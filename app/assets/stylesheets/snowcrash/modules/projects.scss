@@ -1,0 +1,100 @@
+body.projects {
+
+  section.summary-panel {
+    font-size: 18px;
+
+    ul {
+      margin-bottom: 20px;
+
+      li {
+        font-weight: 200;
+        line-height: 30px;
+        margin-left: 25px;
+      }
+    }
+
+    ul.issue-list {
+      list-style: none;
+      li {
+        line-height: 3em;
+        margin: 0;
+        padding: 0 .5em;
+        &:nth-child(odd) {
+          background: lighten($grayLight, 5%);
+        }
+      }
+    }
+
+    &.custom-properties {
+      dl {
+        dt {
+          margin-top: 1em;
+          width: 40%;
+
+          &:after {
+            content: ':';
+          }
+        }
+        dd {
+          margin-left: 42%;
+          margin-top: 1em;
+        }
+      }
+    }
+
+    .no-content {
+      color: #444;
+      font-style: italic;
+      margin: 3em 0;
+      text-align: center;
+    }
+  }
+
+  #issue-chart svg {
+    display: block;
+    margin: auto;
+
+    .bar-High {
+      fill: #d62728;
+    }
+    .bar-Medium {
+      fill: #ff7f0e;
+    }
+    .bar-Low {
+      fill: #6baed6;
+    }
+
+    text {
+      font-size: 14px;
+    }
+  }
+
+  #methodology-chart {
+    .progress-meter .background {
+      fill: #ccc;
+      fill: #5a9dcc;
+      fill: #9ECAE1;
+    }
+
+    .progress-meter .foreground {
+      fill: #000;
+      fill: #1F77B4;
+      fill: #5a9dcc;
+    }
+
+    .progress-meter text {
+      fill: #1F77B4;
+      font-weight: bold;
+    }
+  }
+
+  .methodology-summary {
+    padding-left: 225px;
+
+    ul {
+      li {
+        font-size: 16px;
+      }
+    }
+  }
+}

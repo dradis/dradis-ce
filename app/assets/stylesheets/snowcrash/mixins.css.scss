@@ -1,0 +1,54 @@
+@mixin active-nav() {
+  &.active {
+    position: relative;
+    overflow: visible;
+    display: block;
+    > a{
+      color: #fff;
+    }
+    &:after {
+      $size: 10px;
+      position: absolute;
+      content: '';
+      width: 0px;
+      height: 0px;
+      right: 0;
+      top: 0%;
+      margin-top: 8px;
+      border-style: solid;
+      border-width: $size $size $size 0;
+      border-color: transparent $secondaryBgColor transparent transparent;
+      z-index: 999;
+    }
+
+    li {
+      :after {
+        display: none;
+      }
+    }
+
+  }
+}
+
+@mixin button($color) {
+  border: 0px none;
+  background: $color;
+  &:hover {
+    background: darken($color, 10);
+  }
+}
+
+@mixin ajax-console {
+  background-color: #000;
+  border-radius: 5px;
+  color: #CCC;
+  margin: 4ex;
+  height: 400px;
+  overflow: scroll;
+  padding: 2ex 1ex;
+
+  .log {
+    margin-bottom: 5px;
+  }
+
+}

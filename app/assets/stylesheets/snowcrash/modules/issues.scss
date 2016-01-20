@@ -1,0 +1,71 @@
+body.issues {
+
+  .main-sidebar {
+    .issues-nav {
+      ul.children {
+//        background-color: lighten($primaryBgColor, 20%);
+        display: block;
+        padding-left: 1em;
+      }
+    }
+  }
+
+  .main-content {
+    .view-content {
+      .inner {
+        h2, h3 {
+          margin: 0 0 0.5em 0;
+          line-height: 1em;
+          padding-bottom: 0.5em;
+          border-bottom: 1px solid $grayLight;
+
+          .actions {
+            color: $grayLight;
+            font-size: 85%;
+          }
+        }
+
+        .issue-actions {
+          text-align: center;
+
+          .btn-group {
+            visibility: hidden;
+            .btn {
+              background-color: #e6e6e6;
+              &:active, &:hover {
+                background-color: darken(#e6e6e6, 10%);
+              }
+            }
+            .dropdown-menu {
+              text-align: left;
+            }
+          }
+        }
+
+        td.loading {
+          background: image-url('loading.gif') no-repeat left center;
+          padding-left: 20px;
+        }
+
+        .popover {
+          .popover-title {
+            font-size: 14px;
+          }
+          .popover-content .dropdown-menu {
+            font-size: 14px;
+            font-weight: normal;
+          }
+        }
+      }
+    }
+  }
+
+}
+body.issues.new, body.issues.edit {
+  .tag-input {
+    position: relative;
+    .btn {
+      background: #fff;
+    }
+  }
+}

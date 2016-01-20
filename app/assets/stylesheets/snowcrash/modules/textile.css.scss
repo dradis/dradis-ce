@@ -1,0 +1,73 @@
+.main-content .content-textile, .textile-preview {
+  margin-bottom: 2em;
+
+  h4 {
+    margin-top: 30px;
+  }
+
+  li { margin-left: 40px; }
+  ul {list-style-type: square !important; }
+  ol { list-style-type: decimal; }
+  ul, ol { margin-bottom: 2ex; }
+
+  strong { font-weight: bold; }
+  em { font-style: italic; }
+
+  pre {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    margin: 10px 0;
+    padding: 10px;
+    white-space: pre-wrap;
+  }
+
+  table {
+    max-width: 100%;
+    background-color: transparent;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    // Cells
+    th,
+    td {
+      padding: 8px;
+      line-height: 20px;
+      text-align: left;
+      vertical-align: top;
+      border-top: 1px solid #ddd;
+    }
+    th {
+      font-weight: bold;
+    }
+    // Bottom align for column headings
+    thead th {
+      vertical-align: bottom;
+    }
+    // Remove top border from thead by default
+    caption + thead tr:first-child th,
+    caption + thead tr:first-child td,
+    colgroup + thead tr:first-child th,
+    colgroup + thead tr:first-child td,
+    thead:first-child tr:first-child th,
+    thead:first-child tr:first-child td {
+      border-top: 0;
+    }
+  }
+
+  tbody {
+    > tr:nth-child(odd) > td,
+    > tr:nth-child(odd) > th {
+      background-color: #f9f9f9;
+    }
+    tr:hover td,
+    tr:hover th {
+      background-color: #f5f5f5;
+    }
+  }
+
+}

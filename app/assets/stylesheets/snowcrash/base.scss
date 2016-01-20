@@ -1,0 +1,494 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: $primaryBgColor;
+  font-family: 'OpenSans','Helvetica Neue',helvetica,sans;
+  padding-top: 0px;
+
+  .body-wrapper {
+    top: $navbarHeight;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    overflow: hidden;
+
+    .version {
+      position: absolute;
+      bottom: 0;
+      color: $grayDark;
+      width: $sidebarWidth;
+      background-color: $primaryBgColor;
+      text-align: center;
+      padding: 0.2em 0;
+      border-top: 1px solid #1C2833;
+      font-size: 10px;
+    }
+  }
+}
+
+.navbar-inner {
+  background: $primaryBgColor;
+  border: 0;
+  line-height: $navbarHeight;
+  -webkit-font-smoothing: antialiased;
+  color: $gray;
+
+  .brand {
+    padding: 0;
+    margin: 0;
+    text-shadow: 0 0 0;
+    letter-spacing: -0.4px;
+  }
+
+  .nav {
+    > li{
+      line-height: $navbarHeight;
+      font-size: 0.9em;
+      &.dropdown.open > .dropdown-toggle {
+        background: transparent;
+        color: $blue;
+      }
+
+      .caret {
+        color: inherit;
+        margin-top: $navbarHeight / 2 !important;
+        margin-left: 3px;
+      }
+
+      > a{
+        text-shadow: 0 0 0;
+        padding: 0 1em;
+        &:hover {
+          color: $blue;
+        }
+      }
+    }
+  }
+}
+
+.navbar-fixed-top .navbar-inner, .navbar-static-top .navbar-inner{
+  @include box-shadow( 0 0 0);
+}
+
+.main-wrapper {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+
+  .main-sidebar {
+    background: $primaryBgColor;
+    width: $sidebarWidth;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: table-cell;
+    -webkit-font-smoothing: antialiased;
+    .inner {
+      padding:1em;
+
+      > ul{
+        list-style: none;
+        padding: 0 1em;
+        margin: 0 0 2em 0;
+        overflow: visible;
+
+        &#main-menu{
+          li.active:after {
+            right: -1em;
+          }
+          a {
+            font-size: 1.1em;
+            i {
+              font-size: 20px;
+              vertical-align: text-bottom;
+              margin-right: 5px;
+            }
+          }
+        }
+
+        > li {
+          display: block;
+          position: relative;
+          overflow: hidden;
+          border-bottom: 1px solid darken($primaryBgColor, 3);
+          margin: 0 -1em;
+          padding: 0;
+          line-height: 3em;
+
+          h4 {
+            color: #fff;
+            font-weight: normal;
+          }
+
+          .count {
+            @include border-radius( 3px );
+            background: darken($primaryBgColor, 35%);
+            color: #fff;
+            font-size: 10px;
+            position: absolute;
+            top: 10px;
+            right: 3em;
+            line-height: normal;
+            padding: .2em .5em
+          }
+
+          .toggle {
+            line-height: 1em;
+            display: inline-block;
+            width: 10px;
+          }
+
+          .add-subnode {
+            position: absolute;
+            top: 0;
+            right: 1em;
+            line-height: 3em;
+//            display: none;
+          }
+
+
+          a {
+            display: inline-block;
+            width: auto;
+            color: lighten($primaryBgColor, 40%);
+            &:hover {
+              text-decoration: none;
+              color: lighten($primaryBgColor, 50%);
+            }
+          }
+
+          &.hasSubmenu.active {
+            height: auto;
+            a { border: none; }
+          }
+          &.no-nodes {
+            color: #888;
+            font-style: italic;
+            text-align: center;
+          }
+
+          .collapse {
+            display: block;
+            margin: 0;
+          }
+
+
+          &.node-editor {
+            line-height: auto;
+            height: auto;
+            a {
+              display: none;
+            }
+            form {
+              display: inline-block;
+              font-size: 80%;
+              margin: 1em 0 0 0;
+              text-align: center;
+              .input-append {
+                line-height: inherit;
+                width: 100%;
+                @include box-sizing( border-box );
+                [type="text"] {
+                  width: 70%;
+                }
+              }
+            }
+            &.off {
+              background: inherit;
+              a{
+                display: block;
+              }
+              form {
+                display: none;
+              }
+
+            }
+          }
+        }
+
+        ul.children {
+          overflow: visible;
+          list-style: none;
+          display: none;
+          margin: 0;
+          padding: 0;
+          li {
+            @include active-nav;
+            line-height: 2em;
+            padding-left: 1em;
+            display: block;
+            .add-subnode {
+              line-height: 3em;
+            }
+
+          }
+        }
+      }
+
+      li {
+        @include active-nav;
+      }
+      > ul.nodes-nav {
+        padding: 0em 0em;
+        li {
+          padding: 0 0 0 1em;
+          position: relative;
+          .add-subnode-wrapper {
+            display: none;
+            width: 100%;
+            padding-top: 0.5em;
+            padding-left: 1em;
+            padding-right: 1em;
+            @include box-sizing( border-box );
+            .input-append {
+              line-height: inherit;
+              width: 100%;
+              @include box-sizing( border-box );
+              input, button {
+                @include box-sizing( border-box );
+                height: 22px;
+                font-size: 12px;
+                padding: 2px 4px;
+              }
+              input { width: 70%; }
+            }
+          }
+          &.active {
+            &:after {
+              border-color: transparent $secondaryNavBarBgColor transparent transparent !important;
+            }
+          }
+          &.loading {
+            color: lighten($primaryBgColor, 40%);
+            font-size: 10px;
+            padding: 0 0 1em 3em;
+          }
+          &.error {
+            color: lighten($primaryBgColor, 40%);
+            display: none;
+            font-size: 10px;
+            padding: 0 0 1em 3em;
+          }
+        }
+      }
+
+
+    }
+  }
+
+  .main-content {
+    color: lighten(#000, 20%);
+    background: $secondaryBgColor;
+    @include border-radius( 8px 0 0 0 );
+    width: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 250px;
+    //overflow-x: hidden;
+    overflow-x: auto;
+    overflow-y: auto;
+    padding: 0 $mainContentPadding;
+
+    .node-header {
+//      height: $breadCrumbHeight;
+    }
+    .breadcrumb {
+      padding: 0.5em 2em;
+//      display: block;
+//      height: $breadCrumbHeight;
+      @include box-sizing(border-box);
+    }
+
+
+    .view-content {
+      @include clearfix;
+      position: relative;
+      padding: 0em 2em 2em 2em;
+      height: 100%;
+      width: 100%;
+      @include box-sizing(border-box);
+
+      .inner, .page {
+        @include clearfix;
+        background: #fff;
+        padding: 2em;
+        margin-bottom: 1.5em;
+
+        .inner, .page {
+          padding: 0;
+        }
+
+        h2, h3{
+          margin: 0 0 0.5em 0;
+          line-height: 1em;
+          padding-bottom: 0.5em;
+          border-bottom: 1px solid $grayLight;
+
+          .actions {
+            color: $grayLight;
+            font-size: 85%;
+          }
+        }
+
+//        > ul {
+//          > li {
+//            line-height: 3em;
+//            padding: 0 .5em;
+//            &:nth-child(odd) {
+//              background: lighten($grayLight, 5%);
+//            }
+//          }
+//        }
+      }
+    }
+
+    &.no-padding {
+      .view-content {
+//        padding: $breadCrumbHeight 0 0 0;
+        padding: 0;
+//        margin-top: -$breadCrumbHeight;
+        display: table;
+
+      }
+    }
+
+
+
+    .secondary-navbar {
+      display: table-cell;
+      vertical-align: top;
+      background: $secondaryNavBarBgColor;
+      width: 25%;
+      margin-left: -$mainContentPadding;
+      > .inner {
+        background: $secondaryNavBarBgColor;
+        padding: 2em;
+        min-height: 600px;
+
+
+        .header-inner {
+          position: relative;
+          .options {
+            position: absolute;
+            top: 0;
+            right: 0;
+          }
+
+
+          h3 {
+            margin-bottom: .5em;
+            padding-bottom: .5em;
+            color: darken($secondaryNavBarBgColor, 60%);
+            border-bottom: 1px solid darken($secondaryNavBarBgColor,5);
+          }
+        }
+
+        table {
+          td {
+            padding: 0 0 1em;
+
+            .btn, .btn-danger {
+              background: transparent;
+              color: $red;
+            }
+          }
+        }
+
+        // there are links in the secondary-navbar that are outside a .list-item
+        // and we them with the right color.
+        a {
+          color: darken($secondaryNavBarBgColor, 40%);
+          &:hover {
+            color: darken($secondaryNavBarBgColor, 60%);
+          }
+        }
+
+        .list-item {
+          &.active a {
+            color: darken($secondaryNavBarBgColor, 90%);
+          }
+        }
+
+      }
+    }
+
+    .secondary-navbar-content {
+      background: #fff;
+      vertical-align: top;
+      display: table-cell;
+      position: relative;
+      margin: 0 0 0 (350px -$mainContentPadding);
+      width: 100%;
+    }
+
+    a:hover {
+      text-decoration: none;
+    }
+
+    h1, h2, h3 {
+      color: $asphalt;
+      font-weight: normal;
+    }
+
+    h1 {
+      font-size: 2em;
+      text-transform: uppercase;
+      margin-bottom: 0.5em;
+    }
+    h2 {
+      font-size: 1.7em;
+    }
+    h3 {
+      font-size: 1.4em;
+    }
+
+
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+  }
+}
+
+.attachments-box {
+  .table {margin-bottom: 0}
+}
+.drop-zone {
+  @include rounded;
+  background: lighten($secondaryNavBarBgColor, 10%);
+  border: 1px dashed $grayDark;
+  border-position: out;
+  color: #ccc;
+  padding: 50px;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.btn {
+  background: $gray;
+  @include box-shadow( 0 0 0 );
+  text-shadow: 0 0 0;
+  &.btn-dradispro, &.btn-primary {
+    @include button($blue);
+  }
+  &.btn-danger {
+    @include button($red);
+  }
+  &.btn-success {
+    @include button($green);
+  }
+  &.btn-warning {
+    @include button($orange);
+  }
+}

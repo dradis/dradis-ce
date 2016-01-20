@@ -1,0 +1,15 @@
+@import "jquery.fileupload-ui";
+
+.files .progress {
+  width: 20px;
+}
+
+.files .preview {
+  min-width: 80px;
+  width: 80px;
+}
+
+.files .name {
+  max-width: 100px;
+  overflow: hidden;
+}
