@@ -1,0 +1,24 @@
+# Bundler files
+/.bundle
+/vendor/bundle/
+
+# Rails stuff
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/config/database.yml
+/config/secrets.yml
+/log/*
+!/log/.keep
+/tmp/
+
+# App-specific
+/attachments/
+/config/shared/
+/templates/
+/sample_files/
+/Gemfile.plugins
+/Gemfile.codeship
+
+# Random
+.DS_Store
+*.swp
