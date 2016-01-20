@@ -1,6 +1,6 @@
 # How to contribute
 
-Third-party patches are essential for keeping dradis great. We simply can't
+Third-party patches are essential for keeping Dradis great. We simply can't
 access the huge number of platforms and myriad configurations for running
 dradis. We want to keep it as easy as possible to contribute changes that
 get things working in your environment. There are a few guidelines that we
