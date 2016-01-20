@@ -1,8 +1,8 @@
-# Welcome to Dradis
+# Welcome to the Dradis Framework
 
-[![Build Status](https://secure.travis-ci.org/dradis/dradisframework.png)](https://secure.travis-ci.org/dradis/dradisframework)
+![Build Status](https://www.codeship.io/projects/f06cef90-a1ae-0133-d7a5-465166e508dd/status)
 
-Dradis is an open source collaboration framework, tailored to InfoSec teams.
+Dradis is an open-source collaboration framework, tailored to InfoSec teams.
 
 
 ## Our goals
@@ -26,19 +26,32 @@ Dradis is an open source collaboration framework, tailored to InfoSec teams.
   * [Nmap](http://nmap.org)
   * [OpenVAS](http://www.openvas.org/)
   * [OSVDB](http://osvdb.org)
+  * [Qualys](https://www.qualys.com/)
   * [Retina](http://www.eeye.com/products/retina/retina-network-scanner)
   * [SureCheck](http://www.wildcroftsecurity.com/)
   * [VulnDB](http://vulndbhq.com)
   * [w3af](http://w3af.sourceforge.net/)
   * [wXf](https://github.com/WebExploitationFramework/wXf)
   * [Zed Attack Proxy](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project)
+  * ...
+  * [Full list][http://dradisframework.org/addons/]
 
 
-## Getting started (git release, recommended)
+## Editions
+
+There are two editions of Dradis Framework:
+
+* Dradis Framework Community Edition (CE) is available freely under the GPLv2 license.
+* Dradis Framework Professional Edition (Pro) includes extra features that are more useful for organizations dealing with bigger teams and multiple projects at a time. To use Pro and get official support please [become a subscriber](http://securityroots.com/dradispro/).
+
+
+## Getting started: Community Edition
+
+### Git release (recommended)
 
 ```
-$ git clone https://github.com/dradis/dradisframework.git
-$ cd dradisframework/
+$ git clone https://github.com/dradis/dradisframework-ce.git
+$ cd dradisframework-ce/
 $ ruby bin/setup
 $ bundle exec rails server
 ```
@@ -46,73 +59,16 @@ $ bundle exec rails server
 You can browse to the app at http://localhost:3000/
 
 
+### Stable release
 
-<!--On Debian-based operating systems (Ubuntu, BackTrack, etc.) use this script:
-
-    $ bash < <(curl -s https://raw.github.com/dradis/meta/master/install.sh)
-
-The script:
-  1. Checks for system-level dependencies (git, openssl, etc.)
-  2. Installs [RVM](http://beginrescueend.com/rvm/install/) and Ruby 1.9.3. It detects and reuses your existing RVM too.
-  3. Downloads and prepares the git repo with Dradis code
-
-[View install.sh source](https://github.com/dradis/meta/blob/master/install.sh)
-
-If you want to manually clone the repo:
-
-    $ mkdir dradis-git
-    $ cd dradis-git/
-    $ git clone https://github.com/dradis/dradisframework.git server
-
-Then download the reset and start scripts to your dradis-git/ folder:
-
-    $ curl -O https://raw.github.com/dradis/meta/master/reset.sh
-    $ curl -O https://raw.github.com/dradis/meta/master/start.sh
-    $ chmod +x *.sh
-    $ ./reset.sh
-
-Once the environment is ready, you can start the server with:
-
-    $ ./start.sh
-
-And browse to https://localhost:3004 to start using Dradis.
-
-If you would like to make Dradis accessible to other people on the network:
-
-    $ ./start.sh -b 0.0.0.0 -p 443
-
-The `-b` option defines Dradis' bind address and the `-p` option can be used to change the port. -->
-
-
-## Getting started (stable release)
-
-In http://dradisframework.org/download.html you will find the latest packages. (pending 3.0 release)
-
-
-<!-- Uncompress, verify and prepare the environment:
-
-    $ tar xvvjf dradis-vX.Y.Z.tar.bz2
-    $ cd dradis-vX.Y/
-    $ ./verify.sh
-      # follow instructions / install dependencies
-    $ ./reset.sh
-
-Once the environment is ready, you can start the server with:
-
-    $ ./start.sh
-
-And browse to https://localhost:3004 to start using Dradis. If you need to bind
-to a different address (so others can connect to your instance) or another port
-number, you can use the -b and -p switches respectively:
-
-    $ ./start.sh -b 10.0.0.123 -p 443 -->
+In http://dradisframework.org/download.html you will find the latest packages.
 
 
 ## Getting help
 
 * http://dradisframework.org/
-* Dradis Guides: http://guides.dradisframework.org
 * [Community Forums](http://discuss.dradisframework.org/)
+* [Slack channel](https://evening-hamlet-4416.herokuapp.com/)
 * IRC: **#dradis** `irc.freenode.org`
 
 
@@ -120,9 +76,19 @@ number, you can use the -b and -p switches respectively:
 
 Please see CONTRIBUTING.md for details.
 
-Many thanks to all Dradis Framework [contributors](https://github.com/dradis/dradisframework/graphs/contributors).
+Many thanks to all Dradis Framework [contributors](https://github.com/dradis/dradisframework-ce/graphs/contributors).
+
+
+### Branching model
+We're following Vincent Driessen's [A successful Git branching model](http://nvie.com/posts/a-successful-git-branching-model/) to try to keep things organized.
+
+In this repo we will have: *master*, *develop*, *release-* and *hotfix-* branches.
+
+If you need to work on a feature branch, fork the repo and work on your own copy. We can check it from there. Eventually you'll merge to your *develop* and back to origin's *develop*.
 
 
 ## License
 
-Dradis Framework is released under [GNU General Public License version 2.0](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+Dradis Framework Community Edition is released under [GNU General Public License version 2.0](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+
+Dradis Framework Professional Edition is released under a commercial license.
