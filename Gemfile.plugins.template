@@ -1,0 +1,26 @@
+# Select the Framework plugins you want to use. Uncomment to enable, comment to
+# disable.
+#
+# After making changes run the following to update dependencies:
+#   $ bundle
+
+# ---------------------------------------------------------------------- Export
+gem 'dradis-csv',         path: '../dradis-csv'
+gem 'dradis-html_export', path: '../dradis-html_export'
+
+# ---------------------------------------------------------------------- Import
+# gem 'dradis-mediawiki', path: '../dradis-mediawiki'
+# gem 'dradis-vulndb',    path: '../dradis-vulndb'
+
+# ---------------------------------------------------------------------- Upload
+gem 'dradis-acunetix',    path: '../dradis-acunetix'
+gem 'dradis-brakeman',    path: '../dradis-brakeman'
+gem 'dradis-burp',        path: '../dradis-burp'
+gem 'dradis-metasploit',  path: '../dradis-metasploit'
+gem 'dradis-nessus',      path: '../dradis-nessus'
+gem 'dradis-nexpose',     path: '../dradis-nexpose'
+gem 'dradis-nikto',       path: '../dradis-nikto'
+gem 'dradis-nmap',        path: '../dradis-nmap'
+gem 'dradis-ntospider',   path: '../dradis-ntospider'
+gem 'dradis-openvas',     path: '../dradis-openvas'
+gem 'dradis-qualys',      path: '../dradis-qualys'
