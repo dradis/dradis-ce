@@ -1,7 +1,7 @@
 # Internal application Configuration settings are handled through this
 # REST-enabled controller.
 class ConfigurationsController < ProjectScopedController
-  before_action :find_or_initialize_config, except: [ :index ]
+  before_action :find_plugin, except: [ :index ]
 
   def index
     @configs = all_configurations
@@ -14,9 +14,9 @@ class ConfigurationsController < ProjectScopedController
       format.js do
         if @plugin.settings.update_settings(params[:setting])
           @is_default = @plugin.settings.is_default?(params[:setting].keys.first, params[:setting].values.first)
-          render json: { setting_is_default: @is_default }.to_json }
+          render json: { setting_is_default: @is_default }.to_json
         else
-          render json: @config.errors.to_json, status: :unprocessable_entity }
+          render json: @config.errors.to_json, status: :unprocessable_entity
         end
       end
     end
