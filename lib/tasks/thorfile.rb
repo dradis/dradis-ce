@@ -106,18 +106,6 @@ class DradisTasks < Thor
     load Gem.bin_path('rails', 'rails', ">= 0")
   end
 
-  desc "settings [NAMESPACE]", "list dradis settings, with an optional namespace to filter the results"
-  def settings(namespace=nil)
-    require 'config/environment'
-
-    settings = Dradis::Configurator.configurables.collect(&:settings).flatten.sort_by(&:name)
-    width = settings.collect { |s| s.name.length + 1 }.max
-
-    settings.each do |setting|
-      puts "%-#{width}s %s" % [setting.name, setting.value] if namespace.nil? || setting.name.include?(namespace)
-    end
-  end
-
   desc "version", "displays the version of the dradis server"
   def version
     require 'lib/core/version'
@@ -194,42 +182,6 @@ class DradisTasks < Thor
       count = logs.count
       logs.destroy_all
       puts "Deleted #{count} Log#{"s" if count != 1}"
-    end
-  end
-
-  class Settings < Thor
-    namespace     "dradis:settings"
-
-    desc "get SETTING", "get the value of a dradis setting"
-    def get(name)
-      require 'config/environment'
-
-      setting = Dradis::Configurator.configurables.collect(&:settings).flatten.detect { |c| c.name == name }
-
-      unless setting.nil?
-        puts "%s %s" % [setting.name, setting.value]
-      else
-        puts "Unknown setting %s." % [name]
-      end
-    end
-
-    desc "set SETTING VALUE", "change the value of a dradis setting"
-    def set(name, value)
-      require 'config/environment'
-
-      setting = Dradis::Configurator.configurables.collect(&:settings).flatten.detect { |c| c.name == name }
-
-      unless setting.nil?
-        old_value = setting.value
-
-        if setting.update_attribute(:value, value)
-          puts "Changed %s from \"%s\" to \"%s\"." % [setting.name, old_value, setting.value]
-        else
-          puts "Failed to change %s to \"%s\"." % [setting.name, value]
-        end
-      else
-        puts "Unknown setting %s." % [name]
-      end
     end
   end
   
