@@ -1,3 +1,5 @@
+# UPGRADE: we don't need to deal with vendorized configurations
+
 # Internal application Configuration settings are handled through this
 # REST-enabled controller.
 class ConfigurationsController < ProjectScopedController
@@ -54,15 +56,7 @@ class ConfigurationsController < ProjectScopedController
 
   private
   def all_configurations
-    vendorized = Core::Configurator.configurables.map do |configurable|
-      {
-        klass:    configurable.name.to_s,
-        name:     configurable.name.gsub(/::Configuration$/, ''),
-        type:     'vendorized',
-        settings: configurable.settings.sort_by(&:name)
-      }
-    end
-    gemified = Dradis::Plugins.list.map do |plugin|
+    configurations = Dradis::Plugins.list.map do |plugin|
       {
         klass:    plugin.name.to_s,
         name:     plugin.name.gsub(/^Dradis::Plugins::/, '').gsub(/::Engine$/, ''),
@@ -70,7 +64,7 @@ class ConfigurationsController < ProjectScopedController
         settings: plugin.settings.all
       }
     end
-    configurations = vendorized.zip(gemified).flatten
+    # configurations = vendorized.zip(gemified).flatten
     configurations = configurations.reject{ |c| c[:settings].empty? }
     configurations = configurations.sort_by{ |c| c[:name] }
   end

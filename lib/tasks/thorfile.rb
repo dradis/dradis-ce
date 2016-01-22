@@ -110,7 +110,7 @@ class DradisTasks < Thor
   def settings(namespace=nil)
     require 'config/environment'
 
-    settings = Core::Configurator.configurables.collect(&:settings).flatten.sort_by(&:name)
+    settings = Dradis::Configurator.configurables.collect(&:settings).flatten.sort_by(&:name)
     width = settings.collect { |s| s.name.length + 1 }.max
 
     settings.each do |setting|
@@ -204,7 +204,7 @@ class DradisTasks < Thor
     def get(name)
       require 'config/environment'
 
-      setting = Core::Configurator.configurables.collect(&:settings).flatten.detect { |c| c.name == name }
+      setting = Dradis::Configurator.configurables.collect(&:settings).flatten.detect { |c| c.name == name }
 
       unless setting.nil?
         puts "%s %s" % [setting.name, setting.value]
@@ -217,7 +217,7 @@ class DradisTasks < Thor
     def set(name, value)
       require 'config/environment'
 
-      setting = Core::Configurator.configurables.collect(&:settings).flatten.detect { |c| c.name == name }
+      setting = Dradis::Configurator.configurables.collect(&:settings).flatten.detect { |c| c.name == name }
 
       unless setting.nil?
         old_value = setting.value

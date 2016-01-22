@@ -1,4 +1,4 @@
-module Core
+module Dradis
   class Configurator
 
     class << self
@@ -109,7 +109,7 @@ module Core
         self.send(sym, *attrs) rescue nil
       end
 
-      
+
       protected
       # builds a correctly namespaced name, leaving the configuration name intact
       # if it is in global namespace, or adding 'namespace:' if we are namespaced

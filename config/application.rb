@@ -43,4 +43,4 @@ module Dradis
   end
 end
 
-require 'core/configurator'
+require 'dradis/configurator'
