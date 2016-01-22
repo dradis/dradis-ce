@@ -64,15 +64,27 @@ gem 'differ', '~> 0.1.2'
 # Use ActiveModel has_secure_password
 # Password digests
 gem 'bcrypt',   '3.1.10'
-gem 'sqlite3',  '1.3.10', group: :development
+
+# Required by Rails (uglifier and activesupport)
+gem 'json', '1.8.2'
+
+# XML manipulation
 gem 'nokogiri', '1.6.5'
+
+# MySQL backend
+gem 'mysql2', '0.3.18'
+
+# Textile markup
 gem 'RedCloth', '4.2.9', require: 'redcloth'
+
+# SQLite3 DB driver
+gem 'sqlite3',  '1.3.10', group: :development
+
+# Use Unicorn as the web server
+gem 'unicorn',  '4.9.2', group: :production
 
 
 # --------------------------------------------------------- Dradis Professional
-# MySQL backend
-gem 'mysql2'
-
 # Authorisation
 gem 'cancancan', '~> 1.10'
 
@@ -102,8 +114,6 @@ gem 'whenever', require: false
 # gem 'capistrano-rails', group: :development
 
 group :production do
-  # Use Unicorn as the web server
-  gem 'unicorn'
 end
 
 
