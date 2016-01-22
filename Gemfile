@@ -81,7 +81,7 @@ gem 'RedCloth', '4.2.9', require: 'redcloth'
 gem 'sqlite3',  '1.3.10', group: :development
 
 # Use Unicorn as the web server
-gem 'unicorn',  '4.9.2', group: :production
+gem 'unicorn',  '4.9.0', group: :production
 
 
 # --------------------------------------------------------- Dradis Professional
