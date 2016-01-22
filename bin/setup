@@ -1,0 +1,69 @@
+require 'fileutils'
+require 'pathname'
+
+# path to your application root.
+APP_ROOT = Pathname.new File.expand_path('../../', __FILE__)
+
+Dir.chdir APP_ROOT do
+  # This script is a starting point to setup your application.
+  # Add necessary setup steps to this file:
+
+  community_dir = File.join(APP_ROOT, '..', 'community')
+  puts "== Cloning core Dradis add-ons at #{community_dir} =="
+  unless Dir.exist?(community_dir)
+    FileUtils.mkdir_p(community_dir)
+    Dir.chdir community_dir do
+      # Export
+      system "git clone 'https://github.com/dradis/dradis-csv'"
+      system "git clone 'https://github.com/dradis/dradis-html_export'"
+
+      # Import
+      system "git clone 'https://github.com/dradis/dradis-mediawiki'"
+      system "git clone 'https://github.com/dradis/dradis-vulndb'"
+
+      # Upload
+      system "git clone 'https://github.com/dradis/dradis-acunetix'"
+      system "git clone 'https://github.com/dradis/dradis-brakeman'"
+      system "git clone 'https://github.com/dradis/dradis-burp'"
+      system "git clone 'https://github.com/dradis/dradis-metasploit'"
+      system "git clone 'https://github.com/dradis/dradis-nessus'"
+      system "git clone 'https://github.com/dradis/dradis-nexpose'"
+      system "git clone 'https://github.com/dradis/dradis-nikto'"
+      system "git clone 'https://github.com/dradis/dradis-nmap'"
+      system "git clone 'https://github.com/dradis/dradis-ntospider'"
+      system "git clone 'https://github.com/dradis/dradis-openvas'"
+      system "git clone 'https://github.com/dradis/dradis-qualys'"
+
+      # Other
+      system "git clone 'https://github.com/dradis/dradis-plugins'"
+    end
+  end
+
+  puts "== Installing dependencies =="
+  system "gem install bundler --conservative"
+  system "bundle check || bundle install --local"
+
+  puts "\n== Copying sample files =="
+  unless File.exist?("Gemfile.plugins")
+    system "cp Gemfile.plugins.template Gemfile.plugins"
+  end
+
+  unless File.exist?("config/database.yml")
+    system "cp config/database.yml.template config/database.yml"
+  end
+
+  unless File.exist?("config/secrets.yml")
+    system "cp config/secrets.yml.template config/secrets.yml"
+  end
+
+  puts "\n== Preparing database =="
+  system "bin/rake db:setup"
+
+  puts "\n== Removing old logs and tempfiles =="
+  system "rm -f log/*"
+  system "rm -rf tmp/cache"
+
+  puts "\n== Restarting application server =="
+  system "mkdir -p tmp/"
+  system "touch tmp/restart.txt"
+end
