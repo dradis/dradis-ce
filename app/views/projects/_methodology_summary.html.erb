@@ -1,0 +1,68 @@
+<% total_tasks = 0 %>
+<% completed_tasks = 0 %>
+
+<section class="inner summary-panel">
+  <h2>Methodology progress</h2>
+
+  <% if @methodologies.any? %>
+  <div id="methodology-chart" class="pull-left"></div>
+  <div class="methodology-summary">
+    <ul>
+      <% for methodology in @methodologies do %>
+      <li>
+        <%= methodology.name %><br/>
+        <small><%= methodology.completed_tasks.count %>/<%= methodology.tasks.count %> completed tasks</small>
+      </li>
+      <% total_tasks += methodology.tasks.count %>
+      <% completed_tasks += methodology.completed_tasks.count %>
+      <% end %>
+    </ul>
+  </div>
+  <% else %>
+  <p class="no-content">There are no methodologies in this project yet.</p>
+  <p>Add your first methodology by clicking <%= link_to methodologies_path() do %><i class="fa fa-check"></i> Methodologies<% end %> in the sidebar.</p>
+  <% end %>
+</section>
+
+<% if @methodologies.any?  %>
+<script type="text/javascript">
+var width = 200,
+    height = 200,
+    twoPi = 2 * Math.PI,
+    radius = Math.min(width, height) / 2,
+    formatPercent = d3.format(".0%"),
+    <% if total_tasks > 0 %>
+    progress = <%= (completed_tasks * 100 / total_tasks).to_f/100 %>;
+    <% else %>
+    progress = 0;
+    <% end %>
+
+var arc4 = d3.svg.arc()
+    .startAngle(0)
+    .innerRadius(radius - 10)
+    .outerRadius(radius - 40);
+
+var svg4 = d3.select("#methodology-chart").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+var meter = svg4.append("g")
+    .attr("class", "progress-meter");
+
+meter.append("path")
+    .attr("class", "background")
+    .attr("d", arc4.endAngle(twoPi));
+
+var foreground = meter.append("path")
+    .attr("class", "foreground");
+
+var text = meter.append("text")
+    .attr("text-anchor", "middle")
+    .attr("dy", ".35em");
+
+foreground.attr("d", arc4.endAngle(twoPi * progress));
+text.text(formatPercent(progress));
+</script>
+<% end %>
