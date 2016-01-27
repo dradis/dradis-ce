@@ -1,0 +1,70 @@
+Rails.application.routes.draw do
+  # ------------------------------------------------------------- Sign in / out
+  get '/login'  => 'sessions#new'
+  get '/logout' => 'sessions#destroy'
+  resource :session
+
+  # ------------------------------------------------------------- Project routes
+  get '/summary' => 'projects#show'
+
+  resources :activities, only: [] do
+    collection do
+      get :poll, constraints: { format: /js/ }
+    end
+  end
+
+  resources :configurations, only: [:index, :update]
+
+  resources :issues do
+    collection { post :import }
+    resources :revisions, only: [:index, :show]
+  end
+
+  resources :methodologies do
+    collection { post :preview }
+    member do
+      get :add
+      put :update_task
+    end
+  end
+
+  resources :nodes do
+    collection { post :sort }
+
+    member do
+      get :tree
+    end
+
+    resources :notes do
+      resources :revisions, only: [:index, :show]
+    end
+
+    resources :evidence, except: :index do
+      resources :revisions, only: [:index, :show]
+    end
+
+    constraints(:id => /.*/) do
+      resources :attachments
+    end
+  end
+
+  # -------------------------------------------------------------- Static pages
+  # jQuery Textile URLs
+  get '/preview' => 'home#textilize',  as: :preview, defaults: { format: 'json' }
+  get '/markup-help' => 'home#markup_help', as: :markup
+
+
+  # ------------------------------------------------------------ Export Manager
+  get  '/export'                   => 'export#index',             as: :export_manager
+  post '/export'                   => 'export#create'
+  get  '/export/validate'          => 'export#validate',          as: :validate_export
+  get  '/export/validation_status' => 'export#validation_status', as: :validation_status
+
+  # ------------------------------------------------------------ Upload Manager
+  get  '/upload'        => 'upload#index',  as: :upload_manager
+  post '/upload'        => 'upload#create'
+  post '/upload/parse'  => 'upload#parse'
+  get  '/upload/status' => 'upload#status'
+
+  root to: 'home#index'
+end
