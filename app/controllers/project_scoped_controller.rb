@@ -1,5 +1,6 @@
 class ProjectScopedController < AuthenticatedController
-  include ActivityTracking
+  # FIXME: re-enable Activity tracking
+  # include ActivityTracking
 
   layout 'snowcrash'
 
