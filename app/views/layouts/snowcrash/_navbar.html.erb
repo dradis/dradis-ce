@@ -1,0 +1,42 @@
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+
+    <div class="container-fluid">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <%= link_to 'Dradis CE', summary_path, class: 'brand' %>
+      <div class="nav-collapse">
+        <ul class="nav pull-right">
+          <li><%= link_to upload_manager_path do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %></li>
+          <li><%= link_to export_manager_path do %><i class="fa fa-file-text-o fa-lg"></i> Export results<% end %></li>
+          <li><%= link_to configurations_path do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-question fa-lg"></i><b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="https://evening-hamlet-4416.herokuapp.com/" target="_blank">Chat on Slack</a></li>
+              <li><a href="http://webchat.freenode.net/?channels=dradis" target="_blank">Chat on IRC</a></li>
+              <li><a href="https://github.com/dradis/dradisframework/issues" class="js-hs-beacon">Open a ticket</a></li>
+              <li class="divider"></li>
+              <li><a href="http://dradisframework.org/documentation/" target="_blank">Support website</a></li>
+              <li><a href="http://discuss.dradisframework.org" target="_blank">Community forums</a></li>
+              <%# FIXME: re-enable Tour %>
+              <!-- 
+              <li class="divider"></li>
+              <li><a href="javascript:void(0)" class="js-tour-start">Show Tour</a></li>
+              -->
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i><b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to 'Log out', logout_path %></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
