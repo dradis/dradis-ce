@@ -39,13 +39,15 @@
               <% end %>
             <% end %>
           </ul>
-          <%= render "layouts/snowcrash/nodes" %>
+          <%# FIXME: re-enable nodes tree %>
+          <%#= render "layouts/snowcrash/nodes" %>
 
           <%# need to include this modal here, because not all pages have
               breadcrumbs (e.g. Project#show).
               Can't move it inside _nodes, because it is used for the "Move
               node" modal, and it would nest :form tags breaking them %>
-          <%= render partial: 'nodes/modals/add_branch' %>
+          <%# FIXME: re-enable add node-branch %>
+          <%#= render partial: 'nodes/modals/add_branch' %>
       </div>
       </div>
       <div class="main-content <%= content_for?(:sidebar) ? 'no-padding' : ''%>">
@@ -55,7 +57,8 @@
             <p>Please enable JavaScript support.</p>
           </div>
         </noscript>
-        <%= render "layouts/snowcrash/breadcrumb" %>
+        <%# FIXME: re-enable nodes breadcrumbs %>
+        <%#= render "layouts/snowcrash/breadcrumb" %>
 
         <div id="view-content" class="view-content">
           <% if content_for?(:sidebar) %>
@@ -81,7 +84,7 @@
       </div>
     </div>
     <div class="version">
-      <small><%= Dradis::CE.version %></small>
+      <small>Dradis Community v<%= Dradis::CE.version %></small>
     </div>
   </div>
   <%# FIXME: re-enable Activity poller%>
