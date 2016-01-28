@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get '/logout' => 'sessions#destroy'
   resource :session
 
-  # ------------------------------------------------------------- Project routes
+  # ------------------------------------------------------------ Project routes
   get '/summary' => 'projects#show'
 
   resources :activities, only: [] do
