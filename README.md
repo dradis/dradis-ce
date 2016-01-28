@@ -34,7 +34,7 @@ Dradis is an open-source collaboration framework, tailored to InfoSec teams.
   * [wXf](https://github.com/WebExploitationFramework/wXf)
   * [Zed Attack Proxy](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project)
   * ...
-  * [Full list][http://dradisframework.org/addons/]
+  * [Full list](http://dradisframework.org/addons/)
 
 
 ## Editions
