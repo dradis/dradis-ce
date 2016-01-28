@@ -1,0 +1,103 @@
+.textile-wrap {
+  ul.textile-toolbar {
+    position: relative;
+    z-index: 1002;
+    height: 33px;
+    left: 0;
+    top: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 0 !important;
+    list-style: none;
+    background: #f5f5f5;
+    background: -moz-linear-gradient(top,  #f5f5f5 0%, #dedede 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5f5f5), color-stop(100%,#dedede));
+    background: -webkit-linear-gradient(top,  #f5f5f5 0%,#dedede 100%);
+    background: -o-linear-gradient(top,  #f5f5f5 0%,#dedede 100%);
+    background: -ms-linear-gradient(top,  #f5f5f5 0%,#dedede 100%);
+    background: linear-gradient(top,  #f5f5f5 0%,#dedede 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#dedede',GradientType=0 );
+    overflow: hidden;
+    border-bottom: 1px solid #c2c2c2;
+
+    li {
+      float: left !important;
+      padding: 3px 1px;
+      padding-right: 0;
+
+      a {
+        border: 1px solid transparent;
+        cursor: pointer;
+        display: block;
+        text-decoration: none;
+        height: 26px;
+        padding: 0 12px;
+        line-height: 26px;
+
+        &:hover {
+          border: 1px solid #98a6ba;
+          background-color: #d6dce6;
+        }
+
+        &.active {
+          border-color: #b5b5b5;
+          background-color: #e8e8e8;
+        }
+
+        &.btn {
+          padding: 0;
+        }
+
+//        &.btn-fullscreen span {
+//          display: block;
+//          width: 25px;
+//          background: image-url('jquery.textile.fullscreen.png') no-repeat 5px;
+//        };
+        &.btn-write span { background-position: 0; }
+        &.btn-preview span { background-position: -200px; }
+      }
+    }
+
+    li.right {
+      float: none;
+      float: right !important;
+      padding: 2px 0;
+      padding-right: 1px !important;
+    }
+  }
+
+  .textile-inner {
+    background-color: #DDD;
+    padding: 1ex;
+
+    textarea {
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -ms-box-sizing: border-box;
+      padding: 1ex;
+    }
+
+    .textile-preview {
+      background-color: #FFF;
+      padding: 1ex;
+    }
+
+    .loading-indicator {
+      background: #FFF image-url('jquery.textile.loading.gif') no-repeat 5px;
+      padding-left: 25px;
+    }
+
+  }
+}
+
+.textile-fullscreen {
+  border: medium none !important;
+  height: 100%;
+  left: 0;
+  padding: 10px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 2000;
+}
