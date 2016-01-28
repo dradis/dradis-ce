@@ -2,6 +2,7 @@ class ProjectScopedController < AuthenticatedController
   # FIXME: re-enable Activity tracking
   # include ActivityTracking
 
+  helper :snowcrash
   layout 'snowcrash'
 
   protected

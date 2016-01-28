@@ -69,7 +69,7 @@
               <%= content_for?(:content) ? yield(:content) : yield %>
             </div>
           <% else %>
-            <%= content_tag :h1, yield(:title) if show_title? %>
+            <%= content_tag :h1, yield(:title) if content_for?(:title) %>
             <div class="row-fluid">
               <div class="span12">
                 <%= flash_messages %>
