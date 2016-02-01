@@ -8,9 +8,5 @@ module Dradis
 
       STRING = [MAJOR, MINOR, TINY, PRE].compact.join('.')
     end
-
-    def self.version
-      VERSION::STRING
-    end
   end
 end
