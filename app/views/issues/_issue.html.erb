@@ -1,0 +1,8 @@
+<%= content_tag :div, id: dom_id(issue), class: ('list-item' << ' active' if (request.format.html? and @issue == issue)) do %>
+  <div class="expansion-container">
+    <%= link_to issue, class: 'view-toggle-off', data: {target: "##{dom_id(issue)}_content"} do %>
+      <%= tag_icon_for(issue) %>
+      <%= issue.title %>
+    <% end %>
+  </div>
+<% end %>

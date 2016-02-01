@@ -1,0 +1,18 @@
+<div class="note-list">
+  <%= content_tag :div, id: 'issue_summary_link', class: current_page?(issues_path) ? 'list-item active' : 'list-item' do %>
+    <div class="expansion-container">
+      <%= link_to issues_path(), class: 'view-toggle-off' do %>
+        <i class="fa fa-bar-chart"></i>
+        Summary of issues
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<%= render 'shared/sidebar_collection',
+  name: 'Issues',
+  collection: @issues,
+  new_path: new_issue_path,
+  category_id: nil
+%>
+<%= render 'import_box' %>

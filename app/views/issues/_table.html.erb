@@ -1,0 +1,21 @@
+<table id="tbl-issues" class="table table-striped">
+  <thead>
+    <tr>
+      <th><input type="checkbox" id="select-all" /></th>
+      <th>Title</th>
+      <th>Tags</th>
+      <th>Affects</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% issues.each do |issue| %>
+    <tr>
+      <td><%= check_box_tag dom_id(issue), issue.id, false, class: 'js-multicheck', data: {url: issue_path(issue, format: :json)} %></td>
+      <td><%= link_to issue.title, issue %></td>
+      <td><%= tag_and_name_for(issue) %></td>
+      <%# this count is coming from the SQL finder in the controller %>
+      <td><%= issue.affected_count %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
