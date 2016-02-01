@@ -14,7 +14,7 @@ class Tag < ActiveRecord::Base
   before_save :normalize_name
 
   # -- Validations ------------------------------------------------------------
-  validates :name, presence: true, uniqueness: { case_sensitive: false, scope: :project_id }
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   # -- Scopes -----------------------------------------------------------------
 
