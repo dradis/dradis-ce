@@ -15,7 +15,6 @@ class Tag < ActiveRecord::Base
 
   # -- Validations ------------------------------------------------------------
   validates :name, presence: true, uniqueness: { case_sensitive: false, scope: :project_id }
-  validates :project, presence: true, associated: true
 
   # -- Scopes -----------------------------------------------------------------
 
