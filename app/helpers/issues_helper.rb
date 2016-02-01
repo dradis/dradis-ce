@@ -49,12 +49,12 @@ module IssuesHelper
       badge_css << {
         'public' => ' badge-success',
         'private' => ' badge-warning'
-      }[tag]
+      }.fetch(tag, '')
 
-      content_tag :span, :class => badge_css do
+      content_tag :span, class: badge_css do
         tag
       end
-    end.join.html_safe
+    end.join(' ').html_safe
   end
 
   # ----------------------------------------------------------- /Import plugins
