@@ -1,0 +1,5 @@
+<%# hide the no-issues placeholder %>
+$('#issues .placeholder').hide()
+
+<%# add the note link %>
+$('#issues').append($("<%= j render @issue %>"));
