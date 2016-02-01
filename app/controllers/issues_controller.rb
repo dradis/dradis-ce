@@ -85,8 +85,7 @@ class IssuesController < ProjectScopedController
     # We need a transaction because multiple DELETE calls can be issued from
     # index and a TOCTOR can appear between the Note read and the Issue.find
     Note.transaction do
-      # @issues = Issue.find(Note.where(node_id: @issuelib).pluck('`notes`.`id`'), include: [:affected, :tags]).sort
-      @issues = Issue.where(node_id: @issuelib.id).find(:all, select: 'notes.id, notes.text, count(evidence.id) as affected_count', joins: 'LEFT OUTER JOIN evidence on notes.id = evidence.issue_id', group: 'notes.id', include: :tags).sort
+      @issues = Issue.where(node_id: @issuelib.id).select('notes.id, notes.text, count(evidence.id) as affected_count').joins('LEFT OUTER JOIN evidence on notes.id = evidence.issue_id').group('notes.id').includes(:tags).sort
     end
   end
 
