@@ -61,6 +61,39 @@ body.issues {
   }
 
 }
+
+body.issues.show {
+
+  .evidence-content {
+    .h4, .h5 {
+      margin: 0 0 0.5em 0;
+      line-height: 1em;
+      padding-bottom: 1em;
+      border-bottom: 1px solid $grayLight;
+
+      .actions {
+        color: $grayLight;
+        font-size: 85%;
+      }
+    }
+
+    .evidence-for-host {
+      margin: 0.5em 0 2.5em;
+
+      .content-textile {
+        border-left: 6px solid #ddd;
+        margin-left: 1em;
+        padding-left: 1em;
+      }
+    }
+
+    .tab-content {
+      border-left: 1px solid #ddd;
+      padding: 1.5em 1em 1em;
+    }
+  }
+}
+
 body.issues.new, body.issues.edit {
   .tag-input {
     position: relative;
