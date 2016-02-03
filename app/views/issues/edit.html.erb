@@ -1,0 +1,12 @@
+<% content_for :title, 'Edit issue' %>
+
+<% content_for :sidebar do %>
+  <%= render 'sidebar'%>
+<% end %>
+
+<div id="issues_editor">
+  <div class="inner note-text-inner">
+    <h3>Edit issue</h3>
+    <%= render 'form' %>
+  </div>
+</div>
