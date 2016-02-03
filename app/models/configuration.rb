@@ -2,9 +2,17 @@
 # Each Configuration object has a :name and a :value. Some configuration
 # parameters can be accessed through the helper methods provided in this class.
 class Configuration < ActiveRecord::Base
+  # -- Relationships --------------------------------------------------------
+
+  # -- Callbacks ------------------------------------------------------------
+
+  # -- Validations ----------------------------------------------------------
   validates_presence_of :name, :value
   validates_uniqueness_of :name
 
+  # -- Scopes ---------------------------------------------------------------
+
+  # -- Class Methods --------------------------------------------------------
   # --------------------------------------------------------------- Misc admin:
   def self.emails_node
     find_by(name: 'admin:emails_node').value
@@ -19,10 +27,6 @@ class Configuration < ActiveRecord::Base
       'admin:session_timeout',
       value: 15
     ).value.to_i
-  end
-
-  def self.signups_enabled?
-    find_or_create_by(name: 'admin:signups_enabled', value: 0).value.to_i == 1
   end
 
 
@@ -59,4 +63,6 @@ class Configuration < ActiveRecord::Base
       value: 'Uploaded files'
     ).value
   end
+
+  # -- Instance Methods -----------------------------------------------------
 end
