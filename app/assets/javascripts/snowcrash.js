@@ -2,7 +2,6 @@
 //= require jquery-ui
 //= require jquery_ujs
 // require turbolinks
-//= require jquery.fastLiveFilter
 //= require jquery.form
 //= require jquery.textchange.min
 //= require jquery.textile
