@@ -1,0 +1,18 @@
+<div id="js-add-evidence-container">
+  <div class="js-popover-container"></div>
+  <div class="content hide">
+    <%= text_field_tag nil, nil,
+      id:    'add-evidence',
+      style: 'margin:0 auto',
+      data: {
+        provide: 'typeahead',
+        items:   4,
+        source:  @nodes_for_add_evidence.collect(&:label),
+        ids:     @nodes_for_add_evidence.collect(&:id)
+      }%>
+  </div>
+  <%= form_tag node_evidence_index_path(node_id: ':node_id'), class: 'hide', id: 'new-evidence' do %>
+    <input type="hidden" name="evidence[issue_id]" value="<%= @issue.id %>" />
+    <input type="hidden" name="evidence[content]" value="bc. Placeholder Evidence content." />
+  <% end %>
+</div>

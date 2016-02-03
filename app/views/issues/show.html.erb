@@ -1,0 +1,34 @@
+<% content_for :title, @issue.title %>
+
+<% content_for :sidebar do %>
+  <%= render 'sidebar'%>
+<% end %>
+
+<!-- Main content -->
+<ul class="breadcrumb">
+  <li><%= link_to 'All issues', issues_path() %> <span class="divider">/</span></li>
+  <li class="active"><%= (@issue.title? ? @issue.title : "Issue ##{@issue.id}")%></li>
+</ul>
+
+<div id="issue-viewer">
+  <%= render partial: 'issue_content', locals: { issue: @issue } %>
+
+  <div class="inner">
+    <h3>
+      Recent activity -
+      <span class="actions">
+        <%#
+          # Some legacy content was created before paper_trail, so we need to
+          # make sure that there is at least one revision associated to the
+          # model.
+          #%>
+        <%= link_to(
+              'revision history',
+              issue_revisions_path(@issue)
+        ) if @issue.versions.any? && @issue.versions.last.previous.present? %>
+      </span>
+    </h3>
+    <%# FIXME: re-enable Activity tracking %>
+    <%#= render 'activities/feed', activities: @activities %>
+  </div>
+</div>
