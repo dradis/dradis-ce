@@ -1,35 +1,3 @@
-module Core
-  module Pro
-    module ProjectScopedTask
-      def detect_and_set_project_scope
-        if ENV.key?('PROJECT_ID')
-
-          project_id = ENV['PROJECT_ID'].to_i
-          if Project.where(id: project_id).first
-            shell.say("Project found. Scoping all models to Project #{project_id}.")
-            Evidence.set_project_scope(project_id)
-            Issue.set_project_scope(project_id)
-            Node.set_project_scope(project_id)
-            Note.set_project_scope(project_id)
-            Tag.set_project_scope(project_id)
-          else
-            shell.error("*"*80)
-            shell.error("Couldn't find Project with id=#{project_id}")
-            shell.error("*"*80)
-            exit(2)
-          end
-        else
-          shell.error("*"*80)
-          shell.error('This task requires you to pass a project ID as a parameter. Like this:')
-          shell.error("\tPROJECT_ID=1234 RAILS_ENV=production bundle exec thor #{ARGV.join(' ')}")
-          shell.error("*"*80)
-          exit(1)
-        end
-      end
-    end
-  end
-end
-
 class DradisTasks < Thor
   namespace       "dradis"
   
