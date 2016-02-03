@@ -4,7 +4,6 @@ module Authentication
     base.extend ClassMethods
     base.class_eval do
       helper_method :current_user
-      # scope :disabled, -> { where(disabled: true) }
     end
   end
 

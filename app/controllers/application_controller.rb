@@ -2,9 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  # Include the Authentication concern
-  # FIXME: re-enable Authentication
-  # include Authentication
+  include Authentication
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
