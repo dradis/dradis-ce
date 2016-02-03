@@ -58,10 +58,6 @@ class Node < ActiveRecord::Base
 
 
   # -- Class Methods --------------------------------------------------------
-  def self.set_project_scope(project_id)
-    default_scope { where(project_id: project_id) }
-  end
-
   # Returns or creates the Node that acts as container for all Issues in a
   # given project
   def self.issue_library

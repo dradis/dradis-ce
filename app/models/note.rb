@@ -33,7 +33,7 @@ class Note < ActiveRecord::Base
 
   # -- Relationships --------------------------------------------------------
   belongs_to :category
-  belongs_to :node, -> { includes(:project) }, touch: true
+  belongs_to :node, touch: true
   has_many :activities, as: :trackable
 
   # -- Callbacks ------------------------------------------------------------

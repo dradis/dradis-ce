@@ -1,5 +1,4 @@
 class Issue < Note
-  # Include the Taggable concern (./lib/)
   include Taggable
 
   # -- Relationships --------------------------------------------------------
