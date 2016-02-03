@@ -10,7 +10,8 @@ class IssuesController < ProjectScopedController
   end
 
   def show
-    @activities = @issue.activities.latest
+    # FIXME: re-enable Activities
+    # @activities = @issue.activities.latest
 
     # We can't use the existing @nodes variable as it only contains root-level
     # nodes, and we need the auto-complete to have the full list.
@@ -25,7 +26,8 @@ class IssuesController < ProjectScopedController
 
     respond_to do |format|
       if @issue.save
-        track_created(@issue)
+        # FIXME: re-enable Activities
+        # track_created(@issue)
         format.html { redirect_to @issue, notice: 'Issue added.' }
       else
         format.html { render 'new', alert: "Issue couldn't be added." }
@@ -41,7 +43,8 @@ class IssuesController < ProjectScopedController
     respond_to do |format|
       if @issue.update_attributes(issue_params)
         @modified = true
-        track_updated(@issue)
+        # FIXME: re-enable Activities
+        # track_updated(@issue)
         format.html { redirect_to @issue, notice: 'Issue updated' }
       else
         format.html { render "edit" }
@@ -54,7 +57,8 @@ class IssuesController < ProjectScopedController
   def destroy
     respond_to do |format|
       if @issue.destroy
-        track_destroyed(@issue)
+        # FIXME: re-enable Activities
+        # track_destroyed(@issue)
         format.html { redirect_to issues_url, notice: 'Issue deleted.' }
         format.js
 
