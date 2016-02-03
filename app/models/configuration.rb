@@ -5,14 +5,20 @@ class Configuration < ActiveRecord::Base
   validates_presence_of :name, :value
   validates_uniqueness_of :name
 
-  def self.exists?(*attrs)
-    table_exists? && super(*attrs)
-  end
-
   # --------------------------------------------------------------- Misc admin:
-
   def self.emails_node
     find_by(name: 'admin:emails_node').value
+  end
+
+  def self.shared_password
+    find_or_create_by(name: 'admin:password', value: 'improvable_dradis')
+  end
+
+  def self.session_timeout
+    find_or_create_by_name(
+      'admin:session_timeout',
+      value: 15
+    ).value.to_i
   end
 
   def self.signups_enabled?
