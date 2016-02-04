@@ -9,9 +9,6 @@
 
 jQuery ->
   # --------------------------------------------------- Standard jQuery plugins
-  # Activate jQuery.fastLiveFilter
-  $("[data-filter='fast-live']").fastLiveFilter( '.fastlive-list' )
-
   # Activate jQuery.fileUpload
   $('.jquery-upload').fileupload
     dropZone: $('#drop-zone')
