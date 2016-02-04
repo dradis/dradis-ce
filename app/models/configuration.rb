@@ -23,8 +23,8 @@ class Configuration < ActiveRecord::Base
   end
 
   def self.session_timeout
-    find_or_create_by_name(
-      'admin:session_timeout',
+    find_or_create_by(
+      name: 'admin:session_timeout',
       value: 15
     ).value.to_i
   end
