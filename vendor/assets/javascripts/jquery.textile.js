@@ -35,7 +35,7 @@
 
   // The actual plugin constructor
   function Plugin( element, options ) {
-    this.element = element;
+    this.$element = $(element);
 
     // jQuery has an extend method which merges the contents of two or
     // more objects, storing the result in the first object. The first object
@@ -56,7 +56,7 @@
       // e.g., this.element and this.options
       this._buildContainer();
 
-      this._previousContent = $(this.element).val();
+      this._previousContent = this.$element.val();
       this._previewRendered = false;
       this._helpRendered = false;
     },
@@ -64,23 +64,23 @@
       // Add wrapper div with toolbar and inner container (see defaults.tpl)
 
       // container
-      this.options.wrap = $(this.options.tpl.wrap);
-      $(this.element).parent().append( this.options.wrap );
+      this.options.$wrap = $(this.options.tpl.wrap);
+      this.$element.parent().append( this.options.$wrap );
 
       // move textarea to container
-      $('.textile-inner', this.options.wrap).append($(this.element));
-      $(this.element).css('resize', 'none');
-      $(this.element).css('width', '100%');
+      $('.textile-inner', this.options.$wrap).append(this.$element);
+      this.$element.css('resize', 'none');
+      this.$element.css('width', '100%');
 
       // add Preview to container and hide
-      this.options.preview = $(this.options.tpl.preview);
-      $('.textile-inner', this.options.wrap).append(this.options.preview);
-      this.options.preview.hide();
+      this.options.$preview = $(this.options.tpl.preview);
+      $('.textile-inner', this.options.$wrap).append(this.options.$preview);
+      this.options.$preview.hide();
 
       // add Help to container and hide
-      this.options.help = $(this.options.tpl.help);
-      $('.textile-inner', this.options.wrap).append(this.options.help)
-      this.options.help.hide();
+      this.options.$help = $(this.options.tpl.help);
+      $('.textile-inner', this.options.$wrap).append(this.options.$help)
+      this.options.$help.hide();
 
       // toolbar
       this._buildToolbar();
@@ -91,23 +91,23 @@
       // Write
       button = $('<a class="btn-write active" href="javascript:void(null);"><span>Write</span></a>');
       button.click( $.proxy( function(evt) { this._onBtnWrite(evt); }, this));
-      $('.textile-toolbar', this.options.wrap).append( $('<li>').append(button) );
+      $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
 
       // Preview
       button = $('<a class="btn-preview" href="javascript:void(null);"><span>Preview</span></a>');
       button.click( $.proxy( function(evt) { this._onBtnPreview(evt); }, this));
-      $('.textile-toolbar', this.options.wrap).append( $('<li>').append(button) );
+      $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
 
       // Full screen
       // button = $('<a class="btn btn-fullscreen" href="javascript:void(null);"><span>&nbsp;</span></a>');
       button = $('<a class="btn-fullscreen fa fa-expand" href="javascript:void(null);"><span>&nbsp;</span></a>');
       button.click( $.proxy( function(evt) { this._onBtnFullScreen(evt); }, this));
-      $('.textile-toolbar', this.options.wrap).append( $('<li class="right">').append(button) );
+      $('.textile-toolbar', this.options.$wrap).append( $('<li class="right">').append(button) );
 
       // Help
       button = $('<a class="btn-help fa fa-question" href="javascript:void(null);"><span>&nbsp;</span></a>');
       button.click( $.proxy( function(evt) { this._onBtnHelp(evt); }, this));
-      $('.textile-toolbar', this.options.wrap).append( $('<li class="right">').append(button) );
+      $('.textile-toolbar', this.options.$wrap).append( $('<li class="right">').append(button) );
     },
     _buildResizer: function() {
       if (this.options.resize === false) return false;
@@ -115,11 +115,11 @@
     },
     // Ajax preview
     _loadPreview: function() {
-      this._previousContent = $(this.element).val();
-      this.options.preview.addClass('loading-indicator').text('Loading...');
+      this._previousContent = this.$element.val();
+      this.options.$preview.addClass('loading-indicator').text('Loading...');
 
       var that = this;
-      $.getJSON( $(this.element).data('preview-url'), {text: $(this.element).val()}, function(result){
+      $.getJSON( this.$element.data('preview-url'), {text: this.$element.val()}, function(result){
         that.options.preview.removeClass('loading-indicator')
           .html(result.html);
         that._previewRendered = true;
@@ -128,7 +128,7 @@
     // Ajax help
     _loadHelp: function() {
       var that = this;
-      $.get( $(this.element).data('help-url'), function(result){
+      $.get( this.$element.data('help-url'), function(result){
         that.options.help.removeClass('loading-indicator')
           .html(result);
         this._helpRendered = true;
@@ -137,29 +137,29 @@
     // Toolbar button handlers
     _onBtnWrite: function() {
       // Activate toolbar button
-      var scope = this.options.wrap;
+      var scope = this.options.$wrap;
       $('.textile-toolbar a', scope).removeClass('active');
       $('.textile-toolbar .btn-write', scope).addClass('active');
 
       // Show Write pane
-      this.options.preview.hide();
-      this.options.help.hide();
-      $(this.element).show();
+      this.options.$preview.hide();
+      this.options.$help.hide();
+      this.$element.show();
     },
     _onBtnPreview: function() {
       // Activate toolbar button
-      var scope = this.options.wrap;
+      var scope = this.options.$wrap;
       $('.textile-toolbar a', scope).removeClass('active');
       $('.textile-toolbar .btn-preview', scope).addClass('active');
 
       // Show Preview pane
-      $(this.element).hide();
+      this.$element.hide();
 
-      this.options.help.hide();
-      this.options.preview.show();
+      this.options.$help.hide();
+      this.options.$preview.show();
 
       // If the text hasn't changed, do nothing.
-      if (this._previousContent == $(this.element).val()) {
+      if (this._previousContent == this.$element.val()) {
         if (!this._previewRendered) {
           this._loadPreview();
         }
@@ -170,18 +170,18 @@
       }
     },
     _onBtnFullScreen: function() {
-      $btnFS = $('.btn-fullscreen', this.options.wrap);
+      $btnFS = $('.btn-fullscreen', this.options.$wrap);
 
       if (this.options.fullscreen === false ) {
         this.options.fullscreen = true;
 
-        this.options.height = $(this.element).css('height');
-        this.options.width = this.options.wrap.css('width');
+        this.options.height = this.$element.css('height');
+        this.options.width  = this.options.$wrap.css('width');
 
         this.options.tmpspan = $('<span></span>');
-        this.options.wrap.addClass('textile-fullscreen').after(this.options.tmpspan);
+        this.options.$wrap.addClass('textile-fullscreen').after(this.options.tmpspan);
 
-        $(document.body).prepend(this.options.wrap).css('overflow', 'hidden');
+        $(document.body).prepend(this.options.$wrap).css('overflow', 'hidden');
 
         // fit to window
         this._onFullScreenResize();
@@ -203,26 +203,26 @@
         $(window).unbind('resize', $.proxy(this._onFullScreenResize, this));
         $(document.body).css('overflow', 'visible');
 
-        this.options.wrap.removeClass('textile-fullscreen');
-        this.options.wrap.css('width', this.options.width);
-        this.options.tmpspan.after(this.options.wrap).remove();
+        this.options.$wrap.removeClass('textile-fullscreen');
+        this.options.$wrap.css('width', this.options.width);
+        this.options.tmpspan.after(this.options.$wrap).remove();
 
-        this.options.preview.css('height', 'auto');
-        $(this.element).css('height', this.options.height);
+        this.options.$preview.css('height', 'auto');
+        this.$element.css('height', this.options.height);
 
         // update button icon
         $btnFS.removeClass('fa-compress').addClass('fa-expand');
       }
     },
     _onBtnHelp: function() {
-      var scope = this.options.wrap;
+      var scope = this.options.$wrap;
       $('.textile-toolbar a', scope).removeClass('active');
       $('.textile-toolbar .btn-help', scope).addClass('active');
 
       // Show Help pane
-      $(this.element).hide();
-      this.options.preview.hide();
-      this.options.help.show();
+      this.$element.hide();
+      this.options.$preview.hide();
+      this.options.$help.show();
 
       if (!this._helpRendered) {
         this._loadHelp();
@@ -239,9 +239,9 @@
       var hfix = 60;
       var height = $(window).height() - hfix;
 
-      this.options.wrap.width($(window).width()-20);
-      this.options.preview.height(height);
-      $(this.element).height(height-10);
+      this.options.$wrap.width($(window).width()-20);
+      this.options.$preview.height(height);
+      this.$element.height(height-10);
     }
   };
 
