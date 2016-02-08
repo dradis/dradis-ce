@@ -71,6 +71,7 @@
       $('.textile-inner', this.options.$wrap).append(this.$element);
       this.$element.css('resize', 'none');
       this.$element.css('width', '100%');
+      this.$element.attr('rows', 20);
 
       // add Preview to container and hide
       this.options.$preview = $(this.options.tpl.preview);
@@ -120,7 +121,7 @@
 
       var that = this;
       $.getJSON( this.$element.data('preview-url'), {text: this.$element.val()}, function(result){
-        that.options.preview.removeClass('loading-indicator')
+        that.options.$preview.removeClass('loading-indicator')
           .html(result.html);
         that._previewRendered = true;
       });
@@ -129,7 +130,7 @@
     _loadHelp: function() {
       var that = this;
       $.get( this.$element.data('help-url'), function(result){
-        that.options.help.removeClass('loading-indicator')
+        that.options.$help.removeClass('loading-indicator')
           .html(result);
         this._helpRendered = true;
       });
