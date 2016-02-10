@@ -13,7 +13,7 @@ jQuery ->
       data = {
         section: section,
         task: task,
-        checked: $(this).attr('checked')
+        checked: $(this).prop('checked')
       }
       $li = $(this).parent()
       $li.removeClass('failed').addClass('saving')
@@ -29,7 +29,7 @@ jQuery ->
           $li.addClass('saved')
       }
 
-      if ($(this).attr('checked'))
+      if ($(this).prop('checked'))
         $li.addClass('done')
       else
         $li.removeClass('done')
