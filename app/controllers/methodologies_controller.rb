@@ -19,7 +19,7 @@ class MethodologiesController < ProjectScopedController
   def create
     @methodology = Methodology.find(params[:methodology_id])
     old_name = @methodology.name
-    new_name = params[:methodology].fetch(:name, old_name)
+    new_name = methodology_params.fetch(:name, old_name)
     @methodology.name = new_name
 
     @methodologylib.notes.create(author: 'methodology builder', text: @methodology.content, category: Category.first)
@@ -32,7 +32,7 @@ class MethodologiesController < ProjectScopedController
   end
 
   def update
-    if @note.update_attribute(:text, params[:methodology][:content])
+    if @note.update_attribute(:text, methodology_params[:content])
       redirect_to methodologies_path, notice: "Methodology [#{@methodology.name}] updated."
     else
       redirect_to methodologies_path, alert: "Methodology [#{@methodology.name}] could not be updated."
@@ -41,7 +41,7 @@ class MethodologiesController < ProjectScopedController
 
   def update_task
     section = params.fetch(:section, 'undefined')
-    task = params.fetch(:task, 'undefined')
+    task    = params.fetch(:task, 'undefined')
     checked = params.fetch(:checked, 0)
 
     doc = Nokogiri::XML(@note.text)
@@ -86,5 +86,8 @@ class MethodologiesController < ProjectScopedController
   end
   def find_methodologylib
     @methodologylib = Node.methodology_library
+  end
+  def methodology_params
+    params.require(:methodology).permit(:content, :name)
   end
 end
