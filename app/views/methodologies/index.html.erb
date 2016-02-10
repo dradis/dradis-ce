@@ -1,0 +1,49 @@
+<% content_for :title, 'Methodologies' %>
+
+<div id="methodologies">
+  <ul class="nav nav-pills" id="m-tabs">
+    <% for methodology in @methodologies do %>
+    <li><%= link_to methodology.name, "##{methodology.to_html_anchor}", data: { toggle: 'tab' } %></li>
+    <% end %>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Add new<b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <% if @methodology_templates.any? %>
+          <% for methodology in @methodology_templates do %>
+          <li><%= link_to methodology.name, add_methodology_path(methodology) %></li>
+          <% end %>
+        <% else %>
+        <li class="disabled"><a href="javascript:void(0)">(no methodology templates defined)</a></li>
+        <% end %>
+      </ul>
+    </li>
+  </ul>
+
+  <% if @methodologies.empty? %>
+  <div class="alert alert-notice">
+    <a href="#" class="close" data-dismiss="alert">x</a>
+    <p>No methodologies have been assigned to this project yet.</p>
+  </div>
+  <% end %>
+
+  <div class="tab-content">
+    <% for methodology in @methodologies do %>
+    <%= content_tag :div, class: 'tab-pane', id: methodology.to_html_anchor, data: { url: update_task_methodology_path(methodology) } do %>
+      <div class="pull-right">
+        <%= link_to 'edit', edit_methodology_path(methodology)  %>
+        <%= link_to 'delete', methodology_path(methodology), class: 'text-error', method: :delete, data: { confirm: "Are you sure you want to delete the '#{methodology.name}' methodology?" } %>
+      </div>
+      <% for section in methodology.sections do %>
+      <div class="section">
+        <h2><%= section.name %></h2>
+        <ul>
+          <% for task in section.tasks do %>
+            <li><%= check_box_tag "#{section.name}~#{task.name}", nil, task.checked? %> <%= task.name %></li>
+          <% end %>
+        </ul>
+      </div>
+      <% end %>
+    <% end %>
+    <% end %>
+  </div>
+</div>

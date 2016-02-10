@@ -25,7 +25,7 @@
 //= require snowcrash/modules/issues/quick-add
 //= require snowcrash/modules/issues/table
 //= require snowcrash/modules/issues/tag-input
-// require snowcrash/modules/methodologies
+//= require snowcrash/modules/methodologies
 // require snowcrash/modules/activities/poller
 // require snowcrash/modules/tour
 // require snowcrash/modules/uploads

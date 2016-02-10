@@ -1,0 +1,27 @@
+<% content_for :title, 'Edit methodology' %>
+
+<div class="row-fluid">
+  <div class="span6">
+    <%= simple_form_for @methodology, {url: methodology_path(@methodology), method: :put, html: { class: 'form-vertical' } } do |f| %>
+      <%= f.error_notification %>
+
+      <%= f.input :content, as: :text, input_html: {style: 'width:100%', data: { preview: preview_methodologies_path() } } %>
+      <div class="form-inputs">
+
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit, 'Update methodology', class: 'btn btn-dradispro' %> or
+        <%= link_to 'Cancel', methodologies_path %>
+      </div>
+    <% end %>
+    <p><strong>Note</strong>: Changes made in this form, only affect the instance of the methodology associated with this project.</p>
+  </div>
+
+  <div class="span6">
+    <h2 id="preview_name"><%= @methodology.name %></h2>
+    <div id="preview_content" class="well">
+      <%= parse_methodology_content(@methodology) %>
+    </div>
+  </div>
+</div>
