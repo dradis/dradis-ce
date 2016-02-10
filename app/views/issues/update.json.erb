@@ -1,0 +1,7 @@
+{
+  "success": <%= @modified %>,
+  <% if tag = @issue.tags.first %>
+  "issue_link": "<%= j render('issues/issue.html.erb', issue: @issue) %>",
+  "tag_cell": "<%= j "<td style=\"color:#{tag.color}\"><i class=\"fa fa-tag\"></i> #{tag.display_name}</td>".html_safe %>"
+  <% end %>
+}
