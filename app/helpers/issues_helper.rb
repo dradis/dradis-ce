@@ -25,13 +25,11 @@ module IssuesHelper
         end
       end
 
-      if record.is_a?(Dradis::Plugins::Import::Result)
-        if record.tags.any? && !issue.fields.key?('Tags')
-          issue.text << "\n\n#[Tags]#\n#{record.tags.join(',')}"
-        end
-      elsif record.key?(:tags) && !issue.fields.key?('Tags')
-        # TODO: replace with a real tag when implemented
-        issue.text << "\n\n#[Tags]#\n#{record[:tags].join(',')}"
+      # The content of the entry can come with a Tags field, but the plugin
+      # can also set some (e.g. the entry's status - 'Draft', 'Pending')
+      if record.tags.any?
+        tag_list = record.tags.join(',')
+        issue.text << "\n\n#[AddonTags]#\n#{tag_list}"
       end
 
       issues << issue
@@ -41,20 +39,23 @@ module IssuesHelper
 
   # Output Bootstrap badges if the issue has any associated tags
   def issue_tags(issue)
-    return unless issue.fields.key?('Tags')
+    return unless issue.fields.key?('Tags') || issue.fields.key?('AddonTags')
 
-    tags = issue.fields['Tags'].split(',')
-    tags.map do |tag|
-      badge_css = 'badge'
-      badge_css << {
-        'public' => ' badge-success',
-        'private' => ' badge-warning'
-      }.fetch(tag, '')
+    all_tags = []
 
-      content_tag :span, class: badge_css do
-        tag
+    %w{Tags AddonTags}.each do |tag_field|
+      next unless issue.fields.key?(tag_field)
+      content_tags = issue.fields[tag_field].split(',')
+      all_tags << content_tags.map do |tag_name|
+        tag = Tag.new(name: tag_name.strip)
+
+        content_tag :span, class: 'badge', style: "background-color: #{tag.color}" do
+          h(tag.display_name)
+        end
       end
-    end.join(' ').html_safe
+    end
+
+    all_tags.join(' ').html_safe
   end
 
   # ----------------------------------------------------------- /Import plugins

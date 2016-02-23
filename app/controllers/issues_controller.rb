@@ -26,8 +26,11 @@ class IssuesController < ProjectScopedController
 
     respond_to do |format|
       if @issue.save
+        # Only after we save the issue, we can create valid taggings (w/ valid
+        # taggable IDs)
         # FIXME: re-enable Activities
         # track_created(@issue)
+        tag_issue_from_field_content(@issue)
         format.html { redirect_to @issue, notice: 'Issue added.' }
       else
         format.html { render 'new', alert: "Issue couldn't be added." }
@@ -139,5 +142,20 @@ class IssuesController < ProjectScopedController
 
   def issue_params
     params.require(:issue).permit(:tag_list, :text)
+  end
+
+  # This method inspect the issues' Tag field and if present tags the issue
+  # accordingly.
+  def tag_issue_from_field_content(issue)
+    # If the Issue already has tags (e.g. from the HTML form), or if it doesn't
+    # have a Tags field, bail.
+    return if @issue.tags.any?
+    return unless issue.fields['Tags'].present?
+
+    # For now we just care about the first tag
+    if (tag_name = issue.fields['Tags'].split(',').first)
+      issue.tag_list = tag_name
+      issue.save
+    end
   end
 end

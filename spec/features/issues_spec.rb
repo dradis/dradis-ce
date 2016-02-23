@@ -9,11 +9,11 @@ describe "Issues pages" do
     page.should have_content('Access denied.')
   end
 
-  describe "as authenticated user" do
+  context "as authenticated user" do
 
     before { login_to_project_as_user }
 
-    describe "with an Issue library" do
+    context "with an Issue library" do
       let(:issuelib) do
         Node.set_project_scope(@project.id)
         Node.issue_library
@@ -53,7 +53,7 @@ describe "Issues pages" do
       describe "new page" do
         let(:submit_form) { click_button 'Create Issue' }
 
-        describe "submitting the form with valid information" do
+        context "submitting the form with valid information" do
           before do
             visit new_issue_path
             fill_in :issue_text,
@@ -74,7 +74,7 @@ describe "Issues pages" do
 
         end
 
-        describe "submitting the form with invalid information" do
+        context "submitting the form with invalid information" do
           before do
             visit new_issue_path
             fill_in :issue_text, with: "a" * 65536
@@ -102,6 +102,32 @@ describe "Issues pages" do
             visit new_issue_path(template: 'simple_note')
 
             find_field('issue[text]').value.should include(template_content)
+          end
+        end
+
+        context "when the issue has a Tags field" do
+          it "tags the issue with the corresponding tag if only one is present" do
+            tag_field = '!f89406_private'
+            visit new_issue_path
+            fill_in :issue_text,
+              with: "#[Title]#\nRspec issue\n\n#[Tags]#\n#{tag_field}\n\n"
+
+            expect{submit_form}.to change{Issue.count}.by(1)
+            issue = Issue.last
+            expect(issue.tags.count).to eq(1)
+            expect(issue.tag_list).to eq(tag_field)
+          end
+
+          it "tags the issue with the first tag if more than one are present" do
+            tag_field = '!f89406_private, !468847_public'
+            visit new_issue_path
+            fill_in :issue_text,
+              with: "#[Title]#\nRspec issue\n\n#[Tags]#\n#{tag_field}\n\n"
+
+            expect{submit_form}.to change{Issue.count}.by(1)
+            issue = Issue.last
+            expect(issue.tags.count).to eq(1)
+            expect(issue.tag_list).to eq(tag_field.split(', ').first)
           end
         end
       end
