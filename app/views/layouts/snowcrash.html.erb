@@ -39,15 +39,13 @@
               <% end %>
             <% end %>
           </ul>
-          <%# FIXME: re-enable nodes tree %>
-          <%#= render "layouts/snowcrash/nodes" %>
+          <%= render "layouts/snowcrash/nodes" %>
 
           <%# need to include this modal here, because not all pages have
               breadcrumbs (e.g. Project#show).
               Can't move it inside _nodes, because it is used for the "Move
               node" modal, and it would nest :form tags breaking them %>
-          <%# FIXME: re-enable add node-branch %>
-          <%#= render partial: 'nodes/modals/add_branch' %>
+          <%= render partial: 'nodes/modals/add_branch' %>
       </div>
       </div>
       <div class="main-content <%= content_for?(:sidebar) ? 'no-padding' : ''%>">
@@ -57,8 +55,7 @@
             <p>Please enable JavaScript support.</p>
           </div>
         </noscript>
-        <%# FIXME: re-enable nodes breadcrumbs %>
-        <%#= render "layouts/snowcrash/breadcrumb" %>
+        <%= render "layouts/snowcrash/breadcrumb" %>
 
         <div id="view-content" class="view-content">
           <% if content_for?(:sidebar) %>
