@@ -1,0 +1,14 @@
+<ul class="nodes-nav tree-navigation">
+  <li class="tree-header">
+    <div class="add-subnode">
+      <a href="#modal_add_branch_node" data-toggle="modal"><i class="fa fa-plus"></i></a>
+    </div>
+    <h4><i class="fa fa-sitemap"></i> Nodes</h4>
+  </li>
+
+  <% if @nodes.empty? %>
+    <li class="no-nodes">No nodes defined yet</li>
+  <% else %>
+    <%= render partial: 'layouts/snowcrash/node', collection: @nodes %>
+  <% end %>
+</ul>

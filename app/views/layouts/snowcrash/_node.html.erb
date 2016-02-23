@@ -1,0 +1,23 @@
+<%= content_tag_for :li, node, data: {node_id: node.id, label: node.label, url: node_path(node)}, class: css_class_for_node(node) do %>
+
+  <%= link_to tree_node_path(node, format: :js), class: 'toggle' do %>
+    <i class="fa fa-caret-right"></i>
+  <% end %>
+
+  <a href="<%= node_path(node) %>">
+    <% if node.type_id == Node::Types::HOST %>
+      <i class="fa fa-laptop"></i>
+    <% end %>
+    <%= node.label %>
+  </a>
+
+  <%= content_tag :ul, data: {id: dom_id(node, 'menu')}, class: "children #{css_class_for_sub_nodes(node)}" do %>
+    <% if node.ancestor_of?(@node) %>
+      <%= render partial: "layouts/snowcrash/node", collection: node.children %>
+    <% else %>
+      <li class="loading">Loading...</li>
+      <li class="error">Loading error. Please try again.</li>
+    <% end %>
+  <% end %>
+
+<% end %>

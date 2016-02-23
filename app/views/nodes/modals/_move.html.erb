@@ -1,0 +1,43 @@
+<div id="modal_move_node" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <%= simple_form_for @node, html: {class: 'form-horizontal modal-node-selection-form', data:{ node_id: @node.id }} do |f| %>
+    <%= f.hidden_field :parent_id %>
+
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="myModalLabel">Move <%= @node.label %> node</h3>
+    </div>
+    <div class="modal-body">
+      <p>Where do you want to move the <strong><%= @node.label %></strong> node?</p>
+
+      <% unless @node.root_node? %>
+        <div class="radio">
+          <%= label_tag do %>
+            <%= radio_button_tag :node_move_destination, :root %>
+            Move to the top of the tree and make it a root node.
+          <% end %>
+        </div>
+
+        <div class="radio">
+          <%= label_tag do %>
+            <%= radio_button_tag :node_move_destination, :node, checked: true %>
+            Move below another node:
+          <% end %>
+        </div>
+      <% end %>
+
+      <div class="tree-modal-box">
+        <%= render "layouts/snowcrash/nodes" %>
+      </div>
+      <p id="move-under">
+        Move under: <strong><span id="current-selection"></span></strong>
+      </p>
+      <p id="move-to-root" style="display:none";>
+        Move to root
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary">Move</button>
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+  <% end %>
+</div>
