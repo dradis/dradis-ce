@@ -14,6 +14,10 @@ Dir.chdir APP_ROOT do
   unless Dir.exist?(community_dir)
     FileUtils.mkdir_p(community_dir)
     Dir.chdir community_dir do
+      # Calculators
+      system "git clone 'https://github.com/dradis/dradis-calculator_cvss'"
+      system "git clone 'https://github.com/dradis/dradis-calculator_dread'"
+
       # Export
       system "git clone 'https://github.com/dradis/dradis-csv'"
       system "git clone 'https://github.com/dradis/dradis-html_export'"

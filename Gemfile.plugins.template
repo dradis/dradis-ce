@@ -4,6 +4,10 @@
 # After making changes run the following to update dependencies:
 #   $ bundle
 
+# ----------------------------------------------------------------- Calculators
+gem 'dradis-calculator_cvss',  path: '../dradis-calculator_cvss'
+gem 'dradis-calculator_dread', path: '../dradis-calculator_dread'
+
 # ---------------------------------------------------------------------- Export
 gem 'dradis-csv',         path: '../dradis-csv'
 gem 'dradis-html_export', path: '../dradis-html_export'
