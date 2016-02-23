@@ -29,7 +29,7 @@ module SnowcrashHelper
       content_tag :div, class: flash_css do
         [
           link_to('x', 'javascript:void(0)', class: 'close', data: { dismiss: 'alert' }),
-          msg
+          h(msg)
         ].join("\n").html_safe
       end
     end.join("\n").html_safe
