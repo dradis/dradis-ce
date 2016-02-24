@@ -5,7 +5,8 @@ class EvidenceController < NestedNodeResourceController
 
   def show
     @issue      = @evidence.issue
-    @activities = @evidence.activities.latest
+    # FIXME: re-enable Activities
+    @activities = []#@evidence.activities.latest
   end
 
   def new

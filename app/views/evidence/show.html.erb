@@ -41,5 +41,6 @@
           ) if @evidence.versions.any? && @evidence.versions.last.previous.present? %>
     </span>
   </h3>
-  <%= render 'activities/feed', activities: @activities %>
+  <%# FIXME: re-enable Activities %>
+  <%#= render 'activities/feed', activities: @activities %>
 </div>
