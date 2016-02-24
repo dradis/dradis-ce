@@ -1,0 +1,8 @@
+<div id="<%= dom_id(note) %>_link" class="list-item">
+  <div class="expansion-container">
+    <%= link_to node_note_path(@node, note) do %>
+      <i class="fa fa-file-text"></i>
+      <%= note.title %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<%= simple_form_for [@node, @note] do |f| %>
+
+  <%= f.association :category, collection: Category.all, label_method: :name, prompt: 'Assign note category' %>
+  <%= f.input :text, label: false, input_html: { class: 'textile', data: { preview_url: preview_path, help_url: markup_path } } %>
+
+  <div class="form-actions">
+    <%= f.button :submit, class: 'btn btn-dradispro' %> or
+    <%= link_to 'Cancel', node_path(@node), class: 'cancel-link' %>
+  </div>
+<% end %>

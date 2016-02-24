@@ -1,0 +1,53 @@
+<% content_for :title, "#{@node.label} - view note" %>
+
+<%# FIXME: isn't this dealt with by nested_node_resources/_poller_alerts.html.erb %>
+<%# This alert is shown by nodeView.js if another user deletes the note %>
+<div id="note-deleted-alert" class="alert alert-danger" style="display:none;">
+  <p>
+    <strong>Warning</strong>. This note has been deleted by another user since
+    you started viewing it.
+  </p>
+</div>
+
+<%# This alert is shown by nodeView.js if another user updates the note %>
+<div id="note-updated-alert" class="alert alert-info" style="display:none;">
+  <p>
+    <strong>Warning</strong>. Another user has updated this note since you
+    started viewing it. Refresh the page to see their changes.
+  </p>
+</div>
+
+<div id="<%= dom_id(@note) %>" class="inner note-text-inner">
+  <h3>Content for this note -
+    <span class="actions">
+      <%= link_to 'edit', edit_node_note_path(@node, @note) %>
+      <%= link_to 'delete',
+              [@node, @note],
+              class: 'text-error',
+              data: { confirm: 'Are you sure?' },
+              method: :delete %>
+    </span>
+  </h3>
+  <div class="content-textile">
+    <%= markup(@note.text) %>
+  </div>
+</div>
+
+<div class="inner">
+  <h3>
+    Recent activity -
+    <span class="actions">
+      <%#
+        # Some legacy content was created before paper_trail, so we need to
+        # make sure that there is at least one revision associated to the
+        # model.
+        #%>
+      <%= link_to(
+            'revision history',
+            node_note_revisions_path(@node, @note)
+          ) if @note.versions.any? && @note.versions.last.previous.present? %>
+    </span>
+  </h3>
+  <%# FIXME: re-enable Activities %>
+  <%#= render 'activities/feed', activities: @activities %>
+</div>
