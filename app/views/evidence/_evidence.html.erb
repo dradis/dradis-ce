@@ -1,0 +1,12 @@
+<div id="<%= dom_id(evidence) %>_link" class="list-item">
+  <div class="expansion-container">
+    <%= link_to node_evidence_path(@node, evidence) do %>
+      <% if tag = evidence.issue.tags.first %>
+        <i class="fa fa-flag" style="color: <%= tag.color %>"></i>
+      <% else %>
+        <i class="fa fa-flag"></i>
+      <% end %>
+      <%= evidence.issue.title %>
+    <% end %>
+  </div>
+</div>
