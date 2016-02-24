@@ -30,7 +30,7 @@ class NodesController < NestedNodeResourceController
       if parent
         redirect_to parent, alert: @node.errors.full_messages.join('; ')
       else
-        redirect_to @project, alert: @node.errors.full_messages.join('; ')
+        redirect_to summary_path, alert: @node.errors.full_messages.join('; ')
       end
     end
   end
@@ -73,7 +73,7 @@ class NodesController < NestedNodeResourceController
     if parent
       redirect_to parent
     else
-      redirect_to @project
+      redirect_to summary_path
     end
   end
 
