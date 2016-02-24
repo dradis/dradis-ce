@@ -1,0 +1,13 @@
+<%#
+  # If there are any children, populate the corresponding part of the tree. If
+  # there are no children, remove the triangle icon from the parent.
+%>
+<% if @children.any? %>
+$("[data-id=<%= dom_id(@node, 'menu') %>]").html("<%= j(render partial: 'layouts/snowcrash/node', collection: @children) %>");
+<% else %>
+$parent = $("[data-id=<%= dom_id(@node, 'menu') %>]").parent('li')
+$parent.removeClass('hasSubmenu')
+// Use 'visibility: hidden' rather than .hide() so the surrounding elements
+// don't move.
+$parent.find('.toggle').css({visibility: "hidden"})
+<% end %>

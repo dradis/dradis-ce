@@ -1,0 +1,34 @@
+<% content_for :sidebar do %>
+
+  <div id="<%= dom_id(@node) %>_link" class="note-list">
+    <div class="list-item">
+      <div class="expansion-container">
+        <%= link_to node_path(@node) do %>
+          <% if @node.type_id == Node::Types::HOST %>
+            <i class="fa fa-laptop"></i> Host properties
+          <% else%>
+            <i class="fa fa-cogs"></i> Node properties
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notes -->
+  <%= render 'shared/sidebar_collection',
+        name: 'Notes',
+        collection: @sorted_notes,
+        new_path: new_node_note_path(@node),
+        category_id: Category.default.id %>
+
+  <!-- Issues -->
+  <%= render 'shared/sidebar_collection',
+        name: 'Evidence',
+        collection: @sorted_evidence,
+        new_path: new_node_evidence_path(@node),
+        category_id: Category.issue.id %>
+
+  <!-- Attachments -->
+  <%= render 'attachments/attachment_box' %>
+
+<% end %>

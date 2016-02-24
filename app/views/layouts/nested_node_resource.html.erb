@@ -1,0 +1,6 @@
+<% content_for :content do %>
+  <%= render "nodes/sidebar" %>
+  <%= render "nested_node_resources/poller_alerts" %>
+  <%= yield %>
+<% end %>
+<%= render template: "layouts/snowcrash" %>

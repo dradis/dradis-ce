@@ -1,0 +1,32 @@
+<% content_for :title, "#{@node.label} - properties" %>
+
+<div id="<%= dom_id(@node) %>_content">
+  <div class="inner">
+    <div class="content-textile">
+      <h3>Properties - <%= link_to 'edit', edit_node_path(@node) %></h3>
+
+      <% if @node.has_any_property?  %>
+        <% @node.properties.sort.each do |key, value| %>
+          <% if value.present? %>
+            <% if value.is_a?(Array) || value.is_a?(Hash) %>
+              <h4><%= key.to_s.pluralize.titleize %></h4>
+            <% else %>
+              <h4><%= key.to_s.titleize.singularize  %></h4>
+            <% end %>
+
+            <% if value.is_a?(Array) && value[0].is_a?(Hash) %>
+              <p><%= render_property_table(@node, key) %></p>
+            <% else %>
+              <p><%= render_property(@node, key) %></p>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="inner">
+    <h3>Recent Activity</h3>
+    <%= render 'activities/feed', activities: @activities %>
+  </div>
+</div>
