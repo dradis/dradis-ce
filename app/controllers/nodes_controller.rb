@@ -7,7 +7,9 @@ class NodesController < NestedNodeResourceController
 
   # GET /nodes/<id>
   def show
-    @activities = @node.nested_activities.latest
+    # FIXME: re-enable Activities
+    # @activities = @node.nested_activities.latest
+    @activities = []
   end
 
 
