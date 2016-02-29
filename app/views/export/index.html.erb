@@ -1,0 +1,30 @@
+<% content_for :title, 'Export Manager' %>
+
+<section>
+  <% if @plugin_info.empty? %>
+    <div class="alert alert-error">
+      <p class="lead">Sorry, we were unable to detect any export plugins. This is strange because Dradis ships with a number of plugins installed by default.</p>
+      <p>Check the Export section of your <code><%= Rails.root.join('Gemfile.plugins') %></code> file.</p>
+    </div>
+  <% else %>
+
+    <ul id="plugin-chooser" class="nav nav-tabs">
+      <% @plugin_info.each do |info| %>
+
+        <% data = { toggle: 'tab', target: "#plugin-#{info[:name]}" } %>
+        <li>
+          <%= link_to( { path: nil, anchor: info[:name] } , data: data) do %>
+            <%= info[:name] %>: <%= info[:description] %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+
+    <div class="tab-content">
+      <% @plugin_info.each do |info| %>
+        <%= render partial: 'plugin', locals: { info: info } %>
+      <% end %>
+    </div>
+
+  <% end %>
+</section>

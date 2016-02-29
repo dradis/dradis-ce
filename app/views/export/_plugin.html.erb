@@ -1,0 +1,59 @@
+<%= content_tag :div, id: "plugin-#{info[:name]}", class: 'tab-pane tab-panel' do %>
+
+  <%= form_tag export_manager_path, target: '_blank' do %>
+    <%= hidden_field_tag :plugin, info[:name] %>
+
+    <% if info[:routes].count == 0 %>
+      <div class="alert alert-warning">
+      <p><strong>Danger Will Robinson</strong>, this plugin is not defining any export routes.</p>
+      <p>If we had some documentation, I'd point you to it! But for now,
+        check this code: <a href="https://github.com/dradis/dradis-html_export/tree/master/config/routes.html">dradis-html_export/config/routes.rb</a></p>
+      </div>
+    <% elsif info[:routes].count == 1 %>
+      <%#
+        # Excellent, we've got a single route, so no need to worry about
+        # choosing one
+      %>
+      <%= hidden_field_tag :route, info[:routes].first[0] %>
+    <% else %>
+      <h2>Choose an export option</h2>
+
+      <% info[:routes].names.each do |route| %>
+      <label class="radio">
+        <%# FIXME: going through too many hoops to get the url helper %>
+        <%# engine_helper = send(info[:engine].engine_name) %>
+        <%#= radio_button_tag :action, engine_helper.send("#{route}_path") %>
+        <%= radio_button_tag :route, route, route == info[:routes].first %>
+        <%= route %>
+      </label>
+      <% end %>
+    <% end %>
+
+
+    <% if (info[:routes].count > 0) %>
+
+      <% if info[:templates].count < 2 %>
+        <%= hidden_field_tag :template, info[:templates].first %>
+        <div class="text-center">
+          <h3>Ready when you are!</h3>
+          <button id="export-button" class="btn btn-large btn-dradispro">Export</button>
+        </div>
+      <% else %>
+        <h2>Choose a template</h2>
+        <p>Please choose one of the templates available for this plugin (find them in <code>.<%= info[:templates_dir]%></code>)</p>
+
+        <% info[:templates].each do |template| %>
+        <label class="radio">
+          <%= radio_button_tag :template, template, template == info[:templates].first %>
+          <%= template %>
+        </label>
+        <% end %>
+
+        <div class="text-center">
+          <button id="export-button" class="btn btn-large btn-dradispro">Export</button>
+        </div>
+      <% end %>
+    <% end %>
+
+  <% end %>
+<% end%>

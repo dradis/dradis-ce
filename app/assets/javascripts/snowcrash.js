@@ -20,7 +20,7 @@
 
 //= require snowcrash/modules/configurations
 // require snowcrash/modules/console_updater
-// require snowcrash/modules/export
+//= require snowcrash/modules/export
 //= require snowcrash/modules/issues/importer
 //= require snowcrash/modules/issues/quick-add
 //= require snowcrash/modules/issues/table
