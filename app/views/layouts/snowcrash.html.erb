@@ -84,8 +84,7 @@
       <small>Dradis Community v<%= Dradis::CE.version %></small>
     </div>
   </div>
-  <%# FIXME: re-enable Activity poller%>
-  <%#= render "activities/poller" %>
+  <%= render 'activities/poller' %>
   <%# Always render the Tour content, the user may click on the link in the help menu. %>
   <%# FIXME: re-enable Tour %>
   <%#= render 'layouts/snowcrash/tour' %>
