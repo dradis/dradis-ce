@@ -5,8 +5,7 @@ class EvidenceController < NestedNodeResourceController
 
   def show
     @issue      = @evidence.issue
-    # FIXME: re-enable Activities
-    @activities = []#@evidence.activities.latest
+    @activities = @evidence.activities.latest
   end
 
   def new
@@ -19,8 +18,7 @@ class EvidenceController < NestedNodeResourceController
 
     respond_to do |format|
       if @evidence.save
-        # FIXME: re-enable Activities
-        # track_created(@evidence)
+        track_created(@evidence)
         format.html {
           redirect_to [@evidence.node, @evidence],
             notice: "Evidence added for node #{@evidence.node.label}."
@@ -41,8 +39,7 @@ class EvidenceController < NestedNodeResourceController
   def update
     respond_to do |format|
       if @evidence.update_attributes(evidence_params)
-        # FIXME: re-enable Activities
-        # track_updated(@evidence)
+        track_updated(@evidence)
         format.html { redirect_to [@node, @evidence] }
       else
         format.html {
@@ -57,8 +54,7 @@ class EvidenceController < NestedNodeResourceController
   def destroy
     respond_to do |format|
       if @evidence.destroy
-        # FIXME: re-enable Activities
-        # track_destroyed(@evidence)
+        track_destroyed(@evidence)
         format.html {
           redirect_to @node,
             notice: "Successfully deleted evidence for '#{@evidence.issue.title}.'"

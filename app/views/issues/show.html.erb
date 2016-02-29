@@ -28,7 +28,6 @@
         ) if @issue.versions.any? && @issue.versions.last.previous.present? %>
       </span>
     </h3>
-    <%# FIXME: re-enable Activity tracking %>
-    <%#= render 'activities/feed', activities: @activities %>
+    <%= render 'activities/feed', activities: @activities %>
   </div>
 </div>

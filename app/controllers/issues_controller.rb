@@ -10,8 +10,7 @@ class IssuesController < ProjectScopedController
   end
 
   def show
-    # FIXME: re-enable Activities
-    # @activities = @issue.activities.latest
+    @activities = @issue.activities.latest
 
     # We can't use the existing @nodes variable as it only contains root-level
     # nodes, and we need the auto-complete to have the full list.
@@ -26,10 +25,9 @@ class IssuesController < ProjectScopedController
 
     respond_to do |format|
       if @issue.save
+        track_created(@issue)
         # Only after we save the issue, we can create valid taggings (w/ valid
         # taggable IDs)
-        # FIXME: re-enable Activities
-        # track_created(@issue)
         tag_issue_from_field_content(@issue)
         format.html { redirect_to @issue, notice: 'Issue added.' }
       else
@@ -46,8 +44,7 @@ class IssuesController < ProjectScopedController
     respond_to do |format|
       if @issue.update_attributes(issue_params)
         @modified = true
-        # FIXME: re-enable Activities
-        # track_updated(@issue)
+        track_updated(@issue)
         format.html { redirect_to @issue, notice: 'Issue updated' }
       else
         format.html { render "edit" }
@@ -60,8 +57,7 @@ class IssuesController < ProjectScopedController
   def destroy
     respond_to do |format|
       if @issue.destroy
-        # FIXME: re-enable Activities
-        # track_destroyed(@issue)
+        track_destroyed(@issue)
         format.html { redirect_to issues_url, notice: 'Issue deleted.' }
         format.js
 
