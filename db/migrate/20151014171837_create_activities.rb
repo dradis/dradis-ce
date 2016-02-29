@@ -8,7 +8,6 @@ class CreateActivities < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :activities, :user_id
     add_index :activities, [:trackable_id, :trackable_type]
     add_index :activities, :created_at
   end

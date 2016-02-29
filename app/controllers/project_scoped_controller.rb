@@ -1,6 +1,5 @@
 class ProjectScopedController < AuthenticatedController
-  # FIXME: re-enable Activity tracking
-  # include ActivityTracking
+  include ActivityTracking
 
   before_action :set_current_project
   helper :snowcrash

@@ -13,8 +13,7 @@ class ProjectsController < AuthenticatedController
     @issues_by_tag = Hash.new{|h,k| h[k] = [] }
     assigned = nil
 
-    # FIXME: Activity Feed
-    # @activities = Activity.latest
+    @activities = Activity.latest
 
     @issues.each do |issue|
       assigned = false

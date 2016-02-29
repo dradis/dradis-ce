@@ -4,8 +4,6 @@ class Activity < ActiveRecord::Base
 
   belongs_to :trackable, polymorphic: true
 
-  delegate :email, to: :user, prefix: true
-
   # NOTE: when the project importer creates activities, it will try to match
   # them to existing users based on the 'user email' field in the XML. If it
   # can't find any users with the given address, it will save user_id as '-1'.
@@ -13,7 +11,7 @@ class Activity < ActiveRecord::Base
 
   # -- Validations ----------------------------------------------------------
 
-  validates_presence_of :action, :trackable_id, :trackable_type
+  validates_presence_of :action, :trackable_id, :trackable_type, :user
 
   VALID_ACTIONS = %w[create update destroy]
 

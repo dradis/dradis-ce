@@ -7,9 +7,7 @@ class NodesController < NestedNodeResourceController
 
   # GET /nodes/<id>
   def show
-    # FIXME: re-enable Activities
-    # @activities = @node.nested_activities.latest
-    @activities = []
+    @activities = @node.nested_activities.latest
   end
 
 
@@ -21,8 +19,7 @@ class NodesController < NestedNodeResourceController
   def create
     @node.label = 'unnamed' unless @node.label.present?
     if @node.save
-      # FIXME: re-enable Activities
-      # track_created(@node)
+      track_created(@node)
       flash[:notice] = 'Successfully created node.'
       redirect_to @node
     else
@@ -47,8 +44,7 @@ class NodesController < NestedNodeResourceController
   def update
     respond_to do |format|
       if @node.update_attributes(node_params)
-        # FIXME: re-enable Activities
-        # track_updated(@node)
+        track_updated(@node)
         format.html { redirect_to node_path(@node), notice: 'Node updated.' }
         format.json { render json: { success: true }.to_json }
         format.js
@@ -66,8 +62,7 @@ class NodesController < NestedNodeResourceController
   # DELETE /nodes/<id>
   def destroy
     @node.destroy
-    # FIXME: re-enable Activities
-    # track_destroyed(@node)
+    track_destroyed(@node)
 
     parent = @node.parent
     if parent

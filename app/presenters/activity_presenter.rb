@@ -57,15 +57,15 @@ class ActivityPresenter < BasePresenter
   def avatar_image(size)
     if activity.user
       h.image_tag(
-        avatar_url(activity.user, size: size),
-        alt: activity.user.email,
+        image_path('profile.jpg'),
+        alt: activity.user,
         class: 'gravatar',
-        data: { fallback_image: image_path('logopro_small.png') },
-        title: activity.user.email,
+        data: { fallback_image: image_path('logo_small.png') },
+        title: activity.user,
         width: size
       )
     else
-      h.image_tag 'logopro_small.png', width: size, alt: 'This user has been deleted from the system'
+      h.image_tag 'logo_small.png', width: size, alt: 'This user has been deleted from the system'
     end
   end
 
@@ -75,7 +75,7 @@ class ActivityPresenter < BasePresenter
   def linked_email
     if activity.user
       # h.link_to(activity.user.email, 'javascript:void(0);')
-      h.content_tag :strong, activity.user.email
+      h.content_tag :strong, activity.user
     else
       'a user who has since been deleted'
     end
