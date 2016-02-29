@@ -48,6 +48,5 @@
           ) if @note.versions.any? && @note.versions.last.previous.present? %>
     </span>
   </h3>
-  <%# FIXME: re-enable Activities %>
-  <%#= render 'activities/feed', activities: @activities %>
+  <%= render 'activities/feed', activities: @activities %>
 </div>

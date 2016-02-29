@@ -17,8 +17,7 @@ class NotesController < NestedNodeResourceController
     @note.category ||= Category.default
 
     if @note.save
-      # FIXME: re-enable Activities
-      # track_created(@note)
+      track_created(@note)
       redirect_to node_note_path(@node, @note), notice: 'Note created'
     else
       initialize_nodes_sidebar
@@ -28,8 +27,7 @@ class NotesController < NestedNodeResourceController
 
   # Retrieve a Note given its :id
   def show
-    # FIXME: re-enable Activities
-    @activities = []#@note.activities.latest
+    @activities = @note.activities.latest
   end
 
   def edit
@@ -38,8 +36,7 @@ class NotesController < NestedNodeResourceController
   # Update the attributes of a Note
   def update
     if @note.update_attributes(note_params)
-      # FIXME: re-enable Activities
-      # track_updated(@note)
+      track_updated(@note)
       redirect_to node_note_path(@node, @note), notice: 'Note updated.'
     else
       initialize_nodes_sidebar
@@ -50,8 +47,7 @@ class NotesController < NestedNodeResourceController
   # Remove a Note from the back-end database.
   def destroy
     if @note.destroy
-      # FIXME: re-enable Activities
-      # track_destroyed(@note)
+      track_destroyed(@note)
       redirect_to node_path(@node), notice: 'Note deleted'
     else
       redirect_to node_note_path(@node, @note), alert: 'Could not delete node'
