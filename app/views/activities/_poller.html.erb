@@ -1,0 +1,11 @@
+<%# only enable polling in the right controller contexts this %>
+<%# is picked up by javascripts/snowcrash/modules/activities/poller.js   %>
+<div id="activities-poller"
+  data-action="<%= controller.action_name %>"
+  data-controller="<%= controller_name %>"
+  data-id="<%= params[:id] %>"
+  data-last-poll="<%= Time.now.to_i %>"
+  data-node-id="<%= @node.try(:id) %>"
+  data-url=<%= poll_activities_path %>
+>
+</div>

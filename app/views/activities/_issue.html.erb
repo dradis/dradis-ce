@@ -1,0 +1,13 @@
+<% if issue %>
+  <% if issue.title? %>
+    <%= presenter.verb %> the <%= link_to issue.title, issue %> issue.
+  <% else %>
+    <%= presenter.verb %> <%= link_to "Issue ##{issue.id}", issue %>.
+  <% end %>
+<% else %>
+  <% if activity.action == 'destroy' %>
+    deleted an issue.
+  <% else %>
+    <%= presenter.verb %> an issue which has since been deleted.
+  <% end %>
+<% end %>

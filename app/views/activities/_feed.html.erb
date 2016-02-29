@@ -1,0 +1,27 @@
+<div class="activity-feed">
+  <% if activities.any? %>
+    <% activities.each do |activity| %>
+      <% present activity do |activity_presenter| %>
+        <%= div_for activity do %>
+          <div class="body">
+            <%= activity_presenter.icon %>
+
+            <div class="time">
+              <%= activity_presenter.created_at_ago %>
+            </div>
+
+            <div class="title">
+              <%= activity_presenter.render_title %>
+            </div>
+
+            <div class="details">
+              <%= activity_presenter.avatar_with_link(30) %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <p class="lead">There has been no activity yet.</p>
+  <% end %>
+</div>
