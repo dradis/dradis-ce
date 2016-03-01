@@ -24,7 +24,17 @@ class IssuesController < ProjectScopedController
     @issue.author ||= current_user
 
     respond_to do |format|
-      if @issue.save
+      if @issue.save &&
+          # FIXME: need to fix Taggable concern.
+          #
+          # For some reason we can't save the :tags before we save the model,
+          # so first we save it, then we apply the tags.
+          #
+          # See #find_or_initialize_issue()
+          #
+          @issue.update_attributes(issue_params)
+
+          
         track_created(@issue)
         # Only after we save the issue, we can create valid taggings (w/ valid
         # taggable IDs)
@@ -108,7 +118,7 @@ class IssuesController < ProjectScopedController
     if params[:id]
       @issue = Issue.find(params[:id])
     elsif params[:issue]
-      @issue = Issue.new(issue_params) do |i|
+      @issue = Issue.new(issue_params.except(:tag_list)) do |i|
         i.node = @issuelib
       end
     else
