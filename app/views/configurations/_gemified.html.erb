@@ -1,0 +1,21 @@
+<%= content_tag :h2, gemified[:name], id: gemified[:name] %>
+<table class="table">
+  <thead>
+    <tr>
+      <th class="span2 setting" scope="col">Setting Name</th>
+      <th class="span1 status" scope="col">Status</th>
+      <th class="span4 value" scope="col">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% gemified[:settings].each_with_index do |setting, index| %>
+      <tr class="gemified">
+        <td class="span2 setting"><%= setting[:name] %></td>
+        <td class="span1 status"><%= setting[:default] ? 'default' : 'user set' %></td>
+        <td class="span4 value">
+          <%= text_field_tag "#{ gemified[:name].underscore }_settings_#{ setting[:name] }", setting[:value] %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

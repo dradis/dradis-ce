@@ -32,7 +32,6 @@ class ConfigurationsController < ProjectScopedController
         settings: plugin.settings.all
       }
     end
-    # configurations = vendorized.zip(gemified).flatten
     configurations = configurations.reject{ |c| c[:settings].empty? }
     configurations = configurations.sort_by{ |c| c[:name] }
   end

@@ -1,0 +1,19 @@
+<% content_for :title, 'Configuration Manager' %>
+
+<div class="row-fluid">
+  <div class="span7 offset1">
+    <%= form_tag configurations_path do %>
+      <% @configs.each do |configuration| %>
+        <%= render partial: configuration[:type], object: configuration %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="span3 offset1" data-spy="affix" data-offset-top="300">
+    <ul class="nav nav-list bs-config-sidenav affix">
+      <% @configs.each do |configuration| -%>
+      <li><%= link_to configuration[:name], {anchor: configuration[:name]} %></a></li>
+      <% end -%>
+    </ul>
+  </div>
+</div>
