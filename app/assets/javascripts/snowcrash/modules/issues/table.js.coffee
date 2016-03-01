@@ -23,7 +23,7 @@ class IssueTable
             $("#issue_#{data.id}").remove()
 
           error: (foo,bar,foobar) ->
-            $($row.find('td')[2]).replaceWith("<td class='error'>Please try again</td>")
+            $($row.find('td')[2]).replaceWith("<td class='text-error'>Please try again</td>")
         }
 
     # prevent Rails UJS from doing anything else.
@@ -53,6 +53,9 @@ class IssueTable
 
           $($row.find('td')[2]).replaceWith(data.tag_cell)
           $("#issues #issue_#{issue_id}").replaceWith(data.issue_link)
+
+        error: (foo,bar,foobar) ->
+          $($row.find('td')[2]).replaceWith("<td class='text-error'>Please try again</td>")
       }
 
 jQuery ->
