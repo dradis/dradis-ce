@@ -1,0 +1,19 @@
+<% if @success -%>
+  $('#filesize').text('<%=j number_to_human_size( File.size(@attachment.fullpath) ) %>');
+  $('#spinner').hide();
+  ConsoleUpdater.parsing = true;
+  url = $('#new_upload').data('parse-url');
+  $.post(
+    url, {
+      item_id: <%= @item_id %>,
+      uploader: '<%= params[:uploader] %>',
+      file: '<%= @attachment.filename %>',
+    },
+    null,
+    'script'
+  );
+
+  setTimeout(ConsoleUpdater.updateConsole, 200);
+<% else -%>
+  $("#<%= @item_id  %>").find('span').html('(<%=h flash.now[:error] %>)');
+<% end -%>

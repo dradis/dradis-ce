@@ -19,7 +19,7 @@
 //= require snowcrash/keyboard_shortcuts
 
 //= require snowcrash/modules/configurations
-// require snowcrash/modules/console_updater
+//= require snowcrash/modules/console_updater
 //= require snowcrash/modules/export
 //= require snowcrash/modules/issues/importer
 //= require snowcrash/modules/issues/quick-add
@@ -28,5 +28,4 @@
 //= require snowcrash/modules/methodologies
 //= require snowcrash/modules/activities/poller
 // require snowcrash/modules/tour
-// require snowcrash/modules/uploads
-// require snowcrash/modules/validation_poller
+//= require snowcrash/modules/uploads

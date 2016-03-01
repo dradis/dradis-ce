@@ -25,11 +25,12 @@ class UploadController < ProjectScopedController
   def create
     filename = CGI::escape params[:file].original_filename
     # add the file as an attachment
-    @attachment = Attachment.new( filename, node_id: @uploads_node.id )
+    @attachment = Attachment.new(filename, node_id: @uploads_node.id)
     @attachment << params[:file].read
     @attachment.save
 
     @success = true
+    @item_id = params[:item_id].to_i
     flash.now[:notice] = "Successfully uploaded #{ filename }"
   end
 
@@ -69,10 +70,9 @@ class UploadController < ProjectScopedController
     attachment = args.fetch(:attachment)
 
     @job_id = UploadProcessor.create(
-                                    file: attachment.fullpath.to_s,
+                                    file:   attachment.fullpath.to_s,
                                     plugin: params[:uploader],
-                                    project_id: @project.id,
-                                    uid: params[:item_id])
+                                    uid:    params[:item_id])
     job_logger.write("Enqueueing job to start in the background. Job id is #{ @job_id }")
   end
 
@@ -81,21 +81,16 @@ class UploadController < ProjectScopedController
 
     job_logger.write('Small attachment detected. Processing in line.')
     begin
-      # Detect new-style gemified plugins
-      if @uploader::constants::include?(:Importer)
-        content_service = Dradis::Pro::Plugins::ContentService.new(plugin: @uploader)
-        template_service = Dradis::Pro::Plugins::TemplateService.new(plugin: @uploader)
+      content_service  = Dradis::Plugins::ContentService.new(plugin: @uploader)
+      template_service = Dradis::Plugins::TemplateService.new(plugin: @uploader)
 
-        importer = @uploader::Importer.new(
-                    logger: job_logger,
-           content_service: content_service,
-          template_service: template_service
-        )
+      importer = @uploader::Importer.new(
+                  logger: job_logger,
+         content_service: content_service,
+        template_service: template_service
+      )
 
-        importer.import(file: attachment.fullpath)
-      else
-        @uploader.import(file: attachment.fullpath, logger: job_logger)
-      end
+      importer.import(file: attachment.fullpath)
     rescue Exception => e
       # Fail noisily in test mode; re-raise the error so the test fails:
       raise if Rails.env.test?
@@ -114,12 +109,7 @@ class UploadController < ProjectScopedController
   def find_uploaders
     @uploaders = begin
 
-      # UPGRADE: Old-style plugins, included in main repo
-      # plugin_list = Core::Plugins::Upload::list
-      plugin_list = []
-
-      # New-style gemified plugins using Dradis::Plugins
-      plugin_list << Dradis::Plugins::with_feature(:upload).collect do |plugin|
+      plugin_list = Dradis::Plugins::with_feature(:upload).collect do |plugin|
         path = plugin.to_s
         path[0..path.rindex('::')-1].constantize
       end
