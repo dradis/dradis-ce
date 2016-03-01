@@ -12,7 +12,7 @@ class IssueTable
         $($row.find('td')[2]).replaceWith("<td class=\"loading\">Deleting...</td>")
         $that = $(this)
         $.ajax $(this).data('url'), {
-          type: 'DELETE'
+          method: 'DELETE'
           dataType: 'json'
           success: (data) ->
             # Delete row from the table
@@ -34,22 +34,29 @@ class IssueTable
     event.preventDefault()
 
     $('#tbl-issues').find('input[type=checkbox]:checked.js-multicheck').each ->
-      $(this).prop('checked', false)
-      $row = $(this).parent().parent()
+      $this = $(this)
+
+      $this.prop('checked', false)
+      $row = $this.parent().parent()
       $($row.find('td')[2]).replaceWith("<td class=\"loading\">Loading...</td>")
-      $.ajax $(this).data('url'), {
-        type: 'PUT',
-        data: {issue: {tag_list: $target.data('tag')}},
+
+      url   = $this.data('url')
+      data  = { issue: { tag_list: $target.data('tag') } }
+      $that = $this
+
+      $.ajax url, {
+        method: 'PUT',
+        data: data,
         dataType: 'json',
         success: (data) ->
-          issue_id = $($row.find('td')[0]).find('input').attr('id')
+          issue_id = $that.val()
 
           $($row.find('td')[2]).replaceWith(data.tag_cell)
-          $("#issues ##{issue_id}").replaceWith(data.issue_link)
+          $("#issues #issue_#{issue_id}").replaceWith(data.issue_link)
       }
 
 jQuery ->
-  if ($('#issues').length > 0)
+  if $('body.issues.index').length
 
     # Checkbox behavior: select all, show 'btn-group', etc.
     $('#select-all').click ->

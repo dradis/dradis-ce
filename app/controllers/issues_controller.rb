@@ -59,15 +59,9 @@ class IssuesController < ProjectScopedController
       if @issue.destroy
         track_destroyed(@issue)
         format.html { redirect_to issues_url, notice: 'Issue deleted.' }
-        format.js
-
-        # Issue table in Issues#index
         format.json
       else
         format.html { redirect_to issues_url, notice: "Error while deleting issue: #{@issue.errors}" }
-        format.js
-
-        # Issue table in Issues#index
         format.json
       end
     end
