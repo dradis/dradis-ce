@@ -34,7 +34,7 @@ class IssuesController < ProjectScopedController
           #
           @issue.update_attributes(issue_params)
 
-          
+
         track_created(@issue)
         # Only after we save the issue, we can create valid taggings (w/ valid
         # taggable IDs)
