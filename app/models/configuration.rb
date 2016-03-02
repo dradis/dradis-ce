@@ -14,35 +14,26 @@ class Configuration < ActiveRecord::Base
 
   # -- Class Methods --------------------------------------------------------
   # --------------------------------------------------------------- Misc admin:
-  def self.emails_node
-    find_by(name: 'admin:emails_node').value
-  end
-
   def self.shared_password
-    find_or_create_by(name: 'admin:password', value: 'improvable_dradis')
+    create_with(value: 'improvable_dradis')
+      .find_or_create_by(name: 'admin:password').value
   end
 
   def self.session_timeout
-    find_or_create_by(
-      name: 'admin:session_timeout',
-      value: 15
-    ).value.to_i
+    create_with(value: 15)
+      .find_or_create_by(name: 'admin:session_timeout').value.to_i
   end
 
 
   # --------------------------------------------------------------- admin:paths
   def self.paths_templates_plugins
-    find_or_create_by(
-      name:  'admin:paths:templates:plugins',
-      value: Rails.root.join('templates', 'plugins').to_s
-    ).value
+    create_with(value: Rails.root.join('templates', 'plugins').to_s)
+      .find_or_create_by(name: 'admin:paths:templates:plugins').value
   end
 
   def self.paths_templates_reports
-    find_or_create_by(
-      name:  'admin:paths:templates:reports',
-      value: Rails.root.join('templates', 'reports').to_s
-    ).value
+    create_with(value: Rails.root.join('templates', 'reports'))
+      .find_or_create_by(name: 'admin:paths:templates:reports').value
   end
 
 
@@ -50,18 +41,14 @@ class Configuration < ActiveRecord::Base
 
   # This setting is used by the plugins as the root of all the content the add.
   def self.plugin_parent_node
-    find_or_create_by(
-      name:  'admin:plugins:parent_node',
-      value: 'plugin.output'
-    ).value
+    create_with(value: 'plugin.output')
+      .find_or_create_by(name: 'admin:plugins:parent_node').value
   end
 
   # Retrieve the name of the Node used to associate file uploads.
   def self.plugin_uploads_node
-    find_or_create_by(
-      name:  'admin:plugins:uploads_node',
-      value: 'Uploaded files'
-    ).value
+    create_with(value: 'Uploaded files')
+      .find_or_create_by(name: 'admin:plugins:uploads_node').value
   end
 
   # -- Instance Methods -----------------------------------------------------

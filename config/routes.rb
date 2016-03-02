@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  # ------------------------------------------------------------- Sign in / out
+  # ------------------------------------------------------------ Authentication
+  # These routes allow users to set the shared password
+  get  '/setup' => 'sessions#init'
+  post '/setup' => 'sessions#setup'
+
+  # Sign in / sign out
   get '/login'  => 'sessions#new'
   get '/logout' => 'sessions#destroy'
   resource :session

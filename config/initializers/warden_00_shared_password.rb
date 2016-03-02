@@ -14,7 +14,7 @@ Warden::Strategies.add(:shared_password) do
     params['login'] || params['password']
   end
   def authenticate!
-    username = params.fetch('username', nil)
+    username = params.fetch('login', nil)
     password = params.fetch('password', nil)
 
     if not ( username.blank? || password.nil? || ::BCrypt::Password.new(::Configuration.shared_password) != password )

@@ -1,0 +1,28 @@
+<%= form_tag session_path, class: 'form-horizontal' do -%>
+  <div class="page-header">
+    <h1>Dradis Community Edition</h1>
+  </div>
+
+  <%= flash_messages %>
+
+  <div class="control-group">
+    <label class="control-label" for="login">Login</label>
+    <div class="controls">
+      <%= text_field_tag 'login', nil, placeholder: 'Choose any user name you want', class: 'input-xlarge' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="password">Password</label>
+    <div class="controls">
+      <%= password_field_tag 'password', nil, class: 'input-xlarge' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= submit_tag 'Let me in!', class: 'btn btn-large' %>
+    </div>
+  </div>
+
+<% end -%>

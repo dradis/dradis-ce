@@ -7,10 +7,8 @@
 # Any third-party code (e.g. plugins) should inherit from this class instead of
 # calling the authentication filters directly
 class AuthenticatedController < ApplicationController
-  # before_filter :login_required
+  before_filter :login_required
   # before_filter :render_onboarding_tour
-
-  layout 'mintcreek'
 
   # This is a central location where we can manage authorization errors (e.g.
   # alert admins, block accounts, etc.)
