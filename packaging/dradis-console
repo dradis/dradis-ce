@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+# Figure out where this script is located.
+SELFDIR="`dirname \"$0\"`"
+SELFDIR="`cd \"$SELFDIR\" && pwd`"
+
+cd "$SELFDIR"
+. lib/wrapper-common.sh
+
+exec "$SELFDIR/lib/ruby/bin/ruby" -rbundler/setup "$SELFDIR/lib/app/bin/rails" console $*

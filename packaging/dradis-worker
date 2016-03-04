@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+# Figure out where this script is located.
+SELFDIR="`dirname \"$0\"`"
+SELFDIR="`cd \"$SELFDIR\" && pwd`"
+
+cd "$SELFDIR"
+. lib/wrapper-common.sh
+
+# Check if Redis is running
+redis-cli ping > /dev/null 2>&1 || { printf "Could not connect to Redis.\nPlease make sure Redis is installed and running and try again.\n"; exit 1; }
+
+# Avoid resque deprecation Warning
+# http://hone.herokuapp.com/resque/2012/08/21/resque-signals.html
+export TERM_CHILD=1
+
+printf "Starting resque worker in the background...\n"
+exec "$SELFDIR/lib/ruby/bin/ruby" -rbundler/setup "$SELFDIR/lib/app/bin/rake" resque:work $* &
