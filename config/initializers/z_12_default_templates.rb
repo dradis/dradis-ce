@@ -20,10 +20,29 @@ if Configuration.table_exists?
   # ----------------------------------------------------------------- Methodology
   if !Methodology.pwd.exist?
     Methodology.pwd.mkpath
-    %w{sample.xml}.each do |file|
-      source_file      = Rails.root.join('spec', 'fixtures', 'files', 'methodologies', file)
-      destination_file = Methodology.pwd.join(file)
-      FileUtils.cp(source_file, destination_file)
+    xml_blob =<<-EOX
+    <?xml version="1.0"?>
+    <methodology>
+      <name>New checklist</name>
+      <sections>
+        <section>
+          <name>Section #1</name>
+          <tasks>
+            <task>Task #1.1</task>
+            <task>Task #1.2</task>
+          </tasks>
+        </section>
+        <section>
+          <name>Section #2</name>
+          <tasks>
+            <task>Task #2.1</task>
+          </tasks>
+        </section>
+      </sections>
+    </methodology>
+    EOX
+    File.open(Methodology.pwd.join('sample.xml'), 'w') do |f|
+      f << xml_blob
     end
   end
 
