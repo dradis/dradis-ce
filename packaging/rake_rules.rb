@@ -1,6 +1,6 @@
 # For Bundler.with_clean_env
 require 'bundler/setup'
-require 'core/version'
+require 'dradis/ce'
 
 # require "sqlite3"
 
