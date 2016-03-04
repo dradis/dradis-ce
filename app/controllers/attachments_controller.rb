@@ -59,7 +59,7 @@ class AttachmentsController < ProjectScopedController
     filename = params[:id]
 
     @attachment  = Attachment.find(filename, conditions: { node_id: @node.id } )
-    send_options = { filename; @attachment.filename }
+    send_options = { filename: @attachment.filename }
 
     # Figure out the best way of displaying the file (by default send the it as
     # an attachment).
