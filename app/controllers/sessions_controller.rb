@@ -10,6 +10,8 @@ class SessionsController < ApplicationController
   #
   # GET /setup
   def init
+    # We overwrite the default "access denied" message set by AuthenticatedController
+    flash[:alert] = 'Hold your horses!'
   end
 
   # POST /setup
@@ -20,7 +22,7 @@ class SessionsController < ApplicationController
     setting.value = ::BCrypt::Password.create(@password)
 
     if setting.save
-      flash[:notice] = 'Password set. Please log in.'
+      flash[:notice] = 'All done. May the findings for this project be plentiful!'
     else
       flash[:alert] = "Something went wrong: #{setting.errors.full_messages.join('; ')}"
     end

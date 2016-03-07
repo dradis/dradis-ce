@@ -3,9 +3,10 @@
 </div>
 
 <%= form_tag({action: 'setup'}, {class: 'form-horizontal'}) do -%>
-  <p class="lead">This server does not have a password yet, please set up one:</p>
 
   <%= flash_messages %>
+
+  <p class="lead">This server does not have a password yet, please set up one:</p>
 
   <div class="control-group">
     <label class="control-label" for="password">Password</label>
