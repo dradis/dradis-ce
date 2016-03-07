@@ -20,7 +20,7 @@ gem 'font-awesome-sass', '~> 4.3.0'
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'jquery-fileupload-rails'
+gem 'jquery-fileupload-rails', '~> 0.3.4'
 gem 'jquery-hotkeys-rails'
 
 # Cache-friendly, client-side local time
