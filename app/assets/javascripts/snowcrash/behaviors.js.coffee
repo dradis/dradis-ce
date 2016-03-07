@@ -67,13 +67,6 @@ jQuery ->
     ActivitiesPoller.init($poller)
     ActivitiesPoller.poll()
 
-  if ($('body.issues').length)
-    $('.import-toggle').click ->
-      $this = $(this)
-      $this.find('i').toggleClass('fa-chevron-down fa-chevron-up')
-      $($this.data('target')).find("input[type='text']:first").focus()
-
-
   # Disable form buttons after submitting them.
   $('form').submit (ev)->
     $('input[type=submit]', this).attr('disabled', 'disabled').val('Processing...');
