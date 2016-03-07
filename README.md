@@ -1,7 +1,5 @@
 # Welcome to the Dradis Framework
 
-![Build Status](https://www.codeship.io/projects/f06cef90-a1ae-0133-d7a5-465166e508dd/status)
-
 Dradis is an open-source collaboration framework, tailored to InfoSec teams.
 
 
@@ -41,8 +39,8 @@ Dradis is an open-source collaboration framework, tailored to InfoSec teams.
 
 There are two editions of Dradis Framework:
 
-* Dradis Framework Community Edition (CE) is available freely under the GPLv2 license.
-* Dradis Framework Professional Edition (Pro) includes extra features that are more useful for organizations dealing with bigger teams and multiple projects at a time. To use Pro and get official support please [become a subscriber](http://securityroots.com/dradispro/).
+* **Dradis Framework Community Edition (CE)**: open-source and available freely under the GPLv2 license.
+* **Dradis Framework Professional Edition (Pro)**: includes extra features that are more useful for organizations dealing with bigger teams and multiple projects at a time. To use Pro and get official support please [become a subscriber](http://securityroots.com/dradispro/).
 
 
 ## Getting started: Community Edition
@@ -50,8 +48,8 @@ There are two editions of Dradis Framework:
 ### Git release (recommended)
 
 ```
-$ git clone https://github.com/dradis/dradisframework-ce.git
-$ cd dradisframework-ce/
+$ git clone https://github.com/dradis/dradis-ce.git
+$ cd dradis-ce/
 $ ruby bin/setup
 $ bundle exec rails server
 ```
@@ -76,7 +74,7 @@ In http://dradisframework.org/download.html you will find the latest packages.
 
 Please see CONTRIBUTING.md for details.
 
-Many thanks to all Dradis Framework [contributors](https://github.com/dradis/dradisframework-ce/graphs/contributors). Dradis has been around since 2007, and in 2016 we had to do some nasty Git gimnastics resulting in a lot of the previous SVN + Git history no longer being available in the current repo. We haven't deleted though, and we're still very much grateful for the work of our former [contributors](https://github.com/dradis/dradis-legacy/graphs/contributors).
+Many thanks to all Dradis Framework [contributors](https://github.com/dradis/dradisframework-ce/graphs/contributors). Dradis has been around since 2007, and in 2016 we had to do some nasty Git gimnastics resulting in a lot of the previous SVN + Git history no longer being available in the current repo. We haven't deleted it though, and we're still very much grateful for the work of our former [contributors](https://github.com/dradis/dradis-legacy/graphs/contributors).
 
 
 ### Branching model
