@@ -60,12 +60,12 @@ describe "upload requests" do
       pending
     end
 
-    context "big file size (> 1<Mb)", focus: true do
+    context "big file size (> 1Mb)" do
       let(:big_file) { Rails.root.join('tmp/big.file') }
 
       before do
         File.open(big_file, 'w') do |f|
-          f << "*" * 1024*1024
+          f << "*" * (1+1024)*1024
         end
       end
       after do
