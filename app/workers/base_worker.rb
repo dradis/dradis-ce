@@ -3,6 +3,7 @@
 #
 # See:
 #   http://axonflux.com/resque-to-the-rescue-but-a-gotcha-dont-forget
+#   https://github.com/resque/resque/wiki/FAQ#how-do-you-work-around-the-mysql-server-has-gone-away-error-
 #
 
 class BaseWorker
@@ -12,7 +13,7 @@ class BaseWorker
   # Main method for this class, it re-connects any stale AR connections and
   # delegates to the #perform_delegate() method to perform the actual work.
   def perform(*args)
-    ActiveRecord::Base.verify_active_connections!
+    ActiveRecord::Base.clear_active_connections!
     perform_delegate(*args)
   end
 
