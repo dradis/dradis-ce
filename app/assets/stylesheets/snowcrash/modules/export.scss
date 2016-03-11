@@ -21,35 +21,3 @@ body.export {
     }
   }
 }
-
-body.export, body.legacy_export {
-  #console {
-    @include ajax-console;
-  }
-}
-
-body.export.validate {
-  .panel {
-    background: #fff;
-    margin: 0;
-    padding: 0;
-    border: 1px solid #cecece;
-    #list {
-
-    }
-    .row {
-      margin: 0 0;
-      padding: 2ex;
-      border-top: 1px solid #cecece;
-      &:first-child {
-        border-top: 0;
-      }
-      .progress {
-        margin-bottom: 0;
-      }
-    }
-  }
-  #console {
-    margin: 4ex 0;
-  }
-}
