@@ -46,9 +46,9 @@
     <tbody>
       <% @uploaders.each do |plugin| %>
         <tr>
-          <td><code><%= plugin::Meta::NAME %></code></td>
-          <td><%= defined?(plugin::Meta::EXPECTS) ? plugin::Meta::EXPECTS : "[undefined]" %></td>
-          <td><%= plugin::Meta::VERSION::STRING %></td>
+          <td><code><%= plugin::name %></code></td>
+          <td><%= plugin::Engine.plugin_description %></td>
+          <td><%= plugin.version %></td>
         </tr>
       <% end %>
     </tbody>
