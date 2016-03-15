@@ -114,7 +114,7 @@ class UploadController < ProjectScopedController
         path[0..path.rindex('::')-1].constantize
       end
 
-      plugin_list.flatten.sort_by { |a| a::Meta::NAME }
+      plugin_list.flatten.sort_by { |plugin| plugin::Engine.plugin_name }
     end
   end
 
