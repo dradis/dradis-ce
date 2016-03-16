@@ -7,12 +7,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <%= link_to 'Dradis CE', summary_path, class: 'brand' %>
+      <%= link_to 'Dradis CE', main_app.summary_path, class: 'brand' %>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li><%= link_to upload_manager_path do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %></li>
-          <li><%= link_to export_manager_path do %><i class="fa fa-file-text-o fa-lg"></i> Export results<% end %></li>
-          <li><%= link_to configurations_path do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %></li>
+          <li><%= link_to main_app.upload_manager_path do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %></li>
+          <li><%= link_to main_app.export_manager_path do %><i class="fa fa-file-text-o fa-lg"></i> Export results<% end %></li>
+          <li><%= link_to main_app.configurations_path do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-question fa-lg"></i><b class="caret"></b></a>
             <ul class="dropdown-menu">
@@ -32,7 +32,7 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i><b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><%= link_to 'Log out', logout_path %></li>
+              <li><%= link_to 'Log out', main_app.logout_path %></li>
             </ul>
           </li>
         </ul>
