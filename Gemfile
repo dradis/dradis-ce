@@ -45,9 +45,6 @@ gem 'builder'
 gem 'rails_autolink', '~> 1.1'
 gem 'thor', '~> 0.18'
 
-# To create/read project packages
-gem 'rubyzip', '~> 1.1.0', require: 'zip'
-
 gem 'paper_trail', '~> 4.0.0'
 gem 'differ', '~> 0.1.2'
 
@@ -74,7 +71,7 @@ gem 'mysql2', '0.3.18'
 gem 'RedCloth', '4.2.9', require: 'redcloth'
 
 # SQLite3 DB driver
-gem 'sqlite3',  '1.3.10', group: :development
+gem 'sqlite3',  '1.3.10'
 
 # Use Unicorn as the web server
 gem 'unicorn',  '4.9.0', group: :production
@@ -169,7 +166,10 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins',   path: '../dradis-plugins'
+gem 'dradis-plugins',  path: '../dradis-plugins'
+
+# Import / export project data
+gem 'dradis-projects', path: '../dradis-projects'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)
