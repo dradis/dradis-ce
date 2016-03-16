@@ -14,7 +14,7 @@
         <% data = { toggle: 'tab', target: "#plugin-#{info[:name]}" } %>
         <li>
           <%= link_to( { path: nil, anchor: info[:name] } , data: data) do %>
-            <%= info[:name] %>: <%= info[:description] %>
+            <%= info[:description] %>
           <% end %>
         </li>
       <% end %>
