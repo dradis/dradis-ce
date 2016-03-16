@@ -47,7 +47,7 @@ module NodeProperties
     elsif @raw_properties
       @raw_properties
     else
-      {}
+      "{\n}"
     end
   end
 
