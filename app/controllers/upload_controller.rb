@@ -107,15 +107,11 @@ class UploadController < ProjectScopedController
   end
 
   def find_uploaders
-    @uploaders = begin
-
-      plugin_list = Dradis::Plugins::with_feature(:upload).collect do |plugin|
-        path = plugin.to_s
-        path[0..path.rindex('::')-1].constantize
-      end
-
-      plugin_list.flatten.sort_by { |plugin| plugin::Engine.plugin_name }
-    end
+    # :upload plugins can define multiple uploaders
+    @uploaders ||= Dradis::Plugins::with_feature(:upload).
+                     collect(&:uploaders).
+                     flatten.
+                     sort_by(&:name)
   end
 
   def find_uploads_node

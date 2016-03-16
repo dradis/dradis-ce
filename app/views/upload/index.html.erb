@@ -44,11 +44,11 @@
       </tr>
     </thead>
     <tbody>
-      <% @uploaders.each do |plugin| %>
+      <% @uploaders.each do |uploader| %>
         <tr>
-          <td><code><%= plugin::name %></code></td>
-          <td><%= plugin::Engine.plugin_description %></td>
-          <td><%= plugin.version %></td>
+          <td><code><%= uploader.name %></code></td>
+          <td><%= uploader.meta[:description] %></td>
+          <td><%= uploader.meta[:version] %></td>
         </tr>
       <% end %>
     </tbody>
