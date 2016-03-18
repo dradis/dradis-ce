@@ -168,6 +168,9 @@ end
 # Base framework classes required by other plugins
 gem 'dradis-plugins',  path: '../dradis-plugins'
 
+
+gem 'dradis-api', path: 'engines/dradis-api'
+
 # Import / export project data
 gem 'dradis-projects', path: '../dradis-projects'
 
