@@ -1,6 +1,6 @@
 module Dradis::CE::API
   module V1
-    class NodesController < APIController
+    class NodesController < ProjectScopedController
 
       def index
         @nodes = Node.user_nodes.order('updated_at desc')
