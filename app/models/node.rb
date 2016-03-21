@@ -53,7 +53,11 @@ class Node < ActiveRecord::Base
 
   # -- Scopes ---------------------------------------------------------------
   scope :in_tree, -> {
-    where("type_id IN (?)", [Types::DEFAULT, Types::HOST]).where(parent_id: nil)
+    user_nodes.where(parent_id: nil)
+  }
+
+  scope :user_nodes, -> {
+    where("type_id IN (?)", [Types::DEFAULT, Types::HOST])
   }
 
 
