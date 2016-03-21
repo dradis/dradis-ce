@@ -2,11 +2,14 @@ module Dradis::CE::API
   class APIController < ApplicationController
     # force_ssl if: :ssl_configured?
 
+    # No CSRF protection for the wicked!
+    protect_from_forgery with: :null_session
+
+
     before_action :api_authentication_required
     before_action :json_required, only: [:create, :update]
 
-    # FIXME: do we need this?
-    # load_and_authorize_resource except: [:new, :edit, :access_denied]
+    load_and_authorize_resource except: [:new, :edit, :access_denied]
 
     after_action :skip_set_cookies_header
 

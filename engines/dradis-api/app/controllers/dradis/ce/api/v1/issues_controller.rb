@@ -1,6 +1,6 @@
 module Dradis::CE::API
   module V1
-    class IssuesController < APIController
+    class IssuesController < ProjectScopedController
       def index
         issuelib = Node.issue_library
         @issues  = Issue.where(node_id: issuelib.id).includes(:tags).sort
@@ -12,8 +12,12 @@ module Dradis::CE::API
 
       def create
         @issue = Issue.new(issue_params)
+        @issue.author   = current_user
+        @issue.category = Category.issue
+        @issue.node     = Node.issue_library
+
         if @issue.save
-          render status: 201, location: dradis_ce_api.issue_url(@issue)
+          render status: 201, location: dradis_api.issue_url(@issue)
         else
           render_validation_error
         end
