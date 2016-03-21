@@ -9,8 +9,6 @@ module Dradis::CE::API
     before_action :api_authentication_required
     before_action :json_required, only: [:create, :update]
 
-    load_and_authorize_resource except: [:new, :edit, :access_denied]
-
     after_action :skip_set_cookies_header
 
     # FIXME: do we need this?
