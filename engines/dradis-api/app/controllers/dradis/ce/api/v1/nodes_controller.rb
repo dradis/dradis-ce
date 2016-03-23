@@ -3,10 +3,11 @@ module Dradis::CE::API
     class NodesController < ProjectScopedController
 
       def index
-        @nodes = Node.user_nodes.order('updated_at desc')
+        @nodes = Node.user_nodes.includes(:evidence, :notes, evidence: [:issue]).order('updated_at desc')
       end
 
       def show
+        @node = Node.includes(:evidence, :notes, evidence: [:issue]).find(params[:id])
       end
 
       def create

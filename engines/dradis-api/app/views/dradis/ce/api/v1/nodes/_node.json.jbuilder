@@ -1,7 +1,9 @@
-json.id node.id
-json.label node.label
-json.type_id node.type_id
-json.parent_id node.parent_id
-json.position node.position
-json.created_at node.created_at
-json.updated_at node.updated_at
+json.(node, :id, :label, :type_id, :parent_id, :position, :created_at, :updated_at)
+
+json.evidence node.evidence do |evidence|
+  json.partial! evidence
+end
+
+json.notes node.notes do |note|
+  json.partial! note
+end
