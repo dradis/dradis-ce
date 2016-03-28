@@ -53,7 +53,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :searches, only: [:index]
+  get "search" => "search#index"
 
   # -------------------------------------------------------------- Static pages
   # jQuery Textile URLs

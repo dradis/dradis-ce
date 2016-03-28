@@ -1,0 +1,28 @@
+<ul class="nav nav-pills">
+  <li class="active">
+    <%= link_to search_filter_path(scope: "") do %>
+      All (<%= search.all.size %>)
+    <% end %>
+  </li>
+  <li>
+    <%= link_to search_filter_path(scope: "nodes") do %>
+      Nodes (<%= search.nodes.size %>)
+    <% end %>
+  </li>
+  <li>
+    <%= link_to search_filter_path(scope: "notes") do %>
+      Notes (<%= search.notes.size %>)
+    <% end %>
+  </li>
+  <li>
+    <%= link_to search_filter_path(scope: "evidences") do %>
+      Evidences (<%= search.evidences.size %>)
+    <% end %>
+  </li>
+  <li>
+    <%= link_to search_filter_path(scope: "issues") do %>
+      Issues (<%= search.issues.size %>)
+    <% end %>
+  </li>
+</ul>
+
