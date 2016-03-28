@@ -91,7 +91,7 @@ class Node < ActiveRecord::Base
     end
   end
 
-  # Security scanner output files uploaded via the Upload Manager use thsi node
+  # Security scanner output files uploaded via the Upload Manager use this node
   # as container
   def self.plugin_uploads_node
     if (uploads_node = where(label: ::Configuration.plugin_uploads_node).limit(1).first)
@@ -99,6 +99,15 @@ class Node < ActiveRecord::Base
     else
       create(label: ::Configuration.plugin_uploads_node)
     end
+  end
+
+  # searches user nodes using case insensitive LIKE
+  # returns list of node matches ordered by updated_at desc
+  def self.search(term:)
+    user_nodes
+      .where("label LIKE :term", term: "%#{term}%")
+      .select(:id, :label, :updated_at)
+      .order(updated_at: :desc)
   end
 
   # -- Instance Methods -----------------------------------------------------

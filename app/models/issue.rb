@@ -43,6 +43,16 @@ class Issue < Note
     Hash[issues_map]
   end
 
+  # searches issues using case insensitive LIKE
+  # returns list of issue matches orered by updated_at desc
+  def self.search(term:)
+    issuelib = Node.issue_library
+    where("node_id = :node AND text LIKE :term", node: issuelib, term: "%#{term}%")
+      .select(:id, :text, :updated_at)
+      .order(updated_at: :desc)
+  end
+
+
 
   # -- Instance Methods -----------------------------------------------------
 

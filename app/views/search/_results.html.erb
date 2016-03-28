@@ -1,0 +1,21 @@
+<% if @search.results.any? %>
+  <div class="table">
+    <table id="tbl-search" class="table">
+      <tbody>
+        <% search.results.each do |data| %>
+          <tr>
+            <td>
+              <%= render "search/results/#{data.class.name.downcase}", row: data %>
+            </td>
+          </tr>
+        <% end %>
+       <tfoot>
+         <tr>
+           <td><%= paginate @search.results %></td>
+         </tr>
+       </tfoot>
+    </table>
+  </div>
+<% else %>
+  <%=  content_tag :p, "No matches found!", class: "span12 search-no-matches" %>
+<% end %>

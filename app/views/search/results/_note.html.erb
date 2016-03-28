@@ -1,0 +1,13 @@
+<%= content_tag(:span, "", class: "fa fa-file-text-o")  %>
+<% if row.title? %>
+  <%= link_to row.title.to_s, node_note_path(row.node_id, row),
+    class: "search-match-title" %>
+<% else %>
+  <%= link_to "Note ##{row.id}", node_note_path(row.node_id, row),
+    class: "search-match-title" %>
+<% end %>
+<%= content_tag :p, "Last updated: " + time_ago_in_words(row.updated_at) + "ago",
+  class: "search-updated-ago" %>
+<div class="match-snippet">
+  <%= text_snippet row.text, params[:q] %>
+</div>

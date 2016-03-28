@@ -73,6 +73,17 @@ body {
   @include box-shadow( 0 0 0);
 }
 
+.navbar-inner .navbar-search {
+  margin: 0px;
+  >input {
+    margin-top: 10px;
+  }
+
+  .btn {
+    margin-top: 10px;
+  }
+}
+
 .main-wrapper {
   left: 0;
   right: 0;

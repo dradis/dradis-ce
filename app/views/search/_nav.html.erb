@@ -1,0 +1,28 @@
+<ul class="search-nav nav nav-pills span12">
+  <li class="<%= 'active' if params[:scope] == 'all' %>">
+    <%= link_to search_filter_path(scope: "all"), id: "all" do %>
+      All (<%= search.total_count %>)
+    <% end %>
+  </li>
+  <li class="<%= 'active' if params[:scope] == 'nodes' %>">
+    <%= link_to search_filter_path(scope: "nodes"), id: "nodes" do %>
+      Nodes (<%= search.nodes_count %>)
+    <% end %>
+  </li>
+  <li class="<%= 'active' if params[:scope] == 'notes' %>">
+    <%= link_to search_filter_path(scope: "notes"), id: "notes" do %>
+      Notes (<%= search.notes_count %>)
+    <% end %>
+  </li>
+  <li class="<%= 'active' if params[:scope] == 'evidences' %>">
+    <%= link_to search_filter_path(scope: "evidences"), id: "evidences" do %>
+      Evidences (<%= search.evidences_count %>)
+    <% end %>
+  </li>
+  <li class="<%= 'active' if params[:scope] == 'issues' %>">
+    <%= link_to search_filter_path(scope: "issues"), id: "issues" do %>
+      Issues (<%= search.issues_count %>)
+    <% end %>
+  </li>
+</ul>
+
