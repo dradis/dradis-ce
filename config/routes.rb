@@ -53,6 +53,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :searches, only: [:index]
+
   # -------------------------------------------------------------- Static pages
   # jQuery Textile URLs
   get '/preview' => 'home#textilize',  as: :preview, defaults: { format: 'json' }
