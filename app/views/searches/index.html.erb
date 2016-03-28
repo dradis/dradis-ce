@@ -1,1 +1,17 @@
 <h1>Search results</h1>
+
+<%= @search.issues.each do |data| %>
+  <%= data.text %>
+<% end %>
+
+<%= @search.nodes.each do |data| %>
+  <%= data.label %>
+<% end %>
+
+<%= @search.evidences.each do |data| %>
+  <%= data.content %>
+<% end %>
+
+<%= @search.notes.each do |data| %>
+  <%= data.text %>
+<% end %>
