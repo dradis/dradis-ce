@@ -130,13 +130,11 @@ describe Node do
   end
 
   describe "#nested_activities" do
-    let(:project) { create(:project) }
     before do
-      node.project = project
       node.save!
       @activities = [
-        create(:update_activity, trackable: node, project: project),
-        create(:create_activity, trackable: node, project: project),
+        create(:update_activity, trackable: node),
+        create(:create_activity, trackable: node),
       ]
     end
 
@@ -151,10 +149,10 @@ describe Node do
         note     = create(:note,     node: node)
         evidence = create(:evidence, node: node)
         @activities.push(
-          create(:update_activity, trackable: note,     project: project),
-          create(:create_activity, trackable: note,     project: project),
-          create(:update_activity, trackable: evidence, project: project),
-          create(:create_activity, trackable: evidence, project: project)
+          create(:update_activity, trackable: note),
+          create(:create_activity, trackable: note),
+          create(:update_activity, trackable: evidence),
+          create(:create_activity, trackable: evidence)
         )
       end
 

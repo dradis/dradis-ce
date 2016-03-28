@@ -9,7 +9,7 @@ describe Note do
 
   describe "on delete" do
     before do
-      @note = create(:note, node: create(:node_with_project))
+      @note = create(:note, node: create(:node))
       @activities = create_list(:activity, 2, trackable: @note)
       @note.destroy
     end

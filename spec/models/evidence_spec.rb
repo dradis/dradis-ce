@@ -11,7 +11,7 @@ describe Evidence do
 
   describe "on delete" do
     before do
-      @evidence = create(:evidence, node: create(:node_with_project))
+      @evidence = create(:evidence, node: create(:node))
       @activities = create_list(:activity, 2, trackable: @evidence)
       @evidence.destroy
     end
