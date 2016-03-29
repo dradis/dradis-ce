@@ -1,16 +1,15 @@
 <div class="table">
   <table id="tbl-search" class="table table-striped">
-    <thead>
-      <tr>
-        <th>Entry</th>
-        <th>Match</th>
-      </tr>
-    </thead>
     <tbody>
       <% search.results.each do |data| %>
         <tr>
-          <td><%= data.class %></td>
-          <td><%= data.value %></td>
+          <td>
+            <%= link_to "#" do %>
+              <p>
+                <%= format_match data %>
+              </p>
+            <% end %>
+          </td>
         </tr>
       <% end %>
    </tbody>

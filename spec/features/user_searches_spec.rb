@@ -16,7 +16,7 @@ describe "User searches" do
     fill_in "q", with: "test"
     click_on "search_btn"
 
-    expect(page.current_path).to eq searches_path
+    expect(page.current_path).to eq search_path
     expect(page).to have_content "Search results"
   end
 
