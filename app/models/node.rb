@@ -101,6 +101,14 @@ class Node < ActiveRecord::Base
     end
   end
 
+  # searches nodes using case insensitive LIKE
+  # returns list of nodes matches orered by updated_at desc
+  def self.search(term:)
+    where("label LIKE :term", term: "%#{term}%")
+      .select(:id, :label, :updated_at)
+      .order(updated_at: :desc)
+  end
+
   # -- Instance Methods -----------------------------------------------------
   def ancestor_of?(node)
     node && node.ancestors.include?(self)

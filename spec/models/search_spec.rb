@@ -1,55 +1,131 @@
 require "spec_helper"
 
 describe Search do
-  describe "#issues" do
-    it "searches issues by text using case insensitive like"  do
-      first_issue = create(:issue, text: "First issue")
-      second_issue = create(:issue, text: "Second issue")
-      search_term = "first"
 
-      search = Search.new(search_term: search_term)
+  let(:setup_data) do
+    create(:node, label: "test")
+    create(:note, text: "test")
+    create(:issue, text: "test")
+    create(:evidence, content: "test")
+  end
 
-      expect(search.issues.size).to eq 1
-      expect(search.issues.map(&:text)).to eq [first_issue.text]
+  describe "#all" do
+
+    it "filters nodes, notes, issues, evidences by matching search term" do
+      setup_data
+      term = "test"
+
+      search = Search.new(search_term: term, scope: "all")
+
+      expect(search.results.size).to eq 5
+    end
+
+    it "shows count based on matched fields" do
+      setup_data
+      term = "test"
+
+      search = Search.new(search_term: term, scope: "all")
+
+      expect(search.total_count).to eq 5
+      expect(search.notes_count).to eq 1
+      expect(search.issues_count).to eq 2
+      expect(search.nodes_count).to eq 1
+      expect(search.evidences_count).to eq 1
     end
   end
 
-  describe "#nodes" do
-    it "searches nodes by label using case insensitive like"  do
-      first_node = create(:node, label: "Node First")
-      second_node = create(:node, label: "Node Second")
-      search_term = "first"
+  describe "#total_count" do
+    it "returns 0 if noting founded" do
+      term = "no-match"
 
-      search = Search.new(search_term: search_term)
+      search = Search.new(search_term: term, scope: "all")
 
-      expect(search.nodes.size).to eq 1
-      expect(search.nodes.map(&:label)).to eq [first_node.label]
+      expect(search.total_count).to eq 0
+    end
+
+    it "returns sum of all matched" do
+      setup_data
+      term = "test"
+
+      search = Search.new(search_term: term, scope: "all")
+
+      expect(search.total_count).to eq 5
     end
   end
 
-  describe "#notes" do
-    it "searches nodes by text using case insensitive like"  do
-      first_note = create(:note, text: "Note First")
-      second_note = create(:note, text: "Note Second")
-      search_term = "first"
+  describe "#nodes_count" do
+    it "returns 0 if noting founded" do
+      term = "no-match"
 
-      search = Search.new(search_term: search_term)
+      search = Search.new(search_term: term, scope: "all")
 
-      expect(search.notes.size).to eq 1
-      expect(search.notes.map(&:text)).to eq [first_note.text]
+      expect(search.nodes_count).to eq 0
+    end
+
+    it "returns sum of all matched" do
+      setup_data
+      term = "test"
+
+      search = Search.new(search_term: term, scope: "all")
+
+      expect(search.nodes_count).to eq 1
     end
   end
 
-  describe "#evidences" do
-    it "searches nodes by content using case insensitive like"  do
-      first_evidence = create(:evidence, content: "Evidence First")
-      second_evidence = create(:evidence, content: "Evidence Second")
-      search_term = "first"
+  describe "#notes_count" do
+    it "returns 0 if noting founded" do
+      term = "no-match"
 
-      search = Search.new(search_term: search_term)
+      search = Search.new(search_term: term, scope: "all")
 
-      expect(search.evidences.size).to eq 1
-      expect(search.evidences.map(&:content)).to eq [first_evidence.content]
+      expect(search.notes_count).to eq 0
+    end
+
+    it "returns sum of all matched" do
+      setup_data
+      term = "test"
+
+      search = Search.new(search_term: term, scope: "all")
+
+      expect(search.notes_count).to eq 1
+    end
+  end
+
+  describe "#issues_count" do
+    it "returns 0 if noting founded" do
+      term = "no-match"
+
+      search = Search.new(search_term: term, scope: "all")
+
+      expect(search.issues_count).to eq 0
+    end
+
+    it "returns sum of all matched" do
+      setup_data
+      term = "test"
+
+      search = Search.new(search_term: term, scope: "all")
+
+      expect(search.issues_count).to eq 2
+    end
+  end
+
+  describe "#evidences_count" do
+    it "returns 0 if noting founded" do
+      term = "no-match"
+
+      search = Search.new(search_term: term, scope: "all")
+
+      expect(search.evidences_count).to eq 0
+    end
+
+    it "returns sum of all matched" do
+      setup_data
+      term = "test"
+
+      search = Search.new(search_term: term, scope: "all")
+
+      expect(search.evidences_count).to eq 1
     end
   end
 end

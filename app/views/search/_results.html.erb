@@ -4,11 +4,7 @@
       <% search.results.each do |data| %>
         <tr>
           <td>
-            <%= link_to "#" do %>
-              <p>
-                <%= format_match data %>
-              </p>
-            <% end %>
+            <%= format_match data %>
           </td>
         </tr>
       <% end %>

@@ -12,17 +12,30 @@ module SearchHelper
   def search_row_path(row)
     path_root = ""
     if row.class == Note
-      byebug
-      path_root += "#{row.category.class.to_s.downcase}/#{row.category.id}/"
+      send(:node_note_path, row.node_id, row.id)
+    else
+      path_root += "#{row.class.to_s.downcase}_path"
+      send(path_root.to_sym, row.id)
     end
-    path_root += "#{row.class.to_s.downcase}_path"
-    send(path_root.to_sym, row.id)
   end
 
   def format_match(row)
-    link_to search_row_path(row) do
-      content_tag :p,
-        "Match in #{row.class.to_s} - #{format_value(row)}"
+    link_value = "Match in #{row.class.to_s} - #{format_value(row)}"
+    content_tag :div, class: "search-row" do
+      concat link_to link_value, "#", class: "search-match-type"
+      concat content_tag :p, "Last updated: " + time_ago_in_words(row.updated_at) + "ago",
+        class: "search-updated-ago"
+      if not row.class == Node
+        concat content_tag(:span, matched_data(row), class: "search-match")
+      end
+    end
+  end
+
+  def matched_data(data)
+    if data.class == Node
+      data.label
+    else
+      data.text
     end
   end
 

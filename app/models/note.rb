@@ -51,6 +51,14 @@ class Note < ActiveRecord::Base
 
   # -- Class Methods --------------------------------------------------------
 
+  # searches non issue notes using case insensitive LIKE
+  # returns list of notes matches orered by updated_at desc
+  def self.search(term:)
+    where("category_id != 2 AND text LIKE :term", term: "%#{term}%")
+      .select(:id, :text, :node_id, :updatet_at)
+      .order(updated_at: :desc)
+  end
+
 
   # -- Instance Methods -----------------------------------------------------
 

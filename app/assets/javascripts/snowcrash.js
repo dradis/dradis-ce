@@ -23,6 +23,7 @@
 //= require snowcrash/modules/export
 //= require snowcrash/modules/issues
 //= require snowcrash/modules/methodologies
+//= require snowcrash/modules/search
 //= require snowcrash/modules/activities/poller
 // require snowcrash/modules/tour
 //= require snowcrash/modules/uploads

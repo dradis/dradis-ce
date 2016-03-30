@@ -20,15 +20,19 @@ describe "User searches" do
     expect(page).to have_content "Search results"
   end
 
-  context "basic model search" do
-    it "can search by issue text" do
-      first_issue = create(:issue)
+  context "search results" do
+    it "can see all results when on all tab" do
+      byebug
+      issue = create(:issue, text: "Isues search")
+      node = create(:node, label: "Node search")
+      term = "search"
       login_as_user
 
-      fill_in "q", with: first_issue.text
+      page.find(".navbar-search #q").set(term)
       click_on "search_btn"
 
-      expect(page).to have_content first_issue.text
+      expect(page).to have_content issue.text
+      expect(page).to have_content node.label
     end
 
     it "can search by node label" do
