@@ -1,0 +1,4 @@
+<%= link_to "Match in Node - #{row.label}", node_path(row),
+  class: "search-match-type" %>
+<%= content_tag :p, "Last updated: " + time_ago_in_words(row.updated_at) + "ago",
+  class: "search-updated-ago" %>

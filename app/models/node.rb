@@ -105,7 +105,7 @@ class Node < ActiveRecord::Base
   # returns list of nodes matches orered by updated_at desc
   # and exclude issue, methodology nodes
   def self.search(term:)
-    where.not(type_id: [Types::METHODOLOGY, Types::ISSUELIB])
+    user_nodes
       .where("label LIKE :term", term: "%#{term}%")
       .select(:id, :label, :updated_at)
       .order(updated_at: :desc)

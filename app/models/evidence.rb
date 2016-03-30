@@ -27,7 +27,7 @@ class Evidence < ActiveRecord::Base
   # returns list of evidences matches orered by updated_at desc
   def self.search(term:)
     where("content LIKE :term", term: "%#{term}%")
-      .select(:id, :content, :updated_at)
+      .select(:id, :content, :node_id, :updated_at)
       .order(updated_at: :desc)
   end
 

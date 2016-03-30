@@ -1,5 +1,9 @@
 <% content_for :title, 'Search results' %>
 
 <%= render "form" %>
-<%= render "nav", search: @search %>
-<%= render "results", search: @search %>
+<% if params[:q].blank? %>
+  <%=  content_tag :p, "Please enter search criteria" %>
+<% else %>
+  <%= render "nav", search: @search %>
+  <%= render "results", search: @search %>
+<% end %>

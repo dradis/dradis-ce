@@ -7,7 +7,10 @@ class Search
     @scope =  scope.blank? ? "all" : scope
   end
 
+  # return results based on params
+  # if search term is empty return empty array
   def results
+    return [] if @term.blank?
     send(@scope.to_sym)
   end
 

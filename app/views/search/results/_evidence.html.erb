@@ -1,0 +1,5 @@
+<%= link_to "Match in Evidence - #{row.title}",node_evidence_path(row.node_id, row),
+  class: "search-match-type" %>
+<%= content_tag :p, "Last updated: " + time_ago_in_words(row.updated_at) + "ago",
+  class: "search-updated-ago" %>
+<%= content_tag(:span, row.content, class: "search-match") %>

@@ -1,13 +1,17 @@
-<div class="table">
-  <table id="tbl-search" class="table table-striped">
-    <tbody>
-      <% search.results.each do |data| %>
-        <tr>
-          <td>
-            <%= format_match data %>
-          </td>
-        </tr>
-      <% end %>
-   </tbody>
-  </table>
-</div>
+<% if @search.results.any? %>
+  <div class="table">
+    <table id="tbl-search" class="table table-striped">
+      <tbody>
+        <% search.results.each do |data| %>
+          <tr>
+            <td>
+              <%= render "search/results/#{data.class.name.downcase}", row: data %>
+            </td>
+          </tr>
+        <% end %>
+     </tbody>
+    </table>
+  </div>
+<% else %>
+  <%=  content_tag :p, "No matches found!" %>
+<% end %>
