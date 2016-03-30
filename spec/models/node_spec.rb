@@ -187,6 +187,18 @@ describe Node do
       expect(results.map(&:label)).to eq [second.label, first.label]
     end
 
+    it "filters excludes issues and methodology type" do
+      node = create(:node, label: "First node")
+      create(:node, label: "Issue node", type_id: Node::Types::ISSUELIB)
+      create(:node, label: "Method node", type_id: Node::Types::METHODOLOGY)
+      term = "node"
+
+      results = Node.search(term: term)
+
+      expect(results.size).to eq 1
+      expect(results.first.label).to eq node.label
+    end
+
     it "behaves as case insensitive search" do
       node = create(:node, label: "Node")
       term = "nODE"
