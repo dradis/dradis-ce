@@ -1,6 +1,6 @@
 <% if @search.results.any? %>
   <div class="table">
-    <table id="tbl-search" class="table table-striped">
+    <table id="tbl-search" class="table">
       <tbody>
         <% search.results.each do |data| %>
           <tr>
@@ -13,5 +13,5 @@
     </table>
   </div>
 <% else %>
-  <%=  content_tag :p, "No matches found!" %>
+  <%=  content_tag :p, "No matches found!", class: "span12 search-no-matches" %>
 <% end %>

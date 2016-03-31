@@ -1,4 +1,6 @@
-<%= form_tag search_path, method: :get, class: "navbar-search" do %>
-  <%= text_field_tag(:q) %>
-  <%= submit_tag "Search", id: "search_btn" %>
+<%= form_tag search_path, method: :get, class: "navbar-search input-append" do %>
+    <%= text_field_tag :q, "Search here..." %>
+    <%= button_tag  id: "search_btn", class: "btn" do %>
+      <i class="fa fa-search"></i>
+    <% end %>
 <% end %>

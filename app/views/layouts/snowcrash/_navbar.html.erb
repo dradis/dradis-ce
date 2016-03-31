@@ -10,7 +10,7 @@
       <%= link_to 'Dradis CE', main_app.summary_path, class: 'brand' %>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <%= render "layouts/snowcrash/search" %>
+          <li><%= render "layouts/snowcrash/search" %></li>
           <li><%= link_to main_app.upload_manager_path do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %></li>
           <li><%= link_to main_app.export_manager_path do %><i class="fa fa-file-text-o fa-lg"></i> Export results<% end %></li>
           <li><%= link_to main_app.configurations_path do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %></li>

@@ -1,7 +1,9 @@
-<%= form_tag search_path, method: :get do |f| %>
+<%= form_tag search_path, method: :get , class: "span6 offset3" do |f| %>
   <%= content_tag :div, class: "control-group input-append" do %>
     <%= hidden_field_tag :scope, params[:scope] %>
-    <%= search_field_tag :q, params[:q], placeholder: "Search nodes, issues, etc...", autofocus: true  %>
-    <%= button_tag "Search", class: "btn" %>
+    <%= search_field_tag :q, params[:q], placeholder: "Search here...", autofocus: true  %>
+    <%= button_tag class: "btn" do %>
+      <i class="fa fa-search"></i>
+    <% end %>
   <% end %>
 <% end %>

@@ -1,0 +1,18 @@
+body.search.index {
+  .search-no-matches {
+    padding-top: 3px;
+    padding-left: 10px;
+    border-radius: 25px;
+    margin-left: 0px;
+    background: #e6e6e6;
+  }
+
+  .search-nav {
+    margin-bottom: 1em;
+  }
+
+  .search-updated-ago {
+    font-size: 0.8em;
+    color: #869198;
+  }
+}
