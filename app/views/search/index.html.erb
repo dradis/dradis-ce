@@ -1,6 +1,5 @@
 <% content_for :title, 'Search results' %>
 
-<%= render "form" %>
 <% if params[:q].blank? %>
   <%=  content_tag :p, "Please enter search criteria", class: "span12 search-no-matches" %>
 <% else %>

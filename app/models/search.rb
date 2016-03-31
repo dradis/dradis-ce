@@ -4,7 +4,7 @@
 class Search
   def initialize(search_term:, scope: "all")
     @term = search_term
-    @scope =  scope.blank? ? "all" : scope
+    @scope =  scope
   end
 
   # return results based on params
