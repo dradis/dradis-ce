@@ -24,7 +24,7 @@ class Evidence < ActiveRecord::Base
   # -- Class Methods --------------------------------------------------------
 
   # searches evidences using case insensitive LIKE
-  # returns list of evidences matches orered by updated_at desc
+  # returns list of evidences matches ordered by updated_at desc
   def self.search(term:)
     where("content LIKE :term", term: "%#{term}%")
       .select(:id, :content, :node_id, :updated_at)

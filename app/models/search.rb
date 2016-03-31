@@ -2,16 +2,21 @@
 # so we don't expose more than one instance level variabe
 # in controller
 class Search
-  def initialize(search_term:, scope: "all")
-    @term = search_term
-    @scope =  scope
+  attr_reader :term, :scope, :page
+
+  def initialize(search_term:, scope: "all", page: 1)
+    @term  = search_term
+    @scope = scope
+    @page  = page
   end
 
   # return results based on params
   # if search term is empty return empty array
   def results
-    return [] if @term.blank?
-    send(@scope.to_sym)
+    return [] if term.blank?
+    #default kaminari per page is 30, as we are using here
+    results_array = send(scope.to_sym).to_a
+    Kaminari.paginate_array(results_array).page(page)
   end
 
   def total_count
@@ -42,18 +47,18 @@ class Search
   end
 
   def issues
-    Issue.search(term: @term)
+    Issue.search(term: term)
   end
 
   def nodes
-    Node.search(term: @term)
+    Node.search(term: term)
   end
 
   def notes
-    Note.search(term: @term)
+    Note.search(term: term)
   end
 
   def evidences
-    Evidence.search(term: @term)
+    Evidence.search(term: term)
   end
 end

@@ -21,49 +21,123 @@ describe "User searches" do
   end
 
   context "search results" do
-    it "can see all results when on all tab" do
-      byebug
-      issue = create(:issue, text: "Isues search")
-      node = create(:node, label: "Node search")
+    it "can see all results that are matched when on all tab" do
+      setup_test_data
       term = "search"
       login_as_user
 
       page.find(".navbar-search #q").set(term)
       click_on "search_btn"
 
-      expect(page).to have_content issue.text
-      expect(page).to have_content node.label
+      within "#tbl-search" do
+        expect(page).to have_content "Node search"
+        expect(page).to have_content "Issue search"
+        expect(page).to have_content "Note search"
+        expect(page).to have_content "Evidence search"
+      end
     end
 
-    it "can search by node label" do
-      node = create(:node, label: "test")
+    it "dosen't see results that are not matched" do
+      setup_test_data
+      ghost = create(:node, label: "Node ghost")
+      term = "search"
       login_as_user
 
-      fill_in "q", with: "test"
+      page.find(".navbar-search #q").set(term)
       click_on "search_btn"
 
-      expect(page).to have_content node.label
+      within "#tbl-search" do
+        expect(page).to_not have_content ghost.label
+      end
     end
 
-    it "can search by evidence content" do
-      evidence = create(:evidence, content: "test")
+    it "clicking on node tab sees only matched nodes" do
+      setup_test_data
+      term = "search"
       login_as_user
-
-      fill_in "q", with: "test"
+      page.find(".navbar-search #q").set(term)
       click_on "search_btn"
 
-      expect(page).to have_content evidence.content
+      page.find(".search-nav #nodes").click
 
+      within "#tbl-search" do
+        expect(page).to have_content "Node search"
+
+        expect(page).to_not have_content "Issue search"
+        expect(page).to_not have_content "Note search"
+        expect(page).to_not have_content "Evidence search"
+      end
     end
 
-    it "can search by note text" do
-      note = create(:note, text: "test")
+    it "clicking on note tab sees only matched notes" do
+      setup_test_data
+      term = "search"
       login_as_user
-
-      fill_in "q", with: "test"
+      page.find(".navbar-search #q").set(term)
       click_on "search_btn"
 
-      expect(page).to have_content note.text
+      page.find(".search-nav #notes").click
+
+      within "#tbl-search" do
+        expect(page).to have_content "Note search"
+
+        expect(page).to_not have_content "Node search"
+        expect(page).to_not have_content "Issue search"
+        expect(page).to_not have_content "Evidence search"
+      end
+    end
+
+    it "clicking on issues tab sees only matched issues" do
+      setup_test_data
+      term = "search"
+      login_as_user
+      page.find(".navbar-search #q").set(term)
+      click_on "search_btn"
+
+      page.find(".search-nav #issues").click
+
+      within "#tbl-search" do
+        expect(page).to have_content "Issue search"
+
+        expect(page).to_not have_content "Note search"
+        expect(page).to_not have_content "Node search"
+        expect(page).to_not have_content "Evidence search"
+      end
+    end
+
+    it "clicking on evidences tab sees only matched evidences" do
+      setup_test_data
+      term = "search"
+      login_as_user
+      page.find(".navbar-search #q").set(term)
+      click_on "search_btn"
+
+      page.find(".search-nav #evidences").click
+
+      within "#tbl-search" do
+        expect(page).to have_content "Evidence search"
+
+        expect(page).to_not have_content "Issue search"
+        expect(page).to_not have_content "Note search"
+        expect(page).to_not have_content "Node search"
+      end
+    end
+
+    it "sees message warning when no search criteria entered" do
+      login_as_user
+
+      click_on "search_btn"
+
+      expect(page).to have_css ".search-no-matches", text: "Please enter search criteria"
+    end
+
+    it "sees message warning when no matches find" do
+      login_as_user
+      page.find(".navbar-search #q").set("no matches")
+
+      click_on "search_btn"
+
+      expect(page).to have_css ".search-no-matches", text: "No matches found!"
     end
   end
 end
@@ -82,3 +156,9 @@ def fill_login_form(password:)
   click_on "Let me in!"
 end
 
+def setup_test_data
+  create(:issue, text: "Issue search")
+  node = create(:node, label: "Node search")
+  create(:note, text: "Note search", node: node)
+  create(:evidence, content: "Evidence search")
+end

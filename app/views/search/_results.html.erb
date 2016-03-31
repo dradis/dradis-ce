@@ -9,7 +9,11 @@
             </td>
           </tr>
         <% end %>
-     </tbody>
+       <tfoot>
+         <tr>
+           <td><%= paginate @search.results %></td>
+         </tr>
+       </tfoot>
     </table>
   </div>
 <% else %>
