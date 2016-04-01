@@ -41,6 +41,7 @@ Dir.chdir APP_ROOT do
 
       # Other
       system "git clone 'https://github.com/dradis/dradis-plugins'"
+      system "git clone 'https://github.com/dradis/dradis-projects'"
     end
   end
 
