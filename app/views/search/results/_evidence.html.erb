@@ -8,4 +8,4 @@
 <% end %>
 <%= content_tag :p, "Last updated: " + time_ago_in_words(row.updated_at) + "ago",
   class: "search-updated-ago" %>
-<%= content_tag(:span, row.content, class: "search-match") %>
+<%= content_tag(:span, format_match_row(row.content, params[:q]), class: "search-match") %>

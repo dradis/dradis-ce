@@ -19,4 +19,10 @@ body.search.index {
   .search-match-title {
     font-weight: 600;
   }
+
+  .match-snippet {
+    background-color: #F4F5F6;
+    border: 1px solid #ccc;
+    padding: 2px 2px 2px 2px;
+  }
 }
