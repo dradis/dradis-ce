@@ -91,7 +91,7 @@ class Node < ActiveRecord::Base
     end
   end
 
-  # Security scanner output files uploaded via the Upload Manager use thsi node
+  # Security scanner output files uploaded via the Upload Manager use this node
   # as container
   def self.plugin_uploads_node
     if (uploads_node = where(label: ::Configuration.plugin_uploads_node).limit(1).first)
