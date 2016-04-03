@@ -1,5 +1,5 @@
 <%= content_tag(:span, "", class: "fa fa-folder-o")  %>
 <%= link_to "#{row.label}", node_path(row),
-  class: "search-match-type" %>
+  class: "search-match-title" %>
 <%= content_tag :p, "Last updated: " + time_ago_in_words(row.updated_at) + "ago",
   class: "search-updated-ago" %>

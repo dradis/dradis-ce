@@ -17,7 +17,7 @@ describe Search do
 
       search = Search.new(search_term: term, scope: "all")
 
-      expect(search.results.size).to eq 5
+      expect(search.results.size).to eq 4
     end
 
     it "shows count based on matched fields" do
@@ -26,9 +26,9 @@ describe Search do
 
       search = Search.new(search_term: term, scope: "all")
 
-      expect(search.total_count).to eq 5
+      expect(search.total_count).to eq 4
       expect(search.notes_count).to eq 1
-      expect(search.issues_count).to eq 2
+      expect(search.issues_count).to eq 1
       expect(search.nodes_count).to eq 1
       expect(search.evidences_count).to eq 1
     end
@@ -49,7 +49,7 @@ describe Search do
 
       search = Search.new(search_term: term, scope: "all")
 
-      expect(search.total_count).to eq 5
+      expect(search.total_count).to eq 4
     end
   end
 
@@ -106,7 +106,7 @@ describe Search do
 
       search = Search.new(search_term: term, scope: "all")
 
-      expect(search.issues_count).to eq 2
+      expect(search.issues_count).to eq 1
     end
   end
 

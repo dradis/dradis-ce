@@ -1,11 +1,13 @@
 <%= content_tag(:span, "", class: "fa fa-flag")  %>
 <% if row.title? %>
   <%= link_to row.title.to_s, node_evidence_path(row.node_id, row),
-    class: "search-match-link" %>
+    class: "search-match-title" %>
 <% else %>
-  <%= link_to "Evidence ##{row.id}", node_evidence_path(row.node_id, row),
-    class: "search-match-link" %>
+  <%= link_to "Evidence #{row.id}", node_evidence_path(row.node_id, row),
+    class: "search-match-title" %>
 <% end %>
 <%= content_tag :p, "Last updated: " + time_ago_in_words(row.updated_at) + "ago",
   class: "search-updated-ago" %>
-<%= content_tag(:span, format_match_row(row.content, params[:q]), class: "search-match") %>
+<div class="match-snippet">
+  <%= text_snippet row.content, params[:q] %>
+</div>

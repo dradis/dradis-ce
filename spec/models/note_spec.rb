@@ -84,7 +84,8 @@ describe Note do
     end
 
     it "excludes issue notes" do
-      note = create(:note, text: "First note", category: issue_categ)
+      issue = create(:issue, text: "Issue note")
+      note = create(:note, text: "First note", category: issue.category)
       term = "first"
 
       results = Note.search(term: term)
