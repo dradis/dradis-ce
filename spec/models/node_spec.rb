@@ -24,11 +24,11 @@ describe Node do
     end
 
     it "deletes all associated attachments" do
-      expect(File.exists?(@attachment.fullpath)).to be_false
+      expect(File.exists?(@attachment.fullpath)).to be false
     end
 
     it "deletes its corresponding attachment subfolder" do
-      expect(File.exists?(Attachment.pwd.join(node.id.to_s))).to be_false
+      expect(File.exists?(Attachment.pwd.join(node.id.to_s))).to be false
     end
 
     it "doesn't delete or nullify any associated Activities" do
@@ -55,7 +55,7 @@ describe Node do
     it "should keep the position when provided" do
       node = create(:node)
       node.position = 3
-      node.save.should be_true
+      node.save.should be true
       node = Node.last
       node.position.should eq(3)
     end
@@ -76,7 +76,7 @@ describe Node do
 
   it "returns the ISSUELIB node if one exists" do
     Node.destroy_all
-    node = create(:node, :type_id => Node::Types::ISSUELIB)
+    node = create(:node, type_id: Node::Types::ISSUELIB)
     issuelib = Node.issue_library
     issuelib.should eq(node)
     node.destroy

@@ -26,19 +26,19 @@ describe Methodology do
 
   describe "#destroy" do
     it "deletes file from disk on destroy" do
-      mt = Methodology.new(:content => 'FooBar', :filename => 'mt_test')
+      mt = Methodology.new(content: 'FooBar', filename: 'mt_test')
       mt.save
 
       filename = Methodology.pwd.join('mt_test.xml')
-      File.exists?(filename).should be_true
+      File.exists?(filename).should be true
       mt.should respond_to('destroy')
       mt.should respond_to('delete')
       mt.destroy
-      File.exists?(filename).should be_false
+      File.exists?(filename).should be false
     end
 
     it "destroy() works even if the file doesn't exist any more or never existed" do
-      mt = Methodology.new(:filename => 'foobar')
+      mt = Methodology.new(filename: 'foobar')
       lambda { mt.destroy }.should_not raise_error
 
       filename = Methodology.pwd.join('foobar.xml')
@@ -68,12 +68,12 @@ describe Methodology do
 
       Timecop.freeze(Time.now)
 
-      mt = Methodology.new(:content => 'Simple methodology content: *kapow*!')
-      mt.save.should be_true
+      mt = Methodology.new(content: 'Simple methodology content: *kapow*!')
+      mt.save.should be true
 
       new_methodology = Methodology.pwd.join("auto_#{Time.now.to_i}.xml")
-      File.exists?(Methodology.pwd).should be_true
-      File.exists?(new_methodology).should be_true
+      File.exists?(Methodology.pwd).should be true
+      File.exists?(new_methodology).should be true
       File.read(new_methodology).should eq('Simple methodology content: *kapow*!')
       File.delete(new_methodology)
 
@@ -82,10 +82,10 @@ describe Methodology do
 
 
     it "saves the template contents when saving the instance" do
-      mt = Methodology.new(:content => 'FooBar', :filename => 'mt_test')
-      mt.save.should be_true
+      mt = Methodology.new(content: 'FooBar', filename: 'mt_test')
+      mt.save.should be true
       filename = Methodology.pwd.join('mt_test.xml')
-      File.exists?(filename).should be_true
+      File.exists?(filename).should be true
       File.read(filename).should eq('FooBar')
       File.delete(filename)
     end

@@ -20,7 +20,7 @@ describe ProjectTemplate do
 
   it "auto-generates a filename on save" do
     should be_valid
-    expect(subject.save).to be_true
+    expect(subject.save).to be true
     expect(subject.filename).to match(/auto_/)
   end
 
@@ -46,7 +46,7 @@ describe ProjectTemplate do
 
     it "persists the auto-generated name whens saved to disk" do
       expect(subject.name).to match(/undefined/i)
-      expect(subject.save).to be_true
+      expect(subject.save).to be true
       full_path = subject.full_path
 
       doc = Nokogiri::XML(File.read(full_path))

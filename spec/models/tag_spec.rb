@@ -29,13 +29,13 @@ describe Tag do
   describe '#valid?' do
     it "requires a name" do
       tag = Tag.new()
-      expect(tag.valid?).to be_false
-      expect(tag).to have(1).error_on(:name)
+      expect(tag.valid?).to be false
+      expect(tag.errors[:name].count).to eq(1)
     end
 
     it "requires a unique name" do
       Tag.create!(name: 'pancakes')
-      expect(Tag.create(name: 'Pancakes')).to have(1).error_on(:name)
+      expect(Tag.create(name: 'Pancakes').errors[:name].count).to eq(1)
     end
   end
 end

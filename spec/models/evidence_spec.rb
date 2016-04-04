@@ -58,7 +58,7 @@ describe Evidence do
       it { should eq "My Title" }
 
       specify "#title? returns true" do
-        expect(evidence.title?).to be_true
+        expect(evidence.title?).to be true
       end
     end
 
@@ -67,7 +67,7 @@ describe Evidence do
       it { should eq "This evidence doesn't provide a #[Title]# field" }
 
       specify "#title? returns false" do
-        expect(evidence.title?).to be_false
+        expect(evidence.title?).to be false
       end
     end
   end

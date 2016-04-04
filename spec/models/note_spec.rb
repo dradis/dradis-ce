@@ -37,10 +37,10 @@ describe Note do
       EON
       note = create(:note, text: text)
 
-      note.fields.should have(2).values
-      note.fields.keys.should match_array(['Title', 'Description'])
-      note.fields['Title'].should == "RSpec Title"
-      note.fields['Description'].should == "Nothing to see here, move on!"
+      expect(note.fields.count).to eq(2)
+      expect(note.fields.keys).to match_array(['Title', 'Description'])
+      expect(note.fields['Title']).to  eq "RSpec Title"
+      expect(note.fields['Description']).to  eq "Nothing to see here, move on!"
     end
   end
 
@@ -54,7 +54,7 @@ describe Note do
       it { should eq "My Title" }
 
       specify "#title? returns true" do
-        expect(note.title?).to be_true
+        expect(note.title?).to be true
       end
     end
 
@@ -63,7 +63,7 @@ describe Note do
       it { should eq "This note doesn't provide a #[Title]# field" }
 
       specify "#title? returns false" do
-        expect(note.title?).to be_false
+        expect(note.title?).to be false
       end
     end
   end

@@ -14,7 +14,8 @@ describe Tagging do
       tagging = Tagging.new
       tagging.tag      = tag
       tagging.taggable = taggable
-      tagging.should have(1).error_on(:tag_id)
+      expect(tagging.valid?).to be false
+      expect(tagging.errors[:tag_id].count).to eq(1)
     end
   end
 end
