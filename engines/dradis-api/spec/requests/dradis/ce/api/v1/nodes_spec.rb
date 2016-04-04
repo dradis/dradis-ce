@@ -51,7 +51,7 @@ describe "Nodes API" do
 
     describe "GET /api/nodes" do
       it "retrieves all the nodes" do
-        nodes = create_list(:nodes, 10).sort_by(&:updated_at)
+        nodes = create_list(:node, 10).sort_by(&:updated_at)
         node_labels = nodes.map(&:label)
 
         get "/api/nodes", {}, @env
