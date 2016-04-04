@@ -96,7 +96,7 @@ describe "Issues pages" do
         context "when passed a note template" do
           it "preloads the editor with the template" do
             template_path = Rails.root.join('spec/fixtures/files/note_templates/')
-            NoteTemplate::stub(:pwd) { template_path }
+            allow(NoteTemplate).to receive(:pwd).and_return(template_path)
 
             template_content = File.read(template_path.join('simple_note.txt'))
             visit new_issue_path(template: 'simple_note')

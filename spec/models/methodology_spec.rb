@@ -18,7 +18,7 @@ describe Methodology do
   it_behaves_like "ActiveModel" unless ENV['CI']
 
   before(:each) do
-    Methodology.stub(:pwd) { Pathname.new('tmp/templates/methodologies') }
+    allow(Methodology).to receive(:pwd).and_return(Pathname.new('tmp/templates/methodologies'))
   end
   after(:all) do
     FileUtils.rm_rf('tmp/templates')

@@ -24,7 +24,7 @@ describe "API" do
 
       it "renders as html if it happens outside the API" do
         post session_path, login: @user.email, password: @user.password
-        ProjectsController.any_instance.stub(:index).and_raise(ArgumentError)
+        allow_any_instance_of(ProjectsController).to receive(:index).and_raise(ArgumentError)
         get "/projects"
         expect(response.status).to eq(500)
         # puts response.body

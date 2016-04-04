@@ -106,7 +106,7 @@ describe "Describe methodologies" do
 
     describe "there are some methodology templates" do
       before(:each) do
-        Methodology.stub(:pwd) { Pathname.new('tmp/templates/methodologies') }
+        allow(Methodology).to receive(:pwd).and_return(Pathname.new('tmp/templates/methodologies'))
         FileUtils.mkdir_p(Methodology.pwd) unless File.exists?(Methodology.pwd)
         @available = []
         Dir[Rails.root.join('spec/fixtures/files/methodologies/**.xml')].collect do |file|

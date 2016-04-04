@@ -52,7 +52,7 @@ describe "Export Manager" do
     pending "allows through valid templates" do
       tmp_reports = Pathname.new('tmp/templates/reports')
       FileUtils.mkdir_p(tmp_reports)
-      Configuration::stub(:paths_templates_reports).and_return(tmp_reports)
+      allow(Configuration).to receive(:paths_templates_reports).and_return(tmp_reports)
 
       FileUtils.mkdir(tmp_reports.join('fake_export'))
       FileUtils.touch(tmp_reports.join('fake_export/valid_template'))

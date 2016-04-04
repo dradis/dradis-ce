@@ -7,7 +7,7 @@ describe NoteTemplate do
   it_behaves_like 'ActiveModel'
 
   before(:each) do
-    NoteTemplate.stub(:pwd) { Pathname.new('tmp/templates/notes') }
+    allow(NoteTemplate).to receive(:pwd).and_return('tmp/templates/notes')
   end
   after(:all) do
     FileUtils.rm_rf('tmp/templates/')
