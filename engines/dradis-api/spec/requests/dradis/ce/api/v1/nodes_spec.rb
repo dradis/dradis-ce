@@ -42,11 +42,10 @@ describe "Nodes API" do
   context "as authenticated user" do
 
     before do
-      allow(Configuration).to receive(:shared_password).and_return(::BCrypt::Password.create('rspec_pass'))
-    end
-
-    before(:each) do
-      @env["HTTP_AUTHORIZATION"] = ActionController::HttpAuthentication::Basic.encode_credentials('rspec', 'rspec_pass')
+      allow(Configuration).to \
+        receive(:shared_password).and_return(::BCrypt::Password.create('rspec_pass'))
+      @env["HTTP_AUTHORIZATION"] = \
+        ActionController::HttpAuthentication::Basic.encode_credentials('rspec', 'rspec_pass')
     end
 
     describe "GET /api/nodes" do

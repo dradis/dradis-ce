@@ -101,5 +101,11 @@ module Dradis::CE::API
         errors: resource.errors
       }, status: 422
     end
+
+    def render_successful_destroy_message
+      render json: {
+        message: "Resource deleted successfully"
+      }, status: 200
+    end
   end
 end
