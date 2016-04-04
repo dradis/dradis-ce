@@ -5,6 +5,11 @@ module Dradis::CE::API
     # No CSRF protection for the wicked!
     protect_from_forgery with: :null_session
 
+    rescue_from ActionController::ParameterMissing do |exception|
+      render json: {
+        message: exception.message
+      }, status: 422
+    end
 
     before_action :api_authentication_required
     before_action :json_required, only: [:create, :update]

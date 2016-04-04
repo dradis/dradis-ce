@@ -21,12 +21,27 @@ module Dradis::CE::API
       end
 
       def update
-        if !@node.update_attributes(node_params)
+        @node = Node.find(params[:id])
+        if @node.update_attributes(node_params)
+          render node: @node
+        else
           render_validation_error
         end
       end
 
+      def destroy
+        Node.find(params[:id]).destroy
+        respond_to do |format|
+          format.json do
+            render json: {
+              message: "Resource deleted successfully"
+            }, status: 200
+          end
+        end
+      end
+
       protected
+
       def node_params
         params.require(:node).permit(:label, :type_id, :parent_id, :position)
       end

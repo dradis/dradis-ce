@@ -24,8 +24,22 @@ module Dradis::CE::API
       end
 
       def update
-        if !@issue.update_attributes(issue_params)
+        @issue = Issue.find(params[:id])
+        if @issue.update_attributes(issue_params)
+          render node: @node
+        else
           render_validation_error
+        end
+      end
+
+      def destroy
+        Issue.find(params[:id]).destroy
+        respond_to do |format|
+          format.json do
+            render json: {
+              message: "Resource deleted successfully"
+            }, status: 200
+          end
         end
       end
 
