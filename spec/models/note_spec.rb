@@ -40,7 +40,7 @@ describe Note do
       expect(note.fields.count).to eq(2)
       expect(note.fields.keys).to match_array(['Title', 'Description'])
       expect(note.fields['Title']).to  eq "RSpec Title"
-      expect(note.fields['Description']).to  eq "Nothing to see here, move on!"
+      expect(note.fields['Description']).to eq "Nothing to see here, move on!"
     end
   end
 
