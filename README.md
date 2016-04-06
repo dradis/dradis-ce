@@ -1,6 +1,7 @@
 # Welcome to the Dradis Framework
 
 [ ![Build Status](https://codeship.com/projects/f06cef90-a1ae-0133-d7a5-465166e508dd/status?branch=master)](https://codeship.com/projects/128584)
+[ ![Code quality](https://codeclimate.com/github/dradis/dradis-ce/badges/gpa.svg)](https://codeclimate.com/github/dradis/dradis-ce)
 
 Dradis is an open-source collaboration framework, tailored to InfoSec teams.
 
