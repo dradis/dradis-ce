@@ -6,6 +6,8 @@
 #   https://github.com/rails/rails/blob/master/activemodel/lib/active_model/conversion.rb
 module FileBackedModel
 
+  class FileNotFoundException < Exception; end
+
   def self.included(base)
     @base = base
 
@@ -78,7 +80,7 @@ module FileBackedModel
         break
       end
 
-      raise Exception.new('Not found!') unless result.present?
+      raise FileNotFoundException.new('Not found!') unless result.present?
       return result
     end
 

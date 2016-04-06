@@ -8,21 +8,21 @@ describe Issue do
     node = create(:node)
     # use a block because we can't mass-assign 'node':
     issue = Issue.new { |i| i.node = node }
-    issue.should be_valid()
+    expect(issue).to be_valid()
     issue.save
-    issue.category.should eq(Category.issue)
+    expect(issue.category).to eq(Category.issue)
   end
 
   it "affects many nodes through :evidence" do
     issue = create(:issue)
-    issue.affected.should be_empty
+    expect(issue.affected).to be_empty
 
     host = create(:node, label: '10.0.0.1', type_id: Node::Types::HOST)
     host.evidence.create(author: 'rspec', issue_id: issue.id, content: "#[EvidenceBlock1]#\nThis apache is old!")
 
     issue.reload
-    issue.affected.should_not be_empty
-    issue.affected.first.should eq(host)
+    expect(issue.affected).to_not be_empty
+    expect(issue.affected.first).to eq(host)
   end
 
   it { should have_many(:evidence).dependent(:destroy) }

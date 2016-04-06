@@ -10,7 +10,7 @@ describe Attachment do
     node = create(:node)
     attachment = Attachment.new(Rails.root.join('public', 'images', 'rails.png'), node_id: node.id)
     attachment.save
-    File.exists?(Attachment.pwd + "#{node.id}/rails.png").should be true
+    expect(File.exists?(Attachment.pwd + "#{node.id}/rails.png")).to be true
 
     node.destroy
   end

@@ -30,26 +30,26 @@ describe Methodology do
       mt.save
 
       filename = Methodology.pwd.join('mt_test.xml')
-      File.exists?(filename).should be true
-      mt.should respond_to('destroy')
-      mt.should respond_to('delete')
+      expect(File.exists?(filename)).to be true
+      expect(mt).to respond_to('destroy')
+      expect(mt).to respond_to('delete')
       mt.destroy
-      File.exists?(filename).should be false
+      expect(File.exists?(filename)).to be false
     end
 
     it "destroy() works even if the file doesn't exist any more or never existed" do
       mt = Methodology.new(filename: 'foobar')
-      lambda { mt.destroy }.should_not raise_error
+      expect { mt.destroy }.not_to raise_error
 
       filename = Methodology.pwd.join('foobar.xml')
       FileUtils.mkdir_p(Methodology.pwd)
       File.open(filename,'w'){ |f| f<<'barfoo' }
 
       mt = Methodology.from_file(filename)
-      mt.content.should eq('barfoo')
+      expect(mt.content).to eq('barfoo')
       File.delete(filename)
 
-      lambda { mt.destroy }.should_not raise_error
+      expect { mt.destroy }.not_to raise_error
     end
   end
 
@@ -57,8 +57,8 @@ describe Methodology do
     it "updates content when setting :name attribute" do
       methodology = Methodology.from_file('spec/fixtures/files/methodologies/webapp.xml')
       methodology.name = 'Foo'
-      methodology.name.should eq('Foo')
-      methodology.content.should include('Foo')
+      expect(methodology.name).to eq('Foo')
+      expect(methodology.content).to include('Foo')
     end
   end
 
@@ -69,12 +69,12 @@ describe Methodology do
       Timecop.freeze(Time.now)
 
       mt = Methodology.new(content: 'Simple methodology content: *kapow*!')
-      mt.save.should be true
+      expect(mt.save).to be true
 
       new_methodology = Methodology.pwd.join("auto_#{Time.now.to_i}.xml")
-      File.exists?(Methodology.pwd).should be true
-      File.exists?(new_methodology).should be true
-      File.read(new_methodology).should eq('Simple methodology content: *kapow*!')
+      expect(File.exists?(Methodology.pwd)).to be true
+      expect(File.exists?(new_methodology)).to be true
+      expect(File.read(new_methodology)).to eq('Simple methodology content: *kapow*!')
       File.delete(new_methodology)
 
       Timecop.return
@@ -83,10 +83,10 @@ describe Methodology do
 
     it "saves the template contents when saving the instance" do
       mt = Methodology.new(content: 'FooBar', filename: 'mt_test')
-      mt.save.should be true
+      expect(mt.save).to be true
       filename = Methodology.pwd.join('mt_test.xml')
-      File.exists?(filename).should be true
-      File.read(filename).should eq('FooBar')
+      expect(File.exists?(filename)).to be true
+      expect(File.read(filename)).to eq('FooBar')
       File.delete(filename)
     end
   end
