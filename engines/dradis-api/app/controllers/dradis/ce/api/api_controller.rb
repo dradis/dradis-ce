@@ -6,9 +6,10 @@ module Dradis::CE::API
     protect_from_forgery with: :null_session
 
     rescue_from ActionController::ParameterMissing do |exception|
-      render json: {
-        message: exception.message
-      }, status: 422
+      render_json_error(exception, 422)
+    end
+    rescue_from ActiveRecord::RecordNotFound do |exception|
+      render_json_error(exception, 404)
     end
 
     before_action :api_authentication_required
@@ -107,5 +108,10 @@ module Dradis::CE::API
         message: "Resource deleted successfully"
       }, status: 200
     end
+
+    def render_json_error(exception, code)
+      render json: { message: exception.message }, status: code
+    end
+
   end
 end
