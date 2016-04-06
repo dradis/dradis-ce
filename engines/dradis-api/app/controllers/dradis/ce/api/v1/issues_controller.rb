@@ -35,11 +35,7 @@ module Dradis::CE::API
       def destroy
         Issue.find(params[:id]).destroy
         respond_to do |format|
-          format.json do
-            render json: {
-              message: "Resource deleted successfully"
-            }, status: 200
-          end
+          format.json { render_successful_destroy_message }
         end
       end
 
