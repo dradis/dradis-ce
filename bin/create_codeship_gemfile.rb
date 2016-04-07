@@ -6,8 +6,8 @@
 
 gemfile = File.read("./Gemfile")
 
-cs_gemfile = gemfile.gsub(/path:.*\.\.\/community\/.*['"]/) do |match|
-  gem_name = /community\/(.*)['"]/.match(match)[1]
+cs_gemfile = gemfile.gsub(/path:.*\.\.\/dradis.*['"]/) do |match|
+  gem_name = /(dradis\-.*)['"]/.match(match)[1]
   "github: \"dradis/#{gem_name}\""
 end
 
