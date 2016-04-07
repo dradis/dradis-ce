@@ -1,6 +1,6 @@
 module Dradis::CE::API
   module V1
-    class IssuesController < ProjectScopedController
+    class IssuesController < Dradis::CE::API::V1::ProjectScopedController
       def index
         issuelib = Node.issue_library
         @issues  = Issue.where(node_id: issuelib.id).includes(:tags).sort
