@@ -26,17 +26,6 @@ module Dradis::CE::API
     #   }, status: 403
     # end
 
-    def destroy
-      resource.destroy
-      respond_to do |format|
-        format.json do
-          render json: {
-            message: "Resource deleted successfully"
-          }, status: 200
-        end
-      end
-    end
-
     protected
     # def ssl_configured?
     #   !Rails.env.development?
@@ -87,18 +76,12 @@ module Dradis::CE::API
     end
 
     # ------------------------------------------------------- Validation errors
-    def resource
-      instance_variable_get("@#{ resource_name }")
-    end
 
-    def resource_name
-      controller_name.singularize
-    end
-
-    def render_validation_error
+    def render_validation_errors(resource)
       render json: {
         message: "Validation error",
-        description: "Some validation errors were found and the #{ resource_name } couldn't be saved",
+        description: "Some validation errors were found and the "\
+                     "#{resource.model_name.name.downcase} couldn't be saved",
         errors: resource.errors
       }, status: 422
     end

@@ -19,7 +19,7 @@ module Dradis::CE::API
         if @issue.save
           render status: 201, location: dradis_api.issue_url(@issue)
         else
-          render_validation_error
+          render_validation_errors(@issue)
         end
       end
 
@@ -28,7 +28,7 @@ module Dradis::CE::API
         if @issue.update_attributes(issue_params)
           render node: @node
         else
-          render_validation_error
+          render_validation_errors(@issue)
         end
       end
 
