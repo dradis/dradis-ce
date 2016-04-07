@@ -1,6 +1,6 @@
 module Dradis::CE::API
   module V1
-    class NodesController < ProjectScopedController
+    class NodesController < Dradis::CE::API::V1::ProjectScopedController
 
       def index
         @nodes = Node.user_nodes.includes(:evidence, :notes, evidence: [:issue]).order('updated_at desc')
@@ -16,7 +16,7 @@ module Dradis::CE::API
         if @node.save
           render status: 201, location: dradis_api.node_url(@node)
         else
-          render_validation_error
+          render_validation_errors(@node)
         end
       end
 
@@ -25,17 +25,13 @@ module Dradis::CE::API
         if @node.update_attributes(node_params)
           render node: @node
         else
-          render_validation_error
+          render_validation_errors(@node)
         end
       end
 
       def destroy
         Node.find(params[:id]).destroy
-        respond_to do |format|
-          format.json do
-            render_successful_destroy_message
-          end
-        end
+        render_successful_destroy_message
       end
 
       protected
