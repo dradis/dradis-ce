@@ -34,9 +34,7 @@ module Dradis::CE::API
 
       def destroy
         Issue.find(params[:id]).destroy
-        respond_to do |format|
-          format.json { render_successful_destroy_message }
-        end
+        render_successful_destroy_message
       end
 
       private
