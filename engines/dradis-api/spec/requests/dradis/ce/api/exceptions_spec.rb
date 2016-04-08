@@ -8,6 +8,12 @@ describe "API" do
         ::BCrypt::Password.create('rspec_pass')
       )
 
+      @env = {
+        "HTTPS" => "on",
+        "HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic.encode_credentials('rspec', 'rspec_pass'),
+        "CONTENT_TYPE" => 'application/json'
+      }
+
       # To get the 'renders as HTML' test to work, we need to make show
       # that the 'show_exceptions' config setting is `true`, despite it
       # normally being set to `false` in the test ENV. The problem is that
@@ -44,7 +50,7 @@ describe "API" do
 
     describe "404 - Not Found" do
       it "renders as JSON if it happens inside the API" do
-        get "/api/issues/12345", {}, api_env
+        get "/api/issues/12345", {}, @env
         expect(response.status).to eq(404)
         body = nil
         expect do
@@ -59,16 +65,6 @@ describe "API" do
         expect(response.headers['Content-Type']).not_to eq('application/json; charset=utf-8')
       end
     end
-
-
-    def api_env
-      {
-        "HTTPS" => "on",
-        "HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic.encode_credentials('rspec', 'rspec_pass'),
-        "CONTENT_TYPE" => 'application/json'
-      }
-    end
-
   end
 
 end
