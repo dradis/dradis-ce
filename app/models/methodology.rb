@@ -38,8 +38,11 @@ class Methodology
   # Returns a Pathname to location configured in the database through the
   # 'admin:paths:templates:methodologies' setting
   def self.pwd
-    conf = Configuration.find_by_name('admin:paths:templates:methodologies') || Configuration.create(:name => 'admin:paths:templates:methodologies', :value => Rails.root.join('templates', 'methodologies').to_s)
-    Pathname.new(conf.value)
+    @pwd ||= begin
+      conf = Configuration.create_with(value: Rails.root.join('templates/methodologies/').to_s).
+        find_or_create_by(name: 'admin:paths:templates:methodologies')
+      Pathname.new(conf.value)
+    end
   end
 
 
