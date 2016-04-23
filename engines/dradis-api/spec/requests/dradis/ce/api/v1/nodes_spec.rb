@@ -2,9 +2,7 @@ require 'spec_helper'
 
 describe "Nodes API" do
 
-  before(:each) do
-    @env = { "HTTPS" => "on" }
-  end
+  include_context "https"
 
   context "as unauthenticated user" do
     describe "GET /api/nodes" do
@@ -40,13 +38,7 @@ describe "Nodes API" do
   end
 
   context "as authenticated user" do
-
-    before do
-      allow(Configuration).to \
-        receive(:shared_password).and_return(::BCrypt::Password.create('rspec_pass'))
-      @env["HTTP_AUTHORIZATION"] = \
-        ActionController::HttpAuthentication::Basic.encode_credentials('rspec', 'rspec_pass')
-    end
+    include_context "authenticated API user"
 
     describe "GET /api/nodes" do
       it "retrieves all the nodes" do
