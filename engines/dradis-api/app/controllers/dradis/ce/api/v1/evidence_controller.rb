@@ -1,0 +1,49 @@
+module Dradis::CE::API
+  module V1
+    class EvidenceController < Dradis::CE::API::V1::ProjectScopedController
+      before_action :set_node
+
+      def index
+        @evidence = @node.evidence.all.order('updated_at desc')
+      end
+
+      def show
+        @evidence = @node.evidence.find(params[:id])
+      end
+
+      def create
+        @evidence = @node.evidence.build(evidence_params)
+        if @evidence.save
+          render status: 201, location: node_evidence_path(@node, @evidence)
+        else
+          render_validation_errors(@evidence)
+        end
+      end
+
+      def update
+        @evidence = @node.evidence.find(params[:id])
+        if @evidence.update_attributes(evidence_params)
+          render evidence: @evidence
+        else
+          render_validation_errors(@evidence)
+        end
+      end
+
+      def destroy
+        @node.evidence.find(params[:id]).destroy
+        render_successful_destroy_message
+      end
+
+      private
+
+      def set_node
+        @node = Node.find(params[:node_id])
+      end
+
+      def evidence_params
+        params.require(:evidence).permit(:content, :issue_id)
+      end
+
+    end
+  end
+end
