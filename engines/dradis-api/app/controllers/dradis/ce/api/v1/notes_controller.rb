@@ -15,6 +15,7 @@ module Dradis::CE::API
         @note = @node.notes.build(note_params)
         @note.category ||= Category.default
         if @note.save
+          track_created(@note)
           render status: 201, location: node_note_path(@node, @note)
         else
           render_validation_errors(@note)
@@ -24,6 +25,7 @@ module Dradis::CE::API
       def update
         @note = @node.notes.find(params[:id])
         if @note.update_attributes(note_params)
+          track_updated(@note)
           render note: @note
         else
           render_validation_errors(@note)
@@ -31,7 +33,9 @@ module Dradis::CE::API
       end
 
       def destroy
-        @node.notes.find(params[:id]).destroy
+        @note = @node.notes.find(params[:id])
+        @note.destroy
+        track_destroyed(@note)
         render_successful_destroy_message
       end
 

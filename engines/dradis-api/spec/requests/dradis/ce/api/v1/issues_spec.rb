@@ -92,16 +92,20 @@ describe "Issues API" do
     end
 
     describe "POST /api/issues" do
-      it "creates a new issue" do
-        params = { issue: { text: "#[Title]#\nRspec issue\n\n#[c]#\nd\n\n#[e]#\nf\n\n" } }
-        expect {
-          post "/api/issues", params.to_json, @env.merge("CONTENT_TYPE" => 'application/json')
-        }.to change { Issue.count }.by(1)
-        expect(response.status).to eq(201)
+      let(:valid_params) { { issue: { text: "#[Title]#\nRspec issue\n\n#[c]#\nd\n\n#[e]#\nf\n\n" } } }
+      let(:valid_post) do
+        post "/api/issues", valid_params.to_json, @env.merge("CONTENT_TYPE" => 'application/json')
+      end
 
+      it "creates a new issue" do
+        expect{valid_post}.to change{Issue.count}.by(1)
+        expect(response.status).to eq(201)
         retrieved_issue = JSON.parse(response.body)
         expect(retrieved_issue['text']).to eq params[:issue][:text]
       end
+
+      let(:submit_form) { valid_post }
+      include_examples "creates an Activity", :create, Issue
 
       it "throws 415 unless JSON is sent" do
         params = { issue: { name: "Bad Issue" } }
@@ -119,13 +123,14 @@ describe "Issues API" do
     end
 
     describe "PUT /api/issues/:id" do
-
       let(:issue) { create(:issue, text: "Existing Issue") }
+      let(:valid_params) { { issue: { text: "Updated Issue" } } }
+      let(:valid_put) do
+        put "/api/issues/#{issue.id}", valid_params.to_json, @env.merge("CONTENT_TYPE" => 'application/json')
+      end
 
       it "updates a issue" do
-        params = { issue: { text: "Updated Issue" } }
-
-        put "/api/issues/#{ issue.id }", params.to_json, @env.merge("CONTENT_TYPE" => 'application/json')
+        valid_put
         expect(response.status).to eq(200)
 
         expect(Issue.find(issue.id).text).to eq params[:issue][:text]
@@ -133,6 +138,10 @@ describe "Issues API" do
         retrieved_issue = JSON.parse(response.body)
         expect(retrieved_issue['text']).to eq params[:issue][:text]
       end
+
+      let(:submit_form) { valid_put }
+      let(:model) { issue }
+      include_examples "creates an Activity", :update
 
       it "throws 415 unless JSON is sent" do
         params = { issue: { text: "Bad issuet" } }
@@ -150,13 +159,16 @@ describe "Issues API" do
     describe "DELETE /api/issue/:id" do
       let(:issue) { create(:issue) }
 
-      it "deletes a issue" do
-        delete "/api/issues/#{ issue.id }", {}, @env
-        expect(response.status).to eq(200)
+      let(:delete_issue) { delete "/api/issues/#{ issue.id }", {}, @env }
 
+      it "deletes a issue" do
+        expect(response.status).to eq(200)
         expect { Issue.find(issue.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end
-    end
 
+      let(:submit_form) { delete_issue }
+      let(:model) { issue }
+      include_examples "creates an Activity", :destroy
+    end
   end
 end

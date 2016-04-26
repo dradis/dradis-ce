@@ -137,6 +137,9 @@ describe "Notes API" do
             expect(response.status).to eq 201
           end
 
+          let(:submit_form) { post_note }
+          include_examples "creates an Activity", :create, Note
+
           context "specifying a category" do
             before { params[:note][:category_id] = category.id }
 
@@ -234,6 +237,10 @@ describe "Notes API" do
             expect(note.reload.text).to eq "New text"
           end
 
+          let(:submit_form) { put_note }
+          let(:model) { note }
+          include_examples "creates an Activity", :update
+
           it "returns the attributes of the updated note as JSON" do
             put_note
             retrieved_note = JSON.parse(response.body)
@@ -303,6 +310,10 @@ describe "Notes API" do
         delete_note
         expect(response.status).to eq(200)
       end
+
+      let(:submit_form) { delete_note }
+      let(:model) { note }
+      include_examples "creates an Activity", :destroy
 
       it "returns JSON with a success message" do
         delete_note

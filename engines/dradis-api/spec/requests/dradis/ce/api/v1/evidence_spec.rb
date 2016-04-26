@@ -147,6 +147,9 @@ describe "Evidence API" do
             expect(new_evidence.content).to eq "New evidence"
             expect(new_evidence.issue).to eq issue
           end
+
+          let(:submit_form) { post_evidence }
+          include_examples "creates an Activity", :create, Evidence
         end
 
         context "with params for an invalid evidence" do
@@ -222,6 +225,10 @@ describe "Evidence API" do
             retrieved_evidence = JSON.parse(response.body)
             expect(retrieved_evidence["content"]).to eq "New content"
           end
+
+          let(:submit_form) { put_evidence }
+          let(:model) { evidence }
+          include_examples "creates an Activity", :update
         end
 
         context "with params for an invalid evidence" do
@@ -293,6 +300,10 @@ describe "Evidence API" do
         expect(parsed_response["message"]).to eq\
           "Resource deleted successfully"
       end
+
+      let(:submit_form) { delete_evidence }
+      let(:model) { evidence }
+      include_examples "creates an Activity", :destroy
     end
   end
 end

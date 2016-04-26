@@ -14,6 +14,7 @@ module Dradis::CE::API
         @node = Node.new(node_params)
 
         if @node.save
+          track_created(@node)
           render status: 201, location: dradis_api.node_url(@node)
         else
           render_validation_errors(@node)
@@ -23,6 +24,7 @@ module Dradis::CE::API
       def update
         @node = Node.find(params[:id])
         if @node.update_attributes(node_params)
+          track_updated(@node)
           render node: @node
         else
           render_validation_errors(@node)
@@ -30,7 +32,9 @@ module Dradis::CE::API
       end
 
       def destroy
-        Node.find(params[:id]).destroy
+        node = Node.find(params[:id])
+        node.destroy
+        track_destroyed(node)
         render_successful_destroy_message
       end
 
