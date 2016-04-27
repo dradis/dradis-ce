@@ -476,9 +476,11 @@ body {
 }
 
 .btn {
-  background: $gray;
-  @include box-shadow( 0 0 0 );
+//  @include box-shadow(0 0 0);
+  @include button(#e6e6e6);
   text-shadow: 0 0 0;
+
+
   &.btn-dradispro, &.btn-primary {
     @include button($blue);
   }
