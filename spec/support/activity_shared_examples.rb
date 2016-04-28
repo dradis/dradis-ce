@@ -40,7 +40,7 @@ shared_examples "creates an Activity" do |action, klass=nil|
     else
       raise "unrecognized action, must be 'create', 'update' or 'destroy'"
     end
-    # expect(activity.user).to eq @logged_in_as # CE doesn't have users
+    expect(activity.user).to eq @logged_in_as
     expect(activity.action).to eq action.to_s
   end
 end
