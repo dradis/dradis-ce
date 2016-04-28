@@ -17,6 +17,7 @@ module Dradis::CE::API
         @issue.node     = Node.issue_library
 
         if @issue.save
+          track_created(@issue)
           render status: 201, location: dradis_api.issue_url(@issue)
         else
           render_validation_errors(@issue)
@@ -26,6 +27,7 @@ module Dradis::CE::API
       def update
         @issue = Issue.find(params[:id])
         if @issue.update_attributes(issue_params)
+          track_updated(@issue)
           render node: @node
         else
           render_validation_errors(@issue)
@@ -33,7 +35,9 @@ module Dradis::CE::API
       end
 
       def destroy
-        Issue.find(params[:id]).destroy
+        @issue = Issue.find(params[:id])
+        @issue.destroy
+        track_destroyed(@issue)
         render_successful_destroy_message
       end
 

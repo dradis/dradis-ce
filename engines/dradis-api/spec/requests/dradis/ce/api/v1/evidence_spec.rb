@@ -1,0 +1,309 @@
+require 'spec_helper'
+
+describe "Evidence API" do
+
+  include_context "https"
+
+  let(:node) { create(:node) }
+
+  context "as unauthenticated user" do
+    let(:evidence) { create(:evidence) }
+
+    describe "GET /api/nodes/:node_id/evidence" do
+      it "throws 401" do
+        get "/api/nodes/#{node.id}/evidence", {}, @env
+        expect(response.status).to eq 401
+      end
+    end
+    describe "GET /api/nodes/:node_id/evidence/:id" do
+      it "throws 401" do
+        get "/api/nodes/#{node.id}/evidence/#{evidence.id}", {}, @env
+        expect(response.status).to eq 401
+      end
+    end
+    describe "POST /api/nodes/:node_id/evidence" do
+      it "throws 401" do
+        post "/api/nodes/#{node.id}/evidence", {}, @env
+        expect(response.status).to eq 401
+      end
+    end
+    describe "PUT /api/nodes/:node_id/evidence/:id" do
+      it "throws 401" do
+        put "/api/nodes/#{node.id}/evidence/1", {}, @env
+        expect(response.status).to eq 401
+      end
+    end
+    describe "PATCH /api/evidence/:id" do
+      it "throws 401" do
+        put "/api/nodes/#{node.id}/evidence/1", {}, @env
+        expect(response.status).to eq 401
+      end
+    end
+    describe "DELETE /api/nodes/:node_id/evidence/:id" do
+      it "throws 401" do
+        delete "/api/nodes/#{node.id}/evidence/1", {}, @env
+        expect(response.status).to eq 401
+      end
+    end
+  end
+
+  context "as authenticated user" do
+    include_context "authenticated API user"
+
+    let(:category) { create(:category) }
+
+    describe "GET /api/nodes/:node_id/evidence" do
+      before do
+        @issues = create_list(:issue, 3)
+        @evidence = [
+          Evidence.create!(node: node, content: "#[a]#\nA", issue: @issues[0]),
+          Evidence.create!(node: node, content: "#[b]#\nB", issue: @issues[1]),
+          Evidence.create!(node: node, content: "#[c]#\nC", issue: @issues[2]),
+        ]
+        @other_evidence = create(:evidence)
+        get "/api/nodes/#{node.id}/evidence", {}, @env
+      end
+
+      let(:retrieved_evidence) { JSON.parse(response.body) }
+
+      it "responds with HTTP code 200" do
+        expect(response.status).to eq(200)
+      end
+
+      it "retrieves all the evidence for the given node" do
+        expect(retrieved_evidence.count).to eq 3
+        issue_titles = retrieved_evidence.map{ |json| json['issue']['title'] }
+        expect(issue_titles).to match_array @issues.map(&:title)
+      end
+
+      it "returns JSON data about the evidence's fields and issue" do
+        ev_0 = retrieved_evidence.find { |n| n["issue"]["id"] == @issues[0].id }
+        ev_1 = retrieved_evidence.find { |n| n["issue"]["id"] == @issues[1].id }
+        ev_2 = retrieved_evidence.find { |n| n["issue"]["id"] == @issues[2].id }
+
+        expect(ev_0["fields"].keys).to match_array %w[Label a]
+        expect(ev_0["fields"]["a"]).to eq "A"
+        expect(ev_0["issue"]["title"]).to eq @issues[0].title
+        expect(ev_1["fields"].keys).to match_array %w[Label b]
+        expect(ev_1["fields"]["b"]).to eq "B"
+        expect(ev_1["issue"]["title"]).to eq @issues[1].title
+        expect(ev_2["fields"].keys).to match_array %w[Label c]
+        expect(ev_2["fields"]["c"]).to eq "C"
+        expect(ev_2["issue"]["title"]).to eq @issues[2].title
+      end
+
+      it "doesn't return evidence from other nodes" do
+        retrieved_ids = retrieved_evidence.map { |n| n["id"] }
+        expect(retrieved_ids).not_to include @other_evidence.id
+      end
+    end
+
+    describe "GET /api/nodes/:node_id/evidence/:id" do
+      before do
+        @issue    = create(:issue)
+        @evidence = node.evidence.create!(
+          content: "#[foo]#\nbar\n#[fizz]#\nbuzz",
+          issue:   @issue,
+        )
+        get "/api/nodes/#{node.id}/evidence/#{@evidence.id}", {}, @env
+      end
+
+      it "responds with HTTP code 200" do
+        expect(response.status).to eq 200
+      end
+
+      it "returns JSON information about the evidence" do
+        retrieved_evidence = JSON.parse(response.body)
+        expect(retrieved_evidence["id"]).to eq @evidence.id
+        expect(retrieved_evidence["fields"].keys).to match_array(
+          %w[Label foo fizz]
+        )
+        expect(retrieved_evidence["fields"]["foo"]).to eq "bar"
+        expect(retrieved_evidence["fields"]["fizz"]).to eq "buzz"
+        expect(retrieved_evidence["issue"]["id"]).to eq @issue.id
+        expect(retrieved_evidence["issue"]["title"]).to eq @issue.title
+      end
+    end
+
+    describe "POST /api/nodes/:node_id/evidence" do
+      let(:url) { "/api/nodes/#{node.id}/evidence" }
+      let(:issue) { create(:issue) }
+      let(:post_evidence) { post url, params.to_json, @env }
+
+      context "when content_type header = application/json" do
+        include_context "content_type: application/json"
+
+        context "with params for a valid evidence" do
+          let(:params) { { evidence: { content: "New evidence", issue_id: issue.id } } }
+
+          it "responds with HTTP code 201" do
+            post_evidence
+            expect(response.status).to eq 201
+          end
+
+          it "creates an evidence" do
+            expect{post_evidence}.to change{node.evidence.count}
+            new_evidence = node.evidence.last
+            expect(new_evidence.content).to eq "New evidence"
+            expect(new_evidence.issue).to eq issue
+          end
+
+          let(:submit_form) { post_evidence }
+          include_examples "creates an Activity", :create, Evidence
+        end
+
+        context "with params for an invalid evidence" do
+          let(:params) { { evidence: { content: "New evidence" } } } # no issue
+
+          it "responds with HTTP code 422" do
+            post_evidence
+            expect(response.status).to eq 422
+          end
+
+          it "doesn't create an evidence" do
+            expect{post_evidence}.not_to change{Evidence.count}
+          end
+        end
+
+        context "when no :evidence param is sent" do
+          let(:params) { {} }
+
+          it "doesn't create an evidence" do
+            expect{post_evidence}.not_to change{Evidence.count}
+          end
+
+          it "responds with HTTP code 422" do
+            post_evidence
+            expect(response.status).to eq(422)
+          end
+        end
+
+        context "when invalid JSON is sent" do
+          it "responds with HTTP code 400" do
+            json_payload = '{"evidence":{"label":"A malformed label", , }}'
+            post url, json_payload, @env
+            expect(response.status).to eq(400)
+          end
+        end
+      end
+
+      context "when JSON is not sent" do
+        it "responds with HTTP code 415" do
+          params = { evidence: { } }
+          post url, params, @env
+          expect(response.status).to eq(415)
+        end
+      end
+    end
+
+    describe "PUT /api/nodes/:node_id/evidence/:id" do
+      let(:evidence) do
+        create(:evidence, node: node, content: "My content")
+      end
+
+      let(:url) { "/api/nodes/#{node.id}/evidence/#{evidence.id}" }
+      let(:put_evidence) { put url , params.to_json, @env }
+
+      context "when content_type header = application/json" do
+        include_context "content_type: application/json"
+
+        context "with params for a valid evidence" do
+          let(:params) { { evidence: { content: "New content" } } }
+
+          it "responds with HTTP code 200" do
+            put_evidence
+            expect(response.status).to eq 200
+          end
+
+          it "updates the evidence" do
+            put_evidence
+            expect(evidence.reload.content).to eq "New content"
+          end
+
+          it "returns the attributes of the updated evidence as JSON" do
+            put_evidence
+            retrieved_evidence = JSON.parse(response.body)
+            expect(retrieved_evidence["content"]).to eq "New content"
+          end
+
+          let(:submit_form) { put_evidence }
+          let(:model) { evidence }
+          include_examples "creates an Activity", :update
+        end
+
+        context "with params for an invalid evidence" do
+          let(:params) { { evidence: { content: "a"*65536 } } } # too long
+
+          it "responds with HTTP code 422" do
+            put_evidence
+            expect(response.status).to eq 422
+          end
+
+          it "doesn't update the evidence" do
+            expect{put_evidence}.not_to change{evidence.reload.attributes}
+          end
+        end
+
+        context "when no :evidence param is sent" do
+          let(:params) { {} }
+
+          it "doesn't update the evidence" do
+            expect{put_evidence}.not_to change{evidence.reload.attributes}
+          end
+
+          it "responds with HTTP code 422" do
+            put_evidence
+            expect(response.status).to eq 422
+          end
+        end
+
+        context "when invalid JSON is sent" do
+          it "responds with HTTP code 400" do
+            json_payload = '{"evidence":{"label":"A malformed label", , }}'
+            post url, json_payload, @env
+            expect(response.status).to eq(400)
+          end
+        end
+      end
+
+      context "when JSON is not sent" do
+        let(:params) { { evidence: { content: "New Evidence" } } }
+
+        it "responds with HTTP code 415" do
+          expect{put url, params, @env}.not_to change{evidence.reload.attributes}
+          expect(response.status).to eq 415
+        end
+      end
+    end
+
+    describe "DELETE /api/nodes/:node_id/evidence/:id" do
+      let(:evidence) { create(:evidence, node: node, content: "My Evidence") }
+
+      let(:delete_evidence) do
+        delete "/api/nodes/#{node.id}/evidence/#{evidence.id}", {}, @env
+      end
+
+      it "deletes the evidence" do
+        evidence_id = evidence.id
+        delete_evidence
+        expect(Evidence.find_by_id(evidence_id)).to be_nil
+      end
+
+      it "responds with error code 200" do
+        delete_evidence
+        expect(response.status).to eq(200)
+      end
+
+      it "returns JSON with a success message" do
+        delete_evidence
+        parsed_response = JSON.parse(response.body)
+        expect(parsed_response["message"]).to eq\
+          "Resource deleted successfully"
+      end
+
+      let(:submit_form) { delete_evidence }
+      let(:model) { evidence }
+      include_examples "creates an Activity", :destroy
+    end
+  end
+end

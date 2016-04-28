@@ -19,6 +19,8 @@
 #     let(:submit_form) { click_button "Save" }
 #
 shared_examples "creates an Activity" do |action, klass=nil|
+  let(:action) { submit_form } if defined?(submit_form)
+
   it "creates an Activity" do
     expect{submit_form}.to change{Activity.count}.by(1)
     activity = Activity.last
