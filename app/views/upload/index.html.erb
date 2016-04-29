@@ -3,30 +3,35 @@
 <p>Use the form below to upload output files from other tools.</p>
 
 
-<section>
-  <h2>Choose a file</h2>
-  <%= form_tag upload_manager_path(format: :js), multipart: true, id: 'new_upload', data: { parse_url: upload_parse_path() } do %>
-    <%= select_tag  'uploader', options_from_collection_for_select(@uploaders, :name, :name) %>
-    <%= file_field_tag 'file' %>
-    <%= hidden_field_tag 'item_id' %>
-    <%= hidden_field_tag 'format', 'js' %>
-  <% end %>
+<div class="row-fluid">
+  <div class="span10 offset1">
+    <section>
+      <%= form_tag upload_manager_path(format: :js), multipart: true, id: 'new_upload', data: { parse_url: upload_parse_path() } do %>
+      <h2>1. Choose a tool</h2>
+        <%= select_tag  'uploader', options_from_collection_for_select(@uploaders, :name, :name) %>
+      <h2>2. Choose a file</h2>
+        <%= file_field_tag 'file' %>
+        <%= hidden_field_tag 'item_id' %>
+        <%= hidden_field_tag 'format', 'js' %>
+      <% end %>
 
+      <p>Upload progress:</p>
+      <div class="progress">
+          <div class="bar"></div >
+          <div class="percent">0%</div >
+      </div>
 
-  <div class="progress">
-      <div class="bar"></div >
-      <div class="percent">0%</div >
+      <div id="status"></div>
+
+      <h2>3. Output</h2>
+      <%= content_tag :div, id: 'result', class: 'file', style: 'display:none', data: { url: upload_status_path }  do %>
+        <div><strong>Filename</strong>: <span id="filename"></span> <span id="spinner"><%= image_tag 'loading.gif', style: "margin:0;" %></span></div>
+        <div><strong>Size</strong>: <span id="filesize"></span></div>
+        <div id="console"></div>
+      <% end %>
+    </section>
   </div>
-
-  <div id="status"></div>
-
-  <h2>Output</h2>
-  <%= content_tag :div, id: 'result', class: 'file', style: 'display:none', data: { url: upload_status_path }  do %>
-    <div><strong>Filename</strong>: <span id="filename"></span> <span id="spinner"><%= image_tag 'loading.gif', style: "margin:0;" %></span></div>
-    <div><strong>Size</strong>: <span id="filesize"></span></div>
-    <div id="console"></div>
-  <% end %>
-</section>
+</div>
 
 
 <script type="text/javascript" charset="utf-8">

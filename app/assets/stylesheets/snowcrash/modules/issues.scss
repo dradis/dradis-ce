@@ -94,6 +94,16 @@ body.issues.show {
   }
 }
 
+body.issues.index {
+  p.lead {
+    margin: 1ex 0;
+    text-align: center;
+  }
+  .add-issues {
+    margin-top: 4em;
+  }
+}
+
 body.issues.new, body.issues.edit {
   .tag-input {
     position: relative;
