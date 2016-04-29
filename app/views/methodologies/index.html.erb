@@ -20,9 +20,31 @@
   </ul>
 
   <% if @methodologies.empty? %>
-  <div class="alert alert-notice">
-    <a href="#" class="close" data-dismiss="alert">x</a>
-    <p>No methodologies have been assigned to this project yet.</p>
+  <br/>
+  <div class="row-fluid">
+    <div class="span6">
+      <div class="inner">
+        <p>No methodologies have been assigned to this project yet.</p>
+      </div>
+    </div>
+    <div class="span6">
+      <div class="inner">
+        <h2>What is a testing methodology?</h2>
+        <p>It's a series of tasks you want to perform for the assessment.</p>
+        <p>They are useful in a number of scenarios:</p>
+        <ul class="fa-ul">
+          <li><i class="fa fa-check"></i> So you don't forget any of the things you know you need to test.</li>
+          <li><i class="fa fa-check"></i> To do a standard set of tests in every project.</li>
+          <li><i class="fa fa-check"></i> To keep track of what is done and what is next.</li>
+        </ul>
+        <br/>
+        <br/>
+
+        <h2>Where are they stored?</h2>
+        <p>Methodology files can be found under:</p>
+        <code>./<%= Methodology.pwd.relative_path_from(Rails.root) %>/</code>
+      </div>
+    </div>
   </div>
   <% end %>
 
