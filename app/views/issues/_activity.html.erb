@@ -1,0 +1,15 @@
+<h3>
+  Recent activity -
+  <span class="actions">
+    <%#
+      # Some legacy content was created before paper_trail, so we need to
+      # make sure that there is at least one revision associated to the
+      # model.
+      #%>
+    <%= link_to(
+          'revision history',
+          issue_revisions_path(@issue)
+    ) if @issue.versions.any? && @issue.versions.last.previous.present? %>
+  </span>
+</h3>
+<%= render 'activities/feed', activities: @activities %>

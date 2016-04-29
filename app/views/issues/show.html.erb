@@ -10,24 +10,37 @@
   <li class="active"><%= (@issue.title? ? @issue.title : "Issue ##{@issue.id}")%></li>
 </ul>
 
-<div id="issue-viewer">
-  <%= render partial: 'issue_content', locals: { issue: @issue } %>
+<ul class="nav nav-tabs main-tabs">
+  <li class="active"><a href="#info" data-toggle="tab"><i class="fa fa-bug"></i> Information</a></li>
+  <li><a href="#evidence" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge"><%= @issue.evidence.count %></span></a></li>
+  <li><a href="#activity" data-toggle="tab"><i class="fa fa-tasks"></i> Recent activity</a></li>
+</ul>
 
-  <div class="inner">
-    <h3>
-      Recent activity -
-      <span class="actions">
-        <%#
-          # Some legacy content was created before paper_trail, so we need to
-          # make sure that there is at least one revision associated to the
-          # model.
-          #%>
-        <%= link_to(
-              'revision history',
-              issue_revisions_path(@issue)
-        ) if @issue.versions.any? && @issue.versions.last.previous.present? %>
-      </span>
-    </h3>
-    <%= render 'activities/feed', activities: @activities %>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="info">
+    <div class="inner note-text-inner">
+      <h3>Issue information -
+        <span class="actions">
+          <%= link_to 'edit', edit_issue_path(@issue), class: 'view-toggle-off editor-toggle-off' %>
+          <%= link_to 'delete', @issue, class: 'text-error', data: { confirm: 'Are you sure?' }, method: :delete %> -
+          <%= tag_and_name_for(@issue) %>
+        </span>
+        <small class="pull-right">Author: <%= @issue.author %></small>
+      </h3>
+      <div class="content-textile">
+        <%= markup(@issue.text) %>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="evidence">
+    <div class="inner">
+      <%= render partial: 'evidence' %>
+    </div>
+  </div>
+  <div class="tab-pane" id="activity">
+    <div class="inner">
+      <%= render partial: 'activity' %>
+    </div>
   </div>
 </div>
