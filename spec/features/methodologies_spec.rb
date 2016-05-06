@@ -104,9 +104,9 @@ describe "Describe methodologies" do
       end
     end
 
-    describe "there are some methodology templates" do
+    context "there are some methodology templates" do
       before(:each) do
-        allow(Methodology).to receive(:pwd).and_return(Pathname.new('tmp/templates/methodologies'))
+        allow(Methodology).to receive(:pwd).and_return(Rails.root.join('tmp/templates/methodologies'))
         FileUtils.mkdir_p(Methodology.pwd) unless File.exists?(Methodology.pwd)
         @available = []
         Dir[Rails.root.join('spec/fixtures/files/methodologies/**.xml')].collect do |file|
