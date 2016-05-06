@@ -70,6 +70,7 @@ describe "Nodes API" do
     end
 
     describe "POST /api/nodes" do
+      let!(:parent_node_id) { Node.plugin_parent_node.id }
       let(:valid_post) do
         post "/api/nodes", valid_params.to_json, @env.merge("CONTENT_TYPE" => 'application/json')
       end
@@ -83,13 +84,8 @@ describe "Nodes API" do
           }
         }
       end
-      let(:parent_node_id) { Node.plugin_parent_node.id }
 
       it "creates a new node" do
-        # Call this before calling expect{valid_post}, to ensure than the
-        # parent node gets created in advance:
-        parent_node_id
-
         expect{valid_post}.to change{Node.count}.by(1)
         expect(response.status).to eq(201)
 
