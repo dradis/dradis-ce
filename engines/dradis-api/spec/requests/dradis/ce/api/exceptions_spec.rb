@@ -3,17 +3,10 @@ require 'spec_helper'
 describe "API" do
   describe "Exceptions" do
 
+    include_context "https"
+    include_context "authenticated API user"
+
     before do
-      allow(Configuration).to receive(:shared_password).and_return(
-        ::BCrypt::Password.create('rspec_pass')
-      )
-
-      @env = {
-        "HTTPS" => "on",
-        "HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic.encode_credentials('rspec', 'rspec_pass'),
-        "CONTENT_TYPE" => 'application/json'
-      }
-
       # To get the 'renders as HTML' test to work, we need to make show
       # that the 'show_exceptions' config setting is `true`, despite it
       # normally being set to `false` in the test ENV. The problem is that
