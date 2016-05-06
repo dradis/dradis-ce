@@ -17,15 +17,6 @@ module Dradis::CE::API
 
     after_action :skip_set_cookies_header
 
-    # FIXME: do we need this?
-    # Swallow the AccessDenied exception and present it as a 403 Forbidden error
-    # rescue_from CanCan::AccessDenied do |exception|
-    #   render json: {
-    #     message: "Forbidden",
-    #     description: "The authenticated user does not have access to this operation"
-    #   }, status: 403
-    # end
-
     protected
     # def ssl_configured?
     #   !Rails.env.development?
