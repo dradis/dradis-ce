@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "Issues API" do
 
+  include_context "project scoped API"
   include_context "https"
 
   context "as unauthenticated user" do

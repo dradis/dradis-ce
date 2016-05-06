@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "API" do
   describe "Exceptions" do
 
+    include_context "project scoped API"
     include_context "https"
     include_context "authenticated API user"
 

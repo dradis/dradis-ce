@@ -22,3 +22,6 @@ shared_context "authenticated API user" do
       ActionController::HttpAuthentication::Basic.encode_credentials(@logged_in_as, @password)
   end
 end
+
+shared_context "project scoped API" do
+end
