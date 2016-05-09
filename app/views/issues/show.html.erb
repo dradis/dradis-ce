@@ -11,7 +11,12 @@
 </ul>
 
 <ul class="nav nav-tabs main-tabs">
-  <li class="active"><a href="#info-tab" data-toggle="tab"><i class="fa fa-bug"></i> Information</a></li>
+  <li class="active"><a href="#info-tab" data-toggle="tab">
+    <% if tag = @issue.tags.first %>
+      <i class="fa fa-bug" style="color: <%= tag.color %>"></i>
+    <% else %>
+      <i class="fa fa-bug"></i>
+    <% end %> Information</a></li>
   <li><a href="#evidence-tab" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge"><%= @issue.evidence.count %></span></a></li>
   <li><a href="#activity-tab" data-toggle="tab"><i class="fa fa-refresh"></i> Recent activity</a></li>
 </ul>
