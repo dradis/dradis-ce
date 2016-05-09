@@ -43,6 +43,10 @@ body { padding-top: 60px; }
   background-color: darken(#DFE8F6, 20%);
 }
 
+.alert {
+  margin-bottom: 0;
+}
+
 .btn-dradispro {
   background-color: #49afcd;
   background-image: -moz-linear-gradient(top, darken($dradisProBlue, 10%), darken($dradisProBlue, 40%));
@@ -70,6 +74,7 @@ body { padding-top: 60px; }
     margin-bottom: 0px;
   }
 }
+
 .modal-backdrop {
   background-color: #3d464d;
 }
