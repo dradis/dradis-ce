@@ -1,45 +1,63 @@
 <% content_for :title, "View evidence for #{@node.label} / #{@evidence.issue.title}" %>
 
-<div class="inner note-text-inner">
-  <h3>
-    Evidence for this instance -
-    <span class="actions">
-      <%= link_to 'edit', edit_node_evidence_path(@node, @evidence) %>
-      <%= link_to 'delete', [@node, @evidence], class: 'text-error', data: { confirm: 'Are you sure?' }, method: :delete %>
-    </span>
-  </h3>
 
-  <div class="content-textile"><%= markup(@evidence.content) %></div>
+<ul class="nav nav-tabs main-tabs">
+  <li class="active"><a href="#evidence-tab" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence</a></li>
+  <li><a href="#info-tab" data-toggle="tab"><i class="fa fa-bug"></i> Information</a></li>
+  <li><a href="#activity-tab" data-toggle="tab"><i class="fa fa-refresh"></i> Recent activity</a></li>
+</ul>
 
-  <!-- Issue wrapper -->
-  <div>
-    <h3>
-      Issue information -
-      <span class="actions">
-      <%= link_to 'open', issue_path(@issue)%> -
-      <%= tag_and_name_for(@issue) %>
-      </span>
-    </h3>
-    <div id="<%= dom_id(@issue) %>_text" class="content-textile">
-      <%= markup(@issue.text) %>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="evidence-tab">
+    <div class="inner note-text-inner">
+      <h3>
+        Evidence for this instance -
+        <span class="actions">
+          <%= link_to 'edit', edit_node_evidence_path(@node, @evidence) %>
+          <%= link_to 'delete', [@node, @evidence], class: 'text-error', data: { confirm: 'Are you sure?' }, method: :delete %>
+        </span>
+      </h3>
+
+      <div class="content-textile"><%= markup(@evidence.content) %></div>
     </div>
   </div>
-</div>
 
-<div class="inner">
-  <h3>
-    Recent activity -
-    <span class="actions">
-      <%#
-        # Some legacy content was created before paper_trail, so we need to
-        # make sure that there is at least one revision associated to the
-        # model.
-        #%>
-      <%= link_to(
-            'revision history',
-            node_evidence_revisions_path(@node, @evidence)
-          ) if @evidence.versions.any? && @evidence.versions.last.previous.present? %>
-    </span>
-  </h3>
-  <%= render 'activities/feed', activities: @activities %>
+  <div class="tab-pane" id="info-tab">
+    <div class="inner">
+      <!-- Issue wrapper -->
+      <div>
+        <h3>
+          Issue information -
+          <span class="actions">
+          <%= link_to 'open', issue_path(@issue)%> -
+          <%= tag_and_name_for(@issue) %>
+          </span>
+        </h3>
+        <div id="<%= dom_id(@issue) %>_text" class="content-textile">
+          <%= markup(@issue.text) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="activity-tab">
+    <div class="inner">
+      <h3>
+        Recent activity -
+        <span class="actions">
+          <%#
+            # Some legacy content was created before paper_trail, so we need to
+            # make sure that there is at least one revision associated to the
+            # model.
+            #%>
+          <%= link_to(
+                'revision history',
+                node_evidence_revisions_path(@node, @evidence)
+              ) if @evidence.versions.any? && @evidence.versions.last.previous.present? %>
+        </span>
+      </h3>
+      <%= render 'activities/feed', activities: @activities %>
+    </div>
+  </div>
 </div>
