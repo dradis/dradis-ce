@@ -11,14 +11,14 @@
 </ul>
 
 <ul class="nav nav-tabs main-tabs">
-  <li class="active"><a href="#info" data-toggle="tab"><i class="fa fa-bug"></i> Information</a></li>
-  <li><a href="#evidence" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge"><%= @issue.evidence.count %></span></a></li>
-  <li><a href="#activity" data-toggle="tab"><i class="fa fa-tasks"></i> Recent activity</a></li>
+  <li class="active"><a href="#info-tab" data-toggle="tab"><i class="fa fa-bug"></i> Information</a></li>
+  <li><a href="#evidence-tab" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge"><%= @issue.evidence.count %></span></a></li>
+  <li><a href="#activity-tab" data-toggle="tab"><i class="fa fa-refresh"></i> Recent activity</a></li>
 </ul>
 
 
 <div class="tab-content">
-  <div class="tab-pane active" id="info">
+  <div class="tab-pane active" id="info-tab">
     <div class="inner note-text-inner">
       <h3>Issue information -
         <span class="actions">
@@ -33,12 +33,12 @@
       </div>
     </div>
   </div>
-  <div class="tab-pane" id="evidence">
+  <div class="tab-pane" id="evidence-tab">
     <div class="inner">
       <%= render partial: 'evidence' %>
     </div>
   </div>
-  <div class="tab-pane" id="activity">
+  <div class="tab-pane" id="activity-tab">
     <div class="inner">
       <%= render partial: 'activity' %>
     </div>
