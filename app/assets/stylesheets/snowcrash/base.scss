@@ -428,6 +428,11 @@ body {
       position: relative;
       margin: 0 0 0 (350px -$mainContentPadding);
       width: 100%;
+
+      .main-tabs {
+        background-color: #f5f5f5;
+        padding: 1em 0 0 1em;
+      }
     }
 
     a:hover {
