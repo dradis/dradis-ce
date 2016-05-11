@@ -45,7 +45,10 @@ describe "API" do
     describe "404 - Not Found" do
       it "renders as JSON if it happens inside the API" do
         get "/api/issues/12345", {}, @env
+
         expect(response.status).to eq(404)
+        expect(response.headers.keys).not_to include('Set-Cookie')
+
         body = nil
         expect do
           body = JSON.parse(response.body)
