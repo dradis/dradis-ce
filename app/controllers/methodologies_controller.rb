@@ -40,12 +40,12 @@ class MethodologiesController < ProjectScopedController
   end
 
   def update_task
-    section = params.fetch(:section, 'undefined')
-    task    = params.fetch(:task, 'undefined')
+    section = xpath_escape(params.fetch(:section, 'undefined'))
+    task    = xpath_escape(params.fetch(:task, 'undefined'))
     checked = params.fetch(:checked, 0)
 
     doc = Nokogiri::XML(@note.text)
-    task_node = doc.xpath("//section/name[text()='#{section}']/..//task[text()='#{task}']").first
+    task_node = doc.xpath(%{//section/name[text()=concat(#{section})]/..//task[text()=concat(#{task})]}).first
     return unless task_node
 
     if (checked == 0)
@@ -84,10 +84,19 @@ class MethodologiesController < ProjectScopedController
       redirect_to methodologies_path, notice: 'Methodology not found!'
     end
   end
+
   def find_methodologylib
     @methodologylib = Node.methodology_library
   end
+
   def methodology_params
     params.require(:methodology).permit(:content, :name)
+  end
+
+  # Use XPath's concat() to deal with quotes
+  # See:
+  #   https://groups.google.com/forum/#!topic/nokogiri-talk/6stziv8GcJM
+  def xpath_escape(input)
+    "'#{input.split("'").join("', \"'\", '")}', ''"
   end
 end
