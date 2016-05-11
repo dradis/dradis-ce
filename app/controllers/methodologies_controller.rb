@@ -42,16 +42,18 @@ class MethodologiesController < ProjectScopedController
   def update_task
     section = xpath_escape(params.fetch(:section, 'undefined'))
     task    = xpath_escape(params.fetch(:task, 'undefined'))
-    checked = params.fetch(:checked, 0)
+    checked = params.fetch(:checked, 'false')
 
-    doc = Nokogiri::XML(@note.text)
-    task_node = doc.xpath(%{//section/name[text()=concat(#{section})]/..//task[text()=concat(#{task})]}).first
+    doc         = Nokogiri::XML(@note.text)
+    xpath_query = %{//section/name[text()=concat(#{section})]/..//task[text()=concat(#{task})]}
+    task_node   = doc.at_xpath(xpath_query)
+
     return unless task_node
 
-    if (checked == 0)
-      task_node.remove_attribute('checked')
-    else
+    if checked == 'true'
       task_node.set_attribute('checked', 'checked')
+    else
+      task_node.remove_attribute('checked')
     end
 
     @note.update_attribute(:text, doc.to_s)
