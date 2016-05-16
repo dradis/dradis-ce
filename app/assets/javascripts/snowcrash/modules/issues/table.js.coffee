@@ -111,12 +111,17 @@ class IssueTable
 
   showHideColumns: =>
     that = this
+
     $.each @$table.find('thead th'), (index, th)->
+      $th = $(th)
+
       if (column = $(th).data('column'))
         if that.selectedColumns.indexOf(column) > -1
-          console.log("show #{column}")
+          that.$table.find("td:nth-child(#{index + 1})").css('display', 'table-cell')
+          $th.css('display', 'table-cell')
         else
-          console.log("hide #{column}")
+          that.$table.find("td:nth-child(#{index + 1})").css('display', 'none')
+          $th.css('display', 'none')
 
 jQuery ->
   if $('body.issues.index').length
