@@ -32,7 +32,7 @@ class IssueTable
     @$column_menu.find('a').each ->
       $link = $(this)
       if that.selectedColumns.indexOf($link.data('column')) > -1
-        $($link.find('input')).prop('checked', true)
+        $link.find('input').prop('checked', true)
 
 
   onColumnPickerClick: (event) =>
