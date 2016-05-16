@@ -1,18 +1,35 @@
 <div id="js-add-evidence-container">
-  <div class="js-popover-container"></div>
-  <div class="content hide">
-    <%= text_field_tag nil, nil,
-      id:    'add-evidence',
-      style: 'margin:0 auto',
-      data: {
-        provide: 'typeahead',
-        items:   4,
-        source:  @nodes_for_add_evidence.collect(&:label),
-        ids:     @nodes_for_add_evidence.collect(&:id)
-      }%>
-  </div>
-  <%= form_tag node_evidence_index_path(node_id: ':node_id'), class: 'hide', id: 'new-evidence' do %>
-    <input type="hidden" name="evidence[issue_id]" value="<%= @issue.id %>" />
-    <input type="hidden" name="evidence[content]" value="bc. Placeholder Evidence content." />
+  <%= form_for :evidence, url: create_multiple_evidences_path, html: { id: 'add-evidences', style: 'display:none' } do |f| %>
+    <div class="form-inputs">
+      <%= f.hidden_field :issue_id, value: @issue.id %>
+      <%= f.hidden_field :content %>
+      <%= f.hidden_field :node_id %>
+      <%= f.label :search_node %>
+      <%= f.text_field :node, data: {
+            provide: 'typeahead',
+            items:   4,
+            source:  @nodes_for_add_evidence.collect(&:label),
+            ids:     @nodes_for_add_evidence.collect(&:id)
+          },
+          autocomplete: 'off'
+      %>
+      <%= f.label :note_template %>
+      <%= select_tag :evidence_note_template, options_for_select( NoteTemplate.all.map {|t| [t.name, h(t.content)] } ), include_blank: 'Empty (no template)' %>
+      <div class="clearfix"></div>
+      <div class="existing-nodes">
+        <%= f.label :select_nodes %>
+        <%= f.collection_check_boxes(:node_ids, @nodes_for_add_evidence, :id, :label) do |b|
+          b.label(class: "checkbox") { b.check_box + b.text}
+        end %>
+      </div>
+      <div class="new-nodes">
+        <%= f.label 'New nodes', for: :new_node_ids %>
+        <%= f.text_area :new_node_ids, rows: 10 %>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="form-actions">
+      <%= f.submit class: 'btn btn-default btn btn-dradispro' %>
+    </div>
   <% end %>
 </div>

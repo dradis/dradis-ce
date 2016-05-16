@@ -27,3 +27,5 @@ jQuery ->
         $('form#new-evidence').submit()
       else
         alert('You need to choose a node that already exists in the project.')
+    $('#js-add-evidence-container').on 'change', '#evidence_note_template', ->
+      $('#evidence_content').val($(this).val())
