@@ -77,19 +77,13 @@ body.issues.index {
 
   //-------------------------------------------------------------- Issues table
   .btn-toolbar {
-
     input[type='checkbox'] {
       margin: 0;
     }
 
     .issue-actions {
-      visibility: hidden;
-      .btn {
-        background-color: #e6e6e6;
-        &:active, &:hover {
-          background-color: darken(#e6e6e6, 10%);
-        }
-      }
+      display: none;
+
       .dropdown-menu {
         text-align: left;
       }
