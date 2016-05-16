@@ -11,16 +11,47 @@ class IssueTable
     @showHideColumns()
 
     # -------------------------------------------------- Install event handlers
-    $('#issue-table').on('click', '.js-taglink', @tagSelected)
+    $('#issue-table').on('click', '.js-taglink', @onTagSelected)
 
     # We're hooking into Rails UJS data-confirm behavior to only fire the Ajax
     # if the user confirmed the deletion
-    $('#issue-table').on('confirm:complete', '#delete-selected', @deleteSelected)
+    $('#issue-table').on('confirm:complete', '#delete-selected', @onDeleteSelected)
 
     # Handle the showing / hiding of table columns
     @$column_menu.find('a').on 'click', @onColumnPickerClick
 
-  deleteSelected: (element, answer) ->
+  loadColumnState: =>
+    # TODO: persist this in browser local storage or a cookie
+    @selectedColumns = ['title', 'tags', 'affected']
+    that = this
+
+    @$column_menu.find('a').each ->
+      $link = $(this)
+      if that.selectedColumns.indexOf($link.data('column')) > -1
+        $($link.find('input')).prop('checked', true)
+
+
+  onColumnPickerClick: (event) =>
+    $target = $(event.currentTarget)
+    val     = $target.data('column')
+    $input  = $target.find('input')
+
+    if ((idx = @selectedColumns.indexOf(val)) > -1)
+      @selectedColumns.splice(idx, 1)
+      setTimeout ->
+        $input.prop('checked', false)
+      , 0
+    else
+      @selectedColumns.push(val)
+      setTimeout ->
+        $input.prop('checked', true)
+      , 0
+
+    $(event.target).blur()
+    @showHideColumns()
+    false
+
+  onDeleteSelected: (element, answer) ->
     if answer
       $('.js-tbl-issues').find('input[type=checkbox]:checked.js-multicheck').each ->
         $row = $(this).parent().parent()
@@ -47,17 +78,7 @@ class IssueTable
     # prevent Rails UJS from doing anything else.
     false
 
-  loadColumnState: =>
-    # TODO: persist this in browser local storage or a cookie
-    @selectedColumns = ['title', 'tags', 'affected']
-    that = this
-
-    @$column_menu.find('a').each ->
-      $link = $(this)
-      if that.selectedColumns.indexOf($link.data('column')) > -1
-        $($link.find('input')).prop('checked', true)
-
-  tagSelected: (event) ->
+  onTagSelected: (event) ->
     $target = $(event.target)
     event.preventDefault()
 
@@ -87,27 +108,6 @@ class IssueTable
         error: (foo,bar,foobar) ->
           $($row.find('td')[2]).replaceWith("<td class='text-error'>Please try again</td>")
       }
-
-
-  onColumnPickerClick: (event) =>
-    $target = $(event.currentTarget)
-    val     = $target.data('column')
-    $input  = $target.find('input')
-
-    if ((idx = @selectedColumns.indexOf(val)) > -1)
-      @selectedColumns.splice(idx, 1)
-      setTimeout ->
-        $input.prop('checked', false)
-      , 0
-    else
-      @selectedColumns.push(val)
-      setTimeout ->
-        $input.prop('checked', true)
-      , 0
-
-    $(event.target).blur()
-    @showHideColumns()
-    false
 
   showHideColumns: =>
     that = this
