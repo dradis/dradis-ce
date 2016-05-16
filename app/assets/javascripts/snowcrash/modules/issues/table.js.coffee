@@ -87,4 +87,11 @@ jQuery ->
       else
         $('.js-issue-actions').css('visibility', 'hidden')
 
+    $('#js-table-filter').on 'keyup', ->
+        rex = new RegExp($(this).val(), 'i')
+        $('tbody tr').hide();
+        $('tbody tr').filter( ->
+          rex.test($(this).text());
+        ).show();
+
     new IssueTable
