@@ -3,8 +3,14 @@ class IssueTable
   selectedColumns: []
 
   constructor: ->
-    @$table = $('#issue-table table')
+    @$table       = $('#issue-table table')
+    @$column_menu = $('.dropdown-menu.js-table-columns')
 
+    # -------------------------------------------------------- Load table state
+    @loadColumnState()
+    @showHideColumns()
+
+    # -------------------------------------------------- Install event handlers
     $('#issue-table').on('click', '.js-taglink', @tagSelected)
 
     # We're hooking into Rails UJS data-confirm behavior to only fire the Ajax
@@ -12,7 +18,7 @@ class IssueTable
     $('#issue-table').on('confirm:complete', '#delete-selected', @deleteSelected)
 
     # Handle the showing / hiding of table columns
-    $('.dropdown-menu.js-table-columns a').on 'click', @onColumnPickerClick
+    @$column_menu.find('a').on 'click', @onColumnPickerClick
 
   deleteSelected: (element, answer) ->
     if answer
@@ -40,6 +46,16 @@ class IssueTable
 
     # prevent Rails UJS from doing anything else.
     false
+
+  loadColumnState: =>
+    # TODO: persist this in browser local storage or a cookie
+    @selectedColumns = ['title', 'tags', 'affected']
+    that = this
+
+    @$column_menu.find('a').each ->
+      $link = $(this)
+      if that.selectedColumns.indexOf($link.data('column')) > -1
+        $($link.find('input')).prop('checked', true)
 
   tagSelected: (event) ->
     $target = $(event.target)
@@ -75,7 +91,7 @@ class IssueTable
 
   onColumnPickerClick: (event) =>
     $target = $(event.currentTarget)
-    val     = $target.attr('data-value')
+    val     = $target.data('column')
     $input  = $target.find('input')
 
     if ((idx = @selectedColumns.indexOf(val)) > -1)
