@@ -1,0 +1,21 @@
+<h1>This project doesn't have any issues yet</h1>
+<p>Here are some ways to add new issues:</p>
+
+<div class="row-fluid add-issues">
+  <div class="span3">
+    <h3>1. Manually add a finding</h3>
+    <p>Just click on the <i class="fa fa-plus"></i> sign next to the <strong>Issues</strong> heading in the sidebar.</p>
+  </div>
+  <div class="offset1 span3">
+    <h3>2. Import from a library</h3>
+    <p>Before you can import findings from an external library, you may have to do some configuring.</p>
+    <p>For MediaWiki and VulnDB, click on the <%= link_to main_app.configurations_path, target: '_blank' do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %> link at the top-right of the page.</p>
+    <p>Then click on the <i class="fa fa-chevron-down"></i> next to <strong>Import issues</strong> in the sidebar.</p>
+  </div>
+  <div class="offset1 span3">
+    <h3>3. Upload the output of a tool</h3>
+    <p>Use the <%= link_to main_app.upload_manager_path do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %> link at the top of the page.</p>
+  </div>
+</div>
+<!-- <p>Use the <strong><i class="fa fa-plus"></i></strong> icon next to <em>Project issues</em> on the side bar to add a new issue manually.</p>
+<p>Or use the <em>Import issues</em> <strong><i class="fa fa-chevron-down"></i></strong> menu to import an issue from an external source.</p> -->

@@ -7,7 +7,7 @@ class IssueTable
 
   deleteSelected: (element, answer) ->
     if answer
-      $('#tbl-issues').find('input[type=checkbox]:checked.js-multicheck').each ->
+      $('.js-tbl-issues').find('input[type=checkbox]:checked.js-multicheck').each ->
         $row = $(this).parent().parent()
         $($row.find('td')[2]).replaceWith("<td class=\"loading\">Deleting...</td>")
         $that = $(this)
@@ -22,6 +22,9 @@ class IssueTable
             # Delete link from the sidebar
             $("#issue_#{data.id}").remove()
 
+            if $('input[type=checkbox]:checked').length == 0
+              $('.js-issue-actions').css('visibility', 'hidden')
+
           error: (foo,bar,foobar) ->
             $($row.find('td')[2]).replaceWith("<td class='text-error'>Please try again</td>")
         }
@@ -33,7 +36,7 @@ class IssueTable
     $target = $(event.target)
     event.preventDefault()
 
-    $('#tbl-issues').find('input[type=checkbox]:checked.js-multicheck').each ->
+    $('.js-tbl-issues').find('input[type=checkbox]:checked.js-multicheck').each ->
       $this = $(this)
 
       $this.prop('checked', false)
@@ -53,6 +56,8 @@ class IssueTable
 
           $($row.find('td')[2]).replaceWith(data.tag_cell)
           $("#issues #issue_#{issue_id}").replaceWith(data.issue_link)
+          if $('input[type=checkbox]:checked').length == 0
+            $('.js-issue-actions').css('visibility', 'hidden')
 
         error: (foo,bar,foobar) ->
           $($row.find('td')[2]).replaceWith("<td class='text-error'>Please try again</td>")
@@ -78,8 +83,8 @@ jQuery ->
 
     $('input[type=checkbox]').click ->
       if $('input[type=checkbox]:checked').length
-        $('.btn-group').css('visibility', 'visible')
+        $('.js-issue-actions').css('visibility', 'visible')
       else
-        $('.btn-group').css('visibility', 'hidden')
+        $('.js-issue-actions').css('visibility', 'hidden')
 
     new IssueTable

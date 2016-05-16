@@ -1,7 +1,7 @@
-<table id="tbl-issues" class="table table-striped">
+<table class="table table-striped tbl-issues js-tbl-issues">
   <thead>
     <tr>
-      <th><input type="checkbox" id="select-all" /></th>
+      <th></th>
       <th>Title</th>
       <th>Tags</th>
       <th>Affects</th>
@@ -10,7 +10,7 @@
   <tbody>
     <% issues.each do |issue| %>
     <tr>
-      <td><%= check_box_tag dom_id(issue), issue.id, false, class: 'js-multicheck', data: {url: issue_path(issue, format: :json)} %></td>
+      <td class="column-checkbox"><%= check_box_tag dom_id(issue), issue.id, false, class: 'js-multicheck', data: { url: issue_path(issue, format: :json) } %></td>
       <td><%= link_to issue.title, issue %></td>
       <td><%= tag_and_name_for(issue) %></td>
       <%# this count is coming from the SQL finder in the controller %>
