@@ -120,8 +120,8 @@ jQuery ->
 
       $('#select-all').prop('checked', _select_all)
 
-    $('input[type=checkbox].js-multicheck').click ->
-      if $('input[type=checkbox]:checked').length
+    $('input[type=checkbox]').click ->
+      if $('input[type=checkbox]:checked.js-multicheck').length
         $('.js-issue-actions').css('display', 'inline-block')
       else
         $('.js-issue-actions').css('display', 'none')
