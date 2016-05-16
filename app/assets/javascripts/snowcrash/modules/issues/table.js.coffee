@@ -13,6 +13,10 @@ class IssueTable
     # -------------------------------------------------- Install event handlers
     $('#issue-table').on('click', '.js-taglink', @onTagSelected)
 
+    # Then Select all button is clicked, click the inner checkbox
+    $('.js-select-all-issues').on 'click', ->
+      $(this).find('input').click()
+
     # We're hooking into Rails UJS data-confirm behavior to only fire the Ajax
     # if the user confirmed the deletion
     $('#issue-table').on('confirm:complete', '#delete-selected', @onDeleteSelected)
