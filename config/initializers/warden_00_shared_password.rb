@@ -18,7 +18,7 @@ Warden::Strategies.add(:shared_password) do
     password = params.fetch('password', nil)
 
     if not ( username.blank? || password.nil? || ::BCrypt::Password.new(::Configuration.shared_password) != password )
-      success!(username)
+      success!(User.new(email: username))
     else
       fail 'Invalid credentials.'
     end
