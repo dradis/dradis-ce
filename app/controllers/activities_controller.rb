@@ -7,7 +7,7 @@ class ActivitiesController < ProjectScopedController
     @this_poll  = Time.now.to_i
     @activities = Activity.includes(:trackable).where(
       "`user` != (?) AND `created_at` >= (?)",
-      current_user,
+      current_user.email,
       # passing the string directly doesn't work, must be a Time object:
       Time.at(params[:last_poll].to_i)
     )
