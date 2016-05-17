@@ -19,6 +19,13 @@
             <i class="fa fa-paperclip"></i> <%= short_filename(attachment.filename) %>
             <% end %>
 
+            <a
+              href="#"
+              class="pull-right attachment-url-copy"
+              data-clipboard-text="<%= node_attachment_url(node, attachment.filename) %>">
+              <i class="fa fa-link"> </i>
+            </a>
+
             <span class="delete size pull-right">
               <small><%= number_to_human_size(File.size(attachment)) %></small>
 

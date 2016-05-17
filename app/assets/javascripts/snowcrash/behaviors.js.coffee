@@ -70,3 +70,19 @@ jQuery ->
   # Disable form buttons after submitting them.
   $('form').submit (ev)->
     $('input[type=submit]', this).attr('disabled', 'disabled').val('Processing...');
+
+
+  $(".attachment-url-copy").tooltip
+    placement: "bottom"
+    title:     "Copied!"
+    trigger:   "manual"
+
+  # Initialize clipboard.js:
+  clipboard = new Clipboard(".clipboard")
+
+  clipboard.on "success", (e) ->
+    $link = $(e.trigger)
+    $link.tooltip("show")
+    window.setTimeout () ->
+      $link.tooltip("hide")
+    , 1000
