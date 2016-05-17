@@ -8,12 +8,11 @@ describe "node pages", js: true do
   before do
     login_to_project_as_user
     @other_user = create(:user)
-    @node       = create(:node, project: @project)
+    @node       = create(:node)
     @note_0     = create(:note, node: @node, text:"#[Title]#\nNote 0")
     @note_1     = create(:note, node: @node, text:"#[Title]#\nNote 1")
     @evidence_0 = create(:evidence, node: @node, content:"#[Title]#\nEv 0")
     @evidence_1 = create(:evidence, node: @node, content:"#[Title]#\nEv 1")
-    @other_project = create(:project).tap { |p| p.authors << @logged_in_as }
   end
 
   describe "when another user adds a new root node" do
@@ -48,8 +47,11 @@ describe "node pages", js: true do
     end
 
     context "which belongs to a different project" do
+      skip unless FactoryGirl.factories.registered? :project
+
       before do
-        @new_node  = create(:node, label: "New node", project: @other_project)
+        @other_project = create(:project).tap { |p| p.authors << @logged_in_as }
+        @new_node      = create(:node, label: "New node", project: @other_project)
         visit node_path(@node)
       end
 
@@ -148,7 +150,7 @@ describe "node pages", js: true do
 
   describe "when another user deletes a root node" do
     before do
-      @other_node = create(:node, project: @project, label: "Delete me")
+      @other_node = create(:node, label: "Delete me")
       visit node_path(@node)
     end
 
@@ -178,7 +180,7 @@ describe "node pages", js: true do
 
   describe "when another user deletes a non-root node" do
     before do
-      @subnode = create(:node, project: @project, label: "Sub", parent: @node)
+      @subnode = create(:node, label: "Sub", parent: @node)
       visit node_path(@node)
     end
 
@@ -247,7 +249,7 @@ describe "node pages", js: true do
 
   describe "when another user updates a node" do
     before do
-      @other_node = create(:node, project: @node.project, label: "Other")
+      @other_node = create(:node, label: "Other")
       visit node_path(@node)
     end
 
