@@ -41,9 +41,9 @@ class EvidenceController < NestedNodeResourceController
         Evidence.create(issue_id: evidence_params[:issue_id], node_id: node_id, content: evidence_params[:content])
       end
     end
-    if evidence_params[:new_node_ids]
-      evidence_params[:new_node_ids].split("\n").each do |label|
-        node = Node.create!(label: label)
+    if evidence_params[:node_list]
+      evidence_params[:node_list].lines.map(&:chomp).each do |label|
+        node = Node.find_or_create_by(label: label)
         Evidence.create(issue_id: evidence_params[:issue_id], node_id: node.id, content: evidence_params[:content])
       end
     end
@@ -114,6 +114,6 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def evidence_params
-    params.require(:evidence).permit(:author, :content, :issue_id, :node_id, :new_node_ids, node_ids: [])
+    params.require(:evidence).permit(:author, :content, :issue_id, :node_id, :node_list, node_ids: [])
   end
 end
