@@ -14,7 +14,7 @@ describe "upload requests" do
   after { FileUtils.rm_rf(Attachment.pwd.join(@uploads_node.id.to_s)) }
 
   describe "POST #parse" do
-    let(:uploader) { 'Dradis::Plugins::Nessus' }
+    let(:uploader) { 'Dradis::Plugins::Projects::Upload::Template' }
     let(:send_request) do
       post upload_parse_path, file: "temp", format: :js, uploader: uploader
     end
