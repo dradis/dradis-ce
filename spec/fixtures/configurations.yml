@@ -1,0 +1,7 @@
+revision:
+  name: 'admin:revision'
+  value: 0
+
+plugin_templates:
+  name: 'admin:paths:plugin_templates'
+  value: ./tmp/templates/plugins/
