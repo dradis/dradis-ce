@@ -9,7 +9,7 @@ describe "Export Manager" do
   end
 
   it "presents existing Issues" do
-    pending "For the time being we won't show the Issues in the Export Manager"
+    skip "For the time being we won't show the Issues in the Export Manager"
     # @issuelib = @project.nodes.create(:label => 'All issues', :type_id => Node::Types::ISSUELIB)
     # issue = create(:issue, :node => @issuelib)
     #
@@ -22,7 +22,7 @@ describe "Export Manager" do
       visit url_for({:controller => :export, :action => :index})
 
       Dradis::Plugins::with_feature(:export).each do |engine|
-        page.should have_content(engine.plugin_name.to_s)
+        page.should have_content(engine.plugin_description.to_s)
       end
     end
 
