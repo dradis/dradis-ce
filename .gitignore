@@ -11,6 +11,9 @@
 !/log/.keep
 /tmp/
 
+# RSpec testing
+/spec/.examples.txt
+
 # App-specific
 /attachments/
 /config/shared/
