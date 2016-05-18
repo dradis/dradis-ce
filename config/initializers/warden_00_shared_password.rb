@@ -3,6 +3,15 @@
 # http://team.skroutz.gr/posts/skroutz-warden/
 # http://railscasts.com/episodes/305-authentication-with-warden
 
+Warden::Manager.serialize_into_session do |user|
+  user.email
+end
+
+Warden::Manager.serialize_from_session do |id|
+  User.new(email: id)
+end
+
+
 Rails.configuration.middleware.use Warden::Manager do |manager|
   manager.default_strategies :shared_password
   manager.failure_app = SessionsController.action(:new)
