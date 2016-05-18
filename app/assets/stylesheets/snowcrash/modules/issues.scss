@@ -25,28 +25,6 @@ body.issues {
           }
         }
 
-        .issue-actions {
-          text-align: center;
-
-          .btn-group {
-            visibility: hidden;
-            .btn {
-              background-color: #e6e6e6;
-              &:active, &:hover {
-                background-color: darken(#e6e6e6, 10%);
-              }
-            }
-            .dropdown-menu {
-              text-align: left;
-            }
-          }
-        }
-
-        td.loading {
-          background: image-url('loading.gif') no-repeat left center;
-          padding-left: 20px;
-        }
-
         .popover {
           .popover-title {
             font-size: 14px;
@@ -63,19 +41,8 @@ body.issues {
 }
 
 body.issues.show {
-
   .evidence-content {
-    .h4, .h5 {
-      margin: 0 0 0.5em 0;
-      line-height: 1em;
-      padding-bottom: 1em;
-      border-bottom: 1px solid $grayLight;
-
-      .actions {
-        color: $grayLight;
-        font-size: 85%;
-      }
-    }
+    padding: 1em 0 0 2em;
 
     .evidence-for-host {
       margin: 0.5em 0 2.5em;
@@ -88,6 +55,8 @@ body.issues.show {
     }
 
     .tab-content {
+      border-right: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
       border-left: 1px solid #ddd;
       padding: 1.5em 1em 1em;
     }
@@ -95,13 +64,46 @@ body.issues.show {
 }
 
 body.issues.index {
+  //-------------------------------------------------------- Empty-state styles
   p.lead {
     margin: 1ex 0;
     text-align: center;
   }
+
   .add-issues {
     margin-top: 4em;
   }
+  //------------------------------------------------------- /Empty-state styles
+
+  //-------------------------------------------------------------- Issues table
+  .btn-toolbar {
+    input[type='checkbox'] {
+      margin: 0;
+    }
+
+    .issue-actions {
+      display: none;
+
+      .dropdown-menu {
+        text-align: left;
+      }
+    }
+  }
+
+  .tbl-issues {
+    td.loading {
+      background: image-url('loading.gif') no-repeat left center;
+      padding-left: 20px;
+    }
+
+    .column-checkbox {
+      padding: 0;
+      text-align: center;
+      vertical-align: middle;
+      width: 36px;
+    }
+  }
+  //------------------------------------------------------------- /Issues table
 }
 
 body.issues.new, body.issues.edit {

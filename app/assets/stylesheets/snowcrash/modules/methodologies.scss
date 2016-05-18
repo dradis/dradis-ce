@@ -1,4 +1,5 @@
 body.methodologies {
+
   #methodologies {
     margin-bottom: 40px;
   }
@@ -6,6 +7,18 @@ body.methodologies {
   #preview_content {
     ul {
       margin-bottom: 3ex;
+    }
+  }
+
+  .task-list li {
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 1px 1px #ccc;
+    margin: 1ex 0;
+    padding: 1ex;
+
+    label {
+      margin-bottom: 0;
     }
   }
 }

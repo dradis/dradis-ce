@@ -1,30 +1,24 @@
 module Dradis::CE::API
   class APIController < ApplicationController
-    # force_ssl if: :ssl_configured?
-
-    # No CSRF protection for the wicked!
-    protect_from_forgery with: :null_session
-
-    rescue_from ActionController::ParameterMissing do |exception|
-      render_json_error(exception, 422)
-    end
-    rescue_from ActiveRecord::RecordNotFound do |exception|
-      render_json_error(exception, 404)
-    end
+    after_action :skip_set_cookies_header
 
     before_action :api_authentication_required
     before_action :json_required, only: [:create, :update]
 
-    after_action :skip_set_cookies_header
+    rescue_from ActionController::ParameterMissing do |exception|
+      # after_action is not called for exceptions
+      skip_set_cookies_header
+      render_json_error(exception, 422)
+    end
 
-    # FIXME: do we need this?
-    # Swallow the AccessDenied exception and present it as a 403 Forbidden error
-    # rescue_from CanCan::AccessDenied do |exception|
-    #   render json: {
-    #     message: "Forbidden",
-    #     description: "The authenticated user does not have access to this operation"
-    #   }, status: 403
-    # end
+    rescue_from ActiveRecord::RecordNotFound do |exception|
+      # after_action is not called for exceptions
+      skip_set_cookies_header
+      render_json_error(exception, 404)
+    end
+
+    # No CSRF protection for the wicked!
+    protect_from_forgery with: :null_session
 
     protected
     # def ssl_configured?

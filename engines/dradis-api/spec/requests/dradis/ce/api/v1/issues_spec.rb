@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "Issues API" do
 
+  include_context "project scoped API"
   include_context "https"
 
   context "as unauthenticated user" do
@@ -101,7 +102,7 @@ describe "Issues API" do
         expect{valid_post}.to change{Issue.count}.by(1)
         expect(response.status).to eq(201)
         retrieved_issue = JSON.parse(response.body)
-        expect(retrieved_issue['text']).to eq params[:issue][:text]
+        expect(retrieved_issue['text']).to eq valid_params[:issue][:text]
       end
 
       let(:submit_form) { valid_post }
@@ -133,10 +134,10 @@ describe "Issues API" do
         valid_put
         expect(response.status).to eq(200)
 
-        expect(Issue.find(issue.id).text).to eq params[:issue][:text]
+        expect(Issue.find(issue.id).text).to eq valid_params[:issue][:text]
 
         retrieved_issue = JSON.parse(response.body)
-        expect(retrieved_issue['text']).to eq params[:issue][:text]
+        expect(retrieved_issue['text']).to eq valid_params[:issue][:text]
       end
 
       let(:submit_form) { valid_put }
@@ -162,6 +163,7 @@ describe "Issues API" do
       let(:delete_issue) { delete "/api/issues/#{ issue.id }", {}, @env }
 
       it "deletes a issue" do
+        delete_issue
         expect(response.status).to eq(200)
         expect { Issue.find(issue.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end

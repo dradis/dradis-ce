@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "Evidence API" do
 
+  include_context "project scoped API"
   include_context "https"
 
   let(:node) { create(:node) }
