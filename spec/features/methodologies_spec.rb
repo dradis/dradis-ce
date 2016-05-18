@@ -14,6 +14,7 @@ describe "Describe methodologies" do
     let(:methodology_library){ Node.methodology_library }
 
     it "shows a 'No methodologies assigned' message if none have been assigned" do
+      methodology_library.notes.destroy_all
       visit methodologies_path
       expect(current_path).to eq(methodologies_path)
       expect(page).to have_content('No methodologies')
