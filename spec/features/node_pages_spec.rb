@@ -8,7 +8,7 @@ describe "node pages" do
   describe "creating new nodes" do
     context "when a project has no nodes defined yet" do
       it "says so in the sidebar" do
-        visit project_path(@project)
+        visit summary_path(@project)
         within ".main-sidebar" do
           should have_selector ".no-nodes", text: "No nodes defined yet"
         end
@@ -17,7 +17,7 @@ describe "node pages" do
 
     describe "clicking the '+' button in the 'Nodes' sidebar", js: true do
       before do
-        visit project_path(@project)
+        visit summary_path
         find(".add-subnode > a").click
       end
 
@@ -44,7 +44,7 @@ describe "node pages" do
 
   describe "clicking 'rename' on a node", js: true do
     before do
-      @node = create(:node, label: "My node", project: @project)
+      @node = create(:node, label: "My node")
       visit node_path(@node)
       click_link "Rename"
     end
@@ -69,8 +69,9 @@ describe "node pages" do
 
         activity = Activity.last
         expect(activity.trackable).to eq @node
-        expect(activity.project).to eq @project
-        expect(activity.user).to eq @logged_in_as
+        # TODO: Project singleton
+        # expect(activity.project).to eq @project
+        expect(activity.user).to eq @logged_in_as.email
         expect(activity.action).to eq "update"
       end
     end
@@ -89,7 +90,7 @@ describe "node pages" do
 
   describe "clicking 'Delete' on a node", js: true do
     before do
-      @node = create(:node, label: "My node", project: @project)
+      @node = create(:node, label: "My node")
       visit node_path(@node)
       click_link "Delete"
     end
@@ -138,8 +139,11 @@ describe "node pages" do
         @other_node = create(:node)
         @activities = [@node, @note, @evidence].flat_map do |model|
           [
-            create(:create_activity, trackable: model, project: @project),
-            create(:update_activity, trackable: model,  project: @project)
+            # TODO: Project singleton
+            # create(:create_activity, trackable: model, project: @project),
+            create(:create_activity, trackable: model),
+            # create(:update_activity, trackable: model,  project: @project)
+            create(:update_activity, trackable: model)
           ]
         end
         @other_activity = create(:update_activity, trackable: @other_node)
