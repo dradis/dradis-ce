@@ -22,7 +22,7 @@ class MethodologiesController < ProjectScopedController
     new_name = methodology_params.fetch(:name, old_name)
     @methodology.name = new_name
 
-    @methodologylib.notes.create(author: 'methodology builder', text: @methodology.content, category: Category.first)
+    @methodologylib.notes.create(author: 'methodology builder', text: @methodology.content, category: Category.default)
 
     flash[:info] = "'#{old_name}' added as '#{new_name}'"
     redirect_to methodologies_path

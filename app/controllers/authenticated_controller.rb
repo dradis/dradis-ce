@@ -21,10 +21,9 @@ class AuthenticatedController < ApplicationController
 
   # Set 'whodunnit' in paper trail versions to be the email address of the
   # current user
-  # FIXME: re-enable PaperTrail
-  # def user_for_paper_trail
-  #   current_user.email if current_user
-  # end
+  def user_for_paper_trail
+    current_user.email if current_user
+  end
 
   private
   # This filter redirects every request to the first-time onboarding Tour until

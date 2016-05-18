@@ -64,8 +64,6 @@
       ActivitiesPoller.deleteNode(<%= activity.trackable_id %>)
     <% else %>
       <% node = activity.trackable %>
-      <% # Skip the node if it doesn't belong to the current project: %>
-      <% next unless activity.trackable.project == @project %>
 
       <% if activity.action == "create" %>
         <% if node.root_node? %>

@@ -62,7 +62,7 @@ describe "moving a node", js: true do
     end
 
     it "doesn't allow you to submit the form" do
-      expect(submit_move_button[:disabled]).to be_true
+      expect(submit_move_button[:disabled]).to be true
     end
   end
 
@@ -113,7 +113,6 @@ describe "moving a node", js: true do
 
 
   def create_node(attrs={})
-    attrs[:project] = @project
     create(:node, attrs)
   end
 

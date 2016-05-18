@@ -8,12 +8,11 @@ describe "node pages", js: true do
   before do
     login_to_project_as_user
     @other_user = create(:user)
-    @node       = create(:node, project: @project)
+    @node       = create(:node)
     @note_0     = create(:note, node: @node, text:"#[Title]#\nNote 0")
     @note_1     = create(:note, node: @node, text:"#[Title]#\nNote 1")
     @evidence_0 = create(:evidence, node: @node, content:"#[Title]#\nEv 0")
     @evidence_1 = create(:evidence, node: @node, content:"#[Title]#\nEv 1")
-    @other_project = create(:project).tap { |p| p.authors << @logged_in_as }
   end
 
   describe "when another user adds a new root node" do
@@ -47,40 +46,13 @@ describe "node pages", js: true do
       end
     end
 
-    context "which belongs to a different project" do
-      before do
-        @new_node  = create(:node, label: "New node", project: @other_project)
-        visit node_path(@node)
-      end
-
-      let(:add_node) do
-        track_created(@new_node, @other_user)
-        call_poller
-      end
-
-      it "doesn't add the node to the sidebar" do
-        add_node
-        within_main_sidebar do
-          should have_no_selector node_link_selector(@new_node)
-        end
-      end
-
-      it "doesn't add it to the 'move node' modal" do
-        show_move_node_modal
-        within_move_node_nodal do
-          add_node
-          should have_no_selector node_link_selector(@new_node)
-        end
-      end
-    end
-
     context "and that node is a subnode" do
       before { visit node_path(@node) }
 
       context "and its parent is visible" do
         before do
           # Give the node another subnode so the expansion works:
-          create(:node, label: "Other Sub", project: @project, parent: @node)
+          create(:node, label: "Other Sub", parent: @node)
         end
 
         context "in the sidebar" do
@@ -89,7 +61,7 @@ describe "node pages", js: true do
           it "adds the node to the sidebar" do
             within_main_sidebar do
               should have_selector node_link_selector(@node)
-              @subnode = create(:node, label: "Sub", project: @project, parent: @node)
+              @subnode = create(:node, label: "Sub", parent: @node)
               should have_no_selector node_link_selector(@subnode)
               track_created(@subnode, @other_user)
               call_poller
@@ -107,7 +79,7 @@ describe "node pages", js: true do
           it "adds the node to the sidebar" do
             within_move_node_nodal do
               should have_selector node_link_selector(@node)
-              @subnode = create(:node, label: "Sub", project: @project, parent: @node)
+              @subnode = create(:node, label: "Sub", parent: @node)
               should have_no_selector node_link_selector(@subnode)
               track_created(@subnode, @other_user)
               call_poller
@@ -121,7 +93,7 @@ describe "node pages", js: true do
         before { expand_node_in_sidebar(@node) }
 
         specify "the 'expand' link reappears, and works" do
-          @sub = create(:node, label: "Sub", project: @project, parent: @node)
+          @sub = create(:node, label: "Sub", parent: @node)
           track_created(@sub, @other_user)
           call_poller
           within_main_sidebar do
@@ -148,7 +120,7 @@ describe "node pages", js: true do
 
   describe "when another user deletes a root node" do
     before do
-      @other_node = create(:node, project: @project, label: "Delete me")
+      @other_node = create(:node, label: "Delete me")
       visit node_path(@node)
     end
 
@@ -178,7 +150,7 @@ describe "node pages", js: true do
 
   describe "when another user deletes a non-root node" do
     before do
-      @subnode = create(:node, project: @project, label: "Sub", parent: @node)
+      @subnode = create(:node, label: "Sub", parent: @node)
       visit node_path(@node)
     end
 
@@ -247,7 +219,7 @@ describe "node pages", js: true do
 
   describe "when another user updates a node" do
     before do
-      @other_node = create(:node, project: @node.project, label: "Other")
+      @other_node = create(:node, label: "Other")
       visit node_path(@node)
     end
 
