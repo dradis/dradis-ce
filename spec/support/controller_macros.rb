@@ -12,11 +12,11 @@ module ControllerMacros
     allow_any_instance_of(ApplicationController).to \
       receive(:current_user).and_return(user)
     @logged_in_as = user
-    @project    = OpenStruct.new
-    @project.id = 1
   end
 
   def login_to_project_as_user
     login_as_user
+    @project    = OpenStruct.new
+    @project.id = 1
   end
 end
