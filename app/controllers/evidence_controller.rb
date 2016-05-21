@@ -16,7 +16,7 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def create
-    @evidence.author ||= current_user
+    @evidence.author ||= current_user.email
 
     respond_to do |format|
       if @evidence.save

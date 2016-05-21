@@ -30,7 +30,7 @@ RSpec.configure do |config|
   config.mock_with :rspec
 
   # config.include ControllerMacros, type: :controller
-  # config.include ControllerMacros, type: :feature
+  config.include ControllerMacros, type: :feature
   # config.include SelecterHelper,   type: :feature
   # config.include SupportHelper,    type: :controller
   # config.include SupportHelper,    type: :feature
@@ -52,6 +52,14 @@ RSpec.configure do |config|
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
+  # arbitrary gems may also be filtered via:
+  # config.filter_gems_from_backtrace("gem name")
+
+  config.example_status_persistence_file_path = Rails.root.join("spec", ".examples.txt")
+
+  # Stop GC while we test
+  config.before(:all) { DeferredGarbageCollection.start }
+  config.after(:all) { DeferredGarbageCollection.reconsider }
 
   config.before(:suite) do
     begin

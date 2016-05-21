@@ -21,7 +21,7 @@ class IssuesController < ProjectScopedController
   end
 
   def create
-    @issue.author ||= current_user
+    @issue.author ||= current_user.email
 
     respond_to do |format|
       if @issue.save &&

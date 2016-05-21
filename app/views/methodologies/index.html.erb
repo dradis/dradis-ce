@@ -58,9 +58,14 @@
       <% for section in methodology.sections do %>
       <div class="section">
         <h2><%= section.name %></h2>
-        <ul>
+        <ul class="task-list">
           <% for task in section.tasks do %>
-            <li><%= check_box_tag "#{section.name}~#{task.name}", nil, task.checked? %> <%= task.name %></li>
+            <li>
+              <label class="checkbox">
+                <%= check_box_tag "#{section.name}~#{task.name}", nil, task.checked? %>
+                <%= task.name %>
+              </label>
+            </li>
           <% end %>
         </ul>
       </div>

@@ -21,13 +21,13 @@ Warden::Manager.after_set_user do |user, warden, options|
     end
 
     # When the app is initializing for the first time the DB is not available.
-    session_timeout = if ::Configuration.table_exists?
+    @session_timeout ||= if ::Configuration.table_exists?
                         ::Configuration.session_timeout
                       else
                         15
                       end
 
-    if last_request_at && last_request_at <= session_timeout.minutes.ago
+    if last_request_at && last_request_at <= @session_timeout.minutes.ago
       warden.raw_session.inspect
       warden.logout
       throw :warden, message: "Session timed out!"

@@ -4,9 +4,10 @@ describe "Issues pages" do
   subject { page }
 
   it "should require authenticated users" do
+    Configuration.create(name: 'admin:password', value: 'rspec_pass')
     visit issues_path
-    current_path.should eq(login_path)
-    page.should have_content('Access denied.')
+    expect(current_path).to eq(login_path)
+    expect(page).to have_content('Access denied.')
   end
 
   context "as authenticated user" do
@@ -15,7 +16,7 @@ describe "Issues pages" do
 
     context "with an Issue library" do
       let(:issuelib) do
-        Node.set_project_scope(@project.id)
+        # Node.set_project_scope(@project.id)
         Node.issue_library
       end
 
@@ -101,7 +102,7 @@ describe "Issues pages" do
             template_content = File.read(template_path.join('simple_note.txt'))
             visit new_issue_path(template: 'simple_note')
 
-            find_field('issue[text]').value.should include(template_content)
+            expect(find_field('issue[text]').value).to include(template_content)
           end
         end
 
@@ -137,7 +138,7 @@ describe "Issues pages" do
         let(:submit_form) { click_button "Update Issue" }
 
         before do
-          @node  = create(:node, project: @project)
+          @node  = create(:node)
           @issue = create(:issue, node: @node)
           visit edit_issue_path(@issue)
         end
@@ -186,7 +187,7 @@ describe "Issues pages" do
             category: Category.issue,
             author: 'rspec',
             text: "#[Title]#\nMultiple Apache bugs\n\n",
-            node: create(:node_with_project)
+            node: create(:node, :with_project)
           )
           # @issue is currently loaded as a Note, not an Issue. Make sure it
           # has the right class:
@@ -224,14 +225,13 @@ describe "Issues pages" do
           it "deletes the issue" do
             id = @issue.id
             submit_form
-            expect(Issue.exists?(id)).to be_false
+            expect(Issue.exists?(id)).to be false
           end
 
           let(:model) { @issue }
           include_examples "creates an Activity", :destroy
         end
       end
-
     end
   end
 end
