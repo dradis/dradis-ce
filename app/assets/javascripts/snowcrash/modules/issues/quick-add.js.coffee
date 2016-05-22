@@ -1,18 +1,8 @@
 jQuery ->
   if $('#issues').length
 
-    $('.js-add-evidence').popover
-      container: $('#js-add-evidence-container .js-popover-container'),
-      content: ->
-        $('#js-add-evidence-container .content').html()
-      ,
-      html: true,
-      title: 'Find node',
-      trigger: 'manual'
-
     $('.js-add-evidence').click (e)->
-      $(this).popover('show')
-      $('#js-add-evidence-container .js-popover-container').find('input:text:visible:first').focus()
+      $('#js-add-evidence-container').slideToggle()
 
     $('#js-add-evidence-container .js-popover-container').on 'change', '#add-evidence', ->
       node_label  = $(this).val()

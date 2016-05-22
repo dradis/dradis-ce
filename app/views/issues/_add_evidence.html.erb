@@ -1,5 +1,5 @@
 <div id="js-add-evidence-container">
-  <%= form_for :evidence, url: create_multiple_evidences_path, html: { id: 'add-evidences', style: 'display:none' } do |f| %>
+  <%= form_for :evidence, url: create_multiple_evidences_path, html: { id: 'add-evidences' } do |f| %>
     <div class="form-inputs">
       <%= f.hidden_field :issue_id, value: @issue.id %>
       <%= f.hidden_field :content %>
@@ -18,7 +18,7 @@
           </div>
         </div>
         <div class="span4">
-          <%= f.label 'Enter list of nodes', for: :node_list %>
+          <%= f.label 'Enter list of nodes', for: :evidence_node_list %>
           <%= f.text_area :node_list, rows: 10 %>
         </div>
         <div class="clearfix"></div>
