@@ -74,7 +74,7 @@ jQuery ->
 
   $(".attachment-url-copy").tooltip
     placement: "bottom"
-    title:     "Copied!"
+    title:     "Copied attachment URL to clipboard!"
     trigger:   "manual"
 
   # Initialize clipboard.js:
