@@ -22,7 +22,7 @@ class IssueTable
     @$column_menu.find('a').on 'click', @onColumnPickerClick
 
   loadColumnState: =>
-    if typeof(Storage) != "undefined"
+    if Storage?
       @selectedColumns = JSON.parse(localStorage.getItem(@storageKey()))
     else
       console.log "The browser doesn't support local storage of settings."
@@ -117,7 +117,7 @@ class IssueTable
       }
 
   saveColumnState: ->
-    if typeof(Storage) != "undefined"
+    if Storage?
       localStorage.setItem(@storageKey(), JSON.stringify(@selectedColumns))
     else
       console.log "The browser doesn't support local storage of settings."
