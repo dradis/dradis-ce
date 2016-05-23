@@ -7,6 +7,7 @@ class IssuesController < ProjectScopedController
   before_filter :find_note_template, only: [:new]
 
   def index
+    @columns = @issues.map(&:fields).map(&:keys).uniq.flatten | ['Title', 'Tags', 'Affected']
   end
 
   def show
