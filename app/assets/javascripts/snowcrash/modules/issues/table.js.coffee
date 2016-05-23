@@ -1,5 +1,6 @@
 class IssueTable
   $table: null
+  project: null
   selectedColumns: []
 
   constructor: ->
@@ -21,8 +22,13 @@ class IssueTable
     @$column_menu.find('a').on 'click', @onColumnPickerClick
 
   loadColumnState: =>
-    # TODO: persist this in browser local storage or a cookie
-    @selectedColumns = ['title', 'tags', 'affected']
+    if typeof(Storage) != "undefined"
+      @selectedColumns = JSON.parse(localStorage.getItem(@storageKey()))
+    else
+      console.log "The browser doesn't support local storage of settings."
+
+    @selectedColumns ||= ['title', 'tags', 'affected']
+
     that = this
 
     @$column_menu.find('a').each ->
@@ -48,6 +54,7 @@ class IssueTable
       , 0
 
     $(event.target).blur()
+    @saveColumnState()
     @showHideColumns()
     false
 
@@ -109,6 +116,13 @@ class IssueTable
           $($row.find('td')[2]).replaceWith("<td class='text-error'>Please try again</td>")
       }
 
+  saveColumnState: ->
+    if typeof(Storage) != "undefined"
+      localStorage.setItem(@storageKey(), JSON.stringify(@selectedColumns))
+    else
+      console.log "The browser doesn't support local storage of settings."
+      console.log "Column selection can't be saved."
+
   showHideColumns: =>
     that = this
 
@@ -122,6 +136,10 @@ class IssueTable
         else
           that.$table.find("td:nth-child(#{index + 1})").css('display', 'none')
           $th.css('display', 'none')
+
+  storageKey: ->
+    @project ||= $('.brand').data('project')
+    "project.#{@project}.issue_columns"
 
 jQuery ->
   if $('body.issues.index').length
