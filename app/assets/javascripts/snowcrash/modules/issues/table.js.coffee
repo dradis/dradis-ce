@@ -2,6 +2,8 @@ class IssueTable
   $table: null
   project: null
   selectedColumns: []
+  # We need this for Issues#update in onTagSelected()
+  tagColumnIndex: null
 
   constructor: ->
     @$table       = $('#issue-table table')
@@ -85,7 +87,8 @@ class IssueTable
     # prevent Rails UJS from doing anything else.
     false
 
-  onTagSelected: (event) ->
+  onTagSelected: (event) =>
+    that = this
     $target = $(event.target)
     event.preventDefault()
 
@@ -94,7 +97,7 @@ class IssueTable
 
       $this.prop('checked', false)
       $row = $this.parent().parent()
-      $($row.find('td')[2]).replaceWith("<td class=\"loading\">Loading...</td>")
+      $($row.find('td')[that.tagColumnIndex]).replaceWith("<td class=\"loading\">Loading...</td>")
 
       url   = $this.data('url')
       data  = { issue: { tag_list: $target.data('tag') } }
@@ -107,13 +110,13 @@ class IssueTable
         success: (data) ->
           issue_id = $that.val()
 
-          $($row.find('td')[2]).replaceWith(data.tag_cell)
+          $($row.find('td')[that.tagColumnIndex]).replaceWith(data.tag_cell)
           $("#issues #issue_#{issue_id}").replaceWith(data.issue_link)
           if $('input[type=checkbox]:checked').length == 0
             $('.js-issue-actions').css('display', 'none')
 
         error: (foo,bar,foobar) ->
-          $($row.find('td')[2]).replaceWith("<td class='text-error'>Please try again</td>")
+          $($row.find('td')[that.tagColumnIndex]).replaceWith("<td class='text-error'>Please try again</td>")
       }
 
   saveColumnState: ->
@@ -130,6 +133,7 @@ class IssueTable
       $th = $(th)
 
       if (column = $(th).data('column'))
+        that.tagColumnIndex ||= index if column == 'tags'
         if that.selectedColumns.indexOf(column) > -1
           that.$table.find("td:nth-child(#{index + 1})").css('display', 'table-cell')
           $th.css('display', 'table-cell')
