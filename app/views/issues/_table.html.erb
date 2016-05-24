@@ -22,6 +22,12 @@
         when 'Affected'
           # this count is coming from the SQL finder in the controller
           issue.affected_count
+        when 'Created'
+          local_time_ago(issue.created_at)
+        when 'Created by'
+          issue.author
+        when 'Updated'
+          local_time_ago(issue.updated_at)
         else
           issue.fields.fetch(column, '')
         end
