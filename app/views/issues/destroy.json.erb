@@ -3,14 +3,12 @@
 {
   "success": true,
        "id": <%= @issue.id %>,
-      "msg": "Issue deleted",
-   "issues": "<%= j render('issues/table.html.erb', issues: @issues) %>"
+      "msg": "Issue deleted"
 }
 <% else %>
 {
   "success": false,
       "msg": "<%= j "Error while deleting issue: #{@issue.errors}" %>",
-   "errors": <%= j @issue.errors.to_json %>,
-   "issues": "<%=j render('issues/table.html.erb', issues: @issues) %>"
+   "errors": <%= j @issue.errors.to_json %>"
   }
 <% end %>
