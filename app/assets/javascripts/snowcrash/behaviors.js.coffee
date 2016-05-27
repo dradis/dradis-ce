@@ -16,10 +16,72 @@ jQuery ->
       if confirm('Are you sure?')
         $.blueimp.fileupload.prototype.options.destroy.call(this, e, data);
 
-    paste: (e, data)->
+  # Start: a patch to implement #144
+  # https://github.com/securityroots/dradispro-tracker/issues/144
+    paste: (e, data) ->
+      record = sessionStorage.getItem('attachments.last-upload')
+
       $.each data.files, (index, file) ->
-        if (!file.name?)
-          file.name = prompt('Please provide a filename for the pasted image', 'screenshot-XX.png') || 'unnamed.png'
+        if (record == null)
+          type = '.' + file.type.split('/').pop()
+        else
+          last = record.split(/[-\.]+/)
+          type = '.' + last.pop()
+          flag = parseInt(last.pop())
+
+          if (JSON.parse(localStorage.getItem('attachments.auto-increasing')))
+            ++flag
+
+        noname = 'unnamed' + type
+        myname = 'Risk-Issue-Page-1'
+
+        if !isNaN(flag)
+          last.push(flag)
+          myname = last.join('-')
+
+        file.name = prompt('Please provide a filename for the pasted image', myname + type) || noname
+
+        if (JSON.parse(localStorage.getItem('attachments.quick-pasting')))
+          if (file.name == noname)
+            data.files = []
+          else
+            data.autoUpload = true
+
+    always: (e, data) ->
+      $.each data.files, (index, file) ->
+        sessionStorage.setItem('attachments.last-upload', file.name)
+
+  # initialize clipboard.js
+  clipboard = new Clipboard('.lnk-copy')
+
+  clipboard.on 'success', (e) ->
+    last = e.text.replace(/\!/g, '').split('/').pop()
+    sessionStorage.setItem('attachments.last-upload', last)
+    e.clearSelection()
+
+  # implement image preview
+  $('a[download]').each ->
+    ext = this.href.split('.').pop()
+    img = ['bmp', 'jpeg', 'jpg', 'png']
+
+    if ($.inArray(ext.toLowerCase(), img) > -1)
+      $(this).attr('data-placement', 'right')
+      $(this).attr('data-toggle', 'tooltip')
+      $(this).attr('title', '<img src="' + this.href + '">')
+
+  $('[data-toggle="tooltip"]').tooltip
+    animated: true
+    delay: {show: 800, hide: 100}
+    html: true
+
+  # quick pasting event
+  $('#quick-pasting').prop('checked', JSON.parse(localStorage.getItem('attachments.quick-pasting')))
+  $('#auto-increasing').prop('checked', JSON.parse(localStorage.getItem('attachments.auto-increasing')))
+
+  $('.enhanced-switch').each ->
+    $(this).on 'change', () ->
+      localStorage.setItem('attachments.' + this.id, JSON.stringify($(this).is(':checked')))
+  # End
 
 
   # -------------------------------------------------------- Our jQuery plugins
