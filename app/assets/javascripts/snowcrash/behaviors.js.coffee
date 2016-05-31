@@ -78,7 +78,7 @@ jQuery ->
     trigger:   "manual"
 
   # Initialize clipboard.js:
-  clipboard = new Clipboard(".clipboard")
+  clipboard = new Clipboard(".attachment-url-copy")
 
   clipboard.on "success", (e) ->
     $link = $(e.trigger)
