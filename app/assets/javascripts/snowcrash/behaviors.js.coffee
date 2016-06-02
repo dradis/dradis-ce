@@ -84,7 +84,7 @@ jQuery ->
       trigger:   "manual"
     $btn.tooltip("show")
 
-  
+
   clipboard.on 'error', (e) ->
     actionKey = if e.action == 'cut' then 'X' else 'C'
     if /Mac/i.test(navigator.userAgent)
