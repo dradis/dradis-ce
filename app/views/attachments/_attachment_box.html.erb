@@ -149,19 +149,26 @@
                   {%= file.name %}
                   {% } %}
                 </a>
-                <span class="delete size pull-right">
-                  <small>{%=o.formatFileSize(file.size)%}</small>
+                <span class="pull-right">
+                  <span class="size">
+                    <small>{%=o.formatFileSize(file.size)%}</small>
+                  </span>
+
+                  <span class="delete">
+                    <button
+                      class="btn btn-danger"
+                      data-type="{%=file.delete_type%}"
+                      data-url="{%=file.delete_url%}"
+                    >
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </span>
 
                   <button
-                    class="btn btn-default"
+                    class="attachment-url-copy btn btn-default"
                     data-clipboard-text="!{%= file.url %}!"
                   >
                     <i class="fa fa-link"></i>
-                  </button>
-
-                  <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}">
-                      <i class="fa fa-trash"></i>
-                      <span>{%locale.fileupload.destroy%}</span>
                   </button>
                 </span>
               </div>
