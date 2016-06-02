@@ -72,17 +72,34 @@ jQuery ->
     $('input[type=submit]', this).attr('disabled', 'disabled').val('Processing...');
 
 
-  $(".attachment-url-copy").tooltip
-    placement: "bottom"
-    title:     "Copied attachment URL to clipboard!"
-    trigger:   "manual"
-
   # Initialize clipboard.js:
   clipboard = new Clipboard(".attachment-url-copy")
 
-  clipboard.on "success", (e) ->
-    $link = $(e.trigger)
-    $link.tooltip("show")
-    window.setTimeout () ->
-      $link.tooltip("hide")
-    , 1000
+  clipboard.on 'success', (e) ->
+    e.clearSelection()
+    $btn = $(e.trigger)
+    $btn.tooltip
+      placement: "bottom"
+      title:     "Copied attachment URL to clipboard!",
+      trigger:   "manual"
+    $btn.tooltip("show")
+
+  
+  clipboard.on 'error', (e) ->
+    actionKey = if e.action == 'cut' then 'X' else 'C'
+    if /Mac/i.test(navigator.userAgent)
+      actionMsg = 'Press ⌘-' + actionKey + ' to '+ e.action
+    else
+      actionMsg = 'Press Ctrl-' + actionKey + ' to ' + e.action
+
+    $btn = $(e.trigger)
+
+    $btn.tooltip
+      placement: "bottom"
+      title:     actionMsg
+      trigger:   "manual"
+    $btn.tooltip("show")
+
+
+  $(".attachments-box").on "mouseleave", ".attachment-url-copy", ->
+    $(this).tooltip("hide")

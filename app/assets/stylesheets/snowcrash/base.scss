@@ -468,6 +468,14 @@ body {
 
 .attachments-box {
   .table {margin-bottom: 0}
+
+  .btn {
+    box-shadow: none;
+
+    &:hover {
+      color: #9A1829 !important;
+    }
+  }
 }
 .drop-zone {
   @include rounded;
