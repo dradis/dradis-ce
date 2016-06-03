@@ -4,4 +4,9 @@ jQuery ->
     $('#evidence-tabs .tab-pane').first().addClass('active')
 
     $('#evidence-tabs a[data-toggle="tab"]').on 'shown', (ev)->
-      $('#evidence-tabs #evidence-host-list').css('height', $('#evidence-tabs .tab-content').css('height'))
+      tabContentHeight = $('#evidence-tabs .tab-content').css('height')
+      $tabs            = $('#evidence-tabs #evidence-host-list')
+      if $tabs.height() < tabContentHeight
+        $tabs.css('height', tabContentHeight)
+      else
+        $tabs.css('height', null)
