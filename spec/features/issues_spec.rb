@@ -234,7 +234,7 @@ describe "Issues pages" do
 
         describe "add evidence", js: true do
           before {
-            Node.create!(label: '192.168.0.1')
+            @node = Node.create!(label: '192.168.0.1')
             visit issue_path(@issue)
           }
 
@@ -269,6 +269,23 @@ describe "Issues pages" do
             find('.js-add-evidence').click
             fill_in 'Enter list of nodes', with: "192.168.0.1\r\n192.168.0.2\r\n192.168.0.3"
             expect{click_button('Save Evidence')}.to change{Evidence.count}.by(3).and change { Node.count }.by(2)
+
+            # New nodes don't have a parent:
+            Node.order("created_at ASC").last(2).each do |node|
+              expect(node.parent).to be_nil
+            end
+          end
+
+          specify "new nodes can be assigned to a parent node" do
+            click_link('Evidence')
+            find('.js-add-evidence').click
+            select @node.label, from: "Assign new nodes to parent:"
+            fill_in 'Enter list of nodes', with: "aaaa\nbbbb\ncccc"
+            expect{click_button('Save Evidence')}.to change{Node.count}.by(3)
+
+            Node.order("created_at ASC").last(3).each do |node|
+              expect(node.parent).to eq @node
+            end
           end
         end
       end

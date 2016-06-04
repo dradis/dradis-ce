@@ -42,8 +42,13 @@ class EvidenceController < NestedNodeResourceController
       end
     end
     if params[:evidence][:node_list]
+      if params[:evidence][:node_list_parent_id].present?
+        parent = Node.find(params[:evidence][:node_list_parent_id])
+      end
       params[:evidence][:node_list].lines.map(&:chomp).each do |label|
         node = Node.find_or_create_by(label: label)
+        node.update_attributes!(parent: parent) if parent
+
         Evidence.create(issue_id: evidence_params[:issue_id], node_id: node.id, content: evidence_params[:content])
       end
     end

@@ -20,6 +20,15 @@
         <div class="span4">
           <%= f.label 'Enter list of nodes', for: :evidence_node_list %>
           <%= f.text_area :node_list, rows: 10 %>
+
+          <%= f.label 'Assign new nodes to parent:', for: :evidence_node_list_parent_id %>
+          <%= f.collection_select(
+            :node_list_parent_id,
+            @nodes_for_add_evidence,
+            :id,
+            :label,
+            include_blank: "No parent"
+          ) %>
         </div>
         <div class="clearfix"></div>
       </div>
