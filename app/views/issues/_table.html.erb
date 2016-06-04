@@ -2,19 +2,38 @@
   <thead>
     <tr>
       <th></th>
-      <th data-column="title">Title</th>
-      <th data-column="tags">Tags</th>
-      <th data-column="affected">Affects</th>
+      <% @columns.each do |column| %>
+      <th data-column="<%= column.downcase %>"><%= column %></th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
     <% issues.each do |issue| %>
     <tr>
       <td class="column-checkbox"><%= check_box_tag dom_id(issue), issue.id, false, class: 'js-multicheck', data: { url: issue_path(issue, format: :json) } %></td>
-      <td><%= link_to issue.title, issue %></td>
-      <td><%= tag_and_name_for(issue) %></td>
-      <%# this count is coming from the SQL finder in the controller %>
-      <td><%= issue.affected_count %></td>
+      <% @columns.each do |column| %>
+      <td>
+        <%=
+        case column
+        when 'Title'
+          link_to issue.title, issue
+        when 'Tags'
+          tag_and_name_for(issue)
+        when 'Affected'
+          # this count is coming from the SQL finder in the controller
+          issue.affected_count
+        when 'Created'
+          local_time_ago(issue.created_at)
+        when 'Created by'
+          issue.author
+        when 'Updated'
+          local_time_ago(issue.updated_at)
+        else
+          issue.fields.fetch(column, '')
+        end
+        %>
+      </td>
+      <% end  %>
     </tr>
     <% end %>
   </tbody>

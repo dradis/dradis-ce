@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <%= link_to 'Dradis CE', main_app.summary_path, class: 'brand' %>
+      <%= link_to 'Dradis CE', main_app.summary_path, class: 'brand', data: { project: 1 } %>
       <div class="nav-collapse">
         <ul class="nav pull-right">
           <li><%= link_to main_app.upload_manager_path do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %></li>
