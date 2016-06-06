@@ -19,7 +19,7 @@
             <i class="fa fa-paperclip"></i> <%= short_filename(attachment.filename) %>
             <% end %>
 
-            <span class="pull-right">
+            <div class="text-right">
               <span class="size">
                 <small><%= number_to_human_size(File.size(attachment)) %></small>
               </span>
@@ -35,12 +35,12 @@
               </span>
 
               <button
-                class="attachment-url-copy btn btn-default"
+                class="btn js-attachment-url-copy"
                 data-clipboard-text="!<%= node_attachment_path(node, attachment.filename) %>!"
               >
                 <i class="fa fa-link"></i>
               </button>
-            </span>
+            </div>
           </div>
         </td>
       </tr>

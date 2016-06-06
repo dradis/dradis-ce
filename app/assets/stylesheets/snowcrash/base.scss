@@ -396,8 +396,12 @@ body {
           td {
             padding: 0 0 1em;
 
-            .btn, .btn-danger {
+            .btn {
               background: transparent;
+              padding: 4px 6px;
+            }
+
+            .btn-danger {
               color: $red;
             }
           }
