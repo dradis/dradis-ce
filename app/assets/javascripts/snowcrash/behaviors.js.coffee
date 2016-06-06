@@ -22,6 +22,39 @@ jQuery ->
           file.name = prompt('Please provide a filename for the pasted image', 'screenshot-XX.png') || 'unnamed.png'
 
 
+  # Initialize clipboard.js:
+  clipboard = new Clipboard('.js-attachment-url-copy')
+
+  clipboard.on 'success', (e) ->
+    $btn = $(e.trigger)
+    e.clearSelection()
+    $btn.tooltip
+      placement: 'bottom'
+      title:     'Copied attachment URL to clipboard!',
+      trigger:   'manual'
+    $btn.tooltip('show')
+
+
+  clipboard.on 'error', (e) ->
+    actionKey = if e.action == 'cut' then 'X' else 'C'
+    if /Mac/i.test(navigator.userAgent)
+      actionMsg = 'Press ⌘-' + actionKey + ' to '+ e.action
+    else
+      actionMsg = 'Press Ctrl-' + actionKey + ' to ' + e.action
+
+    $btn = $(e.trigger)
+
+    $btn.tooltip
+      placement: 'bottom'
+      title:     actionMsg
+      trigger:   'manual'
+    $btn.tooltip('show')
+
+
+  $('.attachments-box').on 'mouseleave', '.js-attachment-url-copy', ->
+    $(this).tooltip('hide')
+
+
   # -------------------------------------------------------- Our jQuery plugins
   # Activate jQuery.Textile
   $('.textile').textile()
@@ -71,35 +104,3 @@ jQuery ->
   $('form').submit (ev)->
     $('input[type=submit]', this).attr('disabled', 'disabled').val('Processing...');
 
-
-  # Initialize clipboard.js:
-  clipboard = new Clipboard(".attachment-url-copy")
-
-  clipboard.on 'success', (e) ->
-    e.clearSelection()
-    $btn = $(e.trigger)
-    $btn.tooltip
-      placement: "bottom"
-      title:     "Copied attachment URL to clipboard!",
-      trigger:   "manual"
-    $btn.tooltip("show")
-
-
-  clipboard.on 'error', (e) ->
-    actionKey = if e.action == 'cut' then 'X' else 'C'
-    if /Mac/i.test(navigator.userAgent)
-      actionMsg = 'Press ⌘-' + actionKey + ' to '+ e.action
-    else
-      actionMsg = 'Press Ctrl-' + actionKey + ' to ' + e.action
-
-    $btn = $(e.trigger)
-
-    $btn.tooltip
-      placement: "bottom"
-      title:     actionMsg
-      trigger:   "manual"
-    $btn.tooltip("show")
-
-
-  $(".attachments-box").on "mouseleave", ".attachment-url-copy", ->
-    $(this).tooltip("hide")
