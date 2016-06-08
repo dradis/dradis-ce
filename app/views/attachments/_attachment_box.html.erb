@@ -20,7 +20,9 @@
             <% end %>
 
             <span class="delete size pull-right">
-              <small><%= number_to_human_size(File.size(attachment)) %></small>
+              <span class="lnk-copy" data-clipboard-text="!<%= node_attachment_path(node,attachment.filename) %>!" data-placement="top" data-toggle="tooltip" title="Copy this attachment url !">
+                <small><%= number_to_human_size(File.size(attachment)) %></small>
+              </span>
 
               <button class="btn btn-danger" data-type="DELETE" data-url="<%= node_attachment_path(node,attachment.filename) %>">
                 <i class="fa fa-trash"></i>
@@ -61,6 +63,15 @@
         </button>
       </div>
 
+      <div class="span8">
+        <!-- #144 switches -->
+        <div class="controls">
+          <div class="checkbox">
+            <label><input class="enhanced-switch" id="quick-pasting" type="checkbox"><strong>Quick Pasting</strong></label>
+            <label><input class="enhanced-switch" id="auto-increasing" type="checkbox">Auto Increasing?</label>
+          </div>
+        </div>
+      </div>
       <div class="span4">
         <!-- The global progress bar -->
         <div class="progress progress-success progress-striped active fade">
@@ -136,7 +147,9 @@
                   {% } %}
                 </a>
                 <span class="delete size pull-right">
-                  <small>{%=o.formatFileSize(file.size)%}</small>
+                  <span class="lnk-copy" data-clipboard-text="!{%=file.url%}!" data-placement="top" data-toggle="tooltip" title="Copy this attachment url !">
+                    <small>{%=o.formatFileSize(file.size)%}</small>
+                  </span>
                   <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}">
                       <i class="fa fa-trash"></i>
                       <span>{%locale.fileupload.destroy%}</span>

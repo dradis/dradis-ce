@@ -11,6 +11,8 @@
 //= require d3
 //= require local_time
 
+//= require clipboard
+
 //= require snowcrash/plugins/jquery.breadcrums
 //= require snowcrash/plugins/jquery.treemodal
 //= require snowcrash/plugins/jquery.treenav
