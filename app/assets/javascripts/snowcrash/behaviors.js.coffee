@@ -51,7 +51,7 @@ jQuery ->
     $btn.tooltip('show')
 
 
-  $(".attachments-box").on "mouseleave", ".attachment-url-copy", ->
+  $(".attachments-box").on "mouseleave", ".js-attachment-url-copy", ->
     $this = $(this)
     $this.tooltip("hide") if $this.data("tooltip")
 
