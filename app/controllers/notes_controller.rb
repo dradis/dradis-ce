@@ -35,8 +35,13 @@ class NotesController < NestedNodeResourceController
 
   # Update the attributes of a Note
   def update
+    updated_at_before_save = @note.updated_at.to_f
     if @note.update_attributes(note_params)
       track_updated(@note)
+      if params[:note][:original_updated_at].to_f < updated_at_before_save
+        # TODO get information about versions
+        flash[:update_conflict] = true
+      end
       redirect_to node_note_path(@node, @note), notice: 'Note updated.'
     else
       initialize_nodes_sidebar

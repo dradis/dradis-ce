@@ -29,6 +29,10 @@ class Note < ActiveRecord::Base
 
   dradis_has_fields_for :text
 
+  def original_updated_at
+    @original_updated_at || updated_at.to_f
+  end
+
   has_paper_trail
 
   # -- Relationships --------------------------------------------------------

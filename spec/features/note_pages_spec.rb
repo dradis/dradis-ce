@@ -70,7 +70,6 @@ describe "note pages" do
     it_behaves_like "a form with a help button"
 
     describe "submitting the form with valid information" do
-
       before do
         fill_in :note_text, with: 'New note text'
       end
@@ -88,6 +87,21 @@ describe "note pages" do
 
       let(:model) { @note }
       include_examples "creates an Activity", :update
+
+      context "when another user has updated the note in the meantime" do
+        before { @note.update_attributes!(text: "Someone else's changes") }
+
+        it "still saves my changes" do
+          submit_form
+          expect(@note.reload.text).to eq "New note text"
+        end
+
+        it "shows the updated note with a warning and a link to the other version" do
+          submit_form
+          expect(current_path).to eq node_note_path(@node, @note)
+          expect(page).to have_content "This is a placeholder warning. TODO"
+        end
+      end
     end
 
     describe "submitting the form with invalid information" do

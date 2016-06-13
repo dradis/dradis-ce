@@ -17,6 +17,11 @@
   </p>
 </div>
 
+<% if flash[:update_conflict] %>
+  <div class="alert alert-warning">
+    This is a placeholder warning. TODO
+  </div>
+<% end %>
 
 <ul class="nav nav-tabs main-tabs">
   <li class="active"><a href="#info-tab" data-toggle="tab"><i class="fa fa-file-text"></i> Information</a></li>

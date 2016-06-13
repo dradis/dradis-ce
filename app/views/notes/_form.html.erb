@@ -3,6 +3,8 @@
   <%= f.association :category, collection: Category.all, label_method: :name, prompt: 'Assign note category' %>
   <%= f.input :text, label: false, input_html: { class: 'textile', data: { preview_url: preview_path, help_url: markup_path } } %>
 
+  <%= f.hidden_field :original_updated_at if @note.persisted? %>
+
   <div class="form-actions">
     <%= f.button :submit, class: 'btn btn-dradispro' %> or
     <%= link_to 'Cancel', node_path(@node), class: 'cancel-link' %>
