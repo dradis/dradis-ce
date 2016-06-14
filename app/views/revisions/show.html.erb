@@ -1,0 +1,87 @@
+<% content_for :title, "#{@record.class.model_name} ##{@record.id} - comparing revisions" %>
+
+
+<% if @node %>
+  <%= render "nodes/sidebar" %>
+<% end %>
+
+<div id="diff" class="container-fluid inner">
+  <h2>
+    <%= @record.class.model_name %>
+    #<%= @record.id %> - view changes at <%= @updated_at %>
+  </h2>
+
+  <div class="row-fluid">
+    <div class="span5 offset1">
+      <h4>Previous revision</h4>
+      <div class="well">
+        <ul>
+          <li><strong>Author:</strong> <%= @previous_author %></li>
+          <li><strong>Updated at:</strong> <%= @last_updated_at %></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="span5">
+      <h4>This revision</h4>
+      <div class="well">
+        <ul>
+          <li><strong>Author:</strong> <%= @this_author %></li>
+          <li><strong>Updated at:</strong> <%= @updated_at %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <pre><%= raw @diff.format_as(:html) %></pre>
+
+  <br/>
+  <h3>Legend</h3>
+  <p><del>removed text</del> <ins>added text</ins></p>
+
+  <%# if @revision.previous && @revision.previous.previous %>
+    <%#= link_to "Previous", record_revision_path(@record, @revision.previous)  %>
+  <%# end %>
+
+  <%# if @revision.previous && @revision.previous.previous && @revision.next %>
+    <!-- | -->
+  <%# end %>
+
+  <%# if @revision.next %>
+    <%#= link_to "Next", record_revision_path(@record, @revision.next)  %>
+  <%# end %>
+
+</div><!-- #diff -->
+
+
+<div id="<%= dom_id(@record) %>_revisions"
+      class="revisions-table inner note-text-inner">
+  <h3>Revision History</h3>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Updated by</th>
+        <th>When</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @revisions.each do |revision| %>
+        <tr <%= raw "class='active'" if revision == @revision %>>
+          <td><%= revision.whodunnit %></td>
+          <td><%= time_ago_in_words(revision.created_at) %> ago</td>
+          <td>
+            <% unless revision == @revisions.last %>
+              <% if revision == @revision %>
+                Currently Viewing
+              <% else %>
+                <%= link_to "View Changes", record_revision_path(@record, revision) %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
