@@ -61,8 +61,28 @@ body.issues.show {
       padding: 1.5em 1em 1em;
     }
   }
+
   #js-add-evidence-container{
     display: none;
+
+    .tooltip {
+      ul {
+        list-style: disc;
+        padding-left: 3ex;
+        text-align: left;
+
+        li {
+          margin-bottom: 1ex;
+        }
+      }
+    }
+
+    #existing-node-list {
+      border: 1px solid #ddd;
+      height: 200px;
+      overflow-y: scroll;
+      padding: 1ex;
+    }
   }
 }
 
