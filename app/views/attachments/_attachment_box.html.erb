@@ -26,7 +26,7 @@
 
               <span class="delete">
                 <button
-                  class="btn btn-danger"
+                  class="btn btn-transparent btn-danger"
                   data-type="DELETE"
                   data-url="<%= node_attachment_path(node,attachment.filename) %>"
                 >
@@ -35,7 +35,7 @@
               </span>
 
               <button
-                class="btn js-attachment-url-copy"
+                class="btn btn-transparent js-attachment-url-copy"
                 data-clipboard-text="!<%= node_attachment_path(node, attachment.filename) %>!"
               >
                 <i class="fa fa-link"></i>
@@ -156,7 +156,7 @@
 
                   <span class="delete">
                     <button
-                      class="btn btn-danger"
+                      class="btn btn-transparent btn-danger"
                       data-type="{%=file.delete_type%}"
                       data-url="{%=file.delete_url%}"
                     >
@@ -165,7 +165,7 @@
                   </span>
 
                   <button
-                    class="attachment-url-copy btn btn-default"
+                    class="btn btn-transparent js-attachment-url-copy"
                     data-clipboard-text="!{%= file.url %}!"
                   >
                     <i class="fa fa-link"></i>
