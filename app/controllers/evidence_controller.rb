@@ -38,7 +38,11 @@ class EvidenceController < NestedNodeResourceController
     if params[:evidence][:node_ids]
       params[:evidence][:node_ids].reject(&:blank?).each do |node_id|
         node = Node.find(node_id)
-        Evidence.create(issue_id: evidence_params[:issue_id], node_id: node.id, content: evidence_params[:content])
+        Evidence.create(
+          issue_id: evidence_params[:issue_id],
+          node_id: node.id,
+          content: evidence_params[:content]
+        )
       end
     end
     if params[:evidence][:node_list]
@@ -46,10 +50,15 @@ class EvidenceController < NestedNodeResourceController
         parent = Node.find(params[:evidence][:node_list_parent_id])
       end
       params[:evidence][:node_list].lines.map(&:chomp).each do |label|
-        node = Node.find_or_create_by(label: label)
+        node = Node.create_with(type_id: Node::Types::HOST)
+          .find_or_create_by(label: label)
         node.update_attributes!(parent: parent) if parent
 
-        Evidence.create(issue_id: evidence_params[:issue_id], node_id: node.id, content: evidence_params[:content])
+        Evidence.create(
+          issue_id: evidence_params[:issue_id],
+          node_id: node.id,
+          content: evidence_params[:content]
+        )
       end
     end
     redirect_to issue_path(evidence_params[:issue_id]), notice: "Evidence added for selected nodes."
