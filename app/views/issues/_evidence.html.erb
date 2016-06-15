@@ -34,7 +34,7 @@
               <h3>Evidence for <%= link_to node.label, node %></h3>
               <ul class="nav nav-tabs">
                 <% instances.each_with_index do |evidence, i| %>
-                <li class="<%= 'active' if i==0 %>"><a href="#node_<%= node.id %>_instance_<%= i %>" data-toggle="tab">Instance #<%= i %></a></li>
+                <li class="<%= 'active' if i==0 %>"><a href="#node_<%= node.id %>_instance_<%= i %>" data-toggle="tab">Instance #<%= i+1 %></a></li>
                 <% end %>
               </ul>
 
