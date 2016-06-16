@@ -19,3 +19,10 @@
 .alert-success {
   background-color: rgba($green, 0.1);
 }
+
+.main-content .alert ul {
+  // Don't allow these to be overriden by the more general rules
+  // for .main-content:
+  list-style: inherit;
+  margin-left: 25px;
+}

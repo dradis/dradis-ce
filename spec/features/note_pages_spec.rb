@@ -54,7 +54,7 @@ describe "note pages" do
 
   describe "edit page" do
     before do
-      @note = create(:note, node: @node)
+      @note = create(:note, node: @node, updated_at: 1.second.ago)
       visit edit_node_note_path(@node, @note)
     end
 
@@ -69,10 +69,18 @@ describe "note pages" do
 
     it_behaves_like "a form with a help button"
 
+    # TODO handle the case where a Note has no paperclip versions (legacy data)
+
     describe "submitting the form with valid information" do
       before do
         fill_in :note_text, with: 'New note text'
       end
+
+      CONFLICT_WARNING = \
+        "Warning: another user updated this note while you were editing "\
+        "it. Your changes have been saved, but you may have overwritten "\
+        "their changes. You may want to review the revision history "\
+        "to make sure nothing important has been lost"
 
       it "updates the note" do
         submit_form
@@ -85,13 +93,20 @@ describe "note pages" do
         expect(page).to have_content "New note text"
       end
 
+      it "doesn't say anything about conflicts or locking" do
+        expect(page).to have_no_content CONFLICT_WARNING
+        expect(page).to have_no_link(//, href: node_note_revisions_path(@node, @note))
+      end
+
       let(:model) { @note }
       include_examples "creates an Activity", :update
 
       context "when another user has updated the note in the meantime" do
-        before { @note.update_attributes!(text: "Someone else's changes") }
+        before do
+          @note.update_attributes!(text: "Someone else's changes")
+        end
 
-        it "still saves my changes" do
+        it "saves my changes" do
           submit_form
           expect(@note.reload.text).to eq "New note text"
         end
@@ -99,13 +114,74 @@ describe "note pages" do
         it "shows the updated note with a warning and a link to the other version" do
           submit_form
           expect(current_path).to eq node_note_path(@node, @note)
-          expect(page).to have_content "This is a placeholder warning. TODO"
+          expect(page).to have_content CONFLICT_WARNING
+          expect(page).to have_link(
+            "revision history",
+            href: node_note_revisions_path(@node, @note)
+          )
+        end
+
+        DATE_FORMAT = "%b %e %Y, %-l:%M%P"
+
+        it "links to the previous versions" do
+          submit_form
+          all_versions = @note.versions.order("created_at ASC")
+          my_version   = all_versions[-1]
+          conflict     = all_versions[-2]
+          old_versions = all_versions - [my_version, conflict]
+
+          expect(page).to have_link(
+            "Your update at #{my_version.created_at.strftime(DATE_FORMAT)}",
+            href: node_note_revision_path(@node, @note, my_version),
+          )
+
+          expect(page).to have_link(
+            "Update while you were editing at #{conflict.created_at.strftime(DATE_FORMAT)}",
+            href: node_note_revision_path(@node, @note, conflict),
+          )
+
+          old_versions.each do |version|
+            expect(page).to have_no_link(//, node_note_revision_path(@node, @note, version))
+          end
+        end
+
+        context "when there has been more than one edit" do
+          before do
+            @note.update_attributes!(text: "More conflicts")
+            submit_form
+          end
+
+          it "links to them all" do
+            submit_form
+            all_versions = @note.versions.order("created_at ASC")
+            my_version   = all_versions[-1]
+            conflicts    = all_versions[-3..-2]
+            old_versions = all_versions - [my_version] - conflicts
+
+            expect(page).to have_link(
+              "Your update at #{my_version.created_at.strftime(DATE_FORMAT)}",
+              href: node_note_revision_path(@node, @note, my_version),
+            )
+
+            conflicts.each do |conflict|
+              expect(page).to have_link(
+                "Update while you were editing at #{conflict.created_at.strftime(DATE_FORMAT)}",
+                href: node_note_revision_path(@node, @note, conflict),
+              )
+            end
+
+            old_versions.each do |version|
+              expect(page).to have_no_link(//, node_note_revision_path(@node, @note, version))
+            end
+          end
         end
       end
     end
 
     describe "submitting the form with invalid information" do
       before { fill_in :note_text, with: "a"*65536 }
+
+      # TODO how to handle conflicting edits in this case?
 
       it "doesn't update the note" do
         expect{submit_form}.not_to change{@note.reload.text}

@@ -7,10 +7,15 @@ module RevisionsHelper
     when Issue
       issue_revision_path(record, revision)
     when Note
-      node_note_revision_path(record.node, record, revision)
+      note_revision_path(revision)
     when Evidence
       node_evidence_revision_path(record.node, record, revision)
     end
+  end
+
+  def note_revision_path(revision)
+    note = revision.item
+    node_note_revision_path(note.node, note, revision)
   end
 
 end

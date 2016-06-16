@@ -28,19 +28,26 @@ class NotesController < NestedNodeResourceController
   # Retrieve a Note given its :id
   def show
     @activities = @note.activities.latest
+
+    if flash[:update_conflicts_since]
+      @conflicting_versions = @note.versions\
+        .order("created_at ASC")\
+        .where("created_at > '#{Time.at(flash[:update_conflicts_since].to_i + 1).utc}'")
+    end
   end
 
   def edit
+    # TODO what if there are no versions? E.g. legacy data
+    @versions_count = @note.versions.count
   end
 
   # Update the attributes of a Note
   def update
-    updated_at_before_save = @note.updated_at.to_f
+    updated_at_before_save = @note.updated_at.to_i
     if @note.update_attributes(note_params)
       track_updated(@note)
-      if params[:note][:original_updated_at].to_f < updated_at_before_save
-        # TODO get information about versions
-        flash[:update_conflict] = true
+      if params[:note][:original_updated_at].to_i < updated_at_before_save
+        flash[:update_conflicts_since] = params[:note][:original_updated_at].to_i
       end
       redirect_to node_note_path(@node, @note), notice: 'Note updated.'
     else
