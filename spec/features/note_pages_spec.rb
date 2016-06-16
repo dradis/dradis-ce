@@ -93,7 +93,8 @@ describe "note pages" do
         expect(page).to have_content "New note text"
       end
 
-      it "doesn't say anything about conflicts or locking" do
+      it "doesn't say anything about conflicts" do
+        submit_form
         expect(page).to have_no_content CONFLICT_WARNING
         expect(page).to have_no_link(//, href: node_note_revisions_path(@node, @note))
       end
@@ -111,7 +112,7 @@ describe "note pages" do
           expect(@note.reload.text).to eq "New note text"
         end
 
-        it "shows the updated note with a warning and a link to the other version" do
+        it "shows the updated note with a warning and a link to the revision history" do
           submit_form
           expect(current_path).to eq node_note_path(@node, @note)
           expect(page).to have_content CONFLICT_WARNING

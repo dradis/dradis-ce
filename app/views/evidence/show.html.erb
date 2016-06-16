@@ -1,5 +1,27 @@
 <% content_for :title, "View evidence for #{@node.label} / #{@evidence.issue.title}" %>
 
+<% if @conflicting_versions %>
+  <div class="alert alert-warning">
+    <p>
+      Warning: another user updated this evidence while you were editing it. Your
+      changes have been saved, but you may have overwritten their changes. You
+      may want to review the
+      <%= link_to "revision history", node_evidence_revisions_path(@node, @evidence) %>
+      to make sure nothing important has been lost:
+    </p>
+
+    <ul>
+      <% @conflicting_versions[0..-2].each do |version| %>
+        <li>
+          <%= link_to "Update while you were editing at #{version.created_at.strftime("%b %e %Y, %-l:%M%P")}", node_evidence_revision_path(@node, @evidence, version) %>
+        </li>
+      <% end %>
+      <li>
+        <%= link_to "Your update at #{@conflicting_versions.last.created_at.strftime("%b %e %Y, %-l:%M%P")}", node_evidence_revision_path(@node, @evidence, @conflicting_versions.last) %>
+      </li>
+    </ul>
+  </div>
+<% end %>
 
 <ul class="nav nav-tabs main-tabs">
   <li class="active"><a href="#evidence-tab" data-toggle="tab">

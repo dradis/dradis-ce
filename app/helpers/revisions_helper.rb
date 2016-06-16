@@ -13,6 +13,7 @@ module RevisionsHelper
     end
   end
 
+  # TODO remove me
   def note_revision_path(revision)
     note = revision.item
     node_note_revision_path(note.node, note, revision)

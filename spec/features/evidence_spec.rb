@@ -59,24 +59,113 @@ describe "evidence" do
 
     before do
       issue = create(:issue, node: issue_lib)
-      @evidence = create(:evidence, issue: issue)
+      @evidence = create(:evidence, issue: issue, updated_at: 2.seconds.ago)
       visit edit_node_evidence_path(@node, @evidence)
     end
+
+    CONFLICT_WARNING = \
+      "Warning: another user updated this evidence while you were editing "\
+      "it. Your changes have been saved, but you may have overwritten "\
+      "their changes. You may want to review the revision history "\
+      "to make sure nothing important has been lost"
 
     it "uses the full-screen editor plugin" # TODO
 
     it_behaves_like "a form with a help button"
 
     describe "submitting the form with valid information" do
+      before { fill_in :evidence_content, with: "new content" }
+
       it "updates the evidence" do
-        fill_in :evidence_content, with: "new content"
         submit_form
         expect(@evidence.reload.content).to eq "new content"
         expect(current_path).to eq node_evidence_path(@node, @evidence)
       end
 
+      it "doesn't say anything about conflicts or locking" do
+        submit_form
+        expect(page).to have_no_content CONFLICT_WARNING
+        expect(page).to have_no_link(//, href: node_evidence_revisions_path(@node, @evidence))
+      end
+
       let(:model) { @evidence }
       include_examples "creates an Activity", :update
+
+      context "when another user has updated the evidence in the meantime" do
+        before do
+          @evidence.update_attributes!(content: "Someone else's changes")
+        end
+
+        it "saves my changes" do
+          submit_form
+          expect(@evidence.reload.content).to eq "new content"
+        end
+
+        it "shows the updated evidence with a warning and a link to the revision history" do
+          submit_form
+          expect(current_path).to eq node_evidence_path(@node, @evidence)
+          expect(page).to have_content CONFLICT_WARNING
+          expect(page).to have_link(
+            "revision history",
+            href: node_evidence_revisions_path(@node, @evidence)
+          )
+        end
+
+        DATE_FORMAT = "%b %e %Y, %-l:%M%P"
+
+        it "links to the previous versions" do
+          submit_form
+          all_versions = @evidence.versions.order("created_at ASC")
+          my_version   = all_versions[-1]
+          conflict     = all_versions[-2]
+          old_versions = all_versions - [my_version, conflict]
+
+          expect(page).to have_link(
+            "Your update at #{my_version.created_at.strftime(DATE_FORMAT)}",
+            href: node_evidence_revision_path(@node, @evidence, my_version),
+          )
+
+          expect(page).to have_link(
+            "Update while you were editing at #{conflict.created_at.strftime(DATE_FORMAT)}",
+            href: node_evidence_revision_path(@node, @evidence, conflict),
+          )
+
+          old_versions.each do |version|
+            expect(page).to have_no_link(//, node_evidence_revision_path(@node, @evidence, version))
+          end
+        end
+
+        context "when there has been more than one edit" do
+          before do
+            @evidence.update_attributes!(content: "More conflicts")
+            submit_form
+          end
+
+          it "links to them all" do
+            submit_form
+            all_versions = @evidence.versions.order("created_at ASC")
+            my_version   = all_versions[-1]
+            conflicts    = all_versions[-3..-2]
+            old_versions = all_versions - [my_version] - conflicts
+
+            expect(page).to have_link(
+              "Your update at #{my_version.created_at.strftime(DATE_FORMAT)}",
+              href: node_evidence_revision_path(@node, @evidence, my_version),
+            )
+
+            conflicts.each do |conflict|
+              expect(page).to have_link(
+                "Update while you were editing at #{conflict.created_at.strftime(DATE_FORMAT)}",
+                href: node_evidence_revision_path(@node, @evidence, conflict),
+              )
+            end
+
+            old_versions.each do |version|
+              expect(page).to have_no_link(//, node_evidence_revision_path(@node, @evidence, version))
+            end
+          end
+        end
+      end
     end
 
     describe "submitting the form with invalid data" do

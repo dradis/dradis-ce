@@ -6,6 +6,10 @@
     <%= f.input :content, input_html: { class: 'textile', data: { preview_url: preview_path, help_url: markup_path } } %>
   </div>
 
+  <% if @evidence.persisted? %>
+    <%= hidden_field :evidence, :original_updated_at, value: @evidence.updated_at.to_i %>
+  <% end %>
+
   <div class="form-actions">
     <%= f.button :submit, nil, class: 'btn btn-dradispro' %> or
     <%= link_to 'Cancel', node_path(@node) %>
