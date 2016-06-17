@@ -35,11 +35,14 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def create_multiple
+    # validate Issue
+    issue = Issue.find(evidence_params[:issue_id])
+
     if params[:evidence][:node_ids]
       params[:evidence][:node_ids].reject(&:blank?).each do |node_id|
         node = Node.find(node_id)
         Evidence.create(
-          issue_id: evidence_params[:issue_id],
+          issue_id: issue.id,
           node_id: node.id,
           content: evidence_params[:content]
         )
@@ -55,7 +58,7 @@ class EvidenceController < NestedNodeResourceController
         node.update_attributes!(parent: parent) if parent
 
         Evidence.create(
-          issue_id: evidence_params[:issue_id],
+          issue_id: issue.id,
           node_id: node.id,
           content: evidence_params[:content]
         )
