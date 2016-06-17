@@ -1,5 +1,8 @@
-<%= content_tag(:span, "", class: "fa fa-folder-o")  %>
-<%= link_to "#{row.label}", node_path(row),
-  class: "search-match-title" %>
-<%= content_tag :p, "Last updated: " + time_ago_in_words(row.updated_at) + "ago",
-  class: "search-updated-ago" %>
+<% if row.type_id == Node::Types::HOST %>
+<span class="fa fa-laptop"></span>
+<% else %>
+<span class="fa fa-folder-o"></span>
+<% end %>
+
+<%= link_to row.label, node_path(row), class: "search-match-title" %>
+<p class="result-details">Last updated: <%= local_time_ago(row.updated_at) %></p>
