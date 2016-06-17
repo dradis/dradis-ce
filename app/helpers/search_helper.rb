@@ -15,19 +15,23 @@ module SearchHelper
     content_tag :span, snipet_value, class: "search-matches"
   end
 
-  # get only part of the text if text is
-  # lerger than 300 chars
-  def format_match_row(text, term)
+  # Get only part of the text around the match if text is larger than 300 chars
+  def format_match_row(text, query)
     return text if text.length <= 300
     max_length = 300
-    pos_start = text.index(term)
-    pos_end = text.index(term) + term.length
-    sanitize_text(pos_start, pos_end, max_length, text)
+
+    # MySQL won't do case-sensitive LIKEs
+    text_down  = text.downcase
+    query_down = query.downcase
+
+    pos_start = text_down.index(query_down)
+    pos_end   = text_down.index(query_down) + query.length
+    crop_text(pos_start, pos_end, max_length, text)
   end
 
-  # calcuate what part of text to take based on searched term,
-  # searched term must always be visible in snippet
-  def sanitize_text(pos_start, pos_end, max_length, text)
+  # Calcuate what part of text to take based on the search term,
+  # which must always be visible in the result
+  def crop_text(pos_start, pos_end, max_length, text)
     return text[pos_start...max_length] if pos_start == 0
     return text[(pos_end - max_length)..-1] if pos_end == text.length
     return text[pos_end - 300...pos_end] if pos_start > max_length
