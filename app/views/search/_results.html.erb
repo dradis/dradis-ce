@@ -17,5 +17,8 @@
     </table>
   </div>
 <% else %>
-  <%=  content_tag :p, "No matches found!", class: "span12 search-no-matches" %>
+  <div class="clearfix"></div>
+  <div class="alert alert-block alert-info">
+    <p>No matches found!</p>
+  </div>
 <% end %>

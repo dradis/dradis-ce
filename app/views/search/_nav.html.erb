@@ -1,27 +1,27 @@
-<ul class="search-nav nav nav-pills span12">
-  <li class="<%= 'active' if params[:scope] == 'all' %>">
-    <%= link_to search_filter_path(scope: "all"), id: "all" do %>
+<ul class="search-nav nav nav-tabs">
+  <li class="<%= 'active' if @scope == :all %>">
+    <%= link_to search_filter_path(scope: :all), id: 'all' do %>
       All (<%= search.total_count %>)
     <% end %>
   </li>
-  <li class="<%= 'active' if params[:scope] == 'nodes' %>">
-    <%= link_to search_filter_path(scope: "nodes"), id: "nodes" do %>
-      Nodes (<%= search.nodes_count %>)
+  <li class="<%= 'active' if @scope == :nodes %>">
+    <%= link_to search_filter_path(scope: :nodes), id: 'nodes' do %>
+      <i class="fa fa-sitemap"></i> Nodes (<%= search.nodes_count %>)
     <% end %>
   </li>
-  <li class="<%= 'active' if params[:scope] == 'notes' %>">
-    <%= link_to search_filter_path(scope: "notes"), id: "notes" do %>
-      Notes (<%= search.notes_count %>)
+  <li class="<%= 'active' if @scope == :notes %>">
+    <%= link_to search_filter_path(scope: :notes), id: 'notes' do %>
+      <i class="fa fa-file-text-o"></i> Notes (<%= search.notes_count %>)
     <% end %>
   </li>
-  <li class="<%= 'active' if params[:scope] == 'evidences' %>">
-    <%= link_to search_filter_path(scope: "evidences"), id: "evidences" do %>
-      Evidences (<%= search.evidences_count %>)
+  <li class="<%= 'active' if @scope == :evidence %>">
+    <%= link_to search_filter_path(scope: :evidence), id: 'evidences' do %>
+      <i class="fa fa-flag-o"></i> Evidence (<%= search.evidence_count %>)
     <% end %>
   </li>
-  <li class="<%= 'active' if params[:scope] == 'issues' %>">
-    <%= link_to search_filter_path(scope: "issues"), id: "issues" do %>
-      Issues (<%= search.issues_count %>)
+  <li class="<%= 'active' if @scope == :issues %>">
+    <%= link_to search_filter_path(scope: :issues), id: 'issues' do %>
+      <i class="fa fa-bug"></i> Issues (<%= search.issues_count %>)
     <% end %>
   </li>
 </ul>

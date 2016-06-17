@@ -1,8 +1,12 @@
 <% content_for :title, 'Search results' %>
 
 <% if params[:q].blank? %>
-  <%=  content_tag :p, "Please enter search criteria", class: "span12 search-no-matches" %>
+  <div class="alert alert-block alert-info">
+    <p>Please enter search criteria</p>
+  </div>
 <% else %>
-  <%= render "nav", search: @search %>
-  <%= render "results", search: @search %>
+  <%= render 'nav', search: @search %>
+  <div class="inner">
+    <%= render 'results', search: @search %>
+  </div>
 <% end %>
