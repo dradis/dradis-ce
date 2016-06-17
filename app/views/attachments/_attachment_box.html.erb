@@ -19,14 +19,28 @@
             <i class="fa fa-paperclip"></i> <%= short_filename(attachment.filename) %>
             <% end %>
 
-            <span class="delete size pull-right">
-              <small><%= number_to_human_size(File.size(attachment)) %></small>
+            <div class="text-right">
+              <span class="size">
+                <small><%= number_to_human_size(File.size(attachment)) %></small>
+              </span>
 
-              <button class="btn btn-danger" data-type="DELETE" data-url="<%= node_attachment_path(node,attachment.filename) %>">
-                <i class="fa fa-trash"></i>
-                <span></span>
+              <span class="delete">
+                <button
+                  class="btn btn-danger"
+                  data-type="DELETE"
+                  data-url="<%= node_attachment_path(node,attachment.filename) %>"
+                >
+                  <i class="fa fa-trash"></i>
+                </button>
+              </span>
+
+              <button
+                class="btn js-attachment-url-copy"
+                data-clipboard-text="!<%= node_attachment_path(node, attachment.filename) %>!"
+              >
+                <i class="fa fa-link"></i>
               </button>
-            </span>
+            </div>
           </div>
         </td>
       </tr>
@@ -135,11 +149,26 @@
                   {%= file.name %}
                   {% } %}
                 </a>
-                <span class="delete size pull-right">
-                  <small>{%=o.formatFileSize(file.size)%}</small>
-                  <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}">
+                <span class="pull-right">
+                  <span class="size">
+                    <small>{%=o.formatFileSize(file.size)%}</small>
+                  </span>
+
+                  <span class="delete">
+                    <button
+                      class="btn btn-danger"
+                      data-type="{%=file.delete_type%}"
+                      data-url="{%=file.delete_url%}"
+                    >
                       <i class="fa fa-trash"></i>
-                      <span>{%locale.fileupload.destroy%}</span>
+                    </button>
+                  </span>
+
+                  <button
+                    class="attachment-url-copy btn btn-default"
+                    data-clipboard-text="!{%= file.url %}!"
+                  >
+                    <i class="fa fa-link"></i>
                   </button>
                 </span>
               </div>
