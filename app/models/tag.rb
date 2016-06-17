@@ -28,7 +28,7 @@ class Tag < ActiveRecord::Base
   #  * If the tag name contains color details, they are stripped
   #  * The result is titleized
   def display_name()
-    if self.name =~ /\A!([abcdef\d]{6})(_(\w+))?\z/
+    if self.name =~ /\A!([abcdef\d]{6})(_([[:word:]]+))?\z/
       if $3
         out = $3
       else
@@ -43,7 +43,7 @@ class Tag < ActiveRecord::Base
   # Strips the tag's name and returns the color details if present
   # if no color information is found, returns a default value of #ccc
   def color()
-    name[/\A(![abcdef\d]{6})_\w+?\z/,1].try(:gsub, "!", "#") || "#ccc"
+    name[/\A(![abcdef\d]{6})_[[:word:]]+?\z/,1].try(:gsub, "!", "#") || "#ccc"
   end
 
   private

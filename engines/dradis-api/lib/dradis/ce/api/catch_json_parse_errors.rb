@@ -8,13 +8,22 @@ module Dradis::CE::API
     def call(env)
       begin
         @app.call(env)
-      rescue JSON::ParserError => error
-        error_output = "There was a problem in the JSON you submitted: #{ error.message }"
+      rescue ActionDispatch::ParamsParser::ParseError => error
+        # As of Rails 4, ActionDispatch::ShowExceptions (the next middleware
+        # in the stack after this one) will raise the above ParseError when
+        # it can't parse the JSON.
+        #
+        # See https://robots.thoughtbot.com/catching-json-parse-errors-with-custom-middleware
+        # for more information
+        #
+        # Note that this is undocumented behavior, which means that this error
+        # handler could break without warning in future versions of Rails:
         return [ 400, { "Content-Type" => "application/json" },
           [
             {
-              message: "Bad request",
-              description: error_output
+              message:     "Bad request",
+              description: "There was a problem in the JSON you "\
+                           "submitted: #{error.message}"
             }.to_json
           ] ]
       end

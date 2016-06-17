@@ -9,39 +9,38 @@ Dir.chdir APP_ROOT do
   # This script is a starting point to setup your application.
   # Add necessary setup steps to this file:
 
-  community_dir = File.join(APP_ROOT, '..', 'community')
+  community_dir = File.join(APP_ROOT, '..')
   puts "== Cloning core Dradis add-ons at #{community_dir} =="
-  unless Dir.exist?(community_dir)
-    FileUtils.mkdir_p(community_dir)
-    Dir.chdir community_dir do
-      # Calculators
-      system "git clone 'https://github.com/dradis/dradis-calculator_cvss'"
-      system "git clone 'https://github.com/dradis/dradis-calculator_dread'"
 
-      # Export
-      system "git clone 'https://github.com/dradis/dradis-csv'"
-      system "git clone 'https://github.com/dradis/dradis-html_export'"
+  Dir.chdir community_dir do
+    # Calculators
+    system "git clone 'https://github.com/dradis/dradis-calculator_cvss'"
+    system "git clone 'https://github.com/dradis/dradis-calculator_dread'"
 
-      # Import
-      system "git clone 'https://github.com/dradis/dradis-mediawiki'"
-      system "git clone 'https://github.com/dradis/dradis-vulndb'"
+    # Export
+    system "git clone 'https://github.com/dradis/dradis-csv'"
+    system "git clone 'https://github.com/dradis/dradis-html_export'"
 
-      # Upload
-      system "git clone 'https://github.com/dradis/dradis-acunetix'"
-      system "git clone 'https://github.com/dradis/dradis-brakeman'"
-      system "git clone 'https://github.com/dradis/dradis-burp'"
-      system "git clone 'https://github.com/dradis/dradis-metasploit'"
-      system "git clone 'https://github.com/dradis/dradis-nessus'"
-      system "git clone 'https://github.com/dradis/dradis-nexpose'"
-      system "git clone 'https://github.com/dradis/dradis-nikto'"
-      system "git clone 'https://github.com/dradis/dradis-nmap'"
-      system "git clone 'https://github.com/dradis/dradis-ntospider'"
-      system "git clone 'https://github.com/dradis/dradis-openvas'"
-      system "git clone 'https://github.com/dradis/dradis-qualys'"
+    # Import
+    system "git clone 'https://github.com/dradis/dradis-mediawiki'"
+    system "git clone 'https://github.com/dradis/dradis-vulndb'"
 
-      # Other
-      system "git clone 'https://github.com/dradis/dradis-plugins'"
-    end
+    # Upload
+    system "git clone 'https://github.com/dradis/dradis-acunetix'"
+    system "git clone 'https://github.com/dradis/dradis-brakeman'"
+    system "git clone 'https://github.com/dradis/dradis-burp'"
+    system "git clone 'https://github.com/dradis/dradis-metasploit'"
+    system "git clone 'https://github.com/dradis/dradis-nessus'"
+    system "git clone 'https://github.com/dradis/dradis-nexpose'"
+    system "git clone 'https://github.com/dradis/dradis-nikto'"
+    system "git clone 'https://github.com/dradis/dradis-nmap'"
+    system "git clone 'https://github.com/dradis/dradis-ntospider'"
+    system "git clone 'https://github.com/dradis/dradis-openvas'"
+    system "git clone 'https://github.com/dradis/dradis-qualys'"
+
+    # Other
+    system "git clone 'https://github.com/dradis/dradis-plugins'"
+    system "git clone 'https://github.com/dradis/dradis-projects'"
   end
 
   puts "== Installing dependencies =="

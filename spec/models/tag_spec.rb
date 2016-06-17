@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 describe Tag do
-  let(:project){ create(:project)}
-  before { Tag.set_project_scope(project) }
-
   describe '#display_name' do
     it "capitalizes the first letter of the tag" do
       tag = create(:tag)
@@ -32,28 +29,13 @@ describe Tag do
   describe '#valid?' do
     it "requires a name" do
       tag = Tag.new()
-      expect(tag.valid?).to be_false
-      expect(tag).to have(1).error_on(:name)
+      expect(tag.valid?).to be false
+      expect(tag.errors[:name].count).to eq(1)
     end
 
     it "requires a unique name" do
       Tag.create!(name: 'pancakes')
-      expect(Tag.create(name: 'Pancakes')).to have(1).error_on(:name)
-    end
-
-    it "requires a valid project_id" do
-      Tag.set_project_scope(nil)
-
-      tag = Tag.new(name: 'red')
-      expect(tag.valid?).to be_false
-      expect(tag).to have(1).error_on(:project)
-
-      tag.project_id = 0
-      expect(tag.valid?).to be_false
-      expect(tag).to have(1).error_on(:project)
-
-      tag.project = project
-      expect(tag.valid?).to be_true
+      expect(Tag.create(name: 'Pancakes').errors[:name].count).to eq(1)
     end
   end
 end

@@ -29,15 +29,5 @@ module Dradis::CE::API
       end
     end
 
-    initializer 'dradis-api.exceptions_app' do |app|
-      app.config.exceptions_app = lambda do |env|
-        if env['REQUEST_URI'] =~ /^\/api/
-          Dradis::CE::API::ExceptionsController.action(:show).call(env)
-        # else
-        #   nil
-        end
-      end
-    end
-
   end
 end

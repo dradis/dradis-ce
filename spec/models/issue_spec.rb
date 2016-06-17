@@ -8,21 +8,21 @@ describe Issue do
     node = create(:node)
     # use a block because we can't mass-assign 'node':
     issue = Issue.new { |i| i.node = node }
-    issue.should be_valid()
+    expect(issue).to be_valid()
     issue.save
-    issue.category.should eq(Category.issue)
+    expect(issue.category).to eq(Category.issue)
   end
 
   it "affects many nodes through :evidence" do
     issue = create(:issue)
-    issue.affected.should be_empty
+    expect(issue.affected).to be_empty
 
     host = create(:node, label: '10.0.0.1', type_id: Node::Types::HOST)
     host.evidence.create(author: 'rspec', issue_id: issue.id, content: "#[EvidenceBlock1]#\nThis apache is old!")
 
     issue.reload
-    issue.affected.should_not be_empty
-    issue.affected.first.should eq(host)
+    expect(issue.affected).to_not be_empty
+    expect(issue.affected.first).to eq(host)
   end
 
   it { should have_many(:evidence).dependent(:destroy) }
@@ -30,7 +30,7 @@ describe Issue do
 
   describe "on delete" do
     before do
-      @issue = create(:issue, node: create(:node_with_project))
+      @issue = create(:issue, node: create(:node))
       @activities = create_list(:activity, 2, trackable: @issue)
       @issue.destroy
     end
@@ -57,7 +57,7 @@ describe Issue do
       it { should eq "My Title" }
 
       specify "#title? returns true" do
-        expect(issue.title?).to be_true
+        expect(issue.title?).to be true
       end
     end
 
@@ -66,7 +66,7 @@ describe Issue do
       it { should eq "This issue doesn't provide a #[Title]# field" }
 
       specify "#title? returns false" do
-        expect(issue.title?).to be_false
+        expect(issue.title?).to be false
       end
     end
   end
@@ -85,8 +85,8 @@ describe Issue do
     it "returns the issue's activities" do
       # this requires some hackery, because by default it won't work because
       # Issue and Note don't use proper single-table inheritance :(
-      node  = create(:node_with_project)
-      issue = create(:issue, node: node, project: node.project)
+      node  = create(:node)
+      issue = create(:issue, node: node)
       activities = create_list(:activity, 2, trackable: issue)
 
       # Sanity check that all trackable types are 'Issue', not 'Note'

@@ -11,7 +11,7 @@ describe Evidence do
 
   describe "on delete" do
     before do
-      @evidence = create(:evidence, node: create(:node_with_project))
+      @evidence = create(:evidence, node: create(:node))
       @activities = create_list(:activity, 2, trackable: @evidence)
       @evidence.destroy
     end
@@ -58,7 +58,7 @@ describe Evidence do
       it { should eq "My Title" }
 
       specify "#title? returns true" do
-        expect(evidence.title?).to be_true
+        expect(evidence.title?).to be true
       end
     end
 
@@ -67,7 +67,7 @@ describe Evidence do
       it { should eq "This evidence doesn't provide a #[Title]# field" }
 
       specify "#title? returns false" do
-        expect(evidence.title?).to be_false
+        expect(evidence.title?).to be false
       end
     end
   end

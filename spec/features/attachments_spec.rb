@@ -1,18 +1,19 @@
 require 'spec_helper'
 
 describe "Describe attachments" do
-  fixtures :categories
 
   it "should require authenticated users" do
+    Configuration.create(name: 'admin:password', value: 'rspec_pass')
     visit node_attachments_path(0, 1)
-    current_path.should eq(login_path)
-    page.should have_content('Access denied.')
+
+    expect(current_path).to eq(login_path)
+    expect(page).to have_content('Access denied.')
   end
 
   describe "as authenticated user" do
     before do
       login_to_project_as_user
-      @node = create(:node, project_id: @project.id)
+      @node = create(:node)
     end
 
     after do
@@ -27,7 +28,7 @@ describe "Describe attachments" do
       click_button 'Start'
 
       expect(page).to have_content('rails.png')
-      expect(File.exist?(Attachment.pwd.join(@node.id.to_s, 'rails.png'))).to be_true
+      expect(File.exist?(Attachment.pwd.join(@node.id.to_s, 'rails.png'))).to be true
     end
 
     it "auto-renames the upload if an attachment with the same name already exists" do

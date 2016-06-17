@@ -14,7 +14,7 @@ jQuery ->
     dropZone: $('#drop-zone')
     destroy: (e, data) ->
       if confirm('Are you sure?')
-        $.blueimpUI.fileupload.prototype.options.destroy.call(this, e, data);
+        $.blueimp.fileupload.prototype.options.destroy.call(this, e, data);
 
     paste: (e, data)->
       $.each data.files, (index, file) ->

@@ -7,10 +7,10 @@ describe "note pages" do
 
   before do
     # avoid messing around with any existing templates:
-    NoteTemplate::stub(:pwd) { Pathname.new('tmp/templates/notes') }
+    allow(NoteTemplate).to receive(:pwd).and_return(Pathname.new('tmp/templates/notes'))
     FileUtils.mkdir_p(Rails.root.join("tmp","templates","notes"))
     login_to_project_as_user
-    @node    = create(:node, project: @project)
+    @node    = create(:node)
   end
 
   after(:all) do

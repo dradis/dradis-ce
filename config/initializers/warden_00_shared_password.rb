@@ -3,6 +3,15 @@
 # http://team.skroutz.gr/posts/skroutz-warden/
 # http://railscasts.com/episodes/305-authentication-with-warden
 
+Warden::Manager.serialize_into_session do |user|
+  user.email
+end
+
+Warden::Manager.serialize_from_session do |id|
+  User.new(email: id)
+end
+
+
 Rails.configuration.middleware.use Warden::Manager do |manager|
   manager.default_strategies :shared_password
   manager.failure_app = SessionsController.action(:new)
@@ -18,7 +27,7 @@ Warden::Strategies.add(:shared_password) do
     password = params.fetch('password', nil)
 
     if not ( username.blank? || password.nil? || ::BCrypt::Password.new(::Configuration.shared_password) != password )
-      success!(username)
+      success!(User.new(email: username))
     else
       fail 'Invalid credentials.'
     end

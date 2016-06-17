@@ -64,13 +64,20 @@ gem 'bcrypt',   '3.1.10'
 gem 'json', '1.8.2'
 
 # XML manipulation
-gem 'nokogiri', '1.6.5'
+# TODO: Traveling Ruby - DANGER, DANGER: this version has an issue, but it's
+# the last one supported by Traveling Ruby
+# gem 'nokogiri', '1.6.6.2'
+gem 'nokogiri', '1.6.8'
 
 # MySQL backend
 gem 'mysql2', '0.3.18'
 
 # Textile markup
-gem 'RedCloth', '4.2.9', require: 'redcloth'
+
+# TODO: Traveling Ruby - DANGER, DANGER: this version has an issue, but it's
+# the last one supported by Traveling Ruby
+# gem 'RedCloth', '4.2.9', require: 'redcloth'
+gem 'RedCloth', '4.3.1', require: 'redcloth'
 
 # SQLite3 DB driver
 gem 'sqlite3',  '1.3.10'
@@ -142,7 +149,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
-  gem "rspec-rails", "2.14.2"
+  gem 'rspec-rails', '~> 3.1'
 end
 
 group :test do

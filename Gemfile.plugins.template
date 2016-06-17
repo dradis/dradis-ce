@@ -5,26 +5,25 @@
 #   $ bundle
 
 # ----------------------------------------------------------------- Calculators
-gem 'dradis-calculator_cvss',  path: '../dradis-calculator_cvss'
-gem 'dradis-calculator_dread', path: '../dradis-calculator_dread'
+gem 'dradis-calculator_cvss',  path: '../dradis-calculator_cvss/'
+gem 'dradis-calculator_dread', path: '../dradis-calculator_dread/'
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv',         path: '../dradis-csv'
-gem 'dradis-html_export', path: '../dradis-html_export'
-
+gem 'dradis-csv',         path: '../dradis-csv/'
+gem 'dradis-html_export', '3.3.3'
 # ---------------------------------------------------------------------- Import
-# gem 'dradis-mediawiki', path: '../dradis-mediawiki'
-# gem 'dradis-vulndb',    path: '../dradis-vulndb'
+# gem 'dradis-mediawiki', path: '../dradis-mediawiki/'
+# gem 'dradis-vulndb',    path: '../dradis-vulndb/'
 
 # ---------------------------------------------------------------------- Upload
-gem 'dradis-acunetix',    path: '../dradis-acunetix'
-gem 'dradis-brakeman',    path: '../dradis-brakeman'
-gem 'dradis-burp',        path: '../dradis-burp'
-gem 'dradis-metasploit',  path: '../dradis-metasploit'
-gem 'dradis-nessus',      path: '../dradis-nessus'
-gem 'dradis-nexpose',     path: '../dradis-nexpose'
-gem 'dradis-nikto',       path: '../dradis-nikto'
-gem 'dradis-nmap',        path: '../dradis-nmap'
-gem 'dradis-ntospider',   path: '../dradis-ntospider'
-gem 'dradis-openvas',     path: '../dradis-openvas'
-gem 'dradis-qualys',      path: '../dradis-qualys'
+gem 'dradis-acunetix',    path: '../dradis-acunetix/'
+gem 'dradis-brakeman',    path: '../dradis-brakeman/'
+gem 'dradis-burp',        path: '../dradis-burp/'
+gem 'dradis-metasploit',  path: '../dradis-metasploit/'
+gem 'dradis-nessus',      path: '../dradis-nessus/'
+gem 'dradis-nexpose',     path: '../dradis-nexpose/'
+gem 'dradis-nikto',       path: '../dradis-nikto/'
+gem 'dradis-nmap',        path: '../dradis-nmap/'
+gem 'dradis-ntospider',   path: '../dradis-ntospider/'
+gem 'dradis-openvas',     path: '../dradis-openvas/'
+gem 'dradis-qualys',      path: '../dradis-qualys/'

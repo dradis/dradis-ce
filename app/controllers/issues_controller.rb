@@ -7,6 +7,7 @@ class IssuesController < ProjectScopedController
   before_filter :find_note_template, only: [:new]
 
   def index
+    @columns = @issues.map(&:fields).map(&:keys).uniq.flatten | ['Title', 'Tags', 'Affected', 'Created', 'Created by', 'Updated']
   end
 
   def show
@@ -21,7 +22,7 @@ class IssuesController < ProjectScopedController
   end
 
   def create
-    @issue.author ||= current_user
+    @issue.author ||= current_user.email
 
     respond_to do |format|
       if @issue.save &&
@@ -92,7 +93,7 @@ class IssuesController < ProjectScopedController
     # We need a transaction because multiple DELETE calls can be issued from
     # index and a TOCTOR can appear between the Note read and the Issue.find
     Note.transaction do
-      @issues = Issue.where(node_id: @issuelib.id).select('notes.id, notes.text, count(evidence.id) as affected_count').joins('LEFT OUTER JOIN evidence on notes.id = evidence.issue_id').group('notes.id').includes(:tags).sort
+      @issues = Issue.where(node_id: @issuelib.id).select('notes.id, notes.author, notes.text, count(evidence.id) as affected_count, notes.created_at, notes.updated_at').joins('LEFT OUTER JOIN evidence on notes.id = evidence.issue_id').group('notes.id').includes(:tags).sort
     end
   end
 

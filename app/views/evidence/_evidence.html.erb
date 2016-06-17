@@ -1,4 +1,4 @@
-<div id="<%= dom_id(evidence) %>_link" class="list-item">
+<%= content_tag :div, id: "#{dom_id(evidence)}_link", class: ('list-item' << ' active' if (request.format.html? and @evidence == evidence)) do %>
   <div class="expansion-container">
     <%= link_to node_evidence_path(@node, evidence) do %>
       <% if tag = evidence.issue.tags.first %>
@@ -9,4 +9,4 @@
       <%= evidence.issue.title %>
     <% end %>
   </div>
-</div>
+  <% end %>

@@ -1,20 +1,39 @@
-<table id="tbl-issues" class="table table-striped">
+<table class="table table-striped tbl-issues js-tbl-issues">
   <thead>
     <tr>
-      <th><input type="checkbox" id="select-all" /></th>
-      <th>Title</th>
-      <th>Tags</th>
-      <th>Affects</th>
+      <th></th>
+      <% @columns.each do |column| %>
+      <th data-column="<%= column.downcase %>"><%= column %></th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
     <% issues.each do |issue| %>
     <tr>
-      <td><%= check_box_tag dom_id(issue), issue.id, false, class: 'js-multicheck', data: {url: issue_path(issue, format: :json)} %></td>
-      <td><%= link_to issue.title, issue %></td>
-      <td><%= tag_and_name_for(issue) %></td>
-      <%# this count is coming from the SQL finder in the controller %>
-      <td><%= issue.affected_count %></td>
+      <td class="column-checkbox"><%= check_box_tag dom_id(issue), issue.id, false, class: 'js-multicheck', data: { url: issue_path(issue, format: :json) } %></td>
+      <% @columns.each do |column| %>
+      <td>
+        <%=
+        case column
+        when 'Title'
+          link_to issue.title, issue
+        when 'Tags'
+          tag_and_name_for(issue)
+        when 'Affected'
+          # this count is coming from the SQL finder in the controller
+          issue.affected_count
+        when 'Created'
+          local_time_ago(issue.created_at)
+        when 'Created by'
+          issue.author
+        when 'Updated'
+          local_time_ago(issue.updated_at)
+        else
+          issue.fields.fetch(column, '')
+        end
+        %>
+      </td>
+      <% end  %>
     </tr>
     <% end %>
   </tbody>

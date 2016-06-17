@@ -1,6 +1,6 @@
 module Dradis::CE::API
   module V1
-    class IssuesController < ProjectScopedController
+    class IssuesController < Dradis::CE::API::V1::ProjectScopedController
       def index
         issuelib = Node.issue_library
         @issues  = Issue.where(node_id: issuelib.id).includes(:tags).sort
@@ -17,16 +17,28 @@ module Dradis::CE::API
         @issue.node     = Node.issue_library
 
         if @issue.save
+          track_created(@issue)
           render status: 201, location: dradis_api.issue_url(@issue)
         else
-          render_validation_error
+          render_validation_errors(@issue)
         end
       end
 
       def update
-        if !@issue.update_attributes(issue_params)
-          render_validation_error
+        @issue = Issue.find(params[:id])
+        if @issue.update_attributes(issue_params)
+          track_updated(@issue)
+          render node: @node
+        else
+          render_validation_errors(@issue)
         end
+      end
+
+      def destroy
+        @issue = Issue.find(params[:id])
+        @issue.destroy
+        track_destroyed(@issue)
+        render_successful_destroy_message
       end
 
       private

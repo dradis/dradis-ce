@@ -13,7 +13,7 @@ class NotesController < NestedNodeResourceController
 
   # Create a new Note for the associated Node.
   def create
-    @note.author = current_user
+    @note.author = current_user.email
     @note.category ||= Category.default
 
     if @note.save
@@ -69,6 +69,6 @@ class NotesController < NestedNodeResourceController
   end
 
   def note_params
-    params.require(:note).permit(:category_id, :node_id, :text)
+    params.require(:note).permit(:category_id, :text)
   end
 end

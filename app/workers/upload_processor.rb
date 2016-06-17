@@ -20,8 +20,8 @@ class UploadProcessor < BaseWorker
 
     plugin = plugin_name.constantize
 
-    content_service  = Dradis::Plugins::ContentService.new(plugin: @uploader)
-    template_service = Dradis::Plugins::TemplateService.new(plugin: @uploader)
+    content_service  = Dradis::Plugins::ContentService.new(plugin: plugin)
+    template_service = Dradis::Plugins::TemplateService.new(plugin: plugin)
 
     importer = plugin::Importer.new(
                 logger: logger,

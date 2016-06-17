@@ -1,35 +1,24 @@
 module Dradis::CE::API
   class APIController < ApplicationController
-    # force_ssl if: :ssl_configured?
-
-    # No CSRF protection for the wicked!
-    protect_from_forgery with: :null_session
-
+    after_action :skip_set_cookies_header
 
     before_action :api_authentication_required
     before_action :json_required, only: [:create, :update]
 
-    after_action :skip_set_cookies_header
-
-    # FIXME: do we need this?
-    # Swallow the AccessDenied exception and present it as a 403 Forbidden error
-    # rescue_from CanCan::AccessDenied do |exception|
-    #   render json: {
-    #     message: "Forbidden",
-    #     description: "The authenticated user does not have access to this operation"
-    #   }, status: 403
-    # end
-
-    def destroy
-      resource.destroy
-      respond_to do |format|
-        format.json do
-          render json: {
-            message: "Resource deleted successfully"
-          }, status: 200
-        end
-      end
+    rescue_from ActionController::ParameterMissing do |exception|
+      # after_action is not called for exceptions
+      skip_set_cookies_header
+      render_json_error(exception, 422)
     end
+
+    rescue_from ActiveRecord::RecordNotFound do |exception|
+      # after_action is not called for exceptions
+      skip_set_cookies_header
+      render_json_error(exception, 404)
+    end
+
+    # No CSRF protection for the wicked!
+    protect_from_forgery with: :null_session
 
     protected
     # def ssl_configured?
@@ -81,20 +70,25 @@ module Dradis::CE::API
     end
 
     # ------------------------------------------------------- Validation errors
-    def resource
-      instance_variable_get("@#{ resource_name }")
-    end
 
-    def resource_name
-      controller_name.singularize
-    end
-
-    def render_validation_error
+    def render_validation_errors(resource)
       render json: {
         message: "Validation error",
-        description: "Some validation errors were found and the #{ resource_name } couldn't be saved",
+        description: "Some validation errors were found and the "\
+                     "#{resource.model_name.name.downcase} couldn't be saved",
         errors: resource.errors
       }, status: 422
     end
+
+    def render_successful_destroy_message
+      render json: {
+        message: "Resource deleted successfully"
+      }, status: 200
+    end
+
+    def render_json_error(exception, code)
+      render json: { message: exception.message }, status: code
+    end
+
   end
 end
