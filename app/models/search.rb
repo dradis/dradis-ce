@@ -1,64 +1,84 @@
 # This is facade for searching multiple models
-# so we don't expose more than one instance level variabe
+# so we don't expose more than one instance level variable
 # in controller
 class Search
-  attr_reader :term, :scope, :page
+  attr_reader :page, :query, :scope
 
-  def initialize(search_term:, scope: "all", page: 1)
-    @term  = search_term
+  def initialize(query:, scope: :all, page: 1)
+    @query = query
     @scope = scope
     @page  = page
   end
 
-  # return results based on params
-  # if search term is empty return empty array
+  # Return results based on params.
+  # If search term is empty return empty array
   def results
-    return [] if term.blank?
-    #default kaminari per page is 30, as we are using here
-    results_array = send(scope.to_sym).to_a
-    Kaminari.paginate_array(results_array).page(page)
+    return [] if query.blank?
+    # Default Kaminari per page is 25, as we are using here
+    results = send(scope)
+    case results
+    when ActiveRecord::Relation
+      results.page(page)
+    else
+      Kaminari.paginate_array(results).page(page)
+    end
   end
 
   def total_count
-    nodes_count + notes_count + issues_count +
-      evidences_count
+    nodes_count + notes_count + issues_count + evidence_count
   end
 
   def nodes_count
-    nodes.size
+    nodes.count
   end
 
   def notes_count
-    notes.size
+    notes.count
   end
 
   def issues_count
-    issues.size
+    issues.count
   end
 
-  def evidences_count
-    evidences.size
+  def evidence_count
+    evidence.size
   end
 
   private
 
   def all
-    nodes + notes + evidences + issues
+    nodes + notes + evidence + issues
   end
 
   def issues
-    Issue.search(term: term)
+    Issue.where(
+      "node_id = :node AND text LIKE :q",
+      node: Node.issue_library,
+      q: "%#{query}%"
+    ).order(updated_at: :desc)
   end
 
   def nodes
-    Node.search(term: term)
+    Node.user_nodes
+      .where("label LIKE :q", q: "%#{query}%")
+      .order(updated_at: :desc)
   end
 
   def notes
-    Note.search(term: term)
+    system_nodes = [Node.issue_library.id, Node.methodology_library.id]
+
+    Note.where(
+      "node_id NOT IN (:nodes) AND text LIKE :q",
+      nodes: system_nodes,
+      q: "%#{query}%"
+    )
+      .includes(:node)
+      .order(updated_at: :desc)
   end
 
-  def evidences
-    Evidence.search(term: term)
+  def evidence
+    Evidence.where("content LIKE :q", q: "%#{query}%")
+      .includes(:issue, :node)
+      .order(updated_at: :desc)
   end
 end
