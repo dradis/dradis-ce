@@ -245,12 +245,12 @@ describe "Issues pages" do
             expect(page).to have_selector('#js-add-evidence-container', visible: true)
           end
 
-          it "filters nodes", focus: true do
+          it "filters nodes" do
             find('.js-add-evidence').click
             expect(all('#existing-node-list label').count).to be Node.count
 
             # find('#evidence_node').native.send_key('192')
-            fill_in '#evidence_node', with: '192'
+            fill_in 'evidence_node', with: '192'
 
             expect(all('#existing-node-list label').count).to eq 1
           end
