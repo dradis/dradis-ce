@@ -1,6 +1,5 @@
 //= require snowcrash/modules/issues/evidence
 //= require snowcrash/modules/issues/importer
-//= require snowcrash/modules/issues/quick-add
 //= require snowcrash/modules/issues/table
 //= require snowcrash/modules/issues/tag-input
 

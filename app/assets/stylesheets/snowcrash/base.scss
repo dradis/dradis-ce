@@ -397,12 +397,15 @@ body {
             padding: 0 0 1em;
 
             .btn {
-              background: transparent;
               padding: 4px 6px;
             }
 
             .btn-danger {
               color: $red;
+            }
+
+            .btn-transparent {
+              background: transparent;
             }
           }
         }
