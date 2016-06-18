@@ -1,7 +1,8 @@
 class EvidenceController < NestedNodeResourceController
 
-  before_filter :find_or_initialize_evidence, except: [ :index ]
+  before_filter :find_or_initialize_evidence, except: [ :index, :create_multiple ]
   before_filter :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
+  skip_before_filter :find_or_initialize_node, only: [:create_multiple]
 
   def show
     @issue      = @evidence.issue
@@ -31,6 +32,39 @@ class EvidenceController < NestedNodeResourceController
       end
       format.js
     end
+  end
+
+  def create_multiple
+    # validate Issue
+    issue = Issue.find(evidence_params[:issue_id])
+
+    if params[:evidence][:node_ids]
+      params[:evidence][:node_ids].reject(&:blank?).each do |node_id|
+        node = Node.find(node_id)
+        Evidence.create(
+          issue_id: issue.id,
+          node_id: node.id,
+          content: evidence_params[:content]
+        )
+      end
+    end
+    if params[:evidence][:node_list]
+      if params[:evidence][:node_list_parent_id].present?
+        parent = Node.find(params[:evidence][:node_list_parent_id])
+      end
+      params[:evidence][:node_list].lines.map(&:chomp).each do |label|
+        node = Node.create_with(type_id: Node::Types::HOST)
+          .find_or_create_by(label: label)
+        node.update_attributes!(parent: parent) if parent
+
+        Evidence.create(
+          issue_id: issue.id,
+          node_id: node.id,
+          content: evidence_params[:content]
+        )
+      end
+    end
+    redirect_to issue_path(evidence_params[:issue_id]), notice: "Evidence added for selected nodes."
   end
 
   def edit
