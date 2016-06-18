@@ -3,9 +3,10 @@
     <table id="tbl-search" class="table">
       <tbody>
         <% search.results.each do |data| %>
+          <% class_name = data.class.name.downcase %>
           <tr>
-            <td>
-              <%= render "search/results/#{data.class.name.downcase}", row: data %>
+            <td class="<%= class_name %>-result">
+              <%= render "search/results/#{class_name}", row: data %>
             </td>
           </tr>
         <% end %>

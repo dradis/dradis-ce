@@ -29,10 +29,10 @@ describe "User searches", type: :feature do
       click_on "search_btn"
 
       within "#tbl-search" do
-        expect(page).to have_content "Node search"
-        expect(page).to have_content "Issue search"
-        expect(page).to have_content "Note search"
-        expect(page).to have_content "Evidence search"
+        expect(page).to have_css '.node-result'
+        expect(page).to have_css '.issue-result'
+        expect(page).to have_css '.note-result'
+        expect(page).to have_css '.evidence-result'
       end
     end
 
@@ -58,11 +58,11 @@ describe "User searches", type: :feature do
       page.find(".search-nav #nodes").click
 
       within "#tbl-search" do
-        expect(page).to have_content "Node search"
+        expect(page).to have_css '.node-result'
 
-        expect(page).to_not have_content "Issue search"
-        expect(page).to_not have_content "Note search"
-        expect(page).to_not have_content "Evidence search"
+        expect(page).to_not have_css '.issue-result'
+        expect(page).to_not have_css '.note-result'
+        expect(page).to_not have_css '.evidence-result'
       end
     end
 
@@ -75,11 +75,11 @@ describe "User searches", type: :feature do
       page.find(".search-nav #notes").click
 
       within "#tbl-search" do
-        expect(page).to have_content "Note search"
+        expect(page).to have_css '.note-result'
 
-        expect(page).to_not have_content "Node search"
-        expect(page).to_not have_content "Issue search"
-        expect(page).to_not have_content "Evidence search"
+        expect(page).to_not have_css '.node-result'
+        expect(page).to_not have_css '.issue-result'
+        expect(page).to_not have_css '.evidence-result'
       end
     end
 
@@ -92,11 +92,11 @@ describe "User searches", type: :feature do
       page.find(".search-nav #issues").click
 
       within "#tbl-search" do
-        expect(page).to have_content "Issue search"
+        expect(page).to have_css '.issue-result'
 
-        expect(page).to_not have_content "Note search"
-        expect(page).to_not have_content "Node search"
-        expect(page).to_not have_content "Evidence search"
+        expect(page).to_not have_css '.note-result'
+        expect(page).to_not have_css '.node-result'
+        expect(page).to_not have_css '.evidence-result'
       end
     end
 
@@ -109,18 +109,18 @@ describe "User searches", type: :feature do
       page.find(".search-nav #evidences").click
 
       within "#tbl-search" do
-        expect(page).to have_content "Evidence search"
+        expect(page).to have_css '.evidence-result'
 
-        expect(page).to_not have_content "Issue search"
-        expect(page).to_not have_content "Note search"
-        expect(page).to_not have_content "Node search"
+        expect(page).to_not have_css '.issue-result'
+        expect(page).to_not have_css '.note-result'
+        expect(page).to_not have_css '.node-result'
       end
     end
 
     it "sees message warning when no search criteria entered" do
       click_on "search_btn"
 
-      expect(page).to have_css ".search-no-matches", text: "Please enter search criteria"
+      expect(page).to have_content 'Please enter search criteria'
     end
 
     it "sees message warning when no matches find" do
@@ -128,7 +128,7 @@ describe "User searches", type: :feature do
 
       click_on "search_btn"
 
-      expect(page).to have_css ".search-no-matches", text: "No matches found!"
+      expect(page).to have_content 'No matches found!'
     end
   end
 end
