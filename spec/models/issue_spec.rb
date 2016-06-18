@@ -97,40 +97,6 @@ describe Issue do
     end
   end
 
-  describe ".search" do
-    it "filters issues by text matching search term" do
-      first = create(:issue, text: "First issue")
-      second = create(:issue, text: "Second issue")
-      term = "first"
-
-      results = Issue.search(term: term)
-
-      expect(results.size).to eq 1
-      expect(results.first.text).to eq first.text
-    end
-
-    it "returns list of matches order by updated_at desc" do
-      first = create(:issue, text: "First issue")
-      second = create(:issue, text: "Second issue")
-      term = "issue"
-
-      results = Issue.search(term: term)
-
-      expect(results.map(&:text)).to eq [second.text, first.text]
-    end
-
-    it "behaves as case insensitive search" do
-      issue = create(:issue, text: "Issue")
-      term = "ISSuE"
-
-      results = Issue.search(term: term)
-
-      expect(results.size).to eq 1
-      expect(results.first.text).to eq issue.text
-    end
-  end
-
-
   # NOTE: the idea of having an Affected field appended to the automagically was
   # to allow the Affected field content control in AdvancedWordExport to work in
   # the same way the other fields do. However, this introduces a cascading SQL

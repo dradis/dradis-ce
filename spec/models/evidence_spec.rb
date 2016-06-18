@@ -71,38 +71,4 @@ describe Evidence do
       end
     end
   end
-
-  describe ".search" do
-    it "filters evidences by content matching search term" do
-      first = create(:evidence, content: "First evidence")
-      second = create(:evidence, content: "Second evidence")
-      term = "first"
-
-      results = Evidence.search(term: term)
-
-      expect(results.size).to eq 1
-      expect(results.first.content).to eq first.content
-    end
-
-    it "returns list of matches order by updated_at desc" do
-      first = create(:evidence, content: "First evidence")
-      second = create(:evidence, content: "Second evidence")
-      term = "evidence"
-
-      results = Evidence.search(term: term)
-
-      expect(results.map(&:content)).to eq [second.content, first.content]
-    end
-
-    it "behaves as case insensitive search" do
-      issue = create(:evidence, content: "Evidence")
-      term = "eviDencE"
-
-      results = Evidence.search(term: term)
-
-      expect(results.size).to eq 1
-      expect(results.first.content).to eq issue.content
-    end
-  end
-
 end
