@@ -18,8 +18,8 @@ jQuery ->
     $('.js-add-evidence').click ->
       $('#js-add-evidence-container').slideToggle()
 
-    $('#js-add-evidence-container').on 'change', '#evidence_note_template', ->
-      $('#evidence_content').val($(this).val())
+    $('#js-add-evidence-container').on 'change', '#evidence_content', ->
+      # $('#evidence_content').val($(this).val())
       $('#template-content').text($(this).val())
 
     $('#js-add-evidence-container').on 'keyup', '#evidence_node', ->

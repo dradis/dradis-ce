@@ -248,16 +248,20 @@ describe "Issues pages" do
           it "filters nodes" do
             click_link('Evidence')
             find('.js-add-evidence').click
-            expect(all('#nodes label').count).to be Node.count
+            expect(all('#existing-node-list label').count).to be Node.count
+
+            # This didn't fire keyup events
             fill_in :evidence_node, with: '192'
-            expect(all('#nodes label').size).to be 1
+            page.execute_script '$("#evidence_node").trigger("keyup")'
+
+            expect(all('#existing-node-list label').count).to eq 1
           end
 
           it "creates an evidence with the selected template for selected node" do
             click_link('Evidence')
             find('.js-add-evidence').click
             check('192.168.0.1')
-            select('Basic Fields')
+            select('Basic Fields', from: 'evidence_content')
             expect{click_button('Save Evidence')}.to change{Evidence.count}.by(1)
             evidence = Evidence.last
             expect(evidence.content).to eq(NoteTemplate.find('basic_fields').content.gsub("\n", "\r\n"))
@@ -267,7 +271,7 @@ describe "Issues pages" do
           it "creates an evidence for new nodes and existing nodes too" do
             click_link('Evidence')
             find('.js-add-evidence').click
-            fill_in 'Enter list of nodes', with: "192.168.0.1\r\n192.168.0.2\r\n192.168.0.3"
+            fill_in 'Paste list of nodes', with: "192.168.0.1\r\n192.168.0.2\r\n192.168.0.3"
             expect{click_button('Save Evidence')}.to change{Evidence.count}.by(3).and change { Node.count }.by(2)
 
             # New nodes don't have a parent:
@@ -279,8 +283,8 @@ describe "Issues pages" do
           specify "new nodes can be assigned to a parent node" do
             click_link('Evidence')
             find('.js-add-evidence').click
-            select @node.label, from: "Assign new nodes to parent:"
-            fill_in 'Enter list of nodes', with: "aaaa\nbbbb\ncccc"
+            select @node.label, from: 'Create new nodes under'
+            fill_in 'Paste list of nodes', with: "aaaa\nbbbb\ncccc"
             expect{click_button('Save Evidence')}.to change{Node.count}.by(3)
 
             Node.order("created_at ASC").last(3).each do |node|
