@@ -1,0 +1,21 @@
+<div class="alert alert-warning">
+  <p>
+    Warning: another user updated this
+    <%= record.model_name.name.downcase %> while you were editing it. Your
+    changes have been saved, but you may have overwritten their changes. You
+    may want to review the
+    <%= link_to "revision history", record_revisions_path(record) %>
+    to make sure nothing important has been lost:
+  </p>
+
+  <ul>
+    <% conflicts[0..-2].each do |version| %>
+      <li>
+        <%= link_to "Update while you were editing at #{version.created_at.strftime("%b %e %Y, %-l:%M%P")}", record_revision_path(record, version) %>
+      </li>
+    <% end %>
+    <li>
+      <%= link_to "Your update at #{conflicts.last.created_at.strftime("%b %e %Y, %-l:%M%P")}", record_revision_path(record, conflicts.last) %>
+    </li>
+  </ul>
+</div>
