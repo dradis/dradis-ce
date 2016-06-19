@@ -16,6 +16,12 @@ class IssuesController < ProjectScopedController
     # We can't use the existing @nodes variable as it only contains root-level
     # nodes, and we need the auto-complete to have the full list.
     @nodes_for_add_evidence = Node.order(:label)
+
+    if flash[:update_conflicts_since]
+      @conflicting_versions = @issue.versions\
+        .order("created_at ASC")\
+        .where("created_at > '#{Time.at(flash[:update_conflicts_since].to_i + 1).utc}'")
+    end
   end
 
   def new
@@ -40,6 +46,7 @@ class IssuesController < ProjectScopedController
         # Only after we save the issue, we can create valid taggings (w/ valid
         # taggable IDs)
         tag_issue_from_field_content(@issue)
+
         format.html { redirect_to @issue, notice: 'Issue added.' }
       else
         format.html { render 'new', alert: "Issue couldn't be added." }
@@ -53,8 +60,15 @@ class IssuesController < ProjectScopedController
 
   def update
     respond_to do |format|
+      updated_at_before_save = @issue.updated_at.to_i
+
       if @issue.update_attributes(issue_params)
         @modified = true
+
+        if params[:issue][:original_updated_at].to_i < updated_at_before_save
+          flash[:update_conflicts_since] = params[:issue][:original_updated_at].to_i
+        end
+
         track_updated(@issue)
         format.html { redirect_to @issue, notice: 'Issue updated' }
       else

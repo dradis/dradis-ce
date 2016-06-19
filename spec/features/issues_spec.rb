@@ -139,7 +139,7 @@ describe "Issues pages" do
 
         before do
           @node  = create(:node)
-          @issue = create(:issue, node: @node)
+          @issue = create(:issue, node: @node, updated_at: 2.seconds.ago)
           visit edit_issue_path(@issue)
         end
 
@@ -147,6 +147,12 @@ describe "Issues pages" do
           before { fill_in :issue_text, with: "New info" }
 
           let(:submit_form) { click_button "Update Issue" }
+
+          CONFLICT_WARNING = \
+            "Warning: another user updated this issue while you were editing "\
+            "it. Your changes have been saved, but you may have overwritten "\
+            "their changes. You may want to review the revision history "\
+            "to make sure nothing important has been lost"
 
           it "updates and shows the issue" do
             submit_form
@@ -157,9 +163,91 @@ describe "Issues pages" do
           let(:model) { @issue }
           include_examples "creates an Activity", :update
 
+          it "doesn't say anything about edit conflicts" do
+            submit_form
+            expect(page).to have_no_content CONFLICT_WARNING
+            expect(page).to have_no_link(//, href: issue_revisions_path(@issue))
+          end
+
           it "creates a version with the user's email as 'whodunnit'" do
             submit_form
             expect(@issue.reload.versions.last.whodunnit).to eq @logged_in_as.email
+          end
+
+          context "when another user has updated the issue in the meantime" do
+            before do
+              @issue.update_attributes!(text: "Someone else's changes")
+            end
+
+            it "saves my changes" do
+              submit_form
+              expect(@issue.reload.text).to eq "New info"
+            end
+
+            it "shows the updated issue with a warning and a link to the revision history" do
+              submit_form
+              expect(current_path).to eq issue_path(@issue)
+              expect(page).to have_content CONFLICT_WARNING
+              expect(page).to have_link(
+                "revision history",
+                href: issue_revisions_path(@issue)
+              )
+            end
+
+            DATE_FORMAT = "%b %e %Y, %-l:%M%P"
+
+            it "links to the previous versions" do
+              submit_form
+              all_versions = @issue.versions.order("created_at ASC")
+              my_version   = all_versions[-1]
+              conflict     = all_versions[-2]
+              old_versions = all_versions - [my_version, conflict]
+
+              expect(page).to have_link(
+                "Your update at #{my_version.created_at.strftime(DATE_FORMAT)}",
+                href: issue_revision_path(@issue, my_version),
+              )
+
+              expect(page).to have_link(
+                "Update while you were editing at #{conflict.created_at.strftime(DATE_FORMAT)}",
+                href: issue_revision_path(@issue, conflict),
+              )
+
+              old_versions.each do |version|
+                expect(page).to have_no_link(//, issue_revision_path(@issue, version))
+              end
+            end
+
+            context "when there has been more than one edit" do
+              before do
+                @issue.update_attributes!(text: "More conflicts")
+                submit_form
+              end
+
+              it "links to them all" do
+                submit_form
+                all_versions = @issue.versions.order("created_at ASC")
+                my_version   = all_versions[-1]
+                conflicts    = all_versions[-3..-2]
+                old_versions = all_versions - [my_version] - conflicts
+
+                expect(page).to have_link(
+                  "Your update at #{my_version.created_at.strftime(DATE_FORMAT)}",
+                  href: issue_revision_path(@issue, my_version),
+                )
+
+                conflicts.each do |conflict|
+                  expect(page).to have_link(
+                    "Update while you were editing at #{conflict.created_at.strftime(DATE_FORMAT)}",
+                    href: issue_revision_path(@issue, conflict),
+                  )
+                end
+
+                old_versions.each do |version|
+                  expect(page).to have_no_link(//, issue_revision_path(@issue, version))
+                end
+              end
+            end
           end
         end
 

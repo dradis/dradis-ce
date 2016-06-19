@@ -82,7 +82,7 @@ describe "evidence" do
         expect(current_path).to eq node_evidence_path(@node, @evidence)
       end
 
-      it "doesn't say anything about conflicts or locking" do
+      it "doesn't say anything about edit conflicts" do
         submit_form
         expect(page).to have_no_content CONFLICT_WARNING
         expect(page).to have_no_link(//, href: node_evidence_revisions_path(@node, @evidence))
