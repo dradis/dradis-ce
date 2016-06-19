@@ -1,18 +1,55 @@
 <div id="js-add-evidence-container">
-  <div class="js-popover-container"></div>
-  <div class="content hide">
-    <%= text_field_tag nil, nil,
-      id:    'add-evidence',
-      style: 'margin:0 auto',
-      data: {
-        provide: 'typeahead',
-        items:   4,
-        source:  @nodes_for_add_evidence.collect(&:label),
-        ids:     @nodes_for_add_evidence.collect(&:id)
-      }%>
-  </div>
-  <%= form_tag node_evidence_index_path(node_id: ':node_id'), class: 'hide', id: 'new-evidence' do %>
-    <input type="hidden" name="evidence[issue_id]" value="<%= @issue.id %>" />
-    <input type="hidden" name="evidence[content]" value="bc. Placeholder Evidence content." />
+  <%= form_for :evidence, url: create_multiple_evidences_path, html: { id: 'add-evidences' } do |f| %>
+    <div class="form-inputs">
+      <%= f.hidden_field :issue_id, value: @issue.id %>
+      <%= f.hidden_field :node_id %>
+
+      <!-- <div class="clearfix"></div> -->
+      <div class="row-fluid">
+        <div class="span4">
+          <%= f.label :new_evidence_content %>
+          <%= f.collection_select :content,
+           NoteTemplate.all,
+           :content,
+           :name,
+           include_blank: 'Empty (no template)'
+          %>
+          <pre id="template-content"></pre>
+        </div>
+        <div class="span4">
+          <%= f.label 'Add to existing nodes', for: :evidence_node %>
+          <%= f.text_field :node, placeholder: 'Type here to filter list...' %>
+
+          <div id="existing-node-list">
+            <%= f.collection_check_boxes(:node_ids, @nodes_for_add_evidence, :id, :label) do |b|
+              b.label(class: "checkbox") { b.check_box + b.text}
+            end %>
+          </div>
+        </div>
+        <div class="span4">
+          <label for="evidence_node_list">Paste list of nodes
+            <i
+              class="fa fa-question-circle"
+              data-toggle="tooltip"
+              data-html="true"
+              title="<ul><li>If a node from the list already exist in the project evidence will be added to it.</li><li>If a node doesn't exist it will be created and then evidence will be added.</li></ul>"></i>
+          </label>
+          <%= f.text_area :node_list, rows: 10, placeholder: 'One node per line.' %>
+
+          <%= f.label 'Create new nodes under', for: :evidence_node_list_parent_id %>
+          <%= f.collection_select(
+            :node_list_parent_id,
+            @nodes_for_add_evidence,
+            :id,
+            :label,
+            include_blank: "The root of the tree"
+          ) %>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+    <div class="form-actions">
+      <%= f.submit class: 'btn btn-default btn btn-dradispro' %>
+    </div>
   <% end %>
 </div>

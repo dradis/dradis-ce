@@ -236,6 +236,62 @@ describe "Issues pages" do
           let(:model) { @issue }
           include_examples "creates an Activity", :destroy
         end
+
+        describe "add evidence", js: true do
+          before {
+            @node = Node.create!(label: '192.168.0.1')
+            visit issue_path(@issue)
+            click_link('Evidence')
+          }
+
+          it "displays evidence form when add link clicked" do
+            expect(page).to have_selector('#js-add-evidence-container', visible: false)
+            find('.js-add-evidence').click
+            expect(page).to have_selector('#js-add-evidence-container', visible: true)
+          end
+
+          it "filters nodes" do
+            find('.js-add-evidence').click
+            expect(all('#existing-node-list label').count).to be Node.count
+
+            # find('#evidence_node').native.send_key('192')
+            fill_in 'evidence_node', with: '192'
+
+            expect(all('#existing-node-list label').count).to eq 1
+          end
+
+          it "creates an evidence with the selected template for selected node" do
+            find('.js-add-evidence').click
+            check('192.168.0.1')
+            select('Basic Fields', from: 'evidence_content')
+            expect{click_button('Save Evidence')}.to change{Evidence.count}.by(1)
+            evidence = Evidence.last
+            expect(evidence.content).to eq(NoteTemplate.find('basic_fields').content.gsub("\n", "\r\n"))
+            expect(evidence.node.label).to eq('192.168.0.1')
+          end
+
+          it "creates an evidence for new nodes and existing nodes too" do
+            find('.js-add-evidence').click
+            fill_in 'Paste list of nodes', with: "192.168.0.1\r\n192.168.0.2\r\n192.168.0.3"
+            expect{click_button('Save Evidence')}.to change{Evidence.count}.by(3).and change { Node.count }.by(2)
+
+            # New nodes don't have a parent:
+            Node.order("created_at ASC").last(2).each do |node|
+              expect(node.parent).to be_nil
+            end
+          end
+
+          specify "new nodes can be assigned to a parent node" do
+            find('.js-add-evidence').click
+            select @node.label, from: 'Create new nodes under'
+            fill_in 'Paste list of nodes', with: "aaaa\nbbbb\ncccc"
+            expect{click_button('Save Evidence')}.to change{Node.count}.by(3)
+
+            Node.order("created_at ASC").last(3).each do |node|
+              expect(node.parent).to eq @node
+            end
+          end
+        end
       end
     end
   end

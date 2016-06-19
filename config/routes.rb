@@ -53,6 +53,8 @@ Rails.application.routes.draw do
     end
   end
 
+  post 'create_multiple_evidences' => 'evidence#create_multiple'
+
   # -------------------------------------------------------------- Static pages
   # jQuery Textile URLs
   get '/preview' => 'home#textilize',  as: :preview, defaults: { format: 'json' }
