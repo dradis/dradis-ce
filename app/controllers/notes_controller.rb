@@ -28,12 +28,7 @@ class NotesController < NestedNodeResourceController
   # Retrieve a Note given its :id
   def show
     @activities = @note.activities.latest
-
-    if flash[:update_conflicts_since]
-      @conflicting_versions = @note.versions\
-        .order("created_at ASC")\
-        .where("created_at > '#{Time.at(flash[:update_conflicts_since].to_i + 1).utc}'")
-    end
+    load_conflicting_versions(@note)
   end
 
   def edit
@@ -46,9 +41,7 @@ class NotesController < NestedNodeResourceController
     updated_at_before_save = @note.updated_at.to_i
     if @note.update_attributes(note_params)
       track_updated(@note)
-      if params[:note][:original_updated_at].to_i < updated_at_before_save
-        flash[:update_conflicts_since] = params[:note][:original_updated_at].to_i
-      end
+      check_for_edit_conflicts(@note, updated_at_before_save)
       redirect_to node_note_path(@node, @note), notice: 'Note updated.'
     else
       initialize_nodes_sidebar

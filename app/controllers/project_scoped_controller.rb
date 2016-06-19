@@ -24,4 +24,19 @@ class ProjectScopedController < AuthenticatedController
   def set_current_project
     @nodes = Node.in_tree
   end
+
+  def check_for_edit_conflicts(record, updated_at_before_save)
+    name = record.model_name.name.downcase
+    if params[name][:original_updated_at].to_i < updated_at_before_save
+      flash[:update_conflicts_since] = params[name][:original_updated_at].to_i
+    end
+  end
+
+  def load_conflicting_versions(record)
+    if flash[:update_conflicts_since]
+      @conflicting_versions = record.versions\
+        .order("created_at ASC")\
+        .where("created_at > '#{Time.at(flash[:update_conflicts_since].to_i + 1).utc}'")
+    end
+  end
 end

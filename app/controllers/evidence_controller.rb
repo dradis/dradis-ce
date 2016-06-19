@@ -7,11 +7,7 @@ class EvidenceController < NestedNodeResourceController
     @issue      = @evidence.issue
     @activities = @evidence.activities.latest
 
-    if flash[:update_conflicts_since]
-      @conflicting_versions = @evidence.versions\
-        .order("created_at ASC")\
-        .where("created_at > '#{Time.at(flash[:update_conflicts_since].to_i + 1).utc}'")
-    end
+    load_conflicting_versions(@evidence)
   end
 
   def new
@@ -47,9 +43,7 @@ class EvidenceController < NestedNodeResourceController
       updated_at_before_save = @evidence.updated_at.to_i
       if @evidence.update_attributes(evidence_params)
         track_updated(@evidence)
-        if params[:evidence][:original_updated_at].to_i < updated_at_before_save
-          flash[:update_conflicts_since] = params[:evidence][:original_updated_at].to_i
-        end
+        check_for_edit_conflicts(@evidence, updated_at_before_save)
         format.html { redirect_to [@node, @evidence] }
       else
         format.html {
