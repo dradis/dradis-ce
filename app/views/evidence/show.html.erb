@@ -6,18 +6,18 @@
       Warning: another user updated this evidence while you were editing it. Your
       changes have been saved, but you may have overwritten their changes. You
       may want to review the
-      <%= link_to "revision history", node_evidence_revisions_path(@node, @evidence) %>
+      <%= link_to "revision history", record_revisions_path(@evidence) %>
       to make sure nothing important has been lost:
     </p>
 
     <ul>
       <% @conflicting_versions[0..-2].each do |version| %>
         <li>
-          <%= link_to "Update while you were editing at #{version.created_at.strftime("%b %e %Y, %-l:%M%P")}", node_evidence_revision_path(@node, @evidence, version) %>
+          <%= link_to "Update while you were editing at #{version.created_at.strftime("%b %e %Y, %-l:%M%P")}", record_revision_path(@evidence, version) %>
         </li>
       <% end %>
       <li>
-        <%= link_to "Your update at #{@conflicting_versions.last.created_at.strftime("%b %e %Y, %-l:%M%P")}", node_evidence_revision_path(@node, @evidence, @conflicting_versions.last) %>
+        <%= link_to "Your update at #{@conflicting_versions.last.created_at.strftime("%b %e %Y, %-l:%M%P")}", record_revision_path(@evidence, @conflicting_versions.last) %>
       </li>
     </ul>
   </div>
