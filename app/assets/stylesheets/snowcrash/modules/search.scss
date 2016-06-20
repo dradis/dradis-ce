@@ -1,3 +1,19 @@
+.form-search {
+  margin: 0;
+
+  .search-query {
+    width: 0;
+    -webkit-transition: width 0.1s ease-in-out;
+    -moz-transition:width 0.1s ease-in-out;
+    -o-transition: width 0.1s ease-in-out;
+    transition: width 0.1s ease-in-out;
+
+    &:focus {
+      width: 158px;
+    }
+  }
+}
+
 body.search.index {
   .inner {
     border-left: 1px solid #ddd;

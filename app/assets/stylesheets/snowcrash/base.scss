@@ -67,21 +67,21 @@ body {
       }
     }
   }
+
+  .form-search .input-append {
+    input {
+      box-shadow: none
+    }
+
+    .btn {
+      border: 1px solid #ccc;
+      vertical-align: middle;
+    }
+  }
 }
 
 .navbar-fixed-top .navbar-inner, .navbar-static-top .navbar-inner{
   @include box-shadow( 0 0 0);
-}
-
-.navbar-inner .navbar-search {
-  margin: 0px;
-  >input {
-    margin-top: 10px;
-  }
-
-  .btn {
-    margin-top: 10px;
-  }
 }
 
 .main-wrapper {

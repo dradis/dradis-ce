@@ -105,3 +105,14 @@ jQuery ->
   $('form').submit (ev)->
     $('input[type=submit]', this).attr('disabled', 'disabled').val('Processing...');
 
+
+  # Search form
+  $('#js-search-form-toggle').on 'click', (e)->
+    e.preventDefault()
+    $('.form-search').toggleClass('hide')
+    $('.search-query').focus()
+    $(this).hide()
+
+  $('.search-query').on 'blur', ->
+    $('.form-search').toggleClass('hide')
+    $('#js-search-form-toggle').show()

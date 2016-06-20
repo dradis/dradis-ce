@@ -11,6 +11,6 @@ class SearchWordHighlight
 jQuery ->
   if $('body.search.index').length
     highlighter = new SearchWordHighlight
-    query = $(".navbar-search #q").val()
+    query = $(".form-search #q").val()
     $('#tbl-search .search-matches').each ->
       highlighter.highlight($(this), query)

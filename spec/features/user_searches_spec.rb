@@ -8,13 +8,13 @@ describe "User searches", type: :feature do
   it "can access search on main navigation" do
     within ".navbar" do
       expect(page).to have_css "#q"
-      expect(page).to have_css "#search_btn"
+      expect(page).to have_css "#search-btn"
     end
   end
 
   it "when click on search button search results form is shown" do
     fill_in "q", with: "test"
-    click_on "search_btn"
+    click_on "search-btn"
 
     expect(page.current_path).to eq search_path
     expect(page).to have_content "Search results"
@@ -25,8 +25,8 @@ describe "User searches", type: :feature do
       setup_test_data
       term = "search"
 
-      page.find(".navbar-search #q").set(term)
-      click_on "search_btn"
+      page.find(".form-search #q").set(term)
+      click_on "search-btn"
 
       within "#tbl-search" do
         expect(page).to have_css '.node-result'
@@ -41,8 +41,8 @@ describe "User searches", type: :feature do
       ghost = create(:node, label: "Node ghost")
       term = "search"
 
-      page.find(".navbar-search #q").set(term)
-      click_on "search_btn"
+      page.find(".form-search #q").set(term)
+      click_on "search-btn"
 
       within "#tbl-search" do
         expect(page).to_not have_content ghost.label
@@ -52,8 +52,8 @@ describe "User searches", type: :feature do
     it "clicking on node tab sees only matched nodes" do
       setup_test_data
       term = "search"
-      page.find(".navbar-search #q").set(term)
-      click_on "search_btn"
+      page.find(".form-search #q").set(term)
+      click_on "search-btn"
 
       page.find(".search-nav #nodes").click
 
@@ -69,8 +69,8 @@ describe "User searches", type: :feature do
     it "clicking on note tab sees only matched notes" do
       setup_test_data
       term = "search"
-      page.find(".navbar-search #q").set(term)
-      click_on "search_btn"
+      page.find(".form-search #q").set(term)
+      click_on "search-btn"
 
       page.find(".search-nav #notes").click
 
@@ -86,8 +86,8 @@ describe "User searches", type: :feature do
     it "clicking on issues tab sees only matched issues" do
       setup_test_data
       term = "search"
-      page.find(".navbar-search #q").set(term)
-      click_on "search_btn"
+      page.find(".form-search #q").set(term)
+      click_on "search-btn"
 
       page.find(".search-nav #issues").click
 
@@ -103,8 +103,8 @@ describe "User searches", type: :feature do
     it "clicking on evidences tab sees only matched evidences" do
       setup_test_data
       term = "search"
-      page.find(".navbar-search #q").set(term)
-      click_on "search_btn"
+      page.find(".form-search #q").set(term)
+      click_on "search-btn"
 
       page.find(".search-nav #evidences").click
 
@@ -118,15 +118,15 @@ describe "User searches", type: :feature do
     end
 
     it "sees message warning when no search criteria entered" do
-      click_on "search_btn"
+      click_on "search-btn"
 
       expect(page).to have_content 'Please enter search criteria'
     end
 
     it "sees message warning when no matches find" do
-      page.find(".navbar-search #q").set("no matches")
+      page.find(".form-search #q").set("no matches")
 
-      click_on "search_btn"
+      click_on "search-btn"
 
       expect(page).to have_content 'No matches found!'
     end

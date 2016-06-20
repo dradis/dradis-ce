@@ -1,6 +1,6 @@
-<%= form_tag search_path, method: :get, class: "navbar-search input-append" do %>
-    <%= search_field_tag :q,  params[:q], placeholder: "Search here..." %>
-    <%= button_tag  id: "search_btn", class: "btn" do %>
-      <i class="fa fa-search"></i>
-    <% end %>
+<%= form_tag search_path, method: :get, class: 'form-search pull-right hide' do %>
+  <div class="input-append">
+    <%= search_field_tag :q,  params[:q], placeholder: 'Search here...', class: 'search-query' %>
+    <button type="submit" id="search-btn" class="btn"><span class="fa fa-search"></span></button>
+  </div>
 <% end %>
