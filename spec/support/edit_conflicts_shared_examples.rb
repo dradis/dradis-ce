@@ -1,4 +1,5 @@
-# define: record, submit_form, column
+# the following let variables must be defined for this to work: record,
+# submit_form, column
 shared_examples "a page which handles edit conflicts" do
   include RevisionsHelper
 
@@ -26,7 +27,7 @@ shared_examples "a page which handles edit conflicts" do
     expect(page).to have_no_link(//, href: record_revisions_path(record))
   end
 
-  context "when another user has updated the note in the meantime" do
+  context "when another user has updated the record in the meantime" do
     before do
       record.update_attributes!(column => "Someone else's changes")
     end
@@ -36,7 +37,7 @@ shared_examples "a page which handles edit conflicts" do
       expect(record.reload.send(column)).to eq new_content
     end
 
-    it "shows the updated note with a warning and a link to the revision history" do
+    it "shows the updated record with a warning and a link to the revision history" do
       submit_form
       expect(current_path).to eq record_path(record)
       expect(page).to have_content conflict_warning
