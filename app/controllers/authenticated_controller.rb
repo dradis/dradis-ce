@@ -7,6 +7,7 @@
 # Any third-party code (e.g. plugins) should inherit from this class instead of
 # calling the authentication filters directly
 class AuthenticatedController < ApplicationController
+  include RevisionsHelper
   before_filter :login_required
   # before_filter :render_onboarding_tour
 
@@ -17,12 +18,6 @@ class AuthenticatedController < ApplicationController
   rescue_from CanCan::AccessDenied do |exception|
     # redirect_to main_app.root_url, :alert => exception.message
     raise ActiveRecord::RecordNotFound.new
-  end
-
-  # Set 'whodunnit' in paper trail versions to be the email address of the
-  # current user
-  def user_for_paper_trail
-    current_user.email if current_user
   end
 
   private

@@ -28,8 +28,10 @@ shared_examples "a page which handles edit conflicts" do
   end
 
   context "when another user has updated the record in the meantime" do
+    let(:email_1) { "someone@example.com" }
     before do
       record.update_attributes!(column => "Someone else's changes")
+      record.versions.last.update!(whodunnit: email_1)
     end
 
     it "saves my changes" do
@@ -59,7 +61,7 @@ shared_examples "a page which handles edit conflicts" do
       )
 
       expect(page).to have_link(
-        "Update while you were editing at #{conflict.created_at.strftime(DATE_FORMAT)}",
+        "Update while you were editing by #{email_1} at #{conflict.created_at.strftime(DATE_FORMAT)}",
         href: record_revision_path(record, conflict),
       )
 
@@ -69,8 +71,10 @@ shared_examples "a page which handles edit conflicts" do
     end
 
     context "when there has been more than one edit" do
+      let(:email_2) { "someoneelse@example.com" }
       before do
         record.update_attributes!(column => "More conflicts")
+        record.versions.last.update!(whodunnit: email_2)
         submit_form
       end
 
@@ -88,7 +92,7 @@ shared_examples "a page which handles edit conflicts" do
 
         conflicts.each do |conflict|
           expect(page).to have_link(
-            "Update while you were editing at #{conflict.created_at.strftime(DATE_FORMAT)}",
+            "Update while you were editing by #{conflict.whodunnit} at #{conflict.created_at.strftime(DATE_FORMAT)}",
             href: record_revision_path(record, conflict),
           )
         end

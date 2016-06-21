@@ -1,4 +1,9 @@
 module RevisionsHelper
+  # Set 'whodunnit' in paper trail versions to be the email address of the
+  # current user
+  def user_for_paper_trail
+    current_user.email if current_user
+  end
 
   def record_revisions_path(record)
     # Note - 'when Issue' must go ABOVE 'when Note', or all Issues will match
@@ -24,6 +29,20 @@ module RevisionsHelper
     when Evidence
       node_evidence_revision_path(record.node, record, revision)
     end
+  end
+
+  def link_to_conflicting_revision(record, revision)
+    time = revision.created_at.strftime("%b %e %Y, %-l:%M%P")
+    text =  if revision.whodunnit
+              if revision.whodunnit == user_for_paper_trail
+                "Your update at #{time}"
+              else
+                "Update while you were editing by #{revision.whodunnit} at #{time}"
+              end
+            else
+              "Update while you were editing by unknown user at #{time}"
+            end
+    link_to text, record_revision_path(record, revision)
   end
 
 end
