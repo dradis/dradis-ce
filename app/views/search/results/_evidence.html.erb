@@ -1,0 +1,14 @@
+<span class="fa fa-flag-o"></span>
+
+<% title = row.title? ? row.title : "Evidence ##{row.id}" %>
+<%= link_to title, node_evidence_path(row.node_id, row), class: "search-match-title" %>
+
+<div class="result-details">
+  <p><span>Issue:</span> <%= link_to row.issue.title, issue_path(row.issue) %></p>
+  <p><span>Node:</span> <%= link_to row.node.label, node_path(row.node) %></p>
+  <p><span>Last updated:</span> <%= local_time_ago(row.updated_at) %></p>
+</div>
+
+<div class="match-snippet">
+  <%= text_snippet row.content, params[:q] %>
+</div>

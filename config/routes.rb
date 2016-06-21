@@ -53,6 +53,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'search' => 'search#index'
   post 'create_multiple_evidences' => 'evidence#create_multiple'
 
   # -------------------------------------------------------------- Static pages

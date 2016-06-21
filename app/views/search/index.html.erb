@@ -1,0 +1,25 @@
+<%
+  title = "Search results"
+  title << ": #{params[:q]}" if params[:q].present?
+
+  content_for :title, title
+%>
+
+<% if params[:q].blank? %>
+  <div class="alert alert-block alert-info">
+    <p>Please enter search criteria</p>
+  </div>
+
+  <br/>
+
+  <%= form_tag search_path, method: :get, class: 'form' do %>
+    <%= search_field_tag :q,  params[:q], placeholder: 'Search here...', class: 'search-query' %>
+    <button type="submit" class="btn"><span class="fa fa-search"></span></button>
+  <% end %>
+
+<% else %>
+  <%= render 'nav', search: @search %>
+  <div class="inner">
+    <%= render 'results', search: @search %>
+  </div>
+<% end %>
