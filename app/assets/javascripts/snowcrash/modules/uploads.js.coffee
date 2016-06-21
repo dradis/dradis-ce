@@ -4,7 +4,7 @@ jQuery ->
     $bar = $('.bar');
     $percent = $('.percent');
     $status = $('#status');
-    $('form').ajaxForm({
+    $('form#new_upload').ajaxForm({
       resetForm: true
       dataType: 'script'
       beforeSend: ->

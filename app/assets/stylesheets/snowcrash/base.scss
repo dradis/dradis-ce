@@ -67,6 +67,17 @@ body {
       }
     }
   }
+
+  .form-search .input-append {
+    input {
+      box-shadow: none
+    }
+
+    .btn {
+      border: 1px solid #ccc;
+      vertical-align: middle;
+    }
+  }
 }
 
 .navbar-fixed-top .navbar-inner, .navbar-static-top .navbar-inner{

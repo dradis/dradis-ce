@@ -2,14 +2,15 @@
   <div class="navbar-inner">
 
     <div class="container-fluid">
-      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target="#bs-navbar-collapse">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <%= link_to 'Dradis CE', main_app.summary_path, class: 'brand', data: { project: 1 } %>
-      <div class="nav-collapse">
+      <%= link_to 'Dradis CE', main_app.summary_path, class: 'brand' %>
+      <div class="navbar-collapse" id="bs-navbar-collapse">
         <ul class="nav pull-right">
+          <li><%= link_to main_app.search_path, id: 'js-search-form-toggle' do %><i class="fa fa-search fa-lg"></i><% end %></li>
           <li><%= link_to main_app.upload_manager_path do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %></li>
           <li><%= link_to main_app.export_manager_path do %><i class="fa fa-file-text-o fa-lg"></i> Export results<% end %></li>
           <li><%= link_to main_app.configurations_path do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %></li>
@@ -36,6 +37,7 @@
             </ul>
           </li>
         </ul>
+        <%= render "layouts/snowcrash/search" %>
       </div>
     </div>
   </div>

@@ -45,6 +45,7 @@ describe Issue do
         expect(activity.trackable_type).to eq "Issue"
       end
     end
+
   end
 
 
@@ -95,7 +96,6 @@ describe Issue do
       expect(issue.activities).to eq activities
     end
   end
-
 
   # NOTE: the idea of having an Affected field appended to the automagically was
   # to allow the Affected field content control in AdvancedWordExport to work in

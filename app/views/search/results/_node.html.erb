@@ -1,0 +1,8 @@
+<% if row.type_id == Node::Types::HOST %>
+<span class="fa fa-laptop"></span>
+<% else %>
+<span class="fa fa-folder-o"></span>
+<% end %>
+
+<%= link_to row.label, node_path(row), class: "search-match-title" %>
+<p class="result-details">Last updated: <%= local_time_ago(row.updated_at) %></p>

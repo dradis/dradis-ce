@@ -1,0 +1,10 @@
+<span class="fa fa-bug"></span>
+
+<% title = row.title? ? row.title : "Issue ##{row.id}" %>
+<%= link_to title, issue_path(row), class: "search-match-title" %>
+
+<p class="result-details">Last updated: <%= local_time_ago(row.updated_at) %></p>
+
+<div class="match-snippet">
+  <%= text_snippet row.text, params[:q] %>
+</div>
