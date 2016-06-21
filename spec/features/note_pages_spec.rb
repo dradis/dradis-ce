@@ -54,7 +54,7 @@ describe "note pages" do
 
   describe "edit page" do
     before do
-      @note = create(:note, node: @node, updated_at: 1.second.ago)
+      @note = create(:note, node: @node, updated_at: 2.seconds.ago)
       visit edit_node_note_path(@node, @note)
     end
 
