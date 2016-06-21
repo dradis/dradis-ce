@@ -141,8 +141,9 @@ describe Search do
     end
 
     it "returns list of matches order by updated_at desc" do
-      first = create(:evidence, content: "First evidence")
-      second = create(:evidence, content: "Second evidence")
+      # Without specifying :updated_at, CI would fail to sort properly
+      first = create(:evidence, content: "First evidence", updated_at: 10.seconds.ago)
+      second = create(:evidence, content: "Second evidence", updated_at: 5.seconds.ago)
 
       results = described_class.new(query: 'evidence', scope: :evidence).results
       expect(results.map(&:content)).to eq [second.content, first.content]
@@ -159,7 +160,7 @@ describe Search do
 
   describe "#issues" do
     it "filters issues by text matching search term" do
-      first = create(:issue, text: "First issue")
+      first  = create(:issue, text: "First issue")
       second = create(:issue, text: "Second issue")
 
       results = Search.new(query: 'first', scope: :issues).results
@@ -177,8 +178,9 @@ describe Search do
     end
 
     it "returns list of matches order by updated_at desc" do
-      first = create(:issue, text: "First issue")
-      second = create(:issue, text: "Second issue")
+      # Without specifying :updated_at, CI would fail to sort properly
+      first  = create(:issue, text: "First issue", updated_at: 10.seconds.ago)
+      second = create(:issue, text: "Second issue", updated_at: 5.seconds.ago)
 
       results = Search.new(query: 'issue', scope: :issues).results
 
@@ -197,7 +199,7 @@ describe Search do
 
   describe "#nodes" do
     it "filters nodes by label matching search term" do
-      first = create(:node, label: "First node")
+      first  = create(:node, label: "First node")
       second = create(:node, label: "Second node")
 
 
@@ -207,8 +209,9 @@ describe Search do
     end
 
     it "returns list of matches order by updated_at desc" do
-      first = create(:node, label: "First node")
-      second = create(:node, label: "Second node")
+      # Without specifying :updated_at, CI would fail to sort properly
+      first  = create(:node, label: "First node", updated_at: 10.seconds.ago)
+      second = create(:node, label: "Second node", updated_at: 5.seconds.ago)
 
       results = described_class.new(query: 'node', scope: :nodes).results
       expect(results.map(&:label)).to eq [second.label, first.label]
@@ -253,8 +256,9 @@ describe Search do
     end
 
     it "returns list of matches order by updated_at desc" do
-      first  = create(:note, text: "First note", category: Category.default)
-      second = create(:note, text: "Second note", category: Category.default)
+      # Without specifying :updated_at, CI would fail to sort properly
+      first  = create(:note, text: "First note", category: Category.default, updated_at: 10.seconds.ago)
+      second = create(:note, text: "Second note", category: Category.default, updated_at: 5.seconds.ago)
 
       results = Search.new(query: 'note', scope: :notes).results
       expect(results.map(&:text)).to eq [second.text, first.text]
