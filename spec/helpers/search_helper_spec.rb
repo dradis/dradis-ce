@@ -1,6 +1,13 @@
 require "spec_helper"
 
 describe SearchHelper do
+  def options(term:, scope:)
+    Hash.new.tap do
+      params[:q] = term
+      params[:scope] = scope
+    end
+  end
+
   describe ".search_path" do
     %w[all nodes notes issues evidences].each do |scope|
       it "formats correct #{scope} path" do
@@ -59,12 +66,5 @@ describe SearchHelper do
         expect(new_text).to eq old_text
       end
     end
-  end
-end
-
-def options(term:, scope:)
-  Hash.new.tap do
-    params[:q] = term
-    params[:scope] = scope
   end
 end

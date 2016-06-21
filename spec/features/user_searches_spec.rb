@@ -1,8 +1,16 @@
 require "spec_helper"
 
 describe "User searches", type: :feature do
+  def setup_test_data
+    create(:issue, text: "Issue search")
+    node = create(:node, label: "Node search")
+    create(:note, text: "Note search", node: node)
+    create(:evidence, content: "Evidence search")
+  end
+
   before do
-    sign_in
+    login_to_project_as_user
+    visit root_path
   end
 
   it "can access search on main navigation" do
@@ -131,11 +139,4 @@ describe "User searches", type: :feature do
       expect(page).to have_content 'No matches found!'
     end
   end
-end
-
-def setup_test_data
-  create(:issue, text: "Issue search")
-  node = create(:node, label: "Node search")
-  create(:note, text: "Note search", node: node)
-  create(:evidence, content: "Evidence search")
 end

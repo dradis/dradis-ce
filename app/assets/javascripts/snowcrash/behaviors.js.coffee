@@ -122,5 +122,4 @@ jQuery ->
     , 10
 
   $('.btn-search').on 'click', ->
-    console.log('click')
     $('.form-search').submit()

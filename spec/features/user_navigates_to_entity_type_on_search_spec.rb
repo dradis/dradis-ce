@@ -1,8 +1,10 @@
 require "spec_helper"
 
 describe "User navigates to entity page from search" do
+
   before do
-    sign_in
+    login_to_project_as_user
+    visit root_path
   end
 
   context "when click on title link" do

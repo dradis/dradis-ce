@@ -1,13 +1,13 @@
 module SearchHelper
-	def search_filter_path(options={})
-  	exist_opts = {
-    	q: params[:q],
+  def search_filter_path(options={})
+    exist_opts = {
+      q: params[:q],
       scope: params[:scope]
     }
 
-  	options = exist_opts.merge(options)
+    options = exist_opts.merge(options)
     search_path(options)
-	end
+  end
 
   # returns sanitized text snipet as span
   def text_snippet(text, term)

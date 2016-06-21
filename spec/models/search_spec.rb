@@ -34,7 +34,7 @@ describe Search do
   end
 
   describe "#total_count" do
-    it "returns 0 if noting founded" do
+    it "returns 0 if nothing found" do
       q = "no-match"
 
       search = Search.new(query: q, scope: :all)
@@ -53,7 +53,7 @@ describe Search do
   end
 
   describe "#nodes_count" do
-    it "returns 0 if noting founded" do
+    it "returns 0 if nothing found" do
       q = "no-match"
 
       search = Search.new(query: q, scope: :all)
@@ -72,7 +72,7 @@ describe Search do
   end
 
   describe "#notes_count" do
-    it "returns 0 if noting founded" do
+    it "returns 0 if nothing found" do
       q = "no-match"
 
       search = Search.new(query: q, scope: :all)
@@ -91,7 +91,7 @@ describe Search do
   end
 
   describe "#issues_count" do
-    it "returns 0 if noting founded" do
+    it "returns 0 if nothing found" do
       q = "no-match"
 
       search = Search.new(query: q, scope: :all)
@@ -110,7 +110,7 @@ describe Search do
   end
 
   describe "#evidence_count" do
-    it "returns 0 if noting founded" do
+    it "returns 0 if nothing found" do
       q = "no-match"
 
       search = Search.new(query: q, scope: :all)
