@@ -37,10 +37,10 @@ module RevisionsHelper
               if revision.whodunnit == user_for_paper_trail
                 "Your update at #{time}"
               else
-                "Update while you were editing by #{revision.whodunnit} at #{time}"
+                "Update by #{revision.whodunnit} at #{time}"
               end
             else
-              "Update while you were editing by unknown user at #{time}"
+              "Update by unknown user at #{time}"
             end
     link_to text, record_revision_path(record, revision)
   end

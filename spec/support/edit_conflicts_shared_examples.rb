@@ -61,7 +61,7 @@ shared_examples "a page which handles edit conflicts" do
       )
 
       expect(page).to have_link(
-        "Update while you were editing by #{email_1} at #{conflict.created_at.strftime(DATE_FORMAT)}",
+        "Update by #{email_1} at #{conflict.created_at.strftime(DATE_FORMAT)}",
         href: record_revision_path(record, conflict),
       )
 
@@ -92,7 +92,7 @@ shared_examples "a page which handles edit conflicts" do
 
         conflicts.each do |conflict|
           expect(page).to have_link(
-            "Update while you were editing by #{conflict.whodunnit} at #{conflict.created_at.strftime(DATE_FORMAT)}",
+            "Update by #{conflict.whodunnit} at #{conflict.created_at.strftime(DATE_FORMAT)}",
             href: record_revision_path(record, conflict),
           )
         end
