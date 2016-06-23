@@ -32,7 +32,6 @@ class NotesController < NestedNodeResourceController
   end
 
   def edit
-    # TODO what if there are no versions? E.g. legacy data
     @versions_count = @note.versions.count
   end
 
