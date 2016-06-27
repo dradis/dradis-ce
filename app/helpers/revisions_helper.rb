@@ -1,9 +1,4 @@
 module RevisionsHelper
-  # Set 'whodunnit' in paper trail versions to be the email address of the
-  # current user
-  def user_for_paper_trail
-    current_user.email if current_user
-  end
 
   def record_revisions_path(record)
     # Note - 'when Issue' must go ABOVE 'when Note', or all Issues will match
