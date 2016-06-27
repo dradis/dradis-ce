@@ -7,7 +7,6 @@
 # Any third-party code (e.g. plugins) should inherit from this class instead of
 # calling the authentication filters directly
 class AuthenticatedController < ApplicationController
-  include RevisionsHelper
   before_filter :login_required
   # before_filter :render_onboarding_tour
 
