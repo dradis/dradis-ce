@@ -1,0 +1,16 @@
+<div class="alert alert-warning">
+  <p>
+    Warning: another user updated this
+    <%= record.model_name.name.downcase %> while you were editing it. Your
+    changes have been saved, but you may have overwritten their changes. You
+    may want to review the
+    <%= link_to "revision history", record_revisions_path(record) %>
+    to make sure nothing important has been lost:
+  </p>
+
+  <ul>
+    <% conflicts.each do |revision| %>
+      <li><%= link_to_conflicting_revision(record, revision) %></li>
+    <% end %>
+  </ul>
+</div>

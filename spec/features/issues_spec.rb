@@ -139,18 +139,19 @@ describe "Issues pages" do
 
         before do
           @node  = create(:node)
-          @issue = create(:issue, node: @node)
+          @issue = create(:issue, node: @node, updated_at: 2.seconds.ago)
           visit edit_issue_path(@issue)
         end
 
         describe "submitting the form with valid information" do
-          before { fill_in :issue_text, with: "New info" }
+          let(:new_content) { "New info" }
+          before { fill_in :issue_text, with: new_content }
 
           let(:submit_form) { click_button "Update Issue" }
 
           it "updates and shows the issue" do
             submit_form
-            expect(@issue.reload.text).to eq "New info"
+            expect(@issue.reload.text).to eq new_content
             expect(current_path).to eq issue_path(@issue)
           end
 
@@ -161,6 +162,10 @@ describe "Issues pages" do
             submit_form
             expect(@issue.reload.versions.last.whodunnit).to eq @logged_in_as.email
           end
+
+          let(:column) { :text }
+          let(:record) { @issue }
+          it_behaves_like "a page which handles edit conflicts"
         end
 
         describe "submitting the form with invalid information" do

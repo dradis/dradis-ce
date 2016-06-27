@@ -28,15 +28,19 @@ class NotesController < NestedNodeResourceController
   # Retrieve a Note given its :id
   def show
     @activities = @note.activities.latest
+    load_conflicting_versions(@note)
   end
 
   def edit
+    @versions_count = @note.versions.count
   end
 
   # Update the attributes of a Note
   def update
+    updated_at_before_save = @note.updated_at.to_i
     if @note.update_attributes(note_params)
       track_updated(@note)
+      check_for_edit_conflicts(@note, updated_at_before_save)
       redirect_to node_note_path(@node, @note), notice: 'Note updated.'
     else
       initialize_nodes_sidebar

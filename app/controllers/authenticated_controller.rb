@@ -7,6 +7,7 @@
 # Any third-party code (e.g. plugins) should inherit from this class instead of
 # calling the authentication filters directly
 class AuthenticatedController < ApplicationController
+  include RevisionsHelper
   before_filter :login_required
   # before_filter :render_onboarding_tour
 
@@ -24,6 +25,10 @@ class AuthenticatedController < ApplicationController
   def user_for_paper_trail
     current_user.email if current_user
   end
+
+  # This method needs to be available in the views so RevisionsHelper can
+  # determine whether a revision was made by the current user.
+  helper_method :user_for_paper_trail
 
   private
   # This filter redirects every request to the first-time onboarding Tour until

@@ -3,6 +3,10 @@
 
   <%= f.input :text, label: false, input_html: { class: 'textile', data: { preview_url: preview_path, help_url: markup_path } } %>
 
+  <% if @issue.persisted? %>
+    <%= hidden_field :issue, :original_updated_at, value: @issue.updated_at.to_i %>
+  <% end %>
+
   <%= render 'tag_input', f: f %>
 
   <div class="form-actions">
