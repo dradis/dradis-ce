@@ -98,7 +98,7 @@ gem 'resque-status'
 gem 'simple_form'
 
 # Word content control filter string parsing
-gem 'parslet'
+gem 'parslet', '~> 1.4.0'
 
 # Word screenshots processing
 gem 'image_size', '~> 1.3.0'
