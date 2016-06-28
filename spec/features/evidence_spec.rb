@@ -50,6 +50,8 @@ describe "evidence" do
 
       let(:model) { @evidence }
       include_examples "creates an Activity", :destroy
+
+      include_examples "deleted item is listed in Trash", :evidence
     end
   end
 

@@ -40,4 +40,19 @@ module RevisionsHelper
     link_to text, record_revision_path(record, revision)
   end
 
+  # Renders icon depending on item type.
+  def render_revision_icon(revision)
+    icon_css = %w{fa}
+    icon_css << case revision.item_type
+                when 'Evidence'
+                  'fa-flag'
+                when 'Issue'
+                  'fa-bug'
+                when 'Note'
+                  'fa-file-text-o'
+                else
+                  ''
+                end
+    content_tag(:i, '', class: icon_css)
+  end
 end

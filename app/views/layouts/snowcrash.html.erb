@@ -46,6 +46,13 @@
               Can't move it inside _nodes, because it is used for the "Move
               node" modal, and it would nest :form tags breaking them %>
           <%= render partial: 'nodes/modals/add_branch' %>
+          <ul id="trash-menu">
+            <%= content_tag :li, :class => action_name == 'trash' ? 'active' : '' do %>
+              <%= link_to main_app.trash_path do %>
+                <i class="fa fa-trash" aria-hidden="true"></i> <span>Trash</span>
+              <% end %>
+            <% end %>
+          </ul>
       </div>
       </div>
       <div class="main-content <%= content_for?(:sidebar) ? 'no-padding' : ''%>">

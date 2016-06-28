@@ -49,6 +49,8 @@ describe "note pages" do
 
       let(:model) { @note }
       include_examples "creates an Activity", :destroy
+
+      include_examples "deleted item is listed in Trash", :note
     end
   end
 

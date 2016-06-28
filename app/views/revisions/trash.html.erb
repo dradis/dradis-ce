@@ -1,0 +1,26 @@
+<% content_for :title, 'Trash' %>
+
+<div id="trash">
+  <% if @revisions.any? %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Item type</th>
+          <th>Removed by</th>
+          <th>When</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @revisions.each do |revision| %>
+          <tr>
+            <td><%= render_revision_icon revision %> <%= revision.item_type %></td>
+            <td><%= revision.whodunnit %></td>
+            <td><%= local_time_ago(revision.created_at) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    The trash is empty.
+  <% end %>
+</div>

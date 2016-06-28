@@ -1,6 +1,6 @@
 class RevisionsController < ProjectScopedController
-  before_filter :load_node
-  before_filter :load_record
+  before_filter :load_node, except: :trash
+  before_filter :load_record, except: :trash
 
   def index
     redirect_to action: :show, id: @record.versions.last.try(:id) || 0
@@ -40,6 +40,11 @@ class RevisionsController < ProjectScopedController
               after[content_attribute],
               before[content_attribute]
             )
+  end
+
+  def trash
+    # Get all versions whose event is destroy.
+    @revisions = PaperTrail::Version.where(event: 'destroy').order(created_at: :desc)
   end
 
   private
