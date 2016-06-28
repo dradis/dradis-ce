@@ -52,7 +52,7 @@ class Search
 
   def issues
     Issue.where(
-      "node_id = :node AND text LIKE :q",
+      "node_id = :node AND LOWER(text) LIKE LOWER(:q)",
       node: Node.issue_library,
       q: "%#{query}%"
     ).order(updated_at: :desc)
@@ -60,7 +60,7 @@ class Search
 
   def nodes
     Node.user_nodes
-      .where("label LIKE :q", q: "%#{query}%")
+      .where("LOWER(label) LIKE LOWER(:q)", q: "%#{query}%")
       .order(updated_at: :desc)
   end
 
@@ -68,7 +68,7 @@ class Search
     system_nodes = [Node.issue_library.id, Node.methodology_library.id]
 
     Note.where(
-      "node_id NOT IN (:nodes) AND text LIKE :q",
+      "node_id NOT IN (:nodes) AND LOWER(text) LIKE LOWER(:q)",
       nodes: system_nodes,
       q: "%#{query}%"
     )
@@ -77,7 +77,7 @@ class Search
   end
 
   def evidence
-    Evidence.where("content LIKE :q", q: "%#{query}%")
+    Evidence.where("LOWER(content) LIKE LOWER(:q)", q: "%#{query}%")
       .includes(:issue, :node)
       .order(updated_at: :desc)
   end
