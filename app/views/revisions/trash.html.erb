@@ -13,7 +13,7 @@
       <tbody>
         <% @revisions.each do |revision| %>
           <tr>
-            <td><%= render_revision_type revision %></td>
+            <td><%= render_revision_type_and_content revision %></td>
             <td><%= revision.whodunnit %></td>
             <td><%= local_time_ago(revision.created_at) %></td>
           </tr>

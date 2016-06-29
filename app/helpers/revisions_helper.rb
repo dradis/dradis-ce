@@ -41,13 +41,20 @@ module RevisionsHelper
   end
 
   # Renders revision item type and icon.
-  def render_revision_type(revision)
-    # If revision type is Note, check note's node id to determine object type.
+  def render_revision_type_and_content(revision)
+    item = revision.reify
+    # If revision type is Note, check note's node id to determine item type.
     if revision.item_type == 'Note'
-      note = revision.reify
-      item_type = note.node_id == Node.issue_library.id ? 'Issue' : 'Note'
+      item_type = item.node_id == Node.issue_library.id ? 'Issue' : 'Note'
     else
       item_type = revision.item_type
+    end
+    # Get title or content first characters.
+    if item.fields.empty?
+      item_txt = item_type == 'Evidence' ? item.content : item.text
+    else
+      # Get title field, and if it's not set get first field value.
+      item_txt = item.title? ? item.title : item.fields.values[0]
     end
     # Set icon css depending on item type.
     icon_css = %w{fa}
@@ -61,6 +68,10 @@ module RevisionsHelper
                 else
                   ''
                 end
-    content_tag(:i, '', class: icon_css) + " " + item_type
+    [
+      content_tag(:i, '', class: icon_css),
+      item_type,
+      content_tag(:span, truncate(item_txt, length: 25, separator: "..."), class: 'item-content')
+    ].join(" ").html_safe
   end
 end
