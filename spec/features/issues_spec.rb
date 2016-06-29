@@ -235,6 +235,8 @@ describe "Issues pages" do
 
           let(:model) { @issue }
           include_examples "creates an Activity", :destroy
+
+          include_examples "deleted item is listed in Trash", :issue
         end
 
         describe "add evidence", js: true do

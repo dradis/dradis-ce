@@ -40,10 +40,18 @@ module RevisionsHelper
     link_to text, record_revision_path(record, revision)
   end
 
-  # Renders icon depending on item type.
-  def render_revision_icon(revision)
+  # Renders revision item type and icon.
+  def render_revision_type(revision)
+    # If revision type is Note, check note's node id to determine object type.
+    if revision.item_type == 'Note'
+      note = revision.reify
+      item_type = note.node_id == Node.issue_library.id ? 'Issue' : 'Note'
+    else
+      item_type = revision.item_type
+    end
+    # Set icon css depending on item type.
     icon_css = %w{fa}
-    icon_css << case revision.item_type
+    icon_css << case item_type
                 when 'Evidence'
                   'fa-flag'
                 when 'Issue'
@@ -53,6 +61,6 @@ module RevisionsHelper
                 else
                   ''
                 end
-    content_tag(:i, '', class: icon_css)
+    content_tag(:i, '', class: icon_css) + " " + item_type
   end
 end
