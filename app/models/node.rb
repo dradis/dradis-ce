@@ -14,7 +14,7 @@ class Node < ActiveRecord::Base
     ISSUELIB = 3
   end
 
-  acts_as_tree
+  acts_as_tree counter_cache: true
 
   # -- Relationships --------------------------------------------------------
   has_many :notes, dependent: :destroy

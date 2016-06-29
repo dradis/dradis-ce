@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151125115836) do
+ActiveRecord::Schema.define(version: 20160629084016) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "user",           null: false
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20151125115836) do
     t.datetime "updated_at"
     t.integer  "position"
     t.text     "properties"
+    t.integer  "children_count", default: 0, null: false
   end
 
   add_index "nodes", ["parent_id"], name: "index_nodes_on_parent_id"
