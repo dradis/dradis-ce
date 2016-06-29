@@ -4,6 +4,10 @@
   <%= render 'sidebar'%>
 <% end %>
 
+<% if @conflicting_versions %>
+  <%= render "projects/conflicting_versions", conflicts: @conflicting_versions, record: @issue %>
+<% end %>
+
 <!-- Main content -->
 <ul class="breadcrumb">
   <li><%= link_to 'All issues', issues_path() %> <span class="divider">/</span></li>
@@ -20,7 +24,6 @@
   <li><a href="#evidence-tab" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge"><%= @issue.evidence.count %></span></a></li>
   <li><a href="#activity-tab" data-toggle="tab"><i class="fa fa-refresh"></i> Recent activity</a></li>
 </ul>
-
 
 <div class="tab-content">
   <div class="tab-pane active" id="info-tab">

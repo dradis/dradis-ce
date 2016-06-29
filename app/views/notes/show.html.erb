@@ -17,6 +17,9 @@
   </p>
 </div>
 
+<% if @conflicting_versions %>
+  <%= render "projects/conflicting_versions", conflicts: @conflicting_versions, record: @note %>
+<% end %>
 
 <ul class="nav nav-tabs main-tabs">
   <li class="active"><a href="#info-tab" data-toggle="tab"><i class="fa fa-file-text"></i> Information</a></li>

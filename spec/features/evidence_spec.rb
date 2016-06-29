@@ -59,7 +59,7 @@ describe "evidence" do
 
     before do
       issue = create(:issue, node: issue_lib)
-      @evidence = create(:evidence, issue: issue)
+      @evidence = create(:evidence, issue: issue, updated_at: 2.seconds.ago)
       visit edit_node_evidence_path(@node, @evidence)
     end
 
@@ -68,15 +68,21 @@ describe "evidence" do
     it_behaves_like "a form with a help button"
 
     describe "submitting the form with valid information" do
+      let(:new_content) { "new content" }
+      before { fill_in :evidence_content, with: new_content }
+
       it "updates the evidence" do
-        fill_in :evidence_content, with: "new content"
         submit_form
-        expect(@evidence.reload.content).to eq "new content"
+        expect(@evidence.reload.content).to eq new_content
         expect(current_path).to eq node_evidence_path(@node, @evidence)
       end
 
       let(:model) { @evidence }
       include_examples "creates an Activity", :update
+
+      let(:record) { @evidence }
+      let(:column) { :content }
+      it_behaves_like "a page which handles edit conflicts"
     end
 
     describe "submitting the form with invalid data" do

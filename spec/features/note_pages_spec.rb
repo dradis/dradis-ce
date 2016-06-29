@@ -54,7 +54,7 @@ describe "note pages" do
 
   describe "edit page" do
     before do
-      @note = create(:note, node: @node)
+      @note = create(:note, node: @node, updated_at: 2.seconds.ago)
       visit edit_node_note_path(@node, @note)
     end
 
@@ -69,29 +69,35 @@ describe "note pages" do
 
     it_behaves_like "a form with a help button"
 
-    describe "submitting the form with valid information" do
+    # TODO handle the case where a Note has no paperclip versions (legacy data)
 
-      before do
-        fill_in :note_text, with: 'New note text'
-      end
+    describe "submitting the form with valid information" do
+      let(:new_content) { 'New note text' }
+      before { fill_in :note_text, with: new_content }
 
       it "updates the note" do
         submit_form
-        expect(@note.reload.text).to eq "New note text"
+        expect(@note.reload.text).to eq new_content
       end
 
       it "shows the updated note" do
         submit_form
         expect(current_path).to eq node_note_path(@node, @note)
-        expect(page).to have_content "New note text"
+        expect(page).to have_content new_content
       end
 
       let(:model) { @note }
       include_examples "creates an Activity", :update
+
+      let(:column) { :text }
+      let(:record) { @note }
+      it_behaves_like "a page which handles edit conflicts"
     end
 
     describe "submitting the form with invalid information" do
       before { fill_in :note_text, with: "a"*65536 }
+
+      # TODO how to handle conflicting edits in this case?
 
       it "doesn't update the note" do
         expect{submit_form}.not_to change{@note.reload.text}

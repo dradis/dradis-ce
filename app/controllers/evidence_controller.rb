@@ -7,6 +7,8 @@ class EvidenceController < NestedNodeResourceController
   def show
     @issue      = @evidence.issue
     @activities = @evidence.activities.latest
+
+    load_conflicting_versions(@evidence)
   end
 
   def new
@@ -72,8 +74,10 @@ class EvidenceController < NestedNodeResourceController
 
   def update
     respond_to do |format|
+      updated_at_before_save = @evidence.updated_at.to_i
       if @evidence.update_attributes(evidence_params)
         track_updated(@evidence)
+        check_for_edit_conflicts(@evidence, updated_at_before_save)
         format.html { redirect_to [@node, @evidence] }
       else
         format.html {
