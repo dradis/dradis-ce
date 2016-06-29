@@ -237,6 +237,7 @@ describe "Issues pages" do
           include_examples "creates an Activity", :destroy
 
           include_examples "deleted item is listed in Trash", :issue
+          include_examples "recover deleted item", :issue
         end
 
         describe "add evidence", js: true do

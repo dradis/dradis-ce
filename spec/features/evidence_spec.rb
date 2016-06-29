@@ -52,6 +52,7 @@ describe "evidence" do
       include_examples "creates an Activity", :destroy
 
       include_examples "deleted item is listed in Trash", :evidence
+      include_examples "recover deleted item", :evidence
     end
   end
 

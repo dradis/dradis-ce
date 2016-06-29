@@ -51,6 +51,7 @@ describe "note pages" do
       include_examples "creates an Activity", :destroy
 
       include_examples "deleted item is listed in Trash", :note
+      include_examples "recover deleted item", :note
     end
   end
 
