@@ -52,6 +52,7 @@ describe "note pages" do
 
       include_examples "deleted item is listed in Trash", :note
       include_examples "recover deleted item", :note
+      include_examples "recover deleted item without node", :note
     end
   end
 

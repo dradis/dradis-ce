@@ -49,11 +49,34 @@ class RevisionsController < ProjectScopedController
 
   def recover
     revision = PaperTrail::Version.find params[:id]
-    revision.reify.save
-    # Destroy revision so item is not listed in trash any more.
-    revision.destroy
+    object = revision.reify
+    # If object's node was destroyed, assign it no a new node.
+    if !Node.exists?(object.node_id)
+      recovered_node = Node.create(label: 'Recovered', type_id: Node::Types::DEFAULT)
+      object.node_id = recovered_node.id
+    end
 
-    flash[:info] = "Item recovered"
+    # If object is evidence and its issue doesn't exist any more, recover it.
+    if revision.item_type == 'Evidence' and !Note.exists?(object.issue_id)
+      issue_revision = PaperTrail::Version.where(event: 'destroy', item_type: 'Note', item_id: object.issue_id).limit(1).first
+      # A destroy revision should always be present, but just in case.
+      if issue_revision
+        issue_object = issue_revision.reify
+        issue_object.node_id = Node.issue_library.id
+        issue_object.save
+        object.issue_id = issue_object.id
+        issue_revision.destroy
+      end
+    end
+
+    if object.save
+      # Destroy revision so item is not listed in trash any more.
+      revision.destroy
+      flash[:info] = 'Item recovered'
+    else
+      flash[:error] = "Can't recover item."
+    end
+    
     redirect_to trash_path
   end
 
