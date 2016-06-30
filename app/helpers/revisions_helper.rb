@@ -40,25 +40,11 @@ module RevisionsHelper
     link_to text, record_revision_path(record, revision)
   end
 
-  # Renders revision item type and icon.
-  def render_revision_type_and_content(revision)
-    item = revision.reify
-    # If revision type is Note, check note's node id to determine item type.
-    if revision.item_type == 'Note'
-      item_type = item.node_id == Node.issue_library.id ? 'Issue' : 'Note'
-    else
-      item_type = revision.item_type
-    end
-    # Get title or content first characters.
-    if item.fields.empty?
-      item_txt = item_type == 'Evidence' ? item.content : item.text
-    else
-      # Get title field, and if it's not set get first field value.
-      item_txt = item.title? ? item.title : item.fields.values[0]
-    end
-    # Set icon css depending on item type.
+  def render_revision_object_icon(revision_object,object_type=nil)
+    object_type = revision_object_type(revision,revision_object) if object_type.nil?
+    # Set icon css depending on object type.
     icon_css = %w{fa}
-    icon_css << case item_type
+    icon_css << case object_type
                 when 'Evidence'
                   'fa-flag'
                 when 'Issue'
@@ -68,10 +54,53 @@ module RevisionsHelper
                 else
                   ''
                 end
+    content_tag(:i, '', class: icon_css)
+  end
+
+  def render_revision_object_title(revision_object)
+    # Get title or content first characters.
+    if revision_object.fields.empty?
+      object_title = revision_object.respond_to?(:content) ? revision_object.content : revision_object.text
+    else
+      # Get title field, and if it's not set get first field value.
+      object_title = revision_object.title? ? revision_object.title : revision_object.fields.values[0]
+    end
+    content_tag(:span, truncate(object_title, length: 25, separator: "..."), class: 'item-content')
+  end
+
+  def revision_object_type(revision,revision_object=nil)
+    # If revision type is Note, check note's node id to determine object type.
+    if revision.item_type == 'Note'
+      revision_object = revision.reify if revision_object.nil?
+      object_type = revision_object.node_id == Node.issue_library.id ? 'Issue' : 'Note'
+    else
+      object_type = revision.item_type
+    end
+  end
+
+  def revision_object_location(revision_object,object_type)
+    object_type = revision_object_type(revision,revision_object) if object_type.nil?
+    # Get node if object is a Note or an Evidence.
+    if ['Note','Evidence'].include?(object_type)
+      if revision_object.node
+        "at " + link_to(revision_object.node.label,revision_object.node)
+      else
+        'at a Node which has since been deleted'
+      end
+    else
+      ''
+    end
+  end
+
+  def render_revision_object_info(revision)
+    revision_object = revision.reify
+    object_type = revision_object_type(revision,revision_object)
+    
     [
-      content_tag(:i, '', class: icon_css),
-      item_type,
-      content_tag(:span, truncate(item_txt, length: 25, separator: "..."), class: 'item-content')
+      render_revision_object_icon(revision_object,object_type),
+      render_revision_object_title(revision_object),
+      object_type.downcase,
+      revision_object_location(revision_object,object_type),
     ].join(" ").html_safe
   end
 end

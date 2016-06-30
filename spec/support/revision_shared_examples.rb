@@ -7,7 +7,9 @@ shared_examples "deleted item is listed in Trash" do |item_type|
   it "deletes the item and destroy revision is shown in Trash" do
     submit_form
     visit trash_path
-    expect(page).to have_content item_type.to_s.capitalize
+    within '#trash' do
+      expect(page).to have_content item_type.to_s
+    end
   end
 end
 
@@ -21,7 +23,9 @@ shared_examples "recover deleted item" do |item_type|
       click_link 'Recover'
     end
     expect(page).to have_content "Item recovered"
-    expect(page).not_to have_content item_type.to_s.capitalize
+    within '#trash' do
+      expect(page).not_to have_content item_type.to_s
+    end
     expect(model.class.find_by_id(model.id)).not_to be_nil
   end
 end

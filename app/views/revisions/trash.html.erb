@@ -5,7 +5,7 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Item type</th>
+          <th>Item</th>
           <th>Removed by</th>
           <th>When</th>
           <th></th>
@@ -14,7 +14,7 @@
       <tbody>
         <% @revisions.each do |revision| %>
           <tr>
-            <td><%= render_revision_type_and_content revision %></td>
+            <td><%= render_revision_object_info revision %></td>
             <td><%= revision.whodunnit %></td>
             <td><%= local_time_ago(revision.created_at) %></td>
             <td>
