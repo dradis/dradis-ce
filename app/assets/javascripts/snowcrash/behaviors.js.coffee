@@ -109,17 +109,17 @@ jQuery ->
   # Search form
   $('#js-search-form-toggle').on 'click', (e)->
     e.preventDefault()
-    $('.form-search').toggleClass('hide')
-    $('.search-query').focus()
+    $('.navbar .form-search').toggleClass('hide')
+    $('.navbar .search-query').focus()
     $(this).hide()
 
-  $('.search-query').on 'blur', ->
+  $('.navbar .search-query').on 'blur', ->
     # Without this, the form will be hidden before the user has a chance to
     # click on the submit button with the mouse.
     setTimeout ->
-      $('.form-search').toggleClass('hide')
+      $('.navbar .form-search').toggleClass('hide')
       $('#js-search-form-toggle').show()
     , 10
 
-  $('.btn-search').on 'click', ->
+  $('.navbar .btn-search').on 'click', ->
     $('.form-search').submit()
