@@ -15,9 +15,8 @@ describe "node pages", js: true do
     @evidence_1 = create(:evidence, node: @node, content:"#[Title]#\nEv 1")
   end
 
-  describe "when another user adds a new root node" do
-
-    context "to the current project" do
+  describe "when another user adds a new node to the current project" do
+    context "and the new node is a root node" do
       before do
         visit node_path(@node)
         @new_node = create(:node, label: "New node", parent_id: nil)
@@ -46,7 +45,7 @@ describe "node pages", js: true do
       end
     end
 
-    context "and that node is a subnode" do
+    context "and the new node is a subnode" do
       before { visit node_path(@node) }
 
       context "and its parent is visible" do
