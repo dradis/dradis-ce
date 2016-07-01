@@ -46,14 +46,13 @@ describe "node pages", js: true do
     end
 
     context "and the new node is a subnode" do
-      before { visit node_path(@node) }
+      before do
+        # Give the node another subnode so it's expandable:
+        create(:node, label: "Other Sub", parent: @node)
+        visit node_path(@node)
+      end
 
       context "and its parent is visible" do
-        before do
-          # Give the node another subnode so the expansion works:
-          create(:node, label: "Other Sub", parent: @node)
-        end
-
         context "in the sidebar" do
           before { expand_node_in_sidebar(@node) }
 
@@ -88,10 +87,8 @@ describe "node pages", js: true do
         end
       end
 
-      context "and its parent has been 'expanded' but had no other subnodes" do
-        before { expand_node_in_sidebar(@node) }
-
-        specify "the 'expand' link reappears, and works" do
+      context "and its parent has no other subnodes" do
+        specify "the 'expand' link appears, and works" do
           @sub = create(:node, label: "Sub", parent: @node)
           track_created(@sub, @other_user)
           call_poller
