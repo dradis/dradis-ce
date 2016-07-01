@@ -46,8 +46,6 @@ shared_examples "a page which handles edit conflicts" do
       expect(page).to have_link "revision history", href: record_revisions_path(record)
     end
 
-    DATE_FORMAT = "%b %e %Y, %-l:%M%P"
-
     it "links to the previous versions" do
       submit_form
       all_versions = record.versions.order("created_at ASC")
@@ -56,12 +54,12 @@ shared_examples "a page which handles edit conflicts" do
       old_versions = all_versions - [my_version, conflict]
 
       expect(page).to have_link(
-        "Your update at #{my_version.created_at.strftime(DATE_FORMAT)}",
+        "Your update at #{my_version.created_at.strftime(RevisionsHelper::DATE_FORMAT)}",
         href: record_revision_path(record, my_version),
       )
 
       expect(page).to have_link(
-        "Update by #{email_1} at #{conflict.created_at.strftime(DATE_FORMAT)}",
+        "Update by #{email_1} at #{conflict.created_at.strftime(RevisionsHelper::DATE_FORMAT)}",
         href: record_revision_path(record, conflict),
       )
 
@@ -86,13 +84,13 @@ shared_examples "a page which handles edit conflicts" do
         old_versions = all_versions - [my_version] - conflicts
 
         expect(page).to have_link(
-          "Your update at #{my_version.created_at.strftime(DATE_FORMAT)}",
+          "Your update at #{my_version.created_at.strftime(RevisionsHelper::DATE_FORMAT)}",
           href: record_revision_path(record, my_version),
         )
 
         conflicts.each do |conflict|
           expect(page).to have_link(
-            "Update by #{conflict.whodunnit} at #{conflict.created_at.strftime(DATE_FORMAT)}",
+            "Update by #{conflict.whodunnit} at #{conflict.created_at.strftime(RevisionsHelper::DATE_FORMAT)}",
             href: record_revision_path(record, conflict),
           )
         end

@@ -26,10 +26,8 @@ class RevisionsController < ProjectScopedController
                @record.attributes
              end
 
-    time_format = "%b %e %Y, %-l:%M%P"
-
-    @updated_at      = after["updated_at"].strftime(time_format)
-    @last_updated_at = before["updated_at"].strftime(time_format)
+    @updated_at      = after["updated_at"].strftime(RevisionsHelper::DATE_FORMAT)
+    @last_updated_at = before["updated_at"].strftime(RevisionsHelper::DATE_FORMAT)
 
     content_attribute = case @record
                         when Issue, Note; 'text'
