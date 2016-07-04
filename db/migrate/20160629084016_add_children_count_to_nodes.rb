@@ -1,6 +1,6 @@
 class AddChildrenCountToNodes < ActiveRecord::Migration
   class Node < ActiveRecord::Base
-    # The 'real' Node class in app/models/node.rb passed the option
+    # The 'real' Node class in app/models/node.rb passes the option
     # `counter_cache: true` to `acts_as_tree`. But for some reason, when
     # that option is present, it interferes with this migration and prevents it
     # from working properly because the line
@@ -20,8 +20,12 @@ class AddChildrenCountToNodes < ActiveRecord::Migration
 
     reversible do |d|
       d.up do
-        Node.find_each do |node|
-          node.update_attributes!(children_count: node.children.count)
+        # I've tried several approaches to migrating the existing data and this
+        # is the fastest I can get it. When testing with about 11,000 Nodes in
+        # my database, this entire migration takes about 15 seconds to run on
+        # my machine.
+        Node.select(:id, :parent_id).where.not(parent_id: nil).includes(:parent).find_each do |node|
+          Node.update(node.parent_id, children_count: node.parent.children_count + 1)
         end
       end
     end
