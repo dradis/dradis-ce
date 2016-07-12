@@ -94,3 +94,8 @@ If you need to work on a feature branch, fork the repo and work on your own copy
 Dradis Framework Community Edition is released under [GNU General Public License version 2.0](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
 
 Dradis Framework Professional Edition is released under a commercial license.
+
+
+## We're hiring
+
+If you love open source, Ruby on Rails and would like to have a lot of freedom and autonomy in your work, maybe you should consider [joining our team](http://securityroots.com/careers.html) to make Dradis even better.
