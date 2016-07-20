@@ -29,9 +29,6 @@ do ($ = jQuery, window, document) ->
       if !target.siblings('.children').first().has('li.node').length
         $menu = target.siblings('.children')
         $.get(target.attr 'href')
-        .done ->
-          $menu.find('li.loading').hide()
-          $menu.find('li.error').hide()
         .fail ->
           $menu.find('li.loading').hide()
           $menu.find('li.error').show()

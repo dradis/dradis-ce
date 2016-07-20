@@ -15,9 +15,8 @@ describe "node pages", js: true do
     @evidence_1 = create(:evidence, node: @node, content:"#[Title]#\nEv 1")
   end
 
-  describe "when another user adds a new root node" do
-
-    context "to the current project" do
+  describe "when another user adds a new node to the current project" do
+    context "and the new node is a root node" do
       before do
         visit node_path(@node)
         @new_node = create(:node, label: "New node", parent_id: nil)
@@ -46,15 +45,14 @@ describe "node pages", js: true do
       end
     end
 
-    context "and that node is a subnode" do
-      before { visit node_path(@node) }
+    context "and the new node is a subnode" do
+      before do
+        # Give the node another subnode so it's expandable:
+        create(:node, label: "Other Sub", parent: @node)
+        visit node_path(@node)
+      end
 
       context "and its parent is visible" do
-        before do
-          # Give the node another subnode so the expansion works:
-          create(:node, label: "Other Sub", parent: @node)
-        end
-
         context "in the sidebar" do
           before { expand_node_in_sidebar(@node) }
 
@@ -89,10 +87,8 @@ describe "node pages", js: true do
         end
       end
 
-      context "and its parent has been 'expanded' but had no other subnodes" do
-        before { expand_node_in_sidebar(@node) }
-
-        specify "the 'expand' link reappears, and works" do
+      context "and its parent has no other subnodes" do
+        specify "the 'expand' link appears, and works" do
           @sub = create(:node, label: "Sub", parent: @node)
           track_created(@sub, @other_user)
           call_poller

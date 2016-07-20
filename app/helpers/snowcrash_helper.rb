@@ -1,8 +1,7 @@
 module SnowcrashHelper
   def css_class_for_node(node)
     classes = []
-    # Avoid the extra .children call to save a DB query. Defer to ajax-loading to find out.
-    classes << 'hasSubmenu' #if node.children.any?
+    classes << 'hasSubmenu' if node.children_count > 0
     classes << 'active' if node == @node
     classes << 'in' if @node && @node.parent_id == node.id
     classes.join(' ')
