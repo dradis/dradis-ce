@@ -2,7 +2,7 @@
 
 [ ![Build Status](https://codeship.com/projects/f06cef90-a1ae-0133-d7a5-465166e508dd/status?branch=master)](https://codeship.com/projects/128584)
 [ ![Code quality](https://codeclimate.com/github/dradis/dradis-ce/badges/gpa.svg)](https://codeclimate.com/github/dradis/dradis-ce)
-[ ![Black Hat Arsenal](https://www.toolswatch.org/badges/arsenal/2015.svg)](https://www.blackhat.com/us-15/arsenal.html)
+[ ![Black Hat Arsenal](https://www.toolswatch.org/badges/arsenal/2016.svg)](https://www.blackhat.com/us-16/arsenal.html#dradis-framework)
 
 Dradis is an open-source collaboration framework, tailored to InfoSec teams.
 
@@ -94,3 +94,8 @@ If you need to work on a feature branch, fork the repo and work on your own copy
 Dradis Framework Community Edition is released under [GNU General Public License version 2.0](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
 
 Dradis Framework Professional Edition is released under a commercial license.
+
+
+## We're hiring
+
+If you love open source, Ruby on Rails and would like to have a lot of freedom and autonomy in your work, maybe you should consider [joining our team](http://securityroots.com/careers.html) to make Dradis even better.
