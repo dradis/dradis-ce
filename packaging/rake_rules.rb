@@ -86,19 +86,25 @@ namespace :package do
     sh "cp Gemfile.plugins.template packaging/tmp/Gemfile.plugins"
 
     puts "\nAdjusting relative repo dirs..."
+
     # We want to replace ../dradis-* with ../../../dradis-*
     # regexp = "s/\\.\\.\\/dradis-/\\.\\.\\/\\.\\.\\/\\.\\.\\/dradis-/g"
-    # We want to replace path: '../dradis-*' with github: 'dradis/dradis-*'
-    regexp = "s/path: \'\.\./github: \'dradis/g"
 
-    if RbConfig::CONFIG['host_os'] =~ /darwin/
-      sh "sed -i '' -- \"#{regexp}\" packaging/tmp/Gemfile"
-      sh "sed -i '' -- \"#{regexp}\" packaging/tmp/Gemfile.lock"
-      sh "sed -i '' -- \"#{regexp}\" packaging/tmp/Gemfile.plugins"
-    else
-      sh "sed -i -- \"#{regexp}\" packaging/tmp/Gemfile"
-      sh "sed -i -- \"#{regexp}\" packaging/tmp/Gemfile.lock"
-      sh "sed -i -- \"#{regexp}\" packaging/tmp/Gemfile.plugins"
+    # We want to replace "path: '../dradis-*'" with "github: 'dradis/dradis-*'"
+    regexp = "s/path: \'\\.\\./github: \'dradis/g"
+
+    # We want to replace "path: 'engines/*'" with "path: '../../engines-*'"
+    engines_regexp = "s/'engines\\//'\\.\\.\\/\\.\\.\\/engines\\//g"
+
+    ["Gemfile", "Gemfile.lock", "Gemfile.plugins"].each do |gemfile|
+      path = "packaging/tmp/#{gemfile}"
+      if RbConfig::CONFIG['host_os'] =~ /darwin/
+        sh "sed -i '' -- \"#{regexp}\" #{path}"
+        sh "sed -i '' -- \"#{engines_regexp}\" #{path}"
+      else
+        sh "sed -i -- \"#{regexp}\" #{path}"
+        sh "sed -i -- \"#{engines_regexp}\" #{path}"
+      end
     end
 
     puts "\nCommenting unnecessary gems..."
@@ -214,7 +220,7 @@ def create_package(target)
   sh "mkdir -p #{package_dir}/lib/app"
 
   puts "\nCopying app..."
-  sh "cp -r config.ru Rakefile Thorfile bin app config lib public db vendor #{package_dir}/lib/app/"
+  sh "cp -r config.ru Rakefile Thorfile bin app config lib public db vendor engines #{package_dir}/lib/app/"
   sh "cp config/secrets.yml.template #{package_dir}/lib/app/config/secrets.yml"
   sh "rm -rf #{package_dir}/lib/app/vendor/cache #{package_dir}/lib/app/db/*.sqlite3"
 
@@ -244,6 +250,15 @@ def create_package(target)
   sh "cp -pR packaging/vendor #{package_dir}/lib/"
 
   puts "\nCopying gems..."
+
+  # Traveling Ruby moves all 'top-level' Rails directories into a new
+  # directory in the package called 'app'. (So there'll be 'app/app', 'app/lib',
+  # etc). Before adding the app's Gemfile to the package, we need to change
+  # the relative path of the 'engines' gems so Bundler can find them under the
+  # new app/engines directory:
+  engines_regexp = "s/\\.\\.\\/\\.\\.\\/engines/\\..\\/app\\/engines/g"
+  sh "sed -i '' -- \"#{engines_regexp}\" packaging/tmp/Gemfile"
+
   sh "cp packaging/tmp/Gemfile packaging/tmp/Gemfile.plugins packaging/tmp/Gemfile.lock #{package_dir}/lib/vendor/"
 
   sh "mkdir #{package_dir}/lib/vendor/.bundle"
