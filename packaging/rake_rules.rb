@@ -96,13 +96,20 @@ namespace :package do
     # We want to replace "path: 'engines/*'" with "path: '../../engines-*'"
     engines_regexp = "s/'engines\\//'\\.\\.\\/\\.\\.\\/engines\\//g"
 
+    # If any gems specified with 'path' have names (i.e. filepaths) that end in
+    # a trailing '/', that / will still be present after 'path' is changed to
+    # 'github' and will create an invalid github URL. So remove it:
+    trailing_slash_regex = "/github:/s/\\/'$/'/"
+
     ["Gemfile", "Gemfile.lock", "Gemfile.plugins"].each do |gemfile|
       path = "packaging/tmp/#{gemfile}"
       if RbConfig::CONFIG['host_os'] =~ /darwin/
         sh "sed -i '' -- \"#{regexp}\" #{path}"
+        sh "sed -i '' -- \"#{trailing_slash_regex}\" #{path}"
         sh "sed -i '' -- \"#{engines_regexp}\" #{path}"
       else
         sh "sed -i -- \"#{regexp}\" #{path}"
+        sh "sed -i - \"#{trailing_slash_regex}\" #{path}"
         sh "sed -i -- \"#{engines_regexp}\" #{path}"
       end
     end
