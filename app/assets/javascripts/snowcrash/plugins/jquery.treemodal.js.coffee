@@ -1,30 +1,39 @@
 # jQuery.treeModal
 #
-# This plugin handles the node-selection modal tree (used for the Move node)
+# This plugin handles the node-selection modal tree (used for Move node and Move note)
 # operatio. See ./app/views/nodes/modals/
 
 do ($ = jQuery, window, document) ->
 
   pluginName = "treeModal"
+  defaults =
+    type: "node"
 
   # The actual plugin constructor
   class Plugin
-    constructor: (@element) ->
+    constructor: (@element, options) ->
       @_name = pluginName
+      @options = $.extend {}, defaults, options
       @init()
 
     init: ->
       @$el = $(@element)
       @$tree = @$el.find('.tree-modal-box')
 
-      @$nodeParentIdHiddenInput = @$el.find("#node_parent_id")
+      if @options.type == "note"
+        @$nodeParentIdHiddenInput = @$el.find("#note_node_id")
+      else
+        @$nodeParentIdHiddenInput = @$el.find("#node_parent_id")
 
       @disableSubmitBtn()
 
       current_node_container = "#node_#{@$el.data('node-id')}"
 
       @isDescendedFromCurrentNode = ($nodeLink) ->
-        $nodeLink.parents(current_node_container).length > 0
+        if @options.type == "note"
+          $nodeLink.parent(current_node_container).length > 0
+        else
+          $nodeLink.parents(current_node_container).length > 0
 
       @$el.find("input[name='node_move_destination']").click(@selectMoveDestination)
 
@@ -64,6 +73,7 @@ do ($ = jQuery, window, document) ->
       @makeActiveSelection($nodeLink)
 
       selectedNodeId = $nodeLink.parent().data('node-id')
+
       @$nodeParentIdHiddenInput.val(selectedNodeId)
 
       @$el.find('#current-selection').text($nodeLink.text())
@@ -106,7 +116,7 @@ do ($ = jQuery, window, document) ->
 
 
 
-  $.fn[pluginName] = ->
-    @each ->
-      if !$.data(@, "plugin_#{pluginName}")
-        $.data(@, "plugin_#{pluginName}", new Plugin(@))
+  $.fn[pluginName] = (options) ->
+      @each ->
+        if !$.data(@, "plugin_#{pluginName}")
+          $.data(@, "plugin_#{pluginName}", new Plugin(@, options))

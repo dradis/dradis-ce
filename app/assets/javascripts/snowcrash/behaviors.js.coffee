@@ -68,7 +68,10 @@ jQuery ->
   $('.tree-navigation').treeNav()
 
   # Activate jQuery.treeModal
-  $('.modal-node-selection-form').treeModal()
+  $('.modal-node-selection-form').treeModal
+    type: "node"
+  $('.modal-note-selection-form').treeModal
+    type: "note"
 
 
   # ------------------------------------------------------- Bootstrap behaviors

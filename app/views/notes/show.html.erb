@@ -33,6 +33,10 @@
       <h3>Content for this note -
         <span class="actions">
           <%= link_to 'edit', edit_node_note_path(@node, @note) %>
+          <%= link_to 'move',
+                  '#modal_move_note',
+                  tabindex: '-1',
+                  data: { toggle: "modal" } %>
           <%= link_to 'delete',
                   [@node, @note],
                   class: 'text-error',
