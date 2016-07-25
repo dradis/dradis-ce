@@ -31,15 +31,18 @@
   <div class="tab-pane active" id="info-tab">
     <div id="<%= dom_id(@note) %>" class="inner note-text-inner">
       <h3>Content for this note -
-        <span class="actions">
-          <%= link_to 'edit', edit_node_note_path(@node, @note) %>
-          <%= link_to 'move',
+        <span class="actions note-actions">
+          <%= link_to ' Edit',
+                  edit_node_note_path(@node, @note),
+                  class: 'fa fa-edit' %>
+          <%= link_to ' Move',
                   '#modal_move_note',
                   tabindex: '-1',
+                  class: 'fa fa-mail-forward',
                   data: { toggle: "modal" } %>
-          <%= link_to 'delete',
+          <%= link_to ' Delete',
                   [@node, @note],
-                  class: 'text-error',
+                  class: 'text-error fa fa-trash',
                   data: { confirm: 'Are you sure?' },
                   method: :delete %>
         </span>

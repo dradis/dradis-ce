@@ -23,6 +23,15 @@
   }
 }
 
+.note-actions {
+  a {
+    padding-left: 5px;
+  }
+  a:first-child {
+    padding-left: 2px;
+  }
+}
+
 .note-list {
   margin-bottom: 2em;
   .list-item {
