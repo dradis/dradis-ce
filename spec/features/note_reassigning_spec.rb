@@ -15,7 +15,7 @@ describe "reassigning a note", js: true do
     visit node_note_path(@node_0, @note)
 
     within_note_content do
-      click_link "move"
+      click_link "Move"
     end
   end
 
@@ -60,7 +60,7 @@ describe "reassigning a note", js: true do
   end
 
   def within_note_content
-    within(".tab-content") { yield }
+    within(".note-actions") { yield }
   end
 
   def within_move_note_modal
