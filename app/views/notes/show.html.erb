@@ -32,19 +32,9 @@
     <div id="<%= dom_id(@note) %>" class="inner note-text-inner">
       <h3>Content for this note -
         <span class="actions note-actions">
-          <%= link_to ' Edit',
-                  edit_node_note_path(@node, @note),
-                  class: 'fa fa-edit' %>
-          <%= link_to ' Move',
-                  '#modal_move_note',
-                  tabindex: '-1',
-                  class: 'fa fa-mail-forward',
-                  data: { toggle: "modal" } %>
-          <%= link_to ' Delete',
-                  [@node, @note],
-                  class: 'text-error fa fa-trash',
-                  data: { confirm: 'Are you sure?' },
-                  method: :delete %>
+          <a href="<%= edit_node_note_path(@node, @note) %>" tabindex="-1" data-toggle="modal"><i class="fa fa-edit"></i> Edit</a>
+          <a href="#modal_move_note" tabindex="-1" data-toggle="modal"><i class="fa fa-mail-forward"></i> Move</a>
+          <a class="text-error" data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="<%= node_note_path(@node, @note) %>"><i class="fa fa-trash"></i> Delete</a>
         </span>
       </h3>
       <div class="content-textile">
