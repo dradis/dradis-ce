@@ -1,23 +1,27 @@
-<div id="modal_move_node" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modal_move" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <%= simple_form_for @node, html: {class: 'form-horizontal modal-node-selection-form', data:{ node_id: @node.id }} do |f| %>
-    <%= f.hidden_field :parent_id %>
+
+    <input type="hidden" name="node[parent_id]" id="node_parent_id">
+
+    <input type="hidden" name="note[node_id]" id="note_node_id" disabled>
+    <input type="hidden" name="note[original_updated_at]" id="note_original_updated_at" disabled>
 
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3 id="myModalLabel">Move <%= @node.label %> node</h3>
     </div>
     <div class="modal-body">
-      <p>Where do you want to move the <strong><%= @node.label %></strong> node?</p>
+      <p id= "myModalText">Where do you want to move the <strong><%= @node.label %></strong> node?</p>
 
       <% unless @node.root_node? %>
-        <div class="radio">
+        <div class="radio moveNodeOnly">
           <%= label_tag do %>
             <%= radio_button_tag :node_move_destination, :root %>
             Move to the top of the tree and make it a root node.
           <% end %>
         </div>
 
-        <div class="radio">
+        <div class="radio moveNodeOnly">
           <%= label_tag do %>
             <%= radio_button_tag :node_move_destination, :node, checked: true %>
             Move below another node:

@@ -13,7 +13,7 @@
         <li><a href="#modal_add_child_node" tabindex="-1" data-toggle="modal"><i class="fa fa-plus"></i> Add subnode</a></li>
         <li><a href="#modal_delete_node" tabindex="-1" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
         <li><a href="#modal_rename_node" tabindex="-1" data-toggle="modal"><i class="fa fa-edit"></i> Rename</a></li>
-        <li><a href="#modal_move_node" tabindex="-1" data-toggle="modal"><i class="fa fa-mail-forward"></i> Move</a></li>
+        <li><a href="#modal_move" tabindex="-1" data-toggle="modal" data-move="node" data-move-node-id="<%= @node.id %>" data-move-node-label="<%= @node.label %>"><i class="fa fa-mail-forward"></i> Move</a></li>
       </ul>
     </div>
   </div>
@@ -22,9 +22,5 @@
   <%= render partial: 'nodes/modals/add_child' %>
   <%= render partial: 'nodes/modals/delete' %>
   <%= render partial: 'nodes/modals/rename' %>
-  <%= render partial: 'nodes/modals/move' %>
-<% end %>
-
-<% if @note %>
-  <%= render partial: 'notes/modals/move' %>
+  <%= render partial: 'shared/move' %>
 <% end %>

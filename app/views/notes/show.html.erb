@@ -33,7 +33,7 @@
       <h3>Content for this note -
         <span class="actions note-actions">
           <a href="<%= edit_node_note_path(@node, @note) %>" tabindex="-1" data-toggle="modal"><i class="fa fa-edit"></i> Edit</a>
-          <a href="#modal_move_note" tabindex="-1" data-toggle="modal"><i class="fa fa-mail-forward"></i> Move</a>
+          <a href="#modal_move" tabindex="-1" data-toggle="modal" data-move="note" data-move-original-updated-at="<%= @note.updated_at.to_i %>" data-move-note-id="<%= @note.id %>" data-move-node-id="<%= @node.id %>" data-move-note-title="<%= @note.title %>"><i class="fa fa-mail-forward"></i> Move</a>
           <a class="text-error" data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="<%= node_note_path(@node, @note) %>"><i class="fa fa-trash"></i> Delete</a>
         </span>
       </h3>

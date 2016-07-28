@@ -20,10 +20,9 @@ do ($ = jQuery, window, document) ->
       @$el = $(@element)
       @$tree = @$el.find('.tree-modal-box')
 
-      if @options.type == "note"
-        @$nodeParentIdHiddenInput = @$el.find("#note_node_id")
-      else
-        @$nodeParentIdHiddenInput = @$el.find("#node_parent_id")
+      context = this
+      $('a[href$="#modal_move"]').click ->
+        context.updateForm(this)
 
       @disableSubmitBtn()
 
@@ -42,7 +41,6 @@ do ($ = jQuery, window, document) ->
       # links will be present on page load (most are lazy-loaded)
       linkSelector = "a:not('.invalid-selection'):not('.toggle')"
       @$tree.on "click", linkSelector, @selectNode
-
 
     markAsInvalid: ($nodeLink) ->
       # This will prevent the click handler from being called again for this
@@ -112,9 +110,54 @@ do ($ = jQuery, window, document) ->
     enableSubmitBtn: ->
       @$el.find(".btn-primary").prop("disabled", false)
 
+    updateForm: (e) ->
+      @options.type = $(e).data("move")
+      @options.node_id = $(e).data("move-node-id")
+      @options.note_id = $(e).data("move-note-id") || undefined
+      @options.original_updated_at = $(e).data("move-original-updated-at") || undefined
+      @options.title = $(e).data("move-note-title") || undefined
+      @options.label = $(e).data("move-node-label") || undefined
 
+      if @options.type == "note"
+        @$nodeParentIdHiddenInput = @$el.find("#note_node_id")
 
+        # change form action /nodes/5/notes/5
+        @$el.attr('action', '/nodes/' + @options.node_id + '/notes/' + @options.note_id);
+        # disable node_parent_id
+        @$el.find("#node_parent_id").prop("disabled", true)
+        # enable note_node_id and add value
+        @$el.find("#note_node_id").prop("disabled", false).val(@options.note_id)
+        # enable note_original_updated_at and add value
+        @$el.find("#note_original_updated_at").prop("disabled", false).val(@options.original_updated_at)
+        # select #node_move_destination_node
+        @$el.find("#node_move_destination_node").prop("checked", true)
+        # hide #move-to-root
+        @$el.find("#move-to-root").hide()
+        # hide .moveNodeOnly
+        @$el.find(".moveNodeOnly").hide()
+        # update #myModalLabel text
+        @$el.find("#myModalLabel").html("Move " + @options.title + " note")
+        # update #myModalText text
+        @$el.find("#myModalText").html("Where do you want to move the <strong>" + @options.title + "</strong> note?")
+      else
+        @$nodeParentIdHiddenInput = @$el.find("#node_parent_id")
 
+        # change action /nodes/5
+        @$el.attr('action', '/nodes/' + @options.node_id)
+        # enable node_parent_id and add value
+        @$el.find("#node_parent_id").prop("disabled", false).val(@options.node_id)
+        # disable note_node_id
+        @$el.find("#note_node_id").prop("disabled", true)
+        # disable note_original_updated_at
+        @$el.find("#note_original_updated_at").prop("disabled", true)
+        # show #move-to-root
+        @$el.find("#move-to-root").show()
+        # show .moveNodeOnly
+        @$el.find(".moveNodeOnly").show()
+        # update #myModalLabel text
+        @$el.find("#myModalLabel").html("Move " + @options.label + " node")
+        # update #myModalText text
+        @$el.find("#myModalText").html("Where do you want to move the <strong>" + @options.label + "</strong> node?")
 
   $.fn[pluginName] = (options) ->
       @each ->

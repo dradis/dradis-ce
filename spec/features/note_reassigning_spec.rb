@@ -64,14 +64,14 @@ describe "reassigning a note", js: true do
   end
 
   def within_move_note_modal
-    within("#modal_move_note") { yield }
+    within("#modal_move") { yield }
   end
 
   def click_node_toggle_button(node)
-    find("#modal_move_note [data-node-id='#{node.id}'] > a.toggle").click
+    find("#modal_move [data-node-id='#{node.id}'] > a.toggle").click
   end
 
   def submit_move_button
-    find("#modal_move_note .btn-primary")
+    find("#modal_move .btn-primary")
   end
 end
