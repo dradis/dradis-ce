@@ -21,7 +21,10 @@ Rails.application.routes.draw do
   resources :configurations, only: [:index, :update]
 
   resources :issues do
-    collection { post :import }
+    collection do
+      post :import
+      put  :combine
+    end
     resources :revisions, only: [:index, :show]
   end
 

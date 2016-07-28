@@ -94,6 +94,13 @@ class IssuesController < ProjectScopedController
     @query = params[:query]
   end
 
+  def combine
+    respond_to do |format|
+      format.html { redirect_to issues_url, notice: 'Nothing done yet.' }
+      format.json
+    end
+  end
+
   private
   def find_issues
     # We need a transaction because multiple DELETE calls can be issued from

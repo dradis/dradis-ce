@@ -1,0 +1,24 @@
+<div id="modal_combine_issues" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <%= simple_form_for Issue.new, url: combine_issues_path, method: 'put', html: {class: 'form-horizontal'} do |f| %>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Combine issues</h3>
+  </div>
+  <div class="modal-body">
+    <p>These are the issues to be combined. Please choose the issue you want to merge the others into:
+    <div id="issues_to_combine"></div>
+    <p>Or:
+    <div class="radio">
+      <%= label_tag do %>
+        <%= radio_button_tag :chosen, :new %>
+          Combine the others into a new issue
+      <% end %>
+    </div>
+    <%= f.input :text, label: false, input_html: { class: 'textile', data: { preview_url: preview_path, help_url: markup_path } } %>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary">Combine</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+  <% end %>
+</div>

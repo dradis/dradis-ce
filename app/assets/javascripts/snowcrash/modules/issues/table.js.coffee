@@ -23,6 +23,12 @@ class IssueTable
     # Handle the showing / hiding of table columns
     @$column_menu.find('a').on 'click', @onColumnPickerClick
 
+    # Handle the combine issues button click
+    $('#issue-table').on('click', '#combine-selected', @onCombineSelected)
+
+    # Handle type of combination radios
+    $('#modal_combine_issues').on('click', 'input[name=chosen]', @onCombineTypeChosen)
+
   loadColumnState: =>
     if Storage?
       @selectedColumns = JSON.parse(localStorage.getItem(@storageKey()))
@@ -118,6 +124,36 @@ class IssueTable
         error: (foo,bar,foobar) ->
           $($row.find('td')[that.tagColumnIndex]).replaceWith("<td class='text-error'>Please try again</td>")
       }
+
+  # get selected issues ids and their titles, and build a form with that info
+  # inside the combine issues modal
+  onCombineSelected: (event) ->
+    $('#modal_combine_issues #issues_to_combine').empty()
+
+    issues_to_combine = []
+    $('.js-tbl-issues').find('input[type=checkbox]:checked.js-multicheck').each ->
+      $row = $(this).parent().parent()
+
+      id = @.name.split('_')[1]
+      name = $($row.find('td')[1]).find('a').html()
+      issues_to_combine.push({id: id, name: name})
+
+    for issue in issues_to_combine
+      html =  "<div class='radio'><label><input type='radio' name='chosen' value='#{issue.id}' />#{issue.name}</label></div>"
+      html += "<input type='hidden' name='ids[]' value='#{issue.id}' />"
+      $('#modal_combine_issues #issues_to_combine').append(html)
+
+    $("#modal_combine_issues").modal()
+
+    # TODO: $($row.find('td')[2]).replaceWith("<td class=\"loading\">Combining...</td>")
+
+  # when the combine modal is visible, depending on which radio is clicked,
+  # hide/show the new issue text field
+  onCombineTypeChosen: (event) ->
+    if @.value == "new"
+      $("#modal_combine_issues .issue_text").show()
+    else
+      $("#modal_combine_issues .issue_text").hide()
 
   saveColumnState: ->
     if Storage?

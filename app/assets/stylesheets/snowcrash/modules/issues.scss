@@ -131,6 +131,14 @@ body.issues.index {
     }
   }
   //------------------------------------------------------------- /Issues table
+
+  //------------------------------------------------------------ Combine modal
+  #modal_combine_issues {
+    .issue_text {
+      display: none;
+    }
+  }
+  //----------------------------------------------------------- /Combine modal
 }
 
 body.issues.new, body.issues.edit {
