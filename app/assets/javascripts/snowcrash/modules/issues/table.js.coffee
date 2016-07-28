@@ -164,10 +164,17 @@ jQuery ->
       $('#select-all').prop('checked', _select_all)
 
     $('#select-all, input[type=checkbox].js-multicheck').click ->
-      if $('input[type=checkbox]:checked.js-multicheck').length
+      checked = $('input[type=checkbox]:checked.js-multicheck').length
+
+      if checked
         $('.js-issue-actions').css('display', 'inline-block')
       else
         $('.js-issue-actions').css('display', 'none')
+
+      if checked > 1
+        $('#combine-selected').css('display', 'inline-block')
+      else
+        $('#combine-selected').css('display', 'none')
 
 
     $('#js-table-filter').on 'keyup', ->
