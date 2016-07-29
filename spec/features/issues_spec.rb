@@ -137,12 +137,12 @@ describe "Issues pages" do
             visit new_issue_path
             fill_in :issue_text,
                     with: '#[Title]#\nRSpec issue\n\n'
-            fill_in :tag_list,
+            fill_in :issue_tag_list,
                     with: 'private, public'
 
-            expect(submit_form).to change(Issue.count).by(1)
+            expect{submit_form}.to change{Issue.count}.by(1)
             issue = Issue.last
-            names_of_tags = Tags.all.pluck(:name)
+            names_of_tags = Tag.all.pluck(:name)
             expect(issue.tags.count).to eq(2)
             expect(names_of_tags).to include('private')
             expect(names_of_tags).to include('public')
