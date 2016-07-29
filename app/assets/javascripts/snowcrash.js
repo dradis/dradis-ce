@@ -11,6 +11,7 @@
 //= require d3
 //= require local_time
 //= require clipboard
+//= require jquery.tagsinput
 
 //= require snowcrash/plugins/jquery.breadcrums
 //= require snowcrash/plugins/jquery.treemodal

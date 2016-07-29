@@ -136,4 +136,14 @@ body.issues.new, body.issues.edit {
       background: #fff;
     }
   }
+
+  div.tagsinput span.tag {
+    border-color: #aaa;
+    background: #eee;
+    color: #333;
+
+    a {
+      color: #aaa;
+    }
+  }
 }

@@ -5,3 +5,7 @@ jQuery ->
     $span = $("#issues_editor .dropdown-toggle span.tag")
     $span.html($target.html())
     $span.css("color", $target.css("color"))
+
+  $('#issue_tag_list').tagsInput
+    'width': 'auto',
+    'placeholderColor' : '#666666'
