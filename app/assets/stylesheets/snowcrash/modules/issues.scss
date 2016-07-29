@@ -84,6 +84,12 @@ body.issues.show {
       padding: 1ex;
     }
   }
+
+  .inner .h3-tags {
+    display: block;
+    font-size: 0.7em;
+    padding-top: 5px;
+  }
 }
 
 body.issues.index {

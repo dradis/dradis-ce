@@ -43,7 +43,7 @@ class Tag < ActiveRecord::Base
   # Strips the tag's name and returns the color details if present
   # if no color information is found, returns a default value of #ccc
   def color()
-    name[/\A(![abcdef\d]{6})_[[:word:]]+?\z/,1].try(:gsub, "!", "#") || "#ccc"
+    name[/\A(![abcdef\d]{6})_[[:word:]]+?\z/,1].try(:gsub, "!", "#") || "#333"
   end
 
   private
