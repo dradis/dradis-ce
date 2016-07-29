@@ -1,0 +1,17 @@
+<div class="accordion-group">
+  <div class="accordion-heading">
+    <%= div_for issue, class: 'accordion-toggle', data: {toggle: 'collapse', target: "#issue_#{issue.id}_content_result"}  do %>
+      <div class="remove-note pull-right">
+        <%= link_to 'add this issue', issues_path(:format => :js), :class => 'add-issue', :data => {:text => issue.text} %>
+      </div>
+      <%= issue_tags(issue) if issue.new_record? %> <%= issue.title %>
+    <% end %>
+  </div>
+
+  <div id="<%= "issue_#{issue.id}" %>_content_result" class="accordion-body collapse">
+    <div class="accordion-inner">
+      <div class="page page-mini content-textile"><%= markup(issue.text) %></div>
+    </div>
+  </div>
+
+</div>
