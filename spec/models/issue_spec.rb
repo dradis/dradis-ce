@@ -48,6 +48,20 @@ describe Issue do
 
   end
 
+  describe "on combine" do
+    before do
+      @issue1 = create(:issue)
+      @issue2 = create(:issue)
+
+      @issue1.combine @issue2
+    end
+
+    it "combines the issues", issues: true do
+      expect(true).to eq true
+    end
+
+  end
+
 
   describe "#title" do
     subject { issue.title }

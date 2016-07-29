@@ -71,4 +71,8 @@ class Issue < Note
       node.label.split('.').map(&:to_i)
     end
   end
+
+  def combine!(*issues)
+  end
+
 end
