@@ -131,6 +131,23 @@ describe "Issues pages" do
             expect(issue.tag_list).to eq(tag_field.split(', ').first)
           end
         end
+
+        context "when Tags are set with tags textarea field" do
+          it "tags the issue with the Tags in the textarea and saves them" do
+            visit new_issue_path
+            fill_in :issue_text,
+                    with: '#[Title]#\nRSpec issue\n\n'
+            fill_in :tag_list,
+                    with: 'private, public'
+
+            expect(submit_form).to change(Issue.count).by(1)
+            issue = Issue.last
+            names_of_tags = Tags.all.pluck(:name)
+            expect(issue.tags.count).to eq(2)
+            expect(names_of_tags).to include('private')
+            expect(names_of_tags).to include('public')
+          end
+        end
       end
 
 
