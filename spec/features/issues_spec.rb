@@ -138,7 +138,7 @@ describe "Issues pages" do
             visit new_issue_path
             fill_in :issue_text, with: '#[Title]#\nRSpec issue\n\n'
             find('#issue_tag_list_tag').native.
-              send_keys 'private', :enter, 'public', :enter
+              send_keys 'private', :enter, 'Public', :enter
 
             expect{submit_form}.to change{Issue.count}.by(1)
             issue = Issue.last
