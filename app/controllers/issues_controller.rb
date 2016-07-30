@@ -95,6 +95,11 @@ class IssuesController < ProjectScopedController
   end
 
   def combine
+    if params[:id].blank? and params[:new_issue].blank?
+      redirect_to issues_url, alert: "Must select a target issue"
+      return
+    end
+
     respond_to do |format|
       if params[:new_issue]
         if @issue.save && @issue.update_attributes(issue_params)
