@@ -53,11 +53,21 @@ describe Issue do
       @issue1 = create(:issue)
       @issue2 = create(:issue)
 
-      @issue1.combine @issue2
+      @issue1.evidence.create(
+        author: 'rspec',
+        content: "#[Evidence1]#\nIssue 1 evidence"
+      )
+      @issue2.evidence.create(
+        author: 'rspec',
+        content: "#[Evidence2]#\nIssue 2 evidence"
+      )
+
+      @issue1.combine! @issue2
     end
 
     it "combines the issues", issues: true do
-      expect(true).to eq true
+      expect(@issue1.evidence.length).to be 2
+      expect(Issue.exists?(@issue2.id)).to be false
     end
 
   end

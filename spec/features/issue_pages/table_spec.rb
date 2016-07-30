@@ -32,14 +32,5 @@ describe "issue pages" do
         expect(find('.js-table-columns', visible: false)).to have_text(column)
       end
     end
-
-    it "displays combine button when more than one issue selected" do
-
-    end
-
-    it "builds a form with selected issues when combine button clicked" do
-
-    end
-
   end
 end
