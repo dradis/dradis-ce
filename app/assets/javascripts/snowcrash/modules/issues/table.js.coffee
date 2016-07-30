@@ -27,7 +27,7 @@ class IssueTable
     $('#issue-table').on('click', '#combine-selected', @onCombineSelected)
 
     # Handle type of combination radios
-    $('#modal_combine_issues').on('click', 'input[name=chosen]', @onCombineTypeChosen)
+    $('#modal_combine_issues').on('click', 'input[type=radio]', @onCombineTypeChosen)
 
   loadColumnState: =>
     if Storage?
@@ -139,8 +139,8 @@ class IssueTable
       issues_to_combine.push({id: id, name: name})
 
     for issue in issues_to_combine
-      html =  "<div class='radio'><label><input type='radio' name='chosen' value='#{issue.id}' />#{issue.name}</label></div>"
-      html += "<input type='hidden' name='ids[]' value='#{issue.id}' />"
+      html =  "<div class='radio'><label><input type='radio' name='id' value='#{issue.id}' />#{issue.name}</label></div>"
+      html += "<input type='hidden' name='sources[]' value='#{issue.id}' />"
       $('#modal_combine_issues #issues_to_combine').append(html)
 
     $("#modal_combine_issues").modal()
@@ -151,8 +151,10 @@ class IssueTable
   # hide/show the new issue text field
   onCombineTypeChosen: (event) ->
     if @.value == "new"
+      $("#modal_combine_issues input[name=id]").attr("checked", false)
       $("#modal_combine_issues .issue_text").show()
     else
+      $("#modal_combine_issues input[name=new_issue]").attr("checked", false)
       $("#modal_combine_issues .issue_text").hide()
 
   saveColumnState: ->

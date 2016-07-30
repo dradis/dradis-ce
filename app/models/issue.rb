@@ -73,6 +73,12 @@ class Issue < Note
   end
 
   def combine!(*issues)
+    issues.each do |source|
+      self.evidence << source.evidence
+      source.destroy
+    end
+
+    self
   end
 
 end

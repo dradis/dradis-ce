@@ -83,8 +83,9 @@ describe "Issues pages" do
             expect(page).to have_selector('#modal_combine_issues', visible: true)
 
             # check that the form inside the modal has the required fields
-            expect(page).to have_selector("input[name='chosen']", count: list.length + 1)
-            expect(page).to have_selector("input[name='ids[]']",  count: list.length)
+            expect(page).to have_selector("input[name='id']", count: list.length)
+            expect(page).to have_selector("input[name='new_issue']", 1)
+            expect(page).to have_selector("input[name='sources[]']", count: list.length)
           end
         end
       end

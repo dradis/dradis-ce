@@ -96,7 +96,29 @@ class IssuesController < ProjectScopedController
 
   def combine
     respond_to do |format|
-      format.html { redirect_to issues_url, notice: 'Nothing done yet.' }
+      if params[:new_issue]
+        if @issue.save && @issue.update_attributes(issue_params)
+          track_created(@issue)
+          tag_issue_from_field_content(@issue)
+        else
+          @issue = nil
+        end
+      end
+
+      if @issue
+        source_ids = params[:sources].map(&:to_i) - [@issue.id]
+        sources = Issue.where(id: source_ids).to_a
+        @issue = @issue.combine! *sources
+      end
+
+      format.html {
+        if @issue
+          redirect_to issues_url, notice: "Issues combined."
+        else
+          redirect_to issues_url, alert: "Issue couldn't be combined."
+        end
+      }
+
       format.json
     end
   end
