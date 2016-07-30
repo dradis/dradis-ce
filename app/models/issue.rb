@@ -75,7 +75,7 @@ class Issue < Note
   def combine!(*issues)
     issues.each do |source|
       self.evidence << source.evidence
-      source.destroy
+      source.delete
     end
 
     self
