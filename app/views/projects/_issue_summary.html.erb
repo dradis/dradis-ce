@@ -6,10 +6,20 @@
     <div class="columns">
       <ul>
         <% for tag in @tags do %>
+          <% if @taggings_by_tag[tag.id] %>
+            <li>
+              <%= link_to "#tag_#{tag.id}" do %>
+                <%=	tag.display_name %>
+                <sup><%= @taggings_by_tag[tag.id] || 0 %></sup>
+              <% end %>
+            </li>
+          <% end %>
+        <% end %>
+        <% unless @issues_by_tag[:unassigned].empty? %>
           <li>
-            <%= link_to "#tag_#{tag.id}" do %>
-              <%=	tag.display_name %>
-              <sup><%= @taggings_by_tag[tag.id] || 0 %></sup>
+            <%= link_to "#tag_unassigned" do %>
+              Unassigned
+              <sup><%= @issues_by_tag[:unassigned].count %></sup>
             <% end %>
           </li>
         <% end %>
@@ -18,28 +28,32 @@
 
     <% for tag in @tags do %>
       <%= content_tag_for :div, tag, class: "issue-group" do %>
-        <h2 style="color: <%= tag.color %>"><%= tag.display_name %></h2>
-        <ul class="issue-list drop-target" data-tag="<%= tag.name %>">
-          <% for issue in @issues_by_tag[tag.name] %>
-            <%= content_tag_for :li, issue, data: {url: issue_path(issue, format: :json)} do %>
-              <%= link_to issue.title, issue %>
+        <% if @taggings_by_tag[tag.id] %>
+          <h2 style="color: <%= tag.color %>"><%= tag.display_name %></h2>
+          <ul class="issue-list drop-target" data-tag="<%= tag.name %>">
+            <% for issue in @issues_by_tag[tag.name] %>
+              <%= content_tag_for :li, issue, data: {url: issue_path(issue, format: :json)} do %>
+                <%= link_to issue.title, issue %>
+              <% end %>
             <% end %>
-          <% end %>
-        </ul>
+          </ul>
+        <% end %>
       <% end %>
     <% end %>
 
     <%# unassigned %>
-    <div class="issue-group">
-      <h2>Unassigned</h2>
-      <ul class="issue-list drop-target">
+    <% unless @issues_by_tag[:unassigned].empty? %>
+      <div class="issue-group" id="tag_unassigned">
+        <h2>Unassigned</h2>
+        <ul class="issue-list drop-target">
           <% for issue in @issues_by_tag[:unassigned] %>
             <%= content_tag_for :li, issue, data: {url: issue_path(issue, format: :json)} do %>
               <%= link_to issue.title, issue %>
             <% end %>
           <% end %>
-      </ul>
-    </div>
+        </ul>
+      </div>
+    <% end %>
 
   <% else %>
     <p class="no-content">There are no issues in this project yet.</p>
