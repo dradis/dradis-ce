@@ -2,10 +2,22 @@
   <h2>Issues so far</h2>
 
   <% if @issues.any? %>
-    <div id="issue-chart"></div>
+    <!--<div id="issue-chart"></div>-->
+    <div class="columns">
+      <ul>
+        <% for tag in @tags do %>
+          <li>
+            <%= link_to "#tag_#{tag.id}" do %>
+              <%=	tag.display_name %>
+              <sup><%= @taggings_by_tag[tag.id] || 0 %></sup>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
 
     <% for tag in @tags do %>
-      <div class="issue-group">
+      <%= content_tag_for :div, tag, class: "issue-group" do %>
         <h2 style="color: <%= tag.color %>"><%= tag.display_name %></h2>
         <ul class="issue-list drop-target" data-tag="<%= tag.name %>">
           <% for issue in @issues_by_tag[tag.name] %>
@@ -14,7 +26,7 @@
             <% end %>
           <% end %>
         </ul>
-      </div>
+      <% end %>
     <% end %>
 
     <%# unassigned %>
