@@ -132,8 +132,8 @@ describe "Issues pages" do
           end
         end
 
-        context "when Tags are set through tags textarea field" do
-          it "tags the issue with the Tags in the textarea and saves them", js: true do
+        context "when Tags are set through tags textarea field", js: true do
+          it "tags the issue with the Tags in the textarea and saves them" do
             create(:tag, name: 'public')
             visit new_issue_path
             fill_in :issue_text, with: '#[Title]#\nRSpec issue\n\n'
@@ -142,12 +142,23 @@ describe "Issues pages" do
 
             expect{submit_form}.to change{Issue.count}.by(1)
             issue = Issue.last
-            names_of_tags = Tag.all.pluck(:name)
+            names_of_tags = Tag.pluck(:name)
 
             expect(issue.tags.count).to eq(2)
+            expect(issue.tags.pluck(:name)).to include 'public'
             expect(names_of_tags).to include 'private'
-            expect(names_of_tags).to include 'public'
             expect(Tag.last.name).to eq 'private'
+          end
+
+          it "doesn't save tags that are identical to preloaded tags" do
+            visit new_issue_path
+            fill_in :issue_text, with: '#[Title]#\nRSpec issue\n\n'
+            find('#issue_tag_list_tag').native.send_keys 'high', :enter
+
+            expect{submit_form}.to change{Issue.count}.by(1)
+
+            expect(Issue.last.tags.count).to eq(1)
+            expect(Tag.pluck(:name)).not_to include 'high'
           end
         end
       end
