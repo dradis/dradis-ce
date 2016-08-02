@@ -7,7 +7,7 @@
     <%= hidden_field :issue, :original_updated_at, value: @issue.updated_at.to_i %>
   <% end %>
 
-  <%= f.input :tag_list, as: :text, label: 'Tags:' %>
+  <%= f.input :tag_list, as: :text, label: 'Tags:', hint: 'Hint: Type Tag name and press "Enter" to add it' %>
 
   <div class="form-actions">
     <%= f.button :submit, nil, class: 'btn btn-dradispro' %> or
