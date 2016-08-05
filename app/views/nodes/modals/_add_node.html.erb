@@ -74,6 +74,16 @@
 
       <%= hidden_field_tag "nodes[parent_id]", @node.id if type == :child %>
       <%= text_area_tag    "nodes[list]", "", rows: 3, class: "nodes_list" %>
+
+      <div class="form-control">
+        <%= label_tag :type_id %>
+        <%= select_tag(
+          "nodes[type_id]",
+          options_for_select(
+            [["Default", Node::Types::DEFAULT], ["Host", Node::Types::HOST]]
+          ),
+          include_blank: false) %>
+      </div>
     <% end %>
   </div>
 

@@ -62,6 +62,21 @@ describe "node pages" do
           "node with trailing whitespace",
         ])
       end
+
+      example "adding multiple root host nodes" do
+        choose "Add multiple"
+
+        fill_in :nodes_list, with: "foo\nbar"
+        select "Host", from: :nodes_type_id
+
+        expect do
+          click_button "Add"
+        end.to change{Node.in_tree.count}.by(2)
+
+        expect(
+          Node.in_tree.last(2).all? { |n| n.type_id == Node::Types::HOST }
+        ).to be true
+      end
     end
 
     describe "adding child nodes to an existing node", :js do

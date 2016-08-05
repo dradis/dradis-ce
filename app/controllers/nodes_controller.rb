@@ -34,7 +34,11 @@ class NodesController < NestedNodeResourceController
     if list.any?
       Node.transaction do |node|
         list.each do |node_label|
-          node = Node.create!(label: node_label.strip, parent: @parent)
+          node = Node.create!(
+            label: node_label.strip,
+            parent: @parent,
+            type_id: params[:nodes][:type_id]
+          )
           track_created(node)
         end
       end
