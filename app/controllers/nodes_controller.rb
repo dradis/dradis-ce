@@ -2,8 +2,8 @@
 # resource.
 class NodesController < NestedNodeResourceController
 
-  skip_before_filter :find_or_initialize_node, only: [ :sort ]
-  before_filter :initialize_nodes_sidebar, except: [ :sort ]
+  skip_before_filter :find_or_initialize_node, only: [ :sort, :multiple ]
+  before_filter :initialize_nodes_sidebar, except: [ :sort, :multiple ]
 
   # GET /nodes/<id>
   def show
@@ -18,18 +18,30 @@ class NodesController < NestedNodeResourceController
   # POST /nodes
   def create
     @node.label = 'unnamed' unless @node.label.present?
-    if @node.save
-      track_created(@node)
-      flash[:notice] = 'Successfully created node.'
-      redirect_to @node
-    else
-      parent = @node.parent
-      if parent
-        redirect_to parent, alert: @node.errors.full_messages.join('; ')
-      else
-        redirect_to summary_path, alert: @node.errors.full_messages.join('; ')
+    @node.save!
+    track_created(@node)
+    flash[:notice] = 'Successfully created node.'
+    redirect_to @node
+  end
+
+  def multiple
+    if params[:nodes][:parent_id].present?
+      @parent = Node.find(params[:nodes][:parent_id])
+    end
+
+    list = params[:nodes][:list].split(/\n/).map(&:strip).select(&:present?)
+
+    if list.any?
+      Node.transaction do |node|
+        list.each do |node_label|
+          node = Node.create!(label: node_label.strip, parent: @parent)
+          track_created(node)
+        end
       end
     end
+
+    flash[:notice] = "Successfully created #{list.length} node#{'s' if list.many?}"
+    redirect_to @parent ? node_path(@parent) : summary_path
   end
 
   # POST /nodes/sort
