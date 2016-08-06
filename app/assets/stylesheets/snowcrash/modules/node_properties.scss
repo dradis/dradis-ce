@@ -8,5 +8,8 @@ body.nodes {
 
   &.show {
     h4 { margin-top: 30px; }
+    #scripts-tabs .tab-pane {
+      padding-left: 2em;
+    }
   }
 }

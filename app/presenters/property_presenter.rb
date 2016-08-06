@@ -50,10 +50,11 @@ class PropertyPresenter < BasePresenter
       end.join.html_safe
     end
 
-    content_tag(:div,
-      content_tag(:table, thead.concat(tbody)),
-      class: 'content-textile'
-    )
+    # content_tag(:div,
+    #   content_tag(:table, thead.concat(tbody)),
+    #   class: 'content-textile'
+    # )
+    content_tag(:table, thead.concat(tbody), class: 'table table-condensed')
   end
 
   def render_table
