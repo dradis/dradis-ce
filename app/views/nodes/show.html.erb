@@ -1,32 +1,37 @@
 <% content_for :title, "#{@node.label} - properties" %>
 
-<div id="<%= dom_id(@node) %>_content">
-  <div class="inner">
-    <div class="content-textile">
-      <h3>Properties - <%= link_to 'edit', edit_node_path(@node) %></h3>
+<ul class="nav nav-tabs main-tabs">
+    <li class="active"><a href="#properties-tab" data-toggle="tab">
+    <% if @node.type_id == Node::Types::HOST %>
+      <i class="fa fa-laptop"></i> Host properties
+    <% else%>
+      <i class="fa fa-cogs"></i> Node properties
+    <% end %>
+    </a></li>
+  <li><a href="#activity-tab" data-toggle="tab"><i class="fa fa-refresh"></i> Recent activity</a></li>
+</ul>
 
-      <% if @node.has_any_property?  %>
-        <% @node.properties.sort.each do |key, value| %>
-          <% if value.present? %>
-            <% if value.is_a?(Array) || value.is_a?(Hash) %>
-              <h4><%= key.to_s.pluralize.titleize %></h4>
-            <% else %>
-              <h4><%= key.to_s.titleize.singularize  %></h4>
-            <% end %>
+<div class="tab-content">
+  <div class="tab-pane active" id="properties-tab">
+    <div class="node-content" id="<%= dom_id(@node) %>_content">
+      <div class="inner">
+        <h3>Properties - <%= link_to 'edit', edit_node_path(@node) %></h3>
 
-            <% if value.is_a?(Array) && value[0].is_a?(Hash) %>
-              <p><%= render_property_table(@node, key) %></p>
-            <% else %>
-              <p><%= render_property(@node, key) %></p>
+        <% if @node.has_any_property?  %>
+          <% @node.properties.sort.each do |key, value| %>
+            <% present [key, value], PropertyPresenter do |property_presenter| %>
+              <h4><%= property_presenter.name %></h4>
+              <%= property_presenter.value %>
             <% end %>
           <% end %>
         <% end %>
-      <% end %>
+
+      </div>
     </div>
   </div>
-
-  <div class="inner">
-    <h3>Recent Activity</h3>
-    <%= render 'activities/feed', activities: @activities %>
+  <div class="tab-pane" id="activity-tab">
+    <div class="inner">
+      <%= render partial: 'activity' %>
+    </div>
   </div>
 </div>

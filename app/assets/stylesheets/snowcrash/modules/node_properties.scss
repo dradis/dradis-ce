@@ -1,4 +1,12 @@
-textarea.json {
-  font-family: monospace;
-  width: 100%;
+body.nodes {
+  &.edit {
+    textarea.json {
+      font-family: monospace;
+      width: 100%;
+    }
+  }
+
+  &.show {
+    h4 { margin-top: 30px; }
+  }
 }
