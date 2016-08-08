@@ -531,6 +531,7 @@ DEPENDENCIES
   json (= 1.8.2)
   kaminari (~> 0.16.1)
   letter_opener
+  listen (<= 3.1.1)
   local_time
   mysql2 (= 0.3.18)
   nokogiri (= 1.6.8)
