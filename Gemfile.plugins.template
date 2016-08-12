@@ -5,8 +5,8 @@
 #   $ bundle
 
 # ----------------------------------------------------------------- Calculators
-gem 'dradis-calculator_cvss',  path: '../dradis-calculator_cvss/'
-gem 'dradis-calculator_dread', path: '../dradis-calculator_dread/'
+gem 'dradis-calculator_cvss',  '~> 3.0'
+gem 'dradis-calculator_dread', '~> 3.0'
 
 # ---------------------------------------------------------------------- Export
 gem 'dradis-csv',         path: '../dradis-csv/'
