@@ -54,7 +54,11 @@
     ) do |f| %>
       <%= f.hidden_field :parent_id if type == :child %>
       <%= f.input :label %>
-      <%= f.input :type_id, collection: [["Default", Node::Types::DEFAULT], ["Host", Node::Types::HOST]], include_blank: false %>
+      <%= f.input :type_id,
+        collection: [["No icon", Node::Types::DEFAULT], ["Host", Node::Types::HOST]],
+        include_blank: false,
+        label: 'Icon'
+      %>
     <% end %>
 
     <%# We can't use 'form_for' because 'list' isn't an attribute that exists
@@ -76,11 +80,11 @@
       <%= text_area_tag    "nodes[list]", "", rows: 3, class: "nodes_list" %>
 
       <div class="form-control">
-        <%= label_tag :type_id %>
+        <%= label_tag :type_id, 'Icon' %>
         <%= select_tag(
           "nodes[type_id]",
           options_for_select(
-            [["Default", Node::Types::DEFAULT], ["Host", Node::Types::HOST]]
+            [["No icon", Node::Types::DEFAULT], ["Host", Node::Types::HOST]]
           ),
           include_blank: false) %>
       </div>
