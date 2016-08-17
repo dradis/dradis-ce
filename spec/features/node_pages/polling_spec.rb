@@ -256,7 +256,7 @@ describe "node pages", js: true do
   end
 
   def within_move_node_nodal
-    within("#modal_move_node") { yield }
+    within("#modal_move") { yield }
   end
 
   def show_move_node_modal
@@ -264,7 +264,7 @@ describe "node pages", js: true do
   end
 
   def move_modal_visible?
-    all("#modal_move_node", visible: true).any?
+    all("#modal_move", visible: true).any?
   end
 
   def wait_for_loading_to_finish
@@ -283,7 +283,7 @@ describe "node pages", js: true do
   end
 
   def expand_node_in_modal(node)
-    find("#modal_move_node [data-node-id='#{node.id}'] > .toggle").click
+    find("#modal_move [data-node-id='#{node.id}'] > .toggle").click
     wait_for_loading_to_finish
   end
 

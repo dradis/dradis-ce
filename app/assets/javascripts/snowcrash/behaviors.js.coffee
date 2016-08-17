@@ -70,7 +70,6 @@ jQuery ->
   # Activate jQuery.treeModal
   $('.modal-node-selection-form').treeModal()
 
-
   # ------------------------------------------------------- Bootstrap behaviors
 
   # Focus first input on modal window display.

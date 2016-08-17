@@ -1,26 +1,26 @@
 <% if @node %>
-<div class="row-fluid">
-  <div class="span7">
-    <ul class="breadcrumb">
-      <li><a href="javascript:void(0)">Nodes</a> <span class="divider">/</span></li>
-      <%= content_tag :li, class: 'active', data: {node_id: @node.id} do %>
-        <%= @node.label %>
-      <% end -%>
-    </ul>
+  <div class="row-fluid">
+    <div class="span7">
+      <ul class="breadcrumb">
+        <li><a href="javascript:void(0)">Nodes</a> <span class="divider">/</span></li>
+        <%= content_tag :li, class: 'active', data: {node_id: @node.id} do %>
+          <%= @node.label %>
+        <% end -%>
+      </ul>
+    </div>
+    <div class="span5">
+      <ul class="nav nav-pills pull-right">
+        <li><a href="#modal_add_child_node" tabindex="-1" data-toggle="modal"><i class="fa fa-plus"></i> Add subnode</a></li>
+        <li><a href="#modal_delete_node" tabindex="-1" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
+        <li><a href="#modal_rename_node" tabindex="-1" data-toggle="modal"><i class="fa fa-edit"></i> Rename</a></li>
+        <li><a href="#modal_move" tabindex="-1" data-toggle="modal" data-move="node" data-move-node-id="<%= @node.id %>" data-move-node-label="<%= @node.label %>"><i class="fa fa-mail-forward"></i> Move</a></li>
+      </ul>
+    </div>
   </div>
-  <div class="span5">
-    <ul class="nav nav-pills pull-right">
-      <li><a href="#modal_add_child_node" tabindex="-1" data-toggle="modal"><i class="fa fa-plus"></i> Add subnode</a></li>
-      <li><a href="#modal_delete_node" tabindex="-1" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
-      <li><a href="#modal_rename_node" tabindex="-1" data-toggle="modal"><i class="fa fa-edit"></i> Rename</a></li>
-      <li><a href="#modal_move_node" tabindex="-1" data-toggle="modal"><i class="fa fa-mail-forward"></i> Move</a></li>
-    </ul>
-  </div>
-</div>
 
-<!-- Node modal windows -->
-<%= render partial: 'nodes/modals/add_child' %>
-<%= render partial: 'nodes/modals/delete' %>
-<%= render partial: 'nodes/modals/rename' %>
-<%= render partial: 'nodes/modals/move' %>
+  <!-- Node modal windows -->
+  <%= render partial: 'nodes/modals/add_child' %>
+  <%= render partial: 'nodes/modals/delete' %>
+  <%= render partial: 'nodes/modals/rename' %>
+  <%= render partial: 'shared/move' %>
 <% end %>

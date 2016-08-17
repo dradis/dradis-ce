@@ -66,7 +66,6 @@ describe "moving a node", js: true do
     end
   end
 
-
   describe "selecting 'move to root'" do
     before { choose :node_move_destination_root }
 
@@ -99,7 +98,6 @@ describe "moving a node", js: true do
     end
   end
 
-
   context "when moving a root node" do
     let(:current_node) { @node_0 }
 
@@ -111,21 +109,20 @@ describe "moving a node", js: true do
     end
   end
 
-
   def create_node(attrs={})
     create(:node, attrs)
   end
 
   def within_move_node_modal
-    within("#modal_move_node") { yield }
+    within("#modal_move") { yield }
   end
 
   def click_node_toggle_button(node)
-    find("#modal_move_node [data-node-id='#{node.id}'] > a.toggle").click
+    find("#modal_move [data-node-id='#{node.id}'] > a.toggle").click
   end
 
   def submit_move_button
-    find("#modal_move_node .btn-primary")
+    find("#modal_move .btn-primary")
   end
 
 
