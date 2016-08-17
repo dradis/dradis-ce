@@ -11,16 +11,14 @@
       ×
     </button>
 
-    <h3 id="modal_add_node_header">Add subnode</h3>
+    <% if type == :branch %>
+      <h3 id="modal_add_node_header">Add top-level node</h3>
+    <% else %>
+      <h3 id="modal_add_node_header">Add a child to the <strong><%= @node.label %></strong> node</h3>
+    <% end %>
   </div>
 
   <div class="modal-body">
-    <% if type == :branch %>
-      <p>You are adding a new top-level node.</p>
-    <% else %>
-      <p>You are adding a child to the <strong><%= @node.label %></strong> node.</p>
-    <% end %>
-
     <%# we need to scope the names of the radio buttons to this specific modal
       # so that clicking a radio in the 'add child' modal won't deselect the
       # radios in the 'add branch' modal %>
