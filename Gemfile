@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.6'
+gem 'rails', '4.2.7.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -158,6 +158,11 @@ group :test do
   gem 'capybara', '~> 2.4.4'
   gem 'poltergeist'#, '~> 1.6.0'
   gem 'guard-rspec', require: false
+  # guard-rspec depends on `guard`, which depends on `listen`, but versions of
+  # listen higher than 3.1.1 require Ruby version >= 2.2.3 (we're currently on
+  # 2.2.2). Restrict the version of `listen` to prevent `guard-rspec`
+  # introducing an incompatible dependency:
+  gem 'listen', '<= 3.1.1'
   gem 'shoulda-matchers', '~> 2.8.0'
   gem 'timecop'
 end

@@ -5,7 +5,11 @@
 <% if @children.any? %>
 $("[data-id=<%= dom_id(@node, 'menu') %>]").html("<%= j(render partial: 'layouts/snowcrash/node', collection: @children) %>");
 <% else %>
-$parent = $("[data-id=<%= dom_id(@node, 'menu') %>]").parent('li')
+$menu = $("[data-id=<%= dom_id(@node, 'menu') %>]")
+$menu.find('li.error').remove()
+$menu.find('li.loading').remove()
+
+$parent = $menu.parent('li')
 $parent.removeClass('hasSubmenu')
 // Use 'visibility: hidden' rather than .hide() so the surrounding elements
 // don't move.
