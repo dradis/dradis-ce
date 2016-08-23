@@ -32,7 +32,7 @@ class NodesController < NestedNodeResourceController
       @parent = Node.find(params[:nodes][:parent_id])
     end
 
-    list = params[:nodes][:list].split(/\n/).map(&:strip).select(&:present?)
+    list = params[:nodes][:list].lines.map(&:strip).select(&:present?)
 
     if list.any?
       Node.transaction do |node|
