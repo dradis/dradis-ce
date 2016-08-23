@@ -1,6 +1,6 @@
 class RevisionsController < ProjectScopedController
-  before_filter :load_node
-  before_filter :load_record
+  before_filter :load_node, except: [ :trash, :recover ]
+  before_filter :load_record, except: [ :trash, :recover ]
 
   def index
     redirect_to action: :show, id: @record.versions.last.try(:id) || 0
@@ -38,6 +38,44 @@ class RevisionsController < ProjectScopedController
               after[content_attribute],
               before[content_attribute]
             )
+  end
+
+  def trash
+    # Get all versions whose event is destroy.
+    @revisions = PaperTrail::Version.where(event: 'destroy').order(created_at: :desc)
+  end
+
+  def recover
+    revision = PaperTrail::Version.find params[:id]
+    object = revision.reify
+    # If object's node was destroyed, assign it no a new node.
+    if !Node.exists?(object.node_id)
+      recovered_node = Node.create(label: 'Recovered', type_id: Node::Types::DEFAULT)
+      object.node_id = recovered_node.id
+    end
+
+    # If object is evidence and its issue doesn't exist any more, recover it.
+    if revision.item_type == 'Evidence' and !Note.exists?(object.issue_id)
+      issue_revision = PaperTrail::Version.where(event: 'destroy', item_type: 'Note', item_id: object.issue_id).limit(1).first
+      # A destroy revision should always be present, but just in case.
+      if issue_revision
+        issue_object = issue_revision.reify
+        issue_object.node_id = Node.issue_library.id
+        issue_object.save
+        object.issue_id = issue_object.id
+        issue_revision.destroy
+      end
+    end
+
+    if object.save
+      # Destroy revision so item is not listed in trash any more.
+      revision.destroy
+      flash[:info] = 'Item recovered'
+    else
+      flash[:error] = "Can't recover item."
+    end
+    
+    redirect_to trash_path
   end
 
   private

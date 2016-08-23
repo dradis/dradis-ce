@@ -110,7 +110,7 @@ body {
         margin: 0 0 2em 0;
         overflow: visible;
 
-        &#main-menu{
+        &#main-menu {
           li.active:after {
             right: -1em;
           }
@@ -118,6 +118,20 @@ body {
             font-size: 1.1em;
             i {
               font-size: 20px;
+              vertical-align: text-bottom;
+              margin-right: 5px;
+            }
+          }
+        }
+
+        &#trash-menu {
+          li.active:after {
+            right: -1em;
+          }
+          a {
+            font-size: 0.9em;
+            i {
+              font-size: 18px;
               vertical-align: text-bottom;
               margin-right: 5px;
             }

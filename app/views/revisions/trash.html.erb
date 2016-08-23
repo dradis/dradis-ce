@@ -1,0 +1,32 @@
+<% content_for :title, 'Trash' %>
+
+<div id="trash">
+  <% if @revisions.any? %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Removed by</th>
+          <th>When</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @revisions.each do |revision| %>
+          <tr>
+            <td><%= render_revision_object_info revision %></td>
+            <td><%= revision.whodunnit %></td>
+            <td><%= local_time_ago(revision.created_at) %></td>
+            <td>
+              <%= link_to recover_revision_path(revision), method: :post, data: { confirm: 'Are you sure?' } do %>
+                <i class="fa fa-refresh"></i> Recover
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    The trash is empty.
+  <% end %>
+</div>
