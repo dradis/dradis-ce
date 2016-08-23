@@ -2,8 +2,8 @@
 # resource.
 class NodesController < NestedNodeResourceController
 
-  skip_before_filter :find_or_initialize_node, only: [ :sort, :multiple ]
-  before_filter :initialize_nodes_sidebar, except: [ :sort, :multiple ]
+  skip_before_filter :find_or_initialize_node, only: [ :sort, :create_multiple ]
+  before_filter :initialize_nodes_sidebar, except: [ :sort, :create_multiple ]
 
   # GET /nodes/<id>
   def show
@@ -27,7 +27,7 @@ class NodesController < NestedNodeResourceController
     redirect_to @node
   end
 
-  def multiple
+  def create_multiple
     if params[:nodes][:parent_id].present?
       @parent = Node.find(params[:nodes][:parent_id])
     end
