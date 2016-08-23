@@ -18,13 +18,18 @@ class NodesController < NestedNodeResourceController
   # POST /nodes
   def create
     @node.label = 'unnamed' unless @node.label.present?
-    # @node will never be invalid. The only validation on the model is a
-    # presence validation on `label`, but that will never fail because of the
-    # default label added above.
-    @node.save!
-    track_created(@node)
-    flash[:notice] = 'Successfully created node.'
-    redirect_to @node
+    if @node.save
+      track_created(@node)
+      flash[:notice] = 'Successfully created node.'
+      redirect_to @node
+    else
+      parent = @node.parent
+      if parent
+        redirect_to parent, alert: @node.errors.full_messages.join('; ')
+      else
+        redirect_to summary_path, alert: @node.errors.full_messages.join('; ')
+      end
+    end
   end
 
   def create_multiple
