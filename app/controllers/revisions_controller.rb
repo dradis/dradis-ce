@@ -47,12 +47,9 @@ class RevisionsController < ProjectScopedController
 
   def recover
     revision = PaperTrail::Version.find params[:id]
-    object = revision.reify
-    # If object's node was destroyed, assign it no a new node.
-    if !Node.exists?(object.node_id)
-      recovered_node = Node.create(label: 'Recovered', type_id: Node::Types::DEFAULT)
-      object.node_id = recovered_node.id
-    end
+    object   = revision.reify
+    # If object's node was destroyed, assign it to a new node.
+    object.node = Node.recovered if !Node.exists?(object.node_id)
 
     # If object is evidence and its issue doesn't exist any more, recover it.
     if revision.item_type == 'Evidence' and !Note.exists?(object.issue_id)
