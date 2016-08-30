@@ -51,7 +51,7 @@ class RevisionsController < ProjectScopedController
     # If object's node was destroyed, assign it to a new node.
     object.node = Node.recovered if !Node.exists?(object.node_id)
 
-    # If object is evidence and its issue doesn't exist any more, recover it.
+    # If object is evidence and its issue doesn't exist any more, recover the issue.
     if revision.item_type == 'Evidence' and !Note.exists?(object.issue_id)
       issue_revision = PaperTrail::Version.where(event: 'destroy', item_type: 'Note', item_id: object.issue_id).limit(1).first
       # A destroy revision should always be present, but just in case.
