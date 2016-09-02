@@ -61,7 +61,7 @@
           <%= link_to(
                 'revision history',
                 node_evidence_revisions_path(@node, @evidence)
-              ) if @evidence.versions.any? && @evidence.versions.last.previous.present? %>
+              ) if @evidence.versions.where.not(event: "create").any? %>
         </span>
       </h3>
       <%= render 'activities/feed', activities: @activities %>
