@@ -13,7 +13,7 @@ class Activity < ActiveRecord::Base
 
   validates_presence_of :action, :trackable_id, :trackable_type, :user
 
-  VALID_ACTIONS = %w[create update destroy]
+  VALID_ACTIONS = %w[create update destroy recover]
 
   validates_inclusion_of :action, in: VALID_ACTIONS
 

@@ -19,9 +19,14 @@ shared_examples "recover deleted item" do |item_type|
   it "should recover item listed in Trash", js: true do
     submit_form
     visit trash_path
-    page.accept_confirm do
-      find(:xpath, "//a[@href='#{recover_revision_path(id: model.versions.last.id)}']").click
-    end
+    expect do
+      page.accept_confirm do
+        find(:xpath, "//a[@href='#{recover_revision_path(id: model.versions.last.id)}']").click
+      end
+    end.to change{model.activities.count}.by(1)
+
+    expect(model.activities.last.action).to eq "recover"
+
     expect(page).to have_content "Item recovered"
     within '#trash' do
       expect(page).not_to have_content item_type.to_s
@@ -40,10 +45,14 @@ shared_examples "recover deleted item without node" do |item_type|
     within '#modal_delete_node' do
       click_link 'Delete'
     end
-    visit trash_path
-    page.accept_confirm do
-      find(:xpath, "//a[@href='#{recover_revision_path(id: model.versions.last.id)}']").click
-    end
+    expect do
+      visit trash_path
+      page.accept_confirm do
+        find(:xpath, "//a[@href='#{recover_revision_path(id: model.versions.last.id)}']").click
+      end
+    end.to change{model.activities.count}.by(1)
+    expect(model.activities.last.action).to eq "recover"
+
     expect(page).to have_content "Item recovered"
     within '#trash' do
       expect(page).not_to have_content item_type.to_s

@@ -48,6 +48,18 @@ class RevisionsController < ProjectScopedController
   def recover
     revision = PaperTrail::Version.find params[:id]
     object   = revision.reify
+
+    # If we're recovering an issue, revision.reify will return an instance
+    # of `Note`, because `revision.reify.item_type == "Note"`. This won't prevent
+    # the issue from being recovered correctly (because `revision.reify.node_id
+    # == Node.issue_library.id`), it will break the activity feed, because
+    # track_activity will create an Activity with `trackable_type == "Note"`,
+    # not `trackable_type == "Issue"`.  So if revision.reify returns a Note
+    # which should be an issue, convert it to an instance of Issue:
+    if object.instance_of?(Note) && object.node_id == Node.issue_library.id
+      object = Issue.new(object.attributes)
+    end
+
     # If object's node was destroyed, assign it to a new node.
     object.node = Node.recovered if !Node.exists?(object.node_id)
 
@@ -67,6 +79,7 @@ class RevisionsController < ProjectScopedController
     if object.save
       # Destroy revision so item is not listed in trash any more.
       revision.destroy
+      track_recovered(object)
       flash[:info] = 'Item recovered'
     else
       flash[:error] = "Can't recover item."
