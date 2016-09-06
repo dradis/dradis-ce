@@ -13,16 +13,18 @@
       </thead>
       <tbody>
         <% @revisions.each do |revision| %>
-          <tr>
-            <td><%= render_revision_object_info revision %></td>
-            <td><%= revision.whodunnit %></td>
-            <td><%= local_time_ago(revision.created_at) %></td>
-            <td>
-              <%= link_to recover_revision_path(revision), method: :post, data: { confirm: 'Are you sure?' } do %>
-                <i class="fa fa-refresh"></i> Recover
-              <% end %>
-            </td>
-          </tr>
+          <% present revision, TrashedRevisionPresenter do |revision_presenter| %>
+            <tr>
+              <td><%= revision_presenter.info %></td>
+              <td><%= revision.whodunnit %></td>
+              <td><%= revision_presenter.created_at_ago %></td>
+              <td>
+                <%= link_to recover_revision_path(revision), method: :post, data: { confirm: 'Are you sure?' } do %>
+                  <i class="fa fa-refresh"></i> Recover
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
         <% end %>
       </tbody>
     </table>
