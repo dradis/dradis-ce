@@ -1,8 +1,12 @@
-class TrashedRevisionPresenter < BasePresenter
-  presents :revision
+class RecoverableVersionPresenter < BasePresenter
+  presents :recoverable_version
 
   def created_at_ago
     h.local_time_ago(revision.created_at)
+  end
+
+  def whodunnit
+    revision.whodunnit
   end
 
   def info
@@ -59,6 +63,10 @@ class TrashedRevisionPresenter < BasePresenter
 
   def trashed_object
     @trashed_object ||= revision.reify
+  end
+
+  def revision
+    @revision ||= recoverable_version.version
   end
 
   def type
