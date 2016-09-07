@@ -42,45 +42,14 @@ class RevisionsController < ProjectScopedController
 
   def trash
     # Get all versions whose event is destroy.
-    @revisions = PaperTrail::Version.where(event: 'destroy').order(created_at: :desc)
+    @revisions = RecoverableVersion.all
   end
 
   def recover
-    revision = PaperTrail::Version.find params[:id]
-    object   = revision.reify
-
-    # If we're recovering an issue, revision.reify will return an instance
-    # of `Note`, because `revision.reify.item_type == "Note"`. This won't prevent
-    # the issue from being recovered correctly (because `revision.reify.node_id
-    # == Node.issue_library.id`), it will break the activity feed, because
-    # track_activity will create an Activity with `trackable_type == "Note"`,
-    # not `trackable_type == "Issue"`.  So if revision.reify returns a Note
-    # which should be an issue, convert it to an instance of Issue:
-    if object.instance_of?(Note) && object.node_id == Node.issue_library.id
-      object = Issue.new(object.attributes)
-    end
-
-    # If object's node was destroyed, assign it to a new node.
-    object.node = Node.recovered if !Node.exists?(object.node_id)
-
-    # If object is evidence and its issue doesn't exist any more, recover the issue.
-    if revision.item_type == 'Evidence' and !Note.exists?(object.issue_id)
-      issue_revision = PaperTrail::Version.where(event: 'destroy', item_type: 'Note', item_id: object.issue_id).limit(1).first
-      # A destroy revision should always be present, but just in case.
-      if issue_revision
-        issue_object = issue_revision.reify
-        issue_object.node_id = Node.issue_library.id
-        issue_object.save
-        object.issue_id = issue_object.id
-        issue_revision.destroy
-      end
-    end
-
+    version = RecoverableVersion.find(params[:id])
     class_name = object.class.name.humanize
-    if object.save
-      # Destroy revision so item is not listed in trash any more.
-      revision.destroy
-      track_recovered(object)
+    if version.recover
+      track_recovered(version.recovered_object)
       flash[:info] = "#{class_name} recovered"
     else
       flash[:error] = "Can't recover #{class_name}: #{object.errors.full_messages.join(',')}"
