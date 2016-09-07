@@ -2,7 +2,12 @@
 
 <div id="trash">
   <% if @revisions.any? %>
-    <table class="table">
+    <div class="btn-toolbar">
+      <div class="filter pull-right">
+        <input type="text" class="form-control input-xlarge js-table-filter" placeholder="Type here to filter table..."/>
+      </div>
+    </div>
+    <table class="table table-striped">
       <thead>
         <tr>
           <th>Item</th>
