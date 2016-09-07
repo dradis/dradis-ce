@@ -76,13 +76,14 @@ class RevisionsController < ProjectScopedController
       end
     end
 
+    class_name = object.class.name.humanize
     if object.save
       # Destroy revision so item is not listed in trash any more.
       revision.destroy
       track_recovered(object)
-      flash[:info] = 'Item recovered'
+      flash[:info] = "#{class_name} recovered"
     else
-      flash[:error] = "Can't recover item."
+      flash[:error] = "Can't recover #{class_name}: #{object.errors.full_messages.join(',')}"
     end
     
     redirect_to trash_path
