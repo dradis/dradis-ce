@@ -27,7 +27,7 @@ shared_examples "recover deleted item" do |item_type|
 
     expect(model.activities.last.action).to eq "recover"
 
-    expect(page).to have_content "Item recovered"
+    expect(page).to have_content "#{model.class.name.humanize} recovered"
     within '#trash' do
       expect(page).not_to have_content item_type.to_s
     end
@@ -53,7 +53,7 @@ shared_examples "recover deleted item without node" do |item_type|
     end.to change{model.activities.count}.by(1)
     expect(model.activities.last.action).to eq "recover"
 
-    expect(page).to have_content "Item recovered"
+    expect(page).to have_content "#{model.class.name.humanize} recovered"
     within '#trash' do
       expect(page).not_to have_content item_type.to_s
     end
