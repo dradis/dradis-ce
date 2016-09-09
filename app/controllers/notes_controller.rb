@@ -73,6 +73,6 @@ class NotesController < NestedNodeResourceController
   end
 
   def note_params
-    params.require(:note).permit(:category_id, :text)
+    params.require(:note).permit(:category_id, :text, :node_id)
   end
 end
