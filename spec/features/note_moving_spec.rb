@@ -29,6 +29,24 @@ describe "moving a note", js: true do
     expect(current_path).to eq node_note_path(@note_0.node, @note_0)
   end
 
+  example "choosing same node for note" do
+    within_move_note_modal do
+      click_link @note_0.node.label
+      click_button "Move"
+    end
+    expect(@note_0.reload.node).not_to eq @note_1.node
+    expect(current_path).not_to eq node_note_path(@note_1.node, @note_0)
+  end
+
+  example "closing the modal" do
+    within_move_note_modal do
+      click_link @note_1.node.label
+      click_button "Close"
+    end
+    expect(@note_0.reload.node).not_to eq @note_1.node
+    expect(current_path).to eq node_note_path(@note_0.node, @note_0)
+  end
+  
   def create_note(attrs={})
     create(:note, attrs)
   end
