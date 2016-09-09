@@ -6,7 +6,7 @@ describe "moving a note", js: true do
 
   before do
     login_to_project_as_user
- 
+
     @note_0 = create_note
     # We're specifying the node label so the notes don't get assigned to the
     # same node
@@ -36,7 +36,7 @@ describe "moving a note", js: true do
   def create_node(attrs={})
     create(:node, attrs)
   end
-  
+
   def within_move_note_modal
     within("#modal_move_note") { yield }
   end
