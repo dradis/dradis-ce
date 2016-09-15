@@ -7,7 +7,7 @@
 
       <%= f.input :type_id, collection: [["Default", Node::Types::DEFAULT], ["Host", Node::Types::HOST]], include_blank: false %>
 
-      <%= f.input :raw_properties, as: :text, label: false, value: @node.raw_properties, input_html: { class: :json } %>
+      <%= f.input :raw_properties, as: :text, label: 'Properties', value: @node.raw_properties, input_html: { class: :json, rows: 20 } %>
 
       <div class="form-actions">
         <%= f.button :submit, nil, class: 'btn btn-dradispro' %> or
