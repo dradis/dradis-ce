@@ -16,11 +16,46 @@ jQuery ->
       if confirm('Are you sure?')
         $.blueimp.fileupload.prototype.options.destroy.call(this, e, data);
 
+    # Start: a patch to implement #144
+    # https://github.com/securityroots/dradispro-tracker/issues/144
     paste: (e, data)->
-      $.each data.files, (index, file) ->
-        if (!file.name?)
-          file.name = prompt('Please provide a filename for the pasted image', 'screenshot-XX.png') || 'unnamed.png'
+      # High-SQLi-account_login-3.png
+      record = sessionStorage.getItem('attachments.last-upload')
 
+      $.each data.files, (index, file) ->
+        if (record == null)
+          # read file ext from jQuery.fileUpload
+          type = '.' + file.type.split('/').pop()
+        else
+          last = record.split(/[-\.]+/)
+          type = '.' + last.pop()
+          flag = parseInt(last.pop())
+
+          if (JSON.parse(localStorage.getItem('attachments.auto-increasing')))
+            ++flag
+
+        # default filename here
+        noname = 'unnamed' + type
+        myname = 'Risk-Issue-Page-1'
+
+        if !isNaN(flag)
+          last.push(flag)
+          # High-SQLi-account_login-4
+          myname = last.join('-')
+
+        file.name = prompt('Please provide a filename for the pasted image', myname + type) || noname
+
+        if (JSON.parse(localStorage.getItem('attachments.quick-pasting')))
+          if (file.name == noname)
+            # cancel uploading process
+            data.files = []
+          else
+            data.autoUpload = true
+
+    always: (e, data) ->
+      $.each data.files, (index, file) ->
+        # save the latest filename
+        sessionStorage.setItem('attachments.last-upload', file.name)
 
   # Initialize clipboard.js:
   clipboard = new Clipboard('.js-attachment-url-copy')
@@ -33,6 +68,9 @@ jQuery ->
       title:     'Copied attachment URL to clipboard!',
       trigger:   'manual'
     $btn.tooltip('show')
+    
+    last = e.text.replace(/\!/g, '').split('/').pop()
+    sessionStorage.setItem('attachments.last-upload', last)
 
 
   clipboard.on 'error', (e) ->
@@ -54,6 +92,15 @@ jQuery ->
   $(".attachments-box").on "mouseleave", ".js-attachment-url-copy", ->
     $this = $(this)
     $this.tooltip("hide") if $this.data("tooltip")
+
+  # quick pasting events
+  $('#quick-pasting').prop('checked', JSON.parse(localStorage.getItem('attachments.quick-pasting')))
+  $('#auto-increasing').prop('checked', JSON.parse(localStorage.getItem('attachments.auto-increasing')))
+
+  $('.enhanced-switch').each ->
+    $(this).on 'change', () ->
+      localStorage.setItem('attachments.' + this.id, JSON.stringify($(this).is(':checked')))
+  # End
 
 
   # -------------------------------------------------------- Our jQuery plugins
