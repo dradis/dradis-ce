@@ -4,6 +4,8 @@
   <%= render "nodes/sidebar" %>
 <% end %>
 
+<% if @diff.present? %>
+
 <div id="diff" class="container-fluid inner">
   <h2>
     <%= @record.class.model_name %>
@@ -52,6 +54,7 @@
 
 </div><!-- #diff -->
 
+<% end %>
 
 <div id="<%= dom_id(@record) %>_revisions"
       class="revisions-table inner note-text-inner">
@@ -60,25 +63,29 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Updated by</th>
+        <th>Action</th>
         <th>When</th>
+        <th>By</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       <% @revisions.each do |revision| %>
         <tr <%= raw "class='active'" if revision == @revision %>>
-          <td><%= revision.whodunnit %></td>
-          <td><%= time_ago_in_words(revision.created_at) %> ago</td>
-          <td>
-            <% unless revision == @revisions.last %>
-              <% if revision == @revision %>
-                Currently Viewing
-              <% else %>
-                <%= link_to "View Changes", record_revision_path(@record, revision) %>
+          <% present(revision, RevisionPresenter) do |revision_presenter| %>
+            <td><%= revision_presenter.created_at_ago %></td>
+            <td><%= revision_presenter.action %></td>
+            <td><%= revision_presenter.whodunnit %></td>
+            <td>
+              <% unless revision == @revisions.last %>
+                <% if revision == @revision %>
+                  Currently Viewing
+                <% elsif revision.event == "update" %>
+                  <%= link_to "View Changes", record_revision_path(@record, revision) %>
+                <% end %>
               <% end %>
-            <% end %>
-          </td>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
