@@ -46,21 +46,12 @@ class RevisionsController < ProjectScopedController
   end
 
   def recover
-    version    = RecoverableVersion.find(params[:id])
-    class_name = if version.object.is_a?(Note) && version.object.node_id == Node.issue_library.id
-                   'Issue'
-                 else
-                   version.object.class.name.humanize
-                 end
-    # Don't store 'version.object' in a local variable here because
-    # `version.recover` will mutate the state of `object`, so you'd only need
-    # to call `version.object` again to get the new state. (If you didn't do
-    # that, track_recovered will crash
+    version = RecoverableVersion.find(params[:id])
     if version.recover
       track_recovered(version.object)
-      flash[:info] = "#{class_name} recovered"
+      flash[:info] = "#{version.type} recovered"
     else
-      flash[:error] = "Can't recover #{class_name}: #{version.object.errors.full_messages.join(',')}"
+      flash[:error] = "Can't recover #{version.type}: #{version.errors.full_messages.join(',')}"
     end
     
     redirect_to trash_path

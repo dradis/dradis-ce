@@ -4,6 +4,8 @@
 class RecoverableVersion
   attr_reader :object, :version
 
+  delegate :errors, to: :object
+
   # Load all 'destroy' revisions which represent an object which is in the
   # trash and can be recovered (or perma-deleted).
   #
@@ -71,6 +73,14 @@ class RecoverableVersion
     end
 
     @object.save
+  end
+
+  def type
+    if object.is_a?(Note) && object.node_id == Node.issue_library.id
+      'Issue'
+    else
+      object.class.name.humanize
+    end
   end
 
 end
