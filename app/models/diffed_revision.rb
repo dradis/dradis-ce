@@ -3,7 +3,7 @@
 class DiffedRevision
 
   def initialize(revision, record)
-    raise "undiffable revision" unless revision.event == "update"
+    raise 'undiffable revision' unless revision.event == 'update'
     @revision = revision
     @record   = record
   end
@@ -16,7 +16,7 @@ class DiffedRevision
   end
 
   def last_updated_at
-    before["updated_at"].strftime(RevisionsHelper::DATE_FORMAT)
+    before['updated_at'].strftime(RevisionsHelper::DATE_FORMAT)
   end
 
   def previous_action
@@ -32,7 +32,7 @@ class DiffedRevision
   end
 
   def updated_at
-    after["updated_at"].strftime(RevisionsHelper::DATE_FORMAT)
+    after['updated_at'].strftime(RevisionsHelper::DATE_FORMAT)
   end
 
   private
@@ -56,7 +56,7 @@ class DiffedRevision
 
   def content_attribute
     case @record
-    when Issue, Note; 'text'
+    when Issue, Note; 'text' # FIXME - ISSUE/NOTE INHERITANCE
     when Evidence; 'content'
     end
   end

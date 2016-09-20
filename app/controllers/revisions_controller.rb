@@ -3,7 +3,7 @@ class RevisionsController < ProjectScopedController
   before_filter :load_record, except: [ :trash, :recover ]
 
   def index
-    redirect_to action: :show, id: @record.versions.where(event: "update").last.try(:id) || 0
+    redirect_to action: :show, id: @record.versions.where(event: 'update').last.try(:id) || 0
   end
 
   def show

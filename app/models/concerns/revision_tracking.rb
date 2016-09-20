@@ -6,7 +6,7 @@ module RevisionTracking
   end
 
   def has_revision_history?
-    versions.where(event: "update").any?
+    versions.where(event: 'update').any?
   end
 
 end
