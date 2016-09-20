@@ -15,30 +15,8 @@ class RevisionsController < ProjectScopedController
     # be any links to this page, so if you get here it's a programmer error.
     raise "can't show diff first revision" unless @revision.previous.present?
 
-    @this_author     = @revision.whodunnit
-    @previous_author = @revision.previous.whodunnit
-
     if @revision.event == "update"
-      # Version#object is the state of the object *before* the change was made.
-      before = YAML.load(@revision.object)
-      after  = if next_revision = @revision.next
-                 YAML.load(next_revision.object)
-               else
-                 @record.attributes
-               end
-
-      @updated_at      = after["updated_at"].strftime(RevisionsHelper::DATE_FORMAT)
-      @last_updated_at = before["updated_at"].strftime(RevisionsHelper::DATE_FORMAT)
-
-      content_attribute = case @record
-                          when Issue, Note; 'text'
-                          when Evidence; 'content'
-                          end
-
-      @diff = Differ.diff_by_line(
-                after[content_attribute],
-                before[content_attribute]
-              )
+      @diffed_revision = DiffedRevision.new(@revision, @record)
     end
   end
 
