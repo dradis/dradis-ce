@@ -58,7 +58,7 @@
           <%= link_to(
                 'revision history',
                 node_note_revisions_path(@node, @note)
-              ) if @note.versions.where.not(event: "create").any? %>
+              ) if @note.has_revision_history? %>
         </span>
       </h3>
       <%= render 'activities/feed', activities: @activities %>
