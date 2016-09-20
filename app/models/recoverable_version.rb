@@ -51,6 +51,8 @@ class RecoverableVersion
     # track_activity will create an Activity with `trackable_type == "Note"`,
     # not `trackable_type == "Issue"`.  So if revision.reify returns a Note
     # which should be an issue, convert it to an instance of Issue:
+    #
+    # FIXME - ISSUE/NOTE INHERITANCE
     if @object.instance_of?(Note) && @object.node_id == Node.issue_library.id
       @object = Issue.new(@object.attributes)
     end
@@ -76,6 +78,7 @@ class RecoverableVersion
   end
 
   def type
+    # FIXME - ISSUE/NOTE INHERITANCE
     if object.is_a?(Note) && object.node_id == Node.issue_library.id
       'Issue'
     else

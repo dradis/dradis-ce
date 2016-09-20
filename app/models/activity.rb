@@ -37,6 +37,8 @@ class Activity < ActiveRecord::Base
   # Issue to trackable. This means when you load the Activity later then
   # trackable will return the wrong class. Override the default behaviour here
   # for issues:
+  #
+  # FIXME - ISSUE/NOTE INHERITANCE
   def trackable=(new_trackable)
     super
     self.trackable_type = "Issue" if new_trackable.is_a?(Issue)

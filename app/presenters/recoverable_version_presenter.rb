@@ -71,6 +71,7 @@ class RecoverableVersionPresenter < BasePresenter
 
   def type
     # If revision type is Note, check note's node id to determine object type.
+    # FIXME - ISSUE/NOTE INHERITANCE
     if revision.item_type == 'Note' && trashed_object.node_id == Node.issue_library.id
       'Issue'
     else

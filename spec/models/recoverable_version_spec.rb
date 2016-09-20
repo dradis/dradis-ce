@@ -65,6 +65,7 @@ describe RecoverableVersion do
       @deleted_issue    = create(:issue)
 
       # More issue/note hackery :(
+      # FIXME - ISSUE/NOTE INHERITANCE
       @deleted_issue_as_note = Note.find(@deleted_issue.id)
 
       [@deleted_note, @deleted_evidence, @deleted_issue].each(&:destroy)
