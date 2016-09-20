@@ -19,6 +19,10 @@ class DiffedRevision
     before["updated_at"].strftime(RevisionsHelper::DATE_FORMAT)
   end
 
+  def previous_action
+    @revision.previous.event
+  end
+
   def previous_author
     @revision.previous.whodunnit
   end
