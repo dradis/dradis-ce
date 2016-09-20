@@ -3,7 +3,7 @@ class RevisionsController < ProjectScopedController
   before_filter :load_record, except: [ :trash, :recover ]
 
   def index
-    redirect_to action: :show, id: @record.versions.last.try(:id) || 0
+    redirect_to action: :show, id: @record.versions.where(event: "update").last.try(:id) || 0
   end
 
   def show
@@ -11,13 +11,7 @@ class RevisionsController < ProjectScopedController
     @revisions = @record.versions.includes(:item).reorder("created_at DESC")
     @revision  = @revisions.find(params[:id])
 
-    # If this is the 1st revision, there's nothing to compare. There shouldn't
-    # be any links to this page, so if you get here it's a programmer error.
-    raise "can't show diff first revision" unless @revision.previous.present?
-
-    if @revision.event == "update"
-      @diffed_revision = DiffedRevision.new(@revision, @record)
-    end
+    @diffed_revision = DiffedRevision.new(@revision, @record)
   end
 
   def trash

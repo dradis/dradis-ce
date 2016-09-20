@@ -4,55 +4,52 @@
   <%= render "nodes/sidebar" %>
 <% end %>
 
-<% if @diffed_revision %>
-  <div id="diff" class="container-fluid inner">
-    <h2>
-      <%= @record.class.model_name %>
-      #<%= @record.id %> - view changes at <%= @diffed_revision.updated_at %>
-    </h2>
+<div id="diff" class="container-fluid inner">
+  <h2>
+    <%= @record.class.model_name %>
+    #<%= @record.id %> - view changes at <%= @diffed_revision.updated_at %>
+  </h2>
 
-    <div class="row-fluid">
-      <div class="span5 offset1">
-        <h4>Previous revision</h4>
-        <div class="well">
-          <ul>
-            <li><strong>Author:</strong> <%= @diffed_revision.previous_author %></li>
-            <li><strong>Updated at:</strong> <%= @diffed_revision.last_updated_at %></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="span5">
-        <h4>This revision</h4>
-        <div class="well">
-          <ul>
-            <li><strong>Author:</strong> <%= @diffed_revision.this_author %></li>
-            <li><strong>Updated at:</strong> <%= @diffed_revision.updated_at %></li>
-          </ul>
-        </div>
+  <div class="row-fluid">
+    <div class="span5 offset1">
+      <h4>Previous revision</h4>
+      <div class="well">
+        <ul>
+          <li><strong>Author:</strong> <%= @diffed_revision.previous_author %></li>
+          <li><strong>Updated at:</strong> <%= @diffed_revision.last_updated_at %></li>
+        </ul>
       </div>
     </div>
 
-    <pre><%= raw @diffed_revision.diff.format_as(:html) %></pre>
+    <div class="span5">
+      <h4>This revision</h4>
+      <div class="well">
+        <ul>
+          <li><strong>Author:</strong> <%= @diffed_revision.this_author %></li>
+          <li><strong>Updated at:</strong> <%= @diffed_revision.updated_at %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-    <br/>
-    <h3>Legend</h3>
-    <p><del>removed text</del> <ins>added text</ins></p>
+  <pre><%= raw @diffed_revision.diff.format_as(:html) %></pre>
 
-    <%# if @revision.previous && @revision.previous.previous %>
-      <%#= link_to "Previous", record_revision_path(@record, @revision.previous)  %>
-    <%# end %>
+  <br/>
+  <h3>Legend</h3>
+  <p><del>removed text</del> <ins>added text</ins></p>
 
-    <%# if @revision.previous && @revision.previous.previous && @revision.next %>
-      <!-- | -->
-    <%# end %>
+  <%# if @revision.previous && @revision.previous.previous %>
+    <%#= link_to "Previous", record_revision_path(@record, @revision.previous)  %>
+  <%# end %>
 
-    <%# if @revision.next %>
-      <%#= link_to "Next", record_revision_path(@record, @revision.next)  %>
-    <%# end %>
+  <%# if @revision.previous && @revision.previous.previous && @revision.next %>
+    <!-- | -->
+  <%# end %>
 
-  </div><!-- #diff -->
-<% end %>
+  <%# if @revision.next %>
+    <%#= link_to "Next", record_revision_path(@record, @revision.next)  %>
+  <%# end %>
+</div><!-- #diff -->
 
 <div id="<%= dom_id(@record) %>_revisions"
       class="revisions-table inner note-text-inner">
