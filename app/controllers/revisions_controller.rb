@@ -15,17 +15,17 @@ class RevisionsController < ProjectScopedController
   end
 
   def trash
-    # Get all versions whose event is destroy.
-    @revisions = RecoverableVersion.all
+    # Get all revisions whose event is destroy.
+    @revisions = RecoverableRevision.all
   end
 
   def recover
-    version = RecoverableVersion.find(params[:id])
-    if version.recover
-      track_recovered(version.object)
-      flash[:info] = "#{version.type} recovered"
+    revision = RecoverableRevision.find(params[:id])
+    if revision.recover
+      track_recovered(revision.object)
+      flash[:info] = "#{revision.type} recovered"
     else
-      flash[:error] = "Can't recover #{version.type}: #{version.errors.full_messages.join(',')}"
+      flash[:error] = "Can't recover #{revision.type}: #{revision.errors.full_messages.join(',')}"
     end
     
     redirect_to trash_path

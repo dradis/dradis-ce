@@ -1,5 +1,5 @@
-class RecoverableVersionPresenter < BasePresenter
-  presents :recoverable_version
+class RecoverableRevisionPresenter < BasePresenter
+  presents :recoverable_revision
 
   def created_at_ago
     h.local_time_ago(revision.created_at)
@@ -50,14 +50,7 @@ class RecoverableVersionPresenter < BasePresenter
   end
 
   def title
-    # Get title or content first characters.
-    if trashed_object.fields.empty?
-      title_text = trashed_object.respond_to?(:content) ? trashed_object.content : trashed_object.text
-    else
-      # Get title field, and if it's not set get first field value.
-      title_text = trashed_object.title? ? trashed_object.title : trashed_object.fields.values[0]
-    end
-    truncated_title = h.truncate(title_text, length: 25, separator: "...")
+    truncated_title = h.truncate(trashed_object.title, length: 25, separator: "...")
     h.content_tag(:span, truncated_title, class: 'item-content')
   end
 
@@ -66,7 +59,7 @@ class RecoverableVersionPresenter < BasePresenter
   end
 
   def revision
-    @revision ||= recoverable_version.version
+    @revision ||= recoverable_revision.version
   end
 
   def type

@@ -1,7 +1,7 @@
 # Wraps around an instance of `PaperTrail::Version` (where event==destroy) and
 # lets us a) recover the deleted item and b) load all soft-deleted items so we
 # can show them on the trash page.
-class RecoverableVersion
+class RecoverableRevision
   attr_reader :object, :version
 
   delegate :errors, to: :object

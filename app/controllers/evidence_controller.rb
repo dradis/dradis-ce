@@ -8,7 +8,7 @@ class EvidenceController < NestedNodeResourceController
     @issue      = @evidence.issue
     @activities = @evidence.activities.latest
 
-    load_conflicting_versions(@evidence)
+    load_conflicting_revisions(@evidence)
   end
 
   def new

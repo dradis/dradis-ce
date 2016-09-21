@@ -48,28 +48,8 @@ describe Issue do
 
   end
 
-
-  describe "#title" do
-    subject { issue.title }
-
-    context "when the issue has a #[Title]# field" do
-      before { issue.text = "#[Title]#\nMy Title" }
-      it { should eq "My Title" }
-
-      specify "#title? returns true" do
-        expect(issue.title?).to be true
-      end
-    end
-
-    context "when the issue does not have a #[Title]# field" do
-      before { issue.text = "#[Not The Title]#\nMy Title" }
-      it { should eq "This issue doesn't provide a #[Title]# field" }
-
-      specify "#title? returns false" do
-        expect(issue.title?).to be false
-      end
-    end
-  end
+  let(:fields_column) { :text }
+  it_behaves_like "a model that has fields", Issue
 
   describe "#set_field" do
     it "sets a field and updates 'body'" do

@@ -45,26 +45,6 @@ describe Note do
   end
 
 
-  describe "#title" do
-    let(:note) { Note.new }
-    subject { note.title }
-
-    context "when the note has a #[Title]# field" do
-      before { note.text = "#[Title]#\nMy Title" }
-      it { should eq "My Title" }
-
-      specify "#title? returns true" do
-        expect(note.title?).to be true
-      end
-    end
-
-    context "when the note does not have a #[Title]# field" do
-      before { note.text = "#[Not The Title]#\nMy Title" }
-      it { should eq "This note doesn't provide a #[Title]# field" }
-
-      specify "#title? returns false" do
-        expect(note.title?).to be false
-      end
-    end
-  end
+  let(:fields_column) { :text }
+  it_behaves_like "a model that has fields", Note
 end
