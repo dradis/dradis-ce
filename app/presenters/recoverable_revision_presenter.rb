@@ -1,5 +1,5 @@
-class RecoverableVersionPresenter < BasePresenter
-  presents :recoverable_version
+class RecoverableRevisionPresenter < BasePresenter
+  presents :recoverable_revision
 
   def created_at_ago
     h.local_time_ago(revision.created_at)
@@ -66,7 +66,7 @@ class RecoverableVersionPresenter < BasePresenter
   end
 
   def revision
-    @revision ||= recoverable_version.version
+    @revision ||= recoverable_revision.version
   end
 
   def type

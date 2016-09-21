@@ -1,22 +1,22 @@
 require "spec_helper"
 
-describe RecoverableVersion do
+describe RecoverableRevision do
 
   describe ".find" do
-    it "returns a RecoverableVersion that wraps the PaperTrail::Version with the given ID" do
+    it "returns a RecoverableRevision that wraps the PaperTrail::Version with the given ID" do
       deleted_evidence = create(:evidence)
       deleted_evidence.destroy
       destroy_revision = deleted_evidence.versions.last
-      r_version = RecoverableVersion.find(destroy_revision)
-      expect(r_version).to be_a RecoverableVersion
-      expect(r_version.version).to eq destroy_revision
+      r_revision = RecoverableRevision.find(destroy_revision)
+      expect(r_revision).to be_a RecoverableRevision
+      expect(r_revision.version).to eq destroy_revision
     end
 
     it "returns an error if the version type is not 'destroy'" do
       evidence        = create(:evidence)
       create_revision = evidence.versions.first
       expect do
-        RecoverableVersion.find(create_revision.id)
+        RecoverableRevision.find(create_revision.id)
       end.to raise_error ActiveRecord::RecordNotFound
     end
   end
@@ -25,11 +25,11 @@ describe RecoverableVersion do
     it "recovers the deleted item and returns true" do
       deleted_evidence = create(:evidence)
       deleted_evidence.destroy
-      version = RecoverableVersion.new(deleted_evidence.versions.last)
+      revision = RecoverableRevision.new(deleted_evidence.versions.last)
       expect(Evidence.exists?(deleted_evidence.id)).to be false
-      expect(version.recover).to be true
+      expect(revision.recover).to be true
       expect(Evidence.exists?(deleted_evidence.id)).to be true
-      recovered_evidence = version.object
+      recovered_evidence = revision.object
       expect(recovered_evidence.content).to eq deleted_evidence.content
     end
 
@@ -41,14 +41,14 @@ describe RecoverableVersion do
         evidence.destroy
         issue.destroy
 
-        version = RecoverableVersion.new(evidence.versions.last)
+        revision = RecoverableRevision.new(evidence.versions.last)
         expect(Evidence.exists?(evidence.id)).to be false
         expect(Issue.exists?(issue.id)).to be false
-        expect(version.recover).to be true
+        expect(revision.recover).to be true
         expect(Evidence.exists?(evidence.id)).to be true
         expect(Issue.exists?(issue.id)).to be true
 
-        recovered_evidence = version.object
+        recovered_evidence = revision.object
         expect(recovered_evidence.issue).to eq issue
       end
     end

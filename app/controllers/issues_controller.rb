@@ -17,7 +17,7 @@ class IssuesController < ProjectScopedController
     # nodes, and we need the auto-complete to have the full list.
     @nodes_for_add_evidence = Node.order(:label)
 
-    load_conflicting_versions(@issue)
+    load_conflicting_revisions(@issue)
   end
 
   def new

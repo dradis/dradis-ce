@@ -17,15 +17,15 @@
         </tr>
       </thead>
       <tbody>
-        <% @revisions.each do |recoverable_version| %>
-          <% present recoverable_version do |recoverable_version_presenter| %>
+        <% @revisions.each do |recoverable_revision| %>
+          <% present recoverable_revision do |recoverable_revision_presenter| %>
             <tr>
-              <td><%= recoverable_version_presenter.info %></td>
-              <td><%= recoverable_version_presenter.whodunnit %></td>
-              <td><%= recoverable_version_presenter.created_at_ago %></td>
+              <td><%= recoverable_revision_presenter.info %></td>
+              <td><%= recoverable_revision_presenter.whodunnit %></td>
+              <td><%= recoverable_revision_presenter.created_at_ago %></td>
               <td>
                 <%= link_to(
-                  recover_revision_path(recoverable_version.version),
+                  recover_revision_path(recoverable_revision.version),
                   method: :post,
                   data: { confirm: 'Are you sure?' }
                 ) do %>

@@ -17,8 +17,8 @@
   </p>
 </div>
 
-<% if @conflicting_versions %>
-  <%= render "projects/conflicting_versions", conflicts: @conflicting_versions, record: @note %>
+<% if @conflicting_revisions %>
+  <%= render "projects/conflicting_revisions", conflicts: @conflicting_revisions, record: @note %>
 <% end %>
 
 <ul class="nav nav-tabs main-tabs">
