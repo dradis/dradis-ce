@@ -50,14 +50,7 @@ class RecoverableRevisionPresenter < BasePresenter
   end
 
   def title
-    # Get title or content first characters.
-    if trashed_object.fields.empty?
-      title_text = trashed_object.respond_to?(:content) ? trashed_object.content : trashed_object.text
-    else
-      # Get title field, and if it's not set get first field value.
-      title_text = trashed_object.title? ? trashed_object.title : trashed_object.fields.values[0]
-    end
-    truncated_title = h.truncate(title_text, length: 25, separator: "...")
+    truncated_title = h.truncate(trashed_object.title, length: 25, separator: "...")
     h.content_tag(:span, truncated_title, class: 'item-content')
   end
 
