@@ -37,16 +37,23 @@ class RecoverableRevisionPresenter < BasePresenter
   end
 
   def location
+    result = ""
     # Get node if object is a Note or an Evidence.
     if ['Note','Evidence'].include?(type)
-      if trashed_object.node
-        "at " + h.link_to(trashed_object.node.label, trashed_object.node)
-      else
-        'at a Node which has since been deleted'
+      if type == "Evidence"
+        if trashed_object.issue
+          result << " for #{trashed_object.issue.title} issue "
+        else
+          result << " for an issue which has since been deleted "
+        end
       end
-    else
-      ''
+      if trashed_object.node
+        result << "at " + h.link_to(trashed_object.node.label, trashed_object.node)
+      else
+        result << 'at a node which has since been deleted'
+      end
     end
+    result
   end
 
   def title
