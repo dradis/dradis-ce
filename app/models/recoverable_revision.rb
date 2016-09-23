@@ -19,7 +19,7 @@ class RecoverableRevision
     # See discussion at https://github.com/dradis/dradis-ce/pull/45#discussion_r77555665
     #
     # No need to include Issue in this array because Issue revisions have
-    # their item_type saved as `Note`, not `Issue`.
+    # their item_type saved as `Note`, not `Issue`. FIXME - ISSUE/NOTE INHERITANCE
     ids = [Evidence, Note].flat_map do |model|
       table_name = model.table_name
       PaperTrail::Version.where(event: 'destroy', item_type: model.to_s).
