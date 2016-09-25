@@ -37,7 +37,10 @@ Rails.application.routes.draw do
   end
 
   resources :nodes do
-    collection { post :sort }
+    collection do
+      post :sort
+      post :create_multiple
+    end
 
     member do
       get :tree

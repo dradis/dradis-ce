@@ -1,0 +1,99 @@
+<div
+  id="modal_add_<%= type %>_node"
+  class="modal hide"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="modal_add_node_header"
+  aria-hidden="true"
+>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+      ×
+    </button>
+
+    <% if type == :branch %>
+      <h3 id="modal_add_node_header">Add top-level node</h3>
+    <% else %>
+      <h3 id="modal_add_node_header">Add a child to the <strong><%= @node.label %></strong> node</h3>
+    <% end %>
+  </div>
+
+  <div class="modal-body">
+    <%# we need to scope the names of the radio buttons to this specific modal
+      # so that clicking a radio in the 'add child' modal won't deselect the
+      # radios in the 'add branch' modal %>
+    <div class="radio">
+      <label>
+        <%= radio_button_tag(
+          "add_#{type}_node",
+          :one,
+          true,
+          class: "add_node_radio") %>
+        Add one
+      </label>
+    </div>
+
+    <div class="radio">
+      <label>
+        <%= radio_button_tag(
+          "add_#{type}_node",
+          :multiple,
+          false,
+          class: "add_node_radio") %>
+        Add multiple
+      </label>
+    </div>
+
+    <hr>
+
+    <%= simple_form_for(
+      (type == :branch ? Node.new : Node.new(parent_id: @node.id)),
+      html: { class: 'add_one_node_form form-horizontal' }
+    ) do |f| %>
+      <%= f.hidden_field :parent_id if type == :child %>
+      <%= f.input :label %>
+      <%= f.input :type_id,
+        collection: [["No icon", Node::Types::DEFAULT], ["Host", Node::Types::HOST]],
+        include_blank: false,
+        label: 'Icon'
+      %>
+    <% end %>
+
+    <%# We can't use 'form_for' because 'list' isn't an attribute that exists
+      # exists on a real Node. We can't pass a string or symbol to form_for
+      # either because if we pass ':node' or ':nodes' form_for will try to
+      # use the @node or @nodes instance variables and we get the same error. %>
+    <%= form_tag(
+      create_multiple_nodes_path,
+      class: 'add_multiple_nodes_form',
+      style: 'display: none;',
+    ) do %>
+      To create multiple nodes, add one node name per line:
+
+      <div class="add_multiple_nodes_error" style="display:none;">
+        Please add at least one node
+      </div>
+
+      <%= hidden_field_tag "nodes[parent_id]", @node.id if type == :child %>
+      <%= text_area_tag    "nodes[list]", "", rows: 3, class: "nodes_list" %>
+
+      <div class="form-control">
+        <%= label_tag :type_id, 'Icon' %>
+        <%= select_tag(
+          "nodes[type_id]",
+          options_for_select(
+            [["No icon", Node::Types::DEFAULT], ["Host", Node::Types::HOST]]
+          ),
+          include_blank: false) %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="modal-footer">
+    <button class="modal_add_node_submit_btn btn btn-primary">
+      Add
+    </button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>
+

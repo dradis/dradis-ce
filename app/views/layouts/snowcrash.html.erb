@@ -42,10 +42,10 @@
           <%= render "layouts/snowcrash/nodes" %>
 
           <%# need to include this modal here, because not all pages have
-              breadcrumbs (e.g. Project#show).
-              Can't move it inside _nodes, because it is used for the "Move
-              node" modal, and it would nest :form tags breaking them %>
-          <%= render partial: 'nodes/modals/add_branch' %>
+            breadcrumbs (e.g. Project#show). Can't move it inside _nodes,
+            because _nodes is already used inside the "Move node" modal, and it
+            would nest :form tags breaking them %>
+          <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
       </div>
       </div>
       <div class="main-content <%= content_for?(:sidebar) ? 'no-padding' : ''%>">
