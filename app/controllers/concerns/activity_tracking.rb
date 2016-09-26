@@ -22,4 +22,8 @@ module ActivityTracking
     track_activity(trackable, :destroy, user)
   end
 
+  def track_recovered(trackable, user=current_user)
+    track_activity(trackable, :recover, user)
+  end
+
 end

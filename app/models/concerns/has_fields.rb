@@ -12,7 +12,7 @@ module HasFields
   def title
     fields.fetch(
       "Title",
-      "This #{self.class.name.downcase} doesn't provide a #[Title]# field"
+      "(No #[Title]# field)"
     )
   end
 

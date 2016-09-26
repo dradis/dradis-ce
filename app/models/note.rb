@@ -26,10 +26,10 @@
 # This behaviour is extensively used by import/export plugins such as WordExport.
 class Note < ActiveRecord::Base
   include HasFields
+  include RevisionTracking
 
   dradis_has_fields_for :text
 
-  has_paper_trail
 
   # -- Relationships --------------------------------------------------------
   belongs_to :category

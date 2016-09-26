@@ -17,8 +17,8 @@
   </p>
 </div>
 
-<% if @conflicting_versions %>
-  <%= render "projects/conflicting_versions", conflicts: @conflicting_versions, record: @note %>
+<% if @conflicting_revisions %>
+  <%= render "projects/conflicting_revisions", conflicts: @conflicting_revisions, record: @note %>
 <% end %>
 
 <ul class="nav nav-tabs main-tabs">
@@ -58,7 +58,7 @@
           <%= link_to(
                 'revision history',
                 node_note_revisions_path(@node, @note)
-              ) if @note.versions.any? && @note.versions.last.previous.present? %>
+              ) if @note.has_revision_history? %>
         </span>
       </h3>
       <%= render 'activities/feed', activities: @activities %>

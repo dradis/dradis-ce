@@ -48,27 +48,6 @@ describe Evidence do
     end
   end
 
-
-  describe "#title" do
-    let(:evidence) { Evidence.new }
-    subject { evidence.title }
-
-    context "when the evidence has a #[Title]# field" do
-      before { evidence.content = "#[Title]#\nMy Title" }
-      it { should eq "My Title" }
-
-      specify "#title? returns true" do
-        expect(evidence.title?).to be true
-      end
-    end
-
-    context "when the evidence does not have a #[Title]# field" do
-      before { evidence.content = "#[Not The Title]#\nMy Title" }
-      it { should eq "This evidence doesn't provide a #[Title]# field" }
-
-      specify "#title? returns false" do
-        expect(evidence.title?).to be false
-      end
-    end
-  end
+  let(:fields_column) { :content }
+  it_behaves_like "a model that has fields", Evidence
 end

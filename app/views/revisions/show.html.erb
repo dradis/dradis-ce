@@ -7,7 +7,7 @@
 <div id="diff" class="container-fluid inner">
   <h2>
     <%= @record.class.model_name %>
-    #<%= @record.id %> - view changes at <%= @updated_at %>
+    #<%= @record.id %> - view changes at <%= @diffed_revision.updated_at %>
   </h2>
 
   <div class="row-fluid">
@@ -15,8 +15,9 @@
       <h4>Previous revision</h4>
       <div class="well">
         <ul>
-          <li><strong>Author:</strong> <%= @previous_author %></li>
-          <li><strong>Updated at:</strong> <%= @last_updated_at %></li>
+          <li><strong>Author:</strong> <%= @diffed_revision.previous_author %></li>
+          <li><strong>Action:</strong> <%= @diffed_revision.previous_action %></li>
+          <li><strong>When:</strong> <%= @diffed_revision.last_updated_at %></li>
         </ul>
       </div>
     </div>
@@ -25,14 +26,17 @@
       <h4>This revision</h4>
       <div class="well">
         <ul>
-          <li><strong>Author:</strong> <%= @this_author %></li>
-          <li><strong>Updated at:</strong> <%= @updated_at %></li>
+          <li><strong>Author:</strong> <%= @diffed_revision.this_author %></li>
+          <%# The current action will always be 'Update', else we wouldn't be %>
+          <%# able to see this page %>
+          <li><strong>Action:</strong> Update</li>
+          <li><strong>When:</strong> <%= @diffed_revision.updated_at %></li>
         </ul>
       </div>
     </div>
   </div>
 
-  <pre><%= raw @diff.format_as(:html) %></pre>
+  <pre><%= raw @diffed_revision.diff.format_as(:html) %></pre>
 
   <br/>
   <h3>Legend</h3>
@@ -49,9 +53,7 @@
   <%# if @revision.next %>
     <%#= link_to "Next", record_revision_path(@record, @revision.next)  %>
   <%# end %>
-
 </div><!-- #diff -->
-
 
 <div id="<%= dom_id(@record) %>_revisions"
       class="revisions-table inner note-text-inner">
@@ -60,25 +62,29 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Updated by</th>
+        <th>Action</th>
         <th>When</th>
+        <th>By</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       <% @revisions.each do |revision| %>
         <tr <%= raw "class='active'" if revision == @revision %>>
-          <td><%= revision.whodunnit %></td>
-          <td><%= time_ago_in_words(revision.created_at) %> ago</td>
-          <td>
-            <% unless revision == @revisions.last %>
-              <% if revision == @revision %>
-                Currently Viewing
-              <% else %>
-                <%= link_to "View Changes", record_revision_path(@record, revision) %>
+          <% present(revision, RevisionPresenter) do |revision_presenter| %>
+            <td><%= revision_presenter.created_at_ago %></td>
+            <td><%= revision_presenter.action %></td>
+            <td><%= revision_presenter.whodunnit %></td>
+            <td>
+              <% unless revision == @revisions.last %>
+                <% if revision == @revision %>
+                  Currently Viewing
+                <% elsif revision.event == "update" %>
+                  <%= link_to "View Changes", record_revision_path(@record, revision) %>
+                <% end %>
               <% end %>
-            <% end %>
-          </td>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>

@@ -38,6 +38,11 @@
                 <i class="fa fa-check"></i> <span>Methodologies</span>
               <% end %>
             <% end %>
+            <%= content_tag :li, :class => action_name == 'trash' ? 'active' : '' do %>
+              <%= link_to main_app.trash_path do %>
+                <i class="fa fa-trash" aria-hidden="true"></i> <span>Trash</span>
+              <% end %>
+            <% end %>
           </ul>
           <%= render "layouts/snowcrash/nodes" %>
 

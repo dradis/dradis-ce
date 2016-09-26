@@ -123,3 +123,11 @@ jQuery ->
 
   $('.navbar .btn-search').on 'click', ->
     $('.form-search').submit()
+
+  # Table filtering
+  $('.js-table-filter').on 'keyup', ->
+    rex = new RegExp($(this).val(), 'i')
+    $('tbody tr').hide();
+    $('tbody tr').filter( ->
+      rex.test($(this).text());
+    ).show();

@@ -58,6 +58,11 @@ Rails.application.routes.draw do
 
   get 'search' => 'search#index'
   post 'create_multiple_evidences' => 'evidence#create_multiple'
+  get 'trash' => 'revisions#trash'
+
+  resources :revisions, only: [] do
+    member { post :recover }
+  end
 
   # -------------------------------------------------------------- Static pages
   # jQuery Textile URLs
