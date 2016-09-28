@@ -38,6 +38,7 @@
                   class: 'text-error',
                   data: { confirm: 'Are you sure?' },
                   method: :delete %>
+          <a href="#modal_move_note" tabindex="-1" data-toggle="modal">move</a>
         </span>
       </h3>
       <div class="content-textile">
@@ -65,3 +66,5 @@
     </div>
   </div>
 </div>
+
+<%= render partial: 'notes/modals/move' %>
