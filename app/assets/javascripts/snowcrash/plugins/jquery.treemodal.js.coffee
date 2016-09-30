@@ -17,7 +17,7 @@ do ($ = jQuery, window, document) ->
       @$el = $(@element)
       @$tree = @$el.find('.tree-modal-box')
 
-      @$nodeParentIdHiddenInput = @$el.find("#node_parent_id")
+      @$nodeHiddenInput = @$el.find("##{@$el.data('hidden-field')}")
 
       @disableSubmitBtn()
 
@@ -64,7 +64,7 @@ do ($ = jQuery, window, document) ->
       @makeActiveSelection($nodeLink)
 
       selectedNodeId = $nodeLink.parent().data('node-id')
-      @$nodeParentIdHiddenInput.val(selectedNodeId)
+      @$nodeHiddenInput.val(selectedNodeId)
 
       @$el.find('#current-selection').text($nodeLink.text())
       @enableSubmitBtn()

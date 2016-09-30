@@ -1,5 +1,8 @@
 <div id="modal_move_note" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <%= simple_form_for [@node, @note], html: {class: 'form-horizontal modal-node-selection-form'} do |f| %>
+  <%= simple_form_for [@node, @note], html: {class: 'form-horizontal modal-node-selection-form', data: {hidden_field: 'note_node_id'}}  do |f| %>
+    <%= f.hidden_field :node_id %>
+    <%= f.hidden_field :original_updated_at, value: @note.updated_at.to_i %>
+
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <h3 id="myModalLabel">Move note</h3>
