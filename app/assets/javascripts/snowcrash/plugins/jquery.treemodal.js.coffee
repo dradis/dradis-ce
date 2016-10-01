@@ -17,7 +17,7 @@ do ($ = jQuery, window, document) ->
       @$el = $(@element)
       @$tree = @$el.find('.tree-modal-box')
 
-      @$nodeHiddenInput = @$el.find("##{@$el.data('hidden-field')}")
+      @$nodeHiddenInput = @$el.find(@$el.data('hidden-field'))
 
       @disableSubmitBtn()
 
