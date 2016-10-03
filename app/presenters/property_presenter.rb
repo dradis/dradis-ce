@@ -12,6 +12,12 @@ class PropertyPresenter < BasePresenter
   def value
     return 'n/a' unless property_value.present?
 
+    # We want to always render :services as table, but some times there is a
+    # single port. We just turn it into a single-element array
+    if (property_key == 'services') && !property_value.is_a?(Array)
+      property[1] = [property[1]]
+    end
+
     if property_value.is_a?(Array)
       if property_value[0].is_a?(Hash)
         render_table
