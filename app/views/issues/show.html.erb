@@ -4,8 +4,8 @@
   <%= render 'sidebar'%>
 <% end %>
 
-<% if @conflicting_versions %>
-  <%= render "projects/conflicting_versions", conflicts: @conflicting_versions, record: @issue %>
+<% if @conflicting_revisions %>
+  <%= render "projects/conflicting_revisions", conflicts: @conflicting_revisions, record: @issue %>
 <% end %>
 
 <!-- Main content -->

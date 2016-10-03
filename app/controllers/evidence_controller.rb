@@ -8,7 +8,7 @@ class EvidenceController < NestedNodeResourceController
     @issue      = @evidence.issue
     @activities = @evidence.activities.latest
 
-    load_conflicting_versions(@evidence)
+    load_conflicting_revisions(@evidence)
   end
 
   def new
@@ -54,7 +54,7 @@ class EvidenceController < NestedNodeResourceController
       if params[:evidence][:node_list_parent_id].present?
         parent = Node.find(params[:evidence][:node_list_parent_id])
       end
-      params[:evidence][:node_list].lines.map(&:chomp).each do |label|
+      params[:evidence][:node_list].lines.map(&:strip).each do |label|
         node = Node.create_with(type_id: Node::Types::HOST)
           .find_or_create_by(label: label)
         node.update_attributes!(parent: parent) if parent

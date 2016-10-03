@@ -152,6 +152,12 @@ jQuery ->
     $('#select-all').click ->
       $('input[type=checkbox].js-multicheck').not(this).prop('checked', $(this).prop('checked'))
 
+    $('.js-select-all-issues').click (e) ->
+      $selectAll = $('#select-all')
+      return if e.target == $selectAll[0]
+      isChecked = !$selectAll.prop('checked')
+      $selectAll.prop('checked', isChecked)
+      $('input[type=checkbox].js-multicheck').prop('checked', isChecked)
 
     $('input[type=checkbox].js-multicheck').click ->
       _select_all = $(this).prop('checked')
@@ -169,12 +175,5 @@ jQuery ->
       else
         $('.js-issue-actions').css('display', 'none')
 
-
-    $('#js-table-filter').on 'keyup', ->
-        rex = new RegExp($(this).val(), 'i')
-        $('tbody tr').hide();
-        $('tbody tr').filter( ->
-          rex.test($(this).text());
-        ).show();
 
     new IssueTable

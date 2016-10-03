@@ -9,7 +9,7 @@
     <%= link_to(
           'revision history',
           issue_revisions_path(@issue)
-    ) if @issue.versions.any? && @issue.versions.last.previous.present? %>
+    ) if @issue.has_revision_history? %>
   </span>
 </h3>
 <%= render 'activities/feed', activities: @activities %>

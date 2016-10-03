@@ -34,7 +34,10 @@ Rails.application.routes.draw do
   end
 
   resources :nodes do
-    collection { post :sort }
+    collection do
+      post :sort
+      post :create_multiple
+    end
 
     member do
       get :tree
@@ -55,6 +58,11 @@ Rails.application.routes.draw do
 
   get 'search' => 'search#index'
   post 'create_multiple_evidences' => 'evidence#create_multiple'
+  get 'trash' => 'revisions#trash'
+
+  resources :revisions, only: [] do
+    member { post :recover }
+  end
 
   # -------------------------------------------------------------- Static pages
   # jQuery Textile URLs

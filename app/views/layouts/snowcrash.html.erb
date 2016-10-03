@@ -38,14 +38,19 @@
                 <i class="fa fa-check"></i> <span>Methodologies</span>
               <% end %>
             <% end %>
+            <%= content_tag :li, :class => action_name == 'trash' ? 'active' : '' do %>
+              <%= link_to main_app.trash_path do %>
+                <i class="fa fa-trash" aria-hidden="true"></i> <span>Trash</span>
+              <% end %>
+            <% end %>
           </ul>
           <%= render "layouts/snowcrash/nodes" %>
 
           <%# need to include this modal here, because not all pages have
-              breadcrumbs (e.g. Project#show).
-              Can't move it inside _nodes, because it is used for the "Move
-              node" modal, and it would nest :form tags breaking them %>
-          <%= render partial: 'nodes/modals/add_branch' %>
+            breadcrumbs (e.g. Project#show). Can't move it inside _nodes,
+            because _nodes is already used inside the "Move node" modal, and it
+            would nest :form tags breaking them %>
+          <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
       </div>
       </div>
       <div class="main-content <%= content_for?(:sidebar) ? 'no-padding' : ''%>">

@@ -28,7 +28,7 @@ class NotesController < NestedNodeResourceController
   # Retrieve a Note given its :id
   def show
     @activities = @note.activities.latest
-    load_conflicting_versions(@note)
+    load_conflicting_revisions(@note)
   end
 
   def edit

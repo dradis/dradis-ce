@@ -38,6 +38,99 @@ describe "node pages" do
       end
 
       include_examples "creates an Activity", :create, Node
+
+      example "adding multiple root nodes" do
+        choose "Add multiple"
+        expect(page).to have_no_field :node_label
+        expect(page).to have_field :nodes_list
+
+        # Include a blank line to make sure that no node gets created:
+        fill_in :nodes_list, with: <<-LIST.strip_heredoc
+            node 1
+
+            node_2
+                 node with trailing whitespace    
+          LIST
+
+        expect do
+          click_button "Add"
+        end.to change{Node.in_tree.count}.by(3).and change{Activity.count}.by(3)
+
+        expect(Node.last(3).map(&:label)).to match_array([
+          "node 1",
+          "node_2",
+          "node with trailing whitespace",
+        ])
+      end
+
+      example "adding multiple root host nodes" do
+        choose "Add multiple"
+
+        fill_in :nodes_list, with: "foo\nbar"
+        select "Host", from: :nodes_type_id
+
+        expect do
+          click_button "Add"
+        end.to change{Node.in_tree.count}.by(2)
+
+        expect(
+          Node.in_tree.last(2).all? { |n| n.type_id == Node::Types::HOST }
+        ).to be true
+      end
+    end
+
+    describe "adding child nodes to an existing node", :js do
+      before do
+        visit node_path(node)
+        click_link "Add subnode"
+      end
+
+      let(:node) { create(:node) }
+
+      example "adding a single node" do
+        fill_in :node_label, with: "My new node"
+        expect do
+          click_button "Add"
+        end.to change{node.children.count}.by(1).and change{Activity.count}.by(1)
+
+        new_node = node.children.last
+        expect(new_node.label).to eq "My new node"
+
+        new_activity = Activity.last
+        expect(new_activity.trackable).to eq new_node
+        expect(new_activity.action).to eq "create"
+      end
+
+      example "adding multiple nodes" do
+        choose "Add multiple"
+        expect(page).to have_no_field :node_label
+        expect(page).to have_field :nodes_list
+
+        # Include a blank line to make sure that no node gets created:
+        fill_in :nodes_list, with: <<-LIST.strip_heredoc
+            node 1
+
+            node_2
+                 node with trailing whitespace    
+          LIST
+
+        expect do
+          click_button "Add"
+        end.to change{node.children.count}.by(3).and change{Activity.count}.by(3)
+
+        expect(node.children.pluck(:label)).to match_array([
+          "node 1",
+          "node_2",
+          "node with trailing whitespace",
+        ])
+      end
+
+      example "adding multiple nodes - submitting a blank textarea" do
+        choose "Add multiple"
+        fill_in :nodes_list, with: "   \n \n \n    \n "
+        click_button "Add"
+        expect(page).to have_content "Please add at least one node"
+      end
     end
   end
 
