@@ -60,7 +60,6 @@
             <p>Please enable JavaScript support.</p>
           </div>
         </noscript>
-        <%= render "layouts/snowcrash/breadcrumb" %>
 
         <div id="view-content" class="view-content">
           <% if content_for?(:sidebar) %>
@@ -71,6 +70,7 @@
             </div>
             <div class="secondary-navbar-content">
               <%= flash_messages %>
+              <%= render "layouts/snowcrash/breadcrumb" %>
               <%= content_for?(:content) ? yield(:content) : yield %>
             </div>
           <% else %>
