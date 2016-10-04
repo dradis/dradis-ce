@@ -124,6 +124,7 @@ class PropertyPresenter < BasePresenter
 
   def render_tabs(entries)
     values = entries.select{ |entry| entry.key?(:scripts) && entry[:scripts].any? }
+    return if values.empty?
 
     content_tag(:h4, 'NSE script output') +
     content_tag(:div, class: 'tabbable tabs-left', id: 'scripts-tabs') do
