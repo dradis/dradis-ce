@@ -72,13 +72,26 @@ class Issue < Note
     end
   end
 
-  def combine!(*issues)
-    issues.each do |source|
-      self.evidence << source.evidence
-      source.delete
+  # Move all Evidence attached to issues with ids in issue_ids
+  # array to this issue.
+  # Then delete those issues without Evidence.
+  # Returns the number of issues affected.
+  def combine(issue_ids)
+    # assert current id is not there
+    issue_ids = [issue_ids] if issue_ids.is_a?(Integer)
+    issue_ids -= [id]
+
+    combined = 0
+
+    # combine
+    if issue_ids.any?
+      self.transaction do
+        Evidence.where(issue_id: issue_ids).update_all(issue_id: id)
+        combined = Issue.delete_all(id: issue_ids)
+      end
     end
 
-    self
+    combined
   end
 
 end

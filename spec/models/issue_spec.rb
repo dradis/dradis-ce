@@ -69,7 +69,7 @@ describe Issue do
         node: node
       )
 
-      @issue1.combine! @issue2
+      @issue1.combine @issue2.id
     end
 
     it "combines the issues", issues: true do

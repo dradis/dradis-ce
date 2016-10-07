@@ -95,35 +95,28 @@ class IssuesController < ProjectScopedController
   end
 
   def combine
-    if params[:id].blank? and params[:new_issue].blank?
-      redirect_to issues_url, alert: "Must select a target issue"
-      return
+    # create new issue if existing issue not given
+    if !params[:id]
+      if @issue.save && @issue.update_attributes(issue_params)
+        track_created(@issue)
+        tag_issue_from_field_content(@issue)
+      end
+    end
+
+    count = 0
+    if @issue.persisted?
+      source_ids = params[:sources].map(&:to_i) - [@issue.id]
+      count = @issue.combine source_ids
     end
 
     respond_to do |format|
-      if params[:new_issue]
-        if @issue.save && @issue.update_attributes(issue_params)
-          track_created(@issue)
-          tag_issue_from_field_content(@issue)
-        else
-          @issue = nil
-        end
-      end
-
-      if @issue
-        source_ids = params[:sources].map(&:to_i) - [@issue.id]
-        sources = Issue.where(id: source_ids).to_a
-        @issue = @issue.combine! *sources
-      end
-
       format.html {
-        if @issue
-          redirect_to issues_url, notice: "Issues combined."
+        if count > 0
+          redirect_to issues_url, notice: "#{count} Issues combined into #{@issue.title}."
         else
-          redirect_to issues_url, alert: "Issue couldn't be combined."
+          redirect_to issues_url, alert: "Issues couldn't be combined."
         end
       }
-
       format.json
     end
   end
