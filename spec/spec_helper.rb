@@ -6,6 +6,12 @@ require 'shoulda/matchers'
 require 'capybara/rspec'
 
 require "capybara/poltergeist"
+
+Capybara.register_driver :poltergeist do |app|
+  options = { js_errors: false, timeout: 30, window_size: [1920, 1080] }
+  Capybara::Poltergeist::Driver.new(app, options)
+end
+
 Capybara.javascript_driver = :poltergeist
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
