@@ -11,6 +11,7 @@ class ProjectsController < AuthenticatedController
 
     @tags = Tag.all
     @issues_by_tag = Hash.new{|h,k| h[k] = [] }
+    @taggings_by_tag = Tagging.group(:tag_id).count
     assigned = nil
 
     @activities = Activity.latest

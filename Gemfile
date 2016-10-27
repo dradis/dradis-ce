@@ -22,6 +22,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jquery-fileupload-rails', '~> 0.3.4'
 gem 'jquery-hotkeys-rails'
+gem 'tagsinput-rails'
 
 # Cache-friendly, client-side local time
 gem 'local_time'

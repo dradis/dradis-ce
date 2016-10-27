@@ -32,9 +32,9 @@
         <span class="actions">
           <%= link_to 'edit', edit_issue_path(@issue), class: 'view-toggle-off editor-toggle-off' %>
           <%= link_to 'delete', @issue, class: 'text-error', data: { confirm: 'Are you sure?' }, method: :delete %> -
-          <%= tag_and_name_for(@issue) %>
         </span>
         <small class="pull-right">Author: <%= @issue.author %></small>
+        <%= tag_and_name_for(@issue) %>
       </h3>
       <div class="content-textile">
         <%= markup(@issue.text) %>

@@ -84,6 +84,12 @@ body.issues.show {
       padding: 1ex;
     }
   }
+
+  .inner .h3-tags {
+    display: block;
+    font-size: 0.7em;
+    padding-top: 5px;
+  }
 }
 
 body.issues.index {
@@ -134,6 +140,16 @@ body.issues.new, body.issues.edit {
     position: relative;
     .btn {
       background: #fff;
+    }
+  }
+
+  div.tagsinput span.tag {
+    border-color: #aaa;
+    background: #eee;
+    color: #333;
+
+    a {
+      color: #aaa;
     }
   }
 }

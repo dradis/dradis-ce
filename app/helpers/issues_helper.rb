@@ -60,11 +60,11 @@ module IssuesHelper
 
   # ----------------------------------------------------------- /Import plugins
   def tag_and_name_for(issue)
-    if tag = issue.tags.first
-      content_tag :span, style: "color: #{tag.color}" do
+    if tags = issue.tags
+      content_tag :span, class: 'h3-tags' do
         [
-          tag_icon_for(issue),
-          h(tag.display_name)
+          (content_tag :i, nil, class: 'fa fa-tags' ),
+          h(get_all_tags(tags))
         ].join(' ').html_safe
       end
     else
@@ -80,5 +80,12 @@ module IssuesHelper
       options[:style] = "color: #{tag.color}"
     end
     content_tag :i, nil, options
+  end
+
+  # Get all the tags associated with this issue
+  def get_all_tags(tags)
+    tags.map { |tag|
+      tag.display_name
+    }.join(', ')
   end
 end

@@ -48,6 +48,19 @@ body.projects {
       margin: 3em 0;
       text-align: center;
     }
+
+    .columns {
+      -moz-column-width: 11.5em; /* Firefox */
+      -webkit-column-width: 11.5em; /* webkit, Safari, Chrome */
+      column-width: 11.5em;
+      font-size: 14px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+
+      ul {
+        list-style: disc;
+      }
+    }
   }
 
   #issue-chart svg {
