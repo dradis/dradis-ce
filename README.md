@@ -60,6 +60,29 @@ $ bundle exec rails server
 
 You can browse to the app at http://localhost:3000/
 
+### Using Vagrant
+
+If you'd like to use dradis in Vagrant, you can use the included Vagrantfile.
+
+```
+# Clone the repo
+git clone https://github.com/dradis/dradis-ce.git
+
+# install/start the vagrant box
+vagrant up
+# ssh into the box
+vagrant ssh
+
+# install ruby in the vagrant box
+cd /dradis/dradis-ce
+rvm install "$(cat .ruby-version)"
+
+
+# Then you can proceed with standard setup from within Vagrant
+ruby bin/setup
+# You'll need to tell the server to bind to 0.0.0.0 for port forwarding:
+bundle exec rails server -b 0.0.0.0
+```
 
 ### Stable release
 
