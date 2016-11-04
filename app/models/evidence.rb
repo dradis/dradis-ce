@@ -1,8 +1,8 @@
 class Evidence < ActiveRecord::Base
   include HasFields
+  include RevisionTracking
 
   dradis_has_fields_for :content
-  has_paper_trail
 
   # -- Relationships --------------------------------------------------------
   belongs_to :issue

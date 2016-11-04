@@ -38,6 +38,11 @@
                 <i class="fa fa-check"></i> <span>Methodologies</span>
               <% end %>
             <% end %>
+            <%= content_tag :li, :class => action_name == 'trash' ? 'active' : '' do %>
+              <%= link_to main_app.trash_path do %>
+                <i class="fa fa-trash" aria-hidden="true"></i> <span>Trash</span>
+              <% end %>
+            <% end %>
           </ul>
           <%= render "layouts/snowcrash/nodes" %>
 
@@ -55,7 +60,6 @@
             <p>Please enable JavaScript support.</p>
           </div>
         </noscript>
-        <%= render "layouts/snowcrash/breadcrumb" %>
 
         <div id="view-content" class="view-content">
           <% if content_for?(:sidebar) %>
@@ -66,6 +70,7 @@
             </div>
             <div class="secondary-navbar-content">
               <%= flash_messages %>
+              <%= render "layouts/snowcrash/breadcrumb" %>
               <%= content_for?(:content) ? yield(:content) : yield %>
             </div>
           <% else %>
@@ -85,6 +90,7 @@
     </div>
   </div>
   <%= render 'activities/poller' %>
+  <%= render 'layouts/snowcrash/modals' %>
   <%# Always render the Tour content, the user may click on the link in the help menu. %>
   <%# FIXME: re-enable Tour %>
   <%#= render 'layouts/snowcrash/tour' %>

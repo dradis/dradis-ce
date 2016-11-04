@@ -41,9 +41,9 @@ class ProjectScopedController < AuthenticatedController
     end
   end
 
-  def load_conflicting_versions(record)
+  def load_conflicting_revisions(record)
     if flash[:update_conflicts_since]
-      @conflicting_versions = record.versions\
+      @conflicting_revisions = record.versions\
         .order("created_at ASC")\
         .where("created_at > '#{flash[:update_conflicts_since]}'")
     end

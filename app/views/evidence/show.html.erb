@@ -1,7 +1,7 @@
 <% content_for :title, "View evidence for #{@node.label} / #{@evidence.issue.title}" %>
 
-<% if @conflicting_versions %>
-  <%= render "projects/conflicting_versions", conflicts: @conflicting_versions, record: @evidence %>
+<% if @conflicting_revisions %>
+  <%= render "projects/conflicting_revisions", conflicts: @conflicting_revisions, record: @evidence %>
 <% end %>
 
 <ul class="nav nav-tabs main-tabs">
@@ -61,7 +61,7 @@
           <%= link_to(
                 'revision history',
                 node_evidence_revisions_path(@node, @evidence)
-              ) if @evidence.versions.any? && @evidence.versions.last.previous.present? %>
+              ) if @evidence.has_revision_history? %>
         </span>
       </h3>
       <%= render 'activities/feed', activities: @activities %>

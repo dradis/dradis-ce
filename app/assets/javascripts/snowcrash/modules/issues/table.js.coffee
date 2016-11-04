@@ -221,11 +221,4 @@ jQuery ->
         $('#combine-selected').css('display', 'none')
 
 
-    $('#js-table-filter').on 'keyup', ->
-        rex = new RegExp($(this).val(), 'i')
-        $('tbody tr').hide();
-        $('tbody tr').filter( ->
-          rex.test($(this).text());
-        ).show();
-
     new IssueTable

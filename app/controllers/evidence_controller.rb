@@ -8,7 +8,7 @@ class EvidenceController < NestedNodeResourceController
     @issue      = @evidence.issue
     @activities = @evidence.activities.latest
 
-    load_conflicting_versions(@evidence)
+    load_conflicting_revisions(@evidence)
   end
 
   def new
@@ -66,7 +66,7 @@ class EvidenceController < NestedNodeResourceController
         )
       end
     end
-    redirect_to issue_path(evidence_params[:issue_id]), notice: "Evidence added for selected nodes."
+    redirect_to issue_path(evidence_params[:issue_id]), notice: 'Evidence added for selected nodes.'
   end
 
   def edit
@@ -78,7 +78,7 @@ class EvidenceController < NestedNodeResourceController
       if @evidence.update_attributes(evidence_params)
         track_updated(@evidence)
         check_for_edit_conflicts(@evidence, updated_at_before_save)
-        format.html { redirect_to [@node, @evidence] }
+        format.html { redirect_to [@node, @evidence], notice: 'Evidence updated.' }
       else
         format.html {
           initialize_nodes_sidebar

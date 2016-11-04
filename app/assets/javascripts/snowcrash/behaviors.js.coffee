@@ -80,6 +80,17 @@ jQuery ->
   $('.modal').on 'shown', ->
     $(this).find('input:text:visible:first').focus()
 
+  $('.js-try-pro').on 'click', ->
+    term    = $(this).data('term')
+    $iframe = $('#try-pro iframe')
+    url     = $iframe.data('url') +
+              '?utm_source=ce&utm_medium=app&utm_campaign=try-pro&utm_term=' +
+              term
+
+    $iframe.attr('src', url)
+    $('#try-pro').modal()
+
+
 
   # ------------------------------------------------------ Non-plugin behaviors
 
@@ -123,3 +134,11 @@ jQuery ->
 
   $('.navbar .btn-search').on 'click', ->
     $('.form-search').submit()
+
+  # Table filtering
+  $('.js-table-filter').on 'keyup', ->
+    rex = new RegExp($(this).val(), 'i')
+    $('tbody tr').hide();
+    $('tbody tr').filter( ->
+      rex.test($(this).text());
+    ).show();
