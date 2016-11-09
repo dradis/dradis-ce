@@ -21,6 +21,13 @@ module NodeProperties
   def set_property(key, value)
     current_value = self.properties[key]
 
+    # Even though we're serializing JSONWithIndifferentAccess, and the
+    # properties can be returned using String or Symbol keys, the
+    # :value_is_there variable defined bellow is depending on Array's #include?
+    # and this method wouldn't match two hashes unless they're both
+    # #with_indifferent_access
+    value = value.with_indifferent_access if value.is_a?(Hash)
+
     value_is_there = (current_value == value) || (current_value.is_a?(Array) && current_value.include?(value))
     return current_value if value.blank? || value_is_there
 
