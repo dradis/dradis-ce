@@ -2,9 +2,14 @@
 
 <div class="row-fluid">
   <div class="span7 offset1">
-    <%= form_tag configurations_path do %>
-      <% @configs.each do |configuration| %>
-        <%= render partial: configuration[:type], object: configuration %>
+    <% if @configs.count == 0 %>
+      <h2>This page intentionally left blank</h2>
+      <p>You haven't enabled any add-ons that require configuration. To enable them, see our <a href="http://dradisframework.org/documentation/add-ons.html" target="_blank">Enable/Disable Add-ons</a> guide.</p>
+    <% else %>
+      <%= form_tag configurations_path do %>
+        <% @configs.each do |configuration| %>
+          <%= render partial: configuration[:type], object: configuration %>
+        <% end %>
       <% end %>
     <% end %>
   </div>
