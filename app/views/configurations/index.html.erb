@@ -4,7 +4,8 @@
   <div class="span7 offset1">
     <% if @configs.count == 0 %>
       <h2>You haven't enabled any add-ons that require configuration</h2>
-      <p>For more information on working with add-ons, see our <a href="http://dradisframework.org/documentation/add-ons.html" target="_blank">Enable/Disable Add-ons</a> guide.</p>
+      <p>Import plugins like <a href="http://dradisframework.org/addons/vulndb.html" target="_blank">VulnDB</a> or <a href="http://dradisframework.org/addons/mediawiki.html" target="_blank">MediaWiki</a> require configuration and will display here when they are enabled.</p>
+      <p>For more details on enabling add-ons, see our <a href="http://dradisframework.org/documentation/add-ons.html" target="_blank">Enable/Disable Add-ons</a> guide.</p>
     <% else %>
       <%= form_tag configurations_path do %>
         <% @configs.each do |configuration| %>
