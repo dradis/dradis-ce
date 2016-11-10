@@ -69,6 +69,7 @@ jQuery ->
 
   # Activate jQuery.treeModal
   $('.modal-node-selection-form').treeModal()
+  $('.modal-note-selection-form').treeModalForNote()
 
 
   # ------------------------------------------------------- Bootstrap behaviors

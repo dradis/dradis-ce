@@ -41,7 +41,7 @@ class NotesController < NestedNodeResourceController
     if @note.update_attributes(note_params)
       track_updated(@note)
       check_for_edit_conflicts(@note, updated_at_before_save)
-      redirect_to node_note_path(@node, @note), notice: 'Note updated.'
+      redirect_to node_note_path(@note.node, @note), notice: 'Note updated.'
     else
       initialize_nodes_sidebar
       render 'edit'
@@ -73,6 +73,6 @@ class NotesController < NestedNodeResourceController
   end
 
   def note_params
-    params.require(:note).permit(:category_id, :text)
+    params.require(:note).permit(:category_id, :text, :node_id)
   end
 end

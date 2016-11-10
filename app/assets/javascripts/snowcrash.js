@@ -14,6 +14,7 @@
 
 //= require snowcrash/plugins/jquery.breadcrums
 //= require snowcrash/plugins/jquery.treemodal
+//= require snowcrash/plugins/jquery.treemodalForNote
 //= require snowcrash/plugins/jquery.treenav
 
 //= require snowcrash/behaviors
