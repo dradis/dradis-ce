@@ -17,11 +17,13 @@
     </a>
     <ul class="dropdown-menu">
       <% @tags.each do |tag| %>
+        <% cache [tag, 'issues-toolbar'] do %>
       <li>
         <%= link_to 'javascript:void(0)', class: 'js-taglink', style: "color: #{tag.color}", data: { tag: h(tag.name) } do %>
           <i class="fa fa-tag"></i> <%= h(tag.display_name) %>
         <% end %>
       </li>
+        <% end %>
       <% end %>
     </ul>
   </div>
