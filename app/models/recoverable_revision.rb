@@ -4,8 +4,11 @@
 class RecoverableRevision
   attr_reader :object, :version
 
+  delegate :cache_key, to: :version
   delegate :errors, to: :object
 
+
+  # -- Class Methods --------------------------------------------------------
   # Load all 'destroy' revisions which represent an object which is in the
   # trash and can be recovered (or perma-deleted).
   #
@@ -29,7 +32,7 @@ class RecoverableRevision
         group("item_id"). # only return one version per deleted item
         pluck(:id)
     end
-    PaperTrail::Version.where(id: ids.uniq).select("versions.*").map do |version|
+    PaperTrail::Version.where(id: ids.uniq).select("versions.*").order('created_at DESC').map do |version|
       new(version)
     end
   end
@@ -38,6 +41,8 @@ class RecoverableRevision
     new(PaperTrail::Version.where(event: :destroy).find_by!(id: id))
   end
 
+
+  # -- Instance Methods -----------------------------------------------------
   def initialize(version)
     @version = version
     @object  = version.reify
