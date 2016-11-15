@@ -32,7 +32,7 @@ class RecoverableRevision
         group("item_id"). # only return one version per deleted item
         pluck(:id)
     end
-    PaperTrail::Version.where(id: ids.uniq).select("versions.*").map do |version|
+    PaperTrail::Version.where(id: ids.uniq).select("versions.*").order('created_at DESC').map do |version|
       new(version)
     end
   end
