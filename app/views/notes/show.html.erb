@@ -28,40 +28,45 @@
 
 
 <div class="tab-content">
-  <div class="tab-pane active" id="info-tab">
-    <div id="<%= dom_id(@note) %>" class="inner note-text-inner">
-      <h3>Content for this note -
-        <span class="actions">
-          <%= link_to 'edit', edit_node_note_path(@node, @note) %>
-          <%= link_to 'delete',
-                  [@node, @note],
-                  class: 'text-error',
-                  data: { confirm: 'Are you sure?' },
-                  method: :delete %>
-        </span>
-      </h3>
-      <div class="content-textile">
-        <%= markup(@note.text) %>
+  <% cache ['note-information-tab', @note] do %>
+    <div class="tab-pane active" id="info-tab">
+      <div id="<%= dom_id(@note) %>" class="inner note-text-inner">
+        <h3>Content for this note -
+          <span class="actions">
+            <%= link_to 'edit', edit_node_note_path(@node, @note) %>
+            <%= link_to 'delete',
+                    [@node, @note],
+                    class: 'text-error',
+                    data: { confirm: 'Are you sure?' },
+                    method: :delete %>
+          </span>
+        </h3>
+        <div class="content-textile">
+          <%= markup(@note.text) %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="tab-pane" id="activity-tab">
-    <div class="inner">
-      <h3>
-        Recent activity -
-        <span class="actions">
-          <%#
-            # Some legacy content was created before paper_trail, so we need to
-            # make sure that there is at least one revision associated to the
-            # model.
-            #%>
-          <%= link_to(
-                'revision history',
-                node_note_revisions_path(@node, @note)
-              ) if @note.has_revision_history? %>
-        </span>
-      </h3>
-      <%= render 'activities/feed', activities: @activities %>
+  <% end %>
+
+  <% cache ['note-activity-tab', @activities] do %>
+    <div class="tab-pane" id="activity-tab">
+      <div class="inner">
+        <h3>
+          Recent activity -
+          <span class="actions">
+            <%#
+              # Some legacy content was created before paper_trail, so we need to
+              # make sure that there is at least one revision associated to the
+              # model.
+              #%>
+            <%= link_to(
+                  'revision history',
+                  node_note_revisions_path(@node, @note)
+                ) if @note.has_revision_history? %>
+          </span>
+        </h3>
+        <%= render 'activities/feed', activities: @activities %>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>
