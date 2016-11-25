@@ -87,13 +87,16 @@ jQuery ->
     $iframe = $('#try-pro iframe')
     url     = $iframe.data('url')
 
-    if term == 'word-reports'
-      if $this.data('url')
-        url = $this.data('url')
-
+    if $this.data('url')
+      url = $this.data('url')
       $modal.css('width', '80%')
       $modal.css('margin-left', '-40%')
-      $modal.find('.modal-header h3').html('[<span>Dradis Pro feature</span>] Custom Word reports')
+
+      title = switch term
+        when 'training-course' then 'Dradis Training Course'
+        when 'word-reports' then '[<span>Dradis Pro feature</span>] Custom Word reports'
+
+      $modal.find('.modal-header h3').html(title)
     else
       $modal.css('width', '700px')
       $modal.css('margin-left', '-350px')
