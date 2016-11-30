@@ -74,12 +74,12 @@ class RecoverableRevision
       if issue_revision
         issue_object         = issue_revision.reify
         issue_object.node_id = Node.issue_library.id
-        issue_object.save!
+        issue_object.touch
         @object.issue_id = issue_object.id
       end
     end
 
-    @object.save
+    @object.touch
   end
 
   def type
