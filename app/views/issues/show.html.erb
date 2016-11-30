@@ -44,7 +44,7 @@
     </div>
   <% end %>
 
-  <% cache ['issue-evidence-tab', @issue.evidence] do %>
+  <% cache ['issue-evidence-tab', @issue, @issue.evidence] do %>
     <div class="tab-pane" id="evidence-tab">
       <div class="inner">
         <%= render partial: 'evidence' %>

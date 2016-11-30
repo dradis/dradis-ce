@@ -7,7 +7,7 @@
   <div class="tabbable tabs-left" id="evidence-tabs">
     <ul class="nav nav-tabs" id="evidence-host-list">
       <% @issue.evidence_by_node.each do |node, instances| %>
-        <% cache [node, instances.count, 'evidence-nav'] do %>
+        <% cache [@issue, node, instances.count, 'evidence-nav'] do %>
           <li>
             <a href="#evidence_for_<%= dom_id(node) %>" data-toggle="tab">
               <i class="fa fa-<%= ['folder-o','laptop'][node.type_id] %>"></i> <%= node.label %> (<%= instances.count %>)
@@ -18,7 +18,7 @@
     </ul>
     <div class="tab-content">
       <% @issue.evidence_by_node.each do |node, instances| %>
-        <% cache [node, instances, 'evidence-content'] do %>
+        <% cache [@issue, node, instances, 'evidence-content'] do %>
           <%= content_tag :div, class: 'tab-pane evidence-content', id: "evidence_for_#{dom_id(node)}" do %>
             <%= content_tag :section, class: 'evidence-for-host' do %>
 
