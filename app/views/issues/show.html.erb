@@ -44,7 +44,15 @@
     </div>
   <% end %>
 
-  <% cache ['issue-evidence-tab', @issue, @issue.evidence] do %>
+  <%# We need:
+    #   - @issue                  - in case @issue.evidence is empty (there are
+    #                               two issues with empty evidence)
+    #   - @issue.evidence         - to make sure the tabs are updated with
+    #                               changes.
+    #   - @nodes_for_add_evidence - to make sure the Add Evidence form is
+    #                               refreshed when the list of node changes.
+    # %>
+  <% cache ['issue-evidence-tab', @issue, @issue.evidence, @nodes_for_add_evidence] do %>
     <div class="tab-pane" id="evidence-tab">
       <div class="inner">
         <%= render partial: 'evidence' %>

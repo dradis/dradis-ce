@@ -1,5 +1,7 @@
 <h3>Evidence information - <span class="actions"><a href="javascript:void(0)" class="js-add-evidence">add new</a></span></h3>
-<%= render 'issues/add_evidence'%>
+<% cache @nodes_for_add_evidence do %>
+  <%= render 'issues/add_evidence'%>
+<% end %>
 
 <% if @issue.affected.empty? %>
   <p>None so far.</p>
