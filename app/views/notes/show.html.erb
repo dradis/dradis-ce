@@ -48,7 +48,7 @@
     </div>
   <% end %>
 
-  <% cache ['note-activity-tab', @activities] do %>
+  <% cache ['note-activity-tab', @note, @activities] do %>
     <div class="tab-pane" id="activity-tab">
       <div class="inner">
         <h3>
