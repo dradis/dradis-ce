@@ -10,7 +10,7 @@
     </thead>
     <tbody>
       <% issues.each do |issue| %>
-      <% cache [issue, 'issues-table'] do%>
+      <% cache [issue, issue.affected_count, 'issues-table'] do%>
       <tr>
         <td class="column-checkbox"><%= check_box_tag dom_id(issue), issue.id, false, class: 'js-multicheck', data: { url: issue_path(issue, format: :json) } %></td>
         <% @columns.each do |column| %>
