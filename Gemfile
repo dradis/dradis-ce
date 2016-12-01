@@ -180,13 +180,13 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins',  path: '../dradis-plugins'
+gem 'dradis-plugins', '~> 3.5'
 
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', path: '../dradis-projects'
+gem 'dradis-projects', '~> 3.0'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)

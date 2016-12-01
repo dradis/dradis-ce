@@ -1,8 +1,8 @@
 <% content_for :title, 'Trash' %>
 
-<% cache @revisions do %>
-  <div id="trash">
-    <% if @revisions.any? %>
+<div id="trash">
+  <% if @revisions.any? %>
+    <% cache @revisions do %>
       <div class="btn-toolbar">
         <div class="filter pull-right">
           <input type="text" class="form-control input-xlarge js-table-filter" placeholder="Type here to filter table..."/>
@@ -40,8 +40,8 @@
           <% end %>
         </tbody>
       </table>
-    <% else %>
-      The trash is empty.
     <% end %>
-  </div>
-<% end %>
+  <% else %>
+    The trash is empty.
+  <% end %>
+</div>
