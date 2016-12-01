@@ -86,18 +86,6 @@ PATH
       dradis-plugins (~> 3.2)
 
 PATH
-  remote: ../dradis-plugins
-  specs:
-    dradis-plugins (3.5.0)
-
-PATH
-  remote: ../dradis-projects
-  specs:
-    dradis-projects (3.0.0)
-      dradis-plugins (~> 3.5)
-      rubyzip (~> 1.1.0)
-
-PATH
   remote: ../dradis-qualys
   specs:
     dradis-qualys (3.0.0)
@@ -219,6 +207,10 @@ GEM
       dradis-plugins (~> 3.0)
     dradis-calculator_dread (3.0.3)
       dradis-plugins (~> 3.0)
+    dradis-plugins (3.5.0)
+    dradis-projects (3.0.0)
+      dradis-plugins (~> 3.5)
+      rubyzip (~> 1.1.0)
     erubis (2.7.0)
     execjs (2.6.0)
     factory_girl (4.5.0)
@@ -516,8 +508,8 @@ DEPENDENCIES
   dradis-nmap!
   dradis-ntospider!
   dradis-openvas!
-  dradis-plugins!
-  dradis-projects!
+  dradis-plugins (~> 3.5)
+  dradis-projects (~> 3.0)
   dradis-qualys!
   dradis-vulndb!
   dradis-zap!
