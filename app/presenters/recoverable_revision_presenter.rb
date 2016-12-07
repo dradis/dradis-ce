@@ -31,6 +31,8 @@ class RecoverableRevisionPresenter < BasePresenter
                   'fa-bug'
                 when 'Note'
                   'fa-file-text-o'
+                when 'Methodology'
+                  'fa-check'
                 else
                   ''
                 end
