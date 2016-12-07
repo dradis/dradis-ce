@@ -85,9 +85,10 @@ class RecoverableRevision
   end
 
   def type
-    # FIXME - ISSUE/NOTE INHERITANCE
-    if object.is_a?(Note) && object.node_id == Node.issue_library.id
-      'Issue'
+    if object.is_a?(Note)
+      return 'Issue'       if object.node_id == Node.issue_library.id
+      return 'Methodology' if object.node_id == Node.methodology_library.id
+      return 'Note'
     else
       object.class.name.humanize
     end
