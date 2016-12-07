@@ -57,7 +57,7 @@ class SessionsController < ApplicationController
   # created.
   def ensure_setup
     if (::Configuration.shared_password == 'improvable_dradis')
-      redirect_to action: :init
+      redirect_to setup_path
     end
   end
 
