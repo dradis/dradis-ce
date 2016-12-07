@@ -57,7 +57,13 @@ class RecoverableRevisionPresenter < BasePresenter
   end
 
   def title
-    truncated_title = h.truncate(trashed_object.title, length: 25, separator: "...")
+    title = if trashed_object.is_a?(Note) && trashed_object.node == Node.methodology_library
+              note = trashed_object
+              Methodology.new(filename: note.id, content: note.text).name
+            else
+              trashed_object.title
+            end
+    truncated_title = h.truncate(title, length: 25, separator: "...")
     h.content_tag(:span, truncated_title, class: 'item-content')
   end
 
@@ -70,13 +76,12 @@ class RecoverableRevisionPresenter < BasePresenter
   end
 
   def type
-    # If revision type is Note, check note's node id to determine object type.
-    # FIXME - ISSUE/NOTE INHERITANCE
-    if revision.item_type == 'Note' && trashed_object.node_id == Node.issue_library.id
-      'Issue'
-    else
-      revision.item_type
+    if revision.item_type == 'Note'
+      # If revision type is Note, check note's node id to determine object type.
+      # FIXME - ISSUE/NOTE INHERITANCE
+      return 'Issue'      if trashed_object.node_id == Node.issue_library.id
+      return 'Methodology'if trashed_object.node_id == Node.methodology_library.id
     end
+    revision.item_type
   end
-
 end
