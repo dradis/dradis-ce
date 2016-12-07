@@ -1,4 +1,5 @@
 class RecoverableRevisionPresenter < BasePresenter
+  delegate :type, to: :recoverable_revision
   presents :recoverable_revision
 
   def created_at_ago
@@ -13,7 +14,7 @@ class RecoverableRevisionPresenter < BasePresenter
     [
       icon,
       title,
-      recoverable_revision.type.downcase,
+      type.downcase,
       location,
     ].join(" ").html_safe
   end
