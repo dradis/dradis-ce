@@ -13,7 +13,7 @@ class RecoverableRevisionPresenter < BasePresenter
     [
       icon,
       title,
-      type.downcase,
+      recoverable_revision.type.downcase,
       location,
     ].join(" ").html_safe
   end
@@ -73,15 +73,5 @@ class RecoverableRevisionPresenter < BasePresenter
 
   def revision
     @revision ||= recoverable_revision.version
-  end
-
-  def type
-    if revision.item_type == 'Note'
-      # If revision type is Note, check note's node id to determine object type.
-      # FIXME - ISSUE/NOTE INHERITANCE
-      return 'Issue'      if trashed_object.node_id == Node.issue_library.id
-      return 'Methodology'if trashed_object.node_id == Node.methodology_library.id
-    end
-    revision.item_type
   end
 end
