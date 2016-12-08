@@ -11,7 +11,7 @@ class ExportController < ProjectScopedController
         description: plugin::Engine::plugin_description,
                name: plugin::Engine.plugin_name,
              routes: plugin::Engine.routes.named_routes,
-          templates: templates_for(plugin: plugin).collect{|file| File.basename(file)},
+          templates: templates_for(plugin: plugin).collect{|file| File.basename(file)}.sort,
       templates_dir: templates_dir_for(plugin: plugin)[Rails.root.to_s.length..-1]
       }
     end

@@ -5,8 +5,8 @@ class Evidence < ActiveRecord::Base
   dradis_has_fields_for :content
 
   # -- Relationships --------------------------------------------------------
-  belongs_to :issue
-  belongs_to :node
+  belongs_to :issue, touch: true
+  belongs_to :node, touch: true
   has_many :activities, as: :trackable
 
 

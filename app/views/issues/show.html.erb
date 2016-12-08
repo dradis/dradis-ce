@@ -26,29 +26,45 @@
 </ul>
 
 <div class="tab-content">
-  <div class="tab-pane active" id="info-tab">
-    <div class="inner note-text-inner">
-      <h3>Issue information -
-        <span class="actions">
-          <%= link_to 'edit', edit_issue_path(@issue), class: 'view-toggle-off editor-toggle-off' %>
-          <%= link_to 'delete', @issue, class: 'text-error', data: { confirm: 'Are you sure?' }, method: :delete %> -
-          <%= tag_and_name_for(@issue) %>
-        </span>
-        <small class="pull-right">Author: <%= @issue.author %></small>
-      </h3>
-      <div class="content-textile">
-        <%= markup(@issue.text) %>
+  <% cache ['issue-information-tab', @issue] do %>
+    <div class="tab-pane active" id="info-tab">
+      <div class="inner note-text-inner">
+        <h3>Issue information -
+          <span class="actions">
+            <%= link_to 'edit', edit_issue_path(@issue), class: 'view-toggle-off editor-toggle-off' %>
+            <%= link_to 'delete', @issue, class: 'text-error', data: { confirm: 'Are you sure?' }, method: :delete %> -
+            <%= tag_and_name_for(@issue) %>
+          </span>
+          <small class="pull-right">Author: <%= @issue.author %></small>
+        </h3>
+        <div class="content-textile">
+          <%= markup(@issue.text) %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="tab-pane" id="evidence-tab">
-    <div class="inner">
-      <%= render partial: 'evidence' %>
+  <% end %>
+
+  <%# We need:
+    #   - @issue                  - in case @issue.evidence is empty (there are
+    #                               two issues with empty evidence)
+    #   - @issue.evidence         - to make sure the tabs are updated with
+    #                               changes.
+    #   - @nodes_for_add_evidence - to make sure the Add Evidence form is
+    #                               refreshed when the list of node changes.
+    # %>
+  <% cache ['issue-evidence-tab', @issue, @issue.evidence, @nodes_for_add_evidence] do %>
+    <div class="tab-pane" id="evidence-tab">
+      <div class="inner">
+        <%= render partial: 'evidence' %>
+      </div>
     </div>
-  </div>
-  <div class="tab-pane" id="activity-tab">
-    <div class="inner">
-      <%= render partial: 'activity' %>
+  <% end %>
+
+  <% cache ['issue-activity-tab', @issue, @activities] do %>
+    <div class="tab-pane" id="activity-tab">
+      <div class="inner">
+        <%= render partial: 'activity' %>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>

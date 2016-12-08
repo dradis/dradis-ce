@@ -4,7 +4,7 @@ class RevisionPresenter < BasePresenter
   delegate :whodunnit, to: :revision
 
   def created_at_ago
-    h.time_ago_in_words(revision.created_at) << ' ago'
+    h.local_time_ago(revision.created_at)
   end
 
   def action

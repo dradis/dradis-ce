@@ -12,7 +12,7 @@ module Dradis::CE::API
 
       def create
         @issue = Issue.new(issue_params)
-        @issue.author   = current_user
+        @issue.author   = current_user.email
         @issue.category = Category.issue
         @issue.node     = Node.issue_library
 

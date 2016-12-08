@@ -69,3 +69,30 @@
   color: #b94a48;
   margin-top: 10px;
 }
+
+
+#try-pro {
+  bottom: 10%;
+  display: none;
+  margin-left: -350px;
+  width: 700px;
+
+  iframe {
+    border: none;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+  }
+
+  .modal-body {
+    max-height: inherit;
+  }
+
+  .modal-header h3 span {
+    color: #1857D2;
+  }
+}
