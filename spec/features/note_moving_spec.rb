@@ -20,7 +20,7 @@ describe "moving a note", js: true do
     @node_2 = create(:node, label: "Node 2", parent: @node_0)
     @node_3 = create(:node, label: "Node 3", parent: @node_0)
     @node_4 = create(:node, label: "Node 4", parent: @node_1)
-    @node_5 = create(:node, label: "Node 4", parent: @node_2)
+    @node_5 = create(:node, label: "Node 5", parent: @node_2)
 
     visit node_note_path(@node_5, current_note)
     click_move_note
@@ -42,6 +42,19 @@ describe "moving a note", js: true do
 
     it "should redirect to note show path" do
       expect(current_path).to eq(node_note_path(@node_1, current_note))
+    end
+  end
+
+  describe "moving a note to a similar node" do
+    before do
+      within('#modal_move_note') do
+        click_link @node_5.label
+        click_submit
+      end
+    end
+
+    it "should update the node as an invalid selection" do
+      expect(find('.invalid-selection').text).to eq(@node_5.label)
     end
   end
 
