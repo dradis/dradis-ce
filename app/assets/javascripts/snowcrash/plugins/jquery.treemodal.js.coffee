@@ -62,7 +62,7 @@ do ($ = jQuery, window, document) ->
 
       # Nodes can't be moved underneath one of their own descendants:
       if @isDescendedFromCurrentNode($nodeLink)
-        if @allowDescendants && @isCurrentNode($nodeLink)
+        if (!@allowDescendants) || (@allowDescendants && @isCurrentNode($nodeLink))
           @markAsInvalid($nodeLink)
           return false
 
