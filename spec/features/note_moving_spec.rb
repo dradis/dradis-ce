@@ -15,12 +15,12 @@ describe "moving a note", js: true do
     #   - node_3
     # - node_1
     #   - node_4
-    @node_0 = create_node(label: "Node 0")
-    @node_1 = create_node(label: "Node 1")
-    @node_2 = create_node(label: "Node 2", parent: @node_0)
-    @node_3 = create_node(label: "Node 3", parent: @node_0)
-    @node_4 = create_node(label: "Node 4", parent: @node_1)
-    @node_5 = create_node(label: "Node 4", parent: @node_2)
+    @node_0 = create(:node, label: "Node 0")
+    @node_1 = create(:node, label: "Node 1")
+    @node_2 = create(:node, label: "Node 2", parent: @node_0)
+    @node_3 = create(:node, label: "Node 3", parent: @node_0)
+    @node_4 = create(:node, label: "Node 4", parent: @node_1)
+    @node_5 = create(:node, label: "Node 4", parent: @node_2)
 
     visit node_note_path(@node_5, current_note)
     click_move_note
@@ -46,10 +46,6 @@ describe "moving a note", js: true do
   end
 
 
-
-  def create_node(attrs={})
-    create(:node, attrs)
-  end
 
   def click_move_note
     find("a[href='#modal_move_note']").click
