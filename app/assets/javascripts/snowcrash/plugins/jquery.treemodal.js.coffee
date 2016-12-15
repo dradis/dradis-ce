@@ -17,7 +17,8 @@ do ($ = jQuery, window, document) ->
       @$el = $(@element)
       @$tree = @$el.find('.tree-modal-box')
 
-      @$nodeParentIdHiddenInput = @$el.find("#node_parent_id")
+      @$nodeHiddenInput = @$el.find(@$el.data('hidden-field'))
+      @allowDescendants = @$el.data('allow-descendants')
 
       @disableSubmitBtn()
 
@@ -25,6 +26,9 @@ do ($ = jQuery, window, document) ->
 
       @isDescendedFromCurrentNode = ($nodeLink) ->
         $nodeLink.parents(current_node_container).length > 0
+
+      @isCurrentNode = ($nodeLink) ->
+        $nodeLink.data('node-id') == @$el.data('node-id')
 
       @$el.find("input[name='node_move_destination']").click(@selectMoveDestination)
 
@@ -58,13 +62,14 @@ do ($ = jQuery, window, document) ->
 
       # Nodes can't be moved underneath one of their own descendants:
       if @isDescendedFromCurrentNode($nodeLink)
-        @markAsInvalid($nodeLink)
-        return false
+        if (!@allowDescendants) || (@allowDescendants && @isCurrentNode($nodeLink))
+          @markAsInvalid($nodeLink)
+          return false
 
       @makeActiveSelection($nodeLink)
 
       selectedNodeId = $nodeLink.parent().data('node-id')
-      @$nodeParentIdHiddenInput.val(selectedNodeId)
+      @$nodeHiddenInput.val(selectedNodeId)
 
       @$el.find('#current-selection').text($nodeLink.text())
       @enableSubmitBtn()
