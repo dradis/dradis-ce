@@ -28,7 +28,7 @@ do ($ = jQuery, window, document) ->
         $nodeLink.parents(current_node_container).length > 0
 
       @isCurrentNode = ($nodeLink) ->
-        $nodeLink.attr('href') == "/nodes/#{@$el.data('node-id')}"
+        $nodeLink.data('node-id') == @$el.data('node-id')
 
       @$el.find("input[name='node_move_destination']").click(@selectMoveDestination)
 
