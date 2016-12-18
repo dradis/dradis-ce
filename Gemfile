@@ -127,7 +127,11 @@ end
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console'
-  gem 'listen', '~> 3.0.5'
+  # guard-rspec depends on `guard`, which depends on `listen`, but versions of
+  # listen higher than 3.1.1 require Ruby version >= 2.2.3 (we're currently on
+  # 2.2.2). Restrict the version of `listen` to prevent `guard-rspec`
+  # introducing an incompatible dependency:
+  gem 'listen', '~> 3.0.5', '<= 3.1.1'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
@@ -137,7 +141,7 @@ group :development do
   gem 'bullet'
 
   # Cleanup logs from asset entries
-  gem 'quiet_assets'
+  # gem 'quiet_assets'
 
   # manage background workers
   gem 'foreman'
@@ -160,15 +164,10 @@ end
 
 group :test do
   gem 'database_cleaner'
-  gem 'factory_girl_rails'#, '~> 4.5.0'
-  gem 'capybara', '~> 2.4.4'
-  gem 'poltergeist'#, '~> 1.6.0'
+  gem 'factory_girl_rails'
+  gem 'capybara'
+  gem 'poltergeist'
   gem 'guard-rspec', require: false
-  # guard-rspec depends on `guard`, which depends on `listen`, but versions of
-  # listen higher than 3.1.1 require Ruby version >= 2.2.3 (we're currently on
-  # 2.2.2). Restrict the version of `listen` to prevent `guard-rspec`
-  # introducing an incompatible dependency:
-  gem 'listen', '<= 3.1.1'
   gem 'shoulda-matchers', '~> 2.8.0'
   gem 'timecop'
 end
