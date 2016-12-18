@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   # -- Table-less ActiveRecord hackery ----------------------------------------
   def self.columns
     @columns ||= [];

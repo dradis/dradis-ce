@@ -1,4 +1,4 @@
-class Log < ActiveRecord::Base
+class Log < ApplicationRecord
 
   def write(trace=nil, &block)
     text = trace.nil? ? yield : trace
