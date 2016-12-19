@@ -14,11 +14,19 @@ describe "issue table" do
       visit issues_path
     end
 
-    it "selects all issues" do
-      find('.js-select-all-issues').click
+    context "when Select All is clicked" do
+      before do
+        find('.js-select-all-issues').click
+      end
 
-      all('input[type=checkbox].js-multicheck').each do |el|
-        expect(el['checked']).to be true
+      it "selects all issues" do
+        all('input[type=checkbox].js-multicheck').each do |el|
+          expect(el['checked']).to be true
+        end
+      end
+
+      it "shows the issue actions bar" do
+        expect(find('.js-issue-actions')).to be_visible
       end
     end
   end
