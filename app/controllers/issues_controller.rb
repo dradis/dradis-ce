@@ -138,12 +138,14 @@ class IssuesController < ProjectScopedController
   def find_or_initialize_tags
     @tags = Tag.where('name like ?', '!%')
     if @tags.empty?
-      # Create a few default tags
-      @tags << Tag.create(name: '!9467bd_Critical')
-      @tags << Tag.create(name: '!d62728_High')
-      @tags << Tag.create(name: '!ff7f0e_Medium')
-      @tags << Tag.create(name: '!6baed6_Low')
-      @tags << Tag.create(name: '!2ca02c_Info')
+      # Create a few default tags.
+      @tags = [
+        Tag.create(name: '!9467bd_Critical'),
+        Tag.create(name: '!d62728_High'),
+        Tag.create(name: '!ff7f0e_Medium'),
+        Tag.create(name: '!6baed6_Low'),
+        Tag.create(name: '!2ca02c_Info'),
+      ]
     end
   end
 
