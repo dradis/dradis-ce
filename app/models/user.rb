@@ -4,9 +4,10 @@ class User < ApplicationRecord
     @columns ||= [];
   end
 
-  def self.column(name, sql_type = nil, default = nil, null = true)
-    cast_type = ActiveRecord::Base.connection.send :lookup_cast_type, sql_type
-    columns << ActiveRecord::ConnectionAdapters::Column.new(name.to_s, default, cast_type, sql_type.to_s, null)
+  def self.column(name, default = nil, sql_type_metadata = nil, null = true)
+    # Warning: this is relying undocumented Rails behaviour that may change
+    # without notice. (Last tested on Rails 5.0.0.1)
+    columns << ActiveRecord::ConnectionAdapters::Column.new(name.to_s, default, sql_type_metadata, null)
   end
 
   attr_accessor :email
