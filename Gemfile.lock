@@ -307,6 +307,8 @@ GEM
     rb-fsevent (0.9.8)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
+    record_tag_helper (1.0.0)
+      actionview (~> 5.x)
     redis (3.3.2)
     redis-namespace (1.5.2)
       redis (~> 3.0, >= 3.0.4)
@@ -475,6 +477,7 @@ DEPENDENCIES
   poltergeist
   rails (~> 5.0.0, >= 5.0.0.1)
   rails_autolink (~> 1.1)
+  record_tag_helper
   redis (~> 3.0)
   rerun
   resque

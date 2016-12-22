@@ -50,8 +50,8 @@ gem 'thor', '~> 0.18'
 
 gem 'paper_trail', '~> 4.0.0'
 gem 'differ', '~> 0.1.2'
-
 gem 'kaminari', '~> 0.16.1'
+gem 'record_tag_helper'
 
 # ------------------------------------------------------ With native extensions
 # These require native extensions.
