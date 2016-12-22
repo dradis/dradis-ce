@@ -1,10 +1,10 @@
 class IssuesController < ProjectScopedController
-  before_filter :find_issuelib
-  before_filter :find_issues, except: :destroy
+  before_action :find_issuelib
+  before_action :find_issues, except: :destroy
 
-  before_filter :find_or_initialize_issue, except: [:import, :index]
-  before_filter :find_or_initialize_tags, except: [:destroy]
-  before_filter :find_note_template, only: [:new]
+  before_action :find_or_initialize_issue, except: [:import, :index]
+  before_action :find_or_initialize_tags, except: [:destroy]
+  before_action :find_note_template, only: [:new]
 
   def index
     @columns = @issues.map(&:fields).map(&:keys).uniq.flatten | ['Title', 'Tags', 'Affected', 'Created', 'Created by', 'Updated']

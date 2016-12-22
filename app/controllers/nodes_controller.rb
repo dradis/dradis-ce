@@ -2,8 +2,8 @@
 # resource.
 class NodesController < NestedNodeResourceController
 
-  skip_before_filter :find_or_initialize_node, only: [ :sort, :create_multiple ]
-  before_filter :initialize_nodes_sidebar, except: [ :sort, :create_multiple ]
+  skip_before_action :find_or_initialize_node, only: [ :sort, :create_multiple ]
+  before_action :initialize_nodes_sidebar, except: [ :sort, :create_multiple ]
 
   # GET /nodes/<id>
   def show

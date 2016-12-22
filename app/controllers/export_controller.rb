@@ -1,8 +1,8 @@
 class ExportController < ProjectScopedController
 
-  before_filter :find_plugins
-  before_filter :validate_exporter, except: [:index, :validation_status]
-  before_filter :validate_template, except: [:index, :validation_status]
+  before_action :find_plugins
+  before_action :validate_exporter, except: [:index, :validation_status]
+  before_action :validate_template, except: [:index, :validation_status]
 
   def index
     @plugin_info = @plugins.map do |plugin|

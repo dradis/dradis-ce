@@ -2,8 +2,8 @@
 # resource.
 class NotesController < NestedNodeResourceController
 
-  before_filter :find_or_initialize_note, except: [:index, :new]
-  before_filter :initialize_nodes_sidebar, only: [:edit, :new, :show]
+  before_action :find_or_initialize_note, except: [:index, :new]
+  before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
 
   def new
     @note      = @node.notes.new
