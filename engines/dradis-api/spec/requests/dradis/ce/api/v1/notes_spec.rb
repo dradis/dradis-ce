@@ -278,7 +278,7 @@ describe "Notes API" do
         context "when invalid JSON is sent" do
           it "responds with HTTP code 400" do
             json_payload = '{"note":{"label":"A malformed label", , }}'
-            post url, params: json_payload, env: @env
+            put url, params: json_payload, env: @env
             expect(response.status).to eq(400)
           end
         end
