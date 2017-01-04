@@ -12,37 +12,37 @@ describe "Evidence API" do
 
     describe "GET /api/nodes/:node_id/evidence" do
       it "throws 401" do
-        get "/api/nodes/#{node.id}/evidence", {}, @env
+        get "/api/nodes/#{node.id}/evidence", env: @env
         expect(response.status).to eq 401
       end
     end
     describe "GET /api/nodes/:node_id/evidence/:id" do
       it "throws 401" do
-        get "/api/nodes/#{node.id}/evidence/#{evidence.id}", {}, @env
+        get "/api/nodes/#{node.id}/evidence/#{evidence.id}", env: @env
         expect(response.status).to eq 401
       end
     end
     describe "POST /api/nodes/:node_id/evidence" do
       it "throws 401" do
-        post "/api/nodes/#{node.id}/evidence", {}, @env
+        post "/api/nodes/#{node.id}/evidence", env: @env
         expect(response.status).to eq 401
       end
     end
     describe "PUT /api/nodes/:node_id/evidence/:id" do
       it "throws 401" do
-        put "/api/nodes/#{node.id}/evidence/1", {}, @env
+        put "/api/nodes/#{node.id}/evidence/1", env: @env
         expect(response.status).to eq 401
       end
     end
     describe "PATCH /api/evidence/:id" do
       it "throws 401" do
-        put "/api/nodes/#{node.id}/evidence/1", {}, @env
+        put "/api/nodes/#{node.id}/evidence/1", env: @env
         expect(response.status).to eq 401
       end
     end
     describe "DELETE /api/nodes/:node_id/evidence/:id" do
       it "throws 401" do
-        delete "/api/nodes/#{node.id}/evidence/1", {}, @env
+        delete "/api/nodes/#{node.id}/evidence/1", env: @env
         expect(response.status).to eq 401
       end
     end
@@ -62,7 +62,7 @@ describe "Evidence API" do
           Evidence.create!(node: node, content: "#[c]#\nC", issue: @issues[2]),
         ]
         @other_evidence = create(:evidence)
-        get "/api/nodes/#{node.id}/evidence", {}, @env
+        get "/api/nodes/#{node.id}/evidence", env: @env
       end
 
       let(:retrieved_evidence) { JSON.parse(response.body) }
@@ -106,7 +106,7 @@ describe "Evidence API" do
           content: "#[foo]#\nbar\n#[fizz]#\nbuzz",
           issue:   @issue,
         )
-        get "/api/nodes/#{node.id}/evidence/#{@evidence.id}", {}, @env
+        get "/api/nodes/#{node.id}/evidence/#{@evidence.id}", env: @env
       end
 
       it "responds with HTTP code 200" do
@@ -129,7 +129,7 @@ describe "Evidence API" do
     describe "POST /api/nodes/:node_id/evidence" do
       let(:url) { "/api/nodes/#{node.id}/evidence" }
       let(:issue) { create(:issue) }
-      let(:post_evidence) { post url, params.to_json, @env }
+      let(:post_evidence) { post url, params: params.to_json, env: @env }
 
       context "when content_type header = application/json" do
         include_context "content_type: application/json"
@@ -182,7 +182,7 @@ describe "Evidence API" do
         context "when invalid JSON is sent" do
           it "responds with HTTP code 400" do
             json_payload = '{"evidence":{"label":"A malformed label", , }}'
-            post url, json_payload, @env
+            post url, params: json_payload, env: @env
             expect(response.status).to eq(400)
           end
         end
@@ -191,7 +191,7 @@ describe "Evidence API" do
       context "when JSON is not sent" do
         it "responds with HTTP code 415" do
           params = { evidence: { } }
-          post url, params, @env
+          post url, params: params, env: @env
           expect(response.status).to eq(415)
         end
       end
@@ -203,7 +203,7 @@ describe "Evidence API" do
       end
 
       let(:url) { "/api/nodes/#{node.id}/evidence/#{evidence.id}" }
-      let(:put_evidence) { put url , params.to_json, @env }
+      let(:put_evidence) { put url, params: params.to_json, env: @env }
 
       context "when content_type header = application/json" do
         include_context "content_type: application/json"
@@ -261,7 +261,7 @@ describe "Evidence API" do
         context "when invalid JSON is sent" do
           it "responds with HTTP code 400" do
             json_payload = '{"evidence":{"label":"A malformed label", , }}'
-            post url, json_payload, @env
+            post url, params: json_payload, env: @env
             expect(response.status).to eq(400)
           end
         end
@@ -271,7 +271,7 @@ describe "Evidence API" do
         let(:params) { { evidence: { content: "New Evidence" } } }
 
         it "responds with HTTP code 415" do
-          expect{put url, params, @env}.not_to change{evidence.reload.attributes}
+          expect{put url, params: params, env: @env}.not_to change{evidence.reload.attributes}
           expect(response.status).to eq 415
         end
       end
@@ -281,7 +281,7 @@ describe "Evidence API" do
       let(:evidence) { create(:evidence, node: node, content: "My Evidence") }
 
       let(:delete_evidence) do
-        delete "/api/nodes/#{node.id}/evidence/#{evidence.id}", {}, @env
+        delete "/api/nodes/#{node.id}/evidence/#{evidence.id}", env: @env
       end
 
       it "deletes the evidence" do

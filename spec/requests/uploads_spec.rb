@@ -6,7 +6,7 @@ describe "upload requests" do
     # login as admin
     Configuration.create(name: 'admin:password', value: ::BCrypt::Password.create('rspec_pass'))
     @user = create(:user, :admin)
-    post session_path, login: @user.email, password: 'rspec_pass'
+    post session_path, params: { login: @user.email, password: 'rspec_pass' }
 
     @uploads_node = Node.plugin_uploads_node
   end
@@ -16,7 +16,7 @@ describe "upload requests" do
   describe "POST #parse" do
     let(:uploader) { 'Dradis::Plugins::Projects::Upload::Template' }
     let(:send_request) do
-      post upload_parse_path, file: "temp", format: :js, uploader: uploader
+      post upload_parse_path, params: { file: "temp", format: :js, uploader: uploader }
     end
 
     it "creates issues from the uploaded XML" do

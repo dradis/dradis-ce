@@ -12,37 +12,37 @@ describe "Notes API" do
 
     describe "GET /api/nodes/:node_id/notes" do
       it "throws 401" do
-        get "/api/nodes/#{node.id}/notes", {}, @env
+        get "/api/nodes/#{node.id}/notes", env: @env
         expect(response.status).to eq 401
       end
     end
     describe "GET /api/nodes/:node_id/notes/:id" do
       it "throws 401" do
-        get "/api/nodes/#{node.id}/notes/#{note.id}", {}, @env
+        get "/api/nodes/#{node.id}/notes/#{note.id}", env: @env
         expect(response.status).to eq 401
       end
     end
     describe "POST /api/nodes/:node_id/notes" do
       it "throws 401" do
-        post "/api/nodes/#{node.id}/notes", {}, @env
+        post "/api/nodes/#{node.id}/notes", env: @env
         expect(response.status).to eq 401
       end
     end
     describe "PUT /api/nodes/:node_id/notes/:id" do
       it "throws 401" do
-        put "/api/nodes/#{node.id}/notes/1", {}, @env
+        put "/api/nodes/#{node.id}/notes/1", env: @env
         expect(response.status).to eq 401
       end
     end
     describe "PATCH /api/notes/:id" do
       it "throws 401" do
-        put "/api/nodes/#{node.id}/notes/1", {}, @env
+        put "/api/nodes/#{node.id}/notes/1", env: @env
         expect(response.status).to eq 401
       end
     end
     describe "DELETE /api/nodes/:node_id/notes/:id" do
       it "throws 401" do
-        delete "/api/nodes/#{node.id}/notes/1", {}, @env
+        delete "/api/nodes/#{node.id}/notes/1", env: @env
         expect(response.status).to eq 401
       end
     end
@@ -63,7 +63,7 @@ describe "Notes API" do
         @other_note = create(
           :note, node: create(:node), text: "#[Title]#\nOther Note"
         )
-        get "/api/nodes/#{node.id}/notes", {}, @env
+        get "/api/nodes/#{node.id}/notes", env: @env
       end
 
       let(:retrieved_notes) { JSON.parse(response.body) }
@@ -103,7 +103,7 @@ describe "Notes API" do
           text:     "#[Title]#\nMy note\n#[foo]#\nbar\n#[fizz]#\nbuzz",
           category: category,
         )
-        get "/api/nodes/#{node.id}/notes/#{@note.id}", {}, @env
+        get "/api/nodes/#{node.id}/notes/#{@note.id}", env: @env
       end
 
       it "responds with HTTP code 200" do
@@ -125,7 +125,7 @@ describe "Notes API" do
 
     describe "POST /api/nodes/:node_id/notes" do
       let(:url) { "/api/nodes/#{node.id}/notes" }
-      let(:post_note) { post url, params.to_json, @env }
+      let(:post_note) { post url, params: params.to_json, env: @env }
 
       context "when content_type header = application/json" do
         include_context "content_type: application/json"
@@ -199,7 +199,7 @@ describe "Notes API" do
         context "when invalid JSON is sent" do
           it "responds with HTTP code 400" do
             json_payload = '{"note":{"label":"A malformed label", , }}'
-            post url, json_payload, @env
+            post url, params: json_payload, env: @env
             expect(response.status).to eq(400)
           end
         end
@@ -208,7 +208,7 @@ describe "Notes API" do
       context "when JSON is not sent" do
         it "responds with HTTP code 415" do
           params = { note: { } }
-          post url, params, @env
+          post url, params: params, env: @env
           expect(response.status).to eq(415)
         end
       end
@@ -220,7 +220,7 @@ describe "Notes API" do
       end
 
       let(:url) { "/api/nodes/#{node.id}/notes/#{note.id}" }
-      let(:put_note) { put url , params.to_json, @env }
+      let(:put_note) { put url, params: params.to_json, env: @env }
 
       context "when content_type header = application/json" do
         include_context "content_type: application/json"
@@ -278,7 +278,7 @@ describe "Notes API" do
         context "when invalid JSON is sent" do
           it "responds with HTTP code 400" do
             json_payload = '{"note":{"label":"A malformed label", , }}'
-            post url, json_payload, @env
+            post url, params: json_payload, env: @env
             expect(response.status).to eq(400)
           end
         end
@@ -288,7 +288,7 @@ describe "Notes API" do
         let(:params) { { note: { text: "New Note" } } }
 
         it "responds with HTTP code 415" do
-          expect{put url, params, @env}.not_to change{note.reload.attributes}
+          expect{put url, params: params, env: @env}.not_to change{note.reload.attributes}
           expect(response.status).to eq 415
         end
       end
@@ -298,7 +298,7 @@ describe "Notes API" do
       let(:note) { create(:note, node: node, text: "My Note") }
 
       let(:delete_note) do
-        delete "/api/nodes/#{node.id}/notes/#{note.id}", {}, @env
+        delete "/api/nodes/#{node.id}/notes/#{note.id}", env: @env
       end
 
       it "deletes the note" do
