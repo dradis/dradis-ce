@@ -61,7 +61,7 @@ class NodesController < NestedNodeResourceController
     params[:nodes].each_with_index do |id, index|
       Node.update_all({position: index+1}, {id: id})
     end
-    render nothing: true
+    head :ok
   end
 
   # PUT /node/<id>

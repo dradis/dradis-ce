@@ -52,7 +52,7 @@ class UploadController < ProjectScopedController
 
     # Nothing to do, the client-side JS will poll ./status for updates
     # from now on
-    render nothing: true
+    head :ok
   end
 
   def status
