@@ -12,7 +12,7 @@
     <i class="fa fa-caret-right"></i>
   <% end %>
 
-  <a href="<%= main_app.node_path(node) %>">
+  <a href="<%= main_app.node_path(node) %>" data-node-id="<%= node.id %>">
     <% if node.type_id == Node::Types::HOST %>
       <i class="fa fa-laptop"></i>
     <% end %>
