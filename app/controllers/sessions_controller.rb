@@ -56,10 +56,8 @@ class SessionsController < ApplicationController
   # If the database doesn't contain a valid password, a new one needs to be
   # created.
   def ensure_setup
-    if ::Configuration.shared_password.nil?
-      render action: :not_ready
-    elsif (::Configuration.shared_password == 'improvable_dradis')
-      redirect_to action: :init
+    if (::Configuration.shared_password == 'improvable_dradis')
+      redirect_to setup_path
     end
   end
 

@@ -100,10 +100,38 @@ describe Node do
       expect(node.properties[:test_property]).to eq(80)
     end
 
-    it "does nothing when trying to set a property with the same value it already had" do
-      node.set_property(:test_property, 80)
-      node.set_property(:test_property, 80)
-      expect(node.properties[:test_property]).to eq(80)
+    context "does nothing when adding the same value it already had" do
+      it "ignores same value for simple properties" do
+        node.set_property(:test_property, 80)
+        node.set_property(:test_property, 80)
+        expect(node.properties[:test_property]).to eq(80)
+      end
+
+      it "ignores same value for hash properties (same key type)" do
+        node.set_property(:test_property, {port: 80, protocol: 'tcp'})
+        node.set_property(:test_property, {port: 80, protocol: 'tcp'})
+
+        # Because we're getting a WithIndifferentAccess hash, can't compare
+        # directly.
+        expect(node.properties[:test_property]).to be_a(Hash)
+        expect(node.properties[:test_property][:port]).to eq(80)
+        expect(node.properties[:test_property][:protocol]).to eq('tcp')
+      end
+
+      it "ignores same value for hash properties (different key type)" do
+        # Note that order is important, as internally keys will end up as
+        # strings for DB serialisation. If we start sending Symbols, they
+        # become Strings and by the time we're setting the second property
+        # we'd be comparing strings with strings.
+        node.set_property(:test_property, {'port' => 80, 'protocol' => 'tcp'})
+        node.set_property(:test_property, {port: 80, protocol: 'tcp'})
+
+        # Because we're getting a WithIndifferentAccess hash, can't compare
+        # directly.
+        expect(node.properties[:test_property]).to be_a(Hash)
+        expect(node.properties[:test_property]['port']).to eq(80)
+        expect(node.properties[:test_property]['protocol']).to eq('tcp')
+      end
     end
 
     it "stores value as an array when provided value is an array" do

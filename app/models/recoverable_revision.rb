@@ -4,8 +4,11 @@
 class RecoverableRevision
   attr_reader :object, :version
 
+  delegate :cache_key, to: :version
   delegate :errors, to: :object
 
+
+  # -- Class Methods --------------------------------------------------------
   # Load all 'destroy' revisions which represent an object which is in the
   # trash and can be recovered (or perma-deleted).
   #
@@ -22,14 +25,14 @@ class RecoverableRevision
     # their item_type saved as `Note`, not `Issue`. FIXME - ISSUE/NOTE INHERITANCE
     ids = [Evidence, Note].flat_map do |model|
       table_name = model.table_name
-      PaperTrail::Version.where(event: 'destroy', item_type: model.to_s).
+      versions = PaperTrail::Version.where(event: 'destroy', item_type: model.to_s).
         joins("LEFT JOIN #{table_name} ON item_id=#{table_name}.id").
         where("#{table_name}.id IS NULL"). # avoid showing deleted objects
-        select("min(versions.created_at), versions.id").
-        group("item_id"). # only return one version per deleted item
-        pluck(:id)
+        order(created_at: :desc)
+
+      versions.group_by(&:item_id).map { |_,v| v.first.id }
     end
-    PaperTrail::Version.where(id: ids.uniq).select("versions.*").map do |version|
+    PaperTrail::Version.where(id: ids.uniq).select("versions.*").order('created_at DESC').map do |version|
       new(version)
     end
   end
@@ -38,6 +41,8 @@ class RecoverableRevision
     new(PaperTrail::Version.where(event: :destroy).find_by!(id: id))
   end
 
+
+  # -- Instance Methods -----------------------------------------------------
   def initialize(version)
     @version = version
     @object  = version.reify
@@ -70,17 +75,20 @@ class RecoverableRevision
         issue_object         = issue_revision.reify
         issue_object.node_id = Node.issue_library.id
         issue_object.save!
+        issue_object.touch
         @object.issue_id = issue_object.id
       end
     end
 
     @object.save
+    @object.touch
   end
 
   def type
-    # FIXME - ISSUE/NOTE INHERITANCE
-    if object.is_a?(Note) && object.node_id == Node.issue_library.id
-      'Issue'
+    if object.is_a?(Note)
+      return 'Issue'       if object.node_id == Node.issue_library.id
+      return 'Methodology' if object.node_id == Node.methodology_library.id
+      return 'Note'
     else
       object.class.name.humanize
     end

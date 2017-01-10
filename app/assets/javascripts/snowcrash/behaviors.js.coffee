@@ -81,16 +81,44 @@ jQuery ->
     $(this).find('input:text:visible:first').focus()
 
   $('.js-try-pro').on 'click', ->
-    term    = $(this).data('term')
+    $this   = $(this)
+    term    = $this.data('term')
+    $modal  = $('#try-pro')
     $iframe = $('#try-pro iframe')
-    url     = $iframe.data('url') +
+    url     = $iframe.data('url')
+
+    if $this.data('url')
+      url = $this.data('url')
+      $modal.css('width', '80%')
+      $modal.css('margin-left', '-40%')
+
+      title = switch term
+        when 'training-course' then 'Dradis Training Course'
+        when 'word-reports' then '[<span>Dradis Pro feature</span>] Custom Word reports'
+
+      $modal.find('.modal-header h3').html(title)
+    else
+      $modal.css('width', '700px')
+      $modal.css('margin-left', '-350px')
+      $modal.find('.modal-header h3').text('Dradis Framework editions')
+
+    url = url +
               '?utm_source=ce&utm_medium=app&utm_campaign=try-pro&utm_term=' +
               term
 
     $iframe.attr('src', url)
     $('#try-pro').modal()
 
+    # Wait for the animations to finish before resizing the .modal-body
+    $modal.on 'shown', ->
+      $header      = $modal.find('.modal-header')
+      $body        = $modal.find('.modal-body')
+      modalheight  = parseInt($modal.css('height'))
+      headerheight = parseInt($header.css('height')) + parseInt($header.css('padding-top')) + parseInt($header.css('padding-bottom'))
+      bodypaddings = parseInt($body.css('padding-top')) + parseInt($body.css('padding-bottom'))
+      height       = modalheight - headerheight - bodypaddings - 5 # fudge factor
 
+      $body.css('height', "#{height}px")
 
   # ------------------------------------------------------ Non-plugin behaviors
 

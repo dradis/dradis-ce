@@ -11,7 +11,7 @@
 
     <% if @issues.any? %>
       <div id="issue-table">
-        <%= render 'toolbar', issues: @issues %>
+        <%= render 'toolbar' %>
         <%= render 'table', issues: @issues %>
       </div>
     <% else %>

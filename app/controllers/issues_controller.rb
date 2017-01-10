@@ -1,6 +1,6 @@
 class IssuesController < ProjectScopedController
   before_filter :find_issuelib
-  before_filter :find_issues
+  before_filter :find_issues, except: :destroy
 
   before_filter :find_or_initialize_issue, except: [:import, :index]
   before_filter :find_or_initialize_tags, except: [:destroy]
