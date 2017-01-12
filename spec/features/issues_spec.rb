@@ -51,19 +51,15 @@ describe "Issues pages" do
         end
 
         describe "combine issues", js: true do
-          # TODO: split this in two separated tests
-          it "displays combine button and combine modal when more than one issue selected" do
-            list = ['Issue 1', 'Issue 2']
-            list.each do |title|
-              issuelib.notes.create(
-                category: Category.issue,
-                author: 'rspec',
-                text: "#[Title]#\n#{title}\n\n#[Description]#\nFoobar\n\n"
-              )
-            end
+          before do
+            # create 2 issues
+            create(:evidence)
+            create(:evidence)
 
             visit issues_path
+          end
 
+          it "displays combine button when more than one issue selected" do
             # no modal and no combine uissues visible
             expect(page).to have_selector('#modal_combine_issues', visible: false)
             expect(page).to have_selector('#combine-selected', visible: false)
@@ -73,8 +69,15 @@ describe "Issues pages" do
               checkbox.click
             end
 
-            # then the combine button be visible
+            # then the combine button must be visible
             expect(page).to have_selector('#combine-selected', visible: true)
+          end
+
+          it "displays combine modal when combine button clicked" do
+            # click > 1 issue checkboxes
+            page.all('input.js-multicheck').each do |checkbox|
+              checkbox.click
+            end
 
             # click the combine button
             find('#combine-selected').click
@@ -83,9 +86,49 @@ describe "Issues pages" do
             expect(page).to have_selector('#modal_combine_issues', visible: true)
 
             # check that the form inside the modal has the required fields
-            expect(page).to have_selector("input[name='id']", count: list.length)
+            expect(page).to have_selector("input[name='id']", count: 2)
             expect(page).to have_selector("input[name='new_issue']", 1)
-            expect(page).to have_selector("input[name='sources[]']", count: list.length)
+            expect(page).to have_selector("input[name='sources[]']", count: 2)
+          end
+
+          it "combines issues into an existing one" do
+            # click > 1 issue checkboxes
+            page.all('input.js-multicheck').each do |checkbox|
+              checkbox.click
+            end
+
+            # click the combine button
+            find('#combine-selected').click
+
+            # select first issue as target
+            first("input[name='id']").click
+
+            click_button "Combine"
+
+            expect(page).to have_content("1 issues combined into ")
+          end
+
+          it "combines issues into a new one" do
+            # click > 1 issue checkboxes
+            page.all('input.js-multicheck').each do |checkbox|
+              checkbox.click
+            end
+
+            # click the combine button
+            find('#combine-selected').click
+
+            # new issue form should be still hidden
+            expect(page).to have_selector('#modal_combine_issues .issue_text', visible: false)
+
+            # select first issue as target
+            first("input[name='new_issue']").click
+
+            # new issue form should be visible now
+            expect(page).to have_selector('#modal_combine_issues .issue_text', visible: true)
+
+            click_button "Combine"
+
+            expect(page).to have_content("2 issues combined into ")
           end
         end
       end

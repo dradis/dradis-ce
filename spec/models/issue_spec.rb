@@ -48,34 +48,26 @@ describe Issue do
 
   end
 
-  describe "on combine" do
+  describe ".combine" do
     before do
-      node = Node.create(label: 'Foo')
-
-      @issue1 = Issue.new{ |i| i.node = node }
-      @issue1.save
-
-      @issue2 = Issue.new{ |i| i.node = node }
-      @issue2.save
-
-      @issue1.evidence.create(
-        author: 'rspec',
-        content: "#[Evidence1]#\nIssue 1 evidence",
-        node: node
-      )
-      @issue2.evidence.create(
-        author: 'rspec',
-        content: "#[Evidence2]#\nIssue 2 evidence",
-        node: node
-      )
-
-      @issue1.combine @issue2.id
+      @issue1 = create(:evidence).issue
+      @issue2 = create(:evidence).issue
     end
 
-    it "combines the issues", issues: true do
+    it "combines the issues" do
+      count = @issue1.combine @issue2.id
       @issue1.reload
+
+      expect(count).to eq 1
       expect(@issue1.evidence.length).to eq 2
       expect(Issue.exists?(@issue2.id)).to be false
+    end
+
+    it "doesn't combine an issue with itself" do
+      count = @issue1.combine @issue1.id
+
+      expect(count).to eq 0
+      expect(Issue.exists?(@issue1.id)).to be true
     end
 
   end

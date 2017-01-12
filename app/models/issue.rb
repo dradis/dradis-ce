@@ -75,7 +75,7 @@ class Issue < Note
   end
 
   # Move all Evidence attached to issues with ids in issue_ids
-  # array to this issue.
+  # array to current issue.
   # Then delete those issues without Evidence.
   # Returns the number of issues affected.
   def combine(issue_ids)
