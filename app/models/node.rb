@@ -65,40 +65,24 @@ class Node < ActiveRecord::Base
   # Returns or creates the Node that acts as container for all Issues in a
   # given project
   def self.issue_library
-    if (issue_lib = where(type_id: Node::Types::ISSUELIB).limit(1).first)
-      issue_lib
-    else
-      create(label: 'All issues', type_id: Node::Types::ISSUELIB)
-    end
+    create(label: 'All issues', type_id: Node::Types::ISSUELIB)
   end
 
   # Returns or creates the Node that acts as container for all Methodologies in
   # a given project
   def self.methodology_library
-    if (methodology_lib = where(type_id: Node::Types::METHODOLOGY).limit(1).first)
-      methodology_lib
-    else
-      create(label: 'Methodologies', type_id: Node::Types::METHODOLOGY)
-    end
+    create(label: 'Methodologies', type_id: Node::Types::METHODOLOGY)
   end
 
   # When Upload plugins create new nodes, they'll do so under this parent node
   def self.plugin_parent_node
-    if (parent_node = where(label: ::Configuration.plugin_parent_node).limit(1).first)
-      parent_node
-    else
-      create(label: ::Configuration.plugin_parent_node)
-    end
+    create(label: ::Configuration.plugin_parent_node)
   end
 
   # Security scanner output files uploaded via the Upload Manager use this node
   # as container
   def self.plugin_uploads_node
-    if (uploads_node = where(label: ::Configuration.plugin_uploads_node).limit(1).first)
-      uploads_node
-    else
-      create(label: ::Configuration.plugin_uploads_node)
-    end
+    create(label: ::Configuration.plugin_uploads_node)
   end
 
   # If an item is recovered from the trash, but we can't reassign it to its
