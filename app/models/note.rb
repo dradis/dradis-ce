@@ -24,7 +24,7 @@
 #
 #
 # This behaviour is extensively used by import/export plugins such as WordExport.
-class Note < ActiveRecord::Base
+class Note < ApplicationRecord
   include HasFields
   include RevisionTracking
 

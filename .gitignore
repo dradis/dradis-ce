@@ -8,8 +8,12 @@
 /config/database.yml
 /config/secrets.yml
 /log/*
+/tmp/*
 !/log/.keep
-/tmp/
+!/tmp/.keep
+
+# Ignore Byebug command history file.
+.byebug_history
 
 # RSpec testing
 /spec/.examples.txt

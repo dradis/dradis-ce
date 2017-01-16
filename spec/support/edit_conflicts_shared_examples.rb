@@ -64,7 +64,7 @@ shared_examples "a page which handles edit conflicts" do
       )
 
       old_versions.each do |version|
-        expect(page).to have_no_link(//, record_revision_path(record, version))
+        expect(page).to have_no_link(//, href: record_revision_path(record, version))
       end
     end
 
@@ -96,7 +96,7 @@ shared_examples "a page which handles edit conflicts" do
         end
 
         old_versions.each do |version|
-          expect(page).to have_no_link(//, record_revision_path(record, version))
+          expect(page).to have_no_link(//, href: record_revision_path(record, version))
         end
       end
     end

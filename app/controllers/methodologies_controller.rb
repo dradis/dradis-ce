@@ -1,7 +1,7 @@
 class MethodologiesController < ProjectScopedController
 
-  before_filter :find_methodologylib
-  before_filter :find_methodology, only: [:edit, :update, :update_task, :destroy]
+  before_action :find_methodologylib
+  before_action :find_methodology, only: [:edit, :update, :update_task, :destroy]
 
   def index
     @methodologies = []
