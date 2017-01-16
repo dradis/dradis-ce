@@ -188,14 +188,12 @@ jQuery ->
 
     # Checkbox behavior: select all, show 'btn-group', etc.
     $('#select-all').click ->
-      $('input[type=checkbox].js-multicheck').not(this).prop('checked', $(this).prop('checked'))
+      $('input[type=checkbox].js-multicheck').prop('checked', $(this).prop('checked'))
 
     $('.js-select-all-issues').click (e) ->
       $selectAll = $('#select-all')
       return if e.target == $selectAll[0]
-      isChecked = !$selectAll.prop('checked')
-      $selectAll.prop('checked', isChecked)
-      $('input[type=checkbox].js-multicheck').prop('checked', isChecked)
+      $selectAll.click()
 
     $('input[type=checkbox].js-multicheck').click ->
       _select_all = $(this).prop('checked')
@@ -209,7 +207,6 @@ jQuery ->
 
     $('#select-all, input[type=checkbox].js-multicheck').click ->
       checked = $('input[type=checkbox]:checked.js-multicheck').length
-
       if checked
         $('.js-issue-actions').css('display', 'inline-block')
       else
