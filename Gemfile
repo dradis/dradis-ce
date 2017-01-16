@@ -1,7 +1,12 @@
 source 'https://rubygems.org'
 
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
+  "https://github.com/#{repo_name}.git"
+end
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
+gem 'rails', '~> 5.0.1'
 
 # Use Puma as the app server
 # FIXME: required for Rails 5 ActionCable
@@ -128,7 +133,7 @@ end
 # ----------------------------------------------------- Development and Testing
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem 'web-console'
+  gem 'web-console', '>= 3.3.0'
   # guard-rspec depends on `guard`, which depends on `listen`, but versions of
   # listen higher than 3.1.1 require Ruby version >= 2.2.3 (we're currently on
   # 2.2.2). Restrict the version of `listen` to prevent `guard-rspec`
