@@ -6,7 +6,7 @@
 #   * If they start with @ they are meant to ‘assign ownership’ of the model (e.g. @daniel)
 #   * If they start with ! they define their own colour (e.g. !red needs to be coloured red, !4444dd should be a dark shade of blue).
 #     - We require a 6-digit hex code (no 3-digit shortcut)
-class Tag < ActiveRecord::Base
+class Tag < ApplicationRecord
   # -- Relationships ----------------------------------------------------------
   has_many :taggings, dependent: :destroy
 

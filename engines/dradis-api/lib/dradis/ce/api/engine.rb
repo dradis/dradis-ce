@@ -20,7 +20,7 @@ module Dradis::CE::API
     end
 
     initializer 'dradis-api.insert_middleware' do |app|
-      app.config.middleware.insert_before ActionDispatch::ParamsParser, "Dradis::CE::API::CatchJsonParseErrors"
+      app.config.middleware.insert_before Warden::Manager, Dradis::CE::API::CatchJsonParseErrors
     end
 
     initializer 'dradis-api.mount_engine' do

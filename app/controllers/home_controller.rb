@@ -1,5 +1,5 @@
 class HomeController < ProjectScopedController
-  skip_before_filter :set_current_project, only: [:markup_help, :textilize]
+  skip_before_action :set_current_project, only: [:markup_help, :textilize]
 
   def index
     redirect_to summary_path

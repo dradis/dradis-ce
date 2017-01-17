@@ -1,4 +1,4 @@
-class Evidence < ActiveRecord::Base
+class Evidence < ApplicationRecord
   include HasFields
   include RevisionTracking
 

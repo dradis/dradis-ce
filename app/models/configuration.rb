@@ -1,7 +1,7 @@
 # This class is used to store configuration options in the back-end database.
 # Each Configuration object has a :name and a :value. Some configuration
 # parameters can be accessed through the helper methods provided in this class.
-class Configuration < ActiveRecord::Base
+class Configuration < ApplicationRecord
   # -- Relationships --------------------------------------------------------
 
   # -- Callbacks ------------------------------------------------------------
