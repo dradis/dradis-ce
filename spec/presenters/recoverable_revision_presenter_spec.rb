@@ -17,12 +17,11 @@ RSpec.describe RecoverableRevisionPresenter do
 
   describe 'for a methodology' do
     before do
-      methodology = Methodology.find('sample')
-      methodology.name = 'my_methodology'
+      methodology_content = File.read(Rails.root.join('spec/fixtures/files/methodologies/webapp.xml'))
 
       note = Node.methodology_library.notes.create(
         author:  'methodology builder',
-        text:     methodology.content,
+        text:     methodology_content,
         category: Category.default,
       )
       note.destroy
@@ -32,7 +31,7 @@ RSpec.describe RecoverableRevisionPresenter do
     end
 
     it 'has the correct title' do
-      expect(@presenter.send(:title)).to eq revision_title_tag('my_methodology')
+      expect(@presenter.send(:title)).to eq revision_title_tag('Webapp')
     end
 
     it 'has the correct type' do
