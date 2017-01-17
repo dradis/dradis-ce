@@ -12,13 +12,6 @@ describe "issue trash" do
     @issue = create(:issue)
     edit_and_delete_issue "issue 1"
 
-    # this test saves multiple versions of the issue. If the DB doesn't store
-    # datetimes with enough precision, and the spec runs fast enough, it might
-    # not be able to tell which issue was created first, meaning the spec will
-    # fail randomly (as it was previously doing on CI).  Manually overriding
-    # the created_at timestamp prevents this.
-    @issue.versions.last.update!(created_at: 5.seconds.ago)
-
     visit "/trash"
     click_link 'Recover'
 
