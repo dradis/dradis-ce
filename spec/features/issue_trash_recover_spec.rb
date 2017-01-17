@@ -15,8 +15,6 @@ describe "issue trash" do
     visit "/trash"
     click_link 'Recover'
 
-    sleep(1)
-
     @issue = Note.find(@issue.id)
     edit_and_delete_issue "issue 2"
 

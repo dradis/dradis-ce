@@ -27,8 +27,10 @@ class RecoverableRevision
       table_name = model.table_name
       versions = PaperTrail::Version.where(event: 'destroy', item_type: model.to_s).
         joins("LEFT JOIN #{table_name} ON item_id=#{table_name}.id").
-        where("#{table_name}.id IS NULL"). # avoid showing deleted objects
-        order(created_at: :desc)
+        where("#{table_name}.id IS NULL") # avoid showing deleted objects
+
+      # Sort using the version's created_at attribute
+      versions = versions.to_a.sort_by { |v| v.created_at }.reverse
 
       versions.group_by(&:item_id).map { |_,v| v.first.id }
     end
