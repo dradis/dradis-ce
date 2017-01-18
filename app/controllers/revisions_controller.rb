@@ -1,6 +1,6 @@
 class RevisionsController < ProjectScopedController
-  before_filter :load_node, except: [ :trash, :recover ]
-  before_filter :load_record, except: [ :trash, :recover ]
+  before_action :load_node, except: [ :trash, :recover ]
+  before_action :load_record, except: [ :trash, :recover ]
 
   def index
     redirect_to action: :show, id: @record.versions.where(event: 'update').last.try(:id) || 0

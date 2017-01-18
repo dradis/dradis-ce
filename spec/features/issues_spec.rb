@@ -323,11 +323,11 @@ describe "Issues pages" do
         end
 
         describe "add evidence", js: true do
-          before {
+          before do
             @node = Node.create!(label: '192.168.0.1')
             visit issue_path(@issue)
             click_link('Evidence')
-          }
+          end
 
           it "displays evidence form when add link clicked" do
             expect(page).to have_selector('#js-add-evidence-container', visible: false)
@@ -370,11 +370,7 @@ describe "Issues pages" do
             find('.js-add-evidence').click
             select @node.label, from: 'Create new nodes under'
             fill_in 'Paste list of nodes', with: "aaaa\nbbbb\ncccc"
-            expect{click_button('Save Evidence')}.to change{Node.count}.by(3)
-
-            Node.order("created_at ASC").last(3).each do |node|
-              expect(node.parent).to eq @node
-            end
+            expect{click_button('Save Evidence')}.to change{@node.children.count}.by(3)
           end
         end
       end
