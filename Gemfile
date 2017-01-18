@@ -175,11 +175,6 @@ group :test do
   gem 'capybara'
   gem 'poltergeist'
   gem 'guard-rspec', require: false
-  # guard-rspec depends on `guard`, which depends on `listen`, but versions of
-  # listen higher than 3.1.1 require Ruby version >= 2.2.3 (we're currently on
-  # 2.2.2). Restrict the version of `listen` to prevent `guard-rspec`
-  # introducing an incompatible dependency:
-  gem 'listen', '<= 3.1.1'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'timecop'
 end
