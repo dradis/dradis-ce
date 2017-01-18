@@ -81,8 +81,8 @@ ActiveRecord::Schema.define(version: 20160629084016) do
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
-    t.integer  "taggable_id"
     t.string   "taggable_type"
+    t.integer  "taggable_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["tag_id", "taggable_id", "taggable_type"], name: "index_taggings_on_tag_id_and_taggable_id_and_taggable_type", unique: true
