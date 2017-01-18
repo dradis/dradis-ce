@@ -8,7 +8,7 @@ PATH
 PATH
   remote: ../dradis-brakeman/
   specs:
-    dradis-brakeman (3.0.0)
+    dradis-brakeman (3.0.1)
       dradis-plugins (~> 3.2)
 
 PATH
@@ -246,7 +246,6 @@ GEM
     minitest (5.10.1)
     mono_logger (1.1.0)
     multi_json (1.12.1)
-    mustermann (1.0.0.beta2)
     mysql2 (0.3.18)
     nenv (0.3.0)
     nio4r (1.2.1)
