@@ -89,7 +89,7 @@ class Issue < Note
     if issue_ids.any?
       self.transaction do
         Evidence.where(issue_id: issue_ids).update_all(issue_id: id)
-        combined = Issue.delete_all(id: issue_ids)
+        combined = Issue.where(id: issue_ids).delete_all
       end
     end
 
