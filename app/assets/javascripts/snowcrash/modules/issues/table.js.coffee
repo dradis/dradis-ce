@@ -44,6 +44,10 @@ class IssueTable
       if that.selectedColumns.indexOf($link.data('column')) > -1
         $link.find('input').prop('checked', true)
 
+  resetToolbar: =>
+    $('.js-issue-actions').css('display', 'none')
+    $('#combine-selected').css('display', 'none')
+    $('#select-all').prop('checked', false)
 
   onColumnPickerClick: (event) =>
     $target = $(event.currentTarget)
@@ -66,12 +70,12 @@ class IssueTable
     @showHideColumns()
     false
 
-  onDeleteSelected: (element, answer) ->
+  onDeleteSelected: (element, answer) =>
     if answer
+      that = this
       $('.js-tbl-issues').find('input[type=checkbox]:checked.js-multicheck').each ->
         $row = $(this).parent().parent()
         $($row.find('td')[2]).replaceWith("<td class=\"loading\">Deleting...</td>")
-        $that = $(this)
         $.ajax $(this).data('url'), {
           method: 'DELETE'
           dataType: 'json'
@@ -83,8 +87,8 @@ class IssueTable
             # Delete link from the sidebar
             $("#issue_#{data.id}").remove()
 
-            if $('input[type=checkbox]:checked').length == 0
-              $('.js-issue-actions').css('display', 'none')
+            if $('input[type=checkbox]:checked.js-multicheck').length == 0
+              that.resetToolbar()
 
           error: (foo,bar,foobar) ->
             $($row.find('td')[2]).replaceWith("<td class='text-error'>Please try again</td>")
@@ -101,7 +105,6 @@ class IssueTable
     $('.js-tbl-issues').find('input[type=checkbox]:checked.js-multicheck').each ->
       $this = $(this)
 
-      $this.prop('checked', false)
       $row = $this.parent().parent()
       $($row.find('td')[that.tagColumnIndex]).replaceWith("<td class=\"loading\">Loading...</td>")
 
@@ -114,12 +117,13 @@ class IssueTable
         data: data,
         dataType: 'json',
         success: (data) ->
+          $that.prop('checked', false)
           issue_id = $that.val()
 
           $($row.find('td')[that.tagColumnIndex]).replaceWith(data.tag_cell)
           $("#issues #issue_#{issue_id}").replaceWith(data.issue_link)
-          if $('input[type=checkbox]:checked').length == 0
-            $('.js-issue-actions').css('display', 'none')
+          if $('input[type=checkbox]:checked.js-multicheck').length == 0
+            that.resetToolbar()
 
         error: (foo,bar,foobar) ->
           $($row.find('td')[that.tagColumnIndex]).replaceWith("<td class='text-error'>Please try again</td>")
@@ -196,6 +200,7 @@ jQuery ->
 
       $('input[type=checkbox].js-multicheck').prop('checked', isChecked)
 
+    # when selecting standalone issues, check if we must also check 'select all'
     $('input[type=checkbox].js-multicheck').click ->
       _select_all = $(this).prop('checked')
 
@@ -206,6 +211,7 @@ jQuery ->
 
       $('.js-select-all-issues > input[type=checkbox]').prop('checked', _select_all)
 
+    # when selecting issues or 'select all', refresh toolbar buttons
     $('.js-select-all-issues, input[type=checkbox].js-multicheck').click ->
       checked = $('input[type=checkbox]:checked.js-multicheck').length
       if checked
