@@ -142,10 +142,12 @@ class IssueTable
       name = $($row.find('td')[1]).find('a').html()
       issues_to_combine.push({id: id, name: name})
 
+    issues_to_combine.sort (a, b) -> b.id - a.id
+    checked = true
     for issue in issues_to_combine
-      html =  "<div class='radio'><label><input type='radio' name='id' value='#{issue.id}' />#{issue.name}</label></div>"
+      html =  "<div class='radio'><label><input type='radio' #{if checked then 'checked' else ''} name='id' value='#{issue.id}' />#{issue.name}</label></div>"
       html += "<input type='hidden' name='sources[]' value='#{issue.id}' />"
-      $('#modal_combine_issues #issues_to_combine').append(html)
+      $('#modal_combine_issues #issues_to_combine').prepend(html)
 
     $("#modal_combine_issues").modal()
 

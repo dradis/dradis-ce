@@ -5,12 +5,17 @@
     <h3 id="myModalLabel">Combine issues</h3>
   </div>
   <div class="modal-body">
-    <p>These are the issues to be combined. Please choose the issue you want to merge the others into:
+    <p>This is a list of the issues to be combined, please select the issue to combine the others into.
+    <p><mark>Please remember that only the selected issue will prevail, the others will be deleted</mark>
+    <p>By <strong>default the oldest issue is selected</strong>. You may also <strong>combine issues into a new one</strong>
+      by selecting the last option.
+
+    <p>All issues evidences will be moved to the selected issue.
     <div id="issues_to_combine"></div>
     <p>Or:
     <div class="radio">
       <%= label_tag do %>
-        <%= radio_button_tag :new_issue, :new, true %>
+        <%= radio_button_tag :new_issue, :new %>
           Combine the others into a new issue
       <% end %>
     </div>
