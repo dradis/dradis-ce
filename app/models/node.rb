@@ -65,24 +65,24 @@ class Node < ApplicationRecord
   # Returns or creates the Node that acts as container for all Issues in a
   # given project
   def self.issue_library
-    create(label: 'All issues', type_id: Node::Types::ISSUELIB)
+    find_or_create_by(label: 'All issues', type_id: Node::Types::ISSUELIB)
   end
 
   # Returns or creates the Node that acts as container for all Methodologies in
   # a given project
   def self.methodology_library
-    create(label: 'Methodologies', type_id: Node::Types::METHODOLOGY)
+    find_or_create_by(label: 'Methodologies', type_id: Node::Types::METHODOLOGY)
   end
 
   # When Upload plugins create new nodes, they'll do so under this parent node
   def self.plugin_parent_node
-    create(label: ::Configuration.plugin_parent_node)
+    find_or_create_by(label: ::Configuration.plugin_parent_node)
   end
 
   # Security scanner output files uploaded via the Upload Manager use this node
   # as container
   def self.plugin_uploads_node
-    create(label: ::Configuration.plugin_uploads_node)
+    find_or_create_by(label: ::Configuration.plugin_uploads_node)
   end
 
   # If an item is recovered from the trash, but we can't reassign it to its
