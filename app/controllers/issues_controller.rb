@@ -97,6 +97,7 @@ class IssuesController < ProjectScopedController
   def combine
     # create new issue if existing issue not given
     if !params[:id]
+      @issue.author ||= current_user.email
       if @issue.save && @issue.update_attributes(issue_params)
         track_created(@issue)
         tag_issue_from_field_content(@issue)

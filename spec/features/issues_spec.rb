@@ -125,6 +125,8 @@ describe "Issues pages" do
             click_button "Combine"
 
             expect(page).to have_content("2 issues combined into ")
+
+            expect(Issue.last.author).to eq(@logged_in_as.email)
           end
         end
       end
