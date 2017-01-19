@@ -149,8 +149,6 @@ class IssueTable
 
     $("#modal_combine_issues").modal()
 
-    # TODO: $($row.find('td')[2]).replaceWith("<td class=\"loading\">Combining...</td>")
-
   # when the combine modal is visible, depending on which radio is clicked,
   # hide/show the new issue text field
   onCombineTypeChosen: (event) ->

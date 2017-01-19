@@ -65,9 +65,7 @@ describe "Issues pages" do
             expect(page).to have_selector('#combine-selected', visible: false)
 
             # click > 1 issue checkboxes
-            page.all('input.js-multicheck').each do |checkbox|
-              checkbox.click
-            end
+            page.all('input.js-multicheck').each(&:click)
 
             # then the combine button must be visible
             expect(page).to have_selector('#combine-selected', visible: true)
@@ -75,9 +73,7 @@ describe "Issues pages" do
 
           it "displays combine modal when combine button clicked" do
             # click > 1 issue checkboxes
-            page.all('input.js-multicheck').each do |checkbox|
-              checkbox.click
-            end
+            page.all('input.js-multicheck').each(&:click)
 
             # click the combine button
             find('#combine-selected').click
