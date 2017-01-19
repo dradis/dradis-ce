@@ -12,9 +12,9 @@ class UploadController < ProjectScopedController
   # UPGRADE
   # include Plugins::Upload
 
-  before_filter :find_uploaders
-  before_filter :find_uploads_node, only: [:create, :parse]
-  before_filter :validate_uploader, only: [:create, :parse]
+  before_action :find_uploaders
+  before_action :find_uploads_node, only: [:create, :parse]
+  before_action :validate_uploader, only: [:create, :parse]
 
   def index
     @last_job = Log.maximum(:uid) || 1
@@ -52,7 +52,7 @@ class UploadController < ProjectScopedController
 
     # Nothing to do, the client-side JS will poll ./status for updates
     # from now on
-    render nothing: true
+    head :ok
   end
 
   def status

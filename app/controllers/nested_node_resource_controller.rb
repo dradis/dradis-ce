@@ -1,7 +1,7 @@
 # A controller for pages related to a Node and its notes and evidence.
 class NestedNodeResourceController < ProjectScopedController
 
-  before_filter :find_or_initialize_node
+  before_action :find_or_initialize_node
 
   layout 'nested_node_resource'
   protected

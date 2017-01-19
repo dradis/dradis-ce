@@ -1,8 +1,8 @@
 class EvidenceController < NestedNodeResourceController
 
-  before_filter :find_or_initialize_evidence, except: [ :index, :create_multiple ]
-  before_filter :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
-  skip_before_filter :find_or_initialize_node, only: [:create_multiple]
+  before_action :find_or_initialize_evidence, except: [ :index, :create_multiple ]
+  before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
+  skip_before_action :find_or_initialize_node, only: [:create_multiple]
 
   def show
     @issue      = @evidence.issue

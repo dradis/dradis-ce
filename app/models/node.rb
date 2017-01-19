@@ -4,7 +4,7 @@
 #
 # Each Node has a :parent node and a :label. Nodes can also have many
 # Attachment objects associated with them.
-class Node < ActiveRecord::Base
+class Node < ApplicationRecord
   include NodeProperties
 
   module Types

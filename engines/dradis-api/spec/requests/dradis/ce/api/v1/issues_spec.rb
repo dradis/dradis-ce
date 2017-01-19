@@ -8,31 +8,31 @@ describe "Issues API" do
   context "as unauthenticated user" do
     describe "GET /api/issues" do
       it "throws 401" do
-        get "/api/issues", {}, @env
+        get "/api/issues", env: @env
         expect(response.status).to eq(401)
       end
     end
     describe "GET /api/issues/:id" do
       it "throws 401" do
-        get "/api/issues/1", {}, @env
+        get "/api/issues/1", env: @env
         expect(response.status).to eq(401)
       end
     end
     describe "POST /api/issues" do
       it "throws 401" do
-        post "/api/issues", {}, @env
+        post "/api/issues", env: @env
         expect(response.status).to eq(401)
       end
     end
     describe "PUT /api/issues/:id" do
       it "throws 401" do
-        put "/api/issues/1", {}, @env
+        put "/api/issues/1", env: @env
         expect(response.status).to eq(401)
       end
     end
     describe "DELETE /api/issues/:id" do
       it "throws 401" do
-        delete "/api/issues/1", {}, @env
+        delete "/api/issues/1", env: @env
         expect(response.status).to eq(401)
       end
     end
@@ -45,7 +45,7 @@ describe "Issues API" do
       before(:each) do
         @issues = create_list(:issue, 10).sort_by(&:title)
 
-        get "/api/issues", {}, @env
+        get "/api/issues", env: @env
         expect(response.status).to eq(200)
 
         @retrieved_issues = JSON.parse(response.body)
@@ -75,7 +75,7 @@ describe "Issues API" do
       before(:each) do
         @issue = create(:issue, text: "#[a]#\nb\n\n#[c]#\nd\n\n#[e]#\nf\n\n")
 
-        get "/api/issues/#{ @issue.id }", {}, @env
+        get "/api/issues/#{ @issue.id }", env: @env
         expect(response.status).to eq(200)
 
         @retrieved_issue = JSON.parse(response.body)
@@ -95,7 +95,7 @@ describe "Issues API" do
     describe "POST /api/issues" do
       let(:valid_params) { { issue: { text: "#[Title]#\nRspec issue\n\n#[c]#\nd\n\n#[e]#\nf\n\n" } } }
       let(:valid_post) do
-        post "/api/issues", valid_params.to_json, @env.merge("CONTENT_TYPE" => 'application/json')
+        post "/api/issues", params: valid_params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
       end
 
       it "creates a new issue" do
@@ -110,14 +110,14 @@ describe "Issues API" do
 
       it "throws 415 unless JSON is sent" do
         params = { issue: { name: "Bad Issue" } }
-        post "/api/issues", params, @env
+        post "/api/issues", params: params, env: @env
         expect(response.status).to eq(415)
       end
 
       it "throws 422 if issue is invalid" do
         params = { issue: { text: "A"*(65535+1) } }
         expect {
-          post "/api/issues", params.to_json, @env.merge("CONTENT_TYPE" => 'application/json')
+          post "/api/issues", params: params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
         }.not_to change { Issue.count }
         expect(response.status).to eq(422)
       end
@@ -127,7 +127,7 @@ describe "Issues API" do
       let(:issue) { create(:issue, text: "Existing Issue") }
       let(:valid_params) { { issue: { text: "Updated Issue" } } }
       let(:valid_put) do
-        put "/api/issues/#{issue.id}", valid_params.to_json, @env.merge("CONTENT_TYPE" => 'application/json')
+        put "/api/issues/#{issue.id}", params: valid_params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
       end
 
       it "updates a issue" do
@@ -146,13 +146,13 @@ describe "Issues API" do
 
       it "throws 415 unless JSON is sent" do
         params = { issue: { text: "Bad issuet" } }
-        put "/api/issues/#{ issue.id }", params, @env
+        put "/api/issues/#{ issue.id }", params: params, env: @env
         expect(response.status).to eq(415)
       end
 
       it "throws 422 if issue is invalid" do
         params = { issue: { text: "B"*(65535+1) } }
-        put "/api/issues/#{ issue.id }", params.to_json, @env.merge("CONTENT_TYPE" => 'application/json')
+        put "/api/issues/#{ issue.id }", params: params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
         expect(response.status).to eq(422)
       end
     end
@@ -160,7 +160,7 @@ describe "Issues API" do
     describe "DELETE /api/issue/:id" do
       let(:issue) { create(:issue) }
 
-      let(:delete_issue) { delete "/api/issues/#{ issue.id }", {}, @env }
+      let(:delete_issue) { delete "/api/issues/#{ issue.id }", env: @env }
 
       it "deletes a issue" do
         delete_issue

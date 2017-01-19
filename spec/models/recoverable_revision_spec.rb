@@ -89,10 +89,6 @@ describe RecoverableRevision do
     describe "for items which have been recovered and deleted multiple times" do
       before do
         (3..0).each do |i|
-          # Hack: manually update the timestamps otherwise all the different
-          # versions will be created within 1 second of each other, SQLite
-          # won't know which way to order them, and the test will fail.
-          @deleted_note.versions.last.update_attributes(created_at: i.minutes.ago)
           recoverable = described_class.find(@deleted_note.versions.last.id)
           recoverable.recover
           recoverable.object.destroy
