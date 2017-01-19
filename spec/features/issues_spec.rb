@@ -89,9 +89,7 @@ describe "Issues pages" do
 
           it "combines issues into an existing one" do
             # click > 1 issue checkboxes
-            page.all('input.js-multicheck').each do |checkbox|
-              checkbox.click
-            end
+            page.all('input.js-multicheck').each(&:click)
 
             # click the combine button
             find('#combine-selected').click
@@ -106,9 +104,7 @@ describe "Issues pages" do
 
           it "combines issues into a new one" do
             # click > 1 issue checkboxes
-            page.all('input.js-multicheck').each do |checkbox|
-              checkbox.click
-            end
+            page.all('input.js-multicheck').each(&:click)
 
             # click the combine button
             find('#combine-selected').click
