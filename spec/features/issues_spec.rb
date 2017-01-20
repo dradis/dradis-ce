@@ -124,6 +124,21 @@ describe "Issues pages" do
 
             expect(Issue.last.author).to eq(@logged_in_as.email)
           end
+
+          let(:submit_form) {
+            # click > 1 issue checkboxes
+            page.all('input.js-multicheck').each(&:click)
+
+            # click the combine button
+            find('#combine-selected').click
+
+            # select first issue as target
+            first("input[name='id']").click
+
+            click_button "Combine"
+          }
+
+          include_examples "deleted item is listed in Trash", :issue
         end
       end
 
