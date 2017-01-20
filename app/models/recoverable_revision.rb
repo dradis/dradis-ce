@@ -28,7 +28,14 @@ class RecoverableRevision
       versions = PaperTrail::Version.where(event: 'destroy', item_type: model.to_s).
         joins("LEFT JOIN #{table_name} ON item_id=#{table_name}.id").
         where("#{table_name}.id IS NULL"). # avoid showing deleted objects
-        order(created_at: :desc)
+        # There is a chance the same model has been deleted and restored a
+        # number of times, we need a way to guarantee that we're going to
+        # restore the most recent version of the model in the versions table.
+        # Since the ID value of the table auto-increments, that's a good way to
+        # sort the records. An alternative we considered was to use :created_at
+        # but this could end up in a tie if two records had the same timestamp
+        # value (only precise to the second).
+        order(id: :desc)
 
       versions.group_by(&:item_id).map { |_,v| v.first.id }
     end
