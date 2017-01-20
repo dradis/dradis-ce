@@ -8,8 +8,7 @@ describe "evidence" do
   before do
     login_to_project_as_user
     @node = create(:node)
-    # Create IssueLibrary node in this project
-    Node.create(label: 'All issues', type_id: Node::Types::ISSUELIB)
+    Node.issue_library
   end
 
   describe "show page" do

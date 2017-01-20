@@ -76,7 +76,7 @@ describe Node do
 
   it "returns the ISSUELIB node if one exists" do
     Node.destroy_all
-    node = create(:node, type_id: Node::Types::ISSUELIB)
+    node = Node.issue_library
     issuelib = Node.issue_library
     expect(issuelib).to eq(node)
     node.destroy

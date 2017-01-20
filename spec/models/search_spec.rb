@@ -219,8 +219,8 @@ describe Search do
 
     it "filters excludes issues and methodology type" do
       node = create(:node, label: "First node")
-      create(:node, label: "Issue node", type_id: Node::Types::ISSUELIB)
-      create(:node, label: "Method node", type_id: Node::Types::METHODOLOGY)
+      Node.issue_library
+      Node.methodology_library
 
       results = described_class.new(query: 'node', scope: :nodes).results
       expect(results.size).to eq 1
