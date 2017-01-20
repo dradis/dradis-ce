@@ -27,6 +27,8 @@
   margin-bottom: 2em;
   .list-item {
     line-height: 2em;
+    padding-left: 1ex;
+
     &.note-editor{
       border-bottom: 0;
       .form-actions {
@@ -37,6 +39,18 @@
 
     p {
       line-height: 1.5em;
+    }
+
+    .list-item-edit {
+      padding-right: 1ex;
+      visibility: hidden;
+    }
+
+    &:hover {
+      background-color: lighten(#ccc,10%);
+      .list-item-edit {
+        visibility: visible;
+      }
     }
   }
 

@@ -1,4 +1,9 @@
-<%= content_tag :div, id: "#{dom_id(note)}_link", class: ('list-item' << ' active' if (request.format.html? and @note == note)) do %>
+<%
+  item_css = ['list-item']
+  item_css << ' active' if (request.format.html? and @note == note)
+%>
+
+<%= content_tag :div, id: "#{dom_id(note)}_link", class: item_css.join do %>
   <div class="expansion-container">
     <%= link_to node_note_path(@node, note) do %>
       <i class="fa fa-file-text"></i>

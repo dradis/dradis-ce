@@ -1,4 +1,9 @@
-<%= content_tag :div, id: "#{dom_id(evidence)}_link", class: ('list-item' << ' active' if (request.format.html? and @evidence == evidence)) do %>
+<%
+  item_css = ['list-item']
+  item_css << ' active' if (request.format.html? and @evidence == evidence)
+%>
+
+<%= content_tag :div, id: "#{dom_id(evidence)}_link", class: item_css.join do %>
   <div class="expansion-container">
     <%= link_to node_evidence_path(@node, evidence) do %>
       <% if tag = evidence.issue.tags.first %>

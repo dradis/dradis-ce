@@ -1,8 +1,17 @@
-<%= content_tag :div, id: dom_id(issue), class: ('list-item' << ' active' if (request.format.html? and @issue == issue)) do %>
+<%
+  item_css = ['list-item']
+  item_css << ' active' if (request.format.html? and @issue == issue)
+%>
+
+<%= content_tag :div, id: dom_id(issue), class: item_css.join do %>
   <div class="expansion-container">
     <%= link_to issue, class: 'view-toggle-off', data: {target: "##{dom_id(issue)}_content"} do %>
       <%= tag_icon_for(issue) %>
       <%= issue.title %>
+      <%= link_to edit_issue_path(issue), class: 'pull-right list-item-edit' do %>
+        <i class="fa fa-edit"></i> Edit
+      <% end %>
+
     <% end %>
   </div>
 <% end %>
