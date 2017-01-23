@@ -346,7 +346,11 @@ body {
 
           .actions {
             color: $grayLight;
-            font-size: 85%;
+            font-size: 80%;
+
+            a {
+              padding: 0 4px;
+            }
           }
         }
 

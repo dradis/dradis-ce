@@ -31,8 +31,16 @@
       <div class="inner note-text-inner">
         <h3>Issue information -
           <span class="actions">
-            <%= link_to 'edit', edit_issue_path(@issue), class: 'view-toggle-off editor-toggle-off' %>
-            <%= link_to 'delete', @issue, class: 'text-error', data: { confirm: 'Are you sure?' }, method: :delete %> -
+            <%= link_to edit_issue_path(@issue),
+                  class: 'view-toggle-off editor-toggle-off' do %>
+              <i class="fa fa-pencil"></i> Edit
+            <% end %>
+            <%= link_to @issue,
+                  class: 'text-error',
+                  data: { confirm: 'Are you sure?' },
+                  method: :delete do %>
+              <i class="fa fa-trash"></i> Delete
+            <% end %> -
             <%= tag_and_name_for(@issue) %>
           </span>
           <small class="pull-right">Author: <%= @issue.author %></small>
