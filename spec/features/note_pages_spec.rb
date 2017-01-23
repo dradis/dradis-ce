@@ -38,7 +38,7 @@ describe "note pages" do
     it_behaves_like "a page with an activity feed"
 
     describe "clicking 'delete'" do
-      let(:submit_form) { click_link "delete" }
+      let(:submit_form) { within('.note-text-inner') { click_link "Delete" } }
 
       it "deletes the note and redirects to the node's page" do
         id = @note.id
