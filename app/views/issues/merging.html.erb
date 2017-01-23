@@ -29,6 +29,10 @@
             <%= label_tag do %>
               <%= radio_button_tag 'id', issue.id, checked %>
               <%= issue.title %>
+              <a href="#" class="expand"><small class="text-success">expand</small></a>
+              <div class="well" style="display: none">
+                <%= markup(issue.text) %>
+              </div>
             <% end %>
           </div>
           <% checked = false %>
