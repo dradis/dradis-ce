@@ -9,7 +9,7 @@
       <i class="fa fa-pencil"></i> Edit
     <% end %>
     <%= link_to issue, class: 'view-toggle-off', data: {target: "##{dom_id(issue)}_content"} do %>
-      <%= tag_icon_for(issue, 'issue-icon') %>
+      <%= tag_icon_for(issue, 'list-item-icon') %>
       <%= issue.title %>
       <!--
       <%= link_to edit_issue_path(issue), class: 'pull-right list-item-edit' do %>
