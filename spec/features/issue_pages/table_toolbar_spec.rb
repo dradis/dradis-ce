@@ -40,11 +40,11 @@ describe "issue table" do
         expect(find('.js-issue-actions')).to be_visible
       end
 
-      it "displays combine button if more than 1 issues clicked" do
+      it "displays merge button if more than 1 issues clicked" do
         check "issue_#{@issue1.id}"
-        expect(find('#combine-selected', visible: :all)).to_not be_visible
+        expect(page).to have_selector('#merge-selected', visible: false)
         check "issue_#{@issue2.id}"
-        expect(find('#combine-selected')).to be_visible
+        expect(page).to have_selector('#merge-selected', visible: true)
       end
 
       it "resets toolbar after applying tags" do

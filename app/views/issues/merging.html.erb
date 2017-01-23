@@ -1,0 +1,52 @@
+<% content_for :title, 'Merge issues' %>
+
+<% content_for :sidebar do %>
+  <%= render 'sidebar'%>
+<% end %>
+
+<div id="issues_editor">
+  <div class="inner note-text-inner">
+    <h3>Merging <%= @issues.count %> issues</h3>
+
+    <%= simple_form_for Issue.new, url: merge_issues_path, method: 'post' do |f| %>
+      <p class="text-warning">WARNING: Only the target issue will prevail, the others will be deleted.</mark>
+      <p>All issues evidences will be moved to the selected issue.
+      <div class="row-fluid">
+        <div class="span6">
+          <p class="merge_option">Select existing issue to merge the others into.
+          <p class="merge_option" style="display: none">Merge issues into a new issue.
+        </div>
+        <div id="change_merge_option" class="span6 pull-right">
+          <a class="merge_option" href="#">Or click here to merge into a new issue</a>
+          <a class="merge_option" style="display: none" href="#">Or click here to merge into a existing issue</a>
+        </div>
+      </div>
+
+      <div class="merge_option">
+        <% checked = true %>
+        <% @issues.each do |issue| %>
+          <div class="radio">
+            <%= label_tag do %>
+              <%= radio_button_tag 'id', issue.id, checked %>
+              <%= issue.title %>
+            <% end %>
+          </div>
+          <% checked = false %>
+        <% end %>
+      </div>
+
+      <div id="new_issue" style="display: none" class="merge_option">
+        <%= f.input :text, label: false, input_html: { class: 'textile', data: { preview_url: preview_path, help_url: markup_path } } %>
+      </div>
+
+      <% @issues.each do |issue| %>
+        <%= hidden_field_tag 'sources[]', issue.id %>
+      <% end %>
+
+      <div class="form-actions">
+        <%= f.button :submit, 'Merge issues', class: 'btn btn-dradispro' %> or
+        <%= link_to 'Cancel', issues_path, class: 'cancel-link' %>
+      </div>
+    <% end %>
+  </div>
+</div>

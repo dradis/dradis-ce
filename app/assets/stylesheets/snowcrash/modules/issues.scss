@@ -111,7 +111,7 @@ body.issues.index {
         text-align: left;
       }
 
-      #combine-selected {
+      #merge-selected {
         display: none; // even when issue-actions becomes visible, keep this one hidden
       }
     }
@@ -131,14 +131,6 @@ body.issues.index {
     }
   }
   //------------------------------------------------------------- /Issues table
-
-  //------------------------------------------------------------ Combine modal
-  #modal_combine_issues {
-    .issue_text {
-      display: none;
-    }
-  }
-  //----------------------------------------------------------- /Combine modal
 }
 
 body.issues.new, body.issues.edit {

@@ -20,4 +20,12 @@
   </div>
 </div>
 
-<%= render partial: 'issues/modals/combine' %>
+<%
+  # an empty hidden form that is filled with js
+  # to post the ids we want to merge
+%>
+<%= simple_form_for Issue.new,
+                    url: merging_issues_path,
+                    method: 'post',
+                    html: {id: 'merge_form', class: 'hide'} do |f| %>
+<% end %>

@@ -1,8 +1,8 @@
 class IssuesController < ProjectScopedController
   before_action :find_issuelib
-  before_action :find_issues, except: :destroy
+  before_action :find_issues, except: [:destroy, :merging]
 
-  before_action :find_or_initialize_issue, except: [:import, :index]
+  before_action :find_or_initialize_issue, except: [:import, :index, :merging]
   before_action :find_or_initialize_tags, except: [:destroy]
   before_action :find_note_template, only: [:new]
 
@@ -94,9 +94,13 @@ class IssuesController < ProjectScopedController
     @query = params[:query]
   end
 
-  def combine
+  def merging
+    @issues = Issue.where(id: params[:sources])
+  end
+
+  def merge
     # create new issue if existing issue not given
-    if !params[:id]
+    if @issue.new_record?
       @issue.author ||= current_user.email
       if @issue.save && @issue.update_attributes(issue_params)
         track_created(@issue)
@@ -113,9 +117,9 @@ class IssuesController < ProjectScopedController
     respond_to do |format|
       format.html {
         if count > 0
-          redirect_to issues_url, notice: "#{count} issues combined into #{@issue.title}."
+          redirect_to issues_url, notice: "#{count} issues merged into #{@issue.title}."
         else
-          redirect_to issues_url, alert: "Issues couldn't be combined."
+          redirect_to issues_url, alert: "Issues couldn't be merged."
         end
       }
       format.json

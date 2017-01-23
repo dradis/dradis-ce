@@ -24,10 +24,7 @@ class IssueTable
     @$column_menu.find('a').on 'click', @onColumnPickerClick
 
     # Handle the combine issues button click
-    $('#issue-table').on('click', '#combine-selected', @onCombineSelected)
-
-    # Handle type of combination radios
-    $('#modal_combine_issues').on('click', 'input[type=radio]', @onCombineTypeChosen)
+    $('#issue-table').on('click', '#merge-selected', @onMergeSelected)
 
   loadColumnState: =>
     if Storage?
@@ -46,7 +43,7 @@ class IssueTable
 
   resetToolbar: =>
     $('.js-issue-actions').css('display', 'none')
-    $('#combine-selected').css('display', 'none')
+    $('#merge-selected').css('display', 'none')
     $('#select-all').prop('checked', false)
 
   onColumnPickerClick: (event) =>
@@ -129,37 +126,23 @@ class IssueTable
           $($row.find('td')[that.tagColumnIndex]).replaceWith("<td class='text-error'>Please try again</td>")
       }
 
-  # get selected issues ids and their titles, and build a form with that info
-  # inside the combine issues modal
-  onCombineSelected: (event) ->
-    $('#modal_combine_issues #issues_to_combine').empty()
+  onMergeSelected: (event) ->
+    form = $('#merge_form')
 
-    issues_to_combine = []
+    form.find("input[name='sources[]']").remove()
+
+    issues_to_merge = []
     $('.js-tbl-issues').find('input[type=checkbox]:checked.js-multicheck').each ->
       $row = $(this).parent().parent()
 
       id = @.name.split('_')[1]
-      name = $($row.find('td')[1]).find('a').html()
-      issues_to_combine.push({id: id, name: name})
+      issues_to_merge.push(id)
 
-    issues_to_combine.sort (a, b) -> b.id - a.id
-    checked = true
-    for issue in issues_to_combine
-      html =  "<div class='radio'><label><input type='radio' #{if checked then 'checked' else ''} name='id' value='#{issue.id}' />#{issue.name}</label></div>"
-      html += "<input type='hidden' name='sources[]' value='#{issue.id}' />"
-      $('#modal_combine_issues #issues_to_combine').prepend(html)
+    for id in issues_to_merge
+      html = "<input type='hidden' name='sources[]' value='#{id}' />"
+      form.append(html)
 
-    $("#modal_combine_issues").modal()
-
-  # when the combine modal is visible, depending on which radio is clicked,
-  # hide/show the new issue text field
-  onCombineTypeChosen: (event) ->
-    if @.value == "new"
-      $("#modal_combine_issues input[name=id]").attr("checked", false)
-      $("#modal_combine_issues .issue_text").show()
-    else
-      $("#modal_combine_issues input[name=new_issue]").attr("checked", false)
-      $("#modal_combine_issues .issue_text").hide()
+    form.submit()
 
   saveColumnState: ->
     if Storage?
@@ -220,9 +203,9 @@ jQuery ->
         $('.js-issue-actions').css('display', 'none')
 
       if checked > 1
-        $('#combine-selected').css('display', 'inline-block')
+        $('#merge-selected').css('display', 'inline-block')
       else
-        $('#combine-selected').css('display', 'none')
+        $('#merge-selected').css('display', 'none')
 
 
     new IssueTable

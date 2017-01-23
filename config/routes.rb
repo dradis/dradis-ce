@@ -23,7 +23,8 @@ Rails.application.routes.draw do
   resources :issues do
     collection do
       post :import
-      put  :combine
+      post :merging
+      post :merge
     end
     resources :revisions, only: [:index, :show]
   end

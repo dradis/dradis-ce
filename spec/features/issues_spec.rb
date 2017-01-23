@@ -50,96 +50,60 @@ describe "Issues pages" do
           end
         end
 
-        describe "combine issues", js: true do
-          before do
-            # create 2 issues
-            create(:evidence)
-            create(:evidence)
+      end
 
-            visit issues_path
-          end
+      describe "merging page", js: true do
 
-          it "displays combine button when more than one issue selected" do
-            # no modal and no combine uissues visible
-            expect(page).to have_selector('#modal_combine_issues', visible: false)
-            expect(page).to have_selector('#combine-selected', visible: false)
+        before do
+          # create 2 issues
+          create(:evidence)
+          create(:evidence)
 
-            # click > 1 issue checkboxes
-            page.all('input.js-multicheck').each(&:click)
+          visit issues_path
 
-            # then the combine button must be visible
-            expect(page).to have_selector('#combine-selected', visible: true)
-          end
+          # click > 1 issue checkboxes
+          page.all('input.js-multicheck').each(&:click)
 
-          it "displays combine modal when combine button clicked" do
-            # click > 1 issue checkboxes
-            page.all('input.js-multicheck').each(&:click)
-
-            # click the combine button
-            find('#combine-selected').click
-
-            # then the modal should be visible
-            expect(page).to have_selector('#modal_combine_issues', visible: true)
-
-            # check that the form inside the modal has the required fields
-            expect(page).to have_selector("input[name='id']", count: 2)
-            expect(page).to have_selector("input[name='new_issue']", 1)
-            expect(page).to have_selector("input[name='sources[]']", count: 2)
-          end
-
-          it "combines issues into an existing one" do
-            # click > 1 issue checkboxes
-            page.all('input.js-multicheck').each(&:click)
-
-            # click the combine button
-            find('#combine-selected').click
-
-            # select first issue as target
-            first("input[name='id']").click
-
-            click_button "Combine"
-
-            expect(page).to have_content("1 issues combined into ")
-          end
-
-          it "combines issues into a new one" do
-            # click > 1 issue checkboxes
-            page.all('input.js-multicheck').each(&:click)
-
-            # click the combine button
-            find('#combine-selected').click
-
-            # new issue form should be still hidden
-            expect(page).to have_selector('#modal_combine_issues .issue_text', visible: false)
-
-            # select first issue as target
-            first("input[name='new_issue']").click
-
-            # new issue form should be visible now
-            expect(page).to have_selector('#modal_combine_issues .issue_text', visible: true)
-
-            click_button "Combine"
-
-            expect(page).to have_content("2 issues combined into ")
-
-            expect(Issue.last.author).to eq(@logged_in_as.email)
-          end
-
-          let(:submit_form) {
-            # click > 1 issue checkboxes
-            page.all('input.js-multicheck').each(&:click)
-
-            # click the combine button
-            find('#combine-selected').click
-
-            # select first issue as target
-            first("input[name='id']").click
-
-            click_button "Combine"
-          }
-
-          include_examples "deleted item is listed in Trash", :issue
+          # click the merge button
+          find('#merge-selected').click
         end
+
+        it "merges issues into an existing one" do
+          expect(page).to have_content "Merging 2 issues"
+
+          click_button "Merge issues"
+
+          expect(page).to have_content("1 issues merged into ")
+        end
+
+        it "merges issues into a new one" do
+
+          expect(page).to have_content "Merging 2 issues"
+
+          # new issue form should not be visible yet
+          expect(page).to have_selector('#new_issue', visible: false)
+
+          click_on "Or click here to merge into a new issue"
+
+          # new issue form should be visible now
+          expect(page).to have_selector('#new_issue', visible: true)
+
+          click_button "Merge issues"
+
+          expect(page).to have_content("2 issues merged into ")
+
+          expect(Issue.last.author).to eq(@logged_in_as.email)
+        end
+
+        let(:submit_form) {
+          # select first issue as target
+          first("input[name='id']").click
+
+          click_button "Merge issues"
+        }
+
+        include_examples "deleted item is listed in Trash", :issue
+
       end
 
       describe "new page" do
