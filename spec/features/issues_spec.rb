@@ -96,14 +96,9 @@ describe "Issues pages" do
         end
 
         let(:submit_form) {
-          # select first issue as target
-          first("input[name='id']").click
-
           click_button "Merge issues"
         }
-
         include_examples "deleted item is listed in Trash", :issue
-
       end
 
       describe "new page" do
