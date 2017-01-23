@@ -5,12 +5,20 @@
 
 <%= content_tag :div, id: dom_id(issue), class: item_css.join do %>
   <div class="expansion-container">
-    <%= link_to issue, class: 'view-toggle-off', data: {target: "##{dom_id(issue)}_content"} do %>
-      <%= tag_icon_for(issue) %>
-      <%= issue.title %>
-      <%= link_to edit_issue_path(issue), class: 'pull-right list-item-edit' do %>
-        <i class="fa fa-edit"></i> Edit
+
+    <span class="actions">
+      <%= link_to edit_issue_path(issue), class: 'list-item-edit' do %>
+        <i class="fa fa-pencil"></i> Edit
       <% end %>
+    </span>
+    <%= link_to issue, class: 'view-toggle-off', data: {target: "##{dom_id(issue)}_content"} do %>
+      <%= tag_icon_for(issue, 'issue-icon') %>
+      <%= issue.title %>
+      <!--
+      <%= link_to edit_issue_path(issue), class: 'pull-right list-item-edit' do %>
+        <i class="fa fa-pencil"></i> Edit
+      <% end %>
+      -->
 
     <% end %>
   </div>

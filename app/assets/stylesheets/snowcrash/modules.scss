@@ -42,14 +42,19 @@
     }
 
     .list-item-edit {
+      display: none;
       padding-right: 1ex;
-      visibility: hidden;
     }
 
     &:hover {
       background-color: lighten(#ccc,10%);
+
+      .issue-icon {
+        display: none;
+      }
+
       .list-item-edit {
-        visibility: visible;
+        display: inline;
       }
     }
   }

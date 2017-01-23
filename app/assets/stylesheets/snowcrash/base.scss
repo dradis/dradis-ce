@@ -436,6 +436,14 @@ body {
           }
         }
 
+        // Keep the original light blue color for the Edit link.
+        a.list-item-edit {
+          color: $linkColor;
+          &:hover,
+          &:focus {
+            color: $linkColorHover;
+          }
+        }
       }
     }
 
