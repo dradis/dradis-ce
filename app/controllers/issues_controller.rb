@@ -99,19 +99,24 @@ class IssuesController < ProjectScopedController
   end
 
   def merge
-    # create new issue if existing issue not given
-    if @issue.new_record?
-      @issue.author ||= current_user.email
-      if @issue.save && @issue.update_attributes(issue_params)
-        track_created(@issue)
-        tag_issue_from_field_content(@issue)
-      end
-    end
-
     count = 0
-    if @issue.persisted?
-      source_ids = params[:sources].map(&:to_i) - [@issue.id]
-      count = @issue.combine source_ids
+    if params[:sources]
+
+      # create new issue if existing issue not given
+      if @issue.new_record?
+        @issue.author ||= current_user.email
+        if @issue.save && @issue.update_attributes(issue_params)
+          track_created(@issue)
+          tag_issue_from_field_content(@issue)
+        end
+      end
+
+      count = 0
+      if @issue.persisted?
+        source_ids = params[:sources].map(&:to_i) - [@issue.id]
+        count = @issue.merge source_ids
+      end
+
     end
 
     respond_to do |format|
