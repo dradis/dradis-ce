@@ -194,8 +194,7 @@ jQuery ->
 
       $('.js-select-all-issues > input[type=checkbox]').prop('checked', _select_all)
 
-    # when selecting issues or 'select all', refresh toolbar buttons
-    $('.js-select-all-issues, input[type=checkbox].js-multicheck').click ->
+    refreshToolbar = ->
       checked = $('input[type=checkbox]:checked.js-multicheck').length
       if checked
         $('.js-issue-actions').css('display', 'inline-block')
@@ -206,6 +205,14 @@ jQuery ->
         $('#merge-selected').css('display', 'inline-block')
       else
         $('#merge-selected').css('display', 'none')
+
+    # on page load refresh toolbar
+    refreshToolbar()
+
+    # when selecting issues or 'select all', refresh toolbar buttons
+    $('.js-select-all-issues, input[type=checkbox].js-multicheck').click ->
+      refreshToolbar()
+
 
 
     new IssueTable
