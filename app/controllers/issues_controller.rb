@@ -96,6 +96,10 @@ class IssuesController < ProjectScopedController
 
   def merging
     @issues = Issue.where(id: params[:sources])
+
+    if @issues.count <= 1
+      redirect_to issues_url
+    end
   end
 
   def merge
