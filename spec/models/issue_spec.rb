@@ -48,14 +48,14 @@ describe Issue do
 
   end
 
-  describe ".combine" do
+  describe ".merge" do
     before do
       @issue1 = create(:evidence).issue
       @issue2 = create(:evidence).issue
     end
 
-    it "combines the issues" do
-      count = @issue1.combine @issue2.id
+    it "merges the issues" do
+      count = @issue1.merge @issue2.id
       @issue1.reload
 
       expect(count).to eq 1
@@ -63,8 +63,15 @@ describe Issue do
       expect(Issue.exists?(@issue2.id)).to be false
     end
 
-    it "doesn't combine an issue with itself" do
-      count = @issue1.combine @issue1.id
+    it "doesn't merge an issue with itself" do
+      count = @issue1.merge @issue1.id
+
+      expect(count).to eq 0
+      expect(Issue.exists?(@issue1.id)).to be true
+    end
+
+    it "doesn't merge invalid/unknown ids" do
+      count = @issue1.merge ["a", 33]
 
       expect(count).to eq 0
       expect(Issue.exists?(@issue1.id)).to be true
