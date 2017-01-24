@@ -1,4 +1,4 @@
-<h3>Evidence information - <span class="actions"><a href="javascript:void(0)" class="js-add-evidence">add new</a></span></h3>
+<h3>Evidence information - <span class="actions"><a href="javascript:void(0)" class="js-add-evidence">Add new</a></span></h3>
 <% cache [@issue, @nodes_for_add_evidence] do %>
   <%= render 'issues/add_evidence'%>
 <% end %>
@@ -28,8 +28,15 @@
                 <h3>
                   Evidence for <%= link_to node.label, node %> -
                   <span class="actions">
-                  <%= link_to 'edit', edit_node_evidence_path(node, instances.first) %>
-                  <%= link_to 'delete', [node, instances.first], class: 'text-error', data: { confirm: 'Are you sure?' }, method: :delete %>
+                    <%= link_to edit_node_evidence_path(node, instances.first) do %>
+                      <i class="fa fa-pencil"></i> Edit
+                    <% end %>
+                    <%= link_to [node, instances.first],
+                          class: 'text-error',
+                          data: { confirm: 'Are you sure?' },
+                          method: :delete do %>
+                      <i class="fa fa-trash"></i> Delete
+                    <% end %>
                   </span>
                 </h3>
                 <div class="content-textile" id="node_<%= node.id %>_instance_0">
@@ -49,8 +56,15 @@
                       <h3>
                         Evidence for this instance -
                         <span class="actions">
-                        <%= link_to 'edit', edit_node_evidence_path(node, evidence) %>
-                        <%= link_to 'delete', [node, evidence], class: 'text-error', data: { confirm: 'Are you sure?' }, method: :delete %>
+                          <%= link_to edit_node_evidence_path(node, evidence) do %>
+                            <i class="fa fa-pencil"></i> Edit
+                          <% end %>
+                          <%= link_to [node, evidence],
+                                class: 'text-error',
+                                data: { confirm: 'Are you sure?' },
+                                method: :delete do %>
+                            <i class="fa fa-trash"></i> Delete
+                          <% end %>
                         </span>
                       </h3>
                       <div class="content-textile">
