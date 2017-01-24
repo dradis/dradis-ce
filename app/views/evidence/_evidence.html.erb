@@ -9,13 +9,7 @@
       <i class="fa fa-pencil"></i> Edit
     <% end %>
     <%= link_to node_evidence_path(@node, evidence) do %>
-      <%
-        options = { class: 'fa fa-flag list-item-icon' }
-        if tag = evidence.issue.tags.first
-          options[:style] = "color: #{tag.color}"
-        end
-      %>
-      <%= content_tag :i, nil, options%>
+      <%= icon_for_model(evidence, 'fa-flag', 'list-item-icon') %>
       <%= evidence.issue.title %>
     <% end %>
   </div>

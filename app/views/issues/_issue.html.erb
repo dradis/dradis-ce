@@ -9,7 +9,7 @@
       <i class="fa fa-pencil"></i> Edit
     <% end %>
     <%= link_to issue, class: 'view-toggle-off', data: {target: "##{dom_id(issue)}_content"} do %>
-      <%= tag_icon_for(issue, 'list-item-icon') %>
+      <%= icon_for_model(issue, 'fa-bug', 'list-item-icon') %>
       <%= issue.title %>
     <% end %>
   </div>

@@ -40,4 +40,29 @@ module SnowcrashHelper
     yield presenter if block_given?
     presenter
   end
+
+
+  def icon_for_model(model, icon_class, extra_class = nil)
+
+    css =  ['fa']
+    css << icon_class
+    css << extra_class if extra_class
+
+    options = { class: css.join(' ') }
+    tag     = nil
+
+    case model
+    when Evidence
+      tag = model.issue.tags.first
+    when Issue
+      tag = model.tags.first
+    end
+
+    if tag
+      options[:style] = "color: #{tag.color}"
+    end
+
+    content_tag :i, nil, options
+  end
+
 end

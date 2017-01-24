@@ -5,12 +5,16 @@
 <% end %>
 
 <ul class="nav nav-tabs main-tabs">
-  <li class="active"><a href="#evidence-tab" data-toggle="tab">
-    <% if tag = @evidence.issue.tags.first %>
-      <i class="fa fa-flag" style="color: <%= tag.color %>"></i>
-    <% else %>
-      <i class="fa fa-flag"></i>
-    <% end %>Evidence</a></li><li><a href="#info-tab" data-toggle="tab"><i class="fa fa-bug"></i> Information</a></li>
+  <li class="active">
+    <a href="#evidence-tab" data-toggle="tab">
+      <%= icon_for_model(@evidence, 'fa-flag')%> Evidence
+    </a>
+  </li>
+  <li>
+    <a href="#info-tab" data-toggle="tab">
+      <i class="fa fa-bug"></i> Information
+    </a>
+  </li>
   <li><a href="#activity-tab" data-toggle="tab"><i class="fa fa-refresh"></i> Recent activity</a></li>
 </ul>
 
