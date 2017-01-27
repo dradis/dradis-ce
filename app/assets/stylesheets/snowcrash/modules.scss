@@ -27,6 +27,8 @@
   margin-bottom: 2em;
   .list-item {
     line-height: 2em;
+    padding-left: 1ex;
+
     &.note-editor{
       border-bottom: 0;
       .form-actions {
@@ -37,6 +39,25 @@
 
     p {
       line-height: 1.5em;
+    }
+
+    .list-item-actions {
+      display: none;
+      padding-right: 1ex;
+    }
+
+    .list-item-edit {
+      display: none;
+      padding-right: 1ex;
+    }
+
+    &:hover {
+      background-color: lighten(#ccc,10%);
+
+      .list-item-actions {
+        display: block;
+        text-align: right;
+      }
     }
   }
 
@@ -81,6 +102,7 @@
     }
   }
 }
+
 .content {
   padding: 1em;
 
@@ -103,5 +125,21 @@
   margin-right: 5px;
   img {
     @include rounded(50%)
+  }
+}
+
+table.table-ajax-inputs {
+  td {
+    &.value input {
+      background-position: right center;
+      background-repeat: no-repeat;
+      padding-right: 20px;
+      width: 80%;
+
+      &.editing { background-image: image-url('silk/pencil.png'); }
+      &.saving { background-image: image-url('loading.gif'); }
+      &.saved { background-image: image-url('silk/accept.png'); }
+      &.failed { background-image: image-url('silk/stop.png'); }
+    }
   }
 }
