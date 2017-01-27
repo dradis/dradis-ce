@@ -54,8 +54,15 @@
     <% for methodology in @methodologies do %>
     <%= content_tag :div, class: 'tab-pane', id: methodology.to_html_anchor, data: { url: update_task_methodology_path(methodology) } do %>
       <div class="pull-right">
-        <%= link_to 'edit', edit_methodology_path(methodology)  %>
-        <%= link_to 'delete', methodology_path(methodology), class: 'text-error', method: :delete, data: { confirm: "Are you sure you want to delete the '#{methodology.name}' methodology?" } %>
+        <%= link_to edit_methodology_path(methodology) do %>
+          <i class="fa fa-pencil"></i> Edit
+        <% end %>
+        <%= link_to methodology_path(methodology),
+              class: 'text-error',
+              method: :delete,
+              data: { confirm: "Are you sure you want to delete the '#{methodology.name}' methodology?" } do %>
+          <i class="fa fa-trash"></i> Delete
+        <% end %>
       </div>
       <% for section in methodology.sections do %>
       <div class="section">

@@ -346,7 +346,11 @@ body {
 
           .actions {
             color: $grayLight;
-            font-size: 85%;
+            font-size: 80%;
+
+            a {
+              padding: 0 4px;
+            }
           }
         }
 
@@ -436,6 +440,37 @@ body {
           }
         }
 
+        // Keep the original light blue color for the Edit link.
+        a.list-item-edit {
+          color: $linkColor;
+          &:hover,
+          &:focus {
+            color: $linkColorHover;
+          }
+        }
+        .list-item-actions {
+          font-size: 90%;
+
+          a {
+            padding: 0 4px;
+          }
+
+          a.list-item-action-delete {
+            color: $errorText;
+            &:hover,
+            &:focus {
+              color: darken($errorText, 10%);
+            }
+          }
+
+          a.list-item-action-edit {
+            color: $linkColor;
+            &:hover,
+            &:focus {
+              color: $linkColorHover;
+            }
+          }
+        }
       }
     }
 

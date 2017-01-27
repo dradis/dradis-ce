@@ -63,22 +63,12 @@ module IssuesHelper
     if tag = issue.tags.first
       content_tag :span, style: "color: #{tag.color}" do
         [
-          tag_icon_for(issue),
+          colored_icon_for_model(issue, 'fa-bug'),
           h(tag.display_name)
         ].join(' ').html_safe
       end
     else
       content_tag :span, '(no tag)', class: 'muted'
     end
-  end
-
-  # Output a Font Awesome tag with the right color
-  def tag_icon_for(issue, css_class=nil)
-    options = { class: "fa fa-bug #{css_class if css_class}"}
-
-    if tag = issue.tags.first
-      options[:style] = "color: #{tag.color}"
-    end
-    content_tag :i, nil, options
   end
 end

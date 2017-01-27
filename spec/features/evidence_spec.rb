@@ -39,8 +39,7 @@ describe "evidence" do
     it_behaves_like "a page with an activity feed"
 
     describe "clicking 'delete'" do
-      let(:submit_form) { click_link "delete" }
-
+      let(:submit_form) { within('.note-text-inner') { click_link "Delete" } }
       it "deletes the Evidence" do
         id = @evidence.id
         submit_form
