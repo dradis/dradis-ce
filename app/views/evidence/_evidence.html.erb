@@ -4,13 +4,25 @@
 %>
 
 <%= content_tag :div, id: "#{dom_id(evidence)}_link", class: item_css.join do %>
+
   <div class="expansion-container">
-    <%= link_to edit_node_evidence_path(@node, evidence), class: 'list-item-edit' do %>
-      <i class="fa fa-pencil"></i> Edit
-    <% end %>
     <%= link_to node_evidence_path(@node, evidence) do %>
       <%= icon_for_model(evidence, 'fa-flag', 'list-item-icon') %>
       <%= evidence.issue.title %>
     <% end %>
   </div>
-  <% end %>
+
+  <div class="list-item-actions">
+    <%= link_to edit_node_evidence_path(@node, evidence), class:'list-item-action-edit' do %>
+      <i class="fa fa-pencil"></i> Edit
+    <% end %>
+
+    <%= link_to [@node, evidence],
+          method: :delete,
+          data: { confirm: 'Are you sure?' },
+          class: 'list-item-action-delete' do %>
+      <i class="fa fa-trash"></i> Delete
+    <% end %>
+  </div>
+
+<% end %>

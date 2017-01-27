@@ -448,6 +448,29 @@ body {
             color: $linkColorHover;
           }
         }
+        .list-item-actions {
+          font-size: 90%;
+
+          a {
+            padding: 0 4px;
+          }
+
+          a.list-item-action-delete {
+            color: $errorText;
+            &:hover,
+            &:focus {
+              color: darken($errorText, 10%);
+            }
+          }
+
+          a.list-item-action-edit {
+            color: $linkColor;
+            &:hover,
+            &:focus {
+              color: $linkColorHover;
+            }
+          }
+        }
       }
     }
 

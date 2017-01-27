@@ -41,6 +41,11 @@
       line-height: 1.5em;
     }
 
+    .list-item-actions {
+      display: none;
+      padding-right: 1ex;
+    }
+
     .list-item-edit {
       display: none;
       padding-right: 1ex;
@@ -49,12 +54,9 @@
     &:hover {
       background-color: lighten(#ccc,10%);
 
-      .list-item-icon {
-        display: none;
-      }
-
-      .list-item-edit {
-        display: inline;
+      .list-item-actions {
+        display: block;
+        text-align: right;
       }
     }
   }
