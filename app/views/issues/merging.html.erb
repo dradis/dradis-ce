@@ -9,25 +9,33 @@
     <h3>Merging <%= @issues.count %> issues</h3>
 
     <%= simple_form_for Issue.new, url: merge_issues_path, method: 'post' do |f| %>
-      <p class="text-warning">WARNING: Only the target issue will prevail, the others will be deleted.</mark>
-      <p>All issues evidences will be moved to the selected issue.
-      <div class="row-fluid">
-        <div class="span6">
-          <p class="merge_option">Select existing issue to merge the others into.
-          <p class="merge_option" style="display: none">Merge issues into a new issue.
-        </div>
-        <div id="change_merge_option" class="span6 pull-right">
-          <a class="merge_option" href="#">Or click here to merge into a new issue</a>
-          <a class="merge_option" style="display: none" href="#">Or click here to merge into a existing issue</a>
-        </div>
-      </div>
+      <p class="merge_option">Select a target issue to merge the other issues into.
+
+      <p class="merge-option">
+        All issues except the target issue will be deleted,
+        and their evidence will be moved to the target issue.
+      <p class="merge-option" style="display: none">
+        All issues will be deleted,
+        and their evidence will be moved into a brand new issue.
+
+      <p class="mege-option text-warning">
+        WARNING: The text of all issues except the target will be lost.<br>
+        If you want to preserve the text
+        <a class="change_merge_option" href="#">
+          click here to merge all issues into a new issue with custom text.
+        </a>
+      <p class="merge-option text-warning" style="display: none">
+        WARNING: Only the new text that you enter here will be saved;
+        existing text in the old issues will be deleted.
+        <a class="change_merge_option" href="#">
+          Click here to use one issue as a target issue that does not get deleted.
+        </a>
 
       <div class="merge_option">
-        <% checked = true %>
-        <% @issues.each do |issue| %>
+        <% @issues.each_with_index do |issue, i| %>
           <div class="radio">
             <%= label_tag do %>
-              <%= radio_button_tag 'id', issue.id, checked %>
+              <%= radio_button_tag 'id', issue.id, i == 0 %>
               <%= issue.title %>
               <a href="#" class="expand"><small class="text-success">expand</small></a>
               <div class="well" style="display: none">
@@ -35,7 +43,6 @@
               </div>
             <% end %>
           </div>
-          <% checked = false %>
         <% end %>
       </div>
 

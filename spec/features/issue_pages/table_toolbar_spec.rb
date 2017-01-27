@@ -31,9 +31,6 @@ describe "issue table" do
     end
 
     context "when clicking issues" do
-      before do
-      end
-
       it "displays action buttons (delete, tag ...) if 1 issue is clicked" do
         expect(find('.js-issue-actions', visible: :all)).to_not be_visible
         check "issue_#{@issue1.id}"
@@ -64,7 +61,6 @@ describe "issue table" do
         expect(page).to_not have_css('.js-issue-actions')
         expect(Issue.exists?(@issue1.id)).to be false
       end
-
     end
   end
 end
