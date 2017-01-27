@@ -61,7 +61,7 @@ class AttachmentsController < ProjectScopedController
     @attachment  = Attachment.find(filename, conditions: { node_id: @node.id } )
     send_options = { filename: @attachment.filename }
 
-    # Figure out the best way of displaying the file (by default send the it as
+    # Figure out the best way of displaying the file (by default send it as
     # an attachment).
     extname = File.extname(filename)
     send_options[:disposition] = 'attachment'
@@ -90,10 +90,10 @@ class AttachmentsController < ProjectScopedController
   # the :node_id parameter.
   def destroy
     filename = params[:id]
-    
+
     @attachment = Attachment.find(filename, conditions: { node_id: @node.id} )
     @attachment.delete
-    
+
     render json: { success: true }
   end
 
@@ -102,7 +102,7 @@ class AttachmentsController < ProjectScopedController
   # we are working with. This filter sets the @node instance variable if the
   # give :node_id is valid.
   def find_or_initialize_node
-    begin 
+    begin
       @node = Node.find(params[:node_id])
     rescue
       redirect_to root_path, alert: 'Node not found'

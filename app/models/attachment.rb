@@ -39,7 +39,7 @@
 #   attachment = Attachment.new("images/my_image.gif", :node_id => 1)
 #
 # This will create an instance of an attachment that belongs to node with ID = 0
-# Nothing has bee saved yet
+# Nothing has been saved yet
 #
 #   attachment.save
 #
