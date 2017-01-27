@@ -225,7 +225,7 @@ describe "Issues pages" do
         describe "clicking 'delete'" do
           before { visit issue_path(@issue) }
 
-          let(:submit_form) { click_link "Delete" }
+          let(:submit_form) { within('.note-text-inner') { click_link "Delete" } }
 
           it "deletes the issue" do
             id = @issue.id
