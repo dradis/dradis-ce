@@ -17,7 +17,7 @@
 <ul class="nav nav-tabs main-tabs">
   <li class="active">
     <a href="#info-tab" data-toggle="tab">
-      <%= icon_for_model(@issue, 'fa-bug') %> Information
+      <%= colored_icon_for_model(@issue, 'fa-bug') %> Information
     </a>
   </li>
   <li><a href="#evidence-tab" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge"><%= @issue.evidence.count %></span></a></li>

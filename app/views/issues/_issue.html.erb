@@ -7,7 +7,7 @@
 
   <div class="expansion-container">
     <%= link_to issue, class: 'view-toggle-off', data: {target: "##{dom_id(issue)}_content"} do %>
-      <%= icon_for_model(issue, 'fa-bug', 'list-item-icon') %>
+      <%= colored_icon_for_model(issue, 'fa-bug', 'list-item-icon') %>
       <%= issue.title %>
     <% end %>
   </div>

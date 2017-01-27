@@ -63,7 +63,7 @@ module IssuesHelper
     if tag = issue.tags.first
       content_tag :span, style: "color: #{tag.color}" do
         [
-          icon_for_model(issue, 'fa-bug'),
+          colored_icon_for_model(issue, 'fa-bug'),
           h(tag.display_name)
         ].join(' ').html_safe
       end
