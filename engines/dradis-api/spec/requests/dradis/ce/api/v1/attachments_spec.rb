@@ -43,8 +43,6 @@ describe "Attachments API" do
   context "as authenticated user" do
     include_context "authenticated API user"
 
-    include AttachmentsHelper
-
     after do
       FileUtils.rm_rf(Attachment.pwd.join(node.id.to_s))
     end
@@ -53,11 +51,11 @@ describe "Attachments API" do
       before do
         @attachments = ["image0.png", "image1.png", "image2.png"]
         @attachments.each do |attachment|
-          upload(attachment, node)
+          create(:attachment, filename: attachment, node: node)
         end
 
         # an attachment in another node
-        upload("image3.png", create(:node))
+        create(:attachment, filename: "image3.png", node: create(:node))
 
         get "/api/nodes/#{node.id}/attachments", env: @env
       end
@@ -97,7 +95,7 @@ describe "Attachments API" do
 
     describe "GET /api/nodes/:node_id/attachments/:id" do
       before do
-        upload("image.png", node)
+        create(:attachment, filename: "image.png", node: node)
 
         get "/api/nodes/#{node.id}/attachments/image.png", env: @env
       end
@@ -122,7 +120,6 @@ describe "Attachments API" do
     end
 
     describe "POST /api/nodes/:node_id/attachments" do
-      #let(:url) { "/api/nodes/#{node.id}/attachments" }
       let(:post_attachment) {
         file = fixture_file_upload(Rails.root.join('spec/fixtures/files/rails.png'))
 
@@ -152,7 +149,7 @@ describe "Attachments API" do
         node_attachments = Attachment.pwd.join(node.id.to_s)
         FileUtils.mkdir_p( node_attachments )
 
-        upload("rails.png", node)
+        create(:attachment, filename: "rails.png", node: node)
         expect(Dir["#{node_attachments}/*"].count).to eq(1)
 
         post_attachment
@@ -187,7 +184,7 @@ describe "Attachments API" do
 
     describe "PUT /api/nodes/:node_id/attachments/:id" do
       before do
-        upload("image.png", node)
+        create(:attachment, filename: "image.png", node: node)
       end
 
       let(:url) { "/api/nodes/#{node.id}/attachments/image.png" }
@@ -277,7 +274,7 @@ describe "Attachments API" do
       let(:attachment) { "image.png" }
 
       let(:delete_attachment) do
-        upload(attachment, node)
+        create(:attachment, filename: attachment, node: node)
         delete "/api/nodes/#{node.id}/attachments/#{attachment}", env: @env
       end
 
