@@ -38,8 +38,17 @@
               <%= radio_button_tag 'id', issue.id, i == 0 %>
               <%= issue.title %>
               <a href="#" class="expand"><small class="text-success">expand</small></a>
-              <div class="well" style="display: none">
-                <%= markup(issue.text) %>
+              <div class="tab-content" style="display: none">
+                <ul class="nav nav-tabs pull-right">
+                  <li class="active"><a href="#normal_<%= i %>" data-toggle="tab">As normal text</a></li>
+                  <li><a href="#textile_<%= i %>" data-toggle="tab">As textile</a></li>
+                </ul>
+                <div id="normal_<%= i %>" class="tab-pane active">
+                  <pre><%= markup(issue.text) %></pre>
+                </div>
+                <div id="textile_<%= i %>" class="tab-pane">
+                  <pre><%= issue.text %></pre>
+                </div>
               </div>
             <% end %>
           </div>
