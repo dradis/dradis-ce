@@ -8,7 +8,7 @@ PATH
 PATH
   remote: ../dradis-brakeman/
   specs:
-    dradis-brakeman (3.0.0)
+    dradis-brakeman (3.0.1)
       dradis-plugins (~> 3.2)
 
 PATH
@@ -202,6 +202,9 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
+    html-pipeline (2.5.0)
+      activesupport (>= 2)
+      nokogiri (>= 1.4)
     i18n (0.7.0)
     image_size (1.3.1)
     jbuilder (2.6.1)
@@ -324,6 +327,7 @@ GEM
       vegas (~> 0.1.2)
     resque-status (0.5.0)
       resque (~> 1.19)
+    rinku (2.0.2)
     rprogram (0.3.2)
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
@@ -459,6 +463,7 @@ DEPENDENCIES
   font-awesome-sass (~> 4.3.0)
   foreman
   guard-rspec
+  html-pipeline
   image_size (~> 1.3.0)
   jbuilder (~> 2.5)
   jquery-fileupload-rails (~> 0.3.4)
@@ -476,12 +481,12 @@ DEPENDENCIES
   parslet (~> 1.4.0)
   poltergeist
   rails (~> 5.0.1)
-  rails_autolink (~> 1.1)
   record_tag_helper
   redis (~> 3.0)
   rerun
   resque
   resque-status
+  rinku
   rspec-rails (~> 3.1)
   sass-rails (~> 5.0)
   shoulda-matchers (~> 2.8.0)
