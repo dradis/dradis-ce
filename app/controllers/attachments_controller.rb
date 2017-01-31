@@ -94,7 +94,7 @@ class AttachmentsController < ProjectScopedController
     @attachment = Attachment.find(filename, conditions: { node_id: @node.id} )
     @attachment.delete
     
-    render json: { success: true }
+    redirect_to node_path(@node), notice: 'Attachment deleted'
   end
 
   private

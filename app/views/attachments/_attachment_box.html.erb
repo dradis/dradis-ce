@@ -7,44 +7,48 @@
     </div>
   </div>
 
+  <div id="attachments" class="note-list">
+    <% if node.attachments.any? %>
+
+      <% node.attachments.each do |attachment| %>
+        <div class="list-item">
+          <div class="expansion-container">
+            <%= link_to node_attachment_path(node, attachment.filename, download: attachment.filename) do %>
+              <i class="fa fa-paperclip"></i> <%= short_filename(attachment.filename) %>
+            <% end %>
+          </div>
+          <div class="list-item-actions">
+            <small><%= number_to_human_size(File.size(attachment)) %></small>
+
+            <%= link_to node_attachment_path(node, attachment.filename),
+                  method: :delete,
+                  data: { confirm: 'Are you sure?' },
+                  class: 'list-item-action-delete' do %>
+              <i class="fa fa-trash"></i> Delete
+            <% end %>
+
+            <%= link_to 'javascript:void(0)',
+                  data: {
+                    clipboard_text: "!#{node_attachment_path(node, attachment.filename)}!"
+                  },
+                  class: 'js-attachment-url-copy' do %><i class="fa fa-link"></i> Link<% end %>
+          </div>
+        </div>
+      <% end %>
+
+    <% else %>
+      <div class="list-item">
+        <div class="note placeholder">(nothing yet)</div>
+      </div>
+    <% end %>
+  </div>
+
+
   <!-- The table listing the files available for upload/download -->
   <table class="table">
     <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery">
       <% if node.attachments.any? %>
-        <% for attachment in node.attachments do %>
-      <tr class="template-download">
-        <td class="name" colspan="4">
-          <div>
-            <%= link_to node_attachment_path(node, attachment.filename), download: attachment.filename, title: attachment.filename do %>
-            <i class="fa fa-paperclip"></i> <%= short_filename(attachment.filename) %>
-            <% end %>
 
-            <div class="text-right">
-              <span class="size">
-                <small><%= number_to_human_size(File.size(attachment)) %></small>
-              </span>
-
-              <span class="delete">
-                <button
-                  class="btn btn-transparent btn-danger"
-                  data-type="DELETE"
-                  data-url="<%= node_attachment_path(node,attachment.filename) %>"
-                >
-                  <i class="fa fa-trash"></i>
-                </button>
-              </span>
-
-              <button
-                class="btn btn-transparent js-attachment-url-copy"
-                data-clipboard-text="!<%= node_attachment_path(node, attachment.filename) %>!"
-              >
-                <i class="fa fa-link"></i>
-              </button>
-            </div>
-          </div>
-        </td>
-      </tr>
-        <% end %>
       <% else %>
         <%# display some sort of Nothing yet message %>
       <% end %>
