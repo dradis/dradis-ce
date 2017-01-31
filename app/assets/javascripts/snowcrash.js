@@ -1,7 +1,7 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
-// require turbolinks
+//= require turbolinks
 //= require jquery.form
 //= require jquery.textchange.min
 //= require jquery.textile

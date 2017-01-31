@@ -1,4 +1,4 @@
-jQuery ->
+document.addEventListener "turbolinks:load", ->
   $('#issues_editor .js-taglink').click (e) ->
     $target = $(e.target)
     $('#issue_tag_list').val($target.data('tag'))
