@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe "User navigates to entity page from search" do
 
