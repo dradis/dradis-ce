@@ -14,7 +14,7 @@ describe "Attachments API" do
         expect(response.status).to eq 401
       end
     end
-    describe "GET /api/nodes/:node_id/attachments/:id" do
+    describe "GET /api/nodes/:node_id/attachments/:filename" do
       it "throws 401" do
         get "/api/nodes/#{node.id}/attachments/image.jpg", env: @env
         expect(response.status).to eq 401
@@ -26,13 +26,13 @@ describe "Attachments API" do
         expect(response.status).to eq 401
       end
     end
-    describe "PUT /api/nodes/:node_id/attachments/:id" do
+    describe "PUT /api/nodes/:node_id/attachments/:filename" do
       it "throws 401" do
         put "/api/nodes/#{node.id}/attachments/image.jpg", env: @env
         expect(response.status).to eq 401
       end
     end
-    describe "DELETE /api/nodes/:node_id/attachments/:id" do
+    describe "DELETE /api/nodes/:node_id/attachments/:filename" do
       it "throws 401" do
         delete "/api/nodes/#{node.id}/attachments/image.jpg", env: @env
         expect(response.status).to eq 401
@@ -93,7 +93,7 @@ describe "Attachments API" do
       end
     end
 
-    describe "GET /api/nodes/:node_id/attachments/:id" do
+    describe "GET /api/nodes/:node_id/attachments/:filename" do
       before do
         create(:attachment, filename: "image.png", node: node)
 
@@ -182,7 +182,7 @@ describe "Attachments API" do
       end
     end
 
-    describe "PUT /api/nodes/:node_id/attachments/:id" do
+    describe "PUT /api/nodes/:node_id/attachments/:filename" do
       before do
         create(:attachment, filename: "image.png", node: node)
       end
@@ -270,7 +270,7 @@ describe "Attachments API" do
       end
     end
 
-    describe "DELETE /api/nodes/:node_id/attachments/:id" do
+    describe "DELETE /api/nodes/:node_id/attachments/:filename" do
       let(:attachment) { "image.png" }
 
       let(:delete_attachment) do
