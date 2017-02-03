@@ -115,7 +115,6 @@ class IssuesController < ProjectScopedController
         end
       end
 
-      count = 0
       if @issue.persisted?
         source_ids = params[:sources].map(&:to_i) - [@issue.id]
         count = @issue.merge source_ids
