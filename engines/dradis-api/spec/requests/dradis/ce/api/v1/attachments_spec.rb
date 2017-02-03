@@ -108,7 +108,7 @@ describe "Attachments API" do
         get "/api/nodes/#{node.id}/attachments/image_ko.png", env: @env
         expect(response.status).to eq 404
         json_response = JSON.parse(response.body)
-        expect(json_response["message"]).to eq "Couldn't find attachment with id 'image_ko.png'"
+        expect(json_response["message"]).to eq "Couldn't find attachment with filename 'image_ko.png'"
       end
 
       it "returns JSON information about the attachment" do
