@@ -14,7 +14,7 @@ module Dradis::CE::API
         begin
           @attachment = Attachment.find(filename, conditions: { node_id: @node.id } )
         rescue
-          raise ActiveRecord::RecordNotFound, "Couldn't find attachment with id '#{params[:filename]}'"
+          raise ActiveRecord::RecordNotFound, "Couldn't find attachment with filename '#{params[:filename]}'"
         end
       end
 
