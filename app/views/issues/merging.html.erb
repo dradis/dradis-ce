@@ -9,7 +9,7 @@
     <h3>Merging <%= @issues.count %> issues</h3>
 
     <%= simple_form_for Issue.new, url: merge_issues_path, method: 'post' do |f| %>
-      <p class="merge_option">Select a target issue to merge the other issues into.
+      <p class="merge-option">Select a target issue to merge the other issues into.
 
       <p class="merge-option">
         All issues except the target issue will be deleted,
@@ -18,20 +18,20 @@
         All issues will be deleted,
         and their evidence will be moved into a brand new issue.
 
-      <p class="mege-option text-warning">
+      <p class="merge-option text-warning">
         WARNING: The text of all issues except the target will be lost.<br>
         If you want to preserve the text
-        <a class="change_merge_option" href="#">
+        <a class="change-merge-option" href="#">
           click here to merge all issues into a new issue with custom text.
         </a>
       <p class="merge-option text-warning" style="display: none">
         WARNING: Only the new text that you enter here will be saved;
         existing text in the old issues will be deleted.
-        <a class="change_merge_option" href="#">
+        <a class="change-merge-option" href="#">
           Click here to use one issue as a target issue that does not get deleted.
         </a>
 
-      <div class="merge_option">
+      <div class="merge-option">
         <% @issues.each_with_index do |issue, i| %>
           <div class="radio">
             <%= label_tag do %>
@@ -55,7 +55,7 @@
         <% end %>
       </div>
 
-      <div id="new_issue" style="display: none" class="merge_option">
+      <div id="new_issue" style="display: none" class="merge-option">
         <%= f.input :text, label: false, input_html: { class: 'textile', data: { preview_url: preview_path, help_url: markup_path } } %>
       </div>
 

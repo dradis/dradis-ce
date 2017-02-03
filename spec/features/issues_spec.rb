@@ -83,7 +83,7 @@ describe "Issues pages" do
           # new issue form should not be visible yet
           expect(page).to have_selector('#new_issue', visible: false)
 
-          click_on "Or click here to merge into a new issue"
+          click_on "click here to merge all issues into a new issue with custom text."
 
           # new issue form should be visible now
           expect(page).to have_selector('#new_issue', visible: true)

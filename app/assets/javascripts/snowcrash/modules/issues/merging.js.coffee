@@ -1,8 +1,8 @@
 jQuery ->
   if ($('body.issues.merging').length)
 
-    $('.change_merge_option').click ->
-      $('.merge_option').toggle()
+    $('.change-merge-option').click ->
+      $('.merge-option').toggle()
       $("input[name='id']").prop('disabled', (i,v) -> !v)
       false
 
