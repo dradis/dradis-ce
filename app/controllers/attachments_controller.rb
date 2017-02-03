@@ -14,7 +14,7 @@ class AttachmentsController < ProjectScopedController
   def create
     uploaded_file = params.fetch('attachment_file', params.fetch('files', []).first)
 
-    attachment_name = get_name(original: uploaded_file.original_filename)
+    attachment_name = Attachment.available_name(@node, original: uploaded_file.original_filename)
 
     @attachment = Attachment.new(attachment_name, node_id: @node.id)
     @attachment << uploaded_file.read

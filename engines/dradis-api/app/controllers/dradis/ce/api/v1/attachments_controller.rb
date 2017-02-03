@@ -23,7 +23,7 @@ module Dradis::CE::API
 
         @attachments = []
         uploaded_files.each do |uploaded_file|
-          attachment_name = get_name(original: uploaded_file.original_filename)
+          attachment_name = Attachment.available_name(@node, original: uploaded_file.original_filename)
 
           attachment = Attachment.new(attachment_name, node_id: @node.id)
           attachment << uploaded_file.read
@@ -43,7 +43,7 @@ module Dradis::CE::API
         filename    = params[:filename]
         attachment  = Attachment.find(filename, conditions: { node_id: @node.id } )
         attachment.close
-        
+
         begin
           new_name    = CGI::unescape(params[:attachment][:filename])
           destination = Attachment.pwd.join(params[:node_id], new_name).to_s
@@ -78,26 +78,6 @@ module Dradis::CE::API
       def attachment_params
         params.require(:files).permit()
       end
-
-      # Obtain a suitable attachment name for the recently uploaded file. If the
-      # original file name is still available, use it, otherwise, provide count-based
-      # an alternative.
-      def get_name(args={})
-        original = args.fetch(:original)
-
-        if @node.attachments.map(&:filename).include?(original)
-          attachments_pwd = Attachment.pwd.join(@node.id.to_s)
-
-          # The original name is taken, so we'll add the "_copy-XX." suffix
-          extension = File.extname(original)
-          basename  = File.basename(original, extension)
-          sequence  = Dir.glob(attachments_pwd.join("#{basename}_copy-*#{extension}")).collect { |a| a.match(/_copy-([0-9]+)#{extension}\z/)[1].to_i }.max || 0
-          "%s_copy-%02i%s" % [basename, sequence + 1, extension]
-        else
-          original
-        end
-      end
-
     end
   end
 end

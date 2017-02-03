@@ -148,6 +148,25 @@ class Attachment < File
     AttachmentPwd
   end
 
+  # Obtain a suitable attachment name for a recently uploaded file. If the
+  # original file name is still available, use it, otherwise, provide count-based
+  # an alternative.
+  def self.available_name(node, args={})
+    original = args.fetch(:original)
+
+    if node.attachments.map(&:filename).include?(original)
+      attachments_pwd = Attachment.pwd.join(node.id.to_s)
+
+      # The original name is taken, so we'll add the "_copy-XX." suffix
+      extension = File.extname(original)
+      basename  = File.basename(original, extension)
+      sequence  = Dir.glob(attachments_pwd.join("#{basename}_copy-*#{extension}")).collect { |a| a.match(/_copy-([0-9]+)#{extension}\z/)[1].to_i }.max || 0
+      "%s_copy-%02i%s" % [basename, sequence + 1, extension]
+    else
+      original
+    end
+  end
+
   # -- Instance Methods  ------------------------------------------------------
 
   attr_accessor :filename, :node_id, :tempfile
