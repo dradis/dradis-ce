@@ -11,13 +11,10 @@ module HTML
       # Locate the %%{{}}%% sequence inside code blocks and highlight it (via
       # <mark> tags)
       def call
-        doc.search('code').each do |element|
-          # element.inner_html = element.text.gsub(/(https|http)?:\/\/.+\.(jpg|jpeg|bmp|gif|png)(\?\S+)?/i) do |match|
-          #   %|<img src="#{match}" alt=""/>|
-          # end
-          element.inner_html = element.text.gsub(/%%\{\{(.+)\}\}%%/mi) do |match|
+        doc.search('pre').each do |element|
+          element.inner_html = '<code>' + element.text.gsub(/%%\{\{(.+)\}\}%%/i) do |match|
             %|<mark>#{$1}</mark>|
-          end
+          end + '</code>'
         end
         doc
       end
