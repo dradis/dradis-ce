@@ -6,7 +6,7 @@ Dradis::CE::API::Engine::routes.draw do
         resources :nodes do
           resources :evidence
           resources :notes
-          constraints(:id => /.*/) do
+          constraints(:filename => /.*/) do
             resources :attachments, param: :filename
           end
         end

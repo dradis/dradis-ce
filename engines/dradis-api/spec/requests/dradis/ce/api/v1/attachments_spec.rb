@@ -219,6 +219,14 @@ describe "Attachments API" do
             retrieved_attachment = JSON.parse(response.body)
             expect(retrieved_attachment["filename"]).to eq "image_renamed.png"
           end
+
+          it "responds with HTTP code 422 if attachemnt already exists" do
+            create(:attachment, filename: "image_renamed.png", node: node)
+            put_attachment
+            expect(response.status).to eq(422)
+            retrieved_attachment = JSON.parse(response.body)
+            expect(retrieved_attachment["filename"]).to eq "image_renamed.png"
+          end
         end
 
         context "with params for an invalid attachment" do

@@ -43,7 +43,7 @@ module Dradis::CE::API
         filename    = params[:filename]
         attachment  = Attachment.find(filename, conditions: { node_id: @node.id } )
         attachment.close
-
+        
         begin
           new_name    = CGI::unescape(params[:attachment][:filename])
           destination = Attachment.pwd.join(params[:node_id], new_name).to_s
@@ -51,6 +51,8 @@ module Dradis::CE::API
           if !File.exist?(destination) && !destination.match(/^#{Attachment.pwd}/).nil?
             File.rename attachment.fullpath, destination
             @attachment = Attachment.find(new_name, conditions: { node_id: @node.id } )
+          else
+            raise "Destination file already exists"
           end
         rescue
           @attachment = attachment
