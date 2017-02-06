@@ -73,13 +73,22 @@ describe "Attachments API" do
       end
 
       it "returns JSON information about attachments" do
-        expect(retrieved_attachments).to eq(
-         [
-           {"filename" => "image0.png", "link" => "/nodes/#{node.id}/attachments/image0.png"},
-           {"filename" => "image1.png", "link" => "/nodes/#{node.id}/attachments/image1.png"},
-           {"filename" => "image2.png", "link" => "/nodes/#{node.id}/attachments/image2.png"},
-         ]
-        )
+        attachment_0 = retrieved_attachments.detect { |n| n["filename"] == "image0.png" }
+        attachment_1 = retrieved_attachments.detect { |n| n["filename"] == "image1.png" }
+        attachment_2 = retrieved_attachments.detect { |n| n["filename"] == "image2.png" }
+
+        expect(attachment_0).to eq({
+          "filename" => "image0.png",
+          "link" => "/nodes/#{node.id}/attachments/image0.png"
+        })
+        expect(attachment_1).to eq({
+          "filename" => "image1.png",
+          "link" => "/nodes/#{node.id}/attachments/image1.png"
+        })
+        expect(attachment_2).to eq({
+          "filename" => "image2.png",
+          "link" => "/nodes/#{node.id}/attachments/image2.png"
+        })
       end
 
       it "doesn't return attachments from other nodes" do
