@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe "User searches", type: :feature do
   def setup_test_data
