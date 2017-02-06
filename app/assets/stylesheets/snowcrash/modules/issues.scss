@@ -115,6 +115,10 @@ body.issues.index {
         display: none; // even when issue-actions becomes visible, keep this one hidden
       }
     }
+
+    #delete-selected {
+      color: #b94a48;
+    }
   }
 
   .tbl-issues {
