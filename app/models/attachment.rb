@@ -160,7 +160,7 @@ class Attachment < File
       # The original name is taken, so we'll add the "_copy-XX." suffix
       extension = File.extname(original)
       basename  = File.basename(original, extension)
-      sequence  = Dir.glob(attachments_pwd.join("#{basename}_copy-*#{extension}")).collect { |a| a.match(/_copy-([0-9]+)#{extension}\z/)[1].to_i }.max || 0
+      sequence  = Dir.glob(attachments_pwd.join("#{basename}_copy-*#{extension}")).map { |a| a.match(/_copy-([0-9]+)#{extension}\z/)[1].to_i }.max || 0
       "%s_copy-%02i%s" % [basename, sequence + 1, extension]
     else
       original
