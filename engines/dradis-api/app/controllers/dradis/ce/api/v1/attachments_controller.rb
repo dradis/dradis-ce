@@ -10,9 +10,8 @@ module Dradis::CE::API
       end
 
       def show
-        filename = params[:filename]
         begin
-          @attachment = Attachment.find(filename, conditions: { node_id: @node.id } )
+          @attachment = Attachment.find(params[:filename], conditions: { node_id: @node.id } )
         rescue
           raise ActiveRecord::RecordNotFound, "Couldn't find attachment with filename '#{params[:filename]}'"
         end
@@ -40,8 +39,7 @@ module Dradis::CE::API
       end
 
       def update
-        filename    = params[:filename]
-        attachment  = Attachment.find(filename, conditions: { node_id: @node.id } )
+        attachment  = Attachment.find(params[:filename], conditions: { node_id: @node.id } )
         attachment.close
 
         begin
@@ -61,9 +59,7 @@ module Dradis::CE::API
       end
 
       def destroy
-        filename = params[:filename]
-
-        @attachment = Attachment.find(filename, conditions: { node_id: @node.id} )
+        @attachment = Attachment.find(params[:filename], conditions: { node_id: @node.id} )
         @attachment.delete
 
         render_successful_destroy_message
