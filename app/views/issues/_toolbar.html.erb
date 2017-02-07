@@ -16,22 +16,24 @@
   <div class="btn-group issue-actions js-issue-actions">
     <a id="delete-selected" class="btn" data-confirm="Are you sure?" data-method="delete" title="Delete selected issues"><i class="fa fa-trash text-error"></i> Delete</a>
     <a id="merge-selected" class="btn" title="Merge into one issue"><i class="fa fa-compress"></i> Merge</a>
-    <a id="tag-selected" class="btn dropdown-toggle" data-toggle="dropdown" title="Apply tags to selected issues">
-      <i class="fa fa-tags"></i>
-      Tag
-      <span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu">
-      <% @tags.each do |tag| %>
-        <% cache [tag, 'issues-toolbar'] do %>
-      <li>
-        <%= link_to 'javascript:void(0)', class: 'js-taglink', style: "color: #{tag.color}", data: { tag: h(tag.name) } do %>
-          <i class="fa fa-tag"></i> <%= h(tag.display_name) %>
+    <div class="btn-group dropdown">
+      <a id="tag-selected" class="btn dropdown-toggle" data-toggle="dropdown" title="Apply tags to selected issues">
+        <i class="fa fa-tags"></i>
+        Tag
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <% @tags.each do |tag| %>
+          <% cache [tag, 'issues-toolbar'] do %>
+            <li>
+              <%= link_to 'javascript:void(0)', class: 'js-taglink', style: "color: #{tag.color}", data: { tag: h(tag.name) } do %>
+                <i class="fa fa-tag"></i> <%= h(tag.display_name) %>
+              <% end %>
+            </li>
+          <% end %>
         <% end %>
-      </li>
-        <% end %>
-      <% end %>
-    </ul>
+      </ul>
+    </div>
   </div>
 
   <div class="btn-group">
