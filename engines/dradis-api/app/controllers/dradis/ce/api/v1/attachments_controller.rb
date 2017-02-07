@@ -44,7 +44,7 @@ module Dradis::CE::API
 
         begin
           new_name    = CGI::unescape(params[:attachment][:filename])
-          destination = Attachment.pwd.join(@node.id, new_name).to_s
+          destination = Attachment.pwd.join(@node.id.to_s, new_name).to_s
 
           if !File.exist?(destination) && !destination.match(/^#{Attachment.pwd}/).nil?
             File.rename attachment.fullpath, destination
