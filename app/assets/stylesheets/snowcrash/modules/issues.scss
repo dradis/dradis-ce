@@ -160,4 +160,18 @@ body.issues.merging {
       border-radius: 4px;
     }
   }
+
+  .radio {
+    padding-left: 25px;
+    padding-top: 5px;
+    padding-right: 5px;
+  }
+
+  pre {
+    border: none;
+  }
+
+  .accordion-body {
+    background-color: #f5f5f5;
+  }
 }
