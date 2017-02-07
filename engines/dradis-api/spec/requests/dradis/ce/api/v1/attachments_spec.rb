@@ -125,7 +125,7 @@ describe "Attachments API" do
     describe "POST /api/nodes/:node_id/attachments" do
       let(:post_attachment) {
         file = fixture_file_upload(Rails.root.join('spec/fixtures/files/rails.png'))
-        params = {files: [file]}
+        params = { files: [file] }
         url = "/api/nodes/#{node.id}/attachments"
 
         post url , params: params, env: @env
@@ -160,7 +160,7 @@ describe "Attachments API" do
       it "returns JSON information about the attachments" do
         file1 = fixture_file_upload(Rails.root.join('spec/fixtures/files/rails.png'))
         file2 = fixture_file_upload(Rails.root.join('spec/fixtures/files/rails.png'))
-        params = {files: [file1, file2]}
+        params = { files: [file1, file2] }
         url = "/api/nodes/#{node.id}/attachments"
 
         post url , params: params, env: @env
