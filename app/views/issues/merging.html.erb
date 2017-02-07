@@ -21,24 +21,32 @@
       <p class="merge-option text-warning">
         WARNING: The text of all issues except the target will be lost.<br>
         If you want to preserve the text
-        <a class="change-merge-option" href="#">
+        <a class="js-change-merge-option" href="javascript:void(0)">
           click here to merge all issues into a new issue with custom text.
         </a>
       <p class="merge-option text-warning" style="display: none">
         WARNING: Only the new text that you enter here will be saved;
         existing text in the old issues will be deleted.
-        <a class="change-merge-option" href="#">
+        <a class="js-change-merge-option" href="javascript:void(0)">
           Click here to use one issue as a target issue that does not get deleted.
         </a>
 
-      <div class="merge-option">
+      <hr>
+
+      <div class="merge-option accordion">
         <% @issues.each_with_index do |issue, i| %>
-          <div class="radio">
-            <%= label_tag do %>
-              <%= radio_button_tag 'id', issue.id, i == 0 %>
-              <%= issue.title %>
-              <a href="#" class="expand"><small class="text-success">expand</small></a>
-              <div class="tab-content" style="display: none">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <div class="radio">
+                <%= label_tag do %>
+                  <%= radio_button_tag "id", issue.id, i == 0 %>
+                  <%= issue.title %>
+                  <%= link_to raw('<i class="fa fa-chevron-down"></i>'), 'javascript:void(0)', class: 'issue-toggle pull-right', data: {toggle: 'collapse', target: "#preview_issue_#{issue.id}"} %>
+                <% end %>
+              </div>
+            </div>
+            <div id="<%= "preview_issue_#{issue.id}" %>" class="accordion-body collapse">
+              <div class="tab-content">
                 <ul class="nav nav-tabs pull-right">
                   <li class="active"><a href="#normal_<%= i %>" data-toggle="tab">Preview</a></li>
                   <li><a href="#textile_<%= i %>" data-toggle="tab">Source</a></li>
@@ -50,7 +58,7 @@
                   <pre><%= issue.text %></pre>
                 </div>
               </div>
-            <% end %>
+            </div>
           </div>
         <% end %>
       </div>
