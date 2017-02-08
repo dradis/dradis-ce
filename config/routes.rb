@@ -23,8 +23,7 @@ Rails.application.routes.draw do
   resources :issues do
     collection do
       post :import
-      post :merging
-      post :merge
+      resources :merge, only: [:new, :create], controller: 'issues/merge'
     end
     resources :revisions, only: [:index, :show]
   end
@@ -55,7 +54,7 @@ Rails.application.routes.draw do
       resources :revisions, only: [:index, :show]
     end
 
-    constraints(:id => /.*/) do
+    constraints(id: /.*/) do
       resources :attachments
     end
   end

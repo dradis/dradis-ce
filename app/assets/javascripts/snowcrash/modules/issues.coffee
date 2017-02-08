@@ -2,7 +2,7 @@
 //= require snowcrash/modules/issues/importer
 //= require snowcrash/modules/issues/table
 //= require snowcrash/modules/issues/tag-input
-//= require snowcrash/modules/issues/merging
+//= require snowcrash/modules/issues/merge
 
 jQuery ->
   if ($('body.issues').length)

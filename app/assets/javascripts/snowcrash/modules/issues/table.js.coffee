@@ -23,7 +23,7 @@ class IssueTable
     # Handle the showing / hiding of table columns
     @$column_menu.find('a').on 'click', @onColumnPickerClick
 
-    # Handle the combine issues button click
+    # Handle the merge issues button click
     $('#issue-table').on('click', '#merge-selected', @onMergeSelected)
 
   loadColumnState: =>
@@ -138,11 +138,7 @@ class IssueTable
       id = @.name.split('_')[1]
       issues_to_merge.push(id)
 
-    for id in issues_to_merge
-      html = "<input type='hidden' name='sources[]' value='#{id}' />"
-      form.append(html)
-
-    form.submit()
+    location.href = "/issues/merge/new?ids=#{issues_to_merge}"
 
   saveColumnState: ->
     if Storage?

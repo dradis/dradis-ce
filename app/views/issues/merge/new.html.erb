@@ -1,14 +1,14 @@
 <% content_for :title, 'Merge issues' %>
 
 <% content_for :sidebar do %>
-  <%= render 'sidebar'%>
+  <%= render 'sidebar' %>
 <% end %>
 
 <div id="issues_editor">
   <div class="inner note-text-inner">
     <h3>Merging <%= @issues.count %> issues</h3>
 
-    <%= simple_form_for Issue.new, url: merge_issues_path, method: 'post' do |f| %>
+    <%= simple_form_for Issue.new, url: merge_index_path, method: 'post' do |f| %>
       <p class="merge-option">Select a target issue to merge the other issues into.
 
       <p class="merge-option">
