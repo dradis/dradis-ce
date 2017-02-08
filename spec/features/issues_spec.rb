@@ -52,7 +52,7 @@ describe "Issues pages" do
 
       end
 
-      describe "merging page", js: true do
+      describe "merge page", js: true do
 
         before do
           # create 2 issues
@@ -83,7 +83,7 @@ describe "Issues pages" do
           # new issue form should not be visible yet
           expect(page).to have_selector('#new_issue', visible: false)
 
-          click_on "click here to merge all issues into a new issue with custom text."
+          choose('Merge into a new issue')
 
           # new issue form should be visible now
           expect(page).to have_selector('#new_issue', visible: true)
