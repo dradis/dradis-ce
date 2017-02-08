@@ -8,7 +8,7 @@
   <div class="inner note-text-inner">
     <h3>Merging <%= @issues.count %> issues</h3>
 
-    <%= simple_form_for Issue.new, url: merge_index_path, method: 'post' do |f| %>
+    <%= form_tag merge_index_path do %>
       <p>Select a target issue to merge the other issues into.
 
       <p class="text-warning">
@@ -34,7 +34,7 @@
           </div>
           <div id="<%= "preview_issue_new" %>" class="accordion-body collapse">
             <div id="new_issue">
-              <%= f.input :text, label: false, input_html: { class: 'textile', data: { preview_url: preview_path, help_url: markup_path } } %>
+              <%= text_area_tag "issue[text]", nil, class: 'textile', data: { preview_url: preview_path, help_url: markup_path } %>
             </div>
           </div>
         </div>
@@ -73,7 +73,7 @@
       <% end %>
 
       <div class="form-actions">
-        <%= f.button :submit, 'Merge issues', class: 'btn btn-dradispro' %> or
+        <%= button_tag 'Merge issues', class: 'btn btn-dradispro' %> or
         <%= link_to 'Cancel', issues_path, class: 'cancel-link' %>
       </div>
     <% end %>
