@@ -26,4 +26,12 @@ body.merge.new {
   .accordion-body {
     background-color: #f5f5f5;
   }
+
+  #preview_issue_new {
+    background-color: white;
+    #new_issue {
+      padding: 10px;
+      border-top: 1px solid #eee;
+    }
+  }
 }

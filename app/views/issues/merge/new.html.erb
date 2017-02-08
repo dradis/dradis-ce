@@ -9,31 +9,36 @@
     <h3>Merging <%= @issues.count %> issues</h3>
 
     <%= simple_form_for Issue.new, url: merge_index_path, method: 'post' do |f| %>
-      <p class="merge-option">Select a target issue to merge the other issues into.
+      <p>Select a target issue to merge the other issues into.
 
-      <p class="merge-option">
-        All issues except the target issue will be deleted,
+      <p class="text-warning">
+        All issues except the target issue will be moved to trash,
         and their evidence will be moved to the target issue.
-      <p class="merge-option" style="display: none">
-        All issues will be deleted,
-        and their evidence will be moved into a brand new issue.
 
-      <p class="merge-option text-warning">
-        WARNING: The text of all issues except the target will be lost.<br>
-        If you want to preserve the text
-        <a class="js-change-merge-option" href="javascript:void(0)">
-          click here to merge all issues into a new issue with custom text.
-        </a>
-      <p class="merge-option text-warning" style="display: none">
-        WARNING: Only the new text that you enter here will be saved;
-        existing text in the old issues will be deleted.
-        <a class="js-change-merge-option" href="javascript:void(0)">
-          Click here to use one issue as a target issue that does not get deleted.
-        </a>
+      <p>As a target issue, you can select an existing one or a brand new issue
+         (selecting the first option <em>Merge into a new issue</em>)
 
       <hr>
 
-      <div class="merge-option accordion">
+      <div class="accordion">
+
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <div class="radio">
+              <%= label_tag do %>
+                <%= radio_button_tag "new", nil, false, id: "new" %>
+                Merge into a new issue
+                <%= link_to raw('<i class="fa fa-chevron-down"></i>'), 'javascript:void(0)', class: 'issue-toggle pull-right', data: {toggle: 'collapse', target: "#preview_issue_new"} %>
+              <% end %>
+            </div>
+          </div>
+          <div id="<%= "preview_issue_new" %>" class="accordion-body collapse">
+            <div id="new_issue">
+              <%= f.input :text, label: false, input_html: { class: 'textile', data: { preview_url: preview_path, help_url: markup_path } } %>
+            </div>
+          </div>
+        </div>
+
         <% @issues.each_with_index do |issue, i| %>
           <div class="accordion-group">
             <div class="accordion-heading">
@@ -48,23 +53,19 @@
             <div id="<%= "preview_issue_#{issue.id}" %>" class="accordion-body collapse">
               <div class="tab-content">
                 <ul class="nav nav-tabs pull-right">
-                  <li class="active"><a href="#normal_<%= i %>" data-toggle="tab">Preview</a></li>
-                  <li><a href="#textile_<%= i %>" data-toggle="tab">Source</a></li>
+                  <li class="active"><a href="#normal_<%= issue.id %>" data-toggle="tab">Preview</a></li>
+                  <li><a href="#textile_<%= issue.id %>" data-toggle="tab">Source</a></li>
                 </ul>
-                <div id="normal_<%= i %>" class="tab-pane active">
+                <div id="normal_<%= issue.id %>" class="tab-pane active">
                   <pre><%= markup(issue.text) %></pre>
                 </div>
-                <div id="textile_<%= i %>" class="tab-pane">
+                <div id="textile_<%= issue.id %>" class="tab-pane">
                   <pre><%= issue.text %></pre>
                 </div>
               </div>
             </div>
           </div>
         <% end %>
-      </div>
-
-      <div id="new_issue" style="display: none" class="merge-option">
-        <%= f.input :text, label: false, input_html: { class: 'textile', data: { preview_url: preview_path, help_url: markup_path } } %>
       </div>
 
       <% @issues.each do |issue| %>
