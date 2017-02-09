@@ -9,14 +9,13 @@
     <h3>Merging <%= @issues.count %> issues</h3>
 
     <%= form_tag merge_index_path do %>
-      <p>Select a target issue to merge the other issues into.
+      <p>
+        Merge your Issues into a new target Issue.
+        Select an existing Issue or merge into a new Issue.
 
       <p class="text-warning">
-        All issues except the target issue will be moved to trash,
-        and their evidence will be moved to the target issue.
-
-      <p>As a target issue, you can select an existing one or a brand new issue
-         (selecting the first option <em>Merge into a new issue</em>)
+        All Evidence from merged Issues will added as new instances of Evidence to the target Issue.
+        Then, merged Issues will be moved to the Trash.
 
       <hr>
 
