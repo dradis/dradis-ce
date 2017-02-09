@@ -39,7 +39,7 @@ class AttachmentsController < ProjectScopedController
   # It is possible to rename attachments and this function provides that
   # functionality.
   def update
-    filename    = params[:id]
+    filename    = params[:filename]
     attachment  = Attachment.find(filename, conditions: { node_id: @node.id } )
     attachment.close
     new_name    = CGI::unescape(attachment_params[:filename])
@@ -56,7 +56,7 @@ class AttachmentsController < ProjectScopedController
   # displayed inline. By default the <tt>Content-disposition</tt> will be set to
   # +attachment+.
   def show
-    filename = params[:id]
+    filename = params[:filename]
 
     @attachment  = Attachment.find(filename, conditions: { node_id: @node.id } )
     send_options = { filename: @attachment.filename }
@@ -89,7 +89,7 @@ class AttachmentsController < ProjectScopedController
   # attachment's file name in the :id parameter and the corresponding node in
   # the :node_id parameter.
   def destroy
-    filename = params[:id]
+    filename = params[:filename]
 
     @attachment = Attachment.find(filename, conditions: { node_id: @node.id} )
     @attachment.delete
