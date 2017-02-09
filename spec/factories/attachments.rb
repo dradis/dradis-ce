@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :attachment do
     skip_create
-    
+
     sequence(:filename) { |n| "image#{n}.png" }
-    node { Node.issue_library }
+    node
 
     initialize_with {
       FileUtils.mkdir_p Attachment.pwd.join(node.id.to_s).to_s
