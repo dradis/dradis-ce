@@ -108,23 +108,4 @@ class AttachmentsController < ProjectScopedController
       redirect_to root_path, alert: 'Node not found'
     end
   end
-
-  # Obtain a suitable attachment name for the recently uploaded file. If the
-  # original file name is still available, use it, otherwise, provide count-based
-  # an alternative.
-  def get_name(args={})
-    original = args.fetch(:original)
-
-    if @node.attachments.map(&:filename).include?(original)
-      attachments_pwd = Attachment.pwd.join(@node.id.to_s)
-
-      # The original name is taken, so we'll add the "_copy-XX." suffix
-      extension = File.extname(original)
-      basename  = File.basename(original, extension)
-      sequence  = Dir.glob(attachments_pwd.join("#{basename}_copy-*#{extension}")).collect { |a| a.match(/_copy-([0-9]+)#{extension}\z/)[1].to_i }.max || 0
-      "%s_copy-%02i%s" % [basename, sequence + 1, extension]
-    else
-      original
-    end
-  end
 end
