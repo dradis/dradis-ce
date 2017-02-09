@@ -42,7 +42,7 @@ class AttachmentsController < ProjectScopedController
     filename    = params[:id]
     attachment  = Attachment.find(filename, conditions: { node_id: @node.id } )
     attachment.close
-    new_name    = CGI::unescape(params[:rename])
+    new_name    = CGI::unescape(attachment_params[:filename])
     destination = Attachment.pwd.join(@node.id.to_s, new_name).to_s
 
     if !File.exist?(destination) && !destination.match(/^#{Attachment.pwd}/).nil?
@@ -107,5 +107,9 @@ class AttachmentsController < ProjectScopedController
     rescue
       redirect_to root_path, alert: 'Node not found'
     end
+  end
+
+  def attachment_params
+    params.require(:attachment).permit(:filename)
   end
 end

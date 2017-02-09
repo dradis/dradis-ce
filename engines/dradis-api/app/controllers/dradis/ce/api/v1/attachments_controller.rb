@@ -43,7 +43,7 @@ module Dradis::CE::API
         attachment.close
 
         begin
-          new_name    = CGI::unescape(params[:attachment][:filename])
+          new_name    = CGI::unescape(attachment_params[:filename])
           destination = Attachment.pwd.join(@node.id.to_s, new_name).to_s
 
           if !File.exist?(destination) && !destination.match(/^#{Attachment.pwd}/).nil?
@@ -72,7 +72,7 @@ module Dradis::CE::API
       end
 
       def attachment_params
-        params.require(:files).permit()
+        params.require(:attachment).permit(:filename)
       end
     end
   end
