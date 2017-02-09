@@ -18,7 +18,7 @@ module Dradis::CE::API
       end
 
       def create
-        uploaded_files = params.fetch('files', [])
+        uploaded_files = params.fetch(:files, [])
 
         @attachments = []
         uploaded_files.each do |uploaded_file|

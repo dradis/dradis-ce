@@ -12,7 +12,7 @@ class AttachmentsController < ProjectScopedController
   # Create a new attachment for a give :node_id using a file that has been
   # submitted using an HTML form POST request.
   def create
-    uploaded_file = params.fetch('attachment_file', params.fetch('files', []).first)
+    uploaded_file = params.fetch(:attachment_file, params.fetch(:files, []).first)
 
     attachment_name = Attachment.available_name(@node, original: uploaded_file.original_filename)
 
