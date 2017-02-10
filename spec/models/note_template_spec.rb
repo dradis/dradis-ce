@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 # Remember NoteTemplate inherits from FileBackedModel which is ActiveModel
 # compliant

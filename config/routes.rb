@@ -54,8 +54,8 @@ Rails.application.routes.draw do
       resources :revisions, only: [:index, :show]
     end
 
-    constraints(id: /.*/) do
-      resources :attachments
+    constraints(:filename => /.*/) do
+      resources :attachments, param: :filename
     end
   end
 

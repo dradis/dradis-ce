@@ -15,7 +15,12 @@
   <div class="tab-pane active" id="properties-tab">
     <div class="node-content" id="<%= dom_id(@node) %>_content">
       <div class="inner">
-        <h3>Properties - <%= link_to 'edit', edit_node_path(@node) %></h3>
+        <h3>Properties - <span class="actions">
+          <%= link_to edit_node_path(@node) do %>
+            <i class="fa fa-pencil"></i> Edit
+          <% end %>
+          </span>
+        </h3>
 
         <% if @node.has_any_property?  %>
           <% @node.properties.sort.each do |key, value| %>

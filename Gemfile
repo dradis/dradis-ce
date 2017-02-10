@@ -175,7 +175,7 @@ group :test do
   gem 'capybara'
   gem 'poltergeist'
   gem 'guard-rspec', require: false
-  gem 'shoulda-matchers', '~> 2.8.0'
+  gem 'shoulda-matchers', '~> 3.1'
   gem 'timecop'
 end
 
