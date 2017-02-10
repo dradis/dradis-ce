@@ -24,3 +24,7 @@
 <%= render partial: 'nodes/modals/rename' %>
 <%= render partial: 'nodes/modals/move' %>
 <% end %>
+
+<% if content_for?(:breadcrums) %>
+<%= yield(:breadcrums) %>
+<% end %>

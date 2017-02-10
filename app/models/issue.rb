@@ -73,4 +73,30 @@ class Issue < Note
       node.label.split('.').map(&:to_i)
     end
   end
+
+  # Move all Evidence attached to issues with ids in issue_ids
+  # array to current issue.
+  # Then delete those issues without Evidence.
+  # Returns the number of issues affected.
+  def merge(issue_ids)
+    merged = 0
+    issue_ids = [issue_ids] if issue_ids.is_a?(Integer)
+
+    # check all specified ids are integers
+    return merged unless issue_ids.all?{|i| i.is_a? Integer}
+
+    # assert current id is not there
+    issue_ids -= [id]
+
+    # merge
+    if issue_ids.any?
+      self.transaction do
+        Evidence.where(issue_id: issue_ids).update_all(issue_id: id)
+        merged = Issue.where(id: issue_ids).destroy_all.count
+      end
+    end
+
+    merged
+  end
+
 end

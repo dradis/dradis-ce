@@ -49,6 +49,56 @@ describe "Issues pages" do
             expect(page).to have_content(title)
           end
         end
+
+      end
+
+      describe "merge page", js: true do
+
+        before do
+          # create 2 issues
+          create(:evidence)
+          create(:evidence)
+
+          visit issues_path
+
+          # click > 1 issue checkboxes
+          page.all('input.js-multicheck').each(&:click)
+
+          # click the merge button
+          find('#merge-selected').click
+        end
+
+        it "merges issues into an existing one" do
+          expect(page).to have_content "Merging 2 issues"
+
+          click_button "Merge issues"
+
+          expect(page).to have_content("1 issues merged into ")
+        end
+
+        it "merges issues into a new one" do
+
+          expect(page).to have_content "Merging 2 issues"
+
+          # new issue form should not be visible yet
+          expect(page).to have_selector('#new_issue', visible: false)
+
+          choose('Merge into a new issue')
+
+          # new issue form should be visible now
+          expect(page).to have_selector('#new_issue', visible: true)
+
+          click_button "Merge issues"
+
+          expect(page).to have_content("2 issues merged into ")
+
+          expect(Issue.last.author).to eq(@logged_in_as.email)
+        end
+
+        let(:submit_form) {
+          click_button "Merge issues"
+        }
+        include_examples "deleted item is listed in Trash", :issue
       end
 
       describe "new page" do

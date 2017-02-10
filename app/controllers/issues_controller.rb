@@ -1,8 +1,8 @@
 class IssuesController < ProjectScopedController
   before_action :find_issuelib
-  before_action :find_issues, except: :destroy
+  before_action :find_issues, except: [:destroy, :merging]
 
-  before_action :find_or_initialize_issue, except: [:import, :index]
+  before_action :find_or_initialize_issue, except: [:import, :index, :merging]
   before_action :find_or_initialize_tags, except: [:destroy]
   before_action :find_note_template, only: [:new]
 
@@ -95,6 +95,7 @@ class IssuesController < ProjectScopedController
   end
 
   private
+
   def find_issues
     # We need a transaction because multiple DELETE calls can be issued from
     # index and a TOCTOR can appear between the Note read and the Issue.find
