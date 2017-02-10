@@ -9,7 +9,8 @@ class Issues::MergeController < IssuesController
     end
 
     if @issues.count <= 1
-      redirect_to issues_url
+      redirect_to issues_url,
+        alert: 'You need to select at least two issues to merge.'
     end
   end
 
