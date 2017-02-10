@@ -13,37 +13,22 @@
 
 <div id="issues_editor">
   <div class="inner note-text-inner">
-    <h3>You're merging <%= @issues.count %> issues</h3>
+    <h3>You're merging <%= @issues.count %> Issues into a target Issue</h3>
 
     <%= form_tag merge_index_path do %>
       <p>
-        This screen lets you merge several Issues into a new target Issue:
+        Select an existing Issue to merge into, or create a new one.
       </p>
 
-      <ol>
-        <li>
-          <p>
-            <i class="fa-li fa fa-check"></i>
-            You can select an existing Issue or merge everything into a brand
-            new Issue.
-          </p>
-        </li>
+      <p>
+        Evidence from the original Issues will be added to the target Issue.
+        Then, the original Issues will be moved to the trash.
+      </p>
 
-        <li>
-          <p>
-            <i class="fa-li fa fa-check"></i>
-            All Evidence from merged Issues will be added as new instances of
-            Evidence to the target Issue.
-          </p>
-        </li>
-
-        <li>
-          <p>
-            <i class="fa-li fa fa-check"></i>
-            Finally, the original Issues will be moved to the Trash.
-          </p>
-        </li>
-      </ol>
+      <p>
+        <a href="https://dradisframework.com/pro/support/guides/projects/merge_issues.html">Learn
+        more about merging issues</a>.
+      </p>
 
       <hr>
 
