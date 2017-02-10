@@ -31,9 +31,10 @@ describe "Describe attachments" do
       expect(File.exist?(Attachment.pwd.join(@node.id.to_s, 'rails.png'))).to be true
     end
 
-    it "auto-renames the upload if an attachment with the same name already exists" do
+    it "auto-renames the upload if an attachment with the same name already exists", focus: true do
       node_attachments = Attachment.pwd.join(@node.id.to_s)
-      FileUtils.mkdir_p( node_attachments )
+      FileUtils.rm_rf(node_attachments)
+      FileUtils.mkdir_p(node_attachments)
 
       FileUtils.cp( Rails.root.join('spec/fixtures/files/rails.png'), node_attachments.join('rails.png') )
       expect(Dir["#{node_attachments}/*"].count).to eq(1)
@@ -48,3 +49,4 @@ describe "Describe attachments" do
     end
   end
 end
+#
