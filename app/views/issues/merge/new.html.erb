@@ -4,18 +4,46 @@
   <%= render 'sidebar' %>
 <% end %>
 
+<% content_for :breadcrums do %>
+  <ul class="breadcrumb">
+    <li><%= link_to 'All issues', issues_path %> <span class="divider">/</span></li>
+    <li class="active">Merge issues</li>
+  </ul>
+<% end %>
+
 <div id="issues_editor">
   <div class="inner note-text-inner">
-    <h3>Merging <%= @issues.count %> issues</h3>
+    <h3>You're merging <%= @issues.count %> issues</h3>
 
     <%= form_tag merge_index_path do %>
       <p>
-        Merge your Issues into a new target Issue.
-        Select an existing Issue or merge into a new Issue.
+        This screen lets you merge several Issues into a new target Issue:
+      </p>
 
-      <p class="text-warning">
-        All Evidence from merged Issues will added as new instances of Evidence to the target Issue.
-        Then, merged Issues will be moved to the Trash.
+      <ol>
+        <li>
+          <p>
+            <i class="fa-li fa fa-check"></i>
+            You can select an existing Issue or merge everything into a brand
+            new Issue.
+          </p>
+        </li>
+
+        <li>
+          <p>
+            <i class="fa-li fa fa-check"></i>
+            All Evidence from merged Issues will be added as new instances of
+            Evidence to the target Issue.
+          </p>
+        </li>
+
+        <li>
+          <p>
+            <i class="fa-li fa fa-check"></i>
+            Finally, the original Issues will be moved to the Trash.
+          </p>
+        </li>
+      </ol>
 
       <hr>
 
@@ -55,8 +83,8 @@
                   <li class="active"><a href="#normal_<%= issue.id %>" data-toggle="tab">Preview</a></li>
                   <li><a href="#textile_<%= issue.id %>" data-toggle="tab">Source</a></li>
                 </ul>
-                <div id="normal_<%= issue.id %>" class="tab-pane active">
-                  <pre><%= markup(issue.text) %></pre>
+                <div id="normal_<%= issue.id %>" class="tab-pane active content-textile">
+                  <%= markup(issue.text) %>
                 </div>
                 <div id="textile_<%= issue.id %>" class="tab-pane">
                   <pre><%= issue.text %></pre>
