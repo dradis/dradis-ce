@@ -45,18 +45,28 @@ gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '~> 3.0'
 
+# ---------------------------------------------------- Dradis Community Edition
 # Organize Node tree
 gem 'acts_as_tree'
 
 gem 'builder'
 
-gem 'rails_autolink', '~> 1.1'
-gem 'thor', '~> 0.18'
+gem 'differ', '~> 0.1.2'
+
+
+# HTML processing filters and utilities
+gem 'html-pipeline'
+
+gem 'kaminari', '~> 0.16.1'
 
 gem 'paper_trail', '~> 4.0.0'
-gem 'differ', '~> 0.1.2'
-gem 'kaminari', '~> 0.16.1'
+
+# gem 'rails_autolink', '~> 1.1'
+
 gem 'record_tag_helper'
+
+gem 'thor', '~> 0.18'
+
 
 # ------------------------------------------------------ With native extensions
 # These require native extensions.
@@ -86,6 +96,9 @@ gem 'mysql2', '0.3.18'
 # the last one supported by Traveling Ruby
 # gem 'RedCloth', '4.2.9', require: 'redcloth'
 gem 'RedCloth', '4.3.1', require: 'redcloth'
+
+# html-pipeline dependency for auto-linking
+gem 'rinku'
 
 # SQLite3 DB driver
 gem 'sqlite3'#,  '1.3.10'
