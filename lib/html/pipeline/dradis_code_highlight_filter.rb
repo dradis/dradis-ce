@@ -1,4 +1,3 @@
-%%{{}}%%
 module HTML
   class Pipeline
     # HTML Filter that highlights post-processed Textile code blocks.
