@@ -5,12 +5,16 @@
 <% end %>
 
 <ul class="nav nav-tabs main-tabs">
-  <li class="active"><a href="#evidence-tab" data-toggle="tab">
-    <% if tag = @evidence.issue.tags.first %>
-      <i class="fa fa-flag" style="color: <%= tag.color %>"></i>
-    <% else %>
-      <i class="fa fa-flag"></i>
-    <% end %>Evidence</a></li><li><a href="#info-tab" data-toggle="tab"><i class="fa fa-bug"></i> Information</a></li>
+  <li class="active">
+    <a href="#evidence-tab" data-toggle="tab">
+      <%= colored_icon_for_model(@evidence, 'fa-flag')%> Evidence
+    </a>
+  </li>
+  <li>
+    <a href="#info-tab" data-toggle="tab">
+      <i class="fa fa-bug"></i> Information
+    </a>
+  </li>
   <li><a href="#activity-tab" data-toggle="tab"><i class="fa fa-refresh"></i> Recent activity</a></li>
 </ul>
 
@@ -22,8 +26,15 @@
         <h3>
           Evidence for this instance -
           <span class="actions">
-            <%= link_to 'edit', edit_node_evidence_path(@node, @evidence) %>
-            <%= link_to 'delete', [@node, @evidence], class: 'text-error', data: { confirm: 'Are you sure?' }, method: :delete %>
+            <%= link_to edit_node_evidence_path(@node, @evidence) do %>
+              <i class="fa fa-pencil"></i> Edit
+            <% end %>
+            <%= link_to [@node, @evidence],
+                  class: 'text-error',
+                  data: { confirm: 'Are you sure?' },
+                  method: :delete do %>
+              <i class="fa fa-trash"></i> Delete
+            <% end %>
           </span>
         </h3>
 
@@ -40,7 +51,7 @@
           <h3>
             Issue information -
             <span class="actions">
-            <%= link_to 'open', issue_path(@issue)%> -
+            <%= link_to 'Open', issue_path(@issue)%> -
             <%= tag_and_name_for(@issue) %>
             </span>
           </h3>

@@ -18,7 +18,7 @@
           <%=
           case column
           when 'Title'
-            link_to issue.title, issue
+            link_to(issue.title, issue)
           when 'Tags'
             tag_and_name_for(issue)
           when 'Affected'
@@ -36,6 +36,14 @@
           %>
         </td>
         <% end  %>
+        <td class="column-actions">
+          <%= link_to edit_issue_path(issue), class: '' do %>
+            <i class="fa fa-pencil"></i> Edit
+          <% end %>
+          <%= link_to issue, method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-error' do %>
+            <i class="fa fa-trash"></i> Delete
+          <% end %>
+        </td>
       </tr>
       <% end %>
       <% end %>

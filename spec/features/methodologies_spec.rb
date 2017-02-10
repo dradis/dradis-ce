@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "Describe methodologies" do
   it "should require authenticated users" do

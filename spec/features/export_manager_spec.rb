@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "Export Manager" do
   before { login_to_project_as_user }

@@ -14,17 +14,6 @@ body.configurations {
 
   td {
     &.status { text-align: center; }
-    &.value input {
-      background-position: right center;
-      background-repeat: no-repeat;
-      padding-right: 20px;
-      width: 80%;
-
-      &.editing { background-image: image-url('silk/pencil.png'); }
-      &.saving { background-image: image-url('loading.gif'); }
-      &.saved { background-image: image-url('silk/accept.png'); }
-      &.failed { background-image: image-url('silk/stop.png'); }
-    }
   }
 
 
