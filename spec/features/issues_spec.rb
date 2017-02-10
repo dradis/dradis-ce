@@ -69,7 +69,7 @@ describe "Issues pages" do
         end
 
         it "merges issues into an existing one" do
-          expect(page).to have_content "Merging 2 issues"
+          expect(page).to have_content "You're merging 2 Issues into a target Issue"
 
           click_button "Merge issues"
 
@@ -78,7 +78,7 @@ describe "Issues pages" do
 
         it "merges issues into a new one" do
 
-          expect(page).to have_content "Merging 2 issues"
+          expect(page).to have_content "You're merging 2 Issues into a target Issue"
 
           # new issue form should not be visible yet
           expect(page).to have_selector('#new_issue', visible: false)
