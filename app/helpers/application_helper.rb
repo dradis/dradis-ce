@@ -7,7 +7,7 @@ module ApplicationHelper # :nodoc:
     textile_pipeline = HTML::Pipeline.new [
       HTML::Pipeline::DradisFieldableFilter,
       HTML::Pipeline::DradisTextileFilter,
-      HTML::Pipeline::DradisCodeHighlightFilter,
+      # HTML::Pipeline::DradisCodeHighlightFilter,
       HTML::Pipeline::AutolinkFilter
     ], context
 
