@@ -31,7 +31,7 @@ describe "Describe attachments" do
       expect(File.exist?(Attachment.pwd.join(@node.id.to_s, 'rails.png'))).to be true
     end
 
-    it "auto-renames the upload if an attachment with the same name already exists", focus: true do
+    it "auto-renames the upload if an attachment with the same name already exists" do
       node_attachments = Attachment.pwd.join(@node.id.to_s)
       FileUtils.rm_rf(node_attachments)
       FileUtils.mkdir_p(node_attachments)
