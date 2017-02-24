@@ -170,6 +170,9 @@ GEM
     dradis-projects (3.0.0)
       dradis-plugins (~> 3.5)
       rubyzip (~> 1.1.0)
+    dradis-qualys (3.0.2)
+      dradis-plugins (~> 3.2)
+      nokogiri (~> 1.3)
     dradis-zap (3.0.0)
       dradis-plugins (~> 3.2)
       nokogiri (~> 1.3)
@@ -457,7 +460,7 @@ DEPENDENCIES
   dradis-openvas!
   dradis-plugins (~> 3.5)
   dradis-projects (~> 3.0)
-  dradis-qualys!
+  dradis-qualys (~> 3.0)
   dradis-zap (~> 3.0)
   factory_girl_rails
   font-awesome-sass (~> 4.3.0)
