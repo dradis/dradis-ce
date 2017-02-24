@@ -15,7 +15,7 @@ class IssuesController < ProjectScopedController
 
     # We can't use the existing @nodes variable as it only contains root-level
     # nodes, and we need the auto-complete to have the full list.
-    @nodes_for_add_evidence = Node.order(:label)
+    @nodes_for_add_evidence = Node.user_nodes.order(:label)
 
     load_conflicting_revisions(@issue)
   end
