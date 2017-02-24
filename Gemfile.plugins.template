@@ -18,7 +18,7 @@ gem 'dradis-html_export', '3.3.3'
 # ---------------------------------------------------------------------- Upload
 gem 'dradis-acunetix',    path: '../dradis-acunetix/'
 gem 'dradis-brakeman',    path: '../dradis-brakeman/'
-gem 'dradis-burp',        path: '../dradis-burp/'
+gem 'dradis-burp',        '~> 3.0'
 gem 'dradis-metasploit',  path: '../dradis-metasploit/'
 gem 'dradis-nessus',      '~> 3.3'
 gem 'dradis-nexpose',     path: '../dradis-nexpose/'
