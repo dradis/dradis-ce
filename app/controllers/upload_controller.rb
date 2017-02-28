@@ -71,7 +71,7 @@ class UploadController < ProjectScopedController
 
     job = UploadJob.perform_later(
       file: attachment.fullpath.to_s,
-      plugin: params[:uploader],
+      plugin: @uploader,
       uid: params[:item_id].to_i
     )
 
@@ -84,13 +84,9 @@ class UploadController < ProjectScopedController
 
     job_logger.write('Small attachment detected. Processing in line.')
     begin
-      content_service  = Dradis::Plugins::ContentService.new(plugin: @uploader)
-      template_service = Dradis::Plugins::TemplateService.new(plugin: @uploader)
-
       importer = @uploader::Importer.new(
-                  logger: job_logger,
-         content_service: content_service,
-        template_service: template_service
+        logger: job_logger,
+        plugin: @uploader
       )
 
       importer.import(file: attachment.fullpath)

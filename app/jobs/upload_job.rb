@@ -9,13 +9,9 @@ class UploadJob < ApplicationJob
 
     plugin = plugin_name.constantize
 
-    content_service  = Dradis::Plugins::ContentService.new(plugin: plugin)
-    template_service = Dradis::Plugins::TemplateService.new(plugin: plugin)
-
     importer = plugin::Importer.new(
-                logger: logger,
-       content_service: content_service,
-      template_service: template_service
+      logger: logger,
+      plugin: plugin
     )
 
     importer.import(file: file)
