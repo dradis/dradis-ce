@@ -69,11 +69,14 @@ class UploadController < ProjectScopedController
   def process_upload_background(args={})
     attachment = args.fetch(:attachment)
 
-    @job_id = UploadProcessor.create(
-                                    file:   attachment.fullpath.to_s,
-                                    plugin: params[:uploader],
-                                    uid:    params[:item_id])
-    job_logger.write("Enqueueing job to start in the background. Job id is #{ @job_id }")
+    job = UploadJob.perform_later(
+      file: attachment.fullpath.to_s,
+      plugin: params[:uploader],
+      uid: params[:item_id].to_i
+    )
+
+    job_logger.write 'Enqueueing job to start in the background.'
+    job_logger.write "Job id is #{ job.job_id }."
   end
 
   def process_upload_inline(args={})

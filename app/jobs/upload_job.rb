@@ -1,18 +1,7 @@
-# Resque background worker to process files uploaded via the Upload Manager.
-#
-# This worker requires the following options:
-#   plugin: Upload Plugin that needs to process the file,
-#     file: Full path to the file to be processed,
-#      uid: uuid for this job
+class UploadJob < ApplicationJob
+  queue_as :dradis_upload
 
-class UploadProcessor < BaseWorker
-  @queue = :dradis_upload
-
-  def perform_delegate
-    file        = options['file']
-    plugin_name = options['plugin']
-    uid         = options['uid']
-
+  def perform(file:, plugin:, uid:)
     logger = Log.new(uid: uid)
 
     logger.write{ "Running Ruby version %s" % RUBY_VERSION }
