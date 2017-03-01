@@ -22,7 +22,6 @@ class ExportController < ProjectScopedController
     # redirecting, so we'll put them in the session.
     # *Warning* can't store too much data here.
     session[:export_manager] = {
-      plugin: @exporter,
       template: @template_file
     }
 
