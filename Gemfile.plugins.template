@@ -9,8 +9,8 @@ gem 'dradis-calculator_cvss',  '~> 3.0'
 gem 'dradis-calculator_dread', '~> 3.0'
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv',         path: '../dradis-csv/'
-gem 'dradis-html_export', '3.3.3'
+gem 'dradis-csv',         '~> 3.4'
+gem 'dradis-html_export', '~> 3.4'
 # ---------------------------------------------------------------------- Import
 # gem 'dradis-mediawiki', path: '../dradis-mediawiki/'
 # gem 'dradis-vulndb',    path: '../dradis-vulndb/'
