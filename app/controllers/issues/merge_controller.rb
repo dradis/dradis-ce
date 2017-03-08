@@ -37,7 +37,7 @@ class Issues::MergeController < IssuesController
     respond_to do |format|
       format.html {
         if count > 0
-          redirect_to @issue, notice: "#{count} issues merged into #{@issue.title}."
+          redirect_to @issue, notice: "#{count} #{'issue'.pluralize(count)} merged into #{@issue.title}."
         else
           redirect_to issues_url, alert: "Issues couldn't be merged."
         end
