@@ -88,7 +88,8 @@ describe "Issues pages" do
           # new issue form should be visible now
           expect(page).to have_selector('#new_issue', visible: true)
 
-          click_button "Merge issues"
+          # click_button "Merge issues" (why this sometimes doesn't submit the form?)
+          page.execute_script("$('#merge_button').click()")
 
           expect(page).to have_content("2 issues merged into ")
 
