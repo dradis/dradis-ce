@@ -88,7 +88,9 @@ describe "Issues pages" do
           # new issue form should be visible now
           expect(page).to have_selector('#new_issue', visible: true)
 
-          click_button "Merge issues"
+          # click button like this because the button may be moving down
+          # due to bootstrap accordion unfold transition
+          find_button("Merge issues").trigger("click") # click_button "Merge issues"
 
           expect(page).to have_content("2 issues merged into ")
 
