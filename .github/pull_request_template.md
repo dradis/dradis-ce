@@ -26,8 +26,8 @@ products, we must have the copyright associated with the entire
 codebase. Any code you create which is merged must be owned by us.
 That's not us trying to be a jerks, that's just the way it works.
 
-Feel free to review the [CONTRIBUTORS](https://github.com/dradis/dradis-ce/blob/master/CONTRIBUTING.md)
-agreement for the details.
+Please review the [CONTRIBUTING.md](https://github.com/dradis/dradis-ce/blob/master/CONTRIBUTING.md)
+file for the details.
 
 You can delete this section, but the following sentence needs to
 remain in the PR's description:
