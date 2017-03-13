@@ -8,9 +8,12 @@
 gem 'dradis-calculator_cvss',  '~> 3.6'
 gem 'dradis-calculator_dread', '~> 3.6'
 
+
 # ---------------------------------------------------------------------- Export
 gem 'dradis-csv',         '~> 3.6'
 gem 'dradis-html_export', '~> 3.6'
+
+
 # ---------------------------------------------------------------------- Import
 # gem 'dradis-mediawiki', '~> 3.6'
 # gem 'dradis-vulndb',    '~> 3.6'
@@ -26,5 +29,5 @@ gem 'dradis-nikto',       '~> 3.6'
 gem 'dradis-nmap',        '~> 3.6'
 gem 'dradis-ntospider',   '~> 3.6'
 gem 'dradis-openvas',     '~> 3.6'
-gem 'dradis-qualys',      '¬> 3.6'
+gem 'dradis-qualys',      '~> 3.6'
 gem 'dradis-zap',         '~> 3.6'
