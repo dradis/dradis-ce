@@ -5,12 +5,12 @@
 #   $ bundle
 
 # ----------------------------------------------------------------- Calculators
-gem 'dradis-calculator_cvss',  '~> 3.0'
-gem 'dradis-calculator_dread', '~> 3.0'
+gem 'dradis-calculator_cvss',  '~> 3.0.1', path: '../dradis-calculator_cvss/'
+gem 'dradis-calculator_dread', '~> 3.0', path: '../dradis-calculator_dread/'
 
 # ---------------------------------------------------------------------- Export
 gem 'dradis-csv',         path: '../dradis-csv/'
-gem 'dradis-html_export', '3.3.3'
+gem 'dradis-html_export', path: '../dradis-html_export/'
 # ---------------------------------------------------------------------- Import
 # gem 'dradis-mediawiki', path: '../dradis-mediawiki/'
 # gem 'dradis-vulndb',    path: '../dradis-vulndb/'

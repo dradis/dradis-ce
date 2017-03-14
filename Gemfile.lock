@@ -456,7 +456,7 @@ DEPENDENCIES
   dradis-api!
   dradis-brakeman!
   dradis-burp (~> 3.0)
-  dradis-calculator_cvss (~> 3.0)
+  dradis-calculator_cvss (~> 3.0.1)
   dradis-calculator_dread (~> 3.0)
   dradis-csv (~> 3.3)!
   dradis-html_export (~> 3.3)
