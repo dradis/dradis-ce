@@ -3,7 +3,6 @@
   class="modal hide"
   tabindex="-1"
   role="dialog"
-  aria-labelledby="modal_add_node_header"
   aria-hidden="true"
 >
   <div class="modal-header">
@@ -12,9 +11,9 @@
     </button>
 
     <% if type == :branch %>
-      <h3 id="modal_add_node_header">Add top-level node</h3>
+      <h3>Add top-level node</h3>
     <% else %>
-      <h3 id="modal_add_node_header">Add a child to the <strong><%= @node.label %></strong> node</h3>
+      <h3>Add a child to the <strong><%= @node.label %></strong> node</h3>
     <% end %>
   </div>
 
@@ -64,11 +63,7 @@
       # exists on a real Node. We can't pass a string or symbol to form_for
       # either because if we pass ':node' or ':nodes' form_for will try to
       # use the @node or @nodes instance variables and we get the same error. %>
-    <%= form_tag(
-      main_app.create_multiple_nodes_path,
-      class: 'add_multiple_nodes_form',
-      style: 'display: none;',
-    ) do %>
+    <%= form_tag(main_app.create_multiple_nodes_path, class: 'add_multiple_nodes_form') do %>
       To create multiple nodes, add one node name per line:
 
       <div class="add_multiple_nodes_error">

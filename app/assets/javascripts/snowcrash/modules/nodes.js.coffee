@@ -14,6 +14,7 @@ $ ->
     $modal = $(this).closest(".modal")
     unless $modal.find(".nodes_list").val().trim()
       e.preventDefault()
+      $(".modal_add_node_submit_btn").removeAttr('disabled').val('Add')
       $(".add_multiple_nodes_error").show()
 
   if $('body.nodes.show').length
