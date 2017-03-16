@@ -29,3 +29,5 @@
 //= require snowcrash/modules/activities/poller
 // require snowcrash/modules/tour
 //= require snowcrash/modules/uploads
+
+//= require snowcrash/pages/revisions

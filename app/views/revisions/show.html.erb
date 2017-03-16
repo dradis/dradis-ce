@@ -36,7 +36,7 @@
     </div>
   </div>
 
-  <pre><%= raw @diffed_revision.diff.format_as(:html) %></pre>
+  <pre class='js-diff-body'><%= @diffed_revision.diff.format_as(:color) %></pre>
 
   <br/>
   <h3>Legend</h3>
