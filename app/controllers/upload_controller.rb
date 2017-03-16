@@ -44,11 +44,11 @@ class UploadController < ProjectScopedController
     # cause the processing of a small file to time out).
     #
     # In Development and testing, if the file is small, process in line.
-    # if Rails.env.production? || (File.size(attachment.fullpath) > 1024*1024)
+    if Rails.env.production? || (File.size(attachment.fullpath) > 1024*1024)
       process_upload_background(attachment: attachment)
-    # else
-    #   process_upload_inline(attachment: attachment)
-    # end
+    else
+      process_upload_inline(attachment: attachment)
+    end
 
     # Nothing to do, the client-side JS will poll ./status for updates
     # from now on
