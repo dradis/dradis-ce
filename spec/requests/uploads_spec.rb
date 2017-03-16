@@ -55,7 +55,7 @@ describe "upload requests" do
         expect(UploadJob).to receive(:perform_later).with(
           hash_including(
             file: attachment_file,
-            plugin: uploader
+            plugin_name: uploader
           )
         ).once
 

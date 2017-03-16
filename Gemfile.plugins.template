@@ -5,26 +5,29 @@
 #   $ bundle
 
 # ----------------------------------------------------------------- Calculators
-gem 'dradis-calculator_cvss',  '~> 3.0'
-gem 'dradis-calculator_dread', '~> 3.0'
+gem 'dradis-calculator_cvss',  '~> 3.6', github: 'dradis/dradis-calculator_cvss'
+gem 'dradis-calculator_dread', '~> 3.6', github: 'dradis/dradis-calculator_dread'
+
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv',         path: '../dradis-csv/'
-gem 'dradis-html_export', '3.3.3'
+gem 'dradis-csv',         '~> 3.6', github: 'dradis/dradis-csv'
+gem 'dradis-html_export', '~> 3.6', github: 'dradis/dradis-html_export'
+
+
 # ---------------------------------------------------------------------- Import
-# gem 'dradis-mediawiki', path: '../dradis-mediawiki/'
-# gem 'dradis-vulndb',    path: '../dradis-vulndb/'
+# gem 'dradis-mediawiki', '~> 3.6', github: 'dradis/dradis-mediawiki'
+# gem 'dradis-vulndb',    '~> 3.6', github: 'dradis/dradis-vulndb'
 
 # ---------------------------------------------------------------------- Upload
-gem 'dradis-acunetix',    path: '../dradis-acunetix/'
-gem 'dradis-brakeman',    path: '../dradis-brakeman/'
-gem 'dradis-burp',        '~> 3.0'
-gem 'dradis-metasploit',  path: '../dradis-metasploit/'
-gem 'dradis-nessus',      '~> 3.3'
-gem 'dradis-nexpose',     path: '../dradis-nexpose/'
-gem 'dradis-nikto',       path: '../dradis-nikto/'
-gem 'dradis-nmap',        '~> 3.1'
-gem 'dradis-ntospider',   path: '../dradis-ntospider/'
-gem 'dradis-openvas',     path: '../dradis-openvas/'
-gem 'dradis-qualys',      '~> 3.0'
-gem 'dradis-zap',         '~> 3.0'
+gem 'dradis-acunetix',    '~> 3.6', github: 'dradis/dradis-acunetix'
+gem 'dradis-brakeman',    '~> 3.6', github: 'dradis/dradis-brakeman'
+gem 'dradis-burp',        '~> 3.6', github: 'dradis/dradis-burp'
+gem 'dradis-metasploit',  '~> 3.6', github: 'dradis/dradis-metasploit'
+gem 'dradis-nessus',      '~> 3.6', github: 'dradis/dradis-nessus'
+gem 'dradis-nexpose',     '~> 3.6', github: 'dradis/dradis-nexpose'
+gem 'dradis-nikto',       '~> 3.6', github: 'dradis/dradis-nikto'
+gem 'dradis-nmap',        '~> 3.6', github: 'dradis/dradis-nmap'
+gem 'dradis-ntospider',   '~> 3.6', github: 'dradis/dradis-ntospider'
+gem 'dradis-openvas',     '~> 3.6', github: 'dradis/dradis-openvas'
+gem 'dradis-qualys',      '~> 3.6', github: 'dradis/dradis-qualys'
+gem 'dradis-zap',         '~> 3.6', github: 'dradis/dradis-zap'

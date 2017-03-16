@@ -1,7 +1,7 @@
 class UploadJob < ApplicationJob
   queue_as :dradis_upload
 
-  def perform(file:, plugin:, uid:)
+  def perform(file:, plugin_name:, uid:)
     logger = Log.new(uid: uid)
 
     logger.write{ "Running Ruby version %s" % RUBY_VERSION }
@@ -9,13 +9,9 @@ class UploadJob < ApplicationJob
 
     plugin = plugin_name.constantize
 
-    content_service  = Dradis::Plugins::ContentService.new(plugin: plugin)
-    template_service = Dradis::Plugins::TemplateService.new(plugin: plugin)
-
     importer = plugin::Importer.new(
-                logger: logger,
-       content_service: content_service,
-      template_service: template_service
+      logger: logger,
+      plugin: plugin
     )
 
     importer.import(file: file)
