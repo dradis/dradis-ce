@@ -1,7 +1,7 @@
 class UploadJob < ApplicationJob
   queue_as :dradis_upload
 
-  def perform(file:, plugin:, uid:)
+  def perform(file:, plugin_name:, uid:)
     logger = Log.new(uid: uid)
 
     logger.write{ "Running Ruby version %s" % RUBY_VERSION }
