@@ -62,5 +62,16 @@ describe "issue table" do
         expect(Issue.exists?(@issue1.id)).to be false
       end
     end
+
+    context "when filtering issues" do
+      it "should not delete filtered issues" do
+        find('.js-table-filter').set('1')
+        find('#select-all').click
+        find('#delete-selected').click
+        wait_for_ajax
+        expect(Issue.exists?(@issue1.id)).to be false
+        expect(Issue.exists?(@issue2.id)).to be true
+      end
+    end
   end
 end
