@@ -2,12 +2,15 @@ class IssueTable
   $table: null
   project: null
   selectedColumns: []
+  selectedIssuesSelector: ''
   # We need this for Issues#update in onTagSelected()
   tagColumnIndex: null
 
   constructor: ->
     @$table       = $('#issue-table table')
     @$column_menu = $('.dropdown-menu.js-table-columns')
+
+    @selectedIssuesSelector = 'input[type=checkbox]:checked.js-multicheck:visible'
 
     # -------------------------------------------------------- Load table state
     @loadColumnState()
@@ -70,7 +73,7 @@ class IssueTable
   onDeleteSelected: (element, answer) =>
     if answer
       that = this
-      $('.js-tbl-issues').find('input[type=checkbox]:checked.js-multicheck').each ->
+      $('.js-tbl-issues').find(@selectedIssuesSelector).each ->
         $row = $(this).parent().parent()
         $($row.find('td')[2]).replaceWith("<td class=\"loading\">Deleting...</td>")
         $.ajax $(this).data('url'), {
@@ -84,7 +87,7 @@ class IssueTable
             # Delete link from the sidebar
             $("#issue_#{data.id}").remove()
 
-            if $('input[type=checkbox]:checked.js-multicheck').length == 0
+            if $(@selectedIssuesSelector).length == 0
               that.resetToolbar()
 
           error: (foo,bar,foobar) ->
@@ -99,7 +102,7 @@ class IssueTable
     $target = $(event.target)
     event.preventDefault()
 
-    $('.js-tbl-issues').find('input[type=checkbox]:checked.js-multicheck').each ->
+    $('.js-tbl-issues').find(@selectedIssuesSelector).each ->
       $this = $(this)
 
       $row = $this.parent().parent()
@@ -119,20 +122,20 @@ class IssueTable
 
           $($row.find('td')[that.tagColumnIndex]).replaceWith(data.tag_cell)
           $("#issues #issue_#{issue_id}").replaceWith(data.issue_link)
-          if $('input[type=checkbox]:checked.js-multicheck').length == 0
+          if $(@selectedIssuesSelector).length == 0
             that.resetToolbar()
 
         error: (foo,bar,foobar) ->
           $($row.find('td')[that.tagColumnIndex]).replaceWith("<td class='text-error'>Please try again</td>")
       }
 
-  onMergeSelected: (event) ->
+  onMergeSelected: (event) =>
     form = $('#merge_form')
 
     form.find("input[name='sources[]']").remove()
 
     issues_to_merge = []
-    $('.js-tbl-issues').find('input[type=checkbox]:checked.js-multicheck').each ->
+    $('.js-tbl-issues').find(@selectedIssuesSelector).each ->
       $row = $(this).parent().parent()
 
       id = @.name.split('_')[1]
@@ -177,7 +180,7 @@ jQuery ->
         isChecked = !isChecked
         $allCheckbox.prop('checked', isChecked)
 
-      $('input[type=checkbox].js-multicheck').prop('checked', isChecked)
+      $('input[type=checkbox].js-multicheck:visible').prop('checked', isChecked)
 
     # when selecting standalone issues, check if we must also check 'select all'
     $('input[type=checkbox].js-multicheck').click ->
@@ -191,7 +194,7 @@ jQuery ->
       $('.js-select-all-issues > input[type=checkbox]').prop('checked', _select_all)
 
     refreshToolbar = ->
-      checked = $('input[type=checkbox]:checked.js-multicheck').length
+      checked = $('input[type=checkbox]:checked.js-multicheck:visible').length
       if checked
         $('.js-issue-actions').css('display', 'inline-block')
       else
