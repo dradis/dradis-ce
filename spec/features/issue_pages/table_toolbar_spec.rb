@@ -66,9 +66,10 @@ describe "issue table" do
     context "when filtering issues" do
       it "should not delete filtered issues" do
         find('.js-table-filter').set('1')
+        expect(page).to have_selector("#issue_#{@issue2.id}", visible: false)
         find('#select-all').click
         find('#delete-selected').click
-        expect(page).not_to have_selector("#issue_#{@issue1.id}")
+        expect(page).to_not have_selector("#issue_#{@issue1.id}")
         expect(Issue.exists?(@issue1.id)).to be false
         expect(Issue.exists?(@issue2.id)).to be true
       end
