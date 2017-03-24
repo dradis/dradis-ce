@@ -85,7 +85,7 @@ gem 'json', '1.8.2'
 # TODO: Traveling Ruby - DANGER, DANGER: this version has an issue, but it's
 # the last one supported by Traveling Ruby
 # gem 'nokogiri', '1.6.6.2'
-gem 'nokogiri', '1.6.8'
+gem 'nokogiri', '1.7.1'
 
 # MySQL backend
 gem 'mysql2', '0.3.18'

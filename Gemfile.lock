@@ -230,8 +230,6 @@ GEM
     factory_girl_rails (4.8.0)
       factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
-    faraday (0.11.0)
-      multipart-post (>= 1.2, < 3)
     ffi (1.9.14)
     font-awesome-sass (4.3.2.1)
       sass (~> 3.2)
@@ -301,14 +299,12 @@ GEM
     minitest (5.10.1)
     mono_logger (1.1.0)
     multi_json (1.12.1)
-    multipart-post (2.0.0)
     mustermann (1.0.0.beta2)
     mysql2 (0.3.18)
     nenv (0.3.0)
     nio4r (2.0.0)
-    nokogiri (1.6.8)
+    nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
-      pkg-config (~> 1.1.7)
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -318,7 +314,6 @@ GEM
       request_store (~> 1.1)
     parslet (1.4.0)
       blankslate (~> 2.0)
-    pkg-config (1.1.7)
     poltergeist (1.12.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -460,9 +455,6 @@ GEM
     uniform_notifier (1.10.0)
     vegas (0.1.11)
       rack (>= 1.0.0)
-    vulndbhq (0.1.0)
-      faraday (~> 0.8)
-      multi_json (~> 1.3)
     warden (1.2.6)
       rack (>= 1.0)
     web-console (3.4.0)
@@ -532,7 +524,7 @@ DEPENDENCIES
   listen (~> 3.0.5, <= 3.1.1)
   local_time
   mysql2 (= 0.3.18)
-  nokogiri (= 1.6.8)
+  nokogiri (= 1.7.1)
   paper_trail (~> 4.0.0)
   parslet (~> 1.4.0)
   poltergeist
@@ -562,4 +554,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.13.6
+   1.14.3
