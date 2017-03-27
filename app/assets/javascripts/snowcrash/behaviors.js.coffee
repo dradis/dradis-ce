@@ -14,7 +14,7 @@ jQuery ->
     dropZone: $('#drop-zone')
     destroy: (e, data) ->
       if confirm('Are you sure?')
-        $.blueimp.fileupload.prototype.options.destroy.call(this, e, data);
+        $.blueimp.fileupload.prototype.options.destroy.call(this, e, data)
 
     paste: (e, data)->
       $.each data.files, (index, file) ->
@@ -142,7 +142,7 @@ jQuery ->
 
   # Disable form buttons after submitting them.
   $('form').submit (ev)->
-    $('input[type=submit]', this).attr('disabled', 'disabled').val('Processing...');
+    $('input[type=submit]', this).attr('disabled', 'disabled').val('Processing...')
 
 
   # Search form
@@ -166,7 +166,7 @@ jQuery ->
   # Table filtering
   $('.js-table-filter').on 'keyup', ->
     rex = new RegExp($(this).val(), 'i')
-    $('tbody tr').hide();
+    $('tbody tr').hide()
     $('tbody tr').filter( ->
-      rex.test($(this).text());
-    ).show();
+      rex.test($(this).text())
+    ).show()

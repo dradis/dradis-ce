@@ -65,11 +65,15 @@
   width: 100%;
 }
 
-.add_multiple_nodes_error {
-  color: #b94a48;
-  margin-top: 10px;
-}
+.add_multiple_nodes_form {
+  display: none;
 
+  .add_multiple_nodes_error {
+    display: none;
+    color: #b94a48;
+    margin-top: 10px;
+  }
+}
 
 #try-pro {
   bottom: 10%;

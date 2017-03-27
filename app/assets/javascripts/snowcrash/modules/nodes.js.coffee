@@ -7,12 +7,14 @@ $ ->
     $modal.find(".add_multiple_nodes_form").toggle(!isOne)
 
   $(".modal_add_node_submit_btn").click ->
+    $(this).attr('disabled', 'disabled').val('Processing...')
     $(this).closest(".modal").find("form:visible").submit()
 
   $(".add_multiple_nodes_form").submit (e) ->
     $modal = $(this).closest(".modal")
     unless $modal.find(".nodes_list").val().trim()
       e.preventDefault()
+      $(".modal_add_node_submit_btn").removeAttr('disabled').val('Add')
       $(".add_multiple_nodes_error").show()
 
   if $('body.nodes.show').length
