@@ -173,6 +173,8 @@ group :development do
   # security
   gem 'brakeman', require: false
   gem 'bundler-audit', require: false
+
+  gem 'rubocop', require: false
 end
 
 group :development, :test do
