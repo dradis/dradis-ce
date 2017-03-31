@@ -3,7 +3,7 @@
 set -e
 
 ALLOWED_WARNINGS=1586
-warnings=`rubocop --format simple | grep "offenses detected" | cut -d " " -f4`
+warnings=`bundle exec rubocop --format simple | grep "offenses detected" | cut -d " " -f4`
 
 if [ $warnings -gt $ALLOWED_WARNINGS ]
 then
