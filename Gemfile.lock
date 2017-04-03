@@ -53,7 +53,7 @@ GIT
 
 GIT
   remote: https://github.com/dradis/dradis-metasploit.git
-  revision: 25b657db361f924f432ccf93eab54e4d2be2237a
+  revision: 5cb8fa534570c1f8243e588bbbeec0aa31f4f4db
   specs:
     dradis-metasploit (3.6.0)
       dradis-plugins (~> 3.6)
@@ -107,7 +107,7 @@ GIT
 
 GIT
   remote: https://github.com/dradis/dradis-plugins.git
-  revision: 1608bd40bf92b50a3a17dfd1112707503f8b2047
+  revision: 3a24c50550ac405139f40bb3357fce2ede03ad49
   specs:
     dradis-plugins (3.6.0)
 
@@ -365,14 +365,14 @@ GEM
       ffi (>= 0.5.0)
     record_tag_helper (1.0.0)
       actionview (~> 5.x)
-    redis (3.3.2)
-    redis-namespace (1.5.2)
+    redis (3.3.3)
+    redis-namespace (1.5.3)
       redis (~> 3.0, >= 3.0.4)
     ref (2.0.0)
     request_store (1.3.1)
     rerun (0.11.0)
       listen (~> 3.0)
-    resque (1.26.0)
+    resque (1.27.2)
       mono_logger (~> 1.0)
       multi_json (~> 1.0)
       redis-namespace (~> 1.3)
@@ -451,7 +451,7 @@ GEM
       ref
     thor (0.19.4)
     thread_safe (0.3.6)
-    tilt (2.0.5)
+    tilt (2.0.7)
     timecop (0.8.1)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
