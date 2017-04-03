@@ -1,3 +1,13 @@
+v3.6 (Mar 2017)
+ - Simpler framework <> add-on interface.
+ - Combine multiple issues.
+ - More efficient Search.
+ - HTTP API for Attachments.
+ - Better sidebar styling + direct edit / delete links.
+ - Upgrade to Rails 5.
+ - Fix select all issues bug.
+ - Fix XSS in Issues diff view.
+
 v3.2 (Sep 2016)
  - Nodes only show :expand when they have children
  - Add multiple-nodes
