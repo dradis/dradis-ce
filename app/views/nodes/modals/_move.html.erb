@@ -9,7 +9,7 @@
     <div class="modal-body">
       <p>Where do you want to move the <strong><%= @node.label %></strong> node?</p>
 
-      <% unless @node.root_node? %>
+      <% unless @node.root? %>
         <div class="radio">
           <%= label_tag do %>
             <%= radio_button_tag :node_move_destination, :root %>
