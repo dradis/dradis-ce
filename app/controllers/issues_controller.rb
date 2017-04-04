@@ -48,7 +48,7 @@ class IssuesController < ProjectScopedController
 
         format.html { redirect_to @issue, notice: 'Issue added.' }
       else
-        format.html { render 'new', alert: "Issue couldn't be added." }
+        format.html { render 'new', alert: 'Issue couldn\'t be added.' }
       end
       format.js
     end
@@ -67,7 +67,7 @@ class IssuesController < ProjectScopedController
         track_updated(@issue)
         format.html { redirect_to @issue, notice: 'Issue updated' }
       else
-        format.html { render "edit" }
+        format.html { render 'edit' }
       end
       format.js
       format.json

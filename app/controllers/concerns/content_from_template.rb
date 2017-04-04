@@ -12,8 +12,8 @@ module ContentFromTemplate
   rescue Exception => e
     # Fail gracefully if the template can't be found; don't make the
     # whole action fail e.g. because of a mistake in the query string.
-    if e.message == "Not found!"
-      return ""
+    if e.message == 'Not found!'
+      return ''
     else
       raise e
     end

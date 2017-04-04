@@ -7,8 +7,9 @@ class NotesController < NestedNodeResourceController
 
   def new
     @note      = @node.notes.new
+
+    # See ContentFromTemplate concern
     @note.text = template_content if params[:template]
-    # TODO use the textile-editor plugin
   end
 
   # Create a new Note for the associated Node.
