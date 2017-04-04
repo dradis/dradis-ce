@@ -1,10 +1,11 @@
 class IssuesController < ProjectScopedController
+  include ContentFromTemplate
+
   before_action :find_issuelib
   before_action :find_issues, except: [:destroy, :merging]
 
   before_action :find_or_initialize_issue, except: [:import, :index, :merging]
   before_action :find_or_initialize_tags, except: [:destroy]
-  before_action :find_note_template, only: [:new]
 
   def index
     @columns = @issues.map(&:fields).map(&:keys).uniq.flatten | ['Title', 'Tags', 'Affected', 'Created', 'Created by', 'Updated']
@@ -21,6 +22,8 @@ class IssuesController < ProjectScopedController
   end
 
   def new
+    # See ContentFromTemplate concern
+    @issue.text = template_content if params[:template]
   end
 
   def create
@@ -106,18 +109,6 @@ class IssuesController < ProjectScopedController
 
   def find_issuelib
     @issuelib = Node.issue_library
-  end
-
-  # if a :template param is passed, we try match it against the available
-  # NoteTemplates to pre-populate the Issue's text in the :new action
-  def find_note_template
-    if params.key?(:template)
-      begin
-        @issue.text = NoteTemplate.find(params[:template]).content
-      rescue
-        # invalid template, no need to do anything about it
-      end
-    end
   end
 
   # Once a valid @issuelib is set by the previous filter we look for the Issue we

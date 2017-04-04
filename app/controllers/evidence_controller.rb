@@ -12,8 +12,8 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def new
+    # See ContentFromTemplate concern
     @evidence.content = template_content if params[:template]
-    # TODO use the textile-editor plugin
   end
 
   def create
