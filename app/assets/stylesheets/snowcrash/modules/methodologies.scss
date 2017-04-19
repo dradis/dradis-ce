@@ -10,10 +10,19 @@ body.methodologies {
     }
   }
 
-  .task-list li {
+  .tab-content.outer-tab {
+    border-left: 1px solid #ddd;
+  }
+
+  .tab-pane {
     background-color: #fff;
+    padding: 3ex;
+  }
+
+  .task-list li {
+    background-color: #eee;
     border-radius: 3px;
-    box-shadow: 1px 1px #ccc;
+    box-shadow: 1px 1px #bbb;
     margin: 1ex 0;
     padding: 1ex;
 
