@@ -14,7 +14,7 @@ class Node < ApplicationRecord
     ISSUELIB = 3
   end
 
-  acts_as_tree counter_cache: true
+  acts_as_tree counter_cache: true, order: :label
 
   # -- Relationships --------------------------------------------------------
   has_many :notes, dependent: :destroy
@@ -53,7 +53,7 @@ class Node < ApplicationRecord
 
   # -- Scopes ---------------------------------------------------------------
   scope :in_tree, -> {
-    user_nodes.where(parent_id: nil)
+    user_nodes.roots
   }
 
   scope :user_nodes, -> {
@@ -95,10 +95,6 @@ class Node < ApplicationRecord
   # -- Instance Methods -----------------------------------------------------
   def ancestor_of?(node)
     node && node.ancestors.include?(self)
-  end
-
-  def root_node?
-    parent.nil?
   end
 
   # Return all the Attachment objects associated with this Node.

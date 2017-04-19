@@ -66,7 +66,7 @@
       <% node = activity.trackable %>
 
       <% if activity.action == "create" %>
-        <% if node.root_node? %>
+        <% if node.root? %>
           ActivitiesPoller.addRootNode(
             "<%=j render "layouts/snowcrash/node", node: node %>"
           )

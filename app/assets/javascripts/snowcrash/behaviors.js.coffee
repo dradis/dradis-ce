@@ -93,7 +93,9 @@ jQuery ->
       $modal.css('margin-left', '-40%')
 
       title = switch term
+        when 'boards' then '[<span>Dradis Pro feature</span>] Advanced boards and task assignment'
         when 'training-course' then 'Dradis Training Course'
+        when 'try-pro' then 'Upgrade to Dradis Pro'
         when 'word-reports' then '[<span>Dradis Pro feature</span>] Custom Word reports'
 
       $modal.find('.modal-header h3').html(title)

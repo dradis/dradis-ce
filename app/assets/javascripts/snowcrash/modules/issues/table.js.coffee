@@ -130,18 +130,16 @@ class IssueTable
       }
 
   onMergeSelected: (event) =>
-    form = $('#merge_form')
-
-    form.find("input[name='sources[]']").remove()
-
+    url = $(event.target).data('url')
     issues_to_merge = []
+
     $('.js-tbl-issues').find(@selectedIssuesSelector).each ->
       $row = $(this).parent().parent()
 
       id = @.name.split('_')[1]
       issues_to_merge.push(id)
 
-    location.href = "/issues/merge/new?ids=#{issues_to_merge}"
+    location.href = "#{url}?ids=#{issues_to_merge}"
 
   saveColumnState: ->
     if Storage?
