@@ -9,7 +9,7 @@ class DradisTasks < Thor
   def backup
     require 'config/environment'
 
-    invoke "dradis:plugins:projects:export:package", options unless options.no_backup
+    invoke "dradis:plugins:projects:export:package"
   end
 
   desc      "reset", "resets your local dradis repository"
@@ -22,8 +22,7 @@ class DradisTasks < Thor
     invoke "dradis:setup:configure"
     invoke "dradis:setup:migrate"
 
-    invoke "dradis:plugins:projects:export:package", options unless options.no_backup
-    #invoke "dradis:backup", options             unless options.no_backup
+    invoke "dradis:backup", options            unless options.no_backup
 
     invoke "dradis:reset:attachments", options
     invoke "dradis:reset:database", options
