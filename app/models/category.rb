@@ -34,7 +34,7 @@ class Category < ApplicationRecord
     if (self.id == 1)
       self.errors.add :base, 'Cannot delete Default category.'
     end
-    if Note.count(conditions: { category_id: self.id }) > 0
+    if Note.where(category_id: self.id).count > 0
       self.errors.add :base, 'Cannot delete Category with notes.'
     end
     return errors.count.zero? ? true : false
