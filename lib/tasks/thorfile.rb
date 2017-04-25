@@ -5,7 +5,7 @@ class DradisTasks < Thor
   long_desc "Creates a backup of the current repository, including all nodes, notes and " +
             "attachments as a zipped archive. The backup can be imported into another " +
             "dradis instance using the 'Project Package Upload' option."
-  method_option   :file, :type => :string, :desc => "the backup file to create, or directory to create it in"
+  method_option   :path, :type => :string, :desc => "the backup file destination directory"
   def backup
     require 'config/environment'
 
