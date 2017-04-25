@@ -1,6 +1,6 @@
 class DradisTasks < Thor
   namespace       "dradis"
-  
+
   desc      "backup", "creates a backup of your current repository"
   long_desc "Creates a backup of the current repository, including all nodes, notes and " +
             "attachments as a zipped archive. The backup can be imported into another " +
@@ -9,32 +9,7 @@ class DradisTasks < Thor
   def backup
     require 'config/environment'
 
-    backup_path   = options.file || Rails.root.join('backup')
-
-    unless backup_path.to_s =~ /\.zip\z/
-      date        = DateTime.now.strftime("%Y-%m-%d")
-      sequence    = Dir.glob(File.join(backup_path, "dradis_#{date}_*.zip")).collect { |a| a.match(/_([0-9]+)\.zip\z/)[1].to_i }.max || 0
-      backup_path = File.join(backup_path, "dradis_#{date}_#{sequence + 1}.zip")
-    end
-
-    if ActiveRecord::Migrator::current_version > 0
-      print "** Saving backup...                                                   "
-
-      begin
-        FileUtils.mkdir_p File.dirname(backup_path)
-        
-        ProjectExport::Processor.full_project( :filename => backup_path )
-
-        puts "[  DONE  ]"
-        puts "** Backup Saved as: #{backup_path}"
-      rescue RuntimeError => e
-        puts "[ FAILED ]"
-        puts "** #{e.message}"
-        exit(-1)
-      end
-    else
-      puts "** Nothing to Backup."
-    end
+    invoke "dradis:plugins:projects:export:package", options unless options.no_backup
   end
 
   desc      "reset", "resets your local dradis repository"
@@ -47,8 +22,9 @@ class DradisTasks < Thor
     invoke "dradis:setup:configure"
     invoke "dradis:setup:migrate"
 
-    invoke "dradis:backup", options             unless options.no_backup
-    
+    invoke "dradis:plugins:projects:export:package", options unless options.no_backup
+    #invoke "dradis:backup", options             unless options.no_backup
+
     invoke "dradis:reset:attachments", options
     invoke "dradis:reset:database", options
     invoke "dradis:setup:seed"
@@ -80,7 +56,7 @@ class DradisTasks < Thor
     puts Core::VERSION::string
     puts Core::Pro::VERSION::string
   end
-  
+
 
   class Import < Thor; end
   class Export < Thor; end
@@ -105,7 +81,7 @@ class DradisTasks < Thor
             puts "Do you want to initialize it? [y]es | [N]o | initialize [a]ll"
             response = STDIN.gets.chomp.downcase
             response = 'Y' if ( response.empty? || !['y', 'n', 'a'].include?(response) )
-  
+
             if response == 'n'
               next
             else
@@ -128,7 +104,7 @@ class DradisTasks < Thor
       ActiveRecord::Migrator.migrate("db/migrate/", nil)
       puts "[  DONE  ]"
     end
-    
+
     desc "seed", "adds initial values to the database (i.e., categories and configurations)"
     def seed
       require 'config/environment'
@@ -137,7 +113,7 @@ class DradisTasks < Thor
       require 'db/seeds'
       puts "[  DONE  ]"
     end
-    
+
   end
 
   class Logs < Thor
@@ -152,7 +128,7 @@ class DradisTasks < Thor
       puts "Deleted #{count} Log#{"s" if count != 1}"
     end
   end
-  
+
   class Reset < Thor
     namespace     "dradis:reset"
 
@@ -166,15 +142,15 @@ class DradisTasks < Thor
     desc "database", "removes all data from a dradis repository, except configurations"
     def database
       require 'config/environment'
-      
+
       print "** Cleaning database...                                               "
 
       Note.destroy_all
       Node.destroy_all
       Category.destroy_all
-      
+
       Log.destroy_all
-      
+
       puts "[  DONE  ]"
     end
 
