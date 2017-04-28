@@ -16,7 +16,6 @@ describe "Issues pages" do
 
     context "with an Issue library" do
       let(:issuelib) do
-        # Node.set_project_scope(@project.id)
         Node.issue_library
       end
 

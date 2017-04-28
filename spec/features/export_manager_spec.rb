@@ -3,18 +3,8 @@ require 'rails_helper'
 describe "Export Manager" do
   before { login_as_user }
 
-  it "presents the name of the project you are exporting" do
-    visit url_for({controller: :export, action: :index})
-    expect(page).to have_content(@project.name)
-  end
-
   it "presents existing Issues" do
     skip "For the time being we won't show the Issues in the Export Manager"
-    # @issuelib = @project.nodes.create(:label => 'All issues', :type_id => Node::Types::ISSUELIB)
-    # issue = create(:issue, :node => @issuelib)
-    #
-    # visit url_for({:controller => :export, :action => :index})
-    # page.should have_content(issue.title)
   end
 
   context "export plugin selection" do

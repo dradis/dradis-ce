@@ -8,7 +8,7 @@ describe "node pages" do
   describe "creating new nodes" do
     context "when a project has no nodes defined yet" do
       it "says so in the sidebar" do
-        visit summary_path(@project)
+        visit summary_path
         within ".main-sidebar" do
           should have_selector ".no-nodes", text: "No nodes defined yet"
         end
@@ -162,8 +162,6 @@ describe "node pages" do
 
         activity = Activity.last
         expect(activity.trackable).to eq @node
-        # TODO: Project singleton
-        # expect(activity.project).to eq @project
         expect(activity.user).to eq @logged_in_as.email
         expect(activity.action).to eq "update"
       end
@@ -232,10 +230,7 @@ describe "node pages" do
         @other_node = create(:node)
         @activities = [@node, @note, @evidence].flat_map do |model|
           [
-            # TODO: Project singleton
-            # create(:create_activity, trackable: model, project: @project),
             create(:create_activity, trackable: model),
-            # create(:update_activity, trackable: model,  project: @project)
             create(:update_activity, trackable: model)
           ]
         end
