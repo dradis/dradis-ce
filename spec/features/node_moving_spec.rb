@@ -5,7 +5,7 @@ describe "moving a node", js: true do
   subject { page }
 
   before do
-    login_to_project_as_user
+    login_as_user
 
     @node_0 = create_node(label: "Node 0")
     @node_1 = create_node(label: "Node 1")

@@ -7,7 +7,7 @@ describe "issue pages" do
     subject { page }
 
     before do
-      login_to_project_as_user
+      login_as_user
 
       @issue = create(:issue, text: "#[Risk]#\nHigh\n\n#[Description]#\nn/a")
       visit issues_path

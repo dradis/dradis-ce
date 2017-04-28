@@ -6,7 +6,7 @@ describe "node pages", js: true do
   subject { page }
 
   before do
-    login_to_project_as_user
+    login_as_user
     @other_user = create(:user)
     @node       = create(:node)
     @note_0     = create(:note, node: @node, text:"#[Title]#\nNote 0")

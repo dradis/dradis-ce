@@ -3,10 +3,8 @@ require 'rails_helper'
 describe "upload requests" do
 
   before do
-    # login as admin
-    Configuration.create(name: 'admin:password', value: ::BCrypt::Password.create('rspec_pass'))
-    @user = create(:user, :admin)
-    post session_path, params: { login: @user.email, password: 'rspec_pass' }
+    # login
+    login_as_user
 
     @uploads_node = Node.plugin_uploads_node
   end

@@ -3,7 +3,7 @@ require 'rails_helper'
 describe "node pages" do
   subject { page }
 
-  before { login_to_project_as_user }
+  before { login_as_user }
 
   describe "creating new nodes" do
     context "when a project has no nodes defined yet" do
@@ -49,7 +49,7 @@ describe "node pages" do
             node 1
 
             node_2
-                 node with trailing whitespace    
+                 node with trailing whitespace
           LIST
 
         expect do
@@ -111,7 +111,7 @@ describe "node pages" do
             node 1
 
             node_2
-                 node with trailing whitespace    
+                 node with trailing whitespace
           LIST
 
         expect do

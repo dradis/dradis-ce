@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "Export Manager" do
-  before { login_to_project_as_user }
+  before { login_as_user }
 
   it "presents the name of the project you are exporting" do
     visit url_for({controller: :export, action: :index})

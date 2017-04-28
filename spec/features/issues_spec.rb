@@ -12,7 +12,7 @@ describe "Issues pages" do
 
   context "as authenticated user" do
 
-    before { login_to_project_as_user }
+    before { login_as_user }
 
     context "with an Issue library" do
       let(:issuelib) do

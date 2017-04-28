@@ -5,7 +5,7 @@ describe "issue trash" do
   subject { page }
 
   before do
-    login_to_project_as_user
+    login_as_user
   end
 
   example "reflects edit of a previously deleted issue" do
