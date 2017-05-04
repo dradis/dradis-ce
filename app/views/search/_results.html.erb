@@ -10,12 +10,8 @@
             </td>
           </tr>
         <% end %>
-       <tfoot>
-         <tr>
-           <td><%= paginate @search.results %></td>
-         </tr>
-       </tfoot>
     </table>
+    <%= paginate @search.results %>
   </div>
 <% else %>
   <div class="clearfix"></div>

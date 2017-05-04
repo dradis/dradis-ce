@@ -37,4 +37,13 @@ body.search.index {
     border: 1px solid #ccc;
     padding: 2px 2px 2px 2px;
   }
+
+  .pagination {
+    display: flex;
+    padding-left: 8px;
+
+    > * {
+      padding-right: 5px;
+    }
+  }
 }
