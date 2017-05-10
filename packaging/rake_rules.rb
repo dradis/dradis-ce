@@ -6,15 +6,16 @@ require 'dradis/ce'
 
 PACKAGE_NAME = "dradis"
 VERSION = Dradis::CE.version
-TRAVELING_RUBY_VERSION = "20150715-2.2.2"
+TRAVELING_RUBY_VERSION = "20170404-2.2.2"
+TRAVELING_RUBY_PATH = Rails.root.join("../traveling-ruby")
 
 # Must match Gemfile:
 BCRYPT_VERSION   = "3.1.10"
 MYSQL2_VERSION   = "0.3.18"
-NOKOGIRI_VERSION = "1.6.5"
-REDCLOTH_VERSION = "4.2.9"
-SQLITE3_VERSION  = "1.3.10"
-# HITIMES_VERSION  = "1.2.2"
+NOKOGIRI_VERSION = "1.7.1"
+REDCLOTH_VERSION = "4.3.1"
+SQLITE3_VERSION  = "1.3.13"
+RINKU_VERSION    = "2.0.2"
 
 namespace :assets do
   namespace :precompile do
@@ -65,7 +66,8 @@ namespace :package do
     "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-mysql2-#{MYSQL2_VERSION}.tar.gz",
     "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-nokogiri-#{NOKOGIRI_VERSION}.tar.gz",
     "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-RedCloth-#{REDCLOTH_VERSION}.tar.gz",
-    "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-sqlite3-#{SQLITE3_VERSION}.tar.gz"
+    "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-sqlite3-#{SQLITE3_VERSION}.tar.gz",
+    "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-rinku-#{RINKU_VERSION}.tar.gz"
   ] do
     create_package("osx")
   end
@@ -88,10 +90,10 @@ namespace :package do
     puts "\nAdjusting relative repo dirs..."
 
     # We want to replace ../dradis-* with ../../../dradis-*
-    # regexp = "s/\\.\\.\\/dradis-/\\.\\.\\/\\.\\.\\/\\.\\.\\/dradis-/g"
+    #regexp = "s/\\.\\.\\/dradis-/\\.\\.\\/\\.\\.\\/\\.\\.\\/dradis-/g"
 
     # We want to replace "path: '../dradis-*'" with "github: 'dradis/dradis-*'"
-    regexp = "s/path: \'\\.\\./github: \'dradis/g"
+    #regexp = "s/path: \'\\.\\./github: \'dradis/g"
 
     # We want to replace "path: 'engines/*'" with "path: '../../engines-*'"
     engines_regexp = "s/'engines\\//'\\.\\.\\/\\.\\.\\/engines\\//g"
@@ -99,13 +101,13 @@ namespace :package do
     # If any gems specified with 'path' have names (i.e. filepaths) that end in
     # a trailing '/', that / will still be present after 'path' is changed to
     # 'github' and will create an invalid github URL. So remove it:
-    trailing_slash_regex = "/github:/s/\\/'$/'/"
+    #trailing_slash_regex = "/github:/s/\\/'$/'/"
 
     ["Gemfile", "Gemfile.lock", "Gemfile.plugins"].each do |gemfile|
       path = "packaging/tmp/#{gemfile}"
       if RbConfig::CONFIG['host_os'] =~ /darwin/
-        sh "sed -i '' -- \"#{regexp}\" #{path}"
-        sh "sed -i '' -- \"#{trailing_slash_regex}\" #{path}"
+        #sh "sed -i '' -- \"#{regexp}\" #{path}"
+        #sh "sed -i '' -- \"#{trailing_slash_regex}\" #{path}"
         sh "sed -i '' -- \"#{engines_regexp}\" #{path}"
       else
         sh "sed -i -- \"#{regexp}\" #{path}"
@@ -151,7 +153,7 @@ file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64.tar.gz" do
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx.tar.gz" do
-  download_runtime("osx")
+  copy_runtime("osx")
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-bcrypt-#{BCRYPT_VERSION}.tar.gz" do
@@ -163,7 +165,7 @@ file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-bcrypt-#{B
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-bcrypt-#{BCRYPT_VERSION}.tar.gz" do
-  download_native_extension("osx", "bcrypt-#{BCRYPT_VERSION}")
+  copy_native_extension("osx", "bcrypt-#{BCRYPT_VERSION}")
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-mysql2-#{MYSQL2_VERSION}.tar.gz" do
@@ -175,7 +177,7 @@ file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-mysql2-#{M
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-mysql2-#{MYSQL2_VERSION}.tar.gz" do
-  download_native_extension("osx", "mysql2-#{MYSQL2_VERSION}")
+  copy_native_extension("osx", "mysql2-#{MYSQL2_VERSION}")
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-nokogiri-#{NOKOGIRI_VERSION}.tar.gz" do
@@ -187,7 +189,7 @@ file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-nokogiri-#
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-nokogiri-#{NOKOGIRI_VERSION}.tar.gz" do
-  download_native_extension("osx", "nokogiri-#{NOKOGIRI_VERSION}")
+  copy_native_extension("osx", "nokogiri-#{NOKOGIRI_VERSION}")
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-RedCloth-#{REDCLOTH_VERSION}.tar.gz" do
@@ -199,7 +201,7 @@ file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-RedCloth-#
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-RedCloth-#{REDCLOTH_VERSION}.tar.gz" do
-  download_native_extension("osx", "RedCloth-#{REDCLOTH_VERSION}")
+  copy_native_extension("osx", "RedCloth-#{REDCLOTH_VERSION}")
 end
 
 
@@ -212,7 +214,11 @@ file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-sqlite3-#{
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-sqlite3-#{SQLITE3_VERSION}.tar.gz" do
-  download_native_extension("osx", "sqlite3-#{SQLITE3_VERSION}")
+  copy_native_extension("osx", "sqlite3-#{SQLITE3_VERSION}")
+end
+
+file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-rinku-#{RINKU_VERSION}.tar.gz" do
+  copy_native_extension("osx", "rinku-#{RINKU_VERSION}")
 end
 
 
@@ -271,12 +277,15 @@ def create_package(target)
   sh "mkdir #{package_dir}/lib/vendor/.bundle"
   sh "cp packaging/bundler-config #{package_dir}/lib/vendor/.bundle/config"
 
+  sh "cp README.md LICENSE.txt CHANGELOG #{package_dir}"
+
   [
     "bcrypt-#{BCRYPT_VERSION}",
     "nokogiri-#{NOKOGIRI_VERSION}",
     "mysql2-#{MYSQL2_VERSION}",
     "RedCloth-#{REDCLOTH_VERSION}",
-    "sqlite3-#{SQLITE3_VERSION}"
+    "sqlite3-#{SQLITE3_VERSION}",
+    "rinku-#{RINKU_VERSION}"
   ].each do |gem|
     sh "tar -xzf "+
        "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-#{target}-#{gem}.tar.gz"+
@@ -300,4 +309,17 @@ def download_native_extension(target, gem_name_and_version)
   puts "\nDownloading native extension #{ target }"
   sh "curl -L --fail -o packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-#{target}-#{gem_name_and_version}.tar.gz " +
     "http://d6r77u77i8pq3.cloudfront.net/releases/traveling-ruby-gems-#{TRAVELING_RUBY_VERSION}-#{target}/#{gem_name_and_version}.tar.gz"
+end
+
+def copy_runtime(target)
+  puts "\nCopying runtime #{ target }"
+  sh "cd packaging && " +
+     "cp #{TRAVELING_RUBY_PATH}/#{target}/traveling-ruby-#{TRAVELING_RUBY_VERSION}-#{target}.tar.gz ."
+end
+
+def copy_native_extension(target, gem_name_and_version)
+  puts "\nCopying native extension #{ target }"
+  sh "cd packaging && " +
+     "cp #{TRAVELING_RUBY_PATH}/#{target}/traveling-ruby-gems-#{TRAVELING_RUBY_VERSION}-#{target}/#{gem_name_and_version}.tar.gz " +
+     "traveling-ruby-#{TRAVELING_RUBY_VERSION}-#{target}-#{gem_name_and_version}.tar.gz"
 end
