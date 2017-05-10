@@ -69,11 +69,6 @@ gem 'thor', '~> 0.18'
 
 
 # ------------------------------------------------------ With native extensions
-# These require native extensions.
-# Ensure Traveling Ruby provides an appropriate version before bumping.
-# See:
-#   http://traveling-ruby.s3-us-west-2.amazonaws.com/list.html
-
 # Use ActiveModel has_secure_password
 # Password digests
 gem 'bcrypt',   '3.1.10'
@@ -82,26 +77,19 @@ gem 'bcrypt',   '3.1.10'
 gem 'json', '1.8.2'
 
 # XML manipulation
-# TODO: Traveling Ruby - DANGER, DANGER: this version has an issue, but it's
-# the last one supported by Traveling Ruby
-# gem 'nokogiri', '1.6.6.2'
 gem 'nokogiri', '1.7.1'
 
 # MySQL backend
 gem 'mysql2', '0.3.18'
 
 # Textile markup
-
-# TODO: Traveling Ruby - DANGER, DANGER: this version has an issue, but it's
-# the last one supported by Traveling Ruby
-# gem 'RedCloth', '4.2.9', require: 'redcloth'
 gem 'RedCloth', '4.3.1', require: 'redcloth'
 
 # html-pipeline dependency for auto-linking
 gem 'rinku'
 
 # SQLite3 DB driver
-gem 'sqlite3'#,  '1.3.10'
+gem 'sqlite3'
 
 # Use Unicorn as the web server
 # FIXME: Switch to Puma for Rails 5
