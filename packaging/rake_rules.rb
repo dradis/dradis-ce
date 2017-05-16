@@ -12,7 +12,7 @@ TRAVELING_RUBY_PATH = Rails.root.join('../traveling-ruby')
 # Must match Gemfile:
 BCRYPT_VERSION   = '3.1.10'
 MYSQL2_VERSION   = '0.3.18'
-NOKOGIRI_VERSION = '1.7.1'
+NOKOGIRI_VERSION = '1.7.2'
 REDCLOTH_VERSION = '4.3.1'
 SQLITE3_VERSION  = '1.3.13'
 RINKU_VERSION    = '2.0.2'
@@ -241,7 +241,7 @@ def create_package(target)
   puts "\nPreparing database..."
   sh 'cp config/database.yml.template config/database.yml'
   sh 'RAILS_ENV=production rake db:setup'
-  sh 'cp db/production.sqlite3 #{package_dir}/lib/app/db/'
+  sh "cp db/production.sqlite3 #{package_dir}/lib/app/db/"
 
   # db = SQLite3::Database.new "#{package_dir}/lib/app/db/production.sqlite3"
   # table = "dradis_configurations"
