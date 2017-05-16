@@ -279,6 +279,8 @@ def create_package(target)
 
   sh "cp README.md LICENSE.txt CHANGELOG #{package_dir}"
 
+  sh "sed -i '' -- \"s/config\.force_ssl = true/config\.force_ssl = false/g\" #{package_dir}/lib/app/config/environments/production.rb"
+
   [
     "bcrypt-#{BCRYPT_VERSION}",
     "nokogiri-#{NOKOGIRI_VERSION}",
