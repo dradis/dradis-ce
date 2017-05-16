@@ -1,115 +1,8 @@
 GIT
-  remote: https://github.com/dradis/dradis-acunetix.git
-  revision: 368413c60154c6dde513d526c3a281eb440c3fc8
-  specs:
-    dradis-acunetix (3.6.0)
-      dradis-plugins (~> 3.6)
-      nokogiri (~> 1.3)
-
-GIT
-  remote: https://github.com/dradis/dradis-brakeman.git
-  revision: 7dff841a30168e2d4184171a255207a1550ce878
-  specs:
-    dradis-brakeman (3.6.0)
-      dradis-plugins (~> 3.6)
-
-GIT
-  remote: https://github.com/dradis/dradis-burp.git
-  revision: 8dbc7ada884f5192e57948a8b678ea067cfbd07c
-  specs:
-    dradis-burp (3.6.0)
-      dradis-plugins (~> 3.6)
-      nokogiri (~> 1.3)
-
-GIT
-  remote: https://github.com/dradis/dradis-calculator_cvss.git
-  revision: 3a870bc4aea91869fe2ffaa605ebb04c54a07674
-  specs:
-    dradis-calculator_cvss (3.6.0)
-      dradis-plugins (~> 3.0)
-
-GIT
-  remote: https://github.com/dradis/dradis-calculator_dread.git
-  revision: f1ab440d5e6b49a9b4499e320c72e2169bf1d01c
-  specs:
-    dradis-calculator_dread (3.6.0)
-      dradis-plugins (~> 3.0)
-
-GIT
-  remote: https://github.com/dradis/dradis-csv.git
-  revision: aae72f778b8551e6935b9046e813d42843922da3
-  specs:
-    dradis-csv (3.6.0)
-      dradis-plugins (~> 3.6)
-
-GIT
-  remote: https://github.com/dradis/dradis-html_export.git
-  revision: c640c165a7fc07c51fc6392e133e02bd41a3f919
-  specs:
-    dradis-html_export (3.6.0)
-      RedCloth (= 4.3.1)
-      dradis-plugins (~> 3.6)
-      rails_autolink (~> 1.1)
-
-GIT
-  remote: https://github.com/dradis/dradis-metasploit.git
-  revision: 5cb8fa534570c1f8243e588bbbeec0aa31f4f4db
-  specs:
-    dradis-metasploit (3.6.0)
-      dradis-plugins (~> 3.6)
-      nokogiri (~> 1.3)
-
-GIT
-  remote: https://github.com/dradis/dradis-nessus.git
-  revision: ba3f4d8db89814a58828e578bc5207008809395e
-  specs:
-    dradis-nessus (3.6.0)
-      dradis-plugins (~> 3.6)
-      nokogiri
-
-GIT
-  remote: https://github.com/dradis/dradis-nexpose.git
-  revision: 8cbd625026dc748bb34cc391df97bc25e361f65e
-  specs:
-    dradis-nexpose (3.6.0)
-      dradis-plugins (~> 3.6)
-      nokogiri (~> 1.3)
-
-GIT
-  remote: https://github.com/dradis/dradis-nikto.git
-  revision: 9176d6fc4c05f46b812dc5db9a21a7a57e7128ce
-  specs:
-    dradis-nikto (3.6.0)
-      dradis-plugins (~> 3.6)
-      nokogiri (~> 1.3)
-
-GIT
-  remote: https://github.com/dradis/dradis-nmap.git
-  revision: e0901e5c0a8d289b0b5516fffa402f1f0fcb5a05
-  specs:
-    dradis-nmap (3.6.0)
-      dradis-plugins (~> 3.6)
-      ruby-nmap (~> 0.7)
-
-GIT
-  remote: https://github.com/dradis/dradis-ntospider.git
-  revision: 4f3ec0a9f8b23fd72518c0a43ff68a6b411eabb4
-  specs:
-    dradis-ntospider (3.6.0)
-      dradis-plugins (~> 3.6)
-
-GIT
-  remote: https://github.com/dradis/dradis-openvas.git
-  revision: 6b38e017737ec7313f51bfbc17bc4ffd1219cae7
-  specs:
-    dradis-openvas (3.6.0)
-      dradis-plugins (~> 3.6)
-
-GIT
   remote: https://github.com/dradis/dradis-plugins.git
-  revision: 3a24c50550ac405139f40bb3357fce2ede03ad49
+  revision: be922ba826ccab0da57f6abe0bcd718ed7dc9b34
   specs:
-    dradis-plugins (3.6.0)
+    dradis-plugins (3.6.1)
 
 GIT
   remote: https://github.com/dradis/dradis-projects.git
@@ -118,22 +11,6 @@ GIT
     dradis-projects (3.6.0)
       dradis-plugins (~> 3.6)
       rubyzip (~> 1.2.1)
-
-GIT
-  remote: https://github.com/dradis/dradis-qualys.git
-  revision: 611382d91678ab17b7fb6c67604faf59abbee92f
-  specs:
-    dradis-qualys (3.6.0)
-      dradis-plugins (~> 3.6)
-      nokogiri (~> 1.3)
-
-GIT
-  remote: https://github.com/dradis/dradis-zap.git
-  revision: 0c96f4147117886376f36300e37f063275e50f71
-  specs:
-    dradis-zap (3.6.0)
-      dradis-plugins (~> 3.6)
-      nokogiri (~> 1.3)
 
 PATH
   remote: engines/dradis-api
@@ -182,27 +59,28 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-    acts_as_tree (2.6.0)
+    acts_as_tree (2.6.1)
       activerecord (>= 3.0.0)
-    addressable (2.5.0)
+    addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
     arel (7.1.4)
     ast (2.3.0)
     bcrypt (3.1.10)
+    bindex (0.5.0)
     blankslate (2.1.2.4)
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
-    brakeman (3.4.1)
+    brakeman (3.6.1)
     builder (3.2.3)
-    bullet (5.4.3)
+    bullet (5.5.1)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.10.0)
     bundler-audit (0.5.0)
       bundler (~> 1.2)
       thor (~> 0.18)
     byebug (9.0.6)
-    cancancan (1.15.0)
-    capybara (2.11.0)
+    cancancan (1.16.0)
+    capybara (2.14.0)
       addressable
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -220,9 +98,8 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
-    database_cleaner (1.5.3)
-    debug_inspector (0.0.2)
-    diff-lcs (1.2.5)
+    database_cleaner (1.6.1)
+    diff-lcs (1.3)
     differ (0.1.2)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -231,15 +108,15 @@ GEM
     factory_girl_rails (4.8.0)
       factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
-    ffi (1.9.14)
+    ffi (1.9.18)
     font-awesome-sass (4.7.0)
       sass (>= 3.2)
-    foreman (0.82.0)
+    foreman (0.84.0)
       thor (~> 0.19.1)
     formatador (0.2.5)
-    globalid (0.3.7)
-      activesupport (>= 4.1.0)
-    guard (2.14.0)
+    globalid (0.4.0)
+      activesupport (>= 4.2.0)
+    guard (2.14.1)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
       lumberjack (~> 1.0)
@@ -256,17 +133,17 @@ GEM
     html-pipeline (2.5.0)
       activesupport (>= 2)
       nokogiri (>= 1.4)
-    i18n (0.7.0)
+    i18n (0.8.1)
     image_size (1.3.1)
-    jbuilder (2.6.1)
-      activesupport (>= 3.0.0, < 5.1)
+    jbuilder (2.6.3)
+      activesupport (>= 3.0.0, < 5.2)
       multi_json (~> 1.2)
     jquery-fileupload-rails (0.3.5)
       actionpack (>= 3.1)
       railties (>= 3.1)
     jquery-hotkeys-rails (0.7.9.1)
       railties (>= 3.1)
-    jquery-rails (4.2.1)
+    jquery-rails (4.3.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
@@ -281,7 +158,7 @@ GEM
       addressable (~> 2.3)
     letter_opener (1.4.1)
       launchy (~> 2.2)
-    libv8 (3.16.14.17)
+    libv8 (3.16.14.19)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -289,22 +166,22 @@ GEM
       coffee-rails
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
-    lumberjack (1.0.10)
-    mail (2.6.4)
+    lumberjack (1.0.11)
+    mail (2.6.5)
       mime-types (>= 1.16, < 4)
     method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
-    minitest (5.10.1)
+    minitest (5.10.2)
     mono_logger (1.1.0)
     multi_json (1.12.1)
     mustermann (1.0.0.beta2)
     mysql2 (0.3.18)
     nenv (0.3.0)
     nio4r (2.0.0)
-    nokogiri (1.7.1)
+    nokogiri (1.7.2)
       mini_portile2 (~> 2.1.0)
     notiffany (0.1.1)
       nenv (~> 0.1)
@@ -317,7 +194,7 @@ GEM
       ast (~> 2.2)
     parslet (1.4.0)
       blankslate (~> 2.0)
-    poltergeist (1.12.0)
+    poltergeist (1.15.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
@@ -326,8 +203,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    public_suffix (2.0.4)
-    rack (2.0.1)
+    public_suffix (2.0.5)
+    rack (2.0.2)
     rack-protection (2.0.0.beta2)
       rack
     rack-test (0.6.3)
@@ -349,19 +226,18 @@ GEM
       nokogiri (~> 1.6)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
-    rails_autolink (1.1.6)
-      rails (> 3.1)
     railties (5.0.2)
       actionpack (= 5.0.2)
       activesupport (= 5.0.2)
       method_source
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rainbow (2.2.1)
-    raindrops (0.17.0)
+    rainbow (2.2.2)
+      rake
+    raindrops (0.18.0)
     rake (12.0.0)
     rb-fsevent (0.9.8)
-    rb-inotify (0.9.7)
+    rb-inotify (0.9.8)
       ffi (>= 0.5.0)
     record_tag_helper (1.0.0)
       actionview (~> 5.x)
@@ -369,10 +245,10 @@ GEM
     redis-namespace (1.5.3)
       redis (~> 3.0, >= 3.0.4)
     ref (2.0.0)
-    request_store (1.3.1)
+    request_store (1.3.2)
     rerun (0.11.0)
       listen (~> 3.0)
-    resque (1.27.2)
+    resque (1.27.4)
       mono_logger (~> 1.0)
       multi_json (~> 1.0)
       redis-namespace (~> 1.3)
@@ -381,37 +257,33 @@ GEM
     resque-status (0.5.0)
       resque (~> 1.19)
     rinku (2.0.2)
-    rprogram (0.3.2)
-    rspec (3.5.0)
-      rspec-core (~> 3.5.0)
-      rspec-expectations (~> 3.5.0)
-      rspec-mocks (~> 3.5.0)
-    rspec-core (3.5.4)
-      rspec-support (~> 3.5.0)
-    rspec-expectations (3.5.0)
+    rspec (3.6.0)
+      rspec-core (~> 3.6.0)
+      rspec-expectations (~> 3.6.0)
+      rspec-mocks (~> 3.6.0)
+    rspec-core (3.6.0)
+      rspec-support (~> 3.6.0)
+    rspec-expectations (3.6.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.5.0)
-    rspec-mocks (3.5.0)
+      rspec-support (~> 3.6.0)
+    rspec-mocks (3.6.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.5.0)
-    rspec-rails (3.5.2)
+      rspec-support (~> 3.6.0)
+    rspec-rails (3.6.0)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
-      rspec-core (~> 3.5.0)
-      rspec-expectations (~> 3.5.0)
-      rspec-mocks (~> 3.5.0)
-      rspec-support (~> 3.5.0)
-    rspec-support (3.5.0)
-    rubocop (0.48.0)
+      rspec-core (~> 3.6.0)
+      rspec-expectations (~> 3.6.0)
+      rspec-mocks (~> 3.6.0)
+      rspec-support (~> 3.6.0)
+    rspec-support (3.6.0)
+    rubocop (0.48.1)
       parser (>= 2.3.3.1, < 3.0)
       powerpack (~> 0.1)
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
-    ruby-nmap (0.9.2)
-      nokogiri (~> 1.3)
-      rprogram (~> 0.3)
     ruby-progressbar (1.8.1)
     rubyzip (1.2.1)
     sass (3.4.23)
@@ -424,7 +296,7 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
-    simple_form (3.3.1)
+    simple_form (3.4.0)
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
     sinatra (2.0.0.beta2)
@@ -433,7 +305,7 @@ GEM
       rack-protection (= 2.0.0.beta2)
       tilt (~> 2.0)
     slop (3.6.0)
-    spring (2.0.0)
+    spring (2.0.1)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -445,9 +317,9 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.3.12)
-    therubyracer (0.12.2)
-      libv8 (~> 3.16.14.0)
+    sqlite3 (1.3.13)
+    therubyracer (0.12.3)
+      libv8 (~> 3.16.14.15)
       ref
     thor (0.19.4)
     thread_safe (0.3.6)
@@ -455,12 +327,12 @@ GEM
     timecop (0.8.1)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
-    turbolinks-source (5.0.0)
-    tzinfo (1.2.2)
+    turbolinks-source (5.0.3)
+    tzinfo (1.2.3)
       thread_safe (~> 0.1)
-    uglifier (3.0.4)
+    uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
-    unicode-display_width (1.1.3)
+    unicode-display_width (1.2.1)
     unicorn (4.9.0)
       kgio (~> 2.6)
       rack
@@ -468,12 +340,12 @@ GEM
     uniform_notifier (1.10.0)
     vegas (0.1.11)
       rack (>= 1.0.0)
-    warden (1.2.6)
+    warden (1.2.7)
       rack (>= 1.0)
-    web-console (3.4.0)
+    web-console (3.5.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
-      debug_inspector
+      bindex (>= 0.4.0)
       railties (>= 5.0)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
@@ -501,25 +373,9 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   database_cleaner
   differ (~> 0.1.2)
-  dradis-acunetix (~> 3.6)!
   dradis-api!
-  dradis-brakeman (~> 3.6)!
-  dradis-burp (~> 3.6)!
-  dradis-calculator_cvss (~> 3.6)!
-  dradis-calculator_dread (~> 3.6)!
-  dradis-csv (~> 3.6)!
-  dradis-html_export (~> 3.6)!
-  dradis-metasploit (~> 3.6)!
-  dradis-nessus (~> 3.6)!
-  dradis-nexpose (~> 3.6)!
-  dradis-nikto (~> 3.6)!
-  dradis-nmap (~> 3.6)!
-  dradis-ntospider (~> 3.6)!
-  dradis-openvas (~> 3.6)!
   dradis-plugins (~> 3.6)!
   dradis-projects (~> 3.6)!
-  dradis-qualys (~> 3.6)!
-  dradis-zap (~> 3.6)!
   factory_girl_rails
   font-awesome-sass (~> 4.7.0)
   foreman
@@ -537,7 +393,7 @@ DEPENDENCIES
   listen (~> 3.0.5, <= 3.1.1)
   local_time
   mysql2 (= 0.3.18)
-  nokogiri (= 1.7.1)
+  nokogiri (= 1.7.2)
   paper_trail (~> 4.0.0)
   parslet (~> 1.4.0)
   poltergeist
@@ -568,4 +424,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.14.3
+   1.14.6
