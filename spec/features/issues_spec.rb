@@ -77,6 +77,8 @@ describe "Issues pages" do
         end
 
         it "merges issues into a new one" do
+          # disable bootstrap transitions
+          page.evaluate_script('$.support.transition = false')
 
           expect(page).to have_content "You're merging 2 Issues into a target Issue"
 
