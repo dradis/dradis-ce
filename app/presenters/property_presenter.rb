@@ -66,7 +66,7 @@ class PropertyPresenter < BasePresenter
   def render_table
     values         = property_value
     column_names   = values.map(&:keys).flatten.uniq.sort.map(&:to_sym)
-    sorted_entries = column_names.include?(:port) ? values.sort_by{ |h| h[:port] } : values
+    sorted_entries = column_names.include?(:port) ? merge_entries(values).sort_by{ |h| h[:port] } : values
 
     output = if column_names.delete(:scripts)
                render_tabs(sorted_entries)
@@ -130,6 +130,20 @@ class PropertyPresenter < BasePresenter
     content_tag(:div, class: 'tabbable tabs-left', id: 'scripts-tabs') do
       concat(render_tab_ul(values)).
       concat(render_tab_content(values))
+    end
+  end
+
+  def merge_entries(entries)
+    entries.group_by{|e| [e[:port], e[:protocol]]}.map do |_, a|
+      a.reduce do |memo, row|
+        memo.merge!(row) do |_key, oldvalue, newvalue|
+          if oldvalue == newvalue
+            oldvalue
+          else
+            oldvalue.concat(content_tag(:br)).concat(newvalue).html_safe
+          end
+        end
+      end
     end
   end
 end
