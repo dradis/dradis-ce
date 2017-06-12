@@ -8,6 +8,7 @@ describe Node do
   it 'acts as tree and deletes nested nodes on delete' do
     should have_many(:children).class_name('Node').dependent(:destroy)
   end
+
   it { should have_many(:notes).dependent(:destroy) }
   it { should have_many(:evidence).dependent(:destroy) }
   it { should have_many(:activities) }
@@ -40,6 +41,20 @@ describe Node do
         expect(activity.trackable_id).to eq node.id
         expect(activity.trackable_type).to eq "Node"
       end
+    end
+  end
+
+  describe '#issues' do
+    it { should have_many(:issues).through(:evidence) }
+
+    it 'returns unique issues even if node and issue are associated through multiple evidence' do
+      node  = create(:node)
+      issue = create(:issue)
+
+      create(:evidence, node: node, issue: issue)
+      create(:evidence, node: node, issue: issue)
+
+      expect(node.issues.count).to eq(1)
     end
   end
 
