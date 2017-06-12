@@ -5,14 +5,14 @@ describe Node do
 
   it { should validate_presence_of(:label) }
 
-  it "acts as tree and deletes nested nodes on delete" do
-    should have_many(:children).class_name("Node").dependent(:destroy)
+  it 'acts as tree and deletes nested nodes on delete' do
+    should have_many(:children).class_name('Node').dependent(:destroy)
   end
   it { should have_many(:notes).dependent(:destroy) }
   it { should have_many(:evidence).dependent(:destroy) }
   it { should have_many(:activities) }
 
-  describe "on delete" do
+  describe '#destroy' do
     let(:sample_file) { Rails.root.join('public', 'images', 'rails.png') }
 
     before do
@@ -43,16 +43,16 @@ describe Node do
     end
   end
 
-  describe "positioning" do
+  describe '#position' do
     it { should respond_to(:position)  }
     it { should respond_to(:position=) }
 
-    it "assigns a default 0 position if none is provided" do
+    it 'assigns a default 0 position if none is provided' do
       node.save!
       expect(node.position).to eq(0)
     end
 
-    it "should keep the position when provided" do
+    it 'should keep the position when provided' do
       node = create(:node)
       node.position = 3
       expect(node.save).to be true
@@ -61,12 +61,12 @@ describe Node do
     end
   end
 
-  it "uses a default type ID if none proviede" do
+  it 'uses a default type ID if none provieded' do
     node = Node.create(label: 'Foo')
     expect(node.type_id).to eq(Node::Types::DEFAULT)
   end
 
-  it "creates a ISSUELIB node when none exists" do
+  it 'creates a ISSUELIB node when none exists' do
     Node.destroy_all
     issuelib = Node.issue_library
     expect(Node.count).to eq(1)
@@ -74,7 +74,7 @@ describe Node do
     issuelib.destroy
   end
 
-  it "returns the ISSUELIB node if one exists" do
+  it 'returns the ISSUELIB node if one exists' do
     Node.destroy_all
     node = Node.issue_library
     issuelib = Node.issue_library
@@ -82,32 +82,32 @@ describe Node do
     node.destroy
   end
 
-  describe "properties" do
-    it "exposes working setters and getters values" do
+  describe '#properties' do
+    it 'exposes working setters and getters values' do
       node.set_property(:test_property, 80)
       expect(node.properties[:test_property]).to eq(80)
     end
 
-    it "allows indifferent access to properties" do
+    it 'allows indifferent access to properties' do
       node.set_property(:test_property, 80)
       expect(node.properties[:test_property]).to eq(80)
       expect(node.properties['test_property']).to eq(80)
     end
 
-    it "does nothing when trying to set a property with blank value" do
+    it 'does nothing when trying to set a property with blank value' do
       node.set_property(:test_property, 80)
       node.set_property(:test_property, nil)
       expect(node.properties[:test_property]).to eq(80)
     end
 
-    context "does nothing when adding the same value it already had" do
-      it "ignores same value for simple properties" do
+    context 'does nothing when adding the same value it already had' do
+      it 'ignores same value for simple properties' do
         node.set_property(:test_property, 80)
         node.set_property(:test_property, 80)
         expect(node.properties[:test_property]).to eq(80)
       end
 
-      it "ignores same value for hash properties (same key type)" do
+      it 'ignores same value for hash properties (same key type)' do
         node.set_property(:test_property, {port: 80, protocol: 'tcp'})
         node.set_property(:test_property, {port: 80, protocol: 'tcp'})
 
@@ -118,7 +118,7 @@ describe Node do
         expect(node.properties[:test_property][:protocol]).to eq('tcp')
       end
 
-      it "ignores same value for hash properties (different key type)" do
+      it 'ignores same value for hash properties (different key type)' do
         # Note that order is important, as internally keys will end up as
         # strings for DB serialisation. If we start sending Symbols, they
         # become Strings and by the time we're setting the second property
@@ -134,30 +134,30 @@ describe Node do
       end
     end
 
-    it "stores value as an array when provided value is an array" do
+    it 'stores value as an array when provided value is an array' do
       node.set_property(:test_property, [80, 22])
       expect(node.properties[:test_property]).to eq([80, 22])
     end
 
-    it "merges provided values with existing values" do
+    it 'merges provided values with existing values' do
       node.set_property(:test_property, [80, 22])
       node.set_property(:test_property, [80, 21, 110])
       expect(node.properties[:test_property]).to eq([80, 22, 21, 110])
     end
 
-    it "turns property into an array when a second value is added" do
+    it 'turns property into an array when a second value is added' do
       node.set_property(:test_property, 80)
       node.set_property(:test_property, 22)
       expect(node.properties[:test_property]).to eq([80, 22])
     end
 
-    it "doesn't store value as an array when provided array has only one item" do
+    it 'doesn\'t store value as an array when provided array has only one item' do
       node.set_property(:test_property, [80])
       expect(node.properties[:test_property]).to eq(80)
     end
   end
 
-  describe "#nested_activities" do
+  describe '#nested_activities' do
     before do
       node.save!
       @activities = [
@@ -166,13 +166,13 @@ describe Node do
       ]
     end
 
-    context "when the node has no notes/evidence" do
-      it "returns activities related to the node" do
+    context 'when the node has no notes/evidence' do
+      it 'returns activities related to the node' do
         expect(node.nested_activities).to match_array(@activities)
       end
     end
 
-    context "when the node has notes & evidence" do
+    context 'when the node has notes & evidence' do
       before do
         note     = create(:note,     node: node)
         evidence = create(:evidence, node: node)
@@ -184,7 +184,7 @@ describe Node do
         )
       end
 
-      it "returns activities related to the node & its notes & evidence" do
+      it 'returns activities related to the node & its notes & evidence' do
         expect(node.nested_activities).to match_array(@activities)
       end
     end
