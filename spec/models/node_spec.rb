@@ -24,11 +24,11 @@ describe Node do
       node.destroy
     end
 
-    it "deletes all associated attachments" do
+    it 'deletes all associated attachments' do
       expect(File.exists?(@attachment.fullpath)).to be false
     end
 
-    it "deletes its corresponding attachment subfolder" do
+    it 'deletes its corresponding attachment subfolder' do
       expect(File.exists?(Attachment.pwd.join(node.id.to_s))).to be false
     end
 
@@ -39,7 +39,7 @@ describe Node do
         activity.reload
         expect(activity.trackable).to be nil
         expect(activity.trackable_id).to eq node.id
-        expect(activity.trackable_type).to eq "Node"
+        expect(activity.trackable_type).to eq 'Node'
       end
     end
   end
