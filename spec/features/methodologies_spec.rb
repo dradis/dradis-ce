@@ -10,7 +10,7 @@ describe "Describe methodologies" do
 
   describe "as authenticated user" do
 
-    before { login_to_project_as_user }
+    before { login_as_user }
     let(:methodology_library){ Node.methodology_library }
 
     it "shows a 'No methodologies assigned' message if none have been assigned" do

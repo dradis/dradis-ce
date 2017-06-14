@@ -3,7 +3,7 @@ require 'rails_helper'
 describe "User navigates to entity page from search" do
 
   before do
-    login_to_project_as_user
+    login_as_user
     visit root_path
   end
 

@@ -6,7 +6,7 @@ describe "evidence" do
   let(:issue_lib) { Node.issue_library }
 
   before do
-    login_to_project_as_user
+    login_as_user
     @node = create(:node)
     Node.issue_library
   end

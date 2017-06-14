@@ -1,4 +1,6 @@
-module ControllerMacros
+# Helper methods to force authentication and authorization
+# in our specs
+module SessionMacros
   extend ActiveSupport::Concern
 
   included { fixtures :configurations }
@@ -13,10 +15,5 @@ module ControllerMacros
       receive(:current_user).and_return(user)
     @logged_in_as = user
   end
-
-  def login_to_project_as_user
-    login_as_user
-    @project    = OpenStruct.new
-    @project.id = 1
-  end
+  
 end

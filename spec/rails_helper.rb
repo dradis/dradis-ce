@@ -71,8 +71,9 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
-  # config.include ControllerMacros, type: :controller
-  config.include ControllerMacros, type: :feature
+  config.include SessionMacros, type: :feature
+  config.include SessionMacros, type: :request
+  # config.include SessionMacros, type: :job
   # config.include SelecterHelper,   type: :feature
   # config.include SupportHelper,    type: :controller
   # config.include SupportHelper,    type: :feature

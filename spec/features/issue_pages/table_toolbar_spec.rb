@@ -6,7 +6,7 @@ describe "issue table" do
     subject { page }
 
     before do
-      login_to_project_as_user
+      login_as_user
 
       @issue1 = create(:issue, text: "#[Title]#\r\ntest1\r\n\r\n#[Description]#\r\nnone1\r\n")
       @issue2 = create(:issue, text: "#[Title]#\r\ntest2\r\n\r\n#[Description]#\r\nnone2\r\n")

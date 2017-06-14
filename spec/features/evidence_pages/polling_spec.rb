@@ -49,7 +49,7 @@ describe "evidence pages", js: true do
   end
 
   before do
-    login_to_project_as_user
+    login_as_user
     @other_user = create(:user)
     @node     = create(:node)
     @evidence = create(:evidence, node: @node)

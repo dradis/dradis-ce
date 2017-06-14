@@ -9,7 +9,7 @@ describe "note pages" do
     # avoid messing around with any existing templates:
     allow(NoteTemplate).to receive(:pwd).and_return(Pathname.new('tmp/templates/notes'))
     FileUtils.mkdir_p(Rails.root.join("tmp","templates","notes"))
-    login_to_project_as_user
+    login_as_user
     @node    = create(:node)
   end
 
