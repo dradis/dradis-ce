@@ -1,52 +1,52 @@
 require 'rails_helper'
 
-describe "Nodes API" do
+describe 'Nodes API' do
 
-  include_context "project scoped API"
-  include_context "https"
+  include_context 'project scoped API'
+  include_context 'https'
 
-  context "as unauthenticated user" do
-    describe "GET /api/nodes" do
-      it "throws 401" do
-        get "/api/nodes", env: @env
+  context 'as unauthenticated user' do
+    describe 'GET /api/nodes' do
+      it 'throws 401' do
+        get '/api/nodes', env: @env
         expect(response.status).to eq(401)
       end
     end
-    describe "GET /api/nodes/:id" do
-      it "throws 401" do
-        get "/api/nodes/1", env: @env
+    describe 'GET /api/nodes/:id' do
+      it 'throws 401' do
+        get '/api/nodes/1', env: @env
         expect(response.status).to eq(401)
       end
     end
-    describe "POST /api/nodes" do
-      it "throws 401" do
-        post "/api/nodes", env: @env
+    describe 'POST /api/nodes' do
+      it 'throws 401' do
+        post '/api/nodes', env: @env
         expect(response.status).to eq(401)
       end
     end
-    describe "PUT /api/nodes/:id" do
-      it "throws 401" do
-        put "/api/nodes/1", env: @env
+    describe 'PUT /api/nodes/:id' do
+      it 'throws 401' do
+        put '/api/nodes/1', env: @env
         expect(response.status).to eq(401)
       end
     end
-    describe "DELETE /api/nodes/:id" do
-      it "throws 401" do
-        delete "/api/nodes/1", env: @env
+    describe 'DELETE /api/nodes/:id' do
+      it 'throws 401' do
+        delete '/api/nodes/1', env: @env
         expect(response.status).to eq(401)
       end
     end
   end
 
-  context "as authenticated user" do
-    include_context "authenticated API user"
+  context 'as authenticated user' do
+    include_context 'authenticated API user'
 
-    describe "GET /api/nodes" do
-      it "retrieves all the nodes" do
+    describe 'GET /api/nodes' do
+      it 'retrieves all the nodes' do
         nodes = create_list(:node, 10).sort_by(&:updated_at)
         node_labels = nodes.map(&:label)
 
-        get "/api/nodes", env: @env
+        get '/api/nodes', env: @env
 
         expect(response.status).to eq(200)
 
@@ -56,11 +56,21 @@ describe "Nodes API" do
         expect(retrieved_nodes.count).to eq(nodes.count)
         expect(retrieved_node_labels).to match_array(node_labels)
       end
+
+      it 'paginates with page param' do
+        create_list(:node, 26).sort_by(&:updated_at)
+
+        get '/api/nodes?page=2', env: @env
+        expect(response.status).to eq(200)
+
+        retrieved_nodes = JSON.parse(response.body)
+        expect(retrieved_nodes.count).to eq(1)
+      end
     end
 
-    describe "GET /api/nodes/:id" do
-      it "retrieves a specific node" do
-        node = create(:node, label: "Existing Node")
+    describe 'GET /api/nodes/:id' do
+      it 'retrieves a specific node' do
+        node = create(:node, label: 'Existing Node')
 
         get "/api/nodes/#{ node.id }", env: @env
         expect(response.status).to eq(200)
@@ -70,15 +80,15 @@ describe "Nodes API" do
       end
     end
 
-    describe "POST /api/nodes" do
+    describe 'POST /api/nodes' do
       let!(:parent_node_id) { Node.plugin_parent_node.id }
       let(:valid_post) do
-        post "/api/nodes", params: valid_params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
+        post '/api/nodes', params: valid_params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
       end
       let(:valid_params) do
         {
           node: {
-            label:     "New Node",
+            label:     'New Node',
             type_id:   Node::Types::HOST,
             parent_id: parent_node_id,
             position:  3
@@ -86,7 +96,7 @@ describe "Nodes API" do
         }
       end
 
-      it "creates a new node" do
+      it 'creates a new node' do
         expect{valid_post}.to change{Node.count}.by(1)
         expect(response.status).to eq(201)
 
@@ -102,44 +112,44 @@ describe "Nodes API" do
       # Activity shared example was originally written for feature requests and
       # expects a 'submit_form' let variable to be defined:
       let(:submit_form) { valid_post }
-      include_examples "creates an Activity", :create, Node
+      include_examples 'creates an Activity', :create, Node
 
-      it "throws 415 unless JSON is sent" do
+      it 'throws 415 unless JSON is sent' do
         params = { node: { } }
-        post "/api/nodes", params: params, env: @env
+        post '/api/nodes', params: params, env: @env
         expect(response.status).to eq(415)
       end
 
-      it "throws 422 if node is invalid" do
-        params = { node: { label: "" } }
-        post "/api/nodes", params: params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
+      it 'throws 422 if node is invalid' do
+        params = { node: { label: '' } }
+        post '/api/nodes', params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
         expect(response.status).to eq(422)
       end
 
-      it "throws 422 if no :node param is sent" do
+      it 'throws 422 if no :node param is sent' do
         params = { }
-        post "/api/nodes", params: params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
+        post '/api/nodes', params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
         expect(response.status).to eq(422)
       end
 
-      it "throws 400 if invalid JSON is sent" do
+      it 'throws 400 if invalid JSON is sent' do
         invalid_tokens = ', , '
         json_payload = %Q|{"node":{"label":"A malformed label"#{ invalid_tokens }}}|
-        post "/api/nodes", params: json_payload, env: @env.merge("CONTENT_TYPE" => 'application/json')
+        post '/api/nodes', params: json_payload, env: @env.merge('CONTENT_TYPE' => 'application/json')
         expect(response.status).to eq(400)
       end
     end
 
-    describe "PUT /api/nodes/:id" do
+    describe 'PUT /api/nodes/:id' do
 
-      let(:node) { create(:node, label: "Existing Node") }
+      let(:node) { create(:node, label: 'Existing Node') }
 
       let(:valid_put) do
-        put "/api/nodes/#{ node.id }", params: valid_params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
+        put "/api/nodes/#{ node.id }", params: valid_params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
       end
-      let(:valid_params) { { node: { label: "Updated Node" } } }
+      let(:valid_params) { { node: { label: 'Updated Node' } } }
 
-      it "updates a node" do
+      it 'updates a node' do
         valid_put
         expect(response.status).to eq(200)
         expect(Node.find(node.id).label).to eq valid_params[:node][:label]
@@ -149,48 +159,48 @@ describe "Nodes API" do
 
       let(:submit_form) { valid_put }
       let(:model) { node }
-      include_examples "creates an Activity", :update
+      include_examples 'creates an Activity', :update
 
-      it "assigns :type_id" do
+      it 'assigns :type_id' do
         params = { node: { type_id: Node::Types::HOST } }
-        put "/api/nodes/#{ node.id }", params: params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
+        put "/api/nodes/#{ node.id }", params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
         expect(response.status).to eq(200)
         expect(Node.find(node.id).type_id).to eq(Node::Types::HOST)
       end
 
-      it "throws 415 unless JSON is sent" do
-        params = { node: { label: "Bad Node" } }
+      it 'throws 415 unless JSON is sent' do
+        params = { node: { label: 'Bad Node' } }
         put "/api/nodes/#{ node.id }", params: params, env: @env
         expect(response.status).to eq(415)
       end
 
-      it "throws 422 if node is invalid" do
-        params = { node: { label: "" } }
-        put "/api/nodes/#{ node.id }", params: params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
+      it 'throws 422 if node is invalid' do
+        params = { node: { label: '' } }
+        put "/api/nodes/#{ node.id }", params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
         expect(response.status).to eq(422)
       end
 
-      it "throws 422 if no :node param is sent" do
+      it 'throws 422 if no :node param is sent' do
         params = { }
-        put "/api/nodes/#{ node.id }", params: params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
+        put "/api/nodes/#{ node.id }", params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
         expect(response.status).to eq(422)
       end
 
-      it "throws 400 if invalid JSON is sent" do
+      it 'throws 400 if invalid JSON is sent' do
         invalid_tokens = ', , '
         json_payload = %Q|{"node":{"label":"A malformed label"#{ invalid_tokens }}}|
-        put "/api/nodes/#{ node.id }", params: json_payload, env: @env.merge("CONTENT_TYPE" => 'application/json')
+        put "/api/nodes/#{ node.id }", params: json_payload, env: @env.merge('CONTENT_TYPE' => 'application/json')
         expect(response.status).to eq(400)
       end
 
     end
 
-    describe "DELETE /api/nodes/:id" do
+    describe 'DELETE /api/nodes/:id' do
 
-      let(:node) { create(:node, label: "Existing Node") }
+      let(:node) { create(:node, label: 'Existing Node') }
       let(:delete_node) { delete "/api/nodes/#{ node.id }", env: @env }
 
-      it "deletes a node" do
+      it 'deletes a node' do
         delete_node
         expect(response.status).to eq(200)
 
@@ -199,7 +209,7 @@ describe "Nodes API" do
 
       let(:model) { node }
       let(:submit_form) { delete_node }
-      include_examples "creates an Activity", :destroy
+      include_examples 'creates an Activity', :destroy
     end
   end
 
