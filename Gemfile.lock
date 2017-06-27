@@ -80,7 +80,7 @@ GEM
       thor (~> 0.18)
     byebug (9.0.6)
     cancancan (1.16.0)
-    capybara (2.14.0)
+    capybara (2.14.3)
       addressable
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -213,7 +213,7 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     public_suffix (2.0.5)
-    rack (2.0.2)
+    rack (2.0.3)
     rack-protection (2.0.0.beta2)
       rack
     rack-test (0.6.3)
@@ -361,7 +361,7 @@ GEM
     websocket-extensions (0.1.2)
     whenever (0.9.7)
       chronic (>= 0.6.3)
-    xpath (2.0.0)
+    xpath (2.1.0)
       nokogiri (~> 1.3)
 
 PLATFORMS
@@ -433,4 +433,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.14.6
+   1.15.1
