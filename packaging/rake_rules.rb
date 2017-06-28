@@ -10,12 +10,13 @@ TRAVELING_RUBY_VERSION = '20170626-2.2.2'
 TRAVELING_RUBY_PATH = Rails.root.join('../traveling-ruby')
 
 # Must match Gemfile:
-BCRYPT_VERSION   = '3.1.10'
-MYSQL2_VERSION   = '0.3.18'
-NOKOGIRI_VERSION = '1.7.2'
-REDCLOTH_VERSION = '4.3.1'
-SQLITE3_VERSION  = '1.3.13'
-RINKU_VERSION    = '2.0.2'
+BCRYPT_VERSION       = '3.1.10'
+MYSQL2_VERSION       = '0.3.18'
+NOKOGIRI_VERSION     = '1.7.2'
+REDCLOTH_VERSION     = '4.3.1'
+SQLITE3_VERSION      = '1.3.13'
+RINKU_VERSION        = '2.0.2'
+THERUBYRACER_VERSION = '0.12.3'
 
 namespace :assets do
   namespace :precompile do
@@ -41,7 +42,8 @@ namespace :package do
       "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-nokogiri-#{NOKOGIRI_VERSION}.tar.gz",
       "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-RedCloth-#{REDCLOTH_VERSION}.tar.gz",
       "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-sqlite3-#{SQLITE3_VERSION}.tar.gz",
-      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-rinku-#{RINKU_VERSION}.tar.gz"
+      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-rinku-#{RINKU_VERSION}.tar.gz",
+      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-therubyracer-#{THERUBYRACER_VERSION}.tar.gz"
     ] do
       create_package('linux-x86')
     end
@@ -55,7 +57,8 @@ namespace :package do
       "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-nokogiri-#{NOKOGIRI_VERSION}.tar.gz",
       "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-RedCloth-#{REDCLOTH_VERSION}.tar.gz",
       "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-sqlite3-#{SQLITE3_VERSION}.tar.gz",
-      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-rinku-#{RINKU_VERSION}.tar.gz"
+      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-rinku-#{RINKU_VERSION}.tar.gz",
+      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-therubyracer-#{THERUBYRACER_VERSION}.tar.gz"
     ] do
       create_package('linux-x86_64')
     end
@@ -70,7 +73,8 @@ namespace :package do
     "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-nokogiri-#{NOKOGIRI_VERSION}.tar.gz",
     "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-RedCloth-#{REDCLOTH_VERSION}.tar.gz",
     "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-sqlite3-#{SQLITE3_VERSION}.tar.gz",
-    "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-rinku-#{RINKU_VERSION}.tar.gz"
+    "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-rinku-#{RINKU_VERSION}.tar.gz",
+    "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-therubyracer-#{THERUBYRACER_VERSION}.tar.gz"
   ] do
     create_package('osx')
   end
@@ -121,12 +125,12 @@ namespace :package do
 
     puts "\nCommenting unnecessary gems..."
     if RbConfig::CONFIG['host_os'] =~ /darwin/
-      sh "sed -i '' -- \"s/gem \\'therubyracer/\\# gem \\'therubyracer/g\" packaging/tmp/Gemfile"
+      #sh "sed -i '' -- \"s/gem \\'therubyracer/\\# gem \\'therubyracer/g\" packaging/tmp/Gemfile"
       sh "sed -i '' -- \"s/gem \\'unicorn/\\# gem \\'unicorn/g\" packaging/tmp/Gemfile"
       # remove 'group: :development' from sqlite3 line
       sh "sed -i '' -- \"s/1\.3\.10\\', group: :development/1\.3\.10\\'/g\" Gemfile"
     else
-      sh "sed -i -- \"s/gem \'therubyracer/# gem \'therubyracer/g\" packaging/tmp/Gemfile"
+      #sh "sed -i -- \"s/gem \'therubyracer/# gem \'therubyracer/g\" packaging/tmp/Gemfile"
       sh "sed -i -- \"s/gem \'unicorn/# gem \'unicorn/g\" packaging/tmp/Gemfile"
       # remove 'group: :development' from sqlite3 line
       sh "sed -i -- \"s/1\\.3\\.10\\', group: :development/1\\.3\\.10\\'/g\" Gemfile"
@@ -231,6 +235,17 @@ file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-rinku-#{RINKU_VERSI
   copy_native_extension('osx', "rinku-#{RINKU_VERSION}")
 end
 
+file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-therubyracer-#{THERUBYRACER_VERSION}.tar.gz" do
+  copy_native_extension('linux-x86', "therubyracer-#{THERUBYRACER_VERSION}")
+end
+
+file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-therubyracer-#{THERUBYRACER_VERSION}.tar.gz" do
+  copy_native_extension('linux-x86_64', "therubyracer-#{THERUBYRACER_VERSION}")
+end
+
+file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-therubyracer-#{THERUBYRACER_VERSION}.tar.gz" do
+  copy_native_extension('osx', "therubyracer-#{THERUBYRACER_VERSION}")
+end
 
 def create_package(target)
   puts "\nCreating package #{ target }..."
@@ -305,7 +320,8 @@ def create_package(target)
     "mysql2-#{MYSQL2_VERSION}",
     "RedCloth-#{REDCLOTH_VERSION}",
     "sqlite3-#{SQLITE3_VERSION}",
-    "rinku-#{RINKU_VERSION}"
+    "rinku-#{RINKU_VERSION}",
+    "therubyracer-#{THERUBYRACER_VERSION}"
   ].each do |gem|
     sh 'tar -xzf ' +
        "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-#{target}-#{gem}.tar.gz"+
