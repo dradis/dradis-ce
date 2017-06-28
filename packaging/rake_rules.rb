@@ -6,7 +6,7 @@ require 'dradis/ce'
 
 PACKAGE_NAME = 'dradis'
 VERSION = Dradis::CE.version
-TRAVELING_RUBY_VERSION = '20170404-2.2.2'
+TRAVELING_RUBY_VERSION = '20170626-2.2.2'
 TRAVELING_RUBY_PATH = Rails.root.join('../traveling-ruby')
 
 # Must match Gemfile:
@@ -32,6 +32,7 @@ task :package => ['package:linux:x86', 'package:linux:x86_64', 'package:osx']
 
 namespace :package do
   namespace :linux do
+    desc 'Package your app for Linux x86'
     task :x86 => [:bundle_install,
       'assets:precompile:production',
       "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86.tar.gz",
@@ -39,7 +40,8 @@ namespace :package do
       "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-mysql2-#{MYSQL2_VERSION}.tar.gz",
       "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-nokogiri-#{NOKOGIRI_VERSION}.tar.gz",
       "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-RedCloth-#{REDCLOTH_VERSION}.tar.gz",
-      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-sqlite3-#{SQLITE3_VERSION}.tar.gz"
+      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-sqlite3-#{SQLITE3_VERSION}.tar.gz",
+      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-rinku-#{RINKU_VERSION}.tar.gz"
     ] do
       create_package('linux-x86')
     end
@@ -52,7 +54,8 @@ namespace :package do
       "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-mysql2-#{MYSQL2_VERSION}.tar.gz",
       "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-nokogiri-#{NOKOGIRI_VERSION}.tar.gz",
       "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-RedCloth-#{REDCLOTH_VERSION}.tar.gz",
-      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-sqlite3-#{SQLITE3_VERSION}.tar.gz"
+      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-sqlite3-#{SQLITE3_VERSION}.tar.gz",
+      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-rinku-#{RINKU_VERSION}.tar.gz"
     ] do
       create_package('linux-x86_64')
     end
@@ -110,8 +113,8 @@ namespace :package do
         # sh "sed -i '' -- \"#{trailing_slash_regex}\" #{path}"
         sh "sed -i '' -- \"#{engines_regexp}\" #{path}"
       else
-        sh "sed -i -- \"#{regexp}\" #{path}"
-        sh "sed -i - \"#{trailing_slash_regex}\" #{path}"
+        # sh "sed -i -- \"#{regexp}\" #{path}"
+        # sh "sed -i - \"#{trailing_slash_regex}\" #{path}"
         sh "sed -i -- \"#{engines_regexp}\" #{path}"
       end
     end
@@ -145,11 +148,11 @@ namespace :package do
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86.tar.gz" do
-  download_runtime('linux-x86')
+  copy_runtime('linux-x86')
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64.tar.gz" do
-  download_runtime('linux-x86_64')
+  copy_runtime('linux-x86_64')
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx.tar.gz" do
@@ -157,11 +160,11 @@ file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx.tar.gz" do
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-bcrypt-#{BCRYPT_VERSION}.tar.gz" do
-  download_native_extension('linux-x86', "bcrypt-#{BCRYPT_VERSION}")
+  copy_native_extension('linux-x86', "bcrypt-#{BCRYPT_VERSION}")
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-bcrypt-#{BCRYPT_VERSION}.tar.gz" do
-  download_native_extension('linux-x86_64', "bcrypt-#{BCRYPT_VERSION}")
+  copy_native_extension('linux-x86_64', "bcrypt-#{BCRYPT_VERSION}")
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-bcrypt-#{BCRYPT_VERSION}.tar.gz" do
@@ -169,11 +172,11 @@ file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-bcrypt-#{BCRYPT_VER
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-mysql2-#{MYSQL2_VERSION}.tar.gz" do
-  download_native_extension('linux-x86', "mysql2-#{MYSQL2_VERSION}")
+  copy_native_extension('linux-x86', "mysql2-#{MYSQL2_VERSION}")
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-mysql2-#{MYSQL2_VERSION}.tar.gz" do
-  download_native_extension('linux-x86_64', "mysql2-#{MYSQL2_VERSION}")
+  copy_native_extension('linux-x86_64', "mysql2-#{MYSQL2_VERSION}")
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-mysql2-#{MYSQL2_VERSION}.tar.gz" do
@@ -181,11 +184,11 @@ file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-mysql2-#{MYSQL2_VER
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-nokogiri-#{NOKOGIRI_VERSION}.tar.gz" do
-  download_native_extension('linux-x86', "nokogiri-#{NOKOGIRI_VERSION}")
+  copy_native_extension('linux-x86', "nokogiri-#{NOKOGIRI_VERSION}")
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-nokogiri-#{NOKOGIRI_VERSION}.tar.gz" do
-  download_native_extension('linux-x86_64', "nokogiri-#{NOKOGIRI_VERSION}")
+  copy_native_extension('linux-x86_64', "nokogiri-#{NOKOGIRI_VERSION}")
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-nokogiri-#{NOKOGIRI_VERSION}.tar.gz" do
@@ -193,28 +196,35 @@ file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-nokogiri-#{NOKOGIRI
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-RedCloth-#{REDCLOTH_VERSION}.tar.gz" do
-  download_native_extension('linux-x86', "RedCloth-#{REDCLOTH_VERSION}")
+  copy_native_extension('linux-x86', "RedCloth-#{REDCLOTH_VERSION}")
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-RedCloth-#{REDCLOTH_VERSION}.tar.gz" do
-  download_native_extension('linux-x86_64', "RedCloth-#{REDCLOTH_VERSION}")
+  copy_native_extension('linux-x86_64', "RedCloth-#{REDCLOTH_VERSION}")
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-RedCloth-#{REDCLOTH_VERSION}.tar.gz" do
   copy_native_extension('osx', "RedCloth-#{REDCLOTH_VERSION}")
 end
 
-
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-sqlite3-#{SQLITE3_VERSION}.tar.gz" do
-  download_native_extension('linux-x86', "sqlite3-#{SQLITE3_VERSION}")
+  copy_native_extension('linux-x86', "sqlite3-#{SQLITE3_VERSION}")
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-sqlite3-#{SQLITE3_VERSION}.tar.gz" do
-  download_native_extension('linux-x86_64', "sqlite3-#{SQLITE3_VERSION}")
+  copy_native_extension('linux-x86_64', "sqlite3-#{SQLITE3_VERSION}")
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-sqlite3-#{SQLITE3_VERSION}.tar.gz" do
   copy_native_extension('osx', "sqlite3-#{SQLITE3_VERSION}")
+end
+
+file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-rinku-#{RINKU_VERSION}.tar.gz" do
+  copy_native_extension('linux-x86', "rinku-#{RINKU_VERSION}")
+end
+
+file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-rinku-#{RINKU_VERSION}.tar.gz" do
+  copy_native_extension('linux-x86_64', "rinku-#{RINKU_VERSION}")
 end
 
 file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-rinku-#{RINKU_VERSION}.tar.gz" do
@@ -270,7 +280,11 @@ def create_package(target)
   # the relative path of the 'engines' gems so Bundler can find them under the
   # new app/engines directory:
   engines_regexp = 's/\\.\\.\\/\\.\\.\\/engines/\\..\\/app\\/engines/g'
-  sh "sed -i '' -- \"#{engines_regexp}\" packaging/tmp/Gemfile"
+  if RbConfig::CONFIG['host_os'] =~ /darwin/
+    sh "sed -i '' -- \"#{engines_regexp}\" packaging/tmp/Gemfile"
+  else
+    sh "sed -i -- \"#{engines_regexp}\" packaging/tmp/Gemfile"
+  end
 
   sh "cp packaging/tmp/Gemfile packaging/tmp/Gemfile.plugins packaging/tmp/Gemfile.lock #{package_dir}/lib/vendor/"
 
@@ -279,7 +293,11 @@ def create_package(target)
 
   sh "cp README.md LICENSE.txt CHANGELOG #{package_dir}"
 
-  sh "sed -i '' -- \"s/config\.force_ssl = true/config\.force_ssl = false/g\" #{package_dir}/lib/app/config/environments/production.rb"
+  if RbConfig::CONFIG['host_os'] =~ /darwin/
+    sh "sed -i '' -- \"s/config\.force_ssl = true/config\.force_ssl = false/g\" #{package_dir}/lib/app/config/environments/production.rb"
+  else
+    sh "sed -i -- \"s/config\.force_ssl = true/config\.force_ssl = false/g\" #{package_dir}/lib/app/config/environments/production.rb"
+  end
 
   [
     "bcrypt-#{BCRYPT_VERSION}",
@@ -315,13 +333,15 @@ end
 
 def copy_runtime(target)
   puts "\nCopying runtime #{ target }"
+  folder = target =~ /^linux/ ? 'linux' : 'osx' 
   sh 'cd packaging && ' +
-     "cp #{TRAVELING_RUBY_PATH}/#{target}/traveling-ruby-#{TRAVELING_RUBY_VERSION}-#{target}.tar.gz ."
+     "cp #{TRAVELING_RUBY_PATH}/#{folder}/traveling-ruby-#{TRAVELING_RUBY_VERSION}-#{target}.tar.gz ."
 end
 
 def copy_native_extension(target, gem_name_and_version)
   puts "\nCopying native extension #{ target }"
+  folder = target =~ /^linux/ ? 'linux' : 'osx'
   sh 'cd packaging && ' +
-     "cp #{TRAVELING_RUBY_PATH}/#{target}/traveling-ruby-gems-#{TRAVELING_RUBY_VERSION}-#{target}/#{gem_name_and_version}.tar.gz " +
+     "cp #{TRAVELING_RUBY_PATH}/#{folder}/traveling-ruby-gems-#{TRAVELING_RUBY_VERSION}-#{target}/#{gem_name_and_version}.tar.gz " +
      "traveling-ruby-#{TRAVELING_RUBY_VERSION}-#{target}-#{gem_name_and_version}.tar.gz"
 end
