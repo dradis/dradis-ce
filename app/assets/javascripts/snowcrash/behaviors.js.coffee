@@ -97,6 +97,7 @@ jQuery ->
         when 'training-course' then 'Dradis Training Course'
         when 'try-pro' then 'Upgrade to Dradis Pro'
         when 'word-reports' then '[<span>Dradis Pro feature</span>] Custom Word reports'
+        when 'excel-reports' then '[<span>Dradis Pro feature</span>] Custom Excel reports'
 
       $modal.find('.modal-header h3').html(title)
     else
