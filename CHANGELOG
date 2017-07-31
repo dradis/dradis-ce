@@ -3,7 +3,7 @@ v3.7 (July 2017)
  - Fix 'before_filter is deprecated' warning
  - Updated README with 'Community Projects' section
  - Updated 'poltergeist' (browser specs) configuration
- - Fix a bug may cause duplicates in Node#issues
+ - Fix a bug that may cause duplicates in Node#issues
  - Upgraded Nokogiri (xml/html parsing library)
  - Fixed bug when search results had multiple pages
  - Fixed error in 'dradis:reset' thor task
