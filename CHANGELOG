@@ -1,5 +1,15 @@
-v3.7
+v3.7 (July 2017)
  - Bugs fixed: #119
+ - Fix 'before_filter is deprecated' warning
+ - Updated README with 'Community Projects' section
+ - Updated 'poltergeist' (browser specs) configuration
+ - Fix a bug may cause duplicates in Node#issues
+ - Upgraded Nokogiri (xml/html parsing library)
+ - Fixed bug when search results had multiple pages
+ - Fixed error in 'dradis:reset' thor task
+ - Fixed error in 'dradis:backup' thor task
+ - Refactored nodes tree behaviour (parents with children)
+ - Refactored loading a note template
 
 v3.6 (Mar 2017)
  - Simpler framework <> add-on interface.
