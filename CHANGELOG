@@ -1,4 +1,5 @@
 v3.7 (July 2017)
+ - Fix dradis:reset thor task.
  - Bugs fixed: #119
  - Fix 'before_filter is deprecated' warning
  - Updated README with 'Community Projects' section
