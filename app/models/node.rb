@@ -19,6 +19,7 @@ class Node < ApplicationRecord
   # -- Relationships --------------------------------------------------------
   has_many :notes, dependent: :destroy
   has_many :evidence, dependent: :destroy
+  has_many :issues, -> { distinct }, through: :evidence
   has_many :activities, as: :trackable
 
   def nested_activities
