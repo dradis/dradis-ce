@@ -21,16 +21,16 @@
 shared_examples "creates an Activity" do |action, klass=nil|
   let(:action) { submit_form } if defined?(submit_form)
 
-  it "creates an Activity" do
+  it 'creates an Activity' do
     expect{submit_form}.to change{Activity.count}.by(1)
     activity = Activity.last
 
     case action.to_s
-    when "create"
+    when 'create'
       expect(activity.trackable).to eq klass.last
-    when "update"
+    when 'update'
       expect(activity.trackable).to eq model
-    when "destroy"
+    when 'destroy'
       # 'Destroy' activities should save the type and ID of the destroyed model
       # so we know what they were, even though the specific model doesn't exist
       # anymore.
@@ -58,9 +58,9 @@ end
 #   create_activities : a block which creates the activities AND IS CALLED
 #                       BEFORE THE PAGE LOADS
 #   trackable: the model which the 'show' page is about
-shared_examples "a page with an activity feed" do
+shared_examples 'a page with an activity feed' do
 
-  describe "when the model has activities" do
+  describe 'when the model has activities' do
     include ActivityMacros
 
     let(:create_activities) do
@@ -72,7 +72,7 @@ shared_examples "a page with an activity feed" do
       @other_activity = create(:activity, trackable: other_instance)
     end
 
-    it "lists them in the activity feed" do
+    it 'lists them in the activity feed' do
       within activity_feed do
         should have_activity(@activities[0])
         should have_activity(@activities[1])

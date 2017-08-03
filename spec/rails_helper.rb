@@ -36,7 +36,7 @@ ActiveRecord::Migration.maintain_test_schema!
 
 
 Capybara.register_driver :poltergeist do |app|
-  options = { js_errors: false, timeout: 30, window_size: [1920, 1080] }
+  options = { js_errors: false, timeout: 60, window_size: [1920, 1080] }
   Capybara::Poltergeist::Driver.new(app, options)
 end
 
