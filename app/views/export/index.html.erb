@@ -21,8 +21,10 @@
           %>
         </li>
       <% end %>
+      <% if !defined?(Dradis::Pro) %>
       <li><a href="javascript:void(0)" class="js-try-pro" data-term="word-reports" data-url="http://drad.is/l/try-pro-reporting"><i class="fa fa-file-word-o"></i> Custom Word reports</a></li>
       <li><a href="javascript:void(0)" class="js-try-pro" data-term="excel-reports" data-url="http://drad.is/l/try-pro-excel"><i class="fa fa-file-excel-o"></i> Custom Excel reports</a></li>
+      <% end %>
     </ul>
 
     <div class="tab-content">
