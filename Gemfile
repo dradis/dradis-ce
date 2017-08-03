@@ -59,7 +59,7 @@ gem 'html-pipeline'
 
 gem 'kaminari', '~> 1.0.1'
 
-gem 'paper_trail', '~> 4.0.0'
+gem 'paper_trail', '~> 4.2.0'
 
 # gem 'rails_autolink', '~> 1.1'
 
@@ -209,13 +209,13 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 3.6', github: 'dradis/dradis-plugins'
+gem 'dradis-plugins', '~> 3.7', github: 'dradis/dradis-plugins'
 
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 3.6', github: 'dradis/dradis-projects'
+gem 'dradis-projects', '~> 3.7', github: 'dradis/dradis-projects'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)
