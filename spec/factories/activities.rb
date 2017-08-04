@@ -2,8 +2,7 @@ FactoryGirl.define do
   factory :activity, aliases: [:create_activity] do
     action 'create'
     sequence(:user) { |n| "rspec-user-#{n}" }
-    trackable_id 1
-    trackable_type 'Node'
+    trackable { |activity| activity.association :node }
 
     factory :update_activity do
       action 'update'
