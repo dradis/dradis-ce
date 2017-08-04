@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.0'
+gem 'rails', '~> 5.1.3'
 
 # Use Puma as the app server
 # FIXME: required for Rails 5 ActionCable
@@ -187,7 +187,7 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails'
-  gem 'capybara', '~> 2.13.0'
+  gem 'capybara', '~> 2.13'
   gem 'poltergeist'
   gem 'guard-rspec', require: false
   gem 'shoulda-matchers', '~> 3.1'
