@@ -51,6 +51,7 @@ class Node < ApplicationRecord
 
   # -- Validations ----------------------------------------------------------
   validates_presence_of :label
+  validates_presence_of :parent, if: Proc.new { |node| node.parent_id }
 
   # -- Scopes ---------------------------------------------------------------
   scope :in_tree, -> {
