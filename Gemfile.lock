@@ -196,9 +196,8 @@ GEM
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
-    paper_trail (4.2.0)
-      activerecord (>= 3.0, < 6.0)
-      activesupport (>= 3.0, < 6.0)
+    paper_trail (6.0.2)
+      activerecord (>= 4.0, < 5.2)
       request_store (~> 1.1)
     parallel (1.12.0)
     parser (2.4.0.0)
@@ -411,7 +410,7 @@ DEPENDENCIES
   local_time
   mysql2 (= 0.3.18)
   nokogiri (= 1.7.2)
-  paper_trail (~> 4.2.0)
+  paper_trail (~> 6.0)
   parslet (~> 1.4.0)
   poltergeist
   rails (~> 5.1.3)
