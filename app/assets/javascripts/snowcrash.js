@@ -1,3 +1,4 @@
+//FIXME: jquery + rails_ujs can be replaced by rails-ujs post Rails 5.1
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
