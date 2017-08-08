@@ -51,7 +51,7 @@ class Node < ApplicationRecord
 
   # -- Validations ----------------------------------------------------------
   validates_presence_of :label
-  validates_presence_of :parent, if: Proc.new { |node| node.parent_id }
+  validate :parent_node, if: Proc.new { |node| node.parent_id }
 
   # -- Scopes ---------------------------------------------------------------
   scope :in_tree, -> {
@@ -110,5 +110,14 @@ class Node < ApplicationRecord
   def destroy_attachments
     attachments_dir = Attachment.pwd.join(self.id.to_s)
     FileUtils.rm_rf attachments_dir if File.exists?(attachments_dir)
+  end
+
+  def parent_node
+    if self.parent.nil? ||
+      !(self.parent.type_id == Node::Types::DEFAULT ||
+        self.parent.type_id == Node::Types::HOST)
+
+      errors.add(:base, 'Invalid parent.')
+    end
   end
 end
