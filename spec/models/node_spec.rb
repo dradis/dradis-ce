@@ -60,8 +60,16 @@ describe Node do
 
   describe '#parent' do
     it 'does not create with an invalid parent_id' do
-      lib_node = create(:node, type_id: 2)
+      lib_node = create(:node, type_id: Node::Types::METHODOLOGY)
       node.parent_id = lib_node.id
+      expect(node.save).to eq(false)
+    end
+
+    it 'does not create with a missing parent' do
+      create(:node) if Node.maximum(:id).nil?
+
+      missing_parent_id = Node.maximum(:id) + 1
+      node.parent_id = missing_parent_id
       expect(node.save).to eq(false)
     end
 
