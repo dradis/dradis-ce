@@ -59,7 +59,7 @@ class Node < ApplicationRecord
   }
 
   scope :user_nodes, -> {
-    where("type_id IN (?)", [Types::DEFAULT, Types::HOST])
+    where("type_id IN (?)", user_node_types)
   }
 
 
@@ -94,6 +94,10 @@ class Node < ApplicationRecord
     find_or_create_by(label: 'Recovered', type_id: Node::Types::DEFAULT)
   end
 
+  def self.user_node_types
+    [Node::Types::DEFAULT, Node::Types::HOST]
+  end
+
   # -- Instance Methods -----------------------------------------------------
   def ancestor_of?(node)
     node && node.ancestors.include?(self)
@@ -102,6 +106,10 @@ class Node < ApplicationRecord
   # Return all the Attachment objects associated with this Node.
   def attachments
     Attachment.find(:all, :conditions => {:node_id => self.id})
+  end
+
+  def is_user_node
+    Node.user_node_types.include?(self.type_id)
   end
 
   private
@@ -113,11 +121,14 @@ class Node < ApplicationRecord
   end
 
   def parent_node
-    if self.parent.nil? ||
-      !(self.parent.type_id == Node::Types::DEFAULT ||
-        self.parent.type_id == Node::Types::HOST)
+    if self.parent.nil?
+      errors.add(:parent_id, 'is missing/invalid.')
+      return false
+    end
 
-      errors.add(:base, 'Invalid parent.')
+    if !(self.parent.is_user_node)
+      errors.add(:parent_id, 'has an invalid type.')
+      return false
     end
   end
 end
