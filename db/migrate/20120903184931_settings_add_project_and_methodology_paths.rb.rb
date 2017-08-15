@@ -1,7 +1,7 @@
 # Note that the old admin:paths:methodologies needs to be translated into the
 # new admin:paths:templates:projects.
 
-class SettingsAddProjectAndMethodologyPaths < ActiveRecord::Migration
+class SettingsAddProjectAndMethodologyPaths < ActiveRecord::Migration[5.1]
   def up
     new_value = Rails.root.join('templates', 'projects').to_s
 

@@ -10,7 +10,7 @@
 # See the details in vendor/plugins/bj/lib/bj/table.rb
 #
 
-class BjRails32Compatibility < ActiveRecord::Migration
+class BjRails32Compatibility < ActiveRecord::Migration[5.1]
   def change
     #create_table Bj::Table.table_name
   end
