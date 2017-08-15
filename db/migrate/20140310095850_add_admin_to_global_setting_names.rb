@@ -1,4 +1,4 @@
-class AddAdminToGlobalSettingNames < ActiveRecord::Migration
+class AddAdminToGlobalSettingNames < ActiveRecord::Migration[5.1]
   def up
     %w[
       uploads_node

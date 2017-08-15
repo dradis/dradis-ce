@@ -6,7 +6,7 @@
 #   20101029150104_bj_migration.rb
 #   20120131171008_bj_rails32_compatibility.rb
 #
-class RemoveBjTables < ActiveRecord::Migration
+class RemoveBjTables < ActiveRecord::Migration[5.1]
   def drop_table_if_exists(name)
     drop_table(name) if ActiveRecord::Base.connection.table_exists?(name)
   end

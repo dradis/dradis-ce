@@ -1,4 +1,4 @@
-class RenameLegacyTags < ActiveRecord::Migration
+class RenameLegacyTags < ActiveRecord::Migration[5.1]
   def up
     Tag.all.each do |tag|
       case tag.name

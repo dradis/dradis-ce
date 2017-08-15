@@ -2,7 +2,7 @@
 # Redis/Resque), this migration fails because there is no Bj module.
 #
 # We've decided to keep the file in the repo for archeological interest.
-class BjMigration < ActiveRecord::Migration
+class BjMigration < ActiveRecord::Migration[5.1]
   def self.up
     #Bj::Table.each{|table| table.up}
   end

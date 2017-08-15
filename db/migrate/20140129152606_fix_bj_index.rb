@@ -3,7 +3,7 @@
 #
 # We've decided to keep the file in the repo for archeological interest.
 
-class FixBjIndex < ActiveRecord::Migration
+class FixBjIndex < ActiveRecord::Migration[5.1]
   def up
     # If we skip the :length, as originally created by bj and run in MySQL it will
     # complain with a "Mysql2::Error: BLOB/TEXT column 'hostname' used in key
