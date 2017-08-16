@@ -10,7 +10,7 @@
 //= require jquery-hotkeys
 //= require bootstrap
 //= require d3
-//= require local_time
+//= require local-time
 //= require clipboard
 
 //= require snowcrash/plugins/jquery.breadcrums

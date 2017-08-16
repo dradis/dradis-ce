@@ -25,7 +25,7 @@ gem 'therubyracer', platforms: :ruby
 gem 'coffee-rails', '~> 4.2'
 
 # Cache-friendly, client-side local time
-gem 'local_time'
+gem 'local_time', '>= 2.0.0'
 
 
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
