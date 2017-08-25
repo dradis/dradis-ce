@@ -108,7 +108,7 @@ class Node < ApplicationRecord
     Attachment.find(:all, :conditions => {:node_id => self.id})
   end
 
-  def is_user_node
+  def user_node?
     Node.user_node_types.include?(self.type_id)
   end
 
@@ -126,7 +126,7 @@ class Node < ApplicationRecord
       return false
     end
 
-    if !(self.parent.is_user_node)
+    if !(self.parent.user_node?)
       errors.add(:parent_id, 'has an invalid type.')
       return false
     end
