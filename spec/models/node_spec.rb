@@ -58,6 +58,35 @@ describe Node do
     end
   end
 
+  describe '#parent' do
+    it 'does not create with an invalid parent_id' do
+      lib_node = create(:node, type_id: Node::Types::METHODOLOGY)
+      node.parent_id = lib_node.id
+      expect(node.save).to eq(false)
+    end
+
+    it 'does not create with a missing parent' do
+      create(:node) if Node.maximum(:id).nil?
+
+      missing_parent_id = Node.maximum(:id) + 1
+      node.parent_id = missing_parent_id
+      expect(node.save).to eq(false)
+    end
+
+    it 'creates a root node with a nil parent_id' do
+      node.parent_id = nil
+      expect(node.save).to eq(true)
+      expect(node.parent).to eq(nil)
+    end
+
+    it 'creates the node as a child of the parent node' do
+      parent_node = create(:node)
+      node.parent_id = parent_node.id
+      node.save!
+      expect(node.parent).to eq(parent_node)
+    end
+  end
+
   describe '#position' do
     it { should respond_to(:position)  }
     it { should respond_to(:position=) }
