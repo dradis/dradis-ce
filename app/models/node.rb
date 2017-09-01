@@ -12,6 +12,7 @@ class Node < ApplicationRecord
     HOST = 1
     METHODOLOGY = 2
     ISSUELIB = 3
+    USER_TYPES = [DEFAULT, HOST]
   end
 
   acts_as_tree counter_cache: true, order: :label
@@ -59,7 +60,7 @@ class Node < ApplicationRecord
   }
 
   scope :user_nodes, -> {
-    where("type_id IN (?)", user_node_types)
+    where("type_id IN (?)", Types::USER_TYPES)
   }
 
 
@@ -94,10 +95,6 @@ class Node < ApplicationRecord
     find_or_create_by(label: 'Recovered', type_id: Node::Types::DEFAULT)
   end
 
-  def self.user_node_types
-    [Node::Types::DEFAULT, Node::Types::HOST]
-  end
-
   # -- Instance Methods -----------------------------------------------------
   def ancestor_of?(node)
     node && node.ancestors.include?(self)
@@ -109,7 +106,7 @@ class Node < ApplicationRecord
   end
 
   def user_node?
-    Node.user_node_types.include?(self.type_id)
+    Types::USER_TYPES.include?(self.type_id)
   end
 
   private
