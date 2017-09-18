@@ -18,9 +18,10 @@ jQuery ->
 
     paste: (e, data)->
       $.each data.files, (index, file) ->
-        if (!file.name?)
-          file.name = prompt('Please provide a filename for the pasted image', 'screenshot-XX.png') || 'unnamed.png'
-
+        filename = prompt('Please provide a filename for the pasted image', 'screenshot-XX.png') || 'unnamed.png'
+        # Clone file object, edit, then reapply to the data object
+        newFile = new File [file], filename, { type: file.type }
+        data.files[index] = newFile
 
   # Initialize clipboard.js:
   clipboard = new Clipboard('.js-attachment-url-copy')
