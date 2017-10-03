@@ -11,7 +11,7 @@ module HTML
       # <mark> tags)
       def call
         doc.search('pre').each do |element|
-          element.inner_html = '<code>' + element.text.gsub(/%%\{\{(.+)\}\}%%/i) do |match|
+          element.content = '<code>' + element.text.gsub(/%%\{\{(.+)\}\}%%/i) do |match|
             %|<mark>#{$1}</mark>|
           end + '</code>'
         end
