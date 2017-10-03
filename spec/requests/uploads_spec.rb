@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe "upload requests" do
 
@@ -41,7 +41,6 @@ describe "upload requests" do
       end
 
       it "enqueues a background job with the right parameters" do
-
         attachments_path = Attachment.pwd.join(@uploads_node.id.to_s)
         attachment_file  = attachments_path.join('temp').to_s
 
@@ -50,12 +49,13 @@ describe "upload requests" do
         expect(File.exist?(attachment_file)).to be true
 
         # Don't want to deal with Redis or Resque here
-        allow(UploadProcessor).to receive(:create).and_return(123)
+        FakeJob = Struct.new(:job_id)
+        allow(UploadJob).to receive(:perform_later).and_return(FakeJob.new(job_id: 123))
 
-        expect(UploadProcessor).to receive(:create).with(
+        expect(UploadJob).to receive(:perform_later).with(
           hash_including(
             file: attachment_file,
-            plugin: uploader
+            plugin_name: uploader
           )
         ).once
 

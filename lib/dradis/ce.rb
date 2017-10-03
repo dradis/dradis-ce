@@ -7,3 +7,6 @@ module Dradis
     end
   end
 end
+
+require 'html/pipeline/dradis_fieldable_filter'
+require 'html/pipeline/dradis_textile_filter'

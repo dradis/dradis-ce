@@ -1,0 +1,93 @@
+<% content_for :title, 'Merge issues' %>
+
+<% content_for :sidebar do %>
+  <%= render 'sidebar' %>
+<% end %>
+
+<% content_for :breadcrums do %>
+  <ul class="breadcrumb">
+    <li><%= link_to 'All issues', issues_path %> <span class="divider">/</span></li>
+    <li class="active">Merge issues</li>
+  </ul>
+<% end %>
+
+<div id="issues_editor">
+  <div class="inner note-text-inner">
+    <h3>You're merging <%= @issues.count %> Issues into a target Issue</h3>
+
+    <%= form_tag merge_index_path do %>
+      <p>
+        Select an existing Issue to merge into, or create a new one.
+      </p>
+
+      <p>
+        Evidence from the original Issues will be added to the target Issue.
+        Then, the original Issues will be moved to the trash.
+      </p>
+
+      <p>
+        <a href="https://dradisframework.com/pro/support/guides/projects/merge_issues.html">Learn
+        more about merging issues</a>.
+      </p>
+
+      <hr>
+
+      <div class="accordion">
+
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <div class="radio">
+              <%= label_tag do %>
+                <%= radio_button_tag "new", nil, false, id: "new" %>
+                Merge into a new issue
+                <%= link_to raw('<i class="fa fa-chevron-down"></i>'), 'javascript:void(0)', class: 'issue-toggle pull-right', data: {toggle: 'collapse', target: "#preview_issue_new"} %>
+              <% end %>
+            </div>
+          </div>
+          <div id="<%= "preview_issue_new" %>" class="accordion-body collapse">
+            <div id="new_issue">
+              <%= text_area_tag "issue[text]", nil, class: 'textile', data: { preview_url: preview_path, help_url: markup_path } %>
+            </div>
+          </div>
+        </div>
+
+        <% @issues.each_with_index do |issue, i| %>
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <div class="radio">
+                <%= label_tag do %>
+                  <%= radio_button_tag "id", issue.id, i == 0 %>
+                  <%= issue.title %>
+                  <%= link_to raw('<i class="fa fa-chevron-down"></i>'), 'javascript:void(0)', class: 'issue-toggle pull-right', data: {toggle: 'collapse', target: "#preview_issue_#{issue.id}"} %>
+                <% end %>
+              </div>
+            </div>
+            <div id="<%= "preview_issue_#{issue.id}" %>" class="accordion-body collapse">
+              <div class="tab-content">
+                <ul class="nav nav-tabs pull-right">
+                  <li class="active"><a href="#normal_<%= issue.id %>" data-toggle="tab">Preview</a></li>
+                  <li><a href="#textile_<%= issue.id %>" data-toggle="tab">Source</a></li>
+                </ul>
+                <div id="normal_<%= issue.id %>" class="tab-pane active content-textile">
+                  <%= markup(issue.text) %>
+                </div>
+                <div id="textile_<%= issue.id %>" class="tab-pane">
+                  <pre><%= issue.text %></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <% @issues.each do |issue| %>
+        <%= hidden_field_tag 'sources[]', issue.id %>
+      <% end %>
+
+      <div class="form-actions">
+        <%= button_tag 'Merge issues', class: 'btn btn-dradispro' %> or
+        <%= link_to 'Cancel', issues_path, class: 'cancel-link' %>
+      </div>
+    <% end %>
+  </div>
+</div>

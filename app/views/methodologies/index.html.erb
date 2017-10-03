@@ -1,85 +1,96 @@
 <% content_for :title, 'Methodologies' %>
 
-<div id="methodologies">
-  <ul class="nav nav-pills" id="m-tabs">
-    <% for methodology in @methodologies do %>
-    <li><%= link_to methodology.name, "##{methodology.to_html_anchor}", data: { toggle: 'tab' } %></li>
-    <% end %>
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Add new<b class="caret"></b></a>
-      <ul class="dropdown-menu">
-        <% if @methodology_templates.any? %>
-          <% for methodology in @methodology_templates do %>
-          <li><%= link_to methodology.name, add_methodology_path(methodology) %></li>
-          <% end %>
-        <% else %>
-        <li class="disabled"><a href="javascript:void(0)">(no methodology templates defined)</a></li>
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#checklists" data-toggle="tab">Basic checklists</a></li>
+  <li><a href="javascript:void(0)" class="js-try-pro" data-term="boards" data-url="http://drad.is/l/try-pro-consistency"><i class="fa fa-trello"></i> Advanced boards and task assignment</a></li>
+</ul>
+
+<div class="tab-content outer-tab">
+  <div id="checklists" class="tab-pane active">
+
+    <div id="methodologies">
+      <ul class="nav nav-pills" id="m-tabs">
+        <% for methodology in @methodologies do %>
+        <li><%= link_to methodology.name, "##{methodology.to_html_anchor}", data: { toggle: 'tab' } %></li>
         <% end %>
-        <li class="divider"/>
-        <li class=""><a href="http://dradisframework.org/academy/industry/compliance/" target="_blank">Download more</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Add new<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <% if @methodology_templates.any? %>
+              <% for methodology in @methodology_templates do %>
+              <li><%= link_to methodology.name, add_methodology_path(methodology) %></li>
+              <% end %>
+            <% else %>
+            <li class="disabled"><a href="javascript:void(0)">(no methodology templates defined)</a></li>
+            <% end %>
+            <li class="divider"/>
+            <li class=""><a href="http://dradisframework.org/academy/industry/compliance/" target="_blank">Download more</a></li>
+          </ul>
+        </li>
       </ul>
-    </li>
-  </ul>
 
-  <% if @methodologies.empty? %>
-  <br/>
-  <div class="row-fluid">
-    <div class="span6">
-      <div class="inner">
-        <p>No methodologies have been assigned to this project yet.</p>
-      </div>
-    </div>
-    <div class="span6">
-      <div class="inner">
-        <h2>What is a testing methodology?</h2>
-        <p>It's a series of tasks you want to perform for the assessment.</p>
-        <p>They are useful in a number of scenarios:</p>
-        <ul class="fa-ul">
-          <li><i class="fa fa-check"></i> So you don't forget any of the things you know you need to test.</li>
-          <li><i class="fa fa-check"></i> To do a standard set of tests in every project.</li>
-          <li><i class="fa fa-check"></i> To keep track of what is done and what is next.</li>
-        </ul>
-        <br/>
-        <br/>
+      <% if @methodologies.empty? %>
+      <br/>
+      <div class="row-fluid">
+        <div class="span6">
+          <div class="inner">
+            <p>No methodologies have been assigned to this project yet.</p>
+          </div>
+        </div>
+        <div class="span6">
+          <div class="inner">
+            <h2>What is a testing methodology?</h2>
+            <p>It's a series of tasks you want to perform for the assessment.</p>
+            <p>They are useful in a number of scenarios:</p>
+            <ul class="fa-ul">
+              <li><i class="fa fa-check"></i> So you don't forget any of the things you know you need to test.</li>
+              <li><i class="fa fa-check"></i> To do a standard set of tests in every project.</li>
+              <li><i class="fa fa-check"></i> To keep track of what is done and what is next.</li>
+            </ul>
+            <br/>
+            <br/>
 
-        <h2>Where are they stored?</h2>
-        <p>Methodology files can be found under:</p>
-        <code>./<%= Methodology.pwd.relative_path_from(Rails.root) %>/</code>
-      </div>
-    </div>
-  </div>
-  <% end %>
-
-  <div class="tab-content">
-    <% for methodology in @methodologies do %>
-    <%= content_tag :div, class: 'tab-pane', id: methodology.to_html_anchor, data: { url: update_task_methodology_path(methodology) } do %>
-      <div class="pull-right">
-        <%= link_to edit_methodology_path(methodology) do %>
-          <i class="fa fa-pencil"></i> Edit
-        <% end %>
-        <%= link_to methodology_path(methodology),
-              class: 'text-error',
-              method: :delete,
-              data: { confirm: "Are you sure you want to delete the '#{methodology.name}' methodology?" } do %>
-          <i class="fa fa-trash"></i> Delete
-        <% end %>
-      </div>
-      <% for section in methodology.sections do %>
-      <div class="section">
-        <h2><%= section.name %></h2>
-        <ul class="task-list">
-          <% for task in section.tasks do %>
-            <li>
-              <label class="checkbox">
-                <%= check_box_tag "#{section.name}~#{task.name}", nil, task.checked? %>
-                <%= task.name %>
-              </label>
-            </li>
-          <% end %>
-        </ul>
+            <h2>Where are they stored?</h2>
+            <p>Methodology files can be found under:</p>
+            <code>./<%= Methodology.pwd.relative_path_from(Rails.root) %>/</code>
+          </div>
+        </div>
       </div>
       <% end %>
-    <% end %>
-    <% end %>
+
+      <div class="tab-content">
+        <% for methodology in @methodologies do %>
+        <%= content_tag :div, class: 'tab-pane', id: methodology.to_html_anchor, data: { url: update_task_methodology_path(methodology) } do %>
+          <div class="pull-right">
+            <%= link_to edit_methodology_path(methodology) do %>
+              <i class="fa fa-pencil"></i> Edit
+            <% end %>
+            <%= link_to methodology_path(methodology),
+                  class: 'text-error',
+                  method: :delete,
+                  data: { confirm: "Are you sure you want to delete the '#{methodology.name}' methodology?" } do %>
+              <i class="fa fa-trash"></i> Delete
+            <% end %>
+          </div>
+          <% for section in methodology.sections do %>
+          <div class="section">
+            <h2><%= section.name %></h2>
+            <ul class="task-list">
+              <% for task in section.tasks do %>
+                <li>
+                  <label class="checkbox">
+                    <%= check_box_tag "#{section.name}~#{task.name}", nil, task.checked? %>
+                    <%= task.name %>
+                  </label>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+          <% end %>
+        <% end %>
+        <% end %>
+      </div>
+    </div>
+
   </div>
 </div>

@@ -12,12 +12,12 @@
     <i class="fa fa-caret-right"></i>
   <% end %>
 
-  <a href="<%= main_app.node_path(node) %>" data-node-id="<%= node.id %>">
+  <%= link_to main_app.node_path(node) do %>
     <% if node.type_id == Node::Types::HOST %>
       <i class="fa fa-laptop"></i>
     <% end %>
     <%= node.label %>
-  </a>
+  <% end %>
 
   <% if node.children_count > 0 %>
     <%= content_tag :ul, data: {id: dom_id(node, 'menu')}, class: "children #{css_class_for_sub_nodes(node)}" do %>

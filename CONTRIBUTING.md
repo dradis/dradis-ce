@@ -55,7 +55,7 @@ top of things.
 
 ## Submitting Changes
 
-* Review our [Contributor's Agreement](https://github.com/dradis/dradisframework/wiki/Contributor%27s-agreement). Sending us a pull request means you have read and accept to this agreement
+* Review our [Contributor's Agreement](https://github.com/dradis/dradis-ce/wiki/Contributor%27s-agreement). Sending us a pull request means you have read and accept to this agreement
 * Push your changes to a topic branch in your fork of the repository.
 * Submit a **pull request** to the repository in the dradis organization.
 * Include a link to the pull request in the ticket

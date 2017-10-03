@@ -8,6 +8,13 @@ module ActivityTracking
       user:      user.email,
       action:    action.to_s
     )
+
+    ActiveSupport::Notifications.instrument(
+      'activity',
+      action: action,
+      trackable: trackable,
+      user: user.email
+    )
   end
 
   def track_created(trackable, user=current_user)

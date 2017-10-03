@@ -20,21 +20,23 @@ Dradis is an open-source collaboration framework, tailored to InfoSec teams.
 * Platform independent
 * Markup support for the notes: text styles, code blocks, images, links, etc.
 * Integration with existing systems and tools:
-  * [Burp Scanner](http://portswigger.net/burp/scanner.html)
-  * [Metasploit](http://www.metasploit.com/)
-  * [Nessus](http://www.nessus.org/products/nessus)
-  * [NeXpose](http://www.rapid7.com/products/nexpose-community-edition.jsp)
-  * [Nikto](http://cirt.net/nikto2)
-  * [Nmap](http://nmap.org)
-  * [OpenVAS](http://www.openvas.org/)
-  * [OSVDB](http://osvdb.org)
-  * [Qualys](https://www.qualys.com/)
-  * [Retina](http://www.eeye.com/products/retina/retina-network-scanner)
-  * [SureCheck](http://www.wildcroftsecurity.com/)
-  * [VulnDB](http://vulndbhq.com)
-  * [w3af](http://w3af.sourceforge.net/)
-  * [wXf](https://github.com/WebExploitationFramework/wXf)
-  * [Zed Attack Proxy](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project)
+  * [Brakeman](https://dradisframework.com/ce/addons/brakeman.html)
+  * [Burp Suite](https://dradisframework.com/ce/addons/burp.html)
+  * [MediaWiki](https://dradisframework.com/ce/addons/mediawiki.html)
+  * [Metasploit](https://dradisframework.com/ce/addons/metasploit.html)
+  * [Nessus](https://dradisframework.com/ce/addons/nessus.html)
+  * [NeXpose](https://dradisframework.com/ce/addons/nexpose.html)
+  * [Nikto](https://dradisframework.com/ce/addons/nikto.html)
+  * [Nmap](https://dradisframework.com/ce/addons/nmap.html)
+  * [OpenVAS](https://dradisframework.com/ce/addons/openvas.html)
+  * [OSVDB](https://dradisframework.com/ce/addons/osvdb.html)
+  * [Qualys](https://dradisframework.com/ce/addons/qualys.html)
+  * [Retina](https://dradisframework.com/ce/addons/retina.html)
+  * [SureCheck](https://dradisframework.com/ce/addons/surecheck.html)
+  * [VulnDB](https://dradisframework.com/ce/addons/vulndb.html)
+  * [w3af](https://dradisframework.com/ce/addons/w3af.html)
+  * [wXf](https://dradisframework.com/ce/addons/wxf.html)
+  * [Zed Attack Proxy](https://dradisframework.com/ce/addons/zap.html)
   * ...
   * [Full list](http://dradisframework.org/addons/)
 
@@ -44,7 +46,7 @@ Dradis is an open-source collaboration framework, tailored to InfoSec teams.
 There are two editions of Dradis Framework:
 
 * **Dradis Framework Community Edition (CE)**: open-source and available freely under the GPLv2 license.
-* **Dradis Framework Professional Edition (Pro)**: includes extra features that are more useful for organizations dealing with bigger teams and multiple projects at a time. To use Pro and get official support please [become a subscriber](http://securityroots.com/dradispro/).
+* **Dradis Framework Professional Edition (Pro)**: includes extra features that are more useful for organizations dealing with bigger teams and multiple projects at a time. To use Pro and get official support please [become a subscriber](https://dradisframework.com/pro/).
 
 
 ## Getting started: Community Edition
@@ -86,7 +88,7 @@ bundle exec rails server -b 0.0.0.0
 
 ### Stable release
 
-In http://dradisframework.org/download.html you will find the latest packages.
+In https://dradisframework.com/ce/download.html you will find the latest packages.
 
 
 ## Getting help
@@ -101,7 +103,7 @@ In http://dradisframework.org/download.html you will find the latest packages.
 
 Please see CONTRIBUTING.md for details.
 
-Many thanks to all Dradis Framework [contributors](https://github.com/dradis/dradisframework-ce/graphs/contributors). Dradis has been around since 2007, and in 2016 we had to do some nasty Git gimnastics resulting in a lot of the previous SVN + Git history no longer being available in the current repo. We haven't deleted it though, and we're still very much grateful for the work of our former [contributors](https://github.com/dradis/dradis-legacy/graphs/contributors).
+Many thanks to all Dradis Framework [contributors](https://github.com/dradis/dradis-ce/graphs/contributors). Dradis has been around since 2007, and in 2016 we had to do some nasty Git gimnastics resulting in a lot of the previous SVN + Git history no longer being available in the current repo. We haven't deleted it though, and we're still very much grateful for the work of our former [contributors](https://github.com/dradis/dradis-legacy/graphs/contributors).
 
 
 ### Branching model
@@ -110,6 +112,15 @@ We're following Vincent Driessen's [A successful Git branching model](http://nvi
 In this repo we will have: *master*, *develop*, *release-* and *hotfix-* branches.
 
 If you need to work on a feature branch, fork the repo and work on your own copy. We can check it from there. Eventually you'll merge to your *develop* and back to origin's *develop*.
+
+
+### Community Projects
+
+* [check-user-pwned-dradis by GoVanguard](https://github.com/GoVanguard/check-user-pwned-dradis): Searches for compromised emails across data breaches and creates Dradis Issues
+* [csv-data-import-dradis by GoVanguard](https://github.com/GoVanguard/csv-data-import-dradis): Imports Issues, Nodes, Evidence, and Notes from a CSV file into Dradis
+* [PyDradis by Novacoast](https://github.com/ncatlabs/pydradis): Python wrapper for the Dradis REST API
+
+Have you built a Dradis connector, add-on, or extension? Contact us so that we can feature it here.
 
 
 ## License
@@ -121,4 +132,4 @@ Dradis Framework Professional Edition is released under a commercial license.
 
 ## We're hiring
 
-If you love open source, Ruby on Rails and would like to have a lot of freedom and autonomy in your work, maybe you should consider [joining our team](http://securityroots.com/careers.html) to make Dradis even better.
+If you love open source, Ruby on Rails and would like to have a lot of freedom and autonomy in your work, maybe you should consider [joining our team](https://dradisframework.com/careers.html) to make Dradis even better.

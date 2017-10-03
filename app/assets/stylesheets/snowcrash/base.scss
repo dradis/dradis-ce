@@ -61,7 +61,7 @@ body {
       > a{
         text-shadow: 0 0 0;
         padding: 0 1em;
-        &:hover {
+        &:focus, &:hover {
           color: $blue;
         }
       }

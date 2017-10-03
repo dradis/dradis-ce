@@ -24,7 +24,7 @@ class NodesController < NestedNodeResourceController
       redirect_to @node
     else
       parent = @node.parent
-      if parent
+      if parent && parent.user_node?
         redirect_to parent, alert: @node.errors.full_messages.join('; ')
       else
         redirect_to summary_path, alert: @node.errors.full_messages.join('; ')

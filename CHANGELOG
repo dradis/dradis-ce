@@ -1,3 +1,31 @@
+v3.8 (XXX 2017)
+ - Upgrade to Rails 5.1 and Ruby 2.4
+ - Bugs fixed: #130, #349
+ 
+v3.7 (July 2017)
+ - Fix dradis:reset thor task.
+ - Bugs fixed: #119
+ - Fix 'before_filter is deprecated' warning
+ - Updated README with 'Community Projects' section
+ - Updated 'poltergeist' (browser specs) configuration
+ - Fix a bug that may cause duplicates in Node#issues
+ - Upgraded Nokogiri (xml/html parsing library)
+ - Fixed bug when search results had multiple pages
+ - Fixed error in 'dradis:reset' thor task
+ - Fixed error in 'dradis:backup' thor task
+ - Refactored nodes tree behaviour (parents with children)
+ - Refactored loading a note template
+
+v3.6 (Mar 2017)
+ - Simpler framework <> add-on interface.
+ - Combine multiple issues.
+ - More efficient Search.
+ - HTTP API for Attachments.
+ - Better sidebar styling + direct edit / delete links.
+ - Upgrade to Rails 5.
+ - Fix select all issues bug.
+ - Fix XSS in Issues diff view.
+
 v3.2 (Sep 2016)
  - Nodes only show :expand when they have children
  - Add multiple-nodes

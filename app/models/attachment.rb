@@ -39,7 +39,7 @@
 #   attachment = Attachment.new("images/my_image.gif", :node_id => 1)
 #
 # This will create an instance of an attachment that belongs to node with ID = 0
-# Nothing has bee saved yet
+# Nothing has been saved yet
 #
 #   attachment.save
 #
@@ -146,6 +146,25 @@ class Attachment < File
   # Class method that returns the path to the attachment storage
   def self.pwd
     AttachmentPwd
+  end
+
+  # Obtain a suitable attachment name for a recently uploaded file. If the
+  # original file name is still available, use it, otherwise, provide count-based
+  # an alternative.
+  def self.available_name(node, args={})
+    original = args.fetch(:original)
+
+    if node.attachments.map(&:filename).include?(original)
+      attachments_pwd = Attachment.pwd.join(node.id.to_s)
+
+      # The original name is taken, so we'll add the "_copy-XX." suffix
+      extension = File.extname(original)
+      basename  = File.basename(original, extension)
+      sequence  = Dir.glob(attachments_pwd.join("#{basename}_copy-*#{extension}")).map { |a| a.match(/_copy-([0-9]+)#{extension}\z/)[1].to_i }.max || 0
+      "%s_copy-%02i%s" % [basename, sequence + 1, extension]
+    else
+      original
+    end
   end
 
   # -- Instance Methods  ------------------------------------------------------

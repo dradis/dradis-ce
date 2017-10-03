@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Issue do
 
@@ -44,6 +44,37 @@ describe Issue do
         expect(activity.trackable_id).to eq @issue.id
         expect(activity.trackable_type).to eq "Issue"
       end
+    end
+
+  end
+
+  describe ".merge" do
+    before do
+      @issue1 = create(:evidence).issue
+      @issue2 = create(:evidence).issue
+    end
+
+    it "merges the issues" do
+      count = @issue1.merge @issue2.id
+      @issue1.reload
+
+      expect(count).to eq 1
+      expect(@issue1.evidence.length).to eq 2
+      expect(Issue.exists?(@issue2.id)).to be false
+    end
+
+    it "doesn't merge an issue with itself" do
+      count = @issue1.merge @issue1.id
+
+      expect(count).to eq 0
+      expect(Issue.exists?(@issue1.id)).to be true
+    end
+
+    it "doesn't merge invalid/unknown ids" do
+      count = @issue1.merge ["a", 33]
+
+      expect(count).to eq 0
+      expect(Issue.exists?(@issue1.id)).to be true
     end
 
   end

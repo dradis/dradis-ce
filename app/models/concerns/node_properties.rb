@@ -1,3 +1,6 @@
+require 'json_validator'
+require 'json_with_indifferent_access'
+
 # Note: looks like we're deviating from Rails expected conventions. Maybe
 # reimplement in light of:
 #   https://nvisium.com/blog/2015/06/22/using-rails-5-attributes-api-today-in/

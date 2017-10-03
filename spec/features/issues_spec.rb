@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "Issues pages" do
   subject { page }
@@ -49,6 +49,58 @@ describe "Issues pages" do
             expect(page).to have_content(title)
           end
         end
+
+      end
+
+      describe "merge page", js: true do
+
+        before do
+          # create 2 issues
+          create(:evidence)
+          create(:evidence)
+
+          visit issues_path
+
+          # click > 1 issue checkboxes
+          page.all('input.js-multicheck').each(&:click)
+
+          # click the merge button
+          find('#merge-selected').click
+        end
+
+        it "merges issues into an existing one" do
+          expect(page).to have_content "You're merging 2 Issues into a target Issue"
+
+          click_button "Merge issues"
+
+          expect(page).to have_content("1 issue merged into ")
+        end
+
+        it "merges issues into a new one" do
+
+          expect(page).to have_content "You're merging 2 Issues into a target Issue"
+
+          # new issue form should not be visible yet
+          expect(page).to have_selector('#new_issue', visible: false)
+
+          choose('Merge into a new issue')
+
+          # new issue form should be visible now
+          expect(page).to have_selector('#new_issue', visible: true)
+
+          # click button like this because the button may be moving down
+          # due to bootstrap accordion unfold transition
+          find_button("Merge issues").trigger("click") # click_button "Merge issues"
+
+          expect(page).to have_content("2 issues merged into ")
+
+          expect(Issue.last.author).to eq(@logged_in_as.email)
+        end
+
+        let(:submit_form) {
+          click_button "Merge issues"
+        }
+        include_examples "deleted item is listed in Trash", :issue
       end
 
       describe "new page" do
@@ -255,7 +307,7 @@ describe "Issues pages" do
 
           it "filters nodes" do
             find('.js-add-evidence').click
-            expect(all('#existing-node-list label').count).to be Node.count
+            expect(all('#existing-node-list label').count).to be Node.user_nodes.count
 
             # find('#evidence_node').native.send_key('192')
             fill_in 'evidence_node', with: '192'

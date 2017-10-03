@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'rails_helper'
 
 describe "moving a note", js: true do
 

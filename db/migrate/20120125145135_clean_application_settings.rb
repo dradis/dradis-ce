@@ -1,4 +1,4 @@
-class CleanApplicationSettings < ActiveRecord::Migration
+class CleanApplicationSettings < ActiveRecord::Migration[5.1]
   def up
     # This removes old settings that may exist in versions of Pro prior to v1.4
     %w{password paths:methodologies}.each do |name|
