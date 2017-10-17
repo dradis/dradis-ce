@@ -87,6 +87,18 @@ class IssuesController < ProjectScopedController
     end
   end
 
+  def multiple_destroy
+    respond_to do |format|
+      if Issue.destroy(params[:ids])
+        format.html { redirect_to issues_url, notice: 'Issues deleted.' }
+        format.json
+      else
+        format.html { redirect_to issues_url, notice: "Error while deleting issue: #{@issue.errors}" }
+        format.json
+      end
+    end
+  end
+
 
   def import
     importer = IssueImporter.new(params)
@@ -157,6 +169,12 @@ class IssuesController < ProjectScopedController
     if (tag_name = issue.fields['Tags'].split(',').first)
       issue.tag_list = tag_name
       issue.save
+    end
+  end
+
+  def track_destroyed_issues(issue_ids)
+    issue_ids.each do |id|
+      track_destroyed(Issue.find(id))
     end
   end
 end

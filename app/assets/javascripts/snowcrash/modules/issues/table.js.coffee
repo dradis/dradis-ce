@@ -73,26 +73,24 @@ class IssueTable
   onDeleteSelected: (element, answer) =>
     if answer
       that = this
+      issue_ids = []
       $('.js-tbl-issues').find(@selectedIssuesSelector).each ->
         $row = $(this).parent().parent()
         $($row.find('td')[2]).replaceWith("<td class=\"loading\">Deleting...</td>")
-        $.ajax $(this).data('url'), {
-          method: 'DELETE'
-          dataType: 'json'
-          success: (data) ->
-            # Delete row from the table
-            $row.remove()
-            # TODO: show placeholder if no issues left
+        issue_ids.push($(this).val())
 
-            # Delete link from the sidebar
-            $("#issue_#{data.id}").remove()
+      $.ajax $('#issue-table').data('destroy-url'), {
+        method: 'POST'
+        dataType: 'json'
+        data: {ids: issue_ids}
+        success:  ->
+          for id in issue_ids
+            $("#issue_#{id}").closest('tr').remove()
+            $("#issue_#{id}").remove()
 
-            if $(@selectedIssuesSelector).length == 0
-              that.resetToolbar()
-
-          error: (foo,bar,foobar) ->
-            $($row.find('td')[2]).replaceWith("<td class='text-error'>Please try again</td>")
-        }
+          if $(@selectedIssuesSelector).length == 0
+            that.resetToolbar()
+      }
 
     # prevent Rails UJS from doing anything else.
     false
