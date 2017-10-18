@@ -89,11 +89,11 @@ class IssuesController < ProjectScopedController
 
   def multiple_destroy
     respond_to do |format|
-      if Issue.destroy(params[:ids])
+      if destroy_multiple_issues(params[:ids])
         format.html { redirect_to issues_url, notice: 'Issues deleted.' }
         format.json
       else
-        format.html { redirect_to issues_url, notice: "Error while deleting issue: #{@issue.errors}" }
+        format.html { redirect_to issues_url, notice: "Error while deleting issues." }
         format.json
       end
     end
@@ -172,9 +172,15 @@ class IssuesController < ProjectScopedController
     end
   end
 
-  def track_destroyed_issues(issue_ids)
+  def destroy_multiple_issues(issue_ids)
     issue_ids.each do |id|
-      track_destroyed(Issue.find(id))
+      issue = Issue.find_by_id(id)
+      if issue
+        issue.destroy
+        track_destroyed(issue)
+      end
     end
+
+    true
   end
 end

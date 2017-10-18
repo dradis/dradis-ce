@@ -83,13 +83,18 @@ class IssueTable
         method: 'POST'
         dataType: 'json'
         data: {ids: issue_ids}
-        success:  ->
+        success: ->
           for id in issue_ids
             $("input#issue_#{id}").closest('tr').remove()
             $("#issue_#{id}").remove()
 
           if $(@selectedIssuesSelector).length == 0
             that.resetToolbar()
+
+        error: ->
+          for id in issue_ids
+            $row = $("input#issue_#{id}").closest('tr')
+            $($row.find('td')[2]).replaceWith("<td class='text-error'>Please try again</td>")
       }
 
     # prevent Rails UJS from doing anything else.
