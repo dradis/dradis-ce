@@ -85,7 +85,7 @@ class IssueTable
         data: {ids: issue_ids}
         success:  ->
           for id in issue_ids
-            $("#issue_#{id}").closest('tr').remove()
+            $("input#issue_#{id}").closest('tr').remove()
             $("#issue_#{id}").remove()
 
           if $(@selectedIssuesSelector).length == 0
