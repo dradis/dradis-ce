@@ -32,3 +32,4 @@
 //= require snowcrash/modules/uploads
 
 //= require snowcrash/pages/revisions
+//= require snowcrash/pages/nodes/notes/table

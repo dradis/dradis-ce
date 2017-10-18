@@ -1,0 +1,32 @@
+<% cache ["node-notes-table", notes.map(&:id), notes.map(&:updated_at).map(&:to_i).sort.last] do %>
+  <table class="table table-striped tbl-notes js-tbl-notes">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Title</th>
+        <th>Created</th>
+        <th>Created by</th>
+        <th>Updated</>
+      </tr>
+    </thead>
+    <tbody>
+      <% notes.each do |note| %>
+        <tr>
+          <td class="column-checkbox"><%= check_box_tag dom_id(note), note.id, false, class: 'js-multicheck', data: { url: node_note_path(note, format: :json) } %></td>
+          <td><%= link_to(note.title, [@node, note]) %></td>
+          <td><%= local_time_ago(note.created_at) %></td>
+          <td><%= note.author %></td>
+          <td><%= local_time_ago(note.updated_at) %></td>
+          <td class="column-actions">
+            <%= link_to edit_node_note_path([@node, note]), class: '' do %>
+              <i class="fa fa-pencil"></i> Edit
+            <% end %>
+            <%= link_to [@node, note], method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-error' do %>
+              <i class="fa fa-trash"></i> Delete
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
