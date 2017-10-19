@@ -175,8 +175,7 @@ class IssuesController < ProjectScopedController
   def destroy_multiple_issues(issue_ids)
     issue_ids.each do |id|
       issue = Issue.find_by_id(id)
-      if issue
-        issue.destroy
+      if issue && issue.destroy
         track_destroyed(issue)
       end
     end
