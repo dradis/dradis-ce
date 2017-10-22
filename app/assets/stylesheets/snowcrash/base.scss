@@ -512,7 +512,7 @@ body {
 
 
 
-    ul {
+    ul:not(.fa-ul) {
       list-style: none;
       padding: 0;
       margin: 0;
