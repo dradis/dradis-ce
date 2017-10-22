@@ -59,10 +59,11 @@ body {
       }
 
       > a{
-        text-shadow: 0 0 0;
+        color: lighten($primaryBgColor, 40%);
         padding: 0 1em;
+
         &:focus, &:hover {
-          color: $blue;
+          color: lighten($primaryBgColor, 50%);
         }
       }
     }
