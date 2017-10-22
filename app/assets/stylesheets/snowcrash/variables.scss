@@ -12,12 +12,13 @@ $asphaltDark: darken($asphalt,10);
 
 $primaryBgColor: darken($primaryColor, 10);
 $secondaryBgColor: lighten($grayLight, 5%);
-$secondaryNavBarBgColor: darken( $secondaryBgColor, 10%);
+$secondaryNavBarBgColor: darken( $secondaryBgColor, 1%);
 $mainContentPadding: 0;
 
 $navbarHeight: 60px;
 $sidebarWidth: 250px;
 $breadCrumbHeight: 48px;
+$secondarySidebarWidth: 25%;
 
 @font-face {
   font-family: 'OpenSans';

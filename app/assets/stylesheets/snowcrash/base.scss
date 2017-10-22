@@ -375,21 +375,25 @@ body {
         padding: 0;
 //        margin-top: -$breadCrumbHeight;
         display: table;
-
+//        display: flex;
+//        flex-direction: row;
       }
     }
 
 
 
     .secondary-navbar {
-      display: table-cell;
-      vertical-align: top;
       background: $secondaryNavBarBgColor;
-      width: 25%;
+      border-right: 1px solid #ddd;
+      display: table-cell;
+//flex-grow: 1;
       margin-left: -$mainContentPadding;
+      vertical-align: top;
+      width: $secondarySidebarWidth;
+
       > .inner {
         background: $secondaryNavBarBgColor;
-        padding: 2em;
+        padding: 1em;
         min-height: 600px;
 
 
@@ -479,8 +483,9 @@ body {
 
     .secondary-navbar-content {
       background: #fff;
-      vertical-align: top;
       display: table-cell;
+      vertical-align: top;
+//flex-grow: 4;
       position: relative;
       margin: 0 0 0 (350px -$mainContentPadding);
       width: 100%;
