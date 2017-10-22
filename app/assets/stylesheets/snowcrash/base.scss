@@ -45,11 +45,12 @@ body {
 
   .nav {
     > li{
+//      @include active-nav;
       line-height: $navbarHeight;
       font-size: 0.9em;
       &.dropdown.open > .dropdown-toggle {
         background: transparent;
-        color: $blue;
+        color: $primaryColor;
       }
 
       .caret {
@@ -512,11 +513,12 @@ body {
 
 
 
-    ul:not(.fa-ul) {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
+//    ul:not(.dropdown-menu),
+//    ul:not(.fa-ul) {
+//      list-style: none;
+//      padding: 0;
+//      margin: 0;
+//    }
   }
 }
 

@@ -12,9 +12,10 @@ $navbarBackgroundHighlight: #888;
 $dradisCEGreen: darken($green,10%);
 $dradisProBlue: #DFE8F6;
 
-$primaryColor:   $dradisCEGreen;
-$linkColor:      $dradisCEGreen;
-$linkColorHover: darken($linkColor, 15%);
+$primaryColor:                $dradisCEGreen;
+$linkColor:                   $dradisCEGreen;
+$linkColorHover:              darken($linkColor, 15%);
+$dropdownLinkBackgroundHover: $dradisCEGreen;
 
 //$navbarBackground: darken($dradisProBlue, 20%);
 //$navbarBackgroundHighlight: darken($dradisProBlue, 20%);
