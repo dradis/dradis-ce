@@ -47,27 +47,6 @@ body { padding-top: 60px; }
   margin-bottom: 0;
 }
 
-.btn-dradispro {
-  background-color: #49afcd;
-  background-image: -moz-linear-gradient(top, darken($dradisProBlue, 10%), darken($dradisProBlue, 40%));
-  background-image: -ms-linear-gradient(top, darken($dradisProBlue, 10%), darken($dradisProBlue, 40%));
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(darken($dradisProBlue, 10%)), to(darken($dradisProBlue, 40%)));
-  background-image: -webkit-linear-gradient(top, darken($dradisProBlue, 10%), darken($dradisProBlue, 40%));
-  background-image: -o-linear-gradient(top, darken($dradisProBlue, 10%), darken($dradisProBlue, 40%));
-  background-image: linear-gradient(top, darken($dradisProBlue, 10%), darken($dradisProBlue, 40%));
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF68A3CF', endColorstr='#FF4D92C6', GradientType=0);
-  border-color: darken($dradisProBlue, 40%) darken($dradisProBlue, 40%) #1f6377;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) fadein(rgba(0, 0, 0, 0.1), 15%);
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  color: #fff !important;
-}
-
-.btn-dradispro:hover, .btn-dradispro:active, .btn-dradispro.active, .btn-dradispro.disabled, .btn-dradispro[disabled] {
-  background-color: darken($dradisProBlue, 40%);
-}
-
 .modal {
   outline: none !important;
   form {
