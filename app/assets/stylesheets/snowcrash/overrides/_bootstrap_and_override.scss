@@ -1,3 +1,5 @@
+@import "bootstrap/variables";
+
 // Set the correct sprite paths
 //$iconSpritePath: image-url('glyphicons-halflings.png');
 //$iconWhiteSpritePath: image-url('glyphicons-halflings-white.png');
@@ -7,7 +9,13 @@ $navbarBackgroundHighlight: #888;
 //$navbarText: #eee;
 //$navbarLinkColor: #eee;
 
+$dradisCEGreen: darken($green,10%);
 $dradisProBlue: #DFE8F6;
+
+$primaryColor:   $dradisCEGreen;
+$linkColor:      $dradisCEGreen;
+$linkColorHover: darken($linkColor, 15%);
+
 $navbarBackground: darken($dradisProBlue, 20%);
 $navbarBackgroundHighlight: darken($dradisProBlue, 20%);
 $navbarBrandColor: #fff;
@@ -17,10 +25,6 @@ $navbarLinkColor: #eee;
 $baseFontSize: 14px;
 $baseLineHeight: 20px;
 
-// modal dialogs as used in the Node operations
-// bootstrap3
-//$modal-backdrop-bg: #3d464d;
-//$modal-backdrop-opacity: 0.6;
 
 @import "bootstrap";
 
@@ -56,4 +60,23 @@ body { padding-top: 60px; }
 
 .modal-backdrop {
   background-color: #3d464d;
+}
+
+.btn {
+  @include button(#e6e6e6);
+  text-shadow: 0 0 0;
+
+
+  &.btn-dradispro, &.btn-primary {
+    @include button($primaryColor);
+  }
+  &.btn-danger {
+    @include button($red);
+  }
+  &.btn-success {
+    @include button($green);
+  }
+  &.btn-warning {
+    @include button($orange);
+  }
 }

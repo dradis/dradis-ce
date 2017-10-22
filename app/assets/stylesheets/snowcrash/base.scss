@@ -540,23 +540,3 @@ body {
   text-align: center;
   margin-bottom: 1em;
 }
-
-.btn {
-//  @include box-shadow(0 0 0);
-  @include button(#e6e6e6);
-  text-shadow: 0 0 0;
-
-
-  &.btn-dradispro, &.btn-primary {
-    @include button($blue);
-  }
-  &.btn-danger {
-    @include button($red);
-  }
-  &.btn-success {
-    @include button($green);
-  }
-  &.btn-warning {
-    @include button($orange);
-  }
-}
