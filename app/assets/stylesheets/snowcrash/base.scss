@@ -315,7 +315,8 @@ body {
 //      height: $breadCrumbHeight;
     }
     .breadcrumb {
-      padding: 0.5em 2em;
+      margin-bottom: 0;
+      padding: 0.5em 1em;
 //      display: block;
 //      height: $breadCrumbHeight;
       @include box-sizing(border-box);
@@ -486,7 +487,7 @@ body {
 
       .main-tabs {
         background-color: #f5f5f5;
-        padding: 1em 0 0 1em;
+        padding: 0 0 0 1em;
       }
     }
 
@@ -510,15 +511,6 @@ body {
     h3 {
       font-size: 1.4em;
     }
-
-
-
-//    ul:not(.dropdown-menu),
-//    ul:not(.fa-ul) {
-//      list-style: none;
-//      padding: 0;
-//      margin: 0;
-//    }
   }
 }
 
