@@ -5,6 +5,10 @@ body.nodes, body.notes, body.evidence {
 }
 
 body.nodes {
+  .node-header ul.nav-pills {
+    margin-bottom: 0;
+  }
+
   &.edit {
     textarea.json {
       font-family: monospace;
