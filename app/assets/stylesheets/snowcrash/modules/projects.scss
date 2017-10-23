@@ -3,6 +3,12 @@ body.projects {
   section.summary-panel {
     font-size: 18px;
 
+    a {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
     ul {
       margin-bottom: 20px;
 
@@ -42,11 +48,18 @@ body.projects {
       }
     }
 
+    .btn {
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
     .no-content {
       color: #444;
       font-style: italic;
       margin: 3em 0;
-      text-align: center;
     }
   }
 

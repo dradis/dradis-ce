@@ -10,7 +10,7 @@ $grayDark: darken($gray, 20);
 $asphalt: #34495e;
 $asphaltDark: darken($asphalt,10);
 
-$primaryBgColor: $asphaltDark;
+$primaryBgColor: darken($primaryColor, 10);
 $secondaryBgColor: lighten($grayLight, 5%);
 $secondaryNavBarBgColor: darken( $secondaryBgColor, 1%);
 $mainContentPadding: 0;
