@@ -2,4 +2,10 @@ body.nodes.show .notes {
   .note-actions {
     display: none;
   }
+
+  .note-actions {
+    form {
+      margin: 0
+    }
+  }
 }

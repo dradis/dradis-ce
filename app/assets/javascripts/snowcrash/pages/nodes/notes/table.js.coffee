@@ -37,9 +37,20 @@ document.addEventListener "turbolinks:load", ->
     $('.js-select-all-notes, input[type=checkbox].js-multicheck').click ->
       refreshToolbar()
 
+    selectedIssuesSelector = 'input[type=checkbox]:checked.js-multicheck:visible'
+
     # We're hooking into Rails UJS data-confirm behavior to only fire the Ajax
     # if the user confirmed the deletion
     $('#notes-table').on('confirm:complete', '#delete-selected', ->
-      # TODO: do I need js for this action ?
+
+      $("#multi-destroy input[name='ids[]']").remove()
+
+      $(selectedIssuesSelector).each ->
+        $("#multi-destroy").append(
+          "<input type='hidden' name='ids[]' value='#{$(this).data('id')}' />"
+        )
+
+      $('#multi-destroy').submit()
+
       false
     )

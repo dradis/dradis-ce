@@ -6,6 +6,10 @@
   </div>
 
   <div class="btn-group note-actions js-note-actions">
-    <a id="delete-selected" class="btn" data-confirm="Are you sure?" data-method="delete" title="Delete selected notes"><i class="fa fa-trash text-error"></i> Delete</a>
+    <%= form_tag multi_destroy_node_note_path(@node), method: :delete, id: 'multi-destroy' do %>
+      <a id="delete-selected" class="btn" data-confirm="Are you sure?" title="Delete selected notes">
+        <i class="fa fa-trash text-error"></i> Delete
+      </a>
+    <% end %>
   </div>
 </div>

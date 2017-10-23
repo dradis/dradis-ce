@@ -48,6 +48,9 @@ Rails.application.routes.draw do
 
     resources :notes do
       resources :revisions, only: [:index, :show]
+      member do
+        delete 'multi-destroy'
+      end
     end
 
     resources :evidence, except: :index do

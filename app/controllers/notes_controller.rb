@@ -2,7 +2,7 @@
 # resource.
 class NotesController < NestedNodeResourceController
 
-  before_action :find_or_initialize_note, except: [:index, :new]
+  before_action :find_or_initialize_note, except: [:index, :new, :multi_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
 
   def new
@@ -55,7 +55,29 @@ class NotesController < NestedNodeResourceController
       track_destroyed(@note)
       redirect_to node_path(@node), notice: 'Note deleted'
     else
-      redirect_to node_note_path(@node, @note), alert: 'Could not delete node'
+      redirect_to node_note_path(@node, @note), alert: 'Could not delete note'
+    end
+  end
+
+  def multi_destroy
+    notes = Note.where(
+      'node_id = :node AND id in (:ids)',
+      node: @node,
+      ids: params[:ids]
+    )
+
+    deleted = 0
+    notes.each do |note|
+      if note.destroy
+        track_destroyed(note)
+        deleted += 1
+      end
+    end
+
+    if deleted = notes.size
+      redirect_to node_path(@node, tab: 'notes-tab'), notice: 'Notes deleted'
+    else
+      redirect_to @node, tab: 'notes-tab', alert: 'Could not delete notes'
     end
   end
 

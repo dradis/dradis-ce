@@ -12,7 +12,7 @@
     <tbody>
       <% notes.each do |note| %>
         <tr>
-          <td class="column-checkbox"><%= check_box_tag dom_id(note), note.id, false, class: 'js-multicheck', data: { url: node_note_path(note, format: :json) } %></td>
+          <td class="column-checkbox"><%= check_box_tag dom_id(note), note.id, false, class: 'js-multicheck', data: { id: note.id } %></td>
           <td><%= link_to(note.title, [@node, note]) %></td>
           <td><%= local_time_ago(note.created_at) %></td>
           <td><%= note.author %></td>
