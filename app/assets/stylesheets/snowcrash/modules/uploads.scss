@@ -1,6 +1,11 @@
 body.upload {
-  h2 {
+  .view-content > h2 {
     border-bottom: 1px solid #ccc;
+    margin-top: 2em;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
   }
 
   section {
@@ -24,5 +29,16 @@ body.upload {
     margin-top: 2ex;
     height: 250px;
     overflow: scroll;
+  }
+
+  a[data-behavior~="show-hide"].collapsed:before
+  {
+    content:'(show)' ;
+    width:15px;
+  }
+  a[data-behavior~="show-hide"]:before
+  {
+    content:'(hide)' ;
+    width:15px;
   }
 }

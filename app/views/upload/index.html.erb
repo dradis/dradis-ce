@@ -3,18 +3,20 @@
 <p>Use the form below to upload output files from other tools.</p>
 
 
-<div class="row-fluid">
-  <div class="span10 offset1">
-    <section>
+<section class="inner">
+  <div class="row-fluid">
+    <div class="span3">
       <%= form_tag upload_manager_path(format: :js), multipart: true, id: 'new_upload', data: { parse_url: upload_parse_path() } do %>
       <h2>1. Choose a tool</h2>
         <%= select_tag  'uploader', options_from_collection_for_select(@uploaders, :name, :name) %>
+
       <h2>2. Choose a file</h2>
         <%= file_field_tag 'file' %>
         <%= hidden_field_tag 'item_id' %>
         <%= hidden_field_tag 'format', 'js' %>
       <% end %>
-
+    </div>
+    <div class="span9">
       <p>Upload progress:</p>
       <div class="progress">
           <div class="bar"></div >
@@ -23,7 +25,7 @@
 
       <div id="status"></div>
 
-      <h2>3. Output</h2>
+      <h2>Output console</h2>
       <%= content_tag :div, id: 'result', class: 'file', style: 'display:none', data: { url: upload_status_path }  do %>
         <div><strong>Filename</strong>: <span id="filename"></span> <span id="spinner"><%= image_tag 'loading.gif', style: "margin:0;" %></span></div>
         <div><strong>Size</strong>: <span id="filesize"></span></div>
@@ -39,7 +41,21 @@
 </script>
 
 <section>
-  <h2>Available plugins</h2>
+  <h2>Available plugins
+    <span class="dropdown">
+      <small>
+        <a
+          href="javascript:void(0)"
+          class="collapsed"
+          data-behavior="show-hide"
+          data-toggle="collapse"
+          data-target="#plugin-list"
+        ></a>
+      </small>
+    </span>
+  </h2>
+
+  <div id="plugin-list" class="collapse">
   <table class="table">
     <thead>
       <tr>
@@ -58,4 +74,5 @@
       <% end %>
     </tbody>
   </table>
+  </div>
 </section>
