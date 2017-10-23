@@ -12,23 +12,13 @@ body.upload {
     margin-bottom: 60px;
   }
 
-  .file {
-    padding: 10px 40px 20px 40px;
-    margin: 0 auto;
-  }
-
   // File upload progress status
   .progress { position:relative; width:400px; border: 1px solid #ddd; padding: 1px; border-radius: 3px; }
   .bar { background-color: #B4F5B4; width:0%; height:20px; border-radius: 3px; }
   .percent { position:absolute; display:inline-block; top:3px; left:48%; }
 
   #console {
-    background-color: #000;
-    color: #CCC;
-    padding: 2ex 1ex;
-    margin-top: 2ex;
-    height: 250px;
-    overflow: scroll;
+    @include ajax-console;
   }
 
   a[data-behavior~="show-hide"].collapsed:before

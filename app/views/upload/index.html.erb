@@ -26,7 +26,7 @@
       <div id="status"></div>
 
       <h2>Output console</h2>
-      <%= content_tag :div, id: 'result', class: 'file', style: 'display:none', data: { url: upload_status_path }  do %>
+      <%= content_tag :div, id: 'result', style: 'display:none', data: { url: upload_status_path }  do %>
         <div><strong>Filename</strong>: <span id="filename"></span> <span id="spinner"><%= image_tag 'loading.gif', style: "margin:0;" %></span></div>
         <div><strong>Size</strong>: <span id="filesize"></span></div>
         <div id="console"></div>
