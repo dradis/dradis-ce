@@ -128,7 +128,7 @@ class IndexTable
       $($row.find('td')[that.tagColumnIndex]).replaceWith("<td class=\"loading\">Loading...</td>")
 
       url   = $this.data('url')
-      data  = { @itemName: { tag_list: $target.data('tag') } }
+      data  = { "#{@itemName}": { tag_list: $target.data('tag') } }
       $that = $this
 
       $.ajax url, {
@@ -180,3 +180,6 @@ class IndexTable
       $('.js-table-actions').css('display', 'inline-block')
     else
       $('.js-table-actions').css('display', 'none')
+
+jQuery ->
+  window.IndexTable = IndexTable
