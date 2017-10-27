@@ -9,7 +9,7 @@ jQuery ->
       $('.js-items-table').find(indexTable.selectedItemsSelector).each ->
         $row = $(this).parent().parent()
 
-        id = @.name.split('_')[1]
+        id = @.name.split('_')[2]
         issues_to_merge.push(id)
 
       location.href = "#{url}?ids=#{issues_to_merge}"

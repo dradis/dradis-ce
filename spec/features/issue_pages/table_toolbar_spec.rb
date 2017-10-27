@@ -33,19 +33,19 @@ describe 'issue table' do
     context 'when clicking issues' do
       it 'displays action buttons (delete, tag ...) if 1 issue is clicked' do
         expect(find('.js-table-actions', visible: :all)).to_not be_visible
-        check "issue_#{@issue1.id}"
+        check "checkbox_issue_#{@issue1.id}"
         expect(find('.js-table-actions')).to be_visible
       end
 
       it 'displays merge button if more than 1 issues clicked' do
-        check "issue_#{@issue1.id}"
+        check "checkbox_issue_#{@issue1.id}"
         expect(page).to have_selector('#merge-selected', visible: false)
-        check "issue_#{@issue2.id}"
+        check "checkbox_issue_#{@issue2.id}"
         expect(page).to have_selector('#merge-selected', visible: true)
       end
 
       it 'resets toolbar after applying tags' do
-        check "issue_#{@issue1.id}"
+        check "checkbox_issue_#{@issue1.id}"
         expect(page).to have_css('.js-table-actions')
         find('#tag-selected').click
         find('a[data-tag="!6baed6_low"]').click
@@ -55,7 +55,7 @@ describe 'issue table' do
       end
 
       it 'resets toolbar after deleting issues' do
-        check "issue_#{@issue1.id}"
+        check "checkbox_issue_#{@issue1.id}"
         expect(page).to have_css('.js-table-actions')
         find('#delete-selected').click
         expect(page).to_not have_css('.js-table-actions')
@@ -69,7 +69,7 @@ describe 'issue table' do
         expect(page).to have_selector("#issue_#{@issue2.id}", visible: false)
         find('#select-all').click
         find('#delete-selected').click
-        expect(page).to_not have_selector("#issue_#{@issue1.id}")
+        expect(page).to_not have_selector("#checkbox_issue_#{@issue1.id}")
         expect(Issue.exists?(@issue1.id)).to be false
         expect(Issue.exists?(@issue2.id)).to be true
       end

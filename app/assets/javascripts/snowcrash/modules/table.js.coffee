@@ -92,27 +92,33 @@ class IndexTable
 
   onDeleteSelected: (element, answer) =>
     if answer
-      that = this
+      that   = this
+      issueIds = []
+
       $('.js-items-table').find(@selectedItemsSelector).each ->
         $row = $(this).parent().parent()
         $($row.find('td')[2]).replaceWith("<td class=\"loading\">Deleting...</td>")
-        $.ajax $(this).data('url'), {
-          method: 'DELETE'
-          dataType: 'json'
-          success: (data) ->
-            # Delete row from the table
-            $row.remove()
-            # TODO: show placeholder if no items left
+        issueIds.push($(this).val())
 
-            # Delete link from the sidebar
-            $("#item_#{data.id}").remove()
+      $.ajax $('#index-table').data('destroy-url'), {
+        method: 'POST'
+        dataType: 'json'
+        data: {ids: issueIds}
+        success: ->
+          for id in issueIds
+            $("#checkbox_#{that.itemName}_#{id}").closest('tr').remove()
+            $("##{that.itemName}_#{id}").remove()
 
-            if $(@selectedItemsSelector).length == 0
-              that.resetToolbar()
+          if $(@selectedItemsSelector).length == 0
+            that.resetToolbar()
 
-          error: (foo,bar,foobar) ->
+          # TODO: show placeholder if no items left
+
+        error: ->
+          for id in issueIds
+            $row = $("#checkbox_#{that.itemName}_#{id}").closest('tr')
             $($row.find('td')[2]).replaceWith("<td class='text-error'>Please try again</td>")
-        }
+      }
 
     # prevent Rails UJS from doing anything else.
     false
@@ -141,7 +147,7 @@ class IndexTable
           item_id = $this.val()
 
           $($row.find('td')[that.tagColumnIndex]).replaceWith(data.tag_cell)
-          $("#items #item_#{item_id}").replaceWith(data.item_link)
+          $("##{that.itemName}_#{item_id}").replaceWith(data["#{that.itemName}_link"])
           if $(@selectedItemsSelector).length == 0
             that.resetToolbar()
 
