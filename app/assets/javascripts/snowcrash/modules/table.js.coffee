@@ -1,4 +1,5 @@
 class IndexTable
+  itemName: ''
   $table: null
   project: null
   selectedColumns: []
@@ -128,16 +129,16 @@ class IndexTable
       $($row.find('td')[that.tagColumnIndex]).replaceWith("<td class=\"loading\">Loading...</td>")
 
       url   = $this.data('url')
-      data  = { "#{@itemName}": { tag_list: $target.data('tag') } }
-      $that = $this
+      data  = {}
+      data[that.itemName] = { tag_list: $target.data('tag') }
 
       $.ajax url, {
         method: 'PUT',
         data: data,
         dataType: 'json',
         success: (data) ->
-          $that.prop('checked', false)
-          item_id = $that.val()
+          $this.prop('checked', false)
+          item_id = $this.val()
 
           $($row.find('td')[that.tagColumnIndex]).replaceWith(data.tag_cell)
           $("#items #item_#{item_id}").replaceWith(data.item_link)

@@ -16,7 +16,7 @@ describe 'issue table' do
 
     context 'when Select All is clicked' do
       before do
-        find('.js-select-all-issues').click
+        find('.js-select-all-items').click
       end
 
       it 'selects all issues' do
@@ -26,15 +26,15 @@ describe 'issue table' do
       end
 
       it 'shows the issue actions bar' do
-        expect(find('.js-issue-actions')).to be_visible
+        expect(find('.js-table-actions')).to be_visible
       end
     end
 
     context 'when clicking issues' do
       it 'displays action buttons (delete, tag ...) if 1 issue is clicked' do
-        expect(find('.js-issue-actions', visible: :all)).to_not be_visible
+        expect(find('.js-table-actions', visible: :all)).to_not be_visible
         check "issue_#{@issue1.id}"
-        expect(find('.js-issue-actions')).to be_visible
+        expect(find('.js-table-actions')).to be_visible
       end
 
       it 'displays merge button if more than 1 issues clicked' do
@@ -46,19 +46,19 @@ describe 'issue table' do
 
       it 'resets toolbar after applying tags' do
         check "issue_#{@issue1.id}"
-        expect(page).to have_css('.js-issue-actions')
+        expect(page).to have_css('.js-table-actions')
         find('#tag-selected').click
         find('a[data-tag="!6baed6_low"]').click
-        expect(page).to_not have_css('.js-issue-actions')
+        expect(page).to_not have_css('.js-table-actions')
         @issue1.reload
         expect(@issue1.tags.first.name).to eq '!6baed6_low'
       end
 
       it 'resets toolbar after deleting issues' do
         check "issue_#{@issue1.id}"
-        expect(page).to have_css('.js-issue-actions')
+        expect(page).to have_css('.js-table-actions')
         find('#delete-selected').click
-        expect(page).to_not have_css('.js-issue-actions')
+        expect(page).to_not have_css('.js-table-actions')
         expect(Issue.exists?(@issue1.id)).to be false
       end
     end
