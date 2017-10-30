@@ -1,11 +1,11 @@
 <div class="btn-toolbar">
   <div class="btn-group">
-     <span class="btn js-select-all-notes" title="Select all notes">
+     <span class="btn js-select-all-items" title="Select all notes">
        <input type="checkbox" id="select-all" />
      </span>
   </div>
 
-  <div class="btn-group note-actions js-note-actions">
+  <div class="btn-group note-actions js-table-actions">
     <%= form_tag multi_destroy_node_note_path(@node), method: :delete, id: 'multi-destroy' do %>
       <a id="delete-selected" class="btn" data-confirm="Are you sure?" title="Delete selected notes">
         <i class="fa fa-trash text-error"></i> Delete

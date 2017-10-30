@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :issues do
     collection do
       post :import
+      post :multiple_destroy
       resources :merge, only: [:new, :create], controller: 'issues/merge'
     end
     resources :revisions, only: [:index, :show]

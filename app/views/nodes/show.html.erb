@@ -45,7 +45,7 @@
       <div id="note-viewer">
         <div class="inner note-text-inner">
           <% if @sorted_notes.any? %>
-            <div id="notes-table">
+            <div id="index-table">
               <%= render 'nodes/notes/toolbar' %>
               <%= render 'nodes/notes/table', notes: @sorted_notes %>
             </div>
