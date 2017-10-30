@@ -1,4 +1,4 @@
-jQuery ->
+document.addEventListener "turbolinks:load", ->
   if $('body.upload').length
     # Enable Ajax file uploads via 3rd party plugin
     $bar = $('.bar');

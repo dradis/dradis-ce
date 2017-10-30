@@ -27,6 +27,6 @@ class IssuesTable extends IndexTable
     else
       $('#merge-selected').css('display', 'none')
 
-jQuery ->
+document.addEventListener "turbolinks:load", ->
   if $('body.issues.index').length
     new IssuesTable
