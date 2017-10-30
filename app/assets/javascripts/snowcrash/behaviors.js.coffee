@@ -7,7 +7,7 @@
 #   * jQuery.fileUpload  - handles attachment uploads (gem: jquery-fileupload-rails)
 #   * jQuery.Textile     - handles the note editor (/vendor/)
 
-jQuery ->
+document.addEventListener "turbolinks:load", ->
   # --------------------------------------------------- Standard jQuery plugins
   # Activate jQuery.fileUpload
   $('.jquery-upload').fileupload

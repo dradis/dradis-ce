@@ -8,7 +8,7 @@ class SearchWordHighlight
     element.html src_str
 
 
-jQuery ->
+document.addEventListener "turbolinks:load", ->
   if $('body.search.index').length
     highlighter = new SearchWordHighlight
     query = $(".form-search #q").val()

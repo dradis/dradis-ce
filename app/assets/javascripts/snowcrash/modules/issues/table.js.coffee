@@ -170,7 +170,7 @@ class IssueTable
     @project ||= $('.brand').data('project')
     "project.#{@project}.issue_columns"
 
-jQuery ->
+document.addEventListener "turbolinks:load", ->
   if $('body.issues.index').length
 
     # Checkbox behavior: select all, show 'btn-group', etc.

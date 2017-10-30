@@ -1,12 +1,12 @@
 <div class="page-header">
-  <h1>Configure the shared password</h1>
+  <h1>Configure a shared password</h1>
 </div>
 
 <%= form_tag({action: 'setup'}, {class: 'form-horizontal'}) do -%>
 
   <%= flash_messages %>
 
-  <p class="lead">This server does not have a password yet, please set up one:</p>
+  <p class="lead">The shared password will be used by everyone accessing the server, please set one up:</p>
 
   <div class="control-group">
     <label class="control-label" for="password">Password</label>
@@ -22,7 +22,7 @@
   </div>
   <div class="control-group">
     <div class="controls">
-      <button type="submit" class="btn btn-large">Set password and continue</button>
+      <button type="submit" class="btn btn-large btn-primary">Create shared password and continue</button>
     </div>
   </div>
 <% end -%>
