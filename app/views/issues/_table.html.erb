@@ -1,4 +1,4 @@
-<% cache ['index-table', @columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last] do %>
+<% cache ['issues-table', @columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last] do %>
   <table class="table table-striped tbl-issues js-items-table">
     <thead>
       <tr>
@@ -10,7 +10,7 @@
     </thead>
     <tbody>
       <% issues.each do |issue| %>
-      <% cache [issue, @columns, issue.affected_count, 'index-table'] do%>
+      <% cache [issue, @columns, issue.affected_count, 'issues-table'] do%>
       <tr>
         <td class="column-checkbox"><%= check_box_tag dom_id(issue, :checkbox), issue.id, false, class: 'js-multicheck', data: { url: issue_path(issue, format: :json) } %></td>
         <% @columns.each do |column| %>
