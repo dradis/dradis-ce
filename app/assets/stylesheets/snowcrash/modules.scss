@@ -44,8 +44,9 @@
     }
 
     .list-item-actions {
-      display: none;
       padding-right: 1ex;
+      text-align: right;
+      visibility: hidden;
     }
 
     .list-item-edit {
@@ -54,11 +55,10 @@
     }
 
     &:hover {
-      background-color: lighten(#ccc,10%);
+      background-color: lighten($secondaryNavBarBgColor,10%);
 
       .list-item-actions {
-        display: block;
-        text-align: right;
+        visibility: visible;
       }
     }
   }

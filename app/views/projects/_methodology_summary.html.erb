@@ -20,8 +20,8 @@
   </div>
   <% else %>
     <p class="no-content">There are no methodologies in this project yet.</p>
-    <div class="row text-center">
-      <%= link_to methodologies_path(), class: 'btn btn-large' do %><i class="fa fa-plus"></i> Add a testing methodology<% end %>
+    <div>
+      <%= link_to methodologies_path() do %><i class="fa fa-plus"></i> Add a testing methodology<% end %>
     </div>
   <% end %>
 </section>

@@ -1,15 +1,15 @@
 body.upload {
-  h2 {
+  .view-content > h2 {
     border-bottom: 1px solid #ccc;
+    margin-top: 2em;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
   }
 
   section {
     margin-bottom: 60px;
-  }
-
-  .file {
-    padding: 10px 40px 20px 40px;
-    margin: 0 auto;
   }
 
   // File upload progress status
@@ -18,11 +18,17 @@ body.upload {
   .percent { position:absolute; display:inline-block; top:3px; left:48%; }
 
   #console {
-    background-color: #000;
-    color: #CCC;
-    padding: 2ex 1ex;
-    margin-top: 2ex;
-    height: 250px;
-    overflow: scroll;
+    @include ajax-console;
+  }
+
+  a[data-behavior~="show-hide"].collapsed:before
+  {
+    content:'(show)' ;
+    width:15px;
+  }
+  a[data-behavior~="show-hide"]:before
+  {
+    content:'(hide)' ;
+    width:15px;
   }
 }

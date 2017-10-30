@@ -188,5 +188,4 @@ class IndexTable
     else
       $('.js-table-actions').css('display', 'none')
 
-jQuery ->
-  window.IndexTable = IndexTable
+window.IndexTable = IndexTable
