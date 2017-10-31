@@ -7,9 +7,10 @@ class IndexTable
   constructor: (@itemName) ->
     @$jsTable     = $('.js-index-table')
     @$table       = $('.js-items-table')
-    @$column_menu = $('.dropdown-menu.js-table-columns')
+    @$columnMenu  = $('.dropdown-menu.js-table-columns')
 
-    @selectedItemsSelector = 'input[type=checkbox]:checked.js-multicheck:visible'
+    @checkboxSelector       = 'input[type=checkbox].js-multicheck'
+    @selectedItemsSelector  = "#{@checkboxSelector}:checked:visible"
 
     # -------------------------------------------------------- Load table state
     @loadColumnState()
@@ -21,7 +22,7 @@ class IndexTable
     @$jsTable.on('confirm:complete', '#delete-selected', @onDeleteSelected)
 
     # Handle the showing / hiding of table columns
-    @$column_menu.find('a').on 'click', @onColumnPickerClick
+    @$columnMenu.find('a').on 'click', @onColumnPickerClick
 
     # Checkbox behavior: select all, show 'btn-group', etc.
     $('.js-index-table-select-all').click (e)=>
@@ -31,21 +32,21 @@ class IndexTable
         isChecked = !isChecked
         $allCheckbox.prop('checked', isChecked)
 
-      $('input[type=checkbox].js-multicheck:visible').prop('checked', isChecked)
+      $("#{@checkboxSelector}:visible").prop('checked', isChecked)
 
     # when selecting standalone items, check if we must also check 'select all'
-    $('input[type=checkbox].js-multicheck').click ->
+    $(@checkboxSelector).click ->
       _select_all = $(this).prop('checked')
 
       if _select_all
-        $('input[type=checkbox].js-multicheck').each ->
+        $(@checkboxSelector).each ->
           _select_all = $(this).prop('checked')
           _select_all
 
       $('.js-index-table-select-all > input[type=checkbox]').prop('checked', _select_all)
 
     # when selecting items or 'select all', refresh toolbar buttons
-    @$jsTable.on('click', '.js-index-table-select-all, input[type=checkbox].js-multicheck', @refreshToolbar)
+    @$jsTable.on('click', ".js-index-table-select-all, #{@checkboxSelector}", @refreshToolbar)
 
   loadColumnState: =>
     if Storage?
@@ -57,7 +58,7 @@ class IndexTable
 
     that = this
 
-    @$column_menu.find('a').each ->
+    @$columnMenu.find('a').each ->
       $link = $(this)
       if that.selectedColumns.indexOf($link.data('column')) > -1
         $link.find('input').prop('checked', true)
