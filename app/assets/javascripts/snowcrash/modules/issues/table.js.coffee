@@ -1,15 +1,15 @@
 class IssuesTable extends IndexTable
   constructor: ->
     super('issue')
-    $('#index-table').on('click', '.js-taglink', @onTagSelected)
-    $('#index-table').on('click', '#merge-selected', @onMergeSelected)
+    @$jsTable.on('click', '.js-taglink', @onTagSelected)
+    @$jsTable.on('click', '#merge-selected', @onMergeSelected)
 
   onTagSelected: (event) =>
     that = this
     $target = $(event.target)
     event.preventDefault()
 
-    $('.js-items-table').find(@selectedItemsSelector).each ->
+    @$table.find(@selectedItemsSelector).each ->
       $this = $(this)
 
       $row = $this.parent().parent()
@@ -29,7 +29,7 @@ class IssuesTable extends IndexTable
 
           $($row.find('td')[that.tagColumnIndex]).replaceWith(data.tag_cell)
           $("##{that.itemName}_#{item_id}").replaceWith(data["#{that.itemName}_link"])
-          if $(@selectedItemsSelector).length == 0
+          if $(that.selectedItemsSelector).length == 0
             that.resetToolbar()
 
         error: (foo,bar,foobar) ->
@@ -40,7 +40,7 @@ class IssuesTable extends IndexTable
     url = $(event.target).data('url')
     issues_to_merge = []
 
-    $('.js-items-table').find(@selectedItemsSelector).each ->
+    @$table.find(@selectedItemsSelector).each ->
       $row = $(this).parent().parent()
 
       id = @.name.split('_')[2]
@@ -48,12 +48,12 @@ class IssuesTable extends IndexTable
 
     location.href = "#{url}?ids=#{issues_to_merge}"
 
-  refreshToolbar: ->
-    checked = $('input[type=checkbox]:checked.js-multicheck:visible').length
+  refreshToolbar: =>
+    checked = $(@selectedItemsSelector).length
     if checked
-      $('.js-table-actions').css('display', 'inline-block')
+      $('.js-index-table-actions').css('display', 'inline-block')
     else
-      $('.js-table-actions').css('display', 'none')
+      $('.js-index-table-actions').css('display', 'none')
 
     if checked > 1
       $('#merge-selected').css('display', 'inline-block')
