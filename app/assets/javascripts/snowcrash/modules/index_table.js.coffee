@@ -19,7 +19,7 @@ class IndexTable
     # -------------------------------------------------- Install event handlers
     # We're hooking into Rails UJS data-confirm behavior to only fire the Ajax
     # if the user confirmed the deletion
-    @$jsTable.on('confirm:complete', '#delete-selected', @onDeleteSelected)
+    @$jsTable.on('confirm:complete', '.js-index-table-delete', @onDeleteSelected)
 
     # Handle the showing / hiding of table columns
     @$columnMenu.find('a').on 'click', @onColumnPickerClick
