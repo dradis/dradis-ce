@@ -17,8 +17,6 @@ class IndexTable
     @showHideColumns()
 
     # -------------------------------------------------- Install event handlers
-    $('#index-table').on('click', '.js-taglink', @onTagSelected)
-
     # We're hooking into Rails UJS data-confirm behavior to only fire the Ajax
     # if the user confirmed the deletion
     $('#index-table').on('confirm:complete', '#delete-selected', @onDeleteSelected)
@@ -56,7 +54,7 @@ class IndexTable
     else
       console.log "The browser doesn't support local storage of settings."
 
-    @selectedColumns ||= ['title', 'tags', 'affected']
+    @selectedColumns ||= ['title', 'created', 'updated']
 
     that = this
 
@@ -122,38 +120,6 @@ class IndexTable
 
     # prevent Rails UJS from doing anything else.
     false
-
-  onTagSelected: (event) =>
-    that = this
-    $target = $(event.target)
-    event.preventDefault()
-
-    $('.js-items-table').find(@selectedItemsSelector).each ->
-      $this = $(this)
-
-      $row = $this.parent().parent()
-      $($row.find('td')[that.tagColumnIndex]).replaceWith("<td class=\"loading\">Loading...</td>")
-
-      url   = $this.data('url')
-      data  = {}
-      data[that.itemName] = { tag_list: $target.data('tag') }
-
-      $.ajax url, {
-        method: 'PUT',
-        data: data,
-        dataType: 'json',
-        success: (data) ->
-          $this.prop('checked', false)
-          item_id = $this.val()
-
-          $($row.find('td')[that.tagColumnIndex]).replaceWith(data.tag_cell)
-          $("##{that.itemName}_#{item_id}").replaceWith(data["#{that.itemName}_link"])
-          if $(@selectedItemsSelector).length == 0
-            that.resetToolbar()
-
-        error: (foo,bar,foobar) ->
-          $($row.find('td')[that.tagColumnIndex]).replaceWith("<td class='text-error'>Please try again</td>")
-      }
 
   saveColumnState: ->
     if Storage?

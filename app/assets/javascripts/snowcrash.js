@@ -20,10 +20,10 @@
 //= require snowcrash/behaviors
 //= require snowcrash/keyboard_shortcuts
 
-//= require snowcrash/modules/table
 //= require snowcrash/modules/configurations
 //= require snowcrash/modules/console_updater
 //= require snowcrash/modules/export
+//= require snowcrash/modules/index_table
 //= require snowcrash/modules/issues
 //= require snowcrash/modules/methodologies
 //= require snowcrash/modules/nodes
