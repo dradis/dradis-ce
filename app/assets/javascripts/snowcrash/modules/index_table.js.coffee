@@ -2,11 +2,11 @@ class IndexTable
   project: null
   selectedColumns: []
   selectedItemsSelector: ''
-  tagColumnIndex: null
+  columnIndices: {}
 
   constructor: (@itemName) ->
     @$jsTable     = $('.js-index-table')
-    @$table       = $('.js-items-table')
+    @$table       = $('.js-index-table table')
     @$columnMenu  = $('.dropdown-menu.js-table-columns')
 
     @checkboxSelector       = 'input[type=checkbox].js-multicheck'
@@ -93,7 +93,7 @@ class IndexTable
       that   = this
       issueIds = []
 
-      $('.js-items-table').find(@selectedItemsSelector).each ->
+      @$table.find(@selectedItemsSelector).each ->
         $row = $(this).parent().parent()
         $($row.find('td')[2]).replaceWith("<td class=\"loading\">Deleting...</td>")
         issueIds.push($(this).val())
@@ -135,7 +135,7 @@ class IndexTable
       $th = $(th)
 
       if (column = $(th).data('column'))
-        that.tagColumnIndex ||= index if column == 'tags'
+        that.columnIndices[column] = index
         if that.selectedColumns.indexOf(column) > -1
           that.$table.find("td:nth-child(#{index + 1})").css('display', 'table-cell')
           $th.css('display', 'table-cell')
@@ -144,7 +144,8 @@ class IndexTable
           $th.css('display', 'none')
 
   storageKey: ->
-    @project ||= $('.brand').data('project')
+    projectId = $('.brand').data('project') || 'ce'
+    @project ||= projectId
     "project.#{@project}.#{@itemName}_columns"
 
   refreshToolbar: =>
