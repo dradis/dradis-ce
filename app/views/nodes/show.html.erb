@@ -11,12 +11,14 @@
     </a></li>
   <li <%= "class=active" if params[:tab] == 'notes-tab' %>>
     <a href="#notes-tab" data-toggle="tab"><i class="fa fa-file-text-o"></i> Notes</a>
-  </li <%= "class=active" if params[:tab] == 'activity-tab' %>>
-  <li><a href="#activity-tab" data-toggle="tab"><i class="fa fa-refresh"></i> Recent activity</a></li>
+  </li>
+  <li <%= "class=active" if params[:tab] == 'activity-tab' %>>
+    <a href="#activity-tab" data-toggle="tab"><i class="fa fa-refresh"></i> Recent activity</a>
+  </li>
 </ul>
 
 <div class="tab-content">
-  <div class="tab-pane active" id="properties-tab">
+  <div class="tab-pane <%= "active" if !params[:tab] || params[:tab] == 'properties-tab' %>" id="properties-tab">
     <div class="node-content" id="<%= dom_id(@node) %>_content">
       <div class="inner">
         <h3>Properties - <span class="actions">
@@ -39,13 +41,13 @@
     </div>
   </div>
 
-  <div class="tab-pane notes" id="notes-tab">
+  <div class="tab-pane notes <%= "active" if params[:tab] == "notes-tab" %>" id="notes-tab">
     <div class="inner">
       <h3>Notes</h3>
       <div id="note-viewer">
         <div class="inner note-text-inner">
           <% if @sorted_notes.any? %>
-            <div id="index-table">
+            <div id="node-notes-table" class="js-index-table" data-destroy-url="<%= multi_destroy_node_note_path(@node) %>">
               <%= render 'nodes/notes/toolbar' %>
               <%= render 'nodes/notes/table', notes: @sorted_notes %>
             </div>
@@ -57,7 +59,7 @@
     </div>
   </div>
 
-  <div class="tab-pane" id="activity-tab">
+  <div class="tab-pane <%= "active" if params[:tab] == "activity-tab" %>" id="activity-tab">
     <div class="inner">
       <%= render partial: 'activity' %>
     </div>

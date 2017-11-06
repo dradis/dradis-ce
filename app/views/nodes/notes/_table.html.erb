@@ -1,24 +1,37 @@
 <% cache ["node-notes-table", notes.map(&:id), notes.map(&:updated_at).map(&:to_i).sort.last] do %>
-  <table class="table table-striped tbl-notes js-tbl-notes">
+  <table class="table table-striped tbl-notes js-items-table">
     <thead>
       <tr>
         <th></th>
-        <th>Title</th>
-        <th>Created</th>
-        <th>Created by</th>
-        <th>Updated</>
+        <% @note_columns.each do |column| %>
+          <th data-column="<%= column.downcase %>"><%= column %></th>
+        <% end %>
       </tr>
     </thead>
     <tbody>
       <% notes.each do |note| %>
-        <tr>
-          <td class="column-checkbox"><%= check_box_tag dom_id(note), note.id, false, class: 'js-multicheck', data: { id: note.id } %></td>
-          <td><%= link_to(note.title, [@node, note]) %></td>
-          <td><%= local_time_ago(note.created_at) %></td>
-          <td><%= note.author %></td>
-          <td><%= local_time_ago(note.updated_at) %></td>
+        <tr data-id="<%= note.id %>">
+          <td class="column-checkbox"><%= check_box_tag dom_id(note), note.id, false, class: 'js-multicheck' %></td>
+          <% @note_columns.each do |column| %>
+          <td>
+            <%=
+            case column
+            when 'Title'
+              link_to(note.title, [@node, note])
+            when 'Created'
+              local_time_ago(note.created_at)
+            when 'Created by'
+              note.author
+            when 'Updated'
+              local_time_ago(note.updated_at)
+            else
+              note.fields.fetch(column, '')
+            end
+            %>
+          </td>
+          <% end %>
           <td class="column-actions">
-            <%= link_to edit_node_note_path([@node, note]), class: '' do %>
+            <%= link_to edit_node_note_path(@node, note) do %>
               <i class="fa fa-pencil"></i> Edit
             <% end %>
             <%= link_to [@node, note], method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-error' do %>
@@ -29,4 +42,6 @@
       <% end %>
     </tbody>
   </table>
+
+  <%= render 'nodes/notes/console' %>
 <% end %>

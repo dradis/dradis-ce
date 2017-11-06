@@ -1,0 +1,16 @@
+<div id="modal-console" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-body">
+    <h2>Output console</h2>
+    <%= content_tag :div,
+                    id: 'result',
+                    style: 'display:none',
+                    data: {
+                      url: multi_destroy_status_node_notes_path(@node)
+                    }  do %>
+      <div id="console"></div>
+    <% end %>
+    <div class="modal-footer hide">
+      <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Done!</button>
+    </div>
+  </div>
+</div>

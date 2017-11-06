@@ -1,0 +1,11 @@
+<% if @uid %>
+{
+  "success": true,
+    "jobId": "<%= @uid %>"
+}
+<% else %>
+{
+  "success": false,
+      "msg": "<%= j "Error while deleting notes" %>"
+}
+<% end %>

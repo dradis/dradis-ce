@@ -6,7 +6,7 @@ class IndexTable
 
   constructor: (@itemName) ->
     @$jsTable     = $('.js-index-table')
-    @$table       = $('.js-items-table')
+    @$table       = $('.js-index-table table')
     @$columnMenu  = $('.dropdown-menu.js-table-columns')
 
     @checkboxSelector       = 'input[type=checkbox].js-multicheck'
@@ -91,29 +91,38 @@ class IndexTable
   onDeleteSelected: (element, answer) =>
     if answer
       that   = this
-      issueIds = []
+      ids = []
 
       $('.js-items-table').find(@selectedItemsSelector).each ->
         $row = $(this).parent().parent()
         $($row.find('td')[2]).replaceWith("<td class=\"loading\">Deleting...</td>")
-        issueIds.push($(this).val())
+        ids.push($(this).val())
 
       $.ajax @$jsTable.data('destroy-url'), {
-        method: 'POST'
+        method: 'DELETE'
         dataType: 'json'
-        data: {ids: issueIds}
-        success: ->
-          for id in issueIds
+        data: {ids: ids}
+        success: (data) ->
+          for id in ids
             $("#checkbox_#{that.itemName}_#{id}").closest('tr').remove()
             $("##{that.itemName}_#{id}").remove()
 
           if $(that.selectedItemsSelector).length == 0
             that.resetToolbar()
 
+          $('#modal-console').modal()
+          ConsoleUpdater.jobId = data.jobId
+          $('#console').empty()
+          $('#result').data('id', ConsoleUpdater.jobId)
+          $('#result').show()
+
+          ConsoleUpdater.parsing = true;
+          setTimeout(ConsoleUpdater.updateConsole, 200);
+
           # TODO: show placeholder if no items left
 
         error: ->
-          for id in issueIds
+          for id in ids
             $row = $("#checkbox_#{that.itemName}_#{id}").closest('tr')
             $($row.find('td')[2]).replaceWith("<td class='text-error'>Please try again</td>")
       }

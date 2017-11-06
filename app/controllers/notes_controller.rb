@@ -66,19 +66,35 @@ class NotesController < NestedNodeResourceController
       ids: params[:ids]
     )
 
-    deleted = 0
-    notes.each do |note|
-      if note.destroy
-        track_destroyed(note)
-        deleted += 1
-      end
+    if notes.any?
+      @uid = (Log.maximum(:uid) || 0) + 1
+
+      job = DestroyJob.perform_later(
+        items: notes.to_a,
+        author_email: current_user.email,
+        uid: @uid
+      )
+
+      job_logger = Log.new(uid: @uid)
+      job_logger.write 'Enqueueing job to start in the background.'
+      job_logger.write "Job id is #{ job.job_id }."
     end
 
-    if deleted = notes.size
-      redirect_to node_path(@node, tab: 'notes-tab'), notice: 'Notes deleted'
-    else
-      redirect_to @node, tab: 'notes-tab', alert: 'Could not delete notes'
+    respond_to do |format|
+      format.html do
+        redirect_to node_path(@node, tab: 'notes-tab'),
+                    notice: 'Deleting notes...'
+      end
+      format.json
     end
+  end
+
+  def multi_destroy_status
+    @logs = Log.where(
+      'uid = ? and id > ?',
+      params[:item_id].to_i, params[:after].to_i
+    )
+    @destroying = !(@logs.last.text == 'Worker process completed.') if @logs.any?
   end
 
   private
