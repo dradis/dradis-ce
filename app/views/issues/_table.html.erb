@@ -1,5 +1,5 @@
 <% cache ['issues-table', @columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last] do %>
-  <table class="table table-striped tbl-issues js-items-table">
+  <table class="table table-striped tbl-issues">
     <thead>
       <tr>
         <th></th>

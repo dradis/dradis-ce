@@ -7,13 +7,14 @@ class IssuesTable extends IndexTable
   onTagSelected: (event) =>
     that = this
     $target = $(event.target)
+    tagColumnIndex = @columnIndices['tags']
     event.preventDefault()
 
     @$table.find(@selectedItemsSelector).each ->
       $this = $(this)
 
       $row = $this.parent().parent()
-      $($row.find('td')[that.tagColumnIndex]).replaceWith("<td class=\"loading\">Loading...</td>")
+      $($row.find('td')[tagColumnIndex]).replaceWith("<td class=\"loading\">Loading...</td>")
 
       url   = $this.data('url')
       data  = {}
@@ -27,13 +28,13 @@ class IssuesTable extends IndexTable
           $this.prop('checked', false)
           item_id = $this.val()
 
-          $($row.find('td')[that.tagColumnIndex]).replaceWith(data.tag_cell)
+          $($row.find('td')[tagColumnIndex]).replaceWith(data.tag_cell)
           $("##{that.itemName}_#{item_id}").replaceWith(data["#{that.itemName}_link"])
           if $(that.selectedItemsSelector).length == 0
             that.resetToolbar()
 
         error: (foo,bar,foobar) ->
-          $($row.find('td')[that.tagColumnIndex]).replaceWith("<td class='text-error'>Please try again</td>")
+          $($row.find('td')[tagColumnIndex]).replaceWith("<td class='text-error'>Please try again</td>")
       }
 
   onMergeSelected: (event) =>

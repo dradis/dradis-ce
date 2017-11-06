@@ -2,7 +2,7 @@ class IndexTable
   project: null
   selectedColumns: []
   selectedItemsSelector: ''
-  tagColumnIndex: null
+  columnIndices: {}
 
   constructor: (@itemName) ->
     @$jsTable     = $('.js-index-table')
@@ -19,7 +19,7 @@ class IndexTable
     # -------------------------------------------------- Install event handlers
     # We're hooking into Rails UJS data-confirm behavior to only fire the Ajax
     # if the user confirmed the deletion
-    @$jsTable.on('confirm:complete', '#delete-selected', @onDeleteSelected)
+    @$jsTable.on('confirm:complete', '.js-index-table-delete', @onDeleteSelected)
 
     # Handle the showing / hiding of table columns
     @$columnMenu.find('a').on 'click', @onColumnPickerClick
@@ -93,7 +93,7 @@ class IndexTable
       that   = this
       ids = []
 
-      $('.js-items-table').find(@selectedItemsSelector).each ->
+      @$table.find(@selectedItemsSelector).each ->
         $row = $(this).parent().parent()
         $($row.find('td')[2]).replaceWith("<td class=\"loading\">Deleting...</td>")
         ids.push($(this).val())
@@ -144,7 +144,7 @@ class IndexTable
       $th = $(th)
 
       if (column = $(th).data('column'))
-        that.tagColumnIndex ||= index if column == 'tags'
+        that.columnIndices[column] = index
         if that.selectedColumns.indexOf(column) > -1
           that.$table.find("td:nth-child(#{index + 1})").css('display', 'table-cell')
           $th.css('display', 'table-cell')
@@ -153,7 +153,8 @@ class IndexTable
           $th.css('display', 'none')
 
   storageKey: ->
-    @project ||= $('.brand').data('project')
+    projectId = $('.brand').data('project') || 'ce'
+    @project ||= projectId
     "project.#{@project}.#{@itemName}_columns"
 
   refreshToolbar: =>
