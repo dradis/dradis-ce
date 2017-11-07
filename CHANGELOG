@@ -1,6 +1,10 @@
 v3.8 (XXX 2017)
  - Upgrade to Rails 5.1 and Ruby 2.4
  - Bugs fixed: #130, #349
+ - Add Node properties to Acunetix plugin
+ - Add Node properties to Qualys plugin
+ - Add metric-specific fields to the CVSS calculator
+ - Add fields and Node properties to Burp plugin
  
 v3.7 (July 2017)
  - Fix dradis:reset thor task.
