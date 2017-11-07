@@ -7,6 +7,10 @@ v3.9 (January 2018)
  - Add paper_trail author metadata
  - Upgrade to Rails 5.1 and Ruby 2.4
  - Bugs fixed: #130, #349
+ - Add Node properties to Acunetix plugin
+ - Add Node properties to Qualys plugin
+ - Add metric-specific fields to the CVSS calculator
+ - Add fields and Node properties to Burp plugin
  - Validate parent node (if present) on nodes
  - Improved pool parameter definition in database.yml.template file
  - Fixed local_time gem usage
