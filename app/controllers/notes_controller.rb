@@ -60,24 +60,32 @@ class NotesController < NestedNodeResourceController
   end
 
   def multi_destroy
-    notes = Note.where(
+    @notes = Note.where(
       'node_id = :node AND id in (:ids)',
       node: @node,
       ids: params[:ids]
     )
 
-    if notes.any?
-      @uid = (Log.maximum(:uid) || 0) + 1
+    if @notes.any?
+      @job_logger = Log.new(uid: (Log.maximum(:uid) || 0) + 1)
 
-      job = DestroyJob.perform_later(
-        items: notes.to_a,
-        author_email: current_user.email,
-        uid: @uid
-      )
+      if @notes.count >= 1
+        @job_logger.write 'Enqueueing destroy job to start in the background.'
+        job = DestroyJob.perform_later(
+          items: @notes.to_a,
+          author_email: current_user.email,
+          uid: @job_logger.uid
+        )
+        @job_logger.write "Job id is #{ job.job_id }."
 
-      job_logger = Log.new(uid: @uid)
-      job_logger.write 'Enqueueing job to start in the background.'
-      job_logger.write "Job id is #{ job.job_id }."
+      elsif @notes.count > 0
+        @job_logger.write 'Performing destroy job inline.'
+        DestroyJob.perform_now(
+          items: @notes.to_a,
+          author_email: current_user.email,
+          uid: @job_logger.uid
+        )
+      end
     end
 
     respond_to do |format|

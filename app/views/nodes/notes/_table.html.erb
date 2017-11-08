@@ -11,7 +11,7 @@
     <tbody>
       <% notes.each do |note| %>
         <tr data-id="<%= note.id %>">
-          <td class="column-checkbox"><%= check_box_tag dom_id(note), note.id, false, class: 'js-multicheck' %></td>
+          <td class="column-checkbox"><%= check_box_tag dom_id(note, :checkbox), note.id, false, class: 'js-multicheck' %></td>
           <% @note_columns.each do |column| %>
           <td>
             <%=

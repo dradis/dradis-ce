@@ -1,11 +1,16 @@
-<% if @uid %>
+<% if @notes.size >= 1 %>
 {
   "success": true,
-    "jobId": "<%= @uid %>"
+  "jobId": "<%= @job_logger.uid %>"
+}
+<% elsif @notes.size > 0 %>
+{
+  "success": true,
+  "msg": "<%= "Notes deleted" %>"
 }
 <% else %>
 {
   "success": false,
-      "msg": "<%= j "Error while deleting notes" %>"
+  "msg": "<%= "Error deleting notes" %>"
 }
 <% end %>
