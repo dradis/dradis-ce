@@ -25,14 +25,15 @@ class IndexTable
     @$columnMenu.find('a').on 'click', @onColumnPickerClick
 
     # Checkbox behavior: select all, show 'btn-group', etc.
-    $('.js-index-table-select-all').click (e)=>
+    that = this
+    $('.js-index-table-select-all').click (e) ->
       $allCheckbox = $(this).find('input[type=checkbox]')
       isChecked = $allCheckbox.prop('checked')
       if e.target != $allCheckbox[0]
         isChecked = !isChecked
         $allCheckbox.prop('checked', isChecked)
 
-      $("#{@checkboxSelector}:visible").prop('checked', isChecked)
+      $("#{that.checkboxSelector}:visible").prop('checked', isChecked)
 
     # when selecting standalone items, check if we must also check 'select all'
     $(@checkboxSelector).click ->
@@ -110,14 +111,15 @@ class IndexTable
           if $(that.selectedItemsSelector).length == 0
             that.resetToolbar()
 
-          $('#modal-console').modal()
-          ConsoleUpdater.jobId = data.jobId
-          $('#console').empty()
-          $('#result').data('id', ConsoleUpdater.jobId)
-          $('#result').show()
-
-          ConsoleUpdater.parsing = true;
-          setTimeout(ConsoleUpdater.updateConsole, 200);
+          if data.success
+            if data.jobId?
+              # background deletion
+              that.showConsole(data.jobId)
+            else
+              # inline deletion
+              that.showAlert(data.msg, 'success')
+          else
+            that.showAlert(data.msg, 'error')
 
           # TODO: show placeholder if no items left
 
@@ -151,6 +153,26 @@ class IndexTable
         else
           that.$table.find("td:nth-child(#{index + 1})").css('display', 'none')
           $th.css('display', 'none')
+
+  showAlert: (msg, klass) =>
+    $('.secondary-navbar-content').prepend(
+      "<div class='alert alert-#{klass}'>
+        <a class='close' data-dismiss='alert' href='javascript:void(0)'>x</a>
+        #{msg}
+      </div>"
+    )
+
+  showConsole: (jobId) =>
+    # show console
+    $('#modal-console').modal()
+    ConsoleUpdater.jobId = jobId
+    $('#console').empty()
+    $('#result').data('id', ConsoleUpdater.jobId)
+    $('#result').show()
+
+    # start console
+    ConsoleUpdater.parsing = true;
+    setTimeout(ConsoleUpdater.updateConsole, 200);
 
   storageKey: ->
     projectId = $('.brand').data('project') || 'ce'
