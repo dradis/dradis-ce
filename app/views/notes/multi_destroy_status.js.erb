@@ -4,9 +4,6 @@
   $("#console").prop({ scrollTop: $("#console").prop("scrollHeight") });
   setTimeout(ConsoleUpdater.updateConsole, 2000);
   <% if !@destroying %>
-    $('#modal-console').on('hidden', function () {
-      Turbolinks.visit("<%= node_path(@node, tab: 'notes-tab') %>");
-    });
     $("#modal-console .modal-footer").show()
   <% end %>
 <% else -%>
