@@ -178,8 +178,7 @@ class IndexTable
     setTimeout(ConsoleUpdater.updateConsole, 200);
 
   storageKey: ->
-    projectId = $('.brand').data('project') || 'ce'
-    @project ||= projectId
+    @project ||= $('.brand').data('project') || 'ce'
     "project.#{@project}.#{@itemName}_columns"
 
   refreshToolbar: =>
