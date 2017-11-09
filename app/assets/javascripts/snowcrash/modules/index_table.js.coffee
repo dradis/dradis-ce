@@ -106,7 +106,7 @@ class IndexTable
         success: (data) ->
           for id in ids
             $("#checkbox_#{that.itemName}_#{id}").closest('tr').remove()
-            $("##{that.itemName}_#{id}").remove()
+            $("##{that.itemName}_#{id}_link").remove()
 
           if $(that.selectedItemsSelector).length == 0
             that.resetToolbar()
