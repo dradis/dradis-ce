@@ -7,11 +7,13 @@ describe 'node pages' do
     before do
       login_to_project_as_user
 
-      node   = create(:node)
-      @note1 = create(:note, node: node, text: "#[Title]#\r\ntest1\r\n\r\n#[Description]#\r\nnone1\r\n")
-      @note2 = create(:note, node: node, text: "#[Title]#\r\ntest2\r\n\r\n#[Description]#\r\nnone2\r\n")
+      @node  = create(:node)
+      @notes = []
+      (Note::MAX_DELETED_INLINE + 1).times do |i|
+        @notes << create(:note, node: @node, text: "#[Title]#\r\ntest#{i}\r\n\r\n#[Description]#\r\nnote#{i}\r\n")
+      end
 
-      visit node_path(node, tab: 'notes-tab')
+      visit node_path(@node, tab: 'notes-tab')
     end
 
     context 'when Select All is clicked' do
@@ -30,37 +32,60 @@ describe 'node pages' do
       end
     end
 
-    context 'when clicking notes' do
+    describe 'when clicking notes' do
       it 'displays action buttons (delete button) if 1 note is clicked' do
         expect(find('.js-index-table-actions', visible: :all)).to_not be_visible
-        check "note_#{@note1.id}"
+        check "checkbox_note_#{@notes[0].id}"
         expect(find('.js-index-table-actions')).to be_visible
       end
 
-      it 'resets toolbar after deleting notes' do
-        check "note_#{@note1.id}"
-        expect(page).to have_css('.js-index-table-actions')
-        find('.js-index-table-delete').click
-        expect(find('#modal-console')).to be_visible
-        find('#main-menu').trigger('click') # anywhere outside the modal
-        expect(find('.js-index-table-actions', visible: :all)).to_not be_visible
-        expect(find('#modal-console', visible: :all)).to_not be_visible
+      # context 'deleting with background job' do
+      #   before do
+      #     ActiveJob::Base.queue_adapter = :test
+      #   end
+      #
+      #   it 'resets toolbar after deleting notes' do
+      #     @notes.each do |note|
+      #       check "checkbox_note_#{note.id}"
+      #     end
+      #
+      #     expect(page).to have_css('.js-index-table-actions')
+      #     find('.js-index-table-delete').click
+      #     expect(find('#modal-console')).to be_visible
+      #
+      #     # closes modal reloads page
+      #     find('div.modal-backdrop.in').click
+      #
+      #     expect(page).to have_current_path(node_path(@node, tab: 'notes-tab'))
+      #     expect(find('.js-index-table-actions', visible: :all)).to_not be_visible
+      #     expect(find('#modal-console', visible: :all)).to_not be_visible
+      #   end
+      # end
+
+      context 'deleting with inline job' do
+        it 'resets toolbar after deleting notes' do
+          check "checkbox_note_#{@notes[0].id}"
+          expect(page).to have_css('.js-index-table-actions')
+          find('.js-index-table-delete').click
+          expect(page).to_not have_css('.js-index-table-actions')
+          expect(Note.exists?(@notes[0].id)).to be false
+        end
       end
     end
 
     describe 'when deleting multiple notes' do
-      before do
-        ActiveJob::Base.queue_adapter = :test
-      end
-
       context 'without filters' do
+        before do
+          ActiveJob::Base.queue_adapter = :test
+        end
+
         it 'enqueues a background job with the notes' do
           expect {
             find('#select-all').click
             find('.js-index-table-delete').click
-            save_and_open_screenshot
+            find('#modal-console', visible: true) # wait for the response
           }.to have_enqueued_job(DestroyJob).with(
-            items: [ @note1, @note2 ],
+            items: @notes,
             author_email: @logged_in_as.email,
             uid: 1
           )
@@ -69,18 +94,15 @@ describe 'node pages' do
 
       context 'with filters' do
         it 'does not delete filtered notes' do
-          find('.js-table-filter').set('1')
-          expect(page).to have_selector("#note_#{@note2.id}", visible: false)
-
-          expect {
-            find('#select-all').click
-            find('.js-index-table-delete').click
-            save_and_open_screenshot
-          }.to have_enqueued_job(DestroyJob).with(
-            items: [ @note1 ],
-            author_email: @logged_in_as.email,
-            uid: 1
-          )
+          find('.js-table-filter').set(@notes.last.title)
+          @notes[0..-2].each do |note|
+            expect(page).to have_selector("#checkbox_note_#{note.id}", visible: false)
+          end
+          find('#select-all').click
+          find('.js-index-table-delete').click
+          expect(page).to have_text 'Notes deleted'
+          expect(Note.exists?(@notes.last.id)).to be false
+          expect(Note.count).to be @notes.size - 1
         end
       end
     end
