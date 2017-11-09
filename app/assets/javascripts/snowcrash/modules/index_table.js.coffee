@@ -106,7 +106,7 @@ class IndexTable
         success: (data) ->
           for id in ids
             $("#checkbox_#{that.itemName}_#{id}").closest('tr').remove()
-            $("##{that.itemName}_#{id}").remove()
+            $("##{that.itemName}_#{id}_link").remove()
 
           if $(that.selectedItemsSelector).length == 0
             that.resetToolbar()
@@ -170,6 +170,9 @@ class IndexTable
     $('#result').data('id', ConsoleUpdater.jobId)
     $('#result').show()
 
+    # set what page to visit when closing console
+    $('#modal-console').on('hidden', @refreshPage)
+
     # start console
     ConsoleUpdater.parsing = true;
     setTimeout(ConsoleUpdater.updateConsole, 200);
@@ -185,5 +188,9 @@ class IndexTable
       $('.js-index-table-actions').css('display', 'inline-block')
     else
       $('.js-index-table-actions').css('display', 'none')
+
+  refreshPage: =>
+    Turbolinks.clearCache()
+    Turbolinks.visit($('#result').data('close-url'))
 
 window.IndexTable = IndexTable
