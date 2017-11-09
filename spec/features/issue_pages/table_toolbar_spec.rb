@@ -79,7 +79,7 @@ describe 'issue table' do
       it 'successfully deletes multiple issues' do
         find('#select-all').click
         find('#delete-selected').click
-        expect(page).to_not have_selector("#issue_#{@issue1.id}")
+        expect(page).to_not have_selector("#issue_#{@issue1.id}_link")
         expect(Issue.exists?(@issue1.id)).to be false
         expect(Issue.exists?(@issue2.id)).to be false
       end
