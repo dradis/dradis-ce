@@ -1,0 +1,53 @@
+.btn-toolbar {
+  input[type='checkbox'] {
+    margin: 0;
+  }
+
+  .js-index-table-actions {
+    display: none;
+
+    .dropdown-menu {
+      text-align: left;
+    }
+
+    #merge-selected {
+      display: none; // even when issue-actions becomes visible, keep this one hidden
+    }
+  }
+
+  #delete-selected {
+    color: #b94a48;
+  }
+}
+
+.js-items-table {
+  td.loading {
+    background: image-url('loading.gif') no-repeat left center;
+    padding-left: 20px;
+  }
+
+  .column-actions {
+    text-align: right;
+    width: 125px;
+
+    a {
+      padding-right: 8px;
+      visibility: hidden;
+    }
+  }
+
+  .column-checkbox {
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+    width: 36px;
+
+    input {
+      margin: 0;
+    }
+  }
+
+  tr:hover {
+    .column-actions a { visibility: visible; }
+  }
+}
