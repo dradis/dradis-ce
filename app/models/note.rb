@@ -28,6 +28,8 @@ class Note < ApplicationRecord
   include HasFields
   include RevisionTracking
 
+  MAX_DELETED_INLINE = 15
+
   dradis_has_fields_for :text
 
 

@@ -69,7 +69,7 @@ class NotesController < NestedNodeResourceController
     if @notes.any?
       @job_logger = Log.new(uid: (Log.maximum(:uid) || 0) + 1)
 
-      if @notes.count >= 1
+      if @notes.count > Note::MAX_DELETED_INLINE
         @job_logger.write 'Enqueueing destroy job to start in the background.'
         job = DestroyJob.perform_later(
           items: @notes.to_a,

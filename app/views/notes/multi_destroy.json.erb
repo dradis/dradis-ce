@@ -1,4 +1,4 @@
-<% if @notes.size >= 1 %>
+<% if @notes.size > Note::MAX_DELETED_INLINE %>
 {
   "success": true,
   "jobId": "<%= @job_logger.uid %>"

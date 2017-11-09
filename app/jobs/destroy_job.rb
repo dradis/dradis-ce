@@ -10,10 +10,12 @@ class DestroyJob < ApplicationJob
       "Deleting #{items.count} #{items.first.class.to_s.pluralize}"
     end
 
-    items.each do |item|
-      if item.destroy
-        track_destroyed(item, User.new(email: author_email))
-        logger.write { "Deleted #{item.class} #{item.id}..." }
+    Note.transaction do
+      items.each do |item|
+        if item.destroy
+          track_destroyed(item, User.new(email: author_email))
+          logger.write { "Deleted #{item.class} #{item.id}..." }
+        end
       end
     end
 
