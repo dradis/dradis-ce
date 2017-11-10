@@ -171,7 +171,8 @@ class IndexTable
     $('#result').show()
 
     # set what page to visit when closing console
-    $('#modal-console').on('hidden', @refreshPage)
+    close_url = $('#result').data('close-url')
+    $('#modal-console').on('hidden', @refreshPage(close_url))
 
     # start console
     ConsoleUpdater.parsing = true;
@@ -188,8 +189,8 @@ class IndexTable
     else
       $('.js-index-table-actions').css('display', 'none')
 
-  refreshPage: =>
+  refreshPage: (url) =>
     Turbolinks.clearCache()
-    Turbolinks.visit($('#result').data('close-url'))
+    Turbolinks.visit(url)
 
 window.IndexTable = IndexTable
