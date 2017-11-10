@@ -25,14 +25,15 @@ class IndexTable
     @$columnMenu.find('a').on 'click', @onColumnPickerClick
 
     # Checkbox behavior: select all, show 'btn-group', etc.
-    $('.js-index-table-select-all').click (e)=>
+    that = this
+    $('.js-index-table-select-all').click (e) ->
       $allCheckbox = $(this).find('input[type=checkbox]')
       isChecked = $allCheckbox.prop('checked')
       if e.target != $allCheckbox[0]
         isChecked = !isChecked
         $allCheckbox.prop('checked', isChecked)
 
-      $("#{@checkboxSelector}:visible").prop('checked', isChecked)
+      $("#{that.checkboxSelector}:visible").prop('checked', isChecked)
 
     # when selecting standalone items, check if we must also check 'select all'
     $(@checkboxSelector).click ->
@@ -91,29 +92,39 @@ class IndexTable
   onDeleteSelected: (element, answer) =>
     if answer
       that   = this
-      issueIds = []
+      ids = []
 
       @$table.find(@selectedItemsSelector).each ->
         $row = $(this).parent().parent()
         $($row.find('td')[2]).replaceWith("<td class=\"loading\">Deleting...</td>")
-        issueIds.push($(this).val())
+        ids.push($(this).val())
 
       $.ajax @$jsTable.data('destroy-url'), {
-        method: 'POST'
+        method: 'DELETE'
         dataType: 'json'
-        data: {ids: issueIds}
-        success: ->
-          for id in issueIds
+        data: {ids: ids}
+        success: (data) ->
+          for id in ids
             $("#checkbox_#{that.itemName}_#{id}").closest('tr').remove()
-            $("##{that.itemName}_#{id}").remove()
+            $("##{that.itemName}_#{id}_link").remove()
 
           if $(that.selectedItemsSelector).length == 0
             that.resetToolbar()
 
+          if data.success
+            if data.jobId?
+              # background deletion
+              that.showConsole(data.jobId)
+            else
+              # inline deletion
+              that.showAlert(data.msg, 'success')
+          else
+            that.showAlert(data.msg, 'error')
+
           # TODO: show placeholder if no items left
 
         error: ->
-          for id in issueIds
+          for id in ids
             $row = $("#checkbox_#{that.itemName}_#{id}").closest('tr')
             $($row.find('td')[2]).replaceWith("<td class='text-error'>Please try again</td>")
       }
@@ -143,9 +154,31 @@ class IndexTable
           that.$table.find("td:nth-child(#{index + 1})").css('display', 'none')
           $th.css('display', 'none')
 
+  showAlert: (msg, klass) =>
+    $('.secondary-navbar-content').prepend(
+      "<div class='alert alert-#{klass}'>
+        <a class='close' data-dismiss='alert' href='javascript:void(0)'>x</a>
+        #{msg}
+      </div>"
+    )
+
+  showConsole: (jobId) =>
+    # show console
+    $('#modal-console').modal()
+    ConsoleUpdater.jobId = jobId
+    $('#console').empty()
+    $('#result').data('id', ConsoleUpdater.jobId)
+    $('#result').show()
+
+    # set what page to visit when closing console
+    $('#modal-console').on('hidden', @refreshPage)
+
+    # start console
+    ConsoleUpdater.parsing = true;
+    setTimeout(ConsoleUpdater.updateConsole, 200);
+
   storageKey: ->
-    projectId = $('.brand').data('project') || 'ce'
-    @project ||= projectId
+    @project ||= $('.brand').data('project') || 'ce'
     "project.#{@project}.#{@itemName}_columns"
 
   refreshToolbar: =>
@@ -154,5 +187,9 @@ class IndexTable
       $('.js-index-table-actions').css('display', 'inline-block')
     else
       $('.js-index-table-actions').css('display', 'none')
+
+  refreshPage: =>
+    Turbolinks.clearCache()
+    Turbolinks.visit($('#result').data('close-url'))
 
 window.IndexTable = IndexTable
