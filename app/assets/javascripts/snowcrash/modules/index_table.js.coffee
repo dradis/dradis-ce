@@ -164,15 +164,11 @@ class IndexTable
 
   showConsole: (jobId) =>
     # show console
-    $('#modal-console').modal()
+    $('#modal-console').modal('show')
     ConsoleUpdater.jobId = jobId
     $('#console').empty()
     $('#result').data('id', ConsoleUpdater.jobId)
     $('#result').show()
-
-    # set what page to visit when closing console
-    close_url = $('#result').data('close-url')
-    $('#modal-console').on('hidden', @refreshPage(close_url))
 
     # start console
     ConsoleUpdater.parsing = true;
@@ -188,9 +184,5 @@ class IndexTable
       $('.js-index-table-actions').css('display', 'inline-block')
     else
       $('.js-index-table-actions').css('display', 'none')
-
-  refreshPage: (url) =>
-    Turbolinks.clearCache()
-    Turbolinks.visit(url)
 
 window.IndexTable = IndexTable

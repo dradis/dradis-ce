@@ -4,6 +4,11 @@
   $("#console").prop({ scrollTop: $("#console").prop("scrollHeight") });
   setTimeout(ConsoleUpdater.updateConsole, 2000);
   <% if !@destroying %>
+    var close_url = $('#result').data('close-url');
+    $('#modal-console').on('hide', function() {
+      Turbolinks.clearCache()
+      Turbolinks.visit(close_url)
+    });
     $("#modal-console .modal-footer").show()
   <% end %>
 <% else -%>
