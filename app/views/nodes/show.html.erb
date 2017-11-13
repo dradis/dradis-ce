@@ -47,7 +47,7 @@
       <div id="note-viewer">
         <div class="inner note-text-inner">
           <% if @sorted_notes.any? %>
-            <div id="node-notes-table" class="js-index-table" data-destroy-url="<%= multi_destroy_node_note_path(@node) %>">
+            <div id="node-notes-table" class="js-index-table" data-destroy-url="<%= multi_destroy_node_notes_path(@node) %>">
               <%= render 'nodes/notes/toolbar' %>
               <%= render 'nodes/notes/table', notes: @sorted_notes %>
             </div>
