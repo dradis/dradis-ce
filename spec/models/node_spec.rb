@@ -199,6 +199,67 @@ describe Node do
       node.set_property(:test_property, [80])
       expect(node.properties[:test_property]).to eq(80)
     end
+
+    context 'when working with :services' do
+      it 'adds a service as a Hash when there is none' do
+        node.set_property(:services, port: 80, protocol: 'tcp', name: 'www')
+
+        expect(node.properties[:services]).to be_a(Hash)
+        expect(node.properties[:services]['port']).to eq(80)
+        expect(node.properties[:services]['protocol']).to eq('tcp')
+        expect(node.properties[:services]['name']).to eq('www')
+      end
+
+      it 'merges services by port and protocol' do
+        node.set_property(:services, port: 80, protocol: 'tcp', name: 'www')
+        node.set_property(:services, port: 80, protocol: 'tcp', name: 'http')
+
+        expect(node.properties[:services]).to be_a(Hash)
+        expect(node.properties[:services]['port']).to eq(80)
+        expect(node.properties[:services]['protocol']).to eq('tcp')
+        expect(node.properties[:services]['name']).to eq('www | http')
+      end
+
+      it 'saves as an Array when more than 1 service provided' do
+        node.set_property(:services, port: 80, protocol: 'tcp', name: 'www')
+        node.set_property(:services, port: 80, protocol: 'tcp', name: 'http')
+        node.set_property(:services, port: 22, protocol: 'tcp', name: 'ssh')
+
+        expect(node.properties[:services]).to be_a(Array)
+        expect(node.properties[:services].length).to eq(2)
+        expect(node.properties[:services].last['name']).to eq('ssh')
+      end
+
+      it 'only adds desired columns to services table' do
+        node.set_property(
+          :services, port: 80, protocol: 'tcp', name: 'www', extra: 'extra'
+        )
+
+        expect(node.properties[:services][:name]).to eq 'www'
+        expect(node.properties[:services][:extra]).to be nil
+      end
+
+      it 'creates a \'supplemental\' entry with undesired columns' do
+        node.set_property(
+          :services, port: 80, protocol: 'tcp', name: 'www', extra: 'extra'
+        )
+
+        expect(node.properties[:services][:name]).to eq 'www'
+        expect(node.properties[:services][:extra]).to be nil
+        expect(node.properties[:supplemental][:extra]).to eq 'extra'
+      end
+
+      it 'merges supplemental by port and protocol' do
+        node.set_property(
+          :services, port: 80, protocol: 'tcp', name: 'www', extra: 'extra 1'
+        )
+        node.set_property(
+          :services, port: 80, protocol: 'tcp', name: 'www', extra: 'extra 2'
+        )
+
+        expect(node.properties[:supplemental][:extra]).to eq 'extra 1 | extra 2'
+      end
+    end
   end
 
   describe '#nested_activities' do
