@@ -51,11 +51,11 @@ Rails.application.routes.draw do
       resources :revisions, only: [:index, :show]
 
       collection do
-        get 'multi-destroy-status'
+        get :multi_destroy_status
       end
 
-      member do
-        delete 'multi-destroy'
+      collection do
+        delete :multi_destroy
       end
     end
 
