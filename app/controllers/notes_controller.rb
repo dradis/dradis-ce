@@ -102,7 +102,7 @@ class NotesController < NestedNodeResourceController
       'uid = ? and id > ?',
       params[:item_id].to_i, params[:after].to_i
     )
-    @destroying = !(@logs.last.text == 'Worker process completed.') if @logs.any?
+    @destroying = @logs.last.text != 'Worker process completed.' if @logs.any?
   end
 
   private
