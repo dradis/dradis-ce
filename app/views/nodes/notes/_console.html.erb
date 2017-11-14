@@ -8,6 +8,10 @@
                       url: multi_destroy_status_node_notes_path(@node),
                       close_url: node_path(@node, tab: 'notes-tab'),
                     }  do %>
+      <div>
+        This task can take some time and will be executed in the background.<br>
+        Progress can be tracked here:
+      </div>
       <div id="console"></div>
     <% end %>
     <div class="modal-footer hide">
