@@ -19,7 +19,8 @@
         name: 'Notes',
         collection: @sorted_notes,
         new_path: new_node_note_path(@node),
-        category_id: Category.default.id %>
+        category_id: Category.default.id,
+        index_path: node_path(@node, tab: 'notes-tab') %>
 
   <!-- Issues -->
   <%= render 'shared/sidebar_collection',

@@ -8,7 +8,7 @@
         menu_class: 'pull-right'
       %>
     </div>
-    <h3><%= name %></h3>
+    <h3><%= local_assigns[:index_path] ? link_to(name, index_path) : name %></h3>
   </div>
 </div>
 
