@@ -1,5 +1,5 @@
 <% cache ["node-notes-table", notes.map(&:id), notes.map(&:updated_at).map(&:to_i).sort.last] do %>
-  <table class="table table-striped tbl-notes js-items-table">
+  <table class="table table-striped items-table js-items-table">
     <thead>
       <tr>
         <th></th>

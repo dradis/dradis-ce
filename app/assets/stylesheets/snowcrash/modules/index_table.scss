@@ -3,7 +3,7 @@
     margin: 0;
   }
 
-  .js-index-table-actions {
+  .index-table-actions {
     display: none;
 
     .dropdown-menu {
@@ -20,7 +20,7 @@
   }
 }
 
-.js-items-table {
+.items-table {
   td.loading {
     background: image-url('loading.gif') no-repeat left center;
     padding-left: 20px;
