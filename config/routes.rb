@@ -52,9 +52,6 @@ Rails.application.routes.draw do
 
       collection do
         get :multi_destroy_status
-      end
-
-      collection do
         delete :multi_destroy
       end
     end
