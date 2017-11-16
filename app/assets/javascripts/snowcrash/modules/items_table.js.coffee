@@ -1,4 +1,4 @@
-class ItemsTable
+class @ItemsTable
   project: null
   selectedColumns: []
   selectedItemsSelector: ''
@@ -184,5 +184,3 @@ class ItemsTable
       $('.js-items-table-actions').css('display', 'inline-block')
     else
       $('.js-items-table-actions').css('display', 'none')
-
-window.ItemsTable = ItemsTable
