@@ -32,5 +32,5 @@
 // require snowcrash/modules/tour
 //= require snowcrash/modules/uploads
 
-//= require snowcrash/pages/revisions
 //= require snowcrash/pages/nodes/notes/table
+//= require snowcrash/pages/revisions
