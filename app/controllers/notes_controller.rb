@@ -66,10 +66,12 @@ class NotesController < NestedNodeResourceController
       ids: params[:ids]
     )
 
-    if @notes.any?
+    count = @notes.count # cache
+
+    if count > 0
       @job_logger = Log.new(uid: (Log.maximum(:uid) || 0) + 1)
 
-      if @notes.count > Note::MAX_DELETED_INLINE
+      if count > Note::MAX_DELETED_INLINE
         @job_logger.write 'Enqueueing multiple delete job to start in the background.'
         job = DestroyJob.perform_later(
           items: @notes.to_a,
