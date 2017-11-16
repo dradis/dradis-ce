@@ -2,7 +2,7 @@
 # resource.
 class NotesController < NestedNodeResourceController
 
-  before_action :find_or_initialize_note, except: [:index, :new, :multi_destroy]
+  before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
 
   def new
@@ -59,7 +59,7 @@ class NotesController < NestedNodeResourceController
     end
   end
 
-  def multi_destroy
+  def multiple_destroy
     @notes = Note.where(
       'node_id = :node AND id in (:ids)',
       node: @node,
@@ -70,7 +70,7 @@ class NotesController < NestedNodeResourceController
       @job_logger = Log.new(uid: (Log.maximum(:uid) || 0) + 1)
 
       if @notes.count > Note::MAX_DELETED_INLINE
-        @job_logger.write 'Enqueueing destroy job to start in the background.'
+        @job_logger.write 'Enqueueing multiple delete job to start in the background.'
         job = DestroyJob.perform_later(
           items: @notes.to_a,
           author_email: current_user.email,
@@ -79,7 +79,7 @@ class NotesController < NestedNodeResourceController
         @job_logger.write "Job id is #{ job.job_id }."
 
       elsif @notes.count > 0
-        @job_logger.write 'Performing destroy job inline.'
+        @job_logger.write 'Performing multiple delete job inline.'
         DestroyJob.perform_now(
           items: @notes.to_a,
           author_email: current_user.email,
@@ -97,7 +97,7 @@ class NotesController < NestedNodeResourceController
     end
   end
 
-  def multi_destroy_status
+  def multiple_destroy_status
     @logs = Log.where(
       'uid = ? and id > ?',
       params[:item_id].to_i, params[:after].to_i
