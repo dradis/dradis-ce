@@ -97,9 +97,11 @@ private
 
     merge_service(value)
 
-    value_extra[:extra].select! { |extra| !extra[:output].blank? }
-    if value_extra[:extra].any?
-      merge_service_extra(value_extra)
+    unless value_extra[:extra].nil?
+      value_extra[:extra].select! { |extra| !extra[:output].blank? }
+      if value_extra[:extra].any?
+        merge_service_extra(value_extra)
+      end
     end
 
     self.properties[:services]

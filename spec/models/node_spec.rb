@@ -232,32 +232,49 @@ describe Node do
 
       it 'only adds desired columns to services table' do
         node.set_property(
-          :services, port: 80, protocol: 'tcp', name: 'www', extra: 'extra'
+          :services, port: 80, protocol: 'tcp', name: 'www', unknown: 'unknown'
+        )
+
+        expect(node.properties[:services][:name]).to eq 'www'
+        expect(node.properties[:services][:unknown]).to be nil
+      end
+
+      it 'creates a \'services_extra\' entry if :extra column provided' do
+        extra = [
+          { 'source' => 'nmap', 'id' => 'ssh-script', 'output' => 'extra info' },
+        ]
+        node.set_property(
+          :services, port: 80, protocol: 'tcp', name: 'www',
+          extra: extra
         )
 
         expect(node.properties[:services][:name]).to eq 'www'
         expect(node.properties[:services][:extra]).to be nil
+        expect(node.properties[:services_extra].first[:extra]).to eq extra
       end
 
-      it 'creates a \'supplemental\' entry with undesired columns' do
-        node.set_property(
-          :services, port: 80, protocol: 'tcp', name: 'www', extra: 'extra'
-        )
+      it 'merges \'services_extra\' by port and protocol' do
+        extra1 = [
+          { 'source' => 'nmap', 'id' => 'ssh-script', 'output' => 'extra info 1' },
+        ]
+        extra2 = [
+          { 'source' => 'nmap', 'id' => 'ssh-script', 'output' => 'extra info 2' },
+        ]
 
-        expect(node.properties[:services][:name]).to eq 'www'
-        expect(node.properties[:services][:extra]).to be nil
-        expect(node.properties[:supplemental][:extra]).to eq 'extra'
-      end
-
-      it 'merges supplemental by port and protocol' do
         node.set_property(
-          :services, port: 80, protocol: 'tcp', name: 'www', extra: 'extra 1'
+          :services, port: 80, protocol: 'tcp', name: 'www', extra: extra1
         )
         node.set_property(
-          :services, port: 80, protocol: 'tcp', name: 'www', extra: 'extra 2'
+          :services, port: 80, protocol: 'tcp', name: 'www', extra: extra2
+        )
+        node.set_property(
+          :services, port: 80, protocol: 'tcp', name: 'www', extra: extra1
         )
 
-        expect(node.properties[:supplemental][:extra]).to eq 'extra 1 | extra 2'
+        expect(node.properties[:services_extra].size).to eq 1
+        expect(node.properties[:services_extra][0][:extra].size).to eq 2
+        expect(node.properties[:services_extra][0][:extra][0]).to eq extra1[0]
+        expect(node.properties[:services_extra][0][:extra][1]).to eq extra2[0]
       end
     end
   end
