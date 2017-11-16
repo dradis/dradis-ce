@@ -22,7 +22,7 @@ class PropertyPresenter < BasePresenter
       if property_value[0].is_a?(Hash)
         render_table
       else
-        content_tag(:p, property_value.join(", "))
+        content_tag(:p, property_value.join(', '))
       end
 
     else
@@ -30,7 +30,7 @@ class PropertyPresenter < BasePresenter
     end
   end
 
-  private
+private
 
   def property_key
     property[0]
@@ -40,69 +40,69 @@ class PropertyPresenter < BasePresenter
     property[1]
   end
 
-  def render_scripts_table(entry)
+  def render_services_extra_table(entry)
     thead = content_tag(:thead) do
       content_tag(:tr) do
-        content_tag(:th, 'id').
-          concat(content_tag(:th, 'output'))
+        content_tag(:th, 'source').
+          concat(content_tag(:th, 'id')).
+            concat(content_tag(:th, 'output'))
       end
     end
     tbody = content_tag(:tbody) do
-      entry[:scripts].map do |script|
+      entry[:extra].map do |extra|
         content_tag(:tr) do
-          content_tag(:td, script[0]).
-            concat content_tag(:td, content_tag(:pre, script[1]))
+          content_tag(:td, extra[:source]).
+            concat(content_tag(:td, extra[:id])).
+              concat(content_tag(:td, content_tag(:pre, extra[:output])))
         end
       end.join.html_safe
     end
 
-    # content_tag(:div,
-    #   content_tag(:table, thead.concat(tbody)),
-    #   class: 'content-textile'
-    # )
     content_tag(:table, thead.concat(tbody), class: 'table table-condensed')
   end
 
   def render_table
     values         = property_value
     column_names   = values.map(&:keys).flatten.uniq.sort.map(&:to_sym)
-    sorted_entries = column_names.include?(:port) ? values.sort_by{ |h| h[:port] } : values
+    sorted_entries = column_names.include?(:port) \
+                   ? values.sort_by { |h| h[:port] } : values
 
-    output = if column_names.delete(:scripts)
-               render_tabs(sorted_entries)
-             else
-               ''
-             end
+    output =
+      if property_key == 'services_extra'
+        render_tabs(sorted_entries)
+      else
+        thead = content_tag(:thead) do
+          content_tag(:tr) do
+            column_names.collect do |column_name|
+              concat content_tag(:th, column_name)
+            end.join.html_safe
+          end
+        end
 
-    thead = content_tag(:thead) do
-      content_tag(:tr) do
-        column_names.collect do |column_name|
-          concat content_tag(:th, column_name)
-        end.join.html_safe
-      end
-    end
-
-    tbody = content_tag(:tbody) do
-      sorted_entries.collect do |entry|
-        content_tag(:tr) do
-          column_names.collect do |column_name|
-            concat content_tag(:td, entry[column_name])
+        tbody = content_tag(:tbody) do
+          sorted_entries.collect do |entry|
+            content_tag(:tr) do
+              column_names.collect do |column_name|
+                concat content_tag(:td, entry[column_name])
+              end.join.html_safe
+            end
           end.join.html_safe
         end
-      end.join.html_safe
-    end
 
-    content_tag(:div,
-      content_tag(:table, thead.concat(tbody)),
-      class: 'content-textile'
-    ).concat(output)
+        content_tag(:div,
+          content_tag(:table, thead.concat(tbody)),
+          class: 'content-textile'
+        )
+      end
+
+    output.html_safe
   end
 
   def render_tab_content(values)
     content_tag(:div, class: 'tab-content') do
       values.map do |entry|
         content_tag(:div, class: 'tab-pane', id: "#{entry[:protocol]}-#{entry[:port]}-tab") do
-          render_scripts_table(entry)
+          render_services_extra_table(entry)
         end
       end.join.html_safe
     end
@@ -113,9 +113,9 @@ class PropertyPresenter < BasePresenter
       values.map do |entry|
         content_tag :li do
           content_tag(:a,
-            "%s/%d" % [entry[:protocol], entry[:port]],
+            '%s/%d' % [entry[:protocol], entry[:port]],
             data: { toggle: :tab },
-            href: "#%s-%d-tab" % [entry[:protocol], entry[:port]]
+            href: '#%s-%d-tab' % [entry[:protocol], entry[:port]]
           )
         end
       end.join.html_safe
@@ -123,13 +123,11 @@ class PropertyPresenter < BasePresenter
   end
 
   def render_tabs(entries)
-    values = entries.select{ |entry| entry.key?(:scripts) && entry[:scripts].any? }
-    return if values.empty?
+    return if entries.empty?
 
-    content_tag(:h4, 'NSE script output') +
     content_tag(:div, class: 'tabbable tabs-left', id: 'scripts-tabs') do
-      concat(render_tab_ul(values)).
-      concat(render_tab_content(values))
+      concat(render_tab_ul(entries)).
+      concat(render_tab_content(entries))
     end
   end
 end

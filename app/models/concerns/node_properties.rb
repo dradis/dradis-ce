@@ -76,30 +76,30 @@ module NodeProperties
 
 private
 
-  # Private: Adding a :services key to the node properties is a special case:
-  #   * We check if a row exists in the services table by matching the port
-  #     and protocol columns
-  #   * We only allow a set of known columns in the :services table. The rest
-  #     of columns are moved to an extra data table called 'supplemental'. The
-  #     allowed columms are :name, :port, :product, :protocol, :reason, :state,
-  #     :version
-  # value - The new entry (Hash) we want to add to :services table
+  # Private: Adding a :services key to the node properties is a special case.
+  # We only allow a set of known columns in the :services table.
+  # The allowed columms are :name, :port, :product, :protocol, :reason, :state,
+  # :version
+  # Extra columns can be added as an array of hashes with fields :source, :id
+  # and :output inside the :extra column.
+  # These hashes in the :extra column are saved in the :services_extra table.
+  # We check if a row exists in the :services and :services_extra tables
+  # by matching the port and protocol columns.
+  #
+  # value - The new entry (Hash) we want to add to :services
+  #         (and may be :services_extra) tables
   #
   # Returns the updated services table
   def add_service(value)
-    services     = self.properties[:services]
-    supplemental = self.properties[:supplemental]
-
     # extract extra info from value
-    extra_value = value.except(:name, :product, :reason, :state, :version)
+    value_extra = value.slice(:port, :protocol, :extra)
     value.slice!(:name, :port, :product, :protocol, :reason, :state, :version)
 
-    self.properties[:services] = merge_by_port_and_protocol(services, value)
+    merge_service(value)
 
-    if extra_value.except(:port, :protocol).any?
-      supplemental = merge_by_port_and_protocol(supplemental, extra_value)
-      supplemental = supplemental.first if supplemental.size == 1
-      self.properties[:supplemental] = supplemental
+    value_extra[:extra].select! { |extra| !extra[:output].blank? }
+    if value_extra[:extra].any?
+      merge_service_extra(value_extra)
     end
 
     self.properties[:services]
@@ -107,14 +107,17 @@ private
 
   # Private: Merges a Hash into an Array of Hashes by :port and :protocol keys.
   # If a row exists in the table with the new row port and protocol values, the
-  # rest of the columns that have the same name are concatenated.
+  # rest of the columns that have the same name and different values
+  # are concatenated (as strings)
   #
   # table   - the existing table where we want to merge a new entry.
   #         May be nil, a Hash or an Array of hashes
   # new_row - the new entry (a Hash) we want to put in the existing table.
   #
   # Returns table with new_row merged
-  def merge_by_port_and_protocol(table, new_row)
+  def merge_service(new_row)
+    table = self.properties[:services]
+
     # work always with an array of hashes
     table = [table] if table.is_a?(Hash)
     table = [] if table.nil?
@@ -128,7 +131,7 @@ private
       # if the row was not in the table, add it
       table << new_row
     else
-      # if the row is in th etable, merge it
+      # if the row is in the table, merge it
       target = table[position]
       target.merge!(new_row) do |_key, oldvalue, newvalue|
         if oldvalue == newvalue
@@ -141,6 +144,54 @@ private
       table[position] = target
     end
 
-    table
+    self.properties[:services] = table
+  end
+
+  # Private: Merges a Hash into an Array of Hashes by :port and :protocol keys.
+  # Destination table looks like:
+  #   [
+  #     {
+  #      port: 80,
+  #      protocol: 'tcp',
+  #      extra: [ {source:, id: output:}, {source:, id: output:}]
+  #     },
+  #     ...
+  #   ]
+  # Both the destination hash and the new one have an :extra key, which is an
+  # array (of hashes with :source, :id and :output keys). If some of the hashes
+  # is not present in the destination row, it is added. If the destination row
+  # doesn't exist at all it is created.
+  #
+  # table   - the existing table where we want to merge a new entry.
+  #         May be nil, a Hash or an Array of hashes
+  # new_row - the new entry (a Hash) we want to put in the existing table.
+  #
+  # Returns table with new_row merged
+  def merge_service_extra(new_row)
+    table = self.properties[:services_extra]
+
+    # work always with an array of hashes
+    table = [table] if table.is_a?(Hash)
+    table = [] if table.nil?
+
+    # find new_row in table
+    position = table.find_index do |row|
+      row.values_at(:port, :protocol) == new_row.values_at(:port, :protocol)
+    end
+
+    if position.nil?
+      # if the row was not in the table, add it
+      table << new_row
+    else
+      # if the row is in the table, merge it
+      target = table[position]
+      new_row[:extra].each do |extra|
+        target[:extra] << extra unless target[:extra].include?(extra)
+      end
+
+      table[position] = target
+    end
+
+    self.properties[:services_extra] = table
   end
 end
