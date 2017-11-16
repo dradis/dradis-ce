@@ -175,8 +175,10 @@ class @ItemsTable
     setTimeout(ConsoleUpdater.updateConsole, 200);
 
   storageKey: ->
-    @project ||= $('.brand').data('project') || 'ce'
-    "project.#{@project}.#{@itemName}_columns"
+    project = $('.brand').data('project') || 'ce'
+    id = $('.note-list').data('id') || ''
+    id = "#{id}." if id
+    "project.#{project}.#{id}#{@itemName}_columns"
 
   refreshToolbar: =>
     checked = $(@selectedItemsSelector).length
