@@ -1,4 +1,4 @@
-class IssuesTable extends IndexTable
+class IssuesTable extends ItemsTable
   constructor: ->
     super('issue')
     @$jsTable.on('click', '.js-taglink', @onTagSelected)

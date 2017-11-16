@@ -1,12 +1,12 @@
-class IndexTable
+class ItemsTable
   project: null
   selectedColumns: []
   selectedItemsSelector: ''
   columnIndices: {}
 
   constructor: (@itemName) ->
-    @$jsTable     = $('.js-index-table')
-    @$table       = $('.js-index-table table')
+    @$jsTable     = $('.js-items-table')
+    @$table       = $('.js-items-table table')
     @$columnMenu  = $('.dropdown-menu.js-table-columns')
 
     @checkboxSelector       = 'input[type=checkbox].js-multicheck'
@@ -19,14 +19,14 @@ class IndexTable
     # -------------------------------------------------- Install event handlers
     # We're hooking into Rails UJS data-confirm behavior to only fire the Ajax
     # if the user confirmed the deletion
-    @$jsTable.on('confirm:complete', '.js-index-table-delete', @onDeleteSelected)
+    @$jsTable.on('confirm:complete', '.js-items-table-delete', @onDeleteSelected)
 
     # Handle the showing / hiding of table columns
     @$columnMenu.find('a').on 'click', @onColumnPickerClick
 
     # Checkbox behavior: select all, show 'btn-group', etc.
     that = this
-    $('.js-index-table-select-all').click (e) ->
+    $('.js-items-table-select-all').click (e) ->
       $allCheckbox = $(this).find('input[type=checkbox]')
       isChecked = $allCheckbox.prop('checked')
       if e.target != $allCheckbox[0]
@@ -44,10 +44,10 @@ class IndexTable
           _select_all = $(this).prop('checked')
           _select_all
 
-      $('.js-index-table-select-all > input[type=checkbox]').prop('checked', _select_all)
+      $('.js-items-table-select-all > input[type=checkbox]').prop('checked', _select_all)
 
     # when selecting items or 'select all', refresh toolbar buttons
-    @$jsTable.on('click', ".js-index-table-select-all, #{@checkboxSelector}", @refreshToolbar)
+    @$jsTable.on('click', ".js-items-table-select-all, #{@checkboxSelector}", @refreshToolbar)
 
   loadColumnState: =>
     if Storage?
@@ -65,8 +65,8 @@ class IndexTable
         $link.find('input').prop('checked', true)
 
   resetToolbar: =>
-    $('.js-index-table-actions').css('display', 'none')
-    $('.js-index-select-all #select-all').prop('checked', false)
+    $('.js-items-table-actions').css('display', 'none')
+    $('.js-items-select-all #select-all').prop('checked', false)
 
   onColumnPickerClick: (event) =>
     $target = $(event.currentTarget)
@@ -181,8 +181,8 @@ class IndexTable
   refreshToolbar: =>
     checked = $(@selectedItemsSelector).length
     if checked
-      $('.js-index-table-actions').css('display', 'inline-block')
+      $('.js-items-table-actions').css('display', 'inline-block')
     else
-      $('.js-index-table-actions').css('display', 'none')
+      $('.js-items-table-actions').css('display', 'none')
 
-window.IndexTable = IndexTable
+window.ItemsTable = ItemsTable

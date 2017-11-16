@@ -10,7 +10,7 @@
   <div class="inner note-text-inner">
 
     <% if @issues.any? %>
-      <div id="issues-table" class="js-index-table" data-destroy-url="<%= multiple_destroy_issues_path %>">
+      <div id="issues-table" class="js-items-table" data-destroy-url="<%= multiple_destroy_issues_path %>">
         <%= render 'toolbar' %>
         <%= render 'table', issues: @issues %>
       </div>
