@@ -12,12 +12,13 @@ describe MultiDestroyJob do #, type: :job do
       @notes = [
         create(:note, node: node),
         create(:note, node: node),
-        create(:note, node: node),
+        create(:note, node: node)
       ]
 
       described_class.new.perform(
-        items: @notes,
         author_email: 'rspec@dradisframework.com',
+        ids: @notes.map(&:id),
+        klass: 'Note',
         uid: 1
       )
     end

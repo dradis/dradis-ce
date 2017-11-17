@@ -3,11 +3,14 @@ class MultiDestroyJob < ApplicationJob
 
   queue_as :dradis_project
 
-  def perform(items:, author_email:, uid:)
+  def perform(author_email:, ids:, klass:, uid:)
     # FIXME: migrate logs#uid to uuid ?
     logger = Log.new(uid: uid)
+
+    items = klass.constantize.where(id: ids)
+
     logger.write do
-      "Deleting #{items.count} #{items.first.class.to_s.pluralize}"
+      "Deleting #{items.count} #{klass.pluralize}"
     end
 
     ActiveRecord::Base.transaction do
