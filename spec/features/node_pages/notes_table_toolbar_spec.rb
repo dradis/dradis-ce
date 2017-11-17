@@ -7,7 +7,7 @@ describe 'node pages' do
     let(:node) { create(:node) }
     let(:items) {
       notes = []
-      (Note::MAX_DELETED_INLINE + 1).times do |i|
+      (::Configuration.max_deleted_inline + 1).times do |i|
         notes << create(:note, node: node, text: "#[Title]#\r\ntest#{i}\r\n\r\n#[Description]#\r\nnote#{i}\r\n")
       end
       notes

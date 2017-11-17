@@ -1,12 +1,11 @@
 # This controller exposes the REST operations required to manage the Note
 # resource.
 class NotesController < NestedNodeResourceController
-
   before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
 
   def new
-    @note      = @node.notes.new
+    @note = @node.notes.new
 
     # See ContentFromTemplate concern
     @note.text = template_content if params[:template]
@@ -22,7 +21,7 @@ class NotesController < NestedNodeResourceController
       redirect_to node_note_path(@node, @note), notice: 'Note created'
     else
       initialize_nodes_sidebar
-      render "new"
+      render 'new'
     end
   end
 
@@ -66,12 +65,14 @@ class NotesController < NestedNodeResourceController
       ids: params[:ids]
     )
 
-    count = @notes.count # cache
+    # cache these values
+    @count = @notes.count
+    @max_deleted_inline = ::Configuration.max_deleted_inline
 
-    if count > 0
-      @job_logger = Log.new(uid: (Log.maximum(:uid) || 0) + 1)
+    if @count > 0
+      @job_logger = Log.new
 
-      if count > Note::MAX_DELETED_INLINE
+      if @count > @max_deleted_inline
         @job_logger.write 'Enqueueing multiple delete job to start in the background.'
         job = DestroyJob.perform_later(
           items: @notes.to_a,
@@ -107,7 +108,7 @@ class NotesController < NestedNodeResourceController
     @destroying = @logs.last.text != 'Worker process completed.' if @logs.any?
   end
 
-  private
+private
 
   # Once a valid @node is set by the previous filter we look for the Note we
   # are going to be working with based on the :id passed by the user.
