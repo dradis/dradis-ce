@@ -1,4 +1,4 @@
-class DestroyJob < ApplicationJob
+class MultiDestroyJob < ApplicationJob
   include ActivityTracking
 
   queue_as :dradis_project
@@ -10,7 +10,7 @@ class DestroyJob < ApplicationJob
       "Deleting #{items.count} #{items.first.class.to_s.pluralize}"
     end
 
-    Note.transaction do
+    ActiveRecord::Base.transaction do
       items.each do |item|
         if item.destroy
           track_destroyed(item, User.new(email: author_email))

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe DestroyJob do #, type: :job do
+describe MultiDestroyJob do #, type: :job do
 
   it 'is uses correct queue' do
     expect(described_class.new.queue_name).to eq('dradis_project')
