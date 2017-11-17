@@ -20,6 +20,10 @@ Rails.application.routes.draw do
 
   resources :configurations, only: [:index, :update]
 
+  resources :console, only: [] do
+    collection { get :status }
+  end
+
   resources :issues do
     collection do
       post :import

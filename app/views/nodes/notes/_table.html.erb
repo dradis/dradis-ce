@@ -43,5 +43,5 @@
     </tbody>
   </table>
 
-  <%= render 'nodes/notes/console' %>
+  <%= render 'console/console', close_url: node_path(@node, tab: 'notes-tab') %>
 <% end %>

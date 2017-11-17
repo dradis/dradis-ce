@@ -102,14 +102,6 @@ class NotesController < NestedNodeResourceController
     end
   end
 
-  def multiple_destroy_status
-    @logs = Log.where(
-      'uid = ? and id > ?',
-      params[:item_id].to_i, params[:after].to_i
-    )
-    @destroying = @logs.last.text != 'Worker process completed.' if @logs.any?
-  end
-
 private
 
   # Once a valid @node is set by the previous filter we look for the Note we
