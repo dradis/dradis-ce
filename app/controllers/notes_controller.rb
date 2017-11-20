@@ -92,14 +92,6 @@ class NotesController < NestedNodeResourceController
         )
       end
     end
-
-    respond_to do |format|
-      format.html do
-        redirect_to node_path(@node, tab: 'notes-tab'),
-                    notice: 'Deleting notes...'
-      end
-      format.json
-    end
   end
 
 private
