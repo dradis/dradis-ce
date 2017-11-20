@@ -73,9 +73,9 @@
                    items: @sorted_notes %>
       </div>
     <% else %>
-      <%= render 'items_table/empty',
-                  name: 'evidence',
-                  new_link: new_node_evidence_index_path(@node) %>
+      <%= render 'nodes/items_table/empty',
+                  name: 'note',
+                  new_link: new_node_note_path(@node) %>
     <% end %>
   </div>
 
