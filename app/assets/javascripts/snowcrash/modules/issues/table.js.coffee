@@ -1,6 +1,6 @@
 class IssuesTable extends ItemsTable
   constructor: ->
-    super('issue')
+    super('#issues-table', 'issue')
     @$jsTable.on('click', '.js-taglink', @onTagSelected)
     @$jsTable.on('click', '#merge-selected', @onMergeSelected)
 
