@@ -52,9 +52,9 @@ class IssuesTable extends ItemsTable
   refreshToolbar: =>
     checked = $(@selectedItemsSelector).length
     if checked
-      $('.js-index-table-actions').css('display', 'inline-block')
+      $('.js-items-table-actions').css('display', 'inline-block')
     else
-      $('.js-index-table-actions').css('display', 'none')
+      $('.js-items-table-actions').css('display', 'none')
 
     if checked > 1
       $('#merge-selected').css('display', 'inline-block')
