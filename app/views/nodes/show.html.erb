@@ -1,6 +1,9 @@
 <% content_for :title, "#{@node.label} - properties" %>
 
-<ul id="node-tabs" class="nav nav-tabs main-tabs">
+<ul id="evidence-tabs" class="nav nav-tabs main-tabs">
+  <li <%= "class=active" if params[:tab] == 'evidence-tab' %>>
+    <a href="#evidence-tab" data-toggle="tab"><i class="fa fa-flag"></i> Evidence</a>
+  </li>
   <li <%= "class=active" if !params[:tab] || params[:tab] == 'properties-tab' %>>
     <a href="#properties-tab" data-toggle="tab">
     <% if @node.type_id == Node::Types::HOST %>
@@ -19,6 +22,23 @@
 </ul>
 
 <div class="tab-content">
+  <div class="tab-pane inner <%= "active" if params[:tab] == "evidence-tab" %>" id="evidence-tab">
+    <h3>Evidence</h3>
+    <% if @sorted_evidence.any? %>
+      <div id="node-evidence-table" data-destroy-url="<%= multiple_destroy_node_evidence_index_path(@node) %>">
+        <%= render 'nodes/items_table/toolbar',
+                   columns: @evidence_columns %>
+        <%= render 'nodes/items_table/table',
+                   columns: @evidence_columns,
+                   items: @sorted_evidence %>
+      </div>
+    <% else %>
+      <%= render 'nodes/items_table/empty',
+                 name: 'evidence',
+                 new_link: new_node_evidence_path(@node) %>
+    <% end %>
+  </div>
+
   <div class="tab-pane <%= "active" if !params[:tab] || params[:tab] == 'properties-tab' %>" id="properties-tab">
     <div class="node-content" id="<%= dom_id(@node) %>_content">
       <div class="inner">
@@ -42,22 +62,21 @@
     </div>
   </div>
 
-  <div class="tab-pane notes <%= "active" if params[:tab] == "notes-tab" %>" id="notes-tab">
-    <div class="inner">
-      <h3>Notes</h3>
-      <div id="note-viewer">
-        <div class="inner note-text-inner">
-          <% if @sorted_notes.any? %>
-            <div id="node-notes-table" class="js-items-table" data-destroy-url="<%= multiple_destroy_node_notes_path(@node) %>">
-              <%= render 'nodes/notes/toolbar' %>
-              <%= render 'nodes/notes/table', notes: @sorted_notes %>
-            </div>
-          <% else %>
-            <%= render 'nodes/notes/empty' %>
-          <% end %>
-        </div>
+  <div class="tab-pane inner <%= "active" if params[:tab] == "notes-tab" %>" id="notes-tab">
+    <h3>Notes</h3>
+    <% if @sorted_notes.any? %>
+      <div id="node-notes-table" data-destroy-url="<%= multiple_destroy_node_notes_path(@node) %>">
+        <%= render 'nodes/items_table/toolbar',
+                   columns: @note_columns %>
+        <%= render 'nodes/items_table/table',
+                   columns: @note_columns,
+                   items: @sorted_notes %>
       </div>
-    </div>
+    <% else %>
+      <%= render 'items_table/empty',
+                  name: 'evidence',
+                  new_link: new_node_evidence_index_path(@node) %>
+    <% end %>
   </div>
 
   <div class="tab-pane <%= "active" if params[:tab] == "activity-tab" %>" id="activity-tab">

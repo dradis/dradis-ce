@@ -1,0 +1,47 @@
+<% cache ["#{dom_class(items.first).pluralize}-table", columns, items.map(&:id), items.map(&:updated_at).map(&:to_i).sort.last] do %>
+  <table class="table table-striped items-table">
+    <thead>
+      <tr>
+        <th></th>
+        <% columns.each do |column| %>
+          <th data-column="<%= column.downcase %>"><%= column %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% items.each do |item| %>
+        <tr data-id="<%= item.id %>">
+          <td class="column-checkbox"><%= check_box_tag dom_id(item, :checkbox), item.id, false, class: 'js-multicheck' %></td>
+          <% columns.each do |column| %>
+          <td>
+            <%=
+            case column
+            when 'Title'
+              link_to(item.title, [@node, item])
+            when 'Created'
+              local_time_ago(item.created_at)
+            when 'Created by'
+              item.author
+            when 'Updated'
+              local_time_ago(item.updated_at)
+            else
+              item.fields.fetch(column, '')
+            end
+            %>
+          </td>
+          <% end %>
+          <td class="column-actions">
+            <%= link_to "/nodes/#{@node.id}/#{dom_class(item).pluralize}/#{item.id}/edit" do %>
+              <i class="fa fa-pencil"></i> Edit
+            <% end %>
+            <%= link_to [@node, item], method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-error' do %>
+              <i class="fa fa-trash"></i> Delete
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= render 'console/console', close_url: node_path(@node, tab: "#{dom_class(items.first).pluralize}-tab") %>
+<% end %>

@@ -4,9 +4,9 @@ class @ItemsTable
   selectedItemsSelector: ''
   columnIndices: {}
 
-  constructor: (@itemName) ->
-    @$jsTable     = $('.js-items-table')
-    @$table       = $('.js-items-table table')
+  constructor: (tableId, @itemName) ->
+    @$jsTable     = $(tableId)
+    @$table       = @$jsTable.find('.items-table')
     @$columnMenu  = $('.dropdown-menu.js-table-columns')
 
     @checkboxSelector       = 'input[type=checkbox].js-multicheck'
