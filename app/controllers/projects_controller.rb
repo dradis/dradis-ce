@@ -26,5 +26,8 @@ class ProjectsController < AuthenticatedController
       @issues_by_tag[:unassigned] << issue unless assigned
     end
 
+    @count_by_tag = @issues_by_tag.map do |tag, issues|
+      [tag, issues.count]
+    end.to_h
   end
 end
