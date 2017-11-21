@@ -261,15 +261,11 @@ describe Node do
           { 'source' => 'nmap', 'id' => 'ssh-script', 'output' => 'extra info 2' },
         ]
 
-        node.set_property(
-          :services, port: 80, protocol: 'tcp', name: 'www', extra: extra1
-        )
-        node.set_property(
-          :services, port: 80, protocol: 'tcp', name: 'www', extra: extra2
-        )
-        node.set_property(
-          :services, port: 80, protocol: 'tcp', name: 'www', extra: extra1
-        )
+        [extra1, extra2, extra1].each do |extra|
+          node.set_property(
+            :services, port: 80, protocol: 'tcp', name: 'www', extra: extra
+          )
+        end
 
         expect(node.properties[:services_extra].size).to eq 1
         expect(node.properties[:services_extra][0][:extra].size).to eq 2
