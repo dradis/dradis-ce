@@ -1,6 +1,9 @@
 <% content_for :title, "#{@node.label} - properties" %>
 
 <ul id="node-tabs" class="nav nav-tabs main-tabs">
+  <li <%= "class=active" if params[:tab] == 'notes-tab' %>>
+    <a href="#notes-tab" data-toggle="tab"><i class="fa fa-file-text-o"></i> Notes</a>
+  </li>
   <li <%= "class=active" if !params[:tab] || params[:tab] == 'properties-tab' %>>
     <a href="#properties-tab" data-toggle="tab">
     <% if @node.type_id == Node::Types::HOST %>
@@ -9,9 +12,7 @@
       <i class="fa fa-cogs"></i>
     <% end %>
       Properties
-    </a></li>
-  <li <%= "class=active" if params[:tab] == 'notes-tab' %>>
-    <a href="#notes-tab" data-toggle="tab"><i class="fa fa-file-text-o"></i> Notes</a>
+    </a>
   </li>
   <li <%= "class=active" if params[:tab] == 'activity-tab' %>>
     <a href="#activity-tab" data-toggle="tab"><i class="fa fa-refresh"></i> Recent activity</a>
