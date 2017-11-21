@@ -97,7 +97,7 @@ private
 
     merge_service(value)
 
-    unless value_extra[:extra].nil?
+    if value_extra[:extra]
       value_extra[:extra].select! { |extra| !extra[:output].blank? }
       if value_extra[:extra].any?
         merge_service_extra(value_extra)
