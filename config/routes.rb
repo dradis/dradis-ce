@@ -61,6 +61,10 @@ Rails.application.routes.draw do
 
     resources :evidence, except: :index do
       resources :revisions, only: [:index, :show]
+
+      collection do
+        delete :multiple_destroy
+      end
     end
 
     constraints(:filename => /.*/) do

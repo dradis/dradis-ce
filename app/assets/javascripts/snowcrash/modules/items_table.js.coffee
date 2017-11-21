@@ -4,9 +4,9 @@ class @ItemsTable
   selectedItemsSelector: ''
   columnIndices: {}
 
-  constructor: (@itemName) ->
-    @$jsTable     = $('.js-items-table')
-    @$table       = $('.js-items-table table')
+  constructor: (tableId, @itemName) ->
+    @$jsTable     = $(tableId)
+    @$table       = @$jsTable.find('.items-table')
     @$columnMenu  = $('.dropdown-menu.js-table-columns')
 
     @checkboxSelector       = 'input[type=checkbox].js-multicheck'
@@ -163,6 +163,10 @@ class @ItemsTable
     )
 
   showConsole: (jobId) =>
+    # the table may set the url to redirect to when closing the console
+    close_url = @$jsTable.data('close-console-url')
+    $('#result').data('close-url', close_url) if close_url
+
     # show console
     $('#modal-console').modal('show')
     ConsoleUpdater.jobId = jobId
@@ -175,10 +179,7 @@ class @ItemsTable
     setTimeout(ConsoleUpdater.updateConsole, 200);
 
   storageKey: ->
-    project = $('.brand').data('project') || 'ce'
-    id = $('.note-list').data('id') || ''
-    id = "#{id}." if id
-    "project.#{project}.#{id}#{@itemName}_columns"
+    @$jsTable.data('storage-key')
 
   refreshToolbar: =>
     checked = $(@selectedItemsSelector).length
