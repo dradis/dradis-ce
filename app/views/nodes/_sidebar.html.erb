@@ -27,7 +27,8 @@
         name: 'Evidence',
         collection: @sorted_evidence,
         new_path: new_node_evidence_path(@node),
-        category_id: Category.issue.id %>
+        category_id: Category.issue.id,
+        index_path: node_path(@node, tab: 'evidence-tab') %>
 
   <!-- Attachments -->
   <%= render 'attachments/attachment_box' %>
