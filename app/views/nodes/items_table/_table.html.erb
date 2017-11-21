@@ -31,7 +31,7 @@
           </td>
           <% end %>
           <td class="column-actions">
-            <%= link_to "/nodes/#{@node.id}/#{dom_class(item).pluralize}/#{item.id}/edit" do %>
+            <%= link_to [:edit, @node, item] do %>
               <i class="fa fa-pencil"></i> Edit
             <% end %>
             <%= link_to [@node, item], method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-error' do %>
