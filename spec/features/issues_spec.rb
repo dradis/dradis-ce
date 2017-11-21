@@ -77,7 +77,6 @@ describe "Issues pages" do
         end
 
         it "merges issues into a new one" do
-
           expect(page).to have_content "You're merging 2 Issues into a target Issue"
 
           # new issue form should not be visible yet

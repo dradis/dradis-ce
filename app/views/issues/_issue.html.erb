@@ -3,7 +3,7 @@
   item_css << ' active' if (request.format.html? and @issue == issue)
 %>
 
-<%= content_tag :div, id: dom_id(issue), class: item_css.join do %>
+<%= content_tag :div, id: "#{dom_id(issue)}_link", class: item_css.join do %>
 
   <div class="expansion-container">
     <%= link_to issue, class: 'view-toggle-off', data: {target: "##{dom_id(issue)}_content"} do %>

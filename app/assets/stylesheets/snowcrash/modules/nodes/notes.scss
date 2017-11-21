@@ -1,0 +1,19 @@
+body.nodes.show .notes {
+  .note-actions {
+    display: none;
+
+    form {
+      margin: 0
+    }
+  }
+
+  #note-viewer {
+    min-height: 550px;
+  }
+
+  #console {
+    @include ajax-console;
+
+    max-height: 200px;
+  }
+}

@@ -1,12 +1,11 @@
 # This controller exposes the REST operations required to manage the Note
 # resource.
 class NotesController < NestedNodeResourceController
-
-  before_action :find_or_initialize_note, except: [:index, :new]
+  before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
 
   def new
-    @note      = @node.notes.new
+    @note = @node.notes.new
 
     # See ContentFromTemplate concern
     @note.text = template_content if params[:template]
@@ -22,7 +21,7 @@ class NotesController < NestedNodeResourceController
       redirect_to node_note_path(@node, @note), notice: 'Note created'
     else
       initialize_nodes_sidebar
-      render "new"
+      render 'new'
     end
   end
 
@@ -55,7 +54,43 @@ class NotesController < NestedNodeResourceController
       track_destroyed(@note)
       redirect_to node_path(@node), notice: 'Note deleted'
     else
-      redirect_to node_note_path(@node, @note), alert: 'Could not delete node'
+      redirect_to node_note_path(@node, @note), alert: 'Could not delete note'
+    end
+  end
+
+  def multiple_destroy
+    @notes = Note.where(
+      'node_id = :node AND id in (:ids)',
+      node: @node,
+      ids: params[:ids]
+    )
+
+    # cache these values
+    @count = @notes.count
+    @max_deleted_inline = ::Configuration.max_deleted_inline
+
+    if @count > 0
+      @job_logger = Log.new
+
+      if @count > @max_deleted_inline
+        @job_logger.write 'Enqueueing multiple delete job to start in the background.'
+        job = MultiDestroyJob.perform_later(
+          author_email: current_user.email,
+          ids: @notes.map(&:id),
+          klass: 'Note',
+          uid: @job_logger.uid
+        )
+        @job_logger.write "Job id is #{ job.job_id }."
+
+      elsif @notes.count > 0
+        @job_logger.write 'Performing multiple delete job inline.'
+        MultiDestroyJob.perform_now(
+          author_email: current_user.email,
+          ids: @notes.map(&:id),
+          klass: 'Note',
+          uid: @job_logger.uid
+        )
+      end
     end
   end
 

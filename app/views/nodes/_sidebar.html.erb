@@ -1,13 +1,13 @@
 <% content_for :sidebar do %>
 
-  <div id="<%= dom_id(@node) %>_link" class="note-list">
+  <div id="<%= dom_id(@node) %>_link" data-id="<%= dom_id(@node) %>" class="note-list">
     <div class="list-item">
       <div class="expansion-container">
         <%= link_to node_path(@node) do %>
           <% if @node.type_id == Node::Types::HOST %>
-            <i class="fa fa-laptop"></i> Host properties
+            <i class="fa fa-laptop"></i> Host summary
           <% else%>
-            <i class="fa fa-cogs"></i> Node properties
+            <i class="fa fa-cogs"></i> Node summary
           <% end %>
         <% end %>
       </div>
@@ -19,7 +19,8 @@
         name: 'Notes',
         collection: @sorted_notes,
         new_path: new_node_note_path(@node),
-        category_id: Category.default.id %>
+        category_id: Category.default.id,
+        index_path: node_path(@node, tab: 'notes-tab') %>
 
   <!-- Issues -->
   <%= render 'shared/sidebar_collection',

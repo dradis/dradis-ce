@@ -23,6 +23,7 @@
 //= require snowcrash/modules/configurations
 //= require snowcrash/modules/console_updater
 //= require snowcrash/modules/export
+//= require snowcrash/modules/items_table
 //= require snowcrash/modules/issues
 //= require snowcrash/modules/methodologies
 //= require snowcrash/modules/nodes
@@ -31,4 +32,5 @@
 // require snowcrash/modules/tour
 //= require snowcrash/modules/uploads
 
+//= require snowcrash/pages/nodes/notes/table
 //= require snowcrash/pages/revisions
