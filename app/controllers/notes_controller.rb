@@ -94,7 +94,7 @@ class NotesController < NestedNodeResourceController
     end
   end
 
-private
+  private
 
   # Once a valid @node is set by the previous filter we look for the Note we
   # are going to be working with based on the :id passed by the user.
