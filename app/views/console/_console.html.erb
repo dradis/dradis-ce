@@ -6,7 +6,7 @@
                     style: 'display:none',
                     data: {
                       url: status_console_index_path,
-                      close_url: close_url,
+                      close_url: local_assigns.fetch(:close_url, ''),
                     }  do %>
       <div>
         This task can take some time and will be executed in the background.<br>
@@ -14,8 +14,8 @@
       </div>
       <div id="console"></div>
     <% end %>
-    <div class="modal-footer hide">
-      <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Done!</button>
-    </div>
+  </div>
+  <div class="modal-footer hide">
+    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Done!</button>
   </div>
 </div>

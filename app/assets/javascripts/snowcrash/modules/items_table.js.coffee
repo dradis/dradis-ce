@@ -163,6 +163,10 @@ class @ItemsTable
     )
 
   showConsole: (jobId) =>
+    # the table may set the url to redirect to when closing the console
+    close_url = @$jsTable.data('close-console-url')
+    $('#result').data('close-url', close_url) if close_url
+
     # show console
     $('#modal-console').modal('show')
     ConsoleUpdater.jobId = jobId

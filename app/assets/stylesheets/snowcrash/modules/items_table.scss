@@ -50,10 +50,10 @@
   tr:hover {
     .column-actions a { visibility: visible; }
   }
+}
 
-  #console {
-    @include ajax-console;
+#console {
+  @include ajax-console;
 
-    max-height: 200px;
-  }
+  max-height: 200px;
 }
