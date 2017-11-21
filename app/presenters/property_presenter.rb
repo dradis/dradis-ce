@@ -64,8 +64,12 @@ private
   def render_table
     values         = property_value
     column_names   = values.map(&:keys).flatten.uniq.sort.map(&:to_sym)
-    sorted_entries = column_names.include?(:port) \
-                   ? values.sort_by { |h| h[:port] } : values
+    sorted_entries =
+      if column_names.include?(:port)
+        values.sort_by { |h| h[:port] }
+      else
+        values
+      end
 
     output =
       if property_key == 'services_extra'
