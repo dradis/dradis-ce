@@ -25,7 +25,9 @@
   <div class="tab-pane inner <%= "active" if params[:tab] == "evidence-tab" %>" id="evidence-tab">
     <h3>Evidence</h3>
     <% if @sorted_evidence.any? %>
-      <div id="node-evidence-table" data-destroy-url="<%= multiple_destroy_node_evidence_index_path(@node) %>">
+      <div id="node-evidence-table"
+           data-destroy-url="<%= multiple_destroy_node_evidence_index_path(@node) %>"
+           data-storage-key="<%= "project.ce.#{dom_id(@node)}.evidence_columns" %>">
         <%= render 'nodes/items_table/toolbar',
                    columns: @evidence_columns %>
         <%= render 'nodes/items_table/table',
@@ -65,7 +67,9 @@
   <div class="tab-pane inner <%= "active" if params[:tab] == "notes-tab" %>" id="notes-tab">
     <h3>Notes</h3>
     <% if @sorted_notes.any? %>
-      <div id="node-notes-table" data-destroy-url="<%= multiple_destroy_node_notes_path(@node) %>">
+      <div id="node-notes-table"
+           data-destroy-url="<%= multiple_destroy_node_notes_path(@node) %>"
+           data-storage-key="<%= "project.ce.#{dom_id(@node)}.note_columns" %>">
         <%= render 'nodes/items_table/toolbar',
                    columns: @note_columns %>
         <%= render 'nodes/items_table/table',
