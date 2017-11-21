@@ -120,14 +120,9 @@ private
   def merge_service(new_row)
     table = self.properties[:services]
 
-    # work always with an array of hashes
-    table = [table] if table.is_a?(Hash)
-    table = [] if table.nil?
+    table = to_array_of_hashes(table)
 
-    # find new_row in table
-    position = table.find_index do |row|
-      row.values_at(:port, :protocol) == new_row.values_at(:port, :protocol)
-    end
+    position = find_position_in_table(table, new_row)
 
     if position.nil?
       # if the row was not in the table, add it
@@ -172,14 +167,9 @@ private
   def merge_service_extra(new_row)
     table = self.properties[:services_extra]
 
-    # work always with an array of hashes
-    table = [table] if table.is_a?(Hash)
-    table = [] if table.nil?
+    table = to_array_of_hashes(table)
 
-    # find new_row in table
-    position = table.find_index do |row|
-      row.values_at(:port, :protocol) == new_row.values_at(:port, :protocol)
-    end
+    position = find_position_in_table(table, new_row)
 
     if position.nil?
       # if the row was not in the table, add it
@@ -195,5 +185,17 @@ private
     end
 
     self.properties[:services_extra] = table
+  end
+
+  def to_array_of_hashes(table)
+    table = [table] if table.is_a?(Hash)
+    table = [] if table.nil?
+    table
+  end
+
+  def find_position_in_table(table, new_row)
+    table.find_index do |row|
+      row.values_at(:port, :protocol) == new_row.values_at(:port, :protocol)
+    end
   end
 end
