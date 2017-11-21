@@ -77,16 +77,16 @@ private
       else
         thead = content_tag(:thead) do
           content_tag(:tr) do
-            column_names.collect do |column_name|
+            column_names.map do |column_name|
               concat content_tag(:th, column_name)
             end.join.html_safe
           end
         end
 
         tbody = content_tag(:tbody) do
-          sorted_entries.collect do |entry|
+          sorted_entries.map do |entry|
             content_tag(:tr) do
-              column_names.collect do |column_name|
+              column_names.map do |column_name|
                 concat content_tag(:td, entry[column_name])
               end.join.html_safe
             end
