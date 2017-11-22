@@ -147,8 +147,6 @@ class DradisTasks < Thor
       Note.destroy_all
       Node.destroy_all
       Category.destroy_all
-      Tag.destroy_all
-      Tagging.destroy_all
 
       Log.destroy_all
 

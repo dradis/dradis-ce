@@ -1,0 +1,15 @@
+<div class="text-center">
+  <h1>This node doesn't have any <%= name.pluralize %> yet</h1>
+
+  <p>Add one by clicking on the button below or use the <i class="fa fa-plus"></i> sign next to the <strong><%= name.capitalize.pluralize %> ></strong> heading in the sidebar
+
+  <%= render 'shared/add_item_dropdown',
+    name: name.capitalize.pluralize,
+    new_path: new_link,
+    category_id: nil,
+    button_class: 'btn',
+    text: "Add #{name}",
+    dropdown_class: 'btn-group',
+    menu_class: 'text-left'
+  %>
+</div>

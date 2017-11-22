@@ -4,13 +4,14 @@ class @ItemsTable
   selectedItemsSelector: ''
   columnIndices: {}
 
-  constructor: (@itemName) ->
-    @$jsTable     = $('.js-items-table')
-    @$table       = $('.js-items-table table')
+  constructor: (@tableId, @itemName) ->
+    @$jsTable     = $(@tableId)
+    @$table       = @$jsTable.find('.items-table')
     @$columnMenu  = $('.dropdown-menu.js-table-columns')
 
     @checkboxSelector       = 'input[type=checkbox].js-multicheck'
     @selectedItemsSelector  = "#{@checkboxSelector}:checked:visible"
+    that = this
 
     # -------------------------------------------------------- Load table state
     @loadColumnState()
@@ -25,8 +26,7 @@ class @ItemsTable
     @$columnMenu.find('a').on 'click', @onColumnPickerClick
 
     # Checkbox behavior: select all, show 'btn-group', etc.
-    that = this
-    $('.js-items-table-select-all').click (e) ->
+    @$jsTable.on('click', '.js-items-table-select-all', (e) ->
       $allCheckbox = $(this).find('input[type=checkbox]')
       isChecked = $allCheckbox.prop('checked')
       if e.target != $allCheckbox[0]
@@ -34,17 +34,19 @@ class @ItemsTable
         $allCheckbox.prop('checked', isChecked)
 
       $("#{that.checkboxSelector}:visible").prop('checked', isChecked)
+    )
 
     # when selecting standalone items, check if we must also check 'select all'
-    $(@checkboxSelector).click ->
+    @$jsTable.on('click', @checkboxSelector, ->
       _select_all = $(this).prop('checked')
 
       if _select_all
-        $(@checkboxSelector).each ->
+        $("#{that.tableId} #{that.checkboxSelector}").each ->
           _select_all = $(this).prop('checked')
           _select_all
 
-      $('.js-items-table-select-all > input[type=checkbox]').prop('checked', _select_all)
+      $("#{that.tableId} .js-items-table-select-all > input[type=checkbox]").prop('checked', _select_all)
+    )
 
     # when selecting items or 'select all', refresh toolbar buttons
     @$jsTable.on('click', ".js-items-table-select-all, #{@checkboxSelector}", @refreshToolbar)
@@ -163,6 +165,10 @@ class @ItemsTable
     )
 
   showConsole: (jobId) =>
+    # the table may set the url to redirect to when closing the console
+    close_url = @$jsTable.data('close-console-url')
+    $('#result').data('close-url', close_url) if close_url
+
     # show console
     $('#modal-console').modal('show')
     ConsoleUpdater.jobId = jobId
@@ -175,14 +181,11 @@ class @ItemsTable
     setTimeout(ConsoleUpdater.updateConsole, 200);
 
   storageKey: ->
-    project = $('.brand').data('project') || 'ce'
-    id = $('.note-list').data('id') || ''
-    id = "#{id}." if id
-    "project.#{project}.#{id}#{@itemName}_columns"
+    @$jsTable.data('storage-key')
 
   refreshToolbar: =>
     checked = $(@selectedItemsSelector).length
     if checked
-      $('.js-items-table-actions').css('display', 'inline-block')
+      $("#{@tableId} .js-items-table-actions").css('display', 'inline-block')
     else
-      $('.js-items-table-actions').css('display', 'none')
+      $("#{@tableId} .js-items-table-actions").css('display', 'none')
