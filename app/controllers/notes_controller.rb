@@ -67,25 +67,22 @@ class NotesController < NestedNodeResourceController
 
     if @count > 0
       @job_logger = Log.new
+      job_params = {
+        author_email: current_user.email,
+        ids: @notes.map(&:id),
+        klass: 'Note',
+        uid: @job_logger.uid
+      }
 
       if @count > @max_deleted_inline
         @job_logger.write 'Enqueueing multiple delete job to start in the background.'
-        job = MultiDestroyJob.perform_later(
-          author_email: current_user.email,
-          ids: @notes.map(&:id),
-          klass: 'Note',
-          uid: @job_logger.uid
-        )
+        job = MultiDestroyJob.perform_later(job_params)
         @job_logger.write "Job id is #{ job.job_id }."
 
       elsif @notes.count > 0
         @job_logger.write 'Performing multiple delete job inline.'
-        MultiDestroyJob.perform_now(
-          author_email: current_user.email,
-          ids: @notes.map(&:id),
-          klass: 'Note',
-          uid: @job_logger.uid
-        )
+        MultiDestroyJob.perform_now(job_params)
+
       end
     end
   end
