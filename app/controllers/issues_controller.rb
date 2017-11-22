@@ -88,17 +88,33 @@ class IssuesController < ProjectScopedController
   end
 
   def multiple_destroy
-    respond_to do |format|
-      if destroy_multiple_issues(params[:ids])
-        format.html { redirect_to issues_url, notice: 'Issues deleted.' }
-        format.json
-      else
-        format.html { redirect_to issues_url, notice: "Error while deleting issues." }
-        format.json
+    @issues = Issue.where(id: params[:ids])
+
+    # cache these values
+    @count = @issues.count
+    @max_deleted_inline = ::Configuration.max_deleted_inline
+
+    if @count > 0
+      @job_logger = Log.new
+      job_params = {
+        author_email: current_user.email,
+        ids: @issues.map(&:id),
+        klass: 'Issue',
+        uid: @job_logger.uid
+      }
+
+      if @count > @max_deleted_inline
+        @job_logger.write 'Enqueueing multiple delete job to start in the background.'
+        job = MultiDestroyJob.perform_later(job_params)
+        @job_logger.write "Job id is #{ job.job_id }."
+
+      elsif @count > 0
+        @job_logger.write 'Performing multiple delete job inline.'
+        MultiDestroyJob.perform_now(job_params)
+
       end
     end
   end
-
 
   def import
     importer = IssueImporter.new(params)
@@ -170,16 +186,5 @@ class IssuesController < ProjectScopedController
       issue.tag_list = tag_name
       issue.save
     end
-  end
-
-  def destroy_multiple_issues(issue_ids)
-    issue_ids.each do |id|
-      issue = Issue.find_by_id(id)
-      if issue && issue.destroy
-        track_destroyed(issue)
-      end
-    end
-
-    true
   end
 end
