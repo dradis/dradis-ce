@@ -10,7 +10,7 @@ shared_examples 'an index table toolbar' do
       end
     end
 
-    it 'shows the note actions bar' do
+    it 'shows the item actions bar' do
       expect(find('.js-items-table-actions')).to be_visible
     end
   end
@@ -27,7 +27,7 @@ shared_examples 'an index table toolbar' do
     #     ActiveJob::Base.queue_adapter = :test
     #   end
     #
-    #   it 'resets toolbar after deleting notes' do
+    #   it 'resets toolbar after deleting items' do
     #     @notes.each do |note|
     #       check "checkbox_note_#{note.id}"
     #     end
