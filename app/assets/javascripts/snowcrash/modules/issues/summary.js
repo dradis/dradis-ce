@@ -1,6 +1,8 @@
-document.addEventListener("turbolinks:load", function(){
-  var $dataElement = $('#issues-summary-data');
-  if ($dataElement.length) {
+document.addEventListener('turbolinks:load', function(){
+  var $dataElement  = $('#issues-summary-data'),
+      $chartElement = $('#issue-chart');
+
+  if ($dataElement.length && $chartElement.find('svg').length == 0) {
     var divWidth = $('#issue-chart').width();
     var leftMargin = (divWidth - 400)/3
 
@@ -17,21 +19,21 @@ document.addEventListener("turbolinks:load", function(){
     var xAxis = d3.svg.axis()
         .scale(x)
         .tickSize(0)
-        .orient("bottom");
+        .orient('bottom');
 
     var yAxis = d3.svg.axis()
         .scale(y)
-        .orient("left")
+        .orient('left')
         .tickSize(1, 1)
-        .tickFormat(d3.format(".0f"))
+        .tickFormat(d3.format('.0f'))
         .ticks(2);
         // .tickValues([1, 3, 4]);
 
-    var svg = d3.select("#issue-chart").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    var svg = d3.select('#issue-chart').append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
     // --------------------------------------------------------- Data variables
     var tags        = $dataElement.data('tags');
@@ -59,36 +61,36 @@ document.addEventListener("turbolinks:load", function(){
     // y.domain([0, 5]);
     y.domain([0, highest_y]);
 
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
+    svg.append('g')
+        .attr('class', 'x axis')
+        .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis);
 
-    // svg.append("g")
-    //     .attr("class", "y axis")
+    // svg.append('g')
+    //     .attr('class', 'y axis')
     //     .call(yAxis)
 
-    var bars = svg.append("g");
+    var bars = svg.append('g');
 
-    bars.selectAll("rect")
+    bars.selectAll('rect')
         .data(data)
-      .enter().append("rect")
-        // .attr("class", function(d){ return "bar-" + d.letter; } )
-        .attr("class", "bar" )
-        .attr("x", function(d) { return x(d.letter); })
-        .attr("width", x.rangeBand())
-        .attr("y", function(d) { return y(d.frequency); })
-        .attr("height", function(d) { return height - y(d.frequency); });
+      .enter().append('rect')
+        // .attr('class', function(d){ return 'bar-' + d.letter; } )
+        .attr('class', 'bar' )
+        .attr('x', function(d) { return x(d.letter); })
+        .attr('width', x.rangeBand())
+        .attr('y', function(d) { return y(d.frequency); })
+        .attr('height', function(d) { return height - y(d.frequency); });
 
 
-    bars.selectAll("text")
+    bars.selectAll('text')
         .data(data)
-      .enter().append("text")
-        .attr("x", function(d, i) { return x(d.letter) + x.rangeBand()/2; })
-        .attr("y", function(d) { return y(d.frequency);})
-        .attr("dy", -5)
-        .attr("text-anchor", "middle")
-        .attr("class", "counter" )
+      .enter().append('text')
+        .attr('x', function(d, i) { return x(d.letter) + x.rangeBand()/2; })
+        .attr('y', function(d) { return y(d.frequency);})
+        .attr('dy', -5)
+        .attr('text-anchor', 'middle')
+        .attr('class', 'counter' )
         .text(function(d) {return d.frequency;});
 
     var i = 0;
