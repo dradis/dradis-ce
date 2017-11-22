@@ -59,11 +59,7 @@ class NotesController < NestedNodeResourceController
   end
 
   def multiple_destroy
-    @notes = Note.where(
-      'node_id = :node AND id in (:ids)',
-      node: @node,
-      ids: params[:ids]
-    )
+    @notes = @node.notes.where(id: params[:ids])
 
     # cache these values
     @count = @notes.count
