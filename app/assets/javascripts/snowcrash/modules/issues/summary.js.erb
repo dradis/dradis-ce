@@ -1,6 +1,6 @@
 document.addEventListener("turbolinks:load", function(){
-  if($('#issues-summary-data').length){
-    var $dataElement = $('#issues-summary-data');
+  var $dataElement = $('#issues-summary-data');
+  if ($dataElement.length) {
     var divWidth = $('#issue-chart').width();
     var leftMargin = (divWidth - 400)/3
 

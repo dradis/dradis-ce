@@ -1,3 +1,5 @@
+#= require snowcrash/pages/methodologies/chart
+
 # This file controls the behavior of the Methodologies module, every time an
 # item is ticked or un-ticked, we persist the change on the server.
 
