@@ -9,7 +9,7 @@ class @ItemsTable
     @$table       = @$jsTable.find('.items-table')
     @$columnMenu  = $("#{@tableId} .dropdown-menu.js-table-columns")
 
-    @checkboxSelector       = 'input[type=checkbox].js-multicheck'
+    @checkboxSelector       = "#{@tableId} input[type=checkbox].js-multicheck"
     @selectedItemsSelector  = "#{@checkboxSelector}:checked:visible"
     that = this
 
@@ -26,7 +26,7 @@ class @ItemsTable
     @$columnMenu.find('a').on 'click', @onColumnPickerClick
 
     # Checkbox behavior: select all, show 'btn-group', etc.
-    @$jsTable.on('click', '.js-items-table-select-all', (e) ->
+    $("#{@tableId} .js-items-table-select-all").click (e) ->
       $allCheckbox = $(this).find('input[type=checkbox]')
       isChecked = $allCheckbox.prop('checked')
       if e.target != $allCheckbox[0]
@@ -34,22 +34,21 @@ class @ItemsTable
         $allCheckbox.prop('checked', isChecked)
 
       $("#{that.checkboxSelector}:visible").prop('checked', isChecked)
-    )
 
     # when selecting standalone items, check if we must also check 'select all'
-    @$jsTable.on('click', @checkboxSelector, ->
+    $(@checkboxSelector).click ->
       _select_all = $(this).prop('checked')
 
       if _select_all
-        $("#{that.tableId} #{that.checkboxSelector}").each ->
+        $(that.checkboxSelector).each ->
           _select_all = $(this).prop('checked')
           _select_all
 
       $("#{that.tableId} .js-items-table-select-all > input[type=checkbox]").prop('checked', _select_all)
-    )
 
     # when selecting items or 'select all', refresh toolbar buttons
-    @$jsTable.on('click', ".js-items-table-select-all, #{@checkboxSelector}", @refreshToolbar)
+    $("#{@tableId} .js-items-table-select-all, #{@checkboxSelector}").click =>
+      @refreshToolbar()
 
   loadColumnState: =>
     if Storage?
@@ -96,7 +95,7 @@ class @ItemsTable
       that   = this
       ids = []
 
-      @$table.find(@selectedItemsSelector).each ->
+      $(@selectedItemsSelector).each ->
         $row = $(this).parent().parent()
         $($row.find('td')[2]).replaceWith("<td class=\"loading\">Deleting...</td>")
         ids.push($(this).val())
