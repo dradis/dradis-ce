@@ -17,7 +17,9 @@
             <%=
             case column
             when 'Title'
-              link_to(item.title, [@node, item])
+              link_to([@node, item]) do
+                present(item, TitlePresenter).title
+              end
             when 'Created'
               local_time_ago(item.created_at)
             when 'Created by'
