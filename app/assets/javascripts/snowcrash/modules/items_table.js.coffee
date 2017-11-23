@@ -7,7 +7,7 @@ class @ItemsTable
   constructor: (@tableId, @itemName) ->
     @$jsTable     = $(@tableId)
     @$table       = @$jsTable.find('.items-table')
-    @$columnMenu  = $('.dropdown-menu.js-table-columns')
+    @$columnMenu  = $("#{@tableId} .dropdown-menu.js-table-columns")
 
     @checkboxSelector       = 'input[type=checkbox].js-multicheck'
     @selectedItemsSelector  = "#{@checkboxSelector}:checked:visible"
@@ -67,8 +67,8 @@ class @ItemsTable
         $link.find('input').prop('checked', true)
 
   resetToolbar: =>
-    $('.js-items-table-actions').css('display', 'none')
-    $('.js-items-select-all #select-all').prop('checked', false)
+    $("#{@tableId} .js-items-table-actions").css('display', 'none')
+    $("#{@tableId} .js-items-select-all #select-all").prop('checked', false)
 
   onColumnPickerClick: (event) =>
     $target = $(event.currentTarget)
