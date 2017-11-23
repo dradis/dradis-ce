@@ -9,15 +9,16 @@ class ProjectsController < AuthenticatedController
 
     @methodologies = Node.methodology_library.notes.map{|n| Methodology.new(filename: n.id, content: n.text)}
 
-    @tags = Tag.all
-    @tag_names = @tags.map do |tag|
-      [tag.name, [tag.display_name, tag.color]]
-    end.to_h
+    @activities = Activity.latest
 
+    @tags = Tag.all
     @issues_by_tag  = Hash.new{|h,k| h[k] = [] }
     @count_by_tag   = Hash.new{|h,k| h[k] = 0 }
 
-    @activities = Activity.latest
+    @tag_names = @tags.map do |tag|
+      @count_by_tag[tag.name]
+      [tag.name, [tag.display_name, tag.color]]
+    end.to_h
 
     @issues.each do |issue|
       if issue.tags.empty?
