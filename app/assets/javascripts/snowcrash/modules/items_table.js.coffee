@@ -50,6 +50,14 @@ class @ItemsTable
     $("#{@tableId} .js-items-table-select-all, #{@checkboxSelector}").click =>
       @refreshToolbar()
 
+    # Table filtering
+    $("#{@tableId} .js-table-filter").on 'keyup', ->
+      rex = new RegExp($(this).val(), 'i')
+      $("#{that.tableId} tbody tr").hide()
+      $("#{that.tableId} tbody tr").filter( ->
+        rex.test($(this).text())
+      ).show()
+
   loadColumnState: =>
     if Storage?
       @selectedColumns = JSON.parse(localStorage.getItem(@storageKey()))
