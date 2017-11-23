@@ -33,4 +33,6 @@
 
 //= require snowcrash/pages/methodologies
 //= require snowcrash/pages/nodes/notes/table
+//= require snowcrash/pages/projects/methodologies_chart
+//= require snowcrash/pages/projects/issues_chart
 //= require snowcrash/pages/revisions
