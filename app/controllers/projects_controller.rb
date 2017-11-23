@@ -14,6 +14,7 @@ class ProjectsController < AuthenticatedController
     @tags = Tag.all
     @issues_by_tag  = Hash.new{|h,k| h[k] = [] }
     @count_by_tag   = Hash.new{|h,k| h[k] = 0 }
+    @count_by_tag[:unassigned] = 0
 
     @tag_names = @tags.map do |tag|
       @count_by_tag[tag.name]
