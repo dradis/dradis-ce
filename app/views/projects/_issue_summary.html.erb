@@ -40,5 +40,5 @@
 </section>
 
 <% if @issues.any? %>
-  <div id='issues-summary-data' data-tags='<%= @tags.map{ |t| [t.name, [t.display_name, t.color]] }.to_h.to_json %>' data-issues-count='<%= @count_by_tag.to_json %>'></div>
+  <div id='issues-summary-data' data-tags='<%= @tag_names.to_json %>' data-issues-count='<%= @count_by_tag.to_json %>'></div>
 <% end %>
