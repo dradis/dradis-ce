@@ -58,6 +58,11 @@ class @ItemsTable
         rex.test($(this).text())
       ).show()
 
+    @afterInitialize()
+
+  # Classes that inherit from this may add extra hooks here
+  afterInitialize: ->
+
   loadColumnState: =>
     if Storage?
       @selectedColumns = JSON.parse(localStorage.getItem(@storageKey()))
