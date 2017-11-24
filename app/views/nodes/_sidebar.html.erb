@@ -1,6 +1,6 @@
 <% content_for :sidebar do %>
 
-  <div id="<%= dom_id(@node) %>_link" data-id="<%= dom_id(@node) %>" class="note-list">
+  <div id="<%= dom_id(@node) %>_link" class="note-list">
     <div class="list-item">
       <div class="expansion-container">
         <%= link_to node_path(@node) do %>
@@ -27,7 +27,8 @@
         name: 'Evidence',
         collection: @sorted_evidence,
         new_path: new_node_evidence_path(@node),
-        category_id: Category.issue.id %>
+        category_id: Category.issue.id,
+        index_path: node_path(@node, tab: 'evidence-tab') %>
 
   <!-- Attachments -->
   <%= render 'attachments/attachment_box' %>

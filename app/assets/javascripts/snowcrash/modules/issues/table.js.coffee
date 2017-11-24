@@ -1,6 +1,6 @@
 class IssuesTable extends ItemsTable
-  constructor: ->
-    super('issue')
+
+  afterInitialize: ->
     @$jsTable.on('click', '.js-taglink', @onTagSelected)
     @$jsTable.on('click', '#merge-selected', @onMergeSelected)
 
@@ -10,7 +10,7 @@ class IssuesTable extends ItemsTable
     tagColumnIndex = @columnIndices['tags']
     event.preventDefault()
 
-    @$table.find(@selectedItemsSelector).each ->
+    $(@selectedItemsSelector).each ->
       $this = $(this)
 
       $row = $this.parent().parent()
@@ -41,7 +41,7 @@ class IssuesTable extends ItemsTable
     url = $(event.target).data('url')
     issues_to_merge = []
 
-    @$table.find(@selectedItemsSelector).each ->
+    $(@selectedItemsSelector).each ->
       $row = $(this).parent().parent()
 
       id = @.name.split('_')[2]
@@ -63,4 +63,4 @@ class IssuesTable extends ItemsTable
 
 document.addEventListener "turbolinks:load", ->
   if $('body.issues.index').length
-    new IssuesTable
+    new IssuesTable('#issues-table', 'issue')

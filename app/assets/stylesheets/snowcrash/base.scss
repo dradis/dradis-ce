@@ -416,6 +416,10 @@ body {
             padding-bottom: .5em;
             color: darken($secondaryNavBarBgColor, 60%);
             border-bottom: 1px solid darken($secondaryNavBarBgColor,5);
+
+            a {
+              color: inherit;
+            }
           }
         }
 
