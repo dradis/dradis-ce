@@ -1,6 +1,6 @@
 class IssuesTable extends ItemsTable
-  constructor: ->
-    super('#issues-table', 'issue')
+
+  afterInitialize: ->
     @$jsTable.on('click', '.js-taglink', @onTagSelected)
     @$jsTable.on('click', '#merge-selected', @onMergeSelected)
 
@@ -63,4 +63,4 @@ class IssuesTable extends ItemsTable
 
 document.addEventListener "turbolinks:load", ->
   if $('body.issues.index').length
-    new IssuesTable
+    new IssuesTable('#issues-table', 'issue')
