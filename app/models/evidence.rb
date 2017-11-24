@@ -27,7 +27,10 @@ class Evidence < ApplicationRecord
   # -- Instance Methods -----------------------------------------------------
 
   def local_fields
-    { 'Label' => node.try(:label) }
+    {
+      'Label' => node.try(:label),
+      'Title' => issue.title
+    }
   end
 
 end
