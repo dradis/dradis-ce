@@ -25,12 +25,14 @@
 //= require snowcrash/modules/export
 //= require snowcrash/modules/items_table
 //= require snowcrash/modules/issues
-//= require snowcrash/modules/methodologies
 //= require snowcrash/modules/nodes
 //= require snowcrash/modules/search
 //= require snowcrash/modules/activities/poller
 // require snowcrash/modules/tour
 //= require snowcrash/modules/uploads
 
+//= require snowcrash/pages/methodologies
 //= require snowcrash/pages/nodes/notes/table
+//= require snowcrash/pages/projects/methodologies_chart
+//= require snowcrash/pages/projects/issues_chart
 //= require snowcrash/pages/revisions
