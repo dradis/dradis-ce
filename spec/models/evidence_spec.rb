@@ -47,7 +47,4 @@ describe Evidence do
       expect(@fields['Label']).to eq("Node Label")
     end
   end
-
-  let(:fields_column) { :content }
-  it_behaves_like "a model that has fields", Evidence
 end
