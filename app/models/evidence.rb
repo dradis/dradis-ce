@@ -29,7 +29,7 @@ class Evidence < ApplicationRecord
   def local_fields
     {
       'Label' => node.try(:label),
-      'Title' => issue.title
+      'Title' => issue.try(:title)
     }
   end
 
