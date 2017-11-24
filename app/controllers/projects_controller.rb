@@ -3,17 +3,15 @@ class ProjectsController < AuthenticatedController
   layout 'snowcrash'
 
   def show
-    @nodes   = Node.in_tree
-    @issues  = Issue.where(node_id: Node.issue_library.id).includes(:tags).sort
-    @authors = [current_user]
-
+    @activities    = Activity.latest
+    @authors       = [current_user]
+    @issues        = Issue.where(node_id: Node.issue_library.id).includes(:tags).sort
     @methodologies = Node.methodology_library.notes.map{|n| Methodology.new(filename: n.id, content: n.text)}
+    @nodes         = Node.in_tree
+    @tags          = Tag.all
 
-    @activities = Activity.latest
-
-    @tags = Tag.all
-    @issues_by_tag  = Hash.new{|h,k| h[k] = [] }
-    @count_by_tag   = {unassigned: 0}
+    @count_by_tag  = { unassigned: 0 }
+    @issues_by_tag = Hash.new{|h,k| h[k] = [] }
 
     @tag_names = @tags.map do |tag|
       @count_by_tag[tag.name] = 0
@@ -23,11 +21,11 @@ class ProjectsController < AuthenticatedController
     @issues.each do |issue|
       if issue.tags.empty?
         @issues_by_tag[:unassigned] << issue
-        @count_by_tag[:unassigned] += 1
+        @count_by_tag[:unassigned]  += 1
       else
         issue.tags.each do |tag|
           @issues_by_tag[tag.name] << issue
-          @count_by_tag[tag.name] += 1
+          @count_by_tag[tag.name]  += 1
         end
       end
     end
