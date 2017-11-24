@@ -64,10 +64,4 @@ module SnowcrashHelper
 
     content_tag :i, nil, options
   end
-
-  def table_icon_for_model(model)
-    return '' unless model.is_a?(Evidence)
-
-    colored_icon_for_model(model, 'fa-flag', 'list-item-icon')
-  end
 end

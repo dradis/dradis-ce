@@ -18,7 +18,12 @@
             case column
             when 'Title'
               link_to([@node, item]) do
-                table_icon_for_model(item) + ' ' + item.title
+                icon = ''
+                if item.is_a?(Evidence)
+                  icon =
+                    colored_icon_for_model(item, 'fa-flag', 'list-item-icon')
+                end
+                icon + ' ' + item.title
               end
             when 'Created'
               local_time_ago(item.created_at)
