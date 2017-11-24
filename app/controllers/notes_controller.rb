@@ -78,7 +78,7 @@ class NotesController < NestedNodeResourceController
         @job_logger.write 'Enqueueing multiple delete job to start in the background.'
         job = MultiDestroyJob.perform_later(job_params)
         @job_logger.write "Job id is #{job.job_id}."
-      elsif @notes.count > 0
+      elsif @count > 0
         @job_logger.write 'Performing multiple delete job inline.'
         MultiDestroyJob.perform_now(job_params)
       end
