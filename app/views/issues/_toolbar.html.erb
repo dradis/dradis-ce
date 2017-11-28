@@ -4,7 +4,7 @@
 %>
 <div class="btn-toolbar">
   <div class="btn-group">
-     <span class="btn js-select-all-issues" title="Select all issues">
+     <span class="btn js-index-table-select-all" title="Select all issues">
        <input type="checkbox" id="select-all" />
      </span>
   </div>
@@ -13,8 +13,8 @@
     <a class="btn" href="javascript:location.reload(true);" title="Refresh issue list"><i class="fa fa-refresh"></i></a>
   </div>
 
-  <div class="btn-group issue-actions js-issue-actions">
-    <a id="delete-selected" class="btn" data-confirm="Are you sure?" data-method="delete" title="Delete selected issues"><i class="fa fa-trash text-error"></i> Delete</a>
+  <div class="btn-group issue-actions js-index-table-actions">
+    <a id="delete-selected" class="btn js-index-table-delete" data-confirm="Are you sure?" data-method="delete" title="Delete selected issues"><i class="fa fa-trash text-error"></i> Delete</a>
     <a
       class="btn"
       id="merge-selected"
