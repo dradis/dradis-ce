@@ -7,6 +7,8 @@ class MultiDestroyJob < ApplicationJob
     # FIXME: migrate logs#uid to uuid ?
     logger = Log.new(uid: uid)
 
+    PaperTrail.whodunnit = author_email
+
     items = klass.constantize.where(id: ids)
 
     logger.write do
