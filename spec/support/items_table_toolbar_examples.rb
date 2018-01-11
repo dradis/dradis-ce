@@ -90,7 +90,7 @@ shared_examples 'an index table toolbar' do
         find('.js-items-table-delete').click
         expect(page).to have_text(/deleted/)
         klass = items.last.class
-        expect(klass.pluck(:id).include?(items.first.id)).to be false
+        expect(klass.exists?(items.first.id)).to be false
         expect(klass.count).to be items.size - 1
       end
     end
