@@ -7,7 +7,7 @@
 #   * jQuery.fileUpload  - handles attachment uploads (gem: jquery-fileupload-rails)
 #   * jQuery.Textile     - handles the note editor (/vendor/)
 
-jQuery ->
+document.addEventListener "turbolinks:load", ->
   # --------------------------------------------------- Standard jQuery plugins
   # Activate jQuery.fileUpload
   $('.jquery-upload').fileupload
@@ -166,11 +166,3 @@ jQuery ->
 
   $('.navbar .btn-search').on 'click', ->
     $('.form-search').submit()
-
-  # Table filtering
-  $('.js-table-filter').on 'keyup', ->
-    rex = new RegExp($(this).val(), 'i')
-    $('tbody tr').hide()
-    $('tbody tr').filter( ->
-      rex.test($(this).text())
-    ).show()

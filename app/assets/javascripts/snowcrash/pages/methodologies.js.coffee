@@ -1,8 +1,8 @@
 # This file controls the behavior of the Methodologies module, every time an
 # item is ticked or un-ticked, we persist the change on the server.
 
-jQuery ->
-  if ($('#methodologies').length > 0)
+document.addEventListener "turbolinks:load", ->
+  if $('#methodologies').length
     $('#m-tabs a:first').tab('show')
 
     $('input:checkbox:checked').parent().addClass('done')

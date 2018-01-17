@@ -7,7 +7,11 @@ class NodesController < NestedNodeResourceController
 
   # GET /nodes/<id>
   def show
-    @activities = @node.nested_activities.latest
+    @activities       = @node.nested_activities.latest
+    @note_columns     = @sorted_notes.map(&:fields).map(&:keys).uniq.flatten \
+                      | ['Title', 'Created', 'Created by', 'Updated']
+    @evidence_columns = @sorted_evidence.map(&:fields).map(&:keys).uniq.flatten \
+                      | ['Title', 'Created', 'Created by', 'Updated']
   end
 
 

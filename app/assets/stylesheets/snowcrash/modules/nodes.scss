@@ -5,6 +5,10 @@ body.nodes, body.notes, body.evidence {
 }
 
 body.nodes {
+  .node-header ul.nav-pills {
+    margin-bottom: 0;
+  }
+
   &.edit {
     textarea.json {
       font-family: monospace;
@@ -15,6 +19,10 @@ body.nodes {
     h4 { margin-top: 30px; }
     #scripts-tabs .tab-pane {
       padding-left: 2em;
+    }
+
+    .tab-pane {
+      min-height: 800px;
     }
   }
 }

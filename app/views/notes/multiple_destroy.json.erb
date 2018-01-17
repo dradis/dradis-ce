@@ -1,0 +1,16 @@
+<% if @count > @max_deleted_inline %>
+{
+  "success": true,
+  "jobId": "<%= @job_logger.uid %>"
+}
+<% elsif @count > 0 %>
+{
+  "success": true,
+  "msg": "<%= "Notes deleted" %>"
+}
+<% else %>
+{
+  "success": false,
+  "msg": "<%= "Error deleting notes" %>"
+}
+<% end %>

@@ -33,14 +33,17 @@ class ExportController < ProjectScopedController
   # Runs a pre-export validation of the contents of the project
   def validate
     @validators = Dradis::Pro::Plugins::Export::Validators::BaseValidator.descendants
-    @log_uid = (Log.maximum(:uid) || 1) + 1
+
+    logger = Log.new
+    @log_uid = logger.uid
 
     @job_id = ProjectValidator.create(
-                      plugin: AdvancedWordExport.name,
-                      template: params[:template],
-                      uid: @log_uid)
+      plugin: AdvancedWordExport.name,
+      template: params[:template],
+      uid: @log_uid
+    )
 
-    Log.new(uid: @log_uid).write("Enqueueing pre-export validation job to start in the background. Job id is #{ @log_uid }")
+    logger.write("Enqueueing pre-export validation job to start in the background. Job id is #{ @log_uid }")
   end
 
   def validation_status

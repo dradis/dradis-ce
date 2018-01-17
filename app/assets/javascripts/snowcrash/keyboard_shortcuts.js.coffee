@@ -1,4 +1,4 @@
-$ ->
+document.addEventListener "turbolinks:load", ->
 
   # Nodes#show shortcuts
   if $('body.nodes').length

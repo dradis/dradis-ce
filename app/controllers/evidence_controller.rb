@@ -108,6 +108,32 @@ class EvidenceController < NestedNodeResourceController
     end
   end
 
+  def multiple_destroy
+    @evidence = @node.evidence.where(id: params[:ids])
+
+    # cache these values
+    @count = @evidence.count
+    @max_deleted_inline = ::Configuration.max_deleted_inline
+
+    if @count > 0
+      @job_logger = Log.new
+      job_params = {
+        author_email: current_user.email,
+        ids: @evidence.map(&:id),
+        klass: 'Evidence',
+        uid: @job_logger.uid
+      }
+
+      if @count > @max_deleted_inline
+        @job_logger.write 'Enqueueing multiple delete job to start in the background.'
+        job = MultiDestroyJob.perform_later(job_params)
+        @job_logger.write "Job id is #{job.job_id}."
+      elsif @count > 0
+        @job_logger.write 'Performing multiple delete job inline.'
+        MultiDestroyJob.perform_now(job_params)
+      end
+    end
+  end
 
   private
 
