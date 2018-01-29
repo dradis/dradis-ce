@@ -15,8 +15,8 @@ gem 'dradis-html_export'
 
 
 # ---------------------------------------------------------------------- Import
-# gem 'dradis-mediawiki', '~> 3.7', github: 'dradis/dradis-mediawiki'
-# gem 'dradis-vulndb',    '~> 3.7', github: 'dradis/dradis-vulndb'
+# gem 'dradis-mediawiki', '~> 3.9', github: 'dradis/dradis-mediawiki'
+# gem 'dradis-vulndb',    '~> 3.9', github: 'dradis/dradis-vulndb'
 
 # ---------------------------------------------------------------------- Upload
 gem 'dradis-acunetix'
@@ -25,6 +25,7 @@ gem 'dradis-burp'
 gem 'dradis-metasploit'
 gem 'dradis-nessus'
 gem 'dradis-nexpose'
+gem 'dradis-netsparker'
 gem 'dradis-nikto'
 gem 'dradis-nmap'
 gem 'dradis-ntospider'
