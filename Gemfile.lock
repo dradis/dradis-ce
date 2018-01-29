@@ -1,14 +1,14 @@
 GIT
   remote: https://github.com/dradis/dradis-plugins.git
-  revision: 2ff9b357604a8bf55d0109b221decaf699d42249
+  revision: 4405464bf845c54196d7fcfb2cf8efe88adcd8eb
   specs:
-    dradis-plugins (3.7.0)
+    dradis-plugins (3.9.0)
 
 GIT
   remote: https://github.com/dradis/dradis-projects.git
-  revision: b2287cbab8ee217ba62fff199e2e90562c49ef11
+  revision: 2a56756753c446b878b2e954f66ee376127a6088
   specs:
-    dradis-projects (3.7.0)
+    dradis-projects (3.9.0)
       dradis-plugins (~> 3.7)
       rubyzip (~> 1.2.1)
 
@@ -390,8 +390,8 @@ DEPENDENCIES
   database_cleaner
   differ (~> 0.1.2)
   dradis-api!
-  dradis-plugins (~> 3.7)!
-  dradis-projects (~> 3.7)!
+  dradis-plugins (~> 3.9)!
+  dradis-projects (~> 3.9)!
   factory_girl_rails
   font-awesome-sass (~> 4.7.0)
   foreman
