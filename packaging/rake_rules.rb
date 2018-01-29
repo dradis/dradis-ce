@@ -10,13 +10,17 @@ TRAVELING_RUBY_VERSION = '20180126-2.4.1'
 TRAVELING_RUBY_PATH = Rails.root.join('../traveling-ruby')
 
 # Must match Gemfile:
-BCRYPT_VERSION       = '3.1.10'
-MYSQL2_VERSION       = '0.3.18'
-NOKOGIRI_VERSION     = '1.8.1'
-REDCLOTH_VERSION     = '4.3.1'
-SQLITE3_VERSION      = '1.3.13'
-RINKU_VERSION        = '2.0.4'
-THERUBYRACER_VERSION = '0.12.3'
+BCRYPT_VERSION           = '3.1.10'
+MYSQL2_VERSION           = '0.3.18'
+NOKOGIRI_VERSION         = '1.8.1'
+REDCLOTH_VERSION         = '4.3.1'
+SQLITE3_VERSION          = '1.3.13'
+RINKU_VERSION            = '2.0.2'
+THERUBYRACER_VERSION     = '0.12.3'
+NIO4R_VERSION            = '2.1.0'
+WEBSOCKET_DRIVER_VERSION = '0.6.5'
+FFI_VERSION              = '1.9.18'
+JSON_VERSION             = '1.8.6'
 
 namespace :assets do
   namespace :precompile do
@@ -43,7 +47,11 @@ namespace :package do
       "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-RedCloth-#{REDCLOTH_VERSION}.tar.gz",
       "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-sqlite3-#{SQLITE3_VERSION}.tar.gz",
       "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-rinku-#{RINKU_VERSION}.tar.gz",
-      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-therubyracer-#{THERUBYRACER_VERSION}.tar.gz"
+      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-therubyracer-#{THERUBYRACER_VERSION}.tar.gz",
+      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-nio4r-#{NIO4R_VERSION}.tar.gz",
+      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-websocket-driver-#{WEBSOCKET_DRIVER_VERSION}.tar.gz",
+      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-ffi-#{FFI_VERSION}.tar.gz",
+      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-json-#{JSON_VERSION}.tar.gz"
     ] do
       create_package('linux-x86')
     end
@@ -58,7 +66,11 @@ namespace :package do
       "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-RedCloth-#{REDCLOTH_VERSION}.tar.gz",
       "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-sqlite3-#{SQLITE3_VERSION}.tar.gz",
       "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-rinku-#{RINKU_VERSION}.tar.gz",
-      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-therubyracer-#{THERUBYRACER_VERSION}.tar.gz"
+      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-therubyracer-#{THERUBYRACER_VERSION}.tar.gz",
+      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-nio4r-#{NIO4R_VERSION}.tar.gz",
+      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-websocket-driver-#{WEBSOCKET_DRIVER_VERSION}.tar.gz",
+      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-ffi-#{FFI_VERSION}.tar.gz",
+      "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-json-#{JSON_VERSION}.tar.gz"
     ] do
       create_package('linux-x86_64')
     end
@@ -74,7 +86,11 @@ namespace :package do
     "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-RedCloth-#{REDCLOTH_VERSION}.tar.gz",
     "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-sqlite3-#{SQLITE3_VERSION}.tar.gz",
     "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-rinku-#{RINKU_VERSION}.tar.gz",
-    "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-therubyracer-#{THERUBYRACER_VERSION}.tar.gz"
+    "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-therubyracer-#{THERUBYRACER_VERSION}.tar.gz",
+    "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-nio4r-#{NIO4R_VERSION}.tar.gz",
+    "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-websocket-driver-#{WEBSOCKET_DRIVER_VERSION}.tar.gz",
+    "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-ffi-#{FFI_VERSION}.tar.gz",
+    "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-json-#{JSON_VERSION}.tar.gz"
   ] do
     create_package('osx')
   end
@@ -82,7 +98,7 @@ namespace :package do
  desc 'Install gems to local directory'
   task :bundle_install do
     puts "\nRunning package:bundle_install..."
-    if RUBY_VERSION !~ /^2\.4\.\1/
+    if RUBY_VERSION !~ /^2\.4\.1/
       abort "You can only 'bundle install' using Ruby 2.4.1, because that's what Traveling Ruby uses."
     end
 
@@ -247,6 +263,54 @@ file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-therubyracer-#{THER
   copy_native_extension('osx', "therubyracer-#{THERUBYRACER_VERSION}")
 end
 
+file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-nio4r-#{NIO4R_VERSION}.tar.gz" do
+  copy_native_extension('linux-x86', "nio4r-#{NIO4R_VERSION}")
+end
+
+file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-nio4r-#{NIO4R_VERSION}.tar.gz" do
+  copy_native_extension('linux-x86_64', "nio4r-#{NIO4R_VERSION}")
+end
+
+file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-nio4r-#{NIO4R_VERSION}.tar.gz" do
+  copy_native_extension('osx', "nio4r-#{NIO4R_VERSION}")
+end
+
+file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-websocket-driver-#{WEBSOCKET_DRIVER_VERSION}.tar.gz" do
+  copy_native_extension('linux-x86', "websocket-driver-#{WEBSOCKET_DRIVER_VERSION}")
+end
+
+file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-websocket-driver-#{WEBSOCKET_DRIVER_VERSION}.tar.gz" do
+  copy_native_extension('linux-x86_64', "websocket-driver-#{WEBSOCKET_DRIVER_VERSION}")
+end
+
+file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-websocket-driver-#{WEBSOCKET_DRIVER_VERSION}.tar.gz" do
+  copy_native_extension('osx', "websocket-driver-#{WEBSOCKET_DRIVER_VERSION}")
+end
+
+file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-ffi-#{FFI_VERSION}.tar.gz" do
+  copy_native_extension('linux-x86', "ffi-#{FFI_VERSION}")
+end
+
+file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-ffi-#{FFI_VERSION}.tar.gz" do
+  copy_native_extension('linux-x86_64', "ffi-#{FFI_VERSION}")
+end
+
+file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-ffi-#{FFI_VERSION}.tar.gz" do
+  copy_native_extension('osx', "ffi-#{FFI_VERSION}")
+end
+
+file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86-json-#{JSON_VERSION}.tar.gz" do
+  copy_native_extension('linux-x86', "json-#{JSON_VERSION}")
+end
+
+file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-linux-x86_64-json-#{JSON_VERSION}.tar.gz" do
+  copy_native_extension('linux-x86_64', "json-#{JSON_VERSION}")
+end
+
+file "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-osx-json-#{JSON_VERSION}.tar.gz" do
+  copy_native_extension('osx', "json-#{JSON_VERSION}")
+end
+
 def create_package(target)
   puts "\nCreating package #{ target }..."
 
@@ -321,7 +385,11 @@ def create_package(target)
     "RedCloth-#{REDCLOTH_VERSION}",
     "sqlite3-#{SQLITE3_VERSION}",
     "rinku-#{RINKU_VERSION}",
-    "therubyracer-#{THERUBYRACER_VERSION}"
+    "therubyracer-#{THERUBYRACER_VERSION}",
+    "nio4r-#{NIO4R_VERSION}",
+    "websocket-driver-#{WEBSOCKET_DRIVER_VERSION}",
+    "ffi-#{FFI_VERSION}",
+    "json-#{JSON_VERSION}"
   ].each do |gem|
     sh 'tar -xzf ' +
        "packaging/traveling-ruby-#{TRAVELING_RUBY_VERSION}-#{target}-#{gem}.tar.gz"+
