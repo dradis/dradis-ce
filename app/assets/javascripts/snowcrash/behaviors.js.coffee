@@ -7,7 +7,7 @@
 #   * jQuery.fileUpload  - handles attachment uploads (gem: jquery-fileupload-rails)
 #   * jQuery.Textile     - handles the note editor (/vendor/)
 
-jQuery ->
+document.addEventListener "turbolinks:load", ->
   # --------------------------------------------------- Standard jQuery plugins
   # Activate jQuery.fileUpload
   $('.jquery-upload').fileupload
@@ -18,9 +18,10 @@ jQuery ->
 
     paste: (e, data)->
       $.each data.files, (index, file) ->
-        if (!file.name?)
-          file.name = prompt('Please provide a filename for the pasted image', 'screenshot-XX.png') || 'unnamed.png'
-
+        filename = prompt('Please provide a filename for the pasted image', 'screenshot-XX.png') || 'unnamed.png'
+        # Clone file object, edit, then reapply to the data object
+        newFile = new File [file], filename, { type: file.type }
+        data.files[index] = newFile
 
   # Initialize clipboard.js:
   clipboard = new Clipboard('.js-attachment-url-copy')
@@ -97,6 +98,7 @@ jQuery ->
         when 'training-course' then 'Dradis Training Course'
         when 'try-pro' then 'Upgrade to Dradis Pro'
         when 'word-reports' then '[<span>Dradis Pro feature</span>] Custom Word reports'
+        when 'excel-reports' then '[<span>Dradis Pro feature</span>] Custom Excel reports'
 
       $modal.find('.modal-header h3').html(title)
     else
@@ -164,11 +166,3 @@ jQuery ->
 
   $('.navbar .btn-search').on 'click', ->
     $('.form-search').submit()
-
-  # Table filtering
-  $('.js-table-filter').on 'keyup', ->
-    rex = new RegExp($(this).val(), 'i')
-    $('tbody tr').hide()
-    $('tbody tr').filter( ->
-      rex.test($(this).text())
-    ).show()

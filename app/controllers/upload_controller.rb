@@ -17,7 +17,7 @@ class UploadController < ProjectScopedController
   before_action :validate_uploader, only: [:create, :parse]
 
   def index
-    @last_job = Log.maximum(:uid) || 1
+    @last_job = Log.new.uid
   end
 
   # TODO: this would overwrite an existing file with the same name.

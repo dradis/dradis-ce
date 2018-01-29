@@ -1,4 +1,4 @@
-jQuery ->
+document.addEventListener "turbolinks:load", ->
   if $('body.issues.show').length
     $('#evidence-tabs li').first().addClass('active')
     $('#evidence-tabs .tab-pane').first().addClass('active')

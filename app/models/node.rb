@@ -12,6 +12,7 @@ class Node < ApplicationRecord
     HOST = 1
     METHODOLOGY = 2
     ISSUELIB = 3
+    USER_TYPES = [DEFAULT, HOST]
   end
 
   acts_as_tree counter_cache: true, order: :label
@@ -19,6 +20,7 @@ class Node < ApplicationRecord
   # -- Relationships --------------------------------------------------------
   has_many :notes, dependent: :destroy
   has_many :evidence, dependent: :destroy
+  has_many :issues, -> { distinct }, through: :evidence
   has_many :activities, as: :trackable
 
   def nested_activities
@@ -50,6 +52,7 @@ class Node < ApplicationRecord
 
   # -- Validations ----------------------------------------------------------
   validates_presence_of :label
+  validate :parent_node, if: Proc.new { |node| node.parent_id }
 
   # -- Scopes ---------------------------------------------------------------
   scope :in_tree, -> {
@@ -57,7 +60,7 @@ class Node < ApplicationRecord
   }
 
   scope :user_nodes, -> {
-    where("type_id IN (?)", [Types::DEFAULT, Types::HOST])
+    where("type_id IN (?)", Types::USER_TYPES)
   }
 
 
@@ -102,11 +105,27 @@ class Node < ApplicationRecord
     Attachment.find(:all, :conditions => {:node_id => self.id})
   end
 
+  def user_node?
+    Types::USER_TYPES.include?(self.type_id)
+  end
+
   private
   # Whenever a node is deleted all the associated attachments have to be
   # deleted too
   def destroy_attachments
     attachments_dir = Attachment.pwd.join(self.id.to_s)
     FileUtils.rm_rf attachments_dir if File.exists?(attachments_dir)
+  end
+
+  def parent_node
+    if self.parent.nil?
+      errors.add(:parent_id, 'is missing/invalid.')
+      return false
+    end
+
+    if !(self.parent.user_node?)
+      errors.add(:parent_id, 'has an invalid type.')
+      return false
+    end
   end
 end

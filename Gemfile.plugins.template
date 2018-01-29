@@ -15,8 +15,8 @@ gem 'dradis-html_export'
 
 
 # ---------------------------------------------------------------------- Import
-# gem 'dradis-mediawiki', '~> 3.6', github: 'dradis/dradis-mediawiki'
-# gem 'dradis-vulndb',    '~> 3.6', github: 'dradis/dradis-vulndb'
+# gem 'dradis-mediawiki', '~> 3.7', github: 'dradis/dradis-mediawiki'
+# gem 'dradis-vulndb',    '~> 3.7', github: 'dradis/dradis-vulndb'
 
 # ---------------------------------------------------------------------- Upload
 gem 'dradis-acunetix'

@@ -8,6 +8,7 @@
 # calling the authentication filters directly
 class AuthenticatedController < ApplicationController
   before_action :login_required
+  before_action :set_paper_trail_whodunnit
   # before_action :render_onboarding_tour
 
   # This is a central location where we can manage authorization errors (e.g.

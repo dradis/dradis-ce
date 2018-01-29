@@ -1,4 +1,4 @@
-jQuery ->
+document.addEventListener "turbolinks:load", ->
   if ($("body.merge.new").length)
 
     # when clicking on the "expand/collapse" arrow icon, turn it upside down

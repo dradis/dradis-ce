@@ -8,7 +8,7 @@
   <div class="expansion-container">
     <%= link_to node_evidence_path(@node, evidence) do %>
       <%= colored_icon_for_model(evidence, 'fa-flag', 'list-item-icon') %>
-      <%= evidence.issue.title %>
+      <%= evidence.title %>
     <% end %>
   </div>
 

@@ -1,4 +1,4 @@
-class IndexForeignKeys < ActiveRecord::Migration
+class IndexForeignKeys < ActiveRecord::Migration[5.1]
   def change
     add_index :evidence, :node_id
     add_index :evidence, :issue_id

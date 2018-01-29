@@ -10,7 +10,7 @@
   <%= render 'tag_input', f: f %>
 
   <div class="form-actions">
-    <%= f.button :submit, nil, class: 'btn btn-dradispro' %> or
+    <%= f.button :submit, nil, class: 'btn btn-primary' %> or
     <%= link_to 'Cancel', @issue.new_record? ? issues_path : @issue, class: 'cancel-link' %>
   </div>
 <% end %>

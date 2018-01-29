@@ -20,9 +20,14 @@ Rails.application.routes.draw do
 
   resources :configurations, only: [:index, :update]
 
+  resources :console, only: [] do
+    collection { get :status }
+  end
+
   resources :issues do
     collection do
       post :import
+      delete :multiple_destroy
       resources :merge, only: [:new, :create], controller: 'issues/merge'
     end
     resources :revisions, only: [:index, :show]
@@ -48,10 +53,18 @@ Rails.application.routes.draw do
 
     resources :notes do
       resources :revisions, only: [:index, :show]
+
+      collection do
+        delete :multiple_destroy
+      end
     end
 
     resources :evidence, except: :index do
       resources :revisions, only: [:index, :show]
+
+      collection do
+        delete :multiple_destroy
+      end
     end
 
     constraints(:filename => /.*/) do

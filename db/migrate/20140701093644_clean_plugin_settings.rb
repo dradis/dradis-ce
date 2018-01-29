@@ -1,4 +1,4 @@
-class CleanPluginSettings < ActiveRecord::Migration
+class CleanPluginSettings < ActiveRecord::Migration[5.1]
   def up
     %w[
       admin:paths:plugin_templates

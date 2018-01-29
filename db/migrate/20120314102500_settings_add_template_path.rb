@@ -1,4 +1,4 @@
-class SettingsAddTemplatePath < ActiveRecord::Migration
+class SettingsAddTemplatePath < ActiveRecord::Migration[5.1]
   def up
     # Add new configurations
     Configuration.create(:name => 'admin:paths:plugin_templates', :value => Rails.root.join('templates', 'plugins').to_s)

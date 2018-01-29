@@ -114,6 +114,15 @@ In this repo we will have: *master*, *develop*, *release-* and *hotfix-* branche
 If you need to work on a feature branch, fork the repo and work on your own copy. We can check it from there. Eventually you'll merge to your *develop* and back to origin's *develop*.
 
 
+### Community Projects
+
+* [check-user-pwned-dradis by GoVanguard](https://github.com/GoVanguard/check-user-pwned-dradis): Searches for compromised emails across data breaches and creates Dradis Issues
+* [csv-data-import-dradis by GoVanguard](https://github.com/GoVanguard/csv-data-import-dradis): Imports Issues, Nodes, Evidence, and Notes from a CSV file into Dradis
+* [PyDradis by Novacoast](https://github.com/ncatlabs/pydradis): Python wrapper for the Dradis REST API
+
+Have you built a Dradis connector, add-on, or extension? Contact us so that we can feature it here.
+
+
 ## License
 
 Dradis Framework Community Edition is released under [GNU General Public License version 2.0](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)

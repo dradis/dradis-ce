@@ -1,18 +1,48 @@
 <% content_for :title, "#{@node.label} - properties" %>
-
-<ul class="nav nav-tabs main-tabs">
-    <li class="active"><a href="#properties-tab" data-toggle="tab">
+<ul id="node-tabs" class="nav nav-tabs main-tabs">
+  <li <%= "class=active" if params[:tab] == 'evidence-tab' %>>
+    <a href="#evidence-tab" data-toggle="tab"><i class="fa fa-flag"></i> Evidence</a>
+  </li>
+  <li <%= "class=active" if params[:tab] == 'notes-tab' %>>
+    <a href="#notes-tab" data-toggle="tab"><i class="fa fa-file-text-o"></i> Notes</a>
+  </li>
+  <li <%= "class=active" if !params[:tab] || params[:tab] == 'properties-tab' %>>
+    <a href="#properties-tab" data-toggle="tab">
     <% if @node.type_id == Node::Types::HOST %>
-      <i class="fa fa-laptop"></i> Host properties
+      <i class="fa fa-laptop"></i>
     <% else%>
-      <i class="fa fa-cogs"></i> Node properties
+      <i class="fa fa-cogs"></i>
     <% end %>
-    </a></li>
-  <li><a href="#activity-tab" data-toggle="tab"><i class="fa fa-refresh"></i> Recent activity</a></li>
+      Properties
+    </a>
+  </li>
+  <li <%= "class=active" if params[:tab] == 'activity-tab' %>>
+    <a href="#activity-tab" data-toggle="tab"><i class="fa fa-refresh"></i> Recent activity</a>
+  </li>
 </ul>
 
 <div class="tab-content">
-  <div class="tab-pane active" id="properties-tab">
+  <div class="tab-pane inner <%= "active" if params[:tab] == "evidence-tab" %>" id="evidence-tab">
+    <h3>Evidence</h3>
+    <% if @sorted_evidence.any? %>
+      <div id="node-evidence-table"
+           data-destroy-url="<%= multiple_destroy_node_evidence_index_path(@node) %>"
+           data-storage-key="<%= "project.ce.#{dom_id(@node)}.evidence_columns" %>"
+           data-close-console-url="<%= node_path(@node, tab: "evidence-tab") %>">
+        <%= render 'nodes/items_table/toolbar',
+                   columns: @evidence_columns %>
+        <%= render 'nodes/items_table/table',
+                   columns: @evidence_columns,
+                   items: @sorted_evidence %>
+      </div>
+    <% else %>
+      <%= render 'nodes/items_table/empty',
+                 name: 'evidence',
+                 new_link: new_node_evidence_path(@node) %>
+    <% end %>
+  </div>
+
+  <div class="tab-pane <%= "active" if !params[:tab] || params[:tab] == 'properties-tab' %>" id="properties-tab">
     <div class="node-content" id="<%= dom_id(@node) %>_content">
       <div class="inner">
         <h3>Properties - <span class="actions">
@@ -34,9 +64,32 @@
       </div>
     </div>
   </div>
-  <div class="tab-pane" id="activity-tab">
+
+  <div class="tab-pane inner <%= "active" if params[:tab] == "notes-tab" %>" id="notes-tab">
+    <h3>Notes</h3>
+    <% if @sorted_notes.any? %>
+      <div id="node-notes-table"
+           data-destroy-url="<%= multiple_destroy_node_notes_path(@node) %>"
+           data-storage-key="<%= "project.ce.#{dom_id(@node)}.note_columns" %>"
+           data-close-console-url="<%= node_path(@node, tab: "notes-tab") %>">
+        <%= render 'nodes/items_table/toolbar',
+                   columns: @note_columns %>
+        <%= render 'nodes/items_table/table',
+                   columns: @note_columns,
+                   items: @sorted_notes %>
+      </div>
+    <% else %>
+      <%= render 'nodes/items_table/empty',
+                  name: 'note',
+                  new_link: new_node_note_path(@node) %>
+    <% end %>
+  </div>
+
+  <div class="tab-pane <%= "active" if params[:tab] == "activity-tab" %>" id="activity-tab">
     <div class="inner">
       <%= render partial: 'activity' %>
     </div>
   </div>
+
+  <%= render 'console/console' %>
 </div>

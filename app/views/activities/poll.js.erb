@@ -1,7 +1,7 @@
 <% @activities.each do |activity| %>
 
   <%# Evidence activities %>
-  <% if activity.trackable_type == "Evidence" %>
+  <% if activity.trackable_type == 'Evidence' %>
 
     <%# If this is not a 'destroy' action, 'trackable' may still be nil if  %>
     <%# the Evidence has been destroyed since the current activity was      %>
@@ -10,7 +10,7 @@
     <%# it doesn't matter because we know a 'destroy' activity must be      %>
     <%# coming shortly which will remove the links anyway - so we can just  %>
     <%# skip the current activity. %>
-    <% if activity.action == "destroy" || activity.trackable.nil? %>
+    <% if activity.action == 'destroy' || activity.trackable.nil? %>
       ActivitiesPoller.deleteEvidence(<%= activity.trackable_id %>)
     <%# Whitelist remaining actions instead of using a blanket 'else'       %>
     <%# statement, as future-proofing in case we add a new action type later %>
@@ -20,12 +20,12 @@
       <% @node    = evidence.node %>
 
       var nodeId     = <%= @node.id %>;
-          template   = "<%= j render(evidence) %>",
+          template   = '<%= j render(evidence) %>',
           evidenceId = <%= evidence.id %>;
 
-      <% if activity.action == "create" %>
+      <% if activity.action == 'create' %>
         ActivitiesPoller.addEvidence(nodeId, template)
-      <% elsif activity.action == "update" %>
+      <% elsif activity.action == 'update' %>
         ActivitiesPoller.updateEvidence(nodeId, evidenceId, template)
       <% end %>
     <% end %>
@@ -33,10 +33,10 @@
 
 
   <%# Note activities %>
-  <% if activity.trackable_type == "Note" %>
+  <% if activity.trackable_type == 'Note' %>
 
     <%# See comment above re: activity.trackable.nil? %>
-    <% if activity.action == "destroy" || activity.trackable.nil? %>
+    <% if activity.action == 'destroy' || activity.trackable.nil? %>
       ActivitiesPoller.deleteNote(<%= activity.trackable_id %>)
     <% else %>
       <% note = activity.trackable %>
@@ -44,12 +44,12 @@
       <% @node    = note.node %>
 
       var nodeId   = <%= @node.id %>;
-          template = "<%= j render(note) %>",
+          template = '<%= j render(note) %>',
           noteId   = <%= note.id %>;
 
-      <% if activity.action == "create" %>
+      <% if activity.action == 'create' %>
         ActivitiesPoller.addNote(nodeId, template)
-      <% elsif activity.action == "update" %>
+      <% elsif activity.action == 'update' %>
         ActivitiesPoller.updateNote(nodeId, noteId, template)
       <% end %>
     <% end %>
@@ -57,28 +57,28 @@
 
 
   <%# Node events %>
-  <% if activity.trackable_type == "Node" %>
+  <% if activity.trackable_type == 'Node' %>
 
     <%# See comment above re: activity.trackable.nil? %>
-    <% if activity.action == "destroy" || activity.trackable.nil? %>
+    <% if activity.action == 'destroy' || activity.trackable.nil? %>
       ActivitiesPoller.deleteNode(<%= activity.trackable_id %>)
     <% else %>
       <% node = activity.trackable %>
 
-      <% if activity.action == "create" %>
+      <% if activity.action == 'create' %>
         <% if node.root? %>
           ActivitiesPoller.addRootNode(
-            "<%=j render "layouts/snowcrash/node", node: node %>"
+            "<%=j render 'layouts/snowcrash/node', node: node %>"
           )
         <% else %>
           ActivitiesPoller.addSubNode(
             <%= node.parent_id %>,
-            "<%=j render "layouts/snowcrash/node", node: node %>"
+            "<%=j render 'layouts/snowcrash/node', node: node %>"
           )
         <% end %>
       <% end %>
 
-      <% if activity.action == "update" %>
+      <% if activity.action == 'update' %>
         ActivitiesPoller.updateNode(
           <%= activity.trackable_id %>,
           "<%=j render('layouts/snowcrash/node', node: node) %>"

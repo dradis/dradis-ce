@@ -6,11 +6,11 @@ git_source(:github) do |repo_name|
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.2'
+gem 'rails', '~> 5.1.3'
 
 # Use Puma as the app server
 # FIXME: required for Rails 5 ActionCable
-# gem 'puma', '~> 3.0'
+# gem 'puma', '~> 3.7'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -18,22 +18,14 @@ gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2'
-
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
-gem 'bootstrap-sass', '~> 2.3.2.2'
-gem 'font-awesome-sass', '~> 4.7.0'
-
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
-gem 'jquery-fileupload-rails', '~> 0.3.4'
-gem 'jquery-hotkeys-rails'
+# Use CoffeeScript for .coffee assets and views
+gem 'coffee-rails', '~> 4.2'
 
 # Cache-friendly, client-side local time
-gem 'local_time'
+gem 'local_time', '>= 2.0.0'
 
 
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -46,6 +38,14 @@ gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 3.0'
 
 # ---------------------------------------------------- Dradis Community Edition
+gem 'bootstrap-sass', '~> 2.3.2.2'
+gem 'font-awesome-sass', '~> 4.7.0'
+
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
+gem 'jquery-fileupload-rails', '~> 0.3.4'
+gem 'jquery-hotkeys-rails'
+
 # Organize Node tree
 gem 'acts_as_tree'
 
@@ -57,9 +57,9 @@ gem 'differ', '~> 0.1.2'
 # HTML processing filters and utilities
 gem 'html-pipeline'
 
-gem 'kaminari', '~> 0.16.1'
+gem 'kaminari', '~> 1.0.1'
 
-gem 'paper_trail', '~> 4.0.0'
+gem 'paper_trail', '~> 6.0'
 
 # gem 'rails_autolink', '~> 1.1'
 
@@ -74,10 +74,10 @@ gem 'thor', '~> 0.18'
 gem 'bcrypt',   '3.1.10'
 
 # Required by Rails (uglifier and activesupport)
-gem 'json', '1.8.2'
+gem 'json', '1.8.6'
 
 # XML manipulation
-gem 'nokogiri', '1.7.2'
+gem 'nokogiri', '1.8.1'
 
 # MySQL backend
 gem 'mysql2', '0.3.18'
@@ -104,7 +104,7 @@ gem 'cancancan', '~> 1.10'
 gem 'resque', require: 'resque/status_server'
 gem 'resque-status'
 # See https://github.com/sinatra/sinatra/issues/1055
-gem 'sinatra', '2.0.0.beta2'
+gem 'sinatra', '2.0.0'
 
 # Forms that integrate with Twitter's Bootstrap
 gem 'simple_form'
@@ -139,7 +139,7 @@ group :development do
   # listen higher than 3.1.1 require Ruby version >= 2.2.3 (we're currently on
   # 2.2.2). Restrict the version of `listen` to prevent `guard-rspec`
   # introducing an incompatible dependency:
-  gem 'listen', '~> 3.0.5', '<= 3.1.1'
+  gem 'listen', '>= 3.0.5', '< 3.2'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
@@ -175,7 +175,7 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails'
-  gem 'capybara'
+  gem 'capybara', '~> 2.13'
   gem 'poltergeist'
   gem 'guard-rspec', require: false
   gem 'shoulda-matchers', '~> 3.1'
@@ -198,7 +198,6 @@ end
 
 # Base framework classes required by other plugins
 gem 'dradis-plugins'
-
 
 gem 'dradis-api', path: 'engines/dradis-api'
 

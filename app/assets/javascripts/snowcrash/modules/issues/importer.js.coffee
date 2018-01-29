@@ -37,7 +37,7 @@
 
 
 
-jQuery ->
+document.addEventListener "turbolinks:load", ->
   if $('#issues').length
     # Detect if we're displaying results of a query and toggle the widget
     if $('.results').length

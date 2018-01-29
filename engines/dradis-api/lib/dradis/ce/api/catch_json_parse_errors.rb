@@ -8,7 +8,7 @@ module Dradis::CE::API
     def call(env)
       begin
         @app.call(env)
-      rescue ActionDispatch::ParamsParser::ParseError => error
+      rescue ActionDispatch::Http::Parameters::ParseError => error
         # As of Rails 4, ActionDispatch::ShowExceptions (the next middleware
         # in the stack after this one) will raise the above ParseError when
         # it can't parse the JSON.
