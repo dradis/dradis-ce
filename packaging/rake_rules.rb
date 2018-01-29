@@ -6,16 +6,16 @@ require 'dradis/ce'
 
 PACKAGE_NAME = 'dradis'
 VERSION = Dradis::CE.version
-TRAVELING_RUBY_VERSION = '20170626-2.2.2'
+TRAVELING_RUBY_VERSION = '20180126-2.4.1'
 TRAVELING_RUBY_PATH = Rails.root.join('../traveling-ruby')
 
 # Must match Gemfile:
 BCRYPT_VERSION       = '3.1.10'
 MYSQL2_VERSION       = '0.3.18'
-NOKOGIRI_VERSION     = '1.7.2'
+NOKOGIRI_VERSION     = '1.8.1'
 REDCLOTH_VERSION     = '4.3.1'
 SQLITE3_VERSION      = '1.3.13'
-RINKU_VERSION        = '2.0.2'
+RINKU_VERSION        = '2.0.4'
 THERUBYRACER_VERSION = '0.12.3'
 
 namespace :assets do
@@ -82,8 +82,8 @@ namespace :package do
  desc 'Install gems to local directory'
   task :bundle_install do
     puts "\nRunning package:bundle_install..."
-    if RUBY_VERSION !~ /^2\.2\./
-      abort "You can only 'bundle install' using Ruby 2.2, because that's what Traveling Ruby uses."
+    if RUBY_VERSION !~ /^2\.4\.\1/
+      abort "You can only 'bundle install' using Ruby 2.4.1, because that's what Traveling Ruby uses."
     end
 
     puts "\nRecreating tmp directory..."
@@ -349,7 +349,7 @@ end
 
 def copy_runtime(target)
   puts "\nCopying runtime #{ target }"
-  folder = target =~ /^linux/ ? 'linux' : 'osx' 
+  folder = target =~ /^linux/ ? 'linux' : 'osx'
   sh 'cd packaging && ' +
      "cp #{TRAVELING_RUBY_PATH}/#{folder}/traveling-ruby-#{TRAVELING_RUBY_VERSION}-#{target}.tar.gz ."
 end
