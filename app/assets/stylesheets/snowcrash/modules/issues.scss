@@ -90,7 +90,6 @@ body.issues.index {
   //-------------------------------------------------------- Empty-state styles
   p.lead {
     margin: 1ex 0;
-    text-align: center;
   }
 
   .add-issues {
@@ -101,6 +100,17 @@ body.issues.index {
       width: 30.83%;
     }
   }
+
+  .tab-content.outer-tab {
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+  }
+
+  .tab-pane {
+    padding: 3ex;
+  }
+
   //------------------------------------------------------- /Empty-state styles  
 }
 

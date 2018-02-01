@@ -95,6 +95,7 @@ document.addEventListener "turbolinks:load", ->
 
       title = switch term
         when 'boards' then '[<span>Dradis Pro feature</span>] Advanced boards and task assignment'
+        when 'issuelib' then '[<span>Dradis Pro feature</span>] Integrated library of vulnerability descriptions'
         when 'training-course' then 'Dradis Training Course'
         when 'try-pro' then 'Upgrade to Dradis Pro'
         when 'word-reports' then '[<span>Dradis Pro feature</span>] Custom Word reports'
