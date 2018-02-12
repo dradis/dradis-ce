@@ -11,7 +11,7 @@ unset BUNDLE_IGNORE_CONFIG
 
 cd "$SELFDIR/lib/app"
 
-export PATH="$SELFDIR/lib/ruby/bin:$SELFDIR/lib/vendor/ruby/2.1.0/bin:$PATH"
+export PATH="$SELFDIR/lib/ruby/bin:$SELFDIR/lib/vendor/ruby/2.4.0/bin:$PATH"
 if ! [ -e .secret_key_base ];then
     hexdump -n 64 -v -e '/1 "%02X"' /dev/urandom > .secret_key_base
 fi
