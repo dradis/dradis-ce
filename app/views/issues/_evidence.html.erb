@@ -28,7 +28,7 @@
                 <h3>
                   Evidence for <%= link_to node.label, node %> -
                   <span class="actions">
-                    <%= link_to edit_node_evidence_path(node, instances.first) do %>
+                    <%= link_to edit_node_evidence_path(node, instances.first, back_to: :issue) do %>
                       <i class="fa fa-pencil"></i> Edit
                     <% end %>
                     <%= link_to [node, instances.first],
