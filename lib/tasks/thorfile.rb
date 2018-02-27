@@ -171,7 +171,7 @@ class DradisTasks < Thor
       confirmation = ask "Retype new Dradis password:"
 
       if !password.blank? && password == confirmation
-        Configuration.find_or_create_by(name: 'password').update_attribute(:value, ::Digest::SHA512.hexdigest(password))
+        Configuration.find_or_create_by(name: 'admin:password').update_attribute(:value, ::Digest::SHA512.hexdigest(password))
         say("Password Changed.", Thor::Shell::Color::GREEN)
       else
         say("Passwords do not match. Password Unchanged.", Thor::Shell::Color::RED)
