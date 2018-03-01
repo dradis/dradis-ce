@@ -187,7 +187,7 @@ GEM
     minitest (5.10.3)
     mono_logger (1.1.0)
     multi_json (1.12.1)
-    mustermann (1.0.0)
+    mustermann (1.0.2)
     mysql2 (0.3.18)
     nenv (0.3.0)
     nio4r (2.1.0)
@@ -214,8 +214,8 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     public_suffix (2.0.5)
-    rack (2.0.3)
-    rack-protection (2.0.0)
+    rack (2.0.4)
+    rack-protection (2.0.1)
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -315,10 +315,10 @@ GEM
     simple_form (3.5.0)
       actionpack (> 4, < 5.2)
       activemodel (> 4, < 5.2)
-    sinatra (2.0.0)
+    sinatra (2.0.1)
       mustermann (~> 1.0)
       rack (~> 2.0)
-      rack-protection (= 2.0.0)
+      rack-protection (= 2.0.1)
       tilt (~> 2.0)
     slop (3.6.0)
     spring (2.0.2)
@@ -425,7 +425,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   shoulda-matchers (~> 3.1)
   simple_form
-  sinatra (= 2.0.0)
+  sinatra (= 2.0.1)
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3
@@ -440,4 +440,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.16.0
+   1.16.1
