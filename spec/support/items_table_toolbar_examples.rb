@@ -68,9 +68,9 @@ shared_examples 'an index table toolbar' do
       it 'enqueues a background job with the items to delete' do
         expect {
           find('#select-all').click
-          expect(page).to have_selector('input.js-multicheck:checked') # forces wait
+          expect(page).to have_selector('input.js-multicheck:checked') # wait
           page.accept_confirm { find('.js-items-table-delete').click }
-          find('#modal-console', visible: true) # wait for the response
+          find('#modal-console', visible: true) # wait
         }.to have_enqueued_job(MultiDestroyJob).with(
           ids: items.map(&:id),
           klass: items.first.class.to_s,
@@ -91,11 +91,10 @@ shared_examples 'an index table toolbar' do
           ).size
         ).to eq 1
         find('#select-all').click
-        expect(page).to have_selector('input.js-multicheck:checked') # forces wait
+        expect(page).to have_selector('input.js-multicheck:checked') # wait
         page.accept_confirm { find('.js-items-table-delete').click }
         expect(page).to have_text(/deleted/)
         klass = items.last.class
-        expect(klass.exists?(items.first.id)).to be false
         expect(klass.count).to be items.size - 1
       end
     end
