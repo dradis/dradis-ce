@@ -2,11 +2,12 @@ shared_examples 'an index table toolbar' do
   describe 'when clicking \'Select All\'' do
     before do
       find('.js-items-table-select-all').click
+      expect(page).to have_selector('input.js-multicheck:checked') # forces wait
     end
 
     it 'selects all items' do
       all('input[type=checkbox].js-multicheck').each do |el|
-        expect(el['checked']).to be true
+        expect(el['checked']).to eq 'true'
       end
     end
 
@@ -49,7 +50,9 @@ shared_examples 'an index table toolbar' do
       it 'resets toolbar after deleting items' do
         first('input[type=checkbox].js-multicheck').click
         expect(page).to have_css('.js-items-table-actions')
-        find('.js-items-table-delete').click
+        page.accept_confirm do
+          find('.js-items-table-delete').click
+        end
         expect(page).to_not have_css('.js-items-table-actions')
         expect(page).to have_text(/deleted/)
       end
@@ -65,7 +68,8 @@ shared_examples 'an index table toolbar' do
       it 'enqueues a background job with the items to delete' do
         expect {
           find('#select-all').click
-          find('.js-items-table-delete').click
+          expect(page).to have_selector('input.js-multicheck:checked') # forces wait
+          page.accept_confirm { find('.js-items-table-delete').click }
           find('#modal-console', visible: true) # wait for the response
         }.to have_enqueued_job(MultiDestroyJob).with(
           ids: items.map(&:id),
@@ -87,7 +91,8 @@ shared_examples 'an index table toolbar' do
           ).size
         ).to eq 1
         find('#select-all').click
-        find('.js-items-table-delete').click
+        expect(page).to have_selector('input.js-multicheck:checked') # forces wait
+        page.accept_confirm { find('.js-items-table-delete').click }
         expect(page).to have_text(/deleted/)
         klass = items.last.class
         expect(klass.exists?(items.first.id)).to be false
