@@ -89,7 +89,7 @@ describe "Issues pages" do
 
           # click button like this because the button may be moving down
           # due to bootstrap accordion unfold transition
-          find_button("Merge issues").trigger("click") # click_button "Merge issues"
+          find_button("Merge issues").click # click_button "Merge issues"
 
           expect(page).to have_content("2 issues merged into ")
 
@@ -273,10 +273,15 @@ describe "Issues pages" do
         let(:trackable) { @issue }
         it_behaves_like "a page with an activity feed"
 
-        describe "clicking 'delete'" do
+        describe "clicking 'delete'", js: true do
           before { visit issue_path(@issue) }
 
-          let(:submit_form) { within('.note-text-inner') { click_link "Delete" } }
+          let(:submit_form) do
+            page.accept_confirm do
+              within('.note-text-inner') { click_link "Delete" }
+            end
+            expect(page).to have_text "Issue deleted." # forces waiting
+          end
 
           it "deletes the issue" do
             id = @issue.id
@@ -306,6 +311,11 @@ describe "Issues pages" do
 
           it "filters nodes" do
             find('.js-add-evidence').click
+            within('#existing-node-list') do
+              Node.user_nodes.each do |n|
+                expect(page).to have_text n.label
+              end
+            end
             expect(all('#existing-node-list label').count).to be Node.user_nodes.count
 
             # find('#evidence_node').native.send_key('192')
