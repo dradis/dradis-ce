@@ -62,7 +62,7 @@ describe "moving a node", js: true do
     end
 
     it "doesn't allow you to submit the form" do
-      expect(submit_move_button[:disabled]).to be true
+      expect(submit_move_button[:disabled]).to eq 'true'
     end
   end
 
