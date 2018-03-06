@@ -38,11 +38,17 @@ describe "evidence" do
     let(:trackable) { @evidence }
     it_behaves_like "a page with an activity feed"
 
-    describe "clicking 'delete'" do
-      let(:submit_form) { within('.note-text-inner') { click_link "Delete" } }
+    describe "clicking 'delete'", js: true do
+      let(:submit_form) do
+        page.accept_confirm do
+          within('.note-text-inner') { click_link "Delete" }
+        end
+        expect(page).to have_text "Successfully deleted evidence for '#{@evidence.issue.title}.'"
+      end
       it "deletes the Evidence" do
         id = @evidence.id
         submit_form
+        #expect(page).to have_text "Successfully deleted evidence for '#{@evidence.issue.title}.'"
         expect(Evidence.exists?(id)).to be false
       end
 

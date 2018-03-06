@@ -23,11 +23,11 @@ shared_examples "recover deleted item" do |item_type|
       page.accept_confirm do
         find(:xpath, "//a[@href='#{recover_revision_path(id: model.versions.last.id)}']").click
       end
+      expect(page).to have_content "#{model.class.name.humanize} recovered" # also forces waiting
     end.to change{model.activities.count}.by(1)
 
     expect(model.activities.last.action).to eq "recover"
 
-    expect(page).to have_content "#{model.class.name.humanize} recovered"
     within '#trash' do
       expect(page).not_to have_content item_type.to_s
     end
@@ -50,10 +50,10 @@ shared_examples "recover deleted item without node" do |item_type|
       page.accept_confirm do
         find(:xpath, "//a[@href='#{recover_revision_path(id: model.versions.last.id)}']").click
       end
+      expect(page).to have_content "#{model.class.name.humanize} recovered" # also forces waiting
     end.to change{model.activities.count}.by(1)
     expect(model.activities.last.action).to eq "recover"
 
-    expect(page).to have_content "#{model.class.name.humanize} recovered"
     within '#trash' do
       expect(page).not_to have_content item_type.to_s
     end
