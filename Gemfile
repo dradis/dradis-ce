@@ -188,8 +188,9 @@ group :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'capybara', '~> 2.13'
-  gem 'poltergeist'
+  gem 'chromedriver-helper'
   gem 'guard-rspec', require: false
+  gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'timecop'
 end

@@ -8,7 +8,6 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 require 'capybara/rspec'
-require 'capybara/poltergeist'
 require 'shoulda/matchers'
 
 
@@ -34,13 +33,13 @@ end
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
-
-Capybara.register_driver :poltergeist do |app|
-  options = { js_errors: false, timeout: 60, window_size: [1920, 1080] }
-  Capybara::Poltergeist::Driver.new(app, options)
+Capybara.register_driver :chrome do |app|
+  options = %w[headless disable-gpu window-size=1920,1080]
+  Capybara::Selenium::Driver.new app, browser: :chrome,
+    options: Selenium::WebDriver::Chrome::Options.new(args: options)
 end
 
-Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver = :chrome
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
