@@ -155,16 +155,6 @@ class IssuesController < ProjectScopedController
   # exist, initialize a set of tags.
   def find_or_initialize_tags
     @tags = Tag.where('name like ?', '!%')
-    if @tags.empty?
-      # Create a few default tags.
-      @tags = [
-        Tag.create(name: '!9467bd_Critical'),
-        Tag.create(name: '!d62728_High'),
-        Tag.create(name: '!ff7f0e_Medium'),
-        Tag.create(name: '!6baed6_Low'),
-        Tag.create(name: '!2ca02c_Info'),
-      ]
-    end
   end
 
   def issue_params
