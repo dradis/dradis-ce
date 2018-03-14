@@ -77,7 +77,7 @@ gem 'bcrypt',   '3.1.10'
 gem 'json', '1.8.6'
 
 # XML manipulation
-gem 'nokogiri', '1.8.1'
+gem 'nokogiri', '1.8.2'
 
 # MySQL backend
 gem 'mysql2', '0.3.18'
@@ -104,7 +104,7 @@ gem 'cancancan', '~> 1.10'
 gem 'resque', require: 'resque/status_server'
 gem 'resque-status'
 # See https://github.com/sinatra/sinatra/issues/1055
-gem 'sinatra', '2.0.0'
+gem 'sinatra', '2.0.1'
 
 # Forms that integrate with Twitter's Bootstrap
 gem 'simple_form'
