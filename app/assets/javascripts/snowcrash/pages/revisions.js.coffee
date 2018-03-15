@@ -1,4 +1,5 @@
-$ ->
+document.addEventListener "turbolinks:load", ->
+
   if $('.js-diff-body').length
     delRegex = /\[31m([\s\S]*?)\[0m/g
     insRegex = /\[32m([\s\S]*?)\[0m/g

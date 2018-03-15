@@ -85,7 +85,7 @@ gem 'json', '1.8.6'
 # TODO: Traveling Ruby - DANGER, DANGER: this version has an issue, but it's
 # the last one supported by Traveling Ruby
 # gem 'nokogiri', '1.6.6.2'
-gem 'nokogiri', '1.8.1'
+gem 'nokogiri', '1.8.2'
 
 # MySQL backend
 gem 'mysql2', '0.3.18'
@@ -116,7 +116,7 @@ gem 'cancancan', '~> 1.10'
 gem 'resque', require: 'resque/status_server'
 gem 'resque-status'
 # See https://github.com/sinatra/sinatra/issues/1055
-gem 'sinatra', '2.0.0'
+gem 'sinatra', '2.0.1'
 
 # Forms that integrate with Twitter's Bootstrap
 gem 'simple_form'
@@ -209,13 +209,13 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 3.7', github: 'dradis/dradis-plugins'
+gem 'dradis-plugins', '~> 3.9', github: 'dradis/dradis-plugins'
 
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 3.7', github: 'dradis/dradis-projects'
+gem 'dradis-projects', '~> 3.9', github: 'dradis/dradis-projects'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)

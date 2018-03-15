@@ -1,7 +1,17 @@
-v3.8 (XXX 2017)
+v3.9 (January 2018)
+ - Fixed issues multi delete
+ - Added notes and evidence tab to node view
+ - Fixed project show turbolinks
+ - Restyle secondary navbar
+ - Update CE theme with a green palette
+ - Add paper_trail author metadata
  - Upgrade to Rails 5.1 and Ruby 2.4
  - Bugs fixed: #130, #349
- 
+ - Validate parent node (if present) on nodes
+ - Improved pool parameter definition in database.yml.template file
+ - Fixed local_time gem usage
+ - Updated nokogiri gem
+
 v3.7 (July 2017)
  - Fix dradis:reset thor task.
  - Bugs fixed: #119
