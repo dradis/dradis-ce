@@ -145,10 +145,6 @@ class IssuesController < ProjectScopedController
     params.require(:issue).permit(:tag_list, :text)
   end
 
-  def item_class_name
-    'Issue'
-  end
-
   # This method inspect the issues' Tag field and if present tags the issue
   # accordingly.
   def tag_issue_from_field_content(issue)

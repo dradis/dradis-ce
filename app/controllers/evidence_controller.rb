@@ -134,10 +134,6 @@ class EvidenceController < NestedNodeResourceController
     end
   end
 
-  def item_class_name
-    'Evidence'
-  end
-
   def evidence_params
     params.require(:evidence).permit(:author, :content, :issue_id, :node_id)
   end
