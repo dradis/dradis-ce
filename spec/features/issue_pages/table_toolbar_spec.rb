@@ -14,6 +14,7 @@ describe 'issue table' do
     }
 
     before do
+      Tag.seed!
       login_to_project_as_user
       @issues = items
       visit issues_path
