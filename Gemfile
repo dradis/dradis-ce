@@ -100,6 +100,11 @@ gem 'RedCloth', '4.3.1', require: 'redcloth'
 # html-pipeline dependency for auto-linking
 gem 'rinku'
 
+# actionpack depends on rails-html-sanitizer, which depends on loofah ~> 2.0,
+# but loofah < 2.2.1 has an XSS vulnerability, so make sure we're using
+# 2.2.1+. (more info: https://github.com/flavorjones/loofah/issues/144)
+gem 'loofah', '~> 2.2.1'
+
 # SQLite3 DB driver
 gem 'sqlite3'#,  '1.3.10'
 
