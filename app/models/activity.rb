@@ -2,7 +2,7 @@ class Activity < ApplicationRecord
 
   # -- Relationships --------------------------------------------------------
 
-  belongs_to :trackable, polymorphic: true
+  belongs_to :trackable, polymorphic: true, required: false
 
   # NOTE: when the project importer creates activities, it will try to match
   # them to existing users based on the 'user email' field in the XML. If it

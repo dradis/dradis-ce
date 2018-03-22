@@ -19,15 +19,15 @@ class DradisTasks < Thor
   method_option   :file, :type => :string, :desc => "the backup file to create, or directory to create it in"
   method_option   :no_backup, :type => :boolean, :desc => "do not create a backup of the current repository"
   def reset
-    invoke "dradis:setup:configure"
-    invoke "dradis:setup:migrate"
+    invoke "dradis:setup:configure", [], []
+    invoke "dradis:setup:migrate", [], []
 
-    invoke "dradis:backup", options            unless options.no_backup
+    invoke "dradis:backup", [], options            unless options.no_backup
 
-    invoke "dradis:reset:attachments", options
-    invoke "dradis:reset:database", options
-    invoke "dradis:setup:seed"
-    invoke "dradis:reset:logs", options
+    invoke "dradis:reset:attachments", [], []
+    invoke "dradis:reset:database", [], []
+    invoke "dradis:setup:seed", [], []
+    invoke "dradis:reset:logs", [], []
   end
 
   desc "server", "start dradis server"
@@ -147,6 +147,8 @@ class DradisTasks < Thor
       Note.destroy_all
       Node.destroy_all
       Category.destroy_all
+      Tag.destroy_all
+      Tagging.destroy_all
 
       Log.destroy_all
 
@@ -169,7 +171,7 @@ class DradisTasks < Thor
       confirmation = ask "Retype new Dradis password:"
 
       if !password.blank? && password == confirmation
-        Configuration.find_or_create_by(name: 'password').update_attribute(:value, ::Digest::SHA512.hexdigest(password))
+        Configuration.find_or_create_by(name: 'admin:password').update_attribute(:value, ::BCrypt::Password.create(password))
         say("Password Changed.", Thor::Shell::Color::GREEN)
       else
         say("Passwords do not match. Password Unchanged.", Thor::Shell::Color::RED)

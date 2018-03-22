@@ -78,7 +78,7 @@ class EvidenceController < NestedNodeResourceController
       if @evidence.update_attributes(evidence_params)
         track_updated(@evidence)
         check_for_edit_conflicts(@evidence, updated_at_before_save)
-        format.html { redirect_to [@node, @evidence], notice: 'Evidence updated.' }
+        format.html { redirect_to issue_or_node_path, notice: 'Evidence updated.' }
       else
         format.html {
           initialize_nodes_sidebar
@@ -108,6 +108,32 @@ class EvidenceController < NestedNodeResourceController
     end
   end
 
+  def multiple_destroy
+    @evidence = @node.evidence.where(id: params[:ids])
+
+    # cache these values
+    @count = @evidence.count
+    @max_deleted_inline = ::Configuration.max_deleted_inline
+
+    if @count > 0
+      @job_logger = Log.new
+      job_params = {
+        author_email: current_user.email,
+        ids: @evidence.map(&:id),
+        klass: 'Evidence',
+        uid: @job_logger.uid
+      }
+
+      if @count > @max_deleted_inline
+        @job_logger.write 'Enqueueing multiple delete job to start in the background.'
+        job = MultiDestroyJob.perform_later(job_params)
+        @job_logger.write "Job id is #{job.job_id}."
+      elsif @count > 0
+        @job_logger.write 'Performing multiple delete job inline.'
+        MultiDestroyJob.perform_now(job_params)
+      end
+    end
+  end
 
   private
 
@@ -136,5 +162,13 @@ class EvidenceController < NestedNodeResourceController
 
   def evidence_params
     params.require(:evidence).permit(:author, :content, :issue_id, :node_id)
+  end
+
+  def issue_or_node_path
+    if params[:back_to] == 'issue'
+      @evidence.issue
+    else
+      [@node, @evidence]
+    end
   end
 end

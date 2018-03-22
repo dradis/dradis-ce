@@ -1,4 +1,4 @@
-class AddChildrenCountToNodes < ActiveRecord::Migration
+class AddChildrenCountToNodes < ActiveRecord::Migration[5.1]
   class Node < ActiveRecord::Base
     # The 'real' Node class in app/models/node.rb passes the option
     # `counter_cache: true` to `acts_as_tree`. But for some reason, when

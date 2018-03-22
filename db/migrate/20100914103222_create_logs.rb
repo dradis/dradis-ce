@@ -1,4 +1,4 @@
-class CreateLogs < ActiveRecord::Migration
+class CreateLogs < ActiveRecord::Migration[5.1]
   def self.up
     create_table :logs do |t|
       t.integer :uid

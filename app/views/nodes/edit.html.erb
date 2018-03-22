@@ -11,7 +11,7 @@
       <%= f.input :raw_properties, as: :text, label: 'Properties', value: @node.raw_properties, input_html: { class: :json, rows: 20 } %>
 
       <div class="form-actions">
-        <%= f.button :submit, nil, class: 'btn btn-dradispro' %> or
+        <%= f.button :submit, nil, class: 'btn btn-primary' %> or
         <%= link_to 'Cancel', node_path(@node) %>
       </div>
     <% end %>

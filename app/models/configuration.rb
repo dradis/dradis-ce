@@ -24,6 +24,10 @@ class Configuration < ApplicationRecord
       .find_or_create_by(name: 'admin:session_timeout').value.to_i
   end
 
+  def self.max_deleted_inline
+    create_with(value: 15)
+      .find_or_create_by(name: 'admin:max_deleted_inline').value.to_i
+  end
 
   # --------------------------------------------------------------- admin:paths
   def self.paths_templates_plugins

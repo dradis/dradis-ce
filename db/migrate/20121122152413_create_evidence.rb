@@ -1,4 +1,4 @@
-class CreateEvidence < ActiveRecord::Migration
+class CreateEvidence < ActiveRecord::Migration[5.1]
   def change
     create_table :evidence do |t|
       t.integer :node_id

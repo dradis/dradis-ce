@@ -11,7 +11,8 @@
   <% end %>
 
   <div class="form-actions">
-    <%= f.button :submit, nil, class: 'btn btn-dradispro' %> or
+    <%= hidden_field_tag :back_to, :issue if params[:back_to] == 'issue' %>
+    <%= f.button :submit, nil, class: 'btn btn-primary' %> or
     <%= link_to 'Cancel', node_path(@node) %>
   </div>
 <% end %>

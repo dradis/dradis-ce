@@ -36,7 +36,7 @@ ActiveRecord::Migration.maintain_test_schema!
 
 
 Capybara.register_driver :poltergeist do |app|
-  options = { js_errors: false, timeout: 30, window_size: [1920, 1080] }
+  options = { js_errors: false, timeout: 60, window_size: [1920, 1080] }
   Capybara::Poltergeist::Driver.new(app, options)
 end
 
@@ -77,14 +77,14 @@ RSpec.configure do |config|
   # config.include SupportHelper,    type: :controller
   # config.include SupportHelper,    type: :feature
   # config.include SupportHelper,    type: :request
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   # config.include WaitForAjax, type: :feature
 
   config.example_status_persistence_file_path = Rails.root.join("spec", ".examples.txt")
 
   config.before(:suite) do
     begin
-      FactoryGirl.lint
+      FactoryBot.lint
     ensure
       DatabaseCleaner.clean_with(:truncation)
     end

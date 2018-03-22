@@ -1,4 +1,5 @@
 @import "bootstrap/mixins";
+@import "snowcrash/mixins";
 
 // theme-level imports and overrides
 @import "snowcrash/overrides/bootstrap_and_override";
@@ -10,8 +11,6 @@
 
 // theme-level mixins and variables
 @import "snowcrash/variables";
-@import "snowcrash/mixins";
-
 
 // styles for base HTML elements like body, h1, etc.
 @import "snowcrash/base";

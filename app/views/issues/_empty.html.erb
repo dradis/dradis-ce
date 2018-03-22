@@ -1,19 +1,48 @@
 <h1>This project doesn't have any issues yet</h1>
-<p>Here are some ways to add new issues:</p>
+<p class="lead">Here are some ways to add new issues:</p>
 
-<div class="row-fluid add-issues">
-  <div class="span3">
-    <h3>1. Manually add a finding</h3>
-    <p>Just click on the <i class="fa fa-plus"></i> sign next to the <strong>Issues</strong> heading in the sidebar.</p>
-  </div>
-  <div class="offset1 span3">
-    <h3>2. Import from a library</h3>
-    <p>Before you can import findings from an external library, you may have to do some configuring.</p>
-    <p>For MediaWiki and VulnDB, click on the <%= link_to main_app.configurations_path, target: '_blank' do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %> link at the top-right of the page.</p>
-    <p>Then click on the <i class="fa fa-chevron-down"></i> next to <strong>Import issues</strong> in the sidebar.</p>
-  </div>
-  <div class="offset1 span3">
-    <h3>3. Upload the output of a tool</h3>
-    <p>Use the <%= link_to main_app.upload_manager_path do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %> link at the top of the page.</p>
+<div class="add-issues">
+  <h3>1. Add manual finding</h3>
+  <p>
+    Just click on the <i class="fa fa-plus"></i> sign next to the
+    <strong>Issues</strong> heading in the sidebar.
+  </p>
+</div>
+<div class="add-issues">
+  <h3>2. Upload scanner output</h3>
+  <p>
+    Use the <%= link_to main_app.upload_manager_path do %>
+      <i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool
+    <% end %> link at the top of the page.
+  </p>
+</div>
+<div class="add-issues">
+  <h3>3. Import from a library of descriptions</h3>
+
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#external" data-toggle="tab">External library</a></li>
+    <li><a href="javascript:void(0)" class="js-try-pro" data-term="issuelib" data-url="http://drad.is/l/try-pro-issuelib"><i class="fa fa-book"></i> Built-in IssueLibrary</a></li>
+  </ul>
+
+  <div class="tab-content outer-tab">
+    <div id="external" class="tab-pane active">
+      <p>You'll need an import plugin like:</p>
+      <ul class="fa-ul">
+        <li><i class="fa fa-li fa-chevron-right"></i><a href="https://dradisframework.com/ce/addons/mediawiki.html?utm_source=ce&utm_medium=app" target="_blank">MediaWiki</a></li>
+        <li><i class="fa fa-li fa-chevron-right"></i><a href="http://vulndbhq.com" target="_blank">VulnDB</a></li>
+      </ul>
+      <p>And then:</p>
+      <ol>
+        <li>Activate via <code>Gemfile.plugins</code></li>
+        <li>
+          Click on the
+          <%= link_to main_app.configurations_path do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %> link at the top-right of the page.
+        </li>
+        <li>
+          And on the <i class="fa fa-chevron-down"></i> next to <strong>Import
+          issues</strong> in the sidebar.
+        </li>
+      </ol>
+    </div>
   </div>
 </div>

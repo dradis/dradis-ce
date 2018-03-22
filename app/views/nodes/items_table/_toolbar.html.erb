@@ -1,0 +1,26 @@
+<div class="btn-toolbar">
+  <div class="btn-group">
+     <span class="btn js-items-table-select-all" title="Select all">
+       <input type="checkbox" id="select-all" />
+     </span>
+  </div>
+
+  <div class="btn-group items-table-actions js-items-table-actions">
+    <a class="btn items-table-delete js-items-table-delete" data-confirm="Are you sure?" title="Delete selected">
+      <i class="fa fa-trash text-error"></i> Delete
+    </a>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn dropdown-toggle" data-toggle="dropdown" title="Choose columns to show"><i class="fa fa-columns"></i> <span class="caret"></span></button>
+    <ul class="dropdown-menu js-table-columns">
+      <% columns.each do |column| %>
+      <li><a href="javascript:void(0)" data-column="<%= column.downcase %>"><input type="checkbox" /> <%= column %></a></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="filter pull-right">
+    <input type="text" class="form-control input-xlarge js-table-filter" placeholder="Type here to filter table..."/>
+  </div>
+</div>

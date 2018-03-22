@@ -90,69 +90,28 @@ body.issues.index {
   //-------------------------------------------------------- Empty-state styles
   p.lead {
     margin: 1ex 0;
-    text-align: center;
   }
 
   .add-issues {
     margin-top: 4em;
-  }
-  //------------------------------------------------------- /Empty-state styles
 
-  //-------------------------------------------------------------- Issues table
-  .btn-toolbar {
-    input[type='checkbox'] {
-      margin: 0;
-    }
-
-    .issue-actions {
-      display: none;
-
-      .dropdown-menu {
-        text-align: left;
-      }
-
-      #merge-selected {
-        display: none; // even when issue-actions becomes visible, keep this one hidden
-      }
-    }
-
-    #delete-selected {
-      color: #b94a48;
+    .span3 {
+      margin-left: 2.5%;
+      width: 30.83%;
     }
   }
 
-  .tbl-issues {
-    td.loading {
-      background: image-url('loading.gif') no-repeat left center;
-      padding-left: 20px;
-    }
-
-    .column-actions {
-      text-align: right;
-      width: 125px;
-
-      a {
-        padding-right: 8px;
-        visibility: hidden;
-      }
-    }
-
-    .column-checkbox {
-      padding: 0;
-      text-align: center;
-      vertical-align: middle;
-      width: 36px;
-
-      input {
-        margin: 0;
-      }
-    }
-
-    tr:hover {
-      .column-actions a { visibility: visible; }
-    }
+  .tab-content.outer-tab {
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
   }
-  //------------------------------------------------------------- /Issues table
+
+  .tab-pane {
+    padding: 3ex;
+  }
+
+  //------------------------------------------------------- /Empty-state styles  
 }
 
 body.issues.new, body.issues.edit {

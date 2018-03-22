@@ -1,13 +1,10 @@
-jQuery ->
+document.addEventListener "turbolinks:load", ->
   if $('body.configurations').length
 
-    console.log('init')
     $('tbody tr.gemified td.value').on('blur', 'input', ->
-      console.log('blur')
       $(this).removeClass 'editing'
 
     ).on('change', 'input', ->
-      console.log('change')
       names                 = $(this).attr('name').split('_settings_')
       plugin_name           = names[0]
       setting_name          = names[1]
