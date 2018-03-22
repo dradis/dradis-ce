@@ -1,0 +1,35 @@
+<div class="tabbable tabs-left" id="scripts-tabs">
+  <ul class="nav nav-tabs">
+    <%# each key is in the format "proto/port" e.g. "tcp/22" %>
+    <% extras.keys.each do |key| %>
+      <li>
+        <a data-toggle="tab" href="#<%= key.gsub('/', '-') %>-tab">
+          <%= key %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+
+  <div class="tab-content">
+    <% extras.each do |port_and_proto, data| %>
+      <div id="<%= port_and_proto.gsub('/', '-') %>-tab" class="tab-pane">
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Output</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% data.each do |datum| %>
+              <tr>
+                <td><%= datum[:id] %></td>
+                <td><%= datum[:output] %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+</div>

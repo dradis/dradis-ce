@@ -14,17 +14,23 @@ class PropertyPresenter < BasePresenter
 
     # We want to always render :services as table, but some times there is a
     # single port. We just turn it into a single-element array
+    #
+    # NB new services will always be an array; legacy data may not be
     if (property_key == 'services') && !property_value.is_a?(Array)
       property[1] = [property[1]]
     end
 
-    if property_value.is_a?(Array)
+    # 'services' and 'services_extras' are special cases:
+    if property_key == 'services'
+      render 'nodes/show/services_table', services: property_value
+    elsif property_key == 'services_extras'
+      render 'nodes/show/services_extras_table', extras: property_value
+    elsif property_value.is_a?(Array)
       if property_value[0].is_a?(Hash)
         render_table
       else
         content_tag(:p, property_value.join(', '))
       end
-
     else
       content_tag(:p, property_value)
     end
@@ -40,45 +46,14 @@ class PropertyPresenter < BasePresenter
     property[1]
   end
 
-  def render_scripts_table(entries)
-    thead = content_tag(:thead) do
-      content_tag(:tr) do
-        content_tag(:th, 'id').concat(content_tag(:th, 'output'))
-      end
-    end
-    tbody = content_tag(:tbody) do
-      entries.map do |entry|
-        entry.map do |k,v|
-          next if [:port, :protocol].include?(k.to_sym)
-          if v.respond_to?(:map)
-            v.map do |script|
-              content_tag(:tr) do
-                content_tag(:td, "Nmap NSE script: #{script[0]}").
-                  concat content_tag(:td, content_tag(:pre, script[1]))
-              end
-            end.join.html_safe
-          else
-            content_tag(:tr) do
-              content_tag(:td, k).concat(content_tag(:td, v))
-            end
-          end
-        end.join.html_safe
-      end.join.html_safe
-    end
-
-    content_tag(:table, thead.concat(tbody), class: 'table table-condensed')
-  end
-
   def render_table
     values         = property_value
     column_names   = values.map(&:keys).flatten.uniq.sort.map(&:to_sym).
                      delete_if{ |cn| !services_table_columns.include?(cn) }
-    supplemental   = supplemental_info(values)
     table          = table_info(
       values: values,
       sort_by_port: column_names.include?(:port)
     )
-    output = supplemental.any? ? render_tabs(supplemental) : ''
 
     thead = content_tag(:thead) do
       content_tag(:tr) do
@@ -104,38 +79,6 @@ class PropertyPresenter < BasePresenter
     ).concat(output)
   end
 
-  def render_tab_content(values)
-    content_tag(:div, class: 'tab-content') do
-      supplemental_keys(values).map do |group_key|
-        content_tag(:div, class: 'tab-pane', id: "#{group_key[:protocol]}-#{group_key[:port]}-tab") do
-          render_scripts_table(supplemental_value(group_key, values))
-        end
-      end.join.html_safe
-    end
-  end
-
-  def render_tab_ul(values)
-    content_tag :ul, class: 'nav nav-tabs' do
-      supplemental_keys(values).map do |entry|
-        content_tag :li do
-          content_tag(:a,
-            '%s/%d' % [entry[:protocol], entry[:port]],
-            data: { toggle: :tab },
-            href: '#%s-%d-tab' % [entry[:protocol], entry[:port]]
-          )
-        end
-      end.join.html_safe
-    end
-  end
-
-  def render_tabs(entries)
-    content_tag(:h4, 'Supplemental Data') +
-    content_tag(:div, class: 'tabbable tabs-left', id: 'scripts-tabs') do
-      concat(render_tab_ul(entries)).
-      concat(render_tab_content(entries))
-    end
-  end
-
   def merge_rows(rows)
     rows.group_by{|e| [e[:port], e[:protocol]]}.map do |_, a|
       a.reduce do |memo, row|
@@ -155,55 +98,6 @@ class PropertyPresenter < BasePresenter
 
   def services_table_columns
     NodeProperties::SERVICE_KEYS
-  end
-
-  # Prepare info to be displayed in services table
-  # converts
-  # [ {"port" => 80, "protocol" => "tcp", "name" => "foo", "x_nessus" => "xyz1" },
-  #   {"port" => 22, "name" => "bar", "scripts" => "xyz2"},
-  #   {"port" => 80, "protocol" => "udp", "name" => "baz", "x_nessus" => "xyz3"}, ... ]
-  # to
-  # [ {port: 80, protocol: 'tcp'} => [
-  #      {port: 80, protocol: 'tcp', x_nessus: "xyz1"},
-  #      {port: 80, protocol: 'tcp', x_nessus: "xyz2"}
-  #   ],
-  #   {port: 22, protocol: 'udp'} => [
-  #      {"port" => 22, "name" => "bar", "scripts" => "xyz2"}
-  #   ],
-  #   ...
-  # ]
-  # Groups entries by port/protocol, but every port/protocol pair returns an
-  # array of the values with those port and protocol (doesn't merge them).
-  # The hashes in the array don't contain keys in `services_table_columns`,
-  # except port and column.
-  def supplemental_info(values)
-    filtered = values.map do |se|
-      se.reject do |k, v|
-        (services_table_columns - [:port, :protocol]).include?(k.to_sym) ||
-        v.try(:empty?)
-      end
-    end
-    no_empty = filtered.reject{ |h| h.keys == %w(port protocol) }
-    grouped = no_empty.group_by{ |e| [e[:port], e[:protocol]] }
-    grouped.map{|k,v| { { port: k[0], protocol: k[1] } => v } }
-  end
-
-  # converts
-  # [ {port: 80, protocol: 'tcp'} => [...],
-  #    port: 80, protocol: 'udp'} => [...], ... ]
-  # to
-  # [ {port: 80, protocol: 'tcp'}, {port: 80, protocol: 'udp'}, ... ]
-  def supplemental_keys(values)
-    values.map(&:keys).flatten
-  end
-
-  # from values
-  # [ {port: 80, protocol: 'tcp'} => [foo],
-  #    port: 80, protocol: 'udp'} => [bar], ... ]
-  # with a key like {port: 80, protocol: 'tcp'} returns
-  # [foo]
-  def supplemental_value(group_key, values)
-    values.select{|h| h[group_key]}.map(&:values).flatten
   end
 
   # Prepare info to be displayed in services table
