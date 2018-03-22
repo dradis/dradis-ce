@@ -18,7 +18,7 @@ module NodeProperties
     end
   end
 
-  SERVICE_KEYS = %i[port protocol state product reason name version]
+  SERVICE_KEYS = %i[protocol port state product reason name version]
 
   # -------------------------------------------- Individual property management
   # Sets a property, storing value as Array when needed
