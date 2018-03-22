@@ -200,13 +200,13 @@ describe Node do
       expect(node.properties[:test_property]).to eq(80)
     end
 
-    it 'raises if you try to set :services or service_extras' do
+    it 'raises if you try to set :services or services_extras' do
       expect do
         node.set_property(:services, [{port: '22', protocol: 'tcp'}])
       end.to raise_error(ArgumentError, /set_service/)
 
       expect do
-        node.set_property(:service_extras, { 'tcp/22' => {} })
+        node.set_property(:services_extras, { 'tcp/22' => {} })
       end.to raise_error(ArgumentError, /set_service/)
     end
   end
@@ -305,7 +305,7 @@ describe Node do
         version: '1',
         product: 'my_product',
       )
-      expect(node.properties[:service_extras]).to be nil
+      expect(node.properties[:services_extras]).to be nil
     end
 
     example 'service with extra info - same port/protocol' do
@@ -323,8 +323,8 @@ describe Node do
         uno: 'dos',
       )
 
-      expect(node.properties[:service_extras].keys).to eq ['tcp/22']
-      expect(node.properties[:service_extras]['tcp/22']).to eq(
+      expect(node.properties[:services_extras].keys).to eq ['tcp/22']
+      expect(node.properties[:services_extras]['tcp/22']).to eq(
         [
           { source: 'plugin', id: 'foo', output: 'bar' },
           { source: 'plugin', id: 'fizz', output: 'buzz' },
@@ -347,11 +347,11 @@ describe Node do
         asdf: 'ghjk',
       )
 
-      # doesn't add a new service, or a new key to service_extras:
+      # doesn't add a new service, or a new key to services_extras:
       expect(node.properties[:services].length).to eq 1
-      expect(node.properties[:service_extras].keys).to eq ['tcp/22']
-      # But does add new info to the existing key on service_extras
-      expect(node.properties[:service_extras]['tcp/22']).to eq(
+      expect(node.properties[:services_extras].keys).to eq ['tcp/22']
+      # But does add new info to the existing key on services_extras
+      expect(node.properties[:services_extras]['tcp/22']).to eq(
         [
           { source: 'plugin', id: 'foo', output: 'bar' },
           { source: 'plugin', id: 'fizz', output: 'buzz' },
@@ -378,7 +378,7 @@ describe Node do
         uno: 'dos',
       )
 
-      expect(node.properties[:service_extras].keys).to eq ['tcp/22']
+      expect(node.properties[:services_extras].keys).to eq ['tcp/22']
 
       node.set_service(
         port: '443',
@@ -394,8 +394,8 @@ describe Node do
         uno: 'dos',
       )
 
-      expect(node.properties[:service_extras].keys).to eq ['tcp/22', 'https/443']
-      expect(node.properties[:service_extras]['https/443']).to eq(
+      expect(node.properties[:services_extras].keys).to eq ['tcp/22', 'https/443']
+      expect(node.properties[:services_extras]['https/443']).to eq(
         [
           { source: 'plugin', id: 'foo', output: 'bar' },
           { source: 'plugin', id: 'fizz', output: 'buzz' },

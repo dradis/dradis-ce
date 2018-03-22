@@ -24,9 +24,9 @@ module NodeProperties
   # Sets a property, storing value as Array when needed
   # and taking care of duplications
   def set_property(key, value)
-    if [:services, :service_extras].include?(key) # let's get defensive
+    if [:services, :services_extras].include?(key) # let's get defensive
       raise ArgumentError, "don't use set_property for :services or "\
-                           ":service_extras, use set_service instead"
+                           ":services_extras, use set_service instead"
     end
 
     current_value = self.properties[key]
@@ -65,7 +65,7 @@ module NodeProperties
   # the services under the `services` key on properties: port, protocol, state,
   # product, reason, name, version.
   #
-  # Anything else will be saved under the `service_extras` key
+  # Anything else will be saved under the `services_extras` key
   def set_service(data)
     data.symbolize_keys!
     port     = data.fetch(:port)
@@ -90,10 +90,10 @@ module NodeProperties
     end
 
     if extra.any?
-      self.properties[:service_extras] ||= {}
-      self.properties[:service_extras]["#{protocol}/#{port}"] ||= []
+      self.properties[:services_extras] ||= {}
+      self.properties[:services_extras]["#{protocol}/#{port}"] ||= []
       extra.each do |k, v|
-        self.properties[:service_extras]["#{protocol}/#{port}"].push(
+        self.properties[:services_extras]["#{protocol}/#{port}"].push(
           source: source, id: k.to_s, output: v
         )
       end
