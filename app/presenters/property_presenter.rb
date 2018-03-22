@@ -153,9 +153,8 @@ class PropertyPresenter < BasePresenter
     end
   end
 
-  # A list of the allowed columns in services table
   def services_table_columns
-    [:name, :port, :product, :protocol, :reason, :state, :version]
+    NodeProperties::SERVICE_KEYS
   end
 
   # Prepare info to be displayed in services table
