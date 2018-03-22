@@ -100,6 +100,11 @@ gem 'RedCloth', '4.3.1', require: 'redcloth'
 # html-pipeline dependency for auto-linking
 gem 'rinku'
 
+# actionpack depends on rails-html-sanitizer, which depends on loofah ~> 2.0,
+# but loofah < 2.2.1 has an XSS vulnerability, so make sure we're using
+# 2.2.1+. (more info: https://github.com/flavorjones/loofah/issues/144)
+gem 'loofah', '~> 2.2.1'
+
 # SQLite3 DB driver
 gem 'sqlite3'#,  '1.3.10'
 
@@ -116,7 +121,7 @@ gem 'cancancan', '~> 1.10'
 gem 'resque', require: 'resque/status_server'
 gem 'resque-status'
 # See https://github.com/sinatra/sinatra/issues/1055
-gem 'sinatra', '2.0.0'
+gem 'sinatra', '2.0.1'
 
 # Forms that integrate with Twitter's Bootstrap
 gem 'simple_form'
@@ -186,7 +191,7 @@ end
 
 group :test do
   gem 'database_cleaner'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'capybara', '~> 2.13'
   gem 'poltergeist'
   gem 'guard-rspec', require: false

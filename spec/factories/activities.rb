@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :activity, aliases: [:create_activity] do
     action 'create'
     sequence(:user) { |n| "rspec-user-#{n}" }
