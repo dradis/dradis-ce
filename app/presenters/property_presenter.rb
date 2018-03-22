@@ -26,7 +26,7 @@ class PropertyPresenter < BasePresenter
       end
 
     else
-      if property_value ~= /\n/
+      if property_value =~ /\n/
         content_tag(:pre, property_value)
       else
         content_tag(:p, property_value)
