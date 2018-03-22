@@ -80,8 +80,8 @@ shared_examples 'an index table toolbar' do
 
     context 'with filters' do
       it 'does not delete filtered items' do
-        filter = first('td:nth-child(2)').text
-        find('.js-table-filter').set(filter)
+        to_delete = items.first
+        find('.js-table-filter').set(to_delete.title)
         expect(
           all(
             'input[type=checkbox].js-multicheck',
@@ -91,8 +91,8 @@ shared_examples 'an index table toolbar' do
         find('#select-all').click
         find('.js-items-table-delete').click
         expect(page).to have_text(/deleted/)
-        klass = items.last.class
-        expect(klass.pluck(:id).include?(items.first.id)).to be false
+        klass = to_delete.class
+        expect(klass.exists?(to_delete.id)).to be false
         expect(klass.count).to be items.size - 1
       end
     end
