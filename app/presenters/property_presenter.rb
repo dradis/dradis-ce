@@ -66,10 +66,6 @@ class PropertyPresenter < BasePresenter
       end.join.html_safe
     end
 
-    # content_tag(:div,
-    #   content_tag(:table, thead.concat(tbody)),
-    #   class: 'content-textile'
-    # )
     content_tag(:table, thead.concat(tbody), class: 'table table-condensed')
   end
 
@@ -133,10 +129,6 @@ class PropertyPresenter < BasePresenter
   end
 
   def render_tabs(entries)
-    #values = entries #.select{ |entry| entry.key?(:scripts) && entry[:scripts].any? }
-    #return if values.empty?
-    #entries = entries.group_by{|e| [e[:port], e[:protocol]]}
-
     content_tag(:h4, 'Supplemental Data') +
     content_tag(:div, class: 'tabbable tabs-left', id: 'scripts-tabs') do
       concat(render_tab_ul(entries)).
@@ -235,5 +227,4 @@ class PropertyPresenter < BasePresenter
       se.select{ |k, _| services_table_columns.include?(k.to_sym) }
     end
   end
-
 end
