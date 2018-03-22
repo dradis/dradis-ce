@@ -211,14 +211,6 @@ describe Node do
     end
   end
 
-  # port
-  # protocol
-  # state
-  # reason
-  # name
-  # product
-  # version
-
   describe '#set_service' do
     example 'when no service is present with this port & protocol' do
       node.set_service(
