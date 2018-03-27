@@ -1,6 +1,8 @@
 # This controller exposes the REST operations required to manage the Note
 # resource.
 class NotesController < NestedNodeResourceController
+  include MultipleDestroy
+
   before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
 
@@ -55,33 +57,6 @@ class NotesController < NestedNodeResourceController
       redirect_to node_path(@node), notice: 'Note deleted'
     else
       redirect_to node_note_path(@node, @note), alert: 'Could not delete note'
-    end
-  end
-
-  def multiple_destroy
-    @notes = @node.notes.where(id: params[:ids])
-
-    # cache these values
-    @count = @notes.count
-    @max_deleted_inline = ::Configuration.max_deleted_inline
-
-    if @count > 0
-      @job_logger = Log.new
-      job_params = {
-        author_email: current_user.email,
-        ids: @notes.map(&:id),
-        klass: 'Note',
-        uid: @job_logger.uid
-      }
-
-      if @count > @max_deleted_inline
-        @job_logger.write 'Enqueueing multiple delete job to start in the background.'
-        job = MultiDestroyJob.perform_later(job_params)
-        @job_logger.write "Job id is #{job.job_id}."
-      elsif @count > 0
-        @job_logger.write 'Performing multiple delete job inline.'
-        MultiDestroyJob.perform_now(job_params)
-      end
     end
   end
 

@@ -63,12 +63,14 @@ shared_examples 'an index table toolbar' do
       end
 
       it 'enqueues a background job with the items to delete' do
+        checkboxes = all('.js-multicheck')
+
         expect {
           find('#select-all').click
           find('.js-items-table-delete').click
           find('#modal-console', visible: true) # wait for the response
         }.to have_enqueued_job(MultiDestroyJob).with(
-          ids: items.map(&:id),
+          ids: checkboxes.map(&:value),
           klass: items.first.class.to_s,
           author_email: @logged_in_as.email,
           uid: 1
@@ -78,8 +80,8 @@ shared_examples 'an index table toolbar' do
 
     context 'with filters' do
       it 'does not delete filtered items' do
-        filter = first('td:nth-child(2)').text
-        find('.js-table-filter').set(filter)
+        to_delete = items.first
+        find('.js-table-filter').set(to_delete.title)
         expect(
           all(
             'input[type=checkbox].js-multicheck',
@@ -89,8 +91,8 @@ shared_examples 'an index table toolbar' do
         find('#select-all').click
         find('.js-items-table-delete').click
         expect(page).to have_text(/deleted/)
-        klass = items.last.class
-        expect(klass.exists?(items.first.id)).to be false
+        klass = to_delete.class
+        expect(klass.exists?(to_delete.id)).to be false
         expect(klass.count).to be items.size - 1
       end
     end

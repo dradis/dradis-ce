@@ -100,6 +100,12 @@ gem 'RedCloth', '4.3.1', require: 'redcloth'
 # html-pipeline dependency for auto-linking
 gem 'rinku'
 
+# actionpack depends on rails-html-sanitizer, which has an XSS vulnerability
+# before 1.0.4, so make sure we're using 1.0.4+:
+# see https://github.com/rails/rails-html-sanitizer/commit/f3ba1a839a
+# and https://github.com/flavorjones/loofah/issues/144
+gem 'rails-html-sanitizer', '~> 1.0.4'
+
 # SQLite3 DB driver
 gem 'sqlite3'#,  '1.3.10'
 
@@ -186,7 +192,7 @@ end
 
 group :test do
   gem 'database_cleaner'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'capybara', '~> 2.13'
   gem 'poltergeist'
   gem 'guard-rspec', require: false

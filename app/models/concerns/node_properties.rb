@@ -26,7 +26,7 @@ module NodeProperties
 
     # Even though we're serializing JSONWithIndifferentAccess, and the
     # properties can be returned using String or Symbol keys, the
-    # :value_is_there variable defined bellow is depending on Array's #include?
+    # :value_is_there variable defined below is depending on Array's #include?
     # and this method wouldn't match two hashes unless they're both
     # #with_indifferent_access
     value = value.with_indifferent_access if value.is_a?(Hash)
