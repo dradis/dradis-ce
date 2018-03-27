@@ -6,5 +6,5 @@
   '!6baed6_low',
   '!2ca02c_info',
 ].each do |name|
-  Tag.create(name: name)
+  Tag.create!(name: name)
 end
