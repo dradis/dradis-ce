@@ -15,6 +15,7 @@ describe 'issue table' do
 
     before do
       login_to_project_as_user
+      Tag.create!(name: '!6baed6_low')
       @issues = items
       visit issues_path
     end
