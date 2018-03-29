@@ -2,7 +2,7 @@
 
 # This controller is used by the console_updater js to retrieve logs
 # for a specific job
-class ConsoleController < ProjectScopedController
+class ConsoleController < AuthenticatedController
   def status
     @logs = Log.where(
       'uid = ? and id > ?',
