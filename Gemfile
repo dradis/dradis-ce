@@ -128,7 +128,7 @@ gem 'sinatra', '2.0.1'
 gem 'simple_form'
 
 # Word content control filter string parsing
-gem 'parslet', '~> 1.4.0'
+gem 'parslet', '~> 1.6.0'
 
 # Word screenshots processing
 gem 'image_size', '~> 1.3.0'
