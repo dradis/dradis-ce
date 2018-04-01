@@ -199,6 +199,80 @@ describe Node do
       node.set_property(:test_property, [80])
       expect(node.properties[:test_property]).to eq(80)
     end
+
+    context 'when working with :services' do
+      it 'adds a service as a Hash when there is none' do
+        node.set_property(:services, port: 80, protocol: 'tcp', name: 'www')
+
+        expect(node.properties[:services]).to be_a(Hash)
+        expect(node.properties[:services]['port']).to eq(80)
+        expect(node.properties[:services]['protocol']).to eq('tcp')
+        expect(node.properties[:services]['name']).to eq('www')
+      end
+
+      it 'merges services by port and protocol' do
+        node.set_property(:services, port: 80, protocol: 'tcp', name: 'www')
+        node.set_property(:services, port: 80, protocol: 'tcp', name: 'http')
+
+        expect(node.properties[:services]).to be_a(Hash)
+        expect(node.properties[:services]['port']).to eq(80)
+        expect(node.properties[:services]['protocol']).to eq('tcp')
+        expect(node.properties[:services]['name']).to eq('www | http')
+      end
+
+      it 'saves as an Array when more than 1 service provided' do
+        node.set_property(:services, port: 80, protocol: 'tcp', name: 'www')
+        node.set_property(:services, port: 80, protocol: 'tcp', name: 'http')
+        node.set_property(:services, port: 22, protocol: 'tcp', name: 'ssh')
+
+        expect(node.properties[:services]).to be_a(Array)
+        expect(node.properties[:services].length).to eq(2)
+        expect(node.properties[:services].last['name']).to eq('ssh')
+      end
+
+      it 'only adds desired columns to services table' do
+        node.set_property(
+          :services, port: 80, protocol: 'tcp', name: 'www', unknown: 'unknown'
+        )
+
+        expect(node.properties[:services][:name]).to eq 'www'
+        expect(node.properties[:services][:unknown]).to be nil
+      end
+
+      it 'creates a \'services_extra\' entry if :extra column provided' do
+        extra = [
+          { 'source' => 'nmap', 'id' => 'ssh-script', 'output' => 'extra info' },
+        ]
+        node.set_property(
+          :services, port: 80, protocol: 'tcp', name: 'www',
+          extra: extra
+        )
+
+        expect(node.properties[:services][:name]).to eq 'www'
+        expect(node.properties[:services][:extra]).to be nil
+        expect(node.properties[:services_extra].first[:extra]).to eq extra
+      end
+
+      it 'merges \'services_extra\' by port and protocol' do
+        extra1 = [
+          { 'source' => 'nmap', 'id' => 'ssh-script', 'output' => 'extra info 1' },
+        ]
+        extra2 = [
+          { 'source' => 'nmap', 'id' => 'ssh-script', 'output' => 'extra info 2' },
+        ]
+
+        [extra1, extra2, extra1].each do |extra|
+          node.set_property(
+            :services, port: 80, protocol: 'tcp', name: 'www', extra: extra
+          )
+        end
+
+        expect(node.properties[:services_extra].size).to eq 1
+        expect(node.properties[:services_extra][0][:extra].size).to eq 2
+        expect(node.properties[:services_extra][0][:extra][0]).to eq extra1[0]
+        expect(node.properties[:services_extra][0][:extra][1]).to eq extra2[0]
+      end
+    end
   end
 
   describe '#nested_activities' do
