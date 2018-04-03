@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160629084016) do
+ActiveRecord::Schema.define(version: 20180403094945) do
 
   create_table "activities", force: :cascade do |t|
     t.string "user", null: false
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 20160629084016) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "position"
-    t.text "properties"
+    t.text "properties", limit: 4294967295
     t.integer "children_count", default: 0, null: false
     t.index ["parent_id"], name: "index_nodes_on_parent_id"
     t.index ["type_id"], name: "index_nodes_on_type_id"
