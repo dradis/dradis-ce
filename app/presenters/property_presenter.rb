@@ -32,7 +32,11 @@ class PropertyPresenter < BasePresenter
         content_tag(:p, property_value.join(', '))
       end
     else
-      content_tag(:p, property_value)
+      if property_value =~ /\n/
+        content_tag(:pre, property_value)
+      else
+        content_tag(:p, property_value)
+      end
     end
   end
 

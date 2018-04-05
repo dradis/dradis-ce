@@ -1,5 +1,6 @@
 class IssuesController < ProjectScopedController
   include ContentFromTemplate
+  include MultipleDestroy
 
   before_action :find_issuelib
   before_action :find_issues, except: [:destroy, :merging]
@@ -87,33 +88,6 @@ class IssuesController < ProjectScopedController
     end
   end
 
-  def multiple_destroy
-    @issues = Issue.where(id: params[:ids])
-
-    # cache these values
-    @count = @issues.count
-    @max_deleted_inline = ::Configuration.max_deleted_inline
-
-    if @count > 0
-      @job_logger = Log.new
-      job_params = {
-        author_email: current_user.email,
-        ids: @issues.map(&:id),
-        klass: 'Issue',
-        uid: @job_logger.uid
-      }
-
-      if @count > @max_deleted_inline
-        @job_logger.write 'Enqueueing multiple delete job to start in the background.'
-        job = MultiDestroyJob.perform_later(job_params)
-        @job_logger.write "Job id is #{job.job_id}."
-      elsif @count > 0
-        @job_logger.write 'Performing multiple delete job inline.'
-        MultiDestroyJob.perform_now(job_params)
-      end
-    end
-  end
-
   def import
     importer = IssueImporter.new(params)
     @results = importer.query()
@@ -155,16 +129,6 @@ class IssuesController < ProjectScopedController
   # exist, initialize a set of tags.
   def find_or_initialize_tags
     @tags = Tag.where('name like ?', '!%')
-    if @tags.empty?
-      # Create a few default tags.
-      @tags = [
-        Tag.create(name: '!9467bd_Critical'),
-        Tag.create(name: '!d62728_High'),
-        Tag.create(name: '!ff7f0e_Medium'),
-        Tag.create(name: '!6baed6_Low'),
-        Tag.create(name: '!2ca02c_Info'),
-      ]
-    end
   end
 
   def issue_params

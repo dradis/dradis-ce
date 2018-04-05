@@ -63,12 +63,14 @@ shared_examples 'an index table toolbar' do
       end
 
       it 'enqueues a background job with the items to delete' do
+        checkboxes = all('.js-multicheck')
+
         expect {
           find('#select-all').click
           find('.js-items-table-delete').click
           find('#modal-console', visible: true) # wait for the response
         }.to have_enqueued_job(MultiDestroyJob).with(
-          ids: items.map(&:id),
+          ids: checkboxes.map(&:value),
           klass: items.first.class.to_s,
           author_email: @logged_in_as.email,
           uid: 1

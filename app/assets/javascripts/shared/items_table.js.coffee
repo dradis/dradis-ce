@@ -1,3 +1,13 @@
+# To initialize:
+#
+#   new ItemsTable('#table-id', 'item_name')
+#
+# Where:
+#   - '#table-id' is the ID of a <div> which wraps the <table> AND the toolbar
+#     (so not the ID of the <table> itself). NB the actual <table> must have
+#     the class '.items-table'
+#
+#   - 'item_name' is the name of your model, e.g. 'issue', 'node'
 class @ItemsTable
   project: null
   selectedColumns: []

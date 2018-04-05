@@ -100,10 +100,11 @@ gem 'RedCloth', '4.3.1', require: 'redcloth'
 # html-pipeline dependency for auto-linking
 gem 'rinku'
 
-# actionpack depends on rails-html-sanitizer, which depends on loofah ~> 2.0,
-# but loofah < 2.2.1 has an XSS vulnerability, so make sure we're using
-# 2.2.1+. (more info: https://github.com/flavorjones/loofah/issues/144)
-gem 'loofah', '~> 2.2.1'
+# actionpack depends on rails-html-sanitizer, which has an XSS vulnerability
+# before 1.0.4, so make sure we're using 1.0.4+:
+# see https://github.com/rails/rails-html-sanitizer/commit/f3ba1a839a
+# and https://github.com/flavorjones/loofah/issues/144
+gem 'rails-html-sanitizer', '~> 1.0.4'
 
 # SQLite3 DB driver
 gem 'sqlite3'#,  '1.3.10'
@@ -127,7 +128,7 @@ gem 'sinatra', '2.0.1'
 gem 'simple_form'
 
 # Word content control filter string parsing
-gem 'parslet', '~> 1.4.0'
+gem 'parslet', '~> 1.6.0'
 
 # Word screenshots processing
 gem 'image_size', '~> 1.3.0'
