@@ -90,10 +90,11 @@ module NodeProperties
     end
 
     if extra.any?
+      pp_key = "#{protocol}/#{port}"
       self.properties[:services_extras] ||= {}
-      self.properties[:services_extras]["#{protocol}/#{port}"] ||= []
+      self.properties[:services_extras][pp_key] ||= []
       extra.each do |k, v|
-        self.properties[:services_extras]["#{protocol}/#{port}"].push(
+        self.properties[:services_extras][pp_key].push(
           source: source, id: k.to_s, output: v
         )
       end
