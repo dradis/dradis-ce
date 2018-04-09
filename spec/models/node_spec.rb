@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe Node do
@@ -232,6 +234,27 @@ describe Node do
         expect(node.nested_activities).to match_array(@activities)
       end
     end
+  end
 
+  describe '.sync_settings' do
+    # TODO when porting this to Pro, it needs updating so that there's a
+    # separate Sync node per project
+
+    it "creates the 'Sync' node if it doesn't exist yet" do
+      expect { Node.sync_settings }.to change { Node.count }.by(1)
+      node = Node.last
+      expect(node.label).to eq 'Sync'
+      expect(node.type_id).to eq Node::Types::SYNC
+    end
+
+    it "returns the 'Sync' node if it already exists" do
+      node = Node.sync_settings
+      expect do
+        other = Node.sync_settings
+        expect(node).to eq other
+        expect(other.label).to eq 'Sync'
+        expect(other.type_id).to eq Node::Types::SYNC
+      end.not_to change { Node.count }
+    end
   end
 end

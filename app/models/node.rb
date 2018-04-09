@@ -12,6 +12,7 @@ class Node < ApplicationRecord
     HOST = 1
     METHODOLOGY = 2
     ISSUELIB = 3
+    SYNC = 4
     USER_TYPES = [DEFAULT, HOST]
   end
 
@@ -42,7 +43,6 @@ class Node < ApplicationRecord
     Activity.where(sql)
   end
 
-
   # -- Callbacks ------------------------------------------------------------
   before_destroy :destroy_attachments
   before_save do |record|
@@ -62,7 +62,6 @@ class Node < ApplicationRecord
   scope :user_nodes, -> {
     where("type_id IN (?)", Types::USER_TYPES)
   }
-
 
   # -- Class Methods --------------------------------------------------------
   # Returns or creates the Node that acts as container for all Issues in a
@@ -93,6 +92,12 @@ class Node < ApplicationRecord
   # node:
   def self.recovered
     find_or_create_by(label: 'Recovered', type_id: Node::Types::DEFAULT)
+  end
+
+  # Each project has separate settings for the various 'sync' plugins,
+  # which will be stored in this node.
+  def self.sync_settings
+    find_or_create_by(label: 'Sync', type_id: Node::Types::SYNC)
   end
 
   # -- Instance Methods -----------------------------------------------------
