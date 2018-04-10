@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json_validator'
 require 'json_with_indifferent_access'
 
@@ -46,9 +48,8 @@ module NodeProperties
   end
 
   def has_any_property?
-    self.properties.keys.any?{ |p| self.properties[p].present? }
+    self.properties.keys.any? { |p| self.properties[p].present? }
   end
-
 
   # -------------------------------------- :raw_properties accessors for the UI
   def raw_properties
@@ -69,7 +70,7 @@ module NodeProperties
   def raw_properties=(value)
     @raw_properties = JSON::parse(value)
     self.properties = @raw_properties
-  rescue JSON::ParserError => exception
+  rescue JSON::ParserError
     @raw_properties = value
   end
 end
