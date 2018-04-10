@@ -2,7 +2,7 @@
 
 <div class="row-fluid">
   <div class="span7 offset1">
-    <%= form_tag '#TODO' do %>
+    <%= form_tag sync_settings_path do %>
       <% @plugins.each do |plugin| %>
         <%= render 'settings_table', plugin: plugin %>
       <% end %>

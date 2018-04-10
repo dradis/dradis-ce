@@ -28,6 +28,7 @@
 //= require snowcrash/modules/issues
 //= require snowcrash/modules/nodes
 //= require snowcrash/modules/search
+//= require snowcrash/modules/sync_settings
 //= require snowcrash/modules/activities/poller
 // require snowcrash/modules/tour
 //= require snowcrash/modules/uploads
