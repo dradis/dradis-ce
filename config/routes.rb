@@ -20,6 +20,8 @@ Rails.application.routes.draw do
 
   resources :configurations, only: [:index, :update]
 
+  get 'sync/settings', to: 'sync#settings'
+
   resources :console, only: [] do
     collection { get :status }
   end

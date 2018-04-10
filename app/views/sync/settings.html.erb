@@ -1,0 +1,19 @@
+<% content_for :title, 'Sync Settings' %>
+
+<div class="row-fluid">
+  <div class="span7 offset1">
+    <%= form_tag '#TODO' do %>
+      <% @plugins.each do |plugin| %>
+        <%= render 'settings_table', plugin: plugin %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="span3 offset1" data-spy="affix" data-offset-top="300">
+    <ul class="nav nav-list bs-config-sidenav affix">
+      <% @plugins.each do |p| %>
+        <li><%= link_to p.human_name, anchor: p.human_name %></a></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

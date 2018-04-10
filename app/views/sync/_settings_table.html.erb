@@ -1,0 +1,23 @@
+<%= content_tag :h2, plugin.human_name, id: plugin.human_name.parameterize %>
+
+<table class="table table-ajax-inputs">
+  <thead>
+    <tr>
+      <th class="span3 setting" scope="col">Setting Name</th>
+      <th class="span4 value" scope="col">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% plugin.settings_template.each_with_index do |setting, index| %>
+      <tr class="gemified">
+        <td class="span3 setting"><%= setting[:key] %></td>
+        <td class="span4 value">
+          <%= text_field_tag(
+            "#{setting[:key].underscore}_settings_#{plugin.human_name.underscore}",
+            @settings_node.value(plugin, setting[:key])
+          ) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
