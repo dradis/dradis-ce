@@ -5,5 +5,10 @@ FactoryBot.define do
 
     trait :with_project do
     end
+
+    factory :sync_node do
+      label 'Sync'
+      type_id Node::Types::SYNC
+    end
   end
 end
