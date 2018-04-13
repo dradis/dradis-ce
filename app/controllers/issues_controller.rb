@@ -19,6 +19,22 @@ class IssuesController < ProjectScopedController
     # nodes, and we need the auto-complete to have the full list.
     @nodes_for_add_evidence = Node.user_nodes.order(:label)
 
+    @affected_nodes    = Node.joins(:evidence)
+                           .select(:id, :label, :type_id)
+                           .distinct
+                           .where('evidence.issue_id = ?', @issue.id)
+                           .sort_by do |node,_|
+                             node.label.split('.').map(&:to_i)
+                           end
+    @affected_evidence = Evidence.select(:id, :node_id).where(issue: @issue, node: @affected_nodes)
+    @evidence_by_node  = Hash[
+      @affected_nodes.map do |node|
+        [node, @affected_evidence.select {|e| e.node_id == node.id } ]
+      end
+    ]
+    @first_node        = @affected_nodes.first
+    @first_evidence    = Evidence.find(@evidence_by_node[@first_node].first.id)
+
     load_conflicting_revisions(@issue)
   end
 
