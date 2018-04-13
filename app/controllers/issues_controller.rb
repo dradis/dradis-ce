@@ -27,8 +27,8 @@ class IssuesController < ProjectScopedController
                           node.label.split('.').map(&:to_i)
                         end
 
-    @first_node     = @affected_nodes.first
-    @first_evidence = Evidence.where(node: @first_node, issue: @issue).first
+    @first_node      = @affected_nodes.first
+    @first_evidence  = Evidence.where(node: @first_node, issue: @issue)
 
     load_conflicting_revisions(@issue)
   end

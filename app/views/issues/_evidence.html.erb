@@ -27,8 +27,7 @@
                 render partial: 'issues/evidence_content',
                   locals: {
                     node: node,
-                    evidence: @first_evidence,
-                    instances: {}
+                    instances: @first_evidence
                   }
               %>
             <% end %>
