@@ -21,61 +21,17 @@
     <div class="tab-content">
       <% @affected_nodes.each do |node| %>
         <% instances = @evidence_by_node[node] %>
-        <% cache [@issue, node, instances, 'evidence-content'] do %>
-          <%= content_tag :div, class: 'tab-pane evidence-content', id: "evidence_for_#{dom_id(node)}" do %>
-            <%= content_tag :section, class: 'evidence-for-host' do %>
-
-              <% if node.evidence_count == 1 %>
-                <h3>
-                  Evidence for <%= link_to node.label, node %> -
-                  <span class="actions">
-                    <%= link_to edit_node_evidence_path(node, instances.first, back_to: :issue) do %>
-                      <i class="fa fa-pencil"></i> Edit
-                    <% end %>
-                    <%= link_to [node, instances.first],
-                          class: 'text-error',
-                          data: { confirm: 'Are you sure?' },
-                          method: :delete do %>
-                      <i class="fa fa-trash"></i> Delete
-                    <% end %>
-                  </span>
-                </h3>
-                <div class="content-textile" id="node_<%= node.id %>_instance_0">
-                  <%= markup(instances.first.content) %>
-                </div>
-              <% else %>
-                <h3>Evidence for <%= link_to node.label, node %></h3>
-                <ul class="nav nav-tabs">
-                  <% instances.each_with_index do |evidence, i| %>
-                  <li class="<%= 'active' if i==0 %>"><a href="#node_<%= node.id %>_instance_<%= i %>" data-toggle="tab">Instance #<%= i+1 %></a></li>
-                  <% end %>
-                </ul>
-
-                <div class="tab-content">
-                  <% instances.each_with_index do |evidence, i| %>
-                    <div class="tab-pane<%= ' active' if i==0 %>" id="node_<%= node.id %>_instance_<%= i %>">
-                      <h3>
-                        Evidence for this instance -
-                        <span class="actions">
-                          <%= link_to edit_node_evidence_path(node, evidence) do %>
-                            <i class="fa fa-pencil"></i> Edit
-                          <% end %>
-                          <%= link_to [node, evidence],
-                                class: 'text-error',
-                                data: { confirm: 'Are you sure?' },
-                                method: :delete do %>
-                            <i class="fa fa-trash"></i> Delete
-                          <% end %>
-                        </span>
-                      </h3>
-                      <div class="content-textile">
-                        <%= markup(evidence.content) %>
-                      </div>
-                    </div>
-                  <% end %>
-                </div>
-              <% end %>
-
+        <%= content_tag :div, class: 'tab-pane evidence-content', id: "evidence_for_#{dom_id(node)}" do %>
+          <%= content_tag :section, class: 'evidence-for-host' do %>
+            <% if node == @first_node %>
+              <%=
+                render partial: 'issues/evidence_content',
+                  locals: {
+                    node: node,
+                    evidence: @first_evidence,
+                    instances: instances
+                  }
+              %>
             <% end %>
           <% end %>
         <% end %>

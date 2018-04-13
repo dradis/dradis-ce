@@ -1,6 +1,6 @@
 <% cache [@issue, node, instances, 'evidence-content'] do %>
 
-  <% if instances.count == 1 %>
+  <% if node.evidence_count == 1 %>
     <h3>
       Evidence for <%= link_to node.label, node %> -
       <span class="actions">
