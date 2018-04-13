@@ -43,10 +43,10 @@
                   <%= markup(instances.first.content) %>
                 </div>
               <% else %>
-                <h3>Evidence for <%= link_to node.label, node %></h3>
+                <div class="tabbable tabs-left">
                 <ul class="nav nav-tabs">
                   <% instances.each_with_index do |evidence, i| %>
-                  <li class="<%= 'active' if i==0 %>"><a href="#node_<%= node.id %>_instance_<%= i %>" data-toggle="tab">Instance #<%= i+1 %></a></li>
+                  <li class="<%= 'active' if i==0 %>"><a href="#node_<%= node.id %>_instance_<%= i %>" data-toggle="tab">#<%= i+1 %></a></li>
                   <% end %>
                 </ul>
 
@@ -54,7 +54,7 @@
                   <% instances.each_with_index do |evidence, i| %>
                     <div class="tab-pane<%= ' active' if i==0 %>" id="node_<%= node.id %>_instance_<%= i %>">
                       <h3>
-                        Evidence for this instance -
+                        Instance #<%= i+1 %> for <%= link_to node.label, node %> -
                         <span class="actions">
                           <%= link_to edit_node_evidence_path(node, evidence) do %>
                             <i class="fa fa-pencil"></i> Edit
@@ -72,6 +72,7 @@
                       </div>
                     </div>
                   <% end %>
+                </div>
                 </div>
               <% end %>
 

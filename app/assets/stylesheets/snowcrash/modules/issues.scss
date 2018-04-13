@@ -42,7 +42,7 @@ body.issues {
 
 body.issues.show {
   .evidence-content {
-    padding: 1em 0 0 2em;
+    padding-left: 2em;
 
     .evidence-for-host {
       margin: 0.5em 0 2.5em;
@@ -54,11 +54,11 @@ body.issues.show {
       }
     }
 
+    .tabs-left > .nav-tabs > li > a {
+      min-width: auto;
+    }
     .tab-content {
-      border-right: 1px solid #ddd;
-      border-bottom: 1px solid #ddd;
-      border-left: 1px solid #ddd;
-      padding: 1.5em 1em 1em;
+      padding: 1em 0 0 2em;
     }
   }
 
