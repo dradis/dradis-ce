@@ -20,7 +20,6 @@
     </ul>
     <div class="tab-content">
       <% @affected_nodes.each do |node| %>
-        <% instances = @evidence_by_node[node] %>
         <%= content_tag :div, class: 'tab-pane evidence-content', id: "evidence_for_#{dom_id(node)}" do %>
           <%= content_tag :section, class: 'evidence-for-host' do %>
             <% if node == @first_node %>
@@ -29,7 +28,7 @@
                   locals: {
                     node: node,
                     evidence: @first_evidence,
-                    instances: instances
+                    instances: {}
                   }
               %>
             <% end %>

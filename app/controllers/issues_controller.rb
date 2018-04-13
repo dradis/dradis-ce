@@ -27,14 +27,8 @@ class IssuesController < ProjectScopedController
                           node.label.split('.').map(&:to_i)
                         end
 
-    @evidence_by_node = Hash[
-      @affected_nodes.map do |node|
-        [node, Evidence.select(:id, :node_id, :content).where(issue: @issue, node: node)]
-      end
-    ]
-
-    @first_node        = @affected_nodes.first
-    @first_evidence    = Evidence.find(@evidence_by_node[@first_node].first.id)
+    @first_node     = @affected_nodes.first
+    @first_evidence = Evidence.where(node: @first_node, issue: @issue).first
 
     load_conflicting_revisions(@issue)
   end
