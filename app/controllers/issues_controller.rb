@@ -24,7 +24,11 @@ class IssuesController < ProjectScopedController
                         .where('evidence.issue_id = ?', @issue.id)
                         .group('nodes.id')
                         .sort_by do |node, _|
-                          node.label.split('.').map(&:to_i)
+                          if node.label =~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/
+                            node.label.split('.').map(&:to_s)
+                          else
+                            [node.label.to_s]
+                          end
                         end
 
     @first_node      = @affected_nodes.first
