@@ -11,7 +11,7 @@
       <% @affected_nodes.each do |node| %>
         <% cache [@issue, node, node.evidence_count, 'evidence-nav'] do %>
           <li>
-            <a href="#evidence_for_<%= dom_id(node) %>" data-toggle="tab">
+            <a href="#evidence_for_<%= dom_id(node) %>" data-toggle="tab" data-path="<%= issue_node_path(@issue, node) %>" data-node="<%= "evidence_for_#{dom_id(node)}" %>">
               <i class="fa fa-<%= ['folder-o','laptop'][node.type_id] %>"></i> <%= node.label %> (<%= node.evidence_count %>)
             </a>
           </li>
@@ -21,16 +21,14 @@
     <div class="tab-content">
       <% @affected_nodes.each do |node| %>
         <%= content_tag :div, class: 'tab-pane evidence-content', id: "evidence_for_#{dom_id(node)}" do %>
-          <%= content_tag :section, class: 'evidence-for-host' do %>
-            <% if node == @first_node %>
-              <%=
-                render partial: 'issues/evidence_content',
-                  locals: {
-                    node: node,
-                    instances: @first_evidence
-                  }
-              %>
-            <% end %>
+          <% if node == @first_node %>
+            <%=
+              render partial: 'issues/evidence_content',
+                locals: {
+                  node: node,
+                  instances: @first_evidence
+                }
+            %>
           <% end %>
         <% end %>
       <% end %>

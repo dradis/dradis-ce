@@ -3,9 +3,9 @@ class IssuesController < ProjectScopedController
   include MultipleDestroy
 
   before_action :find_issuelib
-  before_action :find_issues, except: [:destroy, :merging]
+  before_action :find_issues, except: [:destroy]
 
-  before_action :find_or_initialize_issue, except: [:import, :index, :merging]
+  before_action :find_or_initialize_issue, except: [:import, :index]
   before_action :find_or_initialize_tags, except: [:destroy]
 
   def index
