@@ -1,7 +1,7 @@
 <% cache [@issue, node, instances, 'evidence-content'] do %>
+  <% evidence = instances.first %>
   <%= content_tag :section, class: 'evidence-for-host' do %>
     <% if node.evidence_count == 1 %>
-      <% evidence = instances.first %>
       <h3>
         Evidence for <%= link_to node.label, node %> -
         <span class="actions">
@@ -30,25 +30,23 @@
       <div class="tab-content">
         <% instances.each_with_index do |instance, i| %>
           <div class="tab-pane<%= ' active' if i==0 %>" id="node_<%= node.id %>_instance_<%= instance.id %>">
-            <% if instance.id == evidence.id %>
-              <h3>
-                Instance #<%= i+1 %> for <%= link_to node.label, node %> -
-                <span class="actions">
-                  <%= link_to edit_node_evidence_path(node, evidence) do %>
-                    <i class="fa fa-pencil"></i> Edit
-                  <% end %>
-                  <%= link_to [node, evidence],
-                        class: 'text-error',
-                        data: { confirm: 'Are you sure?' },
-                        method: :delete do %>
-                    <i class="fa fa-trash"></i> Delete
-                  <% end %>
-                </span>
-              </h3>
-              <div class="content-textile">
-                <%= markup(evidence.content) %>
-              </div>
-            <% end %>
+            <h3>
+              Instance #<%= i+1 %> for <%= link_to node.label, node %> -
+              <span class="actions">
+                <%= link_to edit_node_evidence_path(node, instance) do %>
+                  <i class="fa fa-pencil"></i> Edit
+                <% end %>
+                <%= link_to [node, instance],
+                      class: 'text-error',
+                      data: { confirm: 'Are you sure?' },
+                      method: :delete do %>
+                  <i class="fa fa-trash"></i> Delete
+                <% end %>
+              </span>
+            </h3>
+            <div class="content-textile">
+              <%= markup(instance.content) %>
+            </div>
           </div>
         <% end %>
       </div>
