@@ -17,10 +17,13 @@ document.addEventListener "turbolinks:load", ->
 
       path   = $(this).data('path')
       node   = $(this).data('node')
-      fetch(path, {credentials: 'same-origin'}).then (response) ->
-        response.text()
-        .then (html) ->
-          $("##{node}").html(html)
+      fetch(path, {credentials: 'include'}).then (response) ->
+        if response.redirected
+          window.location.href = '/'
+        else
+          response.text()
+          .then (html) ->
+            $("##{node}").html(html)
 
     $('.js-add-evidence').click ->
       $('#js-add-evidence-container').slideToggle()
