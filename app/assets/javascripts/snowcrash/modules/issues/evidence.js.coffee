@@ -5,7 +5,7 @@ document.addEventListener "turbolinks:load", ->
 
     $('i[data-toggle="tooltip"]').tooltip()
 
-    $('#evidence-tabs a[data-toggle="tab"]').on 'shown', (ev)->
+    $('#evidence-host-list a[data-toggle="tab"]').on 'shown', (ev)->
       tabContentHeight = $('#evidence-tabs .tab-content').height()
       $tabs            = $('#evidence-tabs #evidence-host-list')
 
