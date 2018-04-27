@@ -255,18 +255,39 @@ describe "Issues pages" do
         let(:extra_setup) { create_activities }
         let(:create_activities) { nil }
 
-        context "when there is a host node with evidence" do
+        context "when there are host nodes with evidence" do
           let(:extra_setup) do
-            host = create(:node, label: '10.0.0.1', type_id: Node::Types::HOST)
-            host.evidence.create(
+            host1 = create(:node, label: '10.0.0.1', type_id: Node::Types::HOST)
+            host1.evidence.create(
               author: 'rspec',
               issue_id: @issue.id,
               content: "#[EvidenceBlock1]#\nThis apache is old!"
             )
+
+            host2 = create(:node, label: '10.0.0.2', type_id: Node::Types::HOST)
+            3.times do |i|
+              host2.evidence.create(
+                author: 'rspec',
+                issue_id: @issue.id,
+                content: "#[EvidenceBlock1]#\nThis apache is old (#{i})!"
+              )
+            end
           end
 
           it "presents the list of hosts affected by a given issue"  do
             expect(find(".secondary-navbar-content")).to have_content('10.0.0.1')
+            expect(find(".secondary-navbar-content")).to have_content('10.0.0.2 (3)')
+          end
+
+          it "presents the evidence of the first node" do
+            expect(page).to have_content('This apache is old!')
+          end
+
+          it "presents the evidence of the other nodes on click", js: true do
+            skip "enable when we move out from PhantomJS and support js 'fetch'"
+            click_link 'Evidence'
+            click_link '10.0.0.2 (3)'
+            expect(page).to have_content('This apache is old (0)!')
           end
         end
 
