@@ -4,7 +4,7 @@ class Issues::NodesController < IssuesController
   def show
     issue = Issue.find(params[:issue_id])
     @node = Node.joins(:evidence)
-                .select('nodes.id, label, type_id, count(evidence.id) as evidence_count')
+                .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')
                 .where('evidence.issue_id = ? and nodes.id = ?', params[:issue_id], params[:id])
                 .first
     @instances = Evidence.where(issue: issue, node: @node)

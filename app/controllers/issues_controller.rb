@@ -20,7 +20,7 @@ class IssuesController < ProjectScopedController
     @nodes_for_add_evidence = Node.user_nodes.order(:label)
 
     @affected_nodes = Node.joins(:evidence)
-                        .select('nodes.id, label, type_id, count(evidence.id) as evidence_count')
+                        .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')
                         .where('evidence.issue_id = ?', @issue.id)
                         .group('nodes.id')
                         .sort_by { |node, _| node.label }
