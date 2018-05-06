@@ -22,9 +22,17 @@ class PropertyPresenter < BasePresenter
 
     # 'services' and 'services_extras' are special cases:
     if property_key == 'services'
-      render 'nodes/show/services_table', services: property_value
+      services = property_value.sort_by { |v| v['port'] }
+      render 'nodes/show/services_table', services: services
     elsif property_key == 'services_extras'
-      render 'nodes/show/services_extras_table', extras: property_value
+      # We want to sort the table by port number - but property_value is and
+      # must remain a Hash, and Hash#sort_by returns an Array.  Hacky solution
+      # is to build a new Hash with the keys in the correct order:
+
+      # (The `to_i` is important here so that e.g. '100' appears after '20')
+      keys   = property_value.keys.sort_by { |k| k.split('/').last.to_i }
+      extras = keys.each_with_object({}) { |k, h| h[k] = property_value[k] }
+      render 'nodes/show/services_extras_table', extras: extras
     elsif property_value.is_a?(Array)
       if property_value.all? { |x| x.is_a?(Hash) }
         render_table
