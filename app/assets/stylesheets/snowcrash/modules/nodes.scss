@@ -32,7 +32,7 @@ body.nodes {
     // tall enough to fit a reasonably-sized dropdown menu. We just need to
     // make sure that we only apply this CSS to the exact correct tab-panes -
     // because there may be other .tab-panes, further nested down, which
-    // shouldn't be as tall (e.g. the .tab-panes that will be used be the
+    // shouldn't be as tall (e.g. the .tab-panes that will be used by the
     // 'services extras' table if it's present.)
     .secondary-navbar-content > .tab-content > .tab-pane {
       min-height: 800px;
