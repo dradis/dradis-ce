@@ -39,3 +39,10 @@ body.nodes {
     }
   }
 }
+
+td.services-extras-datum-output {
+  // Without this line, service info with very long strings of characters (e.g.
+  // an SSH key) will cause the table to be very wide and break the page's
+  // layout:
+  word-break: break-all;
+}
