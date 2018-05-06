@@ -1,5 +1,5 @@
 body.upload {
-  .view-content > h2 {
+  .main-wrapper .main-content .view-content .inner h2 {
     border-bottom: 1px solid #ccc;
     margin-top: 2em;
 
@@ -16,10 +16,6 @@ body.upload {
   .progress { position:relative; width:400px; border: 1px solid #ddd; padding: 1px; border-radius: 3px; }
   .bar { background-color: #B4F5B4; width:0%; height:20px; border-radius: 3px; }
   .percent { position:absolute; display:inline-block; top:3px; left:48%; }
-
-  #console {
-    @include ajax-console;
-  }
 
   a[data-behavior~="show-hide"].collapsed:before
   {

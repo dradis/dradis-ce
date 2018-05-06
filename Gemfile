@@ -47,7 +47,7 @@ gem 'jquery-fileupload-rails', '~> 0.3.4'
 gem 'jquery-hotkeys-rails'
 
 # Organize Node tree
-gem 'acts_as_tree'
+gem 'acts_as_tree', '~> 2.7.1'
 
 gem 'builder'
 
