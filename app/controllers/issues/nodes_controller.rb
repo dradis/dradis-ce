@@ -1,9 +1,4 @@
-class Issues::NodesController < IssuesController
-  skip_before_action :find_issuelib
-  skip_before_action :find_issues
-  skip_before_action :find_or_initialize_issue
-  skip_before_action :find_or_initialize_tags
-
+class Issues::NodesController < ProjectScopedController
   def show
     @node =
       Node.joins(:evidence)
