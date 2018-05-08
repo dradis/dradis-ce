@@ -8,30 +8,27 @@
 <% else %>
   <div class="tabbable tabs-left" id="evidence-tabs">
     <ul class="nav nav-tabs" id="evidence-host-list">
-      <% @evidence_by_node.each do |node, instances| %>
-        <% cache [@issue, node, instances.count, 'evidence-nav'] do %>
+      <% @affected_nodes.each do |node| %>
+        <% cache [@issue, node, node.evidence_count, 'evidence-nav'] do %>
           <li>
-            <a href="#evidence_for_<%= dom_id(node) %>" data-toggle="tab">
-              <i class="fa fa-<%= ['folder-o','laptop'][node.type_id] %>"></i> <%= node.label %> (<%= instances.count %>)
+            <a href="#evidence_for_<%= dom_id(node) %>" data-toggle="tab" data-path="<%= issue_node_path(@issue, node) %>" data-node="<%= "evidence_for_#{dom_id(node)}" %>">
+              <i class="fa fa-<%= ['folder-o','laptop'][node.type_id] %>"></i> <%= node.label %> (<%= node.evidence_count %>)
             </a>
           </li>
         <% end %>
       <% end %>
     </ul>
     <div class="tab-content">
-      <% @evidence_by_node.each do |node, instances| %>
+      <% @affected_nodes.each do |node| %>
         <%= content_tag :div, class: 'tab-pane evidence-content', id: "evidence_for_#{dom_id(node)}" do %>
-          <%= content_tag :section, class: 'evidence-for-host' do %>
-            <% if node == @first_node %>
-              <%=
-                render partial: 'issues/evidence_content',
-                  locals: {
-                    node: node,
-                    evidence: @first_evidence,
-                    instances: instances
-                  }
-              %>
-            <% end %>
+          <% if node == @first_node %>
+            <%=
+              render partial: 'issues/nodes/evidence',
+                locals: {
+                  node: node,
+                  instances: @first_evidence
+                }
+            %>
           <% end %>
         <% end %>
       <% end %>

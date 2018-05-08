@@ -30,6 +30,8 @@ Rails.application.routes.draw do
       delete :multiple_destroy
       resources :merge, only: [:new, :create], controller: 'issues/merge'
     end
+
+    resources :nodes, only: [:show], controller: 'issues/nodes'
     resources :revisions, only: [:index, :show]
   end
 

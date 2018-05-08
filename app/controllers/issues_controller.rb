@@ -3,9 +3,9 @@ class IssuesController < ProjectScopedController
   include MultipleDestroy
 
   before_action :find_issuelib
-  before_action :find_issues, except: [:destroy, :merging]
+  before_action :find_issues, except: [:destroy]
 
-  before_action :find_or_initialize_issue, except: [:import, :index, :merging]
+  before_action :find_or_initialize_issue, except: [:import, :index]
   before_action :find_or_initialize_tags, except: [:destroy]
 
   def index
@@ -19,21 +19,14 @@ class IssuesController < ProjectScopedController
     # nodes, and we need the auto-complete to have the full list.
     @nodes_for_add_evidence = Node.user_nodes.order(:label)
 
-    @affected_nodes    = Node.joins(:evidence)
-                           .select(:id, :label, :type_id)
-                           .distinct
-                           .where('evidence.issue_id = ?', @issue.id)
-                           .sort_by do |node,_|
-                             node.label.split('.').map(&:to_i)
-                           end
-    @affected_evidence = Evidence.select(:id, :node_id).where(issue: @issue, node: @affected_nodes)
-    @evidence_by_node  = Hash[
-      @affected_nodes.map do |node|
-        [node, @affected_evidence.select {|e| e.node_id == node.id } ]
-      end
-    ]
-    @first_node        = @affected_nodes.first
-    @first_evidence    = Evidence.find(@evidence_by_node[@first_node].first.id)
+    @affected_nodes = Node.joins(:evidence)
+                        .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')
+                        .where('evidence.issue_id = ?', @issue.id)
+                        .group('nodes.id')
+                        .sort_by { |node, _| node.label }
+
+    @first_node      = @affected_nodes.first
+    @first_evidence  = Evidence.where(node: @first_node, issue: @issue)
 
     load_conflicting_revisions(@issue)
   end
