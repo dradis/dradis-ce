@@ -35,6 +35,8 @@ Rails.application.routes.draw do
       post :import
       resources :merge, only: [:new, :create], controller: 'issues/merge'
     end
+
+    resources :nodes, only: [:show], controller: 'issues/nodes'
     resources :revisions, only: [:index, :show]
   end
 
