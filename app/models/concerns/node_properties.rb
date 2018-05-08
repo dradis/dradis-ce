@@ -18,10 +18,17 @@ module NodeProperties
     end
   end
 
+  SERVICE_KEYS = %i[protocol port state product reason name version]
+
   # -------------------------------------------- Individual property management
   # Sets a property, storing value as Array when needed
   # and taking care of duplications
   def set_property(key, value)
+    if [:services, :services_extras].include?(key) # let's get defensive
+      raise ArgumentError, "don't use set_property for :services or "\
+                           ":services_extras, use set_service instead"
+    end
+
     current_value = self.properties[key]
 
     # Even though we're serializing JSONWithIndifferentAccess, and the
@@ -47,6 +54,51 @@ module NodeProperties
 
   def has_any_property?
     self.properties.keys.any?{ |p| self.properties[p].present? }
+  end
+
+  # -------------------------------------------- Individual property management
+
+  # data = a hash of options. must have keys port, protocol, and source (the
+  # name of the plugin e.g. 'nmap'.)
+  #
+  # The following properties, if present, will be saved as information about
+  # the services under the `services` key on properties: port, protocol, state,
+  # product, reason, name, version.
+  #
+  # Anything else will be saved under the `services_extras` key
+  def set_service(data)
+    data.symbolize_keys!
+    port     = data.fetch(:port)
+    protocol = data.fetch(:protocol)
+    source   = data.fetch(:source)
+    data.delete(:source)
+
+    core  = data.slice(*SERVICE_KEYS)
+    extra = data.except(*SERVICE_KEYS)
+
+    self.properties[:services] ||= []
+    this_service = self.properties[:services].find do |service|
+      service[:port] == port && service[:protocol] == protocol
+    end
+
+    if this_service.nil?
+      self.properties[:services].push(core)
+    else
+      # the variable 'this_service' is a reference, so updating it like this
+      # will update the entry in original properties[:services] array
+      this_service.merge!(core)
+    end
+
+    if extra.any?
+      pp_key = "#{protocol}/#{port}"
+      self.properties[:services_extras] ||= {}
+      self.properties[:services_extras][pp_key] ||= []
+      extra.each do |k, v|
+        self.properties[:services_extras][pp_key].push(
+          source: source, id: k.to_s, output: v
+        )
+      end
+    end
   end
 
 
