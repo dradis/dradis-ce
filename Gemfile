@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.3'
+gem 'rails', '~> 5.1.6'
 
 # Use Puma as the app server
 # FIXME: required for Rails 5 ActionCable
@@ -35,7 +35,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
 # Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 3.0'
+gem 'redis', '~> 4.0'
 
 # ---------------------------------------------------- Dradis Community Edition
 gem 'bootstrap-sass', '~> 2.3.2.2'
