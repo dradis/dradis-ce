@@ -188,7 +188,7 @@ GEM
     mono_logger (1.1.0)
     multi_json (1.13.1)
     mustermann (1.0.2)
-    mysql2 (0.3.18)
+    mysql2 (0.5.1)
     nenv (0.3.0)
     nio4r (2.3.1)
     nokogiri (1.8.2)
@@ -408,7 +408,7 @@ DEPENDENCIES
   letter_opener
   listen (>= 3.0.5, < 3.2)
   local_time (>= 2.0.0)
-  mysql2 (= 0.3.18)
+  mysql2 (~> 0.5.1)
   nokogiri (= 1.8.2)
   paper_trail (~> 6.0)
   parslet (~> 1.6.0)

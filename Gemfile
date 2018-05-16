@@ -88,7 +88,7 @@ gem 'json', '1.8.6'
 gem 'nokogiri', '1.8.2'
 
 # MySQL backend
-gem 'mysql2', '0.3.18'
+gem 'mysql2', '~> 0.5.1'
 
 # Textile markup
 
