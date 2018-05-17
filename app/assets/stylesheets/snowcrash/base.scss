@@ -289,6 +289,12 @@ body {
             font-size: 10px;
             padding: 0 0 1em 3em;
           }
+          &.node {
+            a {
+              word-break: break-all;
+              margin-left: 30px;
+            }
+          }
         }
       }
 
