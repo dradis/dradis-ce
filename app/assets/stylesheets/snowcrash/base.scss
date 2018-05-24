@@ -441,6 +441,11 @@ body {
           }
         }
 
+        .scrollable {
+          overflow-y: auto;
+          height: 500px;
+        }
+
         // there are links in the secondary-navbar that are outside a .list-item
         // and we them with the right color.
         a {
