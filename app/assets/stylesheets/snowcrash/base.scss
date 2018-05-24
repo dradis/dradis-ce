@@ -171,6 +171,8 @@ body {
             display: inline-block;
             width: auto;
             color: lighten($primaryBgColor, 40%);
+            word-break: break-all;
+            line-height: 1.5em;
             &:hover {
               text-decoration: none;
               color: lighten($primaryBgColor, 50%);
@@ -288,12 +290,6 @@ body {
             display: none;
             font-size: 10px;
             padding: 0 0 1em 3em;
-          }
-          &.node {
-            a {
-              word-break: break-all;
-              line-height: 1.5em;
-            }
           }
         }
       }
