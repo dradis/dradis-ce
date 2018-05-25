@@ -18,6 +18,7 @@ class @ItemsTable
     @$jsTable     = $(@tableId)
     @$table       = @$jsTable.find('.items-table')
     @$columnMenu  = $("#{@tableId} .dropdown-menu.js-table-columns")
+    @$tableHeader = $("#{@tableId} th")
 
     @checkboxSelector       = "#{@tableId} input[type=checkbox].js-multicheck"
     @selectedItemsSelector  = "#{@checkboxSelector}:checked:visible"
@@ -27,6 +28,8 @@ class @ItemsTable
     @loadColumnState()
     @showHideColumns()
 
+    @$tableHeader.css 'cursor', 'pointer'
+    @$tableHeader.on 'click', @sortRow
     # -------------------------------------------------- Install event handlers
     # We're hooking into Rails UJS data-confirm behavior to only fire the Ajax
     # if the user confirmed the deletion
@@ -112,6 +115,29 @@ class @ItemsTable
     @saveColumnState()
     @showHideColumns()
     false
+  
+  sortRow: (evt) =>
+    th = evt.currentTarget
+    rows = @$table.find('tbody tr').toArray().sort(@comparer($(th).index()))
+    th.asc = !th.asc
+    @$tableHeader.find('.sort-icon').remove()
+    console.log(th.asc)
+    if !th.asc
+      $(th).append('<i class="sort-icon fa fa-sort-desc"></i>')
+      rows = rows.reverse()
+    else
+      $(th).append('<i class="sort-icon fa fa-sort-asc"></i>')
+    for row in rows
+      @$table.append(row)
+  
+  comparer: (index) =>
+    (a, b) =>
+      valA = @getCellValue(a, index)
+      valB = @getCellValue(b, index)
+      valA.toString().localeCompare(valB)
+
+  getCellValue: (row, index) ->
+    $(row).children('td').eq(index).text()
 
   onDeleteSelected: (element, answer) =>
     if answer
