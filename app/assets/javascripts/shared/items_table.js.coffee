@@ -121,7 +121,6 @@ class @ItemsTable
     rows = @$table.find('tbody tr').toArray().sort(@comparer($(th).index()))
     th.asc = !th.asc
     @$tableHeader.find('.sort-icon').remove()
-    console.log(th.asc)
     if !th.asc
       $(th).append('<i class="sort-icon fa fa-sort-desc"></i>')
       rows = rows.reverse()
@@ -137,7 +136,10 @@ class @ItemsTable
       valA.toString().localeCompare(valB)
 
   getCellValue: (row, index) ->
-    $(row).children('td').eq(index).text()
+    column = $(row).children('td').eq(index)
+    if column.find('time').length
+      return column.find('time').attr('datetime')
+    column.text()
 
   onDeleteSelected: (element, answer) =>
     if answer
