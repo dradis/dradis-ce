@@ -27,6 +27,9 @@
 /Gemfile.plugins
 /Gemfile.codeship
 
+# Vagrant
+.vagrant/
+
 # Random
 .DS_Store
 *.swp
