@@ -250,6 +250,18 @@ describe "Issues pages" do
           @issue = Issue.find(@issue.id)
           extra_setup
           visit issue_path(@issue)
+
+          NoteTemplate.pwd.mkpath if !NoteTemplate.pwd.exist?
+          @template =
+            NoteTemplate.new(
+              name: 'Basic fields',
+              content: "#[Title]#\n\n\n#[Description]#\n\n"
+            )
+          @template.save
+        end
+
+        after do
+          @template.destroy if @template
         end
 
         let(:extra_setup) { create_activities }
