@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   # Sign in / sign out
   get '/login'  => 'sessions#new'
   get '/logout' => 'sessions#destroy'
-  resource :session
+  resource :session, only: [:new, :create, :destroy]
 
   # ------------------------------------------------------------ Project routes
   concern :multiple_destroy do
@@ -40,7 +40,7 @@ Rails.application.routes.draw do
     resources :revisions, only: [:index, :show]
   end
 
-  resources :methodologies do
+  resources :methodologies, only: [:index, :create, :edit, :update, :destroy] do
     collection { post :preview }
     member do
       get :add
@@ -48,7 +48,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :nodes do
+  resources :nodes, only: [:create, :show, :edit, :update, :destroy] do
     collection do
       post :sort
       post :create_multiple
@@ -58,7 +58,7 @@ Rails.application.routes.draw do
       get :tree
     end
 
-    resources :notes, concerns: :multiple_destroy do
+    resources :notes, only: [:new, :create, :show, :edit, :update, :destroy], concerns: :multiple_destroy do
       resources :revisions, only: [:index, :show]
     end
 
@@ -67,7 +67,7 @@ Rails.application.routes.draw do
     end
 
     constraints(:filename => /.*/) do
-      resources :attachments, param: :filename
+      resources :attachments, only: [:index, :create, :show, :update, :destroy], param: :filename
     end
   end
 
