@@ -62,7 +62,7 @@ Rails.application.routes.draw do
       resources :revisions, only: [:index, :show]
     end
 
-    resources :evidence, except: :index, concerns: :multiple_destroy do
+    resources :evidence, only: [:new, :create, :show, :edit, :update, :destroy], concerns: :multiple_destroy do
       resources :revisions, only: [:index, :show]
     end
 
