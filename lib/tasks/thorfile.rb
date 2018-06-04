@@ -113,6 +113,37 @@ class DradisTasks < Thor
       puts "[  DONE  ]"
     end
 
+    desc "welcome WELCOME_PACKAGE", "import files and projects from a specficied welcome package"
+    def welcome(welcome_pack)
+      puts "** Importing welcome package..."
+
+      Dir.mktmpdir do |tmpdir|
+        # Extract welcome package
+        FileUtils.cp welcome_pack, tmpdir
+        Dir.chdir(tmpdir) do
+          system 'tar', "--exclude='._*'", '-xzvf', File.basename(welcome_pack)
+        end
+
+        # Copy templates
+        NoteTemplate.pwd
+        Methodology.pwd
+        FileUtils.cp_r(
+          "#{tmpdir}/welcome/templates/notes/.",
+          Configuration.find_by_name("admin:paths:note_templates").value
+        )
+        FileUtils.cp_r(
+          "#{tmpdir}/welcome/templates/methodologies/.",
+          Configuration.find_by_name("admin:paths:templates:methodologies").value
+        )
+
+        # Upload package
+        project_package = Dir.glob("#{tmpdir}/welcome/*.zip").first
+        UploadTasks.new.package(project_package)
+      end
+
+      puts "[  DONE  ]"
+    end
+
   end
 
   class Logs < Thor
