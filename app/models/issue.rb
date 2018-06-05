@@ -20,6 +20,8 @@ class Issue < Note
     Activity.where(trackable_type: "Issue", trackable_id: self.id)
   end
 
+  # -- Concerns -------------------------------------------------------------
+  include Commentable
 
   # -- Callbacks ------------------------------------------------------------
   before_validation do
