@@ -1,4 +1,4 @@
-module Suscribable
+module Subscribable
   extend ActiveSupport::Concern
 
   included do
