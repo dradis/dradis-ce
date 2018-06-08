@@ -8,7 +8,7 @@ class Comment < ApplicationRecord
   after_create :create_subscription
 
   # -- Validations ----------------------------------------------------------
-  validates :content, length: { maximum: 65535 }
+  validates :content, presence: true, length: { maximum: 65535 }
   validates :commentable, presence: true, associated: true
   validates :user, presence: true, associated: true
 
