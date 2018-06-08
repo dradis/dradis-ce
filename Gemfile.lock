@@ -215,7 +215,7 @@ GEM
       slop (~> 3.4)
     public_suffix (2.0.5)
     rack (2.0.5)
-    rack-protection (2.0.1)
+    rack-protection (2.0.2)
       rack
     rack-test (1.0.0)
       rack (>= 1.0, < 3)
@@ -315,10 +315,10 @@ GEM
     simple_form (3.5.0)
       actionpack (> 4, < 5.2)
       activemodel (> 4, < 5.2)
-    sinatra (2.0.1)
+    sinatra (2.0.2)
       mustermann (~> 1.0)
       rack (~> 2.0)
-      rack-protection (= 2.0.1)
+      rack-protection (= 2.0.2)
       tilt (~> 2.0)
     slop (3.6.0)
     spring (2.0.2)
@@ -426,7 +426,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   shoulda-matchers (~> 3.1)
   simple_form
-  sinatra (= 2.0.1)
+  sinatra (= 2.0.2)
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3
