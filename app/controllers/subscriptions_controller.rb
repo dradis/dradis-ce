@@ -1,5 +1,4 @@
 class SubscriptionsController < ProjectScopedController
-
   def create
   end
 
