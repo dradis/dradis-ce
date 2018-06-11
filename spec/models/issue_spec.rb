@@ -4,7 +4,7 @@ describe Issue do
 
   let(:issue) { Issue.new }
 
-  it "is assigned to the Category.issue category" do
+  it 'is assigned to the Category.issue category' do
     node = create(:node)
     # use a block because we can't mass-assign 'node':
     issue = Issue.new { |i| i.node = node }
@@ -13,7 +13,7 @@ describe Issue do
     expect(issue.category).to eq(Category.issue)
   end
 
-  it "affects many nodes through :evidence" do
+  it 'affects many nodes through :evidence' do
     issue = create(:issue)
     expect(issue.affected).to be_empty
 
@@ -28,7 +28,7 @@ describe Issue do
   it { should have_many(:evidence).dependent(:destroy) }
   it { should have_many(:activities) }
 
-  describe "on delete" do
+  describe 'on delete' do
     before do
       @issue = create(:issue, node: create(:node))
       @activities = create_list(:activity, 2, trackable: @issue)
@@ -42,19 +42,19 @@ describe Issue do
         activity.reload
         expect(activity.trackable).to be_nil
         expect(activity.trackable_id).to eq @issue.id
-        expect(activity.trackable_type).to eq "Issue"
+        expect(activity.trackable_type).to eq 'Issue'
       end
     end
 
   end
 
-  describe ".merge" do
+  describe '.merge' do
     before do
       @issue1 = create(:evidence).issue
       @issue2 = create(:evidence).issue
     end
 
-    it "merges the issues" do
+    it 'merges the issues' do
       count = @issue1.merge @issue2.id
       @issue1.reload
 
@@ -71,7 +71,7 @@ describe Issue do
     end
 
     it "doesn't merge invalid/unknown ids" do
-      count = @issue1.merge ["a", 33]
+      count = @issue1.merge ['a', 33]
 
       expect(count).to eq 0
       expect(Issue.exists?(@issue1.id)).to be true
@@ -80,19 +80,18 @@ describe Issue do
   end
 
   let(:fields_column) { :text }
-  it_behaves_like "a model that has fields", Issue
+  it_behaves_like 'a model that has fields', Issue
 
-  describe "#set_field" do
+  describe '#set_field' do
     it "sets a field and updates 'body'" do
       issue.text = "#[Title]#\nSomething"
-      issue.set_field("Title", "New title")
-      expect(issue.fields["Title"]).to eq "New title"
+      issue.set_field('Title', 'New title')
+      expect(issue.fields['Title']).to eq 'New title'
       expect(issue.text).to eq "#[Title]#\nNew title"
     end
   end
 
-
-  describe "#activities" do
+  describe '#activities' do
     it "returns the issue's activities" do
       # this requires some hackery, because by default it won't work because
       # Issue and Note don't use proper single-table inheritance :(
@@ -101,7 +100,7 @@ describe Issue do
       activities = create_list(:activity, 2, trackable: issue)
 
       # Sanity check that all trackable types are 'Issue', not 'Note'
-      expect(activities.map(&:trackable_type).uniq).to eq ["Issue"]
+      expect(activities.map(&:trackable_type).uniq).to eq ['Issue']
 
       expect(issue.activities).to be_an(ActiveRecord::Relation)
       expect(issue.activities).to eq activities
