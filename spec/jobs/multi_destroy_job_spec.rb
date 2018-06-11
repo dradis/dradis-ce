@@ -16,7 +16,7 @@ describe MultiDestroyJob do #, type: :job do
       ]
 
       described_class.new.perform(
-        author_email: 'rspec@dradisframework.com',
+        author_email: User.create!(email: 'rspec@dradisframework.com').email,
         ids: @notes.map(&:id),
         klass: 'Note',
         uid: 1
