@@ -4,7 +4,12 @@ describe Evidence do
 
   it { should belong_to :issue }
   it { should belong_to :node }
+
   it { should have_many(:activities) }
+  it { should have_many(:comments).dependent(:destroy) }
+  it { should have_many(:notifications).dependent(:destroy) }
+  it { should have_many(:subscriptions).dependent(:destroy) }
+
 
   it { should validate_presence_of :issue }
   it { should validate_presence_of :node }

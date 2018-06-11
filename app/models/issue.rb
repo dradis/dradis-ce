@@ -1,5 +1,5 @@
 class Issue < Note
-  include Taggable
+  include Commentable, Notifiable, Subscribable, Taggable
 
   # -- Relationships --------------------------------------------------------
   has_many :evidence, dependent: :destroy
@@ -19,7 +19,6 @@ class Issue < Note
   def activities(*params)
     Activity.where(trackable_type: "Issue", trackable_id: self.id)
   end
-
 
   # -- Callbacks ------------------------------------------------------------
   before_validation do

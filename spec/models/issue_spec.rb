@@ -2,6 +2,12 @@ require 'rails_helper'
 
 describe Issue do
 
+  it { should have_many(:activities) }
+  it { should have_many(:comments).dependent(:destroy) }
+  it { should have_many(:evidence).dependent(:destroy) }
+  it { should have_many(:notifications).dependent(:destroy) }
+  it { should have_many(:subscriptions).dependent(:destroy) }
+
   let(:issue) { Issue.new }
 
   it "is assigned to the Category.issue category" do
@@ -24,9 +30,6 @@ describe Issue do
     expect(issue.affected).to_not be_empty
     expect(issue.affected.first).to eq(host)
   end
-
-  it { should have_many(:evidence).dependent(:destroy) }
-  it { should have_many(:activities) }
 
   describe "on delete" do
     before do

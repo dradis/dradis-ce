@@ -1,6 +1,5 @@
 class Evidence < ApplicationRecord
-  include HasFields
-  include RevisionTracking
+  include Commentable, HasFields, Notifiable, RevisionTracking, Subscribable
 
   dradis_has_fields_for :content
 
@@ -8,7 +7,6 @@ class Evidence < ApplicationRecord
   belongs_to :issue, touch: true
   belongs_to :node, touch: true
   has_many :activities, as: :trackable
-
 
   # -- Callbacks ------------------------------------------------------------
 
