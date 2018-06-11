@@ -31,6 +31,7 @@ class User < ApplicationRecord
 
   # -- Relationships --------------------------------------------------------
   has_many :activities
+  has_many :comments
 
   # -- Callbacks ------------------------------------------------------------
   # -- Validations ----------------------------------------------------------
