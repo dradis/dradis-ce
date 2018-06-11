@@ -1,0 +1,34 @@
+.notifications {
+  .dropdown-menu {
+    .notification-header {
+      padding: 0 1em;
+      line-height: 2em;
+
+      div {
+        display: inline-block;
+      }
+    }
+
+    li.notification {
+      width: 420px;
+      border-top: 1px solid $gray;
+
+      .flexbox {
+        display: flex;
+
+        .icon {
+          flex: 1;
+          align-self: center;
+        }
+         .content {
+          flex: 5;
+          white-space: normal;
+        }
+      }
+
+      &.unread {
+        background-color: $grayLight;
+      }
+    }
+  }
+}

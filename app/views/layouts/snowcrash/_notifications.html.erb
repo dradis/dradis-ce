@@ -1,0 +1,98 @@
+<ul class="dropdown-menu">
+  <div class="notification-header">
+    <div>Notifications</div>
+    <div class="pull-right">
+      <a href="#">Mark all as read</a>
+    </div>
+  </div>
+  <li class="notification unread">
+    <a href="#" class="flexbox">
+      <div class="icon">
+        <i class="fa fa-flag"></i>
+      </div>
+      <div class="content">
+        <div>
+          <%= current_user.email %> commented on a node.
+        </div>
+        <div>
+          <%= local_time_ago(Time.now - 5.minutes) %>
+        </div>
+      </div>
+    </a>
+  </li>
+  <li class="notification unread">
+    <a href="#" class="flexbox">
+      <div class="icon">
+        <i class="fa fa-flag"></i>
+      </div>
+      <div class="content">
+        <div>
+          <%= current_user.email %> commented on an issue.
+        </div>
+        <div>
+          <%= local_time_ago(Time.now - 5.minutes) %>
+        </div>
+      </div>
+    </a>
+  </li>
+  <li class="notification">
+    <a href="#" class="flexbox">
+      <div class="icon">
+        <i class="fa fa-flag"></i>
+      </div>
+      <div class="content">
+        <div>
+          <%= current_user.email %> commented on an evidence.
+        </div>
+        <div>
+          <%= local_time_ago(Time.now - 10.hours) %>
+        </div>
+      </div>
+    </a>
+  </li>
+  <li class="notification">
+    <a href="#" class="flexbox">
+      <div class="icon">
+        <i class="fa fa-flag"></i>
+      </div>
+      <div class="content">
+        <div>
+          <%= current_user.email %> commented on an evidence.
+        </div>
+        <div>
+          <%= local_time_ago(Time.now - 22.hours) %>
+        </div>
+      </div>
+    </a>
+  </li>
+  <li class="notification">
+    <a href="#" class="flexbox">
+      <div class="icon">
+        <i class="fa fa-flag"></i>
+      </div>
+      <div class="content">
+        <div>
+          <%= current_user.email %> commented on a node.
+        </div>
+        <div>
+          <%= local_time_ago(Issue.first.created_at) %>
+        </div>
+      </div>
+    </a>
+  </li>
+  <li class="notification">
+    <a href="#" class="flexbox">
+      <div class="icon">
+        <i class="fa fa-flag"></i>
+      </div>
+      <div class="content">
+        <div>
+          <%= current_user.email %> commented on an evidence.
+        </div>
+        <div>
+          <%= local_time_ago(Issue.first.created_at) %>
+        </div>
+      </div>
+    </a>
+  </li>
+</ul>
