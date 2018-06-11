@@ -125,15 +125,13 @@ class DradisTasks < Thor
         end
 
         # Copy templates
-        NoteTemplate.pwd
-        Methodology.pwd
         FileUtils.cp_r(
           "#{tmpdir}/welcome/templates/notes/.",
-          Configuration.find_by_name("admin:paths:note_templates").value
+          Configuration.paths_templates_notes
         )
         FileUtils.cp_r(
           "#{tmpdir}/welcome/templates/methodologies/.",
-          Configuration.find_by_name("admin:paths:templates:methodologies").value
+          Configuration.paths_templates_methodologies
         )
 
         # Upload package
