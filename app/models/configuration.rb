@@ -30,14 +30,14 @@ class Configuration < ApplicationRecord
   end
 
   # --------------------------------------------------------------- admin:paths
-  def self.paths_templates_notes
-    create_with(value: Rails.root.join('templates', 'notes').to_s)
-      .find_or_create_by(name: 'admin:paths:note_templates').value
-  end
-
   def self.paths_templates_methodologies
     create_with(value: Rails.root.join('templates', 'methodologies').to_s)
       .find_or_create_by(name: 'admin:paths:templates:methodologies').value
+  end
+
+  def self.paths_templates_notes
+    create_with(value: Rails.root.join('templates', 'notes').to_s)
+      .find_or_create_by(name: 'admin:paths:note_templates').value
   end
 
   def self.paths_templates_plugins
