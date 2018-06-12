@@ -1,0 +1,23 @@
+<div class="comment-feed">
+  <% if comments.any? %>
+    <% comments.each do |comment| %>
+      <% present comment do |comment_presenter| %>
+        <%= div_for comment do %>
+          <div class="body">
+            <%= comment_presenter.avatar_with_link(30) %>
+
+            <div>
+              <%= comment_presenter.linked_email %> <%= comment_presenter.created_at_ago %>
+            </div>
+
+            <div class="content">
+              <%= comment_presenter.render_content %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <p class="no-content">There has been no comments yet.</p>
+  <% end %>
+</div>
