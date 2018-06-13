@@ -23,7 +23,6 @@ class CommentPresenter < BasePresenter
 
   def render_content
     comment.content
-    # TODO: render_partial
   end
 
   private
@@ -32,10 +31,10 @@ class CommentPresenter < BasePresenter
     if comment.user
       h.image_tag(
         image_path('profile.jpg'),
-        alt: comment.user,
+        alt: comment.user.email,
         class: 'gravatar',
         data: { fallback_image: image_path('logo_small.png') },
-        title: comment.user,
+        title: comment.user.email,
         width: size
       )
     else
