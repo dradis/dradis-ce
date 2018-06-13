@@ -33,7 +33,7 @@ class AuthenticatedController < ApplicationController
 
   private
   def find_notifications
-    @notifications = current_user.notifications
+    @notifications = current_user.notifications.newest
   end
 
   # This filter redirects every request to the first-time onboarding Tour until

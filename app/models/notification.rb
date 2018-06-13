@@ -15,6 +15,7 @@ class Notification < ApplicationRecord
   # -- Scopes ---------------------------------------------------------------
   scope :unread,  -> { where(read_at: nil) }
   scope :read,    -> { where.not(read_at: nil) }
+  scope :newest,  -> { limit(7).order(created_at: :desc) }
 
   # -- Class Methods --------------------------------------------------------
 

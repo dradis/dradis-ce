@@ -32,10 +32,12 @@
         <% end %>
       <% end %>
     <% else %>
-      <p class="no-content">You have no notifications yet.<p>
+      <p class="no-content text-center">You have no notifications yet.<p>
     <% end %>
   </ul>
-  <div class="footer text-center">
-    <a href="#">See all notifications</a>
-  </div>
+  <% if @notifications.any? %>
+    <div class="footer text-center">
+      <a href="#">See all notifications</a>
+    </div>
+  <% end %>
 </div>
