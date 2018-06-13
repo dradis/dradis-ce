@@ -19,7 +19,20 @@ class Notification < ApplicationRecord
   # -- Class Methods --------------------------------------------------------
 
   # -- Instance Methods -----------------------------------------------------
+  alias_method :user, :recipient
+
   def read?
     self.read_at
+  end
+
+  def unread?
+    !self.read?
+  end
+
+  # See activity.rb
+  def notifiable=(new_notifiable)
+    super
+    self.notifiable_type = "Issue" if new_notifiable.is_a?(Issue)
+    new_notifiable
   end
 end

@@ -7,6 +7,7 @@
 # Any third-party code (e.g. plugins) should inherit from this class instead of
 # calling the authentication filters directly
 class AuthenticatedController < ApplicationController
+  before_action :find_notifications
   before_action :login_required
   before_action :set_paper_trail_whodunnit
   # before_action :render_onboarding_tour
@@ -31,6 +32,10 @@ class AuthenticatedController < ApplicationController
   helper_method :user_for_paper_trail
 
   private
+  def find_notifications
+    @notifications = current_user.notifications
+  end
+
   # This filter redirects every request to the first-time onboarding Tour until
   # the user has completed it.
   def render_onboarding_tour

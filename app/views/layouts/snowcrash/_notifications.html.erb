@@ -1,98 +1,41 @@
 <ul class="dropdown-menu">
   <div class="notification-header">
-    <div>Notifications</div>
+    <div>
+      Notifications
+      (<%= @notifications.unread.count %>)
+    </div>
     <div class="pull-right">
       <a href="#">Mark all as read</a>
     </div>
   </div>
-  <li class="notification unread">
-    <a href="#" class="flexbox">
-      <div class="icon">
-        <i class="fa fa-flag"></i>
+  <% if @notifications.any? %>
+    <% @notifications.each do |notification| %>
+      <% present notification do |notif_presenter| %>
+        <li class="notification <%= notification.unread? ? 'unread' : '' %>">
+          <div class="body">
+            <%= notif_presenter.icon %>
+
+            <div class="time">
+              <%= notif_presenter.created_at_ago %>
+            </div>
+
+            <div class="title">
+              <%= notif_presenter.render_title %>
+            </div>
+
+            <div class="details">
+              <%= notif_presenter.avatar_with_link(30) %>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    <% end %>
+    <li>
+      <div class="text-center">
+        <a href="#">See all notifications</a>
       </div>
-      <div class="content">
-        <div>
-          <%= current_user.email %> commented on a node.
-        </div>
-        <div>
-          <%= local_time_ago(Time.now - 5.minutes) %>
-        </div>
-      </div>
-    </a>
-  </li>
-  <li class="notification unread">
-    <a href="#" class="flexbox">
-      <div class="icon">
-        <i class="fa fa-flag"></i>
-      </div>
-      <div class="content">
-        <div>
-          <%= current_user.email %> commented on an issue.
-        </div>
-        <div>
-          <%= local_time_ago(Time.now - 5.minutes) %>
-        </div>
-      </div>
-    </a>
-  </li>
-  <li class="notification">
-    <a href="#" class="flexbox">
-      <div class="icon">
-        <i class="fa fa-flag"></i>
-      </div>
-      <div class="content">
-        <div>
-          <%= current_user.email %> commented on an evidence.
-        </div>
-        <div>
-          <%= local_time_ago(Time.now - 10.hours) %>
-        </div>
-      </div>
-    </a>
-  </li>
-  <li class="notification">
-    <a href="#" class="flexbox">
-      <div class="icon">
-        <i class="fa fa-flag"></i>
-      </div>
-      <div class="content">
-        <div>
-          <%= current_user.email %> commented on an evidence.
-        </div>
-        <div>
-          <%= local_time_ago(Time.now - 22.hours) %>
-        </div>
-      </div>
-    </a>
-  </li>
-  <li class="notification">
-    <a href="#" class="flexbox">
-      <div class="icon">
-        <i class="fa fa-flag"></i>
-      </div>
-      <div class="content">
-        <div>
-          <%= current_user.email %> commented on a node.
-        </div>
-        <div>
-          <%= local_time_ago(Issue.first.created_at) %>
-        </div>
-      </div>
-    </a>
-  </li>
-  <li class="notification">
-    <a href="#" class="flexbox">
-      <div class="icon">
-        <i class="fa fa-flag"></i>
-      </div>
-      <div class="content">
-        <div>
-          <%= current_user.email %> commented on an evidence.
-        </div>
-        <div>
-          <%= local_time_ago(Issue.first.created_at) %>
-        </div>
-      </div>
-    </a>
-  </li>
+    </li>
+  <% else %>
+    <p class="no-content">You have no notifications yet.<p>
+  <% end %>
 </ul>

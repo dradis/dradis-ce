@@ -1,5 +1,11 @@
 .notifications {
+  color: lighten(#000, 20%);
+
   .dropdown-menu {
+    width: 420px;
+    max-height: 500px;
+    overflow: auto;
+
     .notification-header {
       padding: 0 1em;
       line-height: 2em;
@@ -10,19 +16,29 @@
     }
 
     li.notification {
-      width: 420px;
+      position: relative;
       border-top: 1px solid $gray;
+      padding: 0 1em 0 3.5em;
 
-      .flexbox {
-        display: flex;
+      .body {
+        display: block;
 
-        .icon {
-          flex: 1;
-          align-self: center;
+        .notification-icon {
+          color: #bbb;
+          font-size: 32px;
+          height: 32px;
+          left: 5px;
+          position: absolute;
+          top: 20px;
+          width: 32px;
         }
-         .content {
-          flex: 5;
-          white-space: normal;
+
+        .time {
+          color: #888;
+        }
+
+        .details {
+          display: inline-block;
         }
       }
 
