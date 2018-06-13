@@ -2,7 +2,7 @@ class CommentPresenter < BasePresenter
   presents :comment
 
   def avatar_with_link(size)
-    h.link_to(avatar_image(size), 'javascript:void(0)')
+    h.link_to(avatar_image(size), "##{dom_id(comment)}")
   end
 
   def created_at_ago
