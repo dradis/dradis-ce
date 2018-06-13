@@ -31,15 +31,16 @@
         <h3>Issue information -
           <span class="actions">
             <%= link_to edit_issue_path(@issue),
-                  class: 'view-toggle-off editor-toggle-off' do %>
+                  class: 'action-link' do %>
               <i class="fa fa-pencil"></i> Edit
             <% end %>
             <%= link_to @issue,
-                  class: 'text-error',
+                  class: 'action-link text-error',
                   data: { confirm: 'Are you sure?' },
                   method: :delete do %>
               <i class="fa fa-trash"></i> Delete
             <% end %> -
+            <%= render partial: 'send_to_menu' %>
             <%= tag_and_name_for(@issue) %>
           </span>
           <small class="pull-right">Author: <%= @issue.author %></small>
