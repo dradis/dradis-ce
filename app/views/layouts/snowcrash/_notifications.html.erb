@@ -1,41 +1,41 @@
-<ul class="dropdown-menu">
-  <div class="notification-header">
-    <div>
-      Notifications
-      (<%= @notifications.unread.count %>)
-    </div>
-    <div class="pull-right">
-      <a href="#">Mark all as read</a>
-    </div>
-  </div>
-  <% if @notifications.any? %>
-    <% @notifications.each do |notification| %>
-      <% present notification do |notif_presenter| %>
-        <li class="notification <%= notification.unread? ? 'unread' : '' %>">
-          <div class="body">
-            <%= notif_presenter.icon %>
-
-            <div class="time">
-              <%= notif_presenter.created_at_ago %>
-            </div>
-
-            <div class="title">
-              <%= notif_presenter.render_title %>
-            </div>
-
-            <div class="details">
-              <%= notif_presenter.avatar_with_link(30) %>
-            </div>
-          </div>
-        </li>
-      <% end %>
-    <% end %>
-    <li>
-      <div class="text-center">
-        <a href="#">See all notifications</a>
+<div class="dropdown-menu">
+  <ul class="notification-container">
+    <div class="notification-header">
+      <div>
+        Notifications
+        (<%= @notifications.unread.count %>)
       </div>
-    </li>
-  <% else %>
-    <p class="no-content">You have no notifications yet.<p>
-  <% end %>
-</ul>
+      <div class="pull-right">
+        <a href="#">Mark all as read</a>
+      </div>
+    </div>
+    <% if @notifications.any? %>
+      <% @notifications.each do |notification| %>
+        <% present notification do |notif_presenter| %>
+          <li class="notification <%= notification.unread? ? 'unread' : '' %>">
+            <div class="body">
+              <%= notif_presenter.icon %>
+
+              <div class="time">
+                <%= notif_presenter.created_at_ago %>
+              </div>
+
+              <div class="title">
+                <%= notif_presenter.render_title %>
+              </div>
+
+              <div class="details">
+                <%= notif_presenter.avatar_with_link(30) %>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      <% end %>
+    <% else %>
+      <p class="no-content">You have no notifications yet.<p>
+    <% end %>
+  </ul>
+  <div class="footer text-center">
+    <a href="#">See all notifications</a>
+  </div>
+</div>

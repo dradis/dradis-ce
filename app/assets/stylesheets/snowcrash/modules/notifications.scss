@@ -1,9 +1,10 @@
-.notifications {
+.dropdown-menu {
   color: lighten(#000, 20%);
 
-  .dropdown-menu {
+  .notification-container {
     width: 420px;
     max-height: 500px;
+    margin: 0;
     overflow: auto;
 
     .notification-header {
@@ -18,7 +19,7 @@
     li.notification {
       position: relative;
       border-top: 1px solid $gray;
-      padding: 0 1em 0 3.5em;
+      padding: 0.5em 1em 0.5em 3.5em;
 
       .body {
         display: block;
@@ -46,5 +47,9 @@
         background-color: $grayLight;
       }
     }
+  }
+  .footer {
+    line-height: 2em;
+    border-top: 1px solid $gray;
   }
 }
