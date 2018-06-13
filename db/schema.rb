@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180611150236) do
+ActiveRecord::Schema.define(version: 20180613151829) do
 
   create_table "activities", force: :cascade do |t|
     t.string "user", null: false
@@ -88,6 +88,14 @@ ActiveRecord::Schema.define(version: 20180611150236) do
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_notes_on_category_id"
     t.index ["node_id"], name: "index_notes_on_node_id"
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.string "subscribable_type"
+    t.integer "subscribable_id"
+    t.integer "user_id"
+    t.index ["subscribable_type", "subscribable_id"], name: "index_subscriptions_on_subscribable_type_and_subscribable_id"
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
   create_table "taggings", force: :cascade do |t|
