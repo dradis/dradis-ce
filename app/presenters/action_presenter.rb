@@ -46,6 +46,7 @@ class ActionPresenter < BasePresenter
 
   private
 
+  # Define the polymorphic collection type name for the presenter
   def self.collection(type)
     define_method(:collection) do
       @object.send(type)
@@ -60,10 +61,10 @@ class ActionPresenter < BasePresenter
     if @object.user
       h.image_tag(
         image_path('profile.jpg'),
-        alt: @object.user,
+        alt: @object.user.email,
         class: 'gravatar',
         data: { fallback_image: image_path('logo_small.png') },
-        title: @object.user,
+        title: @object.user.email,
         width: size
       )
     else
@@ -74,7 +75,7 @@ class ActionPresenter < BasePresenter
   def linked_email
     if @object.user
       # h.link_to(@object.user.email, 'javascript:void(0);')
-      h.content_tag :strong, @object.user
+      h.content_tag :strong, @object.user.email
     else
       'a user who has since been deleted'
     end
