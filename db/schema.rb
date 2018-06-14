@@ -10,17 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180613151829) do
+ActiveRecord::Schema.define(version: 20180614094306) do
 
   create_table "activities", force: :cascade do |t|
-    t.string "user", null: false
     t.string "trackable_type", null: false
     t.integer "trackable_id", null: false
     t.string "action", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
     t.index ["created_at"], name: "index_activities_on_created_at"
     t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
+    t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
   create_table "categories", force: :cascade do |t|
