@@ -1,20 +1,23 @@
 <div class="comment-feed">
   <% if comments.any? %>
     <% comments.each do |comment| %>
-      <% present comment do |comment_presenter| %>
-        <%= div_for comment do %>
-          <div class="body">
-            <%= comment_presenter.avatar_with_link(30) %>
+      <%= div_for comment do %>
+        <div class="body">
+          <%= link_to(avatar_image(comment.user, size: 30), "##{dom_id(comment)}") %>
 
-            <div>
-              <%= comment_presenter.linked_email %> <%= comment_presenter.created_at_ago %>
-            </div>
-
-            <div class="content">
-              <%= comment_presenter.render_content %>
-            </div>
+          <div>
+            <% if comment.user %>
+              <strong><%= comment.user.email %></strong>
+            <% else %>
+              a user who has since been deleted
+            <% end %>
+            <span class="time"><%= local_time_ago(comment.created_at) %></span>
           </div>
-        <% end %>
+
+          <div class="content">
+            <%= comment.content %>
+          </div>
+        </div>
       <% end %>
     <% end %>
   <% else %>
