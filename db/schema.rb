@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 20180613151829) do
     t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable_type_and_notifiable_id"
     t.index ["recipient_id"], name: "index_notifications_on_recipient_id"
   end
-  
+
   create_table "subscriptions", force: :cascade do |t|
     t.string "subscribable_type"
     t.integer "subscribable_id"

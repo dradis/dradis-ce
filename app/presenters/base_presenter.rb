@@ -7,6 +7,10 @@ class BasePresenter
   private
 
   def self.presents(name)
+    define_method(:item_type) do
+      name
+    end
+
     define_method(name) do
       @object
     end
