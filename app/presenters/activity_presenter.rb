@@ -17,9 +17,9 @@ class ActivityPresenter < BasePresenter
                 when 'Issue'
                   'fa-bug'
                 when 'Node'
-                  'fa-folder-o'
+                  'fa-folder'
                 when 'Note'
-                  'fa-file-text-o'
+                  'fa-file-alt'
                 else
                   ''
                 end

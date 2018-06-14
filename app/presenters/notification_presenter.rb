@@ -10,7 +10,7 @@ class NotificationPresenter < BasePresenter
   end
 
   def icon
-    icon_css = %w{notification-icon fa}
+    icon_css = %w{notification-icon fa fa-fw}
     icon_css << case notification.notifiable_type
                 when 'Evidence'
                   'fa-flag'

@@ -39,7 +39,7 @@ gem 'redis', '~> 4.0'
 
 # ---------------------------------------------------- Dradis Community Edition
 gem 'bootstrap-sass', '~> 2.3.2.2'
-gem 'font-awesome-sass', '~> 5.0.13'
+gem 'font-awesome-sass', '~> 4.7.0'
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
