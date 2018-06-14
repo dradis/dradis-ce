@@ -17,9 +17,9 @@ class NotificationPresenter < BasePresenter
                 when 'Issue'
                   'fa-bug'
                 when 'Node'
-                  'fa-folder'
+                  'fa-folder-0'
                 when 'Note'
-                  'fa-file-alt'
+                  'fa-file-text-0'
                 else
                   ''
                 end
