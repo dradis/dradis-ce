@@ -25,7 +25,7 @@
 </ul>
 
 <div class="tab-content">
-  <% cache ['issue-information-tab', @issue, @comments ] do %>
+  <% cache ['issue-information-tab', @issue, @issue.comments ] do %>
     <div class="tab-pane active" id="info-tab">
       <div class="inner note-text-inner">
         <h3>Issue information -
