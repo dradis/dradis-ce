@@ -5,7 +5,7 @@ module ActivityTracking
   def track_activity(trackable, action, user=current_user)
     Activity.create!(
       trackable: trackable,
-      user:      user.email,
+      user:      user,
       action:    action.to_s
     )
 
@@ -13,7 +13,7 @@ module ActivityTracking
       'activity',
       action: action,
       trackable: trackable,
-      user: user.email
+      user: user
     )
   end
 

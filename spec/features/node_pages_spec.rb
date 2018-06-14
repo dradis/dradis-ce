@@ -164,7 +164,7 @@ describe "node pages" do
         expect(activity.trackable).to eq @node
         # TODO: Project singleton
         # expect(activity.project).to eq @project
-        expect(activity.user).to eq @logged_in_as.email
+        expect(activity.user.email).to eq @logged_in_as.email
         expect(activity.action).to eq "update"
       end
     end
