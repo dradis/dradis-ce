@@ -1,4 +1,4 @@
-class RecordPresenter < BasePresenter
+class ActionPresenter < BasePresenter
 
   def avatar_with_link(size)
     h.link_to(avatar_image(size), 'javascript:void(0)')
@@ -95,8 +95,8 @@ class RecordPresenter < BasePresenter
 
   def partial_paths
     [
-      "activities/#{collection_type.underscore}/#{@object.action}",
-      "activities/#{collection_type.underscore}",
+      "actions/#{collection_type.underscore}/#{@object.action}",
+      "actions/#{collection_type.underscore}"
     ]
   end
 end

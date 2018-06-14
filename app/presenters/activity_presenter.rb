@@ -1,4 +1,4 @@
-class ActivityPresenter < RecordPresenter
+class ActivityPresenter < ActionPresenter
   presents :activity
   collection :trackable
 
@@ -11,14 +11,6 @@ class ActivityPresenter < RecordPresenter
   end
 
   private
-
-  def partial_paths
-    [
-      "activities/#{collection_type.underscore}/#{activity.action}",
-      "activities/#{collection_type.underscore}",
-      'activities/activity'
-    ]
-  end
 
   def trackable_title
     @title ||=
