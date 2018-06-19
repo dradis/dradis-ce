@@ -121,7 +121,7 @@ class DradisTasks < Thor
         # Extract welcome package
         FileUtils.cp welcome_pack, tmpdir
         Dir.chdir(tmpdir) do
-          system 'tar', "--exclude='._*'", '-xzvf', File.basename(welcome_pack)
+          system 'unzip', File.basename(welcome_pack)
         end
 
         # Copy templates
