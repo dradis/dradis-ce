@@ -1,0 +1,44 @@
+<span class="dropdown">
+  <a class="dropdown-toggle"
+    data-name="issues"
+    data-toggle="dropdown"
+    href="javascript:void(0)"
+    title="More actions...">
+    <strong>...<b class="caret"></b></strong>
+  </a>
+  <ul class="dropdown-menu pull-right" role="menu">
+    <li>
+      <%= link_to edit_issue_path(@issue) do %>
+        <i class="fa fa-pencil"></i> Edit
+      <% end %>
+    </li>
+    <li>
+      <%= link_to @issue,
+            class: 'text-error',
+            data: { confirm: 'Are you sure?' },
+            method: :delete do %>
+        <i class="fa fa-trash"></i> Delete
+      <% end %>
+    </li>
+
+    <% sync_plugins = Dradis::Plugins::with_feature(:issue_sync) %>
+    <% if sync_plugins.any? %>
+    <li class="divider"></li>
+    <li class="dropdown-submenu pull-left">
+      <a tabindex="-1" href="javascript:void(0)">
+        <i class="fa fa-paper-plane"></i>
+        Send to...
+      </a>
+      <ul class="dropdown-menu">
+        <% Dradis::Plugins::with_feature(:issue_sync).each do |plugin| %>
+          <%=
+            plugin_path = ActiveSupport::Inflector.underscore(ActiveSupport::Inflector.deconstantize(plugin.name))
+            render partial: "#{plugin_path}/issues/send_to_menu"
+          %>
+        <% end %>
+        <li><a>Issue library</a></li>
+      </ul>
+    </li>
+    <% end %>
+  </ul>
+</span>
