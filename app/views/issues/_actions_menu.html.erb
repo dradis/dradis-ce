@@ -14,10 +14,11 @@
     </li>
     <li>
       <%= link_to @issue,
-            class: 'text-error',
             data: { confirm: 'Are you sure?' },
             method: :delete do %>
-        <i class="fa fa-trash"></i> Delete
+        <span class="text-error">
+          <i class="fa fa-trash"></i> Delete
+        </span>
       <% end %>
     </li>
 
