@@ -13,10 +13,6 @@ describe Subscription do
 
     expect do
       Subscription.create(subscribable: subscribable, user: user)
-    end.to change { Subscription.count }.by(1)
-
-    expect do
-      Subscription.create(subscribable: subscribable, user: user)
     end.to raise_error(ActiveRecord::RecordNotUnique)
   end
 end

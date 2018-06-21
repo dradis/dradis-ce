@@ -17,11 +17,6 @@ class Comment < ApplicationRecord
 
   # -- Instance Methods -----------------------------------------------------
   def create_subscription
-    Subscription.create!(
-      user: user,
-      subscribable: commentable
-    ) unless commentable.author == user.email
-  rescue ActiveRecord::RecordNotUnique
-    # Don't worry about dupes
+    Subscription.subscribe(user: user, to: commentable)
   end
 end
