@@ -19,6 +19,7 @@ class Subscription < ApplicationRecord
     )
   rescue ActiveRecord::RecordNotUnique
     # Don't worry about dupes
+    false
   end
 
   # -- Instance Methods -----------------------------------------------------

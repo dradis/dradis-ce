@@ -12,7 +12,7 @@ describe Subscription do
     subscribable = create(:issue, author: user.email)
 
     expect do
-      Subscription.create(subscribable: subscribable, user: user)
-    end.to raise_error(ActiveRecord::RecordNotUnique)
+      Subscription.subscribe(to: subscribable, user: user)
+    end.to change { Subscription.count }.by(0)
   end
 end

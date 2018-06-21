@@ -103,11 +103,12 @@ ActiveRecord::Schema.define(version: 20180613151829) do
     t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable_type_and_notifiable_id"
     t.index ["recipient_id"], name: "index_notifications_on_recipient_id"
   end
-  
+
   create_table "subscriptions", force: :cascade do |t|
     t.string "subscribable_type"
     t.integer "subscribable_id"
     t.integer "user_id"
+    t.index ["subscribable_id", "subscribable_type", "user_id"], name: "uniqueness_index", unique: true
     t.index ["subscribable_type", "subscribable_id"], name: "index_subscriptions_on_subscribable_type_and_subscribable_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
