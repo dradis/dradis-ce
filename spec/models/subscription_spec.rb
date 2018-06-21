@@ -6,4 +6,17 @@ describe Subscription do
 
   it { should validate_presence_of :subscribable }
   it { should validate_presence_of :user }
+
+  it 'prevents subscribing to the same subscribable twice' do
+    user = create(:user)
+    subscribable = create(:issue, author: user.email)
+
+    expect do
+      Subscription.create(subscribable: subscribable, user: user)
+    end.to change { Subscription.count }.by(1)
+
+    expect do
+      Subscription.create(subscribable: subscribable, user: user)
+    end.to raise_error(ActiveRecord::RecordNotUnique)
+  end
 end
