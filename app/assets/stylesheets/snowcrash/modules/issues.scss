@@ -81,6 +81,14 @@ body.issues.show {
   }
 }
 
+h3 {
+  .actions {
+    span, a {
+      margin-right: 5px;
+    }
+  }
+}
+
 body.issues.index {
   //-------------------------------------------------------- Empty-state styles
   p.lead {
@@ -106,7 +114,7 @@ body.issues.index {
     padding: 3ex;
   }
 
-  //------------------------------------------------------- /Empty-state styles  
+  //------------------------------------------------------- /Empty-state styles
 }
 
 body.issues.new, body.issues.edit {
