@@ -32,9 +32,6 @@
           <%= tag_and_name_for(@issue) %>
           <small class="pull-right">Author: <%= @issue.author %></small>
           <span class="actions pull-right">
-            <%= link_to "#comments" do %>
-              <i class="fa fa-comments"></i> comments
-            <% end %>
             <%= render partial: 'actions_menu' %>
           </span>
         </h3>
