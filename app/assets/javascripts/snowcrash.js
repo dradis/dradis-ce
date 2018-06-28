@@ -22,6 +22,7 @@
 //= require snowcrash/behaviors
 //= require snowcrash/keyboard_shortcuts
 
+//= require snowcrash/modules/comments
 //= require snowcrash/modules/configurations
 //= require snowcrash/modules/console_updater
 //= require snowcrash/modules/export

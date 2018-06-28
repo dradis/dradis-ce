@@ -5,7 +5,7 @@ class IssuesController < ProjectScopedController
   before_action :find_issuelib
   before_action :find_issues, except: [:destroy]
 
-  before_action :find_or_initialize_issue, except: [:import, :index, :show]
+  before_action :find_or_initialize_issue, except: [:import, :index]
   before_action :find_or_initialize_tags, except: [:destroy]
 
   def index
@@ -13,8 +13,6 @@ class IssuesController < ProjectScopedController
   end
 
   def show
-    @issue = Issue.includes(:comments).find(params[:id])
-
     @activities = @issue.activities.latest
 
     # We can't use the existing @nodes variable as it only contains root-level

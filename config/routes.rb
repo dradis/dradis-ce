@@ -36,6 +36,7 @@ Rails.application.routes.draw do
       resources :merge, only: [:new, :create], controller: 'issues/merge'
     end
 
+    resources :comments
     resources :nodes, only: [:show], controller: 'issues/nodes'
     resources :revisions, only: [:index, :show]
   end
