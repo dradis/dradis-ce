@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   end
 
   resources :projects, only: [:show] do
-
+    resources :comments
   end
 
   resources :activities, only: [] do
