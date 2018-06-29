@@ -17,6 +17,11 @@ Rails.application.routes.draw do
   end
 
   resources :projects, only: [:show] do
+    resources :activities, only: [] do
+      collection do
+        get :poll, constraints: { format: /js/ }
+      end
+    end
     resources :comments
     resources :issues, concerns: :multiple_destroy do
       collection do
@@ -34,12 +39,6 @@ Rails.application.routes.draw do
         get :add
         put :update_task
       end
-    end
-  end
-
-  resources :activities, only: [] do
-    collection do
-      get :poll, constraints: { format: /js/ }
     end
   end
 
