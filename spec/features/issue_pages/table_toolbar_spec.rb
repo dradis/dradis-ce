@@ -17,7 +17,7 @@ describe 'issue table' do
       login_to_project_as_user
       Tag.create!(name: '!6baed6_low')
       @issues = items
-      visit issues_path
+      visit project_issues_path(@project)
     end
 
     it_behaves_like 'an index table toolbar'

@@ -32,7 +32,7 @@ describe "User navigates to entity page from search" do
 
       page.find(".search-match-title").click
 
-      expect(page.current_path).to eq issue_path(issue)
+      expect(page.current_path).to eq project_issue_path(@project, issue)
     end
 
     it 'of evidence opens to node page' do
