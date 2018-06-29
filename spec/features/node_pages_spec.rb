@@ -8,7 +8,7 @@ describe "node pages" do
   describe "creating new nodes" do
     context "when a project has no nodes defined yet" do
       it "says so in the sidebar" do
-        visit summary_path(@project)
+        visit project_path(id: @project.id)
         within ".main-sidebar" do
           should have_selector ".no-nodes", text: "No nodes defined yet"
         end
@@ -17,7 +17,7 @@ describe "node pages" do
 
     describe "clicking the '+' button in the 'Nodes' sidebar", js: true do
       before do
-        visit summary_path
+        visit project_path(id: @project.id)
         find(".add-subnode > a").click
       end
 
@@ -198,7 +198,7 @@ describe "node pages" do
       let(:submit_form) do
         within "#modal_delete_node" do
           click_link "Delete"
-          expect(current_path).to eq summary_path
+          expect(current_path).to eq project_path(id: @project.id)
         end
       end
 
