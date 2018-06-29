@@ -61,6 +61,7 @@ describe "moving a note", js: true do
 
 
   def click_move_note
+    click_link "More actions..."
     find("a[href='#modal_move_note']").click
   end
 
