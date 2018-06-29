@@ -1,5 +1,6 @@
 module ActivityTracking
-
+  # FIXME: this concern can be removed once all trackable models
+  # use callbacks instead of controller methods
   protected
 
   def track_activity(trackable, action, user=current_user)
