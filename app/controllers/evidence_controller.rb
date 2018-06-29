@@ -1,4 +1,5 @@
 class EvidenceController < NestedNodeResourceController
+  include ConflictResolver
   include MultipleDestroy
 
   before_action :find_or_initialize_evidence, except: [ :index, :create_multiple ]

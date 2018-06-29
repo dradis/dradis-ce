@@ -1,5 +1,6 @@
 class IssuesController < ProjectScopedController
   include ContentFromTemplate
+  include ConflictResolver
   include MultipleDestroy
 
   before_action :find_issuelib
