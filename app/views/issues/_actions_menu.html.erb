@@ -22,8 +22,6 @@
       <% end %>
     </li>
 
-    <% sync_plugins = Dradis::Plugins::with_feature(:issue_sync) %>
-    <% if sync_plugins.any? %>
     <li class="divider"></li>
     <li class="dropdown-submenu">
       <a tabindex="-1" href="javascript:void(0)">
@@ -31,15 +29,20 @@
         Send to...
       </a>
       <ul class="dropdown-menu">
-        <% Dradis::Plugins::with_feature(:issue_sync).each do |plugin| %>
-          <%=
-            plugin_path = ActiveSupport::Inflector.underscore(ActiveSupport::Inflector.deconstantize(plugin.name))
-            render partial: "#{plugin_path}/issues/send_to_menu"
-          %>
+        <% sync_plugins = Dradis::Plugins::with_feature(:issue_sync) %>
+        <% if sync_plugins.any? %>
+          <% sync_plugins.each do |plugin| %>
+            <%=
+              plugin_path = ActiveSupport::Inflector.underscore(ActiveSupport::Inflector.deconstantize(plugin.name))
+              render partial: "#{plugin_path}/issues/send_to_menu"
+            %>
+          <% end %>
         <% end %>
-        <li><a>Issue library</a></li>
+        <% unless defined?(Dradis::Pro) && sync_plugins.include?(Dradis::Pro::Issuelib::Engine) %>
+        <li class="divider"></li>
+        <li><a href="javascript:void(0)" class="js-try-pro" data-term="issuelib" data-url="http://drad.is/l/try-pro-issuelib"><i class="fa fa-book"></i> Built-in IssueLibrary</a></li>
+        <% end %>
       </ul>
     </li>
-    <% end %>
   </ul>
 </span>
