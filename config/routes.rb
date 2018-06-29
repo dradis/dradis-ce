@@ -16,7 +16,9 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/summary' => 'projects#show'
+  resources :projects, only: [:show] do
+    resources :comments
+  end
 
   resources :activities, only: [] do
     collection do
