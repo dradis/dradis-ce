@@ -11,7 +11,7 @@
       <% @affected_nodes.each do |node| %>
         <% cache [@issue, node, node.evidence_count, 'evidence-nav'] do %>
           <li>
-            <a href="#evidence_for_<%= dom_id(node) %>" data-toggle="tab" data-path="<%= issue_node_path(@issue, node) %>" data-node="<%= "evidence_for_#{dom_id(node)}" %>">
+            <a href="#evidence_for_<%= dom_id(node) %>" data-toggle="tab" data-path="<%= project_issue_node_path(@project, @issue, node) %>" data-node="<%= "evidence_for_#{dom_id(node)}" %>">
               <i class="fa fa-<%= ['folder-o','laptop'][node.type_id] %>"></i> <%= node.label %> (<%= node.evidence_count %>)
             </a>
           </li>

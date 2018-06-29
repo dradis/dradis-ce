@@ -1,6 +1,9 @@
-class IssuesController < ProjectScopedController
+class IssuesController < AuthenticatedController
+  include ActivityTracking
   include ContentFromTemplate
+  include ConflictResolver
   include MultipleDestroy
+  include ProjectScoped
 
   before_action :find_issuelib
   before_action :find_issues, except: [:destroy]
@@ -56,7 +59,7 @@ class IssuesController < ProjectScopedController
         # taggable IDs)
         tag_issue_from_field_content(@issue)
 
-        format.html { redirect_to @issue, notice: 'Issue added.' }
+        format.html { redirect_to [@project, @issue], notice: 'Issue added.' }
       else
         format.html { render 'new', alert: 'Issue couldn\'t be added.' }
       end
@@ -75,7 +78,7 @@ class IssuesController < ProjectScopedController
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
-        format.html { redirect_to @issue, notice: 'Issue updated' }
+        format.html { redirect_to project_issue_path(@project, @issue), notice: 'Issue updated' }
       else
         format.html { render 'edit' }
       end
@@ -88,10 +91,10 @@ class IssuesController < ProjectScopedController
     respond_to do |format|
       if @issue.destroy
         track_destroyed(@issue)
-        format.html { redirect_to issues_url, notice: 'Issue deleted.' }
+        format.html { redirect_to project_issues_url(@project), notice: 'Issue deleted.' }
         format.json
       else
-        format.html { redirect_to issues_url, notice: "Error while deleting issue: #{@issue.errors}" }
+        format.html { redirect_to project_issues_url(@project), notice: "Error while deleting issue: #{@issue.errors}" }
         format.json
       end
     end

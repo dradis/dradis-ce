@@ -18,16 +18,11 @@ module ProjectScoped
   #   https://github.com/airblade/paper_trail#metadata-from-controllers
   #
   def info_for_paper_trail
-    { project_id: @project.id } if project
+    ;
   end
 
   def set_project
-    # authorize! :use, project
-
-    # @nodes = project.nodes.in_tree
-  end
-
-  def project
-    @project ||= OpenStruct.new(id: 1)
+    @nodes   = Node.in_tree
+    @project = Project.new
   end
 end
