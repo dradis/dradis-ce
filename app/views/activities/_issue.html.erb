@@ -2,7 +2,7 @@
   <% if issue.title? %>
     <%= presenter.verb %> the <%= link_to issue.title, [@project, issue] %> issue.
   <% else %>
-    <%= presenter.verb %> <%= link_to "Issue ##{issue.id}", issue %>.
+    <%= presenter.verb %> <%= link_to "Issue ##{issue.id}", [@project, issue] %>.
   <% end %>
 <% else %>
   <% if activity.action == 'destroy' %>
