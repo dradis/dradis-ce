@@ -1,5 +1,6 @@
 class CommentsController < AuthenticatedController
   include ActionView::RecordIdentifier
+  include ProjectScoped
 
   before_action :find_commentable
   before_action :find_or_initialize_comment

@@ -16,7 +16,18 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/summary' => 'projects#show'
+  resources :projects, only: [:show] do
+    resources :comments
+    resources :issues, concerns: :multiple_destroy do
+      collection do
+        post :import
+        resources :merge, only: [:new, :create], controller: 'issues/merge'
+      end
+
+      resources :nodes, only: [:show], controller: 'issues/nodes'
+      resources :revisions, only: [:index, :show]
+    end
+  end
 
   resources :activities, only: [] do
     collection do
@@ -28,17 +39,6 @@ Rails.application.routes.draw do
 
   resources :console, only: [] do
     collection { get :status }
-  end
-
-  resources :issues, concerns: :multiple_destroy do
-    collection do
-      post :import
-      resources :merge, only: [:new, :create], controller: 'issues/merge'
-    end
-
-    resources :comments
-    resources :nodes, only: [:show], controller: 'issues/nodes'
-    resources :revisions, only: [:index, :show]
   end
 
   resources :methodologies do

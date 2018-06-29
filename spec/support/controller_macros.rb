@@ -16,7 +16,6 @@ module ControllerMacros
 
   def login_to_project_as_user
     login_as_user
-    @project    = OpenStruct.new
-    @project.id = 1
+    @project = Project.new
   end
 end

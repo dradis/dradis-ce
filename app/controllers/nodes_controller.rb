@@ -31,7 +31,7 @@ class NodesController < NestedNodeResourceController
       if parent && parent.user_node?
         redirect_to parent, alert: @node.errors.full_messages.join('; ')
       else
-        redirect_to summary_path, alert: @node.errors.full_messages.join('; ')
+        redirect_to project_path(id: 1), alert: @node.errors.full_messages.join('; ')
       end
     end
   end
@@ -57,7 +57,7 @@ class NodesController < NestedNodeResourceController
     end
 
     flash[:notice] = "Successfully created #{list.length} node#{'s' if list.many?}"
-    redirect_to @parent ? node_path(@parent) : summary_path
+    redirect_to @parent ? node_path(@parent) : project_path(id: 1)
   end
 
   # POST /nodes/sort
@@ -96,7 +96,7 @@ class NodesController < NestedNodeResourceController
     if parent
       redirect_to parent
     else
-      redirect_to summary_path
+      redirect_to project_path(id: 1)
     end
   end
 

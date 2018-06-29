@@ -5,7 +5,7 @@ describe 'Issues pages' do
 
   it 'should require authenticated users' do
     Configuration.create(name: 'admin:password', value: 'rspec_pass')
-    visit issues_path
+    visit project_issues_path(project_id: 1)
     expect(current_path).to eq(login_path)
     expect(page).to have_content('Access denied.')
   end
@@ -23,13 +23,13 @@ describe 'Issues pages' do
       describe 'index page' do
 
         it 'presents a link to add new issue' do
-          visit issues_path
-          expect(page).to have_xpath("//a[@href='#{new_issue_path()}']")
+          visit project_issues_path(@project)
+          expect(page).to have_xpath("//a[@href='#{new_project_issue_path(@project)}']")
         end
 
         it 'shows an *empty list* message if none have been assigned' do
-          visit issues_path
-          expect(current_path).to eq(issues_path)
+          visit project_issues_path(@project)
+          expect(current_path).to eq(project_issues_path(@project))
           expect(page).to have_content('nothing yet')
         end
 
@@ -43,8 +43,8 @@ describe 'Issues pages' do
             )
           end
 
-          visit issues_path
-          expect(current_path).to eq(issues_path)
+          visit project_issues_path(@project)
+          expect(current_path).to eq(project_issues_path(@project))
           list.each do |title|
             expect(page).to have_content(title)
           end
@@ -59,7 +59,7 @@ describe 'Issues pages' do
           create(:evidence)
           create(:evidence)
 
-          visit issues_path
+          visit project_issues_path(@project)
 
           # click > 1 issue checkboxes
           page.all('input.js-multicheck').each(&:click)
@@ -107,7 +107,7 @@ describe 'Issues pages' do
 
         context 'submitting the form with valid information' do
           before do
-            visit new_issue_path
+            visit new_project_issue_path(@project)
             fill_in :issue_text,
               with: "#[Title]#\nRspec issue\n\n#[Description]#\nNew description\n\n"
           end
@@ -115,7 +115,7 @@ describe 'Issues pages' do
           it 'creates a new Issue under the Issue library with the right Category and Author'  do
             expect { submit_form }.to change { Issue.count }.by(1)
             issue = Issue.last
-            expect(current_path).to eq(issue_path(issue))
+            expect(current_path).to eq(project_issue_path(@project, issue))
             expect(page).to have_content('Rspec issue')
 
             expect(issue.category).to eq(Category.issue)
@@ -128,7 +128,7 @@ describe 'Issues pages' do
 
         context 'submitting the form with invalid information' do
           before do
-            visit new_issue_path
+            visit new_project_issue_path(@project)
             fill_in :issue_text, with: 'a' * 65536
           end
 
@@ -151,7 +151,7 @@ describe 'Issues pages' do
             allow(NoteTemplate).to receive(:pwd).and_return(template_path)
 
             template_content = File.read(template_path.join('simple_note.txt'))
-            visit new_issue_path(template: 'simple_note')
+            visit new_project_issue_path(@project, template: 'simple_note')
 
             expect(find_field('issue[text]').value).to include(template_content)
           end
@@ -160,7 +160,7 @@ describe 'Issues pages' do
         context 'when the issue has a Tags field' do
           it 'tags the issue with the corresponding tag if only one is present' do
             tag_field = '!f89406_private'
-            visit new_issue_path
+            visit new_project_issue_path(@project)
             fill_in :issue_text,
               with: "#[Title]#\nRspec issue\n\n#[Tags]#\n#{tag_field}\n\n"
 
@@ -172,7 +172,7 @@ describe 'Issues pages' do
 
           it 'tags the issue with the first tag if more than one are present' do
             tag_field = '!f89406_private, !468847_public'
-            visit new_issue_path
+            visit new_project_issue_path(@project)
             fill_in :issue_text,
               with: "#[Title]#\nRspec issue\n\n#[Tags]#\n#{tag_field}\n\n"
 
@@ -190,7 +190,7 @@ describe 'Issues pages' do
         before do
           @node  = create(:node)
           @issue = create(:issue, node: @node, updated_at: 2.seconds.ago)
-          visit edit_issue_path(@issue)
+          visit edit_project_issue_path(@project, @issue)
         end
 
         describe 'submitting the form with valid information' do
@@ -202,7 +202,7 @@ describe 'Issues pages' do
           it 'updates and shows the issue' do
             submit_form
             expect(@issue.reload.text).to eq new_content
-            expect(current_path).to eq issue_path(@issue)
+            expect(current_path).to eq project_issue_path(@project, @issue)
           end
 
           let(:model) { @issue }
@@ -247,7 +247,7 @@ describe 'Issues pages' do
           # has the right class:
           @issue = Issue.find(@issue.id)
           extra_setup
-          visit issue_path(@issue)
+          visit project_issue_path(@project, @issue)
         end
 
         let(:extra_setup) do
@@ -300,7 +300,7 @@ describe 'Issues pages' do
         it_behaves_like "a page with a comments feed"
 
         describe "clicking 'delete'" do
-          before { visit issue_path(@issue) }
+          before { visit project_issue_path(@project, @issue) }
 
           let(:submit_form) { within('.note-text-inner') { click_link 'Delete' } }
 
@@ -320,7 +320,7 @@ describe 'Issues pages' do
         describe 'add evidence', js: true do
           before do
             @node = Node.create!(label: '192.168.0.1')
-            visit issue_path(@issue)
+            visit project_issue_path(@project, @issue)
             click_link('Evidence')
           end
 

@@ -6,7 +6,7 @@ shared_examples "a page which handles edit conflicts" do
   def record_path(record)
     case record
     when Issue
-      issue_path(record)
+      project_issue_path(@project, record)
     when Note
       node_note_path(@node, record)
     when Evidence
