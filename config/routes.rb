@@ -10,6 +10,12 @@ Rails.application.routes.draw do
   resource :session
 
   # ------------------------------------------------------------ Project routes
+  concern :multiple_destroy do
+    collection do
+      delete :multiple_destroy
+    end
+  end
+
   get '/summary' => 'projects#show'
 
   resources :activities, only: [] do
@@ -24,12 +30,13 @@ Rails.application.routes.draw do
     collection { get :status }
   end
 
-  resources :issues do
+  resources :issues, concerns: :multiple_destroy do
     collection do
       post :import
-      delete :multiple_destroy
       resources :merge, only: [:new, :create], controller: 'issues/merge'
     end
+
+    resources :nodes, only: [:show], controller: 'issues/nodes'
     resources :revisions, only: [:index, :show]
   end
 
@@ -51,20 +58,12 @@ Rails.application.routes.draw do
       get :tree
     end
 
-    resources :notes do
+    resources :notes, concerns: :multiple_destroy do
       resources :revisions, only: [:index, :show]
-
-      collection do
-        delete :multiple_destroy
-      end
     end
 
-    resources :evidence, except: :index do
+    resources :evidence, except: :index, concerns: :multiple_destroy do
       resources :revisions, only: [:index, :show]
-
-      collection do
-        delete :multiple_destroy
-      end
     end
 
     constraints(:filename => /.*/) do

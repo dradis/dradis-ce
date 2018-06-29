@@ -49,7 +49,7 @@ describe "node pages" do
             node 1
 
             node_2
-                 node with trailing whitespace    
+                 node with trailing whitespace
           LIST
 
         expect do
@@ -111,7 +111,7 @@ describe "node pages" do
             node 1
 
             node_2
-                 node with trailing whitespace    
+                 node with trailing whitespace
           LIST
 
         expect do
@@ -198,6 +198,7 @@ describe "node pages" do
       let(:submit_form) do
         within "#modal_delete_node" do
           click_link "Delete"
+          expect(current_path).to eq summary_path
         end
       end
 

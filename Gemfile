@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.3'
+gem 'rails', '~> 5.1.6'
 
 # Use Puma as the app server
 # FIXME: required for Rails 5 ActionCable
@@ -35,7 +35,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
 # Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 3.0'
+gem 'redis', '~> 4.0'
 
 # ---------------------------------------------------- Dradis Community Edition
 gem 'bootstrap-sass', '~> 2.3.2.2'
@@ -47,7 +47,7 @@ gem 'jquery-fileupload-rails', '~> 0.3.4'
 gem 'jquery-hotkeys-rails'
 
 # Organize Node tree
-gem 'acts_as_tree'
+gem 'acts_as_tree', '~> 2.7.1'
 
 gem 'builder'
 
@@ -88,7 +88,7 @@ gem 'json', '1.8.6'
 gem 'nokogiri', '1.8.2'
 
 # MySQL backend
-gem 'mysql2', '0.3.18'
+gem 'mysql2', '~> 0.5.1'
 
 # Textile markup
 
@@ -122,7 +122,7 @@ gem 'cancancan', '~> 1.10'
 gem 'resque', require: 'resque/status_server'
 gem 'resque-status'
 # See https://github.com/sinatra/sinatra/issues/1055
-gem 'sinatra', '2.0.1'
+gem 'sinatra', '2.0.2'
 
 # Forms that integrate with Twitter's Bootstrap
 gem 'simple_form'

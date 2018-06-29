@@ -72,8 +72,8 @@
       <% @revisions.each do |revision| %>
         <tr <%= raw "class='active'" if revision == @revision %>>
           <% present(revision, RevisionPresenter) do |revision_presenter| %>
-            <td><%= revision_presenter.created_at_ago %></td>
             <td><%= revision_presenter.action %></td>
+            <td><%= revision_presenter.created_at_ago %></td>
             <td><%= revision_presenter.whodunnit %></td>
             <td>
               <% unless revision == @revisions.last %>
