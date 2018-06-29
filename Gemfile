@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.3'
+gem 'rails', '~> 5.1.6'
 
 # Use Puma as the app server
 # FIXME: required for Rails 5 ActionCable
@@ -35,7 +35,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
 # Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 3.0'
+gem 'redis', '~> 4.0'
 
 # ---------------------------------------------------- Dradis Community Edition
 gem 'bootstrap-sass', '~> 2.3.2.2'
@@ -47,7 +47,7 @@ gem 'jquery-fileupload-rails', '~> 0.3.4'
 gem 'jquery-hotkeys-rails'
 
 # Organize Node tree
-gem 'acts_as_tree'
+gem 'acts_as_tree', '~> 2.7.1'
 
 gem 'builder'
 
@@ -85,10 +85,10 @@ gem 'json', '1.8.6'
 # TODO: Traveling Ruby - DANGER, DANGER: this version has an issue, but it's
 # the last one supported by Traveling Ruby
 # gem 'nokogiri', '1.6.6.2'
-gem 'nokogiri', '1.8.1'
+gem 'nokogiri', '1.8.2'
 
 # MySQL backend
-gem 'mysql2', '0.3.18'
+gem 'mysql2', '~> 0.5.1'
 
 # Textile markup
 
@@ -99,6 +99,12 @@ gem 'RedCloth', '4.3.1', require: 'redcloth'
 
 # html-pipeline dependency for auto-linking
 gem 'rinku'
+
+# actionpack depends on rails-html-sanitizer, which has an XSS vulnerability
+# before 1.0.4, so make sure we're using 1.0.4+:
+# see https://github.com/rails/rails-html-sanitizer/commit/f3ba1a839a
+# and https://github.com/flavorjones/loofah/issues/144
+gem 'rails-html-sanitizer', '~> 1.0.4'
 
 # SQLite3 DB driver
 gem 'sqlite3'#,  '1.3.10'
@@ -116,13 +122,13 @@ gem 'cancancan', '~> 1.10'
 gem 'resque', require: 'resque/status_server'
 gem 'resque-status'
 # See https://github.com/sinatra/sinatra/issues/1055
-gem 'sinatra', '2.0.0'
+gem 'sinatra', '2.0.2'
 
 # Forms that integrate with Twitter's Bootstrap
 gem 'simple_form'
 
 # Word content control filter string parsing
-gem 'parslet', '~> 1.4.0'
+gem 'parslet', '~> 1.6.0'
 
 # Word screenshots processing
 gem 'image_size', '~> 1.3.0'
@@ -186,7 +192,7 @@ end
 
 group :test do
   gem 'database_cleaner'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'capybara', '~> 2.13'
   gem 'poltergeist'
   gem 'guard-rspec', require: false
@@ -209,13 +215,13 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 3.7', github: 'dradis/dradis-plugins'
+gem 'dradis-plugins', '~> 3.9', github: 'dradis/dradis-plugins'
 
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 3.7', github: 'dradis/dradis-projects'
+gem 'dradis-projects', '~> 3.9', github: 'dradis/dradis-projects'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)

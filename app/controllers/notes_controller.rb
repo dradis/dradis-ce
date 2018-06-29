@@ -1,12 +1,13 @@
 # This controller exposes the REST operations required to manage the Note
 # resource.
 class NotesController < NestedNodeResourceController
+  include MultipleDestroy
 
-  before_action :find_or_initialize_note, except: [:index, :new]
+  before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
 
   def new
-    @note      = @node.notes.new
+    @note = @node.notes.new
 
     # See ContentFromTemplate concern
     @note.text = template_content if params[:template]
@@ -22,7 +23,7 @@ class NotesController < NestedNodeResourceController
       redirect_to node_note_path(@node, @note), notice: 'Note created'
     else
       initialize_nodes_sidebar
-      render "new"
+      render 'new'
     end
   end
 
@@ -55,7 +56,7 @@ class NotesController < NestedNodeResourceController
       track_destroyed(@note)
       redirect_to node_path(@node), notice: 'Note deleted'
     else
-      redirect_to node_note_path(@node, @note), alert: 'Could not delete node'
+      redirect_to node_note_path(@node, @note), alert: 'Could not delete note'
     end
   end
 

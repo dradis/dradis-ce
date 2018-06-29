@@ -5,7 +5,7 @@
 
 <section class="inner">
   <div class="row-fluid">
-    <div class="span3">
+    <div class="span5">
       <%= form_tag upload_manager_path(format: :js), multipart: true, id: 'new_upload', data: { parse_url: upload_parse_path() } do %>
       <h2>1. Choose a tool</h2>
         <%= select_tag  'uploader', options_from_collection_for_select(@uploaders, :name, :name) %>
@@ -16,7 +16,7 @@
         <%= hidden_field_tag 'format', 'js' %>
       <% end %>
     </div>
-    <div class="span9">
+    <div class="span7">
       <p>Upload progress:</p>
       <div class="progress">
           <div class="bar"></div >

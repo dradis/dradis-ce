@@ -1,4 +1,5 @@
 class EvidenceController < NestedNodeResourceController
+  include MultipleDestroy
 
   before_action :find_or_initialize_evidence, except: [ :index, :create_multiple ]
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
@@ -78,7 +79,7 @@ class EvidenceController < NestedNodeResourceController
       if @evidence.update_attributes(evidence_params)
         track_updated(@evidence)
         check_for_edit_conflicts(@evidence, updated_at_before_save)
-        format.html { redirect_to [@node, @evidence], notice: 'Evidence updated.' }
+        format.html { redirect_to issue_or_node_path, notice: 'Evidence updated.' }
       else
         format.html {
           initialize_nodes_sidebar
@@ -108,7 +109,6 @@ class EvidenceController < NestedNodeResourceController
     end
   end
 
-
   private
 
   # Look for the Evidence we are going to be working with based on the :id
@@ -136,5 +136,13 @@ class EvidenceController < NestedNodeResourceController
 
   def evidence_params
     params.require(:evidence).permit(:author, :content, :issue_id, :node_id)
+  end
+
+  def issue_or_node_path
+    if params[:back_to] == 'issue'
+      @evidence.issue
+    else
+      [@node, @evidence]
+    end
   end
 end

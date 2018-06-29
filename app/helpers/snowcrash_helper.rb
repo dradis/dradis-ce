@@ -64,5 +64,4 @@ module SnowcrashHelper
 
     content_tag :i, nil, options
   end
-
 end

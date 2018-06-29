@@ -17,7 +17,7 @@ class UploadController < ProjectScopedController
   before_action :validate_uploader, only: [:create, :parse]
 
   def index
-    @last_job = Log.maximum(:uid) || 1
+    @last_job = Log.new.uid
   end
 
   # TODO: this would overwrite an existing file with the same name.
@@ -69,14 +69,16 @@ class UploadController < ProjectScopedController
   def process_upload_background(args={})
     attachment = args.fetch(:attachment)
 
-    job = UploadJob.perform_later(
+    job_logger.write 'Enqueueing job to start in the background.'
+
+    # NOTE: call the bg job as last thing in the action helps us
+    # avoid SQLite3::BusyException when using sqlite and
+    # activejob async queue adapter
+    UploadJob.perform_later(
       file: attachment.fullpath.to_s,
       plugin_name: @uploader.to_s,
       uid: params[:item_id].to_i
     )
-
-    job_logger.write 'Enqueueing job to start in the background.'
-    job_logger.write "Job id is #{ job.job_id }."
   end
 
   def process_upload_inline(args={})

@@ -95,6 +95,7 @@ document.addEventListener "turbolinks:load", ->
 
       title = switch term
         when 'boards' then '[<span>Dradis Pro feature</span>] Advanced boards and task assignment'
+        when 'issuelib' then '[<span>Dradis Pro feature</span>] Integrated library of vulnerability descriptions'
         when 'training-course' then 'Dradis Training Course'
         when 'try-pro' then 'Upgrade to Dradis Pro'
         when 'word-reports' then '[<span>Dradis Pro feature</span>] Custom Word reports'
@@ -166,11 +167,3 @@ document.addEventListener "turbolinks:load", ->
 
   $('.navbar .btn-search').on 'click', ->
     $('.form-search').submit()
-
-  # Table filtering
-  $('.js-table-filter').on 'keyup', ->
-    rex = new RegExp($(this).val(), 'i')
-    $('tbody tr').hide()
-    $('tbody tr').filter( ->
-      rex.test($(this).text())
-    ).show()

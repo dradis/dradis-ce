@@ -353,10 +353,9 @@ body {
           border-bottom: 1px solid $grayLight;
 
           .actions {
-            color: $grayLight;
-            font-size: 80%;
+            font-size: 75%;
 
-            a {
+            .action-link {
               padding: 0 4px;
             }
           }
@@ -416,6 +415,10 @@ body {
             padding-bottom: .5em;
             color: darken($secondaryNavBarBgColor, 60%);
             border-bottom: 1px solid darken($secondaryNavBarBgColor,5);
+
+            a {
+              color: inherit;
+            }
           }
         }
 

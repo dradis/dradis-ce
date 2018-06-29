@@ -20,5 +20,29 @@ body.nodes {
     #scripts-tabs .tab-pane {
       padding-left: 2em;
     }
+
+    // If you have a node with not many Evidences, but with lots of columns in
+    // those evidences, then certain dropdown menus like the 'columns' toolbar
+    // on the evidence tab can overflow their wrapping '.tab-pane' div and be
+    // hidden because of the overflow: hidden property on the .tab-pane. I
+    // couldn't find a direct workaround this that didn't use nasty JS hackery,
+    // e.g. https://stackoverflow.com/q/31829312/1603071
+    //
+    // So the solution instead is to make sure that the .tab-panes are always
+    // tall enough to fit a reasonably-sized dropdown menu. We just need to
+    // make sure that we only apply this CSS to the exact correct tab-panes -
+    // because there may be other .tab-panes, further nested down, which
+    // shouldn't be as tall (e.g. the .tab-panes that will be used by the
+    // 'services extras' table if it's present.)
+    .secondary-navbar-content > .tab-content > .tab-pane {
+      min-height: 800px;
+    }
   }
+}
+
+td.services-extras-datum-output {
+  // Without this line, service info with very long strings of characters (e.g.
+  // an SSH key) will cause the table to be very wide and break the page's
+  // layout:
+  word-break: break-all;
 }
