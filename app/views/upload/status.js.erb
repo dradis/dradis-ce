@@ -1,8 +1,0 @@
-<% if @logs.any? -%>
-  ConsoleUpdater.parsing = <%= @uploading %>;
-  $("#console").append( '<%= escape_javascript(render(@logs)) %>' );
-  $("#console").prop({ scrollTop: $("#console").prop("scrollHeight") });
-  setTimeout(ConsoleUpdater.updateConsole, 2000);
-<% else -%>
-  setTimeout(ConsoleUpdater.updateConsole, 4000);
-<% end -%>
