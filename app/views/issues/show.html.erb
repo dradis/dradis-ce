@@ -49,6 +49,10 @@
           <%= markup(@issue.text) %>
         </div>
       </div>
+
+      <div class="inner">
+        <%= render partial: 'comments' %>
+      </div>
     </div>
   <% end %>
 

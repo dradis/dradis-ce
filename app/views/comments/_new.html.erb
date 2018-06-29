@@ -1,0 +1,9 @@
+<%= form_for [commentable, Comment.new] do |f| %>
+  <%= f.label "Add a comment" %>
+  <%= avatar_image(current_user, size: 30) %>
+  <%= f.text_area :content,
+                  placeholder: 'Write your comment...',
+                  rows: 5,
+                  required: 'required' %>
+  <%= f.submit "Add comment", class: "btn btn-primary" %>
+<% end %>
