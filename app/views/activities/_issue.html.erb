@@ -1,6 +1,6 @@
 <% if issue %>
   <% if issue.title? %>
-    <%= presenter.verb %> the <%= link_to issue.title, issue %> issue.
+    <%= presenter.verb %> the <%= link_to issue.title, [@project, issue] %> issue.
   <% else %>
     <%= presenter.verb %> <%= link_to "Issue ##{issue.id}", issue %>.
   <% end %>
