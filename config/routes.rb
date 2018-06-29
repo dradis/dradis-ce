@@ -27,6 +27,14 @@ Rails.application.routes.draw do
       resources :nodes, only: [:show], controller: 'issues/nodes'
       resources :revisions, only: [:index, :show]
     end
+
+    resources :methodologies do
+      collection { post :preview }
+      member do
+        get :add
+        put :update_task
+      end
+    end
   end
 
   resources :activities, only: [] do
@@ -39,14 +47,6 @@ Rails.application.routes.draw do
 
   resources :console, only: [] do
     collection { get :status }
-  end
-
-  resources :methodologies do
-    collection { post :preview }
-    member do
-      get :add
-      put :update_task
-    end
   end
 
   resources :nodes do
