@@ -16,18 +16,7 @@
       <div id="<%= dom_id(@note) %>" class="inner note-text-inner">
         <h3>Content for this note -
           <span class="actions">
-            <%= link_to edit_node_note_path(@node, @note), class: 'action-link' do %>
-              <i class="fa fa-pencil"></i> Edit
-            <% end %>
-            <%= link_to [@node, @note],
-                  class: 'action-link text-error',
-                  data: { confirm: 'Are you sure?' },
-                  method: :delete do %>
-              <i class="fa fa-trash"></i> Delete
-            <% end %>
-            <a href="#modal_move_note" class="action-link" tabindex="-1" data-toggle="modal">
-              <i class="fa fa-mail-forward"></i> Move
-            </a>
+            <%= render partial: 'actions_menu' %>
           </span>
         </h3>
         <div class="content-textile">
