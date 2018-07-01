@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :comments
   resources :configurations, only: [:index, :update]
 
   resources :console, only: [] do
