@@ -17,7 +17,14 @@ Rails.application.routes.draw do
   end
 
   resources :projects, only: [:show] do
+    resources :activities, only: [] do
+      collection do
+        get :poll, constraints: { format: /js/ }
+      end
+    end
+
     resources :comments
+
     resources :issues, concerns: :multiple_destroy do
       collection do
         post :import
@@ -28,27 +35,21 @@ Rails.application.routes.draw do
       resources :revisions, only: [:index, :show]
     end
 
-    get 'search' => 'search#index'
-  end
-
-  resources :activities, only: [] do
-    collection do
-      get :poll, constraints: { format: /js/ }
+    resources :methodologies do
+      collection { post :preview }
+      member do
+        get :add
+        put :update_task
+      end
     end
+
+    get 'search' => 'search#index'
   end
 
   resources :configurations, only: [:index, :update]
 
   resources :console, only: [] do
     collection { get :status }
-  end
-
-  resources :methodologies do
-    collection { post :preview }
-    member do
-      get :add
-      put :update_task
-    end
   end
 
   resources :nodes do
