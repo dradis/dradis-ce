@@ -22,7 +22,9 @@ Rails.application.routes.draw do
         get :poll, constraints: { format: /js/ }
       end
     end
+
     resources :comments
+
     resources :issues, concerns: :multiple_destroy do
       collection do
         post :import
@@ -40,6 +42,8 @@ Rails.application.routes.draw do
         put :update_task
       end
     end
+
+    get 'search' => 'search#index'
   end
 
   resources :configurations, only: [:index, :update]
@@ -71,7 +75,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'search' => 'search#index'
   post 'create_multiple_evidences' => 'evidence#create_multiple'
   get 'trash' => 'revisions#trash'
 
