@@ -2,17 +2,17 @@
 
 <div class="row-fluid">
   <div class="span6">
-    <%= simple_form_for @methodology, {url: methodology_path(@methodology), method: :put, html: { class: 'form-vertical' } } do |f| %>
+    <%= simple_form_for [@project, @methodology], { url: project_methodology_path(@project, @methodology), method: :put, html: { class: 'form-vertical' } } do |f| %>
       <%= f.error_notification %>
 
-      <%= f.input :content, as: :text, input_html: { data: { preview: preview_methodologies_path() }, rows: 30, style: 'width:100%' } %>
+      <%= f.input :content, as: :text, input_html: { data: { preview: preview_project_methodologies_path(@project) }, rows: 30, style: 'width:100%' } %>
       <div class="form-inputs">
 
       </div>
 
       <div class="form-actions">
         <%= f.button :submit, 'Update methodology', class: 'btn btn-primary' %> or
-        <%= link_to 'Cancel', methodologies_path %>
+        <%= link_to 'Cancel', project_methodologies_path(@project) %>
       </div>
     <% end %>
     <p><strong>Note</strong>: Changes made in this form, only affect the instance of the methodology associated with this project.</p>
@@ -22,7 +22,7 @@
     <div class="inner">
       <h2 id="preview_name"><%= @methodology.name %></h2>
       <div id="preview_content" class="well">
-        <%= parse_methodology_content(@methodology) %>
+        <%= parse_project_methodology_content(@project, @methodology) %>
       </div>
     </div>
   </div>

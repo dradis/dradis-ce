@@ -1,4 +1,5 @@
-class MethodologiesController < ProjectScopedController
+class MethodologiesController < AuthenticatedController
+  include ProjectScoped
 
   before_action :find_methodologylib
   before_action :find_methodology, only: [:edit, :update, :update_task, :destroy]
@@ -25,7 +26,7 @@ class MethodologiesController < ProjectScopedController
     @methodologylib.notes.create(author: 'methodology builder', text: @methodology.content, category: Category.default)
 
     flash[:info] = "'#{old_name}' added as '#{new_name}'"
-    redirect_to methodologies_path
+    redirect_to project_methodologies_path(@project)
   end
 
   def edit
@@ -33,9 +34,9 @@ class MethodologiesController < ProjectScopedController
 
   def update
     if @note.update_attribute(:text, methodology_params[:content])
-      redirect_to methodologies_path, notice: "Methodology [#{@methodology.name}] updated."
+      redirect_to project_methodologies_path(@project), notice: "Methodology [#{@methodology.name}] updated."
     else
-      redirect_to methodologies_path, alert: "Methodology [#{@methodology.name}] could not be updated."
+      redirect_to project_methodologies_path(@project), alert: "Methodology [#{@methodology.name}] could not be updated."
     end
   end
 
@@ -65,7 +66,7 @@ class MethodologiesController < ProjectScopedController
       note.destroy
     end
     flash[:info] = "Methodology deleted"
-    redirect_to methodologies_path()
+    redirect_to project_methodologies_path(@project)
   end
 
 
@@ -83,7 +84,7 @@ class MethodologiesController < ProjectScopedController
     if @note
       @methodology = Methodology.new(filename: @note.id, content: @note.text)
     else
-      redirect_to methodologies_path, notice: 'Methodology not found!'
+      redirect_to project_methodologies_path(@project), notice: 'Methodology not found!'
     end
   end
 

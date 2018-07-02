@@ -1,7 +1,8 @@
 # This controller is used by the Ajax poller to retrieve changes made by other
 # users.
 
-class ActivitiesController < ProjectScopedController
+class ActivitiesController < AuthenticatedController
+  include ProjectScoped
 
   def poll
     @this_poll  = Time.now.to_i
