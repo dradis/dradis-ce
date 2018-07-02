@@ -27,6 +27,8 @@ Rails.application.routes.draw do
       resources :nodes, only: [:show], controller: 'issues/nodes'
       resources :revisions, only: [:index, :show]
     end
+
+    get 'search' => 'search#index'
   end
 
   resources :activities, only: [] do
@@ -72,7 +74,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'search' => 'search#index'
   post 'create_multiple_evidences' => 'evidence#create_multiple'
   get 'trash' => 'revisions#trash'
 
