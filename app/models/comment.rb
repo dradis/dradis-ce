@@ -5,7 +5,6 @@ class Comment < ApplicationRecord
 
   # -- Callbacks ------------------------------------------------------------
 
-
   # -- Validations ----------------------------------------------------------
   validates :content, presence: true, length: { maximum: 65535 }
   validates :commentable, presence: true, associated: true
