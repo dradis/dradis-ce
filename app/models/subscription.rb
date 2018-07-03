@@ -1,13 +1,26 @@
-class User < ApplicationRecord
+class Subscription < ApplicationRecord
   # -- Relationships --------------------------------------------------------
-  has_many :activities
-  has_many :comments
-  has_many :notifications
-  has_many :subscriptions
+  belongs_to :subscribable, polymorphic: true
+  belongs_to :user
 
   # -- Callbacks ------------------------------------------------------------
+
   # -- Validations ----------------------------------------------------------
+  validates :subscribable, presence: true, associated: true
+  validates :user, presence: true, associated: true
+
   # -- Scopes ---------------------------------------------------------------
+
   # -- Class Methods --------------------------------------------------------
+  def self.subscribe(user:, to:)
+    self.create!(
+      user: user,
+      subscribable: to
+    )
+  rescue ActiveRecord::RecordNotUnique
+    # Don't worry about dupes
+    false
+  end
+
   # -- Instance Methods -----------------------------------------------------
 end
