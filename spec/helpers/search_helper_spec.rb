@@ -62,7 +62,7 @@ RSpec.describe SearchHelper do
     end
 
     context "if text is in boundaries of 300 chars" do
-      it "return orginal text" do
+      it 'return original text' do
         old_text = "a" * 300
         term = "dradis"
 
