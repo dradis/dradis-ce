@@ -51,7 +51,7 @@
       </div>
 
       <div class="inner">
-        <%= render partial: 'comments' %>
+        <%= render 'comments/feed', commentable: @issue %>
       </div>
     </div>
   <% end %>
