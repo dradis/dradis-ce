@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <%= link_to 'Dradis CE', main_app.project_path(id: 1), class: 'brand' %>
+      <%= link_to @project.name, main_app.project_path(id: 1), class: 'brand' %>
       <div class="navbar-collapse" id="bs-navbar-collapse">
         <ul class="nav pull-right">
           <li><%= link_to main_app.project_search_path(@project), id: 'js-search-form-toggle' do %><i class="fa fa-search fa-lg"></i><% end %></li>
