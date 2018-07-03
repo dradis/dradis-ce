@@ -4,7 +4,7 @@ class Comment < ApplicationRecord
   belongs_to :user
 
   # -- Callbacks ------------------------------------------------------------
-  after_create :create_subscription
+
 
   # -- Validations ----------------------------------------------------------
   validates :content, presence: true, length: { maximum: 65535 }
@@ -16,7 +16,4 @@ class Comment < ApplicationRecord
   # -- Class Methods --------------------------------------------------------
 
   # -- Instance Methods -----------------------------------------------------
-  def create_subscription
-    Subscription.subscribe(user: user, to: commentable)
-  end
 end
