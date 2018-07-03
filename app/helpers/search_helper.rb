@@ -9,7 +9,7 @@ module SearchHelper
     search_path(options)
   end
 
-  # returns sanitized text snipet as span
+  # returns sanitized text snippet as span
   def text_snippet(text, term)
     snipet_value = format_match_row(text, term)
     content_tag :span, snipet_value, class: "search-matches"
@@ -29,7 +29,7 @@ module SearchHelper
     crop_text(pos_start, pos_end, max_length, text)
   end
 
-  # Calcuate what part of text to take based on the search term,
+  # Calculate what part of text to take based on the search term,
   # which must always be visible in the result
   def crop_text(pos_start, pos_end, max_length, text)
     return text[pos_start...max_length] if pos_start == 0
