@@ -2,10 +2,12 @@ class CommentsController < AuthenticatedController
   include ActionView::RecordIdentifier
   include ProjectScoped
 
-  before_action :find_or_initialize_comment
+  before_action :set_comment, except: [:create]
   before_action :check_comment_author, only: [:update, :destroy]
 
   def create
+    @comment = Comment.new(comment_params)
+    @comment.user = current_user
     @comment.save
     redirect_to polymorphic_path([@project, @comment.commentable], anchor: dom_id(@comment))
   end
@@ -29,14 +31,7 @@ class CommentsController < AuthenticatedController
     params.require(:comment).permit(:content, :commentable_type, :commentable_id)
   end
 
-  def find_or_initialize_comment
-    if params[:id]
-      @comment = Comment.find(params[:id])
-    else
-      @comment = Comment.new(comment_params)
-      @comment.user = current_user
-    end
-
-    @comment
+  def set_comment
+    @comment = Comment.find(params[:id])
   end
 end
