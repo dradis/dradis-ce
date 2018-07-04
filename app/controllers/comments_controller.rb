@@ -3,7 +3,7 @@ class CommentsController < AuthenticatedController
   include ProjectScoped
 
   before_action :set_comment, except: [:create]
-  before_action :check_comment_author, only: [:update, :destroy]
+  before_action :ensure_comment_author, only: [:update, :destroy]
 
   def create
     @comment = Comment.new(comment_params)
@@ -23,8 +23,12 @@ class CommentsController < AuthenticatedController
   end
 
   private
-  def check_comment_author
-    head :forbidden unless @comment.user == current_user
+  def ensure_comment_author
+    unless @comment.user == current_user
+      redirect_to [@project, @comment.commentable],
+                  status: :forbidden,
+                  alert: 'Forbidden'
+    end
   end
 
   def comment_params

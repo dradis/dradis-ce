@@ -17,7 +17,7 @@
 
             <% if comment.user == current_user %>
               <div class="actions">
-                <%= link_to 'javascript:void();',
+                <%= link_to 'javascript:void(0)',
                             data: {toggle_comment: "on"} do %>
                   <i class="fa fa-pencil"></i> Edit
                 <% end %>
