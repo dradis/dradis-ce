@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-describe SearchHelper do
+RSpec.describe SearchHelper do
   def options(term:, scope:)
     Hash.new.tap do
       params[:q] = term
@@ -8,16 +10,19 @@ describe SearchHelper do
     end
   end
 
-  describe ".search_path" do
+  describe '.search_filter_path' do
+    let(:project) { Project.new(id: 1) }
+    before { assign(:project, project) }
+
     %w[all nodes notes issues evidences].each do |scope|
       it "formats correct #{scope} path" do
         expect(helper.search_filter_path(options(term: "test", scope: scope))).
-          to eq "/search?q=test&scope=#{scope}"
+          to eq "/projects/#{project.id}/search?q=test&scope=#{scope}"
       end
     end
 
     it "returns empty search path when no options provided" do
-      expect(helper.search_filter_path).to eq "/search"
+      expect(helper.search_filter_path).to eq "/projects/#{project.id}/search"
     end
   end
 

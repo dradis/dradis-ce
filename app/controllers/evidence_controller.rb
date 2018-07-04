@@ -1,4 +1,5 @@
 class EvidenceController < NestedNodeResourceController
+  include ConflictResolver
   include MultipleDestroy
 
   before_action :find_or_initialize_evidence, except: [ :index, :create_multiple ]
@@ -24,7 +25,7 @@ class EvidenceController < NestedNodeResourceController
       if @evidence.save
         track_created(@evidence)
         format.html {
-          redirect_to [@evidence.node, @evidence],
+          redirect_to [@project, @evidence.node, @evidence],
             notice: "Evidence added for node #{@evidence.node.label}."
         }
       else
@@ -67,7 +68,7 @@ class EvidenceController < NestedNodeResourceController
         )
       end
     end
-    redirect_to issue_path(evidence_params[:issue_id]), notice: 'Evidence added for selected nodes.'
+    redirect_to project_issue_path(@project, evidence_params[:issue_id]), notice: 'Evidence added for selected nodes.'
   end
 
   def edit
@@ -79,7 +80,15 @@ class EvidenceController < NestedNodeResourceController
       if @evidence.update_attributes(evidence_params)
         track_updated(@evidence)
         check_for_edit_conflicts(@evidence, updated_at_before_save)
-        format.html { redirect_to issue_or_node_path, notice: 'Evidence updated.' }
+        format.html do
+          path = if params[:back_to] == 'issue'
+                   [@project, @evidence.issue]
+                 else
+                   [@project, @node, @evidence]
+                 end
+          redirect_to path, notice: 'Evidence updated.'
+        end
+
       else
         format.html {
           initialize_nodes_sidebar
@@ -95,13 +104,13 @@ class EvidenceController < NestedNodeResourceController
       if @evidence.destroy
         track_destroyed(@evidence)
         format.html {
-          redirect_to @node,
+          redirect_to [@project, @node],
             notice: "Successfully deleted evidence for '#{@evidence.issue.title}.'"
         }
         format.js
       else
         format.html {
-          redirect_to [@node,@evidence],
+          redirect_to [@project, @node, @evidence],
             notice: "Error while deleting evidence: #{@evidence.errors}"
         }
         format.js
@@ -136,13 +145,5 @@ class EvidenceController < NestedNodeResourceController
 
   def evidence_params
     params.require(:evidence).permit(:author, :content, :issue_id, :node_id)
-  end
-
-  def issue_or_node_path
-    if params[:back_to] == 'issue'
-      @evidence.issue
-    else
-      [@node, @evidence]
-    end
   end
 end

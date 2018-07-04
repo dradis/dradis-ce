@@ -1,3 +1,5 @@
+require_relative './support/deferred_garbage_collection'
+
 RSpec.configure do |config|
   # Filter which specs to run
   config.filter_run :focus => true

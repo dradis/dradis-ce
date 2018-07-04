@@ -1,4 +1,5 @@
 class ProjectsController < AuthenticatedController
+  before_action :set_project, only: :show
   helper :snowcrash
   layout 'snowcrash'
 
@@ -29,5 +30,10 @@ class ProjectsController < AuthenticatedController
         end
       end
     end
+  end
+
+  private
+  def set_project
+    @project = Project.new
   end
 end

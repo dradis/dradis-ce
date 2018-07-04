@@ -1,7 +1,9 @@
 <% if evidence %>
   <% issue = evidence.issue %>
   <% node  = evidence.node %>
-  <%= presenter.verb %> <%= link_to 'a piece of evidence', [node, evidence] %> for <%= link_to issue.title || "Issue #{issue.id}", evidence.issue %> at <%= link_to node.label, node %>.
+  <%= presenter.verb %> <%= link_to 'a piece of evidence', [@project, node, evidence] %>
+  for
+  <%= link_to issue.title || "Issue #{issue.id}", [@project, evidence.issue] %> at <%= link_to node.label, [@project, node] %>.
 <% else %>
   <% if activity.action == 'destroy' %>
     deleted a piece of evidence.

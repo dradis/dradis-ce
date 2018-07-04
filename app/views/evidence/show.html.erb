@@ -26,10 +26,10 @@
         <h3>
           Evidence for this instance -
           <span class="actions">
-            <%= link_to edit_node_evidence_path(@node, @evidence), class: 'action-link' do %>
+            <%= link_to edit_project_node_evidence_path(@node.project, @node, @evidence), class: 'action-link' do %>
               <i class="fa fa-pencil"></i> Edit
             <% end %>
-            <%= link_to [@node, @evidence],
+            <%= link_to [@project, @node, @evidence],
                   class: 'action-link text-error',
                   data: { confirm: 'Are you sure?' },
                   method: :delete do %>
@@ -51,7 +51,7 @@
           <h3>
             Issue information -
             <span class="actions">
-            <%= link_to 'Open', issue_path(@issue), class: 'action-link' %> -
+            <%= link_to 'Open', project_issue_path(@project, @issue), class: 'action-link' %> -
             <%= tag_and_name_for(@issue) %>
             </span>
           </h3>
@@ -76,7 +76,7 @@
               #%>
             <%= link_to(
                   'revision history',
-                  node_evidence_revisions_path(@node, @evidence),
+                  project_node_evidence_revisions_path(@node.project, @node, @evidence),
                   class: 'action-link'
                 ) if @evidence.has_revision_history? %>
           </span>

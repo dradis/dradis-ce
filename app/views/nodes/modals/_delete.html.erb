@@ -14,7 +14,7 @@
     </ul>
   </div>
   <div class="modal-footer">
-    <%= link_to 'Delete', @node, :class => 'btn btn-danger', :method => :delete %>
+    <%= link_to 'Delete', [@node.project, @node], :class => 'btn btn-danger', :method => :delete %>
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
   </div>
 </div>

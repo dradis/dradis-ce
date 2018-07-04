@@ -39,7 +39,7 @@ shared_examples 'an index table toolbar' do
     #     # closes modal reloads page
     #     find('div.modal-backdrop.in').click
     #
-    #     expect(page).to have_current_path(node_path(@node, tab: 'notes-tab'))
+    #     expect(page).to have_current_path(project_node_path(@node.project, @node, tab: 'notes-tab'))
     #     expect(find('.js-items-table-actions', visible: :all)).to_not be_visible
     #     expect(find('#modal-console', visible: :all)).to_not be_visible
     #   end
