@@ -43,6 +43,29 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :nodes do
+      collection do
+        post :sort
+        post :create_multiple
+      end
+
+      member do
+        get :tree
+      end
+
+      resources :notes, concerns: :multiple_destroy do
+        resources :revisions, only: [:index, :show]
+      end
+
+      resources :evidence, except: :index, concerns: :multiple_destroy do
+        resources :revisions, only: [:index, :show]
+      end
+
+      constraints(:filename => /.*/) do
+        resources :attachments, param: :filename
+      end
+    end
+
     get 'search' => 'search#index'
   end
 
@@ -52,32 +75,11 @@ Rails.application.routes.draw do
     collection { get :status }
   end
 
-  resources :nodes do
-    collection do
-      post :sort
-      post :create_multiple
-    end
-
-    member do
-      get :tree
-    end
-
-    resources :notes, concerns: :multiple_destroy do
-      resources :revisions, only: [:index, :show]
-    end
-
-    resources :evidence, except: :index, concerns: :multiple_destroy do
-      resources :revisions, only: [:index, :show]
-    end
-
-    constraints(:filename => /.*/) do
-      resources :attachments, param: :filename
-    end
-  end
-
+  # TODO nest create_multiple_evidences and trash under project
   post 'create_multiple_evidences' => 'evidence#create_multiple'
-  get 'trash' => 'revisions#trash'
+  get 'trash' => 'revisions#trash' # FIXME shouldn't this be under 'resources :revisions'?
 
+  # TODO nest under 'projects'
   resources :revisions, only: [] do
     member { post :recover }
   end
@@ -89,12 +91,15 @@ Rails.application.routes.draw do
 
 
   # ------------------------------------------------------------ Export Manager
+
+  # TODO nest 'export' under 'project'
   get  '/export'                   => 'export#index',             as: :export_manager
   post '/export'                   => 'export#create'
   get  '/export/validate'          => 'export#validate',          as: :validate_export
   get  '/export/validation_status' => 'export#validation_status', as: :validation_status
 
   # ------------------------------------------------------------ Upload Manager
+  # TODO nest 'upload' under 'project'
   get  '/upload'        => 'upload#index',  as: :upload_manager
   post '/upload'        => 'upload#create'
   post '/upload/parse'  => 'upload#parse'

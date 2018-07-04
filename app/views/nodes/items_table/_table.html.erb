@@ -17,7 +17,7 @@
             <%=
             case column
             when 'Title'
-              link_to([@node, item]) do
+              link_to([@node.project, @node, item]) do
                 icon = ''
                 if item.is_a?(Evidence)
                   icon =
@@ -38,10 +38,10 @@
           </td>
           <% end %>
           <td class="column-actions">
-            <%= link_to [:edit, @node, item] do %>
+            <%= link_to [:edit, @node.project, @node, item] do %>
               <i class="fa fa-pencil"></i> Edit
             <% end %>
-            <%= link_to [@node, item], method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-error' do %>
+            <%= link_to [@node.project, @node, item], method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-error' do %>
               <i class="fa fa-trash"></i> Delete
             <% end %>
           </td>

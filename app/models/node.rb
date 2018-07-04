@@ -23,6 +23,12 @@ class Node < ApplicationRecord
   has_many :issues, -> { distinct }, through: :evidence
   has_many :activities, as: :trackable
 
+  def project
+    # dummy project; this makes Node's interface more similar to how it is
+    # in Pro and makes it easier to deal with node in URL helpers
+    @project ||= Project.new
+  end
+
   def nested_activities
     sql = "(`activities`.`trackable_type`='Node' AND "\
           " `activities`.`trackable_id`=#{id})"
@@ -41,7 +47,6 @@ class Node < ApplicationRecord
     end
     Activity.where(sql)
   end
-
 
   # -- Callbacks ------------------------------------------------------------
   before_destroy :destroy_attachments

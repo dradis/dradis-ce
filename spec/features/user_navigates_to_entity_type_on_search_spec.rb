@@ -14,7 +14,7 @@ describe "User navigates to entity page from search" do
 
       page.find(".search-match-title").click
 
-      expect(page.current_path).to eq node_path(node)
+      expect(page.current_path).to eq project_node_path(node.project, node)
     end
 
     it 'of note opens the note page' do
@@ -23,7 +23,7 @@ describe "User navigates to entity page from search" do
 
       page.find(".search-match-title").click
 
-      expect(page.current_path).to eq node_note_path(note.node_id, note)
+      expect(page.current_path).to eq project_node_note_path(@project, note.node_id, note)
     end
 
     it 'of issue opens the issue page' do
@@ -41,7 +41,7 @@ describe "User navigates to entity page from search" do
 
       page.find(".search-match-title").click
 
-      expect(page.current_path).to eq node_evidence_path(evidence.node_id, evidence)
+      expect(page.current_path).to eq project_node_evidence_path(@project, evidence.node_id, evidence)
     end
   end
 end

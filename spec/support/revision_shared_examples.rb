@@ -40,7 +40,7 @@ end
 shared_examples "recover deleted item without node" do |item_type|
   it "should recover item listed in Trash even if its node has been destroyed", js: true do
     submit_form
-    visit node_path(id: model.node_id)
+    visit project_node_path(model.node.project, model.node.id)
     click_link 'Delete'
     within '#modal_delete_node' do
       click_link 'Delete'

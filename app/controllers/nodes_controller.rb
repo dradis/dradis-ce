@@ -25,11 +25,11 @@ class NodesController < NestedNodeResourceController
     if @node.save
       track_created(@node)
       flash[:notice] = 'Successfully created node.'
-      redirect_to @node
+      redirect_to [@node.project, @node]
     else
       parent = @node.parent
       if parent && parent.user_node?
-        redirect_to parent, alert: @node.errors.full_messages.join('; ')
+        redirect_to [parent.project, parent], alert: @node.errors.full_messages.join('; ')
       else
         redirect_to project_path(id: 1), alert: @node.errors.full_messages.join('; ')
       end
@@ -57,7 +57,11 @@ class NodesController < NestedNodeResourceController
     end
 
     flash[:notice] = "Successfully created #{list.length} node#{'s' if list.many?}"
-    redirect_to @parent ? node_path(@parent) : project_path(id: 1)
+    if @parent
+      redirect_to project_node_path(@parent.project, @parent)
+    else
+      project_path(id: 1)
+    end
   end
 
   # POST /nodes/sort
@@ -73,7 +77,7 @@ class NodesController < NestedNodeResourceController
     respond_to do |format|
       if @node.update_attributes(node_params)
         track_updated(@node)
-        format.html { redirect_to node_path(@node), notice: 'Node updated.' }
+        format.html { redirect_to project_node_path(@project, @node), notice: 'Node updated.' }
         format.json { render json: { success: true }.to_json }
         format.js
       else
@@ -94,7 +98,7 @@ class NodesController < NestedNodeResourceController
 
     parent = @node.parent
     if parent
-      redirect_to parent
+      redirect_to project_node_path(parent.project, parent)
     else
       redirect_to project_path(id: 1)
     end
