@@ -15,7 +15,7 @@
 
             <span class="time"><%= local_time_ago(comment.created_at) %></span>
 
-            <% if comment.user == current_user %>
+            <% if can? :update, comment %>
               <div class="actions">
                 <%= link_to 'javascript:void(0)',
                             data: {toggle_comment: "on"} do %>
@@ -35,7 +35,7 @@
             <%= comment.content %>
           </div>
 
-          <% if comment.user == current_user %>
+          <% if can? :update, comment %>
             <%= render 'comments/edit', commentable: commentable, comment: comment %>
           <% end %>
         </div>
