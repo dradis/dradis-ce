@@ -66,8 +66,14 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :revisions, only: [] do
+      member { post :recover }
+    end
+
+    get 'trash' => 'revisions#trash'
     get 'search' => 'search#index'
   end
+
 
   resources :configurations, only: [:index, :update]
 
@@ -77,12 +83,6 @@ Rails.application.routes.draw do
 
   # TODO nest create_multiple_evidences and trash under project
   post 'create_multiple_evidences' => 'evidence#create_multiple'
-  get 'trash' => 'revisions#trash' # FIXME shouldn't this be under 'resources :revisions'?
-
-  # TODO nest under 'projects'
-  resources :revisions, only: [] do
-    member { post :recover }
-  end
 
   # -------------------------------------------------------------- Static pages
   # jQuery Textile URLs
