@@ -23,13 +23,13 @@ class NodesController < NestedNodeResourceController
     if @node.save
       track_created(@node)
       flash[:notice] = 'Successfully created node.'
-      redirect_to [@node.project, @node]
+      redirect_to [@project, @node]
     else
       parent = @node.parent
       if parent && parent.user_node?
-        redirect_to [parent.project, parent], alert: @node.errors.full_messages.join('; ')
+        redirect_to [@project, parent], alert: @node.errors.full_messages.join('; ')
       else
-        redirect_to project_path(id: 1), alert: @node.errors.full_messages.join('; ')
+        redirect_to project_path(@project), alert: @node.errors.full_messages.join('; ')
       end
     end
   end
@@ -56,9 +56,9 @@ class NodesController < NestedNodeResourceController
 
     flash[:notice] = "Successfully created #{list.length} node#{'s' if list.many?}"
     if @parent
-      redirect_to project_node_path(@parent.project, @parent)
+      redirect_to project_node_path(@project, @parent)
     else
-      project_path(id: 1)
+      project_path(@project)
     end
   end
 
@@ -96,9 +96,9 @@ class NodesController < NestedNodeResourceController
 
     parent = @node.parent
     if parent
-      redirect_to project_node_path(parent.project, parent)
+      redirect_to project_node_path(@project, parent)
     else
-      redirect_to project_path(id: 1)
+      redirect_to project_path(@project)
     end
   end
 
