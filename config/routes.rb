@@ -70,8 +70,20 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
-    get 'trash' => 'revisions#trash'
     get 'search' => 'search#index'
+    get 'trash' => 'revisions#trash'
+
+    # ------------------------------------------------------- Export Manager
+    get  '/export'                   => 'export#index',             as: :export_manager
+    post '/export'                   => 'export#create'
+    get  '/export/validate'          => 'export#validate',          as: :validate_export
+    get  '/export/validation_status' => 'export#validation_status', as: :validation_status
+
+    # ------------------------------------------------------- Upload Manager
+    get  '/upload'        => 'upload#index',  as: :upload_manager
+    post '/upload'        => 'upload#create'
+    post '/upload/parse'  => 'upload#parse'
+    get  '/upload/status' => 'upload#status'
   end
 
 
@@ -81,27 +93,13 @@ Rails.application.routes.draw do
     collection { get :status }
   end
 
-  # TODO nest create_multiple_evidences and trash under project
+  # TODO nest under `:projects`
   post 'create_multiple_evidences' => 'evidence#create_multiple'
 
   # -------------------------------------------------------------- Static pages
   # jQuery Textile URLs
   get '/preview' => 'home#textilize',  as: :preview, defaults: { format: 'json' }
   get '/markup-help' => 'home#markup_help', as: :markup
-
-  # ------------------------------------------------------------ Export Manager
-
-  # TODO nest 'export' under 'project'
-  get  '/export'                   => 'export#index',             as: :export_manager
-  post '/export'                   => 'export#create'
-  get  '/export/validate'          => 'export#validate',          as: :validate_export
-  get  '/export/validation_status' => 'export#validation_status', as: :validation_status
-
-  # ------------------------------------------------------------ Upload Manager
-  # TODO nest 'upload' under 'project'
-  get  '/upload'        => 'upload#index',  as: :upload_manager
-  post '/upload'        => 'upload#create'
-  post '/upload/parse'  => 'upload#parse'
 
   root to: 'home#index'
 end
