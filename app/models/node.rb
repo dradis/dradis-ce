@@ -68,7 +68,6 @@ class Node < ApplicationRecord
     where("type_id IN (?)", Types::USER_TYPES)
   }
 
-
   # -- Class Methods --------------------------------------------------------
   # Returns or creates the Node that acts as container for all Issues in a
   # given project

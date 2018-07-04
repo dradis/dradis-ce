@@ -45,5 +45,4 @@ module RevisionsHelper
             end
     link_to text, record_revision_path(record, revision)
   end
-
 end

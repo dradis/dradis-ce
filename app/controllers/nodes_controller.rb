@@ -1,7 +1,6 @@
 # This controller exposes the REST operations required to manage the Node
 # resource.
 class NodesController < NestedNodeResourceController
-
   skip_before_action :find_or_initialize_node, only: [ :sort, :create_multiple ]
   before_action :initialize_nodes_sidebar, except: [ :sort, :create_multiple ]
 
@@ -13,7 +12,6 @@ class NodesController < NestedNodeResourceController
     @evidence_columns = @sorted_evidence.map(&:fields).map(&:keys).uniq.flatten \
                       | ['Title', 'Created', 'Created by', 'Updated']
   end
-
 
   # GET /nodes/<id>/edit
   def edit

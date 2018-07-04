@@ -58,8 +58,6 @@ describe "moving a note", js: true do
     end
   end
 
-
-
   def click_move_note
     find("a[href='#modal_move_note']").click
   end

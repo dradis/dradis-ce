@@ -128,5 +128,4 @@ describe "moving a node", js: true do
     find("#modal_move_node .btn-primary")
   end
 
-
 end
