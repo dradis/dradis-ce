@@ -12,6 +12,15 @@ class Subscription < ApplicationRecord
   # -- Scopes ---------------------------------------------------------------
 
   # -- Class Methods --------------------------------------------------------
+  def self.subscribe(user:, to:)
+    self.create!(
+      user: user,
+      subscribable: to
+    )
+  rescue ActiveRecord::RecordNotUnique
+    # Don't worry about dupes
+    false
+  end
 
   # -- Instance Methods -----------------------------------------------------
 end

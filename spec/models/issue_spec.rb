@@ -28,6 +28,12 @@ describe Issue do
     expect(issue.affected.first).to eq(host)
   end
 
+  describe 'on create' do
+    let(:user) { create(:user) }
+    let(:subscribable) { create(:issue, author: user.email) }
+    it_behaves_like 'a subscribable model'
+  end
+
   describe 'on delete' do
     before do
       @issue = create(:issue, node: create(:node))
