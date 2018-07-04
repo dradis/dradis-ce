@@ -25,6 +25,8 @@ Rails.application.routes.draw do
 
     resources :comments
 
+    post :create_multiple_evidence, to: 'evidence#create_multiple'
+
     resources :issues, concerns: :multiple_destroy do
       collection do
         post :import
@@ -92,9 +94,6 @@ Rails.application.routes.draw do
   resources :console, only: [] do
     collection { get :status }
   end
-
-  # TODO nest under `:projects`
-  post 'create_multiple_evidences' => 'evidence#create_multiple'
 
   # -------------------------------------------------------------- Static pages
   # jQuery Textile URLs
