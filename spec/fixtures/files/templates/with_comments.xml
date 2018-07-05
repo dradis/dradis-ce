@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><dradis-template version="2"><nodes><node><id>5</id><label>Uploaded files</label><parent-id/><position>0</position><properties><![CDATA[{
+}]]></properties><type-id>0</type-id><notes></notes><evidence></evidence><activities></activities></node></nodes><issues><issue><id>2</id><author>admin@securityroots.com</author><text><![CDATA[#[Title]#
+Test Issue
+
+#[CVSSv3.BaseScore]#
+4
+
+#[CVSSv3Vector]#
+5
+
+#[Type]#
+Internal
+]]></text><activities></activities><comments><comment><content><![CDATA[Hello World]]></content><author>aaron@securityroots.com</author><created_at>1530537993</created_at></comment></comments></issue></issues><methodologies></methodologies><categories><category><id>2</id><name>Issue description</name></category></categories><tags><tag><id>1</id><name>!9467bd_critical</name><taggings></taggings></tag><tag><id>2</id><name>!d62728_high</name><taggings></taggings></tag><tag><id>3</id><name>!ff7f0e_medium</name><taggings></taggings></tag><tag><id>4</id><name>!6baed6_low</name><taggings></taggings></tag><tag><id>5</id><name>!2ca02c_info</name><taggings></taggings></tag></tags></dradis-template>
