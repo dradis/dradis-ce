@@ -49,6 +49,10 @@
           <%= markup(@issue.text) %>
         </div>
       </div>
+
+      <div class="inner">
+        <%= render 'comments/feed', commentable: @issue %>
+      </div>
     </div>
   <% end %>
 
