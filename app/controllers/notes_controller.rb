@@ -1,6 +1,7 @@
 # This controller exposes the REST operations required to manage the Note
 # resource.
 class NotesController < NestedNodeResourceController
+  include ConflictResolver
   include MultipleDestroy
 
   before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]

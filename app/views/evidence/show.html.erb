@@ -51,7 +51,7 @@
           <h3>
             Issue information -
             <span class="actions">
-            <%= link_to 'Open', issue_path(@issue), class: 'action-link' %> -
+            <%= link_to 'Open', project_issue_path(@project, @issue), class: 'action-link' %> -
             <%= tag_and_name_for(@issue) %>
             </span>
           </h3>

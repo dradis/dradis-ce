@@ -32,6 +32,7 @@ Dradis is an open-source collaboration framework, tailored to InfoSec teams.
   * [OSVDB](https://dradisframework.com/ce/addons/osvdb.html)
   * [Qualys](https://dradisframework.com/ce/addons/qualys.html)
   * [Retina](https://dradisframework.com/ce/addons/retina.html)
+  * [SAINT](https://dradisframework.com/ce/addons/saint.html)
   * [SureCheck](https://dradisframework.com/ce/addons/surecheck.html)
   * [VulnDB](https://dradisframework.com/ce/addons/vulndb.html)
   * [w3af](https://dradisframework.com/ce/addons/w3af.html)

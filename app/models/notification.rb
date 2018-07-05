@@ -36,4 +36,5 @@ class Notification < ApplicationRecord
     self.notifiable_type = "Issue" if new_notifiable.is_a?(Issue)
     new_notifiable
   end
+
 end

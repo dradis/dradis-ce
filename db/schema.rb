@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180613151829) do
+ActiveRecord::Schema.define(version: 20180705112109) do
 
   create_table "activities", force: :cascade do |t|
     t.string "user", null: false
@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 20180613151829) do
     t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable_type_and_notifiable_id"
     t.index ["recipient_id"], name: "index_notifications_on_recipient_id"
   end
-  
+
   create_table "subscriptions", force: :cascade do |t|
     t.string "subscribable_type"
     t.integer "subscribable_id"
