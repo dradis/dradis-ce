@@ -16,17 +16,20 @@ end
 # Apart from the 'submit_form' let variable described above, another let variable
 # called 'model' should be defined, which will be the object to recover.
 shared_examples "recover deleted item" do |item_type|
-  it "should recover item listed in Trash", js: true do
+  it "should recover item listed in Trash", focus: true, js: true do
     submit_form
     visit project_trash_path(@project)
-    expect do
-      rr_path = recover_project_revision_path(@project, model.versions.last)
-      page.accept_confirm do
-        find(:xpath, "//a[@href='#{rr_path}']").click
-      end
-    end.to change{model.activities.count}.by(1)
+    activity_count = model.try(:activities) ? model.activities.count : 0
 
-    expect(model.activities.last.action).to eq "recover"
+    page.accept_confirm do
+      rr_path = recover_project_revision_path(@project, model.versions.last)
+      find(:xpath, "//a[@href='#{rr_path}']").click
+    end
+
+    if (model.respond_to?(:activities))
+      expect(model.activities.count).to eq activity_count + 1
+      expect(model.activities.last.action).to eq "recover"
+    end
 
     expect(page).to have_content "#{model.class.name.humanize} recovered"
     within '#trash' do
