@@ -26,7 +26,7 @@
 # This behaviour is extensively used by import/export plugins such as WordExport.
 class Note < ApplicationRecord
   include HasFields
-  include RevisionTracking, Notifiable
+  include RevisionTracking
 
   dradis_has_fields_for :text
 

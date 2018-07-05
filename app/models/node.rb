@@ -5,7 +5,7 @@
 # Each Node has a :parent node and a :label. Nodes can also have many
 # Attachment objects associated with them.
 class Node < ApplicationRecord
-  include NodeProperties, Notifiable
+  include NodeProperties
 
   module Types
     DEFAULT = 0
