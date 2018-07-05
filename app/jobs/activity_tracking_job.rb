@@ -1,9 +1,7 @@
-module ActivityTracking
-  # FIXME: this concern can be removed once all trackable models
-  # use callbacks instead of controller methods
-  protected
+class ActivityTrackingJob < ApplicationJob
+  queue_as :dradis_project
 
-  def track_activity(trackable, action, user=current_user)
+  def track_activity(trackable, action, user)
     Activity.create!(
       trackable: trackable,
       user:      user.email,
@@ -18,20 +16,23 @@ module ActivityTracking
     )
   end
 
-  def track_created(trackable, user=current_user)
+  def track_created(trackable, user)
     track_activity(trackable, :create, user)
   end
 
-  def track_updated(trackable, user=current_user)
+  def track_updated(trackable, user)
     track_activity(trackable, :update, user)
   end
 
-  def track_destroyed(trackable, user=current_user)
+  def track_destroyed(trackable, user)
     track_activity(trackable, :destroy, user)
   end
 
-  def track_recovered(trackable, user=current_user)
+  def track_recovered(trackable, user)
     track_activity(trackable, :recover, user)
   end
 
+  def perform(trackable:, action: , user:)
+    track_activity(trackable, action, user)
+  end
 end

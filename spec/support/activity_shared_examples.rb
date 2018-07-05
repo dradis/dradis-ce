@@ -81,3 +81,44 @@ shared_examples 'a page with an activity feed' do
     end
   end
 end
+
+shared_examples 'a trackable model' do
+  before do
+    ActiveJob::Base.queue_adapter = :test
+  end
+
+  it 'enqueues an ActivityTrackingJob when created' do
+    expect do
+      create(described_class.to_s.underscore.to_sym)
+    end.to \
+      have_enqueued_job(ActivityTrackingJob)
+      .with { |arg|
+         expect(arg[:trackable]).to eq described_class.last
+         expect(arg[:action]).to eq 'create'
+         expect(arg[:user]).to eq described_class.last.user
+       }
+       # NOTE: do not change this '.with' block to do..end:
+       # https://github.com/rspec/rspec-rails/pull/1578#issuecomment-292918850
+  end
+
+  it 'enqueues an ActivityTrackingJob when updated' do
+    trackable = create(described_class.to_s.underscore.to_sym)
+    expect do
+      trackable.update_attribute(:updated_at, Time.now)
+    end.to \
+      have_enqueued_job(ActivityTrackingJob).with(
+        trackable: trackable,
+        action: 'update',
+        user: trackable.user
+      )
+  end
+
+  it 'enqueues an ActivityTrackingJob when deleted' do
+    trackable = create(described_class.to_s.underscore.to_sym)
+    expect do
+      trackable.destroy
+    end.to \
+      change(ActiveJob::Base.queue_adapter.enqueued_jobs, :size).by(1)
+    # FIXME: check enqueued job arguments
+  end
+end
