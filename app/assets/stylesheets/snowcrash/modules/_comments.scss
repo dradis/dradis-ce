@@ -1,0 +1,48 @@
+.comment-feed {
+  .actions {
+    float: right;
+    visibility: hidden;
+  }
+
+  .gravatar {
+    img {
+      border-radius: 0;
+    }
+  }
+
+  textarea {
+    width: 90%;
+  }
+
+  label {
+    font-weight: bold;
+  }
+
+  input[type="submit"] {
+    margin-left: 35px;
+  }
+
+  .comment {
+    margin: 15px 0px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f1f3f3;
+
+    .time {
+      color: #888;
+      font-size: 12px;
+    }
+
+    &:hover {
+      background-color: #f5f5f5;
+
+      .actions {
+        visibility: visible;
+      }
+    }
+
+    form.edit_comment {
+      display: none;
+    }
+  }
+}
