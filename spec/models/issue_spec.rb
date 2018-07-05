@@ -33,6 +33,7 @@ describe Issue do
       @issue = create(:issue, node: create(:node))
       @activities = create_list(:activity, 2, trackable: @issue)
       @comments = create_list(:comment, 2, commentable: @issue)
+      @subscriptions = create_list(:subscription, 2, subscribable: @issue)
       @issue.destroy
     end
 
