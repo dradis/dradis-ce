@@ -293,7 +293,7 @@ describe 'Issues pages' do
         it_behaves_like 'a page with an activity feed'
 
         let(:subscribable) { @issue }
-        it_behaves_like 'a page sith subscribe/unsunscribe links'
+        it_behaves_like 'a page sith subscribe/unsubscribe links'
 
         describe "clicking 'delete'" do
           before { visit project_issue_path(@project, @issue) }

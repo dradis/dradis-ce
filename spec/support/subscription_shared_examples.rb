@@ -1,6 +1,6 @@
 # Define the following let variables before using these examples:
 #   subscribable: an instance of the subscribable model
-shared_examples 'a page sith subscribe/unsunscribe links' do
+shared_examples 'a page sith subscribe/unsubscribe links' do
   it 'subscribes and unsubscribes with the provided links' do
     click_link 'Subscribe'
     expect(page).to have_text 'Subscribed!'
