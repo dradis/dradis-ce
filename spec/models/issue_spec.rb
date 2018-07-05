@@ -32,6 +32,7 @@ describe Issue do
     before do
       @issue = create(:issue, node: create(:node))
       @activities = create_list(:activity, 2, trackable: @issue)
+      @comments = create_list(:comment, 2, commentable: @issue)
       @issue.destroy
     end
 
@@ -46,6 +47,19 @@ describe Issue do
       end
     end
 
+    it 'deletes associated Comments' do
+      expect(Comment.where(
+        commentable_type: 'Issue',
+        commentable_id: @issue.id).count
+      ).to eq(0)
+    end
+
+    it 'deletes associated Subscriptions' do
+      expect(Subscription.where(
+        subscribable_type: 'Issue',
+        subscribable_id: @issue.id).count
+      ).to eq(0)
+    end
   end
 
   describe '.merge' do
