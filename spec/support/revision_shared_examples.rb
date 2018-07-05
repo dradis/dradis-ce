@@ -16,7 +16,7 @@ end
 # Apart from the 'submit_form' let variable described above, another let variable
 # called 'model' should be defined, which will be the object to recover.
 shared_examples "recover deleted item" do |item_type|
-  it "should recover item listed in Trash", focus: true, js: true do
+  it "should recover item listed in Trash", js: true do
     submit_form
     visit project_trash_path(@project)
     activity_count = model.try(:activities) ? model.activities.count : 0
