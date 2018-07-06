@@ -36,9 +36,8 @@ Rails.application.routes.draw do
       resources :nodes, only: [:show], controller: 'issues/nodes'
       resources :revisions, only: [:index, :show]
     end
-    
+
     resources :subscriptions, only: [:create, :destroy]
-  end
 
     resources :methodologies do
       collection { post :preview }
