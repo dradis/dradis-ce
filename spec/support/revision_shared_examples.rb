@@ -6,7 +6,7 @@
 shared_examples "deleted item is listed in Trash" do |item_type|
   it "deletes the item and destroy revision is shown in Trash" do
     submit_form
-    visit trash_path
+    visit project_trash_path(@project)
     within '#trash' do
       expect(page).to have_content item_type.to_s
     end
@@ -18,10 +18,11 @@ end
 shared_examples "recover deleted item" do |item_type|
   it "should recover item listed in Trash", js: true do
     submit_form
-    visit trash_path
+    visit project_trash_path(@project)
     expect do
+      rr_path = recover_project_revision_path(@project, model.versions.last)
       page.accept_confirm do
-        find(:xpath, "//a[@href='#{recover_revision_path(id: model.versions.last.id)}']").click
+        find(:xpath, "//a[@href='#{rr_path}']").click
       end
     end.to change{model.activities.count}.by(1)
 
@@ -40,15 +41,16 @@ end
 shared_examples "recover deleted item without node" do |item_type|
   it "should recover item listed in Trash even if its node has been destroyed", js: true do
     submit_form
-    visit node_path(id: model.node_id)
+    visit project_node_path(model.node.project, model.node.id)
     click_link 'Delete'
     within '#modal_delete_node' do
       click_link 'Delete'
     end
     expect do
-      visit trash_path
+      visit project_trash_path(@project)
+      rr_path = recover_project_revision_path(@project, model.versions.last)
       page.accept_confirm do
-        find(:xpath, "//a[@href='#{recover_revision_path(id: model.versions.last.id)}']").click
+        find(:xpath, "//a[@href='#{rr_path}']").click
       end
     end.to change{model.activities.count}.by(1)
     expect(model.activities.last.action).to eq "recover"

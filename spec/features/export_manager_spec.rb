@@ -4,7 +4,7 @@ describe "Export Manager" do
   before { login_to_project_as_user }
 
   it "presents the name of the project you are exporting" do
-    visit url_for({controller: :export, action: :index})
+    visit project_export_manager_path(@project)
     expect(page).to have_content(@project.name)
   end
 
@@ -13,13 +13,13 @@ describe "Export Manager" do
     # @issuelib = @project.nodes.create(:label => 'All issues', :type_id => Node::Types::ISSUELIB)
     # issue = create(:issue, :node => @issuelib)
     #
-    # visit url_for({:controller => :export, :action => :index})
+    # visit project_export_manager_path(@project)
     # page.should have_content(issue.title)
   end
 
   context "export plugin selection" do
     it "presents a list of available export plugins to choose from" do
-      visit url_for({controller: :export, action: :index})
+      visit project_export_manager_path(@project)
 
       Dradis::Plugins::with_feature(:export).each do |engine|
         expect(page).to have_content(engine.plugin_description.to_s)

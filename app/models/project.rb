@@ -1,10 +1,15 @@
+# frozen_string_literal: true
+
 class Project
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  def id; 1; end
+  attr_reader :id, :name
 
-  def name; 'Dradis CE'; end
+  def initialize(id: 1, name: 'Dradis CE', **_attrs)
+    @id   = id
+    @name = name
+  end
 
   def persisted?; true; end
 end

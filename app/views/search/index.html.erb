@@ -12,7 +12,7 @@
 
   <br/>
 
-  <%= form_tag search_path, method: :get, class: 'form' do %>
+  <%= form_tag project_search_path(@project), method: :get, class: 'form' do %>
     <%= search_field_tag :q,  params[:q], placeholder: 'Search here...', class: 'search-query' %>
     <button type="submit" class="btn"><span class="fa fa-search"></span></button>
   <% end %>
