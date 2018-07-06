@@ -1,5 +1,18 @@
 # Define the following let variables before using these examples:
-#   subscribable: an instance of the subscribable model
+#   - subscribable: a non persisted instance of the subscribable model
+#   - user: the subscribed user
+#
+shared_examples 'a subscribable model' do
+  it 'subscribes the subscribable author to the subscribable' do
+    expect { subscribable.save }.to change {
+      Subscription.count
+    }.by(1)
+  end
+end
+
+# Define the following let variables before using these examples:
+#   - subscribable: an instance of the subscribable model
+#
 shared_examples 'a page sith subscribe/unsubscribe links' do
   it 'subscribes and unsubscribes with the provided links' do
     click_link 'Subscribe'
