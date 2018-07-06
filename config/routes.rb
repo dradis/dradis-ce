@@ -98,4 +98,6 @@ Rails.application.routes.draw do
   post '/upload/parse'  => 'upload#parse'
 
   root to: 'home#index'
+
+  mount ActionCable.server => '/cable'
 end
