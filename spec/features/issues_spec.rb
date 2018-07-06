@@ -250,8 +250,12 @@ describe 'Issues pages' do
           visit project_issue_path(@project, @issue)
         end
 
-        let(:extra_setup) { create_activities }
+        let(:extra_setup) do
+          create_activities
+          create_comments
+        end
         let(:create_activities) { nil }
+        let(:create_comments) { nil }
 
         context 'when there are host nodes with evidence' do
           let(:extra_setup) do
@@ -291,6 +295,12 @@ describe 'Issues pages' do
 
         let(:trackable) { @issue }
         it_behaves_like 'a page with an activity feed'
+
+        let(:commentable) { @issue }
+        it_behaves_like "a page with a comments feed"
+        
+        let(:subscribable) { @issue }
+        it_behaves_like 'a page sith subscribe/unsubscribe links'
 
         describe "clicking 'delete'" do
           before { visit project_issue_path(@project, @issue) }
