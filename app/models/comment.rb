@@ -5,6 +5,7 @@ class Comment < ApplicationRecord
 
   # -- Callbacks ------------------------------------------------------------
   after_create :create_subscription
+  after_commit :create_notifications, on: :create
 
   # -- Validations ----------------------------------------------------------
   validates :content, presence: true, length: { maximum: 65535 }
@@ -16,10 +17,6 @@ class Comment < ApplicationRecord
   # -- Class Methods --------------------------------------------------------
 
   # -- Instance Methods -----------------------------------------------------
-  def create_subscription
-    Subscription.subscribe(user: user, to: commentable)
-  end
-
   # Because Issue descends from Note but doesn't use STI, Rails's default
   # polymorphic setter will set 'commentable_type' to 'Note' when you pass an
   # Issue to commentable. This means when you load the Activity later then
@@ -31,5 +28,17 @@ class Comment < ApplicationRecord
     super
     self.commentable_type = 'Issue' if new_commentable.is_a?(Issue)
     new_commentable
+  end
+
+  def create_notifications
+    NotificationsCreationJob.perform_later(
+      notifiable: self.commentable,
+      action: 'create',
+      user: self.user
+    )
+  end
+
+  def create_subscription
+    Subscription.subscribe(user: user, to: commentable)
   end
 end
