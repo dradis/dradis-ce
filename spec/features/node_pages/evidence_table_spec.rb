@@ -9,7 +9,7 @@ describe 'node pages' do
 
       node = create(:node)
       @evidence = create(:evidence, node: node, content: "#[Title]#\nEvidence1\n\n#[Description]#\nn/a\n#[Extra]#\nExtra field")
-      visit node_path(node, tab: 'evidence-tab')
+      visit project_node_path(node.project, node, tab: 'evidence-tab')
     end
 
     let(:columns) { ['Title', 'Created', 'Created by', 'Updated'] }

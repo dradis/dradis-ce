@@ -16,7 +16,7 @@ describe 'node pages' do
     before do
       login_to_project_as_user
       items
-      visit node_path(node, tab: 'notes-tab')
+      visit project_node_path(@project, node, tab: 'notes-tab')
     end
 
     it_behaves_like 'an index table toolbar'

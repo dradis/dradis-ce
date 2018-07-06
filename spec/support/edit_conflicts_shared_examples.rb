@@ -8,9 +8,9 @@ shared_examples "a page which handles edit conflicts" do
     when Issue
       project_issue_path(@project, record)
     when Note
-      node_note_path(@node, record)
+      project_node_note_path(@project, @node, record)
     when Evidence
-      node_evidence_path(@node, record)
+      project_node_evidence_path(@project, @node, record)
     end
   end
 
