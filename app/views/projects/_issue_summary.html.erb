@@ -34,7 +34,7 @@
     <div>
       <%= link_to project_issues_path(@project), class: 'btn btn-large btn-primary' do %>
         <i class="fa fa-plus"></i> Add new issue
-      <% end %> or <%= link_to upload_manager_path() do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %>
+      <% end %> or <%= link_to project_upload_manager_path(@project) do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %>
     </div>
   <% end %>
 </section>

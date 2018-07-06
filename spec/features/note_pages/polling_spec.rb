@@ -56,12 +56,12 @@ describe "note pages", js: true do
   end
 
   describe "when I am viewing a Note" do
-    before { visit node_note_path(@node, @note) }
+    before { visit project_node_note_path(@project, @node, @note) }
     it_behaves_like "a note page with poller"
   end
 
   describe "when I am editing a Note" do
-    before { visit edit_node_note_path(@node, @note) }
+    before { visit edit_project_node_note_path(@project, @node, @note) }
     it_behaves_like "a note page with poller"
   end
 end

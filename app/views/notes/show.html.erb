@@ -16,10 +16,10 @@
       <div id="<%= dom_id(@note) %>" class="inner note-text-inner">
         <h3>Content for this note -
           <span class="actions">
-            <%= link_to edit_node_note_path(@node, @note), class: 'action-link' do %>
+            <%= link_to edit_project_node_note_path(@node.project, @node, @note), class: 'action-link' do %>
               <i class="fa fa-pencil"></i> Edit
             <% end %>
-            <%= link_to [@node, @note],
+            <%= link_to [@project, @node, @note],
                   class: 'action-link text-error',
                   data: { confirm: 'Are you sure?' },
                   method: :delete do %>
@@ -50,7 +50,7 @@
               #%>
             <%= link_to(
                   'revision history',
-                  node_note_revisions_path(@node, @note),
+                  project_node_note_revisions_path(@node.project, @node, @note),
                   class: 'action-link'
                 ) if @note.has_revision_history? %>
           </span>
