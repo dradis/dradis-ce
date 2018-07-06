@@ -1,5 +1,9 @@
 <div id="js-add-evidence-container">
-  <%= form_for :evidence, url: create_multiple_evidences_path, html: { id: 'add-evidences' } do |f| %>
+  <%= form_for(
+    :evidence,
+    url: project_create_multiple_evidence_path(@project),
+    html: { id: 'add-evidences' }
+  ) do |f| %>
     <div class="form-inputs">
       <%= f.hidden_field :issue_id, value: @issue.id %>
       <%= f.hidden_field :node_id %>

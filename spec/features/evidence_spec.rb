@@ -18,7 +18,7 @@ describe "evidence" do
       @issue    = create(:issue,    node: @node, text: i_text)
       @evidence = create(:evidence, node: @node, issue: @issue, content: e_text)
       create_activities
-      visit node_evidence_path(@node, @evidence)
+      visit project_node_evidence_path(@project, @node, @evidence)
     end
 
     let(:create_activities) { nil }
@@ -62,7 +62,7 @@ describe "evidence" do
     before do
       issue = create(:issue, node: issue_lib)
       @evidence = create(:evidence, issue: issue, updated_at: 2.seconds.ago)
-      visit edit_node_evidence_path(@node, @evidence)
+      visit edit_project_node_evidence_path(@project, @node, @evidence)
     end
 
     it "uses the full-screen editor plugin" # TODO
@@ -76,7 +76,7 @@ describe "evidence" do
       it "updates the evidence" do
         submit_form
         expect(@evidence.reload.content).to eq new_content
-        expect(current_path).to eq node_evidence_path(@node, @evidence)
+        expect(current_path).to eq project_node_evidence_path(@project, @node, @evidence)
       end
 
       let(:model) { @evidence }
@@ -114,7 +114,7 @@ describe "evidence" do
       File.write(path, content)
       @issue_0 = create(:issue, node: issue_lib, text: "#[Title]#\nIssue 0")
       @issue_1 = create(:issue, node: issue_lib, text: "#[Title]#\nIssue 1")
-      visit new_node_evidence_path(@node, params)
+      visit new_project_node_evidence_path(@project, @node, params)
     end
     # Check the file still exists before trying to delete it, or File.delete
     # will fail noisily (e.g. if the file has been automatically cleaned up by
@@ -151,7 +151,7 @@ describe "evidence" do
 
         it "shows the new evidence" do
           submit_form
-          expect(current_path).to eq node_evidence_path(@node, new_evidence)
+          expect(current_path).to eq project_node_evidence_path(@project, @node, new_evidence)
           expect(page).to have_content "This is some evidence"
         end
       end

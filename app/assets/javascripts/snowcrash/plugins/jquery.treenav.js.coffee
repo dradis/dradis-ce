@@ -67,7 +67,7 @@ do ($ = jQuery, window, document) ->
     getNodeIdFromPath: (path) =>
       parseInt(path.match(NODE_ID_REGEX)[2], 10)
 
-    NODE_ID_REGEX = /^(\/pro)?\/nodes\/(\d+)/
+    NODE_ID_REGEX = /^(\/pro)?\/projects\/\d+\/nodes\/(\d+)/
 
 
 

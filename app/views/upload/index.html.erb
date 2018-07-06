@@ -6,7 +6,7 @@
 <section class="inner">
   <div class="row-fluid">
     <div class="span5">
-      <%= form_tag upload_manager_path(format: :js), multipart: true, id: 'new_upload', data: { parse_url: upload_parse_path() } do %>
+      <%= form_tag project_upload_manager_path(@project, format: :js), multipart: true, id: 'new_upload', data: { parse_url: upload_parse_path() } do %>
       <h2>1. Choose a tool</h2>
         <%= select_tag  'uploader', options_from_collection_for_select(@uploaders, :name, :name) %>
 

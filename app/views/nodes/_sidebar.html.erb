@@ -3,7 +3,7 @@
   <div id="<%= dom_id(@node) %>_link" class="note-list">
     <div class="list-item">
       <div class="expansion-container">
-        <%= link_to node_path(@node) do %>
+        <%= link_to project_node_path(@node.project, @node) do %>
           <% if @node.type_id == Node::Types::HOST %>
             <i class="fa fa-laptop"></i> Host summary
           <% else%>
@@ -18,17 +18,17 @@
   <%= render 'shared/sidebar_collection',
         name: 'Notes',
         collection: @sorted_notes,
-        new_path: new_node_note_path(@node),
+        new_path: new_project_node_note_path(@node.project, @node),
         category_id: Category.default.id,
-        index_path: node_path(@node, tab: 'notes-tab') %>
+        index_path: project_node_path(@node.project, @node, tab: 'notes-tab') %>
 
   <!-- Issues -->
   <%= render 'shared/sidebar_collection',
         name: 'Evidence',
         collection: @sorted_evidence,
-        new_path: new_node_evidence_path(@node),
+        new_path: new_project_node_evidence_path(@node.project, @node),
         category_id: Category.issue.id,
-        index_path: node_path(@node, tab: 'evidence-tab') %>
+        index_path: project_node_path(@node.project, @node, tab: 'evidence-tab') %>
 
   <!-- Attachments -->
   <%= render 'attachments/attachment_box' %>

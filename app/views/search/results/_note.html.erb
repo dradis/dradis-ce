@@ -1,10 +1,10 @@
 <span class="fa fa-file-text-o"></span>
 
 <% title = row.title? ? row.title : "Note ##{row.id}" %>
-<%= link_to title, node_note_path(row.node_id, row), class: "search-match-title" %>
+<%= link_to title, project_node_note_path(row.node.project, row.node_id, row), class: "search-match-title" %>
 
 <div class="result-details">
-  <p><span>Node:</span> <%= link_to row.node.label, node_path(row.node) %></p>
+  <p><span>Node:</span> <%= link_to row.node.label, project_node_path(row.node.project, row.node) %></p>
   <p><span>Last updated:</span> <%= local_time_ago(row.updated_at) %></p>
 </div>
 

@@ -1,4 +1,4 @@
-<%= simple_form_for [@node, @evidence] do |f| %>
+<%= simple_form_for [@project, @node, @evidence] do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
@@ -13,6 +13,6 @@
   <div class="form-actions">
     <%= hidden_field_tag :back_to, :issue if params[:back_to] == 'issue' %>
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
-    <%= link_to 'Cancel', node_path(@node) %>
+    <%= link_to 'Cancel', project_node_path(@node.project, @node) %>
   </div>
 <% end %>

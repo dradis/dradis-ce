@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_many :activities
   has_many :comments
   has_many :notifications
-  has_many :subscriptions
+  has_many :subscriptions, dependent: :destroy
 
   # -- Callbacks ------------------------------------------------------------
   # -- Validations ----------------------------------------------------------

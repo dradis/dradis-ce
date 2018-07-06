@@ -4,5 +4,5 @@
 <span class="fa fa-folder-o"></span>
 <% end %>
 
-<%= link_to row.label, node_path(row), class: "search-match-title" %>
+<%= link_to row.label, project_node_path(row.project, row), class: "search-match-title" %>
 <p class="result-details">Last updated: <%= local_time_ago(row.updated_at) %></p>
