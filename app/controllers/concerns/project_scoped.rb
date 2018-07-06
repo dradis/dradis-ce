@@ -27,8 +27,6 @@ module ProjectScoped
     @nodes = Node.in_tree
   end
 
-  # In Pro this method will load a Project using params[:project_id]. In
-  # CE things are much simpler.
   def set_project
     @project = Project.new
   end
