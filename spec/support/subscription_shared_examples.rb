@@ -5,11 +5,7 @@
 shared_examples 'a subscribable model' do
   it 'subscribes the subscribable author to the subscribable' do
     expect { subscribable.save }.to change {
-      Subscription.where(
-        user: user,
-        subscribable_type: subscribable.class.to_s,
-        subscribable_id: user.id
-      ).count
+      Subscription.count
     }.by(1)
   end
 end
