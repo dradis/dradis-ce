@@ -214,6 +214,7 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     public_suffix (2.0.5)
+    puma (3.11.4)
     rack (2.0.5)
     rack-protection (2.0.2)
       rack
@@ -413,6 +414,7 @@ DEPENDENCIES
   paper_trail (~> 6.0)
   parslet (~> 1.6.0)
   poltergeist
+  puma
   rails (~> 5.1.6)
   rails-html-sanitizer (~> 1.0.4)
   record_tag_helper

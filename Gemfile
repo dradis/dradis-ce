@@ -188,6 +188,8 @@ group :development, :test do
   gem 'byebug', platform: :mri
 
   gem 'rspec-rails', '~> 3.1'
+
+  gem 'puma'
 end
 
 group :test do
