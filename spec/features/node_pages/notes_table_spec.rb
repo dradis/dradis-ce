@@ -9,7 +9,7 @@ describe 'node pages' do
 
       node = create(:node)
       @note = create(:note, node: node, text: "#[Title]#\nNote1\n\n#[Description]#\nn/a\n#[Extra]#\nExtra field")
-      visit node_path(node, tab: 'notes-tab')
+      visit project_node_path(@project, node, tab: 'notes-tab')
     end
 
     let(:columns) { ['Title', 'Created', 'Created by', 'Updated'] }

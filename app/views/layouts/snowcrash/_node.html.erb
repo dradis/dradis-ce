@@ -1,7 +1,7 @@
-<%= content_tag_for :li, node, data: {node_id: node.id, label: node.label, url: main_app.node_path(node)}, class: css_class_for_node(node) do %>
+<%= content_tag_for :li, node, data: {node_id: node.id, label: node.label, url: main_app.project_node_path(node.project, node)}, class: css_class_for_node(node) do %>
 
   <%= link_to(
-    main_app.tree_node_path(node, format: :js),
+    main_app.tree_project_node_path(node.project, node, format: :js),
     class: 'toggle',
     # Use 'visibility: hidden' rather than just not outputting the link at
     # all, so that the node's name is still indented the same amount as nodes
@@ -12,7 +12,7 @@
     <i class="fa fa-caret-right"></i>
   <% end %>
 
-  <%= link_to main_app.node_path(node) do %>
+  <%= link_to main_app.project_node_path(node.project, node) do %>
     <% if node.type_id == Node::Types::HOST %>
       <i class="fa fa-laptop"></i>
     <% end %>

@@ -6,18 +6,18 @@
 <%= content_tag :div, id: "#{dom_id(note)}_link", class: item_css.join do %>
 
   <div class="expansion-container">
-    <%= link_to node_note_path(@node, note) do %>
+    <%= link_to project_node_note_path(@node.project, @node, note) do %>
       <i class="fa fa-file-text list-item-icon"></i>
       <%= note.title %>
     <% end %>
   </div>
 
   <div class="list-item-actions">
-    <%= link_to edit_node_note_path(@node, note), class:'list-item-action-edit' do %>
+    <%= link_to edit_project_node_note_path(@node.project, @node, note), class:'list-item-action-edit' do %>
       <i class="fa fa-pencil"></i> Edit
     <% end %>
 
-    <%= link_to [@node, note],
+    <%= link_to [@node.project, @node, note],
           method: :delete,
           data: { confirm: 'Are you sure?' },
           class: 'list-item-action-delete' do %>
