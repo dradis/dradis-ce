@@ -8,10 +8,6 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.6'
 
-# Use Puma as the app server
-# FIXME: required for Rails 5 ActionCable
-# gem 'puma', '~> 3.7'
-
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 
@@ -107,9 +103,7 @@ gem 'rails-html-sanitizer', '~> 1.0.4'
 gem 'sqlite3'#,  '1.3.10'
 
 # Use Unicorn as the web server
-# FIXME: Switch to Puma for Rails 5
-gem 'unicorn',  '4.9.0', group: :production
-
+gem 'unicorn',  '4.9.0'
 
 # --------------------------------------------------------- Dradis Professional
 # Authorisation
