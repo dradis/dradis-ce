@@ -30,7 +30,8 @@ describe Issue do
 
   describe 'on create' do
     let(:user) { create(:user) }
-    let(:subscribable) { create(:issue, author: user.email) }
+    let(:subscribable) { build(:issue, author: user.email) }
+
     it_behaves_like 'a subscribable model'
   end
 

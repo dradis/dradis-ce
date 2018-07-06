@@ -1,16 +1,16 @@
 # Define the following let variables before using these examples:
-#   - subscribable: an instance of the subscribable model
+#   - subscribable: a non persisted instance of the subscribable model
 #   - user: the subscribed user
 #
 shared_examples 'a subscribable model' do
   it 'subscribes the subscribable author to the subscribable' do
-    expect(
+    expect { subscribable.save }.to change {
       Subscription.where(
         user: user,
         subscribable_type: subscribable.class.to_s,
         subscribable_id: user.id
       ).count
-    ).to eq(1)
+    }.by(1)
   end
 end
 
