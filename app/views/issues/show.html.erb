@@ -25,7 +25,7 @@
 </ul>
 
 <div class="tab-content">
-  <% cache ['issue-information-tab', @issue] do %>
+  <% cache ['issue-information-tab', @issue, @issue.comments, @issue.subscriptions] do %>
     <div class="tab-pane active" id="info-tab">
       <div class="inner note-text-inner">
         <h3>Issue information -
@@ -40,6 +40,34 @@
                   method: :delete do %>
               <i class="fa fa-trash"></i> Delete
             <% end %> -
+            <% if @subscription %>
+              <%= link_to \
+                    project_subscription_path(
+                      @project,
+                      @subscription,
+                      subscription: {
+                        subscribable_type: @issue.class.to_s,
+                        subscribable_id: @issue.id
+                      }
+                    ),
+                    class: 'action-link text-error',
+                      method: :delete do %>
+                  <i class="fa fa-bell-slash"></i> Unsubscribe
+              <% end %>
+            <% else %>
+              <%= link_to \
+                    project_subscriptions_path(
+                      @project,
+                      subscription: {
+                        subscribable_type: @issue.class.to_s,
+                        subscribable_id: @issue.id
+                      }
+                    ),
+                    class: 'action-link',
+                    method: :post do %>
+                <i class="fa fa-bell"></i> Subscribe
+              <% end %>
+            <% end %> -
             <%= render partial: 'send_to_menu' %>
             <%= tag_and_name_for(@issue) %>
           </span>
@@ -52,6 +80,7 @@
 
       <div class="inner">
         <%= render 'comments/feed', commentable: @issue %>
+        <%= render 'subscriptions/feed', subscribable: @issue %>
       </div>
     </div>
   <% end %>
