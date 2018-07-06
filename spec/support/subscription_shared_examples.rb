@@ -5,7 +5,11 @@
 shared_examples 'a subscribable model' do
   it 'subscribes the subscribable author to the subscribable' do
     expect(
-      Subscription.where(user: user, subscribable: subscribable).count
+      Subscription.where(
+        user: user,
+        subscribable_type: subscribable.class.to_s,
+        subscribable_id: user.id
+      ).count
     ).to eq(1)
   end
 end
