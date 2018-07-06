@@ -8,6 +8,6 @@ class CreateSubscriptions < ActiveRecord::Migration[5.1]
     add_index :subscriptions,
               [:subscribable_id, :subscribable_type, :user_id],
               unique: true,
-              name: 'subscriptions_uniqueness_index'
+              name: 'index_subscriptions_on_subscribablue_and_user'
   end
 end
