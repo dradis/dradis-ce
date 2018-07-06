@@ -7,7 +7,14 @@ class CommentsController < AuthenticatedController
   def create
     @comment = Comment.new(comment_params)
     @comment.user = current_user
-    @comment.save
+    @comment.save!
+    ActionCable.server.broadcast(
+      'comment_channel',
+      comment: {
+        content: @comment.content,
+        user_id: @comment.user_id,
+      },
+    )
     redirect_to polymorphic_path([@project, @comment.commentable], anchor: dom_id(@comment))
   end
 

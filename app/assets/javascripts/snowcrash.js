@@ -38,3 +38,5 @@
 //= require snowcrash/pages/projects/methodologies_chart
 //= require snowcrash/pages/projects/issues_chart
 //= require snowcrash/pages/revisions
+
+//= require cable

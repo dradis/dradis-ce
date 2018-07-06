@@ -101,4 +101,6 @@ Rails.application.routes.draw do
   get '/markup-help' => 'home#markup_help', as: :markup
 
   root to: 'home#index'
+
+  mount ActionCable.server => 'cable'
 end
