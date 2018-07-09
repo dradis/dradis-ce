@@ -24,10 +24,22 @@ class CommentEvent
   isRelevant: ->
     @$feed.length != 0
 
+  updateCounters: ->
+    count = $(".comments-list div.comment").length
+    $("#comments_feed_no_comments").toggle(count == 0)
+    $("#comments-count-badge").text(count)
+
   process: ->
     if @action == 'create'
       @$feed.find(".comments-list").append(@html)
+      @$feed.find("#comment_form_submit_btn")
+        .attr('value', 'Add comment')
+        .attr('disabled', false)
+      @$feed.find(".new_comment #comment_content").val('')
     else if @action == 'update'
       @$feed.find("#comment_#{@commentId}").replaceWith(@html)
     else if @action == 'destroy'
       @$feed.find("#comment_#{@commentId}").remove()
+    @updateCounters()
+
+

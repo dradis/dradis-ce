@@ -1,10 +1,15 @@
+# DEPRECATED: this test comments which use the traditional Rails CRUD
+#             style which involves a full page refresh. We're moving away
+#             from this to use Websockets instead.
+#             should be removed FIXME
+#
 # Define the following let variables before using these examples:
 #
 #   create_comments : a block which creates the activities AND IS CALLED
 #                     BEFORE THE PAGE LOADS
 #   commentable: the model which the 'show' page is about
-shared_examples 'a page with a comments feed' do
-
+#
+shared_examples 'a page with a comments feed (old)' do
   include CommentMacros
 
   let(:create_comments) do
@@ -14,6 +19,11 @@ shared_examples 'a page with a comments feed' do
     ]
     other_instance = create(commentable.class.to_s.underscore)
     @other_comment = create(:comment, commentable: other_instance)
+  end
+
+  before do
+    warn "comment_shared_examples.rb is deprecated. Upgrade comments "\
+         "to use the new, websocket style."
   end
 
   it 'lists them in the content feed' do

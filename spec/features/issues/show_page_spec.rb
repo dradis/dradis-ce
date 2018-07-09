@@ -68,7 +68,7 @@ RSpec.describe 'Issues pages' do
   it_behaves_like 'a page with an activity feed'
 
   let(:commentable) { @issue }
-  it_behaves_like "a page with a comments feed"
+  it_behaves_like 'a page with a comments feed'
 
   describe "clicking 'delete'" do
     before { visit project_issue_path(@project, @issue) }

@@ -8,17 +8,17 @@ class CommentsController < AuthenticatedController
     @comment = Comment.new(comment_params)
     @comment.user = current_user
     @comment.save!
-    websocket_event(@comment, 'create')
+    send_to_websockets(@comment, 'create')
   end
 
   def update
     @comment.update_attributes!(comment_params)
-    websocket_event(@comment, 'update')
+    send_to_websockets(@comment, 'update')
   end
 
   def destroy
     @comment.destroy
-    websocket_event(@comment, 'destroy')
+    send_to_websockets(@comment, 'destroy')
   end
 
   private
@@ -27,12 +27,13 @@ class CommentsController < AuthenticatedController
     params.require(:comment).permit(:content, :commentable_type, :commentable_id)
   end
 
-  def websocket_event(action, comment)
+  def send_to_websockets(comment, action)
     ActionCable.server.broadcast(
       'comment_channel',
       action: action,
       comment_feed_id: dom_id(comment.commentable),
       comment_id: comment.id,
+      html: render_to_string(comment), # TODO do we have to worry about XSS here?
     )
     head :no_content
   end

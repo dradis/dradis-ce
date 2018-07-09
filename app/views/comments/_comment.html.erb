@@ -14,13 +14,14 @@
       <% if can? :update, comment %>
         <div class="actions">
           <%= link_to 'javascript:void(0)',
+                      class: 'edit_comment_link',
                       data: {toggle_comment: "on"} do %>
             <i class="fa fa-pencil"></i> Edit
           <% end %>
           <%= link_to [@project, comment],
                       method: :delete,
                       data: { confirm: 'Are you sure?' },
-                      class: 'text-error' do %>
+                      class: 'delete_comment_link text-error' do %>
             <i class="fa fa-trash"></i> Delete
           <% end %>
         </div>
