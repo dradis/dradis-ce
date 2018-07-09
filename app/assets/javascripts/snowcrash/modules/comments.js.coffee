@@ -1,5 +1,7 @@
 document.addEventListener "turbolinks:load", ->
-  $("[data-toggle-comment]").click ->
+  # new comments may be added AJAX after page load, so make sure that
+  # the event handler will catch clicks for all of them:
+  $('.comment-feed').on 'click', '[data-toggle-comment]', ->
     element = $(this)
     comment = element.closest(".comment")
     content = comment.find(".content")

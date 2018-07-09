@@ -91,6 +91,15 @@ shared_examples 'a page with a comments feed' do
           click_button 'Update comment'
           expect(page).to have_text 'test comment edited'
         end
+
+        # Bug fix: after updating once, the 'edit' button still works and you
+        # can update the same comment again.
+        click_edit_comment_link(my_comment)
+        within_comment(my_comment) do
+          fill_in :comment_content, with: 'test comment edited again'
+          click_button 'Update comment'
+          expect(page).to have_text 'test comment edited again'
+        end
       end
 
       it 'does not allow to edit comments from other users' do
