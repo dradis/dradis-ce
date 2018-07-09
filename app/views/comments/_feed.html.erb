@@ -9,10 +9,11 @@
   <div class="comments-list">
     <% if commentable.comments.any? %>
       <%= render commentable.comments %>
-    <% else %>
-      <p id="comments_feed_no_comments" class="no-content">There have been no comments yet.</p>
     <% end %>
   </div>
+  <% if commentable.comments.none? %>
+    <p id="comments_feed_no_comments" class="no-content">There have been no comments yet.</p>
+  <% end %>
 
   <%= render 'comments/new', commentable: commentable %>
 </div>
