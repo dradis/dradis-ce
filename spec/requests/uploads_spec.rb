@@ -3,6 +3,7 @@ require 'rails_helper'
 describe "upload requests" do
 
   before do
+    @project = Project.new
     # login as admin
     Configuration.create(name: 'admin:password', value: ::BCrypt::Password.create('rspec_pass'))
     @user = create(:user, :admin)
@@ -16,7 +17,7 @@ describe "upload requests" do
   describe "POST #parse" do
     let(:uploader) { 'Dradis::Plugins::Projects::Upload::Template' }
     let(:send_request) do
-      post upload_parse_path, params: { file: "temp", format: :js, uploader: uploader }
+      post project_upload_parse_path(@project), params: { file: "temp", format: :js, uploader: uploader }
     end
 
     it "creates issues from the uploaded XML" do

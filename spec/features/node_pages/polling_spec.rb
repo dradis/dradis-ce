@@ -18,7 +18,7 @@ describe "node pages", js: true do
   describe "when another user adds a new node to the current project" do
     context "and the new node is a root node" do
       before do
-        visit node_path(@node)
+        visit project_node_path(@node.project, @node)
         @new_node = create(:node, label: "New node", parent_id: nil)
       end
 
@@ -49,7 +49,7 @@ describe "node pages", js: true do
       before do
         # Give the node another subnode so it's expandable:
         create(:node, label: "Other Sub", parent: @node)
-        visit node_path(@node)
+        visit project_node_path(@node.project, @node)
       end
 
       context "and its parent is visible" do
@@ -103,7 +103,7 @@ describe "node pages", js: true do
   end
 
   describe "when another user deletes the current node" do
-    before { visit node_path(@node) }
+    before { visit project_node_path(@node.project, @node) }
 
     it "displays a warning" do
       @node.destroy
@@ -117,7 +117,7 @@ describe "node pages", js: true do
   describe "when another user deletes a root node" do
     before do
       @other_node = create(:node, label: "Delete me")
-      visit node_path(@node)
+      visit project_node_path(@node.project, @node)
     end
 
     let(:delete_node) do
@@ -147,7 +147,7 @@ describe "node pages", js: true do
   describe "when another user deletes a non-root node" do
     before do
       @subnode = create(:node, label: "Sub", parent: @node)
-      visit node_path(@node)
+      visit project_node_path(@node.project, @node)
     end
 
     let(:delete_node) do
@@ -216,7 +216,7 @@ describe "node pages", js: true do
   describe "when another user updates a node" do
     before do
       @other_node = create(:node, label: "Other")
-      visit node_path(@node)
+      visit project_node_path(@node.project, @node)
     end
 
     let(:update_node) do
@@ -252,7 +252,7 @@ describe "node pages", js: true do
   end
 
   def node_link_selector(node)
-    "#{node_li_selector(node)} > a[href='#{node_path(node)}']"
+    "#{node_li_selector(node)} > a[href='#{project_node_path(node.project, node)}']"
   end
 
   def within_move_node_nodal

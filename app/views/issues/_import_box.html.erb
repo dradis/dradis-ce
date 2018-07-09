@@ -18,7 +18,7 @@
       <% Dradis::Plugins::Import::Filters[plugin.plugin_name].each do |label, klass| %>
         <% next if label == :find_one_by_field %>
 
-        <%= form_tag import_issues_path, class: 'form-search' do %>
+        <%= form_tag import_project_issues_path, class: 'form-search' do %>
           <%= hidden_field_tag :scope, plugin.plugin_name %>
           <%= hidden_field_tag :filter, label %>
 

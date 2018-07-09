@@ -33,7 +33,7 @@ describe "node pages" do
           expect{submit_form}.to change{Node.count}.by(1)
           expect(page).to have_content "Successfully created node."
           new_node = Node.last
-          expect(current_path).to eq node_path(new_node)
+          expect(current_path).to eq project_node_path(new_node.project, new_node)
         end
       end
 
@@ -81,7 +81,7 @@ describe "node pages" do
 
     describe "adding child nodes to an existing node", :js do
       before do
-        visit node_path(node)
+        visit project_node_path(node.project, node)
         click_link "Add subnode"
       end
 
@@ -138,7 +138,7 @@ describe "node pages" do
   describe "clicking 'rename' on a node", js: true do
     before do
       @node = create(:node, label: "My node")
-      visit node_path(@node)
+      visit project_node_path(@node.project, @node)
       click_link "Rename"
     end
 
@@ -184,7 +184,7 @@ describe "node pages" do
   describe "clicking 'Delete' on a node", js: true do
     before do
       @node = create(:node, label: "My node")
-      visit node_path(@node)
+      visit project_node_path(@node.project, @node)
       click_link "Delete"
     end
 
@@ -219,7 +219,7 @@ describe "node pages" do
       @properties = { foo: "bar", fizz: "buzz" }
       @node = create(:node, properties: @properties)
       extra_setup
-      visit node_path(@node)
+      visit project_node_path(@node.project, @node)
     end
 
     let(:extra_setup) { nil }
@@ -290,7 +290,7 @@ describe "node pages" do
       @properties = { foo: "bar", fizz: "buzz" }
       @node = create(:node, label: "My node", properties: @properties)
       extra_setup
-      visit edit_node_path(@node)
+      visit edit_project_node_path(@node.project, @node)
     end
 
     let(:extra_setup) { nil }
@@ -329,7 +329,7 @@ describe "node pages" do
 
       it "redirects to the node's show page" do
         submit_form
-        expect(current_path).to eq node_path(@node)
+        expect(current_path).to eq project_node_path(@node.project, @node)
       end
 
       let(:model) { @node }

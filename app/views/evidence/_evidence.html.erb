@@ -6,18 +6,18 @@
 <%= content_tag :div, id: "#{dom_id(evidence)}_link", class: item_css.join do %>
 
   <div class="expansion-container">
-    <%= link_to node_evidence_path(@node, evidence) do %>
+    <%= link_to project_node_evidence_path(@node.project, @node, evidence) do %>
       <%= colored_icon_for_model(evidence, 'fa-flag', 'list-item-icon') %>
       <%= evidence.title %>
     <% end %>
   </div>
 
   <div class="list-item-actions">
-    <%= link_to edit_node_evidence_path(@node, evidence), class:'list-item-action-edit' do %>
+    <%= link_to edit_project_node_evidence_path(@node.project, @node, evidence), class:'list-item-action-edit' do %>
       <i class="fa fa-pencil"></i> Edit
     <% end %>
 
-    <%= link_to [@node, evidence],
+    <%= link_to [@project, @node, evidence],
           method: :delete,
           data: { confirm: 'Are you sure?' },
           class: 'list-item-action-delete' do %>
