@@ -30,11 +30,4 @@ class Notification < ApplicationRecord
     !self.read?
   end
 
-  # See activity.rb
-  def notifiable=(new_notifiable)
-    super
-    self.notifiable_type = "Issue" if new_notifiable.is_a?(Issue)
-    new_notifiable
-  end
-
 end

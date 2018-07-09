@@ -32,6 +32,7 @@ class AuthenticatedController < ApplicationController
   helper_method :user_for_paper_trail
 
   private
+
   def find_notifications
     @notifications = current_user.notifications.newest
   end
