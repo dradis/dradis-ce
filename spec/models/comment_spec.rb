@@ -6,4 +6,5 @@ describe Comment do
 
   it { should validate_presence_of :commentable }
   it { should validate_presence_of :content }
+  it { should validate_presence_of :user }
 end

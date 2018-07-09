@@ -1,7 +1,7 @@
 class UploadJob < ApplicationJob
   queue_as :dradis_upload
 
-  def perform(file:, plugin_name:, uid:)
+  def perform(default_user_id:, file:, plugin_name:, uid:)
     logger = Log.new(uid: uid)
 
     logger.write { "Job id is #{job_id}." }
@@ -11,6 +11,7 @@ class UploadJob < ApplicationJob
     plugin = plugin_name.constantize
 
     importer = plugin::Importer.new(
+      default_user_id: default_user_id,
       logger: logger,
       plugin: plugin
     )
