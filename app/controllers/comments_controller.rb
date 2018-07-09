@@ -31,7 +31,13 @@ class CommentsController < AuthenticatedController
 
   def destroy
     @comment.destroy
-    redirect_to [@project, @comment.commentable]
+    ActionCable.server.broadcast(
+      'comment_channel',
+      action: 'destroy',
+      comment_feed_id: dom_id(@comment.commentable),
+      comment_id: @comment.id,
+    )
+    head :no_content
   end
 
   private

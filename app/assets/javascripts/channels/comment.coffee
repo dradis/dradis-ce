@@ -29,4 +29,5 @@ class CommentEvent
       @$feed.find(".comments-list").append(@html)
     else if @action == 'update'
       @$feed.find("#comment_#{@commentId}").replaceWith(@html)
-
+    else if @action == 'destroy'
+      @$feed.find("#comment_#{@commentId}").remove()
