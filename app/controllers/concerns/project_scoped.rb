@@ -3,7 +3,7 @@ module ProjectScoped
 
   included do
     # Use prepend_before_action to keep things consistent with Pro:
-    prepend_before_action :set_project
+    before_action :set_project
     before_action :set_nodes
 
     helper :snowcrash
@@ -12,14 +12,14 @@ module ProjectScoped
 
   protected
 
-  # In Pro this method sets the column `versions.project_id`.
+  # Internal: Sets saves the current :project_id as PaperTrail::Version metadata
+  # this is going to allow us to speed up recovery of Versions scoped to the
+  # current project.
   #
-  # See https://github.com/airblade/paper_trail#metadata-from-controllers
+  # See also:
   #
-  # Since versions.project_id doesn't exist in CE, the method is a no-op here.
+  #   https://github.com/airblade/paper_trail#metadata-from-controllers
   #
-  # We don't strictly need to include the empty method here, but leaving it in
-  # makes things clearer when dealing with CE/Pro merges in future.
   def info_for_paper_trail
   end
 
@@ -28,6 +28,10 @@ module ProjectScoped
   end
 
   def set_project
-    @project = Project.new
+    project
+  end
+
+  def project
+    @project ||= Project.new
   end
 end
