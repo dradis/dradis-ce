@@ -2,7 +2,6 @@ module ProjectScoped
   extend ActiveSupport::Concern
 
   included do
-    # Use prepend_before_action to keep things consistent with Pro:
     before_action :set_project
     before_action :set_nodes
 
