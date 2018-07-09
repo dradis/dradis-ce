@@ -37,8 +37,6 @@ Rails.application.routes.draw do
       resources :revisions, only: [:index, :show]
     end
 
-    resources :subscriptions, only: [:create, :destroy]
-
     resources :methodologies do
       collection { post :preview }
       member do
@@ -70,9 +68,13 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :notifications, only: [:index]
+
     resources :revisions, only: [] do
       member { post :recover }
     end
+
+    resources :subscriptions, only: [:create, :destroy]
 
     get 'search' => 'search#index'
     get 'trash' => 'revisions#trash'

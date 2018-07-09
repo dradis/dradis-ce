@@ -1,9 +1,9 @@
 <div class="dropdown-menu">
-  <ul class="notification-container js-notification-container">
+  <ul class="notification-container js-notification-container" data-url="<%= project_notifications_path(@project) %>">
     <div class="notification-header">
       <div>
         Notifications
-        (<%= @notifications.unread.count %>)
+        (notification-count)
       </div>
       <div class="pull-right">
         <a href="#">Mark all as read</a>
@@ -11,9 +11,7 @@
     </div>
     <div class="no-content loading"></div>
   </ul>
-  <% if @notifications.any? %>
-    <div class="footer text-center">
-      <a href="#">See all notifications</a>
-    </div>
-  <% end %>
+  <div class="footer text-center">
+    <a href="#">See all notifications</a>
+  </div>
 </div>
