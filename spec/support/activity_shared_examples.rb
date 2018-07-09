@@ -74,9 +74,9 @@ shared_examples 'a page with an activity feed' do
 
     it 'lists them in the activity feed' do
       within activity_feed do
-        should have_activity(@activities[0])
-        should have_activity(@activities[1])
-        should_not have_activity(@other_activity)
+        expect(page).to have_activity(@activities[0])
+        expect(page).to have_activity(@activities[1])
+        expect(page).not_to have_activity(@other_activity)
       end
     end
   end

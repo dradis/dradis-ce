@@ -18,9 +18,9 @@ shared_examples 'a page with a comments feed' do
 
   it 'lists them in the content feed' do
     within comment_feed do
-      should have_comment(@comments[0])
-      should have_comment(@comments[1])
-      should_not have_comment(@other_comment)
+      expect(page).to have_comment(@comments[0])
+      expect(page).to have_comment(@comments[1])
+      expect(page).not_to have_comment(@other_comment)
     end
   end
 
