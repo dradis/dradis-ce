@@ -6,11 +6,7 @@
 #   commentable: the model which the 'show' page is about, e.g.
 #     if we're viewing /projects/x/issues/1, commentable = issue with ID 1
 #
-# NB visit whatever_path should be called BEFORE these tests are run
-#
-# TODO ^^this comment needs updating
-#
-# NB the functionality tested in these specs makes heavy use of ActionCable
+# NB 'visit whatever_path' should be called BEFORE these tests are run
 shared_examples 'a page with a comments feed' do
   include CommentMacros
 
@@ -25,7 +21,8 @@ shared_examples 'a page with a comments feed' do
       expect(page).to have_content no_comments_text
       submit_new_comment(content: 'test comment')
       expect(page).to have_no_content no_comments_text
-      # TODO test it reappears iff the last comment is destroyed
+      click_delete_comment_link(Comment.last)
+      expect(page).to have_content no_comments_text
     end
 
     example 'comments count number' do
@@ -38,7 +35,10 @@ shared_examples 'a page with a comments feed' do
       expect(page).to have_comments_count(1)
       submit_new_comment(content: 'test comment 2')
       expect(page).to have_comments_count(2)
-      # TODO test it decrements iff the last comment is destroyed
+      click_delete_comment_link(Comment.last)
+      expect(page).to have_comments_count(1)
+      click_delete_comment_link(Comment.last)
+      expect(page).to have_comments_count(0)
     end
 
     context 'when there are already comments' do
@@ -61,9 +61,6 @@ shared_examples 'a page with a comments feed' do
           expect(page).to have_no_comment(@other_comment)
         end
       end
-
-      # TODO test form still works after button submit - button enabled
-      # and text is cleared
 
       example 'adding a comment' do
         submit_new_comment(content: 'test comment')
