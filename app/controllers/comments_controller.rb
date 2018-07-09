@@ -10,17 +10,23 @@ class CommentsController < AuthenticatedController
     @comment.save!
     ActionCable.server.broadcast(
       'comment_channel',
-      comment: {
-        content: @comment.content,
-        user_id: @comment.user_id,
-      },
+      action: 'create',
+      comment_feed_id: dom_id(@comment.commentable),
+      html: render_to_string(@comment), # TODO do we have to worry about XSS issues?
     )
-    redirect_to polymorphic_path([@project, @comment.commentable], anchor: dom_id(@comment))
+    head :no_content
   end
 
   def update
-    @comment.update_attributes(comment_params)
-    redirect_to polymorphic_path([@project, @comment.commentable], anchor: dom_id(@comment))
+    @comment.update_attributes!(comment_params)
+    ActionCable.server.broadcast(
+      'comment_channel',
+      action: 'update',
+      comment_feed_id: dom_id(@comment.commentable),
+      comment_id: @comment.id,
+      html: render_to_string(@comment), # TODO do we have to worry about XSS issues?
+    )
+    head :no_content
   end
 
   def destroy
