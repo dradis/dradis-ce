@@ -56,6 +56,11 @@
           background-color: $grayLight;
         }
       }
+
+      .no-content.loading {
+        background: image-url('loading.gif') no-repeat center;
+        height: 50px;
+      }
     }
     .footer {
       line-height: 2em;

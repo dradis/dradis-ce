@@ -1,5 +1,5 @@
 <div class="dropdown-menu">
-  <ul class="notification-container">
+  <ul class="notification-container js-notification-container">
     <div class="notification-header">
       <div>
         Notifications
@@ -9,31 +9,7 @@
         <a href="#">Mark all as read</a>
       </div>
     </div>
-    <% if @notifications.any? %>
-      <% @notifications.each do |notification| %>
-        <% present notification do |notif_presenter| %>
-          <li class="notification <%= notification.unread? ? 'unread' : '' %>">
-            <div class="body">
-              <%= notif_presenter.icon %>
-
-              <div class="time">
-                <%= notif_presenter.created_at_ago %>
-              </div>
-
-              <div class="title">
-                <%= notif_presenter.render_title %>
-              </div>
-
-              <div class="details">
-                <%= notif_presenter.avatar_with_link(30) %>
-              </div>
-            </div>
-          </li>
-        <% end %>
-      <% end %>
-    <% else %>
-      <p class="no-content text-center">You have no notifications yet.<p>
-    <% end %>
+    <div class="no-content loading"></div>
   </ul>
   <% if @notifications.any? %>
     <div class="footer text-center">
