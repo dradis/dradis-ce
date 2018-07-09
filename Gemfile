@@ -184,7 +184,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'puma'
+  gem 'puma' # required for tests which involve websockets
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'capybara', '~> 2.13'
