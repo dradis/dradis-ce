@@ -1,6 +1,5 @@
 module ProjectScoped
   extend ActiveSupport::Concern
-  include ActivityTracking
 
   included do
     before_action :set_project

@@ -1,8 +1,8 @@
 # A controller for pages related to a Node and its notes and evidence.
 class NestedNodeResourceController < AuthenticatedController
-  include ProjectScoped
-
+  include ActivityTracking
   include ContentFromTemplate
+  include ProjectScoped
 
   before_action :find_or_initialize_node
 
