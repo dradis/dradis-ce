@@ -12,15 +12,10 @@ describe 'User notifications', type: :feature do
     end
   end
 
-  describe 'notifications list' do
-    before do
-      within '.notifications' do
-        find('.dropdown-toggle').click
-      end
-    end
-
+  pending 'notifications list with ajax', js: true do
     context 'the user has no notifications' do
       it 'shows an empty dropdown' do
+        find('.js-notifications-dropdown').click
         expect(find('.no-content', text: 'You have no notifications yet.')).to_not be_nil
       end
     end
@@ -28,9 +23,10 @@ describe 'User notifications', type: :feature do
     context 'the user has some notifications' do
       it 'shows the notification list' do
         issue = create(:issue, text: 'Test issue')
-        issue.notifications.create action: :comment, actor: @logged_in_as, recipient: @logged_in_as
+        create(:notification, notifiable: issue, actor: @logged_in_as, recipient: @logged_in_as)
 
         visit root_path
+        find('.js-notifications-dropdown').click
         expect(page).to have_content "#{@logged_in_as.email} commented"
       end
     end

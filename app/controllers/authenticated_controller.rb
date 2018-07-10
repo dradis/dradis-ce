@@ -31,7 +31,6 @@ class AuthenticatedController < ApplicationController
   helper_method :user_for_paper_trail
 
   private
-
   # This filter redirects every request to the first-time onboarding Tour until
   # the user has completed it.
   def render_onboarding_tour

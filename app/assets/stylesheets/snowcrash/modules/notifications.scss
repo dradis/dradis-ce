@@ -57,7 +57,8 @@
         }
       }
 
-      .no-content.loading {
+      .loading {
+        border-top: 1px solid $gray;
         background: image-url('loading.gif') no-repeat center;
         height: 50px;
       }

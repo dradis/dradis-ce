@@ -4,6 +4,8 @@ class Notification < ApplicationRecord
   belongs_to :recipient, class_name: 'User'
   belongs_to :notifiable, polymorphic: true
 
+  alias_method :user, :recipient
+
   # -- Callbacks ------------------------------------------------------------
 
   # -- Validations ----------------------------------------------------------
@@ -20,8 +22,6 @@ class Notification < ApplicationRecord
   # -- Class Methods --------------------------------------------------------
 
   # -- Instance Methods -----------------------------------------------------
-  alias_method :user, :recipient
-
   def read?
     self.read_at
   end
