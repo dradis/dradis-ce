@@ -1,5 +1,7 @@
-class HomeController < ProjectScopedController
-  skip_before_action :set_current_project, only: [:markup_help, :textilize]
+class HomeController < AuthenticatedController
+  include ProjectScoped
+
+  skip_before_action :set_project, only: [:markup_help, :textilize]
 
   def index
     redirect_to project_path(@project)

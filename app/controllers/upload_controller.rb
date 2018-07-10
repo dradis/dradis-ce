@@ -7,7 +7,8 @@
 #
 # A convenience list method is provided that will return all the currently
 # loaded plugins of this category.
-class UploadController < ProjectScopedController
+class UploadController < AuthenticatedController
+  include ProjectScoped
 
   # UPGRADE
   # include Plugins::Upload

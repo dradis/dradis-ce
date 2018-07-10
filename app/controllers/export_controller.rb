@@ -1,4 +1,5 @@
-class ExportController < ProjectScopedController
+class ExportController < AuthenticatedController
+  include ProjectScoped
 
   before_action :find_plugins
   before_action :validate_exporter, except: [:index, :validation_status]
