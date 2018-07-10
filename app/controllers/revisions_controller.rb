@@ -41,7 +41,7 @@ class RevisionsController < AuthenticatedController
         :notes, :evidence, evidence: [:issue, { issue: :tags }]
       ).find_by_id(params[:node_id])
 
-      # FIXME: from ProjectScopedController
+      # FIXME: from ProjectScoped
       initialize_nodes_sidebar
     end
   end
