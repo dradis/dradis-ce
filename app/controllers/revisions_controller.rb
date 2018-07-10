@@ -1,4 +1,5 @@
 class RevisionsController < AuthenticatedController
+  include NodesSidebar
   include ProjectScoped
 
   before_action :load_node, except: [ :trash, :recover ]

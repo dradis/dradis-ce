@@ -3,6 +3,7 @@
 class NotesController < NestedNodeResourceController
   include ConflictResolver
   include MultipleDestroy
+  include NodesSidebar
 
   before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]

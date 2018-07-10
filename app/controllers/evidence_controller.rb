@@ -1,6 +1,7 @@
 class EvidenceController < NestedNodeResourceController
   include ConflictResolver
   include MultipleDestroy
+  include NodesSidebar
 
   before_action :find_or_initialize_evidence, except: [ :index, :create_multiple ]
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
