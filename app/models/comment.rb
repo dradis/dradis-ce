@@ -1,11 +1,12 @@
 class Comment < ApplicationRecord
+  include Notifiable
+
   # -- Relationships --------------------------------------------------------
   belongs_to :commentable, polymorphic: true
   belongs_to :user
 
   # -- Callbacks ------------------------------------------------------------
   after_create :create_subscription
-  after_commit :create_notifications, on: :create
 
   # -- Validations ----------------------------------------------------------
   validates :content, presence: true, length: { maximum: 65535 }
@@ -30,15 +31,14 @@ class Comment < ApplicationRecord
     new_commentable
   end
 
-  def create_notifications
-    NotificationsCreationJob.perform_later(
-      notifiable: self.commentable,
-      action: 'create',
-      user: self.user
-    )
-  end
-
   def create_subscription
     Subscription.subscribe(user: user, to: commentable)
+  end
+
+  def subscriptions_for_action(action)
+    case action.to_s
+    when 'create'
+      commentable.subscriptions.where.not(user: user)
+    end
   end
 end
