@@ -1,6 +1,6 @@
 class ActivityPresenter < ActionPresenter
   presents :activity
-  collection :trackable
+  belongs_to :trackable
 
   def title
     [
@@ -14,10 +14,10 @@ class ActivityPresenter < ActionPresenter
 
   def trackable_title
     @title ||=
-      if collection.respond_to?(:title) && collection.title?
-        collection.title
-      elsif collection.respond_to?(:label) && collection.label?
-        collection.label
+      if belongs_to.respond_to?(:title) && belongs_to.title?
+        belongs_to.title
+      elsif belongs_to.respond_to?(:label) && belongs_to.label?
+        belongs_to.label
       end
   end
 end

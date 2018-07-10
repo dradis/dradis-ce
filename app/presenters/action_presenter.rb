@@ -11,7 +11,7 @@ class ActionPresenter < BasePresenter
   def icon
     icon_css = ["#{item_type}-icon", 'fa']
     icon_css <<
-      case collection_type
+      case belongs_to_type
       when 'Evidence'
         'fa-flag'
       when 'Issue'
@@ -46,13 +46,13 @@ class ActionPresenter < BasePresenter
 
   private
 
-  # Define the polymorphic collection type name for the presenter
-  def self.collection(type)
-    define_method(:collection) do
+  # Define the polymorphic belongs_to type name for the presenter
+  def self.belongs_to(type)
+    define_method(:belongs_to) do
       @object.send(type)
     end
 
-    define_method(:collection_type) do
+    define_method(:belongs_to_type) do
       @object.send("#{type}_type")
     end
   end
@@ -84,7 +84,7 @@ class ActionPresenter < BasePresenter
   def render_partial
     locals = {presenter: self}
     locals[item_type] = @object
-    locals[collection_type.underscore.to_sym] = collection
+    locals[belongs_to_type.underscore.to_sym] = belongs_to
     render partial_path, locals
   end
 
@@ -96,8 +96,8 @@ class ActionPresenter < BasePresenter
 
   def partial_paths
     [
-      "actions/#{collection_type.underscore}/#{@object.action}",
-      "actions/#{collection_type.underscore}"
+      "actions/#{belongs_to_type.underscore}/#{@object.action}",
+      "actions/#{belongs_to_type.underscore}"
     ]
   end
 end
