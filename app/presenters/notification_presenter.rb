@@ -82,7 +82,7 @@ class NotificationPresenter < BasePresenter
   def partial_path
     partial_paths.detect do |path|
       lookup_context.template_exists? path, nil, true
-    end || raise("No partial found for activity in #{partial_paths}")
+    end || raise("No partial found for notification in #{partial_paths}")
   end
 
   def partial_paths

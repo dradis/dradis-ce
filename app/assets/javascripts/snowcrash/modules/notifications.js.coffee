@@ -8,14 +8,17 @@ document.addEventListener 'turbolinks:load', ->
         $('.no-content.loading').remove()
 
       success: (data) ->
+        # console.log(data)
         if data.length == 0
           $container.append(
             $('<div>', class: 'no-content text-center').
               html('You currently have no notifications.')
           )
         else
-          for notification in data
-            unread_class = notification.unread ? 'unread' : ''
+          $('.js-notification-count').html("Notifications (#{data.count})")
+
+          for notification in data.notifications
+            unread_class = if notification.unread then 'unread' else ''
             $container.append($('<li>', class: "notification #{unread_class}"))
             $('li.notification:last').append($('<div>', class: 'body'))
 
