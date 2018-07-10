@@ -1,6 +1,8 @@
 # Internal application Configuration settings are handled through this
 # REST-enabled controller.
-class ConfigurationsController < ProjectScopedController
+class ConfigurationsController < AuthenticatedController
+  include ProjectScoped
+
   before_action :find_plugin, except: [ :index ]
 
   def index

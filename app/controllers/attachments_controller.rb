@@ -1,6 +1,8 @@
 # Each Node of the repository can have multiple Attachments associated with it.
 # This controller is used to handle REST operations for the attachments.
-class AttachmentsController < ProjectScopedController
+class AttachmentsController < AuthenticatedController
+  include ProjectScoped
+
   before_action :find_or_initialize_node
 
   # Retrieve all the associated attachments for a given :node_id

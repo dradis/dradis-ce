@@ -1,4 +1,6 @@
-class RevisionsController < ProjectScopedController
+class RevisionsController < AuthenticatedController
+  include ProjectScoped
+
   before_action :load_node, except: [ :trash, :recover ]
   before_action :load_record, except: [ :trash, :recover ]
 
