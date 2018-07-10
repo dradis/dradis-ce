@@ -99,5 +99,5 @@ Rails.application.routes.draw do
   get '/preview' => 'home#textilize',  as: :preview, defaults: { format: 'json' }
   get '/markup-help' => 'home#markup_help', as: :markup
 
-  root to: 'home#index'
+  root to: 'projects#index'
 end
