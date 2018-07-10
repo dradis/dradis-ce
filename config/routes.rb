@@ -85,7 +85,6 @@ Rails.application.routes.draw do
     get  '/upload'        => 'upload#index',  as: :upload_manager
     post '/upload'        => 'upload#create'
     post '/upload/parse'  => 'upload#parse'
-    get  '/upload/status' => 'upload#status'
   end
 
 
