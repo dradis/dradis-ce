@@ -6,15 +6,16 @@ describe 'exporting comments' do
   context 'issue with a comment' do
     before do
       @issue = create(:issue, text: 'Sample issue')
-      @comment = @issue.comments.create(
+      @comment = create(:comment,
         content: 'Sample comment',
-        user_id: @logged_in_as.id
+        commentable: @issue,
+        user: @logged_in_as
       )
     end
 
     it 'creates the comment xml' do
       export_options = {plugin: Dradis::Plugins::Projects}
-      @exporter =
+      exporter =
         Dradis::Plugins::Projects::Export::V2::Template.new(export_options)
 
       comment_xml = "<comment>"\
@@ -22,7 +23,7 @@ describe 'exporting comments' do
         "<author>#{@logged_in_as.email}</author>"\
         "<created_at>#{@comment.created_at.to_i}</created_at>"\
         "</comment>"
-      expect(@exporter.export).to include(comment_xml)
+      expect(exporter.export).to include(comment_xml)
     end
   end
 end

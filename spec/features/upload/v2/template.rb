@@ -8,7 +8,7 @@ describe 'restoring comments' do
       visit upload_path
     end
 
-    it "transforms methodologies into boards", js: true do
+    it 'uploads the comments in the template', js: true do
       select "Dradis::Plugins::Projects::Upload::Template"
       attach_file \
         "file",
