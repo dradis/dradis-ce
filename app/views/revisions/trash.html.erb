@@ -27,7 +27,10 @@
                   <td><%= recoverable_revision_presenter.created_at_ago %></td>
                   <td>
                     <%= link_to(
-                      recover_revision_path(recoverable_revision.version),
+                      recover_project_revision_path(
+                        @project,
+                        recoverable_revision.version,
+                      ),
                       method: :post,
                       data: { confirm: 'Are you sure?' }
                     ) do %>

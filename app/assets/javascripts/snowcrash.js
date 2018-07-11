@@ -13,6 +13,7 @@
 //= require local-time
 //= require clipboard
 
+//= require shared/console_updater
 //= require shared/items_table
 
 //= require snowcrash/plugins/jquery.breadcrums
@@ -23,7 +24,6 @@
 //= require snowcrash/keyboard_shortcuts
 
 //= require snowcrash/modules/configurations
-//= require snowcrash/modules/console_updater
 //= require snowcrash/modules/export
 //= require snowcrash/modules/issues
 //= require snowcrash/modules/nodes

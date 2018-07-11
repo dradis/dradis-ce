@@ -26,9 +26,9 @@
     <h3>Evidence</h3>
     <% if @sorted_evidence.any? %>
       <div id="node-evidence-table"
-           data-destroy-url="<%= multiple_destroy_node_evidence_index_path(@node) %>"
+           data-destroy-url="<%= multiple_destroy_project_node_evidence_index_path(@node.project, @node) %>"
            data-storage-key="<%= "project.ce.#{dom_id(@node)}.evidence_columns" %>"
-           data-close-console-url="<%= node_path(@node, tab: "evidence-tab") %>">
+           data-close-console-url="<%= project_node_path(@node.project, @node, tab: "evidence-tab") %>">
         <%= render 'nodes/items_table/toolbar',
                    columns: @evidence_columns %>
         <%= render 'nodes/items_table/table',
@@ -38,7 +38,7 @@
     <% else %>
       <%= render 'nodes/items_table/empty',
                  name: 'evidence',
-                 new_link: new_node_evidence_path(@node) %>
+                 new_link: new_project_node_evidence_path(@node.project, @node) %>
     <% end %>
   </div>
 
@@ -46,7 +46,7 @@
     <div class="node-content" id="<%= dom_id(@node) %>_content">
       <div class="inner">
         <h3>Properties - <span class="actions">
-          <%= link_to edit_node_path(@node) do %>
+          <%= link_to edit_project_node_path(@node.project, @node), class: 'action-link' do %>
             <i class="fa fa-pencil"></i> Edit
           <% end %>
           </span>
@@ -69,9 +69,9 @@
     <h3>Notes</h3>
     <% if @sorted_notes.any? %>
       <div id="node-notes-table"
-           data-destroy-url="<%= multiple_destroy_node_notes_path(@node) %>"
+           data-destroy-url="<%= multiple_destroy_project_node_notes_path(@node.project, @node) %>"
            data-storage-key="<%= "project.ce.#{dom_id(@node)}.note_columns" %>"
-           data-close-console-url="<%= node_path(@node, tab: "notes-tab") %>">
+           data-close-console-url="<%= project_node_path(@node.project, @node, tab: "notes-tab") %>">
         <%= render 'nodes/items_table/toolbar',
                    columns: @note_columns %>
         <%= render 'nodes/items_table/table',
@@ -81,7 +81,7 @@
     <% else %>
       <%= render 'nodes/items_table/empty',
                   name: 'note',
-                  new_link: new_node_note_path(@node) %>
+                  new_link: new_project_node_note_path(@node.project, @node) %>
     <% end %>
   </div>
 

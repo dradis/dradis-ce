@@ -14,7 +14,7 @@ end
 
 shared_context "authenticated API user" do
   before do
-    @logged_in_as = User.new(email: 'rspec')
+    @logged_in_as = User.find_or_create_by(email: 'rspec')
     @password     = 'rspec_pass'
     allow(Configuration).to \
       receive(:shared_password).and_return(::BCrypt::Password.create(@password))

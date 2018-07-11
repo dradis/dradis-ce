@@ -50,8 +50,8 @@ class RecoverableRevisionPresenter < BasePresenter
           result << " for an issue which has since been deleted "
         end
       end
-      if trashed_object.node
-        result << "at " + h.link_to(trashed_object.node.label, trashed_object.node)
+      if (node = trashed_object.node)
+        result << "at " + h.link_to(node.label, [node.project, node])
       else
         result << 'at a node which has since been deleted'
       end

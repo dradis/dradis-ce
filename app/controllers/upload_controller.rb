@@ -55,13 +55,8 @@ class UploadController < ProjectScopedController
     head :ok
   end
 
-  def status
-    @logs = Log.where("uid = ? and id > ?", params[:item_id].to_i, params[:after].to_i)
-    @uploading = !(@logs.last.text == 'Worker process completed.') if @logs.any?
-  end
-
-
   private
+
   def job_logger
     @job_logger ||= Log.new(uid: params[:item_id].to_i)
   end
@@ -127,8 +122,7 @@ class UploadController < ProjectScopedController
     if (params.key?(:uploader) && valid_uploaders.include?(params[:uploader]))
       @uploader = params[:uploader].constantize
     else
-      redirect_to upload_manager_path, alert: 'Something fishy is going on...'
+      redirect_to project_upload_manager_path(@project), alert: 'Something fishy is going on...'
     end
   end
-
 end

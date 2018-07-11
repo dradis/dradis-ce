@@ -1,0 +1,16 @@
+<% sync_plugins = Dradis::Plugins::with_feature(:issue_sync) %>
+<% if sync_plugins.any? %>
+<span class="dropdown">
+  <a class="dropdown-toggle action-link" data-name="issues" data-toggle="dropdown" href="javascript:void(0)">
+    Send to...
+  </a>
+  <ul class="dropdown-menu" role="menu">
+  <% Dradis::Plugins::with_feature(:issue_sync).each do |plugin| %>
+    <%=
+      plugin_path = ActiveSupport::Inflector.underscore(ActiveSupport::Inflector.deconstantize(plugin.name))
+      render partial: "#{plugin_path}/issues/send_to_menu"
+    %>
+  <% end %>
+  </ul>
+</span> - 
+<% end %>

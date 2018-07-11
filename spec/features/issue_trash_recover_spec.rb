@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe "issue trash" do
-
   subject { page }
 
   before do
@@ -12,13 +11,13 @@ describe "issue trash" do
     @issue = create(:issue)
     edit_and_delete_issue "issue 1"
 
-    visit "/trash"
+    visit project_trash_path(@project)
     click_link 'Recover'
 
     @issue = Note.find(@issue.id)
     edit_and_delete_issue "issue 2"
 
-    visit "/trash"
+    visit project_trash_path(@project)
     expect(find(".item-content").text).to eq(@issue.title)
   end
 
@@ -30,5 +29,4 @@ describe "issue trash" do
     )
     @issue.destroy
   end
-
 end

@@ -8,7 +8,8 @@
       #%>
     <%= link_to(
           'revision history',
-          issue_revisions_path(@issue)
+          project_issue_revisions_path(@project, @issue),
+          class: 'action-link'
     ) if @issue.has_revision_history? %>
   </span>
 </h3>

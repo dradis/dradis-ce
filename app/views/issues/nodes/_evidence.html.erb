@@ -3,13 +3,13 @@
   <%= content_tag :section, class: 'evidence-for-host' do %>
     <% if node.evidence_count == 1 %>
       <h3>
-        Evidence for <%= link_to node.label, node %> -
+        Evidence for <%= link_to node.label, project_node_path(node.project, node) %> -
         <span class="actions">
-          <%= link_to edit_node_evidence_path(node, evidence, back_to: :issue) do %>
+          <%= link_to edit_project_node_evidence_path(node.project, node, evidence, back_to: :issue), class: 'action-link' do %>
             <i class="fa fa-pencil"></i> Edit
           <% end %>
-          <%= link_to [node, evidence],
-                class: 'text-error',
+          <%= link_to [@project, node, evidence],
+                class: 'action-link text-error',
                 data: { confirm: 'Are you sure?' },
                 method: :delete do %>
             <i class="fa fa-trash"></i> Delete
@@ -31,13 +31,13 @@
           <% instances.each_with_index do |instance, i| %>
             <div class="tab-pane<%= ' active' if i==0 %>" id="node_<%= node.id %>_instance_<%= instance.id %>">
               <h3>
-                Instance #<%= i+1 %> for <%= link_to node.label, node %> -
+                Instance #<%= i+1 %> for <%= link_to node.label, project_node_path(node.project, node) %> -
                 <span class="actions">
-                  <%= link_to edit_node_evidence_path(node, instance) do %>
+                  <%= link_to edit_project_node_evidence_path(node.project, node, instance), class: 'action-link' do %>
                     <i class="fa fa-pencil"></i> Edit
                   <% end %>
-                  <%= link_to [node, instance],
-                        class: 'text-error',
+                  <%= link_to [@project, node, instance],
+                        class: 'action-link text-error',
                         data: { confirm: 'Are you sure?' },
                         method: :delete do %>
                     <i class="fa fa-trash"></i> Delete

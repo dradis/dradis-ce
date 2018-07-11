@@ -8,10 +8,6 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.6'
 
-# Use Puma as the app server
-# FIXME: required for Rails 5 ActionCable
-# gem 'puma', '~> 3.7'
-
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 
@@ -82,10 +78,7 @@ gem 'bcrypt',   '3.1.10'
 gem 'json', '1.8.6'
 
 # XML manipulation
-# TODO: Traveling Ruby - DANGER, DANGER: this version has an issue, but it's
-# the last one supported by Traveling Ruby
-# gem 'nokogiri', '1.6.6.2'
-gem 'nokogiri', '1.8.2'
+gem 'nokogiri', '1.8.3'
 
 # MySQL backend
 gem 'mysql2', '~> 0.5.1'
@@ -110,9 +103,9 @@ gem 'rails-html-sanitizer', '~> 1.0.4'
 gem 'sqlite3'#,  '1.3.10'
 
 # Use Unicorn as the web server
-# FIXME: Switch to Puma for Rails 5
-gem 'unicorn',  '4.9.0', group: :production
-
+gem 'unicorn',  '4.9.0'
+# Make 'rails server' run unicorn by default:
+gem 'unicorn-rails'
 
 # --------------------------------------------------------- Dradis Professional
 # Authorisation
