@@ -39,7 +39,7 @@ class Issues::MergeController < IssuesController
         if count > 0
           redirect_to [@project, @issue], notice: "#{count} #{'issue'.pluralize(count)} merged into #{@issue.title}."
         else
-          redirect_to project_issues_path(@project), alert: "Issues couldn't be merged."
+          redirect_to project_issues_path(current_project), alert: "Issues couldn't be merged."
         end
       }
       format.json

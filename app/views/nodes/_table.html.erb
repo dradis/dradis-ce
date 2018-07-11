@@ -1,5 +1,6 @@
-<% cache ['issues-table', @columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last] do %>
-  <table class="table table-striped items-table">
+
+<% cache ['nodes-table', @columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last] do %>
+  <table class="table table-striped tbl-issues js-tbl-issues">
     <thead>
       <tr>
         <th></th>
@@ -12,13 +13,13 @@
       <% issues.each do |issue| %>
       <% cache [issue, @columns, issue.affected_count, 'issues-table'] do%>
       <tr>
-        <td class="column-checkbox"><%= check_box_tag dom_id(issue, :checkbox), issue.id, false, class: 'js-multicheck', data: { url: project_issue_path(current_project, issue, format: :json) } %></td>
+        <td class="column-checkbox"><%= check_box_tag dom_id(issue), issue.id, false, class: 'js-multicheck', data: { url: issue_path(issue, format: :json) } %></td>
         <% @columns.each do |column| %>
         <td>
           <%=
           case column
           when 'Title'
-            link_to(issue.title, [current_project, issue])
+            link_to(issue.title, issue)
           when 'Tags'
             tag_and_name_for(issue)
           when 'Affected'

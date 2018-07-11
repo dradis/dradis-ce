@@ -78,7 +78,7 @@ class IssuesController < AuthenticatedController
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
-        format.html { redirect_to project_issue_path(@project, @issue), notice: 'Issue updated' }
+        format.html { redirect_to project_issue_path(current_project, @issue), notice: 'Issue updated' }
       else
         format.html { render 'edit' }
       end

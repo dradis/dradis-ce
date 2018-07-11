@@ -3,7 +3,7 @@
 <div id="node_properties_editor">
   <div class="inner note-text-inner">
     <h3>Edit <%= @node.label %></h3>
-    <%= simple_form_for [@project, @node] do |f| %>
+    <%= simple_form_for [current_project, @node] do |f| %>
       <%= f.input :label, label: "New name" %>
 
       <%= f.input :type_id, collection: [["No icon", Node::Types::DEFAULT], ["Host", Node::Types::HOST]], include_blank: false, label: 'Icon' %>
@@ -12,7 +12,7 @@
 
       <div class="form-actions">
         <%= f.button :submit, nil, class: 'btn btn-primary' %> or
-        <%= link_to 'Cancel', project_node_path(@project, @node) %>
+        <%= link_to 'Cancel', project_node_path(current_project, @node) %>
       </div>
     <% end %>
   </div>
