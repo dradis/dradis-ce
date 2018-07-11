@@ -1,12 +1,4 @@
 class HomeController < AuthenticatedController
-  include ProjectScoped
-
-  skip_before_action :set_project, only: [:markup_help, :textilize]
-
-  def index
-    redirect_to project_path(@project)
-  end
-
   # Returns the markup cheatsheet that is used by the jQuery.Textile plugin Help
   # button.
   def markup_help

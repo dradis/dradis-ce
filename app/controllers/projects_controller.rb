@@ -1,7 +1,11 @@
 class ProjectsController < AuthenticatedController
-  before_action :set_project, only: :show
+  before_action :set_project
   helper :snowcrash
   layout 'snowcrash'
+
+  def index
+    redirect_to project_path(@project)
+  end
 
   def show
     @activities    = Activity.latest
