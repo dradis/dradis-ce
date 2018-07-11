@@ -108,7 +108,6 @@ shared_examples 'a page with a comments feed' do
           expect(page).to have_no_link 'Edit'
           expect(page).to have_no_css "form#edit_comment_#{not_my_comment.id}"
         end
-        # TODO test they can't edit by direct HTTP request
       end
 
       it 'allows deleting a comment from the same user' do
@@ -120,12 +119,7 @@ shared_examples 'a page with a comments feed' do
         within_comment(not_my_comment) do
           expect(page).to have_no_link('Delete')
         end
-        # TODO test they can't delete by direct HTTP request
       end
-
-      # TODO test that other user's edits/updates/destroys appear with
-      # websockets. Probably a bunch of obvious bugs to test - e.g. make sure
-      # that new comments only appear if they're for the current page!
     end
   end
 end
