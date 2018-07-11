@@ -11,13 +11,13 @@ describe "issue trash" do
     @issue = create(:issue)
     edit_and_delete_issue "issue 1"
 
-    visit project_trash_path(@project)
+    visit project_trash_path(current_project)
     click_link 'Recover'
 
     @issue = Note.find(@issue.id)
     edit_and_delete_issue "issue 2"
 
-    visit project_trash_path(@project)
+    visit project_trash_path(current_project)
     expect(find(".item-content").text).to eq(@issue.title)
   end
 

@@ -7,7 +7,8 @@
 #
 # A convenience list method is provided that will return all the currently
 # loaded plugins of this category.
-class UploadController < ProjectScopedController
+class UploadController < AuthenticatedController
+  include ProjectScoped
 
   # UPGRADE
   # include Plugins::Upload
@@ -122,7 +123,7 @@ class UploadController < ProjectScopedController
     if (params.key?(:uploader) && valid_uploaders.include?(params[:uploader]))
       @uploader = params[:uploader].constantize
     else
-      redirect_to project_upload_manager_path(@project), alert: 'Something fishy is going on...'
+      redirect_to project_upload_manager_path(current_project), alert: 'Something fishy is going on...'
     end
   end
 end

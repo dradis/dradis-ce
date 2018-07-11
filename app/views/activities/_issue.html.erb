@@ -1,8 +1,8 @@
 <% if issue %>
   <% if issue.title? %>
-    <%= presenter.verb %> the <%= link_to issue.title, [@project, issue] %> issue.
+    <%= presenter.verb %> the <%= link_to issue.title, [current_project, issue] %> issue.
   <% else %>
-    <%= presenter.verb %> <%= link_to "Issue ##{issue.id}", [@project, issue] %>.
+    <%= presenter.verb %> <%= link_to "Issue ##{issue.id}", [current_project, issue] %>.
   <% end %>
 <% else %>
   <% if activity.action == 'destroy' %>

@@ -29,7 +29,7 @@
             <%= link_to edit_project_node_evidence_path(@node.project, @node, @evidence), class: 'action-link' do %>
               <i class="fa fa-pencil"></i> Edit
             <% end %>
-            <%= link_to [@project, @node, @evidence],
+            <%= link_to [current_project, @node, @evidence],
                   class: 'action-link text-error',
                   data: { confirm: 'Are you sure?' },
                   method: :delete do %>
@@ -51,7 +51,7 @@
           <h3>
             Issue information -
             <span class="actions">
-            <%= link_to 'Open', project_issue_path(@project, @issue), class: 'action-link' %> -
+            <%= link_to 'Open', project_issue_path(current_project, @issue), class: 'action-link' %> -
             <%= tag_and_name_for(@issue) %>
             </span>
           </h3>

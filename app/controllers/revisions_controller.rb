@@ -1,4 +1,8 @@
-class RevisionsController < ProjectScopedController
+class RevisionsController < AuthenticatedController
+  include ActivityTracking
+  include NodesSidebar
+  include ProjectScoped
+
   before_action :load_node, except: [ :trash, :recover ]
   before_action :load_record, except: [ :trash, :recover ]
 
@@ -28,7 +32,7 @@ class RevisionsController < ProjectScopedController
       flash[:error] = "Can't recover #{revision.type}: #{revision.errors.full_messages.join(',')}"
     end
     
-    redirect_to project_trash_path(@project)
+    redirect_to project_trash_path(current_project)
   end
 
   private
@@ -38,7 +42,7 @@ class RevisionsController < ProjectScopedController
         :notes, :evidence, evidence: [:issue, { issue: :tags }]
       ).find_by_id(params[:node_id])
 
-      # FIXME: from ProjectScopedController
+      # FIXME: from ProjectScoped
       initialize_nodes_sidebar
     end
   end

@@ -19,7 +19,7 @@
             <%= link_to edit_project_node_note_path(@node.project, @node, @note), class: 'action-link' do %>
               <i class="fa fa-pencil"></i> Edit
             <% end %>
-            <%= link_to [@project, @node, @note],
+            <%= link_to [current_project, @node, @note],
                   class: 'action-link text-error',
                   data: { confirm: 'Are you sure?' },
                   method: :delete do %>

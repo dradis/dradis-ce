@@ -11,7 +11,7 @@
 <div class="add-issues">
   <h3>2. Upload scanner output</h3>
   <p>
-    Use the <%= link_to main_app.project_upload_manager_path(@project) do %>
+    Use the <%= link_to main_app.project_upload_manager_path(current_project) do %>
       <i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool
     <% end %> link at the top of the page.
   </p>

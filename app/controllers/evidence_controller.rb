@@ -1,6 +1,7 @@
 class EvidenceController < NestedNodeResourceController
   include ConflictResolver
   include MultipleDestroy
+  include NodesSidebar
 
   before_action :find_or_initialize_evidence, except: [ :index, :create_multiple ]
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
@@ -25,7 +26,7 @@ class EvidenceController < NestedNodeResourceController
       if @evidence.save
         track_created(@evidence)
         format.html {
-          redirect_to [@project, @evidence.node, @evidence],
+          redirect_to [current_project, @evidence.node, @evidence],
             notice: "Evidence added for node #{@evidence.node.label}."
         }
       else
@@ -68,7 +69,7 @@ class EvidenceController < NestedNodeResourceController
         )
       end
     end
-    redirect_to project_issue_path(@project, evidence_params[:issue_id]), notice: 'Evidence added for selected nodes.'
+    redirect_to project_issue_path(current_project, evidence_params[:issue_id]), notice: 'Evidence added for selected nodes.'
   end
 
   def edit
@@ -82,9 +83,9 @@ class EvidenceController < NestedNodeResourceController
         check_for_edit_conflicts(@evidence, updated_at_before_save)
         format.html do
           path = if params[:back_to] == 'issue'
-                   [@project, @evidence.issue]
+                   [current_project, @evidence.issue]
                  else
-                   [@project, @node, @evidence]
+                   [current_project, @node, @evidence]
                  end
           redirect_to path, notice: 'Evidence updated.'
         end
@@ -104,13 +105,13 @@ class EvidenceController < NestedNodeResourceController
       if @evidence.destroy
         track_destroyed(@evidence)
         format.html {
-          redirect_to [@project, @node],
+          redirect_to [current_project, @node],
             notice: "Successfully deleted evidence for '#{@evidence.issue.title}.'"
         }
         format.js
       else
         format.html {
-          redirect_to [@project, @node, @evidence],
+          redirect_to [current_project, @node, @evidence],
             notice: "Error while deleting evidence: #{@evidence.errors}"
         }
         format.js

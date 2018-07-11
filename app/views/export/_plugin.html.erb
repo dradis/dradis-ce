@@ -1,6 +1,6 @@
 <%= content_tag :div, id: "plugin-#{info[:name]}", class: 'tab-pane tab-panel' do %>
 
-  <%= form_tag project_export_manager_path(@project), target: '_blank' do %>
+  <%= form_tag project_export_manager_path(current_project), target: '_blank' do %>
     <%= hidden_field_tag :plugin, info[:name] %>
 
     <% if info[:routes].count == 0 %>

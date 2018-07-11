@@ -1,4 +1,4 @@
-<%= simple_form_for [@project, @node, @note] do |f| %>
+<%= simple_form_for [current_project, @node, @note] do |f| %>
 
   <%= f.association :category, collection: Category.all, label_method: :name, prompt: 'Assign note category' %>
   <%= f.input :text, label: false, input_html: { class: 'textile', data: { preview_url: preview_path, help_url: markup_path } } %>

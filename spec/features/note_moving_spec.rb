@@ -22,7 +22,7 @@ describe "moving a note", js: true do
     @node_4 = create(:node, label: "Node 4", parent: @node_1)
     @node_5 = create(:node, label: "Node 5", parent: @node_2)
 
-    visit project_node_note_path(@project, @node_5, current_note)
+    visit project_node_note_path(current_project, @node_5, current_note)
     click_move_note
   end
 
@@ -41,7 +41,7 @@ describe "moving a note", js: true do
     end
 
     it "should redirect to note show path" do
-      expect(current_path).to eq(project_node_note_path(@project, @node_1, current_note))
+      expect(current_path).to eq(project_node_note_path(current_project, @node_1, current_note))
     end
   end
 
