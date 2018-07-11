@@ -12,7 +12,7 @@ describe "moving a node", js: true do
     @node_2 = create_node(label: "Node 2", parent: @node_0)
     @node_3 = create_node(label: "Node 3", parent: @node_0)
     @node_4 = create_node(label: "Node 4", parent: @node_1)
-    @node_5 = create_node(label: "Node 4", parent: @node_2)
+    @node_5 = create_node(label: "Node 5", parent: @node_2)
 
     # Tree:
     #
@@ -61,7 +61,7 @@ describe "moving a node", js: true do
       within_move_node_modal do
         click_node_toggle_button(@node_0)
         click_node_toggle_button(@node_2)
-        click_link @node_5.label
+        find_link(@node_5.label, visible: :all).trigger("click")
       end
 
       expect(submit_move_button[:disabled]).to be true
