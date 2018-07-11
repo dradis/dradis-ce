@@ -25,19 +25,24 @@ shared_examples 'creates an Activity' do |action, klass = nil|
 
   it 'enqueues an ActivityTrackingJob' do
     if action == :create
-      trackable_id   = (klass.last.try(:id) || 0) + 1
-      trackable_type = klass.to_s
+      submit_form
+      expect(
+        ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h| h[:job] }
+      ).to eq [ActivityTrackingJob]
+      expect(
+        ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1| h1[:args].map { |h2| h2['action'] } }.flatten
+      ).to eq ['create']
+      expect(
+        ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1| h1[:args].map { |h2| h2['trackable_type'] } }.flatten
+      ).to eq [klass.to_s]
     else
-      trackable_id   = model.id
-      trackable_type = model.class.to_s
+      expect { submit_form }.to have_enqueued_job(ActivityTrackingJob).with(
+        action: action.to_s,
+        trackable_id: model.id,
+        trackable_type: model.class.to_s,
+        user: @logged_in_as
+      )
     end
-
-    expect { submit_form }.to have_enqueued_job(ActivityTrackingJob).with(
-      action: action.to_s,
-      trackable_id: trackable_id,
-      trackable_type: trackable_type,
-      user: @logged_in_as
-    )
   end
 end
 
