@@ -40,6 +40,11 @@ Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, options)
 end
 
+# Capybara by default uses WEBrick, which isn't compatible with websockets.  I
+# couldn't get it to work with unicorn (although I didn't try very hard), but
+# it seems to work fine with puma. It's not ideal using a different server for
+# tests vs. production but I think we can get away with it for now.
+Capybara.server = :puma
 Capybara.javascript_driver = :poltergeist
 
 RSpec.configure do |config|

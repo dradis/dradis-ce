@@ -19,7 +19,12 @@
 
   <%= csrf_meta_tag %>
 </head>
-<body class="<%= controller_name %> <%= action_name %>">
+<body
+  class="<%= controller_name %> <%= action_name %>"
+  <% if current_user %>
+    data-current-user-id="<%= current_user.id %>"
+  <% end %>
+  >
   <%= render "layouts/snowcrash/navbar" %>
 
   <div class="body-wrapper">

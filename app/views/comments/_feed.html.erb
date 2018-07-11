@@ -1,48 +1,18 @@
-<h3>Comments <span class="badge"><%= commentable.comments.count %></span></h3>
-<div class="comment-feed">
-  <% if commentable.comments.any? %>
-    <% commentable.comments.each do |comment| %>
-      <%= div_for comment do %>
-        <div class="body">
-          <%= link_to(avatar_image(comment.user, size: 30), "##{dom_id(comment)}") %>
+<h3>
+  Comments
+  <span
+    id="comments-count-badge"
+    class="badge"><%= commentable.comments.count %></span>
+</h3>
 
-          <div>
-            <% if comment.user %>
-              <strong><%= comment.user.email %></strong>
-            <% else %>
-              a user who has since been deleted
-            <% end %>
-
-            <span class="time"><%= local_time_ago(comment.created_at) %></span>
-
-            <% if can? :update, comment %>
-              <div class="actions">
-                <%= link_to 'javascript:void(0)',
-                            data: {toggle_comment: "on"} do %>
-                  <i class="fa fa-pencil"></i> Edit
-                <% end %>
-                <%= link_to [@project, comment],
-                            method: :delete,
-                            data: { confirm: 'Are you sure?' },
-                            class: 'text-error' do %>
-                  <i class="fa fa-trash"></i> Delete
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-
-          <div class="content">
-            <%= comment.content %>
-          </div>
-
-          <% if can? :update, comment %>
-            <%= render 'comments/edit', commentable: commentable, comment: comment %>
-          <% end %>
-        </div>
-      <% end %>
+<div data-commentable="<%= dom_id(commentable) %>" class="comment-feed">
+  <div class="comments-list">
+    <% if commentable.comments.any? %>
+      <%= render commentable.comments %>
     <% end %>
-  <% else %>
-    <p class="no-content">There have been no comments yet.</p>
+  </div>
+  <% if commentable.comments.none? %>
+    <p id="comments_feed_no_comments" class="no-content">There have been no comments yet.</p>
   <% end %>
 
   <%= render 'comments/new', commentable: commentable %>
