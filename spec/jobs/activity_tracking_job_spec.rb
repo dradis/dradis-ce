@@ -18,7 +18,7 @@ describe ActivityTrackingJob do #, type: :job do
           trackable.destroy if action == :destroy
 
           expect {
-            described_class.perform_now(
+            described_class.new.perform(
               action: action.to_s,
               trackable_id: trackable.id,
               trackable_type: trackable.class.to_s,
@@ -54,7 +54,7 @@ describe ActivityTrackingJob do #, type: :job do
       trackable = create(:comment, commentable: commentable)
 
       expect {
-        described_class.perform_now(
+        described_class.new.perform(
           action: 'create',
           trackable_id: trackable.id,
           trackable_type: trackable.class.to_s,
