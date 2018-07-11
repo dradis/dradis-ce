@@ -25,6 +25,10 @@ Rails.application.routes.draw do
 
     resources :comments
 
+    constraints id: %r{[(0-z)\/]+} do
+      resources :configurations, only: [:index, :update]
+    end
+
     post :create_multiple_evidence, to: 'evidence#create_multiple'
 
     resources :issues, concerns: :multiple_destroy do
@@ -86,9 +90,6 @@ Rails.application.routes.draw do
     post '/upload'        => 'upload#create'
     post '/upload/parse'  => 'upload#parse'
   end
-
-
-  resources :configurations, only: [:index, :update]
 
   resources :console, only: [] do
     collection { get :status }
