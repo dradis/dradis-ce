@@ -62,6 +62,10 @@
         background: image-url('loading.gif') no-repeat center;
         height: 50px;
       }
+
+      .js-no-content {
+        border-top: 1px solid $gray;
+      }
     }
     .footer {
       line-height: 2em;

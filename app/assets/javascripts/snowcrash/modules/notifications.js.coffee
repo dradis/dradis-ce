@@ -1,6 +1,9 @@
 document.addEventListener 'turbolinks:load', ->
-  if $('.js-notifications-dropdown').length > 0
+  if $('.js-notifications-dropdown').length
     $container = $('.js-notification-container')
+    $empty     = $container.find('.js-no-content')
+    $footer    = $container.next('.js-footer')
+    $loading   = $container.find('.js-loading')
 
     $('.js-notifications-dropdown').click ->
       unless $container.is(':visible')
@@ -9,18 +12,17 @@ document.addEventListener 'turbolinks:load', ->
           data: {count: 7},
           beforeSend: () ->
             $container.find('li.notification').remove()
-            $container.append($('<div>', class: 'loading'))
+
+            $empty.hide()
+            $footer.hide()
+            $loading.show()
 
           success: (data) ->
-            # console.log(data)
-            if data.length == 0
-              $container.append(
-                $('<div>', class: 'no-content text-center').
-                  html('You have no notifications yet.')
-              )
-            else
-              $('.js-notification-count').html("Notifications (#{data.count})")
+            $('.js-notification-count').html("Notifications (#{data.count})")
 
+            if data.count == 0
+              $empty.show()
+            else
               for notification in data.notifications
                 unread_class = if notification.unread then 'unread' else ''
                 $container.append($('<li>', class: "notification #{unread_class}"))
@@ -31,5 +33,7 @@ document.addEventListener 'turbolinks:load', ->
                 $body.append($('<div>', class: 'title').html(notification.render_title))
                 $body.append($('<div>', class: 'details').html(notification.avatar))
 
+              $footer.show()
+
           complete: () ->
-            $('.loading').remove()
+            $loading.hide()
