@@ -85,7 +85,6 @@ Rails.application.routes.draw do
     get  '/upload'        => 'upload#index',  as: :upload_manager
     post '/upload'        => 'upload#create'
     post '/upload/parse'  => 'upload#parse'
-    get  '/upload/status' => 'upload#status'
   end
 
 
@@ -100,5 +99,5 @@ Rails.application.routes.draw do
   get '/preview' => 'home#textilize',  as: :preview, defaults: { format: 'json' }
   get '/markup-help' => 'home#markup_help', as: :markup
 
-  root to: 'home#index'
+  root to: 'projects#index'
 end

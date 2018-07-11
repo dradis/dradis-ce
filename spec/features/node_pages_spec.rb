@@ -8,7 +8,7 @@ describe "node pages" do
   describe "creating new nodes" do
     context "when a project has no nodes defined yet" do
       it "says so in the sidebar" do
-        visit project_path(id: @project.id)
+        visit project_path(current_project)
         within ".main-sidebar" do
           should have_selector ".no-nodes", text: "No nodes defined yet"
         end
@@ -17,7 +17,7 @@ describe "node pages" do
 
     describe "clicking the '+' button in the 'Nodes' sidebar", js: true do
       before do
-        visit project_path(id: @project.id)
+        visit project_path(current_project)
         find(".add-subnode > a").click
       end
 
@@ -54,7 +54,7 @@ describe "node pages" do
 
         expect do
           click_button "Add"
-        end.to change{Node.in_tree.count}.by(3).and change{Activity.count}.by(3)
+        end.to change{ Node.in_tree.count }.by(3).and change{ Activity.count }.by(3)
 
         expect(Node.last(3).map(&:label)).to match_array([
           "node 1",
@@ -71,7 +71,7 @@ describe "node pages" do
 
         expect do
           click_button "Add"
-        end.to change{Node.in_tree.count}.by(2)
+        end.to change{ Node.in_tree.count }.by(2)
 
         expect(
           Node.in_tree.last(2).all? { |n| n.type_id == Node::Types::HOST }
@@ -91,7 +91,7 @@ describe "node pages" do
         fill_in :node_label, with: "My new node"
         expect do
           click_button "Add"
-        end.to change{node.children.count}.by(1).and change{Activity.count}.by(1)
+        end.to change{ node.children.count }.by(1).and change{Activity.count}.by(1)
 
         new_node = node.children.last
         expect(new_node.label).to eq "My new node"
@@ -116,7 +116,7 @@ describe "node pages" do
 
         expect do
           click_button "Add"
-        end.to change{node.children.count}.by(3).and change{Activity.count}.by(3)
+        end.to change{ node.children.count }.by(3).and change{ Activity.count }.by(3)
 
         expect(node.children.pluck(:label)).to match_array([
           "node 1",
@@ -158,7 +158,7 @@ describe "node pages" do
       end
 
       it "creates an Activity" do
-        expect{submit_form}.to change{Activity.count}.by(1)
+        expect{ submit_form }.to change{ Activity.count }.by(1)
 
         activity = Activity.last
         expect(activity.trackable).to eq @node
@@ -173,7 +173,7 @@ describe "node pages" do
       before { fill_in :node_label, with: "" }
 
       it "doesn't update the node's name" do
-        expect{submit_form}.not_to change{@node.reload.label}
+        expect{ submit_form }.not_to change{ @node.reload.label }
       end
 
       include_examples "doesn't create an Activity"
@@ -198,7 +198,7 @@ describe "node pages" do
       let(:submit_form) do
         within "#modal_delete_node" do
           click_link "Delete"
-          expect(current_path).to eq project_path(id: @project.id)
+          expect(current_path).to eq project_path(current_project)
         end
       end
 
@@ -343,7 +343,7 @@ describe "node pages" do
       end
 
       it "doesn't update the node's properties" do
-        expect{submit_form}.not_to change{@node.reload.properties}
+        expect{ submit_form }.not_to change{ @node.reload.properties }
       end
 
       # UPGRADE: fix specs

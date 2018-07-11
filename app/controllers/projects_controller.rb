@@ -1,7 +1,13 @@
 class ProjectsController < AuthenticatedController
-  before_action :set_project, only: :show
-  helper :snowcrash
-  layout 'snowcrash'
+  before_action :set_project
+
+  helper        :snowcrash
+  helper_method :current_project
+  layout        'snowcrash'
+
+  def index
+    redirect_to project_path(current_project)
+  end
 
   def show
     @activities    = Activity.latest
@@ -34,6 +40,10 @@ class ProjectsController < AuthenticatedController
 
   private
   def set_project
-    @project = Project.new
+    current_project
+  end
+
+  def current_project
+    @current_project ||= Project.new
   end
 end

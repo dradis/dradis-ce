@@ -8,7 +8,7 @@ describe 'issue pages' do
       login_to_project_as_user
 
       @issue = create(:issue, text: "#[Title]#\nIssue1\n\n#[Risk]#\nHigh\n\n#[Description]#\nn/a")
-      visit project_issues_path(@project)
+      visit project_issues_path(current_project)
     end
 
     let(:columns) { ['Title', 'Created', 'Created by', 'Updated'] }

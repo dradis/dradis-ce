@@ -17,7 +17,7 @@
       <i class="fa fa-pencil"></i> Edit
     <% end %>
 
-    <%= link_to [@project, @node, evidence],
+    <%= link_to [current_project, @node, evidence],
           method: :delete,
           data: { confirm: 'Are you sure?' },
           class: 'list-item-action-delete' do %>

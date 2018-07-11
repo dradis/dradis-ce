@@ -3,6 +3,7 @@
 class NotesController < NestedNodeResourceController
   include ConflictResolver
   include MultipleDestroy
+  include NodesSidebar
 
   before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
@@ -21,7 +22,7 @@ class NotesController < NestedNodeResourceController
 
     if @note.save
       track_created(@note)
-      redirect_to project_node_note_path(@project, @node, @note), notice: 'Note created'
+      redirect_to project_node_note_path(current_project, @node, @note), notice: 'Note created'
     else
       initialize_nodes_sidebar
       render 'new'
@@ -44,7 +45,7 @@ class NotesController < NestedNodeResourceController
     if @note.update_attributes(note_params)
       track_updated(@note)
       check_for_edit_conflicts(@note, updated_at_before_save)
-      redirect_to project_node_note_path(@project, @note.node, @note), notice: 'Note updated.'
+      redirect_to project_node_note_path(current_project, @note.node, @note), notice: 'Note updated.'
     else
       initialize_nodes_sidebar
       render 'edit'
@@ -55,9 +56,9 @@ class NotesController < NestedNodeResourceController
   def destroy
     if @note.destroy
       track_destroyed(@note)
-      redirect_to project_node_path(@project, @node), notice: 'Note deleted'
+      redirect_to project_node_path(current_project, @node), notice: 'Note deleted'
     else
-      redirect_to project_node_note_path(@project, @node, @note), alert: 'Could not delete note'
+      redirect_to project_node_note_path(current_project, @node, @note), alert: 'Could not delete note'
     end
   end
 

@@ -28,7 +28,7 @@
                   <td>
                     <%= link_to(
                       recover_project_revision_path(
-                        @project,
+                        current_project,
                         recoverable_revision.version,
                       ),
                       method: :post,
