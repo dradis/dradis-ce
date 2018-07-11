@@ -59,7 +59,7 @@ class IssuesController < AuthenticatedController
         # taggable IDs)
         tag_issue_from_field_content(@issue)
 
-        format.html { redirect_to [@project, @issue], notice: 'Issue added.' }
+        format.html { redirect_to [current_project, @issue], notice: 'Issue added.' }
       else
         format.html { render 'new', alert: 'Issue couldn\'t be added.' }
       end
@@ -91,10 +91,10 @@ class IssuesController < AuthenticatedController
     respond_to do |format|
       if @issue.destroy
         track_destroyed(@issue)
-        format.html { redirect_to project_issues_url(@project), notice: 'Issue deleted.' }
+        format.html { redirect_to project_issues_path(current_project), notice: 'Issue deleted.' }
         format.json
       else
-        format.html { redirect_to project_issues_url(@project), notice: "Error while deleting issue: #{@issue.errors}" }
+        format.html { redirect_to project_issues_path(current_project), notice: "Error while deleting issue: #{@issue.errors}" }
         format.json
       end
     end

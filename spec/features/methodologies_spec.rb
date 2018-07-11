@@ -15,8 +15,8 @@ describe "Describe methodologies" do
 
     it "shows a 'No methodologies assigned' message if none have been assigned" do
       methodology_library.notes.destroy_all
-      visit project_methodologies_path(@project)
-      expect(current_path).to eq(project_methodologies_path(@project))
+      visit project_methodologies_path(current_project)
+      expect(current_path).to eq(project_methodologies_path(current_project))
       expect(page).to have_content('No methodologies')
     end
 
@@ -26,8 +26,8 @@ describe "Describe methodologies" do
         methodology_library.notes.create!(category: Category.default, author: 'rspec', text: "<methodology><name>#{name}</name></methodology>" )
       end
 
-      visit project_methodologies_path(@project)
-      expect(current_path).to eq(project_methodologies_path(@project))
+      visit project_methodologies_path(current_project)
+      expect(current_path).to eq(project_methodologies_path(current_project))
       list.each do |name|
         expect(page).to have_content(name)
       end
@@ -41,8 +41,8 @@ describe "Describe methodologies" do
         list << Methodology.new(content: xml_blob )
       end
 
-      visit project_methodologies_path(@project)
-      expect(current_path).to eq(project_methodologies_path(@project))
+      visit project_methodologies_path(current_project)
+      expect(current_path).to eq(project_methodologies_path(current_project))
 
       list.each do |checklist|
         checklist.sections.each do |section|
@@ -62,8 +62,8 @@ describe "Describe methodologies" do
 
       methodology_library.notes.create(category: Category.default, author: 'rspec', text: doc.to_s)
 
-      visit project_methodologies_path(@project)
-      expect(current_path).to eq(project_methodologies_path(@project))
+      visit project_methodologies_path(current_project)
+      expect(current_path).to eq(project_methodologies_path(current_project))
 
       expect(page).to have_content('Reconnaissance')
       expect(page).to have_xpath("//input[@checked and @name='Authentication~Maximal crazy']")
@@ -75,7 +75,7 @@ describe "Describe methodologies" do
       note = methodology_library.notes.create(category: Category.default, author: 'rspec', text: methodology.content )
 
       visit project_methodologies_path(@proejct)
-      expect(current_path).to eq(project_methodologies_path(@project))
+      expect(current_path).to eq(project_methodologies_path(current_project))
 
       find('#Reconnaissance_Say_a_little_something').set(true)
 
@@ -98,9 +98,9 @@ describe "Describe methodologies" do
         list << Methodology.new(filename: note.id, content: xml_blob)
       end
 
-      visit project_methodologies_path(@project)
+      visit project_methodologies_path(current_project)
       list.each do |checklist|
-        expect(page).to have_xpath("//a",href: project_methodology_path(@project, checklist), data_method: 'delete')
+        expect(page).to have_xpath("//a",href: project_methodology_path(current_project, checklist), data_method: 'delete')
       end
     end
 
@@ -119,7 +119,7 @@ describe "Describe methodologies" do
       end
 
       it "presents a list to add methodologies (with all the available ones)" do
-        visit project_methodologies_path(@project)
+        visit project_methodologies_path(current_project)
         @available.each do |file|
           expect(page).to have_link(Methodology.from_file(file).name)
         end
@@ -127,7 +127,7 @@ describe "Describe methodologies" do
 
       it "lets your choose the name you want to use when adding a new methodology" do
         methodology = Methodology.from_file(@available.first)
-        visit add_project_methodology_path(@project, methodology)
+        visit add_project_methodology_path(current_project, methodology)
         expect(page).to have_field('Name', with: methodology.name)
 
         methodology_library.notes.destroy_all
@@ -136,7 +136,7 @@ describe "Describe methodologies" do
         click_button 'Add to project'
 
         expect(methodology_library.reload.notes.count).to eq(1)
-        expect(current_path).to eq(project_methodologies_path(@project))
+        expect(current_path).to eq(project_methodologies_path(current_project))
         expect(page).to have_content('RSPec methodology')
       end
     end

@@ -25,11 +25,11 @@ class NodesController < NestedNodeResourceController
     if @node.save
       track_created(@node)
       flash[:notice] = 'Successfully created node.'
-      redirect_to [@project, @node]
+      redirect_to [current_project, @node]
     else
       parent = @node.parent
       if parent && parent.user_node?
-        redirect_to [@project, parent], alert: @node.errors.full_messages.join('; ')
+        redirect_to [current_project, parent], alert: @node.errors.full_messages.join('; ')
       else
         redirect_to project_path(current_project), alert: @node.errors.full_messages.join('; ')
       end
