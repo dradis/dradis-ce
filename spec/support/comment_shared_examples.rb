@@ -8,6 +8,7 @@
 #
 # NB 'visit whatever_path' should be called BEFORE these tests are run
 shared_examples 'a page with a comments feed' do
+  include ActionView::RecordIdentifier
   include CommentMacros
 
   # We can't add js: true to the shared_example block itself, so we have to add
@@ -15,9 +16,8 @@ shared_examples 'a page with a comments feed' do
   # remember to activate js 'one level up' in every file that calls this shared
   # example group.
   context '', js: true do
-    let(:no_comments_text) { 'There have been no comments yet.' }
-
     example '"there are no comments" text' do
+      no_comments_text = 'There have been no comments yet.'
       expect(page).to have_content no_comments_text
       submit_new_comment(content: 'test comment')
       expect(page).to have_no_content no_comments_text
@@ -42,10 +42,11 @@ shared_examples 'a page with a comments feed' do
     end
 
     context 'when there are already comments' do
+      let(:other_user) { create(:user) }
       let(:create_comments) do
         @comments = [
           create(:comment, commentable: commentable, user: @logged_in_as),
-          create(:comment, commentable: commentable)
+          create(:comment, commentable: commentable, user: other_user)
         ]
         other_commentable = create(commentable.class.to_s.underscore)
         @other_comment    = create(:comment, commentable: other_commentable)
