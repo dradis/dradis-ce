@@ -19,11 +19,13 @@
 #     let(:submit_form) { click_button "Save" }
 #
 shared_examples 'creates an Activity' do |action, klass = nil|
-  it 'enqueues an ActivityTrackingJob' do
+  before do
     ActiveJob::Base.queue_adapter = :test
+  end
 
+  it 'enqueues an ActivityTrackingJob' do
     if action == :create
-      trackable_id   = (klass.last || 0) + 1
+      trackable_id   = (klass.last.try(:id) || 0) + 1
       trackable_type = klass.to_s
     else
       trackable_id   = model.id
@@ -40,8 +42,11 @@ shared_examples 'creates an Activity' do |action, klass = nil|
 end
 
 shared_examples "doesn't create an Activity" do
-  it "doesn't enqueue an ActivityTrackingJob" do
+  before do
     ActiveJob::Base.queue_adapter = :test
+  end
+
+  it "doesn't enqueue an ActivityTrackingJob" do
     expect { submit_form }.not_to have_enqueued_job(ActivityTrackingJob)
   end
 end
