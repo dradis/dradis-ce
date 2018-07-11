@@ -32,6 +32,11 @@ class IssuesController < AuthenticatedController
     @first_evidence  = Evidence.where(node: @first_node, issue: @issue)
 
     load_conflicting_revisions(@issue)
+
+    @subscription = Subscription.find_by(
+                      user: current_user,
+                      subscribable_type: @issue.class.to_s,
+                      subscribable_id: @issue.id)
   end
 
   def new

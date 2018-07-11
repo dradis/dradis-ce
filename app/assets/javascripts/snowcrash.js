@@ -25,6 +25,7 @@
 //= require snowcrash/behaviors
 //= require snowcrash/keyboard_shortcuts
 
+//= require snowcrash/modules/comments
 //= require snowcrash/modules/configurations
 //= require snowcrash/modules/export
 //= require snowcrash/modules/issues

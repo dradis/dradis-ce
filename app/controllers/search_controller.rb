@@ -1,5 +1,7 @@
-class SearchController < ProjectScopedController
+class SearchController < AuthenticatedController
+  include ProjectScoped
   include SearchHelper
+
   before_action :set_scope
 
   def index

@@ -73,7 +73,7 @@ class ExportController < ProjectScopedController
   # presenting the obscure Error 500 default page of Rails.
   def rescue_action(exception)
     flash[:error] = exception.message
-    redirect_to upload_manager_path()
+    redirect_to project_upload_manager_path(@project)
   end
 
   def templates_dir_for(args={})
@@ -95,7 +95,7 @@ class ExportController < ProjectScopedController
     if (params.key?(:plugin) && valid_exporters.keys.include?(params[:plugin]))
       @exporter = valid_exporters[params[:plugin]]
     else
-      redirect_to export_manager_path, alert: 'Something fishy is going on...'
+      redirect_to project_export_manager_path(@project), alert: 'Something fishy is going on...'
     end
   end
 

@@ -21,7 +21,7 @@ class NotesController < NestedNodeResourceController
 
     if @note.save
       track_created(@note)
-      redirect_to node_note_path(@node, @note), notice: 'Note created'
+      redirect_to project_node_note_path(@project, @node, @note), notice: 'Note created'
     else
       initialize_nodes_sidebar
       render 'new'
@@ -44,7 +44,7 @@ class NotesController < NestedNodeResourceController
     if @note.update_attributes(note_params)
       track_updated(@note)
       check_for_edit_conflicts(@note, updated_at_before_save)
-      redirect_to node_note_path(@note.node, @note), notice: 'Note updated.'
+      redirect_to project_node_note_path(@project, @note.node, @note), notice: 'Note updated.'
     else
       initialize_nodes_sidebar
       render 'edit'
@@ -55,9 +55,9 @@ class NotesController < NestedNodeResourceController
   def destroy
     if @note.destroy
       track_destroyed(@note)
-      redirect_to node_path(@node), notice: 'Note deleted'
+      redirect_to project_node_path(@project, @node), notice: 'Note deleted'
     else
-      redirect_to node_note_path(@node, @note), alert: 'Could not delete note'
+      redirect_to project_node_note_path(@project, @node, @note), alert: 'Could not delete note'
     end
   end
 
