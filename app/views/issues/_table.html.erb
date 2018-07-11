@@ -12,13 +12,13 @@
       <% issues.each do |issue| %>
       <% cache [issue, @columns, issue.affected_count, 'issues-table'] do%>
       <tr>
-        <td class="column-checkbox"><%= check_box_tag dom_id(issue, :checkbox), issue.id, false, class: 'js-multicheck', data: { url: project_issue_path(@project, issue, format: :json) } %></td>
+        <td class="column-checkbox"><%= check_box_tag dom_id(issue, :checkbox), issue.id, false, class: 'js-multicheck', data: { url: project_issue_path(current_project, issue, format: :json) } %></td>
         <% @columns.each do |column| %>
         <td>
           <%=
           case column
           when 'Title'
-            link_to(issue.title, [@project, issue])
+            link_to(issue.title, [current_project, issue])
           when 'Tags'
             tag_and_name_for(issue)
           when 'Affected'
@@ -37,10 +37,10 @@
         </td>
         <% end  %>
         <td class="column-actions">
-          <%= link_to edit_project_issue_path(@project, issue), class: '' do %>
+          <%= link_to edit_project_issue_path(current_project, issue), class: '' do %>
             <i class="fa fa-pencil"></i> Edit
           <% end %>
-          <%= link_to [@project, issue], method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-error' do %>
+          <%= link_to [current_project, issue], method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-error' do %>
             <i class="fa fa-trash"></i> Delete
           <% end %>
         </td>

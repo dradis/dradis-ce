@@ -5,8 +5,9 @@ module ProjectScoped
     before_action :set_project
     before_action :set_nodes
 
-    helper :snowcrash
-    layout 'snowcrash'
+    helper        :snowcrash
+    helper_method :current_project
+    layout        'snowcrash'
   end
 
   protected
@@ -27,10 +28,10 @@ module ProjectScoped
   end
 
   def set_project
-    project
+    current_project
   end
 
-  def project
-    @project ||= Project.new
+  def current_project
+    @current_project ||= Project.new
   end
 end

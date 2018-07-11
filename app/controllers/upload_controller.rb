@@ -123,7 +123,7 @@ class UploadController < AuthenticatedController
     if (params.key?(:uploader) && valid_uploaders.include?(params[:uploader]))
       @uploader = params[:uploader].constantize
     else
-      redirect_to project_upload_manager_path(@project), alert: 'Something fishy is going on...'
+      redirect_to project_upload_manager_path(current_project), alert: 'Something fishy is going on...'
     end
   end
 end

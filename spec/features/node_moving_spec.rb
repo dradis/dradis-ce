@@ -38,7 +38,7 @@ describe "moving a node", js: true do
       click_button "Move"
     end
     expect(@node_2.reload.parent).to eq @node_3
-    expect(current_path).to eq project_node_path(@project, @node_2)
+    expect(current_path).to eq project_node_path(current_project, @node_2)
   end
 
 
@@ -51,7 +51,7 @@ describe "moving a node", js: true do
     end
 
     expect(@node_2.reload.parent).to eq @node_4
-    expect(current_path).to eq project_node_path(@project, @node_2)
+    expect(current_path).to eq project_node_path(current_project, @node_2)
   end
 
 

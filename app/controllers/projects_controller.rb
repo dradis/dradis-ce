@@ -1,10 +1,12 @@
 class ProjectsController < AuthenticatedController
   before_action :set_project
-  helper :snowcrash
-  layout 'snowcrash'
+
+  helper        :snowcrash
+  helper_method :current_project
+  layout        'snowcrash'
 
   def index
-    redirect_to project_path(@project)
+    redirect_to project_path(current_project)
   end
 
   def show
@@ -38,6 +40,10 @@ class ProjectsController < AuthenticatedController
 
   private
   def set_project
-    @project = Project.new
+    current_project
+  end
+
+  def current_project
+    @current_project ||= Project.new
   end
 end

@@ -1,7 +1,7 @@
 <div class="note-list">
-  <%= content_tag :div, id: 'issue_summary_link', class: current_page?(project_issues_path(@project)) ? 'list-item active' : 'list-item' do %>
+  <%= content_tag :div, id: 'issue_summary_link', class: current_page?(project_issues_path(current_project)) ? 'list-item active' : 'list-item' do %>
     <div class="expansion-container">
-      <%= link_to project_issues_path(@project), class: 'view-toggle-off' do %>
+      <%= link_to project_issues_path(current_project), class: 'view-toggle-off' do %>
         <i class="fa fa-bar-chart"></i>
         Summary of issues
       <% end %>
@@ -12,7 +12,7 @@
 <%= render 'shared/sidebar_collection',
   name: 'Issues',
   collection: @issues,
-  new_path: new_project_issue_path(@project),
+  new_path: new_project_issue_path(current_project),
   category_id: nil
 %>
 <%= render 'import_box' %>

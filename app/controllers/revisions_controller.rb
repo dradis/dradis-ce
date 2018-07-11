@@ -32,7 +32,7 @@ class RevisionsController < AuthenticatedController
       flash[:error] = "Can't recover #{revision.type}: #{revision.errors.full_messages.join(',')}"
     end
     
-    redirect_to project_trash_path(@project)
+    redirect_to project_trash_path(current_project)
   end
 
   private

@@ -1,4 +1,4 @@
-<%= simple_form_for [@project, @node, @evidence] do |f| %>
+<%= simple_form_for [current_project, @node, @evidence] do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">

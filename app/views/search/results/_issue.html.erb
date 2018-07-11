@@ -1,7 +1,7 @@
 <span class="fa fa-bug"></span>
 
 <% title = row.title? ? row.title : "Issue ##{row.id}" %>
-<%= link_to title, project_issue_path(@project, row), class: "search-match-title" %>
+<%= link_to title, project_issue_path(current_project, row), class: "search-match-title" %>
 
 <p class="result-details">Last updated: <%= local_time_ago(row.updated_at) %></p>
 
