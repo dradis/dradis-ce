@@ -4,5 +4,5 @@
 class ApplicationController < ActionController::Base
   include Authentication
 
-  protect_from_forgery with: :exception
+  protect_from_forgery with: :reset_session
 end
