@@ -1,17 +1,14 @@
 <div class="dropdown-menu">
   <ul class="notification-container js-notification-container" data-url="<%= project_notifications_path(@project) %>">
     <div class="notification-header">
-      <div class="js-notification-count">
-        Notifications ()
-      </div>
+      Notifications
+      <span class="js-notification-count"></span>
       <div class="pull-right">
         <a href="#">Mark all as read</a>
       </div>
     </div>
-    <div class="no-content js-no-content text-center">
-      You have no notifications yet.
-    </div>
-    <div class="loading js-loading" />
+    <div class="js-notifications-body"></div>
+    <div class="loading js-loading"></div>
   </ul>
   <div class="footer js-footer text-center">
     <a href="#">See all notifications</a>

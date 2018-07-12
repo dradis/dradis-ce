@@ -9,6 +9,10 @@ class NotificationsController < AuthenticatedController
         current_user.notifications.newest
       end
 
-    @unread_count = current_user.notifications.unread.count
+    @unread_count = @notifications.unread.count
+
+    respond_to do |format|
+      format.js
+    end
   end
 end

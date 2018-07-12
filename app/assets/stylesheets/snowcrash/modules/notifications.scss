@@ -57,17 +57,20 @@
         }
       }
 
+      li.no-content {
+        border-top: 1px solid $gray;
+        line-height: inherit;
+      }
+
       .loading {
         border-top: 1px solid $gray;
         background: image-url('loading.gif') no-repeat center;
         height: 50px;
       }
 
-      .js-no-content {
-        border-top: 1px solid $gray;
-      }
     }
     .footer {
+      display: none;
       line-height: 2em;
       border-top: 1px solid $gray;
     }
