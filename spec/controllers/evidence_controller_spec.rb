@@ -11,7 +11,7 @@ RSpec.describe EvidenceController do
     @project.save!
   end
 
-  # If you don't do this, note creation fails because vesion creation fails
+  # If you don't do this, evidence creation fails because vesion creation fails
   # info_for_paper_trail isn't set properly in the controller. Turning off
   # PaperTrail is the lazy option but PT is irrelevant to what I'm trying to
   # test for here so I don't think it matters.
