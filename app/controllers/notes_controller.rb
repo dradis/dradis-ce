@@ -45,6 +45,9 @@ class NotesController < NestedNodeResourceController
     if @note.update_attributes(note_params)
       track_updated(@note)
       check_for_edit_conflicts(@note, updated_at_before_save)
+      # if the note has just been moved to another node, we must reload
+      # here so that @note.node is correct and we redirect to the right URL
+      @note.reload
       redirect_to project_node_note_path(current_project, @note.node, @note), notice: 'Note updated.'
     else
       initialize_nodes_sidebar
