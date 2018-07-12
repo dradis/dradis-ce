@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe EvidenceController do
-  include ProControllerMacros
+  include ControllerMacros
 
   before { login_as_user }
 
