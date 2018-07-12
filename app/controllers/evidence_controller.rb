@@ -125,7 +125,7 @@ class EvidenceController < NestedNodeResourceController
   # passed by the user.
   def find_or_initialize_evidence
     if params[:id]
-      @evidence = Evidence.includes(:issue, issue: [:tags]).find(params[:id])
+      @evidence = @node.evidence.includes(:issue, issue: [:tags]).find(params[:id])
     elsif params[:evidence]
       @evidence = Evidence.new(evidence_params) do |e|
         e.node = @node

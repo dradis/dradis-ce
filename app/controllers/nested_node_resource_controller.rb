@@ -22,9 +22,9 @@ class NestedNodeResourceController < AuthenticatedController
         @node = Node.new(node_params)
       end
     else
-      @node = Node.includes(
+      @node = @project.nodes.includes(
         :notes, :evidence, evidence: [:issue, { issue: :tags }]
-      ).find_by_id(params[:node_id])
+      ).find(params[:node_id])
     end
   end
 end

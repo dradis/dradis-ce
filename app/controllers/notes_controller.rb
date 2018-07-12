@@ -68,7 +68,7 @@ class NotesController < NestedNodeResourceController
   # are going to be working with based on the :id passed by the user.
   def find_or_initialize_note
     if params[:id]
-      @note = Note.find(params[:id])
+      @note = @node.notes.find(params[:id])
     elsif params[:note]
       @note = @node.notes.new(note_params)
     else
