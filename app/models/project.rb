@@ -12,4 +12,8 @@ class Project
   end
 
   def persisted?; true; end
+
+  def nodes
+    Node.all
+  end
 end

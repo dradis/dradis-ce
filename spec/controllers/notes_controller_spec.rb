@@ -5,11 +5,7 @@ RSpec.describe NotesController do
 
   before { login_as_user }
 
-  before do
-    @project = create(:project)
-    @project.authors << @logged_in_as
-    @project.save!
-  end
+  before { @project = Project.new }
 
   # If you don't do this, note creation fails because vesion creation fails
   # info_for_paper_trail isn't set properly in the controller. Turning off
@@ -18,17 +14,10 @@ RSpec.describe NotesController do
   before { PaperTrail.enabled = false }
   after { PaperTrail.enabled = true }
 
-  let(:other_project) do
-    op = create(:project)
-    op.authors << @logged_in_as
-    op.save!
-    op
-  end
-
-  let(:node) { create(:node, project: @project) }
+  let(:node) { create(:node) }
   let(:note) { create(:note, node: node) }
 
-  let(:other_node) { create(:node, project: @project) }
+  let(:other_node) { create(:node) }
 
   describe 'GET #show' do
     let(:params) { { project_id: @project.id, node_id: node.id, id: note.id } }
@@ -36,12 +25,6 @@ RSpec.describe NotesController do
     example 'normal functionality' do
       get :show, params: params
       expect(response).to have_http_status(200)
-    end
-
-    example 'wrong project ID' do
-      expect do
-        get :show, params: params.merge(project_id: other_project.id)
-      end.to raise_error(ActiveRecord::RecordNotFound)
     end
 
     example 'wrong node ID' do
