@@ -110,24 +110,6 @@ describe Node do
     expect(node.type_id).to eq(Node::Types::DEFAULT)
   end
 
-  it 'creates a ISSUELIB node when none exists' do
-    skip 'move spec to Project' # TODO
-    Node.destroy_all
-    issuelib = Node.issue_library
-    expect(Node.count).to eq(1)
-    expect(issuelib.type_id).to eq(Node::Types::ISSUELIB)
-    issuelib.destroy
-  end
-
-  it 'returns the ISSUELIB node if one exists' do
-    skip 'move spec to Project' # TODO
-    Node.destroy_all
-    node = Node.issue_library
-    issuelib = Node.issue_library
-    expect(issuelib).to eq(node)
-    node.destroy
-  end
-
   describe '#properties' do
     it 'exposes working setters and getters values' do
       node.set_property(:test_property, 80)
