@@ -61,8 +61,13 @@ describe "evidence" do
 
     before do
       issue = create(:issue, node: issue_lib)
-      @evidence = create(:evidence, issue: issue, updated_at: 2.seconds.ago)
+      @evidence = create(:evidence, issue: issue, node: @node, updated_at: 2.seconds.ago)
       visit edit_project_node_evidence_path(current_project, @node, @evidence)
+    end
+
+    it 'has a form to edit the evidence' do
+      expect(page).to have_field :evidence_content
+      expect(page).to have_field :evidence_issue_id
     end
 
     it "uses the full-screen editor plugin" # TODO
