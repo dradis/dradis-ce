@@ -3,12 +3,11 @@ require 'rails_helper'
 describe "evidence" do
   subject { page }
 
-  let(:issue_lib) { Node.issue_library }
+  let(:issue_lib) { @project.issue_library }
 
   before do
     login_to_project_as_user
     @node = create(:node)
-    Node.issue_library
   end
 
   describe "show page" do

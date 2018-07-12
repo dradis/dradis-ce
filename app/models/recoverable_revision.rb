@@ -59,13 +59,13 @@ class RecoverableRevision
     # If we're recovering an issue, revision.reify will return an instance
     # of `Note`, because `revision.reify.item_type == "Note"`. This won't prevent
     # the issue from being recovered correctly (because `revision.reify.node_id
-    # == Node.issue_library.id`), it will break the activity feed, because
+    # == issue_library.id`), it will break the activity feed, because
     # track_activity will create an Activity with `trackable_type == "Note"`,
     # not `trackable_type == "Issue"`.  So if revision.reify returns a Note
     # which should be an issue, convert it to an instance of Issue:
     #
     # FIXME - ISSUE/NOTE INHERITANCE
-    if @object.instance_of?(Note) && @object.node_id == Node.issue_library.id
+    if @object.instance_of?(Note) && @object.node_id == issue_library.id
       @object = Issue.new(@object.attributes)
     end
 
@@ -80,7 +80,7 @@ class RecoverableRevision
       # A destroy revision should always be present, but just in case.
       if issue_revision
         issue_object         = issue_revision.reify
-        issue_object.node_id = Node.issue_library.id
+        issue_object.node_id = issue_library.id
         issue_object.save!
         issue_object.touch
         @object.issue_id = issue_object.id
@@ -93,7 +93,7 @@ class RecoverableRevision
 
   def type
     if object.is_a?(Note)
-      return 'Issue'       if object.node_id == Node.issue_library.id
+      return 'Issue'       if object.node_id == issue_library.id
       return 'Methodology' if object.node_id == Node.methodology_library.id
       return 'Note'
     else
@@ -101,4 +101,9 @@ class RecoverableRevision
     end
   end
 
+  private
+
+  def issue_library
+    @issue_library ||= Project.new.issue_library
+  end
 end

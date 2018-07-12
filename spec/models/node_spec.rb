@@ -111,6 +111,7 @@ describe Node do
   end
 
   it 'creates a ISSUELIB node when none exists' do
+    skip 'move spec to Project' # TODO
     Node.destroy_all
     issuelib = Node.issue_library
     expect(Node.count).to eq(1)
@@ -119,6 +120,7 @@ describe Node do
   end
 
   it 'returns the ISSUELIB node if one exists' do
+    skip 'move spec to Project' # TODO
     Node.destroy_all
     node = Node.issue_library
     issuelib = Node.issue_library
