@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'User notifications', js: true, focus: true do
+describe 'User notifications', js: true do
   subject { page }
 
   before do
