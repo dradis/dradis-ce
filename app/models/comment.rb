@@ -35,10 +35,11 @@ class Comment < ApplicationRecord
     Subscription.subscribe(user: user, to: commentable)
   end
 
-  def subscriptions_for_action(action)
+  def notify(action)
     case action.to_s
     when 'create'
-      commentable.subscriptions.where.not(user: user)
+      subscribers = commentable.subscriptions.where.not(user: user).map(&:user)
+      create_notifications(action: :create, recipients: subscribers)
     end
   end
 end
