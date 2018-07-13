@@ -21,6 +21,7 @@ module ProjectScoped
   #   https://github.com/airblade/paper_trail#metadata-from-controllers
   #
   def info_for_paper_trail
+    { project_id: current_project.id } if current_project
   end
 
   def set_nodes

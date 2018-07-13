@@ -10,6 +10,15 @@ describe "evidence" do
     @node = create(:node)
   end
 
+  example 'show page with wrong Node ID in URL' do
+    node     = create(:node)
+    evidence = create(:evidence, node: node)
+    wrong_node = create(:node)
+    expect do
+      visit project_node_evidence_path(current_project, wrong_node, evidence)
+    end.to raise_error(ActiveRecord::RecordNotFound)
+  end
+
   describe "show page" do
     before(:each) do
       e_text    = "#[Foobar]#\nBarfoo\n\n#[Fizzbuzz]#\nBuzzfizz"

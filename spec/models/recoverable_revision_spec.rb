@@ -7,7 +7,7 @@ describe RecoverableRevision do
       deleted_evidence = create(:evidence)
       deleted_evidence.destroy
       destroy_revision = deleted_evidence.versions.last
-      r_revision = RecoverableRevision.find(destroy_revision)
+      r_revision = RecoverableRevision.find(id:destroy_revision)
       expect(r_revision).to be_a RecoverableRevision
       expect(r_revision.version).to eq destroy_revision
     end
@@ -16,7 +16,7 @@ describe RecoverableRevision do
       evidence        = create(:evidence)
       create_revision = evidence.versions.first
       expect do
-        RecoverableRevision.find(create_revision.id)
+        RecoverableRevision.find(id: create_revision.id)
       end.to raise_error ActiveRecord::RecordNotFound
     end
   end
@@ -78,7 +78,7 @@ describe RecoverableRevision do
     end
 
     it "doesn't return revisions when the item has been recovered" do
-      recoverable = described_class.find(@deleted_note.versions.last.id)
+      recoverable = described_class.find(id: @deleted_note.versions.last.id)
       recoverable.recover
 
       expect(described_class.all.map { |v| v.version.reify }).to match_array(

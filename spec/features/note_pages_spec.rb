@@ -17,6 +17,15 @@ describe "note pages" do
     FileUtils.rm_rf('tmp/templates')
   end
 
+  example 'show page with wrong Node ID in URL' do
+    node       = create(:node)
+    note       = create(:note, node: node)
+    wrong_node = create(:node)
+    expect do
+      visit project_node_note_path(current_project, wrong_node, note)
+    end.to raise_error(ActiveRecord::RecordNotFound)
+  end
+
   describe "show page" do
     before do
       text = "#[Title]#\nMy note\n\n#[Description]#\nMy description"

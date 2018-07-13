@@ -28,5 +28,6 @@ describe "issue trash" do
       "#[Title]#\r\n#{title}\r\n\r\n#[Description]#\r\n\r\n"
     )
     @issue.destroy
+    @issue.versions.last.update_attribute(:project_id, current_project.id)
   end
 end
