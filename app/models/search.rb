@@ -4,11 +4,11 @@
 class Search
   attr_reader :page, :query, :scope, :project
 
-  def initialize(query:, scope: :all, page: 1)
+  def initialize(query:, scope: :all, page: 1, project:)
     @query = query
     @scope = scope
     @page  = page
-    @project = Project.new
+    @project = project
   end
 
   # Return results based on params.
