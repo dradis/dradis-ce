@@ -19,7 +19,7 @@ RSpec.describe RecoverableRevisionPresenter do
     before do
       methodology_content = File.read(Rails.root.join('spec/fixtures/files/methodologies/webapp.xml'))
 
-      note = Node.methodology_library.notes.create(
+      note = Project.new.methodology_library.notes.create(
         author:  'methodology builder',
         text:     methodology_content,
         category: Category.default,

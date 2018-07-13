@@ -198,6 +198,8 @@ describe Search do
   end
 
   describe "#nodes" do
+    let(:project) { Project.new }
+
     it "filters nodes by label matching search term" do
       first  = create(:node, label: "First node")
       second = create(:node, label: "Second node")
@@ -220,7 +222,7 @@ describe Search do
     it "filters excludes issues and methodology type" do
       node = create(:node, label: "First node")
       Node.issue_library
-      Node.methodology_library
+      project.methodology_library
 
       results = described_class.new(query: 'node', scope: :nodes).results
       expect(results.size).to eq 1
