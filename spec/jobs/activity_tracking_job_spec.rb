@@ -62,5 +62,30 @@ describe ActivityTrackingJob do #, type: :job do
         )
       }.to change { Notification.count }.by(2)
     end
+
+    it 'creates notifications when a comment has mentions' do
+      issue_owner = create(:user, email: 'owner')
+      commentable = create(:issue, author: issue_owner.email)
+      create(:subscription, subscribable: commentable)
+      mentioned = create(:user, email: 'mentioned')
+      trackable = create(
+        :comment,
+        commentable: commentable,
+        content: "Hello @#{mentioned.email} and @#{issue_owner.email}"
+      )
+
+      expect {
+        described_class.new.perform(
+          action: 'create',
+          trackable_id: trackable.id,
+          trackable_type: trackable.class.to_s,
+          user: trackable.user
+        )
+      }.to change { Notification.count }.by(3) \
+      .and change { Subscription.count }.by(1)
+
+      expect(Notification.where(action: 'mention').count).to eq(2)
+      expect(Notification.where(action: 'create').count).to eq(1)
+    end
   end
 end

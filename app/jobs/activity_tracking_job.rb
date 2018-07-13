@@ -18,10 +18,6 @@ class ActivityTrackingJob < ApplicationJob
       user: user.email
     )
 
-    NotificationCreationService.new(
-      action: action,
-      actor: user,
-      notifiable: trackable
-    ).create_notifications
+    trackable.notify(action) if trackable.respond_to?(:notify)
   end
 end

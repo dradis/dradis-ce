@@ -60,8 +60,8 @@ class Comment < ApplicationRecord
   def subscribe_mentions
     subscribers_by_mention = []
     mentions.each do |mention|
-      Subscribe.subscribe(user: mention, to: commentable)
-      subscribers_by_mention << mentions
+      Subscription.subscribe(user: mention, to: commentable)
+      subscribers_by_mention << mention
     end
 
     subscribers_by_mention
