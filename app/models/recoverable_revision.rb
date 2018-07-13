@@ -67,7 +67,7 @@ class RecoverableRevision
     # which should be an issue, convert it to an instance of Issue:
     #
     # FIXME - ISSUE/NOTE INHERITANCE
-    if @object.instance_of?(Note) && @object.node_id == project.issue_library.id
+    if @object.instance_of?(Note) && @object.node_id == Node.issue_library.id
       @object = Issue.new(@object.attributes)
     end
 
@@ -106,6 +106,6 @@ class RecoverableRevision
 
   private
   def project
-    @project ||= Project.find(@object.project_id)
+    @project ||= Project.find(@version.project_id)
   end
 end

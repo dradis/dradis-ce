@@ -7,7 +7,7 @@ class Project
   attr_reader :id, :name
 
   # -- Class Methods --------------------------------------------------------
-  def find(id)
+  def self.find(id)
     new(id: id)
   end
 

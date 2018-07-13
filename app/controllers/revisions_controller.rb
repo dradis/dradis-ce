@@ -20,11 +20,11 @@ class RevisionsController < AuthenticatedController
 
   def trash
     # Get all revisions whose event is destroy.
-    @revisions = RecoverableRevision.all
+    @revisions = RecoverableRevision.all(project_id: current_project.id)
   end
 
   def recover
-    revision = RecoverableRevision.find(params[:id])
+    revision = RecoverableRevision.find(id: params[:id], project_id: current_project.id)
     if revision.recover
       track_recovered(revision.object)
       flash[:info] = "#{revision.type} recovered"
