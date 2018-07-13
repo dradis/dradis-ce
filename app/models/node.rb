@@ -81,12 +81,6 @@ class Node < ApplicationRecord
     find_or_create_by(label: 'Methodologies', type_id: Node::Types::METHODOLOGY)
   end
 
-  # If an item is recovered from the trash, but we can't reassign it to its
-  # Node because its Node has also been deleted, it will be assigned to this
-  # node:
-  def self.recovered
-    find_or_create_by(label: 'Recovered', type_id: Node::Types::DEFAULT)
-  end
 
   # -- Instance Methods -----------------------------------------------------
   def ancestor_of?(node)

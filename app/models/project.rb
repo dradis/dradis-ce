@@ -6,6 +6,12 @@ class Project
 
   attr_reader :id, :name
 
+  # -- Class Methods --------------------------------------------------------
+  def self.find(id)
+    new(id: id)
+  end
+
+  # -- Instance Methods -----------------------------------------------------
   def initialize(id: 1, name: 'Dradis CE', **_attrs)
     @id   = id
     @name = name
@@ -32,4 +38,10 @@ class Project
     @plugin_uploads_node ||= nodes.find_or_create_by(label: ::Configuration.plugin_uploads_node)
   end
 
+  # If an item is recovered from the trash, but we can't reassign it to its
+  # Node because its Node has also been deleted, it will be assigned to this
+  # node:
+  def recovered
+    @recovered ||= nodes.find_or_create_by(label: 'Recovered')
+  end
 end
