@@ -58,7 +58,6 @@ class RecoverableRevision
   end
 
   def recover
-    project = Project.find(id)
     # If we're recovering an issue, revision.reify will return an instance
     # of `Note`, because `revision.reify.item_type == "Note"`. This won't prevent
     # the issue from being recovered correctly (because `revision.reify.node_id
@@ -104,4 +103,9 @@ class RecoverableRevision
     end
   end
 
+
+  private
+  def project
+    @project ||= Project.find(@object.project_id)
+  end
 end
