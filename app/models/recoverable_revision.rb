@@ -72,7 +72,9 @@ class RecoverableRevision
     end
 
     # If @object's node was destroyed, assign it to a new node.
-    @object.node = project.recovered if !Node.exists?(@object.node_id)
+    if @object.respond_to?(:node_id) && !Node.exists?(@object.node_id)
+      @object.node = Node.recovered
+    end
 
     # If object is evidence and its issue doesn't exist any more, recover the issue.
     if @version.item_type == 'Evidence' && !Note.exists?(@object.issue_id)
