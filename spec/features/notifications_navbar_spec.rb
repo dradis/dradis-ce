@@ -31,7 +31,8 @@ describe 'User notifications', js: true do
     context 'the user has some notifications' do
       it 'shows the notification list' do
         issue = create(:issue, text: 'Test issue')
-        create(:notification, notifiable: issue, actor: @logged_in_as, recipient: @logged_in_as)
+        comment = create(:comment, commentable: issue, user: @logged_in_as)
+        create(:notification, notifiable: comment, actor: @logged_in_as, recipient: @logged_in_as)
 
         find('[data-id="js-notifications-dropdown"]').click
 

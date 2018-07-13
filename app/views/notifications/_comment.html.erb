@@ -4,5 +4,5 @@
   <%= link_to commentable.title, [@project, commentable] %>
   <%= comment.commentable_type %>
 <% else %>
-  <%= presenter.verb %> on <%= link_to "#{commentable.type} ##{issue.id}", [@project, commentable] %>.
+  <%= presenter.verb %> on <%= link_to "#{comment.commentable_type} ##{commentable.id}", [@project, commentable] %>.
 <% end %>
