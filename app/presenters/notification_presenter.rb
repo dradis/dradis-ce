@@ -87,9 +87,7 @@ class NotificationPresenter < BasePresenter
 
   def partial_paths
     [
-      "activities/#{notification.notifiable_type.underscore}/#{notification.action}",
-      "activities/#{notification.notifiable_type.underscore}",
-      'activities/activity'
+      "notifications/#{notification.notifiable_type.underscore}",
     ]
   end
 end
