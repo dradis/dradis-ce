@@ -15,7 +15,7 @@ class RecoverableRevision
   # Note that an object can be deleted and recovered multiple times, in which
   # case it will have multiple 'destroy' revisions. This method will only
   # return the most recent 'destroy' revision.
-  def self.all
+  def self.all(project_id: nil)
     # Based on https://leonid.shevtsov.me/post/how-to-use-papertrail-for-soft-deletetion/
     #
     # This isn't ideal because it makes multiple SQL calls, but it will do.
@@ -25,7 +25,9 @@ class RecoverableRevision
     # their item_type saved as `Note`, not `Issue`. FIXME - ISSUE/NOTE INHERITANCE
     ids = [Evidence, Note].flat_map do |model|
       table_name = model.table_name
-      versions = PaperTrail::Version.where(event: 'destroy', item_type: model.to_s).
+      versions = PaperTrail::Version.where(
+        event: 'destroy', item_type: model.to_s, project_id: project_id
+      ).
         joins("LEFT JOIN #{table_name} ON item_id=#{table_name}.id").
         where("#{table_name}.id IS NULL"). # avoid showing deleted objects
         # There is a chance the same model has been deleted and restored a
@@ -44,8 +46,8 @@ class RecoverableRevision
     end
   end
 
-  def self.find(id)
-    new(PaperTrail::Version.where(event: :destroy).find_by!(id: id))
+  def self.find(id:, project_id: nil)
+    new(PaperTrail::Version.where(event: :destroy).find_by!(id: id, project_id: project_id))
   end
 
 
@@ -56,6 +58,7 @@ class RecoverableRevision
   end
 
   def recover
+    project = Project.find(id)
     # If we're recovering an issue, revision.reify will return an instance
     # of `Note`, because `revision.reify.item_type == "Note"`. This won't prevent
     # the issue from being recovered correctly (because `revision.reify.node_id
@@ -65,12 +68,12 @@ class RecoverableRevision
     # which should be an issue, convert it to an instance of Issue:
     #
     # FIXME - ISSUE/NOTE INHERITANCE
-    if @object.instance_of?(Note) && @object.node_id == Node.issue_library.id
+    if @object.instance_of?(Note) && @object.node_id == project.issue_library.id
       @object = Issue.new(@object.attributes)
     end
 
     # If @object's node was destroyed, assign it to a new node.
-    @object.node = Node.recovered if !Node.exists?(@object.node_id)
+    @object.node = project.recovered if !Node.exists?(@object.node_id)
 
     # If object is evidence and its issue doesn't exist any more, recover the issue.
     if @version.item_type == 'Evidence' && !Note.exists?(@object.issue_id)
