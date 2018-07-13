@@ -10,7 +10,7 @@ describe "Describe methodologies" do
 
   describe "as authenticated user" do
     before { login_to_project_as_user }
-    let(:methodology_library){ @project.methodology_library }
+    let(:methodology_library) { current_project.methodology_library }
 
     it "shows a 'No methodologies assigned' message if none have been assigned" do
       methodology_library.notes.destroy_all

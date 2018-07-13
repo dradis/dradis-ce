@@ -1,8 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe RecoverableRevisionPresenter do
+  let(:project) { Project.new }
+
   class FakeView
     include ActionView::Helpers::TextHelper
+
+    def current_project
+      Project.new
+    end
   end
 
   include ActionView::Helpers::TagHelper
@@ -19,7 +25,7 @@ RSpec.describe RecoverableRevisionPresenter do
     before do
       methodology_content = File.read(Rails.root.join('spec/fixtures/files/methodologies/webapp.xml'))
 
-      note = Project.new.methodology_library.notes.create(
+      note = project.methodology_library.notes.create(
         author:  'methodology builder',
         text:     methodology_content,
         category: Category.default,

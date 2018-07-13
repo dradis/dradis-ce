@@ -78,5 +78,7 @@ class RecoverableRevisionPresenter < BasePresenter
     @revision ||= recoverable_revision.version
   end
 
-  delegate :project, to: :recoverable_revision
+  def project
+    h.current_project
+  end
 end
