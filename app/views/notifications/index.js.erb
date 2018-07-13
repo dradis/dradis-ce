@@ -1,10 +1,5 @@
-$container = $('.js-notification-container');
-$count     = $('.js-notification-count');
-$body      = $container.find('.js-notifications-body');
-$footer    = $container.next('.js-footer');
-
-<% if @notifications.any?  %>
-  $footer.show();
-<% end %>
-$count.html('(<%= @unread_count %>)');
-$body.html("<%= escape_javascript(render partial: 'notifications_list', locals: { notifications: @notifications } ) %>");
+<% partial = escape_javascript(
+  render partial: 'notifications',
+  locals: { notifications: @notifications,  unread_count: @unread_count}
+) %>
+$('[data-id="js-notification-container"]').html("<%= partial %>");

@@ -1,21 +1,12 @@
 document.addEventListener 'turbolinks:load', ->
-  if $('.js-notifications-dropdown').length
-    $container = $('.js-notification-container')
-    $count     = $('.js-notification-count')
-    $body      = $container.find('.js-notifications-body')
-    $footer    = $container.next('.js-footer')
-    $loading   = $container.find('.js-loading')
+  $dropdown = $('[data-id="js-notifications-dropdown"]')
 
-    $('.js-notifications-dropdown').on 'ajax:beforeSend', (event)->
+  if $dropdown.length
+    $container = $('[data-id="js-notification-container"]')
+
+    $dropdown.on 'ajax:beforeSend', (event)->
       if !$container.is(':visible')
-        $body.html('')
-        $count.html('')
-
-        $footer.hide()
-        $loading.show()
+        $container.html('<div class="loader"></div>')
       else
         # Don't send out ajax when hiding the dropdown
         return false
-
-    $('.js-notifications-dropdown').on 'ajax:complete', (event)->
-      $loading.hide()

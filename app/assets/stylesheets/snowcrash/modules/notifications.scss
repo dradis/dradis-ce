@@ -9,6 +9,12 @@
     border-radius: 50%;
   }
 
+  .loader {
+    background: image-url('loading.gif') no-repeat center;
+    height: 50px;
+    width: 420px;
+  }
+
   .dropdown-menu {
     color: lighten(#000, 20%);
 
@@ -62,15 +68,8 @@
         line-height: inherit;
       }
 
-      .loading {
-        border-top: 1px solid $gray;
-        background: image-url('loading.gif') no-repeat center;
-        height: 50px;
-      }
-
     }
     .footer {
-      display: none;
       line-height: 2em;
       border-top: 1px solid $gray;
     }
