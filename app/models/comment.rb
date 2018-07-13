@@ -35,10 +35,35 @@ class Comment < ApplicationRecord
     Subscription.subscribe(user: user, to: commentable)
   end
 
-  def subscriptions_for_action(action)
+  def notify(action)
     case action.to_s
     when 'create'
-      commentable.subscriptions.where.not(user: user)
+      subscribers_by_mention = subscribe_mentions()
+      create_notifications(action: :mention, recipients: subscribers_by_mention)
+
+      subscribers = commentable.subscriptions.where.not(user: user).map(&:user)
+      create_notifications(action: :create, recipients: subscribers - subscribers_by_mention)
     end
+  end
+
+  def mentions
+    users = []
+    HTML::Pipeline::MentionFilter.mentioned_logins_in(content) do |match, login, is_mentioned|
+      if (mentioned_user = User.find_by_email(login))
+        users << mentioned_user
+      end
+    end
+
+    users
+  end
+
+  def subscribe_mentions
+    subscribers_by_mention = []
+    mentions.each do |mention|
+      Subscribe.subscribe(user: mention, to: commentable)
+      subscribers_by_mention << mentions
+    end
+
+    subscribers_by_mention
   end
 end
