@@ -59,7 +59,7 @@ shared_examples "recover deleted item without node" do |item_type|
       action: 'recover',
       trackable_id: model.id,
       trackable_type: model.class.to_s,
-      user: @logged_in_as
+      user_id: @logged_in_as.id
     )
 
     expect(page).to have_content "#{model.class.name.humanize} recovered"

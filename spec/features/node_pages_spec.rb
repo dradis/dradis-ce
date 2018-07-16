@@ -115,7 +115,7 @@ describe "node pages" do
             action: 'create',
             trackable_id: node.children.last.try(:id) || Node.last.id + 1,
             trackable_type: 'Node',
-            user: @logged_in_as
+            user_id: @logged_in_as.id
           )
 
         new_node = node.children.last
@@ -200,7 +200,7 @@ describe "node pages" do
           action: 'update',
           trackable_id: @node.id,
           trackable_type: 'Node',
-          user: @logged_in_as
+          user_id: @logged_in_as.id
         )
       end
     end
