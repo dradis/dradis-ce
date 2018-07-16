@@ -19,22 +19,24 @@
 #     let(:submit_form) { click_button "Save" }
 #
 shared_examples 'creates an Activity' do |action, klass = nil|
-  before do
-    ActiveJob::Base.queue_adapter = :test
-  end
-
   it 'enqueues an ActivityTrackingJob' do
     if action == :create
-      submit_form
+      expect { submit_form }.to change {
+        ActiveJob::Base.queue_adapter.enqueued_jobs.size
+      }.by(1)
       expect(
-        ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h| h[:job] }
-      ).to eq [ActivityTrackingJob]
+        ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h| h[:job] }.last
+      ).to eq ActivityTrackingJob
       expect(
-        ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1| h1[:args].map { |h2| h2['action'] } }.flatten
-      ).to eq ['create']
+        ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+          h1[:args].map { |h2| h2['action'] }
+        }.flatten.last
+      ).to eq 'create'
       expect(
-        ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1| h1[:args].map { |h2| h2['trackable_type'] } }.flatten
-      ).to eq [klass.to_s]
+        ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+          h1[:args].map { |h2| h2['trackable_type'] }
+        }.flatten.last
+      ).to eq klass.to_s
     else
       expect { submit_form }.to have_enqueued_job(ActivityTrackingJob).with(
         action: action.to_s,
@@ -47,10 +49,6 @@ shared_examples 'creates an Activity' do |action, klass = nil|
 end
 
 shared_examples "doesn't create an Activity" do
-  before do
-    ActiveJob::Base.queue_adapter = :test
-  end
-
   it "doesn't enqueue an ActivityTrackingJob" do
     expect { submit_form }.not_to have_enqueued_job(ActivityTrackingJob)
   end

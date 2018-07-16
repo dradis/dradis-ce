@@ -17,8 +17,6 @@ end
 # called 'model' should be defined, which will be the object to recover.
 shared_examples "recover deleted item" do |item_type|
   it "should recover item listed in Trash", js: true do
-    ActiveJob::Base.queue_adapter = :test
-
     submit_form
     visit project_trash_path(@project)
     expect do
@@ -44,10 +42,6 @@ end
 # Apart from the 'submit_form' let variable described above, another let variable
 # called 'model' should be defined, which will be the object to recover.
 shared_examples "recover deleted item without node" do |item_type|
-  before do
-    ActiveJob::Base.queue_adapter = :test
-  end
-
   it "should recover item listed in Trash even if its node has been destroyed", js: true do
     submit_form
     visit project_node_path(model.node.project, model.node.id)
