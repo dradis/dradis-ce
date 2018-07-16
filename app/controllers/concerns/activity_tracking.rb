@@ -6,7 +6,7 @@ module ActivityTracking
       action: action.to_s,
       trackable_id: trackable.id,
       trackable_type: trackable.class.to_s,
-      user: user
+      user_id: user.id
     )
   end
 

@@ -42,7 +42,7 @@ shared_examples 'creates an Activity' do |action, klass = nil|
         action: action.to_s,
         trackable_id: model.id,
         trackable_type: model.class.to_s,
-        user: @logged_in_as
+        user_id: @logged_in_as.id
       )
     end
   end
