@@ -2,7 +2,8 @@
   <%= f.text_area :content,
                   value: comment.content,
                   rows: 5,
-                  required: 'required' %>
+                  required: 'required',
+                  class: 'mentionable' %>
   <%= f.submit "Update comment", class: "btn btn-primary" %> or
   <%= link_to 'Cancel',
               'javascript:void(0)',

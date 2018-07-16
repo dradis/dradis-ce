@@ -4,7 +4,8 @@
   <%= f.text_area :content,
                   placeholder: 'Write your comment...',
                   rows: 5,
-                  required: 'required' %>
+                  required: 'required',
+                  class: 'mentionable' %>
 
   <%= f.hidden_field :commentable_type %>
   <%= f.hidden_field :commentable_id %>
