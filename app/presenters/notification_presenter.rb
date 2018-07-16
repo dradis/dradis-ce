@@ -33,12 +33,9 @@ class NotificationPresenter < BasePresenter
     ].join(' ').html_safe
   end
 
-  # For now we can get away with just adding 'ed' to the end of the action,
-  # but this may change if we add activities whose action is an irregular
-  # verb.
   def verb
-    if notification.action == 'destroy'
-      'deleted'
+    if notification.action == 'create'
+      'commented on'
     else
       notification.action.sub(/e?\z/, 'ed')
     end
@@ -82,14 +79,12 @@ class NotificationPresenter < BasePresenter
   def partial_path
     partial_paths.detect do |path|
       lookup_context.template_exists? path, nil, true
-    end || raise("No partial found for activity in #{partial_paths}")
+    end || raise("No partial found for notification in #{partial_paths}")
   end
 
   def partial_paths
     [
-      "activities/#{notification.notifiable_type.underscore}/#{notification.action}",
-      "activities/#{notification.notifiable_type.underscore}",
-      'activities/activity'
+      "notifications/#{notification.notifiable_type.underscore}",
     ]
   end
 end

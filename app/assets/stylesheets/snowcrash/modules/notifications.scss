@@ -1,5 +1,6 @@
 .notifications {
   .notifications-dot {
+    display: none;
     position: absolute;
     top: 20px;
     left: 22px;
@@ -7,6 +8,12 @@
     height: 7px;
     width: 7px;
     border-radius: 50%;
+  }
+
+  .loader {
+    background: image-url('loading.gif') no-repeat center;
+    height: 50px;
+    width: 420px;
   }
 
   .dropdown-menu {
@@ -56,6 +63,12 @@
           background-color: $grayLight;
         }
       }
+
+      li.no-content {
+        border-top: 1px solid $gray;
+        line-height: inherit;
+      }
+
     }
     .footer {
       line-height: 2em;

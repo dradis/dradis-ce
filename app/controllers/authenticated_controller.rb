@@ -9,7 +9,6 @@
 class AuthenticatedController < ApplicationController
   before_action :login_required
   before_action :set_paper_trail_whodunnit
-  before_action :find_notifications
   # before_action :render_onboarding_tour
 
   # This is a central location where we can manage authorization errors (e.g.
@@ -32,10 +31,6 @@ class AuthenticatedController < ApplicationController
   helper_method :user_for_paper_trail
 
   private
-  def find_notifications
-    @notifications = current_user.notifications.newest
-  end
-
   # This filter redirects every request to the first-time onboarding Tour until
   # the user has completed it.
   def render_onboarding_tour

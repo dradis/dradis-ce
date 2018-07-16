@@ -1,0 +1,21 @@
+<% cache [current_user, @notifications] do %>
+  <ul class="notification-container" >
+    <div class="notification-header">
+      Notifications
+      (<%= unread_count %>)
+      <div class="pull-right">
+        <a href="#">Mark all as read</a>
+      </div>
+    </div>
+    <% if notifications.any? %>
+      <%= render partial: 'feed', locals: {notifications: notifications} %>
+    <% else %>
+      <li class="no-content text-center">You have no notifications yet.</li>
+    <% end %>
+  </ul>
+  <% if notifications.any? %>
+    <div class="footer text-center" data-id="js-footer">
+      <a href="#">See all notifications</a>
+    </div>
+  <% end %>
+<% end %>

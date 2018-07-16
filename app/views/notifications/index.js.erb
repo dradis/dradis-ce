@@ -1,0 +1,5 @@
+<% partial = escape_javascript(
+  render partial: 'notifications',
+  locals: { notifications: @notifications,  unread_count: @unread_count}
+) %>
+$('[data-id="js-notification-container"]').html("<%= partial %>");
