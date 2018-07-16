@@ -3,6 +3,6 @@ FactoryBot.define do
     notifiable { |notification| notification.association :issue }
     association :actor, factory: :user
     association :recipient, factory: :user
-    action :comment
+    action :create
   end
 end

@@ -35,7 +35,7 @@ class NotificationPresenter < BasePresenter
 
   def verb
     if notification.action == 'create'
-      'commented on'
+      'commented'
     else
       notification.action.sub(/e?\z/, 'ed')
     end
