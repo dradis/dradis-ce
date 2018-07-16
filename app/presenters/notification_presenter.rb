@@ -33,14 +33,11 @@ class NotificationPresenter < BasePresenter
     ].join(' ').html_safe
   end
 
-  # For now we can get away with just adding 'ed' to the end of the action,
-  # but this may change if we add activities whose action is an irregular
-  # verb.
   def verb
-    if notification.action == 'destroy'
-      'deleted'
+    if notification.action == 'create'
+      'commented on'
     else
-      notification.action.sub(/e?\z/, 'ed')
+      notification.action
     end
   end
 

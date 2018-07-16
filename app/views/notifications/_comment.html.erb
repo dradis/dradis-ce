@@ -1,8 +1,10 @@
 <% commentable = comment.commentable %>
+<% comment_path = polymorphic_path([@project, commentable], anchor: dom_id(comment)) %>
 <% if commentable.title? %>
   <%= presenter.verb %> on the
-  <%= link_to commentable.title, [@project, commentable] %>
+  <%= link_to commentable.title, comment_path %>
   <%= comment.commentable_type %>
 <% else %>
-  <%= presenter.verb %> on <%= link_to "#{comment.commentable_type} ##{commentable.id}", [@project, commentable] %>.
+  <%= presenter.verb %> on
+  <%= link_to "#{comment.commentable_type} ##{commentable.id}", comment_path %>.
 <% end %>
