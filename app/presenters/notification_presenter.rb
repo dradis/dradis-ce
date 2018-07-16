@@ -37,7 +37,7 @@ class NotificationPresenter < BasePresenter
     if notification.action == 'create'
       'commented on'
     else
-      notification.action
+      notification.action.sub(/e?\z/, 'ed')
     end
   end
 
