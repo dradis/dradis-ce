@@ -1,0 +1,14 @@
+<script>
+  var tribute = new Tribute({
+    values: [
+      <% users.each do |user| %>
+      {key: '<%= user.email %>', value: '<%= user.email %>', avatar_url: '<%= avatar_url %>'},
+      <% end %>
+    ],
+    menuItemTemplate: function (item) {
+      return '<img src="' + item.original.avatar_url + '" width="24px" height="24px" > ' + item.string;
+    }
+  })
+
+  tribute.attach(document.querySelectorAll('.mentionable'));
+</script>
