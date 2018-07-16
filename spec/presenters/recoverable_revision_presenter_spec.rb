@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe RecoverableRevisionPresenter do
+
+  before { PaperTrail.enabled = true }
+  after  { PaperTrail.enabled = false }
+
   class FakeView
     include ActionView::Helpers::TextHelper
   end

@@ -5,10 +5,12 @@
 #
 shared_examples "deleted item is listed in Trash" do |item_type|
   it "deletes the item and destroy revision is shown in Trash" do
-    submit_form
-    visit project_trash_path(current_project)
-    within '#trash' do
-      expect(page).to have_content item_type.to_s
+    with_versioning do
+      submit_form
+      visit project_trash_path(current_project)
+      within '#trash' do
+        expect(page).to have_content item_type.to_s
+      end
     end
   end
 end
@@ -17,25 +19,27 @@ end
 # called 'model' should be defined, which will be the object to recover.
 shared_examples "recover deleted item" do |item_type|
   it "should recover item listed in Trash", js: true do
-    submit_form
-    visit project_trash_path(current_project)
-    activity_count = model.try(:activities) ? model.activities.count : 0
+    with_versioning do
+      submit_form
+      visit project_trash_path(current_project)
+      activity_count = model.try(:activities) ? model.activities.count : 0
 
-    page.accept_confirm do
-      rr_path = recover_project_revision_path(current_project, model.versions.last)
-      find(:xpath, "//a[@href='#{rr_path}']").click
-    end
+      page.accept_confirm do
+        rr_path = recover_project_revision_path(current_project, model.versions.last)
+        find(:xpath, "//a[@href='#{rr_path}']").click
+      end
 
-    if (model.respond_to?(:activities))
-      expect(model.activities.count).to eq activity_count + 1
-      expect(model.activities.last.action).to eq "recover"
-    end
+      if (model.respond_to?(:activities))
+        expect(model.activities.count).to eq activity_count + 1
+        expect(model.activities.last.action).to eq "recover"
+      end
 
-    expect(page).to have_content "#{model.class.name.humanize} recovered"
-    within '#trash' do
-      expect(page).not_to have_content item_type.to_s
+      expect(page).to have_content "#{model.class.name.humanize} recovered"
+      within '#trash' do
+        expect(page).not_to have_content item_type.to_s
+      end
+      expect(model.class.find_by_id(model.id)).not_to be_nil
     end
-    expect(model.class.find_by_id(model.id)).not_to be_nil
   end
 end
 
@@ -43,26 +47,28 @@ end
 # called 'model' should be defined, which will be the object to recover.
 shared_examples "recover deleted item without node" do |item_type|
   it "should recover item listed in Trash even if its node has been destroyed", js: true do
-    submit_form
-    visit project_node_path(model.node.project, model.node.id)
-    click_link 'Delete'
-    within '#modal_delete_node' do
+    with_versioning do
+      submit_form
+      visit project_node_path(model.node.project, model.node.id)
       click_link 'Delete'
-    end
-    expect do
-      visit project_trash_path(current_project)
-      rr_path = recover_project_revision_path(current_project, model.versions.last)
-      page.accept_confirm do
-        find(:xpath, "//a[@href='#{rr_path}']").click
+      within '#modal_delete_node' do
+        click_link 'Delete'
       end
-    end.to change{model.activities.count}.by(1)
-    expect(model.activities.last.action).to eq "recover"
+      expect do
+        visit project_trash_path(current_project)
+        rr_path = recover_project_revision_path(current_project, model.versions.last)
+        page.accept_confirm do
+          find(:xpath, "//a[@href='#{rr_path}']").click
+        end
+      end.to change{model.activities.count}.by(1)
+      expect(model.activities.last.action).to eq "recover"
 
-    expect(page).to have_content "#{model.class.name.humanize} recovered"
-    within '#trash' do
-      expect(page).not_to have_content item_type.to_s
+      expect(page).to have_content "#{model.class.name.humanize} recovered"
+      within '#trash' do
+        expect(page).not_to have_content item_type.to_s
+      end
+      expect(model.class.find_by_id(model.id)).not_to be_nil
+      expect(page).to have_content 'Recovered'
     end
-    expect(model.class.find_by_id(model.id)).not_to be_nil
-    expect(page).to have_content 'Recovered'
   end
 end
