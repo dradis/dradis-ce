@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe ActivityTrackingJob do #, type: :job do
 
-  it 'it uses correct queue' do
+  it 'uses correct queue' do
     expect(described_class.new.queue_name).to eq('dradis_project')
   end
 
