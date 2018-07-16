@@ -16,7 +16,7 @@
           <li><%= link_to main_app.configurations_path do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %></li>
           <li class="notifications dropdown">
             <%= link_to main_app.project_notifications_path(@project), class: 'dropdown-toggle', data: {id: 'js-notifications-dropdown', toggle: 'dropdown'}, remote: true do %>
-              <i class="fa fa-bell fa-lg"></i><b class="caret"></b><i class="notifications-dot"></i>
+              <i class="fa fa-bell fa-lg"></i><b class="caret"></b><i class="notifications-dot" data-id="js-notifications-dot"></i>
             <% end %>
             <div class="dropdown-menu" data-id="js-notification-container" data-url="<%= project_notifications_path(@project) %>"></div>
           </li>

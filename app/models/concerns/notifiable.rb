@@ -17,4 +17,10 @@ module Notifiable
       end
     end
   end
+
+  def broadcast_notifications(recipients:)
+    recipients.each do |user|
+      NotificationsChannel.broadcast_to(user, item: self)
+    end
+  end
 end
