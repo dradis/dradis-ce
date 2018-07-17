@@ -5,9 +5,9 @@ class Search
   attr_reader :page, :project, :query, :scope
 
   def initialize(query:, scope: :all, page: 1, project:)
-    @query = query
-    @scope = scope
-    @page  = page
+    @query   = query
+    @scope   = scope
+    @page    = page
     @project = project
   end
 
