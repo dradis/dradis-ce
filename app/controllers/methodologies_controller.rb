@@ -89,7 +89,7 @@ class MethodologiesController < AuthenticatedController
   end
 
   def find_methodologylib
-    @methodologylib = Node.methodology_library
+    @methodologylib = current_project.methodology_library
   end
 
   def methodology_params
