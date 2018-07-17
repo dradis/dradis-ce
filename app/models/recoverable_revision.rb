@@ -98,15 +98,13 @@ class RecoverableRevision
   def type
     if object.is_a?(Note)
       return 'Issue'       if object.node_id == Node.issue_library.id
-      return 'Methodology' if object.node_id == Node.methodology_library.id
+      return 'Methodology' if object.node_id == project.methodology_library.id
       return 'Note'
     else
       object.class.name.humanize
     end
   end
 
-
-  private
   def project
     @project ||= Project.find(@version.project_id)
   end

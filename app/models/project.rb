@@ -27,6 +27,15 @@ class Project
     Note.all
   end
 
+  # Returns or creates the Node that acts as container for all Methodologies in
+  # a given project
+  def methodology_library
+    @methodology_library ||= nodes.find_or_create_by(
+      label: 'Methodologies',
+      type_id: Node::Types::METHODOLOGY
+    )
+  end
+
   # When Upload plugins create new nodes, they'll do so under this parent node
   def plugin_parent_node
     @plugin_parent_node ||= nodes.find_or_create_by(label: ::Configuration.plugin_parent_node)
