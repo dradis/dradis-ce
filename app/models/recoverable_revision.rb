@@ -26,8 +26,8 @@ class RecoverableRevision
     ids = [Evidence, Note].flat_map do |model|
       table_name = model.table_name
       versions = PaperTrail::Version.where(
-        event: 'destroy', item_type: model.to_s, project_id: project_id
-      ).
+          event: 'destroy', item_type: model.to_s, project_id: project_id
+        ).
         joins("LEFT JOIN #{table_name} ON item_id=#{table_name}.id").
         where("#{table_name}.id IS NULL"). # avoid showing deleted objects
         # There is a chance the same model has been deleted and restored a
@@ -72,7 +72,9 @@ class RecoverableRevision
     end
 
     # If @object's node was destroyed, assign it to a new node.
-    @object.node = project.recovered if !Node.exists?(@object.node_id)
+    if @object.respond_to?(:node_id) && !Node.exists?(@object.node_id)
+      @object.node = project.recovered
+    end
 
     # If object is evidence and its issue doesn't exist any more, recover the issue.
     if @version.item_type == 'Evidence' && !Note.exists?(@object.issue_id)

@@ -209,8 +209,10 @@ describe 'Issues pages' do
           include_examples 'creates an Activity', :update
 
           it "creates a version with the user's email as 'whodunnit'" do
-            submit_form
-            expect(@issue.reload.versions.last.whodunnit).to eq @logged_in_as.email
+            with_versioning do
+              submit_form
+              expect(@issue.reload.versions.last.whodunnit).to eq @logged_in_as.email
+            end
           end
 
           let(:column) { :text }

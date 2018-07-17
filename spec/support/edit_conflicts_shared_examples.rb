@@ -22,17 +22,22 @@ shared_examples "a page which handles edit conflicts" do
   end
 
   specify "a regular update doesn't say anything about edit conflicts" do
-    submit_form
-    expect(page).to have_no_content conflict_warning
-    expect(page).to have_no_link(//, href: record_revisions_path(record))
+    with_versioning do
+      submit_form
+      expect(page).to have_no_content conflict_warning
+      expect(page).to have_no_link(//, href: record_revisions_path(record))
+    end
   end
 
   context "when another user has updated the record in the meantime" do
     let(:email_1) { "someone@example.com" }
     before do
+      PaperTrail.enabled = true
       record.update_attributes!(column => "Someone else's changes")
       record.versions.last.update!(whodunnit: email_1)
     end
+
+    after { PaperTrail.enabled = false }
 
     it "saves my changes" do
       submit_form
