@@ -25,7 +25,7 @@ module ProjectScoped
   end
 
   def set_nodes
-    @nodes = Node.in_tree
+    @nodes = current_project.nodes.in_tree
   end
 
   def set_project
