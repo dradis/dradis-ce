@@ -4,11 +4,11 @@
 class Search
   attr_reader :page, :project, :query, :scope
 
-  def initialize(query:, scope: :all, page: 1)
-    @query   = query
-    @scope   = scope
-    @page    = page
-    @project = Project.new
+  def initialize(query:, scope: :all, page: 1, project:)
+    @query = query
+    @scope = scope
+    @page  = page
+    @project = project
   end
 
   # Return results based on params.
@@ -67,7 +67,7 @@ class Search
 
   def notes
     @notes ||= begin
-      system_nodes = [project.issue_library.id, Node.methodology_library.id]
+      system_nodes = [project.issue_library.id, project.methodology_library.id]
 
       Note.where(
         "node_id NOT IN (:nodes) AND LOWER(text) LIKE LOWER(:q)",

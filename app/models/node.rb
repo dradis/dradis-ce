@@ -70,13 +70,6 @@ class Node < ApplicationRecord
 
   # -- Class Methods --------------------------------------------------------
 
-  # Returns or creates the Node that acts as container for all Methodologies in
-  # a given project
-  def self.methodology_library
-    find_or_create_by(label: 'Methodologies', type_id: Node::Types::METHODOLOGY)
-  end
-
-
   # -- Instance Methods -----------------------------------------------------
   def ancestor_of?(node)
     node && node.ancestors.include?(self)

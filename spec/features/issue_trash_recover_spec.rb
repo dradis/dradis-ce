@@ -23,11 +23,13 @@ describe "issue trash" do
 
 
   def edit_and_delete_issue title
-    @issue.update_attribute(
-      :text,
-      "#[Title]#\r\n#{title}\r\n\r\n#[Description]#\r\n\r\n"
-    )
-    @issue.destroy
-    @issue.versions.last.update_attribute(:project_id, current_project.id)
+    with_versioning do
+      @issue.update_attribute(
+        :text,
+        "#[Title]#\r\n#{title}\r\n\r\n#[Description]#\r\n\r\n"
+      )
+      @issue.destroy
+      @issue.versions.last.update_attribute(:project_id, current_project.id)
+    end
   end
 end

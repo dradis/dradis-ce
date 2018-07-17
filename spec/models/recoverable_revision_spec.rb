@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe RecoverableRevision do
+  before { PaperTrail.enabled = true }
+  after  { PaperTrail.enabled = false }
 
   describe ".find" do
     it "returns a RecoverableRevision that wraps the PaperTrail::Version with the given ID" do

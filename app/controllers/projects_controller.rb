@@ -13,8 +13,8 @@ class ProjectsController < AuthenticatedController
     @activities    = Activity.latest
     @authors       = [current_user]
     @issues        = current_project.issues.includes(:tags).sort
-    @methodologies = Node.methodology_library.notes.map{|n| Methodology.new(filename: n.id, content: n.text)}
-    @nodes         = Node.in_tree
+    @methodologies = current_project.methodology_library.notes.map{|n| Methodology.new(filename: n.id, content: n.text)}
+    @nodes         = current_project.nodes.in_tree
     @tags          = Tag.all
 
     @count_by_tag  = { unassigned: 0 }
