@@ -60,12 +60,14 @@ class RecoverableRevisionPresenter < BasePresenter
   end
 
   def title
-    title = if trashed_object.is_a?(Note) && trashed_object.node == project.methodology_library
-              note = trashed_object
-              Methodology.new(filename: note.id, content: note.text).name
-            else
-              trashed_object.title
-            end
+    title =
+      if trashed_object.is_a?(Note) && trashed_object.node == project.methodology_library
+        note = trashed_object
+        Methodology.new(filename: note.id, content: note.text).name
+      else
+        trashed_object.title
+      end
+
     truncated_title = h.truncate(title, length: 25, separator: "...")
     h.content_tag(:span, truncated_title, class: 'item-content')
   end
