@@ -8,6 +8,7 @@
 # calling the authentication filters directly
 class AuthenticatedController < ApplicationController
   before_action :login_required
+  before_action :check_unread_notifications
   before_action :set_paper_trail_whodunnit
   # before_action :render_onboarding_tour
 
@@ -31,6 +32,11 @@ class AuthenticatedController < ApplicationController
   helper_method :user_for_paper_trail
 
   private
+
+  def check_unread_notifications
+    @has_unread_notifications = current_user.notifications.unread.any?
+  end
+
   # This filter redirects every request to the first-time onboarding Tour until
   # the user has completed it.
   def render_onboarding_tour
