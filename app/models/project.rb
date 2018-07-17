@@ -28,6 +28,7 @@ class Project
     @issue_library ||= nodes.find_or_create_by(
       label: 'All issues',
       type_id: Node::Types::ISSUELIB
+    )
   end
 
   def nodes
