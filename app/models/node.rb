@@ -29,6 +29,8 @@ class Node < ApplicationRecord
     @project ||= Project.new
   end
 
+  def project=(new_project); end
+
   def nested_activities
     sql = "(`activities`.`trackable_type`='Node' AND "\
           " `activities`.`trackable_id`=#{id})"

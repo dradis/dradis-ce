@@ -8,7 +8,7 @@ describe "moving a note", js: true do
     login_to_project_as_user
 
     def create_node(label, parent = nil)
-      create(:node, label: label, parent: parent)
+      create(:node, label: label, parent: parent, project: current_project)
     end
 
     # Tree:
