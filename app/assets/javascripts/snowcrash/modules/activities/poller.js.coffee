@@ -173,6 +173,20 @@ class @ActivitiesPoller
       @_showEvidenceDeletedAlert()
 
 
+  # ------ COMMENTS ------
+
+  @addComment: (commentableId, content) ->
+    if commentableId == @modelId
+      $('.comment-list').append(content)
+
+  @updateComment: (commentId, commentableId, content) ->
+    comment = $("#comment_#{commentId}")
+    comment.replaceWith(content)
+
+  @deleteComment: (commentId) ->
+      comment = $("#comment_#{commentId}")
+      comment.remove() if comment.length
+
   # private
 
   @_addLink: (selector, link) ->
