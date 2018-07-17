@@ -19,6 +19,10 @@ class Project
 
   def persisted?; true; end
 
+  def evidence
+    Evidence.all
+  end
+
   def issues
     Issue.where(node_id: issue_library.id)
   end

@@ -51,6 +51,13 @@ class Search
     @all ||= nodes + notes + evidence + issues
   end
 
+  def evidence
+    @evidence ||= project.evidence
+      .where("LOWER(content) LIKE LOWER(:q)", q: "%#{query}%")
+      .includes(:issue, :node)
+      .order(updated_at: :desc)
+  end
+
   def issues
     @issues ||= Issue.where(
       "node_id = :node AND LOWER(text) LIKE LOWER(:q)",
@@ -77,11 +84,5 @@ class Search
         .includes(:node)
         .order(updated_at: :desc)
     end
-  end
-
-  def evidence
-    @evidence ||= Evidence.where("LOWER(content) LIKE LOWER(:q)", q: "%#{query}%")
-      .includes(:issue, :node)
-      .order(updated_at: :desc)
   end
 end
