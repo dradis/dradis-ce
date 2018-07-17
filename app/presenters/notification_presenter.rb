@@ -47,7 +47,7 @@ class NotificationPresenter < BasePresenter
     if notification.user
       h.image_tag(
         image_path('profile.jpg'),
-        alt: notification.user,
+        alt: notification.user.email,
         class: 'gravatar',
         data: { fallback_image: image_path('logo_small.png') },
         title: notification.user,
