@@ -34,6 +34,20 @@ describe 'comment pages', js: true do
       end
     end
 
+    describe 'and someone else deletes a comment' do
+      before do
+        @comment.destroy
+        track_destroyed(@comment, @other_user)
+        call_poller
+      end
+
+      it 'removes the deleted comment' do
+        within('.comment-list') do
+          expect(page).not_to have_selector("#comment_#{@comment.id}")
+        end
+      end
+    end
+
   end
 
   before do
