@@ -60,7 +60,7 @@ class Search
   end
 
   def nodes
-    @nodes ||= Node.user_nodes
+    @nodes ||= project.nodes.user_nodes
       .where("LOWER(label) LIKE LOWER(:q)", q: "%#{query}%")
       .order(updated_at: :desc)
   end
