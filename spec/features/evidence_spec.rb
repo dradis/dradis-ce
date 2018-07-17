@@ -3,11 +3,11 @@ require 'rails_helper'
 describe "evidence" do
   subject { page }
 
-  let(:issue_lib) { @project.issue_library }
+  let(:issue_lib) { current_project.issue_library }
 
   before do
     login_to_project_as_user
-    @node = create(:node)
+    @node = create(:node, project: current_project)
   end
 
   example 'show page with wrong Node ID in URL' do
