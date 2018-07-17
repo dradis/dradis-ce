@@ -2,7 +2,7 @@
 # so we don't expose more than one instance level variable
 # in controller
 class Search
-  attr_reader :page, :query, :scope, :project
+  attr_reader :page, :project, :query, :scope
 
   def initialize(query:, scope: :all, page: 1, project:)
     @query = query
@@ -54,7 +54,7 @@ class Search
   def issues
     @issues ||= Issue.where(
       "node_id = :node AND LOWER(text) LIKE LOWER(:q)",
-      node: Node.issue_library,
+      node: project.issue_library,
       q: "%#{query}%"
     ).order(updated_at: :desc)
   end
@@ -67,7 +67,7 @@ class Search
 
   def notes
     @notes ||= begin
-      system_nodes = [Node.issue_library.id, project.methodology_library.id]
+      system_nodes = [project.issue_library.id, project.methodology_library.id]
 
       Note.where(
         "node_id NOT IN (:nodes) AND LOWER(text) LIKE LOWER(:q)",

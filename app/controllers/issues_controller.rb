@@ -120,7 +120,7 @@ class IssuesController < AuthenticatedController
   end
 
   def find_issuelib
-    @issuelib = Node.issue_library
+    @issuelib = current_project.issue_library
   end
 
   # Once a valid @issuelib is set by the previous filter we look for the Issue we

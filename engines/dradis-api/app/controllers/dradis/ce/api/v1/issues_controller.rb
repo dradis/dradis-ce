@@ -2,8 +2,7 @@ module Dradis::CE::API
   module V1
     class IssuesController < Dradis::CE::API::V1::ProjectScopedController
       def index
-        issuelib = Node.issue_library
-        @issues  = Issue.where(node_id: issuelib.id).includes(:tags).sort
+        @issues  = Project.new.issues.includes(:tags).sort
       end
 
       def show
@@ -14,7 +13,7 @@ module Dradis::CE::API
         @issue = Issue.new(issue_params)
         @issue.author   = current_user.email
         @issue.category = Category.issue
-        @issue.node     = Node.issue_library
+        @issue.node     = Project.new.issue_library
 
         if @issue.save
           track_created(@issue)

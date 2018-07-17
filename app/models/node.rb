@@ -69,11 +69,6 @@ class Node < ApplicationRecord
   }
 
   # -- Class Methods --------------------------------------------------------
-  # Returns or creates the Node that acts as container for all Issues in a
-  # given project
-  def self.issue_library
-    find_or_create_by(label: 'All issues', type_id: Node::Types::ISSUELIB)
-  end
 
   # -- Instance Methods -----------------------------------------------------
   def ancestor_of?(node)

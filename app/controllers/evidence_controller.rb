@@ -139,7 +139,7 @@ class EvidenceController < NestedNodeResourceController
   def create_issue
     Issue.create do |issue|
       issue.text = "#[Title]#\nNew issue auto-created for node [#{@node.label}]."
-      issue.node = Node.issue_library
+      issue.node = current_project.issue_library
       issue.author = current_user.email
     end
   end

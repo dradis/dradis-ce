@@ -19,6 +19,18 @@ class Project
 
   def persisted?; true; end
 
+  def issues
+    Issue.where(node_id: issue_library.id)
+  end
+
+  # Returns or creates the Node that acts as container for the project's Issues
+  def issue_library
+    @issue_library ||= nodes.find_or_create_by(
+      label: 'All issues',
+      type_id: Node::Types::ISSUELIB
+    )
+  end
+
   def nodes
     Node.all
   end

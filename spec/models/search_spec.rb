@@ -222,7 +222,7 @@ describe Search do
 
     it "filters excludes issues and methodology type" do
       node = create(:node, label: "First node")
-      Node.issue_library
+      project.issue_library
       project.methodology_library
 
       results = described_class.new(query: 'node', scope: :nodes, project: project).results
