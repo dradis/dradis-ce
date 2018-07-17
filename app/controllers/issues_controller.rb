@@ -3,6 +3,7 @@ class IssuesController < AuthenticatedController
   include ContentFromTemplate
   include ConflictResolver
   include MultipleDestroy
+  include NotificationsReader
   include ProjectScoped
 
   before_action :find_issuelib
@@ -37,6 +38,8 @@ class IssuesController < AuthenticatedController
                       user: current_user,
                       subscribable_type: @issue.class.to_s,
                       subscribable_id: @issue.id)
+
+    read_item_notifications(@issue)
   end
 
   def new

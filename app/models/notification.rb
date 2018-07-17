@@ -30,4 +30,8 @@ class Notification < ApplicationRecord
     !self.read?
   end
 
+  def mark_as_read(time = Time.now)
+    self.update_attribute :read_at, time
+  end
+
 end
