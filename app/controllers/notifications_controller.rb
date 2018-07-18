@@ -11,13 +11,12 @@ class NotificationsController < AuthenticatedController
   end
 
   def read
-    @notification =
-      current_user.notifications.where(id: params[:id]).mark_as_read
-    head :no_content
+    @notification = current_user.notifications.find(params[:id]).mark_as_read
+    render json: {id: params[:id]}
   end
 
   def read_all
-    current_user.notifications.where(read_at: nil).each(&:mark_as_read)
+    current_user.notifications.each(&:mark_as_read)
     head :no_content
   end
 end
