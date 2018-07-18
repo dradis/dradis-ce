@@ -68,7 +68,14 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :notifications, only: [:index]
+    resources :notifications, only: [:index] do
+      collection do
+        post :read_all
+      end
+      member do
+        post :read
+      end
+    end
 
     resources :revisions, only: [] do
       member { post :recover }
