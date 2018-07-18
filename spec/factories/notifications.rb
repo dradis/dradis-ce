@@ -4,5 +4,6 @@ FactoryBot.define do
     association :actor, factory: :user
     association :recipient, factory: :user
     action :comment
+    read_at :nil
   end
 end

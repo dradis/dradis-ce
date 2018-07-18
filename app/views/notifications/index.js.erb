@@ -30,9 +30,7 @@ $readBtn.each( function(index){
       dataType: 'json',
       method: 'POST',
       success: function(data) {
-        console.log(data);
         $notification = $('[data-notification-id="' + data.id + '"]');
-        console.log($notification);
         $notification.removeClass('unread');
       }
     });
