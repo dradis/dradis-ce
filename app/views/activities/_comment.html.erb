@@ -3,7 +3,7 @@
   <% if comment.commentable.title? %>
     <% title = comment.commentable.title %>
   <% end %>
-  <%= presenter.verb %> a comment on <%= link_to title, polymorphic_path([@project, comment.commentable], anchor: dom_id(comment)) %>.
+  <%= presenter.verb %> a <%= link_to 'comment', polymorphic_path([@project, comment.commentable], anchor: dom_id(comment)) %> on <%= link_to title, polymorphic_path([@project, comment.commentable]) %>.
 <% else %>
   <% if activity.action == 'destroy' %>
     deleted a comment.

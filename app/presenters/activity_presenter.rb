@@ -47,7 +47,9 @@ class ActivityPresenter < BasePresenter
   # but this may change if we add activities whose action is an irregular
   # verb.
   def verb
-    if activity.action == 'destroy'
+    if activity.trackable_type == 'Comment' && activity.action == 'create'
+      'added'
+    elsif activity.action == 'destroy'
       'deleted'
     else
       activity.action.sub(/e?\z/, 'ed')
