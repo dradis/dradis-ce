@@ -2,18 +2,18 @@ module Dradis::CE::API
   module V1
     class IssuesController < Dradis::CE::API::V1::ProjectScopedController
       def index
-        @issues  = Project.new.issues.includes(:tags).sort
+        @issues  = current_project.issues.includes(:tags).sort
       end
 
       def show
-        @issue = Issue.find(params[:id])
+        @issue = current_project.issues.find(params[:id])
       end
 
       def create
-        @issue = Issue.new(issue_params)
+        @issue = current_project.issues.new(issue_params)
         @issue.author   = current_user.email
         @issue.category = Category.issue
-        @issue.node     = Project.new.issue_library
+        @issue.node     = current_project.issue_library
 
         if @issue.save
           track_created(@issue)
@@ -24,7 +24,7 @@ module Dradis::CE::API
       end
 
       def update
-        @issue = Issue.find(params[:id])
+        @issue = current_project.issues.find(params[:id])
         if @issue.update_attributes(issue_params)
           track_updated(@issue)
           render node: @node
@@ -34,7 +34,7 @@ module Dradis::CE::API
       end
 
       def destroy
-        @issue = Issue.find(params[:id])
+        @issue = current_project.issues.find(params[:id])
         @issue.destroy
         track_destroyed(@issue)
         render_successful_destroy_message
