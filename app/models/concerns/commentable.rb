@@ -6,8 +6,11 @@ module Commentable
   end
 
   def commentable_activities
-    Activity.where(trackable_type: self.class.to_s, trackable_id: self.id).or(
-      Activity.where(trackable_type: 'Comment', trackable_id: [self.comments.map(&:id)])
+    self.activities.or(
+      Activity.where(
+        trackable_type: 'Comment',
+        trackable_id: self.comments.pluck(:id)
+      )
     )
   end
 end
