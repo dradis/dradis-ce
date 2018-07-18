@@ -1,3 +1,4 @@
+/* Notifications in the navbar */
 .notifications {
   .notifications-dot {
     display: none;
@@ -39,25 +40,6 @@
         border-top: 1px solid $gray;
         padding: 0.5em 1em 0.5em 3.5em;
 
-        .body {
-          display: block;
-
-          .notification-icon {
-            color: #bbb;
-            font-size: 32px;
-            left: 2px;
-            position: absolute;
-            top: 11px;
-          }
-
-          .time {
-            color: #888;
-          }
-
-          .details {
-            display: inline-block;
-          }
-        }
 
         &.unread {
           background-color: $grayLight;
@@ -74,5 +56,38 @@
       line-height: 2em;
       border-top: 1px solid $gray;
     }
+  }
+}
+
+li.notification {
+  .body {
+    display: block;
+
+    .notification-icon {
+      color: #bbb;
+      font-size: 32px;
+      left: 2px;
+      position: absolute;
+      top: 11px;
+    }
+
+    .time {
+      color: #888;
+    }
+
+    .details {
+      display: inline-block;
+    }
+  }
+}
+
+/* Notifications on the main body of /projects/X/notifications */
+.notifications-index {
+  ul {
+    list-style-type: none;
+  }
+
+  li.notification {
+    display: block;
   }
 }

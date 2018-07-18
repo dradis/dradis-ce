@@ -1,0 +1,17 @@
+<h1>Notifications for this Project</h1>
+
+<div class="notifications-index">
+  <% cache [current_user, @notifications] do %>
+    <% if @notifications.any? %>
+      <ul>
+        <% @notifications.each do |notification| %>
+          <%= render notification, index_page: true %>
+        <% end %>
+      </ul>
+
+      <%= paginate @notifications %>
+    <% else %>
+      <li class="no-content text-center">You have no notifications yet.</li>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,27 @@
+<%# NB this template is rendered both in the notification navbar %>
+<%# and on notifications#index                                   %>
+<% present notification do |notif_presenter| %>
+  <li class="notification <%= notification.unread? ? 'unread' : '' %>">
+    <div class="body">
+      <%= notif_presenter.icon %>
+
+      <div class="time">
+        <%= notif_presenter.created_at_ago %>
+      </div>
+
+      <div class="title">
+        <%= notif_presenter.render_title %>
+      </div>
+
+      <div class="details">
+        <%= notif_presenter.avatar_with_link(30) %>
+      </div>
+
+      <% if local_assigns[:index_page] %>
+        <%# TODO once #308 is merged, point this link to %>
+        <%# read_project_notifications_path(current_project) %>
+        <%= link_to 'Mark as read', '#', title: 'Mark as read', class: 'notification-read' %>
+      <% end %>
+    </div>
+  </li>
+<% end %>

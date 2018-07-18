@@ -15,7 +15,9 @@
   </ul>
   <% if notifications.any? %>
     <div class="footer text-center" data-id="js-footer">
-      <a href="#">See all notifications</a>
+      <%# TODO current_project doesn't work here in place of @project - am I %>
+      <%# missing something? Not worth fixing right now %>
+      <%= link_to 'See all notifications', project_notifications_path(@project) %>
     </div>
   <% end %>
 <% end %>
