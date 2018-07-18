@@ -33,14 +33,6 @@ class NotificationPresenter < BasePresenter
     ].join(' ').html_safe
   end
 
-  def verb
-    if notification.action == 'create'
-      'commented'
-    else
-      notification.action.sub(/e?\z/, 'ed')
-    end
-  end
-
   private
 
   def avatar_image(size)
@@ -71,7 +63,7 @@ class NotificationPresenter < BasePresenter
   end
 
   def render_partial
-    locals = {notification: notification, presenter: self}
+    locals = {}
     locals[notification.notifiable_type.underscore.to_sym] = notification.notifiable
     render partial_path, locals
   end
@@ -83,8 +75,6 @@ class NotificationPresenter < BasePresenter
   end
 
   def partial_paths
-    [
-      "notifications/#{notification.notifiable_type.underscore}",
-    ]
+    ["notifications/#{notification.notifiable_type.underscore}"]
   end
 end
