@@ -1,7 +1,7 @@
 module Dradis::CE::API
   module V1
     class AttachmentsController < Dradis::CE::API::V1::ProjectScopedController
-      before_action :set_project, :set_node
+      before_action :set_node
 
       skip_before_action :json_required, :only => [:create]
 
@@ -67,12 +67,8 @@ module Dradis::CE::API
 
       private
 
-      def set_project
-        @project = Project.new
-      end
-
       def set_node
-        @node = Node.find(params[:node_id])
+        @node = current_project.nodes.find(params[:node_id])
       end
 
       def attachment_params
