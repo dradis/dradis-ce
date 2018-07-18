@@ -296,11 +296,8 @@ describe 'Issues pages' do
         let(:trackable) { @issue }
         it_behaves_like 'a page with an activity feed'
 
-        describe 'comments', js: true do
-          let(:commentable) { @issue }
-          it_behaves_like "a page with a comments feed"
-          it_behaves_like "a commentable page with poller"
-        end
+        let(:commentable) { @issue }
+        it_behaves_like 'a page with a comments feed'        
 
         describe "clicking 'delete'" do
           before { visit project_issue_path(@project, @issue) }
