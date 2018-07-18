@@ -1,6 +1,6 @@
 # Define the following let variables before using these examples:
 #
-#   create_comments : a block which creates the activities AND IS CALLED
+#   create_comments : a block which creates the comments AND IS CALLED
 #                     BEFORE THE PAGE LOADS
 #   commentable: the model which the 'show' page is about
 shared_examples 'a page with a comments feed' do

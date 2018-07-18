@@ -17,6 +17,8 @@ describe 'comment pages', js: true do
         within('.comment-list') do
           expect(page).to have_selector("#comment_#{@new_comment.id}") # , visible: :all)
         end
+
+        expect(find('#comment-count').text.to_i).to eq(2)
       end
     end
 
@@ -45,6 +47,8 @@ describe 'comment pages', js: true do
         within('.comment-list') do
           expect(page).not_to have_selector("#comment_#{@comment.id}")
         end
+
+        expect(find('#comment-count').text.to_i).to eq(0)
       end
     end
 
