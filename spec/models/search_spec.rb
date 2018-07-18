@@ -4,10 +4,10 @@ describe Search do
   let(:project) { Project.new }
 
   let(:setup_data) do
-    create(:node, label: "test")
+    node = create(:node, label: "test", project: project)
     create(:note, text: "test")
     create(:issue, text: "test")
-    create(:evidence, content: "test")
+    create(:evidence, content: "test", node: node)
   end
 
   describe "#all" do
@@ -199,8 +199,6 @@ describe Search do
   end
 
   describe "#nodes" do
-    let(:project) { Project.new }
-
     it "filters nodes by label matching search term" do
       first  = create(:node, label: "First node")
       second = create(:node, label: "Second node")
@@ -211,7 +209,7 @@ describe Search do
       expect(results.first.label).to eq first.label
     end
 
-    it "returns list of matches order by updated_at desc" do
+    it "returns list of matches ordered by updated_at desc" do
       # Without specifying :updated_at, CI would fail to sort properly
       first  = create(:node, label: "First node", updated_at: 10.seconds.ago)
       second = create(:node, label: "Second node", updated_at: 5.seconds.ago)
