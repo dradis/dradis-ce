@@ -322,7 +322,7 @@ describe 'Issues pages' do
 
         describe 'add evidence', js: true do
           before do
-            @node = Node.create!(label: '192.168.0.1')
+            @node = create(:node, label: '192.168.0.1')
             visit project_issue_path(@project, @issue)
             click_link('Evidence')
           end
@@ -340,7 +340,7 @@ describe 'Issues pages' do
             # find('#evidence_node').native.send_key('192')
             fill_in 'evidence_node', with: '192'
 
-            expect(all('#existing-node-list label').count).to eq 1
+            expect(all('#existing-node-list label').count).to eq 2
           end
 
           it 'creates an evidence with the selected template for selected node' do
