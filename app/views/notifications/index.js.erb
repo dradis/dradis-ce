@@ -16,6 +16,7 @@ $readAll.click( function(e){
     success: function(data) {
       $container  = $('[data-id="js-notification-container"]')
       $container.find('li.notification').removeClass('unread');
+      $('[data-id="js-notifications-dot"]').addClass('hidden');
     }
   });
 });
@@ -32,6 +33,7 @@ $readBtn.each( function(index){
       success: function(data) {
         $notification = $('[data-notification-id="' + data.id + '"]');
         $notification.removeClass('unread');
+        if (!data.has_unread) $('[data-id="js-notifications-dot"]').addClass('hidden');
       }
     });
   });

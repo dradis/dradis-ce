@@ -6,5 +6,4 @@ App.cable.subscriptions.create 'NotificationsChannel',
     console.log('Error subscribing to NotificationsChannel.')
 
   received: (data)->
-    console.log(data)
     $('[data-id="js-notifications-dot"]').toggleClass('hidden')
