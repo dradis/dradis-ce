@@ -24,9 +24,12 @@ shared_examples "recover deleted item" do |item_type|
       page.accept_confirm do
         find(:xpath, "//a[@href='#{rr_path}']").click
       end
-    end.to change{model.activities.count}.by(1)
-
-    expect(model.activities.last.action).to eq "recover"
+    end.to have_enqueued_job(ActivityTrackingJob).with(
+      action: 'recover',
+      trackable_id: model.id,
+      trackable_type: model.class.to_s,
+      user_id: @logged_in_as.id
+    )
 
     expect(page).to have_content "#{model.class.name.humanize} recovered"
     within '#trash' do
@@ -52,8 +55,12 @@ shared_examples "recover deleted item without node" do |item_type|
       page.accept_confirm do
         find(:xpath, "//a[@href='#{rr_path}']").click
       end
-    end.to change{model.activities.count}.by(1)
-    expect(model.activities.last.action).to eq "recover"
+    end.to have_enqueued_job(ActivityTrackingJob).with(
+      action: 'recover',
+      trackable_id: model.id,
+      trackable_type: model.class.to_s,
+      user_id: @logged_in_as.id
+    )
 
     expect(page).to have_content "#{model.class.name.humanize} recovered"
     within '#trash' do

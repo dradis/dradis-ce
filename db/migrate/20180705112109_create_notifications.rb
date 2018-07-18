@@ -11,5 +11,10 @@ class CreateNotifications < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
+
+    add_index :notifications,
+              [:notifiable_id, :notifiable_type, :recipient_id],
+              unique: true,
+              name: 'index_notifications_on_notifiable_and_recipient'
   end
 end

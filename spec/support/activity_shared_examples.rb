@@ -18,40 +18,41 @@
 #
 #     let(:submit_form) { click_button "Save" }
 #
-shared_examples "creates an Activity" do |action, klass=nil|
-  let(:action) { submit_form } if defined?(submit_form)
-
-  it 'creates an Activity' do
-    expect{submit_form}.to change{Activity.count}.by(1)
-    activity = Activity.last
-
-    case action.to_s
-    when 'create'
-      expect(activity.trackable).to eq klass.last
-    when 'update'
-      expect(activity.trackable).to eq model
-    when 'destroy'
-      # 'Destroy' activities should save the type and ID of the destroyed model
-      # so we know what they were, even though the specific model doesn't exist
-      # anymore.
-      expect(activity.trackable).to be_nil
-      expect(activity.trackable_type).to eq model.class.to_s
-      expect(activity.trackable_id).to eq model.id
+shared_examples 'creates an Activity' do |action, klass = nil|
+  it 'enqueues an ActivityTrackingJob' do
+    if action == :create
+      expect { submit_form }.to change {
+        ActiveJob::Base.queue_adapter.enqueued_jobs.size
+      }.by(1)
+      expect(
+        ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h| h[:job] }.last
+      ).to eq ActivityTrackingJob
+      expect(
+        ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+          h1[:args].map { |h2| h2['action'] }
+        }.flatten.last
+      ).to eq 'create'
+      expect(
+        ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+          h1[:args].map { |h2| h2['trackable_type'] }
+        }.flatten.last
+      ).to eq klass.to_s
     else
-      raise "unrecognized action, must be 'create', 'update' or 'destroy'"
+      expect { submit_form }.to have_enqueued_job(ActivityTrackingJob).with(
+        action: action.to_s,
+        trackable_id: model.id,
+        trackable_type: model.class.to_s,
+        user_id: @logged_in_as.id
+      )
     end
-    expect(activity.user).to eq @logged_in_as.email
-    expect(activity.action).to eq action.to_s
   end
 end
-
 
 shared_examples "doesn't create an Activity" do
-  it "doesn't create an Activity" do
-    expect{submit_form}.not_to change{Activity.count}
+  it "doesn't enqueue an ActivityTrackingJob" do
+    expect { submit_form }.not_to have_enqueued_job(ActivityTrackingJob)
   end
 end
-
 
 # Define the following let variables before using these examples:
 #

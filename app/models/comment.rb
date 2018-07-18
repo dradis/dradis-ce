@@ -1,4 +1,6 @@
 class Comment < ApplicationRecord
+  include Notifiable
+
   # -- Relationships --------------------------------------------------------
   belongs_to :commentable, polymorphic: true
   belongs_to :user
@@ -16,10 +18,6 @@ class Comment < ApplicationRecord
   # -- Class Methods --------------------------------------------------------
 
   # -- Instance Methods -----------------------------------------------------
-  def create_subscription
-    Subscription.subscribe(user: user, to: commentable)
-  end
-
   # Because Issue descends from Note but doesn't use STI, Rails's default
   # polymorphic setter will set 'commentable_type' to 'Note' when you pass an
   # Issue to commentable. This means when you load the Activity later then
@@ -31,5 +29,17 @@ class Comment < ApplicationRecord
     super
     self.commentable_type = 'Issue' if new_commentable.is_a?(Issue)
     new_commentable
+  end
+
+  def create_subscription
+    Subscription.subscribe(user: user, to: commentable)
+  end
+
+  def notify(action)
+    case action.to_s
+    when 'create'
+      subscribers = commentable.subscriptions.where.not(user: user).map(&:user)
+      create_notifications(action: :create, recipients: subscribers)
+    end
   end
 end
