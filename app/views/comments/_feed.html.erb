@@ -31,9 +31,7 @@
             <% end %>
           </div>
 
-          <div class="content">
-            <%= comment.content %>
-          </div>
+          <pre class="content"><%= comment.content %></pre>
 
           <% if can? :update, comment %>
             <%= render 'comments/edit', commentable: commentable, comment: comment %>
