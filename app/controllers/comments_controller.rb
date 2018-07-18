@@ -1,5 +1,6 @@
 class CommentsController < AuthenticatedController
   include ActionView::RecordIdentifier
+  include ActivityTracking
   include ProjectScoped
 
   load_and_authorize_resource
@@ -7,17 +8,26 @@ class CommentsController < AuthenticatedController
   def create
     @comment = Comment.new(comment_params)
     @comment.user = current_user
-    @comment.save
+    if @comment.save
+      track_created(@comment)
+    end
+
     redirect_to polymorphic_path([@project, @comment.commentable], anchor: dom_id(@comment))
   end
 
   def update
-    @comment.update_attributes(comment_params)
+    if @comment.update_attributes(comment_params)
+      track_updated(@comment)
+    end
+
     redirect_to polymorphic_path([@project, @comment.commentable], anchor: dom_id(@comment))
   end
 
   def destroy
-    @comment.destroy
+    if @comment.destroy
+      track_destroyed(@comment)
+    end
+
     redirect_to [@project, @comment.commentable]
   end
 

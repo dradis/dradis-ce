@@ -1,6 +1,6 @@
 # Define the following let variables before using these examples:
 #
-#   create_comments : a block which creates the activities AND IS CALLED
+#   create_comments : a block which creates the comments AND IS CALLED
 #                     BEFORE THE PAGE LOADS
 #   commentable: the model which the 'show' page is about
 shared_examples 'a page with a comments feed' do
@@ -24,46 +24,70 @@ shared_examples 'a page with a comments feed' do
     end
   end
 
-  it 'allows adding a comment' do
-    within 'form#new_comment' do
-      fill_in 'comment_content', with: 'test comment'
-      click_button 'Add comment'
+  describe 'add comment' do
+    let(:submit_form) do
+      within 'form#new_comment' do
+        fill_in 'comment_content', with: 'test comment'
+        click_button 'Add comment'
+      end
     end
 
-    expect(page).to have_text 'test comment'
-  end
+    it 'allows adding a comment' do
+      submit_form
 
-  it 'allows updating a comment from the same user' do
-    id = @comments[0].id
-    within "div#comment_#{id}" do
-      fill_in 'comment_content', with: 'test comment edited'
-      click_button 'Update comment'
+      expect(page).to have_text 'test comment'
     end
 
-    expect(page).to have_text 'test comment edited'
+    include_examples 'creates an Activity', :create, Comment
   end
 
-  it 'does not allow to edit comments from other users' do
-    id = @comments[1].id
-    within "div#comment_#{id}" do
-      expect(page).not_to have_link 'Edit'
-      expect(page).not_to have_css "form#edit_comment_#{id}"
+  describe 'update comment' do
+    let(:model) { @comments[0] }
+    let(:submit_form) do
+      within "div#comment_#{model.id}" do
+        fill_in 'comment_content', with: 'test comment edited'
+        click_button 'Update comment'
+      end
+    end
+
+    it 'allows updating a comment from the same user' do
+      submit_form
+
+      expect(page).to have_text 'test comment edited'
+    end
+
+    include_examples 'creates an Activity', :update
+
+    it 'does not allow to edit comments from other users' do
+      id = @comments[1].id
+      within "div#comment_#{id}" do
+        expect(page).not_to have_link 'Edit'
+        expect(page).not_to have_css "form#edit_comment_#{id}"
+      end
     end
   end
 
-  it 'allows deleting a comment from the same user' do
-    id = @comments[0].id
-    within "div#comment_#{id}" do
-      click_link 'Delete'
+  describe 'delete comment' do
+    let(:model) { @comments[0] }
+    let (:submit_form) do
+      within "div#comment_#{model.id}" do
+        click_link 'Delete'
+      end
     end
 
-    expect(page).not_to have_comment(@comments[0])
-  end
+    it 'allows deleting a comment from the same user' do
+      submit_form
 
-  it 'does not allow deleting a comment from another user' do
-    id = @comments[1].id
-    within "div#comment_#{id}" do
-      expect(page).not_to have_link('Delete')
+      expect(page).not_to have_comment(@comments[0])
+    end
+
+    include_examples 'creates an Activity', :destroy
+
+    it 'does not allow deleting a comment from another user' do
+      id = @comments[1].id
+      within "div#comment_#{id}" do
+        expect(page).not_to have_link('Delete')
+      end
     end
   end
 end
