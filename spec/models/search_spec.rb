@@ -219,7 +219,7 @@ describe Search do
     end
 
     it "filters excludes issues and methodology type" do
-      node = create(:node, label: "First node")
+      node = create(:node, label: "First node", project: project)
       project.issue_library
       project.methodology_library
 
