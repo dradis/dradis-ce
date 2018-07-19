@@ -297,8 +297,8 @@ describe 'Issues pages' do
         it_behaves_like 'a page with an activity feed'
 
         let(:commentable) { @issue }
-        it_behaves_like "a page with a comments feed"
-        
+        it_behaves_like 'a page with a comments feed'
+
         let(:subscribable) { @issue }
         it_behaves_like 'a page sith subscribe/unsubscribe links'
 
