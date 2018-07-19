@@ -6,7 +6,7 @@ describe "Attachments API" do
   include_context "project scoped API"
   include_context "https"
 
-  let(:node) { create(:node) }
+  let(:node) { create(:node, project: project) }
 
   context "as unauthenticated user" do
     describe "GET /api/nodes/:node_id/attachments" do
@@ -59,7 +59,7 @@ describe "Attachments API" do
         end
 
         # an attachment in another node
-        create(:attachment, filename: "image3.png", node: create(:node))
+        create(:attachment, filename: "image3.png", node: create(:node, project: project))
 
         get "/api/nodes/#{node.id}/attachments", env: @env
       end
