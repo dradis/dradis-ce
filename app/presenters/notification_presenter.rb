@@ -36,13 +36,13 @@ class NotificationPresenter < BasePresenter
   private
 
   def avatar_image(size)
-    if notification.user
+    if notification.recipient
       h.image_tag(
         image_path('profile.jpg'),
-        alt: notification.user.email,
+        alt: notification.recipient.email,
         class: 'gravatar',
         data: { fallback_image: image_path('logo_small.png') },
-        title: notification.user,
+        title: notification.recipient,
         width: size
       )
     else
@@ -54,9 +54,9 @@ class NotificationPresenter < BasePresenter
   # don't know what we should link to. For the time being lets just enclose
   # it in a strong tag.
   def linked_email
-    if notification.user
-      # h.link_to(activity.user.email, 'javascript:void(0);')
-      h.content_tag :strong, notification.user.email
+    if notification.recipient
+      # h.link_to(notification.recipient.email, 'javascript:void(0);')
+      h.content_tag :strong, notification.recipient.email
     else
       'a user who has since been deleted'
     end
