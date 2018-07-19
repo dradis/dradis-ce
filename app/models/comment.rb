@@ -46,6 +46,8 @@ class Comment < ApplicationRecord
     end
   end
 
+  private 
+
   def mentions
     users = []
     HTML::Pipeline::MentionFilter.mentioned_logins_in(content) do |match, login, is_mentioned|

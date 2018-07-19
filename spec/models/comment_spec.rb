@@ -22,7 +22,7 @@ describe Comment do
       user2   = create(:user, email: 'bar')
       comment = create(:comment, content: 'Hello @foo and hello @bar')
 
-      expect(comment.mentions).to eq [user1, user2]
+      expect(comment.send(:mentions)).to eq [user1, user2]
     end
   end
 end
