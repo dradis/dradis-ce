@@ -1,17 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe RecoverableRevisionPresenter do
-  before { PaperTrail.enabled = true }
-  after  { PaperTrail.enabled = false }
-
   let(:project) { Project.new }
+
+  before do
+    PaperTrail.enabled = true
+    PaperTrail.controller_info = { project_id: project.id }
+  end
+
+  after  { PaperTrail.enabled = false }
 
   class FakeView
     include ActionView::Helpers::TextHelper
-
-    def current_project
-      Project.new
-    end
   end
 
   include ActionView::Helpers::TagHelper
@@ -21,7 +21,10 @@ RSpec.describe RecoverableRevisionPresenter do
   end
 
   def presenter_for(revision)
-    described_class.new(revision, FakeView.new)
+    presenter = described_class.new(revision, FakeView.new)
+    allow(presenter).to receive(:project).and_return(project)
+
+    presenter
   end
 
   describe 'for a methodology' do
@@ -50,7 +53,7 @@ RSpec.describe RecoverableRevisionPresenter do
 
   describe 'for an Issue' do
     before do
-      issue = create(:issue, text: "#[Title]#\nMy issue")
+      issue = create(:issue, text: "#[Title]#\nMy issue", node: project.issue_library)
       issue.destroy
       revision = RecoverableRevision.new(issue.versions.last)
 
