@@ -6,14 +6,13 @@ RSpec.describe 'notifications index page' do
   end
 
   let(:me) { @logged_in_as }
-  let(:comment) { create(:comment) }
   let(:u1) { create(:user) }
   let(:u2) { create(:user) }
 
   example 'when I have no notifications' do
     # other users have notifications but you don't:
-    create(:notification, recipient: u1, notifiable: comment)
-    create(:notification, recipient: u2, notifiable: comment)
+    create(:notification, recipient: u1, notifiable: create(:comment))
+    create(:notification, recipient: u2, notifiable: create(:comment))
 
     visit project_notifications_path(@project)
 
@@ -23,12 +22,12 @@ RSpec.describe 'notifications index page' do
 
   example 'when I have notifications' do
     # my notifications: 1 read, 1 unread
-    create(:notification, recipient: me, notifiable: comment)
-    create(:notification, recipient: me, notifiable: comment, read_at: Time.now)
+    create(:notification, recipient: me, notifiable: create(:comment))
+    create(:notification, recipient: me, notifiable: create(:comment), read_at: Time.now)
 
     # other people's notifications:
-    create(:notification, recipient: u1, notifiable: comment)
-    create(:notification, recipient: u2, notifiable: comment)
+    create(:notification, recipient: u1, notifiable: create(:comment))
+    create(:notification, recipient: u2, notifiable: create(:comment))
 
     visit project_notifications_path(@project)
 
