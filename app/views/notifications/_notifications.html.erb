@@ -4,7 +4,7 @@
       Notifications
       (<%= unread_count %>)
       <div class="pull-right">
-        <%= link_to 'Mark all as read', 'javascript:void(0)', data: {id: 'js-read-all', url: read_all_project_notifications_path(@project)} %>
+        <%= link_to 'Mark all as read', 'javascript:void(0)', data: {behavior: 'read-all', url: read_all_project_notifications_path(@project)} %>
       </div>
     </div>
     <% if notifications.any? %>
@@ -14,7 +14,7 @@
     <% end %>
   </ul>
   <% if notifications.any? %>
-    <div class="footer text-center" data-id="js-footer">
+    <div class="footer text-center">
       <a href="#">See all notifications</a>
     </div>
   <% end %>
