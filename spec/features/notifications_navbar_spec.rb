@@ -16,13 +16,13 @@ describe 'User notifications', js: true do
 
   describe 'notifications list with ajax' do
     it 'opens the dropdown after click' do
-      find('[data-id="js-notifications-dropdown"]').click
-      expect(find('[data-id="js-notification-container"]')).to_not be_nil
+      find('[data-behavior~=notifications-dropdown]').click
+      expect(find('[data-behavior~=notifications-dropdown] + div')).to_not be_nil
     end
 
     context 'the user has no notifications' do
       it 'shows an empty dropdown' do
-        find('[data-id="js-notifications-dropdown"]').click
+        find('[data-behavior~=notifications-dropdown]').click
 
         expect(find('.no-content', text: 'You have no notifications yet.')).to_not be_nil
       end
@@ -34,7 +34,7 @@ describe 'User notifications', js: true do
         comment = create(:comment, commentable: issue, user: @logged_in_as)
         create(:notification, notifiable: comment, actor: @logged_in_as, recipient: @logged_in_as)
 
-        find('[data-id="js-notifications-dropdown"]').click
+        find('[data-behavior~=notifications-dropdown]').click
 
         expect(page).to have_content("#{@logged_in_as.email} commented")
       end

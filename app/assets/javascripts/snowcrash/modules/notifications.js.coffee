@@ -1,9 +1,10 @@
 document.addEventListener 'turbolinks:load', ->
-  $alertDot   = $('[data-id="js-notifications-dot"]')
-  $container  = $('[data-id="js-notification-container"]')
-  $dropdown   = $('[data-id="js-notifications-dropdown"]')
+  $alertDot = $('[data-behavior~=notifications-dot]')
+  $dropdown = $('[data-behavior~=notifications-dropdown]')
 
   if $dropdown.length
+    $container = $('[data-behavior~=notifications-dropdown] + div')
+
     $dropdown.on 'ajax:beforeSend', (event)->
       if !$container.is(':visible')
         $container.html('<div class="loader"></div>')

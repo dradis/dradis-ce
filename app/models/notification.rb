@@ -4,8 +4,6 @@ class Notification < ApplicationRecord
   belongs_to :recipient, class_name: 'User'
   belongs_to :notifiable, polymorphic: true
 
-  alias_method :user, :recipient
-
   # -- Callbacks ------------------------------------------------------------
 
   # -- Validations ----------------------------------------------------------
@@ -15,19 +13,15 @@ class Notification < ApplicationRecord
   validates :recipient, presence: true, associated: true
 
   # -- Scopes ---------------------------------------------------------------
-  scope :unread,  -> { where(read_at: nil) }
-  scope :read,    -> { where.not(read_at: nil) }
   scope :newest,  -> { order(created_at: :desc) }
+  scope :read,    -> { where.not(read_at: nil) }
+  scope :unread,  -> { where(read_at: nil) }
 
   # -- Class Methods --------------------------------------------------------
 
   # -- Instance Methods -----------------------------------------------------
   def read?
     self.read_at
-  end
-
-  def unread?
-    !self.read?
   end
 
   def mark_as_read(time = Time.now)

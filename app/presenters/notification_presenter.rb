@@ -33,24 +33,16 @@ class NotificationPresenter < BasePresenter
     ].join(' ').html_safe
   end
 
-  def verb
-    if notification.action == 'create'
-      'commented on'
-    else
-      notification.action.sub(/e?\z/, 'ed')
-    end
-  end
-
   private
 
   def avatar_image(size)
-    if notification.user
+    if notification.recipient
       h.image_tag(
         image_path('profile.jpg'),
-        alt: notification.user,
+        alt: notification.recipient.email,
         class: 'gravatar',
         data: { fallback_image: image_path('logo_small.png') },
-        title: notification.user,
+        title: notification.recipient,
         width: size
       )
     else
@@ -62,16 +54,16 @@ class NotificationPresenter < BasePresenter
   # don't know what we should link to. For the time being lets just enclose
   # it in a strong tag.
   def linked_email
-    if notification.user
-      # h.link_to(activity.user.email, 'javascript:void(0);')
-      h.content_tag :strong, notification.user.email
+    if notification.recipient
+      # h.link_to(notification.recipient.email, 'javascript:void(0);')
+      h.content_tag :strong, notification.recipient.email
     else
       'a user who has since been deleted'
     end
   end
 
   def render_partial
-    locals = {notification: notification, presenter: self}
+    locals = {}
     locals[notification.notifiable_type.underscore.to_sym] = notification.notifiable
     render partial_path, locals
   end
@@ -83,8 +75,6 @@ class NotificationPresenter < BasePresenter
   end
 
   def partial_paths
-    [
-      "notifications/#{notification.notifiable_type.underscore}",
-    ]
+    ["notifications/#{notification.notifiable_type.underscore}"]
   end
 end

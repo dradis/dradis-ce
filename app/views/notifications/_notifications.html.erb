@@ -8,7 +8,7 @@
       </div>
     </div>
     <% if notifications.any? %>
-      <%= render partial: 'feed', locals: {notifications: notifications} %>
+      <%= render partial: 'feed', locals: { notifications: notifications } %>
     <% else %>
       <li class="no-content text-center">You have no notifications yet.</li>
     <% end %>
