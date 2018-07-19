@@ -7,8 +7,8 @@ describe "moving a node", js: true do
   before do
     login_to_project_as_user
 
-    @node_0 = create_node(label: "Node 0")
-    @node_1 = create_node(label: "Node 1")
+    @node_0 = create_node(label: "Node 0", project: current_project)
+    @node_1 = create_node(label: "Node 1", project: current_project)
     @node_2 = create_node(label: "Node 2", parent: @node_0)
     @node_3 = create_node(label: "Node 3", parent: @node_0)
     @node_4 = create_node(label: "Node 4", parent: @node_1)
@@ -113,7 +113,7 @@ describe "moving a node", js: true do
 
 
   def create_node(attrs={})
-    create(:node, attrs)
+    create(:node, attrs.merge(project: current_project))
   end
 
   def within_move_node_modal
