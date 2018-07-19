@@ -6,6 +6,8 @@
       <ul>
         <% @notifications.each do |notification| %>
           <%= render notification, index_page: true %>
+          <div class="clearfix"></div>
+          <hr>
         <% end %>
       </ul>
 

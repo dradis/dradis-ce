@@ -3,6 +3,11 @@
 <% present notification do |notif_presenter| %>
   <li class="notification <%= notification.unread? ? 'unread' : '' %>">
     <div class="body">
+      <% if local_assigns[:index_page] %>
+        <%# TODO point this link to %>
+        <%# read_project_notifications_path(current_project) %>
+        <%= link_to 'Mark as read', '#', title: 'Mark as read', class: 'notification-read' %>
+      <% end %>
       <%= notif_presenter.icon %>
 
       <div class="time">
@@ -16,12 +21,6 @@
       <div class="details">
         <%= notif_presenter.avatar_with_link(30) %>
       </div>
-
-      <% if local_assigns[:index_page] %>
-        <%# TODO once #308 is merged, point this link to %>
-        <%# read_project_notifications_path(current_project) %>
-        <%= link_to 'Mark as read', '#', title: 'Mark as read', class: 'notification-read' %>
-      <% end %>
     </div>
   </li>
 <% end %>

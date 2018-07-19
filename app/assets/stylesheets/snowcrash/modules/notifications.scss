@@ -89,5 +89,13 @@ li.notification {
 
   li.notification {
     display: block;
+
+    .notification-read {
+      float: right;
+    }
+  }
+
+  hr {
+    margin: 10px 0;
   }
 }
