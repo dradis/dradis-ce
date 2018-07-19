@@ -12,7 +12,7 @@
 //= require d3
 //= require local-time
 //= require clipboard
-//= require tribute.min 
+//= require tribute
 
 //= require shared/console_updater
 //= require shared/items_table
