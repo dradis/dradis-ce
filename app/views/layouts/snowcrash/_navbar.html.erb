@@ -15,7 +15,7 @@
           <li><%= link_to main_app.project_export_manager_path(@project) do %><i class="fa fa-file-text-o fa-lg"></i> Export results<% end %></li>
           <li><%= link_to main_app.configurations_path do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %></li>
           <li class="notifications dropdown">
-            <%= link_to main_app.project_notifications_path(@project), class: 'dropdown-toggle', data: {id: 'js-notifications-dropdown', toggle: 'dropdown'}, remote: true do %>
+            <%= link_to main_app.project_notifications_path(@project), class: 'dropdown-toggle', data: { id: 'js-notifications-dropdown', toggle: 'dropdown' }, remote: true do %>
               <i class="fa fa-bell fa-lg"></i><b class="caret"></b><i class="notifications-dot"></i>
             <% end %>
             <div class="dropdown-menu" data-id="js-notification-container" data-url="<%= project_notifications_path(@project) %>"></div>
