@@ -14,7 +14,7 @@ $readAll.click( function(e){
     dataType: 'json',
     method: 'POST',
     success: function(data) {
-      $container  = $('[data-behavior~=notification-container]')
+      $container = $('[data-behavior~=notifications-dropdown] + div')
       $container.find('li.notification').removeClass('unread');
       $('[data-behavior~=notifications-dot]').addClass('hidden');
     }
