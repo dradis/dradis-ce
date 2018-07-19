@@ -23,9 +23,4 @@ class Notification < ApplicationRecord
   def read?
     self.read_at
   end
-
-  def unread?
-    !self.read?
-  end
-
 end
