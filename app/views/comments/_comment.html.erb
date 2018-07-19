@@ -1,6 +1,6 @@
 <%= div_for comment do %>
   <div class="body">
-    <%= link_to(avatar_image(comment.user, size: 30), "##{dom_id(comment)}") %>
+    <%= link_to(avatar_image(comment.user, size: 30), "##{dom_id(comment)}", data: { turbolinks: false }) %>
 
     <div>
       <% if comment.user %>
