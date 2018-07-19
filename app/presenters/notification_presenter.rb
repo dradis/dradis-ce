@@ -33,6 +33,16 @@ class NotificationPresenter < BasePresenter
     ].join(' ').html_safe
   end
 
+  # This is the link as it appears on notifications#index - we may need
+  # something different for the notifications dropdown
+  #
+  # It's hacky to pass in the current_project from the view but not sure what
+  # else we can do - can we assume that @object.notifiable.project will be
+  # defined for all possible 'notifiable' records?
+  def link_to_mark_as_read(project)
+    link_to 'Mark as read', read_project_notification_path(project, @object), class: 'notification-read', data: { method: 'POST' }
+  end
+
   private
 
   def avatar_image(size)

@@ -1,4 +1,3 @@
-<%# DISCUSS rename to dropdown_feed or something like that ?%>
 <% notifications.each do |notification| %>
   <% present notification do |notif_presenter| %>
     <li class="notification <%= notification.read? ? '' : 'unread' %>">

@@ -41,9 +41,6 @@
         padding: 0.5em 1em 0.5em 3.5em;
 
 
-        &.unread {
-          background-color: $grayLight;
-        }
       }
 
       li.no-content {
@@ -60,6 +57,10 @@
 }
 
 li.notification {
+  &.unread {
+    background-color: $grayLight;
+  }
+
   .body {
     display: block;
 
@@ -89,6 +90,7 @@ li.notification {
 
   li.notification {
     display: block;
+    padding: 0.6em 1em;
 
     .notification-read {
       float: right;
@@ -96,6 +98,6 @@ li.notification {
   }
 
   hr {
-    margin: 10px 0;
+    margin: 0;
   }
 }

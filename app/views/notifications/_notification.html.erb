@@ -4,9 +4,8 @@
   <li class="notification <%= notification.read? ? '' : 'unread' %>">
     <div class="body">
       <% if local_assigns[:index_page] %>
-        <%# TODO point this link to %>
-        <%# read_project_notifications_path(current_project) %>
-        <%= link_to 'Mark as read', '#', title: 'Mark as read', class: 'notification-read' %>
+        <%# TODO s/@project/current_project once project-id-scopes is merged %>
+        <%= notif_presenter.link_to_mark_as_read(@project) %>
       <% end %>
       <%= notif_presenter.icon %>
 
