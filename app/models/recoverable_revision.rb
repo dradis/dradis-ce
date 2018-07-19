@@ -15,7 +15,7 @@ class RecoverableRevision
   # Note that an object can be deleted and recovered multiple times, in which
   # case it will have multiple 'destroy' revisions. This method will only
   # return the most recent 'destroy' revision.
-  def self.all(project_id: nil)
+  def self.all(project_id:)
     # Based on https://leonid.shevtsov.me/post/how-to-use-papertrail-for-soft-deletetion/
     #
     # This isn't ideal because it makes multiple SQL calls, but it will do.
@@ -46,7 +46,7 @@ class RecoverableRevision
     end
   end
 
-  def self.find(id:, project_id: nil)
+  def self.find(id:, project_id:)
     new(PaperTrail::Version.where(event: :destroy).find_by!(id: id, project_id: project_id))
   end
 
