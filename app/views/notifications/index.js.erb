@@ -2,4 +2,4 @@
   render partial: 'notifications',
   locals: { notifications: @notifications,  unread_count: @unread_count}
 ) %>
-$('[data-id="js-notification-container"]').html("<%= partial %>");
+$('[data-behavior~=notifications-dropdown] + div').html("<%= partial %>");
