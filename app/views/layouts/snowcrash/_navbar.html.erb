@@ -38,6 +38,8 @@
           <li class="dropdown">
             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i><b class="caret"></b></a>
             <ul class="dropdown-menu">
+              <li class="disabled"><a tabindex="-1" href="javascript:void(0)"><%= current_user.email %></a></li>
+              <li class="divider"></li>
               <li><%= link_to 'Log out', main_app.logout_path %></li>
             </ul>
           </li>
