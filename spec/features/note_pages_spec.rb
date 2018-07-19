@@ -10,7 +10,7 @@ describe "note pages" do
     allow(NoteTemplate).to receive(:pwd).and_return(Pathname.new('tmp/templates/notes'))
     FileUtils.mkdir_p(Rails.root.join("tmp","templates","notes"))
     login_to_project_as_user
-    @node    = create(:node)
+    @node = create(:node, project: current_project)
   end
 
   after(:all) do
@@ -18,9 +18,9 @@ describe "note pages" do
   end
 
   example 'show page with wrong Node ID in URL' do
-    node       = create(:node)
+    node       = create(:node, project: current_project)
     note       = create(:note, node: node)
-    wrong_node = create(:node)
+    wrong_node = create(:node, project: current_project)
     expect do
       visit project_node_note_path(current_project, wrong_node, note)
     end.to raise_error(ActiveRecord::RecordNotFound)
