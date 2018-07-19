@@ -1,7 +1,7 @@
 <%# NB this template is rendered both in the notification navbar %>
 <%# and on notifications#index                                   %>
 <% present notification do |notif_presenter| %>
-  <li class="notification <%= notification.unread? ? 'unread' : '' %>">
+  <li class="notification <%= notification.read? ? '' : 'unread' %>">
     <div class="body">
       <% if local_assigns[:index_page] %>
         <%# TODO point this link to %>
