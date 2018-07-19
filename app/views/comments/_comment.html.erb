@@ -1,6 +1,6 @@
 <%= div_for comment do %>
   <div class="body">
-    <%= link_to(avatar_image(comment.user, size: 30), "##{dom_id(comment)}", data: { turbolinks: false }) %>
+    <%= avatar_image(comment.user, size: 30) %>
 
     <div>
       <% if comment.user %>
@@ -9,7 +9,9 @@
         a user who has since been deleted
       <% end %>
 
-      <span class="time"><%= local_time_ago(comment.created_at) %></span>
+      <span class="time">
+        <%= link_to local_time_ago(comment.created_at), "##{dom_id(comment)}", data: { turbolinks: false } %>
+      </span>
 
       <% if can? :update, comment %>
         <div class="actions">
