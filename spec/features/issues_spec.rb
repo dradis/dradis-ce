@@ -337,10 +337,10 @@ describe 'Issues pages' do
             find('.js-add-evidence').click
             expect(all('#existing-node-list label').count).to be Node.user_nodes.count
 
-            # find('#evidence_node').native.send_key('192')
-            fill_in 'evidence_node', with: '192'
+            # find('#evidence_node').native.send_key('192.')
+            fill_in 'evidence_node', with: '192\.'
 
-            expect(all('#existing-node-list label').count).to eq 2
+            expect(all('#existing-node-list label').count).to eq 1
           end
 
           it 'creates an evidence with the selected template for selected node' do
