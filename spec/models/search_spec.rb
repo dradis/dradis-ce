@@ -242,8 +242,9 @@ describe Search do
 
   describe "#notes" do
     it "filters notes by content matching search term" do
-      first  = create(:note, text: "First note", category: Category.default)
-      second = create(:note, text: "Second note", category: Category.default)
+      node    = create(:node, project: project)
+      first   = create(:note, text: "First note",  category: Category.default, node: node)
+      _second = create(:note, text: "Second note", category: Category.default, node: node)
 
       results = Search.new(query: 'first', scope: :notes, project: project).results
 
@@ -253,23 +254,24 @@ describe Search do
 
     it "excludes issue notes" do
       issue = create(:issue, text: "Issue note", node: project.issue_library)
-      note  = create(:note, text: "First note", category: issue.category)
+      _note  = create(:note, text: "First note", node: create(:node, project: project), category: issue.category)
 
       results = Search.new(query: 'issue', scope: :notes, project: project).results
       expect(results.size).to eq 0
     end
 
     it "returns list of matches order by updated_at desc" do
+      node   = create(:node, project: project)
       # Without specifying :updated_at, CI would fail to sort properly
-      first  = create(:note, text: "First note", category: Category.default, updated_at: 10.seconds.ago)
-      second = create(:note, text: "Second note", category: Category.default, updated_at: 5.seconds.ago)
+      first  = create(:note, text: "First note",  category: Category.default, node: node, updated_at: 10.seconds.ago)
+      second = create(:note, text: "Second note", category: Category.default, node: node, updated_at: 5.seconds.ago)
 
       results = Search.new(query: 'note', scope: :notes, project: project).results
       expect(results.map(&:text)).to eq [second.text, first.text]
     end
 
     it "behaves as case insensitive search" do
-      note = create(:note, text: "note", category: Category.default)
+      note = create(:note, text: "note", category: Category.default, node: create(:node, project: project))
 
       results = Search.new(query: 'NOTE', scope: :notes, project: project).results
 

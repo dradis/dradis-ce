@@ -42,7 +42,7 @@ class Search
   end
 
   def evidence_count
-    @evidence_count ||= evidence.size
+    @evidence_count ||= evidence.count
   end
 
   private
@@ -52,10 +52,15 @@ class Search
   end
 
   def evidence
-    @evidence ||= project.evidence
-      .where("LOWER(content) LIKE LOWER(:q)", q: "%#{query}%")
-      .includes(:issue, :node)
-      .order(updated_at: :desc)
+    @evidence ||= begin
+      Evidence.where(
+        'node_id IN (:nodes) AND LOWER(content) LIKE LOWER(:q)',
+        nodes: project.nodes.user_nodes.pluck(:id),
+        q: "%#{query}%"
+      )
+        .includes(:issue, :node)
+        .order(updated_at: :desc)
+    end
   end
 
   def issues
@@ -74,11 +79,9 @@ class Search
 
   def notes
     @notes ||= begin
-      system_nodes = [project.issue_library.id, project.methodology_library.id]
-
       Note.where(
-        "node_id NOT IN (:nodes) AND LOWER(text) LIKE LOWER(:q)",
-        nodes: system_nodes,
+        "node_id IN (:nodes) AND LOWER(text) LIKE LOWER(:q)",
+        nodes: project.nodes.user_nodes.pluck(:id),
         q: "%#{query}%"
       )
         .includes(:node)
