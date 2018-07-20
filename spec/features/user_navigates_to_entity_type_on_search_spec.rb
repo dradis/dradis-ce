@@ -9,7 +9,7 @@ describe "User navigates to entity page from search" do
 
   context "when click on title link" do
     it 'of node opens the node page' do
-      node = create(:node, label: "Node search")
+      node = create(:node, label: 'Node search', project: @project)
       visit project_search_path(current_project, q: node.label)
 
       page.find(".search-match-title").click
@@ -18,7 +18,8 @@ describe "User navigates to entity page from search" do
     end
 
     it 'of note opens the note page' do
-      note = create(:note, text: "Note search")
+      node = create(:node, project: @project)
+      note = create(:note, text: 'Note search', node: node)
       visit project_search_path(current_project, q: note.text)
 
       page.find(".search-match-title").click
@@ -27,7 +28,7 @@ describe "User navigates to entity page from search" do
     end
 
     it 'of issue opens the issue page' do
-      issue = create(:issue, text: "Issue search")
+      issue = create(:issue, text: 'Issue search', node: @project.issue_library)
       visit project_search_path(current_project, q: issue.text)
 
       page.find(".search-match-title").click
@@ -36,7 +37,9 @@ describe "User navigates to entity page from search" do
     end
 
     it 'of evidence opens to node page' do
-      evidence = create(:evidence, content: "Evidence search")
+      issue = create(:issue, text: 'Issue search', node: @project.issue_library)
+      node = create(:node, project: @project)
+      evidence = create(:evidence, content: 'Evidence search', node: node, issue: issue)
       visit project_search_path(current_project, q: evidence.content)
 
       page.find(".search-match-title").click

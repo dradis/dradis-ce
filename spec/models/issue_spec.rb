@@ -5,6 +5,7 @@ describe Issue do
   it { should have_many(:comments).dependent(:destroy) }
   it { should have_many(:evidence).dependent(:destroy) }
 
+  let(:project) { Project.new }
   let(:issue) { Issue.new }
 
   it 'is assigned to the Category.issue category' do
@@ -17,7 +18,7 @@ describe Issue do
   end
 
   it 'affects many nodes through :evidence' do
-    issue = create(:issue)
+    issue = create(:issue, node: project.issue_library)
     expect(issue.affected).to be_empty
 
     host = create(:node, label: '10.0.0.1', type_id: Node::Types::HOST)

@@ -8,7 +8,7 @@ describe "issue trash" do
   end
 
   example "reflects edit of a previously deleted issue" do
-    @issue = create(:issue)
+    @issue = create(:issue, node: @project.issue_library)
     edit_and_delete_issue "issue 1"
 
     visit project_trash_path(current_project)
