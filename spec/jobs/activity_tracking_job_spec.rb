@@ -79,7 +79,7 @@ describe ActivityTrackingJob do #, type: :job do
           action: 'create',
           trackable_id: trackable.id,
           trackable_type: trackable.class.to_s,
-          user: trackable.user
+          user_id: trackable.user_id
         )
       }.to change { Notification.count }.by(3) \
       .and change { Subscription.count }.by(1)
