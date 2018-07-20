@@ -14,7 +14,6 @@ class UploadController < AuthenticatedController
   # include Plugins::Upload
 
   before_action :find_uploaders
-  before_action :find_uploads_node, only: [:create, :parse]
   before_action :validate_uploader, only: [:create, :parse]
 
   def index
@@ -26,7 +25,7 @@ class UploadController < AuthenticatedController
   def create
     filename = CGI::escape params[:file].original_filename
     # add the file as an attachment
-    @attachment = Attachment.new(filename, node_id: @uploads_node.id)
+    @attachment = Attachment.new(filename, node_id: current_project.plugin_uploads_node.id)
     @attachment << params[:file].read
     @attachment.save
 
@@ -36,7 +35,7 @@ class UploadController < AuthenticatedController
   end
 
   def parse
-    attachment = Attachment.find(params[:file], conditions: { node_id: @uploads_node.id })
+    attachment = Attachment.find(params[:file], conditions: { node_id: current_project.plugin_uploads_node.id })
 
     # Files smaller than 1Mb are processed inlined, others are
     # processed in the background via a Redis worker.
@@ -109,10 +108,6 @@ class UploadController < AuthenticatedController
                      collect(&:uploaders).
                      flatten.
                      sort_by(&:name)
-  end
-
-  def find_uploads_node
-    @uploads_node = Node.plugin_uploads_node
   end
 
   # Ensure that the requested :uploader is valid and has been included in the

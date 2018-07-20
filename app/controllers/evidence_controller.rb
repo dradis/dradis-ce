@@ -125,7 +125,7 @@ class EvidenceController < NestedNodeResourceController
   # passed by the user.
   def find_or_initialize_evidence
     if params[:id]
-      @evidence = Evidence.includes(:issue, issue: [:tags]).find(params[:id])
+      @evidence = @node.evidence.includes(:issue, issue: [:tags]).find(params[:id])
     elsif params[:evidence]
       @evidence = Evidence.new(evidence_params) do |e|
         e.node = @node
@@ -139,7 +139,7 @@ class EvidenceController < NestedNodeResourceController
   def create_issue
     Issue.create do |issue|
       issue.text = "#[Title]#\nNew issue auto-created for node [#{@node.label}]."
-      issue.node = Node.issue_library
+      issue.node = current_project.issue_library
       issue.author = current_user.email
     end
   end

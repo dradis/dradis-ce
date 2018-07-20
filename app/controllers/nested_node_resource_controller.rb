@@ -15,16 +15,16 @@ class NestedNodeResourceController < AuthenticatedController
     # child controllers.
     if params[:controller] == 'nodes'
       if params[:id]
-        @node = Node.includes(
+        @node = current_project.nodes.includes(
           :notes, :evidence, evidence: [:issue, { issue: :tags }]
         ).find(params[:id])
       else
         @node = Node.new(node_params)
       end
     else
-      @node = Node.includes(
+      @node = current_project.nodes.includes(
         :notes, :evidence, evidence: [:issue, { issue: :tags }]
-      ).find_by_id(params[:node_id])
+      ).find(params[:node_id])
     end
   end
 end

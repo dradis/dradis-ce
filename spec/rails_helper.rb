@@ -9,6 +9,7 @@ require 'rspec/rails'
 
 require 'capybara/rspec'
 require 'capybara/poltergeist'
+require 'paper_trail/frameworks/rspec'
 require 'shoulda/matchers'
 
 

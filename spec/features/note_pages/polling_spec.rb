@@ -8,7 +8,7 @@ describe "note pages", js: true do
   before do
     login_to_project_as_user
     @other_user = create(:user, :admin)
-    @node       = create(:node)
+    @node       = create(:node, project: current_project)
     @note       = create(:note, node: @node)
   end
 

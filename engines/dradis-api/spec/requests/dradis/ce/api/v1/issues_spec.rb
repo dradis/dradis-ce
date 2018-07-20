@@ -43,7 +43,7 @@ describe "Issues API" do
 
     describe "GET /api/issues" do
       before(:each) do
-        @issues = create_list(:issue, 10).sort_by(&:title)
+        @issues = create_list(:issue, 10, node: project.issue_library).sort_by(&:title)
 
         get "/api/issues", env: @env
         expect(response.status).to eq(200)
@@ -73,7 +73,7 @@ describe "Issues API" do
 
     describe "GET /api/issue/:id" do
       before(:each) do
-        @issue = create(:issue, text: "#[a]#\nb\n\n#[c]#\nd\n\n#[e]#\nf\n\n")
+        @issue = create(:issue, node: project.issue_library, text: "#[a]#\nb\n\n#[c]#\nd\n\n#[e]#\nf\n\n")
 
         get "/api/issues/#{ @issue.id }", env: @env
         expect(response.status).to eq(200)
@@ -99,7 +99,7 @@ describe "Issues API" do
       end
 
       it "creates a new issue" do
-        expect{valid_post}.to change{Issue.count}.by(1)
+        expect{valid_post}.to change{project.issues.count}.by(1)
         expect(response.status).to eq(201)
         retrieved_issue = JSON.parse(response.body)
         expect(retrieved_issue['text']).to eq valid_params[:issue][:text]
@@ -118,13 +118,13 @@ describe "Issues API" do
         params = { issue: { text: "A"*(65535+1) } }
         expect {
           post "/api/issues", params: params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
-        }.not_to change { Issue.count }
+        }.not_to change { project.issues.count }
         expect(response.status).to eq(422)
       end
     end
 
     describe "PUT /api/issues/:id" do
-      let(:issue) { create(:issue, text: "Existing Issue") }
+      let(:issue) { create(:issue, node: project.issue_library, text: "Existing Issue") }
       let(:valid_params) { { issue: { text: "Updated Issue" } } }
       let(:valid_put) do
         put "/api/issues/#{issue.id}", params: valid_params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
@@ -134,7 +134,7 @@ describe "Issues API" do
         valid_put
         expect(response.status).to eq(200)
 
-        expect(Issue.find(issue.id).text).to eq valid_params[:issue][:text]
+        expect(project.issues.find(issue.id).text).to eq valid_params[:issue][:text]
 
         retrieved_issue = JSON.parse(response.body)
         expect(retrieved_issue['text']).to eq valid_params[:issue][:text]
@@ -158,14 +158,14 @@ describe "Issues API" do
     end
 
     describe "DELETE /api/issue/:id" do
-      let(:issue) { create(:issue) }
+      let(:issue) { create(:issue, node: project.issue_library) }
 
       let(:delete_issue) { delete "/api/issues/#{ issue.id }", env: @env }
 
       it "deletes a issue" do
         delete_issue
         expect(response.status).to eq(200)
-        expect { Issue.find(issue.id) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { project.issues.find(issue.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
       let(:submit_form) { delete_issue }

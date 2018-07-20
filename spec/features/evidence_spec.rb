@@ -3,12 +3,20 @@ require 'rails_helper'
 describe "evidence" do
   subject { page }
 
-  let(:issue_lib) { Node.issue_library }
+  let(:issue_lib) { current_project.issue_library }
 
   before do
     login_to_project_as_user
-    @node = create(:node)
-    Node.issue_library
+    @node = create(:node, project: current_project)
+  end
+
+  example 'show page with wrong Node ID in URL' do
+    node     = create(:node)
+    evidence = create(:evidence, node: node)
+    wrong_node = create(:node)
+    expect do
+      visit project_node_evidence_path(current_project, wrong_node, evidence)
+    end.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   describe "show page" do
@@ -61,8 +69,13 @@ describe "evidence" do
 
     before do
       issue = create(:issue, node: issue_lib)
-      @evidence = create(:evidence, issue: issue, updated_at: 2.seconds.ago)
+      @evidence = create(:evidence, issue: issue, node: @node, updated_at: 2.seconds.ago)
       visit edit_project_node_evidence_path(current_project, @node, @evidence)
+    end
+
+    it 'has a form to edit the evidence' do
+      expect(page).to have_field :evidence_content
+      expect(page).to have_field :evidence_issue_id
     end
 
     it "uses the full-screen editor plugin" # TODO

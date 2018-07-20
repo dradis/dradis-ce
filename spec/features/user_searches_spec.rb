@@ -2,10 +2,10 @@ require 'rails_helper'
 
 describe "User searches", type: :feature do
   def setup_test_data
-    create(:issue, text: "Issue search")
-    node = create(:node, label: "Node search")
-    create(:note, text: "Note search", node: node)
-    create(:evidence, content: "Evidence search")
+    issue = create(:issue, text: 'Issue search', node: current_project.issue_library)
+    node = create(:node, label: 'Node search', project: current_project)
+    create(:note, text: 'Note search', node: node)
+    create(:evidence, content: 'Evidence search', issue: issue, node: node)
   end
 
   before do

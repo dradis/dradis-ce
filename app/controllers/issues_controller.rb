@@ -20,7 +20,7 @@ class IssuesController < AuthenticatedController
 
     # We can't use the existing @nodes variable as it only contains root-level
     # nodes, and we need the auto-complete to have the full list.
-    @nodes_for_add_evidence = Node.user_nodes.order(:label)
+    @nodes_for_add_evidence = current_project.nodes.user_nodes.order(:label)
 
     @affected_nodes = Node.joins(:evidence)
                         .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')
@@ -120,7 +120,7 @@ class IssuesController < AuthenticatedController
   end
 
   def find_issuelib
-    @issuelib = Node.issue_library
+    @issuelib = current_project.issue_library
   end
 
   # Once a valid @issuelib is set by the previous filter we look for the Issue we

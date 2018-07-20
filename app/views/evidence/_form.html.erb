@@ -2,7 +2,7 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :issue, collection: Issue.where(node_id: Node.issue_library.id).sort, label_method: :title, prompt: 'Choose an Issue' %>
+    <%= f.association :issue, collection: current_project.issues.sort, label_method: :title, prompt: 'Choose an Issue' %>
     <%= f.input :content, input_html: { class: 'textile', data: { preview_url: preview_path, help_url: markup_path } } %>
   </div>
 

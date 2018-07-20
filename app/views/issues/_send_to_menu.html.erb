@@ -12,7 +12,7 @@
       %>
     <% end %>
   <% end %>
-  <% unless defined?(Dradis::Pro) && sync_plugins.include?(Dradis::Pro::Issuelib::Engine) %>
+  <% unless defined?(Dradis::Pro) && defined?(Dradis::Pro::Issuelib) %>
     <% if sync_plugins.any? %>
     <li class="divider"></li>
     <% end %>
