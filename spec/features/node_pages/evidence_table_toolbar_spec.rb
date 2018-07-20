@@ -10,11 +10,11 @@ describe 'node pages' do
       (::Configuration.max_deleted_inline + 1).times do |i|
         evidence << create(
           :evidence,
+          node: node,
           content: "#[Title]#\r\ntest#{i}\r\n\r\n#[Description]#\r\nevidence#{i}\r\n",
           # Each evidence needs to be for a different issue so we can filter by
           # issue title in 'an index table toolbar' shared examples:
           issue: create(:issue, node: current_project.issue_library),
-          node: node,
         )
       end
       evidence
