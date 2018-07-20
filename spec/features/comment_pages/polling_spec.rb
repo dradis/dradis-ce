@@ -9,7 +9,7 @@ describe 'comment pages', js: true do
     describe 'and someone else adds a comment' do
       before do
         @new_comment = create(:comment, commentable: @commentable, user: @other_user)
-        track_created(@new_comment, @other_user)
+        create(:activity, action: :create, trackable: @new_comment, user: @other_user)
         call_poller
       end
 
@@ -25,7 +25,7 @@ describe 'comment pages', js: true do
     describe 'and someone else updates a comment' do
       before do
         @comment.update_attributes(content: 'content updated')
-        track_updated(@comment, @other_user)
+        create(:activity, action: :update, trackable: @comment, user: @other_user)
         call_poller
       end
 
@@ -39,7 +39,7 @@ describe 'comment pages', js: true do
     describe 'and someone else deletes a comment' do
       before do
         @comment.destroy
-        track_destroyed(@comment, @other_user)
+        create(:activity, action: :destroy, trackable: @comment, user: @other_user)
         call_poller
       end
 
