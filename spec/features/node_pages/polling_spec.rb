@@ -8,18 +8,19 @@ describe "node pages", js: true do
   before do
     login_to_project_as_user
     @other_user = create(:user)
-    @node       = create(:node)
+    @node       = create(:node, project: current_project)
     @note_0     = create(:note, node: @node, text:"#[Title]#\nNote 0")
     @note_1     = create(:note, node: @node, text:"#[Title]#\nNote 1")
-    @evidence_0 = create(:evidence, node: @node, content:"#[Title]#\nEv 0")
-    @evidence_1 = create(:evidence, node: @node, content:"#[Title]#\nEv 1")
+    issue       = create(:issue, node: current_project.issue_library)
+    @evidence_0 = create(:evidence, issue: issue, node: @node, content:"#[Title]#\nEv 0")
+    @evidence_1 = create(:evidence, issue: issue, node: @node, content:"#[Title]#\nEv 1")
   end
 
   describe "when another user adds a new node to the current project" do
     context "and the new node is a root node" do
       before do
         visit project_node_path(@node.project, @node)
-        @new_node = create(:node, label: "New node", parent_id: nil)
+        @new_node = create(:node, label: "New node", parent_id: nil, project: current_project)
       end
 
       let(:add_node) do
@@ -116,7 +117,7 @@ describe "node pages", js: true do
 
   describe "when another user deletes a root node" do
     before do
-      @other_node = create(:node, label: "Delete me")
+      @other_node = create(:node, label: "Delete me", project: current_project)
       visit project_node_path(@node.project, @node)
     end
 
@@ -215,7 +216,7 @@ describe "node pages", js: true do
 
   describe "when another user updates a node" do
     before do
-      @other_node = create(:node, label: "Other")
+      @other_node = create(:node, label: "Other", project: current_project)
       visit project_node_path(@node.project, @node)
     end
 
