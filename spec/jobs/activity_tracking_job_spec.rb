@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe ActivityTrackingJob do #, type: :job do
 
-  it 'it uses correct queue' do
+  it 'uses correct queue' do
     expect(described_class.new.queue_name).to eq('dradis_project')
   end
 
@@ -22,7 +22,7 @@ describe ActivityTrackingJob do #, type: :job do
               action: action.to_s,
               trackable_id: trackable.id,
               trackable_type: trackable.class.to_s,
-              user: user
+              user_id: user.id
             )
           }.to change { Activity.count }.by(1)
 
@@ -58,7 +58,7 @@ describe ActivityTrackingJob do #, type: :job do
           action: 'create',
           trackable_id: trackable.id,
           trackable_type: trackable.class.to_s,
-          user: trackable.user
+          user_id: trackable.user.id
         )
       }.to change { Notification.count }.by(2)
     end

@@ -13,8 +13,9 @@ class Notification < ApplicationRecord
   validates :recipient, presence: true, associated: true
 
   # -- Scopes ---------------------------------------------------------------
-  scope :unread,  -> { where(read_at: nil) }
+  scope :newest,  -> { order(created_at: :desc) }
   scope :read,    -> { where.not(read_at: nil) }
+  scope :unread,  -> { where(read_at: nil) }
 
   # -- Class Methods --------------------------------------------------------
 

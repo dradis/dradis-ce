@@ -29,6 +29,7 @@
 //= require snowcrash/modules/export
 //= require snowcrash/modules/issues
 //= require snowcrash/modules/nodes
+//= require snowcrash/modules/notifications
 //= require snowcrash/modules/search
 //= require snowcrash/modules/activities/poller
 // require snowcrash/modules/tour

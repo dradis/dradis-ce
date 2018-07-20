@@ -1,0 +1,21 @@
+<% notifications.each do |notification| %>
+  <% present notification do |notif_presenter| %>
+    <li class="notification <%= notification.read? ? '' : 'unread' %>">
+      <div class="body">
+        <%= notif_presenter.icon %>
+
+        <div class="time">
+          <%= notif_presenter.created_at_ago %>
+        </div>
+
+        <div class="title">
+          <%= notif_presenter.render_title %>
+        </div>
+
+        <div class="details">
+          <%= notif_presenter.avatar_with_link(30) %>
+        </div>
+      </div>
+    </li>
+  <% end %>
+<% end %>

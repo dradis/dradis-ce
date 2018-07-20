@@ -1,8 +1,10 @@
 class ActivityTrackingJob < ApplicationJob
   queue_as :dradis_project
 
-  def perform(action:, trackable_id:, trackable_type:, user:)
-    trackable = trackable_type.constantize.find(trackable_id) rescue nil
+  def perform(action:, trackable_id:, trackable_type:, user_id:)
+    user = User.find(user_id)
+    
+    trackable = trackable_type.constantize.find_by(id: trackable_id)
 
     Activity.create!(
       action:    action.to_s,
