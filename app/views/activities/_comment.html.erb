@@ -1,0 +1,13 @@
+<% if comment %>
+  <% title = "#{comment.commentable.class.to_s.capitalize} ##{comment.commentable.id}" %>
+  <% if comment.commentable.title? %>
+    <% title = comment.commentable.title %>
+  <% end %>
+  <%= presenter.verb %> a <%= link_to 'comment', polymorphic_path([@project, comment.commentable], anchor: dom_id(comment)) %> on <%= link_to title, polymorphic_path([@project, comment.commentable]) %>.
+<% else %>
+  <% if activity.action == 'destroy' %>
+    deleted a comment.
+  <% else %>
+    <%= presenter.verb %> a comment which has since been deleted.
+  <% end %>
+<% end %>

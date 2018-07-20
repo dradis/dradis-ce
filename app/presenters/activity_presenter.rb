@@ -12,6 +12,8 @@ class ActivityPresenter < BasePresenter
   def icon
     icon_css = %w{activity-icon fa}
     icon_css << case activity.trackable_type
+                when 'Comment'
+                  'fa-comment'
                 when 'Evidence'
                   'fa-flag'
                 when 'Issue'

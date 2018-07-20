@@ -17,7 +17,7 @@ class IssuesController < AuthenticatedController
   end
 
   def show
-    @activities = @issue.activities.latest
+    @activities = @issue.commentable_activities.latest
 
     # We can't use the existing @nodes variable as it only contains root-level
     # nodes, and we need the auto-complete to have the full list.
