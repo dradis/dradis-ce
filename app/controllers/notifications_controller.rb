@@ -23,12 +23,10 @@ class NotificationsController < AuthenticatedController
     @has_unread = current_user.notifications.unread.any?
 
     respond_to do |f|
-      f.js {
-        render json: {
-          ids: notifications.map(&:id),
-          has_unread: @has_unread
-        }
-      }
+      f.js do
+        @ids = notifications.map(&:id)
+      end
+
       # TODO s/@project/current_project once project-id-scopes is merged
       f.html { redirect_to project_notifications_path(@project) }
     end
