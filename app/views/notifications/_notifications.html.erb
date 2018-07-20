@@ -4,7 +4,11 @@
       Notifications
       (<%= unread_count %>)
       <div class="pull-right">
-        <%= link_to 'Mark all as read', 'javascript:void(0)', data: {behavior: 'read-all', url: read_all_project_notifications_path(@project)} %>
+        <%= link_to 'Mark all as read',
+                    project_notification_path(@project, id: 'all'),
+                    method: :put,
+                    remote: true
+                    %>
       </div>
     </div>
     <% if notifications.any? %>

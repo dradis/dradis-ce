@@ -16,7 +16,11 @@
           <%= notif_presenter.avatar_with_link(30) %>
         </div>
       </div>
-      <%= link_to 'javascript:void(0)', title: 'Mark as read', class: 'notification-read', data: {behavior: 'read-notification', url: read_project_notification_path(@project, notification)} do %>
+      <%= link_to project_notification_path(@project, notification),
+                  title: 'Mark as read',
+                  class: 'notification-read',
+                  remote: true,
+                  method: :put do %>
         <i class="fa fa-times-circle-o fa-lg" aria-hidden="true"></i>
       <% end %>
     </li>
