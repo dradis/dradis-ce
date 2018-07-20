@@ -49,7 +49,7 @@ describe "node pages", js: true do
     context "and the new node is a subnode" do
       before do
         # Give the node another subnode so it's expandable:
-        create(:node, label: "Other Sub", parent: @node)
+        create(:node, label: "Other Sub", parent: @node, project: current_project)
         visit project_node_path(@node.project, @node)
       end
 
@@ -60,7 +60,7 @@ describe "node pages", js: true do
           it "adds the node to the sidebar" do
             within_main_sidebar do
               should have_selector node_link_selector(@node)
-              @subnode = create(:node, label: "Sub", parent: @node)
+              @subnode = create(:node, label: "Sub", parent: @node, project: current_project)
               should have_no_selector node_link_selector(@subnode)
               track_created(@subnode, @other_user)
               call_poller
@@ -78,7 +78,7 @@ describe "node pages", js: true do
           it "adds the node to the sidebar" do
             within_move_node_nodal do
               should have_selector node_link_selector(@node)
-              @subnode = create(:node, label: "Sub", parent: @node)
+              @subnode = create(:node, label: "Sub", parent: @node, project: current_project)
               should have_no_selector node_link_selector(@subnode)
               track_created(@subnode, @other_user)
               call_poller
@@ -90,7 +90,7 @@ describe "node pages", js: true do
 
       context "and its parent has no other subnodes" do
         specify "the 'expand' link appears, and works" do
-          @sub = create(:node, label: "Sub", parent: @node)
+          @sub = create(:node, label: "Sub", parent: @node, project: current_project)
           track_created(@sub, @other_user)
           call_poller
           within_main_sidebar do
@@ -147,7 +147,7 @@ describe "node pages", js: true do
 
   describe "when another user deletes a non-root node" do
     before do
-      @subnode = create(:node, label: "Sub", parent: @node)
+      @subnode = create(:node, label: "Sub", parent: @node, project: current_project)
       visit project_node_path(@node.project, @node)
     end
 

@@ -15,7 +15,7 @@ describe 'node pages' do
         content: "#[Title]#\nEvidence1\n\n#[Description]#\nn/a\n#[Extra]#\nExtra field",
         issue: issue,
       )
-      visit project_node_path(node.project, node, tab: 'evidence-tab')
+      visit project_node_path(@project, node, tab: 'evidence-tab')
     end
 
     let(:columns) { ['Title', 'Created', 'Created by', 'Updated'] }
