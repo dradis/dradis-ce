@@ -14,7 +14,7 @@ describe 'exporting comments' do
     end
 
     it 'creates the comment xml' do
-      export_options = {plugin: Dradis::Plugins::Projects}
+      export_options = { plugin: Dradis::Plugins::Projects }
       exporter =
         Dradis::Plugins::Projects::Export::V2::Template.new(export_options)
 

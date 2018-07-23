@@ -1,25 +1,28 @@
 require 'rails_helper'
 
-describe 'restoring comments' do
-  before { login_to_project_as_user }
 
-  context 'template with comments' do
-    before do
-      visit upload_path
-    end
+describe Dradis::Plugins::Projects::Upload::V2::Template::Importer do
+  before do
+    login_to_project_as_user
+  end
 
-    it 'uploads the comments in the template', js: true do
-      select "Dradis::Plugins::Projects::Upload::Template"
-      attach_file \
-        "file",
-        Rails.root.join(
-          "spec", "fixtures", "files", "templates", "with_comments.xml"
-        )
 
-      expect(page).to have_text("Worker process completed", wait: 120)
+  let(:importer_class) { Dradis::Plugins::Projects::Upload::Template }
+  let(:file_path) {
+    Rails.root.join( "spec", "fixtures", "files", "templates", "with_comments.xml")
+  }
 
-      expect(Comment.count).to eq 1
-      expect(Comment.last.content).to eq 'Hello World'
+  context 'uploading a template with comments' do
+    it 'imports the comments' do
+      importer = importer_class::Importer.new(
+        default_user_id: User.first.id,
+        plugin: importer_class
+      )
+
+      output = importer.import(file: file_path)
+
+      expect(Comment.count).to eq(1)
+      expect(Comment.last.content).to include('Hello World')
     end
   end
 end
