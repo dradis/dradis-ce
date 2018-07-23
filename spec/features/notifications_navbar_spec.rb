@@ -54,7 +54,7 @@ describe 'User notifications', js: true do
 
     describe 'read all feature' do
       it 'sets all the notifications as read' do
-        find('[data-behavior~=read-all]').click
+        click_link 'Mark all as read'
 
         expect(page).to_not have_css(".notification.unread[data-notification-id='#{@notification1.id}']")
         expect(page).to_not have_css(".notification.unread[data-notification-id='#{@notification1.id}']")
@@ -65,8 +65,9 @@ describe 'User notifications', js: true do
 
     describe 'read notification feature' do
       it 'sets a notification as read' do
-        read_path = "/projects/#{@project.id}/notifications/#{@notification1.id}/read"
-        find("[data-behavior~=read-notification][data-url='#{read_path}']", wait: 10).click
+        within ".notification[data-notification-id='#{@notification1.id}']" do
+          click_link 'Mark as read'
+        end
 
         expect(page).to_not have_css(".notification.unread[data-notification-id='#{@notification1.id}']")
         expect(@notification1.reload.read_at).to_not be_nil

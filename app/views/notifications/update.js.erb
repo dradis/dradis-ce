@@ -1,0 +1,8 @@
+<% @ids.each do |id| %>
+$notification = $('[data-notification-id="' + <%= id %> + '"]');
+$notification.removeClass('unread');
+<% end %>
+
+<% unless @has_unread %>
+$('[data-behavior~=notifications-dot]').addClass('hidden');
+<% end %>

@@ -63,19 +63,12 @@ Rails.application.routes.draw do
         resources :revisions, only: [:index, :show]
       end
 
-      constraints(:filename => /.*/) do
+      constraints(filename: /.*/) do
         resources :attachments, param: :filename
       end
     end
 
-    resources :notifications, only: [:index] do
-      collection do
-        post :read_all
-      end
-      member do
-        post :read
-      end
-    end
+    resources :notifications, only: [:index, :update]
 
     resources :revisions, only: [] do
       member { post :recover }

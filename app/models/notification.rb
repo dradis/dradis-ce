@@ -24,7 +24,7 @@ class Notification < ApplicationRecord
     self.read_at
   end
 
-  def mark_as_read(time = Time.now)
+  def read!(time = Time.now)
     return if self.read_at
     self.update_attribute :read_at, time
   end
