@@ -40,7 +40,6 @@ class Comment < ApplicationRecord
     when 'create'
       subscribers = commentable.subscriptions.where.not(user: user).map(&:user)
       create_notifications(action: :create, recipients: subscribers)
-      broadcast_notifications(recipients: subscribers)
     end
   end
 end

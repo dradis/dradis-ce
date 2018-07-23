@@ -1,0 +1,22 @@
+<% present notification do |presenter| %>
+  <li class="notification <%= notification.read? ? '' : 'unread' %>" data-notification-id="<%= notification.id %>">
+    <div class="body">
+      <%= presenter.icon %>
+
+      <div class="time">
+        <%= presenter.created_at_ago %>
+      </div>
+
+      <div class="title">
+        <%= presenter.render_title %>
+      </div>
+
+      <div class="details">
+        <%= presenter.avatar_with_link(30) %>
+      </div>
+    </div>
+    <%= link_to 'javascript:void(0)', title: 'Mark as read', class: 'notification-read', data: { behavior: 'read-notification', url: read_project_notification_path(@project || notification_project, notification) } do %>
+      <i class="fa fa-times-circle-o fa-lg" aria-hidden="true"></i>
+    <% end %>
+  </li>
+<% end %>
