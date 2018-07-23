@@ -1,5 +1,5 @@
 <% partial = escape_javascript(
-  render partial: 'notifications',
+  render partial: 'dropdown',
   locals: { notifications: @notifications,  unread_count: @unread_count}
 ) %>
 $('[data-behavior~=notifications-dropdown] + div').html("<%= partial %>");

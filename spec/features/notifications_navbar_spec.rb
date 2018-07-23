@@ -72,4 +72,17 @@ describe 'User notifications', js: true do
       end
     end
   end
+
+  describe 'notification on broadcast' do
+    before do
+      issue = create(:issue, text: 'Test issue')
+      @comment = create(:comment, commentable: issue, user: @logged_in_as)
+      @notification = create(:notification, notifiable: @comment, actor: @logged_in_as, recipient: @logged_in_as)
+    end
+
+    it 'shows the notification alert dot' do
+      @comment.broadcast_to_user(@notification, @logged_in_as)
+      expect(page).to_not have_css('.notifications-dot.hidden')
+    end
+  end
 end

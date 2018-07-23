@@ -1,28 +1,3 @@
 <% notifications.each do |notification| %>
-  <% present notification do |notif_presenter| %>
-    <li class="notification <%= notification.read? ? '' : 'unread' %>" data-notification-id="<%= notification.id %>">
-      <div class="body">
-        <%= notif_presenter.icon %>
-
-        <div class="time">
-          <%= notif_presenter.created_at_ago %>
-        </div>
-
-        <div class="title">
-          <%= notif_presenter.render_title %>
-        </div>
-
-        <div class="details">
-          <%= notif_presenter.avatar_with_link(30) %>
-        </div>
-      </div>
-      <%= link_to project_notification_path(@project, notification),
-                  title: 'Mark as read',
-                  class: 'notification-read',
-                  remote: true,
-                  method: :put do %>
-        <i class="fa fa-times-circle-o fa-lg" aria-hidden="true"></i>
-      <% end %>
-    </li>
-  <% end %>
+  <%= render partial: 'item', locals: { notification: notification } %>
 <% end %>
