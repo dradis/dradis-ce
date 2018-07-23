@@ -6,7 +6,7 @@ App.cable.subscriptions.create 'NotificationsChannel',
     console.log('Error subscribing to NotificationsChannel.')
 
   received: (data)->
-    $('[data-behavior~=notifications-dot]').toggleClass('hidden')
+    $('[data-behavior~=notifications-dot]').removeClass('hidden')
 
     $container = $('[data-behavior~=notifications-dropdown] + div')
     $unreadCount = $('[data-behavior~=unread-count]')
