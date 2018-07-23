@@ -7,7 +7,7 @@
 # Any third-party code (e.g. plugins) should inherit from this class instead of
 # calling the authentication filters directly
 class AuthenticatedController < ApplicationController
-  before_action :login_required
+  prepend_before_action :login_required
   before_action :set_paper_trail_whodunnit
   # before_action :render_onboarding_tour
 
