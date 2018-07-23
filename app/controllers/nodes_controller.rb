@@ -38,7 +38,7 @@ class NodesController < NestedNodeResourceController
 
   def create_multiple
     if params[:nodes][:parent_id].present?
-      @parent = Node.find(params[:nodes][:parent_id])
+      @parent = current_project.nodes.find(params[:nodes][:parent_id])
     end
 
     list = params[:nodes][:list].lines.map(&:strip).select(&:present?)

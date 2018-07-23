@@ -38,7 +38,7 @@ class RevisionsController < AuthenticatedController
   private
   def load_node
     if params[:evidence_id] || params[:note_id]
-      @node = Node.includes(
+      @node = current_project.nodes.includes(
         :notes, :evidence, evidence: [:issue, { issue: :tags }]
       ).find_by_id(params[:node_id])
 

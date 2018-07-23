@@ -140,7 +140,7 @@ class IssuesController < AuthenticatedController
   # Load all the colour tags in the project (those that start with !). If none
   # exist, initialize a set of tags.
   def find_or_initialize_tags
-    @tags = Tag.where('name like ?', '!%')
+    @tags = current_project.tags.where('name like ?', '!%')
   end
 
   def issue_params
