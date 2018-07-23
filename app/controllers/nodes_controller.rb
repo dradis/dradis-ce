@@ -46,7 +46,7 @@ class NodesController < NestedNodeResourceController
     if list.any?
       Node.transaction do |node|
         list.each do |node_label|
-          node = Node.create!(
+          node = current_project.nodes.create!(
             label: node_label.strip,
             parent: @parent,
             type_id: params[:nodes][:type_id]
@@ -67,7 +67,7 @@ class NodesController < NestedNodeResourceController
   # POST /nodes/sort
   def sort
     params[:nodes].each_with_index do |id, index|
-      Node.update_all({position: index+1}, {id: id})
+      current_project.nodes.update_all({position: index+1}, {id: id})
     end
     head :ok
   end
