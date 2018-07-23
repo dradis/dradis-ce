@@ -16,17 +16,17 @@ describe 'upload manager spec' do
     end
 
     it 'imports the uploaded template', js: true do
+      expect(importer_class).to receive(:new).with(
+        hash_including(default_user_id: User.first.id)
+      )
+      expect(importer).to receive(:import)
+
       file_path =
         Rails.root.join(
           "spec", "fixtures", "files", "templates", "with_comments.xml"
         )
       select "Dradis::Plugins::Projects::Upload::Template"
       attach_file "file", file_path
-
-      expect(importer_class).to receive(:new).with(
-        hash_including(default_user_id: User.first.id)
-      )
-      expect(importer).to receive(:import)
     end
   end
 end
