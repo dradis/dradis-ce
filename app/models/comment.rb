@@ -47,6 +47,7 @@ class Comment < ApplicationRecord
   end
 
   def mentions
+    @mentions = nil if changed?(:content)
     @mentions ||= begin
       mentioned_users = []
       HTML::Pipeline::MentionFilter.mentioned_logins_in(content) do |match, login, is_mentioned|
