@@ -37,6 +37,8 @@ Rails.application.routes.draw do
       resources :revisions, only: [:index, :show]
     end
 
+    resources :subscriptions, only: [:create, :destroy]
+
     resources :methodologies do
       collection { post :preview }
       member do
