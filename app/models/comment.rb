@@ -47,16 +47,16 @@ class Comment < ApplicationRecord
   end
 
   def mentions
-    return @mentions unless (@mentions.nil? || content_changed?)
-
-    @mentions = []
-    HTML::Pipeline::MentionFilter.mentioned_logins_in(content) do |match, login, is_mentioned|
-      if (mentioned_user = User.find_by_email(login))
-        @mentions << mentioned_user
+    @mentions ||= begin
+      mentioned_users = []
+      HTML::Pipeline::MentionFilter.mentioned_logins_in(content) do |match, login, is_mentioned|
+        if (mentioned_user = User.find_by_email(login))
+          mentioned_users << mentioned_user
+        end
       end
-    end
 
-    @mentions
+      mentioned_users
+    end
   end
 
   private
