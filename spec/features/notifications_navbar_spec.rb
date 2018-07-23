@@ -65,7 +65,9 @@ describe 'User notifications', js: true do
 
     describe 'read notification feature' do
       it 'sets a notification as read' do
-        click_link 'Mark as read', match: :first
+        within ".notification[data-notification-id='#{@notification1.id}']" do
+          click_link 'Mark as read'
+        end
 
         expect(page).to_not have_css(".notification.unread[data-notification-id='#{@notification1.id}']")
         expect(@notification1.reload.read_at).to_not be_nil
