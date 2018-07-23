@@ -5,7 +5,7 @@
                   placeholder: 'Write your comment...',
                   rows: 5,
                   required: 'required',
-                  class: 'mentionable' %>
+                  data: { behavior: 'mentionable' } %>
 
   <%= f.hidden_field :commentable_type %>
   <%= f.hidden_field :commentable_id %>
