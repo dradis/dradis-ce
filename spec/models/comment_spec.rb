@@ -25,4 +25,36 @@ describe Comment do
       expect(comment.mentions).to eq [user1, user2]
     end
   end
+
+  describe '#notify' do
+    it 'creates notifications when a comment is created' do
+      commentable = create(:issue)
+      create_list(:subscription, 2, subscribable: commentable)
+      comment = create(:comment, commentable: commentable)
+
+      expect {
+        comment.notify('create')
+      }.to change { Notification.count }.by(2)
+    end
+
+    it 'creates notifications when a comment has mentions' do
+      issue_owner = create(:user, email: 'owner')
+      commentable = create(:issue, author: issue_owner.email)
+      create(:subscription, subscribable: commentable)
+      mentioned = create(:user, email: 'mentioned')
+      comment = create(
+        :comment,
+        commentable: commentable,
+        content: "Hello @#{mentioned.email} and @#{issue_owner.email}"
+      )
+
+      expect {
+        comment.notify('create')
+      }.to change { Notification.count }.by(3) \
+      .and change { Subscription.count }.by(1)
+
+      expect(Notification.where(action: 'mention').count).to eq(2)
+      expect(Notification.where(action: 'create').count).to eq(1)
+    end
+  end
 end
