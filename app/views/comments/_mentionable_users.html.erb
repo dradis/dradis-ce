@@ -1,6 +1,12 @@
 <%# this is picked up by javascripts/snowcrash/modules/comments.js.coffee %>
-<div id="mentionable-users"
-  data-users="
-    <%= User.all.map { |u| { key: u.email, value: u.email, avatar_url: avatar_url } }.to_json %>
-  ">
-</div>
+<%= tag.div id: "mentionable-users",
+            data: {
+              users: User.all.map do |user|
+                {
+                  key: user.email,
+                  value: user.email,
+                  avatar_url: avatar_url
+                }
+              end
+            }
+%>
