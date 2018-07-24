@@ -2,7 +2,6 @@ class NotificationsController < AuthenticatedController
   include ProjectScoped
 
   def index
-    # TODO this doesn't fix all the N+1 query problems, needs a closer look:
     notifs = current_user.notifications.newest.includes(:actor, notifiable: [:user, :commentable])
     respond_to do |format|
       format.html do
