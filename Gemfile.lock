@@ -421,7 +421,6 @@ DEPENDENCIES
   rails (~> 5.1.6)
   rails-html-sanitizer (~> 1.0.4)
   record_tag_helper
-  redis (~> 4.0)
   rerun
   resque
   resque-status
