@@ -3,6 +3,10 @@ require 'rails_helper'
 describe 'upload manager spec' do
   before { login_to_project_as_user }
 
+  after do
+    FileUtils.rm_rf(Attachment.pwd.join(uploads_node.to_s))
+  end
+
   let(:importer_class) { Dradis::Plugins::Projects::Upload::Template::Importer }
   let(:importer) { instance_double(importer_class) }
   let(:uploads_node) { Node.plugin_uploads_node }
@@ -27,6 +31,8 @@ describe 'upload manager spec' do
         )
       select "Dradis::Plugins::Projects::Upload::Template"
       attach_file "file", file_path
+
+      expect(page).to have_content('Small attachment detected. Processing in line.')
     end
   end
 end
