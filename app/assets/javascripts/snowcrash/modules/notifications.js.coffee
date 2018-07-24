@@ -1,5 +1,4 @@
 document.addEventListener 'turbolinks:load', ->
-  $alertDot = $('[data-behavior~=notifications-dot]')
   $dropdown = $('[data-behavior~=notifications-dropdown]')
 
   if $dropdown.length
