@@ -2,7 +2,9 @@
 
 <div class="notifications-index">
   <%# TODO s/@project/current_project once project-id-scopes is merged %>
-  <b><%= link_to 'Mark all as read', read_all_project_notifications_path(@project), class: 'pull-right', data: { method: 'POST' } %></b>
+  <% if @notifications.any? %>
+    <b><%= link_to 'Mark all as read', read_all_project_notifications_path(@project), class: 'pull-right', data: { method: 'POST' } %></b>
+  <% end %>
   <div class="clearfix"></div><br>
 
   <% cache [current_user, @notifications] do %>
