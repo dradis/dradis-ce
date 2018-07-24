@@ -12,11 +12,17 @@
       %>
     <% end %>
   <% end %>
-  <% unless defined?(Dradis::Pro) && defined?(Dradis::Pro::Issuelib) %>
+  <% unless defined?(Dradis::Pro) %>
     <% if sync_plugins.any? %>
     <li class="divider"></li>
     <% end %>
+  <% end %>
+  <% unless defined?(Dradis::Pro::Issuelib) %>
     <li><a href="javascript:void(0)" class="js-try-pro" data-term="issuelib" data-url="http://drad.is/l/try-pro-issuelib"><i class="fa fa-book"></i> Built-in IssueLibrary</a></li>
+    <li class="divider"></li>
+  <% end %>
+  <% unless defined?(Dradis::Pro::Remediationtracker) %>   
+    <li><a href="javascript:void(0)" class="js-try-pro" data-term="remediation" data-url="http://drad.is/l/try-pro-remediation"><i class="fa fa-tasks"></i> Remediation Tracker</a></li>
   <% end %>
   </ul>
-</span> - 
+</span>
