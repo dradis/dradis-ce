@@ -1,5 +1,5 @@
 <% commentable = comment.commentable %>
-<% project = commentable.node.project %>
+<% project = commentable.project %>
 <% comment_path = polymorphic_path([project, commentable], anchor: dom_id(comment)) %>
 <% if commentable.title? %>
   commented on the

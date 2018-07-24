@@ -15,15 +15,15 @@ module Notifiable
           recipient: recipient
         )
 
-        broadcast_to_user(notification, user)
+        broadcast_to_user(notification, recipient)
       end
     end
   end
 
   def broadcast_to_user(notification, user)
-    project = self.commentable.node.project
+    project = self.commentable.project
     notification_html = NotificationsController.render(
-      partial: 'notifications/item',
+      partial: 'notifications/notification',
       locals: { notification: notification, notification_project: project}
     )
     NotificationsChannel.broadcast_to(user, notification_html: notification_html)
