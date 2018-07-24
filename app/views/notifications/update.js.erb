@@ -1,0 +1,11 @@
+<% @ids.each do |id| %>
+$notification = $('[data-notification-id="' + <%= id %> + '"]');
+$notification.removeClass('unread');
+<% end %>
+
+$unreadCount  = $('[data-behavior~=unread-count]');
+$unreadCount.text(parseInt($unreadCount.text()) - <%= @changed_notifications_count %>);
+
+<% unless @has_unread %>
+$('[data-behavior~=notifications-dot]').addClass('hidden');
+<% end %>

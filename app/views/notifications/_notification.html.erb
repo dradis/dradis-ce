@@ -1,25 +1,35 @@
 <%# NB this template is rendered both in the notification navbar %>
 <%# and on notifications#index                                   %>
-<% present notification do |notif_presenter| %>
-  <li class="notification <%= notification.read? ? '' : 'unread' %>">
+<% present notification do |presenter| %>
+  <li class="notification <%= notification.read? ? '' : 'unread' %>" data-notification-id="<%= notification.id %>">
     <div class="body">
       <% if local_assigns[:index_page] %>
         <%# TODO s/@project/current_project once project-id-scopes is merged %>
-        <%= notif_presenter.link_to_mark_as_read(@project) %>
+        <%= presenter.link_to_mark_as_read(@project) %>
       <% end %>
-      <%= notif_presenter.icon %>
+
+      <%= presenter.icon %>
 
       <div class="time">
-        <%= notif_presenter.created_at_ago %>
+        <%= presenter.created_at_ago %>
       </div>
 
       <div class="title">
-        <%= notif_presenter.render_title %>
+        <%= presenter.render_title %>
       </div>
 
       <div class="details">
-        <%= notif_presenter.avatar_with_link(30) %>
+        <%= presenter.avatar_with_link(30) %>
       </div>
     </div>
+
+    <%= link_to project_notification_path(@project || notification_project, notification),
+                title: 'Mark as read',
+                class: 'notification-read',
+                data: { behavior: 'notification-read' },
+                remote: true,
+                method: :put do %>
+      <i class="fa fa-times-circle-o fa-lg" aria-hidden="true"></i>
+    <% end %>
   </li>
 <% end %>

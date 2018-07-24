@@ -13,6 +13,8 @@
 //= require local-time
 //= require clipboard
 
+//= require cable
+
 //= require shared/console_updater
 //= require shared/items_table
 

@@ -17,22 +17,37 @@ class NotificationsController < AuthenticatedController
     end
   end
 
-  def read
-    current_user.notifications.find(params[:id]).mark_as_read
+  def update
+    @notifications =
+      if params[:id] == 'all'
+        current_user.notifications
+      elsif params[:id]
+        current_user.notifications.where(id: params[:id])
+      end
+
+    @notifications.each(&:read!)
+
     @has_unread = current_user.notifications.unread.any?
+
     respond_to do |f|
-      f.js { render json: {id: params[:id], has_unread: @has_unread} }
+      f.js do
+        if changed_notifications_count > 0
+          @ids = @notifications.map(&:id)
+        else
+          head :ok
+        end
+      end
+
       # TODO s/@project/current_project once project-id-scopes is merged
       f.html { redirect_to project_notifications_path(@project) }
     end
   end
 
-  def read_all
-    current_user.notifications.each(&:mark_as_read)
-    respond_to do |f|
-      f.js { head :no_content }
-      # TODO s/@project/current_project once project-id-scopes is merged
-      f.html { redirect_to project_notifications_path(@project) }
-    end
+
+  private
+
+  def changed_notifications_count
+    @changed_notifications_count ||=
+      @notifications.count(&:read_at_previously_changed?)
   end
 end

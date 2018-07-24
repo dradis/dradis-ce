@@ -214,6 +214,7 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     public_suffix (2.0.5)
+    puma (3.11.4)
     rack (2.0.5)
     rack-protection (2.0.2)
       rack
@@ -353,6 +354,9 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    unicorn-rails (2.2.1)
+      rack
+      unicorn
     uniform_notifier (1.10.0)
     vegas (0.1.11)
       rack (>= 1.0.0)
@@ -413,6 +417,7 @@ DEPENDENCIES
   paper_trail (~> 6.0)
   parslet (~> 1.6.0)
   poltergeist
+  puma
   rails (~> 5.1.6)
   rails-html-sanitizer (~> 1.0.4)
   record_tag_helper
@@ -436,6 +441,7 @@ DEPENDENCIES
   turbolinks (~> 5)
   uglifier (>= 1.3.0)
   unicorn (= 4.9.0)
+  unicorn-rails
   warden (~> 1.2.3)
   web-console (>= 3.3.0)
   whenever

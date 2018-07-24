@@ -1,7 +1,6 @@
 /* Notifications in the navbar */
 .notifications {
   .notifications-dot {
-    display: none;
     position: absolute;
     top: 20px;
     left: 22px;
@@ -38,9 +37,35 @@
       li.notification {
         position: relative;
         border-top: 1px solid $gray;
-        padding: 0.5em 1em 0.5em 3.5em;
+        padding: 0.5em 3em 0.5em 3.5em;
 
+        .body {
+          .notification-icon {
+            color: #bbb;
+            font-size: 32px;
+            left: 2px;
+            position: absolute;
+            top: 11px;
+          }
 
+          .time {
+            color: #888;
+          }
+
+          .details {
+            display: inline-block;
+          }
+        }
+
+        .notification-read {
+          position: absolute;
+          top: 15px;
+          right: 15px;
+        }
+
+        &.unread {
+          background-color: $grayLight;
+        }
       }
 
       li.no-content {
