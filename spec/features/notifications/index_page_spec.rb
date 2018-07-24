@@ -40,7 +40,7 @@ RSpec.describe 'notifications index page' do
     expect(page).not_to have_content 'You have no notifications yet'
   end
 
-  example 'marking all notifications as read' do
+  example 'marking all notifications as read', :js do
     unread_notif_1 = create_notification(recipient: me)
     unread_notif_2 = create_notification(recipient: me)
     read_notif     = create_notification(recipient: me, read_at: Time.now)
@@ -56,9 +56,23 @@ RSpec.describe 'notifications index page' do
       click_link 'Mark all as read'
     end.not_to change { read_notif.reload.read_at }
 
+    expect(page).to have_no_css('.notification.unread')
+
     expect(unread_notif_1.reload.read_at).to be_within(10.seconds).of(Time.now)
     expect(unread_notif_2.reload.read_at).to be_within(10.seconds).of(Time.now)
 
     not_mine.each { |notif| expect(notif.reload.read_at).to be_nil }
+  end
+
+  example 'marking a notification as read', :js do
+    notif = create_notification(recipient: me)
+
+    visit project_notifications_path(@project)
+
+    expect(page).to have_css('.notification.unread')
+    find('.notification-read').click
+    expect(page).to have_no_css('.notification.unread')
+
+    expect(notif.reload.read_at).to be_within(5.seconds).of(Time.now)
   end
 end

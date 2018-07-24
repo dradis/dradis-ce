@@ -3,11 +3,6 @@
 <% present notification do |presenter| %>
   <li class="notification <%= notification.read? ? '' : 'unread' %>" data-notification-id="<%= notification.id %>">
     <div class="body">
-      <% if local_assigns[:index_page] %>
-        <%# TODO s/@project/current_project once project-id-scopes is merged %>
-        <%= presenter.link_to_mark_as_read(@project) %>
-      <% end %>
-
       <%= presenter.icon %>
 
       <div class="time">

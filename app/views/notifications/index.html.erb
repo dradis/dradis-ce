@@ -3,7 +3,7 @@
 <div class="notifications-index">
   <%# TODO s/@project/current_project once project-id-scopes is merged %>
   <% if @notifications.any? %>
-    <b><%= link_to 'Mark all as read', read_all_project_notifications_path(@project), class: 'pull-right', data: { method: 'POST' } %></b>
+    <b><%= link_to 'Mark all as read', project_notification_path(@project, id: 'all'), class: 'pull-right', method: :put, remote: true %></b>
   <% end %>
   <div class="clearfix"></div><br>
 
@@ -11,7 +11,7 @@
     <% if @notifications.any? %>
       <ul>
         <% @notifications.each do |notification| %>
-          <%= render notification, index_page: true %>
+          <%= render notification %>
           <div class="clearfix"></div>
           <hr>
         <% end %>
