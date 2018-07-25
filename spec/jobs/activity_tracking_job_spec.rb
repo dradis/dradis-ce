@@ -62,5 +62,20 @@ describe ActivityTrackingJob do #, type: :job do
         )
       }.to change { Notification.count }.by(2)
     end
+
+    it 'broadcasts to the notificationschannel' do
+      expect(NotificationsChannel).to receive(:broadcast_to).twice
+
+      commentable = create(:issue)
+      create_list(:subscription, 2, subscribable: commentable)
+      trackable = create(:comment, commentable: commentable)
+
+      described_class.new.perform(
+        action: 'create',
+        trackable_id: trackable.id,
+        trackable_type: trackable.class.to_s,
+        user_id: trackable.user.id
+      )
+    end
   end
 end
