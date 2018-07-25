@@ -1,5 +1,5 @@
 <% present notification do |presenter| %>
-  <li class="notification <%= notification.read? ? '' : 'unread' %>" data-notification-id="<%= notification.id %>">
+  <li class="notification <%= notification.read? ? '' : 'unread' %>" data-behavior="notification" data-notification-id="<%= notification.id %>">
     <div class="body">
       <%= presenter.icon %>
 

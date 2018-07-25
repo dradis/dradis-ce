@@ -24,7 +24,7 @@ module Notifiable
     project = self.commentable.project
     notification_html = NotificationsController.render(
       partial: 'notifications/notification',
-      locals: { notification: notification, notification_project: project}
+      locals: { notification: notification, notification_project: project }
     )
     NotificationsChannel.broadcast_to(user, notification_html: notification_html)
   end

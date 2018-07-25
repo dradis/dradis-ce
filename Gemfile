@@ -100,7 +100,6 @@ gem 'rails-html-sanitizer', '~> 1.0.4'
 gem 'sqlite3'#,  '1.3.10'
 
 # Use Unicorn as the web server
-# FIXME: Switch to Puma for Rails 5
 gem 'unicorn',  '4.9.0'
 gem 'unicorn-rails'
 

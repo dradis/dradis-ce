@@ -11,5 +11,5 @@ App.cable.subscriptions.create 'NotificationsChannel',
     $container = $('[data-behavior~=notifications-dropdown] + div')
     $unreadCount = $('[data-behavior~=unread-count]')
     if $container.is(':visible')
-      $('.notification-header').after(data.notification_html)
+      $container.find('ul > div:first-child').after(data.notification_html)
       $unreadCount.text(parseInt($unreadCount.text()) + 1)
