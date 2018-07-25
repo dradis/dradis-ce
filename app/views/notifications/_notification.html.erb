@@ -15,13 +15,15 @@
         <%= presenter.avatar_with_link(30) %>
       </div>
     </div>
-    <%= link_to project_notification_path(@project || notification_project, notification),
-                title: 'Mark as read',
-                class: 'notification-read',
-                data: { behavior: 'notification-read' },
-                remote: true,
-                method: :put do %>
-      <i class="fa fa-times-circle-o fa-lg" aria-hidden="true"></i>
+    <% if !notification.read? %>
+      <%= link_to project_notification_path(@project || notification_project, notification),
+                  title: 'Mark as read',
+                  class: 'notification-read',
+                  data: { behavior: 'notification-read' },
+                  remote: true,
+                  method: :put do %>
+        <i class="fa fa-times-circle-o fa-lg" aria-hidden="true"></i>
+      <% end %>
     <% end %>
   </li>
 <% end %>
