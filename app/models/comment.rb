@@ -38,8 +38,33 @@ class Comment < ApplicationRecord
   def notify(action)
     case action.to_s
     when 'create'
+      subscribe_mentioned()
+      create_notifications(action: :mention, recipients: mentions)
+
       subscribers = commentable.subscriptions.where.not(user: user).map(&:user)
-      create_notifications(action: :create, recipients: subscribers)
+      create_notifications(action: :create, recipients: subscribers - mentions)
+    end
+  end
+
+  def mentions
+    @mentions = nil if content_changed?
+    @mentions ||= begin
+      mentioned_users = []
+      HTML::Pipeline::MentionFilter.mentioned_logins_in(content) do |match, login, is_mentioned|
+        if (mentioned_user = User.find_by_email(login))
+          mentioned_users << mentioned_user
+        end
+      end
+
+      mentioned_users
+    end
+  end
+
+  private
+
+  def subscribe_mentioned
+    mentions.each do |mention|
+      Subscription.subscribe(user: mention, to: commentable)
     end
   end
 end
