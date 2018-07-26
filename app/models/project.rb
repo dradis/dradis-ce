@@ -43,6 +43,10 @@ class Project
     Note.all
   end
 
+  def tags
+    Tag.all
+  end
+
   # Returns or creates the Node that acts as container for all Methodologies in
   # a given project
   def methodology_library

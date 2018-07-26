@@ -41,11 +41,11 @@ class EvidenceController < NestedNodeResourceController
 
   def create_multiple
     # validate Issue
-    issue = Issue.find(evidence_params[:issue_id])
+    issue = current_project.issues.find(evidence_params[:issue_id])
 
     if params[:evidence][:node_ids]
       params[:evidence][:node_ids].reject(&:blank?).each do |node_id|
-        node = Node.find(node_id)
+        node = current_project.nodes.find(node_id)
         Evidence.create(
           issue_id: issue.id,
           node_id: node.id,
@@ -55,10 +55,10 @@ class EvidenceController < NestedNodeResourceController
     end
     if params[:evidence][:node_list]
       if params[:evidence][:node_list_parent_id].present?
-        parent = Node.find(params[:evidence][:node_list_parent_id])
+        parent = current_project.nodes.find(params[:evidence][:node_list_parent_id])
       end
       params[:evidence][:node_list].lines.map(&:strip).each do |label|
-        node = Node.create_with(type_id: Node::Types::HOST)
+        node = current_project.nodes.create_with(type_id: Node::Types::HOST)
           .find_or_create_by(label: label)
         node.update_attributes!(parent: parent) if parent
 
