@@ -20,6 +20,13 @@ describe 'Issues pages' do
         Node.issue_library
       end
 
+      before do
+        # Ignore the NotificationsReaderJob for this spec
+        fake_job = Struct.new(:job_id).new
+        allow(NotificationsReaderJob).to receive(:perform_later).
+          and_return(fake_job)
+      end
+
       describe 'index page' do
 
         it 'presents a link to add new issue' do
