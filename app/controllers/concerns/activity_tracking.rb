@@ -2,7 +2,7 @@ module ActivityTracking
   protected
 
   def track_activity(trackable, action, user = current_user)
-    ActivityTrackingJob.perform_now(
+    ActivityTrackingJob.perform_later(
       action: action.to_s,
       trackable_id: trackable.id,
       trackable_type: trackable.class.to_s,
