@@ -16,7 +16,7 @@
       </div>
     </div>
     <% if !notification.read? %>
-      <%= link_to project_notification_path(@project || notification_project, notification),
+      <%= link_to project_notification_path(@project, notification),
                   title: 'Mark as read',
                   class: 'notification-read',
                   data: { behavior: 'notification-read' },

@@ -29,18 +29,8 @@ class ActivityTrackingJob < ApplicationJob
   private
 
   def broadcast_notifications(trackable)
-    project = trackable.commentable.project
-
     trackable.notifications.each do |notification|
-      notification_html = NotificationsController.render(
-        partial: 'notifications/notification',
-        locals: { notification: notification, notification_project: project }
-      )
-
-      NotificationsChannel.broadcast_to(
-        notification.recipient,
-        notification_html: notification_html
-      )
+      NotificationsChannel.broadcast_to(notification.recipient)
     end
   end
 end
