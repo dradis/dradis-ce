@@ -8,7 +8,7 @@ module Notifiable
   def create_notifications(action:, recipients:)
     ActiveRecord::Base.transaction do
       recipients.each do |recipient|
-        notification = Notification.create(
+        Notification.create(
           action: action,
           actor: user,
           notifiable: self,

@@ -5,7 +5,7 @@ $notification.find('[data-behavior~=notification-read]').remove();
 <% end %>
 
 $unreadCount  = $('[data-behavior~=unread-count]');
-$unreadCount.text(parseInt($unreadCount.text()) - <%= @changed_notifications_count %>);
+$unreadCount.text(parseInt($unreadCount.text()) - <%= @updated_count %>);
 
 <% unless @has_unread %>
 $('[data-behavior~=notifications-dot]').addClass('hidden');
