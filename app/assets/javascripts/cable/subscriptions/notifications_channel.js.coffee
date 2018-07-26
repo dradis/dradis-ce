@@ -1,4 +1,4 @@
-App.cable.subscriptions.create 'NotificationsChannel',
+App.notificationsChannel = App.cable.subscriptions.create 'NotificationsChannel',
   connected: ->
     console.log('Subscribed to NotificationsChannel.')
 

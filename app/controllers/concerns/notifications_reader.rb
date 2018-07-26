@@ -8,9 +8,6 @@ module NotificationsReader
         notifications_by_commentable(item).unread.where(recipient: current_user)
       notifications.update_all(read_at: Time.now)
     end
-
-    # Re-set the notifications alert dot
-    @has_unread_notifications = current_user.notifications.unread.any?
   end
 
   def notifications_by_commentable(commentable)
