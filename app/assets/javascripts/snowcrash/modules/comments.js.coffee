@@ -19,7 +19,7 @@ document.addEventListener "turbolinks:load", ->
     allowSpaces: ->
       false
     menuItemTemplate: (item) ->
-      '<img src="' + item.original.avatar_url + '" width="24px" height="24px" > ' + escape(item.string)
+      '<img src="' + item.original.avatar_url + '" width="24px" height="24px" > ' + item.string
     noMatchTemplate: ->
       ''
     values: $('#mentionable-users').data('users')
