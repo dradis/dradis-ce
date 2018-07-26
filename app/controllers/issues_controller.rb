@@ -37,6 +37,8 @@ class IssuesController < AuthenticatedController
                       user: current_user,
                       subscribable_type: @issue.class.to_s,
                       subscribable_id: @issue.id)
+
+    @mentionable_users = User.all
   end
 
   def new
