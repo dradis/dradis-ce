@@ -30,7 +30,7 @@ class ActivityTrackingJob < ApplicationJob
 
   def broadcast_notifications(trackable)
     trackable.notifications.each do |notification|
-      NotificationsChannel.broadcast_to(notification.recipient)
+      NotificationsChannel.broadcast_to(notification.recipient, {})
     end
   end
 end
