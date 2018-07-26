@@ -3,11 +3,9 @@ module NotificationsReader
 
   # Mark each notifications associated with the item as read
   def read_item_notifications(item)
-    Notification.transaction do
-      notifications =
-        notifications_by_commentable(item).unread.where(recipient: current_user)
-      notifications.update_all(read_at: Time.now)
-    end
+    NotificationsReaderJob.perform_later(
+      notification_ids: notifications_by_commentable(item).pluck(:id)
+    )
   end
 
   def notifications_by_commentable(commentable)
