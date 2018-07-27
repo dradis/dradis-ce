@@ -6,5 +6,5 @@ $('[data-behavior~=notifications-dropdown] + div').html("<%= partial %>");
 
 $('[data-behavior~=notification-read]').on('ajax:beforeSend', function(event){
   // Don't send out ajax when reading a 'read' notification
-  if(!$(this).closest('.notification').hasClass('unread')) return false;
+  if(!$(this).parent().hasClass('unread')) return false;
 });

@@ -12,6 +12,7 @@
 //= require d3
 //= require local-time
 //= require clipboard
+//= require tribute
 
 //= require cable
 

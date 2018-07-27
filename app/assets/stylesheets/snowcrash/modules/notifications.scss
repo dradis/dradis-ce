@@ -40,6 +40,9 @@
         padding: 0.5em 3em 0.5em 3.5em;
 
         .body {
+          display: block;
+          padding-left: 5px;
+
           .notification-icon {
             color: #bbb;
             font-size: 32px;

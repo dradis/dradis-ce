@@ -12,14 +12,8 @@ class NotificationPresenter < BasePresenter
   def icon
     icon_css = %w{notification-icon fa fa-fw}
     icon_css << case notification.notifiable_type
-                when 'Evidence'
-                  'fa-flag'
-                when 'Issue'
-                  'fa-bug'
-                when 'Node'
-                  'fa-folder-o'
-                when 'Note'
-                  'fa-file-text-o'
+                when 'Comment'
+                  'fa-comment'
                 else
                   ''
                 end

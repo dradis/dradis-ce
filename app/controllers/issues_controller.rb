@@ -39,6 +39,7 @@ class IssuesController < AuthenticatedController
                       subscribable_type: @issue.class.to_s,
                       subscribable_id: @issue.id)
 
+    @mentionable_users = User.all
     read_item_notifications(@issue)
   end
 

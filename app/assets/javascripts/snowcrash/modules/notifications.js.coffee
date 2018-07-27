@@ -1,6 +1,8 @@
 document.addEventListener 'turbolinks:load', ->
   $dropdown = $('[data-behavior~=notifications-dropdown]')
 
+  App.notificationsChannel.perform('check_unread', {})
+
   if $dropdown.length
     $container = $('[data-behavior~=notifications-dropdown] + div')
 

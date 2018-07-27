@@ -1,4 +1,4 @@
-App.cable.subscriptions.create 'NotificationsChannel',
+App.notificationsChannel = App.cable.subscriptions.create 'NotificationsChannel',
   connected: ->
     console.log('Subscribed to NotificationsChannel.')
 
@@ -7,9 +7,3 @@ App.cable.subscriptions.create 'NotificationsChannel',
 
   received: (data)->
     $('[data-behavior~=notifications-dot]').removeClass('hidden')
-
-    $container = $('[data-behavior~=notifications-dropdown] + div')
-    $unreadCount = $('[data-behavior~=unread-count]')
-    if $container.is(':visible')
-      $('.notification-header').after(data.notification_html)
-      $unreadCount.text(parseInt($unreadCount.text()) + 1)
