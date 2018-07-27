@@ -23,20 +23,20 @@ shared_examples 'creates an Activity' do |action, klass = nil|
     if action == :create
       expect { submit_form }.to change {
         ActiveJob::Base.queue_adapter.enqueued_jobs.size
-      }.by(1)
+      }.by_at_least(1)
       expect(
-        ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h| h[:job] }.last
-      ).to eq ActivityTrackingJob
+        ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h| h[:job] }
+      ).to include ActivityTrackingJob
       expect(
         ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
           h1[:args].map { |h2| h2['action'] }
-        }.flatten.last
-      ).to eq 'create'
+        }.flatten
+      ).to include 'create'
       expect(
         ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
           h1[:args].map { |h2| h2['trackable_type'] }
-        }.flatten.last
-      ).to eq klass.to_s
+        }.flatten
+      ).to include klass.to_s
     else
       expect { submit_form }.to have_enqueued_job(ActivityTrackingJob).with(
         action: action.to_s,
