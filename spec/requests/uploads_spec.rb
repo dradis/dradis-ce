@@ -26,7 +26,36 @@ describe "upload requests" do
     end
 
     context "small file size (< 1Mb)" do
-      pending
+      let(:importer_class) { "#{uploader}::Importer".constantize }
+      let(:importer) { instance_double(importer_class) }
+      let(:small_file) { Rails.root.join('tmp/small.file') }
+
+      before do
+        File.open(small_file, 'w') { |f| f << '*' }
+      end
+
+      after do
+        FileUtils.rm(small_file)
+      end
+
+      it 'imports the uploaded template', js: true do
+        attachments_path = Attachment.pwd.join(@uploads_node.id.to_s)
+        attachment_file  = attachments_path.join('temp').to_s
+
+        FileUtils.mkdir_p(attachments_path)
+        FileUtils.cp(small_file, attachment_file)
+        expect(File.exist?(attachment_file)).to be true
+
+        allow(importer_class).to receive(:new).and_return(importer)
+        allow(importer).to receive(:import)
+
+        expect(importer_class).to receive(:new).with(
+          hash_including(default_user_id: User.first.id)
+        )
+        expect(importer).to receive(:import)
+
+        send_request
+      end
     end
 
     context "big file size (> 1Mb)" do
