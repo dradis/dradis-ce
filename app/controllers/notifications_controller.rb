@@ -24,7 +24,7 @@ class NotificationsController < AuthenticatedController
         current_user.notifications.where(id: params[:id])
       end
 
-    @updated_count = @notifications.update_all(read_at: Time.now)
+    @updated_count = @notifications.unread.update_all(read_at: Time.now)
 
     @has_unread = current_user.notifications.unread.any?
 
