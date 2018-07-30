@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'notifications index page' do
+describe 'notifications index page' do
   before do
     login_to_project_as_user
   end
