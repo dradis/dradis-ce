@@ -25,6 +25,10 @@ Rails.application.routes.draw do
 
     resources :comments
 
+    constraints id: %r{[(0-z)\/]+} do
+      resources :configurations, only: [:index, :update]
+    end
+
     post :create_multiple_evidence, to: 'evidence#create_multiple'
 
     resources :issues, concerns: :multiple_destroy do
@@ -89,11 +93,7 @@ Rails.application.routes.draw do
     get  '/upload'        => 'upload#index',  as: :upload_manager
     post '/upload'        => 'upload#create'
     post '/upload/parse'  => 'upload#parse'
-    get  '/upload/status' => 'upload#status'
   end
-
-
-  resources :configurations, only: [:index, :update]
 
   resources :console, only: [] do
     collection { get :status }
@@ -105,6 +105,8 @@ Rails.application.routes.draw do
   get '/markup-help' => 'home#markup_help', as: :markup
 
   root to: 'home#index'
+
+  root to: 'projects#index'
 
   mount ActionCable.server => '/cable'
 end

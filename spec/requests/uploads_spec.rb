@@ -9,7 +9,7 @@ describe "upload requests" do
     @user = create(:user, :admin)
     post session_path, params: { login: @user.email, password: 'rspec_pass' }
 
-    @uploads_node = Node.plugin_uploads_node
+    @uploads_node = @project.plugin_uploads_node
   end
 
   after { FileUtils.rm_rf(Attachment.pwd.join(@uploads_node.id.to_s)) }

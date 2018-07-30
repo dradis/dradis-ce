@@ -11,38 +11,11 @@
 <div class="add-issues">
   <h3>2. Upload scanner output</h3>
   <p>
-    Use the <%= link_to main_app.project_upload_manager_path(@project) do %>
+    Use the <%= link_to main_app.project_upload_manager_path(current_project) do %>
       <i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool
     <% end %> link at the top of the page.
   </p>
 </div>
 <div class="add-issues">
-  <h3>3. Import from a library of descriptions</h3>
-
-  <ul class="nav nav-tabs">
-    <li class="active"><a href="#external" data-toggle="tab">External library</a></li>
-    <li><a href="javascript:void(0)" class="js-try-pro" data-term="issuelib" data-url="http://drad.is/l/try-pro-issuelib"><i class="fa fa-book"></i> Built-in IssueLibrary</a></li>
-  </ul>
-
-  <div class="tab-content outer-tab">
-    <div id="external" class="tab-pane active">
-      <p>You'll need an import plugin like:</p>
-      <ul class="fa-ul">
-        <li><i class="fa fa-li fa-chevron-right"></i><a href="https://dradisframework.com/ce/addons/mediawiki.html?utm_source=ce&utm_medium=app" target="_blank">MediaWiki</a></li>
-        <li><i class="fa fa-li fa-chevron-right"></i><a href="http://vulndbhq.com" target="_blank">VulnDB</a></li>
-      </ul>
-      <p>And then:</p>
-      <ol>
-        <li>Activate via <code>Gemfile.plugins</code></li>
-        <li>
-          Click on the
-          <%= link_to main_app.configurations_path do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %> link at the top-right of the page.
-        </li>
-        <li>
-          And on the <i class="fa fa-chevron-down"></i> next to <strong>Import
-          issues</strong> in the sidebar.
-        </li>
-      </ol>
-    </div>
-  </div>
+  <%= render 'issues/empty_import_ce' %>
 </div>

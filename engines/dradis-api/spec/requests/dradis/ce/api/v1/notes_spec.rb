@@ -5,10 +5,10 @@ describe "Notes API" do
   include_context "project scoped API"
   include_context "https"
 
-  let(:node) { create(:node) }
+  let(:node) { create(:node, project: project) }
 
   context "as unauthenticated user" do
-    let(:note) { create(:note) }
+    let(:note) { create(:note, node: node) }
 
     describe "GET /api/nodes/:node_id/notes" do
       it "throws 401" do
@@ -61,7 +61,7 @@ describe "Notes API" do
           create(:note, node: node, text: "#[Title]#\nNote 2\n\n#[dos]#\ntwo"),
         ]
         @other_note = create(
-          :note, node: create(:node), text: "#[Title]#\nOther Note"
+          :note, node: create(:node, project: project), text: "#[Title]#\nOther Note"
         )
         get "/api/nodes/#{node.id}/notes", env: @env
       end

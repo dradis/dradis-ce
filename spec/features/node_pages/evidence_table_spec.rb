@@ -7,9 +7,15 @@ describe 'node pages' do
     before do
       login_to_project_as_user
 
-      node = create(:node)
-      @evidence = create(:evidence, node: node, content: "#[Title]#\nEvidence1\n\n#[Description]#\nn/a\n#[Extra]#\nExtra field")
-      visit project_node_path(node.project, node, tab: 'evidence-tab')
+      node = create(:node, project: @project)
+      issue = create(:issue, node: @project.issue_library)
+      @evidence = create(
+        :evidence,
+        node: node,
+        content: "#[Title]#\nEvidence1\n\n#[Description]#\nn/a\n#[Extra]#\nExtra field",
+        issue: issue,
+      )
+      visit project_node_path(@project, node, tab: 'evidence-tab')
     end
 
     let(:columns) { ['Title', 'Created', 'Created by', 'Updated'] }

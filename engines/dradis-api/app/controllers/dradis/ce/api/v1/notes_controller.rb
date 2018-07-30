@@ -42,7 +42,7 @@ module Dradis::CE::API
       private
 
       def set_node
-        @node = Node.find(params[:node_id])
+        @node = current_project.nodes.find(params[:node_id])
       end
 
       def note_params

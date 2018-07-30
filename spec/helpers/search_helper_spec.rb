@@ -12,7 +12,9 @@ RSpec.describe SearchHelper do
 
   describe '.search_filter_path' do
     let(:project) { Project.new(id: 1) }
-    before { assign(:project, project) }
+
+    # Make #current_project available in SearchHelper
+    before { helper.send(:define_singleton_method, :current_project, lambda { Project.new(id: 1) }) }
 
     %w[all nodes notes issues evidences].each do |scope|
       it "formats correct #{scope} path" do

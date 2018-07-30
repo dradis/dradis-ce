@@ -2,12 +2,13 @@
 # so we don't expose more than one instance level variable
 # in controller
 class Search
-  attr_reader :page, :query, :scope
+  attr_reader :page, :project, :query, :scope
 
-  def initialize(query:, scope: :all, page: 1)
-    @query = query
-    @scope = scope
-    @page  = page
+  def initialize(query:, scope: :all, page: 1, project:)
+    @query   = query
+    @scope   = scope
+    @page    = page
+    @project = project
   end
 
   # Return results based on params.
@@ -41,7 +42,7 @@ class Search
   end
 
   def evidence_count
-    @evidence_count ||= evidence.size
+    @evidence_count ||= evidence.count
   end
 
   private
@@ -50,37 +51,41 @@ class Search
     @all ||= nodes + notes + evidence + issues
   end
 
+  def evidence
+    @evidence ||= begin
+      Evidence.where(
+        'node_id IN (:nodes) AND LOWER(content) LIKE LOWER(:q)',
+        nodes: project.nodes.user_nodes.pluck(:id),
+        q: "%#{query}%"
+      )
+        .includes(:issue, :node)
+        .order(updated_at: :desc)
+    end
+  end
+
   def issues
     @issues ||= Issue.where(
       "node_id = :node AND LOWER(text) LIKE LOWER(:q)",
-      node: Node.issue_library,
+      node: project.issue_library,
       q: "%#{query}%"
     ).order(updated_at: :desc)
   end
 
   def nodes
-    @nodes ||= Node.user_nodes
+    @nodes ||= project.nodes.user_nodes
       .where("LOWER(label) LIKE LOWER(:q)", q: "%#{query}%")
       .order(updated_at: :desc)
   end
 
   def notes
     @notes ||= begin
-      system_nodes = [Node.issue_library.id, Node.methodology_library.id]
-
       Note.where(
-        "node_id NOT IN (:nodes) AND LOWER(text) LIKE LOWER(:q)",
-        nodes: system_nodes,
+        "node_id IN (:nodes) AND LOWER(text) LIKE LOWER(:q)",
+        nodes: project.nodes.user_nodes.pluck(:id),
         q: "%#{query}%"
       )
         .includes(:node)
         .order(updated_at: :desc)
     end
-  end
-
-  def evidence
-    @evidence ||= Evidence.where("LOWER(content) LIKE LOWER(:q)", q: "%#{query}%")
-      .includes(:issue, :node)
-      .order(updated_at: :desc)
   end
 end

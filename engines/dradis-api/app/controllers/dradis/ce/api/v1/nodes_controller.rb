@@ -3,15 +3,15 @@ module Dradis::CE::API
     class NodesController < Dradis::CE::API::V1::ProjectScopedController
 
       def index
-        @nodes = Node.user_nodes.includes(:evidence, :notes, evidence: [:issue]).order('updated_at desc')
+        @nodes = current_project.nodes.user_nodes.includes(:evidence, :notes, evidence: [:issue]).order('updated_at desc')
       end
 
       def show
-        @node = Node.includes(:evidence, :notes, evidence: [:issue]).find(params[:id])
+        @node = current_project.nodes.includes(:evidence, :notes, evidence: [:issue]).find(params[:id])
       end
 
       def create
-        @node = Node.new(node_params)
+        @node = current_project.nodes.new(node_params)
 
         if @node.save
           track_created(@node)
@@ -22,7 +22,7 @@ module Dradis::CE::API
       end
 
       def update
-        @node = Node.find(params[:id])
+        @node = current_project.nodes.find(params[:id])
         if @node.update_attributes(node_params)
           track_updated(@node)
           render node: @node
@@ -32,7 +32,7 @@ module Dradis::CE::API
       end
 
       def destroy
-        node = Node.find(params[:id])
+        node = current_project.nodes.find(params[:id])
         node.destroy
         track_destroyed(node)
         render_successful_destroy_message

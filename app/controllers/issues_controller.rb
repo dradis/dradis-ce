@@ -21,7 +21,7 @@ class IssuesController < AuthenticatedController
 
     # We can't use the existing @nodes variable as it only contains root-level
     # nodes, and we need the auto-complete to have the full list.
-    @nodes_for_add_evidence = Node.user_nodes.order(:label)
+    @nodes_for_add_evidence = current_project.nodes.user_nodes.order(:label)
 
     @affected_nodes = Node.joins(:evidence)
                         .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')
@@ -68,7 +68,7 @@ class IssuesController < AuthenticatedController
         # taggable IDs)
         tag_issue_from_field_content(@issue)
 
-        format.html { redirect_to [@project, @issue], notice: 'Issue added.' }
+        format.html { redirect_to [current_project, @issue], notice: 'Issue added.' }
       else
         format.html { render 'new', alert: 'Issue couldn\'t be added.' }
       end
@@ -87,7 +87,7 @@ class IssuesController < AuthenticatedController
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
-        format.html { redirect_to project_issue_path(@project, @issue), notice: 'Issue updated' }
+        format.html { redirect_to project_issue_path(current_project, @issue), notice: 'Issue updated' }
       else
         format.html { render 'edit' }
       end
@@ -100,10 +100,10 @@ class IssuesController < AuthenticatedController
     respond_to do |format|
       if @issue.destroy
         track_destroyed(@issue)
-        format.html { redirect_to project_issues_url(@project), notice: 'Issue deleted.' }
+        format.html { redirect_to project_issues_path(current_project), notice: 'Issue deleted.' }
         format.json
       else
-        format.html { redirect_to project_issues_url(@project), notice: "Error while deleting issue: #{@issue.errors}" }
+        format.html { redirect_to project_issues_path(current_project), notice: "Error while deleting issue: #{@issue.errors}" }
         format.json
       end
     end
@@ -129,7 +129,7 @@ class IssuesController < AuthenticatedController
   end
 
   def find_issuelib
-    @issuelib = Node.issue_library
+    @issuelib = current_project.issue_library
   end
 
   # Once a valid @issuelib is set by the previous filter we look for the Issue we
@@ -149,7 +149,7 @@ class IssuesController < AuthenticatedController
   # Load all the colour tags in the project (those that start with !). If none
   # exist, initialize a set of tags.
   def find_or_initialize_tags
-    @tags = Tag.where('name like ?', '!%')
+    @tags = current_project.tags.where('name like ?', '!%')
   end
 
   def issue_params

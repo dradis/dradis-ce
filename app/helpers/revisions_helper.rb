@@ -11,11 +11,11 @@ module RevisionsHelper
     # 'Note' before they can reach 'Issue' FIXME - ISSUE/NOTE INHERITANCE
     case record
     when Issue
-      project_issue_revisions_path(@project, record)
+      project_issue_revisions_path(current_project, record)
     when Note
-      project_node_note_revisions_path(@project, record.node, record)
+      project_node_note_revisions_path(current_project, record.node, record)
     when Evidence
-      project_node_evidence_revisions_path(@project, record.node, record)
+      project_node_evidence_revisions_path(current_project, record.node, record)
     end
   end
 
@@ -24,11 +24,11 @@ module RevisionsHelper
     # 'Note' before they can reach 'Issue' FIXME - ISSUE/NOTE INHERITANCE
     case record
     when Issue
-      project_issue_revision_path(@project, record, revision)
+      project_issue_revision_path(current_project, record, revision)
     when Note
-      project_node_note_revision_path(@project, record.node, record, revision)
+      project_node_note_revision_path(current_project, record.node, record, revision)
     when Evidence
-      project_node_evidence_revision_path(@project, record.node, record, revision)
+      project_node_evidence_revision_path(current_project, record.node, record, revision)
     end
   end
 

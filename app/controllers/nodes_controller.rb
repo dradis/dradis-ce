@@ -1,6 +1,8 @@
 # This controller exposes the REST operations required to manage the Node
 # resource.
 class NodesController < NestedNodeResourceController
+  include NodesSidebar
+
   skip_before_action :find_or_initialize_node, only: [ :sort, :create_multiple ]
   before_action :initialize_nodes_sidebar, except: [ :sort, :create_multiple ]
 
@@ -23,20 +25,20 @@ class NodesController < NestedNodeResourceController
     if @node.save
       track_created(@node)
       flash[:notice] = 'Successfully created node.'
-      redirect_to [@project, @node]
+      redirect_to [current_project, @node]
     else
       parent = @node.parent
       if parent && parent.user_node?
-        redirect_to [@project, parent], alert: @node.errors.full_messages.join('; ')
+        redirect_to [current_project, parent], alert: @node.errors.full_messages.join('; ')
       else
-        redirect_to project_path(@project), alert: @node.errors.full_messages.join('; ')
+        redirect_to project_path(current_project), alert: @node.errors.full_messages.join('; ')
       end
     end
   end
 
   def create_multiple
     if params[:nodes][:parent_id].present?
-      @parent = Node.find(params[:nodes][:parent_id])
+      @parent = current_project.nodes.find(params[:nodes][:parent_id])
     end
 
     list = params[:nodes][:list].lines.map(&:strip).select(&:present?)
@@ -44,7 +46,7 @@ class NodesController < NestedNodeResourceController
     if list.any?
       Node.transaction do |node|
         list.each do |node_label|
-          node = Node.create!(
+          node = current_project.nodes.create!(
             label: node_label.strip,
             parent: @parent,
             type_id: params[:nodes][:type_id]
@@ -56,16 +58,16 @@ class NodesController < NestedNodeResourceController
 
     flash[:notice] = "Successfully created #{list.length} node#{'s' if list.many?}"
     if @parent
-      redirect_to project_node_path(@project, @parent)
+      redirect_to project_node_path(current_project, @parent)
     else
-      project_path(@project)
+      project_path(current_project)
     end
   end
 
   # POST /nodes/sort
   def sort
     params[:nodes].each_with_index do |id, index|
-      Node.update_all({position: index+1}, {id: id})
+      current_project.nodes.update_all({position: index+1}, {id: id})
     end
     head :ok
   end
@@ -75,7 +77,7 @@ class NodesController < NestedNodeResourceController
     respond_to do |format|
       if @node.update_attributes(node_params)
         track_updated(@node)
-        format.html { redirect_to project_node_path(@project, @node), notice: 'Node updated.' }
+        format.html { redirect_to project_node_path(current_project, @node), notice: 'Node updated.' }
         format.json { render json: { success: true }.to_json }
         format.js
       else
@@ -96,9 +98,9 @@ class NodesController < NestedNodeResourceController
 
     parent = @node.parent
     if parent
-      redirect_to project_node_path(@project, parent)
+      redirect_to project_node_path(current_project, parent)
     else
-      redirect_to project_path(@project)
+      redirect_to project_path(current_project)
     end
   end
 

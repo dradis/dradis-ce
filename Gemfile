@@ -101,8 +101,8 @@ gem 'sqlite3'#,  '1.3.10'
 
 # Use Unicorn as the web server
 gem 'unicorn',  '4.9.0'
+# Make 'rails server' run unicorn by default:
 gem 'unicorn-rails'
-
 
 # --------------------------------------------------------- Dradis Professional
 # Authorisation

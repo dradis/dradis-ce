@@ -51,17 +51,18 @@ describe "evidence pages", js: true do
   before do
     login_to_project_as_user
     @other_user = create(:user)
-    @node     = create(:node)
-    @evidence = create(:evidence, node: @node)
+    @node       = create(:node, project: @project)
+    issue       = create(:issue, node: @project.issue_library)
+    @evidence   = create(:evidence, node: @node, issue: issue)
   end
 
   describe "when I am viewing an Evidence" do
-    before { visit project_node_evidence_path(@project, @node, @evidence) }
+    before { visit project_node_evidence_path(current_project, @node, @evidence) }
     it_behaves_like "an evidence page with poller"
   end
 
   describe "when I am editing an Evidence" do
-    before { visit edit_project_node_evidence_path(@project, @node, @evidence) }
+    before { visit edit_project_node_evidence_path(current_project, @node, @evidence) }
     it_behaves_like "an evidence page with poller"
   end
 end

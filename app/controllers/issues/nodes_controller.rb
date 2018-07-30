@@ -1,4 +1,6 @@
-class Issues::NodesController < ProjectScopedController
+class Issues::NodesController < AuthenticatedController
+  include ProjectScoped
+
   def show
     @node =
       Node.joins(:evidence)
