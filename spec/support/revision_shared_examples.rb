@@ -24,9 +24,11 @@ shared_examples "recover deleted item" do |item_type|
       visit project_trash_path(current_project)
       activity_count = model.try(:activities) ? model.activities.count : 0
 
-      page.accept_confirm do
-        rr_path = recover_project_revision_path(current_project, model.versions.last)
-        find(:xpath, "//a[@href='#{rr_path}']").click
+      expect do
+        page.accept_confirm do
+          rr_path = recover_project_revision_path(current_project, model.versions.last)
+          find(:xpath, "//a[@href='#{rr_path}']").click
+        end
       end.to have_enqueued_job(ActivityTrackingJob).with(
         action: 'recover',
         trackable_id: model.id,
