@@ -297,8 +297,8 @@ describe 'Issues pages' do
         it_behaves_like 'a page with an activity feed'
 
         let(:commentable) { @issue }
-        it_behaves_like "a page with a comments feed"
-        
+        it_behaves_like 'a page with a comments feed'
+
         let(:subscribable) { @issue }
         it_behaves_like 'a page with subscribe/unsubscribe links'
 
@@ -322,7 +322,7 @@ describe 'Issues pages' do
 
         describe 'add evidence', js: true do
           before do
-            @node = Node.create!(label: '192.168.0.1')
+            @node = create(:node, label: '192.168.0.1')
             visit project_issue_path(@project, @issue)
             click_link('Evidence')
           end

@@ -3,7 +3,9 @@ require 'rails_helper'
 describe "node pages" do
   subject { page }
 
-  before { login_to_project_as_user }
+  before do
+    login_to_project_as_user
+  end
 
   describe "creating new nodes" do
     context "when a project has no nodes defined yet" do
@@ -54,7 +56,24 @@ describe "node pages" do
 
         expect do
           click_button "Add"
-        end.to change{Node.in_tree.count}.by(3).and change{Activity.count}.by(3)
+        end.to change { Node.in_tree.count }.by(3) \
+          .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(3)
+
+        expect(
+          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h|
+            h[:job]
+          }.last(3)
+        ).to eq Array.new(3, ActivityTrackingJob)
+        expect(
+          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+            h1[:args].map { |h2| h2['action'] }
+          }.flatten.last(3)
+        ).to eq Array.new(3, 'create')
+        expect(
+          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+            h1[:args].map { |h2| h2['trackable_type'] }
+          }.flatten.last(3)
+        ).to eq Array.new(3, 'Node')
 
         expect(Node.last(3).map(&:label)).to match_array([
           "node 1",
@@ -90,15 +109,17 @@ describe "node pages" do
       example "adding a single node" do
         fill_in :node_label, with: "My new node"
         expect do
-          click_button "Add"
-        end.to change{node.children.count}.by(1).and change{Activity.count}.by(1)
+          click_button 'Add'
+        end.to change { node.children.count }.by(1)
+          .and have_enqueued_job(ActivityTrackingJob).with(
+            action: 'create',
+            trackable_id: node.children.last.try(:id) || Node.last.id + 1,
+            trackable_type: 'Node',
+            user_id: @logged_in_as.id
+          )
 
         new_node = node.children.last
         expect(new_node.label).to eq "My new node"
-
-        new_activity = Activity.last
-        expect(new_activity.trackable).to eq new_node
-        expect(new_activity.action).to eq "create"
       end
 
       example "adding multiple nodes" do
@@ -115,8 +136,25 @@ describe "node pages" do
           LIST
 
         expect do
-          click_button "Add"
-        end.to change{node.children.count}.by(3).and change{Activity.count}.by(3)
+          click_button 'Add'
+        end.to change { node.children.count }.by(3)
+        .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(3)
+
+        expect(
+          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h|
+            h[:job]
+          }.last(3)
+        ).to eq Array.new(3, ActivityTrackingJob)
+        expect(
+          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+            h1[:args].map { |h2| h2['action'] }
+          }.flatten.last(3)
+        ).to eq Array.new(3, 'create')
+        expect(
+          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+            h1[:args].map { |h2| h2['trackable_type'] }
+          }.flatten.last(3)
+        ).to eq Array.new(3, 'Node')
 
         expect(node.children.pluck(:label)).to match_array([
           "node 1",
@@ -158,14 +196,12 @@ describe "node pages" do
       end
 
       it "creates an Activity" do
-        expect{submit_form}.to change{Activity.count}.by(1)
-
-        activity = Activity.last
-        expect(activity.trackable).to eq @node
-        # TODO: Project singleton
-        # expect(activity.project).to eq @project
-        expect(activity.user).to eq @logged_in_as.email
-        expect(activity.action).to eq "update"
+        expect { submit_form }.to have_enqueued_job(ActivityTrackingJob).with(
+          action: 'update',
+          trackable_id: @node.id,
+          trackable_type: 'Node',
+          user_id: @logged_in_as.id
+        )
       end
     end
 
@@ -311,7 +347,8 @@ describe "node pages" do
 
       it "shows the current node in the sidebar node tree", js: true do # bug fix
         within ".main-sidebar .nodes-nav" do
-          should have_content "My node"
+          click_link class: 'toggle'
+          should have_content 'My node'
         end
       end
     end
