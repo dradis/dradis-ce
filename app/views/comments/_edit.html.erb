@@ -1,4 +1,4 @@
-<%= form_for [@project, comment] do |f| %>
+<%= form_for [current_project, comment] do |f| %>
   <%= f.text_area :content,
                   value: comment.content,
                   rows: 5,

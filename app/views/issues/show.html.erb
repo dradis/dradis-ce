@@ -43,7 +43,7 @@
             <% if @subscription %>
               <%= link_to \
                     project_subscription_path(
-                      @project,
+                      current_project,
                       @subscription,
                       subscription: {
                         subscribable_type: @issue.class.to_s,
@@ -57,7 +57,7 @@
             <% else %>
               <%= link_to \
                     project_subscriptions_path(
-                      @project,
+                      current_project,
                       subscription: {
                         subscribable_type: @issue.class.to_s,
                         subscribable_id: @issue.id

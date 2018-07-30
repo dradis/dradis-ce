@@ -39,8 +39,7 @@ class NotificationsController < AuthenticatedController
         end
       end
 
-      # TODO s/@project/current_project once project-id-scopes is merged
-      f.html { redirect_to project_notifications_path(@project) }
+      f.html { redirect_to project_notifications_path(current_project) }
     end
   end
 end

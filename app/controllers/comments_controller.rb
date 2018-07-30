@@ -12,7 +12,7 @@ class CommentsController < AuthenticatedController
       track_created(@comment)
     end
 
-    redirect_to polymorphic_path([@project, @comment.commentable], anchor: dom_id(@comment))
+    redirect_to polymorphic_path([current_project, @comment.commentable], anchor: dom_id(@comment))
   end
 
   def update
@@ -20,7 +20,7 @@ class CommentsController < AuthenticatedController
       track_updated(@comment)
     end
 
-    redirect_to polymorphic_path([@project, @comment.commentable], anchor: dom_id(@comment))
+    redirect_to polymorphic_path([current_project, @comment.commentable], anchor: dom_id(@comment))
   end
 
   def destroy
@@ -28,7 +28,7 @@ class CommentsController < AuthenticatedController
       track_destroyed(@comment)
     end
 
-    redirect_to [@project, @comment.commentable]
+    redirect_to [current_project, @comment.commentable]
   end
 
   private

@@ -5,7 +5,7 @@
       (<span data-behavior='unread-count'><%= unread_count %></span>)
       <div class="pull-right">
         <%= link_to 'Mark all as read',
-                    project_notification_path(@project, id: 'all'),
+                    project_notification_path(current_project, id: 'all'),
                     method: :put,
                     remote: true
                     %>
@@ -19,8 +19,7 @@
   </ul>
   <% if notifications.any? %>
     <div class="footer text-center">
-      <%# TODO replace @project with current_project once project-id-scopes is merged %>
-      <%= link_to 'See all notifications', project_notifications_path(@project) %>
+      <%= link_to 'See all notifications', project_notifications_path(current_project) %>
     </div>
   <% end %>
 <% end %>

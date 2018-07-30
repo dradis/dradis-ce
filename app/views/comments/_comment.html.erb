@@ -19,7 +19,7 @@
                       data: {toggle_comment: "on"} do %>
             <i class="fa fa-pencil"></i> Edit
           <% end %>
-          <%= link_to [@project, comment],
+          <%= link_to [current_project, comment],
                       method: :delete,
                       data: { confirm: 'Are you sure?' },
                       class: 'text-error' do %>

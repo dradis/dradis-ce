@@ -1,9 +1,8 @@
 <h1>Notifications for this Project</h1>
 
 <div class="notifications-index">
-  <%# TODO s/@project/current_project once project-id-scopes is merged %>
   <% if @notifications.any? %>
-    <b><%= link_to 'Mark all as read', project_notification_path(@project, id: 'all'), class: 'pull-right', method: :put, remote: true %></b>
+    <b><%= link_to 'Mark all as read', project_notification_path(current_project, id: 'all'), class: 'pull-right', method: :put, remote: true %></b>
   <% end %>
   <div class="clearfix"></div><br>
 
