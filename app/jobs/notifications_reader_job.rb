@@ -2,9 +2,11 @@ class NotificationsReaderJob < ApplicationJob
   queue_as :dradis_project
 
   # Mark each notifications associated with the item as read
-  def perform(commentable_id:, commentable_type:)
+  def perform(commentable_id:, commentable_type:, user_id:)
     Notification.transaction do
       notifications_by_commentable(id: commentable_id, type: commentable_type).
+        unread.
+        where(recipient_id: user_id).
         update_all(read_at: Time.now)
     end
   end
