@@ -30,13 +30,13 @@ class NotificationPresenter < BasePresenter
   private
 
   def avatar_image(size)
-    if notification.recipient
+    if notification.actor
       h.image_tag(
         image_path('profile.jpg'),
-        alt: notification.recipient.email,
+        alt: notification.actor.email,
         class: 'gravatar',
         data: { fallback_image: image_path('logo_small.png') },
-        title: notification.recipient,
+        title: notification.actor.email,
         width: size
       )
     else

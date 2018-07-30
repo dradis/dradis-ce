@@ -1,3 +1,41 @@
+@mixin notification-list-item {
+  position: relative;
+  border-top: 1px solid $gray;
+  padding: 0.5em 3em 0.5em 3.5em;
+
+  .body {
+    display: block;
+    padding-left: 5px;
+
+    .notification-icon {
+      color: #bbb;
+      font-size: 32px;
+      left: 2px;
+      position: absolute;
+      top: 11px;
+    }
+
+    .time {
+      color: #888;
+    }
+
+    .details {
+      display: inline-block;
+    }
+  }
+
+  .notification-read {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
+
+  &.unread {
+    background-color: $grayLight;
+  }
+}
+
+/* Notifications in the navbar */
 .notifications {
   .notifications-dot {
     position: absolute;
@@ -34,40 +72,7 @@
       }
 
       li.notification {
-        position: relative;
-        border-top: 1px solid $gray;
-        padding: 0.5em 3em 0.5em 3.5em;
-
-        .body {
-          display: block;
-          padding-left: 5px;
-
-          .notification-icon {
-            color: #bbb;
-            font-size: 32px;
-            left: 2px;
-            position: absolute;
-            top: 11px;
-          }
-
-          .time {
-            color: #888;
-          }
-
-          .details {
-            display: inline-block;
-          }
-        }
-
-        .notification-read {
-          position: absolute;
-          top: 15px;
-          right: 15px;
-        }
-
-        &.unread {
-          background-color: $grayLight;
-        }
+        @include notification-list-item;
       }
 
       li.no-content {
@@ -80,5 +85,21 @@
       line-height: 2em;
       border-top: 1px solid $gray;
     }
+  }
+}
+
+/* Notifications on the main body of /projects/X/notifications */
+.notifications-index {
+  ul {
+    list-style-type: none;
+  }
+
+  li.notification {
+    @include notification-list-item;
+    border: none;
+  }
+
+  hr {
+    margin: 0;
   }
 }

@@ -2,11 +2,19 @@ class NotificationsController < AuthenticatedController
   include ProjectScoped
 
   def index
-    @notifications = current_user.notifications.newest.limit(20)
-    @unread_count = @notifications.unread.count
-
+    notifications = current_user.notifications.newest.includes(
+      :actor, notifiable: [:user, :commentable]
+    )
     respond_to do |format|
-      format.js
+      format.html do
+        @notifications = notifications.page(params[:page])
+      end
+      format.js do
+        @notifications = notifications.limit(20)
+        # NB the unread count is not the same as @notifications.count because
+        # @notifications a) includes read notifs and b) is capped at 20
+        @unread_count  = current_user.notifications.unread.count
+      end
     end
   end
 
@@ -18,7 +26,7 @@ class NotificationsController < AuthenticatedController
         current_user.notifications.where(id: params[:id])
       end
 
-    @updated_count = @notifications.update_all(read_at: Time.now)
+    @updated_count = @notifications.unread.update_all(read_at: Time.now)
 
     @has_unread = current_user.notifications.unread.any?
 

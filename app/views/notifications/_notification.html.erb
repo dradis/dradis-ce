@@ -1,3 +1,5 @@
+<%# NB this template is rendered both in the notification navbar %>
+<%# and on notifications#index                                   %>
 <% present notification do |presenter| %>
   <li class="notification <%= notification.read? ? '' : 'unread' %>" data-notification-id="<%= notification.id %>">
     <div class="body">

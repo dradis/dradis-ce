@@ -28,5 +28,4 @@ class Notification < ApplicationRecord
     return if self.read_at
     self.update_attribute :read_at, time
   end
-
 end
