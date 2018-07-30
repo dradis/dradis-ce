@@ -20,6 +20,17 @@ class ActivityTrackingJob < ApplicationJob
       user: user.email
     )
 
-    trackable.notify(action) if trackable.respond_to?(:notify)
+    if trackable.respond_to?(:notify)
+      trackable.notify(action)
+      broadcast_notifications(trackable)
+    end
+  end
+
+  private
+
+  def broadcast_notifications(trackable)
+    trackable.notifications.each do |notification|
+      NotificationsChannel.broadcast_to(notification.recipient, {})
+    end
   end
 end

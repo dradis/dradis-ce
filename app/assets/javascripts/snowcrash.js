@@ -14,6 +14,8 @@
 //= require clipboard
 //= require tribute
 
+//= require cable
+
 //= require shared/console_updater
 //= require shared/items_table
 

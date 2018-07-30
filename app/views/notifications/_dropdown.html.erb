@@ -1,0 +1,26 @@
+<% cache [current_user, notifications] do %>
+  <ul class="notification-container" >
+    <div class="notification-header">
+      Notifications
+      (<span data-behavior='unread-count'><%= unread_count %></span>)
+      <div class="pull-right">
+        <%= link_to 'Mark all as read',
+                    project_notification_path(@project, id: 'all'),
+                    method: :put,
+                    remote: true
+                    %>
+      </div>
+    </div>
+    <% if notifications.any? %>
+      <%= render notifications %>
+    <% else %>
+      <li class="no-content text-center">You have no notifications yet.</li>
+    <% end %>
+  </ul>
+  <% if notifications.any? %>
+    <div class="footer text-center">
+      <%# TODO replace @project with current_project once project-id-scopes is merged %>
+      <%= link_to 'See all notifications', project_notifications_path(@project) %>
+    </div>
+  <% end %>
+<% end %>

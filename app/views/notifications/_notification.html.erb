@@ -1,0 +1,31 @@
+<%# NB this template is rendered both in the notification navbar %>
+<%# and on notifications#index                                   %>
+<% present notification do |presenter| %>
+  <li class="notification <%= notification.read? ? '' : 'unread' %>" data-notification-id="<%= notification.id %>">
+    <div class="body">
+      <%= presenter.icon %>
+
+      <div class="time">
+        <%= presenter.created_at_ago %>
+      </div>
+
+      <div class="title">
+        <%= presenter.render_title %>
+      </div>
+
+      <div class="details">
+        <%= presenter.avatar_with_link(30) %>
+      </div>
+    </div>
+    <% if !notification.read? %>
+      <%= link_to project_notification_path(@project, notification),
+                  title: 'Mark as read',
+                  class: 'notification-read',
+                  data: { behavior: 'notification-read' },
+                  remote: true,
+                  method: :put do %>
+        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+      <% end %>
+    <% end %>
+  </li>
+<% end %>

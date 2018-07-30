@@ -8,10 +8,6 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.6'
 
-# Use Puma as the app server
-# FIXME: required for Rails 5 ActionCable
-# gem 'puma', '~> 3.7'
-
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 
@@ -33,9 +29,6 @@ gem 'turbolinks', '~> 5'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
-
-# Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 4.0'
 
 # ---------------------------------------------------- Dradis Community Edition
 gem 'bootstrap-sass', '~> 2.3.2.2'
@@ -107,8 +100,8 @@ gem 'rails-html-sanitizer', '~> 1.0.4'
 gem 'sqlite3'#,  '1.3.10'
 
 # Use Unicorn as the web server
-# FIXME: Switch to Puma for Rails 5
-gem 'unicorn',  '4.9.0', group: :production
+gem 'unicorn',  '4.9.0'
+gem 'unicorn-rails'
 
 
 # --------------------------------------------------------- Dradis Professional
@@ -188,6 +181,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'puma'
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'capybara', '~> 2.13'
