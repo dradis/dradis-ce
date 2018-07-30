@@ -18,7 +18,7 @@
     <% end %>
   </ul>
   <% if notifications.any? %>
-    <div class="footer text-center" data-id="js-footer">
+    <div class="footer text-center">
       <%# TODO replace @project with current_project once project-id-scopes is merged %>
       <%= link_to 'See all notifications', project_notifications_path(@project) %>
     </div>
