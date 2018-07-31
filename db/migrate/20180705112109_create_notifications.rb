@@ -6,8 +6,8 @@ class CreateNotifications < ActiveRecord::Migration[5.1]
 
       t.references  :notifiable, polymorphic: true, index: true
 
-      t.references  :actor, index: true, references: :users
-      t.references  :recipient, index: true, references: :users
+      t.references  :actor, index: true, foreign_key: { to_table: :users }
+      t.references  :recipient, index: true, foreign_key: { to_table: :users }
 
       t.timestamps
     end
