@@ -100,7 +100,6 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["actor_id"], name: "index_notifications_on_actor_id"
-    t.index ["notifiable_id", "notifiable_type", "recipient_id"], name: "index_notifications_on_notifiable_and_recipient", unique: true
     t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable_type_and_notifiable_id"
     t.index ["recipient_id"], name: "index_notifications_on_recipient_id"
   end
