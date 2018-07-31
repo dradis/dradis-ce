@@ -67,14 +67,18 @@ Rails.application.routes.draw do
         resources :revisions, only: [:index, :show]
       end
 
-      constraints(:filename => /.*/) do
+      constraints(filename: /.*/) do
         resources :attachments, param: :filename
       end
     end
 
+    resources :notifications, only: [:index, :update]
+
     resources :revisions, only: [] do
       member { post :recover }
     end
+
+    resources :subscriptions, only: [:create, :destroy]
 
     get 'search' => 'search#index'
     get 'trash' => 'revisions#trash'
@@ -101,4 +105,6 @@ Rails.application.routes.draw do
   get '/markup-help' => 'home#markup_help', as: :markup
 
   root to: 'projects#index'
+
+  mount ActionCable.server => '/cable'
 end

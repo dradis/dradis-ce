@@ -30,9 +30,6 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 
-# Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 4.0'
-
 # ---------------------------------------------------- Dradis Community Edition
 gem 'bootstrap-sass', '~> 2.3.2.2'
 gem 'font-awesome-sass', '~> 4.7.0'
@@ -184,6 +181,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'puma'
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'capybara', '~> 2.13'

@@ -22,7 +22,7 @@
     <div class="inner">
       <h2 id="preview_name"><%= @methodology.name %></h2>
       <div id="preview_content" class="well">
-        <%= parse_project_methodology_content(@project, @methodology) %>
+        <%= parse_project_methodology_content(current_project, @methodology) %>
       </div>
     </div>
   </div>

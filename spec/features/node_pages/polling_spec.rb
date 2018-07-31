@@ -24,7 +24,7 @@ describe "node pages", js: true do
       end
 
       let(:add_node) do
-        track_created(@new_node, @other_user)
+        create(:activity, action: :create, trackable: @new_node, user: @other_user)
         call_poller
       end
 
@@ -62,7 +62,7 @@ describe "node pages", js: true do
               should have_selector node_link_selector(@node)
               @subnode = create(:node, label: "Sub", parent: @node, project: current_project)
               should have_no_selector node_link_selector(@subnode)
-              track_created(@subnode, @other_user)
+              create(:activity, action: :create, trackable: @subnode, user: @other_user)
               call_poller
               should have_selector node_link_selector(@subnode)
             end
@@ -80,7 +80,7 @@ describe "node pages", js: true do
               should have_selector node_link_selector(@node)
               @subnode = create(:node, label: "Sub", parent: @node, project: current_project)
               should have_no_selector node_link_selector(@subnode)
-              track_created(@subnode, @other_user)
+              create(:activity, action: :create, trackable: @subnode, user: @other_user)
               call_poller
               should have_selector node_link_selector(@subnode)
             end
@@ -91,7 +91,7 @@ describe "node pages", js: true do
       context "and its parent has no other subnodes" do
         specify "the 'expand' link appears, and works" do
           @sub = create(:node, label: "Sub", parent: @node, project: current_project)
-          track_created(@sub, @other_user)
+          create(:activity, action: :create, trackable: @sub, user: @other_user)
           call_poller
           within_main_sidebar do
             should have_selector "#{node_li_selector(@node)} > a.toggle"
@@ -108,7 +108,7 @@ describe "node pages", js: true do
 
     it "displays a warning" do
       @node.destroy
-      track_destroyed(@node, @other_user)
+      create(:activity, action: :destroy, trackable: @node, user: @other_user)
       call_poller
 
       should have_selector "#node-deleted-alert"
@@ -123,7 +123,7 @@ describe "node pages", js: true do
 
     let(:delete_node) do
       @other_node.destroy
-      track_destroyed(@other_node, @other_user)
+      create(:activity, action: :destroy, trackable: @other_node, user: @other_user)
       call_poller
     end
 
@@ -153,7 +153,7 @@ describe "node pages", js: true do
 
     let(:delete_node) do
       @subnode.destroy
-      track_destroyed(@subnode, @other_user)
+      create(:activity, action: :destroy, trackable: @subnode, user: @other_user)
       call_poller
     end
 
@@ -222,7 +222,7 @@ describe "node pages", js: true do
 
     let(:update_node) do
       @other_node.update_attributes!(label: "New name")
-      track_updated(@other_node, @other_user)
+      create(:activity, action: :update, trackable: @other_node, user: @other_user)
       call_poller
     end
 

@@ -1,0 +1,88 @@
+.comment-feed {
+  .actions {
+    float: right;
+    visibility: hidden;
+  }
+
+  .gravatar {
+    img {
+      border-radius: 0;
+    }
+  }
+
+  textarea {
+    width: 90%;
+  }
+
+  label {
+    font-weight: bold;
+  }
+
+  input[type="submit"] {
+    margin-left: 35px;
+  }
+
+  .comment {
+    margin: 15px 0px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f1f3f3;
+
+    .content {
+      margin-left: 20px;
+    }
+
+    .time {
+      color: #888;
+      font-size: 12px;
+    }
+
+    &:hover {
+      background-color: #f5f5f5;
+
+      .actions {
+        visibility: visible;
+      }
+    }
+
+    form.edit_comment {
+      display: none;
+    }
+  }
+}
+
+// tribute @-mentions plugin styles
+.tribute-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: auto;
+  max-height: 300px;
+  max-width: 500px;
+  overflow: auto;
+  display: block;
+  z-index: 999999;
+}
+.tribute-container ul {
+  margin: 0;
+  margin-top: 2px;
+  padding: 0;
+  list-style: none;
+  background: #efefef;
+}
+.tribute-container li {
+  padding: 5px 5px;
+  cursor: pointer;
+}
+.tribute-container li.highlight, .tribute-container li:hover {
+  background: #ddd;
+}
+.tribute-container li span {
+  font-weight: bold;
+}
+.tribute-container li.no-match {
+  cursor: default;
+}
+.tribute-container .menu-highlighted {
+  font-weight: bold;
+}

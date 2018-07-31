@@ -24,15 +24,17 @@ shared_examples "recover deleted item" do |item_type|
       visit project_trash_path(current_project)
       activity_count = model.try(:activities) ? model.activities.count : 0
 
-      page.accept_confirm do
-        rr_path = recover_project_revision_path(current_project, model.versions.last)
-        find(:xpath, "//a[@href='#{rr_path}']").click
-      end
-
-      if (model.respond_to?(:activities))
-        expect(model.activities.count).to eq activity_count + 1
-        expect(model.activities.last.action).to eq "recover"
-      end
+      expect do
+        page.accept_confirm do
+          rr_path = recover_project_revision_path(current_project, model.versions.last)
+          find(:xpath, "//a[@href='#{rr_path}']").click
+        end
+      end.to have_enqueued_job(ActivityTrackingJob).with(
+        action: 'recover',
+        trackable_id: model.id,
+        trackable_type: model.class.to_s,
+        user_id: @logged_in_as.id
+      )
 
       expect(page).to have_content "#{model.class.name.humanize} recovered"
       within '#trash' do
@@ -54,14 +56,19 @@ shared_examples "recover deleted item without node" do |item_type|
       within '#modal_delete_node' do
         click_link 'Delete'
       end
+
       expect do
         visit project_trash_path(current_project)
         rr_path = recover_project_revision_path(current_project, model.versions.last)
         page.accept_confirm do
           find(:xpath, "//a[@href='#{rr_path}']").click
         end
-      end.to change{model.activities.count}.by(1)
-      expect(model.activities.last.action).to eq "recover"
+      end.to have_enqueued_job(ActivityTrackingJob).with(
+        action: 'recover',
+        trackable_id: model.id,
+        trackable_type: model.class.to_s,
+        user_id: @logged_in_as.id
+      )
 
       expect(page).to have_content "#{model.class.name.humanize} recovered"
       within '#trash' do

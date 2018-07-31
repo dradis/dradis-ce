@@ -70,6 +70,7 @@ class UploadController < AuthenticatedController
     # avoid SQLite3::BusyException when using sqlite and
     # activejob async queue adapter
     UploadJob.perform_later(
+      default_user_id: current_user.id,
       file: attachment.fullpath.to_s,
       plugin_name: @uploader.to_s,
       uid: params[:item_id].to_i
@@ -82,6 +83,7 @@ class UploadController < AuthenticatedController
     job_logger.write('Small attachment detected. Processing in line.')
     begin
       importer = @uploader::Importer.new(
+        default_user_id: current_user.id,
         logger: job_logger,
         plugin: @uploader
       )

@@ -16,7 +16,8 @@ describe "note pages", js: true do
     describe "and someone else updates the same Note" do
       before do
         @note.update_attributes(text: "whatever")
-        track_updated(@note, @other_user)
+        create(:activity, action: :update, trackable: @note, user: @other_user)
+
 
         call_poller
       end
@@ -29,7 +30,8 @@ describe "note pages", js: true do
     describe "and someone deletes that Note" do
       before do
         @note.destroy
-        track_destroyed(@note, @other_user)
+        create(:activity, action: :destroy, trackable: @note, user: @other_user)
+
         call_poller
       end
 
@@ -41,9 +43,9 @@ describe "note pages", js: true do
     describe "and someone updates then deletes that note" do
       before do
         @note.update_attributes(text: "whatever")
-        track_updated(@note, @other_user)
+        create(:activity, action: :update, trackable: @note, user: @other_user)
         @note.destroy
-        track_destroyed(@note, @other_user)
+        create(:activity, action: :destroy, trackable: @note, user: @other_user)
         call_poller
       end
 

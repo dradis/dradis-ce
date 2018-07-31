@@ -3,6 +3,7 @@ class IssuesController < AuthenticatedController
   include ContentFromTemplate
   include ConflictResolver
   include MultipleDestroy
+  include NotificationsReader
   include ProjectScoped
 
   before_action :find_issuelib
@@ -16,7 +17,7 @@ class IssuesController < AuthenticatedController
   end
 
   def show
-    @activities = @issue.activities.latest
+    @activities = @issue.commentable_activities.latest
 
     # We can't use the existing @nodes variable as it only contains root-level
     # nodes, and we need the auto-complete to have the full list.
@@ -32,6 +33,14 @@ class IssuesController < AuthenticatedController
     @first_evidence  = Evidence.where(node: @first_node, issue: @issue)
 
     load_conflicting_revisions(@issue)
+
+    @subscription = Subscription.find_by(
+                      user: current_user,
+                      subscribable_type: @issue.class.to_s,
+                      subscribable_id: @issue.id)
+
+    @mentionable_users = User.all
+    read_item_notifications(@issue, current_user)
   end
 
   def new

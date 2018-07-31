@@ -41,6 +41,7 @@ Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, options)
 end
 
+Capybara.server = :puma
 Capybara.javascript_driver = :poltergeist
 
 RSpec.configure do |config|
@@ -131,3 +132,5 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+ActiveJob::Base.queue_adapter = :test

@@ -36,6 +36,7 @@ class Note < ApplicationRecord
   belongs_to :node, touch: true
   has_many :activities, as: :trackable
 
+  delegate :project, :project=, to: :node
   # -- Callbacks ------------------------------------------------------------
 
 

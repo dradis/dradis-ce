@@ -1,0 +1,10 @@
+<% partial = escape_javascript(
+  render partial: 'dropdown',
+  locals: { notifications: @notifications,  unread_count: @unread_count}
+) %>
+$('[data-behavior~=notifications-dropdown] + div').html("<%= partial %>");
+
+$('[data-behavior~=notification-read]').on('ajax:beforeSend', function(event){
+  // Don't send out ajax when reading a 'read' notification
+  if(!$(this).parent().hasClass('unread')) return false;
+});
