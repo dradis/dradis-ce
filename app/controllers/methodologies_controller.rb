@@ -8,7 +8,7 @@ class MethodologiesController < AuthenticatedController
     @methodologies = []
 
     # How ugly is using the :filename to store the note's :id?
-    @methodologies = @methodologylib.notes.map{|n| Methodology.new(filename: n.id, content: n.text)}
+    @methodologies = @methodologylib.notes.map{|n| Methodology.new(filename: n.id.to_s, content: n.text)}
 
     @methodology_templates = Methodology.all
   end
