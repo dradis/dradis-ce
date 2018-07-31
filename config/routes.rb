@@ -1,3 +1,7 @@
+if ENV['RAILS_RELATIVE_URL_ROOT']
+  Rails.application.routes.default_scope = ENV['RAILS_RELATIVE_URL_ROOT']
+end
+
 Rails.application.routes.draw do
   # ------------------------------------------------------------ Authentication
   # These routes allow users to set the shared password
