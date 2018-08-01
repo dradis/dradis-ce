@@ -113,6 +113,7 @@ describe "node pages" do
         end.to change { node.children.count }.by(1)
           .and have_enqueued_job(ActivityTrackingJob).with(
             action: 'create',
+            project_id: current_project.id,
             trackable_id: node.children.last.try(:id) || Node.last.id + 1,
             trackable_type: 'Node',
             user_id: @logged_in_as.id
@@ -198,6 +199,7 @@ describe "node pages" do
       it "creates an Activity" do
         expect { submit_form }.to have_enqueued_job(ActivityTrackingJob).with(
           action: 'update',
+          project_id: current_project.id,
           trackable_id: @node.id,
           trackable_type: 'Node',
           user_id: @logged_in_as.id

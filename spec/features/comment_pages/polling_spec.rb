@@ -61,7 +61,7 @@ describe 'comment pages', js: true do
 
   describe 'when I am viewing an Issue' do
     before do
-      @commentable = create(:issue)
+      @commentable = create(:issue, node: @project.issue_library)
       @comment = create(:comment, commentable: @commentable, user: @other_user)
       visit project_issue_path(@project, @commentable)
     end

@@ -5,7 +5,7 @@ describe 'User notifications', js: true do
 
   before do
     login_to_project_as_user
-    visit root_path
+    visit project_path(@project)
   end
 
   it 'can view the notifcation bell' do

@@ -31,6 +31,7 @@ shared_examples "recover deleted item" do |item_type|
         end
       end.to have_enqueued_job(ActivityTrackingJob).with(
         action: 'recover',
+        project_id: current_project.id,
         trackable_id: model.id,
         trackable_type: model.class.to_s,
         user_id: @logged_in_as.id
@@ -65,6 +66,7 @@ shared_examples "recover deleted item without node" do |item_type|
         end
       end.to have_enqueued_job(ActivityTrackingJob).with(
         action: 'recover',
+        project_id: current_project.id,
         trackable_id: model.id,
         trackable_type: model.class.to_s,
         user_id: @logged_in_as.id
