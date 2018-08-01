@@ -73,6 +73,7 @@ class UploadController < AuthenticatedController
       default_user_id: current_user.id,
       file: attachment.fullpath.to_s,
       plugin_name: @uploader.to_s,
+      project_id: current_project.id,
       uid: params[:item_id].to_i
     )
   end
@@ -84,8 +85,9 @@ class UploadController < AuthenticatedController
     begin
       importer = @uploader::Importer.new(
         default_user_id: current_user.id,
-        logger: job_logger,
-        plugin: @uploader
+        logger:     job_logger,
+        plugin:     @uploader,
+        project_id: current_project.id
       )
 
       importer.import(file: attachment.fullpath)
