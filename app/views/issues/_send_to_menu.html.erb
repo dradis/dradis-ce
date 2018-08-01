@@ -18,5 +18,11 @@
     <% end %>
     <li><a href="javascript:void(0)" class="js-try-pro" data-term="issuelib" data-url="http://drad.is/l/try-pro-issuelib"><i class="fa fa-book"></i> Built-in IssueLibrary</a></li>
   <% end %>
+  <% unless defined?(Dradis::Pro) && defined?(Dradis::Pro::Plugins::Remediationtracker) %>
+    <% if sync_plugins.any? %>
+    <li class="divider"></li>
+    <% end %>
+    <li><a href="javascript:void(0)" class="js-try-pro" data-term="remediation" data-url="http://drad.is/l/try-pro-remediation"><i class="fa fa-tasks"></i> Built-in Remediation Tracker</a></li>
+  <% end %>
   </ul>
 </span> - 
