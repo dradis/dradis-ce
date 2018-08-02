@@ -3,9 +3,11 @@ class MultiDestroyJob < ApplicationJob
 
   queue_as :dradis_project
 
-  def perform(author_email:, ids:, klass:, uid:)
+  def perform(project_id:, author_email:, ids:, klass:, uid:)
     # FIXME: migrate logs#uid to uuid ?
     logger = Log.new(uid: uid)
+
+    project = Project.find(project_id)
 
     PaperTrail.whodunnit = author_email
 
@@ -18,7 +20,7 @@ class MultiDestroyJob < ApplicationJob
     ActiveRecord::Base.transaction do
       items.each do |item|
         if item.destroy
-          track_destroyed(item, User.find_by_email(author_email))
+          track_destroyed(item, User.find_by_email(author_email), project)
           logger.write { "Deleted #{item.class} #{item.id}..." }
         end
       end
