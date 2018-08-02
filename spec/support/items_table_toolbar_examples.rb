@@ -63,6 +63,7 @@ shared_examples 'an index table toolbar' do
           find('#modal-console', visible: true) # wait for the response
         }.to have_enqueued_job(MultiDestroyJob).with(
           ids: checkboxes.map(&:value),
+          project_id: current_project.id,
           klass: items.first.class.to_s,
           author_email: @logged_in_as.email,
           uid: 1
