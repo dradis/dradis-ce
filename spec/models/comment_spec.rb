@@ -18,9 +18,9 @@ describe Comment do
 
   describe '#mentions' do
     it 'detects mentions' do
-      user1   = create(:user, email: 'foo')
-      user2   = create(:user, email: 'bar')
-      comment = create(:comment, content: 'Hello @foo and hello @bar')
+      user1   = create(:user, email: 'foo@dradis.test')
+      user2   = create(:user, email: 'bar@dradis.test')
+      comment = create(:comment, content: 'Hello @foo@dradis.test and hello @bar@dradis.test')
 
       expect(comment.mentions).to eq [user1, user2]
     end
@@ -38,10 +38,10 @@ describe Comment do
     end
 
     it 'creates notifications when a comment has mentions' do
-      issue_owner = create(:user, email: 'owner')
+      issue_owner = create(:user, email: 'owner@dradis.test')
       commentable = create(:issue, author: issue_owner.email)
       create(:subscription, subscribable: commentable)
-      mentioned = create(:user, email: 'mentioned')
+      mentioned = create(:user, email: 'mentioned@dradis.test')
       comment = create(
         :comment,
         commentable: commentable,
