@@ -8,18 +8,26 @@ describe ActivityTrackingJob do #, type: :job do
 
   describe '#perform' do
     it 'creates activities' do
-      models  = [:issue, :evidence, :note, :node, :comment]
+      project   = create(:project)
+      node      = create(:node, project: project)
+      issue     = create(:issue, node: project.issue_library)
+      note      = create(:issue, node: node)
+      evidence  = create(:evidence, issue: issue, node: node)
+      comment   = create(:comment, commentable: issue)
+
+      models  = [node, issue, note, evidence, comment]
       actions = [:create, :update, :destroy]
       user    = create(:user)
 
       models.each do |model|
         actions.each do |action|
-          trackable = create(model)
+          trackable = model
           trackable.destroy if action == :destroy
 
           expect {
             described_class.new.perform(
               action: action.to_s,
+              project_id: project.id,
               trackable_id: trackable.id,
               trackable_type: trackable.class.to_s,
               user_id: user.id
@@ -52,10 +60,12 @@ describe ActivityTrackingJob do #, type: :job do
       commentable = create(:issue)
       create_list(:subscription, 2, subscribable: commentable)
       trackable = create(:comment, commentable: commentable)
+      project = commentable.node.project
 
       expect {
         described_class.new.perform(
           action: 'create',
+          project_id: project.id,
           trackable_id: trackable.id,
           trackable_type: trackable.class.to_s,
           user_id: trackable.user.id
@@ -69,9 +79,11 @@ describe ActivityTrackingJob do #, type: :job do
       commentable = create(:issue)
       create_list(:subscription, 2, subscribable: commentable)
       trackable = create(:comment, commentable: commentable)
+      project = commentable.node.project
 
       described_class.new.perform(
         action: 'create',
+        project_id: project.id,
         trackable_id: trackable.id,
         trackable_type: trackable.class.to_s,
         user_id: trackable.user.id

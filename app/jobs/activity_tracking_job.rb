@@ -7,7 +7,6 @@ class ActivityTrackingJob < ApplicationJob
 
     Activity.create!(
       action:    action.to_s,
-      project_id: project_id,
       trackable_id: trackable_id,
       trackable_type: trackable_type,
       user:      user.email
