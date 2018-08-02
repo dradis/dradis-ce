@@ -5,7 +5,7 @@ module ActivityTracking
     project = current_project if project.nil? # current_project is set by ProjectScoped
     ActivityTrackingJob.perform_later(
       action: action.to_s,
-      project_id: project.try(:id),
+      project_id: project.id,
       trackable_id: trackable.id,
       trackable_type: trackable.class.to_s,
       user_id: user.id
