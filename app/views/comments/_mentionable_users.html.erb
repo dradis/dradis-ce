@@ -2,7 +2,7 @@
 <% cache(@mentionable_users) do %>
   <%= tag.div id: "mentionable-users",
               data: {
-                users: User.all.map do |user|
+                users: @mentionable_users.map do |user|
                   {
                     key: user.email,
                     value: user.email,
