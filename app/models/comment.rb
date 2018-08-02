@@ -50,7 +50,7 @@ class Comment < ApplicationRecord
     @mentions = nil if content_changed?
     @mentions ||= begin
       mentioned_users = []
-      HTML::Pipeline::MentionFilter.mentioned_logins_in(content) do |match, login, is_mentioned|
+      HTML::Pipeline::MentionFilter.mentioned_logins_in(content, /[a-z0-9][a-z0-9\-@\.]*/) do |match, login, is_mentioned|
         if (mentioned_user = User.find_by_email(login))
           mentioned_users << mentioned_user
         end
