@@ -20,9 +20,9 @@ describe MultiDestroyJob do #, type: :job do
 
       described_class.new.perform(
         author_email: @user.email,
-        project_id: @project.id,
         ids: @notes.map(&:id),
         klass: 'Note',
+        project_id: @project.id,
         uid: 1
       )
     end
