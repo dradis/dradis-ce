@@ -43,7 +43,7 @@ describe "Nodes API" do
 
     describe "GET /api/nodes" do
       it "retrieves all the nodes" do
-        nodes = create_list(:node, 10, project: project).sort_by(&:updated_at)
+        nodes = create_list(:node, 10, project: current_project).sort_by(&:updated_at)
         node_labels = nodes.map(&:label)
 
         get "/api/nodes", env: @env
@@ -60,7 +60,7 @@ describe "Nodes API" do
 
     describe "GET /api/nodes/:id" do
       it "retrieves a specific node" do
-        node = create(:node, label: "Existing Node", project: project)
+        node = create(:node, label: "Existing Node", project: current_project)
 
         get "/api/nodes/#{ node.id }", env: @env
         expect(response.status).to eq(200)
@@ -132,7 +132,7 @@ describe "Nodes API" do
 
     describe "PUT /api/nodes/:id" do
 
-      let(:node) { create(:node, label: "Existing Node", project: project) }
+      let(:node) { create(:node, label: "Existing Node", project: current_project) }
 
       let(:valid_put) do
         put "/api/nodes/#{ node.id }", params: valid_params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
@@ -142,7 +142,7 @@ describe "Nodes API" do
       it "updates a node" do
         valid_put
         expect(response.status).to eq(200)
-        expect(project.nodes.find(node.id).label).to eq valid_params[:node][:label]
+        expect(current_project.nodes.find(node.id).label).to eq valid_params[:node][:label]
         retrieved_node = JSON.parse(response.body)
         expect(retrieved_node['label']).to eq valid_params[:node][:label]
       end
@@ -155,7 +155,7 @@ describe "Nodes API" do
         params = { node: { type_id: Node::Types::HOST } }
         put "/api/nodes/#{ node.id }", params: params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
         expect(response.status).to eq(200)
-        expect(project.nodes.find(node.id).type_id).to eq(Node::Types::HOST)
+        expect(current_project.nodes.find(node.id).type_id).to eq(Node::Types::HOST)
       end
 
       it "throws 415 unless JSON is sent" do
@@ -187,14 +187,14 @@ describe "Nodes API" do
 
     describe "DELETE /api/nodes/:id" do
 
-      let(:node) { create(:node, label: "Existing Node", project: project) }
+      let(:node) { create(:node, label: "Existing Node", project: current_project) }
       let(:delete_node) { delete "/api/nodes/#{ node.id }", env: @env }
 
       it "deletes a node" do
         delete_node
         expect(response.status).to eq(200)
 
-        expect { project.nodes.find(node.id) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { current_project.nodes.find(node.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
       let(:model) { node }

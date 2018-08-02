@@ -8,7 +8,10 @@ describe MultiDestroyJob do #, type: :job do
 
   describe '#perform' do
     before do
-      node = create(:node)
+      @project = create(:project)
+      @user    = create(:user)
+      node     = create(:node, project: @project)
+      PaperTrail.controller_info = { project_id: @project.id }
       @notes = [
         create(:note, node: node),
         create(:note, node: node),
@@ -16,7 +19,8 @@ describe MultiDestroyJob do #, type: :job do
       ]
 
       described_class.new.perform(
-        author_email: User.create!(email: 'rspec@dradisframework.com').email,
+        author_email: @user.email,
+        project_id: @project.id,
         ids: @notes.map(&:id),
         klass: 'Note',
         uid: 1

@@ -1,5 +1,6 @@
 module ApplicationHelper # :nodoc:
-  def avatar_url
+  def avatar_url(user, options = {})
+    # The arguments are a noop here for CE-Pro parity.
     image_path('profile.jpg')
   end
 
@@ -12,7 +13,7 @@ module ApplicationHelper # :nodoc:
 
     content_tag :span, class: 'gravatar' do
       image_tag(
-        avatar_url, #(user, size: size),
+        avatar_url(user, size: size),
         alt: alt,
         data: { fallback_image: fallback_image },
         title: title,
@@ -21,11 +22,11 @@ module ApplicationHelper # :nodoc:
       ) + (include_name ? ' ' + user.email : '')
     end
   end
-  
+
   def markup(text)
     return unless text.present?
 
-    context = { }
+    context = {}
 
     textile_pipeline = HTML::Pipeline.new [
       HTML::Pipeline::DradisFieldableFilter,

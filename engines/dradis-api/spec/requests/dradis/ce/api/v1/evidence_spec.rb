@@ -5,8 +5,8 @@ describe "Evidence API" do
   include_context "project scoped API"
   include_context "https"
 
-  let(:node)  { create(:node, project: project) }
-  let(:issue) { create(:issue, node: project.issue_library) }
+  let(:node)  { create(:node, project: current_project) }
+  let(:issue) { create(:issue, node: current_project.issue_library) }
 
   context "as unauthenticated user" do
     let(:evidence) { create(:evidence, issue: issue, node: node) }
@@ -56,13 +56,13 @@ describe "Evidence API" do
 
     describe "GET /api/nodes/:node_id/evidence" do
       before do
-        @issues = create_list(:issue, 3, node: project.issue_library)
+        @issues = create_list(:issue, 3, node: current_project.issue_library)
         @evidence = [
           Evidence.create!(node: node, content: "#[a]#\nA", issue: @issues[0]),
           Evidence.create!(node: node, content: "#[b]#\nB", issue: @issues[1]),
           Evidence.create!(node: node, content: "#[c]#\nC", issue: @issues[2]),
         ]
-        @other_evidence = create(:evidence, issue: issue, node: project.issue_library)
+        @other_evidence = create(:evidence, issue: issue, node: current_project.issue_library)
         get "/api/nodes/#{node.id}/evidence", env: @env
       end
 
@@ -105,7 +105,7 @@ describe "Evidence API" do
 
     describe "GET /api/nodes/:node_id/evidence/:id" do
       before do
-        @issue    = create(:issue, node: project.issue_library)
+        @issue    = create(:issue, node: current_project.issue_library)
         @evidence = node.evidence.create!(
           content: "#[foo]#\nbar\n#[fizz]#\nbuzz",
           issue:   @issue,
@@ -132,7 +132,7 @@ describe "Evidence API" do
 
     describe "POST /api/nodes/:node_id/evidence" do
       let(:url) { "/api/nodes/#{node.id}/evidence" }
-      let(:issue) { create(:issue, node: project.issue_library) }
+      let(:issue) { create(:issue, node: current_project.issue_library) }
       let(:post_evidence) { post url, params: params.to_json, env: @env }
 
       context "when content_type header = application/json" do
