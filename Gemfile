@@ -99,11 +99,6 @@ gem 'rails-html-sanitizer', '~> 1.0.4'
 # SQLite3 DB driver
 gem 'sqlite3'#,  '1.3.10'
 
-# Use Unicorn as the web server
-gem 'unicorn',  '4.9.0'
-# Make 'rails server' run unicorn by default:
-gem 'unicorn-rails'
-
 # --------------------------------------------------------- Dradis Professional
 # Authorisation
 gem 'cancancan', '~> 1.10'
@@ -136,6 +131,10 @@ gem 'whenever', require: false
 # gem 'capistrano-rails', group: :development
 
 group :production do
+  # Use Unicorn as the web server
+  gem 'unicorn',  '4.9.0'
+  # Make 'rails server' run unicorn by default:
+  gem 'unicorn-rails'
 end
 
 
@@ -178,10 +177,11 @@ group :development, :test do
   gem 'byebug', platform: :mri
 
   gem 'rspec-rails', '~> 3.1'
+
+  gem 'puma'
 end
 
 group :test do
-  gem 'puma'
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'capybara', '~> 2.13'
