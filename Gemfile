@@ -133,8 +133,6 @@ gem 'whenever', require: false
 group :production do
   # Use Unicorn as the web server
   gem 'unicorn',  '4.9.0'
-  # Make 'rails server' run unicorn by default:
-  gem 'unicorn-rails'
 end
 
 

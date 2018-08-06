@@ -1,14 +1,14 @@
 GIT
   remote: https://github.com/dradis/dradis-plugins.git
-  revision: dc29467e46cd7f6c4c42bee0c4476c5a860fbefc
+  revision: d9d1be9649280f02134452cfd0462438adcaa0ed
   specs:
     dradis-plugins (3.10.0)
 
 GIT
   remote: https://github.com/dradis/dradis-projects.git
-  revision: 2a56756753c446b878b2e954f66ee376127a6088
+  revision: fcaeac2ed52553f705ca1e0cdd434b6418d995cd
   specs:
-    dradis-projects (3.9.0)
+    dradis-projects (3.10.0)
       dradis-plugins (~> 3.7)
       rubyzip (~> 1.2.1)
 
@@ -354,9 +354,6 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    unicorn-rails (2.2.1)
-      rack
-      unicorn
     uniform_notifier (1.10.0)
     vegas (0.1.11)
       rack (>= 1.0.0)
@@ -440,7 +437,6 @@ DEPENDENCIES
   turbolinks (~> 5)
   uglifier (>= 1.3.0)
   unicorn (= 4.9.0)
-  unicorn-rails
   warden (~> 1.2.3)
   web-console (>= 3.3.0)
   whenever
