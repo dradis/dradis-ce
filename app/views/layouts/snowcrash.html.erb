@@ -55,11 +55,19 @@
       </div>
       <div class="main-content <%= content_for?(:sidebar) ? 'no-padding' : ''%>">
         <noscript>
-          <div class="alert alert-error" style="margin-top: 2em">
+          <div class="alert alert-error" style="margin: 2em">
             <h4>Error</h4>
             <p>Please enable JavaScript support.</p>
           </div>
         </noscript>
+
+        <div class="alert alert-notice hide" style="margin: 2em" data-behavior="project-teaser">
+          <h3>This isn't the project you're looking for</h3>
+          <p>
+            If you're looking to work with multiple projects, consider <a href="javascript:void(0)"
+            class="js-try-pro" data-term="projects" data-url="http://drad.is/l/try-pro-projects">checking Dradis Pro out</a>.
+          </p>
+        </div>
 
         <div id="view-content" class="view-content">
           <% if content_for?(:sidebar) %>

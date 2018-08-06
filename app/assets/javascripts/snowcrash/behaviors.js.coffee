@@ -96,6 +96,7 @@ document.addEventListener "turbolinks:load", ->
       title = switch term
         when 'boards' then '[<span>Dradis Pro feature</span>] Advanced boards and task assignment'
         when 'issuelib' then '[<span>Dradis Pro feature</span>] Integrated library of vulnerability descriptions'
+        when 'projects' then '[<span>Dradis Pro feature</span>] Work with multiple projects'
         when 'remediation' then '[<span>Dradis Pro feature</span>] Integrated remediation tracker'
         when 'training-course' then 'Dradis Training Course'
         when 'try-pro' then 'Upgrade to Dradis Pro'
@@ -125,6 +126,9 @@ document.addEventListener "turbolinks:load", ->
       height       = modalheight - headerheight - bodypaddings - 5 # fudge factor
 
       $body.css('height', "#{height}px")
+
+  if !(/^\/projects\/1(\/|$)/.test(window.location.pathname))
+    $('[data-behavior~=project-teaser]').removeClass('hide')
 
   # ------------------------------------------------------ Non-plugin behaviors
 
