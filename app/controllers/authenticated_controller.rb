@@ -7,6 +7,10 @@
 # Any third-party code (e.g. plugins) should inherit from this class instead of
 # calling the authentication filters directly
 class AuthenticatedController < ApplicationController
+  # We are using 'prepend_' here so this is executed before
+  # ApplicationController#protect_from_forgery. If not, when the user session
+  # expires we see an 'Invalid csrf token' exception for requests that require
+  # a csrf token.
   prepend_before_action :login_required
   before_action :set_paper_trail_whodunnit
   # before_action :render_onboarding_tour
