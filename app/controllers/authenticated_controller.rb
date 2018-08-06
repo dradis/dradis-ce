@@ -10,7 +10,8 @@ class AuthenticatedController < ApplicationController
   # We are using 'prepend_' here so this is executed before
   # ApplicationController#protect_from_forgery. If not, when the user session
   # expires we see an 'Invalid csrf token' exception for requests that require
-  # a csrf token.
+  # a csrf token. But it is not a csrf attack, it's just that wo/ session the token
+  # cannot be checked.
   prepend_before_action :login_required
   before_action :set_paper_trail_whodunnit
   # before_action :render_onboarding_tour
