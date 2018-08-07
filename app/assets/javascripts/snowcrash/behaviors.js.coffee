@@ -147,8 +147,9 @@ document.addEventListener "turbolinks:load", ->
       img.src = $this.attr('src')
 
   if ($poller = $("#activities-poller")).length
-    ActivitiesPoller.init($poller)
-    ActivitiesPoller.poll()
+    unless ActivitiesPoller.initialized
+      ActivitiesPoller.init($poller)
+      ActivitiesPoller.poll()
 
   # Disable form buttons after submitting them.
   $('form').submit (ev)->
