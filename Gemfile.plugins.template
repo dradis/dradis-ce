@@ -5,31 +5,31 @@
 #   $ bundle
 
 # ----------------------------------------------------------------- Calculators
-gem 'dradis-calculator_cvss',  '~> 3.9', github: 'dradis/dradis-calculator_cvss'
-gem 'dradis-calculator_dread', '~> 3.9', github: 'dradis/dradis-calculator_dread'
+gem 'dradis-calculator_cvss',  '~> 4.0', github: 'dradis/dradis-calculator_cvss'
+gem 'dradis-calculator_dread', '~> 4.0', github: 'dradis/dradis-calculator_dread'
 
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv',         '~> 3.9', github: 'dradis/dradis-csv'
-gem 'dradis-html_export', '~> 3.9', github: 'dradis/dradis-html_export'
+gem 'dradis-csv',         '~> 4.0', github: 'dradis/dradis-csv'
+gem 'dradis-html_export', '~> 4.0', github: 'dradis/dradis-html_export'
 
 
 # ---------------------------------------------------------------------- Import
-# gem 'dradis-mediawiki', '~> 3.9', github: 'dradis/dradis-mediawiki'
-# gem 'dradis-vulndb',    '~> 3.9', github: 'dradis/dradis-vulndb'
+# gem 'dradis-mediawiki', '~> 4.0', github: 'dradis/dradis-mediawiki'
+# gem 'dradis-vulndb',    '~> 4.0', github: 'dradis/dradis-vulndb'
 
 # ---------------------------------------------------------------------- Upload
-gem 'dradis-acunetix',    '~> 3.9', github: 'dradis/dradis-acunetix'
-gem 'dradis-brakeman',    '~> 3.9', github: 'dradis/dradis-brakeman'
-gem 'dradis-burp',        '~> 3.9', github: 'dradis/dradis-burp'
-gem 'dradis-metasploit',  '~> 3.9', github: 'dradis/dradis-metasploit'
-gem 'dradis-nessus',      '~> 3.9', github: 'dradis/dradis-nessus'
-gem 'dradis-nexpose',     '~> 3.9', github: 'dradis/dradis-nexpose'
-gem 'dradis-netsparker',  '~> 3.9', github: 'dradis/dradis-netsparker'
-gem 'dradis-nikto',       '~> 3.9', github: 'dradis/dradis-nikto'
-gem 'dradis-nmap',        '~> 3.9', github: 'dradis/dradis-nmap'
-gem 'dradis-ntospider',   '~> 3.9', github: 'dradis/dradis-ntospider'
-gem 'dradis-openvas',     '~> 3.9', github: 'dradis/dradis-openvas'
-gem 'dradis-qualys',      '~> 3.9', github: 'dradis/dradis-qualys'
-gem 'dradis-saint',       '~> 3.9', github: 'dradis/dradis-saint'
-gem 'dradis-zap',         '~> 3.9', github: 'dradis/dradis-zap'
+gem 'dradis-acunetix',    '~> 4.0', github: 'dradis/dradis-acunetix'
+gem 'dradis-brakeman',    '~> 4.0', github: 'dradis/dradis-brakeman'
+gem 'dradis-burp',        '~> 4.0', github: 'dradis/dradis-burp'
+gem 'dradis-metasploit',  '~> 4.0', github: 'dradis/dradis-metasploit'
+gem 'dradis-nessus',      '~> 4.0', github: 'dradis/dradis-nessus'
+gem 'dradis-nexpose',     '~> 4.0', github: 'dradis/dradis-nexpose'
+gem 'dradis-netsparker',  '~> 4.0', github: 'dradis/dradis-netsparker'
+gem 'dradis-nikto',       '~> 4.0', github: 'dradis/dradis-nikto'
+gem 'dradis-nmap',        '~> 4.0', github: 'dradis/dradis-nmap'
+gem 'dradis-ntospider',   '~> 4.0', github: 'dradis/dradis-ntospider'
+gem 'dradis-openvas',     '~> 4.0', github: 'dradis/dradis-openvas'
+gem 'dradis-qualys',      '~> 4.0', github: 'dradis/dradis-qualys'
+gem 'dradis-saint',       '~> 4.0', github: 'dradis/dradis-saint'
+gem 'dradis-zap',         '~> 4.0', github: 'dradis/dradis-zap'
