@@ -1,7 +1,6 @@
 module ActivityMacros
   extend ActiveSupport::Concern
 
-  include ActivityTracking
   include ActionView::RecordIdentifier
 
   def activity_feed

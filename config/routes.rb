@@ -1,3 +1,7 @@
+if ENV['RAILS_RELATIVE_URL_ROOT']
+  Rails.application.routes.default_scope = ENV['RAILS_RELATIVE_URL_ROOT']
+end
+
 Rails.application.routes.draw do
   # ------------------------------------------------------------ Authentication
   # These routes allow users to set the shared password
@@ -24,6 +28,10 @@ Rails.application.routes.draw do
     end
 
     resources :comments
+
+    constraints id: %r{[(0-z)\/]+} do
+      resources :configurations, only: [:index, :update]
+    end
 
     post :create_multiple_evidence, to: 'evidence#create_multiple'
 
@@ -63,14 +71,18 @@ Rails.application.routes.draw do
         resources :revisions, only: [:index, :show]
       end
 
-      constraints(:filename => /.*/) do
+      constraints(filename: /.*/) do
         resources :attachments, param: :filename
       end
     end
 
+    resources :notifications, only: [:index, :update]
+
     resources :revisions, only: [] do
       member { post :recover }
     end
+
+    resources :subscriptions, only: [:create, :destroy]
 
     get 'search' => 'search#index'
     get 'trash' => 'revisions#trash'
@@ -85,11 +97,7 @@ Rails.application.routes.draw do
     get  '/upload'        => 'upload#index',  as: :upload_manager
     post '/upload'        => 'upload#create'
     post '/upload/parse'  => 'upload#parse'
-    get  '/upload/status' => 'upload#status'
   end
-
-
-  resources :configurations, only: [:index, :update]
 
   resources :console, only: [] do
     collection { get :status }
@@ -100,5 +108,7 @@ Rails.application.routes.draw do
   get '/preview' => 'home#textilize',  as: :preview, defaults: { format: 'json' }
   get '/markup-help' => 'home#markup_help', as: :markup
 
-  root to: 'home#index'
+  root to: 'projects#index'
+
+  mount ActionCable.server => '/cable'
 end

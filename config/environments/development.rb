@@ -54,5 +54,8 @@ Rails.application.configure do
 
   # In development, we want any emails to be opened in the browser
   config.action_mailer.delivery_method = :letter_opener
-end
 
+  if ENV['RAILS_RELATIVE_URL_ROOT']
+    config.assets.prefix = "#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets"
+  end
+end

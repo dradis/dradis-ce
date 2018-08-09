@@ -15,21 +15,17 @@ describe 'Issues pages' do
     before { login_to_project_as_user }
 
     context 'with an Issue library' do
-      let(:issuelib) do
-        # Node.set_project_scope(@project.id)
-        Node.issue_library
-      end
+      let(:issuelib) { current_project.issue_library }
 
       describe 'index page' do
-
         it 'presents a link to add new issue' do
-          visit project_issues_path(@project)
-          expect(page).to have_xpath("//a[@href='#{new_project_issue_path(@project)}']")
+          visit project_issues_path(current_project)
+          expect(page).to have_xpath("//a[@href='#{new_project_issue_path(current_project)}']")
         end
 
         it 'shows an *empty list* message if none have been assigned' do
-          visit project_issues_path(@project)
-          expect(current_path).to eq(project_issues_path(@project))
+          visit project_issues_path(current_project)
+          expect(current_path).to eq(project_issues_path(current_project))
           expect(page).to have_content('nothing yet')
         end
 
@@ -43,8 +39,8 @@ describe 'Issues pages' do
             )
           end
 
-          visit project_issues_path(@project)
-          expect(current_path).to eq(project_issues_path(@project))
+          visit project_issues_path(current_project)
+          expect(current_path).to eq(project_issues_path(current_project))
           list.each do |title|
             expect(page).to have_content(title)
           end
@@ -56,10 +52,10 @@ describe 'Issues pages' do
 
         before do
           # create 2 issues
-          create(:evidence)
-          create(:evidence)
+          create(:issue, node: current_project.issue_library)
+          create(:issue, node: current_project.issue_library)
 
-          visit project_issues_path(@project)
+          visit project_issues_path(current_project)
 
           # click > 1 issue checkboxes
           page.all('input.js-multicheck').each(&:click)
@@ -107,15 +103,15 @@ describe 'Issues pages' do
 
         context 'submitting the form with valid information' do
           before do
-            visit new_project_issue_path(@project)
+            visit new_project_issue_path(current_project)
             fill_in :issue_text,
               with: "#[Title]#\nRspec issue\n\n#[Description]#\nNew description\n\n"
           end
 
           it 'creates a new Issue under the Issue library with the right Category and Author'  do
-            expect { submit_form }.to change { Issue.count }.by(1)
-            issue = Issue.last
-            expect(current_path).to eq(project_issue_path(@project, issue))
+            expect { submit_form }.to change { current_project.issues.count }.by(1)
+            issue = current_project.issues.last
+            expect(current_path).to eq(project_issue_path(current_project, issue))
             expect(page).to have_content('Rspec issue')
 
             expect(issue.category).to eq(Category.issue)
@@ -128,12 +124,12 @@ describe 'Issues pages' do
 
         context 'submitting the form with invalid information' do
           before do
-            visit new_project_issue_path(@project)
+            visit new_project_issue_path(current_project)
             fill_in :issue_text, with: 'a' * 65536
           end
 
           it "doesn't create a new Issue" do
-            expect { submit_form }.not_to change { Issue.count }
+            expect { submit_form }.not_to change { current_project.issues.count }
           end
 
           include_examples "doesn't create an Activity"
@@ -151,7 +147,7 @@ describe 'Issues pages' do
             allow(NoteTemplate).to receive(:pwd).and_return(template_path)
 
             template_content = File.read(template_path.join('simple_note.txt'))
-            visit new_project_issue_path(@project, template: 'simple_note')
+            visit new_project_issue_path(current_project, template: 'simple_note')
 
             expect(find_field('issue[text]').value).to include(template_content)
           end
@@ -160,24 +156,24 @@ describe 'Issues pages' do
         context 'when the issue has a Tags field' do
           it 'tags the issue with the corresponding tag if only one is present' do
             tag_field = '!f89406_private'
-            visit new_project_issue_path(@project)
+            visit new_project_issue_path(current_project)
             fill_in :issue_text,
               with: "#[Title]#\nRspec issue\n\n#[Tags]#\n#{tag_field}\n\n"
 
-            expect { submit_form }.to change { Issue.count }.by(1)
-            issue = Issue.last
+            expect { submit_form }.to change { current_project.issues.count }.by(1)
+            issue = current_project.issues.last
             expect(issue.tags.count).to eq(1)
             expect(issue.tag_list).to eq(tag_field)
           end
 
           it 'tags the issue with the first tag if more than one are present' do
             tag_field = '!f89406_private, !468847_public'
-            visit new_project_issue_path(@project)
+            visit new_project_issue_path(current_project)
             fill_in :issue_text,
               with: "#[Title]#\nRspec issue\n\n#[Tags]#\n#{tag_field}\n\n"
 
-            expect { submit_form }.to change { Issue.count }.by(1)
-            issue = Issue.last
+            expect { submit_form }.to change { current_project.issues.count }.by(1)
+            issue = current_project.issues.last
             expect(issue.tags.count).to eq(1)
             expect(issue.tag_list).to eq(tag_field.split(', ').first)
           end
@@ -188,9 +184,9 @@ describe 'Issues pages' do
         let(:submit_form) { click_button 'Update Issue' }
 
         before do
-          @node  = create(:node)
-          @issue = create(:issue, node: @node, updated_at: 2.seconds.ago)
-          visit edit_project_issue_path(@project, @issue)
+          issuelib = current_project.issue_library
+          @issue = create(:issue, node: issuelib, updated_at: 2.seconds.ago)
+          visit edit_project_issue_path(current_project, @issue)
         end
 
         describe 'submitting the form with valid information' do
@@ -202,15 +198,17 @@ describe 'Issues pages' do
           it 'updates and shows the issue' do
             submit_form
             expect(@issue.reload.text).to eq new_content
-            expect(current_path).to eq project_issue_path(@project, @issue)
+            expect(current_path).to eq project_issue_path(current_project, @issue)
           end
 
           let(:model) { @issue }
           include_examples 'creates an Activity', :update
 
           it "creates a version with the user's email as 'whodunnit'" do
-            submit_form
-            expect(@issue.reload.versions.last.whodunnit).to eq @logged_in_as.email
+            with_versioning do
+              submit_form
+              expect(@issue.reload.versions.last.whodunnit).to eq @logged_in_as.email
+            end
           end
 
           let(:column) { :text }
@@ -247,7 +245,7 @@ describe 'Issues pages' do
           # has the right class:
           @issue = Issue.find(@issue.id)
           extra_setup
-          visit project_issue_path(@project, @issue)
+          visit project_issue_path(current_project, @issue)
 
           NoteTemplate.pwd.mkpath if !NoteTemplate.pwd.exist?
           @template =
@@ -262,24 +260,29 @@ describe 'Issues pages' do
           @template.destroy if @template
         end
 
-        let(:extra_setup) { create_activities }
+        let(:extra_setup) do
+          create_activities
+          create_comments
+        end
         let(:create_activities) { nil }
+        let(:create_comments) { nil }
 
         context 'when there are host nodes with evidence' do
           let(:extra_setup) do
-            host1 = create(:node, label: '10.0.0.1', type_id: Node::Types::HOST)
+            host1 = create(:node, label: '10.0.0.1', project: current_project, type_id: Node::Types::HOST)
             host1.evidence.create(
               author: 'rspec',
               issue_id: @issue.id,
               content: "#[EvidenceBlock1]#\nThis apache is old!"
             )
 
-            host2 = create(:node, label: '10.0.0.2', type_id: Node::Types::HOST)
+            host2 = create(:node, label: '10.0.0.2', project: current_project, type_id: Node::Types::HOST)
             3.times do |i|
               host2.evidence.create(
                 author: 'rspec',
                 issue_id: @issue.id,
-                content: "#[EvidenceBlock1]#\nThis apache is old (#{i})!"
+                content: "#[EvidenceBlock1]#\nThis apache is old (#{i})!",
+                node: create(:node, project: current_project)
               )
             end
           end
@@ -304,8 +307,14 @@ describe 'Issues pages' do
         let(:trackable) { @issue }
         it_behaves_like 'a page with an activity feed'
 
+        let(:commentable) { @issue }
+        it_behaves_like 'a page with a comments feed'
+
+        let(:subscribable) { @issue }
+        it_behaves_like 'a page with subscribe/unsubscribe links'
+
         describe "clicking 'delete'" do
-          before { visit project_issue_path(@project, @issue) }
+          before { visit project_issue_path(current_project, @issue) }
 
           let(:submit_form) { within('.note-text-inner') { click_link 'Delete' } }
 
@@ -324,8 +333,8 @@ describe 'Issues pages' do
 
         describe 'add evidence', js: true do
           before do
-            @node = Node.create!(label: '192.168.0.1')
-            visit project_issue_path(@project, @issue)
+            @node = current_project.nodes.create!(label: '192.168.0.1')
+            visit project_issue_path(current_project, @issue)
             click_link('Evidence')
           end
 
@@ -339,8 +348,8 @@ describe 'Issues pages' do
             find('.js-add-evidence').click
             expect(all('#existing-node-list label').count).to be Node.user_nodes.count
 
-            # find('#evidence_node').native.send_key('192')
-            fill_in 'evidence_node', with: '192'
+            # find('#evidence_node').native.send_key('192.')
+            fill_in 'evidence_node', with: '192\.'
 
             expect(all('#existing-node-list label').count).to eq 1
           end
@@ -361,7 +370,7 @@ describe 'Issues pages' do
             expect { click_button('Save Evidence') }.to change { Evidence.count }.by(3).and change { Node.count }.by(2)
 
             # New nodes don't have a parent:
-            Node.order('created_at ASC').last(2).each do |node|
+            current_project.nodes.order('created_at ASC').last(2).each do |node|
               expect(node.parent).to be_nil
             end
           end

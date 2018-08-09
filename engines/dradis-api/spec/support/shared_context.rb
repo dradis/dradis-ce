@@ -24,4 +24,5 @@ shared_context "authenticated API user" do
 end
 
 shared_context "project scoped API" do
+  let(:current_project) { Project.new }
 end

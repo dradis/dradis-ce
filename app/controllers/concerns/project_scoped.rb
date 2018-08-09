@@ -5,8 +5,9 @@ module ProjectScoped
     before_action :set_project
     before_action :set_nodes
 
-    helper :snowcrash
-    layout 'snowcrash'
+    helper        :snowcrash
+    helper_method :current_project
+    layout        'snowcrash'
   end
 
   protected
@@ -20,17 +21,18 @@ module ProjectScoped
   #   https://github.com/airblade/paper_trail#metadata-from-controllers
   #
   def info_for_paper_trail
+    { project_id: current_project.id } if current_project
   end
 
   def set_nodes
-    @nodes = Node.in_tree
+    @nodes = current_project.nodes.in_tree
   end
 
   def set_project
-    project
+    current_project
   end
 
-  def project
-    @project ||= Project.new
+  def current_project
+    @current_project ||= Project.new
   end
 end

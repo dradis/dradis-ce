@@ -5,7 +5,12 @@ class SearchController < AuthenticatedController
   before_action :set_scope
 
   def index
-    @search = Search.new(query: params[:q], scope: @scope, page: params[:page])
+    @search = Search.new(
+      query: params[:q],
+      scope: @scope,
+      page: params[:page],
+      project: current_project
+    )
   end
 
   private

@@ -6,7 +6,7 @@ module SearchHelper
     }
 
     options = exist_opts.merge(options)
-    project_search_path(@project, options)
+    project_search_path(current_project, options)
   end
 
   # returns sanitized text snippet as span

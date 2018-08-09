@@ -12,6 +12,7 @@ module MultipleDestroy
         author_email: current_user.email,
         ids: params[:ids],
         klass: params[:controller].singularize.capitalize,
+        project_id: current_project.id,
         uid: @job_logger.uid
       }
 

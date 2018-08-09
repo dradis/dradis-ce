@@ -1,6 +1,7 @@
 class EvidenceController < NestedNodeResourceController
   include ConflictResolver
   include MultipleDestroy
+  include NodesSidebar
 
   before_action :find_or_initialize_evidence, except: [ :index, :create_multiple ]
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
@@ -25,7 +26,7 @@ class EvidenceController < NestedNodeResourceController
       if @evidence.save
         track_created(@evidence)
         format.html {
-          redirect_to [@project, @evidence.node, @evidence],
+          redirect_to [current_project, @evidence.node, @evidence],
             notice: "Evidence added for node #{@evidence.node.label}."
         }
       else
@@ -40,11 +41,11 @@ class EvidenceController < NestedNodeResourceController
 
   def create_multiple
     # validate Issue
-    issue = Issue.find(evidence_params[:issue_id])
+    issue = current_project.issues.find(evidence_params[:issue_id])
 
     if params[:evidence][:node_ids]
       params[:evidence][:node_ids].reject(&:blank?).each do |node_id|
-        node = Node.find(node_id)
+        node = current_project.nodes.find(node_id)
         Evidence.create(
           issue_id: issue.id,
           node_id: node.id,
@@ -54,10 +55,10 @@ class EvidenceController < NestedNodeResourceController
     end
     if params[:evidence][:node_list]
       if params[:evidence][:node_list_parent_id].present?
-        parent = Node.find(params[:evidence][:node_list_parent_id])
+        parent = current_project.nodes.find(params[:evidence][:node_list_parent_id])
       end
       params[:evidence][:node_list].lines.map(&:strip).each do |label|
-        node = Node.create_with(type_id: Node::Types::HOST)
+        node = current_project.nodes.create_with(type_id: Node::Types::HOST)
           .find_or_create_by(label: label)
         node.update_attributes!(parent: parent) if parent
 
@@ -68,7 +69,7 @@ class EvidenceController < NestedNodeResourceController
         )
       end
     end
-    redirect_to project_issue_path(@project, evidence_params[:issue_id]), notice: 'Evidence added for selected nodes.'
+    redirect_to project_issue_path(current_project, evidence_params[:issue_id]), notice: 'Evidence added for selected nodes.'
   end
 
   def edit
@@ -82,9 +83,9 @@ class EvidenceController < NestedNodeResourceController
         check_for_edit_conflicts(@evidence, updated_at_before_save)
         format.html do
           path = if params[:back_to] == 'issue'
-                   [@project, @evidence.issue]
+                   [current_project, @evidence.issue]
                  else
-                   [@project, @node, @evidence]
+                   [current_project, @node, @evidence]
                  end
           redirect_to path, notice: 'Evidence updated.'
         end
@@ -104,13 +105,13 @@ class EvidenceController < NestedNodeResourceController
       if @evidence.destroy
         track_destroyed(@evidence)
         format.html {
-          redirect_to [@project, @node],
+          redirect_to [current_project, @node],
             notice: "Successfully deleted evidence for '#{@evidence.issue.title}.'"
         }
         format.js
       else
         format.html {
-          redirect_to [@project, @node, @evidence],
+          redirect_to [current_project, @node, @evidence],
             notice: "Error while deleting evidence: #{@evidence.errors}"
         }
         format.js
@@ -124,7 +125,7 @@ class EvidenceController < NestedNodeResourceController
   # passed by the user.
   def find_or_initialize_evidence
     if params[:id]
-      @evidence = Evidence.includes(:issue, issue: [:tags]).find(params[:id])
+      @evidence = @node.evidence.includes(:issue, issue: [:tags]).find(params[:id])
     elsif params[:evidence]
       @evidence = Evidence.new(evidence_params) do |e|
         e.node = @node
@@ -138,7 +139,7 @@ class EvidenceController < NestedNodeResourceController
   def create_issue
     Issue.create do |issue|
       issue.text = "#[Title]#\nNew issue auto-created for node [#{@node.label}]."
-      issue.node = Node.issue_library
+      issue.node = current_project.issue_library
       issue.author = current_user.email
     end
   end

@@ -29,6 +29,8 @@ class Node < ApplicationRecord
     @project ||= Project.new
   end
 
+  def project=(new_project); end
+
   def nested_activities
     sql = "(`activities`.`trackable_type`='Node' AND "\
           " `activities`.`trackable_id`=#{id})"
@@ -69,35 +71,6 @@ class Node < ApplicationRecord
   }
 
   # -- Class Methods --------------------------------------------------------
-  # Returns or creates the Node that acts as container for all Issues in a
-  # given project
-  def self.issue_library
-    find_or_create_by(label: 'All issues', type_id: Node::Types::ISSUELIB)
-  end
-
-  # Returns or creates the Node that acts as container for all Methodologies in
-  # a given project
-  def self.methodology_library
-    find_or_create_by(label: 'Methodologies', type_id: Node::Types::METHODOLOGY)
-  end
-
-  # When Upload plugins create new nodes, they'll do so under this parent node
-  def self.plugin_parent_node
-    find_or_create_by(label: ::Configuration.plugin_parent_node)
-  end
-
-  # Security scanner output files uploaded via the Upload Manager use this node
-  # as container
-  def self.plugin_uploads_node
-    find_or_create_by(label: ::Configuration.plugin_uploads_node)
-  end
-
-  # If an item is recovered from the trash, but we can't reassign it to its
-  # Node because its Node has also been deleted, it will be assigned to this
-  # node:
-  def self.recovered
-    find_or_create_by(label: 'Recovered', type_id: Node::Types::DEFAULT)
-  end
 
   # -- Instance Methods -----------------------------------------------------
   def ancestor_of?(node)

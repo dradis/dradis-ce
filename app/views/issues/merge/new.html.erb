@@ -6,7 +6,7 @@
 
 <% content_for :breadcrums do %>
   <ul class="breadcrumb">
-    <li><%= link_to 'All issues', project_issues_path(@project) %> <span class="divider">/</span></li>
+    <li><%= link_to 'All issues', project_issues_path(current_project) %> <span class="divider">/</span></li>
     <li class="active">Merge issues</li>
   </ul>
 <% end %>
@@ -15,7 +15,7 @@
   <div class="inner note-text-inner">
     <h3>You're merging <%= @issues.count %> Issues into a target Issue</h3>
 
-    <%= form_tag project_merge_index_path(@project) do %>
+    <%= form_tag project_merge_index_path(current_project) do %>
       <p>
         Select an existing Issue to merge into, or create a new one.
       </p>
@@ -86,7 +86,7 @@
 
       <div class="form-actions">
         <%= button_tag 'Merge issues', class: 'btn btn-primary' %> or
-        <%= link_to 'Cancel', project_issues_path(@project), class: 'cancel-link' %>
+        <%= link_to 'Cancel', project_issues_path(current_project), class: 'cancel-link' %>
       </div>
     <% end %>
   </div>

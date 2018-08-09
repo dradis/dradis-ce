@@ -47,7 +47,7 @@
 
     <%= simple_form_for(
       (type == :branch ? Node.new : Node.new(parent_id: @node.id)),
-      url: main_app.project_nodes_path(@project),
+      url: main_app.project_nodes_path(current_project),
       html: { class: 'add_one_node_form form-horizontal' }
     ) do |f| %>
       <%= f.hidden_field :parent_id if type == :child %>
@@ -63,7 +63,7 @@
       # exists on a real Node. We can't pass a string or symbol to form_for
       # either because if we pass ':node' or ':nodes' form_for will try to
       # use the @node or @nodes instance variables and we get the same error. %>
-    <%= form_tag(main_app.create_multiple_project_nodes_path(@project), class: 'add_multiple_nodes_form') do %>
+    <%= form_tag(main_app.create_multiple_project_nodes_path(current_project), class: 'add_multiple_nodes_form') do %>
       To create multiple nodes, add one node name per line:
 
       <div class="add_multiple_nodes_error">

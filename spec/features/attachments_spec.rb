@@ -3,7 +3,8 @@ require 'rails_helper'
 describe "Describe attachments" do
   it "should require authenticated users" do
     Configuration.create(name: 'admin:password', value: 'rspec_pass')
-    visit project_node_attachments_path(Project.new, create(:node))
+    node = create(:node)
+    visit project_node_attachments_path(node.project, node)
 
     expect(current_path).to eq(login_path)
     expect(page).to have_content('Access denied.')
@@ -12,7 +13,7 @@ describe "Describe attachments" do
   describe "as authenticated user" do
     before do
       login_to_project_as_user
-      @node = create(:node)
+      @node = create(:node, project: current_project)
     end
 
     after do
@@ -20,7 +21,7 @@ describe "Describe attachments" do
     end
 
     it "stores the file on disk" do
-      visit project_node_path(@node.project, @node)
+      visit project_node_path(current_project, @node)
 
       file_path = Rails.root.join('spec/fixtures/files/rails.png')
       attach_file('files[]', file_path)
@@ -38,7 +39,7 @@ describe "Describe attachments" do
       FileUtils.cp( Rails.root.join('spec/fixtures/files/rails.png'), node_attachments.join('rails.png') )
       expect(Dir["#{node_attachments}/*"].count).to eq(1)
 
-      visit project_node_path(@node.project, @node)
+      visit project_node_path(current_project, @node)
 
       file_path = Rails.root.join('spec/fixtures/files/rails.png')
       attach_file('files[]', file_path)

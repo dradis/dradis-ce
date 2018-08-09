@@ -1,0 +1,14 @@
+<%# this is picked up by javascripts/snowcrash/modules/comments.js.coffee %>
+<% cache(@mentionable_users) do %>
+  <%= tag.div id: "mentionable-users",
+              data: {
+                users: @mentionable_users.map do |user|
+                  {
+                    key: user.email,
+                    value: user.email,
+                    avatar_url: avatar_url(user)
+                  }
+                end
+              }
+  %>
+<% end %>

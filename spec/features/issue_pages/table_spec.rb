@@ -7,8 +7,13 @@ describe 'issue pages' do
     before do
       login_to_project_as_user
 
-      @issue = create(:issue, text: "#[Title]#\nIssue1\n\n#[Risk]#\nHigh\n\n#[Description]#\nn/a")
-      visit project_issues_path(@project)
+      @issue = create(
+        :issue,
+        text: "#[Title]#\nIssue1\n\n#[Risk]#\nHigh\n\n#[Description]#\nn/a",
+        node: current_project.issue_library
+
+      )
+      visit project_issues_path(current_project)
     end
 
     let(:columns) { ['Title', 'Created', 'Created by', 'Updated'] }

@@ -96,6 +96,8 @@ document.addEventListener "turbolinks:load", ->
       title = switch term
         when 'boards' then '[<span>Dradis Pro feature</span>] Advanced boards and task assignment'
         when 'issuelib' then '[<span>Dradis Pro feature</span>] Integrated library of vulnerability descriptions'
+        when 'projects' then '[<span>Dradis Pro feature</span>] Work with multiple projects'
+        when 'remediation' then '[<span>Dradis Pro feature</span>] Integrated remediation tracker'
         when 'training-course' then 'Dradis Training Course'
         when 'try-pro' then 'Upgrade to Dradis Pro'
         when 'word-reports' then '[<span>Dradis Pro feature</span>] Custom Word reports'
@@ -125,6 +127,9 @@ document.addEventListener "turbolinks:load", ->
 
       $body.css('height', "#{height}px")
 
+  if !(/^\/projects\/1(\/|$)/.test(window.location.pathname))
+    $('[data-behavior~=project-teaser]').removeClass('hide')
+
   # ------------------------------------------------------ Non-plugin behaviors
 
   # Close button that hides instead of removing the container
@@ -142,8 +147,9 @@ document.addEventListener "turbolinks:load", ->
       img.src = $this.attr('src')
 
   if ($poller = $("#activities-poller")).length
-    ActivitiesPoller.init($poller)
-    ActivitiesPoller.poll()
+    unless ActivitiesPoller.initialized
+      ActivitiesPoller.init($poller)
+      ActivitiesPoller.poll()
 
   # Disable form buttons after submitting them.
   $('form').submit (ev)->

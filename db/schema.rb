@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180611150236) do
+ActiveRecord::Schema.define(version: 20180705112109) do
 
   create_table "activities", force: :cascade do |t|
     t.string "user", null: false
@@ -90,6 +90,29 @@ ActiveRecord::Schema.define(version: 20180611150236) do
     t.index ["node_id"], name: "index_notes_on_node_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.string "action"
+    t.datetime "read_at"
+    t.string "notifiable_type"
+    t.integer "notifiable_id"
+    t.integer "actor_id"
+    t.integer "recipient_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["actor_id"], name: "index_notifications_on_actor_id"
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable_type_and_notifiable_id"
+    t.index ["recipient_id"], name: "index_notifications_on_recipient_id"
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.string "subscribable_type"
+    t.integer "subscribable_id"
+    t.integer "user_id"
+    t.index ["subscribable_id", "subscribable_type", "user_id"], name: "index_subscriptions_on_subscribablue_and_user", unique: true
+    t.index ["subscribable_type", "subscribable_id"], name: "index_subscriptions_on_subscribable_type_and_subscribable_id"
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
+  end
+
   create_table "taggings", force: :cascade do |t|
     t.integer "tag_id"
     t.string "taggable_type"
@@ -124,7 +147,9 @@ ActiveRecord::Schema.define(version: 20180611150236) do
     t.string "whodunnit"
     t.text "object", limit: 1073741823
     t.datetime "created_at"
+    t.integer "project_id"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
+    t.index ["project_id"], name: "index_versions_on_project_id"
   end
 
 end

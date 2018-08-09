@@ -9,7 +9,7 @@ describe "evidence pages", js: true do
     describe "when someone else updates the current Evidence" do
       before do
         @evidence.update_attributes(content: "whatever")
-        track_updated(@evidence, @other_user)
+        create(:activity, action: :update, trackable: @evidence, user: @other_user)
 
         call_poller
       end
@@ -22,7 +22,7 @@ describe "evidence pages", js: true do
     describe "and someone deletes that Evidence" do
       before do
         @evidence.destroy
-        track_destroyed(@evidence, @other_user)
+        create(:activity, action: :destroy, trackable: @evidence, user: @other_user)
         call_poller
       end
 
@@ -34,9 +34,9 @@ describe "evidence pages", js: true do
     describe "and someone updates then deletes that evidence" do
       before do
         @evidence.update_attributes(content: "whatever")
-        track_updated(@evidence, @other_user)
+        create(:activity, action: :update, trackable: @evidence, user: @other_user)
         @evidence.destroy
-        track_destroyed(@evidence, @other_user)
+        create(:activity, action: :destroy, trackable: @evidence, user: @other_user)
         call_poller
       end
 
@@ -51,17 +51,18 @@ describe "evidence pages", js: true do
   before do
     login_to_project_as_user
     @other_user = create(:user)
-    @node     = create(:node)
-    @evidence = create(:evidence, node: @node)
+    @node       = create(:node, project: @project)
+    issue       = create(:issue, node: @project.issue_library)
+    @evidence   = create(:evidence, node: @node, issue: issue)
   end
 
   describe "when I am viewing an Evidence" do
-    before { visit project_node_evidence_path(@project, @node, @evidence) }
+    before { visit project_node_evidence_path(current_project, @node, @evidence) }
     it_behaves_like "an evidence page with poller"
   end
 
   describe "when I am editing an Evidence" do
-    before { visit edit_project_node_evidence_path(@project, @node, @evidence) }
+    before { visit edit_project_node_evidence_path(current_project, @node, @evidence) }
     it_behaves_like "an evidence page with poller"
   end
 end

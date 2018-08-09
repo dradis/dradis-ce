@@ -3,12 +3,14 @@ require 'rails_helper'
 describe "node pages" do
   subject { page }
 
-  before { login_to_project_as_user }
+  before do
+    login_to_project_as_user
+  end
 
   describe "creating new nodes" do
     context "when a project has no nodes defined yet" do
       it "says so in the sidebar" do
-        visit project_path(id: @project.id)
+        visit project_path(current_project)
         within ".main-sidebar" do
           should have_selector ".no-nodes", text: "No nodes defined yet"
         end
@@ -17,7 +19,7 @@ describe "node pages" do
 
     describe "clicking the '+' button in the 'Nodes' sidebar", js: true do
       before do
-        visit project_path(id: @project.id)
+        visit project_path(current_project)
         find(".add-subnode > a").click
       end
 
@@ -54,9 +56,26 @@ describe "node pages" do
 
         expect do
           click_button "Add"
-        end.to change{Node.in_tree.count}.by(3).and change{Activity.count}.by(3)
+        end.to change { current_project.nodes.in_tree.count }.by(3) \
+          .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(3)
 
-        expect(Node.last(3).map(&:label)).to match_array([
+        expect(
+          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h|
+            h[:job]
+          }.last(3)
+        ).to eq Array.new(3, ActivityTrackingJob)
+        expect(
+          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+            h1[:args].map { |h2| h2['action'] }
+          }.flatten.last(3)
+        ).to eq Array.new(3, 'create')
+        expect(
+          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+            h1[:args].map { |h2| h2['trackable_type'] }
+          }.flatten.last(3)
+        ).to eq Array.new(3, 'Node')
+
+        expect(current_project.nodes.last(3).map(&:label)).to match_array([
           "node 1",
           "node_2",
           "node with trailing whitespace",
@@ -71,10 +90,10 @@ describe "node pages" do
 
         expect do
           click_button "Add"
-        end.to change{Node.in_tree.count}.by(2)
+        end.to change{ current_project.nodes.in_tree.count }.by(2)
 
         expect(
-          Node.in_tree.last(2).all? { |n| n.type_id == Node::Types::HOST }
+          current_project.nodes.in_tree.last(2).all? { |n| n.type_id == Node::Types::HOST }
         ).to be true
       end
     end
@@ -85,20 +104,23 @@ describe "node pages" do
         click_link "Add subnode"
       end
 
-      let(:node) { create(:node) }
+      let(:node) { create(:node, project: current_project) }
 
       example "adding a single node" do
         fill_in :node_label, with: "My new node"
         expect do
-          click_button "Add"
-        end.to change{node.children.count}.by(1).and change{Activity.count}.by(1)
+          click_button 'Add'
+        end.to change { node.children.count }.by(1)
+          .and have_enqueued_job(ActivityTrackingJob).with(
+            action: 'create',
+            project_id: current_project.id,
+            trackable_id: node.children.last.try(:id) || Node.last.id + 1,
+            trackable_type: 'Node',
+            user_id: @logged_in_as.id
+          )
 
         new_node = node.children.last
         expect(new_node.label).to eq "My new node"
-
-        new_activity = Activity.last
-        expect(new_activity.trackable).to eq new_node
-        expect(new_activity.action).to eq "create"
       end
 
       example "adding multiple nodes" do
@@ -115,8 +137,25 @@ describe "node pages" do
           LIST
 
         expect do
-          click_button "Add"
-        end.to change{node.children.count}.by(3).and change{Activity.count}.by(3)
+          click_button 'Add'
+        end.to change { node.children.count }.by(3)
+        .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(3)
+
+        expect(
+          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h|
+            h[:job]
+          }.last(3)
+        ).to eq Array.new(3, ActivityTrackingJob)
+        expect(
+          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+            h1[:args].map { |h2| h2['action'] }
+          }.flatten.last(3)
+        ).to eq Array.new(3, 'create')
+        expect(
+          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+            h1[:args].map { |h2| h2['trackable_type'] }
+          }.flatten.last(3)
+        ).to eq Array.new(3, 'Node')
 
         expect(node.children.pluck(:label)).to match_array([
           "node 1",
@@ -137,7 +176,7 @@ describe "node pages" do
 
   describe "clicking 'rename' on a node", js: true do
     before do
-      @node = create(:node, label: "My node")
+      @node = create(:node, label: "My node", project: current_project)
       visit project_node_path(@node.project, @node)
       click_link "Rename"
     end
@@ -158,14 +197,13 @@ describe "node pages" do
       end
 
       it "creates an Activity" do
-        expect{submit_form}.to change{Activity.count}.by(1)
-
-        activity = Activity.last
-        expect(activity.trackable).to eq @node
-        # TODO: Project singleton
-        # expect(activity.project).to eq @project
-        expect(activity.user).to eq @logged_in_as.email
-        expect(activity.action).to eq "update"
+        expect { submit_form }.to have_enqueued_job(ActivityTrackingJob).with(
+          action: 'update',
+          project_id: current_project.id,
+          trackable_id: @node.id,
+          trackable_type: 'Node',
+          user_id: @logged_in_as.id
+        )
       end
     end
 
@@ -173,7 +211,7 @@ describe "node pages" do
       before { fill_in :node_label, with: "" }
 
       it "doesn't update the node's name" do
-        expect{submit_form}.not_to change{@node.reload.label}
+        expect{ submit_form }.not_to change{ @node.reload.label }
       end
 
       include_examples "doesn't create an Activity"
@@ -183,7 +221,7 @@ describe "node pages" do
 
   describe "clicking 'Delete' on a node", js: true do
     before do
-      @node = create(:node, label: "My node")
+      @node = create(:node, label: "My node", project: current_project)
       visit project_node_path(@node.project, @node)
       click_link "Delete"
     end
@@ -198,14 +236,14 @@ describe "node pages" do
       let(:submit_form) do
         within "#modal_delete_node" do
           click_link "Delete"
-          expect(current_path).to eq project_path(id: @project.id)
+          expect(current_path).to eq project_path(current_project)
         end
       end
 
       it "deletes the node" do
         node_id = @node.id
         submit_form
-        expect(Node.find_by_id(node_id)).to be_nil
+        expect(current_project.nodes.find_by_id(node_id)).to be_nil
       end
 
       let(:model) { @node }
@@ -217,7 +255,7 @@ describe "node pages" do
   describe "show page" do
     before do
       @properties = { foo: "bar", fizz: "buzz" }
-      @node = create(:node, properties: @properties)
+      @node = create(:node, project: current_project, properties: @properties)
       extra_setup
       visit project_node_path(@node.project, @node)
     end
@@ -229,8 +267,9 @@ describe "node pages" do
 
       let(:extra_setup) do
         @note       = create(:note, node: @node)
-        @evidence   = create(:evidence, node: @node)
-        @other_node = create(:node)
+        @issue      = create(:issue, node: current_project.issue_library)
+        @evidence   = create(:evidence, issue: @issue, node: @node)
+        @other_node = create(:node, project: current_project)
         @activities = [@node, @note, @evidence].flat_map do |model|
           [
             # TODO: Project singleton
@@ -260,8 +299,9 @@ describe "node pages" do
     context "when the node has nested notes or evidence" do
       let(:extra_setup) do
         @note           = create(:note, node: @node, text: "#[Title]#\nMy note")
-        @evidence       = create(:evidence, node: @node)
-        other_node      = create(:node)
+        @issue          = create(:issue, node: current_project.issue_library)
+        @evidence       = create(:evidence, issue: @issue, node: @node)
+        other_node      = create(:node, project: current_project)
         @other_note     = create(:note,     node: other_node)
         @other_evidence = create(:evidence, node: other_node)
       end
@@ -288,7 +328,7 @@ describe "node pages" do
   describe "edit page" do
     before do
       @properties = { foo: "bar", fizz: "buzz" }
-      @node = create(:node, label: "My node", properties: @properties)
+      @node = create(:node, label: "My node", project: current_project, properties: @properties)
       extra_setup
       visit edit_project_node_path(@node.project, @node)
     end
@@ -305,13 +345,14 @@ describe "node pages" do
 
     describe "when this node is not a root node" do
       let(:extra_setup) do
-        @node.parent = create(:node, label: "Parent")
+        @node.parent = create(:node, label: "Parent", project: current_project)
         @node.save!
       end
 
       it "shows the current node in the sidebar node tree", js: true do # bug fix
         within ".main-sidebar .nodes-nav" do
-          should have_content "My node"
+          click_link class: 'toggle'
+          should have_content 'My node'
         end
       end
     end
@@ -343,7 +384,7 @@ describe "node pages" do
       end
 
       it "doesn't update the node's properties" do
-        expect{submit_form}.not_to change{@node.reload.properties}
+        expect{ submit_form }.not_to change{ @node.reload.properties }
       end
 
       # UPGRADE: fix specs

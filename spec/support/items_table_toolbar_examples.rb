@@ -23,10 +23,6 @@ shared_examples 'an index table toolbar' do
     end
 
     # context 'deleting with background job' do
-    #   before do
-    #     ActiveJob::Base.queue_adapter = :test
-    #   end
-    #
     #   it 'resets toolbar after deleting items' do
     #     @notes.each do |note|
     #       check "checkbox_note_#{note.id}"
@@ -58,10 +54,6 @@ shared_examples 'an index table toolbar' do
 
   describe 'when deleting multiple items' do
     context 'without filters' do
-      before do
-        ActiveJob::Base.queue_adapter = :test
-      end
-
       it 'enqueues a background job with the items to delete' do
         checkboxes = all('.js-multicheck')
 
@@ -71,6 +63,7 @@ shared_examples 'an index table toolbar' do
           find('#modal-console', visible: true) # wait for the response
         }.to have_enqueued_job(MultiDestroyJob).with(
           ids: checkboxes.map(&:value),
+          project_id: current_project.id,
           klass: items.first.class.to_s,
           author_email: @logged_in_as.email,
           uid: 1

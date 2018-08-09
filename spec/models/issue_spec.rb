@@ -5,6 +5,7 @@ describe Issue do
   it { should have_many(:comments).dependent(:destroy) }
   it { should have_many(:evidence).dependent(:destroy) }
 
+  let(:project) { Project.new }
   let(:issue) { Issue.new }
 
   it 'is assigned to the Category.issue category' do
@@ -17,7 +18,7 @@ describe Issue do
   end
 
   it 'affects many nodes through :evidence' do
-    issue = create(:issue)
+    issue = create(:issue, node: project.issue_library)
     expect(issue.affected).to be_empty
 
     host = create(:node, label: '10.0.0.1', type_id: Node::Types::HOST)
@@ -28,10 +29,19 @@ describe Issue do
     expect(issue.affected.first).to eq(host)
   end
 
+  describe 'on create' do
+    let(:user) { create(:user) }
+    let(:subscribable) { build(:issue, author: user.email) }
+
+    it_behaves_like 'a subscribable model'
+  end
+
   describe 'on delete' do
     before do
       @issue = create(:issue, node: create(:node))
       @activities = create_list(:activity, 2, trackable: @issue)
+      @comments = create_list(:comment, 2, commentable: @issue)
+      @subscriptions = create_list(:subscription, 2, subscribable: @issue)
       @issue.destroy
     end
 
@@ -46,6 +56,19 @@ describe Issue do
       end
     end
 
+    it 'deletes associated Comments' do
+      expect(Comment.where(
+        commentable_type: 'Issue',
+        commentable_id: @issue.id).count
+      ).to eq(0)
+    end
+
+    it 'deletes associated Subscriptions' do
+      expect(Subscription.where(
+        subscribable_type: 'Issue',
+        subscribable_id: @issue.id).count
+      ).to eq(0)
+    end
   end
 
   describe '.merge' do

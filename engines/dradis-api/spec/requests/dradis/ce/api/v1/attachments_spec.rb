@@ -1,12 +1,10 @@
 require 'rails_helper'
 
 describe "Attachments API" do
-  let(:project) { Project.new }
-
   include_context "project scoped API"
   include_context "https"
 
-  let(:node) { create(:node) }
+  let(:node) { create(:node, project: current_project) }
 
   context "as unauthenticated user" do
     describe "GET /api/nodes/:node_id/attachments" do
@@ -59,7 +57,7 @@ describe "Attachments API" do
         end
 
         # an attachment in another node
-        create(:attachment, filename: "image3.png", node: create(:node))
+        create(:attachment, filename: "image3.png", node: create(:node, project: current_project))
 
         get "/api/nodes/#{node.id}/attachments", env: @env
       end
@@ -83,15 +81,15 @@ describe "Attachments API" do
 
         expect(attachment_0).to eq({
           "filename" => "image0.png",
-          "link" => "/projects/#{project.id}/nodes/#{node.id}/attachments/image0.png"
+          "link" => "/projects/#{current_project.id}/nodes/#{node.id}/attachments/image0.png"
         })
         expect(attachment_1).to eq({
           "filename" => "image1.png",
-          "link" => "/projects/#{project.id}/nodes/#{node.id}/attachments/image1.png"
+          "link" => "/projects/#{current_project.id}/nodes/#{node.id}/attachments/image1.png"
         })
         expect(attachment_2).to eq({
           "filename" => "image2.png",
-          "link" => "/projects/#{project.id}/nodes/#{node.id}/attachments/image2.png"
+          "link" => "/projects/#{current_project.id}/nodes/#{node.id}/attachments/image2.png"
         })
       end
 
@@ -122,7 +120,7 @@ describe "Attachments API" do
         retrieved_attachment = JSON.parse(response.body)
         expect(retrieved_attachment.keys).to match_array(%w[filename link])
         expect(retrieved_attachment["filename"]).to eq "image.png"
-        expect(retrieved_attachment["link"]).to eq "/projects/#{project.id}/nodes/#{node.id}/attachments/image.png"
+        expect(retrieved_attachment["link"]).to eq "/projects/#{current_project.id}/nodes/#{node.id}/attachments/image.png"
       end
     end
 
@@ -176,10 +174,10 @@ describe "Attachments API" do
 
         expect(attachment_0.keys).to match_array %w[filename link]
         expect(attachment_0["filename"]).to eq "rails.png"
-        expect(attachment_0["link"]).to eq "/projects/#{project.id}/nodes/#{node.id}/attachments/rails.png"
+        expect(attachment_0["link"]).to eq "/projects/#{current_project.id}/nodes/#{node.id}/attachments/rails.png"
         expect(attachment_1.keys).to match_array %w[filename link]
         expect(attachment_1["filename"]).to eq "rails_copy-01.png"
-        expect(attachment_1["link"]).to eq "/projects/#{project.id}/nodes/#{node.id}/attachments/rails_copy-01.png"
+        expect(attachment_1["link"]).to eq "/projects/#{current_project.id}/nodes/#{node.id}/attachments/rails_copy-01.png"
       end
     end
 

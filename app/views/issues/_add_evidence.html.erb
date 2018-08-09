@@ -1,7 +1,7 @@
 <div id="js-add-evidence-container">
   <%= form_for(
     :evidence,
-    url: project_create_multiple_evidence_path(@project),
+    url: project_create_multiple_evidence_path(current_project),
     html: { id: 'add-evidences' }
   ) do |f| %>
     <div class="form-inputs">

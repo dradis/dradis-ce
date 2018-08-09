@@ -7,7 +7,7 @@
 <% else %>
   <div class="row-fluid">
     <div class="span7 offset1">
-      <%= form_tag configurations_path do %>
+      <%= form_tag project_configurations_path(current_project) do %>
         <% @configs.each do |configuration| %>
           <%= render partial: configuration[:type], object: configuration %>
         <% end %>
