@@ -3,6 +3,8 @@ class CreateSubscriptions < ActiveRecord::Migration[5.1]
     create_table :subscriptions do |t|
       t.references :subscribable, polymorphic: true
       t.references :user, index: true, foreign_key: true
+
+      t.timestamps
     end
 
     add_index :subscriptions,
