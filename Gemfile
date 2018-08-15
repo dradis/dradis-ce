@@ -69,7 +69,7 @@ gem 'thor', '~> 0.18'
 
 # Use ActiveModel has_secure_password
 # Password digests
-gem 'bcrypt',   '3.1.10'
+gem 'bcrypt',   '3.1.12'
 
 # Required by Rails (uglifier and activesupport)
 gem 'json', '1.8.6'
