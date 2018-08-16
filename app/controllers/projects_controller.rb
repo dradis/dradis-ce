@@ -15,7 +15,7 @@ class ProjectsController < AuthenticatedController
     @issues        = current_project.issues.includes(:tags).sort
     @methodologies = current_project.methodology_library.notes.map{|n| Methodology.new(filename: n.id, content: n.text)}
     @nodes         = current_project.nodes.in_tree
-    @tags          = Tag.all
+    @tags          = current_project.tags
 
     @count_by_tag  = { unassigned: 0 }
     @issues_by_tag = Hash.new{|h,k| h[k] = [] }
