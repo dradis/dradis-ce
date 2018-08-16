@@ -182,7 +182,7 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
-  gem 'capybara', '~> 2.13'
+  gem 'capybara', '~> 3.6.0'
   gem 'poltergeist'
   gem 'guard-rspec', require: false
   gem 'shoulda-matchers', '~> 3.1'
