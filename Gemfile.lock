@@ -21,7 +21,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    RedCloth (4.3.1)
+    RedCloth (4.3.2)
     actioncable (5.1.6)
       actionpack (= 5.1.6)
       nio4r (~> 2.0)
@@ -376,7 +376,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  RedCloth (= 4.3.1)
+  RedCloth (~> 4.3.2)
   acts_as_tree (~> 2.7.1)
   bcrypt (= 3.1.10)
   bootstrap-sass (~> 2.3.2.2)
@@ -442,4 +442,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.16.2
+   1.16.3

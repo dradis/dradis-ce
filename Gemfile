@@ -81,11 +81,7 @@ gem 'nokogiri', '1.8.3'
 gem 'mysql2', '~> 0.5.1'
 
 # Textile markup
-
-# TODO: Traveling Ruby - DANGER, DANGER: this version has an issue, but it's
-# the last one supported by Traveling Ruby
-# gem 'RedCloth', '4.2.9', require: 'redcloth'
-gem 'RedCloth', '4.3.1', require: 'redcloth'
+gem 'RedCloth', '~> 4.3.2', require: 'redcloth'
 
 # html-pipeline dependency for auto-linking
 gem 'rinku'
