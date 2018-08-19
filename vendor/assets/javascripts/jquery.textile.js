@@ -28,7 +28,6 @@
         // HTML templates
         tpl: {
           wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner"></div></div>',
-          form: '<div class="textile-form">Form view</div>',
           preview: '<div class="textile-preview loading-indicator">Loading...</div>',
           help: '<div class="textile-help loading-indicator">Loading...</div>'
         }
@@ -74,15 +73,8 @@
       this.$element.css('width', '100%');
       this.$element.attr('rows', 20);
 
-      // add Form to container and hide
-      this.options.$form = $(this.options.tpl.form);
-      this.options.$form.css('min-height', this.$element.css('height'));
-      $('.textile-inner', this.options.$wrap).append(this.options.$form);
-      this.options.$form.hide();
-
       // add Preview to container and hide
       this.options.$preview = $(this.options.tpl.preview);
-      this.options.$preview.css('min-height', this.$element.css('height'));
       $('.textile-inner', this.options.$wrap).append(this.options.$preview);
       this.options.$preview.hide();
 
@@ -100,11 +92,6 @@
       // Write
       button = $('<a class="btn-write active" href="javascript:void(null);"><span>Write</span></a>');
       button.click( $.proxy( function(evt) { this._onBtnWrite(evt); }, this));
-      $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
-
-      // Form
-      button = $('<a class="btn-form" href="javascript:void(null);"><span>Form</span></a>');
-      button.click( $.proxy( function(evt) { this._onBtnForm(evt); }, this));
       $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
 
       // Preview
@@ -156,24 +143,9 @@
       $('.textile-toolbar .btn-write', scope).addClass('active');
 
       // Show Write pane
-      this.options.$form.hide();
       this.options.$preview.hide();
       this.options.$help.hide();
-
       this.$element.show();
-    },
-    _onBtnForm: function() {
-      // Activate toolbar button
-      var scope = this.options.$wrap;
-      $('.textile-toolbar a', scope).removeClass('active');
-      $('.textile-toolbar .btn-form', scope).addClass('active');
-
-      // Show Form pane
-      this.options.$preview.hide();
-      this.options.$help.hide();
-      this.$element.hide();
-
-      this.options.$form.show();
     },
     _onBtnPreview: function() {
       // Activate toolbar button
@@ -183,9 +155,8 @@
 
       // Show Preview pane
       this.$element.hide();
-      this.options.$form.hide();
-      this.options.$help.hide();
 
+      this.options.$help.hide();
       this.options.$preview.show();
 
       // If the text hasn't changed, do nothing.
@@ -251,7 +222,6 @@
 
       // Show Help pane
       this.$element.hide();
-      this.options.$form.hide();
       this.options.$preview.hide();
       this.options.$help.show();
 
@@ -271,7 +241,6 @@
       var height = $(window).height() - hfix;
 
       this.options.$wrap.width($(window).width()-20);
-      this.options.$form.height(height);
       this.options.$preview.height(height);
       this.$element.height(height-10);
     }
