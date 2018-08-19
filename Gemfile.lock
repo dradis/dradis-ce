@@ -61,8 +61,8 @@ GEM
       tzinfo (~> 1.1)
     acts_as_tree (2.7.1)
       activerecord (>= 3.0.0)
-    addressable (2.5.1)
-      public_suffix (~> 2.0, >= 2.0.2)
+    addressable (2.5.2)
+      public_suffix (>= 2.0.2, < 4.0)
     arel (8.0.0)
     ast (2.3.0)
     bcrypt (3.1.12)
@@ -80,13 +80,13 @@ GEM
       thor (~> 0.18)
     byebug (9.0.6)
     cancancan (1.17.0)
-    capybara (2.15.1)
+    capybara (3.6.0)
       addressable
       mini_mime (>= 0.1.3)
-      nokogiri (>= 1.3.3)
-      rack (>= 1.0.0)
-      rack-test (>= 0.5.4)
-      xpath (~> 2.0)
+      nokogiri (~> 1.8)
+      rack (>= 1.6.0)
+      rack-test (>= 0.6.3)
+      xpath (~> 3.1)
     chronic (0.10.2)
     cliver (0.3.2)
     coderay (1.1.1)
@@ -182,7 +182,7 @@ GEM
     mail (2.7.0)
       mini_mime (>= 0.1.1)
     method_source (0.8.2)
-    mini_mime (0.1.4)
+    mini_mime (1.0.1)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
     mono_logger (1.1.0)
@@ -204,8 +204,8 @@ GEM
       ast (~> 2.2)
     parslet (1.6.2)
       blankslate (>= 2.0, <= 4.0)
-    poltergeist (1.16.0)
-      capybara (~> 2.1)
+    poltergeist (1.18.1)
+      capybara (>= 2.1, < 4)
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
     powerpack (0.1.1)
@@ -213,12 +213,12 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    public_suffix (2.0.5)
+    public_suffix (3.0.3)
     puma (3.11.4)
     rack (2.0.5)
     rack-protection (2.0.2)
       rack
-    rack-test (1.0.0)
+    rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.1.6)
       actioncable (= 5.1.6)
@@ -369,8 +369,8 @@ GEM
     websocket-extensions (0.1.3)
     whenever (0.9.7)
       chronic (>= 0.6.3)
-    xpath (2.1.0)
-      nokogiri (~> 1.3)
+    xpath (3.1.0)
+      nokogiri (~> 1.8)
 
 PLATFORMS
   ruby
@@ -386,7 +386,7 @@ DEPENDENCIES
   bundler-audit
   byebug
   cancancan (~> 1.10)
-  capybara (~> 2.13)
+  capybara (~> 3.6.0)
   coffee-rails (~> 4.2)
   database_cleaner
   differ (~> 0.1.2)
@@ -442,4 +442,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.16.2
+   1.16.3
