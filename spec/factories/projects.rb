@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :project do
     skip_create
 
-    ignore do
+    transient do
       id 1
     end
   end
