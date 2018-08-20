@@ -29,10 +29,10 @@ module ApplicationHelper # :nodoc:
     context = {}
 
     textile_pipeline = HTML::Pipeline.new [
+      HTML::Pipeline::DradisEscapeHTMLFilter,
       HTML::Pipeline::DradisFieldableFilter,
       HTML::Pipeline::DradisTextileFilter,
-      # HTML::Pipeline::DradisCodeHighlightFilter,
-      HTML::Pipeline::AutolinkFilter
+      HTML::Pipeline::AutolinkFilter,
     ], context
 
     result = textile_pipeline.call(text)
