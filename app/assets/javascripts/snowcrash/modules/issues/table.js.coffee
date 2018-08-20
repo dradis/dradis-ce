@@ -8,13 +8,15 @@ class IssuesTable extends ItemsTable
     that = this
     $target = $(event.target)
     tagColumnIndex = @columnIndices['tags']
+    tagColIsHidden = !$('th[data-column=tags]').is(':visible')
     event.preventDefault()
 
     $(@selectedItemsSelector).each ->
       $this = $(this)
 
       $row = $this.parent().parent()
-      $($row.find('td')[tagColumnIndex]).replaceWith("<td class=\"loading\">Loading...</td>")
+      $tagTD = $row.find('td').eq(tagColumnIndex)
+      $tagTD.removeClass().addClass('loading').text('Loading...')
 
       url   = $this.data('url')
       data  = {}
@@ -28,7 +30,9 @@ class IssuesTable extends ItemsTable
           $this.prop('checked', false)
           item_id = $this.val()
 
-          $($row.find('td')[tagColumnIndex]).replaceWith(data.tag_cell)
+          $newTagTD = $(data.tag_cell)
+          $newTagTD.hide() if tagColIsHidden
+          $tagTD.replaceWith($newTagTD)
           $("##{that.itemName}_#{item_id}").replaceWith(data["#{that.itemName}_link"])
           if $(that.selectedItemsSelector).length == 0
             that.resetToolbar()
