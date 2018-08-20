@@ -33,7 +33,8 @@ class IssuesTable extends ItemsTable
           $newTagTD = $(data.tag_cell)
           $newTagTD.hide() if tagColIsHidden
           $tagTD.replaceWith($newTagTD)
-          $("##{that.itemName}_#{item_id}").replaceWith(data["#{that.itemName}_link"])
+          # Update the link in the sidebar:
+          $("##{that.itemName}_#{item_id}_link").replaceWith(data["#{that.itemName}_link"])
           if $(that.selectedItemsSelector).length == 0
             that.resetToolbar()
 
