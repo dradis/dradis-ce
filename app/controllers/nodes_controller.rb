@@ -57,11 +57,11 @@ class NodesController < NestedNodeResourceController
     end
 
     flash[:notice] = "Successfully created #{list.length} node#{'s' if list.many?}"
-    if @parent
-      redirect_to project_node_path(current_project, @parent)
-    else
-      project_path(current_project)
-    end
+    redirect_to (if @parent
+                   project_node_path(current_project, @parent)
+                 else
+                   project_path(current_project)
+                 end)
   end
 
   # POST /nodes/sort
