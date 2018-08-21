@@ -80,6 +80,9 @@ describe "node pages" do
           "node_2",
           "node with trailing whitespace",
         ])
+
+        # redirects to project root:
+        expect(page).to have_selector 'h1', text: 'PROJECT SUMMARY'
       end
 
       example "adding multiple root host nodes" do
@@ -162,6 +165,9 @@ describe "node pages" do
           "node_2",
           "node with trailing whitespace",
         ])
+
+        # redirects to parent node's page
+        expect(page).to have_selector 'ul.breadcrumb > li.active', text: node.label
       end
 
       example "adding multiple nodes - submitting a blank textarea" do
