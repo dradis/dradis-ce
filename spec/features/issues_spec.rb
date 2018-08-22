@@ -376,6 +376,32 @@ describe 'Issues pages' do
             new_node = current_project.nodes.find_by!(label: 'aaaa')
             expect(new_node.parent).to eq @node
           end
+
+          it 'tracks "create" activities for new evidence and nodes' do
+            find('.js-add-evidence').click
+            # one new node, one existing node:
+            fill_in 'Paste list of nodes', with: "#{@node.label}\r\naaaa"
+            expect do
+              click_button('Save Evidence')
+            end.to change { enqueued_activity_tracking_jobs.size }.by(3)
+
+            jobs = enqueued_activity_tracking_jobs.last(3)
+            expect(enqueued_job_args(jobs, 'action')).to eq Array.new(3, 'create')
+            expect(enqueued_job_args(jobs, 'trackable_type')).to \
+              match_array(%w[Evidence Evidence Node])
+          end
+
+          # we need to filter by job class because a NotificationsReaderJob
+          # will also be enqueued
+          def enqueued_activity_tracking_jobs
+            ActiveJob::Base.queue_adapter.enqueued_jobs.select do |hash|
+              hash[:job] == ActivityTrackingJob
+            end
+          end
+
+          def enqueued_job_args(job_hashes, key)
+            job_hashes.map { |h| h[:args].map { |h2| h2[key] } }.flatten
+          end
         end
       end
     end
