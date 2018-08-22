@@ -349,7 +349,7 @@ describe 'Issues pages' do
             expect { click_button('Save Evidence') }.to change { Evidence.count }.by(1)
             evidence = Evidence.last
             expect(evidence.content).to eq(NoteTemplate.find('basic_fields').content.gsub("\n", "\r\n"))
-            expect(evidence.node.label).to eq '192.168.0.1'
+            expect(evidence.node.label).to eq('192.168.0.1')
           end
 
           it 'creates an evidence for new nodes and existing nodes too' do
@@ -363,18 +363,11 @@ describe 'Issues pages' do
             end
           end
 
-          it 'assigns new nodes to the right parent' do
+          specify 'new nodes can be assigned to a parent node' do
             find('.js-add-evidence').click
-            fill_in 'Paste list of nodes', with: "#{@node.label}\r\naaaa"
             select @node.label, from: 'Create new nodes under'
-            expect do
-              click_button('Save Evidence')
-            end.to change { Evidence.count }.by(2).and change { Node.count }.by(1)
-
-            # bug fix: existing nodes don't have their parent changed
-            expect(@node.reload.parent).to be_nil # bug fix
-            new_node = current_project.nodes.find_by!(label: 'aaaa')
-            expect(new_node.parent).to eq @node
+            fill_in 'Paste list of nodes', with: "aaaa\nbbbb\ncccc"
+            expect { click_button('Save Evidence') }.to change { @node.children.count }.by(3)
           end
         end
       end
