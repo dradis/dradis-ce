@@ -57,12 +57,16 @@ class EvidenceController < NestedNodeResourceController
       if params[:evidence][:node_list_parent_id].present?
         parent = current_project.nodes.find(params[:evidence][:node_list_parent_id])
       end
-      params[:evidence][:node_list].lines.map(&:strip).each do |label|
-        node = current_project.nodes.create_with(type_id: Node::Types::HOST)
-          .find_or_create_by(label: label)
-        node.update_attributes!(parent: parent) if parent
+      params[:evidence][:node_list].lines.map(&:strip).reject(&:blank?).each do |label|
+        unless (node = current_project.nodes.find_by(label: label))
+          node = current_project.nodes.create!(
+            type_id: Node::Types::HOST,
+            label: label,
+            parent: parent,
+          )
+        end
 
-        Evidence.create(
+        Evidence.create!(
           issue_id: issue.id,
           node_id: node.id,
           content: evidence_params[:content]
