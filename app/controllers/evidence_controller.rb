@@ -46,11 +46,12 @@ class EvidenceController < NestedNodeResourceController
     if params[:evidence][:node_ids]
       params[:evidence][:node_ids].reject(&:blank?).each do |node_id|
         node = current_project.nodes.find(node_id)
-        Evidence.create(
+        evidence = Evidence.create!(
           issue_id: issue.id,
           node_id: node.id,
           content: evidence_params[:content]
         )
+        track_created(evidence)
       end
     end
     if params[:evidence][:node_list]
@@ -64,13 +65,15 @@ class EvidenceController < NestedNodeResourceController
             label: label,
             parent: parent,
           )
+          track_created(node)
         end
 
-        Evidence.create!(
+        evidence = Evidence.create!(
           issue_id: issue.id,
           node_id: node.id,
           content: evidence_params[:content]
         )
+        track_created(evidence)
       end
     end
     redirect_to project_issue_path(current_project, evidence_params[:issue_id]), notice: 'Evidence added for selected nodes.'
