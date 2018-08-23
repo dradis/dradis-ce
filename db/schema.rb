@@ -108,6 +108,8 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.string "subscribable_type"
     t.integer "subscribable_id"
     t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["subscribable_id", "subscribable_type", "user_id"], name: "index_subscriptions_on_subscribablue_and_user", unique: true
     t.index ["subscribable_type", "subscribable_id"], name: "index_subscriptions_on_subscribable_type_and_subscribable_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
