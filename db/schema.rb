@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.text "content"
     t.string "commentable_type"
     t.integer "commentable_id"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
@@ -95,8 +95,8 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.datetime "read_at"
     t.string "notifiable_type"
     t.integer "notifiable_id"
-    t.integer "actor_id"
-    t.integer "recipient_id"
+    t.bigint "actor_id"
+    t.bigint "recipient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["actor_id"], name: "index_notifications_on_actor_id"
@@ -154,4 +154,7 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.index ["project_id"], name: "index_versions_on_project_id"
   end
 
+  add_foreign_key "comments", "users", on_delete: :nullify
+  add_foreign_key "notifications", "users", column: "actor_id", on_delete: :cascade
+  add_foreign_key "notifications", "users", column: "recipient_id", on_delete: :cascade
 end
