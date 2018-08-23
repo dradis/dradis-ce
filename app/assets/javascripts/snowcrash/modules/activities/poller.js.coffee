@@ -177,6 +177,7 @@ class @ActivitiesPoller
 
   @addComment: (commentableId, content) ->
     if commentableId == @modelId
+      $('#no-comments-notice').hide()
       $('.comment-list').append(content)
       count = parseInt($('#comment-count').html())
       $('#comment-count').html(count + 1)
@@ -186,11 +187,13 @@ class @ActivitiesPoller
     comment.replaceWith(content)
 
   @deleteComment: (commentId) ->
-      comment = $("#comment_#{commentId}")
-      if comment.length
-        comment.remove()
-        count = parseInt($('#comment-count').html())
-        $('#comment-count').html(count - 1) if count > 0
+    comment = $("#comment_#{commentId}")
+    if comment.length
+      comment.remove()
+      count = parseInt($('#comment-count').html())
+      $('#comment-count').html(count - 1) if count > 0
+      if !$('.comments-list .comment:not(#no-comments-notice').length
+        $('#no-comments-notice').show()
 
   # private
 
