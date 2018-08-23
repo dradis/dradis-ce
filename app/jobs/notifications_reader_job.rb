@@ -7,7 +7,7 @@ class NotificationsReaderJob < ApplicationJob
       notifications_by_commentable(id: commentable_id, type: commentable_type).
         unread.
         where(recipient_id: user_id).
-        update_all(read_at: Time.now)
+        mark_all_as_read!
     end
   end
 
