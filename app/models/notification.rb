@@ -19,6 +19,11 @@ class Notification < ApplicationRecord
 
   # -- Class Methods --------------------------------------------------------
 
+  def self.mark_all_as_read!
+    # update_all doesnt update timestamps, so do it manually to bust the cache:
+    update_all(read_at: Time.now, updated_at: Time.now)
+  end
+
   # -- Instance Methods -----------------------------------------------------
   def read?
     self.read_at
