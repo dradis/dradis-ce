@@ -176,7 +176,9 @@ class @ActivitiesPoller
   # ------ COMMENTS ------
 
   @addComment: (commentableId, content) ->
-    if commentableId == @modelId
+    # Make sure comment isn't already on the page, e.g. if they
+    # loaded/refreshed the page just after the comment was posted:
+    if commentableId == @modelId && !$("#comment_#{commentId}").length
       $('#no-comments-notice').hide()
       $('.comment-list').append(content)
       count = parseInt($('#comment-count').html())
