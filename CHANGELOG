@@ -1,3 +1,16 @@
+v4.0 (August 2018)
+ - Add comments for issues
+ - Add notifications for comments
+ - Add subscriptions for issues in a project
+ - Nest the dradis elements under the project scope
+ - Add 'Send to...' menu for issues
+ - Add better handling of the Services table
+ - Use puma for the development and test server
+ - Remove resque dependency
+ - Improve redirect on Evidence#edit
+ - Fix password reset
+ - Bugs fixed: #102, #118, #321
+
 v3.9 (January 2018)
  - Fixed issues multi delete
  - Added notes and evidence tab to node view
