@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Project do
+describe Project do
   it 'has default ID 1' do
     expect(Project.new.id).to eq 1
   end

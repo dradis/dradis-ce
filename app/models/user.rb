@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   validates :email,
     format: { with: /\A[-a-z0-9_+\.]+\@([-a-z0-9]+\.)+[a-z0-9]{2,4}\z/i },
-    length: { maximum: 255 },
+    length: { maximum: DB_MAX_STRING_LENGTH },
     uniqueness: { allow_blank: false }
 
   # -- Callbacks ------------------------------------------------------------
