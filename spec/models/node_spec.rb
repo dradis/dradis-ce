@@ -4,6 +4,7 @@ describe Node do
   let(:node) { build(:node) }
 
   it { should validate_presence_of(:label) }
+  it { should validate_length_of(:label).is_at_most(255) }
 
   it 'acts as tree and deletes nested nodes on delete' do
     should have_many(:children).class_name('Node').dependent(:destroy)

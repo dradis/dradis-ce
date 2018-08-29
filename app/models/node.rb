@@ -58,7 +58,7 @@ class Node < ApplicationRecord
   end
 
   # -- Validations ----------------------------------------------------------
-  validates_presence_of :label
+  validates :label, presence: true, length: { maximum: 255 }
   validate :parent_node, if: Proc.new { |node| node.parent_id }
 
   # -- Scopes ---------------------------------------------------------------
