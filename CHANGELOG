@@ -9,6 +9,7 @@ v3.10 (August 2018)
  - Remove resque dependency
  - Improve redirect on Evidence#edit
  - Fix password reset
+ - Fix XSS issue in Textile textarea inputs
  - Bugs fixed: #102, #118, #321
 
 v3.9 (January 2018)
