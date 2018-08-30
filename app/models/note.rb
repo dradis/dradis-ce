@@ -43,7 +43,7 @@ class Note < ApplicationRecord
   # -- Validations ----------------------------------------------------------
   validates :category, presence: true
   validates :node, presence: true
-  validates :text, length: { maximum: 65535 }
+  validates :text, length: { maximum: DB_MAX_TEXT_LENGTH }
 
 
   # -- Scopes ---------------------------------------------------------------

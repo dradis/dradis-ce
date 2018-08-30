@@ -14,7 +14,7 @@ class Evidence < ApplicationRecord
 
 
   # -- Validations ----------------------------------------------------------
-  validates :content, length: { maximum: 65535 }
+  validates :content, length: { maximum: DB_MAX_TEXT_LENGTH }
   validates :issue, presence: true, associated: true
   validates :node, presence: true, associated: true
 
