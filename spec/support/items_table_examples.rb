@@ -1,7 +1,7 @@
 # A let variable  'columns' and a variable 'custom_columns' should be defined
 #
 #     let(:columns) { ['Title', 'Created', ...] }
-#     let(:columns) { ['Description', 'Extra', ...] }
+#     let(:custom_columns) { ['Description', 'Extra', ...] }
 #
 shared_examples "an index table" do |item_type|
   it 'displays column controls desired columns' do

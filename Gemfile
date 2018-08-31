@@ -69,7 +69,7 @@ gem 'thor', '~> 0.18'
 
 # Use ActiveModel has_secure_password
 # Password digests
-gem 'bcrypt',   '3.1.10'
+gem 'bcrypt',   '3.1.12'
 
 # Required by Rails (uglifier and activesupport)
 gem 'json', '1.8.6'
@@ -182,7 +182,7 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
-  gem 'capybara', '~> 2.13'
+  gem 'capybara', '~> 3.6.0'
   gem 'poltergeist'
   gem 'guard-rspec', require: false
   gem 'shoulda-matchers', '~> 3.1'
