@@ -171,6 +171,8 @@ body {
             display: inline-block;
             width: auto;
             color: lighten($primaryBgColor, 40%);
+            word-break: break-all;
+            line-height: 1.5em;
             &:hover {
               text-decoration: none;
               color: lighten($primaryBgColor, 50%);
