@@ -29,6 +29,10 @@ class Node < ApplicationRecord
     @project ||= Project.new
   end
 
+  def project_id
+    self.project.id
+  end
+
   def project=(new_project); end
 
   def nested_activities
