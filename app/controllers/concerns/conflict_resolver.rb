@@ -1,7 +1,21 @@
 module ConflictResolver
-  extend ActiveSupport::Concern
-
   protected
+
+  # This concern lets us guard users against the following scenario:
+  #
+  # 1. User 1 opens a record's 'edit' page
+  # 2. User 2 opens the same record's 'edit' page
+  # 3. User 1 saves an update
+  # 4. User 2 saves their own update, overwriting User 1's recent changes
+  #
+  # With this method we don't prevent the overwrite from happening, but we
+  # detect when it happens and warn the user post-save, so they can check in
+  # the record's revision history and fix any problems.
+  #
+  # To make it work, call check_for_edit_conflicts in #update after a
+  # successful update, then call load_conflicting_revisions in whatever
+  # controller action the user is redirected to next (typically #show)
+
   def check_for_edit_conflicts(record, updated_at_before_save)
     name = record.model_name.name.downcase
     if params[name][:original_updated_at].to_i < updated_at_before_save
