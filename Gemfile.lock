@@ -298,7 +298,7 @@ GEM
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.8.1)
     ruby_dep (1.5.0)
-    rubyzip (1.2.1)
+    rubyzip (1.2.2)
     sass (3.5.1)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -424,6 +424,7 @@ DEPENDENCIES
   rinku
   rspec-rails (~> 3.1)
   rubocop
+  rubyzip (>= 1.2.2)
   sass-rails (~> 5.0)
   shoulda-matchers (~> 3.1)
   simple_form
