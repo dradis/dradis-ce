@@ -6,7 +6,6 @@ class User < ApplicationRecord
   has_many :subscriptions, dependent: :destroy
 
   validates :email,
-    format: { with: /\A[-a-z0-9_+\.]+\@([-a-z0-9]+\.)+[a-z0-9]{2,4}\z/i },
     length: { maximum: DB_MAX_STRING_LENGTH },
     uniqueness: { allow_blank: false }
 
