@@ -30,7 +30,7 @@
     </div>
 
     <div class="content">
-      <%= simple_format(comment.content) %>
+      <%= simple_format(h(comment.content)) %>
     </div>
 
     <% if can? :update, comment %>
