@@ -33,6 +33,7 @@ class NotesController < NestedNodeResourceController
   def show
     @activities = @note.activities.latest
     load_conflicting_revisions(@note)
+    @mentionable_users = User.all
   end
 
   def edit
