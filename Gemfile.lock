@@ -1,4 +1,119 @@
 GIT
+  remote: https://github.com/dradis/dradis-acunetix.git
+  revision: 42d2a3a260fbf60ff21539896609e2d1ada40145
+  specs:
+    dradis-acunetix (3.10.0)
+      dradis-plugins (~> 3.6)
+      nokogiri (~> 1.3)
+
+GIT
+  remote: https://github.com/dradis/dradis-brakeman.git
+  revision: 46505fc63c1277385eba5ab1922a1e5d3e8f621d
+  specs:
+    dradis-brakeman (3.10.0)
+      dradis-plugins (~> 3.6)
+
+GIT
+  remote: https://github.com/dradis/dradis-burp.git
+  revision: 091e361a38b14b6f3a06a0f844582f01f43b90ae
+  specs:
+    dradis-burp (3.10.0)
+      dradis-plugins (~> 3.6)
+      nokogiri (~> 1.3)
+
+GIT
+  remote: https://github.com/dradis/dradis-calculator_cvss.git
+  revision: 998b5e2d0717c15f1cce082fdf0ae2cbe4c645f0
+  specs:
+    dradis-calculator_cvss (3.10.0)
+      dradis-plugins (~> 3.0)
+
+GIT
+  remote: https://github.com/dradis/dradis-calculator_dread.git
+  revision: 83fd1e7c77cf92a845a2bf33a5fcaa701395cd97
+  specs:
+    dradis-calculator_dread (3.10.0)
+      dradis-plugins (~> 3.0)
+
+GIT
+  remote: https://github.com/dradis/dradis-csv.git
+  revision: ea4abea5b9b232327e483982a027457ed2d0026d
+  specs:
+    dradis-csv (3.10.0)
+      dradis-plugins (~> 3.6)
+
+GIT
+  remote: https://github.com/dradis/dradis-html_export.git
+  revision: 9c8e4a51a9d19913562af5d937ba8f03f5242fb4
+  specs:
+    dradis-html_export (3.10.0)
+      RedCloth (~> 4.3.2)
+      dradis-plugins (~> 3.6)
+      rails_autolink (~> 1.1)
+
+GIT
+  remote: https://github.com/dradis/dradis-metasploit.git
+  revision: afc5d494d8244a4d43a6c4395fdc2b5a0836fe3d
+  specs:
+    dradis-metasploit (3.10.0)
+      dradis-plugins (~> 3.6)
+      nokogiri (~> 1.3)
+
+GIT
+  remote: https://github.com/dradis/dradis-nessus.git
+  revision: 753bd877f948d116747fddd6cf0c4421d3630f47
+  specs:
+    dradis-nessus (3.10.1)
+      dradis-plugins (~> 3.6)
+      nokogiri
+
+GIT
+  remote: https://github.com/dradis/dradis-netsparker.git
+  revision: 659654917844e91b5240692d60269325b2e1012c
+  specs:
+    dradis-netsparker (3.10.0)
+      dradis-plugins (~> 3.2)
+      nokogiri (~> 1.3)
+
+GIT
+  remote: https://github.com/dradis/dradis-nexpose.git
+  revision: 4fc76dea72f8e815e4b228c57383046e2f6c7f33
+  specs:
+    dradis-nexpose (3.10.0)
+      dradis-plugins (~> 3.6)
+      nokogiri (~> 1.3)
+
+GIT
+  remote: https://github.com/dradis/dradis-nikto.git
+  revision: 956bb5b7aa8b8942885748c587f47f31ee26663c
+  specs:
+    dradis-nikto (3.10.0)
+      dradis-plugins (~> 3.6)
+      nokogiri (~> 1.3)
+
+GIT
+  remote: https://github.com/dradis/dradis-nmap.git
+  revision: 4dc26f25433a4921ce23856eccaeda2729006037
+  specs:
+    dradis-nmap (3.10.0)
+      dradis-plugins (~> 3.6)
+      ruby-nmap (~> 0.7)
+
+GIT
+  remote: https://github.com/dradis/dradis-ntospider.git
+  revision: 549552ccc28cf08e2b5b712e0e829d75f763a55b
+  specs:
+    dradis-ntospider (3.10.0)
+      dradis-plugins (~> 3.6)
+
+GIT
+  remote: https://github.com/dradis/dradis-openvas.git
+  revision: a3128a19f0d6f788b14731b3923a7b2e91af84c3
+  specs:
+    dradis-openvas (3.10.0)
+      dradis-plugins (~> 3.6)
+
+GIT
   remote: https://github.com/dradis/dradis-plugins.git
   revision: d9d1be9649280f02134452cfd0462438adcaa0ed
   specs:
@@ -11,6 +126,33 @@ GIT
     dradis-projects (3.10.0)
       dradis-plugins (~> 3.7)
       rubyzip (~> 1.2.1)
+
+GIT
+  remote: https://github.com/dradis/dradis-qualys.git
+  revision: 6dba03eacf36095d86c412a0f065ee1664b49feb
+  specs:
+    dradis-qualys (3.10.0)
+      dradis-plugins (~> 3.6)
+      nokogiri (~> 1.3)
+
+GIT
+  remote: https://github.com/dradis/dradis-saint.git
+  revision: b22f657ed4c7e6687ac38a7a9a5cf43adad54837
+  specs:
+    dradis-saint (3.10.0)
+      combustion (~> 0.6.0)
+      dradis-plugins (~> 3.8)
+      nokogiri
+      rake (~> 12.0)
+      rspec-rails
+
+GIT
+  remote: https://github.com/dradis/dradis-zap.git
+  revision: 3211ffd29690ff6544566a7d07fe200c7148f116
+  specs:
+    dradis-zap (3.10.0)
+      dradis-plugins (~> 3.6)
+      nokogiri (~> 1.3)
 
 PATH
   remote: engines/dradis-api
@@ -97,6 +239,10 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
+    combustion (0.6.0)
+      activesupport (>= 3.0.0)
+      railties (>= 3.0.0)
+      thor (>= 0.14.6)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
     database_cleaner (1.6.1)
@@ -237,6 +383,8 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.0.4)
       loofah (~> 2.2, >= 2.2.2)
+    rails_autolink (1.1.6)
+      rails (> 3.1)
     railties (5.1.6)
       actionpack (= 5.1.6)
       activesupport (= 5.1.6)
@@ -268,6 +416,7 @@ GEM
     resque-status (0.5.0)
       resque (~> 1.19)
     rinku (2.0.2)
+    rprogram (0.3.2)
     rspec (3.6.0)
       rspec-core (~> 3.6.0)
       rspec-expectations (~> 3.6.0)
@@ -296,6 +445,9 @@ GEM
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
+    ruby-nmap (0.9.3)
+      nokogiri (~> 1.3)
+      rprogram (~> 0.3)
     ruby-progressbar (1.8.1)
     ruby_dep (1.5.0)
     rubyzip (1.2.2)
@@ -390,9 +542,27 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   database_cleaner
   differ (~> 0.1.2)
+  dradis-acunetix (~> 3.10)!
   dradis-api!
+  dradis-brakeman (~> 3.10)!
+  dradis-burp (~> 3.10)!
+  dradis-calculator_cvss (~> 3.10)!
+  dradis-calculator_dread (~> 3.10)!
+  dradis-csv (~> 3.10)!
+  dradis-html_export (~> 3.10)!
+  dradis-metasploit (~> 3.10)!
+  dradis-nessus (~> 3.10)!
+  dradis-netsparker (~> 3.10)!
+  dradis-nexpose (~> 3.10)!
+  dradis-nikto (~> 3.10)!
+  dradis-nmap (~> 3.10)!
+  dradis-ntospider (~> 3.10)!
+  dradis-openvas (~> 3.10)!
   dradis-plugins (~> 3.10)!
   dradis-projects (~> 3.10)!
+  dradis-qualys (~> 3.10)!
+  dradis-saint (~> 3.10)!
+  dradis-zap (~> 3.10)!
   factory_bot_rails
   font-awesome-sass (~> 4.7.0)
   foreman
@@ -443,4 +613,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.16.4
+   1.16.5
