@@ -9,4 +9,8 @@ class TagsController < AuthenticatedController
     @tags = Tag.all
     @columns = %w(Name Color Created Updated)
   end
+
+  def new
+    @tag = Tag.new
+  end
 end

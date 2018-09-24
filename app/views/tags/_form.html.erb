@@ -1,0 +1,12 @@
+<%= simple_form_for [current_project, @tag] do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :name %>
+  <%= label_tag 'color', 'Color' %>
+  <%= text_field_tag :color %>
+
+  <div class="form-actions">
+    <%= f.button :submit, nil, class: 'btn btn-primary' %> or
+    <%= link_to 'Cancel', @tag.new_record? ? project_tags_path(current_project) : [current_project, @tag], class: 'cancel-link' %>
+  </div>
+<% end %>

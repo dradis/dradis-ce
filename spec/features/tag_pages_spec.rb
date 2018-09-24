@@ -15,6 +15,20 @@ describe 'Tag pages' do
           expect(page).to have_content(tag.display_name)
         end
       end
+
+      it 'presents a link to add a new tag' do
+        visit project_tags_path(current_project)
+        expect(page).to have_xpath("//a[@href='#{new_project_tag_path(current_project)}']")
+      end
+    end
+
+    describe "new page" do
+      it 'presents a form to create a new tag' do
+        visit new_project_tag_path(current_project)
+        expect(current_path).to eq(new_project_tag_path(current_project))
+        expect(page).to have_field(:tag_name)
+        expect(page).to have_field(:color)
+      end
     end
   end
 end

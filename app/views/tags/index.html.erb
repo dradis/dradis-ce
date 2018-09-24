@@ -1,4 +1,6 @@
-<% content_for :title, 'Tags summary' %>
+<% content_for :title, 'Tags' %>
+
+<%= link_to new_project_tag_path(current_project), class: 'btn btn-primary mb-3' do %><i class="fa fa-plus"></i> Add a tag<% end %>
 
 <!-- Main content -->
 <div id="tag-viewer">
