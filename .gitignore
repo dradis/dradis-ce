@@ -33,3 +33,4 @@
 # Random
 .DS_Store
 *.swp
+.idea/*
