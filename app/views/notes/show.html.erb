@@ -34,6 +34,10 @@
           <%= markup(@note.text) %>
         </div>
       </div>
+
+      <div class="inner">
+        <%= render 'comments/feed', commentable: @note %>
+      </div>
     </div>
   <% end %>
 

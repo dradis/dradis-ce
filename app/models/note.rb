@@ -25,6 +25,7 @@
 #
 # This behaviour is extensively used by import/export plugins such as WordExport.
 class Note < ApplicationRecord
+  include Commentable, Subscribable
   include HasFields
   include RevisionTracking
 

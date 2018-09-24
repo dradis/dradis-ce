@@ -12,7 +12,7 @@ class CommentsController < AuthenticatedController
       track_created(@comment)
     end
 
-    redirect_to polymorphic_path([current_project, @comment.commentable], anchor: dom_id(@comment))
+    redirect_to helpers.commentable_path(@comment)
   end
 
   def update
