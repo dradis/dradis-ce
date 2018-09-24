@@ -23,11 +23,37 @@ describe 'Tag pages' do
     end
 
     describe "new page" do
+      let(:submit_form) { click_button 'Create Tag' }
+
+      before do
+        visit new_project_tag_path(current_project)
+      end
+
       it 'presents a form to create a new tag' do
         visit new_project_tag_path(current_project)
         expect(current_path).to eq(new_project_tag_path(current_project))
         expect(page).to have_field(:tag_name)
         expect(page).to have_field(:color)
+      end
+
+      context 'submitting the form with valid information' do
+        it 'creates a new tag and returns to the tags index' do
+          fill_in :tag_name, with: 'Awesome'
+          fill_in :color, with: '#123456'
+          expect { submit_form }.to change { Tag.count }.by(1)
+          expect(current_path).to eq(project_tags_path(current_project))
+          expect(page).to have_content('Tag created')
+          expect(page).to have_content('Awesome')
+        end
+      end
+
+      context 'submitting the form with invalid information' do
+        it 'does not create a new tag, and returns an error message' do
+          expect { submit_form }.to change { Tag.count }.by(1)
+          expect(current_path).to eq(new_project_tag_path(current_project))
+          expect(page).to have_content('Tag created')
+          expect(page).to have_content('Awesome')
+        end
       end
     end
   end
