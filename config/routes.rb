@@ -84,6 +84,8 @@ Rails.application.routes.draw do
 
     resources :subscriptions, only: [:create, :destroy]
 
+    resources :tags
+
     get 'search' => 'search#index'
     get 'trash' => 'revisions#trash'
 

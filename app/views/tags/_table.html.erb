@@ -1,0 +1,45 @@
+<% cache ['tags-table', @columns, @tags.map(&:id), @tags.map(&:updated_at).map(&:to_i).sort.last] do %>
+  <table class="table table-striped items-table">
+    <thead>
+      <tr>
+        <% @columns.each do |column| %>
+        <th data-column="<%= column.downcase %>"><%= column %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tags.each do |tag| %>
+      <% cache [tag, @columns, tag.name, 'tags-table'] do%>
+      <tr>
+        <% @columns.each do |column| %>
+        <td>
+          <%=
+          case column
+          when 'Name'
+            tag.display_name
+          when 'Color'
+            tag.color
+          when 'Created'
+            local_time_ago(tag.created_at)
+          when 'Updated'
+            local_time_ago(tag.updated_at)
+          else
+            tag.fields.fetch(column, '')
+          end
+          %>
+        </td>
+        <% end  %>
+        <td class="column-actions">
+          <%= link_to edit_project_tag_path(current_project, tag), class: '' do %>
+            <i class="fa fa-pencil"></i> Edit
+          <% end %>
+          <%= link_to [current_project, tag], method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-error' do %>
+            <i class="fa fa-trash"></i> Delete
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

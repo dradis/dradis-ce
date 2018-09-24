@@ -1,0 +1,20 @@
+<% content_for :title, 'Tags summary' %>
+
+<!-- Main content -->
+<div id="tag-viewer">
+
+  <div class="inner note-text-inner">
+
+    <% if @tags.any? %>
+      <div id="tags-table"
+           data-storage-key="project.ce.tag_columns"
+           data-close-console-url="<%= project_tags_path(current_project) %>">
+        <%= render 'table', tags: @tags %>
+      </div>
+    <% else %>
+      <%= render 'empty' %>
+    <% end %>
+  </div>
+</div>
+
+<%= render 'console/console' %>
