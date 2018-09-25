@@ -1,13 +1,14 @@
 <% content_for :title, 'Tags' %>
 
-<%= link_to new_project_tag_path(current_project), class: 'btn btn-primary mb-3' do %>
-  <i class="fa fa-plus"></i> Add a tag
-<% end %>
-
 <!-- Main content -->
 <div id="tag-viewer">
 
   <div class="inner note-text-inner">
+    <h3>
+      <%= link_to new_project_tag_path(current_project), class: 'btn btn-primary' do %>
+        <i class="fa fa-plus"></i> Add a tag
+      <% end %>
+    </h3>
 
     <% if @tags.any? %>
       <div id="tags-table"
