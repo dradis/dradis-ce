@@ -8,7 +8,7 @@ class TagsController < AuthenticatedController
 
   def index
     @tags = Tag.all
-    @columns = %w(Name Color Created Updated)
+    @columns = %w(Name Color Uses Created Updated)
   end
 
   def new

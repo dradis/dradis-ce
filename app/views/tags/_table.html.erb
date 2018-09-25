@@ -3,8 +3,11 @@
     <thead>
       <tr>
         <% @columns.each do |column| %>
-        <th data-column="<%= column.downcase %>"><%= column %></th>
+          <th data-column="<%= column.downcase %>"><%= column %></th>
         <% end %>
+        <th>
+          <i class="fa fa-pencil"></i>
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -18,7 +21,9 @@
           when 'Name'
             tag.display_name
           when 'Color'
-            tag.color
+            content_tag(:i, '', class: 'fa fa-square fa-2x',  style: "color: #{tag.color}", title: tag.color)
+          when 'Uses'
+            tag.taggings_count
           when 'Created'
             local_time_ago(tag.created_at)
           when 'Updated'
