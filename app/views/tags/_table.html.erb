@@ -19,7 +19,7 @@
               <%=
                 case column
                 when 'Name'
-                  tag.display_name
+                  h(tag.display_name)
                 when 'Color'
                   content_tag(:i, '', class: 'fa fa-square fa-2x', style: "color: #{tag.color}", title: tag.color)
                 when 'Uses'
