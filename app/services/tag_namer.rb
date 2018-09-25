@@ -11,6 +11,8 @@ class TagNamer
   end
 
   def execute
+    return unless name.present?
+
     if valid_color?
       prepend_to_name(color.gsub('#', '!'))
     elsif valid_user?
