@@ -1,7 +1,6 @@
 # This controller exposes the REST operations required to manage the Tag
 # resource.
 class TagsController < AuthenticatedController
-  include ActivityTracking
   include ConflictResolver
   include ProjectScoped
 
@@ -18,7 +17,6 @@ class TagsController < AuthenticatedController
   def create
     @tag.name = TagNamer.new(name: params[:tag][:name], color: params[:color]).execute
     if @tag.save
-      track_created(@tag)
       redirect_to project_tags_path(current_project), notice: 'Tag created'
     else
       render :new
