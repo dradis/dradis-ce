@@ -23,6 +23,20 @@ class TagsController < AuthenticatedController
     end
   end
 
+  def edit
+    @color = @tag.color
+    @tag.name = @tag.display_name
+  end
+
+  def update
+    @tag.name = TagNamer.new(name: params[:tag][:name], color: params[:color]).execute
+    if @tag.save
+      redirect_to project_tags_path(current_project), notice: 'Tag updated'
+    else
+      render :edit
+    end
+  end
+
   private
 
   def find_or_initialize_tag
