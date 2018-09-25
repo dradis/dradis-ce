@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Tag pages' do
-  subject {page}
+  subject { page }
 
   context 'as authenticated user' do
     before { login_to_project_as_user }
@@ -32,7 +32,7 @@ describe 'Tag pages' do
         tag = create(:tag)
         visit project_tags_path(current_project)
         expect(page).to have_xpath("//a[@href='#{project_tag_path(current_project, tag)}' and @data-method='delete']")
-        expect{ click_link('Delete') }.to change{Tag.count}.by(-1)
+        expect { click_link('Delete') }.to change { Tag.count }.by(-1)
       end
     end
 
