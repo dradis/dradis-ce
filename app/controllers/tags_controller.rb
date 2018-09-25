@@ -37,6 +37,14 @@ class TagsController < AuthenticatedController
     end
   end
 
+  def destroy
+    if @tag.destroy
+      redirect_to project_tags_path(current_project), notice: 'Tag deleted'
+    else
+      redirect_to project_tags_note_path(current_project), alert: 'Could not delete tag'
+    end
+  end
+
   private
 
   def find_or_initialize_tag

@@ -20,6 +20,20 @@ describe 'Tag pages' do
         visit project_tags_path(current_project)
         expect(page).to have_xpath("//a[@href='#{new_project_tag_path(current_project)}']")
       end
+
+      it 'presents a link to edit the tag' do
+        tag = create(:tag)
+        visit project_tags_path(current_project)
+        page.find("//a[@href='#{edit_project_tag_path(current_project, tag)}']").click
+        expect(current_path).to eq(edit_project_tag_path(current_project, tag))
+      end
+
+      it 'presents a link to delete the tag' do
+        tag = create(:tag)
+        visit project_tags_path(current_project)
+        expect(page).to have_xpath("//a[@href='#{project_tag_path(current_project, tag)}' and @data-method='delete']")
+        expect{ click_link('Delete') }.to change{Tag.count}.by(-1)
+      end
     end
 
     describe "new page" do
