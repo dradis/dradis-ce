@@ -231,6 +231,10 @@ describe 'Issues pages' do
             should have_selector '.alert.alert-error'
           end
         end
+
+        it 'displays a link to the tags index page' do
+          expect(page).to have_xpath("//a[@href='#{project_tags_path(current_project)}']")
+        end
       end
 
       describe 'show page' do
