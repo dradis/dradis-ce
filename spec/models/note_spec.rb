@@ -8,11 +8,19 @@ describe Note do
 
   it { should have_many(:activities) }
 
+  describe 'on create' do
+    let(:user) { create(:user) }
+    let(:subscribable) { build(:note, author: user.email) }
+
+    it_behaves_like 'a subscribable model'
+  end
+
   describe 'on delete' do
     before do
       @note = create(:note, node: create(:node))
       @activities = create_list(:activity, 2, trackable: @note)
       @comments = create_list(:comment, 2, commentable: @note)
+      @subscriptions = create_list(:subscription, 2, subscribable: @note)
       @note.destroy
     end
 
@@ -31,6 +39,13 @@ describe Note do
       expect(Comment.where(
         commentable_type: 'Note',
         commentable_id: @note.id).count
+      ).to eq(0)
+    end
+
+    it 'deletes associated Subscriptions' do
+      expect(Subscription.where(
+        subscribable_type: 'Note',
+        subscribable_id: @note.id).count
       ).to eq(0)
     end
   end
