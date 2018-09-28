@@ -51,6 +51,9 @@ describe "note pages" do
     let(:commentable) { @note }
     it_behaves_like 'a page with a comments feed'
 
+    let(:subscribable) { @note }
+    it_behaves_like 'a page with subscribe/unsubscribe links'
+
     describe "clicking 'delete'" do
       let(:submit_form) { within('.note-text-inner') { click_link "Delete" } }
 
