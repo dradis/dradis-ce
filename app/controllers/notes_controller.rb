@@ -5,6 +5,7 @@ class NotesController < NestedNodeResourceController
   include MultipleDestroy
   include Mentionable
   include NodesSidebar
+  include NotificationsReader
 
   before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
@@ -40,6 +41,7 @@ class NotesController < NestedNodeResourceController
     )
     load_conflicting_revisions(@note)
     find_mentionable_users
+    read_item_notifications(@note, current_user)
   end
 
   def edit
