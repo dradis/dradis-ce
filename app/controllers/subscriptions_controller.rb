@@ -6,7 +6,7 @@ class SubscriptionsController < AuthenticatedController
     subscription.user = current_user
     subscription.save
 
-    redirect_to [current_project, subscription.subscribable], notice: 'Subscribed!'
+    redirect_to helpers.subscribable_path(subscription), notice: 'Subscribed!'
   end
 
   def destroy
@@ -17,7 +17,7 @@ class SubscriptionsController < AuthenticatedController
     )
     subscription.destroy
 
-    redirect_to [current_project, subscription.subscribable], notice: 'Unsubscribed!'
+    redirect_to helpers.subscribable_path(subscription), notice: 'Unsubscribed!'
   end
 
   private

@@ -40,34 +40,7 @@
                   method: :delete do %>
               <i class="fa fa-trash"></i> Delete
             <% end %> -
-            <% if @subscription %>
-              <%= link_to \
-                    project_subscription_path(
-                      current_project,
-                      @subscription,
-                      subscription: {
-                        subscribable_type: @issue.class.to_s,
-                        subscribable_id: @issue.id
-                      }
-                    ),
-                    class: 'action-link text-error',
-                      method: :delete do %>
-                  <i class="fa fa-bell-slash"></i> Unsubscribe
-              <% end %>
-            <% else %>
-              <%= link_to \
-                    project_subscriptions_path(
-                      current_project,
-                      subscription: {
-                        subscribable_type: @issue.class.to_s,
-                        subscribable_id: @issue.id
-                      }
-                    ),
-                    class: 'action-link',
-                    method: :post do %>
-                <i class="fa fa-bell"></i> Subscribe
-              <% end %>
-            <% end %> -
+            <%= render 'subscriptions/button', subscribable: @issue %> -
             <%= render partial: 'send_to_menu' %>
             <%= tag_and_name_for(@issue) %>
           </span>
