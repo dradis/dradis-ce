@@ -3,6 +3,7 @@
 class NotesController < NestedNodeResourceController
   include ConflictResolver
   include MultipleDestroy
+  include Mentionable
   include NodesSidebar
 
   before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
@@ -38,7 +39,7 @@ class NotesController < NestedNodeResourceController
       subscribable_id: @note.id
     )
     load_conflicting_revisions(@note)
-    @mentionable_users = User.all
+    find_mentionable_users
   end
 
   def edit

@@ -2,6 +2,7 @@ class IssuesController < AuthenticatedController
   include ActivityTracking
   include ContentFromTemplate
   include ConflictResolver
+  include Mentionable
   include MultipleDestroy
   include NotificationsReader
   include ProjectScoped
@@ -39,7 +40,7 @@ class IssuesController < AuthenticatedController
                       subscribable_type: @issue.class.to_s,
                       subscribable_id: @issue.id)
 
-    @mentionable_users = User.all
+    find_mentionable_users
     read_item_notifications(@issue, current_user)
   end
 
