@@ -12,4 +12,12 @@ module Subscribable
       Subscription.subscribe(user: user, to: self)
     end
   end
+
+  def current_subscription(user)
+    self.subscriptions.find_by(
+      user: user,
+      subscribable_type: self.class.to_s,
+      subscribable_id: self.id
+    )
+  end
 end

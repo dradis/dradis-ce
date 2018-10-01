@@ -10,6 +10,13 @@ describe Evidence do
   it { should validate_presence_of :issue }
   it { should validate_presence_of :node }
 
+  describe 'on create' do
+    let(:user) { create(:user) }
+    let(:subscribable) { build(:evidence, author: user.email) }
+
+    it_behaves_like 'a subscribable model'
+  end
+
   describe 'on delete' do
     before do
       @evidence = create(:evidence, node: create(:node))
