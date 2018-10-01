@@ -34,7 +34,8 @@
                   data: { confirm: 'Are you sure?' },
                   method: :delete do %>
               <i class="fa fa-trash"></i> Delete
-            <% end %>
+            <% end %> -
+            <%= render 'subscriptions/button', subscribable: @evidence %>
           </span>
         </h3>
 
