@@ -1,6 +1,5 @@
 class Evidence < ApplicationRecord
-  include HasFields
-  include RevisionTracking
+  include Commentable, HasFields, RevisionTracking
 
   dradis_has_fields_for :content
 
