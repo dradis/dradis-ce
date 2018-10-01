@@ -3,7 +3,7 @@
 class NotesController < NestedNodeResourceController
   include ConflictResolver
   include MultipleDestroy
-  include Mentionable
+  include Mentions
   include NodesSidebar
   include NotificationsReader
 

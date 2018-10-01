@@ -1,4 +1,4 @@
-module Mentionable
+module Mentions
   extend ActiveSupport::Concern
 
   protected
