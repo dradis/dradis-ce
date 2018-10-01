@@ -59,25 +59,8 @@ describe ActivityTrackingJob do #, type: :job do
       end
     end
 
-    it 'creates notifications when a comment is created' do
-      commentables = [:issue, :note]
-      commentables.each do |commentable_sym|
-        commentable = create(commentable_sym)
-        create_list(:subscription, 2, subscribable: commentable)
-        trackable = create(:comment, commentable: commentable)
-        project = commentable.node.project
-
-        expect {
-          described_class.new.perform(
-            action: 'create',
-            project_id: project.id,
-            trackable_id: trackable.id,
-            trackable_type: trackable.class.to_s,
-            user_id: trackable.user.id
-          )
-        }.to change { Notification.count }.by(2)
-      end
-    end
+    include_examples 'creates notifications for comments in a', :issue
+    include_examples 'creates notifications for comments in a', :note
 
     it 'broadcasts to the notificationschannel' do
       expect(NotificationsChannel).to receive(:broadcast_to).twice
