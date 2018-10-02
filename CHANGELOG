@@ -1,3 +1,6 @@
+v3.11 (November 2018)
+ - Fix blockcode characters displaying incorrectly
+
 v3.10 (August 2018)
  - Add comments for issues
  - Add notifications for comments
