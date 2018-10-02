@@ -13,7 +13,7 @@ module Subscribable
     end
   end
 
-  def subscription_for(user: user)
+  def subscription_for(user:)
     self.subscriptions.find_by(
       user: user,
       subscribable_type: self.class.to_s,
