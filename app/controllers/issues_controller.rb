@@ -35,11 +35,7 @@ class IssuesController < AuthenticatedController
 
     load_conflicting_revisions(@issue)
 
-    @subscription = Subscription.find_by(
-                      user: current_user,
-                      subscribable_type: @issue.class.to_s,
-                      subscribable_id: @issue.id)
-
+    @subscription = @issue.subscription_for(user: current_user)
     find_mentionable_users
     read_item_notifications(@issue, current_user)
   end

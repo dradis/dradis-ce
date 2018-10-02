@@ -34,11 +34,7 @@ class NotesController < NestedNodeResourceController
   # Retrieve a Note given its :id
   def show
     @activities = @note.activities.latest
-    @subscription = Subscription.find_by(
-      user: current_user,
-      subscribable_type: @note.class.to_s,
-      subscribable_id: @note.id
-    )
+    @subscription = @note.subscription_for(user: current_user)
     load_conflicting_revisions(@note)
     find_mentionable_users
     read_item_notifications(@note, current_user)
