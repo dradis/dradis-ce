@@ -59,9 +59,6 @@ describe ActivityTrackingJob do #, type: :job do
       end
     end
 
-    include_examples 'creates notifications for comments in a', :issue
-    include_examples 'creates notifications for comments in a', :note
-
     it 'broadcasts to the notificationschannel' do
       expect(NotificationsChannel).to receive(:broadcast_to).twice
 
