@@ -25,7 +25,14 @@
 #
 # This behaviour is extensively used by import/export plugins such as WordExport.
 class Note < ApplicationRecord
+<<<<<<< HEAD
   include Commentable, HasFields, RevisionTracking, Subscribable
+=======
+  include Commentable
+  include HasFields
+  include RevisionTracking
+  include Subscribable
+>>>>>>> comments-in-notes
 
   dradis_has_fields_for :text
 
