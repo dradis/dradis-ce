@@ -10,6 +10,7 @@ class IssuesController < AuthenticatedController
   before_action :find_issuelib
   before_action :find_issues, except: [:destroy]
 
+  before_action :find_mentionable_users, only: show
   before_action :find_or_initialize_issue, except: [:import, :index]
   before_action :find_or_initialize_tags, except: [:destroy]
 
@@ -36,7 +37,6 @@ class IssuesController < AuthenticatedController
     load_conflicting_revisions(@issue)
 
     @subscription = @issue.subscription_for(user: current_user)
-    find_mentionable_users
     read_item_notifications(@issue, current_user)
   end
 
