@@ -40,7 +40,7 @@
                   method: :delete do %>
               <i class="fa fa-trash"></i> Delete
             <% end %> -
-            <%= render 'subscriptions/button', subscribable: @issue %> -
+            <%= render 'subscriptions/actions', subscribable: @issue %> -
             <%= render partial: 'send_to_menu' %>
             <%= tag_and_name_for(@issue) %>
           </span>
