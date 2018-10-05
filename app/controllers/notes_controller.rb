@@ -10,6 +10,8 @@ class NotesController < NestedNodeResourceController
   before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
 
+  include Subscribed
+
   def new
     @note = @node.notes.new
 
@@ -34,7 +36,6 @@ class NotesController < NestedNodeResourceController
   # Retrieve a Note given its :id
   def show
     @activities = @note.activities.latest
-    @subscription = @note.subscription_for(user: current_user)
     load_conflicting_revisions(@note)
   end
 

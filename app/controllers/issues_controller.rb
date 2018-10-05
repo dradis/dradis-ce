@@ -13,6 +13,8 @@ class IssuesController < AuthenticatedController
   before_action :find_or_initialize_issue, except: [:import, :index]
   before_action :find_or_initialize_tags, except: [:destroy]
 
+  include Subscribed
+
   def index
     @columns = @issues.map(&:fields).map(&:keys).uniq.flatten | ['Title', 'Tags', 'Affected', 'Created', 'Created by', 'Updated']
   end
@@ -34,8 +36,6 @@ class IssuesController < AuthenticatedController
     @first_evidence  = Evidence.where(node: @first_node, issue: @issue)
 
     load_conflicting_revisions(@issue)
-
-    @subscription = @issue.subscription_for(user: current_user)
   end
 
   def new
