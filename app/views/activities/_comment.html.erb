@@ -3,7 +3,7 @@
   <% if comment.commentable.title? %>
     <% title = comment.commentable.title %>
   <% end %>
-  <%= presenter.verb %> a <%= link_to 'comment', comment_path(comment) %> on <%= link_to title, commentable_path(comment) %>.
+  <%= presenter.verb %> a <%= link_to 'comment', presenter.comment_path(anchor: dom_id(comment)) %> on <%= link_to title, presenter.comment_path %>.
 <% else %>
   <% if activity.action == 'destroy' %>
     deleted a comment.
