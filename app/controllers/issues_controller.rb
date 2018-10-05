@@ -2,7 +2,7 @@ class IssuesController < AuthenticatedController
   include ActivityTracking
   include ContentFromTemplate
   include ConflictResolver
-  include Mentions
+  include Mentioned
   include MultipleDestroy
   include NotificationsReader
   include ProjectScoped
@@ -10,7 +10,6 @@ class IssuesController < AuthenticatedController
   before_action :find_issuelib
   before_action :find_issues, except: [:destroy]
 
-  before_action :find_mentionable_users, only: [:show]
   before_action :find_or_initialize_issue, except: [:import, :index]
   before_action :find_or_initialize_tags, except: [:destroy]
 
@@ -35,9 +34,7 @@ class IssuesController < AuthenticatedController
     @first_evidence  = Evidence.where(node: @first_node, issue: @issue)
 
     load_conflicting_revisions(@issue)
-
     @subscription = @issue.subscription_for(user: current_user)
-    read_item_notifications(@issue, current_user)
   end
 
   def new

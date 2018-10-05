@@ -2,12 +2,11 @@
 # resource.
 class NotesController < NestedNodeResourceController
   include ConflictResolver
-  include Mentions
+  include Mentioned
   include MultipleDestroy
   include NodesSidebar
   include NotificationsReader
 
-  before_action :find_mentionable_users, only: [:show]
   before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
 
@@ -37,7 +36,6 @@ class NotesController < NestedNodeResourceController
     @activities = @note.activities.latest
     @subscription = @note.subscription_for(user: current_user)
     load_conflicting_revisions(@note)
-    read_item_notifications(@note, current_user)
   end
 
   def edit
