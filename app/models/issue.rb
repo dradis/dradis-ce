@@ -1,5 +1,7 @@
 class Issue < Note
-  include Commentable, Subscribable, Taggable
+  include Commentable
+  include Subscribable
+  include Taggable
 
   # -- Relationships --------------------------------------------------------
   has_many :evidence, dependent: :destroy
