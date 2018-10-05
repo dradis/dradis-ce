@@ -77,7 +77,7 @@ gem 'bcrypt',   '3.1.12'
 gem 'json', '1.8.6'
 
 # XML manipulation
-gem 'nokogiri', '1.8.3'
+gem 'nokogiri', '1.8.5'
 
 # MySQL backend
 gem 'mysql2', '~> 0.5.1'
