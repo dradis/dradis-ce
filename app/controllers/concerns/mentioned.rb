@@ -1,4 +1,4 @@
-module Mentions
+module Mentioned
   extend ActiveSupport::Concern
 
   included do
