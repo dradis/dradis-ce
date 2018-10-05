@@ -1,6 +1,10 @@
 module Mentions
   extend ActiveSupport::Concern
 
+  included do
+    before_action :find_mentionable_users, only: [:show]
+  end
+
   protected
 
   def find_mentionable_users

@@ -7,7 +7,6 @@ class NotesController < NestedNodeResourceController
   include NodesSidebar
   include NotificationsReader
 
-  before_action :find_mentionable_users, only: [:show]
   before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
 
