@@ -36,7 +36,6 @@ class NotesController < NestedNodeResourceController
     @activities = @note.activities.latest
     @subscription = @note.subscription_for(user: current_user)
     load_conflicting_revisions(@note)
-    read_item_notifications(@note, current_user)
   end
 
   def edit

@@ -36,7 +36,6 @@ class IssuesController < AuthenticatedController
     load_conflicting_revisions(@issue)
 
     @subscription = @issue.subscription_for(user: current_user)
-    read_item_notifications(@issue, current_user)
   end
 
   def new
