@@ -42,6 +42,6 @@ class CommentsController < AuthenticatedController
       request.env['HTTP_REFERER'] += "##{dom_id(comment)}"
     end
 
-    redirect_back fallback_location: root_path
+    redirect_back fallback_location: project_path(current_project)
   end
 end
