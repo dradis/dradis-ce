@@ -12,7 +12,7 @@ class CommentsController < AuthenticatedController
       track_created(@comment)
     end
 
-    redirect_to polymorphic_path([current_project, @comment.commentable], anchor: dom_id(@comment))
+    redirect_to_comment(@comment)
   end
 
   def update
@@ -20,7 +20,7 @@ class CommentsController < AuthenticatedController
       track_updated(@comment)
     end
 
-    redirect_to polymorphic_path([current_project, @comment.commentable], anchor: dom_id(@comment))
+    redirect_to_comment(@comment)
   end
 
   def destroy
@@ -28,12 +28,20 @@ class CommentsController < AuthenticatedController
       track_destroyed(@comment)
     end
 
-    redirect_to [current_project, @comment.commentable]
+    redirect_to_comment(@comment)
   end
 
   private
 
   def comment_params
     params.require(:comment).permit(:content, :commentable_type, :commentable_id)
+  end
+
+  def redirect_to_comment(comment)
+    if comment.persisted? && !request.referrer.nil?
+      request.env['HTTP_REFERER'] += "##{dom_id(comment)}"
+    end
+
+    redirect_back fallback_location: project_path(current_project)
   end
 end

@@ -27,12 +27,18 @@
             <% end %>
             <a href="#modal_move_note" class="action-link" tabindex="-1" data-toggle="modal">
               <i class="fa fa-mail-forward"></i> Move
-            </a>
+            </a> -
+            <%= render 'subscriptions/actions', subscribable: @note %>
           </span>
         </h3>
         <div class="content-textile">
           <%= markup(@note.text) %>
         </div>
+      </div>
+
+      <div class="inner">
+        <%= render 'comments/feed', commentable: @note %>
+        <%= render 'subscriptions/feed', subscribable: @note %>
       </div>
     </div>
   <% end %>
