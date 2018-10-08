@@ -130,7 +130,7 @@ gem 'whenever', require: false
 
 group :production do
   # Use Unicorn as the web server
-  gem 'unicorn',  '4.9.0'
+  gem 'unicorn',  '5.4.1'
 end
 
 
