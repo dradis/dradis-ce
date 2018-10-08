@@ -28,6 +28,7 @@ class Note < ApplicationRecord
   include Commentable
   include HasFields
   include RevisionTracking
+  include Subscribable
 
   dradis_has_fields_for :text
 
