@@ -5,6 +5,26 @@ class ActivityPresenter < BasePresenter
     h.link_to(avatar_image(size), 'javascript:void(0)')
   end
 
+  def comment_path(anchor: false)
+    # FIXME - ISSUE/NOTE INHERITANCE
+    # Would like to use only `commentable.respond_to?(:node)` here, but
+    # that would return a wrong path for issues
+    comment         = activity.trackable
+    commentable     = comment.commentable
+    path_to_comment =
+      if commentable.respond_to?(:node) && !commentable.is_a?(Issue)
+        [current_project, commentable.node, commentable]
+      else
+        [current_project, commentable]
+      end
+
+    anchor = dom_id(comment) if anchor
+    polymorphic_path(
+      path_to_comment,
+      anchor: anchor
+    )
+  end
+
   def created_at_ago
     h.local_time_ago(activity.created_at)
   end
@@ -84,7 +104,7 @@ class ActivityPresenter < BasePresenter
   end
 
   def render_partial
-    locals = {activity: activity, presenter: self}
+    locals = { activity: activity, presenter: self }
     locals[activity.trackable_type.underscore.to_sym] = activity.trackable
     render partial_path, locals
   end

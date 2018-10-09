@@ -2,6 +2,7 @@ class IssuesController < AuthenticatedController
   include ActivityTracking
   include ContentFromTemplate
   include ConflictResolver
+  include Mentioned
   include MultipleDestroy
   include NotificationsReader
   include ProjectScoped
@@ -33,14 +34,7 @@ class IssuesController < AuthenticatedController
     @first_evidence  = Evidence.where(node: @first_node, issue: @issue)
 
     load_conflicting_revisions(@issue)
-
-    @subscription = Subscription.find_by(
-                      user: current_user,
-                      subscribable_type: @issue.class.to_s,
-                      subscribable_id: @issue.id)
-
-    @mentionable_users = User.all
-    read_item_notifications(@issue, current_user)
+    @subscription = @issue.subscription_for(user: current_user)
   end
 
   def new
