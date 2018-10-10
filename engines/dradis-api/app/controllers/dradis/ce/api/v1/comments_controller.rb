@@ -22,11 +22,16 @@ module Dradis::CE::API
       private
 
       def set_commentable
-        regex = /(?<=\/api\/)([a-z]+)(?=\/)/
-        commentable_type = request.original_fullpath[regex].singularize
-        commentable_class = commentable_type.capitalize.constantize
-
-        @commentable = commentable_class.find(params["#{commentable_type}_id"])
+        @commentable =
+          if params[:issue_id]
+           Issue.find(params[:issue_id])
+          elsif params[:note_id]
+            Note.find(params[:note_id])
+          elsif params[:evidence_id]
+            Evidence.find(params[:evidence_id])
+          else
+            raise 'Polymorphic model missing!'
+          end
       end
 
       def set_comment
