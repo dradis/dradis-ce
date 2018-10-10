@@ -5,6 +5,7 @@ module Dradis::CE::API
       before_action :set_commentable, only: [:index, :create]
 
       def index
+        @comments = @commentable.comments
       end
 
       def show; end
