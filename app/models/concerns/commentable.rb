@@ -13,4 +13,8 @@ module Commentable
       )
     )
   end
+
+  def comments_count
+    self.comments.count
+  end
 end
