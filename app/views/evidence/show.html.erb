@@ -40,6 +40,9 @@
 
         <div class="content-textile"><%= markup(@evidence.content) %></div>
       </div>
+      <div class="inner">
+        <%= render 'comments/feed', commentable: @evidence %>
+      </div>
     </div>
   <% end %>
 

@@ -1,4 +1,5 @@
 class Evidence < ApplicationRecord
+  include Commentable
   include HasFields
   include RevisionTracking
 

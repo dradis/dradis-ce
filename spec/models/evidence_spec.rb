@@ -5,6 +5,7 @@ describe Evidence do
   it { should belong_to :issue }
   it { should belong_to :node }
   it { should have_many(:activities) }
+  it { should have_many(:comments).dependent(:destroy) }
 
   it { should validate_presence_of :issue }
   it { should validate_presence_of :node }
@@ -13,10 +14,11 @@ describe Evidence do
     before do
       @evidence = create(:evidence, node: create(:node))
       @activities = create_list(:activity, 2, trackable: @evidence)
+      @comments = create_list(:comment, 2, commentable: @evidence)
       @evidence.destroy
     end
 
-    it "doesn't delete or nullify any associated Activities" do
+    it 'doesn\'t delete or nullify any associated Activities' do
       # We want to keep records of actions performed on a evidence even after it's
       # been deleted.
       @activities.each do |activity|
@@ -25,6 +27,13 @@ describe Evidence do
         expect(activity.trackable_id).to eq @evidence.id
         expect(activity.trackable_type).to eq 'Evidence'
       end
+    end
+
+    it 'deletes associated Comments' do
+      expect(Comment.where(
+        commentable_type: 'Evidence',
+        commentable_id: @evidence.id).count
+      ).to eq(0)
     end
   end
 
@@ -43,7 +52,7 @@ describe Evidence do
       expect(@fields['Output']).to eq 'Resistance is futile'
     end
 
-    it "provides access to the Node label's as a virtual field" do
+    it 'provides access to the Node label\'s as a virtual field' do
       expect(@fields['Label']).to eq('Node Label')
     end
   end
