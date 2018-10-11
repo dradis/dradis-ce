@@ -194,7 +194,7 @@ class @ActivitiesPoller
       comment.remove()
       count = parseInt($('#comment-count').html())
       count = count - 1 if count > 0
-      $('#comment-count').html(count - 1) if count > 0
+      $('#comment-count').html(count)
       $('[data-notice~=no-comments]').show() if count == 0
 
   # private
