@@ -11,6 +11,7 @@ gem 'dradis-calculator_dread', '~> 3.10', github: 'dradis/dradis-calculator_drea
 
 # ---------------------------------------------------------------------- Export
 gem 'dradis-csv',         '~> 3.10', github: 'dradis/dradis-csv'
+# gem 'dradis-json',        '~> 3.10', github: 'dradis/dradis-json'
 gem 'dradis-html_export', '~> 3.10', github: 'dradis/dradis-html_export'
 
 

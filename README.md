@@ -95,7 +95,7 @@ In https://dradisframework.com/ce/download.html you will find the latest package
 ## Getting help
 
 * http://dradisframework.org/
-* [Community Forums](http://discuss.dradisframework.org/)
+* [Community Forums](https://discuss.dradisframework.org/)
 * [Slack channel](https://evening-hamlet-4416.herokuapp.com/)
 * IRC: **#dradis** `irc.freenode.org`
 
