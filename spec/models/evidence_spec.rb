@@ -10,11 +10,19 @@ describe Evidence do
   it { should validate_presence_of :issue }
   it { should validate_presence_of :node }
 
+  describe 'on create' do
+    let(:user) { create(:user) }
+    let(:subscribable) { build(:evidence, author: user.email) }
+
+    it_behaves_like 'a subscribable model'
+  end
+
   describe 'on delete' do
     before do
       @evidence = create(:evidence, node: create(:node))
       @activities = create_list(:activity, 2, trackable: @evidence)
       @comments = create_list(:comment, 2, commentable: @evidence)
+      @subscriptions = create_list(:subscription, 2, subscribable: @evidence)
       @evidence.destroy
     end
 
@@ -33,6 +41,13 @@ describe Evidence do
       expect(Comment.where(
         commentable_type: 'Evidence',
         commentable_id: @evidence.id).count
+      ).to eq(0)
+    end
+
+    it 'deletes associated Subscriptions' do
+      expect(Subscription.where(
+        subscribable_type: 'Evidence',
+        subscribable_id: @evidence.id).count
       ).to eq(0)
     end
   end

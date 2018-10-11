@@ -51,6 +51,9 @@ describe "evidence" do
     let(:commentable) { @evidence }
     it_behaves_like 'a page with a comments feed'
 
+    let(:subscribable) { @evidence }
+    it_behaves_like 'a page with subscribe/unsubscribe links'
+
     describe "clicking 'delete'" do
       let(:submit_form) { within('.note-text-inner') { click_link "Delete" } }
       it "deletes the Evidence" do
