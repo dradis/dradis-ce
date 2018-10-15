@@ -14,7 +14,18 @@ module HTML
     # This filter does not write any additional information to the context hash.
     class DradisEscapeHTMLFilter < TextFilter
       def call
-        ERB::Util.html_escape(@text)
+        text = ERB::Util.html_escape(@text)
+
+        # Match the text between bc. and bc.. following the textile rules
+        regex = Regexp.union(
+          /(?<=bc. )(.*?)(?=(\r\n|\n){2})/m,
+          /(?<=bc.. )(.*?)(?=(bc\.|bc\.\.|p\.|\z))/m
+        )
+
+        # Un-escape the matched strings
+        text.gsub(regex) do |bc|
+          CGI::unescapeHTML(bc)
+        end
       end
     end
   end
