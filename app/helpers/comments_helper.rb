@@ -1,6 +1,6 @@
 module CommentsHelper
   def format_comment(text)
-    simple_format(text).gsub(/@[a-z0-9\-_\.]+/i) do |mention|
+    simple_format(text).gsub(/@[a-z0-9\-_\.@]+/i) do |mention|
       user = User.find_by_email(mention[1..-1])
       if user
         content_tag :span, class: 'format_comment' do
