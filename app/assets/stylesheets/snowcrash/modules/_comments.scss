@@ -42,6 +42,12 @@
     form.edit_comment {
       display: none;
     }
+
+    .format_comment {
+      .gravatar {
+        float: none;
+      }
+    }
   }
 }
 
