@@ -10,6 +10,6 @@ module CommentsHelper
       else
         mention
       end
-    end.html
+    end.html_safe
   end
 end
