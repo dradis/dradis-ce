@@ -1,6 +1,6 @@
 class Subscription < ApplicationRecord
   # -- Relationships --------------------------------------------------------
-  belongs_to :subscribable, polymorphic: true
+  belongs_to :subscribable, polymorphic: true, touch: true
   belongs_to :user
 
   # -- Callbacks ------------------------------------------------------------
