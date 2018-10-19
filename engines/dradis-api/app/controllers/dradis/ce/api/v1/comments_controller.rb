@@ -42,15 +42,16 @@ module Dradis::CE::API
       end
 
       def set_commentable
-        begin
-          id_param = params.keys.select { |key| key =~ /_id$/ }.first
-          id_value = params[id_param]
-
-          klass = id_param.chomp('_id').capitalize.constantize
-          @commentable = klass.find(id_value)
-        rescue
-          raise 'Could not find commentable resource'
-        end
+        @commentable =
+          if params[:issue_id]
+            Issue.find(params[:issue_id])
+          elsif params[:note_id]
+            Note.find(params[:note_id])
+          elsif params[:evidence_id]
+            Evidence.find(params[:evidence_id])
+          else
+            raise 'Polymorphic model missing!'
+          end
       end
 
       def set_comment
