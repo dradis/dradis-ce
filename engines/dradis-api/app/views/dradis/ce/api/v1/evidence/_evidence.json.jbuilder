@@ -5,4 +5,4 @@ json.issue do |json|
   json.url dradis_api.issue_url(evidence.issue_id)
 end
 json.comments_count evidence.comments.count
-json.comments_url evidence_comments_path(evidence)
+json.comments_url node_evidence_comments_path(@node, evidence)
