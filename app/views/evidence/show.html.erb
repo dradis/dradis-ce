@@ -18,10 +18,9 @@
   <li><a href="#activity-tab" data-toggle="tab"><i class="fa fa-refresh"></i> Recent activity</a></li>
 </ul>
 
-
 <div class="tab-content">
-  <% cache ['evidence-evidence-tab', @evidence, current_user] do %>
-    <div class="tab-pane active" id="evidence-tab">
+  <div class="tab-pane active" id="evidence-tab">
+    <% cache ['evidence-evidence-tab', @evidence, current_user] do %>
       <div class="inner note-text-inner">
         <h3>
           Evidence for this instance -
@@ -41,12 +40,13 @@
 
         <div class="content-textile"><%= markup(@evidence.content) %></div>
       </div>
-      <div class="inner">
-        <%= render 'comments/feed', commentable: @evidence %>
-        <%= render 'subscriptions/feed', subscribable: @evidence %>
-      </div>
+    <% end %>
+    
+    <div class="inner">
+      <%= render 'comments/feed', commentable: @evidence %>
+      <%= render 'subscriptions/feed', subscribable: @evidence %>
     </div>
-  <% end %>
+  </div>
 
   <% cache ['evidence-information-tab', @issue] do %>
     <div class="tab-pane" id="info-tab">

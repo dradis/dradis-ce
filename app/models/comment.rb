@@ -2,7 +2,7 @@ class Comment < ApplicationRecord
   include Notifiable
 
   # -- Relationships --------------------------------------------------------
-  belongs_to :commentable, polymorphic: true, touch: true
+  belongs_to :commentable, polymorphic: true
   belongs_to :user
 
   # -- Callbacks ------------------------------------------------------------
