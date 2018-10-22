@@ -22,16 +22,10 @@ module Dradis::CE::API
       private
 
       def set_commentable
-        @commentable =
-          if params[:issue_id]
-           Issue.find(params[:issue_id])
-          elsif params[:note_id]
-            Note.find(params[:note_id])
-          elsif params[:evidence_id]
-            Evidence.find(params[:evidence_id])
-          else
-            raise 'Polymorphic model missing!'
-          end
+        commentable_klasses = %w[issue note evidence]
+        if klass = commentable_klasses.detect { |ck| params[:"#{ck}_id"].present? }
+          @commentable = klass.camelize.constantize.find params[:"#{klass}_id"]
+        end
       end
 
       def set_comment
