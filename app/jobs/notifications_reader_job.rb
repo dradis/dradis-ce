@@ -8,6 +8,10 @@ class NotificationsReaderJob < ApplicationJob
         unread.
         where(recipient_id: user_id).
         mark_all_as_read!
+
+      if Notification.unread.where(recipient_id: user_id).count == 0
+        NotificationsChannel.broadcast_to(User.find(user_id), 'all_read')
+      end
     end
   end
 

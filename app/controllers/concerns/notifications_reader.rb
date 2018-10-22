@@ -9,7 +9,7 @@ module NotificationsReader
 
   def read_item_notifications
     commentable = instance_variable_get("@#{controller_name.singularize}")
-    NotificationsReaderJob.perform_now(
+    NotificationsReaderJob.perform_later(
       commentable_id: commentable.id,
       commentable_type: commentable.class.to_s,
       user_id: current_user.id
