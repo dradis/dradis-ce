@@ -22,7 +22,7 @@ describe 'Comments API' do
         expect(response.status).to eq 401
       end
     end
-    describe 'POST /api/issues/:node_id/comments' do
+    describe 'POST /api/issues/:issue_id/comments' do
       it 'throws 401' do
         post "/api/issues/#{issue.id}/comments", env: @env
         expect(response.status).to eq 401
