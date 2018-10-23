@@ -4,7 +4,7 @@
               data: {
                 users: @mentionable_users.map do |user|
                   {
-                    key: user.email,
+                    key: h(user.email),
                     value: user.email,
                     avatar_url: avatar_url(user)
                   }
