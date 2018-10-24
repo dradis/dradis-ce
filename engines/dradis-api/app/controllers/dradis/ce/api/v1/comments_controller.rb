@@ -2,7 +2,7 @@ module Dradis::CE::API
   module V1
     class CommentsController < Dradis::CE::API::V1::ProjectScopedController
       before_action :set_comment, only: [:show, :update, :destroy]
-      before_action :set_commentable, only: [:index, :create]
+      before_action :set_commentable
 
       def index
         @comments = @commentable.comments
@@ -30,7 +30,7 @@ module Dradis::CE::API
       end
 
       def set_comment
-        @comment = Comment.find(params[:id])
+        @comment = @commentable.comments.find(params[:id])
       end
     end
   end
