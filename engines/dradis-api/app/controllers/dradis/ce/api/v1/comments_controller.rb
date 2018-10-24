@@ -24,7 +24,8 @@ module Dradis::CE::API
       def set_commentable
         commentable_klasses = %w[issue note evidence]
         if klass = commentable_klasses.detect { |ck| params[:"#{ck}_id"].present? }
-          @commentable = klass.camelize.constantize.find params[:"#{klass}_id"]
+          @commentable =
+            current_project.send(klass.pluralize).find(params[:"#{klass}_id"])
         end
       end
 
