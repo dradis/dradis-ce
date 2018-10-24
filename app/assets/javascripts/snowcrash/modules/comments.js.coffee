@@ -26,3 +26,10 @@ document.addEventListener "turbolinks:load", ->
       values: $('#mentionable-users').data('users')
     )
     tribute.attach(document.querySelectorAll('[data-behavior~=mentionable]'));
+
+  if $('[data-behavior~=comment-feed]').length
+    current_user_comments = $('[data-behavior~=comment-feed]').data('current-user-comments')
+    for comment_id in current_user_comments
+      comment = $("#comment_#{comment_id}")
+      if comment.length
+        comment.find('.actions').addClass('current_user')

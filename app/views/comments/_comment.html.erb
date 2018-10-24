@@ -13,20 +13,19 @@
         <%= link_to local_time_ago(comment.created_at), "##{dom_id(comment)}", data: { turbolinks: false } %>
       </span>
 
-      <% if can? :update, comment %>
-        <div class="actions">
-          <%= link_to 'javascript:void(0)',
-                      data: {toggle_comment: "on"} do %>
-            <i class="fa fa-pencil"></i> Edit
-          <% end %>
-          <%= link_to [current_project, comment],
-                      method: :delete,
-                      data: { confirm: 'Are you sure?' },
-                      class: 'text-error' do %>
-            <i class="fa fa-trash"></i> Delete
-          <% end %>
-        </div>
-      <% end %>
+      <% # this is not visible, it is shown later with js %>
+      <div class="actions">
+        <%= link_to 'javascript:void(0)',
+                    data: {toggle_comment: "on"} do %>
+          <i class="fa fa-pencil"></i> Edit
+        <% end %>
+        <%= link_to [current_project, comment],
+                    method: :delete,
+                    data: { confirm: 'Are you sure?' },
+                    class: 'text-error' do %>
+          <i class="fa fa-trash"></i> Delete
+        <% end %>
+      </div>
     </div>
 
     <div class="content">

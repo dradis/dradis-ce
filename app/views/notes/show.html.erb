@@ -11,8 +11,8 @@
 
 
 <div class="tab-content">
-  <div class="tab-pane active" id="info-tab">
-    <% cache ['note-information-tab', @note, current_user] do %>
+  <div class="tab-pane active" id="info-tab" data-behavior="subscription-actions" data-subscribed="<%= !@subscription.nil? %>">
+    <% cache ['note-information-tab', @note] do %>
       <div id="<%= dom_id(@note) %>" class="inner note-text-inner">
         <h3>Content for this note -
           <span class="actions">

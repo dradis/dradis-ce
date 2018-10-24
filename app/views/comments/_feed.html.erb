@@ -1,6 +1,7 @@
+<% current_user_comments = commentable.comments.where(user: current_user) %>
+<div class="comment-feed" data-behavior="comment-feed" data-current-user-comments="<%= current_user_comments.map(&:id)%>">
 <% cache ['comment-feed', commentable.comments] do %>
   <h3>Comments <span class="badge" id="comment-count"><%= commentable.comments.count %></span></h3>
-  <div class="comment-feed">
     <div class="comment-list">
       <%= render(commentable.comments.includes(:user)) if commentable.comments.any? %>
 
@@ -14,5 +15,5 @@
     </div>
 
     <%= render 'comments/new', commentable: commentable %>
-  </div>
 <% end %>
+</div>

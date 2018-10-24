@@ -19,8 +19,8 @@
 </ul>
 
 <div class="tab-content">
-  <div class="tab-pane active" id="evidence-tab">
-    <% cache ['evidence-evidence-tab', @evidence, current_user] do %>
+  <div class="tab-pane active" id="evidence-tab" data-behavior="subscription-actions" data-subscribed="<%= !@subscription.nil? %>">
+    <% cache ['evidence-evidence-tab', @evidence] do %>
       <div class="inner note-text-inner">
         <h3>
           Evidence for this instance -
@@ -41,7 +41,7 @@
         <div class="content-textile"><%= markup(@evidence.content) %></div>
       </div>
     <% end %>
-    
+
     <div class="inner">
       <%= render 'comments/feed', commentable: @evidence %>
       <%= render 'subscriptions/feed', subscribable: @evidence %>
