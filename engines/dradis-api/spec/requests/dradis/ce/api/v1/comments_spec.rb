@@ -129,7 +129,7 @@ describe 'Comments API' do
               expect(retrieved_comment[attr.to_s]).to eq value
             end
             expect(response.location).to eq(
-              dradis_api.issue_url(issue.id)
+              dradis_api.issue_comment_url(issue, retrieved_comment['id'])
             )
           end
         end

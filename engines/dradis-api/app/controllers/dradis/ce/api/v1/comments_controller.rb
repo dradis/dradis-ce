@@ -17,7 +17,7 @@ module Dradis::CE::API
         @comment.user = current_user
         if @comment.save
           track_created(@comment)
-          render status: 201, location: main_app.polymorphic_path(@commentable.path, anchor: dom_id(@comment))
+          render status: 201, location: polymorphic_url(@commentable.path.drop(1).append(@comment))
         else
           render_validation_errors(@comment)
         end
