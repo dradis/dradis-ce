@@ -13,4 +13,8 @@ module Commentable
       )
     )
   end
+
+  def path
+    [project, self]
+  end
 end

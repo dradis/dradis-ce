@@ -1,6 +1,8 @@
 module Dradis::CE::API
   module V1
     class CommentsController < Dradis::CE::API::V1::ProjectScopedController
+      include ActionView::RecordIdentifier
+
       before_action :set_comment, only: [:show, :update, :destroy]
       before_action :set_commentable, only: [:index, :create]
 
@@ -15,7 +17,7 @@ module Dradis::CE::API
         @comment.user = current_user
         if @comment.save
           track_created(@comment)
-          render status: 201, location: @commentable
+          render status: 201, location: main_app.polymorphic_path(@commentable.path, anchor: dom_id(@comment))
         else
           render_validation_errors(@comment)
         end

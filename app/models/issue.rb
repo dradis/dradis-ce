@@ -138,4 +138,10 @@ class Issue < Note
     merged
   end
 
+  # FIXME - ISSUE/NOTE INHERITANCE
+  # `Issue` should not need to overwrite the `Commentable` concern `path` method
+  # if not inheriting from `Note`, that overwrites it
+  def path
+    [project, self]
+  end
 end

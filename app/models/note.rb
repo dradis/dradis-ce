@@ -59,4 +59,8 @@ class Note < ApplicationRecord
   def field_or_text(field_name)
     fields.fetch(field_name, text.truncate(20))
   end
+
+  def path
+    [project, node, self]
+  end
 end

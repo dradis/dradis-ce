@@ -10,6 +10,7 @@ class Evidence < ApplicationRecord
   belongs_to :node, touch: true
   has_many :activities, as: :trackable
 
+  delegate :project, :project=, to: :node
 
   # -- Callbacks ------------------------------------------------------------
 
@@ -34,4 +35,7 @@ class Evidence < ApplicationRecord
     }
   end
 
+  def path
+    [project, node, self]
+  end
 end
