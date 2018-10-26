@@ -10,4 +10,7 @@ App.cable.subscriptions.create 'NotificationsChannel',
     $(document).off('.notifications')
 
   received: (data)->
-    $('[data-behavior~=notifications-dot]').removeClass('hidden')
+    if data == 'all_read'
+      $('[data-behavior~=notifications-dot]').addClass('hidden')
+    else
+      $('[data-behavior~=notifications-dot]').removeClass('hidden')
