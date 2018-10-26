@@ -1,7 +1,14 @@
 v3.11 (November 2018)
+ - Added comments, subscriptions and notifications to notes
+ - Added comments, subscriptions and notifications to evidence
  - Fix blockcode characters displaying incorrectly
  - Fix red dot still being displayed on the first visit to the page that
    caused the single unread notification
+ - Upgraded some ruby gems (nokogiri, unicorn, ffi, rubyzip)
+ - Fix wrong 'There are no comments' message
+ - Escape html in comments
+ - Track activities when multiple-creating evidence
+ - Revert validating email format
 
 v3.10 (August 2018)
  - Add comments for issues
