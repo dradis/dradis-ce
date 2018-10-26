@@ -1,5 +1,7 @@
 v3.11 (November 2018)
  - Fix blockcode characters displaying incorrectly
+ - Fix red dot still being displayed on the first visit to the page that
+   caused the single unread notification
 
 v3.10 (August 2018)
  - Add comments for issues
