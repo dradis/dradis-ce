@@ -8,7 +8,7 @@
           <%= link_to edit_project_node_evidence_path(node.project, node, evidence, back_to: :issue), class: 'action-link' do %>
             <i class="fa fa-pencil"></i> Edit
           <% end %>
-          <%= link_to project_node_evidence_path(current_project, node, evidence, back_to: :issue),
+          <%= link_to [current_project, node, evidence],
                 class: 'action-link text-error',
                 data: { confirm: 'Are you sure?' },
                 method: :delete do %>
@@ -36,7 +36,7 @@
                   <%= link_to edit_project_node_evidence_path(node.project, node, instance, back_to: :issue), class: 'action-link' do %>
                     <i class="fa fa-pencil"></i> Edit
                   <% end %>
-                  <%= link_to project_node_evidence_path(current_project, node, instance, back_to: :issue),
+                  <%= link_to [current_project, node, instance],
                         class: 'action-link text-error',
                         data: { confirm: 'Are you sure?' },
                         method: :delete do %>
