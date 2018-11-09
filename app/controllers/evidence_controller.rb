@@ -115,14 +115,13 @@ class EvidenceController < NestedNodeResourceController
       if @evidence.destroy
         track_destroyed(@evidence)
         format.html {
-          path =
-            if params[:back_to] == 'issue'
-              [current_project, @evidence.issue]
-            else
-              [current_project, @node]
-            end
-          redirect_to path,
-            notice: "Successfully deleted evidence for '#{@evidence.issue.title}.'"
+          notice = "Successfully deleted evidence for '#{@evidence.issue.title}.'"
+          fallback_location = [current_project, @node]
+          if request.headers['Referer'] == project_node_evidence_url(current_project, @node, @evidence)
+            redirect_to fallback_location, notice: notice
+          else
+            redirect_back fallback_location: fallback_location, notice: notice
+          end
         }
         format.js
       else
