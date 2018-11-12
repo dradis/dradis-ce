@@ -20,7 +20,7 @@
 
 
 <div class="tab-content">
-  <% cache ['evidence-evidence-tab', @evidence, @evidence.comments, @evidence.subscriptions, current_user] do %>
+  <% cache ['evidence-evidence-tab', @evidence, @evidence.comments, @evidence.subscriptions, session.id] do %>
     <div class="tab-pane active" id="evidence-tab">
       <div class="inner note-text-inner">
         <h3>
