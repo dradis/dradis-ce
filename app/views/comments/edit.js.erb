@@ -1,0 +1,4 @@
+<% if can? :update, @comment %>
+  $('#<%= dom_id(@comment) %> .content').hide();
+  $('#<%= dom_id(@comment) %> .body').append("<%= j render 'form' %>");
+<% end %>

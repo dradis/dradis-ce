@@ -1,18 +1,12 @@
 document.addEventListener "turbolinks:load", ->
 
-  # hide/show comment editable textarea
-  $("[data-toggle-comment]").click ->
+  # hide comment editable textarea when clicking cancel
+  $('.comment').on('click', "[data-behavior~=cancel-comment]", ->
     element = $(this)
     comment = element.closest(".comment")
-    content = comment.find(".content")
-    update  = comment.find(".edit_comment")
-    value   = element.data('toggle-comment')
-    if value == "on"
-      content.hide()
-      update.show()
-    else if value == "off"
-      content.show()
-      update.hide()
+    comment.find(".content").show()
+    comment.find("form").hide()
+  )
 
   if $('[data-behavior~=mentionable]').length
     # initialize mentions (https://github.com/zurb/tribute)
