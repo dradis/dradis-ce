@@ -39,8 +39,20 @@ class Note < ApplicationRecord
   has_many :activities, as: :trackable
 
   delegate :project, :project=, to: :node
-  # -- Callbacks ------------------------------------------------------------
 
+  # -- Callbacks ------------------------------------------------------------
+  # `has_many :comments, dependent: :destroy` and
+  # `has_many :subscriptions, dependent: :destroy`
+  # are not working properly for `Issue`, because we're not using STI.
+  # Also, we put the callback in the parent `Note` model, so when we detroy
+  # a project (a project `has_many :notes` but not `has_many :issues`), and the
+  # destroyed objects are loaded as `Note`, we make sure its comments/subscriptions
+  # are destroyed if the record really is an `Issue`
+  # FIXME - ISSUE/NOTE INHERITANCE
+  after_destroy do
+    Comment.where(commentable_type: 'Issue', commentable_id: id).destroy_all
+    Subscription.where(subscribable_type: 'Issue', subscribable_id: id).destroy_all
+  end
 
   # -- Validations ----------------------------------------------------------
   validates :category, presence: true
