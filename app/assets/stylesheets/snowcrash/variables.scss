@@ -28,3 +28,14 @@ $secondarySidebarWidth: 25%;
        font-url('OpenSans-Regular.ttf') format('truetype'),
        url(font-path('OpenSans-Regular.svg') + '#open_sans') format('svg');
 }
+
+@font-face {
+  font-family: 'OpenSans';
+  src: font-url('OpenSans-Bold.eot');
+  src: url(font-path('OpenSans-Bold.eot') + '?#iefix') format('embedded-opentype'),
+       font-url('OpenSans-Bold.woff') format('woff'),
+       font-url('OpenSans-Bold.ttf') format('truetype'),
+       url(font-path('OpenSans-Bold.svg') + '#open_sans') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
