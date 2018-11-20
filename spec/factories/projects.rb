@@ -3,7 +3,7 @@ FactoryBot.define do
     skip_create
 
     transient do
-      id 1
+      id { 1 }
     end
   end
 end
