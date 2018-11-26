@@ -67,7 +67,7 @@
     #   - @nodes_for_add_evidence - to make sure the Add Evidence form is
     #                               refreshed when the list of node changes.
     # %>
-  <% cache ['issue-evidence-tab', @issue, @issue.evidence, @nodes_for_add_evidence] do %>
+  <% cache ['issue-evidence-tab', @issue, @issue.evidence, @nodes_for_add_evidence, session.id] do %>
     <div class="tab-pane" id="evidence-tab">
       <div class="inner">
         <%= render partial: 'evidence' %>
