@@ -1,6 +1,7 @@
 v3.12 (XXX)
  - Fixed nodes sidebar header margin
  - Added bold font to improve bold text visibility
+ - Added revision history user for API actions
 
 v3.11 (November 2018)
  - Added comments, subscriptions and notifications to notes
