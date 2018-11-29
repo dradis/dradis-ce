@@ -15,7 +15,7 @@ chdir APP_ROOT do
   # Add necessary setup steps to this file.
 
   puts "\n== Enabling default add-ons =="
-  unless File.exist?('Gemfile.plugins')
+  unless File.exist?('Gemfile.plugins') || File.exist?('lib/dradis/pro.rb')
     cp 'Gemfile.plugins.template', 'Gemfile.plugins'
   end
 
