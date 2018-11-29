@@ -5,11 +5,7 @@
     <div class="comment-list">
       <%= render(commentable.comments.includes(:user)) if commentable.comments.any? %>
 
-      <div data-notice="no-comments" class="comment"
-        <% if commentable.comments.any? %>
-          style="display: none;" <%# may be un-hidden later by JS %>
-        <% end %>
-      >
+      <div data-notice="no-comments" class="comment <% if commentable.comments.any? %>hide<% end %>">
         There have been no comments yet.
       </div>
     </div>
