@@ -57,15 +57,6 @@ class Issue < Note
     self.category = Category.issue unless self.category
   end
 
-  # `dependent: :destroy` doesn't work as normal here, because we're not
-  # using proper single-table inheritance.
-  #
-  # FIXME - ISSUE/NOTE INHERITANCE
-  after_destroy do
-    Comment.where(commentable_type: 'Issue', commentable_id: id).destroy_all
-    Subscription.where(subscribable_type: 'Issue', subscribable_id: id).destroy_all
-  end
-
   # -- Validations ----------------------------------------------------------
 
 

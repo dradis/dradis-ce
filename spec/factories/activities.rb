@@ -1,15 +1,15 @@
 FactoryBot.define do
   factory :activity, aliases: [:create_activity] do
-    action 'create'
+    action { 'create' }
     sequence(:user) { |n| "rspec-user-#{n}" }
     trackable { |activity| activity.association :node }
 
     factory :update_activity do
-      action 'update'
+      action { 'update' }
     end
 
     factory :delete_activity do
-      action 'destroy'
+      action { 'destroy' }
     end
   end
 end
