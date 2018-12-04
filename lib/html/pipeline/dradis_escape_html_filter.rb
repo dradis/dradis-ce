@@ -21,7 +21,7 @@ module HTML
       def call
         text = ERB::Util.html_escape(@text)
 
-        # Match the text between bc. and bc.. following the textile rules
+        # Match the text under bc./bc.. and links, following the textile rules
         regex = Regexp.union(
           /(?<=bc. )(.*?)(?=(\r\n|\n){2})/m,
           /(?<=bc.. )(.*?)(?=(bc\.|bc\.\.|p\.|\z))/m,
