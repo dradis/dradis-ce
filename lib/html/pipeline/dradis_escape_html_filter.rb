@@ -23,14 +23,14 @@ module HTML
 
         # Match the text under bc./bc.. and links, following the textile rules
         regex = Regexp.union(
-          /(?<=bc. )(.*?)(?=(\r\n|\n){2})/m,
-          /(?<=bc.. )(.*?)(?=(bc\.|bc\.\.|p\.|\z))/m,
+          /(?<=bc\. )(.*?)(?=(\r\n|\n){2})/m,
+          /(?<=bc\.\. )(.*?)(?=(bc\.|bc\.\.|p\.|\z))/m,
           /&quot;.*&quot;:(?:#{PROTOCOLS.join('|')})\:\/\/.+/
         )
 
         # Un-escape the matched strings
-        text.gsub(regex) do |bc|
-          CGI::unescapeHTML(bc)
+        text.gsub(regex) do |matched|
+          CGI::unescapeHTML(matched)
         end
       end
     end
