@@ -1,6 +1,7 @@
 # This controller exposes the REST operations required to manage the Note
 # resource.
 class NotesController < NestedNodeResourceController
+  include Commented
   include ConflictResolver
   include Mentioned
   include MultipleDestroy
@@ -73,13 +74,14 @@ class NotesController < NestedNodeResourceController
   # Once a valid @node is set by the previous filter we look for the Note we
   # are going to be working with based on the :id passed by the user.
   def find_or_initialize_note
-    if params[:id]
-      @note = @node.notes.find(params[:id])
-    elsif params[:note]
-      @note = @node.notes.new(note_params)
-    else
-      @note = @node.notes.new
-    end
+    @note ||=
+      if params[:id]
+        @node.notes.find(params[:id])
+      elsif params[:note]
+        @node.notes.new(note_params)
+      else
+        @node.notes.new
+      end
   end
 
   def note_params

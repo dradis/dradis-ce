@@ -1,5 +1,6 @@
 class IssuesController < AuthenticatedController
   include ActivityTracking
+  include Commented
   include ContentFromTemplate
   include ConflictResolver
   include Mentioned
@@ -129,15 +130,16 @@ class IssuesController < AuthenticatedController
   # Once a valid @issuelib is set by the previous filter we look for the Issue we
   # are going to be working with based on the :id passed by the user.
   def find_or_initialize_issue
-    if params[:id]
-      @issue = Issue.find(params[:id])
-    elsif params[:issue]
-      @issue = Issue.new(issue_params.except(:tag_list)) do |i|
-        i.node = @issuelib
+    @issue ||=
+      if params[:id]
+        @issue = Issue.find(params[:id])
+      elsif params[:issue]
+        @issue = Issue.new(issue_params.except(:tag_list)) do |i|
+          i.node = @issuelib
+        end
+      else
+        @issue = Issue.new(node: @issuelib)
       end
-    else
-      @issue = Issue.new(node: @issuelib)
-    end
   end
 
   # Load all the colour tags in the project (those that start with !). If none

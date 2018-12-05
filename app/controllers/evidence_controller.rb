@@ -1,4 +1,5 @@
 class EvidenceController < NestedNodeResourceController
+  include Commented
   include ConflictResolver
   include Mentioned
   include MultipleDestroy
@@ -134,15 +135,16 @@ class EvidenceController < NestedNodeResourceController
   # Look for the Evidence we are going to be working with based on the :id
   # passed by the user.
   def find_or_initialize_evidence
-    if params[:id]
-      @evidence = @node.evidence.includes(:issue, issue: [:tags]).find(params[:id])
-    elsif params[:evidence]
-      @evidence = Evidence.new(evidence_params) do |e|
-        e.node = @node
+    @evidence ||=
+      if params[:id]
+        @node.evidence.includes(:issue, issue: [:tags]).find(params[:id])
+      elsif params[:evidence]
+        Evidence.new(evidence_params) do |e|
+          e.node = @node
+        end
+      else
+        Evidence.new(node: @node)
       end
-    else
-      @evidence = Evidence.new(node: @node)
-    end
   end
 
   # If the user selects "Add new issue" in the Evidence editor, we create an empty skeleton
