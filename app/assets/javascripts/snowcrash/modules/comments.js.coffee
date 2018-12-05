@@ -27,9 +27,10 @@ document.addEventListener "turbolinks:load", ->
     )
     tribute.attach(document.querySelectorAll('[data-behavior~=mentionable]'));
 
-  if $('[data-behavior~=comment-feed]').length
-    current_user_comments = $('[data-behavior~=comment-feed]').data('current-user-comments')
-    for comment_id in current_user_comments
-      comment = $("#comment_#{comment_id}")
-      if comment.length
+  comments = $('[data-behavior~=comment-feed] [data-author]')
+  if comments.length
+    current_user = $('meta[name=current-user-id]').attr('content')
+    for comment in comments
+      comment = $(comment)
+      if `current_user == comment.data('author')`
         comment.find('.actions').addClass('current_user')

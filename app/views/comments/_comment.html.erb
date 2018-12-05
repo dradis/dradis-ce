@@ -1,4 +1,4 @@
-<%= div_for comment do %>
+<%= div_for comment, data: { author: comment.user_id } do %>
   <div class="body">
     <%= avatar_image(comment.user, size: 30) %>
 
