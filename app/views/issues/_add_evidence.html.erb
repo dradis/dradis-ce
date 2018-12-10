@@ -4,7 +4,8 @@
     url: project_create_multiple_evidence_path(current_project),
     html: { id: 'add-evidences' }
   ) do |f| %>
-    <% cache [@issue, @nodes_for_add_evidence, NoteTemplate.all] do %>
+    <% note_templates = NoteTemplate.all %>
+    <% cache [@issue, @nodes_for_add_evidence, note_templates: note_templates ] do %>
       <div class="form-inputs">
         <%= f.hidden_field :issue_id, value: @issue.id %>
         <%= f.hidden_field :node_id %>
@@ -13,7 +14,7 @@
           <div class="span4">
             <%= f.label :new_evidence_content %>
             <%= f.collection_select :content,
-             NoteTemplate.all,
+             note_templates,
              :content,
              :name,
              include_blank: 'Empty (no template)'
