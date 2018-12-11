@@ -33,7 +33,7 @@
               <h3>
                 Instance #<%= i+1 %> for <%= link_to node.label, project_node_path(node.project, node) %> -
                 <span class="actions">
-                  <%= link_to edit_project_node_evidence_path(node.project, node, instance, back_to: :issue), class: 'action-link' do %>
+                  <%= link_to edit_project_node_evidence_path(node.project, node, instance), class: 'action-link' do %>
                     <i class="fa fa-pencil"></i> Edit
                   <% end %>
                   <%= link_to [current_project, node, instance],
