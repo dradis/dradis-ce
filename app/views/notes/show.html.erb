@@ -11,7 +11,7 @@
 
 
 <div class="tab-content">
-  <% cache ['note-information-tab', @note, @note.comments, @note.subscriptions, current_user] do %>
+  <% cache ['note-information-tab', @note, @note.comments, @note.subscriptions, session.id] do %>
     <div class="tab-pane active" id="info-tab">
       <div id="<%= dom_id(@note) %>" class="inner note-text-inner">
         <h3>Content for this note -
