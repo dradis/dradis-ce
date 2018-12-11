@@ -13,11 +13,6 @@ module HTML
     #
     # This filter does not write any additional information to the context hash.
     class DradisEscapeHTMLFilter < TextFilter
-      PROTOCOLS = %w{
-        ed2k ftp http https irc mailto news gopher nntp telnet webcal xmpp
-        callto feed svn urn aim rsync tag ssh sftp rtsp afs file
-      }
-
       def call
         text = ERB::Util.html_escape(@text)
 
@@ -25,7 +20,7 @@ module HTML
         regex = Regexp.union(
           /(?<=bc\. )(.*?)(?=(\r\n|\n){2})/m,
           /(?<=bc\.\. )(.*?)(?=(bc\.|bc\.\.|p\.|\z))/m,
-          /&quot;.*&quot;:(?:#{PROTOCOLS.join('|')})\:\/\/.+/
+          /&quot;(.*?)&quot;:(?:http|https)\:\/\/.+/
         )
 
         # Un-escape the matched strings
