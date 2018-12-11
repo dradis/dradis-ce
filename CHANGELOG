@@ -1,3 +1,6 @@
+v3.12 (XXX)
+ - Fix redirection destinations after edit/delete evidence
+
 v3.11 (November 2018)
  - Added comments, subscriptions and notifications to notes
  - Added comments, subscriptions and notifications to evidence
