@@ -116,6 +116,12 @@ class EvidenceController < NestedNodeResourceController
         track_destroyed(@evidence)
         format.html {
           notice = "Successfully deleted evidence for '#{@evidence.issue.title}.'"
+          # Evidence can be deleted from 3 places:
+          # 1. from the issue evidence tab
+          # 2. from the node evidence tab
+          # 3. from the evidence show page itself (under node)
+          # When using redirect_back in case 3, we find an evidence not found error,
+          # since the evidence does not exist anymore. That's why we check the 'Referer' here:
           if request.headers['Referer'] == project_node_evidence_url(current_project, @node, @evidence)
             redirect_to project_node_path(current_project, @node), notice: notice
           else
