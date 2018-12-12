@@ -74,14 +74,13 @@ class NotesController < NestedNodeResourceController
   # Once a valid @node is set by the previous filter we look for the Note we
   # are going to be working with based on the :id passed by the user.
   def find_or_initialize_note
-    @note ||=
-      if params[:id]
-        @node.notes.find(params[:id])
-      elsif params[:note]
-        @node.notes.new(note_params)
-      else
-        @node.notes.new
-      end
+    if params[:id]
+      @node.notes.find(params[:id])
+    elsif params[:note]
+      @node.notes.new(note_params)
+    else
+      @node.notes.new
+    end
   end
 
   def note_params

@@ -2,16 +2,14 @@ module Commented
   extend ActiveSupport::Concern
 
   included do
-    before_action :set_comments, only: :show
+    helper_method :commentable, :comments
   end
 
-  protected
+  def commentable
+    instance_variable_get("@#{controller_name.singularize}")
+  end
 
-  def set_comments
-    resource = controller_name.singularize
-    send("find_or_initialize_#{resource}".to_sym)
-    @commentable = instance_variable_get("@#{resource}")
-    @comments = @commentable.comments.includes(:user)
-
+  def comments
+    @comments ||= commentable.comments.includes(:user)
   end
 end
