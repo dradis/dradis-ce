@@ -9,7 +9,7 @@ class @Mentions
           '<img src="' + item.original.avatar_url + '" width="24px" height="24px" > ' + item.string
         noMatchTemplate: ->
           ''
-        values: $('#mentionable-users').data('users')
+        values: JSON.parse($('meta[name=mentionable-users]').attr('content'))
       )
 
     @tribute.attach(elements);
