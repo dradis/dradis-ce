@@ -9,14 +9,4 @@ document.addEventListener "turbolinks:load", ->
   )
 
   if $('[data-behavior~=mentionable]').length
-    # initialize mentions (https://github.com/zurb/tribute)
-    tribute = new Tribute(
-      allowSpaces: ->
-        false
-      menuItemTemplate: (item) ->
-        '<img src="' + item.original.avatar_url + '" width="24px" height="24px" > ' + item.string
-      noMatchTemplate: ->
-        ''
-      values: $('#mentionable-users').data('users')
-    )
-    tribute.attach(document.querySelectorAll('[data-behavior~=mentionable]'));
+    Mentions.init(document.querySelectorAll('[data-behavior~=mentionable]'))
