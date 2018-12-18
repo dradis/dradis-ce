@@ -24,36 +24,39 @@ shared_examples 'a page with a comments feed' do
     end
   end
 
-  describe 'add comment' do
+  describe 'add comment', js: true do
     let(:submit_form) do
-      within 'form#new_comment' do
-        fill_in 'comment_content', with: 'test comment'
+      within 'form[data-behavior=add-comment]' do
+        fill_in 'comment[content]', with: 'test comment'
         click_button 'Add comment'
       end
+
+      expect(page).to have_text 'test comment' # forces waiting for ajax
     end
 
     it 'allows adding a comment' do
       submit_form
-
-      expect(page).to have_text 'test comment'
     end
 
     include_examples 'creates an Activity', :create, Comment
   end
 
-  describe 'update comment' do
+  describe 'update comment', js: true do
     let(:model) { @comments[0] }
     let(:submit_form) do
+      find("div#comment_#{model.id}").hover
       within "div#comment_#{model.id}" do
-        fill_in 'comment_content', with: 'test comment edited'
+        click_link 'Edit'
+        expect(page).to have_css('textarea')
+        fill_in 'comment[content]', with: 'test comment edited'
         click_button 'Update comment'
       end
+
+      expect(page).to have_text 'test comment edited' # forces waiting for ajax
     end
 
     it 'allows updating a comment from the same user' do
       submit_form
-
-      expect(page).to have_text 'test comment edited'
     end
 
     include_examples 'creates an Activity', :update
@@ -67,18 +70,19 @@ shared_examples 'a page with a comments feed' do
     end
   end
 
-  describe 'delete comment' do
+  describe 'delete comment', js: true do
     let(:model) { @comments[0] }
     let (:submit_form) do
+      find("div#comment_#{model.id}").hover
       within "div#comment_#{model.id}" do
         click_link 'Delete'
       end
+
+      expect(page).not_to have_comment(model) # forces waiting for ajax
     end
 
     it 'allows deleting a comment from the same user' do
       submit_form
-
-      expect(page).not_to have_comment(@comments[0])
     end
 
     include_examples 'creates an Activity', :destroy
