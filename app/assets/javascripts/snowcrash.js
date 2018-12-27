@@ -30,6 +30,7 @@
 //= require snowcrash/modules/configurations
 //= require snowcrash/modules/export
 //= require snowcrash/modules/issues
+//= require snowcrash/modules/mentions
 //= require snowcrash/modules/nodes
 //= require snowcrash/modules/notifications
 //= require snowcrash/modules/search

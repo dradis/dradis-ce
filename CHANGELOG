@@ -1,6 +1,9 @@
 v3.12 (XXX)
+ - Using ajax in comments
  - Fixed nodes sidebar header margin
  - Added bold font to improve bold text visibility
+ - Fix links display in Textile fields
+ - Refactoring cache keys in pages with comments
 
 v3.11 (November 2018)
  - Added comments, subscriptions and notifications to notes
