@@ -1,4 +1,8 @@
 $(".comment-list").append("<%= j render(@comment) %>")
+
 $('[data-behavior~=add-comment] textarea').val('')
+
 var submit = $('[data-behavior~=add-comment] input[type=submit]')
 submit.attr('disabled', false).val(submit.data('disable-with'))
+
+$('#<%= dom_id(@comment) %>').find('.actions').addClass('current_user')
