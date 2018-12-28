@@ -14,7 +14,7 @@ class Tag < ApplicationRecord
     !6baed6_low
     !2ca02c_info
   ].freeze
-  
+
   # -- Relationships ----------------------------------------------------------
   has_many :taggings, dependent: :destroy
 
