@@ -7,6 +7,14 @@
 #   * If they start with ! they define their own colour (e.g. !red needs to be coloured red, !4444dd should be a dark shade of blue).
 #     - We require a 6-digit hex code (no 3-digit shortcut)
 class Tag < ApplicationRecord
+  DEFAULT_TAGS = %w[
+    !9467bd_critical
+    !d62728_high
+    !ff7f0e_medium
+    !6baed6_low
+    !2ca02c_info
+  ].freeze
+  
   # -- Relationships ----------------------------------------------------------
   has_many :taggings, dependent: :destroy
 
