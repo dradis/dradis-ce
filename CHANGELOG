@@ -3,6 +3,7 @@ v3.12 (XXX)
  - Fixed nodes sidebar header margin
  - Added bold font to improve bold text visibility
  - Fix links display in Textile fields
+ - Sort attachments in alphabetical ASCII order
 
 v3.11 (November 2018)
  - Added comments, subscriptions and notifications to notes
