@@ -9,10 +9,11 @@
   <% end %>
 </div>
 
+<%= render 'import_box' %>
+
 <%= render 'shared/sidebar_collection',
   name: 'Issues',
   collection: @issues,
   new_path: new_project_issue_path(current_project),
   category_id: nil
 %>
-<%= render 'import_box' %>
