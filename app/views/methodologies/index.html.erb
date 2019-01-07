@@ -18,7 +18,7 @@
           <ul class="dropdown-menu">
             <% if @methodology_templates.any? %>
               <% for methodology in @methodology_templates do %>
-              <li><%= link_to methodology.name, add_project_methodology_path(current_project, methodology) %></li>
+              <li><%= link_to methodology.filename, add_project_methodology_path(current_project, methodology) %></li>
               <% end %>
             <% else %>
             <li class="disabled"><a href="javascript:void(0)">(no methodology templates defined)</a></li>
