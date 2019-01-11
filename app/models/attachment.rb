@@ -94,7 +94,7 @@ class Attachment < File
         node_id = options[:conditions][:node_id].to_s
         raise "Node with ID=#{node_id} does not exist" unless Node.exists?(node_id)
         if (File.exist?( File.join(pwd, node_id)))
-          node_dir = Dir.new(pwd.join(node_id))
+          node_dir = Dir.new(pwd.join(node_id)).sort
           node_dir.each do |attachment|
             next unless (attachment =~ /^(.+)$/) == 0 && !File.directory?(pwd.join(node_id, attachment))
             attachments << Attachment.new(:filename => $1, :node_id => node_id.to_i)
@@ -103,7 +103,7 @@ class Attachment < File
       else
         dir.each do |node|
           next unless node =~ /^\d*$/
-          node_dir = Dir.new(pwd.join(node))
+          node_dir = Dir.new(pwd.join(node)).sort
           node_dir.each do |attachment|
             next unless (attachment =~ /^(.+)$/) == 0 && !File.directory?(pwd.join(node, attachment))
             attachments << Attachment.new(:filename => $1, :node_id => node.to_i)
@@ -128,7 +128,7 @@ class Attachment < File
       raise "You need to supply a node id in the condition parameter" unless options[:conditions] && options[:conditions][:node_id]
       node_id = options[:conditions][:node_id].to_s
       raise "Node with ID=#{node_id} does not exist" unless Node.exists?(node_id)
-      node_dir = Dir.new(pwd.join(node_id))
+      node_dir = Dir.new(pwd.join(node_id)).sort
       node_dir.each do |attachment|
         next unless ((attachment =~ /^(.+)$/) == 0 && $1 == filename)
         attachments << Attachment.new(:filename => $1, :node_id => node_id.to_i)
