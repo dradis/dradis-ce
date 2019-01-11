@@ -1,4 +1,4 @@
-<%= form_for [current_project, Comment.new(commentable: commentable)] do |f| %>
+<%= form_with model: [current_project, Comment.new(commentable: commentable)], data: { behavior: 'add-comment'} do |f| %>
   <%= f.label "Add a comment" %>
   <%= avatar_image(current_user, size: 30) %>
   <%= f.text_area :content,

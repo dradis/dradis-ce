@@ -11,6 +11,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <% if flash.any? %>
+    <% # when flash messages present, disable turbolinks cache to avoid
+       # the message appear and disappear in the next page load %>
+    <meta name="turbolinks-cache-control" content="no-cache">
+  <% end %>
+  <%= render 'comments/mentionable_users' if @mentionable_users %>
 
   <%= favicon_link_tag %>
 
@@ -98,7 +104,6 @@
     </div>
   </div>
   <%= render 'activities/poller' %>
-  <%= render 'comments/mentionable_users' if @mentionable_users %>
   <%= render 'layouts/snowcrash/modals' %>
   <%# Always render the Tour content, the user may click on the link in the help menu. %>
   <%# FIXME: re-enable Tour %>

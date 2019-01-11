@@ -1,14 +1,10 @@
 <%# this is picked up by javascripts/snowcrash/modules/comments.js.coffee %>
 <% cache(@mentionable_users) do %>
-  <%= tag.div id: "mentionable-users",
-              data: {
-                users: @mentionable_users.map do |user|
-                  {
-                    key: h(user.email),
-                    value: user.email,
-                    avatar_url: avatar_url(user)
-                  }
-                end
-              }
-  %>
+  <meta name="mentionable-users" content="<%= @mentionable_users.map do |user|
+    {
+      key: h(user.email),
+      value: user.email,
+      avatar_url: avatar_url(user)
+    }
+  end.to_json %>">
 <% end %>
