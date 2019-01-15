@@ -413,6 +413,52 @@ describe Node do
         expect(node.nested_activities).to match_array(@activities)
       end
     end
+  end
 
+  describe '#merge_with!' do
+    let(:sample_file) { Rails.root.join('public', 'images', 'rails.png') }
+    let(:other_sample_file) { Rails.root.join('public', 'images', 'rails2.png') }
+
+    before do
+      # Create a fully-loaded Node
+      node.save!
+      @attachment = Attachment.new(sample_file, node_id: node.id)
+      @attachment.save
+      @activities = create_list(:activity, 2, trackable: node)
+      issue = create(:issue)
+      @evidence = create(:evidence, node: node, issue: issue)
+      @note = create(:note, node: node)
+
+      # Create another node to merge from
+      @other_node = create(:node)
+      @other_attachment = Attachment.new(other_sample_file, node_id: @other_node.id)
+      @other_attachment.save
+      @other_activities = create_list(:activity, 2, trackable: @other_node)
+      other_issue = create(:issue)
+      @other_evidence = create(:evidence, node: @other_node, issue: other_issue)
+      @other_note = create(:note, node: @other_node)
+
+      node.merge_with!(@other_node)
+    end
+
+    it 'moves notes from the other node' do
+      expect(node.notes).to match_array([@note, @other_note])
+    end
+
+    it 'moves attachments from the other node' do
+      expect(node.attachments.map(&:filename)).to match_array([@attachment.filename, @other_attachment.filename])
+    end
+
+    it 'moves activities from the other node' do
+      expect(node.activities).to match_array(@activities + @other_activities)
+    end
+
+    it 'moves evidence from the other node' do
+      expect(node.evidence).to match_array([@evidence, @other_evidence])
+    end
+
+    it 'destroys the other node' do
+      expect(@other_node.destroyed?).to be true
+    end
   end
 end

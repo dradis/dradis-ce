@@ -86,6 +86,21 @@ class Node < ApplicationRecord
     Types::USER_TYPES.include?(self.type_id)
   end
 
+  # Take all of other_node's associated objects and then delete it
+  def merge_with!(other_node)
+    transaction do
+      other_node.evidence.each { |evidence| evidence.update!(node: self) }
+      other_node.activities.each { |activity| activity.update!(trackable: self) }
+      other_node.notes.each { |note| note.update!(node: self) }
+      other_node.attachments.each { |attachment| attachment.node_id = self.id; attachment.save }
+
+      # Reload the other_node before destroy so it doesn't take any cached associations with it
+      other_node.reload
+      other_node.destroy!
+    end
+    self.reload
+  end
+
   private
   # Whenever a node is deleted all the associated attachments have to be
   # deleted too
