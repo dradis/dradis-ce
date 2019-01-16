@@ -50,7 +50,7 @@ describe "Attachments API" do
     end
 
     around do |example|
-      # assert the atachments folder is empty before and after the spec
+      # assert the attachments folder is empty before and after each spec
       empty_attachments
       example.run
       empty_attachments
