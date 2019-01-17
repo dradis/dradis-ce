@@ -42,18 +42,17 @@ describe "Attachments API" do
   context "as authenticated user" do
     include_context "authenticated API user"
 
-    def empty_attachments
-      node_attachments = Attachment.pwd.join(node.id.to_s)
-      until Dir["#{node_attachments}/*"].count == 0 do
-        FileUtils.rm_rf(Attachment.pwd.join(node.id.to_s))
+    before(:each) do
+      node_attachments_folder = Attachment.pwd.join(node.id.to_s)
+      until Dir["#{node_attachments_folder}/*"].count == 0 do
+        FileUtils.rm_rf(node_attachments_folder)
       end
     end
 
-    around do |example|
-      # assert the attachments folder is empty before and after each spec
-      empty_attachments
-      example.run
-      empty_attachments
+    after(:all) do
+      Dir["#{Attachment.pwd}/*"].each do |folder|
+        FileUtils.rm_rf(folder)
+      end
     end
 
     describe "GET /api/nodes/:node_id/attachments" do
