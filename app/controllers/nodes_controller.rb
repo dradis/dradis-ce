@@ -113,6 +113,16 @@ class NodesController < NestedNodeResourceController
     end
   end
 
+  def merge
+    @other_node = current_project.nodes.find(params[:merge_with_node_id])
+
+    if @node.merge_with!(@other_node)
+      redirect_to project_node_path(current_project, @node), notice: "Successfully merged with #{@other_node.label}"
+    else
+      redirect_to project_node_path(current_project, @node), alert: "Couldn't merge with #{@other_node.label}"
+    end
+  end
+
   private
   def node_params
     params.require(:node).permit(:label, :parent_id, :position, :raw_properties, :type_id)

@@ -61,6 +61,7 @@ Rails.application.routes.draw do
 
       member do
         get :tree
+        post :merge
       end
 
       resources :notes, concerns: :multiple_destroy do
