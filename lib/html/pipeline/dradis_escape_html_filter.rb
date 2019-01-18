@@ -16,10 +16,23 @@ module HTML
       def call
         text = ERB::Util.html_escape(@text)
 
+        # Add another newline between a field header and a bc.. block. We're
+        # doing this for two reasons:
+        # 1. To better handle valid bc.. blocks. Originally, bc.. blocks are
+        #    only valid if the previous line is empty. The fieldable filter
+        #    cheats the validity by ignoring newlines after the field header.
+        # 2. The regex does not support a variable-length lookbehind. Simply
+        #    put, the regex: (?<=\#\[.*\]\#\nbc\.\.) is not valid.
+        field_regex = /(\#\[.+\]\#)(?:\r\n|\n)(bc\.\.)/
+        text.gsub!(field_regex) do |match|
+          match.sub(/(\r\n|\n)/, "\n\n")
+        end
+
+
         # Match the text under bc./bc.. and links, following the textile rules
         regex = Regexp.union(
           /(?<=bc\. )(.*?)(?=(\r\n|\n){2})/m,
-          /(?<=bc\.\. )(.*?)(?=(bc\.|bc\.\.|p\.|\z))/m,
+          /(?<=\n\nbc\.\. )(.*?)(?=(bc\.|bc\.\.|p\.|\z))/m,
           /&quot;(.*?)&quot;:(?:http|https)\:\/\/.+/
         )
 
