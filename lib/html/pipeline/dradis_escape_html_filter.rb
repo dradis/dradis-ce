@@ -32,7 +32,7 @@ module HTML
         # Match the text under bc./bc.. and links, following the textile rules
         regex = Regexp.union(
           /(?<=bc\. )(.*?)(?=(\r\n|\n){2})/m,
-          /(?<=\n\nbc\.\. )(.*?)(?=(bc\.|bc\.\.|p\.|\z))/m,
+          /(?<=\n\nbc\.\. |\Abc\.\.)(.*?)(?=(bc\.|bc\.\.|p\.|\z))/m,
           /&quot;(.*?)&quot;:(?:http|https)\:\/\/.+/
         )
 
