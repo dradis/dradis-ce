@@ -1,5 +1,5 @@
 <h3>Comments <span class="badge" id="comment-count"><%= commentable.comments.count %></span></h3>
-<div class="comment-feed">
+<div class="comment-feed" data-behavior="comment-feed">
   <div class="comment-list">
     <%= render(commentable.comments.includes(:user)) if commentable.comments.any? %>
 

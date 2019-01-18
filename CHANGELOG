@@ -1,6 +1,11 @@
 v3.12 (XXX)
+ - Using ajax in comments
  - Fixed nodes sidebar header margin
  - Added bold font to improve bold text visibility
+ - Fix links display in Textile fields
+ - Disable turbolinks cache when displaying flash messages
+ - Sort attachments in alphabetical ASCII order
+ - Fix methodology checklist edit error
  - Added revision history user for API actions
 
 v3.11 (November 2018)

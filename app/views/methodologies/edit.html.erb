@@ -2,7 +2,7 @@
 
 <div class="row-fluid">
   <div class="span6">
-    <%= simple_form_for [current_project, @methodology], { url: project_methodology_path(current_project, @methodology), method: :put, html: { class: 'form-vertical' } } do |f| %>
+    <%= simple_form_for [current_project, @methodology], { url: project_methodology_path(project_id: current_project.id, methodology_id: @methodology.id), method: :put, html: { class: 'form-vertical' } } do |f| %>
       <%= f.error_notification %>
 
       <%= f.input :content, as: :text, input_html: { data: { preview: preview_project_methodologies_path(current_project) }, rows: 30, style: 'width:100%' } %>
@@ -22,7 +22,7 @@
     <div class="inner">
       <h2 id="preview_name"><%= @methodology.name %></h2>
       <div id="preview_content" class="well">
-        <%= parse_project_methodology_content(current_project, @methodology) %>
+        <%= parse_methodology_content(@methodology) %>
       </div>
     </div>
   </div>
