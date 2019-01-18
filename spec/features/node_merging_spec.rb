@@ -16,13 +16,40 @@ describe "merging a node", js: true do
     click_link "Merge"
   end
 
-  example "merging with another node" do
-    within_merge_node_modal do
-      click_link @other_node.label
-      click_button "Merge"
+  example "Clicking merge opens the modal" do
+    expect(page).to have_selector('#modal_merge_node', visible: true)
+  end
+
+  describe "within the merge modal" do
+    it "starts with Merge button disabled" do
+      expect(page).to have_button('Merge', disabled: true)
     end
 
-    expect(current_path).to eq project_node_path(current_project, @node)
+    it "selecting a node makes the Merge button enabled" do
+      within_merge_node_modal do
+        click_link @other_node.label
+      end
+
+      expect(page).to have_button('Merge', disabled: false)
+    end
+
+    it "selecting a node fills in the current selection text" do
+      within_merge_node_modal do
+        click_link @other_node.label
+      end
+
+      expect(find('#current-selection')).to have_content(@other_node.label)
+    end
+
+    it "clicking Merge button performs a merge" do
+      within_merge_node_modal do
+        click_link @other_node.label
+        click_button "Merge"
+      end
+
+      expect(current_path).to eq project_node_path(current_project, @node)
+      expect(page).to have_content("Successfully merged with #{@other_node.label}")
+    end
   end
 
   def within_merge_node_modal
