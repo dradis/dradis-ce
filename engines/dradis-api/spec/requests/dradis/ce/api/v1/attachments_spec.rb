@@ -42,11 +42,12 @@ describe "Attachments API" do
   context "as authenticated user" do
     include_context "authenticated API user"
 
-    after do
-      node_attachments = Attachment.pwd.join(node.id.to_s)
-      until Dir["#{node_attachments}/*"].count == 0 do
-        FileUtils.rm_rf(Attachment.pwd.join(node.id.to_s))
-      end
+    before(:each) do
+      FileUtils.rm_rf Dir[Attachment.pwd.join('*')] until Dir[Attachment.pwd.join('*')].count == 0
+    end
+
+    after(:all) do
+      FileUtils.rm_rf Dir[Attachment.pwd.join('*')]
     end
 
     describe "GET /api/nodes/:node_id/attachments" do
