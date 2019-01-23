@@ -43,16 +43,11 @@ describe "Attachments API" do
     include_context "authenticated API user"
 
     before(:each) do
-      node_attachments_folder = Attachment.pwd.join(node.id.to_s)
-      until Dir["#{node_attachments_folder}/*"].count == 0 do
-        FileUtils.rm_rf(node_attachments_folder)
-      end
+      FileUtils.rm_rf Dir[Attachment.pwd.join('*')] until Dir[Attachment.pwd.join('*')].count == 0
     end
 
     after(:all) do
-      Dir["#{Attachment.pwd}/*"].each do |folder|
-        FileUtils.rm_rf(folder)
-      end
+      FileUtils.rm_rf Dir[Attachment.pwd.join('*')]
     end
 
     describe "GET /api/nodes/:node_id/attachments" do
