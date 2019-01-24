@@ -29,6 +29,7 @@ shared_examples "recover deleted item" do |item_type|
           rr_path = recover_project_revision_path(current_project, model.versions.last)
           find(:xpath, "//a[@href='#{rr_path}']").click
         end
+        expect(page).to have_content "#{model.class.name.humanize} recovered"
       end.to have_enqueued_job(ActivityTrackingJob).with(
         action: 'recover',
         project_id: current_project.id,
@@ -37,7 +38,6 @@ shared_examples "recover deleted item" do |item_type|
         user_id: @logged_in_as.id
       )
 
-      expect(page).to have_content "#{model.class.name.humanize} recovered"
       within '#trash' do
         expect(page).not_to have_content item_type.to_s
       end
