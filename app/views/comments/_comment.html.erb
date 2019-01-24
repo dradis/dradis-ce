@@ -1,0 +1,36 @@
+<%= div_for comment do %>
+  <div class="body">
+    <%= avatar_image(comment.user, size: 30) %>
+
+    <div>
+      <% if comment.user %>
+        <strong><%= comment.user.email %></strong>
+      <% else %>
+        a user who has since been deleted
+      <% end %>
+
+      <span class="time">
+        <%= link_to local_time_ago(comment.created_at), "##{dom_id(comment)}", data: { turbolinks: false } %>
+      </span>
+
+      <% if can? :update, comment %>
+        <div class="actions">
+          <%= link_to edit_project_comment_path(current_project, comment), remote: true do %>
+            <i class="fa fa-pencil"></i> Edit
+          <% end %>
+          <%= link_to [current_project, comment],
+                      method: :delete,
+                      data: { confirm: 'Are you sure?' },
+                      remote: true,
+                      class: 'text-error' do %>
+            <i class="fa fa-trash"></i> Delete
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="content">
+      <%= simple_format(h(comment.content)) %>
+    </div>
+  </div>
+<% end %>

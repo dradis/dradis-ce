@@ -2,9 +2,7 @@
 
 require_relative 'config/environment'
 
-map ENV['RAILS_RELATIVE_URL_ROOT'] || '/' do
-  run Rails.application
-end
+run Rails.application
 
 # Mount the Resque web interface in development. In production is already
 # available through the CIC.

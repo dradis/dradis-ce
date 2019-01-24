@@ -1,6 +1,8 @@
 # A controller for pages related to a Node and its notes and evidence.
-class NestedNodeResourceController < ProjectScopedController
+class NestedNodeResourceController < AuthenticatedController
+  include ActivityTracking
   include ContentFromTemplate
+  include ProjectScoped
 
   before_action :find_or_initialize_node
 
@@ -13,16 +15,16 @@ class NestedNodeResourceController < ProjectScopedController
     # child controllers.
     if params[:controller] == 'nodes'
       if params[:id]
-        @node = Node.includes(
+        @node = current_project.nodes.includes(
           :notes, :evidence, evidence: [:issue, { issue: :tags }]
         ).find(params[:id])
       else
         @node = Node.new(node_params)
       end
     else
-      @node = Node.includes(
+      @node = current_project.nodes.includes(
         :notes, :evidence, evidence: [:issue, { issue: :tags }]
-      ).find_by_id(params[:node_id])
+      ).find(params[:node_id])
     end
   end
 end

@@ -8,6 +8,7 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 require 'capybara/rspec'
+require 'paper_trail/frameworks/rspec'
 require 'shoulda/matchers'
 
 
@@ -39,6 +40,7 @@ Capybara.register_driver :chrome do |app|
     options: Selenium::WebDriver::Chrome::Options.new(args: options)
 end
 
+Capybara.server = :puma, { Silent: true }
 Capybara.javascript_driver = :chrome
 
 RSpec.configure do |config|
@@ -76,14 +78,14 @@ RSpec.configure do |config|
   # config.include SupportHelper,    type: :controller
   # config.include SupportHelper,    type: :feature
   # config.include SupportHelper,    type: :request
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   # config.include WaitForAjax, type: :feature
 
   config.example_status_persistence_file_path = Rails.root.join("spec", ".examples.txt")
 
   config.before(:suite) do
     begin
-      FactoryGirl.lint
+      FactoryBot.lint
     ensure
       DatabaseCleaner.clean_with(:truncation)
     end
@@ -129,3 +131,5 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+ActiveJob::Base.queue_adapter = :test

@@ -9,8 +9,8 @@
         <h2 style="color: <%= tag.color %>"><%= tag.display_name %></h2>
         <ul class="issue-list drop-target" data-tag="<%= tag.name %>">
           <% for issue in @issues_by_tag[tag.name] %>
-            <%= content_tag_for :li, issue, data: {url: issue_path(issue, format: :json)} do %>
-              <%= link_to issue.title, issue %>
+            <%= content_tag_for :li, issue, data: { url: project_issue_path(current_project, issue, format: :json) } do %>
+              <%= link_to issue.title, [current_project, issue] %>
             <% end %>
           <% end %>
         </ul>
@@ -22,8 +22,8 @@
       <h2>Unassigned</h2>
       <ul class="issue-list drop-target">
           <% for issue in @issues_by_tag[:unassigned] %>
-            <%= content_tag_for :li, issue, data: {url: issue_path(issue, format: :json)} do %>
-              <%= link_to issue.title, issue %>
+            <%= content_tag_for :li, issue, data: { url: project_issue_path(current_project, issue, format: :json) } do %>
+              <%= link_to issue.title, [current_project, issue] %>
             <% end %>
           <% end %>
       </ul>
@@ -32,9 +32,9 @@
   <% else %>
     <p class="no-content">There are no issues in this project yet.</p>
     <div>
-      <%= link_to issues_path(), class: 'btn btn-large btn-primary' do %>
+      <%= link_to project_issues_path(current_project), class: 'btn btn-large btn-primary' do %>
         <i class="fa fa-plus"></i> Add new issue
-      <% end %> or <%= link_to upload_manager_path() do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %>
+      <% end %> or <%= link_to project_upload_manager_path(current_project) do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %>
     </div>
   <% end %>
 </section>

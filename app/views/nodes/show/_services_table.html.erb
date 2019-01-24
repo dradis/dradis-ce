@@ -1,0 +1,18 @@
+<div class="content-textile">
+  <table>
+    <thead>
+      <% NodeProperties::SERVICE_KEYS.each do |key| %>
+        <th><%= key.to_s.titleize %></th>
+      <% end %>
+    </thead>
+    <tbody>
+      <% services.each do |service| %>
+        <tr>
+          <% NodeProperties::SERVICE_KEYS.each do |key| %>
+            <td><%= service[key] %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

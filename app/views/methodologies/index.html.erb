@@ -18,7 +18,7 @@
           <ul class="dropdown-menu">
             <% if @methodology_templates.any? %>
               <% for methodology in @methodology_templates do %>
-              <li><%= link_to methodology.name, add_methodology_path(methodology) %></li>
+              <li><%= link_to methodology.name, add_project_methodology_path(current_project, methodology) %></li>
               <% end %>
             <% else %>
             <li class="disabled"><a href="javascript:void(0)">(no methodology templates defined)</a></li>
@@ -35,12 +35,12 @@
 
       <div class="tab-content">
         <% for methodology in @methodologies do %>
-        <%= content_tag :div, class: 'tab-pane', id: methodology.to_html_anchor, data: { url: update_task_methodology_path(methodology) } do %>
+        <%= content_tag :div, class: 'tab-pane', id: methodology.to_html_anchor, data: { url: update_task_project_methodology_path(current_project, methodology) } do %>
           <div class="pull-right">
-            <%= link_to edit_methodology_path(methodology) do %>
+            <%= link_to edit_project_methodology_path(current_project, methodology) do %>
               <i class="fa fa-pencil"></i> Edit
             <% end %>
-            <%= link_to methodology_path(methodology),
+            <%= link_to project_methodology_path(current_project, methodology),
                   class: 'text-error',
                   method: :delete,
                   data: { confirm: "Are you sure you want to delete the '#{methodology.name}' methodology?" } do %>

@@ -1,0 +1,16 @@
+<h3>Comments <span class="badge" id="comment-count"><%= commentable.comments.count %></span></h3>
+<div class="comment-feed" data-behavior="comment-feed">
+  <div class="comment-list">
+    <%= render(commentable.comments.includes(:user)) if commentable.comments.any? %>
+
+    <div data-notice="no-comments" class="comment"
+      <% if commentable.comments.any? %>
+        style="display: none;" <%# may be un-hidden later by JS %>
+      <% end %>
+    >
+      There have been no comments yet.
+    </div>
+  </div>
+
+  <%= render 'comments/new', commentable: commentable %>
+</div>

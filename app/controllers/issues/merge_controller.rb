@@ -9,7 +9,7 @@ class Issues::MergeController < IssuesController
     end
 
     if @issues.count <= 1
-      redirect_to issues_url,
+      redirect_to projects_issues_url(current_project),
         alert: 'You need to select at least two issues to merge.'
     end
   end
@@ -37,9 +37,9 @@ class Issues::MergeController < IssuesController
     respond_to do |format|
       format.html {
         if count > 0
-          redirect_to @issue, notice: "#{count} #{'issue'.pluralize(count)} merged into #{@issue.title}."
+          redirect_to [current_project, @issue], notice: "#{count} #{'issue'.pluralize(count)} merged into #{@issue.title}."
         else
-          redirect_to issues_url, alert: "Issues couldn't be merged."
+          redirect_to project_issues_path(current_project), alert: "Issues couldn't be merged."
         end
       }
       format.json

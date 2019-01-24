@@ -1,33 +1,21 @@
-begin
-  require "redcloth"
-rescue LoadError => _
-  raise HTML::Pipeline::MissingDependencyError, "Missing dependency 'RedCloth' for TextileFilter. See README.md for details."
-end
+HTML::Pipeline.require_dependency('redcloth', 'RedCloth')
 
 module HTML
   class Pipeline
     # HTML Filter that converts Textile text into HTML and converts into a
-    # DocumentFragment. This is different from most filters in that it can take a
-    # non-HTML as input. It must be used as the first filter in a pipeline.
-    #
-    # Context options:
-    #   :autolink => false    Disable autolinking URLs
+    # DocumentFragment.
     #
     # This filter does not write any additional information to the context hash.
     #
-    # NOTE This filter is provided for really old comments only. It probably
-    # shouldn't be used for anything new.
+    # NOTE we use this instead of html-pipeline's own TextileFilter because
+    # a) we want to pass the 'no_span_caps' option to RedCloth (otherwise
+    #   things like URLs get messed up, see e.g. the specs).
+    # b) the output needs to be wrapped in a <div> to make the pipeline work
+    #    correctly, we can't add this <div> at an earlier point in the pipeline
+    #    because then RedCloth can't parse the Textile correctly.
     class DradisTextileFilter < TextFilter
-
-      # Convert Textile to HTML and convert into a DocumentFragment. We need to
-      # enclose everything in a root element.
-      #
-      # See:
-      #   https://github.com/jch/html-pipeline#1-why-doesnt-my-pipeline-work-when-theres-no-root-element-in-the-document
       def call
-        '<div>' +
-        RedCloth.new(@text, [:filter_html, :no_span_caps]).to_html +
-        '</div>'
+        "<div>#{RedCloth.new(@text, [:no_span_caps]).to_html}</div>"
       end
     end
   end

@@ -1,10 +1,16 @@
-class IssuesController < ProjectScopedController
+class IssuesController < AuthenticatedController
+  include ActivityTracking
   include ContentFromTemplate
+  include ConflictResolver
+  include Mentioned
+  include MultipleDestroy
+  include NotificationsReader
+  include ProjectScoped
 
   before_action :find_issuelib
-  before_action :find_issues, except: [:destroy, :merging]
+  before_action :find_issues, except: [:destroy]
 
-  before_action :find_or_initialize_issue, except: [:import, :index, :merging]
+  before_action :find_or_initialize_issue, except: [:import, :index]
   before_action :find_or_initialize_tags, except: [:destroy]
 
   def index
@@ -12,13 +18,23 @@ class IssuesController < ProjectScopedController
   end
 
   def show
-    @activities = @issue.activities.latest
+    @activities = @issue.commentable_activities.latest
 
     # We can't use the existing @nodes variable as it only contains root-level
     # nodes, and we need the auto-complete to have the full list.
-    @nodes_for_add_evidence = Node.user_nodes.order(:label)
+    @nodes_for_add_evidence = current_project.nodes.user_nodes.order(:label)
+
+    @affected_nodes = Node.joins(:evidence)
+                        .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')
+                        .where('evidence.issue_id = ?', @issue.id)
+                        .group('nodes.id')
+                        .sort_by { |node, _| node.label }
+
+    @first_node      = @affected_nodes.first
+    @first_evidence  = Evidence.where(node: @first_node, issue: @issue)
 
     load_conflicting_revisions(@issue)
+    @subscription = @issue.subscription_for(user: current_user)
   end
 
   def new
@@ -46,7 +62,7 @@ class IssuesController < ProjectScopedController
         # taggable IDs)
         tag_issue_from_field_content(@issue)
 
-        format.html { redirect_to @issue, notice: 'Issue added.' }
+        format.html { redirect_to [current_project, @issue], notice: 'Issue added.' }
       else
         format.html { render 'new', alert: 'Issue couldn\'t be added.' }
       end
@@ -65,7 +81,7 @@ class IssuesController < ProjectScopedController
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
-        format.html { redirect_to @issue, notice: 'Issue updated' }
+        format.html { redirect_to project_issue_path(current_project, @issue), notice: 'Issue updated' }
       else
         format.html { render 'edit' }
       end
@@ -78,38 +94,11 @@ class IssuesController < ProjectScopedController
     respond_to do |format|
       if @issue.destroy
         track_destroyed(@issue)
-        format.html { redirect_to issues_url, notice: 'Issue deleted.' }
+        format.html { redirect_to project_issues_path(current_project), notice: 'Issue deleted.' }
         format.json
       else
-        format.html { redirect_to issues_url, notice: "Error while deleting issue: #{@issue.errors}" }
+        format.html { redirect_to project_issues_path(current_project), notice: "Error while deleting issue: #{@issue.errors}" }
         format.json
-      end
-    end
-  end
-
-  def multiple_destroy
-    @issues = Issue.where(id: params[:ids])
-
-    # cache these values
-    @count = @issues.count
-    @max_deleted_inline = ::Configuration.max_deleted_inline
-
-    if @count > 0
-      @job_logger = Log.new
-      job_params = {
-        author_email: current_user.email,
-        ids: @issues.map(&:id),
-        klass: 'Issue',
-        uid: @job_logger.uid
-      }
-
-      if @count > @max_deleted_inline
-        @job_logger.write 'Enqueueing multiple delete job to start in the background.'
-        job = MultiDestroyJob.perform_later(job_params)
-        @job_logger.write "Job id is #{job.job_id}."
-      elsif @count > 0
-        @job_logger.write 'Performing multiple delete job inline.'
-        MultiDestroyJob.perform_now(job_params)
       end
     end
   end
@@ -134,7 +123,7 @@ class IssuesController < ProjectScopedController
   end
 
   def find_issuelib
-    @issuelib = Node.issue_library
+    @issuelib = current_project.issue_library
   end
 
   # Once a valid @issuelib is set by the previous filter we look for the Issue we
@@ -154,17 +143,7 @@ class IssuesController < ProjectScopedController
   # Load all the colour tags in the project (those that start with !). If none
   # exist, initialize a set of tags.
   def find_or_initialize_tags
-    @tags = Tag.where('name like ?', '!%')
-    if @tags.empty?
-      # Create a few default tags.
-      @tags = [
-        Tag.create(name: '!9467bd_Critical'),
-        Tag.create(name: '!d62728_High'),
-        Tag.create(name: '!ff7f0e_Medium'),
-        Tag.create(name: '!6baed6_Low'),
-        Tag.create(name: '!2ca02c_Info'),
-      ]
-    end
+    @tags = current_project.tags.where('name like ?', '!%')
   end
 
   def issue_params

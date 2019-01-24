@@ -1,10 +1,14 @@
 require 'rails_helper'
 
 describe Issue do
+  it { should have_many(:activities) }
+  it { should have_many(:comments).dependent(:destroy) }
+  it { should have_many(:evidence).dependent(:destroy) }
 
+  let(:project) { Project.new }
   let(:issue) { Issue.new }
 
-  it "is assigned to the Category.issue category" do
+  it 'is assigned to the Category.issue category' do
     node = create(:node)
     # use a block because we can't mass-assign 'node':
     issue = Issue.new { |i| i.node = node }
@@ -13,8 +17,8 @@ describe Issue do
     expect(issue.category).to eq(Category.issue)
   end
 
-  it "affects many nodes through :evidence" do
-    issue = create(:issue)
+  it 'affects many nodes through :evidence' do
+    issue = create(:issue, node: project.issue_library)
     expect(issue.affected).to be_empty
 
     host = create(:node, label: '10.0.0.1', type_id: Node::Types::HOST)
@@ -25,13 +29,19 @@ describe Issue do
     expect(issue.affected.first).to eq(host)
   end
 
-  it { should have_many(:evidence).dependent(:destroy) }
-  it { should have_many(:activities) }
+  describe 'on create' do
+    let(:user) { create(:user) }
+    let(:subscribable) { build(:issue, author: user.email) }
 
-  describe "on delete" do
+    it_behaves_like 'a subscribable model'
+  end
+
+  describe 'on delete' do
     before do
       @issue = create(:issue, node: create(:node))
       @activities = create_list(:activity, 2, trackable: @issue)
+      @comments = create_list(:comment, 2, commentable: @issue)
+      @subscriptions = create_list(:subscription, 2, subscribable: @issue)
       @issue.destroy
     end
 
@@ -42,19 +52,32 @@ describe Issue do
         activity.reload
         expect(activity.trackable).to be_nil
         expect(activity.trackable_id).to eq @issue.id
-        expect(activity.trackable_type).to eq "Issue"
+        expect(activity.trackable_type).to eq 'Issue'
       end
     end
 
+    it 'deletes associated Comments' do
+      expect(Comment.where(
+        commentable_type: 'Issue',
+        commentable_id: @issue.id).count
+      ).to eq(0)
+    end
+
+    it 'deletes associated Subscriptions' do
+      expect(Subscription.where(
+        subscribable_type: 'Issue',
+        subscribable_id: @issue.id).count
+      ).to eq(0)
+    end
   end
 
-  describe ".merge" do
+  describe '.merge' do
     before do
       @issue1 = create(:evidence).issue
       @issue2 = create(:evidence).issue
     end
 
-    it "merges the issues" do
+    it 'merges the issues' do
       count = @issue1.merge @issue2.id
       @issue1.reload
 
@@ -71,7 +94,7 @@ describe Issue do
     end
 
     it "doesn't merge invalid/unknown ids" do
-      count = @issue1.merge ["a", 33]
+      count = @issue1.merge ['a', 33]
 
       expect(count).to eq 0
       expect(Issue.exists?(@issue1.id)).to be true
@@ -80,19 +103,18 @@ describe Issue do
   end
 
   let(:fields_column) { :text }
-  it_behaves_like "a model that has fields", Issue
+  it_behaves_like 'a model that has fields', Issue
 
-  describe "#set_field" do
+  describe '#set_field' do
     it "sets a field and updates 'body'" do
       issue.text = "#[Title]#\nSomething"
-      issue.set_field("Title", "New title")
-      expect(issue.fields["Title"]).to eq "New title"
+      issue.set_field('Title', 'New title')
+      expect(issue.fields['Title']).to eq 'New title'
       expect(issue.text).to eq "#[Title]#\nNew title"
     end
   end
 
-
-  describe "#activities" do
+  describe '#activities' do
     it "returns the issue's activities" do
       # this requires some hackery, because by default it won't work because
       # Issue and Note don't use proper single-table inheritance :(
@@ -101,7 +123,7 @@ describe Issue do
       activities = create_list(:activity, 2, trackable: issue)
 
       # Sanity check that all trackable types are 'Issue', not 'Note'
-      expect(activities.map(&:trackable_type).uniq).to eq ["Issue"]
+      expect(activities.map(&:trackable_type).uniq).to eq ['Issue']
 
       expect(issue.activities).to be_an(ActiveRecord::Relation)
       expect(issue.activities).to eq activities

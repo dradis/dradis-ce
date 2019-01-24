@@ -10,11 +10,20 @@ describe "note pages" do
     allow(NoteTemplate).to receive(:pwd).and_return(Pathname.new('tmp/templates/notes'))
     FileUtils.mkdir_p(Rails.root.join("tmp","templates","notes"))
     login_to_project_as_user
-    @node    = create(:node)
+    @node = create(:node, project: current_project)
   end
 
   after(:all) do
     FileUtils.rm_rf('tmp/templates')
+  end
+
+  example 'show page with wrong Node ID in URL' do
+    node       = create(:node, project: current_project)
+    note       = create(:note, node: node)
+    wrong_node = create(:node, project: current_project)
+    expect do
+      visit project_node_note_path(current_project, wrong_node, note)
+    end.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   describe "show page" do
@@ -22,10 +31,12 @@ describe "note pages" do
       text = "#[Title]#\nMy note\n\n#[Description]#\nMy description"
       @note = create(:note, node: @node, text: text)
       create_activities
-      visit node_note_path(@node, @note)
+      create_comments
+      visit project_node_note_path(current_project, @node, @note)
     end
 
     let(:create_activities) { nil }
+    let(:create_comments) { nil }
 
     it "shows the note's contents" do
       should have_selector "h4", text: "Title"
@@ -36,6 +47,12 @@ describe "note pages" do
 
     let(:trackable) { @note }
     it_behaves_like "a page with an activity feed"
+
+    let(:commentable) { @note }
+    it_behaves_like 'a page with a comments feed'
+
+    let(:subscribable) { @note }
+    it_behaves_like 'a page with subscribe/unsubscribe links'
 
     describe "clicking 'delete'", js: true do
       let(:submit_form) do
@@ -49,7 +66,7 @@ describe "note pages" do
         id = @note.id
         submit_form
         expect(Note.find_by_id(id)).to be_nil
-        expect(current_path).to eq node_path(@node)
+        expect(current_path).to eq project_node_path(@node.project, @node)
       end
 
       let(:model) { @note }
@@ -64,7 +81,7 @@ describe "note pages" do
   describe "edit page" do
     before do
       @note = create(:note, node: @node, updated_at: 2.seconds.ago)
-      visit edit_node_note_path(@node, @note)
+      visit edit_project_node_note_path(current_project, @node, @note)
     end
 
     let(:submit_form) { click_button "Update Note" }
@@ -91,7 +108,7 @@ describe "note pages" do
 
       it "shows the updated note" do
         submit_form
-        expect(current_path).to eq node_note_path(@node, @note)
+        expect(current_path).to eq project_node_note_path(current_project, @node, @note)
         expect(page).to have_content new_content
       end
 
@@ -130,7 +147,7 @@ describe "note pages" do
     # Create the dummy NoteTemplate:
     before do
       File.write(path, content)
-      visit new_node_note_path(@node, params)
+      visit new_project_node_note_path(current_project, @node, params)
     end
     after { File.delete(path) }
 
@@ -163,7 +180,7 @@ describe "note pages" do
 
         it "shows the newly created note" do
           submit_form
-          expect(current_path).to eq node_note_path(@node, new_note)
+          expect(current_path).to eq project_node_note_path(current_project, @node, new_note)
           expect(page).to have_content "This is a note"
         end
 

@@ -1,4 +1,4 @@
-<%= form_tag main_app.search_path, method: :get, class: 'form-search pull-right hide' do %>
+<%= form_tag main_app.project_search_path(current_project), method: :get, class: 'form-search pull-right hide' do %>
   <div class="input-append">
     <%= search_field_tag :q,  params[:q], placeholder: 'Search here...', class: 'search-query' %>
     <button type="submit" id="search-btn" class="btn"><span class="fa fa-search"></span></button>

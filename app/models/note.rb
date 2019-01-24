@@ -25,8 +25,10 @@
 #
 # This behaviour is extensively used by import/export plugins such as WordExport.
 class Note < ApplicationRecord
+  include Commentable
   include HasFields
   include RevisionTracking
+  include Subscribable
 
   dradis_has_fields_for :text
 
@@ -36,13 +38,26 @@ class Note < ApplicationRecord
   belongs_to :node, touch: true
   has_many :activities, as: :trackable
 
-  # -- Callbacks ------------------------------------------------------------
+  delegate :project, :project=, to: :node
 
+  # -- Callbacks ------------------------------------------------------------
+  # FIXME - ISSUE/NOTE INHERITANCE
+  # `has_many :comments, dependent: :destroy` and
+  # `has_many :subscriptions, dependent: :destroy`
+  # are not working properly for `Issue`, because we're not using STI.
+  # Also, we put the callback in the parent `Note` model, so when we destroy
+  # a project (a project `has_many :notes` but not `has_many :issues`), and the
+  # destroyed objects are loaded as `Note`, we make sure its comments/subscriptions
+  # are destroyed if the record really is an `Issue`
+  after_destroy do
+    Comment.where(commentable_type: 'Issue', commentable_id: id).destroy_all
+    Subscription.where(subscribable_type: 'Issue', subscribable_id: id).destroy_all
+  end
 
   # -- Validations ----------------------------------------------------------
   validates :category, presence: true
   validates :node, presence: true
-  validates :text, length: { maximum: 65535 }
+  validates :text, length: { maximum: DB_MAX_TEXT_LENGTH }
 
 
   # -- Scopes ---------------------------------------------------------------

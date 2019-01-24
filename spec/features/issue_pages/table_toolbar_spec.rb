@@ -8,15 +8,20 @@ describe 'issue table' do
     let(:items) {
       issues = []
       (::Configuration.max_deleted_inline + 1).times do |i|
-        issues << create(:issue, text: "#[Title]#\r\ntest#{i}\r\n\r\n#[Description]#\r\nnone#{i}\r\n")
+        issues << create(
+          :issue,
+          text: "#[Title]#\r\ntest#{i}\r\n\r\n#[Description]#\r\nnone#{i}\r\n",
+          node: current_project.issue_library,
+        )
       end
       issues
     }
 
     before do
       login_to_project_as_user
+      Tag.create!(name: '!6baed6_low')
       @issues = items
-      visit issues_path
+      visit project_issues_path(current_project)
     end
 
     it_behaves_like 'an index table toolbar'

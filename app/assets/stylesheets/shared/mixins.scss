@@ -1,0 +1,13 @@
+@mixin ajax-console {
+  background-color: #000;
+  border-radius: 5px;
+  color: #CCC;
+  margin: 4ex;
+  height: 400px;
+  overflow: scroll;
+  padding: 2ex 1ex;
+
+  .log {
+    margin-bottom: 5px;
+  }
+}

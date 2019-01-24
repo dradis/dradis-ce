@@ -1,1 +1,4 @@
-# No need to pre-seed the DB for now.
+# Create a few default tags.
+Tag::DEFAULT_TAGS.each do |name|
+  Tag.create!(name: name)
+end

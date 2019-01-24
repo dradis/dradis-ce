@@ -2,10 +2,10 @@ require 'rails_helper'
 
 describe "User searches", type: :feature do
   def setup_test_data
-    create(:issue, text: "Issue search")
-    node = create(:node, label: "Node search")
-    create(:note, text: "Note search", node: node)
-    create(:evidence, content: "Evidence search")
+    issue = create(:issue, text: 'Issue search', node: current_project.issue_library)
+    node = create(:node, label: 'Node search', project: current_project)
+    create(:note, text: 'Note search', node: node)
+    create(:evidence, content: 'Evidence search', issue: issue, node: node)
   end
 
   before do
@@ -24,7 +24,7 @@ describe "User searches", type: :feature do
     fill_in "q", with: "test"
     click_on "search-btn"
 
-    expect(page.current_path).to eq search_path
+    expect(page.current_path).to eq project_search_path(current_project)
     expect(page).to have_content "Search results"
   end
 

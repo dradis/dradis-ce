@@ -32,6 +32,7 @@ Dradis is an open-source collaboration framework, tailored to InfoSec teams.
   * [OSVDB](https://dradisframework.com/ce/addons/osvdb.html)
   * [Qualys](https://dradisframework.com/ce/addons/qualys.html)
   * [Retina](https://dradisframework.com/ce/addons/retina.html)
+  * [SAINT](https://dradisframework.com/ce/addons/saint.html)
   * [SureCheck](https://dradisframework.com/ce/addons/surecheck.html)
   * [VulnDB](https://dradisframework.com/ce/addons/vulndb.html)
   * [w3af](https://dradisframework.com/ce/addons/w3af.html)
@@ -94,7 +95,7 @@ In https://dradisframework.com/ce/download.html you will find the latest package
 ## Getting help
 
 * http://dradisframework.org/
-* [Community Forums](http://discuss.dradisframework.org/)
+* [Community Forums](https://discuss.dradisframework.org/)
 * [Slack channel](https://evening-hamlet-4416.herokuapp.com/)
 * IRC: **#dradis** `irc.freenode.org`
 

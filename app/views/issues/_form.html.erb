@@ -1,4 +1,4 @@
-<%= simple_form_for @issue do |f| %>
+<%= simple_form_for [current_project, @issue] do |f| %>
   <%= f.error_notification %>
 
   <%= f.input :text, label: false, input_html: { class: 'textile', data: { preview_url: preview_path, help_url: markup_path } } %>
@@ -11,6 +11,6 @@
 
   <div class="form-actions">
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
-    <%= link_to 'Cancel', @issue.new_record? ? issues_path : @issue, class: 'cancel-link' %>
+    <%= link_to 'Cancel', @issue.new_record? ? project_issues_path(current_project) : [current_project, @issue], class: 'cancel-link' %>
   </div>
 <% end %>

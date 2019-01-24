@@ -7,13 +7,13 @@
 #
 # A convenience list method is provided that will return all the currently
 # loaded plugins of this category.
-class UploadController < ProjectScopedController
+class UploadController < AuthenticatedController
+  include ProjectScoped
 
   # UPGRADE
   # include Plugins::Upload
 
   before_action :find_uploaders
-  before_action :find_uploads_node, only: [:create, :parse]
   before_action :validate_uploader, only: [:create, :parse]
 
   def index
@@ -25,7 +25,7 @@ class UploadController < ProjectScopedController
   def create
     filename = CGI::escape params[:file].original_filename
     # add the file as an attachment
-    @attachment = Attachment.new(filename, node_id: @uploads_node.id)
+    @attachment = Attachment.new(filename, node_id: current_project.plugin_uploads_node.id)
     @attachment << params[:file].read
     @attachment.save
 
@@ -35,7 +35,7 @@ class UploadController < ProjectScopedController
   end
 
   def parse
-    attachment = Attachment.find(params[:file], conditions: { node_id: @uploads_node.id })
+    attachment = Attachment.find(params[:file], conditions: { node_id: current_project.plugin_uploads_node.id })
 
     # Files smaller than 1Mb are processed inlined, others are
     # processed in the background via a Redis worker.
@@ -55,13 +55,8 @@ class UploadController < ProjectScopedController
     head :ok
   end
 
-  def status
-    @logs = Log.where("uid = ? and id > ?", params[:item_id].to_i, params[:after].to_i)
-    @uploading = !(@logs.last.text == 'Worker process completed.') if @logs.any?
-  end
-
-
   private
+
   def job_logger
     @job_logger ||= Log.new(uid: params[:item_id].to_i)
   end
@@ -75,8 +70,10 @@ class UploadController < ProjectScopedController
     # avoid SQLite3::BusyException when using sqlite and
     # activejob async queue adapter
     UploadJob.perform_later(
+      default_user_id: current_user.id,
       file: attachment.fullpath.to_s,
       plugin_name: @uploader.to_s,
+      project_id: current_project.id,
       uid: params[:item_id].to_i
     )
   end
@@ -87,8 +84,10 @@ class UploadController < ProjectScopedController
     job_logger.write('Small attachment detected. Processing in line.')
     begin
       importer = @uploader::Importer.new(
-        logger: job_logger,
-        plugin: @uploader
+        default_user_id: current_user.id,
+        logger:     job_logger,
+        plugin:     @uploader,
+        project_id: current_project.id
       )
 
       importer.import(file: attachment.fullpath)
@@ -115,10 +114,6 @@ class UploadController < ProjectScopedController
                      sort_by(&:name)
   end
 
-  def find_uploads_node
-    @uploads_node = Node.plugin_uploads_node
-  end
-
   # Ensure that the requested :uploader is valid and has been included in the
   # Plugins::Upload mixin
   def validate_uploader
@@ -127,8 +122,7 @@ class UploadController < ProjectScopedController
     if (params.key?(:uploader) && valid_uploaders.include?(params[:uploader]))
       @uploader = params[:uploader].constantize
     else
-      redirect_to upload_manager_path, alert: 'Something fishy is going on...'
+      redirect_to project_upload_manager_path(current_project), alert: 'Something fishy is going on...'
     end
   end
-
 end

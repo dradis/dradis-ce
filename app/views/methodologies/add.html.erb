@@ -1,6 +1,6 @@
 <% content_for :title, 'Add methodology to project' %>
 
-<%= simple_form_for @methodology, html: {class: 'form-horizontal' } do |f| %>
+<%= simple_form_for [current_project, @methodology], html: { class: 'form-horizontal' } do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
@@ -10,6 +10,6 @@
 
   <div class="form-actions">
     <%= f.button :submit, 'Add to project', class: 'btn-primary' %> or
-    <%= link_to 'Cancel', methodologies_path %>
+    <%= link_to 'Cancel', project_methodologies_path(current_project) %>
   </div>
 <% end %>

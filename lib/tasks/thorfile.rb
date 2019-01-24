@@ -140,17 +140,15 @@ class DradisTasks < Thor
 
     desc "database", "removes all data from a dradis repository, except configurations"
     def database
-      require 'config/environment'
+      return if defined?(Dradis::Pro)
 
+      require 'config/environment'
       print "** Cleaning database...                                               "
 
-      Note.destroy_all
-      Node.destroy_all
-      Category.destroy_all
-      Tag.destroy_all
-      Tagging.destroy_all
-
-      Log.destroy_all
+      Rails.application.eager_load!
+      (ApplicationRecord.descendants - [Configuration]).each do |model|
+        model.destroy_all
+      end
 
       puts "[  DONE  ]"
     end

@@ -6,11 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.3'
-
-# Use Puma as the app server
-# FIXME: required for Rails 5 ActionCable
-# gem 'puma', '~> 3.7'
+gem 'rails', '~> 5.1.6'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -34,9 +30,6 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 
-# Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 3.0'
-
 # ---------------------------------------------------- Dradis Community Edition
 gem 'bootstrap-sass', '~> 2.3.2.2'
 gem 'font-awesome-sass', '~> 4.7.0'
@@ -47,7 +40,7 @@ gem 'jquery-fileupload-rails', '~> 0.3.4'
 gem 'jquery-hotkeys-rails'
 
 # Organize Node tree
-gem 'acts_as_tree'
+gem 'acts_as_tree', '~> 2.7.1'
 
 gem 'builder'
 
@@ -65,6 +58,8 @@ gem 'paper_trail', '~> 6.0'
 
 gem 'record_tag_helper'
 
+gem 'rubyzip', '>= 1.2.2'
+
 gem 'thor', '~> 0.18'
 
 
@@ -76,37 +71,31 @@ gem 'thor', '~> 0.18'
 
 # Use ActiveModel has_secure_password
 # Password digests
-gem 'bcrypt',   '3.1.10'
+gem 'bcrypt',   '3.1.12'
 
 # Required by Rails (uglifier and activesupport)
 gem 'json', '1.8.6'
 
 # XML manipulation
-# TODO: Traveling Ruby - DANGER, DANGER: this version has an issue, but it's
-# the last one supported by Traveling Ruby
-# gem 'nokogiri', '1.6.6.2'
-gem 'nokogiri', '1.8.2'
+gem 'nokogiri', '1.8.5'
 
 # MySQL backend
-gem 'mysql2', '0.3.18'
+gem 'mysql2', '~> 0.5.1'
 
 # Textile markup
-
-# TODO: Traveling Ruby - DANGER, DANGER: this version has an issue, but it's
-# the last one supported by Traveling Ruby
-# gem 'RedCloth', '4.2.9', require: 'redcloth'
-gem 'RedCloth', '4.3.1', require: 'redcloth'
+gem 'RedCloth', '~> 4.3.2', require: 'redcloth'
 
 # html-pipeline dependency for auto-linking
 gem 'rinku'
 
+# actionpack depends on rails-html-sanitizer, which has an XSS vulnerability
+# before 1.0.4, so make sure we're using 1.0.4+:
+# see https://github.com/rails/rails-html-sanitizer/commit/f3ba1a839a
+# and https://github.com/flavorjones/loofah/issues/144
+gem 'rails-html-sanitizer', '~> 1.0.4'
+
 # SQLite3 DB driver
 gem 'sqlite3'#,  '1.3.10'
-
-# Use Unicorn as the web server
-# FIXME: Switch to Puma for Rails 5
-gem 'unicorn',  '4.9.0', group: :production
-
 
 # --------------------------------------------------------- Dradis Professional
 # Authorisation
@@ -116,13 +105,13 @@ gem 'cancancan', '~> 1.10'
 gem 'resque', require: 'resque/status_server'
 gem 'resque-status'
 # See https://github.com/sinatra/sinatra/issues/1055
-gem 'sinatra', '2.0.1'
+gem 'sinatra', '2.0.2'
 
 # Forms that integrate with Twitter's Bootstrap
 gem 'simple_form'
 
 # Word content control filter string parsing
-gem 'parslet', '~> 1.4.0'
+gem 'parslet', '~> 1.6.0'
 
 # Word screenshots processing
 gem 'image_size', '~> 1.3.0'
@@ -140,6 +129,8 @@ gem 'whenever', require: false
 # gem 'capistrano-rails', group: :development
 
 group :production do
+  # Use Unicorn as the web server
+  gem 'unicorn',  '5.4.1'
 end
 
 
@@ -182,12 +173,14 @@ group :development, :test do
   gem 'byebug', platform: :mri
 
   gem 'rspec-rails', '~> 3.1'
+
+  gem 'puma'
 end
 
 group :test do
   gem 'database_cleaner'
-  gem 'factory_girl_rails'
-  gem 'capybara', '~> 2.13'
+  gem 'factory_bot_rails'
+  gem 'capybara', '~> 3.6.0'
   gem 'chromedriver-helper'
   gem 'guard-rspec', require: false
   gem 'selenium-webdriver'
@@ -210,13 +203,13 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 3.9', github: 'dradis/dradis-plugins'
+gem 'dradis-plugins', '~> 3.11', github: 'dradis/dradis-plugins'
 
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 3.9', github: 'dradis/dradis-projects'
+gem 'dradis-projects', '~> 3.11', github: 'dradis/dradis-projects'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)

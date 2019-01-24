@@ -1,6 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe RecoverableRevisionPresenter do
+  let(:project) { Project.new }
+
+  before do
+    PaperTrail.enabled = true
+    PaperTrail.controller_info = { project_id: project.id }
+  end
+
+  after  { PaperTrail.enabled = false }
+
   class FakeView
     include ActionView::Helpers::TextHelper
   end
@@ -12,14 +21,17 @@ RSpec.describe RecoverableRevisionPresenter do
   end
 
   def presenter_for(revision)
-    described_class.new(revision, FakeView.new)
+    presenter = described_class.new(revision, FakeView.new)
+    allow(presenter).to receive(:project).and_return(project)
+
+    presenter
   end
 
   describe 'for a methodology' do
     before do
       methodology_content = File.read(Rails.root.join('spec/fixtures/files/methodologies/webapp.xml'))
 
-      note = Node.methodology_library.notes.create(
+      note = project.methodology_library.notes.create(
         author:  'methodology builder',
         text:     methodology_content,
         category: Category.default,
@@ -41,7 +53,7 @@ RSpec.describe RecoverableRevisionPresenter do
 
   describe 'for an Issue' do
     before do
-      issue = create(:issue, text: "#[Title]#\nMy issue")
+      issue = create(:issue, text: "#[Title]#\nMy issue", node: project.issue_library)
       issue.destroy
       revision = RecoverableRevision.new(issue.versions.last)
 

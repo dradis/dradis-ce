@@ -1,0 +1,9 @@
+<% commentable = comment.commentable %>
+<% if commentable.title? %>
+  commented on the
+  <%= link_to commentable.title, presenter.comment_path(anchor: true) %>
+  <%= comment.commentable_type %>
+<% else %>
+  commented on
+  <%= link_to "#{comment.commentable_type} ##{commentable.id}", presenter.comment_path(anchor: true) %>.
+<% end %>

@@ -1,5 +1,25 @@
 <% @activities.each do |activity| %>
 
+  <%# Comment activities %>
+  <% if activity.trackable_type == 'Comment' %>
+
+    <% if activity.action == 'destroy' || activity.trackable.nil? %>
+      ActivitiesPoller.deleteComment(<%= activity.trackable_id %>)
+    <% elsif %w[create update].include?(activity.action) %>
+      <% comment = activity.trackable %>
+
+      var commentId = <%= comment.id %>,
+          commentableId = <%= comment.commentable.id %>,
+          template      = '<%= j render(comment) %>';
+
+      <% if activity.action == 'create' %>
+        ActivitiesPoller.addComment(commentableId, template)
+      <% elsif activity.action == 'update' %>
+        ActivitiesPoller.updateComment(commentId, commentableId, template)
+      <% end %>
+    <% end %>
+  <% end # if activity.trackable_type == "Comment" %>
+
   <%# Evidence activities %>
   <% if activity.trackable_type == 'Evidence' %>
 

@@ -2,13 +2,16 @@ require 'rails_helper'
 
 describe MultiDestroyJob do #, type: :job do
 
-  it 'is uses correct queue' do
+  it 'uses correct queue' do
     expect(described_class.new.queue_name).to eq('dradis_project')
   end
 
   describe '#perform' do
     before do
-      node = create(:node)
+      @project = create(:project)
+      @user    = create(:user)
+      node     = create(:node, project: @project)
+      PaperTrail.controller_info = { project_id: @project.id }
       @notes = [
         create(:note, node: node),
         create(:note, node: node),
@@ -16,9 +19,10 @@ describe MultiDestroyJob do #, type: :job do
       ]
 
       described_class.new.perform(
-        author_email: 'rspec@dradisframework.com',
+        author_email: @user.email,
         ids: @notes.map(&:id),
         klass: 'Note',
+        project_id: @project.id,
         uid: 1
       )
     end

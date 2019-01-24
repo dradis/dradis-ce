@@ -1,0 +1,28 @@
+<% if @subscription %>
+  <%= link_to \
+        project_subscription_path(
+          current_project,
+          @subscription,
+          subscription: {
+            subscribable_type: subscribable.class.to_s,
+            subscribable_id: subscribable.id
+          }
+        ),
+        class: 'action-link text-error',
+          method: :delete do %>
+      <i class="fa fa-bell-slash"></i> Unsubscribe
+  <% end %>
+<% else %>
+  <%= link_to \
+        project_subscriptions_path(
+          current_project,
+          subscription: {
+            subscribable_type: subscribable.class.to_s,
+            subscribable_id: subscribable.id
+          }
+        ),
+        class: 'action-link',
+        method: :post do %>
+    <i class="fa fa-bell"></i> Subscribe
+  <% end %>
+<% end %>

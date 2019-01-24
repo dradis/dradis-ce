@@ -8,7 +8,7 @@ describe "note pages", js: true do
   before do
     login_to_project_as_user
     @other_user = create(:user, :admin)
-    @node       = create(:node)
+    @node       = create(:node, project: current_project)
     @note       = create(:note, node: @node)
   end
 
@@ -16,7 +16,8 @@ describe "note pages", js: true do
     describe "and someone else updates the same Note" do
       before do
         @note.update_attributes(text: "whatever")
-        track_updated(@note, @other_user)
+        create(:activity, action: :update, trackable: @note, user: @other_user)
+
 
         call_poller
       end
@@ -29,7 +30,8 @@ describe "note pages", js: true do
     describe "and someone deletes that Note" do
       before do
         @note.destroy
-        track_destroyed(@note, @other_user)
+        create(:activity, action: :destroy, trackable: @note, user: @other_user)
+
         call_poller
       end
 
@@ -41,9 +43,9 @@ describe "note pages", js: true do
     describe "and someone updates then deletes that note" do
       before do
         @note.update_attributes(text: "whatever")
-        track_updated(@note, @other_user)
+        create(:activity, action: :update, trackable: @note, user: @other_user)
         @note.destroy
-        track_destroyed(@note, @other_user)
+        create(:activity, action: :destroy, trackable: @note, user: @other_user)
         call_poller
       end
 
@@ -56,12 +58,12 @@ describe "note pages", js: true do
   end
 
   describe "when I am viewing a Note" do
-    before { visit node_note_path(@node, @note) }
+    before { visit project_node_note_path(current_project, @node, @note) }
     it_behaves_like "a note page with poller"
   end
 
   describe "when I am editing a Note" do
-    before { visit edit_node_note_path(@node, @note) }
+    before { visit edit_project_node_note_path(current_project, @node, @note) }
     it_behaves_like "a note page with poller"
   end
 end
