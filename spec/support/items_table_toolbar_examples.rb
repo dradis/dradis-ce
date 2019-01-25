@@ -1,19 +1,15 @@
 shared_examples 'an index table toolbar' do
-  describe 'when clicking \'Select All\'' do
-    before do
-      find('.js-items-table-select-all').click
-      expect(page).to have_selector('input.js-multicheck:checked') # forces wait
+  example 'clicking \'Select All\' works' do
+    find('.js-items-table-select-all').click
+    expect(page).to have_selector('input.js-multicheck:checked') # forces wait
+
+    # it selects all items
+    all('input[type=checkbox].js-multicheck').each do |el|
+      expect(el['checked']).to eq 'true'
     end
 
-    it 'selects all items' do
-      all('input[type=checkbox].js-multicheck').each do |el|
-        expect(el['checked']).to eq 'true'
-      end
-    end
-
-    it 'shows the item actions bar' do
-      expect(find('.js-items-table-actions')).to be_visible
-    end
+    # it shows the item actions bar
+    expect(find('.js-items-table-actions')).to be_visible
   end
 
   describe 'when clicking items' do
