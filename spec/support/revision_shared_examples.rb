@@ -25,7 +25,7 @@ shared_examples "recover deleted item" do |item_type|
       activity_count = model.try(:activities) ? model.activities.count : 0
 
       expect do
-        page.accept_confirm do
+        accept_confirm do
           rr_path = recover_project_revision_path(current_project, model.versions.last)
           find(:xpath, "//a[@href='#{rr_path}']").click
         end
@@ -61,9 +61,10 @@ shared_examples "recover deleted item without node" do |item_type|
       expect do
         visit project_trash_path(current_project)
         rr_path = recover_project_revision_path(current_project, model.versions.last)
-        page.accept_confirm do
+        accept_confirm do
           find(:xpath, "//a[@href='#{rr_path}']").click
         end
+        expect(page).to have_content "#{model.class.name.humanize} recovered"
       end.to have_enqueued_job(ActivityTrackingJob).with(
         action: 'recover',
         project_id: current_project.id,
@@ -72,7 +73,6 @@ shared_examples "recover deleted item without node" do |item_type|
         user_id: @logged_in_as.id
       )
 
-      expect(page).to have_content "#{model.class.name.humanize} recovered"
       within '#trash' do
         expect(page).not_to have_content item_type.to_s
       end
