@@ -340,11 +340,11 @@ describe 'Issues pages' do
           it 'filters nodes' do
             find('.js-add-evidence').click
             within('#existing-node-list') do
-              Node.user_nodes.each do |n|
+              current_project.nodes.user_nodes.each do |n|
                 expect(page).to have_text n.label
               end
             end
-            expect(all('#existing-node-list label').count).to be Node.user_nodes.count
+            expect(all('#existing-node-list label').count).to be current_project.nodes.user_nodes.count
 
             # find('#evidence_node').native.send_key('192.')
             fill_in 'evidence_node', with: '192\.'
