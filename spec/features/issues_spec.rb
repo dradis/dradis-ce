@@ -383,6 +383,7 @@ describe 'Issues pages' do
             fill_in 'Paste list of nodes', with: "#{@node.label}\r\naaaa"
             expect do
               click_button('Save Evidence')
+              expect(page).to have_text 'Evidence added for selected nodes.'
             end.to change { enqueued_activity_tracking_jobs.size }.by(3)
 
             jobs = enqueued_activity_tracking_jobs.last(3)
