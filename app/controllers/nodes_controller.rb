@@ -107,7 +107,7 @@ class NodesController < NestedNodeResourceController
   # Lazy-load the nodes' tree via Ajax calls to this action.
   def tree
     # TODO: Do we want to use :find_or_initialize_node or skip it and :include children?
-    @children = @node.children
+    @children = @node.children.to_a.sort_by!{ |node| node.label.split('.').map(&:to_i) }
     respond_to do |format|
       format.js
     end
