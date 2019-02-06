@@ -1,27 +1,201 @@
-<div class="activity-feed">
-  <% if activities.any? %>
-    <% activities.each do |activity| %>
-      <% present activity do |activity_presenter| %>
-        <%= div_for activity do %>
-          <div class="body">
-            <%= activity_presenter.icon %>
-
-            <div class="time">
-              <%= activity_presenter.created_at_ago %>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge"
+          http-equiv="X-UA-Compatible">
+    <title>Recent Activity
+    </title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link href="css/style.css"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <section class="inner summary-panel">
+        <div class="row">
+          <div class="activity-header col-xs-12">
+            <div class="header-title col-xs-6">
+              <h2>Recent activity
+              </h2>
             </div>
-
-            <div class="title">
-              <%= activity_presenter.render_title %>
-            </div>
-
-            <div class="details">
-              <%= activity_presenter.avatar_with_link(30) %>
+            <div class="button-main-group col-xs-6">
+              <div class="button-group">
+                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                  <i class="fas fa-user">
+                  </i>
+                  <span class="caret">
+                  </span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li>
+                    <a href="#" class="small" data-value="option1" tabIndex="-1">
+                      <input type="checkbox"/>&nbsp;All Users
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" class="small" data-value="option2" tabIndex="-1">
+                      <input type="checkbox"/>&nbsp;Matt Budz
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" class="small" data-value="option3" tabIndex="-1">
+                      <input type="checkbox"/>&nbsp;John Doe
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" class="small" data-value="option4" tabIndex="-1">
+                      <input type="checkbox"/>&nbsp;Jane Doe
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="button-group">
+                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                  <i class="fas fa-filter">
+                  </i>
+                  <span class="caret">
+                  </span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li>
+                    <a href="#" class="small" data-value="option1" tabIndex="-1">
+                      <input type="checkbox"/>&nbsp;All Types
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" class="small" data-value="option2" tabIndex="-1">
+                      <input type="checkbox"/>&nbsp;Evidence
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" class="small" data-value="option3" tabIndex="-1">
+                      <input type="checkbox"/>&nbsp;Label
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" class="small" data-value="option4" tabIndex="-1">
+                      <input type="checkbox"/>&nbsp;Issue
+                    </a>
+                  </li>
+                </ul>
+              </div> 
             </div>
           </div>
-        <% end %>
-      <% end %>
-    <% end %>
-  <% else %>
-    <p class="no-content">There has been no activity yet.</p>
-  <% end %>
-</div>
+        </div>
+        <div class="activity-feed">
+          <div class="activity" id="activity_3">
+            <div class="body">
+              <span class="activity-icon fa fa-flag">
+              </span>
+              <div class="row">
+                <div class="col-xs-1">
+                  <div class="details">
+                    <a href="javascript:void(0)">
+                      <img alt="MattBudz" class="gravatar" data-fallback-image="/assets/logo_small-3459adc9b083bab7dbfd3a54cffc86b722e60447264883650bc34778203d35c1.png" title="MattBudz" width="30" src="/assets/profile-0fa7c958325096d1b6204200bb17bdcab55a57996df6e6d202bd3bc9c7cf3cae.jpg">
+                    </a>
+                  </div>
+                </div>
+                <div class="col-xs-11">
+                  <div class="title">
+                    <strong>Matt Budz
+                    </strong> created 
+                    <a href="/projects/1/nodes/3/evidence/1">a piece of evidence
+                    </a>
+                    for
+                    <a href="/projects/1/issues/2">
+                    </a>at 
+                    <a href="/projects/1/nodes/3">lbl
+                    </a>.
+                  </div>
+                  <div class="time">
+                    <time datetime="2019-02-05T15:57:27Z" data-local="time-ago" title="February 5, 2019 at 11:57pm CST" aria-label="18 hours ago">18 hours ago
+                    </time>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="activity" id="activity_2">
+            <div class="body">
+              <span class="activity-icon far fa-folder">
+              </span>
+              <div class="row">
+                <div class="col-xs-1">
+                  <div class="details">
+                    <a href="javascript:void(0)">
+                      <img alt="MattBudz" class="gravatar" data-fallback-image="/assets/logo_small-3459adc9b083bab7dbfd3a54cffc86b722e60447264883650bc34778203d35c1.png" title="MattBudz" width="30" src="/assets/profile-0fa7c958325096d1b6204200bb17bdcab55a57996df6e6d202bd3bc9c7cf3cae.jpg">
+                    </a>
+                  </div>
+                </div>
+                <div class="col-xs-11">
+                  <div class="title">
+                    <strong>Matt Budz
+                    </strong> created the
+                    <a href="/projects/1/nodes/3">lbl
+                    </a> node.
+                  </div>
+                  <div class="time">
+                    <time datetime="2019-01-30T11:11:11Z" data-local="time-ago" title="January 30, 2019 at 11:11am CST" aria-label="January 30, 2019 11:11am">January 30, 2019 11:11am
+                    </time>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="activity" id="activity_1">
+            <div class="body">
+              <span class="activity-icon fa fa-bug">
+              </span>
+              <div class="row">
+                <div class="col-xs-1">
+                  <div class="details">
+                    <a href="javascript:void(0)">
+                      <img alt="MattBudz" class="gravatar" data-fallback-image="/assets/logo_small-3459adc9b083bab7dbfd3a54cffc86b722e60447264883650bc34778203d35c1.png" title="MattBudz" width="30" src="/assets/profile-0fa7c958325096d1b6204200bb17bdcab55a57996df6e6d202bd3bc9c7cf3cae.jpg">
+                    </a>
+                  </div>
+                </div>
+                <div class="col-xs-11">
+                  <div class="title">
+                    <strong>Matt Budz
+                    </strong> created 
+                    <a href="/projects/1/nodes/3/evidence/1">a piece of evidence
+                    </a>
+                    for
+                    <a href="/projects/1/issues/2">
+                    </a>at 
+                    <a href="/projects/1/nodes/3">lbl
+                    </a>.
+                  </div>
+                  <div class="time">
+                    <time datetime="2018-12-12T15:48:07Z" data-local="time-ago" title="December 12, 2018 at 3:48pm CST" aria-label="December 12, 2018 3:48pm">December 12, 2018 3:48pm
+                    </time>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="activity-footer">
+          <div class="activity-daterange">
+            <div class="input-group input-daterange">
+              <input type="text" class="form-control datebox" value="2012-04-05">
+              <div class="input-group-addon">to
+              </div>
+              <input type="text" class="form-control datebox" value="2012-04-19">
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js">
+    </script>
+  </body>
+</html>

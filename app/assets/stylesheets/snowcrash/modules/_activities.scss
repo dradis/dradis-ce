@@ -17,7 +17,6 @@ table.activity-feed {
 
 }
 
-
 .activity {
   border-bottom: 1px solid #f1f1f1;
   padding: 0px 0px 1em 45px;
@@ -28,12 +27,11 @@ table.activity-feed {
     color: #bbb;
     font-size: 32px;
     height: 32px;
-    left: 0px;
+    right: 20px;
     position: absolute;
     top: 14px;
     width: 32px;
   }
-  .activity-icon-node {}
 
   .body {
     padding: 1em 0px 0px;
@@ -56,7 +54,107 @@ table.activity-feed {
   }
 
   .title {
-//    font-weight: bold;
     padding: 0px;
   }
+}
+
+body{
+background: #f4f5f6;
+font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+line-height: 20px;
+
+a {
+  color: #378137;
+  &:hover {
+    color: #204b20;
+  }
+}
+
+.container {
+  background: #fff;
+  padding: 0 2em 2em;
+  margin: 1em;
+  
+  .activity-header{
+    margin: 0 0 0.8em 0;
+    line-height: 1em;
+
+    h2 {
+      font-weight: normal;
+      left: 0;
+      font-size: 2.2em;
+      color: #34495e;
+      font-family: 'Open Sans', sans-serif;
+    }
+    
+    .button-main-group {
+      margin: 20px 0 0;
+      float: right;
+
+      .button-group{
+        float: right;
+        margin: 2px;
+
+        .btn {
+          border: none;
+          background-color: #e6e6e6;
+          &:hover {
+            background-color: #cdcdcd;
+          }
+        }
+
+        .dropdown-menu {
+          line-height: 20px;
+          font-family: 'Open Sans', sans-serif;
+
+          li {
+
+            a {
+              display: block;
+              padding: 3px 20px;
+              clear: both;
+              font-weight: normal;
+              line-height: 20px;
+              font-size: 14px;
+              color: #333;
+              white-space: nowrap;
+
+              &:hover, &:focus {
+                background-color: #347a34;
+              color: #fff;
+              }
+
+            }
+
+          }
+
+        }
+        
+      }
+
+    }
+
+  }
+
+  .activity-feed {
+    border-top: 2px solid #f1f1f1;
+    padding-top: 1.2em; 
+  }
+
+  .activity-footer {
+    margin-top: 2em;
+    .activity-daterange {
+      width: 50%;
+      margin: 0 auto;
+    }
+
+    .form-control:focus {
+      border-color: #ccc;
+      box-shadow: none;
+    }
+
+  }
+
+}
+
 }
