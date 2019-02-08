@@ -35,6 +35,7 @@
 //= require snowcrash/modules/notifications
 //= require snowcrash/modules/search
 //= require snowcrash/modules/activities/poller
+//= require snowcrash/modules/subscriptions
 // require snowcrash/modules/tour
 //= require snowcrash/modules/uploads
 

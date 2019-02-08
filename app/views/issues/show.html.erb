@@ -25,8 +25,8 @@
 </ul>
 
 <div class="tab-content">
-  <% cache ['issue-information-tab', @issue, @issue.comments, @issue.subscriptions, session.id] do %>
-    <div class="tab-pane active" id="info-tab">
+  <div class="tab-pane active" id="info-tab" data-behavior="subscription-actions" data-subscribed="<%= !@subscription.nil? %>" >
+    <% cache ['issue-information-tab', @issue] do %>
       <div class="inner note-text-inner">
         <h3>Issue information -
           <span class="actions">
@@ -50,13 +50,14 @@
           <%= markup(@issue.text) %>
         </div>
       </div>
+    <% end %>
 
-      <div class="inner">
-        <%= render 'comments/feed', commentable: @issue %>
-        <%= render 'subscriptions/feed', subscribable: @issue %>
-      </div>
+    <div class="inner">
+      <%= render 'comments/feed' %>
+      <%= render 'subscriptions/feed', subscribable: @issue %>
     </div>
-  <% end %>
+  </div>
+
 
   <div class="tab-pane" id="evidence-tab">
     <div class="inner">

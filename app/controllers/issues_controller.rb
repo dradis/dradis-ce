@@ -1,5 +1,6 @@
 class IssuesController < AuthenticatedController
   include ActivityTracking
+  include Commented
   include ContentFromTemplate
   include ConflictResolver
   include Mentioned
