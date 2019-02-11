@@ -23,6 +23,8 @@ module HTML
           /&quot;(.*?)&quot;:(?:http|https)\:\/\/.+/
         )
 
+        puts regex
+
         # Un-escape the matched strings
         text.gsub(regex) do |matched|
           CGI::unescapeHTML(matched)
@@ -31,9 +33,15 @@ module HTML
 
       private
 
+      # We are matching the characters preceding a valid block code following
+      # the rules: The block code is valid if
+      # 1. it is preceded by a line with a Dradis header.
+      # 2. it is preceded by a newline. The newline can be the start of the
+      #    string, preceded by another newline, and/or with spaces in between.
+      # 3. it is at the start of the string.
       def before_regex(bc)
         '(?:(\#\[.*\]\#\n' + bc +
-          '  |(\A|\A\ +|\n\ +|\n|\r\n)(\n|\r\n)' + bc +
+          ' |(\A|\A\ +|\n\ +|\n|\r\n)(\n|\r\n)' + bc +
           ' |\A' + bc + ' ))'
       end
     end
