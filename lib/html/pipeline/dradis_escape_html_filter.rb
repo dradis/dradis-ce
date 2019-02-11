@@ -18,8 +18,8 @@ module HTML
 
         # Match the text under bc./bc.. and links, following the textile rules
         regex = Regexp.union(
-          /(?<=bc\. )(.*?)(?=(\r\n|\n){2})/m,
-          /(?:(\#\[.*\]\#\nbc\.\. |(\A|\A\ +|\n\ +|\n|\r\n)(\n|\r\n)bc\.\. |\Abc\.\. ))(.*?)(?=(bc\.|bc\.\.|p\.|\z))/m,
+          /#{before_regex('bc\.')}(.*?)(?=((\r\n|\n){2}|\z))/m,
+          /#{before_regex('bc\.\.')}(.*?)(?=(bc\.|bc\.\.|p\.|\z))/m,
           /&quot;(.*?)&quot;:(?:http|https)\:\/\/.+/
         )
 
@@ -27,6 +27,14 @@ module HTML
         text.gsub(regex) do |matched|
           CGI::unescapeHTML(matched)
         end
+      end
+
+      private
+
+      def before_regex(bc)
+        '(?:(\#\[.*\]\#\n' + bc +
+          '  |(\A|\A\ +|\n\ +|\n|\r\n)(\n|\r\n)' + bc +
+          ' |\A' + bc + ' ))'
       end
     end
   end
