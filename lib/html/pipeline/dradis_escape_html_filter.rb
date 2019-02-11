@@ -23,8 +23,6 @@ module HTML
           /&quot;(.*?)&quot;:(?:http|https)\:\/\/.+/
         )
 
-        puts regex
-
         # Un-escape the matched strings
         text.gsub(regex) do |matched|
           CGI::unescapeHTML(matched)
