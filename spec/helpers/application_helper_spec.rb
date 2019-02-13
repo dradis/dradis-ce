@@ -30,9 +30,8 @@ describe ApplicationHelper do
     end
 
     it 'escapes HTML entities' do
-      # careful: we want to escape any HTML provided by the user, but the HTML
-      # pipeline will add HTML tags of its own (when parsing Textile) which
-      # shouldn't be escaped
+      # careful: we are allowing code tags to be correctly parsed as html, but
+      # we are sanitizing attributes that might be considered as unsafe.
       text_0 = '<code onmouseover=alert(1);>'
       expect(helper.markup(text_0)).to include '<div><p><code></code></p></div>'
 
