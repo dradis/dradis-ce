@@ -34,16 +34,14 @@ describe ApplicationHelper do
       # pipeline will add HTML tags of its own (when parsing Textile) which
       # shouldn't be escaped
       text_0 = '<code onmouseover=alert(1);>'
-      expect(helper.markup(text_0)).to include '&lt;code onmouseover=alert(1);&gt;'
+      expect(helper.markup(text_0)).to include '<div><p><code></code></p></div>'
 
       text_1 = '<script>alert()</script>'
-      expect(helper.markup(text_1)).to include(
-        '&lt;script&gt;alert()&lt;/script&gt;'
-      )
+      expect(helper.markup(text_1)).to include '<div></div>'
 
       text_2 = '*bold* <script> <code>'
       expect(helper.markup(text_2)).to include(
-        '<strong>bold</strong> &lt;script&gt; &lt;code&gt;'
+        '<div><p><strong>bold</strong> </p></div>'
       )
     end
   end
