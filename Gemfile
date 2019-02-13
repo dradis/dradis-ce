@@ -82,20 +82,20 @@ gem 'nokogiri', '1.8.5'
 # MySQL backend
 gem 'mysql2', '~> 0.5.1'
 
-# Textile markup
-gem 'RedCloth', '~> 4.3.2', require: 'redcloth'
-
-# html-pipeline dependency for html sanitization
-gem 'sanitize'
-
-# html-pipeline dependency for auto-linking
-gem 'rinku'
-
 # actionpack depends on rails-html-sanitizer, which has an XSS vulnerability
 # before 1.0.4, so make sure we're using 1.0.4+:
 # see https://github.com/rails/rails-html-sanitizer/commit/f3ba1a839a
 # and https://github.com/flavorjones/loofah/issues/144
 gem 'rails-html-sanitizer', '~> 1.0.4'
+
+# Textile markup
+gem 'RedCloth', '~> 4.3.2', require: 'redcloth'
+
+# html-pipeline dependency for auto-linking
+gem 'rinku'
+
+# html-pipeline dependency for html sanitization
+gem 'sanitize'
 
 # SQLite3 DB driver
 gem 'sqlite3'#,  '1.3.10'
