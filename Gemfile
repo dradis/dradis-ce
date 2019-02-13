@@ -85,6 +85,9 @@ gem 'mysql2', '~> 0.5.1'
 # Textile markup
 gem 'RedCloth', '~> 4.3.2', require: 'redcloth'
 
+# html-pipeline dependency for html sanitization
+gem 'sanitize'
+
 # html-pipeline dependency for auto-linking
 gem 'rinku'
 
