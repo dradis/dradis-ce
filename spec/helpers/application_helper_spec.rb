@@ -36,11 +36,13 @@ describe ApplicationHelper do
       expect(helper.markup(text_0)).to include '<div><p><code></code></p></div>'
 
       text_1 = '<script>alert()</script>'
-      expect(helper.markup(text_1)).to include '<div></div>'
+      expect(helper.markup(text_1)).to include(
+        '<div>&lt;script&gt;alert()&lt;/script&gt;</div>'
+      )
 
       text_2 = '*bold* <script> <code>'
       expect(helper.markup(text_2)).to include(
-        '<div><p><strong>bold</strong> </p></div>'
+        '<div><p><strong>bold</strong> &lt;script&gt; <code></code></p></div>'
       )
     end
   end
