@@ -44,6 +44,43 @@ describe ApplicationHelper do
       expect(helper.markup(text_2)).to include(
         '<div><p><strong>bold</strong> &lt;script&gt; <code></code></p></div>'
       )
+
+      text_3 = "xssbc. <script>alert(1)</script>\n\n"\
+        "xssbc.. <script>alert(1)</script>"
+      expect(helper.markup(text_3)).to include(
+        "<div>\n<p>xssbc. &lt;script&gt;alert(1)&lt;/script&gt;</p>\n"\
+        "<p>xssbc.. &lt;script&gt;alert(1)&lt;/script&gt;</p>\n</div>"
+      )
+
+      text_4 =
+        "bc.. block code\n\n" \
+        "h1. <script>alert(1)</script>\n\n" \
+        "bq. <script>alert(2)</script>\n\n" \
+        "div. <script>alert(3)</script>\n\n" \
+        "p(xss). <script>alert(4)</script>\n\n" \
+        "p(#xss). <script>alert(5)</script>\n\n" \
+        "p(xss#xss). <script>alert(6)</script>\n\n" \
+        "p[xss]. <script>alert(7)</script>\n\n" \
+        "p<. <script>alert(8)</script>\n\n" \
+        "p(. <script>alert(9)</script>\n\n"
+
+      expect(helper.markup(text_4)).to include(
+        "<div>\n<pre><code>block code</code></pre>\n"\
+        "<h1>&lt;script&gt;alert(1)&lt;/script&gt;</h1>\n"\
+        "<blockquote>\n<p>&lt;script&gt;alert(2)&lt;/script&gt;</p>\n</blockquote>\n"\
+        "<div>&lt;script&gt;alert(3)&lt;/script&gt;</div>\n"\
+        "<p>&lt;script&gt;alert(4)&lt;/script&gt;</p>\n"\
+        "<p>&lt;script&gt;alert(5)&lt;/script&gt;</p>\n"\
+        "<p>&lt;script&gt;alert(6)&lt;/script&gt;</p>\n"\
+        "<p lang=\"xss\">&lt;script&gt;alert(7)&lt;/script&gt;</p>\n"\
+        "<p>&lt;script&gt;alert(8)&lt;/script&gt;</p>\n"\
+        "<p>&lt;script&gt;alert(9)&lt;/script&gt;</p>\n</div>"
+      )
+
+      text_5 = '“xss”:http://<script>alert(1)</script>;'
+      expect(helper.markup(text_5)).to include(
+        '<div><p>“xss”:http://&lt;script&gt;alert(1)&lt;/script&gt;;</p></div>'
+      )
     end
   end
 end
