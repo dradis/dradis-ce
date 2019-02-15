@@ -24,6 +24,7 @@
 //= require snowcrash/plugins/jquery.treenav
 
 //= require snowcrash/behaviors
+//= require snowcrash/engines
 //= require snowcrash/keyboard_shortcuts
 
 //= require snowcrash/modules/comments
