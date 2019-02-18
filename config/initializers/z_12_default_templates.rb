@@ -12,7 +12,7 @@ if Configuration.table_exists?
   # --------------------------------------------------------------- Note template
   if !NoteTemplate.pwd.exist?
     NoteTemplate.pwd.mkpath
-    NoteTemplate.new(name: 'Basic fields', content: "#[Title]#\n\n\n#[Description]#\n\n").save
+    NoteTemplate.new(name: 'Basic fields', content: "#[Title]#\n\n\n#[Description]#\n\n\n#[Recommendation]#\n\n").save
   end
 
 
@@ -23,19 +23,34 @@ if Configuration.table_exists?
     xml_blob =<<-EOX
     <?xml version="1.0"?>
     <methodology>
-      <name>New checklist</name>
+      <name>Simple OWASP checklist</name>
       <sections>
         <section>
-          <name>Section #1</name>
+          <name>OWASP Top 10</name>
           <tasks>
-            <task>Task #1.1</task>
-            <task>Task #1.2</task>
+            <task>A1:2017 - Injection</task>
+            <task>A2:2017 - Broken Authentication</task>
+            <task>A3:2017 - Sensitive Data Exchange</task>
+            <task>A4:2017 - XML External Entities (XXE)</task>
+            <task>A5:2017 - Broken Access Control</task>
+            <task>A6:2017 - Security Misconfiguration</task>
+            <task>A7:2017 - Cross-Site Scripting (XSS)</task>
+            <task>A8:2017 - Insecure Deserialization</task>
+            <task>A9:2017 - Using Components with Known Vulnerabilities</task>
+            <task>A10:2017 - Insufficiend Logging & Monitoring</task>
           </tasks>
         </section>
         <section>
-          <name>Section #2</name>
+          <name>A1:2017 - Injection</name>
           <tasks>
-            <task>Task #2.1</task>
+            <task>Check for SQL injection</task>
+            <task>Check for LDAP injection</task>
+            <task>Check for XPath injection</task>
+            <task>Check for NoSQL injection</task>
+            <task>Check for OS command injection</task>
+            <task>Check for XML injection</task>
+            <task>Check for SMTP headers injection</task>
+            <task>Check for ORM queries injection</task>
           </tasks>
         </section>
       </sections>
