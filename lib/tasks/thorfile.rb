@@ -63,7 +63,13 @@ class DradisTasks < Thor
 
 
   class Setup < Thor
+    include Thor::Actions
+
     namespace     "dradis:setup"
+
+    def self.source_root
+      File.join(File.dirname(__FILE__), 'templates')
+    end
 
     desc "configure", "Creates the Dradis configuration files from their templates (see config/*.yml.template)"
     def configure
@@ -113,6 +119,24 @@ class DradisTasks < Thor
       puts "[  DONE  ]"
     end
 
+    desc "welcome", "adds initial content to the repo for demonstration purposes"
+    def welcome
+      # --------------------------------------------------------- Note template
+      if NoteTemplate.pwd.exist?
+        say 'Note templates folder already exists. Skipping.'
+      else
+        template 'note.txt', NoteTemplate.pwd.join('basic_fields.txt')
+      end
+
+      # ----------------------------------------------------------- Methodology
+      if Methodology.pwd.exist?
+        say 'Methodology templates folder already exists. Skipping.'
+      else
+        template 'methodology.xml', Methodology.pwd.join('owasp2017.xml')
+      end
+
+      # ---------------------------------------------------------- Project data
+    end
   end
 
   class Logs < Thor
