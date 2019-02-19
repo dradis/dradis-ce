@@ -85,6 +85,8 @@
 
       // toolbar
       this._buildToolbar();
+
+      this.$element.attr('data-textiled', 'true');
     },
     _buildToolbar: function() {
       var button;
@@ -250,7 +252,7 @@
   // preventing against multiple instantiations
   $.fn[pluginName] = function ( options ) {
     return this.each(function () {
-      if (!$.data(this, 'plugin_' + pluginName)) {
+      if (!$.data(this, 'plugin_' + pluginName) && !$(this).data('textiled')) {
         $.data(this, 'plugin_' + pluginName, new Plugin( this, options ));
       }
     });
