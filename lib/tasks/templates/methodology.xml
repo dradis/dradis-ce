@@ -14,7 +14,7 @@
         <task>A7:2017 - Cross-Site Scripting (XSS)</task>
         <task>A8:2017 - Insecure Deserialization</task>
         <task>A9:2017 - Using Components with Known Vulnerabilities</task>
-        <task>A10:2017 - Insufficiend Logging & Monitoring</task>
+        <task>A10:2017 - Insufficiend Logging &amp; Monitoring</task>
       </tasks>
     </section>
     <section>
