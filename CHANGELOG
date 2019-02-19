@@ -7,6 +7,7 @@ v3.12 (XXX)
  - Disable turbolinks cache when displaying flash messages
  - Sort attachments in alphabetical ASCII order
  - Fix methodology checklist edit error
+ - Fix textile toolbar stacking
 
 v3.11 (November 2018)
  - Added comments, subscriptions and notifications to notes
