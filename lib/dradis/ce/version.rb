@@ -3,7 +3,7 @@ module Dradis
     module VERSION #:nodoc:
       MAJOR = 3
       MINOR = 11
-      TINY  = 0
+      TINY  = 1
       PRE = nil
 
       STRING = [MAJOR, MINOR, TINY, PRE].compact.join('.')
