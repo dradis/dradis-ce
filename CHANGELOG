@@ -7,7 +7,9 @@ v3.12 (XXX)
  - Disable turbolinks cache when displaying flash messages
  - Sort attachments in alphabetical ASCII order
  - Fix methodology checklist edit error
- - Replace DradisEscapeHtmlFilter with SanitizationFilter
+
+v3.11.1 (February 2019)
+ - Fix blockcode vulnerability in Textile formatting
 
 v3.11 (November 2018)
  - Added comments, subscriptions and notifications to notes
