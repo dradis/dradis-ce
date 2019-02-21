@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   # Sign in / sign out
   get '/login'  => 'sessions#new'
   get '/logout' => 'sessions#destroy'
+  match '/timeout' => 'sessions#timeout', via: :all
   resource :session
 
   # ------------------------------------------------------------ Project routes
@@ -23,7 +24,7 @@ Rails.application.routes.draw do
   resources :projects, only: [:show] do
     resources :activities, only: [] do
       collection do
-        get :poll, constraints: { format: /js/ }
+        get :poll, defaults: { format: :js }
       end
     end
 

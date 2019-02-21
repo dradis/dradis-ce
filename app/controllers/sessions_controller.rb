@@ -3,6 +3,7 @@ class SessionsController < ApplicationController
   before_action :ensure_setup,          only: :new
   before_action :ensure_not_setup,      only: [:init, :setup]
   before_action :ensure_valid_password, only: :setup
+  skip_before_action :verify_authenticity_token, only: :failure
 
   # ------------------------------------------- Initial shared password setup
   # Initialise the session, clear any objects that might currently exist and
@@ -31,10 +32,6 @@ class SessionsController < ApplicationController
   end
   # ------------------------------------------ /Initial shared password setup
 
-  def new
-    flash.now[:alert] = warden_message if warden_message.present?
-  end
-
   def create
     warden.authenticate!
     redirect_to_target_or_default root_url
@@ -43,6 +40,17 @@ class SessionsController < ApplicationController
   def destroy
     logout
     redirect_to login_path, notice: 'You have been logged out.'
+  end
+
+  def failure
+    respond_to do |format|
+      format.html do
+        flash[:alert] = warden_message if warden_message.present?
+        redirect_to new_session_path
+      end
+      format.json { head :not_found }
+      format.js { head :not_found }
+    end
   end
 
   protected
