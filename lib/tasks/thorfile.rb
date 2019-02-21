@@ -64,6 +64,7 @@ class DradisTasks < Thor
 
   class Setup < Thor
     include Thor::Actions
+    include ::Rails.application.config.dradis.thor_helper_module
 
     namespace     "dradis:setup"
 
@@ -136,6 +137,15 @@ class DradisTasks < Thor
       end
 
       # ---------------------------------------------------------- Project data
+      detect_and_set_project_scope
+
+      task_options.merge!({
+        plugin: Dradis::Plugins::Projects::Upload::Template,
+        default_user_id: 1
+      })
+
+      importer = Dradis::Plugins::Projects::Upload::Template::Importer.new(task_options)
+      importer.import(file: File.expand_path('../templates/project.xml', __FILE__))
     end
   end
 

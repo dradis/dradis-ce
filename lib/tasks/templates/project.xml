@@ -1,0 +1,1151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dradis-template version="2">
+  <nodes>
+    <node>
+      <id>2771</id>
+      <label>0.- Start Here</label>
+      <parent-id/>
+      <position>0</position>
+      <properties><![CDATA[{
+}]]></properties>
+      <type-id>0</type-id>
+      <notes>
+        <note>
+          <id>600</id>
+          <author>adama@dradisframework.com</author>
+          <category-id>3</category-id>
+          <text><![CDATA[#[Title]#
+0.- Welcome to Dradis!
+
+#[Description]#
+p(pull-right). !/assets/logo_small-3459adc9b083bab7dbfd3a54cffc86b722e60447264883650bc34778203d35c1.png!
+
+We have pre-populated this project with a little bit of everything so you get a sense of what working with Dradis in a real assessment would be like.
+
+The core concepts you need to know about:
+* **All issues**: This is where your add findings to the project. You can "add them manually":http://localhost:3000/projects/1/issues or "upload the output from a tool":http://localhost:3000/projects/1/upload.
+* **Methodologies**: Think checklists, this is how you keep track of all the tasks you want to go through for the assessment.
+* **Nodes**: Think folders or directories. Nodes is how you keep your project organized:
+** For an **infrastructure** assessment you'll create nodes for each IP address or network range.
+** For a **webapp** assessment you'll create nodes for "session management", "access control", "injection", etc.]]></text>
+          <activities>
+            <activity>
+              <action>create</action>
+              <user_email>adama@dradisframework.com</user_email>
+              <created_at>1527084054</created_at>
+            </activity>
+          </activities>
+          <comments/>
+        </note>
+        <note>
+          <id>601</id>
+          <author>adama@dradisframework.com</author>
+          <category-id>3</category-id>
+          <text><![CDATA[#[Title]#
+1.- Next steps
+
+#[Description]#
+When you're ready to start with a new empty project:
+
+# "Log out":http://localhost:3000/logout
+# Kill the server and go back to the console.
+# Run: @bundle exec thor dradis:reset@
+
+If you ever want to reload this sample project again:
+
+# "Log out":http://localhost:3000/logout
+# Kill the server and go back to the console.
+# Run: @bundle exec thor dradis:reset@
+# Run: @bundle exec thor dradis:setup:welcome@]]></text>
+          <activities/>
+          <comments/>
+        </note>
+      </notes>
+      <evidence/>
+      <activities/>
+    </node>
+    <node>
+      <id>2830</id>
+      <label>1.- Scope</label>
+      <parent-id/>
+      <position>0</position>
+      <properties><![CDATA[{
+}]]></properties>
+      <type-id>0</type-id>
+      <notes>
+        <note>
+          <id>6705</id>
+          <author>adama@dradisframework.com</author>
+          <category-id>3</category-id>
+          <text><![CDATA[#[Title]#
+URLs and accounts
+
+#[Description]#
+You can use a "Scope" node to keep track of URLs, accounts, or any other information that is relevant for the assessment.
+
+Use Textile markup to make your notes clearer
+
+|_. Username|_. Password|
+|admin|foo|
+
+In scope URLs:
+
+* http://drad.is/blog
+* http://drad.is/l/forum
+* http://drad.is/l/slack
+]]></text>
+          <activities>
+            <activity>
+              <action>create</action>
+              <user_email>adama@dradisframework.com</user_email>
+              <created_at>1527084054</created_at>
+            </activity>
+          </activities>
+          <comments/>
+        </note>
+      </notes>
+      <evidence/>
+      <activities>
+        <activity>
+          <action>create</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1527084023</created_at>
+        </activity>
+      </activities>
+    </node>
+    <node>
+      <id>2772</id>
+      <label>plugin.output</label>
+      <parent-id/>
+      <position>0</position>
+      <properties><![CDATA[{
+}]]></properties>
+      <type-id>0</type-id>
+      <notes/>
+      <evidence/>
+      <activities/>
+    </node>
+    <node>
+      <id>2773</id>
+      <label>173.45.230.150</label>
+      <parent-id>2772</parent-id>
+      <position>0</position>
+      <properties><![CDATA[{
+  "fqdn": "snorby.org",
+  "ip": "173.45.230.150",
+  "os": "NetBSD 3.0",
+  "services": [
+    {
+      "port": 9090,
+      "protocol": "tcp",
+      "state": "open",
+      "name": "www",
+      "x_nessus": "A web server is running on this port."
+    },
+    {
+      "port": 7070,
+      "protocol": "tcp",
+      "state": "open",
+      "name": "arcp?",
+      "x_nessus": "The service closed the connection without sending any data.\nIt might be protected by some sort of TCP wrapper."
+    },
+    {
+      "port": 554,
+      "protocol": "tcp",
+      "state": "open",
+      "name": "rtsp?",
+      "x_nessus": "The service closed the connection without sending any data.\nIt might be protected by some sort of TCP wrapper."
+    },
+    {
+      "port": 443,
+      "protocol": "tcp",
+      "state": "open",
+      "name": "www",
+      "x_nessus": "A TLSv1 server answered on this port.\n"
+    },
+    {
+      "port": 80,
+      "protocol": "tcp",
+      "state": "open",
+      "name": "www",
+      "x_nessus": "A web server is running on this port."
+    },
+    {
+      "port": 25,
+      "protocol": "tcp",
+      "state": "open",
+      "name": "smtp",
+      "x_nessus": "An SMTP server is running on this port."
+    },
+    {
+      "port": 22,
+      "protocol": "tcp",
+      "state": "open",
+      "name": "ssh",
+      "x_nessus": "An SSH server is running on this port."
+    },
+    {
+      "port": 21,
+      "protocol": "tcp",
+      "state": "open",
+      "name": "ftp?",
+      "x_nessus": "The service closed the connection without sending any data.\nIt might be protected by some sort of TCP wrapper."
+    }
+  ]
+}]]></properties>
+      <type-id>1</type-id>
+      <notes>
+        <note>
+          <id>6659</id>
+          <author>Nessus upload plugin</author>
+          <category-id>3</category-id>
+          <text><![CDATA[#[Title]#
+Nessus Host Details
+
+#[IP]#
+173.45.230.150
+
+#[Type]#
+Host]]></text>
+          <activities/>
+          <comments/>
+        </note>
+      </notes>
+      <evidence>
+        <evidence>
+          <id>29866</id>
+          <author/>
+          <issue-id>6663</issue-id>
+          <content><![CDATA[#[Location]#
+tcp/9090
+
+#[Output]#
+n/a
+
+
+
+]]></content>
+          <activities/>
+          <comments/>
+        </evidence>
+        <evidence>
+          <id>29867</id>
+          <author/>
+          <issue-id>6664</issue-id>
+          <content><![CDATA[#[Location]#
+tcp/443
+
+#[Output]#
+n/a
+
+
+
+]]></content>
+          <activities/>
+          <comments/>
+        </evidence>
+      </evidence>
+      <activities>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1495866657</created_at>
+        </activity>
+      </activities>
+    </node>
+    <node>
+      <id>2774</id>
+      <label>1.1.1.1</label>
+      <parent-id>2772</parent-id>
+      <position>0</position>
+      <properties><![CDATA[{
+  "network": "blue",
+  "ip": [
+    "1.1.1.1",
+    "1.1.1.2"
+  ],
+  "services": [
+    {
+      "port": 123,
+      "protocol": "udp",
+      "state": "open",
+      "name": "NTP"
+    },
+    {
+      "port": 161,
+      "protocol": "udp",
+      "state": "open",
+      "name": "SNMP"
+    }
+  ]
+}]]></properties>
+      <type-id>1</type-id>
+      <notes/>
+      <evidence>
+        <evidence>
+          <id>29868</id>
+          <author/>
+          <issue-id>6665</issue-id>
+          <content><![CDATA[#[Location]#
+Server
+
+#[Output]#
+The following NTP variables were found from a readvar request:
+
+bc.. system="cisco", leap=0, stratum=5, rootdelay=88.21,
+rootdispersion=108.54, peer=24960, refid=135.89.100.96,
+reftime=0xD80BB6B5.715ACDD8, poll=10, clock=0xD80BB78F.8931F3F6,
+phase=8.259, freq=-141.24, error=11.32]]></content>
+          <activities>
+            <activity>
+              <action>update</action>
+              <user_email>adama@dradisframework.com</user_email>
+              <created_at>1495865942</created_at>
+            </activity>
+          </activities>
+          <comments/>
+        </evidence>
+        <evidence>
+          <id>29869</id>
+          <author>adama@dradisframework.com</author>
+          <issue-id>6662</issue-id>
+          <content><![CDATA[#[Location]#
+/ui/warehouse/index.php
+
+#[Output]#
+!/projects/124/nodes/2774/attachments/command-01.png(Example caption created within Dradis)!
+
+URL encoded GET input *filter[qty_max]* was set to *(select(0)from(select(sleep(0)))v)/*'+(select(0)from(select(sleep(0)))v)+'"+(select(0)from(select(sleep(0)))v)+"*/*
+
+Tests performed:
+* (select(0)from(select(sleep(3)))v)/*'+(select(0)from(select(sleep(3)))v)+'"+(select(0)from(select(sleep(3)))v)+"*/ => *3.266 s*
+* (select(0)from(select(sleep(6)))v)/*'+(select(0)from(select(sleep(6)))v)+'"+(select(0)from(select(sleep(6)))v)+"*/ => *6.516 s*
+* (select(0)from(select(sleep(0)))v)/*'+(select(0)from(select(sleep(0)))v)+'"+(select(0)from(select(sleep(0)))v)+"*/ => *1.579 s*
+* (select(0)from(select(sleep(9)))v)/*'+(select(0)from(select(sleep(9)))v)+'"+(select(0)from(select(sleep(9)))v)+"*/ => *9.344 s*
+* (select(0)from(select(sleep(0)))v)/*'+(select(0)from(select(sleep(0)))v)+'"+(select(0)from(select(sleep(0)))v)+"*/ => *0.234 s*
+* (select(0)from(select(sleep(0)))v)/*'+(select(0)from(select(sleep(0)))v)+'"+(select(0)from(select(sleep(0)))v)+"*/ => *0.375 s*
+* (select(0)from(select(sleep(0)))v)/*'+(select(0)from(select(sleep(0)))v)+'"+(select(0)from(select(sleep(0)))v)+"*/ => *0.454 s*
+* (select(0)from(select(sleep(6)))v)/*'+(select(0)from(select(sleep(6)))v)+'"+(select(0)from(select(sleep(6)))v)+"*/ => *6.313 s*
+* (select(0)from(select(sleep(0)))v)/*'+(select(0)from(select(sleep(0)))v)+'"+(select(0)from(select(sleep(0)))v)+"*/ => *0.438 s*
+
+ Original value: *1*
+
+]]></content>
+          <activities>
+            <activity>
+              <action>create</action>
+              <user_email>adama@dradisframework.com</user_email>
+              <created_at>1495866591</created_at>
+            </activity>
+            <activity>
+              <action>update</action>
+              <user_email>adama@dradisframework.com</user_email>
+              <created_at>1504150101</created_at>
+            </activity>
+            <activity>
+              <action>update</action>
+              <user_email>adama@dradisframework.com</user_email>
+              <created_at>1525869293</created_at>
+            </activity>
+            <activity>
+              <action>update</action>
+              <user_email>adama@dradisframework.com</user_email>
+              <created_at>1531237536</created_at>
+            </activity>
+          </activities>
+          <comments/>
+        </evidence>
+      </evidence>
+      <activities>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1534423440</created_at>
+        </activity>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1544632774</created_at>
+        </activity>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1544632796</created_at>
+        </activity>
+      </activities>
+    </node>
+    <node>
+      <id>2775</id>
+      <label>10.0.155.157</label>
+      <parent-id>2772</parent-id>
+      <position>0</position>
+      <properties><![CDATA[{
+}]]></properties>
+      <type-id>1</type-id>
+      <notes>
+        <note>
+          <id>6660</id>
+          <author>Qualys upload plugin</author>
+          <category-id>3</category-id>
+          <text><![CDATA[#[Title]#
+Basic host info
+
+#[Description]#
+IP: 10.0.155.157
+Name: smtp.example.com
+OS: Linux 2.4-2.6]]></text>
+          <activities/>
+          <comments/>
+        </note>
+      </notes>
+      <evidence>
+        <evidence>
+          <id>29870</id>
+          <author/>
+          <issue-id>6666</issue-id>
+          <content><![CDATA[#[Location]#
+n/a/n/a
+
+#[Output]#
+bc.. Some of the ports filtered by the firewall are: 20, 21, 22, 23, 53, 111, 135, 139, 443, 445.
+]]></content>
+          <activities/>
+          <comments/>
+        </evidence>
+        <evidence>
+          <id>29871</id>
+          <author/>
+          <issue-id>6667</issue-id>
+          <content><![CDATA[#[Location]#
+n/a/n/a
+
+#[Output]#
+bc.. Tested on port 25 with an injected SYN/RST offset by 16 bytes.
+  Tested on port 80 with an injected SYN/RST offset by 16 bytes.
+]]></content>
+          <activities/>
+          <comments/>
+        </evidence>
+      </evidence>
+      <activities/>
+    </node>
+    <node>
+      <id>2776</id>
+      <label>10.0.155.160</label>
+      <parent-id>2772</parent-id>
+      <position>0</position>
+      <properties><![CDATA[{
+}]]></properties>
+      <type-id>1</type-id>
+      <notes>
+        <note>
+          <id>6661</id>
+          <author>Qualys upload plugin</author>
+          <category-id>3</category-id>
+          <text><![CDATA[#[Title]#
+Basic host info
+
+#[Description]#
+IP: 10.0.155.160
+Name: No registered hostname
+OS: Linux 2.4-2.6]]></text>
+          <activities/>
+          <comments/>
+        </note>
+      </notes>
+      <evidence>
+        <evidence>
+          <id>29872</id>
+          <author/>
+          <issue-id>6667</issue-id>
+          <content><![CDATA[#[Location]#
+n/a/n/a
+
+#[Output]#
+bc.. Tested on port 80 with an injected SYN/RST offset by 16 bytes.
+]]></content>
+          <activities/>
+          <comments/>
+        </evidence>
+        <evidence>
+          <id>29873</id>
+          <author/>
+          <issue-id>6668</issue-id>
+          <content><![CDATA[#[Location]#
+tcp/80
+
+#[Output]#
+bc.. HTTP/1.1 417 Expectation Failed
+Date: Fri, 20 Dec 2011 19:05:57 GMT
+Server: Apache
+Keep-Alive: timeout=15, max=100
+Connection: Keep-Alive
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=iso-8859-1
+
+&lt;!DOCTYPE HTML PUBLIC &quot;-//IETF//DTD HTML 2.0//EN&quot;&gt;
+&lt;HTML&gt;&lt;HEAD&gt;
+&lt;TITLE&gt;417 Expectation Failed&lt;/TITLE&gt;
+&lt;/HEAD&gt;&lt;BODY&gt;
+&lt;H1&gt;Expectation Failed&lt;/H1&gt;
+The expectation given in the Expect request-header
+field could not be met by this server.&lt;P&gt;
+The client sent&lt;PRE&gt;
+Expect: &lt;script&gt;alert(document.domain)&lt;/script&gt;
+&lt;/PRE&gt;
+but we only allow the 100-continue expectation.
+&lt;/BODY&gt;&lt;/HTML&gt;
+-CR-
+]]></content>
+          <activities/>
+          <comments/>
+        </evidence>
+        <evidence>
+          <id>29874</id>
+          <author/>
+          <issue-id>6669</issue-id>
+          <content><![CDATA[#[Location]#
+tcp/80
+
+#[Output]#
+bc.. &quot;3bee-4f12-00794aef&quot;
+]]></content>
+          <activities/>
+          <comments/>
+        </evidence>
+      </evidence>
+      <activities/>
+    </node>
+  </nodes>
+  <issues>
+    <issue>
+      <id>6662</id>
+      <author>Acunetix upload plugin</author>
+      <text><![CDATA[#[Title]#
+Blind SQL Injection
+
+#[CVSSv3.BaseScore]#
+9.8
+
+#[CVSSv3Vector]#
+AV:N/AC:M/Au:N/C:P/I:P/A:P
+
+#[Phase]#
+Webapp
+
+#[Type]#
+Internal
+
+#[QA]#
+Pending
+
+#[Description]#
+This script is possibly vulnerable to SQL Injection attacks.
+
+SQL injection is a vulnerability that allows an attacker to alter back-end SQL statements by manipulating the user input. An SQL injection occurs when web applications accept user input that is directly placed into a SQL statement and doesn't properly filter out dangerous characters.
+
+This is one of the most common application layer attacks currently being used on the Internet.  Despite the fact that it is relatively easy to protect against, there is a large number of web applications vulnerable.
+
+An attacker may execute arbitrary SQL statements on the vulnerable system. This may compromise the integrity of your database and/or expose sensitive information.
+
+Depending on the backend database in use, SQL injection vulnerabilities lead to varying levels of data/system access for the attacker. It may be possible to not only manipulate existing queries, but to UNION in arbitrary data, use subselects, or append additional queries. In some cases, it may be possible to read in or write out to files or to execute shell commands on the underlying operating system.
+
+Certain SQL Servers such as Microsoft SQL Server contain stored and extended procedures (database server functions). If an attacker can obtain access to these procedures it may be possible to compromise the entire machine.
+
+#[Solution]#
+Your script should filter metacharacters from user input.
+Check detailed information for more information about fixing this vulnerability.
+
+#[References]#
+Acunetix SQL Injection Attack
+http://www.acunetix.com/websitesecurity/sql-injection.htm
+
+VIDEO: SQL Injection tutorial
+http://www.acunetix.com/blog/web-security-zone/video-sql-injection-tutorial/
+
+OWASP Injection Flaws
+http://www.owasp.org/index.php/Injection_Flaws
+
+How to check for SQL injection vulnerabilities
+http://www.acunetix.com/websitesecurity/sql-injection2/
+
+SQL Injection Walkthrough
+http://www.securiteam.com/securityreviews/5DP0N1P76E.html
+
+OWASP PHP Top 5
+http://www.owasp.org/index.php/PHP_Top_5
+
+#[plugin]#
+acunetix
+
+#[plugin_id]#
+Scripting (Blind_Sql_Injection.script)/Blind SQL Injection
+
+#[jira_id]#
+10000
+
+#[jira_key]#
+SF-1]]></text>
+      <activities>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1495866017</created_at>
+        </activity>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1527084558</created_at>
+        </activity>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1530778108</created_at>
+        </activity>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1531307150</created_at>
+        </activity>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1531307157</created_at>
+        </activity>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1531310233</created_at>
+        </activity>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1534423619</created_at>
+        </activity>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1544632065</created_at>
+        </activity>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1544632294</created_at>
+        </activity>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1544632331</created_at>
+        </activity>
+      </activities>
+      <comments/>
+    </issue>
+    <issue>
+      <id>6663</id>
+      <author>Nessus upload plugin</author>
+      <text><![CDATA[#[Title]#
+Secure HyperText Transfer Protocol (S-HTTP) Detection
+
+#[CVSSv3.BaseScore]#
+3.8
+
+#[CVSSv3Vector]#
+CVSS2#AV:N/AC:L/Au:N/C:P/I:N/A:N
+
+#[Type]#
+Internal
+
+#[Description]#
+The remote web server accepts connections encrypted using Secure HyperText Transfer Protocol (S-HTTP), a cryptographic layer that was defined in 1999 by RFC 2660 and never widely implemented.
+
+#[Solution]#
+Rare or obsolete code is often poorly tested. Thus, it would be safer to disable support for S-HTTP and use HTTPS instead.
+
+#[References]#
+http://tools.ietf.org/html/rfc2660
+
+
+#[plugin]#
+nessus
+
+
+#[plugin_id]#
+11720
+]]></text>
+      <activities>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1495866298</created_at>
+        </activity>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1495866319</created_at>
+        </activity>
+      </activities>
+      <comments/>
+    </issue>
+    <issue>
+      <id>6664</id>
+      <author>Nessus upload plugin</author>
+      <text><![CDATA[#[Title]#
+SSL / TLS Renegotiation Handshakes MiTM Plaintext Data Injection
+
+#[CVSSv3.BaseScore]#
+2.6
+
+#[CVSSv3Vector]#
+AV:N/AC:H/Au:N/C:N/I:P/A:N
+
+#[Type]#
+Internal
+
+#[Description]#
+The remote service encrypts traffic using TLS / SSL but allows a client to renegotiate the connection after the initial handshake.  An unauthenticated remote attacker may be able to leverage this issue to inject an arbitrary amount of plaintext into the beginning of the application protocol stream, which could facilitate man-in-the-middle attacks if the service assumes that the sessions before and after renegotiation are from the same 'client' and merges them at the application layer.
+
+#[Solution]#
+Contact the vendor for specific patch information.
+
+#[References]#
+http://extendedsubset.com/?p=8
+http://www.ietf.org/mail-archive/web/tls/current/msg03948.html
+http://www.kb.cert.org/vuls/id/120541
+http://www.g-sec.lu/practicaltls.pdf
+https://svn.resiprocate.org/rep/ietf-drafts/ekr/draft-rescorla-tls-renegotiate.txt
+
+
+#[plugin]#
+nessus
+
+
+#[plugin_id]#
+42880
+]]></text>
+      <activities>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1495865763</created_at>
+        </activity>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1495866279</created_at>
+        </activity>
+      </activities>
+      <comments/>
+    </issue>
+    <issue>
+      <id>6665</id>
+      <author>Nexpose upload plugin</author>
+      <text><![CDATA[#[Title]#
+Apache HTTPD: error responses can expose cookies (CVE-2012-0053)
+
+#[CVSSv3.BaseScore]#
+4.3
+
+#[CVSSv3Vector]#
+AV:N/AC:M/Au:N/C:P/I:N/A:N
+
+#[Type]#
+Internal
+
+#[Description]#
+A flaw was found in the default error response for status code 400.  This flaw could be used by an attacker to expose "httpOnly" cookies when no custom ErrorDocument is specified.
+
+#[Solution]#
+Apache HTTPD >= 2.0 and < 2.0.65
+
+Many platforms and distributions provide pre-built binary packages for Apache HTTP server.  These pre-built packages are usually customized and optimized for a particular distribution, therefore we recommend that you use the packages if they are available for your operating system.
+
+#[References]#
+|_. source |_. text |
+| APPLE | APPLE-SA-2012-09-19-2 |
+| BID | 51706 |
+| CVE | CVE-2012-0053 |
+| REDHAT | RHSA-2012:0128 |
+| SECUNIA | 48551 |
+| URL | http://httpd.apache.org/security/vulnerabilities_20.html |
+| URL | http://httpd.apache.org/security/vulnerabilities_22.html |
+
+
+
+#[plugin]#
+nexpose
+
+
+#[plugin_id]#
+ntp-clock-variables-disclosure
+]]></text>
+      <activities>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1495866053</created_at>
+        </activity>
+      </activities>
+      <comments/>
+    </issue>
+    <issue>
+      <id>6666</id>
+      <author>Qualys upload plugin</author>
+      <text><![CDATA[#[Title]#
+Firewall Detected
+
+#[CVSSv3.BaseScore]#
+0.0
+
+#[CVSSv3Vector]#
+n/a
+
+#[Type]#
+External
+
+#[Description]#
+A packet filtering device protecting this IP was detected. This is likely to be a firewall or a router using access control lists (ACLs).
+
+#[Solution]#
+n/a
+
+#[References]#
+n/a
+
+#[host]#
+10.0.155.157
+
+#[plugin]#
+qualys
+
+#[plugin_id]#
+34011
+
+#[jira_id]#
+10001
+
+#[jira_key]#
+SF-2]]></text>
+      <activities>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1495865750</created_at>
+        </activity>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1495866234</created_at>
+        </activity>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1500144827</created_at>
+        </activity>
+      </activities>
+      <comments/>
+    </issue>
+    <issue>
+      <id>6667</id>
+      <author>Qualys upload plugin</author>
+      <text><![CDATA[#[Title]#
+TCP Sequence Number Approximation Based Denial of Service
+
+#[CVSSv3.BaseScore]#
+7.1
+
+#[CVSSv3Vector]#
+AV:N/AC:L/Au:N/C:P/I:N/A:N
+
+#[Type]#
+Internal
+
+#[Description]#
+TCP provides stateful communications between hosts on a network. TCP sessions are established by a three-way handshake and use random 32-bit sequence and acknowledgment numbers to ensure the validity of traffic. A vulnerability was reported that may permit TCP sequence numbers to be more easily approximated by remote attackers. This issue affects products released by multiple vendors.
+
+The cause of the vulnerability is that affected implementations will accept TCP sequence numbers within a certain range, known as the acknowledgement range, of the expected sequence number for a packet in the session. This is determined by the TCP window size, which is negotiated during the three-way handshake for the session. Larger TCP window sizes may be set to allow for more throughput, but the larger the TCP window size, the more probable it is to guess a TCP sequence number that falls within an acceptable range. It was initially thought that guessing an acceptable sequence number was relatively difficult for most implementations given random distribution, making this type of attack impractical. However, some implementations may make it easier to successfully approximate an acceptable TCP sequence number, making these attacks possible with a number of protocols and implementations.
+
+This is further compounded by the fact that some implementations may support the use of the TCP Window Scale Option, as described in RFC 1323, to extend the TCP window size to a maximum value of 1 billion.
+
+This vulnerability will permit a remote attacker to inject a SYN or RST packet into the session, causing it to be reset and effectively allowing for denial of service attacks. An attacker would exploit this issue by sending a packet to a receiving implementation with an approximated sequence number and a forged source IP address and TCP port.
+
+There are a few factors that may present viable target implementations, such as those which depend on long-lived TCP connections, those that have known or easily guessed IP address endpoints and those implementations with easily guessed TCP source ports. It has been noted that Border Gateway Protocol (BGP) is reported to be particularly vulnerable to this type of attack, due to the use of long-lived TCP sessions and the possibility that some implementations may use the TCP Window Scale Option. As a result, this issue is likely to affect a number of routing platforms.
+
+Another factor to consider is the relative difficulty of injecting packets into TCP sessions, as a number of receiving implementations will reassemble packets in order, dropping any duplicates. This may make some implementations more resistant to attacks than others.
+
+It should be noted that while a number of vendors have confirmed this issue in various products, investigations are ongoing and it is likely that many other vendors and products will turn out to be vulnerable as the issue is investigated further.
+
+Successful exploitation of this issue could lead to denial of service attacks on the TCP based services of target hosts. Other consequences may also result, such as man-in-the-middle attacks.
+
+
+#[Solution]#
+Please first check the results section below for the port number on which this vulnerability was detected. If that port number is known to be used for port-forwarding, then it is the backend host that is really vulnerable.
+
+Various implementations and products including Check Point, Cisco, Cray Inc, Hitachi, Internet Initiative Japan, Inc (IIJ), Juniper Networks, NEC, Polycom, and Yamaha are currently undergoing review. Contact the vendors to obtain more information about affected products and fixes. "NISCC Advisory 236929 - Vulnerability Issues in TCP":http://packetstormsecurity.org/0404-advisories/246929.html details the vendor patch status as of the time of the advisory, and identifies resolutions and workarounds.
+
+The Internet Engineering Task Force (IETF) has developed an Internet-Draft titled "Transmission Control Protocol Security Considerations":http://www3.ietf.org/proceedings/05mar/slides/tcpm-4.pdf that addresses this issue.
+
+*Workaround:*
+
+The following BGP-specific workaround information has been provided.
+
+For BGP implementations that support it, the TCP MD5 Signature Option should be enabled. Passwords that the MD5 checksum is applied to should be set to strong values and changed on a regular basis.
+
+Secure BGP configuration instructions have been provided for Cisco and Juniper at these locations:
+
+"http://www.cymru.com/Documents/secure-bgp-template.html":http://www.cymru.com/Documents/secure-bgp-template.html
+"http://www.qorbit.net/documents/junos-bgp-template.pdf":http://www.qorbit.net/documents/junos-bgp-template.pdf
+
+
+#[References]#
+n/a
+
+
+#[Number]#
+82054
+
+#[plugin]#
+qualys
+
+
+#[plugin_id]#
+82054
+]]></text>
+      <activities>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1495866407</created_at>
+        </activity>
+      </activities>
+      <comments/>
+    </issue>
+    <issue>
+      <id>6668</id>
+      <author>Qualys upload plugin</author>
+      <text><![CDATA[#[Title]#
+Apache 1.3 HTTP Server Expect Header Cross-Site Scripting
+
+#[CVSSv3.BaseScore]#
+7.4
+
+#[CVSSv3Vector]#
+AV:N/AC:L/Au:N/C:P/I:N/A:N
+
+#[Type]#
+External
+
+#[Description]#
+A vulnerability exists in Apache HTTP Server Versions 1.3.3 to 1.3.34. This issue occurs due to the handling of invalid Expect headers.
+An attacker can exploit this vulnerability to perform a cross-site scripting attack.
+
+#[Solution]#
+Upgrade to the latest version of Apache, which is available for download from the "Apache Web site":http://www.apache.org/.
+
+#[References]#
+Apache 1.3 http://httpd.apache.org/security/vulnerabilities_13.html
+
+#[Number]#
+86821
+
+#[plugin]#
+qualys
+
+#[plugin_id]#
+86821
+
+#[jira_id]#
+10002
+
+#[jira_key]#
+SF-3]]></text>
+      <activities>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1495865883</created_at>
+        </activity>
+      </activities>
+      <comments/>
+    </issue>
+    <issue>
+      <id>6669</id>
+      <author>Qualys upload plugin</author>
+      <text><![CDATA[#[Title]#
+Apache Web Server ETag Header Information Disclosure Weakness
+
+#[CVSSv3.BaseScore]#
+4.3
+
+#[CVSSv3Vector]#
+AV:N/AC:M/Au:N/C:P/I:N/A:N
+
+#[Type]#
+External
+
+#[Description]#
+The Apache HTTP Server is a popular, open-source HTTP server for multiple platforms, including Windows, Unix, and Linux.
+
+A cache management feature for Apache makes use of an entity tag (ETag) header. When this option is enabled and a request is made for a document relating to a file, an ETag response header is returned containing various file attributes for caching purposes. ETag information allows subsequent file requests to contain specific information, such as the file's inode number.
+
+A weakness has been found in the generation of ETag headers under certain configurations implementing the FileETag directive. Among the file attributes included in the header is the file inode number that is returned to a client. In Apache Versions 1.3.22 and earlier, it's not possible to disable inodes in in ETag headers. In later versions, the default behavior is to release this sensitive information.
+
+This vulnerability poses a security risk, as the disclosure of inode information may aid in launching attacks against other network-based services. For instance, NFS uses inode numbers to generate file handles.
+
+#[Solution]#
+OpenBSD has released a "patch":ftp://ftp.openbsd.org/pub/OpenBSD/patches/3.2/common/008_httpd.patch that fixes this vulnerability. After installing the patch, inode numbers returned from the server are encoded using a private hash to avoid the release of sensitive information.
+
+Customers are advised to upgrade to the latest version of Apache. In Apache Version "1.3.23":http://httpd.apache.org/docs/1.3/mod/core.html#fileetag and later, it's possible to configure the FileETag directive to generate ETag headers without inode information.
+
+To do so, include:
+
+bc. &quot;FileETag -INode&quot;
+
+in the Apache server configuration file for a specific subdirectory.
+
+In order to fix this vulnerability globally, for the Web server, use the option:
+
+bc. &quot;FileETag None&quot;.
+
+Use the option:
+
+bc.. &quot;FileETag
+MTime Size&quot;
+
+p. if you just want to remove the Inode information.
+
+#[References]#
+n/a
+
+#[Number]#
+86477
+
+#[plugin]#
+qualys
+
+#[plugin_id]#
+86477
+]]></text>
+      <activities>
+        <activity>
+          <action>update</action>
+          <user_email>adama@dradisframework.com</user_email>
+          <created_at>1495866203</created_at>
+        </activity>
+      </activities>
+      <comments/>
+    </issue>
+  </issues>
+  <methodologies>
+    <methodology version="1">
+      <text><![CDATA[<?xml version="1.0"?>
+<methodology>
+  <name>Simple OWASP checklist</name>
+  <sections>
+    <section>
+      <name>OWASP Top 10</name>
+      <tasks>
+        <task checked="checked">A1:2017 - Injection</task>
+        <task>A2:2017 - Broken Authentication</task>
+        <task>A3:2017 - Sensitive Data Exchange</task>
+        <task>A4:2017 - XML External Entities (XXE)</task>
+        <task>A5:2017 - Broken Access Control</task>
+        <task>A6:2017 - Security Misconfiguration</task>
+        <task>A7:2017 - Cross-Site Scripting (XSS)</task>
+        <task>A8:2017 - Insecure Deserialization</task>
+        <task>A9:2017 - Using Components with Known Vulnerabilities</task>
+        <task>A10:2017 - Insufficiend Logging &amp; Monitoring</task>
+      </tasks>
+    </section>
+    <section>
+      <name>A1:2017 - Injection</name>
+      <tasks>
+        <task checked="checked">Check for SQL injection</task>
+        <task checked="checked">Check for LDAP injection</task>
+        <task>Check for XPath injection</task>
+        <task>Check for NoSQL injection</task>
+        <task>Check for OS command injection</task>
+        <task>Check for XML injection</task>
+        <task>Check for SMTP headers injection</task>
+        <task>Check for ORM queries injection</task>
+      </tasks>
+    </section>
+  </sections>
+</methodology>
+  ]]></text>
+    </methodology>
+  </methodologies>
+  <categories>
+    <category>
+      <id>4</id>
+      <name>Issue description</name>
+    </category>
+    <category>
+      <id>3</id>
+      <name>Default category</name>
+    </category>
+  </categories>
+  <tags>
+    <tag>
+      <id>397</id>
+      <name>!9467bd_critical</name>
+      <taggings>
+        <tagging>
+          <taggable-id>6662</taggable-id>
+          <taggable-type>Note</taggable-type>
+        </tagging>
+      </taggings>
+    </tag>
+    <tag>
+      <id>398</id>
+      <name>!d62728_high</name>
+      <taggings>
+        <tagging>
+          <taggable-id>6667</taggable-id>
+          <taggable-type>Note</taggable-type>
+        </tagging>
+        <tagging>
+          <taggable-id>6668</taggable-id>
+          <taggable-type>Note</taggable-type>
+        </tagging>
+      </taggings>
+    </tag>
+    <tag>
+      <id>399</id>
+      <name>!ff7f0e_medium</name>
+      <taggings>
+        <tagging>
+          <taggable-id>6665</taggable-id>
+          <taggable-type>Note</taggable-type>
+        </tagging>
+        <tagging>
+          <taggable-id>6669</taggable-id>
+          <taggable-type>Note</taggable-type>
+        </tagging>
+      </taggings>
+    </tag>
+    <tag>
+      <id>400</id>
+      <name>!6baed6_low</name>
+      <taggings>
+        <tagging>
+          <taggable-id>6663</taggable-id>
+          <taggable-type>Note</taggable-type>
+        </tagging>
+        <tagging>
+          <taggable-id>6664</taggable-id>
+          <taggable-type>Note</taggable-type>
+        </tagging>
+      </taggings>
+    </tag>
+    <tag>
+      <id>401</id>
+      <name>!2ca02c_info</name>
+      <taggings>
+        <tagging>
+          <taggable-id>6666</taggable-id>
+          <taggable-type>Note</taggable-type>
+        </tagging>
+      </taggings>
+    </tag>
+  </tags>
+</dradis-template>
