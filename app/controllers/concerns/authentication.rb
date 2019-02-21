@@ -8,8 +8,7 @@ module Authentication
   end
 
   def access_denied
-    # specify 'main_app' explicitly in case we're inside an engine.
-    redirect_to(main_app.login_path, alert: 'Please sign in first. Access denied.')
+    throw :warden, message: 'Please sign in first. Access denied.'
   end
 
   # Proxy to the authenticated? method on warden
