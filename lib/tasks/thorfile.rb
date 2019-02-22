@@ -187,7 +187,8 @@ class DradisTasks < Thor
 
       Rails.application.eager_load!
       (ApplicationRecord.descendants - [Configuration]).each do |model|
-        model.destroy_all
+        ActiveRecord::Base.connection.execute("DELETE FROM #{model.table_name}")
+        ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='#{model.table_name}'")
       end
 
       puts "[  DONE  ]"
