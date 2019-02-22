@@ -322,6 +322,10 @@ describe 'Issues pages' do
         describe 'add evidence', js: true do
           before do
             @node = current_project.nodes.create!(label: '192.168.0.1')
+
+            template_path = Rails.root.join('spec/fixtures/files/note_templates/')
+            allow(NoteTemplate).to receive(:pwd).and_return(template_path)
+
             visit project_issue_path(current_project, @issue)
             click_link('Evidence')
           end
@@ -345,10 +349,10 @@ describe 'Issues pages' do
           it 'creates an evidence with the selected template for selected node' do
             find('.js-add-evidence').click
             check('192.168.0.1')
-            select('Basic Fields', from: 'evidence_content')
+            select('Simple Note', from: 'evidence_content')
             expect { click_button('Save Evidence') }.to change { Evidence.count }.by(1)
             evidence = Evidence.last
-            expect(evidence.content).to eq(NoteTemplate.find('basic_fields').content.gsub("\n", "\r\n"))
+            expect(evidence.content).to eq(NoteTemplate.find('simple_note').content.gsub("\n", "\r\n"))
             expect(evidence.node.label).to eq '192.168.0.1'
           end
 
