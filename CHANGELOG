@@ -8,6 +8,9 @@ v3.12 (XXX)
  - Sort attachments in alphabetical ASCII order
  - Fix methodology checklist edit error
 
+v3.11.1 (February 2019)
+ - Fix blockcode vulnerability in Textile formatting
+
 v3.11 (November 2018)
  - Added comments, subscriptions and notifications to notes
  - Added comments, subscriptions and notifications to evidence
