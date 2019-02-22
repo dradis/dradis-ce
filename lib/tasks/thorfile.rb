@@ -146,6 +146,12 @@ class DradisTasks < Thor
 
       importer = Dradis::Plugins::Projects::Upload::Template::Importer.new(task_options)
       importer.import(file: File.expand_path('../templates/project.xml', __FILE__))
+
+      # dradis:reset:database truncates the tables and resets the :id column so
+      # we know the right node ID we're going to get based on the project.xml
+      # structure.
+      Dir.mkdir(Attachment.pwd.join('5'))
+      template 'command-01.png', Attachment.pwd.join('5/command-01.png')
     end
   end
 

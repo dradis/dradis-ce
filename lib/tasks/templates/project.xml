@@ -313,7 +313,7 @@ phase=8.259, freq=-141.24, error=11.32]]></content>
 /ui/warehouse/index.php
 
 #[Output]#
-!/projects/124/nodes/2774/attachments/command-01.png(Example caption created within Dradis)!
+!/projects/1/nodes/2774/attachments/command-01.png(Example caption created within Dradis)!
 
 URL encoded GET input *filter[qty_max]* was set to *(select(0)from(select(sleep(0)))v)/*'+(select(0)from(select(sleep(0)))v)+'"+(select(0)from(select(sleep(0)))v)+"*/*
 
