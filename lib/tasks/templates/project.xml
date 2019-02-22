@@ -23,7 +23,7 @@ p(pull-right). !/assets/logo_small-3459adc9b083bab7dbfd3a54cffc86b722e6044726488
 We have pre-populated this project with a little bit of everything so you get a sense of what working with Dradis in a real assessment would be like.
 
 The core concepts you need to know about:
-* **All issues**: This is where your add findings to the project. You can "add them manually":http://localhost:3000/projects/1/issues or "upload the output from a tool":http://localhost:3000/projects/1/upload.
+* **All issues**: This is where your add findings to the project. You can "add them manually":/projects/1/issues or "upload the output from a tool":/projects/1/upload.
 * **Methodologies**: Think checklists, this is how you keep track of all the tasks you want to go through for the assessment.
 * **Nodes**: Think folders or directories. Nodes is how you keep your project organized:
 ** For an **infrastructure** assessment you'll create nodes for each IP address or network range.
@@ -47,13 +47,13 @@ The core concepts you need to know about:
 #[Description]#
 When you're ready to start with a new empty project:
 
-# "Log out":http://localhost:3000/logout
+# "Log out":/logout
 # Kill the server and go back to the console.
 # Run: @bundle exec thor dradis:reset@
 
 If you ever want to reload this sample project again:
 
-# "Log out":http://localhost:3000/logout
+# "Log out":/logout
 # Kill the server and go back to the console.
 # Run: @bundle exec thor dradis:reset@
 # Run: @bundle exec thor dradis:setup:welcome@]]></text>
