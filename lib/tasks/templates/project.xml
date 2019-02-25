@@ -360,8 +360,7 @@ Tests performed:
                     <id>5</id>
                     <author></author>
                     <issue-id>15</issue-id>
-                    <content>
-                        <![CDATA[#[Title]#
+                    <content><![CDATA[#[Title]#
 This is how Evidence works
 
 #[Description]#
@@ -1053,8 +1052,7 @@ qualys
         <issue>
             <id>15</id>
             <author>adama@dradisframework.com</author>
-            <text>
-                <![CDATA[#[Title]#
+            <text><![CDATA[#[Title]#
 0.- This is how you make Issues in Dradis
 
 #[CVSSv3.BaseScore]#
@@ -1113,7 +1111,7 @@ SF-1]]>
         <methodology version="1">
             <text>
                 <![CDATA[
-                <?xml version="1.0"?><methodology><name>Getting started with Dradis checklist</name><sections><section><name>Issues, Evidence, and Plugins</name><tasks><task>Click on the "0.- This is how you make Issues in Dradis " Issue</task><task>Create your first Issue</task><task>Tag your Issue</task><task>Add a piece of Evidence to an existing Node</task><task>Edit a piece of Evidence</task><task>Add a screenshot to an Issue or piece of Evidence</task><task>Upload output from tool using your favourite plugin</task><task>Explore Issues and Evidence added by tool output</task></tasks></section><section><name>Nodes, Notes, and Node properties</name><tasks><task>Read the "0.- Start Here" Node</task><task>Read the "1.- Scope" Node</task><task>Add a Node manually</task><task>Add a subnode manually</task><task>After uploading output from a tool, explore the Nodes added under plugin.output</task><task>Create a Note on a Node</task><task>Look at Node properties. You can find sample properties on the 1.1.1.1 subnode under plugin.output</task></tasks></section><section><name>Methodologies</name><tasks><task checked="checked">See the Methodologies overview on the Project Dashboard</task><task checked="checked">Open the Methodologies view</task><task>Check off a task</task><task>Edit this Methodology</task><task>Add a new "Simple OWASP Checklist" Methodology from the existing template</task><task>Explore other templates available for download (from the "Add New" drop-down)</task></tasks></section><section><name>Support and documentation</name><tasks><task>Dradis CE Documentation page https://dradisframework.com/ce/documentation/</task><task>Check out our Dradis CE Forum: http://discuss.dradisframework.org/</task><task>Dradis Pro support pages https://dradisframework.com/support/</task><task>Dradis CE on GitHub https://github.com/dradis/dradis-ce</task><task>Dradis CE on Slack dradis.slack.com</task></tasks></section></sections></methodology>
+                <?xml version="1.0"?><methodology><name>Getting started with Dradis checklist</name><sections><section><name>Issues, Evidence, and Plugins</name><tasks><task>Click on the "0.- This is how you make Issues in Dradis " Issue</task><task>Create your first Issue</task><task>Tag your Issue</task><task>Add a piece of Evidence to an existing Node</task><task>Edit a piece of Evidence</task><task>Add a screenshot to an Issue or piece of Evidence</task><task>Upload output from tool using your favourite plugin</task><task>Explore Issues and Evidence added by tool output</task></tasks></section><section><name>Nodes, Notes, and Node properties</name><tasks><task>Read the "0.- Start Here" Node</task><task>Read the "1.- Scope" Node</task><task>Add a Node manually</task><task>Add a subnode manually</task><task>After uploading output from a tool, explore the Nodes added under plugin.output</task><task>Create a Note on a Node</task><task>Look at Node properties. You can find sample properties on the 1.1.1.1 subnode under plugin.output</task></tasks></section><section><name>Methodologies</name><tasks><task checked="checked">See the Methodologies overview on the Project Dashboard</task><task checked="checked">Open the Methodologies view</task><task>Check off a task</task><task>Edit this Methodology</task><task>Add a new "Simple OWASP Checklist" Methodology from the existing template</task><task>Explore other templates available for download (from the "Add New" drop-down)</task></tasks></section><section><name>Support and documentation</name><tasks><task>Dradis CE Documentation page https://dradisframework.com/ce/documentation/</task><task>Check out our Dradis CE Forum: http://drad.is/l/forum/</task><task>Dradis Pro support pages https://dradisframework.com/support/</task><task>Dradis CE on GitHub https://github.com/dradis/dradis-ce</task><task>Dradis CE on Slack http://drad.is/l/slack</task></tasks></section></sections></methodology>
   ]]>
             </text>
         </methodology>
