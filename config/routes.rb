@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   resources :projects, only: [:show] do
     resources :activities, only: [] do
       collection do
-        get :poll, defaults: { format: :js }
+        get :poll, constraints: { format: /js/ }
       end
     end
 
