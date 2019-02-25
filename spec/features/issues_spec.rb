@@ -355,7 +355,10 @@ describe 'Issues pages' do
           it 'creates an evidence for new nodes and existing nodes too' do
             find('.js-add-evidence').click
             fill_in 'Paste list of nodes', with: "192.168.0.1\r\n192.168.0.2\r\n192.168.0.3"
-            expect { click_button('Save Evidence') }.to change { Evidence.count }.by(3).and change { Node.count }.by(2)
+            expect do
+              click_button('Save Evidence')
+              expect(page).to have_text 'Evidence added for selected nodes.'
+            end.to change { Evidence.count }.by(3).and change { Node.count }.by(2)
 
             # New nodes don't have a parent:
             current_project.nodes.order('created_at ASC').last(2).each do |node|
