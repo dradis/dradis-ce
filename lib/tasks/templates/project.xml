@@ -38,11 +38,84 @@ The core concepts you need to know about:
           <comments/>
         </note>
         <note>
-          <id>601</id>
+            <id>601</id>
+            <author>adama@dradisframework.com</author>
+            <category-id>3</category-id>
+            <text><![CDATA[#[Title]#
+1.- Adding Issues
+
+#[CVSSv3.BaseScore]#
+Learn about CVSS scoring here: https://www.first.org/cvss/specification-document
+
+#[CVSSv3Vector]#
+Learn about CVSS Vectors here: https://www.first.org/cvss/calculator/3.0
+
+#[Phase]#
+Webapp
+
+#[Type]#
+Internal
+
+#[QA]#
+Pending
+
+#[Description]#
+This is where you get started with Dradis issues.  Issues can be added manually or through tool output, such as Nessus, Burp, Metasploit, and so on.
+
+You can configure the fields however you like.  To add a field it needs to be formatted appropriately.  Click "Edit" for this issue to see what the field headers should look like.
+
+Learn more about Issues here: https://dradisframework.com/support/guides/projects/issues.html
+
+#[Solution]#
+Next, we're going to learn about Evidence.  Click on Evidence, above!
+
+#[References]#
+https://dradisframework.com/ce/
+https://dradisframework.com/support/guides/projects/index.html
+
+
+#[plugin]#
+This field gets auto-populated when an issue is added from uploading tool output.
+
+#[plugin_id]#
+This would be the identifier field when an issue is auto-magically added by uploading tool output.
+
+#[jira_id]#
+JIRA integration is a Pro feature, but the field you see here can be added by tool upload as well. https://dradisframework.com/support/guides/jira/index.html
+
+#[jira_key]#
+SF-1]]>
+            </text>
+            <activities/>
+            <comments></comments>
+        </note>
+        <note>
+            <id>602</id>
+            <author>adama@dradisframework.com</author>
+            <category-id>3</category-id>
+            <text><![CDATA[#[Title]#
+2.- Adding Evidence
+
+#[Description]#
+Every Issue can be associated with one or more instances of Evidence. Evidence lives on the Node level.
+
+If you delete that Node, the Evidence disappears as well.
+
+Plugins such as Nessus, Burp, etc. will add Nodes and subnodes, and Evidence within those Nodes.  They will appear under the @plugin.output@ Node that you see on the left.
+
+You can also add images/screenshots and captions.  Like this!
+
+!/projects/1/nodes/5/attachments/command-01.png(Example caption created within Dradis)!]]>
+            </text>
+            <activities/>
+            <comments></comments>
+        </note>
+        <note>
+          <id>603</id>
           <author>adama@dradisframework.com</author>
           <category-id>3</category-id>
           <text><![CDATA[#[Title]#
-1.- Next steps
+3.- Next steps
 
 #[Description]#
 When you're ready to start with a new empty project:
@@ -352,33 +425,6 @@ Tests performed:
                             <action>update</action>
                             <user_email>adama@dradisframework.com</user_email>
                             <created_at>1531237536</created_at>
-                        </activity>
-                    </activities>
-                    <comments></comments>
-                </evidence>
-                <evidence>
-                    <id>5</id>
-                    <author></author>
-                    <issue-id>15</issue-id>
-                    <content><![CDATA[#[Title]#
-This is how Evidence works
-
-#[Description]#
-Every Issue should be associated with at least one instance of Evidence.  Evidence lives on the Host level.  You may add Evidence either from the Issue view on the Evidence tab, or on the Nodes view for the appropriate Node.  Click to add Evidence and fill in the fields as you did for Issues.
-
-As you can see above, this sample piece of evidence lives on the 1.1.1.1 Node.  If you delete that Node, the Evidence disappears as well.
-
-Plugins such as Nessus, Burp, etc. will add Nodes and subnodes, and Evidence within those Nodes.  They will appear under the "plugin.output" Node that you see on the left.
-
-You can also add images/screenshots and captions.  Like this!
-
-!/projects/1/nodes/2774/attachments/command-01.png(Example caption created within Dradis)!]]>
-                    </content>
-                    <activities>
-                        <activity>
-                            <action>create</action>
-                            <user_email>adama@dradisframework.com</user_email>
-                            <created_at>1550824718</created_at>
                         </activity>
                     </activities>
                     <comments></comments>
@@ -1049,69 +1095,12 @@ qualys
             </activities>
             <comments></comments>
         </issue>
-        <issue>
-            <id>15</id>
-            <author>adama@dradisframework.com</author>
-            <text><![CDATA[#[Title]#
-0.- This is how you make Issues in Dradis
-
-#[CVSSv3.BaseScore]#
-Learn about CVSS scoring here: https://www.first.org/cvss/specification-document
-
-#[CVSSv3Vector]#
-Learn about CVSS Vectors here: https://www.first.org/cvss/calculator/3.0
-
-#[Phase]#
-Webapp
-
-#[Type]#
-Internal
-
-#[QA]#
-Pending
-
-#[Description]#
-This is where you get started with Dradis issues.  Issues can be added manually or through tool output, such as Nessus, Burp, Metasploit, and so on.
-
-You can configure the fields however you like.  To add a field it needs to be formatted appropriately.  Click "Edit" for this issue to see what the field headers should look like.
-
-Learn more about Issues here: https://dradisframework.com/support/guides/projects/issues.html
-
-#[Solution]#
-Next, we're going to learn about Evidence.  Click on Evidence, above!
-
-#[References]#
-https://dradisframework.com/ce/
-https://dradisframework.com/support/guides/projects/index.html
-
-
-#[plugin]#
-This field gets auto-populated when an issue is added from uploading tool output.
-
-#[plugin_id]#
-This would be the identifier field when an issue is auto-magically added by uploading tool output.
-
-#[jira_id]#
-JIRA integration is a Pro feature, but the field you see here can be added by tool upload as well. https://dradisframework.com/support/guides/jira/index.html
-
-#[jira_key]#
-SF-1]]>
-            </text>
-            <activities>
-                <activity>
-                    <action>create</action>
-                    <user_email>adama@dradisframework.com</user_email>
-                    <created_at>1550769026</created_at>
-                </activity>
-            </activities>
-            <comments></comments>
-        </issue>
     </issues>
     <methodologies>
         <methodology version="1">
             <text>
                 <![CDATA[
-                <?xml version="1.0"?><methodology><name>Getting started with Dradis checklist</name><sections><section><name>Issues, Evidence, and Plugins</name><tasks><task>Click on the "0.- This is how you make Issues in Dradis " Issue</task><task>Create your first Issue</task><task>Tag your Issue</task><task>Add a piece of Evidence to an existing Node</task><task>Edit a piece of Evidence</task><task>Add a screenshot to an Issue or piece of Evidence</task><task>Upload output from tool using your favourite plugin</task><task>Explore Issues and Evidence added by tool output</task></tasks></section><section><name>Nodes, Notes, and Node properties</name><tasks><task>Read the "0.- Start Here" Node</task><task>Read the "1.- Scope" Node</task><task>Add a Node manually</task><task>Add a subnode manually</task><task>After uploading output from a tool, explore the Nodes added under plugin.output</task><task>Create a Note on a Node</task><task>Look at Node properties. You can find sample properties on the 1.1.1.1 subnode under plugin.output</task></tasks></section><section><name>Methodologies</name><tasks><task checked="checked">See the Methodologies overview on the Project Dashboard</task><task checked="checked">Open the Methodologies view</task><task>Check off a task</task><task>Edit this Methodology</task><task>Add a new "Simple OWASP Checklist" Methodology from the existing template</task><task>Explore other templates available for download (from the "Add New" drop-down)</task></tasks></section><section><name>Support and documentation</name><tasks><task>Dradis CE Documentation page https://dradisframework.com/ce/documentation/</task><task>Check out our Dradis CE Forum: http://drad.is/l/forum/</task><task>Dradis Pro support pages https://dradisframework.com/support/</task><task>Dradis CE on GitHub https://github.com/dradis/dradis-ce</task><task>Dradis CE on Slack http://drad.is/l/slack</task></tasks></section></sections></methodology>
+                <?xml version="1.0"?><methodology><name>Getting started with Dradis checklist</name><sections><section><name>Issues, Evidence, and Plugins</name><tasks><task>Create your first Issue</task><task>Tag your Issue</task><task>Add a piece of Evidence to an existing Node</task><task>Edit a piece of Evidence</task><task>Add a screenshot to an Issue or piece of Evidence</task><task>Upload output from tool using your favourite plugin</task><task>Explore Issues and Evidence added by tool output</task></tasks></section><section><name>Nodes, Notes, and Node properties</name><tasks><task>Read the "0.- Start Here" Node</task><task>Read the "1.- Scope" Node</task><task>Add a Node manually</task><task>Add a subnode manually</task><task>After uploading output from a tool, explore the Nodes added under plugin.output</task><task>Create a Note on a Node</task><task>Look at Node properties. You can find sample properties on the 1.1.1.1 subnode under plugin.output</task></tasks></section><section><name>Methodologies</name><tasks><task checked="checked">See the Methodologies overview on the Project Dashboard</task><task checked="checked">Open the Methodologies view</task><task>Check off a task</task><task>Edit this Methodology</task><task>Add a new "Simple OWASP Checklist" Methodology from the existing template</task><task>Explore other templates available for download (from the "Add New" drop-down)</task></tasks></section><section><name>Support and documentation</name><tasks><task>Dradis CE Documentation page https://dradisframework.com/ce/documentation/</task><task>Check out our Dradis CE Forum: http://drad.is/l/forum/</task><task>Dradis Pro support pages https://dradisframework.com/support/</task><task>Dradis CE on GitHub https://github.com/dradis/dradis-ce</task><task>Dradis CE on Slack http://drad.is/l/slack</task></tasks></section></sections></methodology>
   ]]>
             </text>
         </methodology>
@@ -1133,10 +1122,6 @@ SF-1]]>
             <taggings>
                 <tagging>
                     <taggable-id>6662</taggable-id>
-                    <taggable-type>Note</taggable-type>
-                </tagging>
-                <tagging>
-                    <taggable-id>15</taggable-id>
                     <taggable-type>Note</taggable-type>
                 </tagging>
             </taggings>
