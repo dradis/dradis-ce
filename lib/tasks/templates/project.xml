@@ -66,12 +66,6 @@ You can configure the fields however you like.  To add a field it needs to be fo
 
 Learn more about Issues "*here*":https://dradisframework.com/support/guides/projects/issues.html
 
-#[CVSSv3.BaseScore]#
-Learn about CVSS scoring "*here*":https://www.first.org/cvss/specification-document
-
-#[CVSSv3Vector]#
-Learn about CVSS Vectors "*here*":https://www.first.org/cvss/calculator/3.0
-
 #[Next]#
 Next, we're going to learn about Evidence.
 
@@ -79,33 +73,7 @@ Next, we're going to learn about Evidence.
 https://dradisframework.com/ce/
 https://dradisframework.com/support/guides/projects/index.html
             ]]></text>
-          <activities>
-            <activity>
-              <action>update</action>
-              <user_email>adama@dradisframework.com</user_email>
-              <created_at>1551110897</created_at>
-            </activity>
-            <activity>
-              <action>update</action>
-              <user_email>adama@dradisframework.com</user_email>
-              <created_at>1551111031</created_at>
-            </activity>
-            <activity>
-              <action>update</action>
-              <user_email>adama@dradisframework.com</user_email>
-              <created_at>1551111228</created_at>
-            </activity>
-            <activity>
-              <action>update</action>
-              <user_email>adama@dradisframework.com</user_email>
-              <created_at>1551111297</created_at>
-            </activity>
-            <activity>
-              <action>update</action>
-              <user_email>adama@dradisframework.com</user_email>
-              <created_at>1551112032</created_at>
-            </activity>
-          </activities>
+          <activities/>
           <comments/>
         </note>
         <note>
@@ -122,17 +90,9 @@ If you delete that Node, the Evidence disappears as well.
 
 Plugins such as Nessus, Burp, etc. will add Nodes and subnodes, and Evidence within those Nodes.  They will appear under the @plugin.output@ Node that you see on the left.
 
-You can also add "images/screenshots and captions":https://dradisframework.com/support/guides/word_reports/styles.html.  Like this!
-
-!/projects/1/nodes/5/attachments/command-01.png(Example caption created within Dradis)!
+You can also add "images/screenshots and captions":https://dradisframework.com/support/guides/word_reports/styles.html.
             ]]></text>
-          <activities>
-            <activity>
-              <action>update</action>
-              <user_email>adama@dradisframework.com</user_email>
-              <created_at>1551111382</created_at>
-            </activity>
-          </activities>
+          <activities/>
           <comments/>
         </note>
         <note>
@@ -155,18 +115,7 @@ If you ever want to reload this sample project again:
 # Kill the server and go back to the console.
 # Run: @bundle exec thor dradis:reset@
 # Run: @bundle exec thor dradis:setup:welcome@]]></text>
-          <activities>
-            <activity>
-              <action>update</action>
-              <user_email>adama@dradisframework.com</user_email>
-              <created_at>1551111411</created_at>
-            </activity>
-            <activity>
-              <action>update</action>
-              <user_email>adama@dradisframework.com</user_email>
-              <created_at>1551111764</created_at>
-            </activity>
-          </activities>
+          <activities/>
           <comments/>
         </note>
         <note>
@@ -180,18 +129,7 @@ If you ever want to reload this sample project again:
 Nodes and hosts are where you place Evidence.  Hosts can be IP addresses, URLs (e.g. www.google.com), or anything else you choose to name them.  Like Issues and Evidence, they can be added manually or be created using tool output.  Tool output nodes will live under the "plugin.output":/projects/1/nodes/3 node.
 
 Once you have created a Node, you can add Notes or Evidence to that Node.  A Note is flexible; it can contain any sort of data you like, functioning like a notepad for penetration testers if you like.  Notes can also be exported into reports if they are in the Default category.  Evidence needs to be associated with an Issue.]]></text>
-          <activities>
-            <activity>
-              <action>create</action>
-              <user_email>adama@dradisframework.com</user_email>
-              <created_at>1551111460</created_at>
-            </activity>
-            <activity>
-              <action>update</action>
-              <user_email>adama@dradisframework.com</user_email>
-              <created_at>1551111701</created_at>
-            </activity>
-          </activities>
+          <activities/>
           <comments/>
         </note>
         <note>
@@ -205,13 +143,7 @@ Once you have created a Node, you can add Notes or Evidence to that Node.  A Not
 Methodologies are essentially customizable kanban boards with lists and tasks.  We have included an OWASP Checklist methodology template, but you can also create your own methodologies and methodology templates.  Methodologies are optional, but can also be exported into reports if you like - for example to show Pass/Fail items on a checklist.
 
 Look at how Methodologies work "*here*":/projects/1/methodologies!]]></text>
-          <activities>
-            <activity>
-              <action>create</action>
-              <user_email>adama@dradisframework.com</user_email>
-              <created_at>1551111964</created_at>
-            </activity>
-          </activities>
+          <activities/>
           <comments/>
         </note>
       </notes>
@@ -1178,11 +1110,58 @@ qualys
   </issues>
   <methodologies>
     <methodology version="1">
-      <text><![CDATA[
-                
-                <?xml version="1.0"?><methodology><name>Getting started with Dradis checklist</name><sections><section><name>Issues, Evidence, and Plugins</name><tasks><task>Create your first Issue</task><task>Tag your Issue</task><task>Add a piece of Evidence to an existing Node</task><task>Edit a piece of Evidence</task><task>Add a screenshot to an Issue or piece of Evidence</task><task>Upload output from tool using your favourite plugin</task><task>Explore Issues and Evidence added by tool output</task></tasks></section><section><name>Nodes, Notes, and Node properties</name><tasks><task>Read the "0.- Start Here" Node</task><task>Read the "1.- Scope" Node</task><task>Add a Node manually</task><task>Add a subnode manually</task><task>After uploading output from a tool, explore the Nodes added under plugin.output</task><task>Create a Note on a Node</task><task>Look at Node properties. You can find sample properties on the 1.1.1.1 subnode under plugin.output</task></tasks></section><section><name>Methodologies</name><tasks><task checked="checked">See the Methodologies overview on the Project Dashboard</task><task checked="checked">Open the Methodologies view</task><task>Check off a task</task><task>Edit this Methodology</task><task>Add a new "Simple OWASP Checklist" Methodology from the existing template</task><task>Explore other templates available for download (from the "Add New" drop-down)</task></tasks></section><section><name>Support and documentation</name><tasks><task>Dradis CE Documentation page https://dradisframework.com/ce/documentation/</task><task>Check out our Dradis CE Forum: http://drad.is/l/forum/</task><task>Dradis Pro support pages https://dradisframework.com/support/</task><task>Dradis CE on GitHub https://github.com/dradis/dradis-ce</task><task>Dradis CE on Slack http://drad.is/l/slack</task></tasks></section></sections></methodology>
-  
-            ]]></text>
+      <text><![CDATA[<?xml version="1.0"?>
+<methodology>
+  <name>Getting started with Dradis checklist</name>
+  <sections>
+    <section>
+      <name>Issues, Evidence, and Plugins</name>
+      <tasks>
+        <task>Create your first Issue</task>
+        <task>Tag your Issue</task>
+        <task>Add a piece of Evidence to an existing Node</task>
+        <task>Edit a piece of Evidence</task>
+        <task>Add a screenshot to an Issue or piece of Evidence</task>
+        <task>Upload output from tool using your favourite plugin</task>
+        <task>Explore Issues and Evidence added by tool output</task>
+      </tasks>
+    </section>
+    <section>
+      <name>Nodes, Notes, and Node properties</name>
+      <tasks>
+        <task>Read the "0.- Start Here" Node</task>
+        <task>Read the "1.- Scope" Node</task>
+        <task>Add a Node manually</task>
+        <task>Add a subnode manually</task>
+        <task>After uploading output from a tool, explore the Nodes added under plugin.output</task>
+        <task>Create a Note on a Node</task>
+        <task>Look at Node properties. You can find sample properties on the 1.1.1.1 subnode under plugin.output</task>
+      </tasks>
+    </section>
+    <section>
+      <name>Methodologies</name>
+      <tasks>
+        <task checked="checked">See the Methodologies overview on the Project Dashboard</task>
+        <task checked="checked">Open the Methodologies view</task>
+        <task>Check off a task</task>
+        <task>Edit this Methodology</task>
+        <task>Add a new "Simple OWASP Checklist" Methodology from the existing template</task>
+        <task>Explore other templates available for download (from the "Add New" drop-down)</task>
+      </tasks>
+    </section>
+    <section>
+      <name>Support and documentation</name>
+      <tasks>
+        <task>Dradis CE Documentation page https://dradisframework.com/ce/documentation/</task>
+        <task>Check out our Dradis CE Forum: http://drad.is/l/forum/</task>
+        <task>Dradis Pro support pages https://dradisframework.com/support/</task>
+        <task>Dradis CE on GitHub https://github.com/dradis/dradis-ce</task>
+        <task>Dradis CE on Slack http://drad.is/l/slack</task>
+      </tasks>
+    </section>
+  </sections>
+</methodology>
+]]></text>
     </methodology>
   </methodologies>
   <categories>
