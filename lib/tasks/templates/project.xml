@@ -2,7 +2,7 @@
 <dradis-template version="2">
   <nodes>
     <node>
-      <id>2771</id>
+      <id>1</id>
       <label>0.- Start Here</label>
       <parent-id/>
       <position>0</position>
@@ -11,9 +11,9 @@
       <type-id>0</type-id>
       <notes>
         <note>
-          <id>600</id>
+          <id>1</id>
           <author>adama@dradisframework.com</author>
-          <category-id>3</category-id>
+          <category-id>2</category-id>
           <text><![CDATA[#[Title]#
 0.- Welcome to Dradis!
 
@@ -38,11 +38,69 @@ The core concepts you need to know about:
           <comments/>
         </note>
         <note>
-          <id>601</id>
+          <id>2</id>
           <author>adama@dradisframework.com</author>
-          <category-id>3</category-id>
+          <category-id>2</category-id>
           <text><![CDATA[#[Title]#
-1.- Next steps
+1.- Adding Issues
+
+#[Description]#
+This is where you get started with Dradis issues.  Issues can be added manually or through tool output, such as Nessus, Burp, Metasploit, and so on.
+
+You can configure the fields however you like.  To add a field it needs to be formatted appropriately.  We have included some sample issues with this project.  Click "Edit" on an issue issue to see what the field headers should look like.
+
+*Adding Issues*
+* To add a finding manually:
+** Just click on the *+* sign next to the *Issues* heading in the sidebar/
+
+* To upload scanner output:
+** Use the "Upload output from tool":/projects/1/upload link at the top of the page.
+** Select the scanner plugin you want to use, select the file to upload, and your Issues, Evidence, and Nodes should be created auto-magically.
+
+* To import from a library of descriptions:
+** You will need an import library like "MediaWiki":https://www.mediawiki.org or "VulnDB":https://vulndb.cyberriskanalytics.com/
+*** Activate via Gemfile.plugins
+*** Click on the Configuration link at the top-right of the page
+*** Then click on the arrow next to *Import issues* in the sidebar.
+** Dradis Pro also includes a built-in "IssueLibrary":https://dradisframework.com/support/guides/issuelibrary/index.html so you can create your own vulnerability database with custom fields and integration with Dradis.
+
+Learn more about Issues "*here*":https://dradisframework.com/support/guides/projects/issues.html
+
+#[Next]#
+Next, we're going to learn about Evidence.
+
+#[References]#
+https://dradisframework.com/ce/
+https://dradisframework.com/support/guides/projects/index.html
+            ]]></text>
+          <activities/>
+          <comments/>
+        </note>
+        <note>
+          <id>3</id>
+          <author>adama@dradisframework.com</author>
+          <category-id>2</category-id>
+          <text><![CDATA[#[Title]#
+2.- Adding Evidence
+
+#[Description]#
+Every Issue can be associated with one or more instances of Evidence. Evidence lives on the Node level.
+
+If you delete that Node, the Evidence disappears as well.
+
+Plugins such as Nessus, Burp, etc. will add Nodes and subnodes, and Evidence within those Nodes.  They will appear under the @plugin.output@ Node that you see on the left.
+
+You can also add "images/screenshots and captions":https://dradisframework.com/support/guides/word_reports/styles.html.
+            ]]></text>
+          <activities/>
+          <comments/>
+        </note>
+        <note>
+          <id>4</id>
+          <author>adama@dradisframework.com</author>
+          <category-id>2</category-id>
+          <text><![CDATA[#[Title]#
+5.- Next steps
 
 #[Description]#
 When you're ready to start with a new empty project:
@@ -60,12 +118,40 @@ If you ever want to reload this sample project again:
           <activities/>
           <comments/>
         </note>
+        <note>
+          <id>18</id>
+          <author>adama@dradisframework.com</author>
+          <category-id>2</category-id>
+          <text><![CDATA[#[Title]#
+3.- Adding Nodes
+
+#[Description]#
+Nodes and hosts are where you place Evidence.  Hosts can be IP addresses, URLs (e.g. www.google.com), or anything else you choose to name them.  Like Issues and Evidence, they can be added manually or be created using tool output.  Tool output nodes will live under the "plugin.output":/projects/1/nodes/3 node.
+
+Once you have created a Node, you can add Notes or Evidence to that Node.  A Note is flexible; it can contain any sort of data you like, functioning like a notepad for penetration testers if you like.  Notes can also be exported into reports if they are in the Default category.  Evidence needs to be associated with an Issue.]]></text>
+          <activities/>
+          <comments/>
+        </note>
+        <note>
+          <id>19</id>
+          <author>adama@dradisframework.com</author>
+          <category-id>2</category-id>
+          <text><![CDATA[#[Title]#
+4.- Working with Methodologies
+
+#[Description]#
+Methodologies are essentially customizable kanban boards with lists and tasks.  We have included an OWASP Checklist methodology template, but you can also create your own methodologies and methodology templates.  Methodologies are optional, but can also be exported into reports if you like - for example to show Pass/Fail items on a checklist.
+
+Look at how Methodologies work "*here*":/projects/1/methodologies!]]></text>
+          <activities/>
+          <comments/>
+        </note>
       </notes>
       <evidence/>
       <activities/>
     </node>
     <node>
-      <id>2830</id>
+      <id>2</id>
       <label>1.- Scope</label>
       <parent-id/>
       <position>0</position>
@@ -74,9 +160,9 @@ If you ever want to reload this sample project again:
       <type-id>0</type-id>
       <notes>
         <note>
-          <id>6705</id>
+          <id>5</id>
           <author>adama@dradisframework.com</author>
-          <category-id>3</category-id>
+          <category-id>2</category-id>
           <text><![CDATA[#[Title]#
 URLs and accounts
 
@@ -114,7 +200,7 @@ In scope URLs:
       </activities>
     </node>
     <node>
-      <id>2772</id>
+      <id>3</id>
       <label>plugin.output</label>
       <parent-id/>
       <position>0</position>
@@ -126,9 +212,9 @@ In scope URLs:
       <activities/>
     </node>
     <node>
-      <id>2773</id>
+      <id>4</id>
       <label>173.45.230.150</label>
-      <parent-id>2772</parent-id>
+      <parent-id>3</parent-id>
       <position>0</position>
       <properties><![CDATA[{
   "fqdn": "snorby.org",
@@ -196,9 +282,9 @@ In scope URLs:
       <type-id>1</type-id>
       <notes>
         <note>
-          <id>6659</id>
+          <id>6</id>
           <author>Nessus upload plugin</author>
-          <category-id>3</category-id>
+          <category-id>2</category-id>
           <text><![CDATA[#[Title]#
 Nessus Host Details
 
@@ -213,9 +299,9 @@ Host]]></text>
       </notes>
       <evidence>
         <evidence>
-          <id>29866</id>
+          <id>1</id>
           <author/>
-          <issue-id>6663</issue-id>
+          <issue-id>10</issue-id>
           <content><![CDATA[#[Location]#
 tcp/9090
 
@@ -229,9 +315,9 @@ n/a
           <comments/>
         </evidence>
         <evidence>
-          <id>29867</id>
+          <id>2</id>
           <author/>
-          <issue-id>6664</issue-id>
+          <issue-id>11</issue-id>
           <content><![CDATA[#[Location]#
 tcp/443
 
@@ -254,9 +340,9 @@ n/a
       </activities>
     </node>
     <node>
-      <id>2774</id>
+      <id>5</id>
       <label>1.1.1.1</label>
-      <parent-id>2772</parent-id>
+      <parent-id>3</parent-id>
       <position>0</position>
       <properties><![CDATA[{
   "network": "blue",
@@ -283,9 +369,9 @@ n/a
       <notes/>
       <evidence>
         <evidence>
-          <id>29868</id>
+          <id>3</id>
           <author/>
-          <issue-id>6665</issue-id>
+          <issue-id>12</issue-id>
           <content><![CDATA[#[Location]#
 Server
 
@@ -306,14 +392,14 @@ phase=8.259, freq=-141.24, error=11.32]]></content>
           <comments/>
         </evidence>
         <evidence>
-          <id>29869</id>
+          <id>4</id>
           <author>adama@dradisframework.com</author>
-          <issue-id>6662</issue-id>
+          <issue-id>9</issue-id>
           <content><![CDATA[#[Location]#
 /ui/warehouse/index.php
 
 #[Output]#
-!/projects/1/nodes/2774/attachments/command-01.png(Example caption created within Dradis)!
+!/projects/1/nodes/5/attachments/command-01.png(Example caption created within Dradis)!
 
 URL encoded GET input *filter[qty_max]* was set to *(select(0)from(select(sleep(0)))v)/*'+(select(0)from(select(sleep(0)))v)+'"+(select(0)from(select(sleep(0)))v)+"*/*
 
@@ -330,7 +416,8 @@ Tests performed:
 
  Original value: *1*
 
-]]></content>
+
+                    ]]></content>
           <activities>
             <activity>
               <action>create</action>
@@ -356,38 +443,23 @@ Tests performed:
           <comments/>
         </evidence>
       </evidence>
-      <activities>
-        <activity>
-          <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
-          <created_at>1534423440</created_at>
-        </activity>
-        <activity>
-          <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
-          <created_at>1544632774</created_at>
-        </activity>
-        <activity>
-          <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
-          <created_at>1544632796</created_at>
-        </activity>
-      </activities>
+      <activities/>
     </node>
     <node>
-      <id>2775</id>
+      <id>6</id>
       <label>10.0.155.157</label>
-      <parent-id>2772</parent-id>
+      <parent-id>3</parent-id>
       <position>0</position>
       <properties><![CDATA[{
 }]]></properties>
       <type-id>1</type-id>
       <notes>
         <note>
-          <id>6660</id>
+          <id>7</id>
           <author>Qualys upload plugin</author>
-          <category-id>3</category-id>
-          <text><![CDATA[#[Title]#
+          <category-id>2</category-id>
+          <text><![CDATA[
+                        #[Title]#
 Basic host info
 
 #[Description]#
@@ -400,9 +472,9 @@ OS: Linux 2.4-2.6]]></text>
       </notes>
       <evidence>
         <evidence>
-          <id>29870</id>
+          <id>5</id>
           <author/>
-          <issue-id>6666</issue-id>
+          <issue-id>13</issue-id>
           <content><![CDATA[#[Location]#
 n/a/n/a
 
@@ -413,9 +485,9 @@ bc.. Some of the ports filtered by the firewall are: 20, 21, 22, 23, 53, 111, 13
           <comments/>
         </evidence>
         <evidence>
-          <id>29871</id>
+          <id>6</id>
           <author/>
-          <issue-id>6667</issue-id>
+          <issue-id>14</issue-id>
           <content><![CDATA[#[Location]#
 n/a/n/a
 
@@ -430,18 +502,18 @@ bc.. Tested on port 25 with an injected SYN/RST offset by 16 bytes.
       <activities/>
     </node>
     <node>
-      <id>2776</id>
+      <id>7</id>
       <label>10.0.155.160</label>
-      <parent-id>2772</parent-id>
+      <parent-id>3</parent-id>
       <position>0</position>
       <properties><![CDATA[{
 }]]></properties>
       <type-id>1</type-id>
       <notes>
         <note>
-          <id>6661</id>
+          <id>8</id>
           <author>Qualys upload plugin</author>
-          <category-id>3</category-id>
+          <category-id>2</category-id>
           <text><![CDATA[#[Title]#
 Basic host info
 
@@ -455,9 +527,9 @@ OS: Linux 2.4-2.6]]></text>
       </notes>
       <evidence>
         <evidence>
-          <id>29872</id>
+          <id>7</id>
           <author/>
-          <issue-id>6667</issue-id>
+          <issue-id>14</issue-id>
           <content><![CDATA[#[Location]#
 n/a/n/a
 
@@ -468,9 +540,9 @@ bc.. Tested on port 80 with an injected SYN/RST offset by 16 bytes.
           <comments/>
         </evidence>
         <evidence>
-          <id>29873</id>
+          <id>8</id>
           <author/>
-          <issue-id>6668</issue-id>
+          <issue-id>15</issue-id>
           <content><![CDATA[#[Location]#
 tcp/80
 
@@ -501,9 +573,9 @@ but we only allow the 100-continue expectation.
           <comments/>
         </evidence>
         <evidence>
-          <id>29874</id>
+          <id>9</id>
           <author/>
-          <issue-id>6669</issue-id>
+          <issue-id>16</issue-id>
           <content><![CDATA[#[Location]#
 tcp/80
 
@@ -519,7 +591,7 @@ bc.. &quot;3bee-4f12-00794aef&quot;
   </nodes>
   <issues>
     <issue>
-      <id>6662</id>
+      <id>9</id>
       <author>Acunetix upload plugin</author>
       <text><![CDATA[#[Title]#
 Blind SQL Injection
@@ -641,7 +713,7 @@ SF-1]]></text>
       <comments/>
     </issue>
     <issue>
-      <id>6663</id>
+      <id>10</id>
       <author>Nessus upload plugin</author>
       <text><![CDATA[#[Title]#
 Secure HyperText Transfer Protocol (S-HTTP) Detection
@@ -687,7 +759,7 @@ nessus
       <comments/>
     </issue>
     <issue>
-      <id>6664</id>
+      <id>11</id>
       <author>Nessus upload plugin</author>
       <text><![CDATA[#[Title]#
 SSL / TLS Renegotiation Handshakes MiTM Plaintext Data Injection
@@ -737,7 +809,7 @@ nessus
       <comments/>
     </issue>
     <issue>
-      <id>6665</id>
+      <id>12</id>
       <author>Nexpose upload plugin</author>
       <text><![CDATA[#[Title]#
 Apache HTTPD: error responses can expose cookies (CVE-2012-0053)
@@ -788,7 +860,7 @@ ntp-clock-variables-disclosure
       <comments/>
     </issue>
     <issue>
-      <id>6666</id>
+      <id>13</id>
       <author>Qualys upload plugin</author>
       <text><![CDATA[#[Title]#
 Firewall Detected
@@ -845,7 +917,7 @@ SF-2]]></text>
       <comments/>
     </issue>
     <issue>
-      <id>6667</id>
+      <id>14</id>
       <author>Qualys upload plugin</author>
       <text><![CDATA[#[Title]#
 TCP Sequence Number Approximation Based Denial of Service
@@ -920,7 +992,7 @@ qualys
       <comments/>
     </issue>
     <issue>
-      <id>6668</id>
+      <id>15</id>
       <author>Qualys upload plugin</author>
       <text><![CDATA[#[Title]#
 Apache 1.3 HTTP Server Expect Header Cross-Site Scripting
@@ -968,7 +1040,7 @@ SF-3]]></text>
       <comments/>
     </issue>
     <issue>
-      <id>6669</id>
+      <id>16</id>
       <author>Qualys upload plugin</author>
       <text><![CDATA[#[Title]#
 Apache Web Server ETag Header Information Disclosure Weakness
@@ -1024,7 +1096,8 @@ qualys
 
 #[plugin_id]#
 86477
-]]></text>
+
+            ]]></text>
       <activities>
         <activity>
           <action>update</action>
@@ -1039,110 +1112,127 @@ qualys
     <methodology version="1">
       <text><![CDATA[<?xml version="1.0"?>
 <methodology>
-  <name>Simple OWASP checklist</name>
+  <name>Getting started with Dradis checklist</name>
   <sections>
     <section>
-      <name>OWASP Top 10</name>
+      <name>Issues, Evidence, and Plugins</name>
       <tasks>
-        <task checked="checked">A1:2017 - Injection</task>
-        <task>A2:2017 - Broken Authentication</task>
-        <task>A3:2017 - Sensitive Data Exchange</task>
-        <task>A4:2017 - XML External Entities (XXE)</task>
-        <task>A5:2017 - Broken Access Control</task>
-        <task>A6:2017 - Security Misconfiguration</task>
-        <task>A7:2017 - Cross-Site Scripting (XSS)</task>
-        <task>A8:2017 - Insecure Deserialization</task>
-        <task>A9:2017 - Using Components with Known Vulnerabilities</task>
-        <task>A10:2017 - Insufficiend Logging &amp; Monitoring</task>
+        <task>Create your first Issue</task>
+        <task>Tag your Issue</task>
+        <task>Add a piece of Evidence to an existing Node</task>
+        <task>Edit a piece of Evidence</task>
+        <task>Add a screenshot to an Issue or piece of Evidence</task>
+        <task>Upload output from tool using your favourite plugin</task>
+        <task>Explore Issues and Evidence added by tool output</task>
       </tasks>
     </section>
     <section>
-      <name>A1:2017 - Injection</name>
+      <name>Nodes, Notes, and Node properties</name>
       <tasks>
-        <task checked="checked">Check for SQL injection</task>
-        <task checked="checked">Check for LDAP injection</task>
-        <task>Check for XPath injection</task>
-        <task>Check for NoSQL injection</task>
-        <task>Check for OS command injection</task>
-        <task>Check for XML injection</task>
-        <task>Check for SMTP headers injection</task>
-        <task>Check for ORM queries injection</task>
+        <task>Read the "0.- Start Here" Node</task>
+        <task>Read the "1.- Scope" Node</task>
+        <task>Add a Node manually</task>
+        <task>Add a subnode manually</task>
+        <task>After uploading output from a tool, explore the Nodes added under plugin.output</task>
+        <task>Create a Note on a Node</task>
+        <task>Look at Node properties. You can find sample properties on the 1.1.1.1 subnode under plugin.output</task>
+      </tasks>
+    </section>
+    <section>
+      <name>Methodologies</name>
+      <tasks>
+        <task checked="checked">See the Methodologies overview on the Project Dashboard</task>
+        <task checked="checked">Open the Methodologies view</task>
+        <task>Check off a task</task>
+        <task>Edit this Methodology</task>
+        <task>Add a new "Simple OWASP Checklist" Methodology from the existing template</task>
+        <task>Explore other templates available for download (from the "Add New" drop-down)</task>
+      </tasks>
+    </section>
+    <section>
+      <name>Support and documentation</name>
+      <tasks>
+        <task>Dradis CE Documentation page https://dradisframework.com/ce/documentation/</task>
+        <task>Check out our Dradis CE Forum: http://drad.is/l/forum/</task>
+        <task>Dradis Pro support pages https://dradisframework.com/support/</task>
+        <task>Dradis CE on GitHub https://github.com/dradis/dradis-ce</task>
+        <task>Dradis CE on Slack http://drad.is/l/slack</task>
       </tasks>
     </section>
   </sections>
 </methodology>
-  ]]></text>
+]]></text>
     </methodology>
   </methodologies>
   <categories>
     <category>
-      <id>4</id>
+      <id>1</id>
       <name>Issue description</name>
     </category>
     <category>
-      <id>3</id>
+      <id>2</id>
       <name>Default category</name>
     </category>
   </categories>
   <tags>
     <tag>
-      <id>397</id>
+      <id>1</id>
       <name>!9467bd_critical</name>
       <taggings>
         <tagging>
-          <taggable-id>6662</taggable-id>
+          <taggable-id>9</taggable-id>
           <taggable-type>Note</taggable-type>
         </tagging>
       </taggings>
     </tag>
     <tag>
-      <id>398</id>
+      <id>2</id>
       <name>!d62728_high</name>
       <taggings>
         <tagging>
-          <taggable-id>6667</taggable-id>
+          <taggable-id>14</taggable-id>
           <taggable-type>Note</taggable-type>
         </tagging>
         <tagging>
-          <taggable-id>6668</taggable-id>
+          <taggable-id>15</taggable-id>
           <taggable-type>Note</taggable-type>
         </tagging>
       </taggings>
     </tag>
     <tag>
-      <id>399</id>
+      <id>3</id>
       <name>!ff7f0e_medium</name>
       <taggings>
         <tagging>
-          <taggable-id>6665</taggable-id>
+          <taggable-id>12</taggable-id>
           <taggable-type>Note</taggable-type>
         </tagging>
         <tagging>
-          <taggable-id>6669</taggable-id>
+          <taggable-id>16</taggable-id>
           <taggable-type>Note</taggable-type>
         </tagging>
       </taggings>
     </tag>
     <tag>
-      <id>400</id>
+      <id>4</id>
       <name>!6baed6_low</name>
       <taggings>
         <tagging>
-          <taggable-id>6663</taggable-id>
+          <taggable-id>10</taggable-id>
           <taggable-type>Note</taggable-type>
         </tagging>
         <tagging>
-          <taggable-id>6664</taggable-id>
+          <taggable-id>11</taggable-id>
           <taggable-type>Note</taggable-type>
         </tagging>
       </taggings>
     </tag>
     <tag>
-      <id>401</id>
+      <id>5</id>
       <name>!2ca02c_info</name>
       <taggings>
         <tagging>
-          <taggable-id>6666</taggable-id>
+          <taggable-id>13</taggable-id>
           <taggable-type>Note</taggable-type>
         </tagging>
       </taggings>
