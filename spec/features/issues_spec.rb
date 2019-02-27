@@ -48,56 +48,6 @@ describe 'Issues pages' do
 
       end
 
-      describe 'merge page', js: true do
-
-        before do
-          # create 2 issues
-          create(:issue, node: current_project.issue_library)
-          create(:issue, node: current_project.issue_library)
-
-          visit project_issues_path(current_project)
-
-          # click > 1 issue checkboxes
-          page.all('input.js-multicheck').each(&:click)
-
-          # click the merge button
-          find('#merge-selected').click
-        end
-
-        it 'merges issues into an existing one' do
-          expect(page).to have_content "You're merging 2 Issues into a target Issue"
-
-          click_button 'Merge issues'
-
-          expect(page).to have_content('1 issue merged into ')
-        end
-
-        it 'merges issues into a new one' do
-          expect(page).to have_content "You're merging 2 Issues into a target Issue"
-
-          # new issue form should not be visible yet
-          expect(page).to have_selector('#new_issue', visible: false)
-
-          choose('Merge into a new issue')
-
-          # new issue form should be visible now
-          expect(page).to have_selector('#new_issue', visible: true)
-
-          # click button like this because the button may be moving down
-          # due to bootstrap accordion unfold transition
-          find_button('Merge issues').trigger('click') # click_button "Merge issues"
-
-          expect(page).to have_content('2 issues merged into ')
-
-          expect(Issue.last.author).to eq(@logged_in_as.email)
-        end
-
-        let(:submit_form) {
-          click_button 'Merge issues'
-        }
-        include_examples 'deleted item is listed in Trash', :issue
-      end
-
       describe 'new page' do
         let(:submit_form) { click_button 'Create Issue' }
 
