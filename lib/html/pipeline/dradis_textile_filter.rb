@@ -15,7 +15,7 @@ module HTML
     #    because then RedCloth can't parse the Textile correctly.
     class DradisTextileFilter < TextFilter
       def call
-        "<div>#{RedCloth.new(@text, [:no_span_caps]).to_html}</div>"
+        "<div>#{RedCloth.new(@text, [:filter_html, :no_span_caps]).to_html}</div>"
       end
     end
   end

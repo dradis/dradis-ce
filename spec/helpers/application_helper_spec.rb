@@ -30,20 +30,56 @@ describe ApplicationHelper do
     end
 
     it 'escapes HTML entities' do
-      # careful: we want to escape any HTML provided by the user, but the HTML
-      # pipeline will add HTML tags of its own (when parsing Textile) which
-      # shouldn't be escaped
+      # careful: we are allowing code tags to be correctly parsed as html, but
+      # we are sanitizing attributes that might be considered as unsafe.
       text_0 = '<code onmouseover=alert(1);>'
-      expect(helper.markup(text_0)).to include '&lt;code onmouseover=alert(1);&gt;'
+      expect(helper.markup(text_0)).to include '<div><p><code></code></p></div>'
 
       text_1 = '<script>alert()</script>'
       expect(helper.markup(text_1)).to include(
-        '&lt;script&gt;alert()&lt;/script&gt;'
+        '<div>&lt;script&gt;alert()&lt;/script&gt;</div>'
       )
 
       text_2 = '*bold* <script> <code>'
       expect(helper.markup(text_2)).to include(
-        '<strong>bold</strong> &lt;script&gt; &lt;code&gt;'
+        '<div><p><strong>bold</strong> &lt;script&gt; <code></code></p></div>'
+      )
+
+      text_3 = "xssbc. <script>alert(1)</script>\n\n"\
+        "xssbc.. <script>alert(1)</script>"
+      expect(helper.markup(text_3)).to include(
+        "<div>\n<p>xssbc. &lt;script&gt;alert(1)&lt;/script&gt;</p>\n"\
+        "<p>xssbc.. &lt;script&gt;alert(1)&lt;/script&gt;</p>\n</div>"
+      )
+
+      text_4 =
+        "bc.. block code\n\n" \
+        "h1. <script>alert(1)</script>\n\n" \
+        "bq. <script>alert(2)</script>\n\n" \
+        "div. <script>alert(3)</script>\n\n" \
+        "p(xss). <script>alert(4)</script>\n\n" \
+        "p(#xss). <script>alert(5)</script>\n\n" \
+        "p(xss#xss). <script>alert(6)</script>\n\n" \
+        "p[xss]. <script>alert(7)</script>\n\n" \
+        "p<. <script>alert(8)</script>\n\n" \
+        "p(. <script>alert(9)</script>\n\n"
+
+      expect(helper.markup(text_4)).to include(
+        "<div>\n<pre><code>block code</code></pre>\n"\
+        "<h1>&lt;script&gt;alert(1)&lt;/script&gt;</h1>\n"\
+        "<blockquote>\n<p>&lt;script&gt;alert(2)&lt;/script&gt;</p>\n</blockquote>\n"\
+        "<div>&lt;script&gt;alert(3)&lt;/script&gt;</div>\n"\
+        "<p>&lt;script&gt;alert(4)&lt;/script&gt;</p>\n"\
+        "<p>&lt;script&gt;alert(5)&lt;/script&gt;</p>\n"\
+        "<p>&lt;script&gt;alert(6)&lt;/script&gt;</p>\n"\
+        "<p lang=\"xss\">&lt;script&gt;alert(7)&lt;/script&gt;</p>\n"\
+        "<p>&lt;script&gt;alert(8)&lt;/script&gt;</p>\n"\
+        "<p>&lt;script&gt;alert(9)&lt;/script&gt;</p>\n</div>"
+      )
+
+      text_5 = '“xss”:http://<script>alert(1)</script>;'
+      expect(helper.markup(text_5)).to include(
+        '<div><p>“xss”:http://&lt;script&gt;alert(1)&lt;/script&gt;;</p></div>'
       )
     end
   end

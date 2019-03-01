@@ -1,5 +1,6 @@
 class IssuesController < AuthenticatedController
   include ActivityTracking
+  include Commented
   include ContentFromTemplate
   include ConflictResolver
   include Mentioned
@@ -58,9 +59,10 @@ class IssuesController < AuthenticatedController
 
 
         track_created(@issue)
+
         # Only after we save the issue, we can create valid taggings (w/ valid
         # taggable IDs)
-        tag_issue_from_field_content(@issue)
+        @issue.tag_from_field_content!
 
         format.html { redirect_to [current_project, @issue], notice: 'Issue added.' }
       else
@@ -150,18 +152,4 @@ class IssuesController < AuthenticatedController
     params.require(:issue).permit(:tag_list, :text)
   end
 
-  # This method inspect the issues' Tag field and if present tags the issue
-  # accordingly.
-  def tag_issue_from_field_content(issue)
-    # If the Issue already has tags (e.g. from the HTML form), or if it doesn't
-    # have a Tags field, bail.
-    return if @issue.tags.any?
-    return unless issue.fields['Tags'].present?
-
-    # For now we just care about the first tag
-    if (tag_name = issue.fields['Tags'].split(',').first)
-      issue.tag_list = tag_name
-      issue.save
-    end
-  end
 end

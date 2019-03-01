@@ -48,56 +48,6 @@ describe 'Issues pages' do
 
       end
 
-      describe 'merge page', js: true do
-
-        before do
-          # create 2 issues
-          create(:issue, node: current_project.issue_library)
-          create(:issue, node: current_project.issue_library)
-
-          visit project_issues_path(current_project)
-
-          # click > 1 issue checkboxes
-          page.all('input.js-multicheck').each(&:click)
-
-          # click the merge button
-          find('#merge-selected').click
-        end
-
-        it 'merges issues into an existing one' do
-          expect(page).to have_content "You're merging 2 Issues into a target Issue"
-
-          click_button 'Merge issues'
-
-          expect(page).to have_content('1 issue merged into ')
-        end
-
-        it 'merges issues into a new one' do
-          expect(page).to have_content "You're merging 2 Issues into a target Issue"
-
-          # new issue form should not be visible yet
-          expect(page).to have_selector('#new_issue', visible: false)
-
-          choose('Merge into a new issue')
-
-          # new issue form should be visible now
-          expect(page).to have_selector('#new_issue', visible: true)
-
-          # click button like this because the button may be moving down
-          # due to bootstrap accordion unfold transition
-          find_button('Merge issues').send_keys(:return) # click_button "Merge issues"
-
-          expect(page).to have_content('2 issues merged into ')
-
-          expect(Issue.last.author).to eq(@logged_in_as.email)
-        end
-
-        let(:submit_form) {
-          click_button 'Merge issues'
-        }
-        include_examples 'deleted item is listed in Trash', :issue
-      end
-
       describe 'new page' do
         let(:submit_form) { click_button 'Create Issue' }
 
@@ -327,6 +277,10 @@ describe 'Issues pages' do
         describe 'add evidence', js: true do
           before do
             @node = current_project.nodes.create!(label: '192.168.0.1')
+
+            template_path = Rails.root.join('spec/fixtures/files/note_templates/')
+            allow(NoteTemplate).to receive(:pwd).and_return(template_path)
+
             visit project_issue_path(current_project, @issue)
             click_link('Evidence')
           end
@@ -355,17 +309,20 @@ describe 'Issues pages' do
           it 'creates an evidence with the selected template for selected node' do
             find('.js-add-evidence').click
             check('192.168.0.1')
-            select('Basic Fields', from: 'evidence_content')
+            select('Simple Note', from: 'evidence_content')
             expect { click_button('Save Evidence') }.to change { Evidence.count }.by(1)
             evidence = Evidence.last
-            expect(evidence.content).to eq(NoteTemplate.find('basic_fields').content.gsub("\n", "\r\n"))
+            expect(evidence.content).to eq(NoteTemplate.find('simple_note').content.gsub("\n", "\r\n"))
             expect(evidence.node.label).to eq '192.168.0.1'
           end
 
           it 'creates an evidence for new nodes and existing nodes too' do
             find('.js-add-evidence').click
             fill_in 'Paste list of nodes', with: "192.168.0.1\r\n192.168.0.2\r\n192.168.0.3"
-            expect { click_button('Save Evidence') }.to change { Evidence.count }.by(3).and change { Node.count }.by(2)
+            expect do
+              click_button('Save Evidence')
+              expect(page).to have_text 'Evidence added for selected nodes.'
+            end.to change { Evidence.count }.by(3).and change { Node.count }.by(2)
 
             # New nodes don't have a parent:
             current_project.nodes.order('created_at ASC').last(2).each do |node|
@@ -393,6 +350,7 @@ describe 'Issues pages' do
             fill_in 'Paste list of nodes', with: "#{@node.label}\r\naaaa"
             expect do
               click_button('Save Evidence')
+              expect(page).to have_text 'Evidence added for selected nodes.'
             end.to change { enqueued_activity_tracking_jobs.size }.by(3)
 
             jobs = enqueued_activity_tracking_jobs.last(3)

@@ -6,6 +6,6 @@
   data-id="<%= params[:id] %>"
   data-last-poll="<%= Time.now.to_i %>"
   data-node-id="<%= @node.try(:id) %>"
-  data-url=<%= main_app.poll_project_activities_path(current_project) %>
+  data-url=<%= main_app.poll_project_activities_path(current_project, format: :js) %>
 >
 </div>
