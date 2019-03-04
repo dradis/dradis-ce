@@ -140,7 +140,7 @@ class Issue < Note
     # For now we just care about the first tag
     if (tag_name = fields['Tags'].split(',').first)
       self.tag_list = tag_name
-      self.save
+      self.save!
     end
   end
 end
