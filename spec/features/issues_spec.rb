@@ -251,10 +251,15 @@ describe 'Issues pages' do
         let(:subscribable) { @issue }
         it_behaves_like 'a page with subscribe/unsubscribe links'
 
-        describe "clicking 'delete'" do
+        describe "clicking 'delete'", js: true do
           before { visit project_issue_path(current_project, @issue) }
 
-          let(:submit_form) { within('.note-text-inner') { click_link 'Delete' } }
+          let(:submit_form) do
+            page.accept_confirm do
+              within('.note-text-inner') { click_link "Delete" }
+            end
+            expect(page).to have_text "Issue deleted." # forces waiting
+          end
 
           it 'deletes the issue' do
             id = @issue.id
@@ -288,7 +293,12 @@ describe 'Issues pages' do
 
           it 'filters nodes' do
             find('.js-add-evidence').click
-            expect(all('#existing-node-list label').count).to be Node.user_nodes.count
+            within('#existing-node-list') do
+              current_project.nodes.user_nodes.each do |n|
+                expect(page).to have_text n.label
+              end
+            end
+            expect(all('#existing-node-list label').count).to be current_project.nodes.user_nodes.count
 
             # find('#evidence_node').native.send_key('192.')
             fill_in 'evidence_node', with: '192\.'

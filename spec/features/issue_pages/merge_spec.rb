@@ -40,7 +40,7 @@ describe 'issue pages' do
 
         # click button like this because the button may be moving down
         # due to bootstrap accordion unfold transition
-        find_button('Merge issues').trigger('click') # click_button "Merge issues"
+        find_button('Merge issues').send_keys(:return) # click_button "Merge issues"
 
         expect(page).to have_content('2 issues merged into ')
 
@@ -65,7 +65,7 @@ describe 'issue pages' do
 
         # click button like this because the button may be moving down
         # due to bootstrap accordion unfold transition
-        find_button('Merge issues').trigger('click') # click_button "Merge issues"
+        find_button('Merge issues').send_keys(:return) # click_button "Merge issues"
 
         expect(page).to have_content('2 issues merged into Merged issue')
         expect(Issue.last.reload.tag_list).to eq(tag_name)
