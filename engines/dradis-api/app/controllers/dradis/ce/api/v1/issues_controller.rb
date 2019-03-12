@@ -17,6 +17,7 @@ module Dradis::CE::API
 
         if @issue.save
           track_created(@issue)
+          @issue.tag_from_field_content!
           render status: 201, location: dradis_api.issue_url(@issue)
         else
           render_validation_errors(@issue)

@@ -54,8 +54,13 @@ describe "note pages" do
     let(:subscribable) { @note }
     it_behaves_like 'a page with subscribe/unsubscribe links'
 
-    describe "clicking 'delete'" do
-      let(:submit_form) { within('.note-text-inner') { click_link "Delete" } }
+    describe "clicking 'delete'", js: true do
+      let(:submit_form) do
+        page.accept_confirm do
+          within('.note-text-inner') { click_link 'Delete' }
+        end
+        expect(page).to have_text 'Note deleted'
+      end
 
       it "deletes the note and redirects to the node's page" do
         id = @note.id

@@ -1,4 +1,5 @@
 class EvidenceController < NestedNodeResourceController
+  include Commented
   include ConflictResolver
   include Mentioned
   include MultipleDestroy

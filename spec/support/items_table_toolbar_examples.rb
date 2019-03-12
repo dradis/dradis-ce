@@ -1,18 +1,15 @@
 shared_examples 'an index table toolbar' do
-  describe 'when clicking \'Select All\'' do
-    before do
-      find('.js-items-table-select-all').click
+  example 'clicking \'Select All\' works' do
+    find('.js-items-table-select-all').click
+    expect(page).to have_selector('input.js-multicheck:checked') # forces wait
+
+    # it selects all items
+    all('input[type=checkbox].js-multicheck').each do |el|
+      expect(el['checked']).to eq 'true'
     end
 
-    it 'selects all items' do
-      all('input[type=checkbox].js-multicheck').each do |el|
-        expect(el['checked']).to be true
-      end
-    end
-
-    it 'shows the item actions bar' do
-      expect(find('.js-items-table-actions')).to be_visible
-    end
+    # it shows the item actions bar
+    expect(find('.js-items-table-actions')).to be_visible
   end
 
   describe 'when clicking items' do
@@ -45,7 +42,9 @@ shared_examples 'an index table toolbar' do
       it 'resets toolbar after deleting items' do
         first('input[type=checkbox].js-multicheck').click
         expect(page).to have_css('.js-items-table-actions')
-        find('.js-items-table-delete').click
+        page.accept_confirm do
+          find('.js-items-table-delete').click
+        end
         expect(page).to_not have_css('.js-items-table-actions')
         expect(page).to have_text(/deleted/)
       end
@@ -59,8 +58,9 @@ shared_examples 'an index table toolbar' do
 
         expect {
           find('#select-all').click
-          find('.js-items-table-delete').click
-          find('#modal-console', visible: true) # wait for the response
+          expect(page).to have_selector('input.js-multicheck:checked') # wait
+          page.accept_confirm { find('.js-items-table-delete').click }
+          find('#modal-console', visible: true) # wait
         }.to have_enqueued_job(MultiDestroyJob).with(
           ids: checkboxes.map(&:value),
           project_id: current_project.id,
@@ -82,7 +82,8 @@ shared_examples 'an index table toolbar' do
           ).size
         ).to eq 1
         find('#select-all').click
-        find('.js-items-table-delete').click
+        expect(page).to have_selector('input.js-multicheck:checked') # wait
+        page.accept_confirm { find('.js-items-table-delete').click }
         expect(page).to have_text(/deleted/)
         klass = to_delete.class
         expect(klass.exists?(to_delete.id)).to be false

@@ -63,6 +63,8 @@ GEM
       activerecord (>= 3.0.0)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
+    archive-zip (0.11.0)
+      io-like (~> 0.3.0)
     arel (8.0.0)
     ast (2.4.0)
     bcrypt (3.1.12)
@@ -87,8 +89,12 @@ GEM
       rack (>= 1.6.0)
       rack-test (>= 0.6.3)
       xpath (~> 3.1)
+    childprocess (0.9.0)
+      ffi (~> 1.0, >= 1.0.11)
+    chromedriver-helper (2.1.0)
+      archive-zip (~> 0.10)
+      nokogiri (~> 1.8)
     chronic (0.10.2)
-    cliver (0.3.2)
     coderay (1.1.2)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
@@ -137,7 +143,8 @@ GEM
     i18n (1.1.1)
       concurrent-ruby (~> 1.0)
     image_size (1.3.1)
-    jaro_winkler (1.5.1)
+    io-like (0.3.0)
+    jaro_winkler (1.5.2)
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
@@ -194,6 +201,8 @@ GEM
     nio4r (2.3.1)
     nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
+    nokogumbo (2.0.1)
+      nokogiri (~> 1.8, >= 1.8.4)
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -205,10 +214,6 @@ GEM
       ast (~> 2.4.0)
     parslet (1.6.2)
       blankslate (>= 2.0, <= 4.0)
-    poltergeist (1.18.1)
-      capybara (>= 2.1, < 4)
-      cliver (~> 0.3.1)
-      websocket-driver (>= 0.2.0)
     powerpack (0.1.2)
     pry (0.12.0)
       coderay (~> 1.1.0)
@@ -300,6 +305,10 @@ GEM
     ruby-progressbar (1.10.0)
     ruby_dep (1.5.0)
     rubyzip (1.2.2)
+    sanitize (5.0.0)
+      crass (~> 1.0.2)
+      nokogiri (>= 1.8.0)
+      nokogumbo (~> 2.0)
     sass (3.6.0)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -311,6 +320,9 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    selenium-webdriver (3.10.0)
+      childprocess (~> 0.5)
+      rubyzip (~> 1.2)
     shellany (0.0.1)
     shoulda-matchers (3.1.2)
       activesupport (>= 4.0.0)
@@ -386,6 +398,7 @@ DEPENDENCIES
   byebug
   cancancan (~> 1.10)
   capybara (~> 3.6.0)
+  chromedriver-helper
   coffee-rails (~> 4.2)
   database_cleaner
   differ (~> 0.1.2)
@@ -412,7 +425,6 @@ DEPENDENCIES
   nokogiri (= 1.8.5)
   paper_trail (~> 6.0)
   parslet (~> 1.6.0)
-  poltergeist
   puma
   rails (~> 5.1.6)
   rails-html-sanitizer (~> 1.0.4)
@@ -424,7 +436,9 @@ DEPENDENCIES
   rspec-rails (~> 3.1)
   rubocop
   rubyzip (>= 1.2.2)
+  sanitize
   sass-rails (~> 5.0)
+  selenium-webdriver
   shoulda-matchers (~> 3.1)
   simple_form
   sinatra (= 2.0.2)
@@ -442,4 +456,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.16.4
+   1.17.3

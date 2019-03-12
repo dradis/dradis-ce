@@ -4,8 +4,13 @@ v3.12 (XXX)
  - Added bold font to improve bold text visibility
  - Fix links display in Textile fields
  - Fix redirection destinations after edit/delete evidence
+ - Refactoring cache keys in pages with comments
  - Disable turbolinks cache when displaying flash messages
  - Sort attachments in alphabetical ASCII order
+ - Fix methodology checklist edit error
+
+v3.11.1 (February 2019)
+ - Fix blockcode vulnerability in Textile formatting
 
 v3.11 (November 2018)
  - Added comments, subscriptions and notifications to notes

@@ -64,7 +64,7 @@ shared_examples 'a page with a comments feed' do
     it 'does not allow to edit comments from other users' do
       id = @comments[1].id
       within "div#comment_#{id}" do
-        expect(page).not_to have_link 'Edit'
+        expect(page).to have_link('Edit', visible: false)
         expect(page).not_to have_css "form#edit_comment_#{id}"
       end
     end
@@ -75,7 +75,7 @@ shared_examples 'a page with a comments feed' do
     let (:submit_form) do
       find("div#comment_#{model.id}").hover
       within "div#comment_#{model.id}" do
-        click_link 'Delete'
+        accept_confirm { click_link 'Delete' }
       end
 
       expect(page).not_to have_comment(model) # forces waiting for ajax
@@ -90,7 +90,7 @@ shared_examples 'a page with a comments feed' do
     it 'does not allow deleting a comment from another user' do
       id = @comments[1].id
       within "div#comment_#{id}" do
-        expect(page).not_to have_link('Delete')
+        expect(page).to have_link('Delete', visible: false)
       end
     end
   end
