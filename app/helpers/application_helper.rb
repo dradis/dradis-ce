@@ -38,4 +38,15 @@ module ApplicationHelper # :nodoc:
     result = textile_pipeline.call(text)
     result[:output].to_s.html_safe
   end
+
+  def render_view_hooks(partial, locals: {})
+    Dradis::Plugins::with_feature(:addon).sort_by(&:plugin_description).each do |plugin|
+      begin
+        plugin_path = ActiveSupport::Inflector.underscore(ActiveSupport::Inflector.deconstantize(plugin.name))
+        concat(render("#{plugin_path}/#{partial}", locals))
+      rescue ActionView::MissingTemplate
+      end
+    end
+    ;nil
+  end
 end

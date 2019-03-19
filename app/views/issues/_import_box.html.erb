@@ -2,7 +2,7 @@
   <div class="header-inner">
     <div class="options">
       <div class="dropdown">
-        <%= link_to raw('<i class="fa fa-chevron-down"></i>'), 'javascript:void(0)', class: 'import-toggle', data: {toggle: 'collapse', target: '.import-box'} %>
+        <%= link_to raw('<i class="fa fa-chevron-down"></i>'), 'javascript:void(0)', class: 'import-toggle', data: { toggle: 'collapse', target: '.import-box' } %>
       </div>
     </div>
     <h3>Import issues</h3>
@@ -18,7 +18,7 @@
       <% Dradis::Plugins::Import::Filters[plugin.plugin_name].each do |label, klass| %>
         <% next if label == :find_one_by_field %>
 
-        <%= form_tag import_project_issues_path, class: 'form-search' do %>
+        <%= form_tag main_app.import_project_issues_path, class: 'form-search' do %>
           <%= hidden_field_tag :scope, plugin.plugin_name %>
           <%= hidden_field_tag :filter, label %>
 

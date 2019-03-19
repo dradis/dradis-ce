@@ -22,6 +22,7 @@
   </li>
   <li><a href="#evidence-tab" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge"><%= @issue.evidence.count %></span></a></li>
   <li><a href="#activity-tab" data-toggle="tab"><i class="fa fa-refresh"></i> Recent activity</a></li>
+  <%= render_view_hooks 'issues/show-tabs' %>
 </ul>
 
 <div class="tab-content">
@@ -72,4 +73,6 @@
       </div>
     </div>
   <% end %>
+
+  <%= render_view_hooks 'issues/show-content' %>
 </div>
