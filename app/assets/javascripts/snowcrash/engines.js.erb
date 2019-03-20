@@ -1,3 +1,4 @@
+document.addEventListener('turbolinks:load', function(){
 <%
 Dradis::Plugins::with_feature(:addon).sort_by(&:plugin_description).each do |plugin|
   begin
@@ -9,3 +10,4 @@ Dradis::Plugins::with_feature(:addon).sort_by(&:plugin_description).each do |plu
   end
 end
 %>
+});
