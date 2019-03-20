@@ -27,6 +27,8 @@
 //= require snowcrash/engines
 //= require snowcrash/keyboard_shortcuts
 
+//= require snowcrash/modules/auto_save
+
 //= require snowcrash/modules/comments
 //= require snowcrash/modules/configurations
 //= require snowcrash/modules/export
