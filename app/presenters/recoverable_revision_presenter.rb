@@ -44,9 +44,7 @@ class RecoverableRevisionPresenter < BasePresenter
     # Get node if object is a Note or an Evidence.
     if ['Note','Evidence'].include?(type)
       if type == "Evidence"
-        if trashed_object.issue
-          result << " for #{trashed_object.issue.title} issue "
-        else
+        unless trashed_object.issue
           result << " for an issue which has since been deleted "
         end
       end
