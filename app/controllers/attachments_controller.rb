@@ -76,7 +76,7 @@ class AttachmentsController < AuthenticatedController
       mime_type = Mime::Type.lookup_by_extension(extname[1..-1])
       if mime_type
         send_options[:type] = mime_type.to_s
-        if mime_type =~ 'image'
+        if mime_type =~ 'image' && !mime_type.svg?
           send_options[:disposition] = 'inline'
         end
       end
