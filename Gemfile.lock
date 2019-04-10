@@ -1,14 +1,14 @@
 GIT
   remote: https://github.com/dradis/dradis-plugins.git
-  revision: 2cb20f4f6ad7a19a5eaef2bee394cac4d828ee09
+  revision: 570367ba16e42dae3f3065a6b72c544dd780ca36
   specs:
-    dradis-plugins (3.11.0)
+    dradis-plugins (3.12.0)
 
 GIT
   remote: https://github.com/dradis/dradis-projects.git
-  revision: ee0561bf2ee9fd6eaa42f1433f3a6d8b601b6743
+  revision: c581357dd9fff7e65afdf30c05ea183c58362207
   specs:
-    dradis-projects (3.11.0)
+    dradis-projects (3.12.0)
       dradis-plugins (~> 3.7)
       rubyzip (~> 1.2.2)
 
@@ -77,8 +77,8 @@ GEM
     bullet (5.8.1)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
-    bundler-audit (0.6.0)
-      bundler (~> 1.2)
+    bundler-audit (0.6.1)
+      bundler (>= 1.2.0, < 3)
       thor (~> 0.18)
     byebug (10.0.2)
     cancancan (1.17.0)
@@ -403,8 +403,8 @@ DEPENDENCIES
   database_cleaner
   differ (~> 0.1.2)
   dradis-api!
-  dradis-plugins (~> 3.11)!
-  dradis-projects (~> 3.11)!
+  dradis-plugins (~> 3.12)!
+  dradis-projects (~> 3.12)!
   factory_bot_rails
   font-awesome-sass (~> 4.7.0)
   foreman
@@ -456,4 +456,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.17.3
+   2.0.1
