@@ -6,8 +6,8 @@ run Rails.application
 
 # Mount the Resque web interface in development. In production is already
 # available through the CIC.
-if defined?(Rails) && Rails.env.development?
-  map '/jobs' do
-    run Resque::Server
-  end
-end
+# if defined?(Rails) && Rails.env.development?
+#   map '/jobs' do
+#     run Resque::Server
+#   end
+# end
