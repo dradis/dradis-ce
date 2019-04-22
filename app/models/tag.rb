@@ -28,7 +28,9 @@ class Tag < ApplicationRecord
 
 
   # -- Class Methods ----------------------------------------------------------
-
+  def self.normalize(name)
+    name.strip.downcase
+  end
 
   # -- Instance Methods -------------------------------------------------------
 
@@ -56,6 +58,6 @@ class Tag < ApplicationRecord
 
   private
   def normalize_name
-    self[:name] = self.name.downcase
+    self[:name] = self.normalize(self.name)
   end
 end
