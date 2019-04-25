@@ -1,3 +1,6 @@
+v3.13 (XXX)
+ - User-provided content takes priority over default local fields.
+
 v3.12 (XXX)
  - Using ajax in comments
  - Fixed nodes sidebar header margin
