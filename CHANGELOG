@@ -1,7 +1,7 @@
 v3.13 (XXX)
  - User-provided content takes priority over default local fields.
 
-v3.12 (XXX)
+v3.12 (April 2019)
  - Using ajax in comments
  - Fixed nodes sidebar header margin
  - Added bold font to improve bold text visibility
