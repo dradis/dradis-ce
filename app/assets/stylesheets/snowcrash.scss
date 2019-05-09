@@ -13,6 +13,9 @@
 // theme-level mixins and variables
 @import "snowcrash/variables";
 
+// shared styles
+@import "shared/items_table";
+
 // styles for base HTML elements like body, h1, etc.
 @import "snowcrash/base";
 // styles for managing the layout in the screen (columns, floats, etc.)
