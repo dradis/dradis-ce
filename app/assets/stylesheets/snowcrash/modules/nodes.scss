@@ -46,3 +46,14 @@ td.services-extras-datum-output {
   // layout:
   word-break: break-all;
 }
+
+.btn-node-action, .btn-node-action.open {
+  .btn.dropdown-toggle,
+  .btn.dropdown-toggle:hover {
+    background-color: #285d28; color: white; margin: 5px 10px 0 0;
+  }
+
+  .caret {
+    border-top-color: #eee; border-bottom-color: #eee;
+  }
+}
