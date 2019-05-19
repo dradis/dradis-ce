@@ -27,7 +27,8 @@ describe "moving a node", js: true do
 
   before do
     visit project_node_path(current_node.project, current_node)
-    click_link "Move"
+    click_link 'Action'
+    click_link 'Move'
   end
 
   let(:current_node) { @node_2 }
