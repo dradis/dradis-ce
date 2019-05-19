@@ -1,5 +1,5 @@
 <div id="modal_merge_node" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <%= form_tag project_merges_path(current_project), method: :post, class: 'form-horizontal modal-node-selection-form', data: { node_id: @node.id, hidden_field: '#node_id' } do %>
+  <%= form_tag project_merges_path(current_project.id, @node.id), method: :post, class: 'form-horizontal modal-node-selection-form', data: { node_id: @node.id, hidden_field: '#node_id' } do %>
     <%= hidden_field_tag :node_id %>
 
     <div class="modal-header">

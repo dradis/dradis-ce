@@ -261,7 +261,10 @@ describe "node pages", js: true do
   end
 
   def show_move_node_modal
-    click_link "Move" unless move_modal_visible?
+    unless move_modal_visible?
+      click_link("Action")
+      click_link("Move")
+    end
   end
 
   def move_modal_visible?

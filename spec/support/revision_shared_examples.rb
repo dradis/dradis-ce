@@ -53,6 +53,7 @@ shared_examples "recover deleted item without node" do |item_type|
     with_versioning do
       submit_form
       visit project_node_path(model.node.project, model.node.id)
+      click_link 'Action'
       click_link 'Delete'
       within '#modal_delete_node' do
         click_link 'Delete'
