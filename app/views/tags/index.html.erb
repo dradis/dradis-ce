@@ -9,11 +9,9 @@
     <% end %> 
     <div class="btn-toolbar">
       <div class="filter pull-right">
-        <% if @tags.any? %>
-          <%= form_tag project_tags_path, method: :get do %>
-            <%= search_field_tag :name, nil, placeholder: "Type here to filter table..." %>
-          <% end %>
-        <% end %>        
+        <%= form_tag project_tags_path, method: :get do %>
+          <%= search_field_tag :name, nil, placeholder: "Type here to filter table..." %>
+        <% end %>              
       </div>
     </div>
     <% if @tags.any? %>            
