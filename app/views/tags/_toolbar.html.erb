@@ -1,0 +1,14 @@
+<%= link_to '#new-tag-modal', class: "btn", data: {toggle: 'modal'} do %>
+  <i class="fa fa-plus"></i>
+  New Tag
+<% end %> 
+<div class="btn-toolbar">      
+  <div class="pull-left">
+    <h5><%= pluralize(@tags.total_count, 'result') %></h5>
+  </div>
+  <div class="filter pull-right">
+    <%= form_tag project_tags_path, method: :get do %>
+      <%= search_field_tag :name, nil, placeholder: "Type here to filter table..." %>
+    <% end %>              
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<%= content_tag :tr, row_id: tag.id, data: {value: tag.name, url: project_tag_path(current_project, tag)} do %>
+  <td>
+    <%= content_tag :div, class: 'row_data', edit_type: :click, col_name: 'display_name' do %>
+      <%= tag.display_name %>
+    <% end %>                
+  </td>
+  <td>
+    <%= color_field(nil, :color, class: 'tag-colorpicker', value: tag.color, id: nil) %>
+    <%= content_tag :div, class: 'row_data', edit_type: :click, col_name: 'color' do %>
+      <%= tag.color %>  
+    <% end %>                 
+  </td>
+  <td><%= time_ago_in_words tag.created_at %> ago</td>
+  <td><%= time_ago_in_words tag.updated_at %> ago</td>
+  <td>                
+    <span class="btn_edit"><%= link_to 'Edit', '#', class: 'btn btn-link', row_id: tag.id %>   </span>
+    <span class="btn_delete">
+      <%= link_to "Delete",
+        project_tag_path(current_project, tag),
+        method: :delete,
+        class: 'btn btn-link',
+        row_id: tag.id,
+        data: {
+          confirm: "Are you sure you want to delete \"#{tag.display_name}\"?"
+        }
+      %>  
+    </span>
+    <span class="btn_save"> | <%= link_to 'Save', '#', class: 'btn btn-link', row_id: tag.id %> | </span>
+    <span class="btn_cancel"> <%= link_to 'Cancel', '#', class: 'btn btn-link', row_id: tag.id %></span>
+  </td>
+<% end %>

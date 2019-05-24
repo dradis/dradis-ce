@@ -8,14 +8,22 @@
   <div class="modal-header">
     <h3>New Tag</h3>
   </div>
-
   <div class="modal-body new-tag">     
     <%= label_tag :name %>    
     <%= text_field_tag :tag_name %>
-    <input type="color" id="tag_color" class="tag-colorpicker" name="color" value="#ffa500">    
+    <%= color_field(:tag, "color", class: "tag-colorpicker", value: "#ffa500") %>
   </div>
   <div class="modal-footer">
-    <%= button_tag "Submit", class: "btn btn-primary", id: "create-tag", data: {dismiss: :modal, url: project_tags_path}, aria: {hidden: true} %>
-    <%= button_tag "Close", class: "btn", data: {dismiss: :modal}, aria: {hidden: true} %>
+    <%= button_tag "Submit", class: "btn btn-primary", id: "create-tag",
+      data: {
+        dismiss: :modal,
+        url: project_tags_path
+      },
+      aria: {hidden: true} 
+    %>
+    <%= button_tag "Close", class: "btn",
+      data: { dismiss: :modal} , 
+      aria: {hidden: true} 
+    %>
   </div>
 <% end %>
