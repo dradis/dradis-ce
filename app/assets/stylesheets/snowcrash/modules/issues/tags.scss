@@ -1,0 +1,47 @@
+.tag-editor {  
+  display: inline-block;
+  position: relative;
+  width: 250px;
+}
+
+.tag-results {
+  width: 100%;
+  li {
+    position: relative;
+    a {
+      &:hover {
+        background-image: none;
+        background-color: transparent;
+      }
+    }
+    &:hover {
+      background-color: #f5f5f5;
+      .tag-option {
+        display: block;
+      }
+    }
+    .tag-option {
+      display: none;
+      width: 30px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      font-size: 12px;
+      &:hover {
+        color: inherit;
+        text-decoration: underline;
+      }
+    }
+
+    .js-taglink {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 3px 50px 3px 20px;
+    }
+  }
+}
+
+#tag_search {
+  margin: 0;
+}
