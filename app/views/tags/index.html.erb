@@ -1,0 +1,76 @@
+<% content_for :title, 'Tags' %>
+
+<% cache @tags do %>
+  <div id="tags-index" class="span12">   
+    <%= render 'tags/new_modal' %>
+    <%= link_to '#new-tag-modal', class: "btn", data: {toggle: 'modal'} do %>
+      <i class="fa fa-plus"></i>
+      New Tag
+    <% end %> 
+    <div class="btn-toolbar">
+      <div class="filter pull-right">
+        <% if @tags.any? %>
+          <%= form_tag project_tags_path, method: :get do %>
+            <%= search_field_tag :name, nil, placeholder: "Type here to filter table..." %>
+          <% end %>
+        <% end %>        
+      </div>
+    </div>
+    <% if @tags.any? %>            
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Colour</th>
+            <th>When</th>
+            <th>Last touched</th>
+            <th>Options</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tags.each do |tag| %>
+            <%= content_tag :tr, row_id: tag.id, data: {value: tag.name, url: project_tag_path(current_project, tag)} do %>
+              <td>
+                <%= content_tag :div, class: "row_data", edit_type: :click, col_name: "display_name" do %>
+                  <%= tag.display_name %>
+                <% end %>                
+              </td>
+              <td>
+                <input type="color" class="tag-colorpicker" name="color" value="<%= tag.color %>">
+                <%= content_tag :div, class: "row_data", edit_type: :click, col_name: "color" do %>
+                  <%= tag.color %>  
+                <% end %>                 
+              </td>
+              <td><%= time_ago_in_words tag.created_at %> ago</td>
+              <td><%= time_ago_in_words tag.updated_at %> ago</td>
+              <td>                
+                <span class="btn_edit"><%= link_to "Edit", "#", class: "btn btn-link", row_id: tag.id %>   </span>
+                <span class="btn_delete">
+                  <%= link_to "Delete",
+                    project_tag_path(current_project, tag),
+                    method: :delete,
+                    class: "btn btn-link",
+                    row_id: tag.id,
+                    data: {
+                      confirm: "Are you sure you want to delete \"#{tag.display_name}\"?"
+                    }
+                  %>  </span>
+                <span class="btn_save"> | <%= link_to "Save", "#", class: "btn btn-link", row_id: tag.id %> | </span>
+                <span class="btn_cancel"> <%= link_to "Cancel", "#", class: "btn btn-link", row_id: tag.id %></span>
+              </td>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>      
+    <% else %>
+      <div class="row-fluid">
+        <div class="span12 text-center">
+          <h3>No Tags Found</h3>
+        </div>
+      </div>      
+    <% end %>
+  </div>
+  <div class="span12">
+    <%= paginate @tags %>
+  </div>
+<% end %>

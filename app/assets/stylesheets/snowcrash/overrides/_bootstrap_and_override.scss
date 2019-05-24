@@ -79,3 +79,18 @@ select {
     @include button($orange);
   }
 }
+
+.bg-warning {
+  background: #fcf8e3;
+}
+
+input[type="color"] {
+  display: inline;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  &:hover {
+    cursor: pointer;
+  }
+}

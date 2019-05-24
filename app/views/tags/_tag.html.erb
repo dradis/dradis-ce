@@ -1,0 +1,5 @@
+<%= link_to 'javascript:void(0)', class: 'js-taglink',  style: "color: #{ tag.color }", data: { tag: h(tag.name) } do %>
+  <i class="icon fa fa-tag"></i>
+  <%= h(tag.display_name) %>
+<% end %>
+<%= link_to "(edit)", "#", class: "tag-option" %>

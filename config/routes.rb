@@ -84,7 +84,7 @@ Rails.application.routes.draw do
 
     resources :subscriptions, only: [:create, :destroy]
 
-    resources :tags, except: [:new, :show, :edit ], format: 'json'
+    resources :tags, except: [:new, :show, :edit ]
 
     get 'search' => 'search#index'
     get 'trash' => 'revisions#trash'

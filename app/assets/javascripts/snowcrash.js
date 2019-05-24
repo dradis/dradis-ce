@@ -38,6 +38,7 @@
 //= require snowcrash/modules/activities/poller
 //= require snowcrash/modules/subscriptions
 // require snowcrash/modules/tour
+//= require snowcrash/modules/tags
 //= require snowcrash/modules/uploads
 
 //= require snowcrash/pages/methodologies
