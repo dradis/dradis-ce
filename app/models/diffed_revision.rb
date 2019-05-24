@@ -11,7 +11,7 @@ class DiffedRevision
   def diff
     @diff ||= Differ.diff_by_line(
                 after[content_attribute],
-                before[content_attribute]
+                before_content
               )
   end
 
@@ -40,6 +40,10 @@ class DiffedRevision
   def before
     # Version#object is the state of the object *before* the change was made.
     @before ||= YAML.load(@revision.object)
+  end
+
+  def before_content
+    @revision.previous.event == 'create' ? before[content_attribute].gsub("\n", "\r\n") : before[content_attribute]
   end
 
   def after
