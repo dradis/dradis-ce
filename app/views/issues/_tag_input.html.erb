@@ -1,34 +1,17 @@
-<div class="tag-input">
-  <%= f.input :tag_list, as: :hidden %>
-  Tag:
-  <button class="btn dropdown-toggle" data-toggle="dropdown">
-    <% if @issue.tags.any? %>
-      <span class="tag" style="color: <%= @issue.tags.first.color %>">
+<div class="row-fluid">  
+  <div class="span12 tag-wrap">
+    <%= button_tag nil, class: "btn", id: "tag-btn" do %>
+      <%= content_tag :span, style: "color: #{@issue.tags&.first&.color || '#555'};" do %>
         <i class="icon fa fa-tag"></i>
-        <%= @issue.tags.first.display_name %>
-      </span>
-    <% else %>
-      <span class="tag" style="color: #555">
-        <i class='fa fa-tags'> </i>
-        No tag
-      </span>
-    <% end %>
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu">
-    <li>
-      <%= link_to 'javascript:void(0)', class: 'js-taglink',  style: "color: #555", data: { tag: "" } do %>
-        <i class="icon fa fa-tag"></i>
-        No tag
+        <%= @issue.tags&.first&.display_name || 'No tag' %>
       <% end %>
-    </li>
-    <% @tags.each do |tag| %>
-    <li>
-      <%= link_to 'javascript:void(0)', class: 'js-taglink',  style: "color: #{ tag.color }", data: { tag: h(tag.name) } do %>
-        <i class="icon fa fa-tag"></i>
-        <%= h(tag.display_name) %>
-      <% end %>
-    </li>
-    <% end %>
-  </ul>
+    <% end %>    
+    <div class="tag-editor">
+      <%= f.input :tag_list, as: :hidden %>    
+      <%= text_field_tag :tag_search, nil, data: {url: project_tags_path }, placeholder: "e.g (Critical Medium or Low)", class: "span12" %>
+      <ul class="dropdown-menu show tag-results" id="tag-result">
+      </ul>
+    </div>
+    <%= image_tag "loading.gif", class: "hide", id: "tag-loading", width: 20 %>
+  </div>
 </div>
