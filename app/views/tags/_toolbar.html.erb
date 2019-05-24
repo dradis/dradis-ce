@@ -4,11 +4,14 @@
 <% end %> 
 <div class="btn-toolbar">      
   <div class="pull-left">
-    <h5><%= pluralize(@tags.total_count, 'result') %></h5>
+    <h5>
+      <%= pluralize(@tags.total_count, 'result') %>
+      <%= params[:name].present? ? "for \"#{params[:name]}\"" : "" %>
+    </h5>
   </div>
   <div class="filter pull-right">
     <%= form_tag project_tags_path, method: :get do %>
-      <%= search_field_tag :name, nil, placeholder: "Type here to filter table..." %>
+      <%= search_field_tag :name, nil, placeholder: "Search by tag name or colour..." %>
     <% end %>              
   </div>
 </div>

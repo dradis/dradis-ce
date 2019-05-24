@@ -51,7 +51,7 @@
       tbl_row.find('.row_data').each(function(index, val) 
       {   
         var col_name = $(this).attr('col_name');  
-        var col_val  =  $.trim($(this).html());
+        var col_val  =  $.trim($(this).html().replace(/&nbsp;/g, ''));
         arr[col_name] = col_val;
       });
       submitRow(url ,`!${arr["color"].substr(1)}_${arr["display_name"]}`);
@@ -111,7 +111,7 @@
       tbl_row.find('.row_data').each(function(index, val) 
       {   
         var col_name = $(this).attr('col_name');  
-        var col_val  =  $.trim($(this).html());
+        var col_val  =  $.trim($(this).html().replace(/&nbsp;/g, ''));
         arr[col_name] = col_val;
       });
 
