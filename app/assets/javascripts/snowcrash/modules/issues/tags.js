@@ -1,13 +1,13 @@
 (function ($) {
   const updateTagBtn = function () {
     $('#issue_tag_list').val($(this).data('tag'));
-    $('#tag-btn').html($(this).html()).css("color", $(this).css("color"));
+    $('#tag-btn').html($(this).html()).css('color', $(this).css('color'));
     showTagBtn();
   };
 
   const showTagBtn = function () {
     $('#tag-result').hide();
-    $("#tag_search").hide();
+    $('#tag_search').hide();
     $('#tag-btn').show();
   };
 
@@ -31,11 +31,11 @@
   };
 
   const fillResults = function (tags) {
-    let tagResults = "";  
+    let tagResults = '';  
     tags.forEach(function(tag) {
       tagResults += createTag(tag.value, tag.color, tag.name);
     });
-    $("#tag-result").html($.parseHTML(tagResults)).show();
+    $('#tag-result').html($.parseHTML(tagResults)).show();
     $('#tag-loading').hide();
   };
 
@@ -43,26 +43,26 @@
     if ($('#issues_editor').length === 0) return;
 
     showTagBtn();    
-    $('#issues_editor').on('click', ".js-taglink", updateTagBtn);    
+    $('#issues_editor').on('click', '.js-taglink', updateTagBtn);    
 
     $('#tag-btn').click(function(e) {
       e.preventDefault();
       $(this).hide();
-      $("#tag_search").show().focus();      
+      $('#tag_search').show().focus();      
     });
 
-    $("#tag_search").keyup(delay(function() {
+    $('#tag_search').keyup(delay(function() {
       $('#tag-loading').show();
       if ($(this).val().length) {
-        return $.get($(this).data('url'), {name: $(this).val()}, function(data) {fillResults(data);});
+        return $.getJSON($(this).data('url'), {name: $(this).val()}, function(data) {fillResults(data);});
       } else {
-        $("#tag-result").hide();
+        $('#tag-result').hide();
         $('#tag-loading').hide();
       }
     }, 500));
 
-    $("body").click(function(e) {
-      if ($(e.target).parents(".tag-wrap").length) return;
+    $('body').click(function(e) {
+      if ($(e.target).parents('.tag-wrap').length) return;
       showTagBtn();
     });
   };
