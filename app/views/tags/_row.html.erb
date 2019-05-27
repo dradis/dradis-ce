@@ -1,20 +1,19 @@
-<tr>
-  <%= form_for tag, url: project_tag_path(current_project, tag) do |f| %>  
+<tr>  
     <td>
-      <%= f.text_field :name, as: :hidden, class: "tag-name-hidden" %>
-      <%= text_field_tag nil, :tag_name, class: 'tag-row-name', value: tag.display_name %>  
-      <%= image_tag :loading, class: "hide" %>
+      <%= form_for tag, url: project_tag_path(current_project, tag) do |f| %>  
+        <%= f.text_field :name, as: :hidden, class: "tag-name-hidden" %>
+        <%= text_field_tag nil, :tag_name, class: 'tag-row-name', value: tag.display_name %>  
+        <%= image_tag :loading, class: "hide" %>
+      <% end %>
     </td>
     <td>
       <%= color_field(nil, :color, class: 'tag-colorpicker', value: tag.color, id: nil) %>
-      <span><%= tag.color %></span>
-    </td>
-  <% end %>
+      <%= tag.color %>
+    </td>  
   <td><%= tag.taggings_count %></td>
   <td><%= time_ago_in_words tag.created_at %> ago</td>
   <td><%= time_ago_in_words tag.updated_at %> ago</td>
   <td>                
-    <%# link_to "Edit", '#', class: 'btn btn-link' %>
     <%= link_to "Delete",
       project_tag_path(current_project, tag),
       method: :delete,
