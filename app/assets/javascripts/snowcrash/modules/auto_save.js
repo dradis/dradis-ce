@@ -1,9 +1,6 @@
 document.addEventListener( "turbolinks:load", function(){
-  console.log('auto_save loaded');
 
   document.querySelectorAll("[data-behavior~=auto-save]").forEach( function(item){
-    console.log(item);
-
     var key  = item.dataset.autosaveKey;
     var data = "";
 
@@ -26,24 +23,24 @@ document.addEventListener( "turbolinks:load", function(){
       console.log("No data in localStorage for " + key);
     }
 
+    // we're using a jQuery plugin for :textchange event, so need to use $()
     var timer;
-
     $(item).on("textchange", function(event, previousText) {
-      console.log('textchange');
-      console.log(event);
-
       clearTimeout(timer)
 
       timer = setTimeout(function(){
-        console.log("Saving to localStorage...");
-        console.log(event.currentTarget.value);
         if (typeof Storage !== "undefined" && Storage !== null) {
           localStorage.setItem(key, JSON.stringify(event.currentTarget.value));
         } else {
           console.log("The browser doesn't support local storage of settings.");
-          console.log("Column selection can't be saved.");
         }
       }, 1000);
+    });
+
+    item.form.addEventListener("submit", function(event){
+      if (typeof Storage !== "undefined" && Storage !== null) {
+        localStorage.removeItem(key);
+      }
     });
   });
 });
