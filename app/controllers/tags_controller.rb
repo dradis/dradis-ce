@@ -19,7 +19,7 @@ class TagsController < AuthenticatedController
   end
 
   def update
-    @tag.update_attributes(tag_params)    
+    @tag.update_attributes(tag_params)
     redirect_to project_tags_path
   end
 

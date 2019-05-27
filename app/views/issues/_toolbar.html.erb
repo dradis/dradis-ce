@@ -41,15 +41,20 @@
         <% end %>
       </ul>
     </div>
-  </div>
-
+  </div>  
   <div class="btn-group">
-    <button class="btn dropdown-toggle" data-toggle="dropdown" title="Choose columns to show"><i class="fa fa-columns"></i> <span class="caret"></span></button>
+    <button class="btn dropdown-toggle" data-toggle="dropdown" title="Choose columns to show"><i class="fa fa-columns"></i> <span class="caret"></span></button>    
     <ul class="dropdown-menu js-table-columns">
       <% @columns.each do |column| %>
       <li><a href="javascript:void(0)" data-column="<%= column.downcase %>"><input type="checkbox" /> <%= column %></a></li>
       <% end %>
     </ul>
+  </div>
+
+  <div class="btn-group">
+    <%= link_to project_tags_path, class: :btn, title: "See all Tags" do  %>
+      Tags
+    <% end %>
   </div>
 
   <div class="filter pull-right">

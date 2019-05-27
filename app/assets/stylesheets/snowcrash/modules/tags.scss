@@ -1,13 +1,23 @@
-.row_data {
-  display: inline-block;
-}
-
 .new-tag {
   input {
     margin: 0;
   }
-  input[type="color"] {
-    width: 30px;
-    height: 30px;
+}
+
+#tags-index {
+  .tag-row-name {
+    background: none;
+    box-shadow: none;
+    border: 1px solid transparent;    
+    margin: 0;
+    &:focus {
+      background: #fcf8e3;
+      box-shadow: inherit;
+      border: 1px solid #ccc;    
+    }
+  }
+
+  input[name="tag[name]"] {
+    display: none;
   }
 }

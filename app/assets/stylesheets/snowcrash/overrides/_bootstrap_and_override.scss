@@ -80,15 +80,14 @@ select {
   }
 }
 
-.bg-warning {
-  background: #fcf8e3;
-}
-
 input[type="color"] {
   display: inline;
   padding: 0;
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 27px;
+  border: none;
+  box-shadow: none;
+  background: none;
   margin: 0;
   &:hover {
     cursor: pointer;

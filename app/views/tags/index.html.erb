@@ -16,7 +16,7 @@
             <th>Options</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="inner">
           <% @tags.each do |tag| %>
             <%= render 'tags/row', tag: tag %>
           <% end %>
