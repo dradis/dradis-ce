@@ -200,7 +200,7 @@ class @ItemsTable
 
     # start console
     ConsoleUpdater.parsing = true;
-    setTimeout(ConsoleUpdater.updateConsole, 200);
+    setTimeout(ConsoleUpdater.updateConsole, 1000);
 
   storageKey: ->
     @$jsTable.data('storage-key')

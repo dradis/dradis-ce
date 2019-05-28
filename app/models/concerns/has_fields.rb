@@ -38,7 +38,7 @@ module HasFields
     def dradis_has_fields_for(container_field)
       define_method :fields do
         if raw_content = self.send(container_field)
-          Hash[ *raw_content.scan(REGEX).flatten.map(&:strip) ].merge(local_fields)
+          local_fields.merge(Hash[ *raw_content.scan(REGEX).flatten.map(&:strip) ])
         else # if the container field is empty, just return an empty hash:
           {}
         end
