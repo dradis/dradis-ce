@@ -43,7 +43,8 @@ class DiffedRevision
   end
 
   def before_content
-    @revision.previous.event == 'create' ? before[content_attribute].gsub("\n", "\r\n") : before[content_attribute]
+    harmonized_version = before[content_attribute].include?("\r\n") ? before[content_attribute] : before[content_attribute].gsub("\n", "\r\n")
+    @revision.previous.event == 'create' ? harmonized_version : before[content_attribute]
   end
 
   def after
