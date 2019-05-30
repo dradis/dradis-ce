@@ -9,10 +9,7 @@ class DiffedRevision
   end
 
   def diff
-    @diff ||= Differ.diff_by_line(
-                after[content_attribute],
-                before[content_attribute]
-              )
+    @diff ||= Differ.diff_by_line(after['content'], before['content'])
   end
 
   def last_updated_at
@@ -53,12 +50,4 @@ class DiffedRevision
                  @record.attributes
                end
   end
-
-  def content_attribute
-    case @record
-    when Issue, Note; 'text' # FIXME - ISSUE/NOTE INHERITANCE
-    when Evidence; 'content'
-    end
-  end
-
 end
