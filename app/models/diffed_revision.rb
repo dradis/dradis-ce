@@ -9,7 +9,10 @@ class DiffedRevision
   end
 
   def diff
-    @diff ||= Differ.diff_by_line(after['content'], before['content'])
+    @diff ||= Differ.diff_by_line(
+                after[content_attribute],
+                before[content_attribute]
+              )
   end
 
   def last_updated_at
@@ -50,4 +53,15 @@ class DiffedRevision
                  @record.attributes
                end
   end
+
+  # Issue/Note have the `text` attribute aliased as `content` but we can't use
+  # it here because 1) the saved object does not use the aliased method and
+  # 2) the #attributes method does not return the aliased method.
+  def content_attribute
+    case @record
+    when Issue, Note; 'text' # FIXME - ISSUE/NOTE INHERITANCE
+    when Evidence; 'content'
+    end
+  end
+
 end
