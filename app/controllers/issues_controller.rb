@@ -8,11 +8,11 @@ class IssuesController < AuthenticatedController
   include NotificationsReader
   include ProjectScoped
 
-  before_action :find_issuelib
-  before_action :find_issues, except: [:destroy]
+  before_action :set_issuelib
+  before_action :set_issues, except: [:destroy]
 
-  before_action :find_or_initialize_issue, except: [:import, :index]
-  before_action :find_or_initialize_tags, except: [:destroy]
+  before_action :set_or_initialize_issue, except: [:import, :index]
+  before_action :set_or_initialize_tags, except: [:destroy]
 
   def index
     @columns = @issues.map(&:fields).map(&:keys).uniq.flatten | ['Title', 'Tags', 'Affected', 'Created', 'Created by', 'Updated']
@@ -53,7 +53,7 @@ class IssuesController < AuthenticatedController
           # For some reason we can't save the :tags before we save the model,
           # so first we save it, then we apply the tags.
           #
-          # See #find_or_initialize_issue()
+          # See #set_or_initialize_issue()
           #
           @issue.update_attributes(issue_params)
 
@@ -116,7 +116,7 @@ class IssuesController < AuthenticatedController
 
   private
 
-  def find_issues
+  def set_issues
     # We need a transaction because multiple DELETE calls can be issued from
     # index and a TOCTOR can appear between the Note read and the Issue.find
     Note.transaction do
@@ -124,13 +124,13 @@ class IssuesController < AuthenticatedController
     end
   end
 
-  def find_issuelib
+  def set_issuelib
     @issuelib = current_project.issue_library
   end
 
   # Once a valid @issuelib is set by the previous filter we look for the Issue we
   # are going to be working with based on the :id passed by the user.
-  def find_or_initialize_issue
+  def set_or_initialize_issue
     if params[:id]
       @issue = Issue.find(params[:id])
     elsif params[:issue]
@@ -144,7 +144,7 @@ class IssuesController < AuthenticatedController
 
   # Load all the colour tags in the project (those that start with !). If none
   # exist, initialize a set of tags.
-  def find_or_initialize_tags
+  def set_or_initialize_tags
     @tags = current_project.tags.where('name like ?', '!%')
   end
 

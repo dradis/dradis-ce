@@ -6,7 +6,7 @@ class EvidenceController < NestedNodeResourceController
   include NodesSidebar
   include NotificationsReader
 
-  before_action :find_or_initialize_evidence, except: [ :index, :create_multiple ]
+  before_action :set_or_initialize_evidence, except: [ :index, :create_multiple ]
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
   skip_before_action :find_or_initialize_node, only: [:create_multiple]
 
@@ -144,7 +144,7 @@ class EvidenceController < NestedNodeResourceController
 
   # Look for the Evidence we are going to be working with based on the :id
   # passed by the user.
-  def find_or_initialize_evidence
+  def set_or_initialize_evidence
     if params[:id]
       @evidence = @node.evidence.includes(:issue, issue: [:tags]).find(params[:id])
     elsif params[:evidence]
