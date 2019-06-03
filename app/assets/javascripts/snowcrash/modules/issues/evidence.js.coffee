@@ -43,13 +43,28 @@ document.addEventListener "turbolinks:load", ->
 
 
   # when selecting items or 'select all', refresh toolbar buttons
-  $(".js-items-table-select-all, input[type=checkbox].js-multicheck").click =>
+  $(".js-items-table-select-all, input[type=checkbox].js-multicheck").change =>
     # @refreshToolbar()
     checked = $("input[type=checkbox].js-multicheck:checked:visible").length
     if checked
       $(".js-items-table-actions").css('display', 'inline-block')
     else
       $(".js-items-table-actions").css('display', 'none')
+
+  checker = (checked_value) ->
+    $('input[type=checkbox].js-multicheck').each (index, element) ->
+        jqueried_element = $('#' + element['id'])
+        jqueried_element.prop('checked', checked_value)
+
+  $('#issues-evidence-select-all').change =>
+    if $('#issues-evidence-select-all').prop('checked')
+      checker(true)
+    else
+      checker(false)
+      $(".js-items-table-actions").css('display', 'none')
+
+  $('[data-toggle="tab"]').click =>
+    $(".js-items-table-actions").css('display', 'none')
 
   $('.js-items-table-delete').on 'confirm:complete', (element, answer) ->
     if answer
