@@ -65,6 +65,8 @@ document.addEventListener "turbolinks:load", ->
 
   $('[data-toggle="tab"]').click =>
     $(".js-items-table-actions").css('display', 'none')
+    $('#issues-evidence-select-all').prop('checked', false)
+    checker(false)
 
   $('.js-items-table-delete').on 'confirm:complete', (element, answer) ->
     if answer
