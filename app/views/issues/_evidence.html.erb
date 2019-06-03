@@ -11,12 +11,19 @@
   <% if @issue.affected.empty? %>
     <p>None so far.</p>
   <% else %>
+    <%= render partial: 'evidence_toolbar' %>
     <div class="tabbable tabs-left" id="evidence-tabs">
       <ul class="nav nav-tabs" id="evidence-host-list">
         <% @affected_nodes.each do |node| %>
           <% cache [@issue, node, node.evidence_count, 'evidence-nav'] do %>
             <li>
-              <a href="#evidence_for_<%= dom_id(node) %>" data-toggle="tab" data-path="<%= project_issue_node_path(current_project, @issue, node) %>" data-node="<%= "evidence_for_#{dom_id(node)}" %>">
+              <a href="#evidence_for_<%= dom_id(node) %>" data-toggle="tab"
+                data-path="<%= project_issue_node_path(current_project, @issue, node) %>"
+                data-node="<%= "evidence_for_#{dom_id(node)}" %>"
+                data-node-id="<%= node.id %>"
+                data-destroy-url="<%= multiple_destroy_project_node_evidence_index_path(node.project, node) %>"
+                data-redirect-to="<%= project_issue_path(node.project, @issue) %>"
+              >
                 <i class="fa fa-<%= ['folder-o','laptop'][node.type_id] %>"></i> <%= node.label %> (<%= node.evidence_count %>)
               </a>
             </li>

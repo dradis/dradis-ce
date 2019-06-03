@@ -5,13 +5,14 @@ module MultipleDestroy
     # cache these values
     @count = params[:ids].size
     @max_deleted_inline = ::Configuration.max_deleted_inline
+    kontroller = params[:custom_controller] || params[:controller]
 
     if @count > 0
       @job_logger = Log.new
       job_params = {
         author_email: current_user.email,
         ids: params[:ids],
-        klass: params[:controller].singularize.capitalize,
+        klass: kontroller.singularize.capitalize,
         project_id: current_project.id,
         uid: @job_logger.uid
       }
@@ -25,5 +26,8 @@ module MultipleDestroy
         MultiDestroyJob.perform_now(job_params)
       end
     end
+
+    return unless params[:notice]
+    flash[:notice] = params[:notice]
   end
 end
