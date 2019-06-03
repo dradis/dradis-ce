@@ -1,6 +1,8 @@
-v3.13 (XXX)
+v3.13 (June 2019)
  - User-provided content takes priority over default local fields.
  - Fix subnodes disappearing when moved
+ - Add auto-save JS that uses localStorage on textarea textchange events
+ - Better welcome content
 
 v3.12 (April 2019)
  - Using ajax in comments
