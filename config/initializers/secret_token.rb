@@ -26,4 +26,4 @@ secret_token = (secret_token_file.exist? and secret_token_file.read.chomp) or (
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Dradis::Application.config.secret_key_base = secret_token
+Dradis::Application.secrets.secret_key_base = secret_token
