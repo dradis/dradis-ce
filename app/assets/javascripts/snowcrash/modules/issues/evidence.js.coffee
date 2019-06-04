@@ -40,84 +40,46 @@ document.addEventListener "turbolinks:load", ->
       rule.test($(this).text())
     .show()
 
-
-
-  # when selecting items or 'select all', refresh toolbar buttons
-  $(".js-items-table-select-all, input[type=checkbox].js-multicheck").change =>
-    # @refreshToolbar()
-    checked = $("input[type=checkbox].js-multicheck:checked:visible").length
+  $(".js-issues-evidence-select-all, .js-multicheck").change =>
+    checked = $(".js-multicheck:checked:visible").length
     if checked
-      $(".js-items-table-actions").css('display', 'inline-block')
+      $(".js-issues-evidence-actions").css('display', 'inline-block')
     else
-      $(".js-items-table-actions").css('display', 'none')
-
-  checker = (checked_value) ->
-    $('input[type=checkbox].js-multicheck').each (index, element) ->
-        jqueried_element = $('#' + element['id'])
-        jqueried_element.prop('checked', checked_value)
+      $(".js-issues-evidence-actions").css('display', 'none')
 
   $('#issues-evidence-select-all').change =>
     if $('#issues-evidence-select-all').prop('checked')
       checker(true)
     else
       checker(false)
-      $(".js-items-table-actions").css('display', 'none')
+
+  $(".js-multicheck").change =>
+    return unless $('#issues-evidence-select-all').prop('checked') && !this.checked
+
+    $('#issues-evidence-select-all').prop('checked', false)
 
   $('[data-toggle="tab"]').click =>
-    $(".js-items-table-actions").css('display', 'none')
+    $(".js-issues-evidence-actions").css('display', 'none')
     $('#issues-evidence-select-all').prop('checked', false)
     checker(false)
 
-  $('.js-items-table-delete').on 'confirm:complete', (element, answer) ->
-    if answer
-      that = this
-      ids = []
+  $('.js-issues-evidence-delete').on 'confirm:complete', (element, answer) ->
+    return unless answer
 
-      $('.evidence-content.active input[type=checkbox]:checked:visible').each ->
-        # $row = $(this).parent().parent()
-        # $($row.find('td')[2]).replaceWith("<td class=\"loading\">Deleting...</td>")
+    ids = []
 
-        # $('#evidence-host-list li.active a').data('node-id')
-        ids.push($(this).val())
+    $('.evidence-content.active .js-multicheck:checked:visible').each ->
+      ids.push($(this).val())
 
-      $.ajax $('#evidence-host-list li.active a').data('destroy-url'), {
-        method: 'DELETE'
-        dataType: 'json'
-        data: { ids: ids, custom_controller: 'evidence', notice: 'Evidence deleted for selected nodes.' }
-        success: (data) ->
-          window.location.replace($('#evidence-host-list li.active a').data('redirect-to'))
+    $.ajax $('#evidence-host-list li.active a').data('destroy-url'), {
+      method: 'DELETE'
+      dataType: 'json'
+      data: { ids: ids, custom_controller: 'evidence', notice: 'Evidence deleted for selected nodes.' }
+      success: (data) ->
+        window.location.replace($('#evidence-host-list li.active a').data('redirect-to'))
+    }
 
-          # for id in ids
-          #   $("#checkbox_#{that.itemName}_#{id}").closest('tr').remove()
-          #   $("##{that.itemName}_#{id}_link").remove()
-
-          # if $(that.selectedItemsSelector).length == 0
-          #   that.resetToolbar()
-
-          # if data.success
-          #   if data.jobId?
-          #     # background deletion
-          #     that.showConsole(data.jobId)
-          #   else
-          #     # inline deletion
-          #     that.showAlert(data.msg, 'success')
-          # else
-          #   that.showAlert(data.msg, 'error')
-
-          # TODO: show placeholder if no items left
-
-        error: ->
-          # for id in ids
-          #   $row = $("#checkbox_#{that.itemName}_#{id}").closest('tr')
-          #   $($row.find('td')[2]).replaceWith("<td class='text-error'>Please try again</td>")
-      }
-
-    # prevent Rails UJS from doing anything else.
-    false
-
-  # refreshToolbar: =>
-  #   checked = $("input[type=checkbox].js-multicheck:checked:visible").length
-  #   if checked
-  #     $(".js-items-table-actions").css('display', 'inline-block')
-  #   else
-  #     $(".js-items-table-actions").css('display', 'none')
+  checker = (checked_value) ->
+    $('.js-multicheck').each (index, element) ->
+      jqueried_element = $('#' + element['id'])
+      jqueried_element.prop('checked', checked_value)
