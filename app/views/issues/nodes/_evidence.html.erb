@@ -23,8 +23,8 @@
       <div class="tabbable tabs-left">
         <ul class="nav nav-tabs">
           <% instances.each_with_index do |instance, i| %>
+            <%= check_box_tag "checkbox_#{instance.id}", instance.id, false, class: 'js-multicheck' %>
             <li class="<%= 'active' if i==0 %>">
-              <%= check_box_tag "checkbox_#{instance.id}", instance.id, false, class: 'js-multicheck' %>
               <a href="#node_<%= node.id %>_instance_<%= instance.id %>" data-toggle="tab">#<%= i+1 %></a>
             </li>
           <% end %>

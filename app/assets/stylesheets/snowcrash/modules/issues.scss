@@ -50,7 +50,13 @@ body.issues.show {
     }
 
     .tabs-left > .nav-tabs > li > a {
-      min-width: auto;
+      min-width: 28px;
+    }
+    .tabs-left > .nav-tabs > .js-multicheck {
+      float: left;
+      margin-top: 12px;
+      margin-left: 5px;
+      margin-right: 5px;
     }
     .tab-content {
       padding: 1em 0 0 2em;
