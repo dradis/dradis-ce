@@ -112,6 +112,7 @@ RSpec.configure do |config|
 
   config.after(:each) do
     DatabaseCleaner.clean
+    Attachment.all.each(&:delete)
   end
 end
 
