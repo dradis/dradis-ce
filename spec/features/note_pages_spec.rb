@@ -57,7 +57,9 @@ describe "note pages" do
     describe "clicking 'delete'", js: true do
       let(:submit_form) do
         page.accept_confirm do
-          within('.note-text-inner') { click_link 'Delete' }
+          within('.note-text-inner') do
+            click_link 'Delete'
+          end
         end
         expect(page).to have_text 'Note deleted'
       end
