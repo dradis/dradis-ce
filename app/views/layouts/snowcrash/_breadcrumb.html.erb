@@ -16,6 +16,7 @@
         <ul class="dropdown-menu dropdown-menu-more">
           <li><a href="#modal_rename_node" tabindex="-1" data-toggle="modal"><i class="fa fa-edit"></i> Rename</a></li>
           <li><a href="#modal_move_node" tabindex="-1" data-toggle="modal"><i class="fa fa-mail-forward"></i> Move</a></li>
+          <li><a href="#modal_merge_node" tabindex="-1" data-toggle="modal"><i class="fa fa-object-group"></i> Merge</a></li>
           <li><a href="#modal_delete_node" tabindex="-1" data-toggle="modal"><span class="text-error"><i class="fa fa-trash"></i> Delete</span></a></li>
         </ul>
       </li>
@@ -28,6 +29,7 @@
 <%= render partial: 'nodes/modals/delete' %>
 <%= render partial: 'nodes/modals/rename' %>
 <%= render partial: 'nodes/modals/move' %>
+<%= render partial: 'nodes/modals/merge' %>
 <% end %>
 
 <% if content_for?(:breadcrums) %>
