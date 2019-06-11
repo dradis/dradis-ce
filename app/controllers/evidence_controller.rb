@@ -6,7 +6,7 @@ class EvidenceController < NestedNodeResourceController
   include NodesSidebar
   include NotificationsReader
 
-  before_action :find_or_initialize_evidence, except: [ :index, :create_multiple ]
+  before_action :set_or_initialize_evidence, except: [ :index, :create_multiple ]
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
   skip_before_action :find_or_initialize_node, only: [:create_multiple]
 
@@ -116,8 +116,18 @@ class EvidenceController < NestedNodeResourceController
       if @evidence.destroy
         track_destroyed(@evidence)
         format.html {
-          redirect_to [current_project, @node],
-            notice: "Successfully deleted evidence for '#{@evidence.issue.title}.'"
+          notice = "Successfully deleted evidence for '#{@evidence.issue.title}.'"
+          # Evidence can be deleted from 3 places:
+          # 1. from the issue evidence tab
+          # 2. from the node evidence tab
+          # 3. from the evidence show page itself (under node)
+          # When using redirect_back in case 3, we find an evidence not found error,
+          # since the evidence does not exist anymore. That's why we check the 'Referer' here:
+          if request.headers['Referer'] == project_node_evidence_url(current_project, @node, @evidence)
+            redirect_to project_node_path(current_project, @node), notice: notice
+          else
+            redirect_back fallback_location: project_node_path(current_project, @node), notice: notice
+          end
         }
         format.js
       else
@@ -134,7 +144,7 @@ class EvidenceController < NestedNodeResourceController
 
   # Look for the Evidence we are going to be working with based on the :id
   # passed by the user.
-  def find_or_initialize_evidence
+  def set_or_initialize_evidence
     if params[:id]
       @evidence = @node.evidence.includes(:issue, issue: [:tags]).find(params[:id])
     elsif params[:evidence]

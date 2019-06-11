@@ -86,6 +86,12 @@ class Node < ApplicationRecord
     Types::USER_TYPES.include?(self.type_id)
   end
 
+  # SEE: https://github.com/amerine/acts_as_tree/issues/63
+  # We add an empty method to handle the bug in acts_as_tree gem that
+  # causes subnodes to disappear when moved.
+  # FIXME: This expected to be fixed in Rails 6. Remove this when upgraded.
+  def update_parents_counter_cache; end
+
   private
   # Whenever a node is deleted all the associated attachments have to be
   # deleted too

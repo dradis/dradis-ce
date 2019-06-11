@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.6'
+gem 'rails', '~> 5.1.7'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -77,10 +77,16 @@ gem 'bcrypt',   '3.1.12'
 gem 'json', '1.8.6'
 
 # XML manipulation
-gem 'nokogiri', '1.8.5'
+gem 'nokogiri', '1.10.3'
 
 # MySQL backend
 gem 'mysql2', '~> 0.5.1'
+
+# actionpack depends on rails-html-sanitizer, which has an XSS vulnerability
+# before 1.0.4, so make sure we're using 1.0.4+:
+# see https://github.com/rails/rails-html-sanitizer/commit/f3ba1a839a
+# and https://github.com/flavorjones/loofah/issues/144
+gem 'rails-html-sanitizer', '~> 1.0.4'
 
 # Textile markup
 gem 'RedCloth', '~> 4.3.2', require: 'redcloth'
@@ -88,11 +94,8 @@ gem 'RedCloth', '~> 4.3.2', require: 'redcloth'
 # html-pipeline dependency for auto-linking
 gem 'rinku'
 
-# actionpack depends on rails-html-sanitizer, which has an XSS vulnerability
-# before 1.0.4, so make sure we're using 1.0.4+:
-# see https://github.com/rails/rails-html-sanitizer/commit/f3ba1a839a
-# and https://github.com/flavorjones/loofah/issues/144
-gem 'rails-html-sanitizer', '~> 1.0.4'
+# html-pipeline dependency for html sanitization
+gem 'sanitize'
 
 # SQLite3 DB driver
 gem 'sqlite3'#,  '1.3.10'
@@ -181,8 +184,9 @@ group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'capybara', '~> 3.6.0'
-  gem 'poltergeist'
+  gem 'chromedriver-helper'
   gem 'guard-rspec', require: false
+  gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'timecop'
 end
@@ -202,13 +206,13 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 3.11', github: 'dradis/dradis-plugins'
+gem 'dradis-plugins', '~> 3.12', github: 'dradis/dradis-plugins'
 
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 3.11', github: 'dradis/dradis-projects'
+gem 'dradis-projects', '~> 3.12', github: 'dradis/dradis-projects'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)

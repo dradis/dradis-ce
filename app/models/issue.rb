@@ -129,4 +129,18 @@ class Issue < Note
     merged
   end
 
+  # This method inspects the issues' Tag field and if present tags the issue
+  # accordingly.
+  def tag_from_field_content!
+    # If the Issue already has tags (e.g. from the HTML form), or if it doesn't
+    # have a Tags field, bail.
+    return if tags.any?
+    return unless fields['Tags'].present?
+
+    # For now we just care about the first tag
+    if (tag_name = fields['Tags'].split(',').first)
+      self.tag_list = tag_name
+      self.save!
+    end
+  end
 end

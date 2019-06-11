@@ -75,7 +75,7 @@ shared_examples 'a page with a comments feed' do
     let (:submit_form) do
       find("div#comment_#{model.id}").hover
       within "div#comment_#{model.id}" do
-        click_link 'Delete'
+        accept_confirm { click_link 'Delete' }
       end
 
       expect(page).not_to have_comment(model) # forces waiting for ajax
