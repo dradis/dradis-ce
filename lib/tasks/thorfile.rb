@@ -120,8 +120,35 @@ class DradisTasks < Thor
       puts "[  DONE  ]"
     end
 
+    desc "kit SETUP_PACKAGE", "import files and projects from a specified kit file"
+    method_option :file, :type => :string, :desc => "full path to a zip file"
+    def kit(file)
+      puts "** Importing package..."
+      KitImportJob.perform_now(file: file, logger: default_logger)
+      puts "[  DONE  ]"
+    end
+
     desc "welcome", "adds initial content to the repo for demonstration purposes"
     def welcome
+      # zip lib/tasks/welcome_kit
+      directory_to_zip = Rails.root.join('lib', 'tasks', 'welcome_kit')
+      temporary_zip = Tempfile.new
+
+      entries = Dir["#{directory_to_zip}/**/**"]
+      Zip::File.open(temporary_zip.path, Zip::File::CREATE) do |zipfile|
+        entries.each do |file|
+          next if File.directory?(file)
+          in_zip_file = file.sub(Rails.root.join('lib', 'tasks', 'welcome_kit').to_s, 'kit')
+          zipfile.add(in_zip_file, file)
+        end
+      end
+
+      invoke 'dradis:setup:kit', [], [file: temporary_zip.path]
+      #FileUtils.cp temporary_zip.path, Rails.root.join('tmp')
+    end
+
+    desc "welcome_old", "adds initial content to the repo for demonstration purposes"
+    def welcome_old
       # --------------------------------------------------------- Note template
       if NoteTemplate.pwd.exist?
         say 'Note templates folder already exists. Skipping.'
