@@ -12,7 +12,7 @@ module HTML
       # Locate the $${{}}$$ sequence inside code blocks and highlight it (via
       # <mark> tags)
       def call
-        doc.search('pre').each do |element|
+        doc.search('pre').each do |pre|
           pre.search('code').each do |node|
             content = node.to_html
             html    = content.gsub(REGEX) do |match|
