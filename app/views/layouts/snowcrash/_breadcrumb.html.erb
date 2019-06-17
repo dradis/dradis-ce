@@ -1,6 +1,6 @@
 <% if @node %>
 <div class="row-fluid node-header">
-  <div class="span7">
+  <div class="span6">
     <ul class="breadcrumb">
       <li><a href="javascript:void(0)">Nodes</a> <span class="divider">/</span></li>
       <%= content_tag :li, class: 'active', data: {node_id: @node.id} do %>
@@ -8,7 +8,7 @@
       <% end -%>
     </ul>
   </div>
-  <div class="span5">
+  <div class="span6">
     <ul class="nav nav-pills pull-right">
       <li><a href="#modal_add_child_node" tabindex="-1" data-toggle="modal"><i class="fa fa-plus"></i> Add subnode</a></li>
       <li><a href="#modal_delete_node" class="text-error" tabindex="-1" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>

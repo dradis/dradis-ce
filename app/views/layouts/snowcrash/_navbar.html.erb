@@ -7,27 +7,33 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <%= link_to 'Dradis CE', main_app.summary_path, class: 'brand' %>
+      <%= link_to current_project.name, main_app.project_path(current_project), class: 'brand' %>
       <div class="navbar-collapse" id="bs-navbar-collapse">
         <ul class="nav pull-right">
-          <li><%= link_to main_app.search_path, id: 'js-search-form-toggle' do %><i class="fa fa-search fa-lg"></i><% end %></li>
-          <li><%= link_to main_app.upload_manager_path do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %></li>
-          <li><%= link_to main_app.export_manager_path do %><i class="fa fa-file-text-o fa-lg"></i> Export results<% end %></li>
-          <li><%= link_to main_app.configurations_path do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %></li>
+          <li><%= link_to main_app.project_search_path(current_project), id: 'js-search-form-toggle' do %><i class="fa fa-search fa-lg"></i><% end %></li>
+          <li><%= link_to main_app.project_upload_manager_path(current_project) do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %></li>
+          <li><%= link_to main_app.project_export_manager_path(current_project) do %><i class="fa fa-file-text-o fa-lg"></i> Export results<% end %></li>
+          <li><%= link_to main_app.project_configurations_path(current_project) do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %></li>
+          <li class="notifications dropdown">
+            <%= link_to main_app.project_notifications_path(current_project), class: 'dropdown-toggle', data: { behavior: 'notifications-dropdown', toggle: 'dropdown' }, remote: true do %>
+              <i class="fa fa-bell fa-lg"></i><b class="caret"></b><i class="notifications-dot hidden" data-behavior="notifications-dot"></i>
+            <% end %>
+            <div class="dropdown-menu" data-url="<%= main_app.project_notifications_path(current_project) %>"></div>
+          </li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-question fa-lg"></i><b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="javascript:void(0)" class="js-try-pro" data-term="training-course" data-url="http://drad.is/l/try-pro-course">Training course</a></li>
+              <li><a href="javascript:void(0)" class="js-try-pro" data-term="training-course" data-url="http://drad.is/l/try-pro-course">Free training course</a></li>
               <li class="divider"></li>
-              <li><a href="javascript:void(0)" class="js-try-pro" data-term="contact-support">Contact support</a></li>
+              <li><a href="javascript:void(0)" class="js-try-pro" data-term="contact-support" data-url="http://drad.is/l/try-pro-support">Contact support</a></li>
               <li><a href="https://evening-hamlet-4416.herokuapp.com/" target="_blank">Chat on Slack</a></li>
-              <li><a href="http://webchat.freenode.net/?channels=dradis" target="_blank">Chat on IRC</a></li>
-              <li><a href="https://github.com/dradis/dradisframework/issues" class="js-hs-beacon">Report an issue</a></li>
-              <li class="divider"></li>
+              <li><a href="https://github.com/dradis/dradis-ce/issues" class="js-hs-beacon">Report an issue</a></li>
               <li><a href="http://dradisframework.org/documentation/" target="_blank">Support website</a></li>
-              <li><a href="http://discuss.dradisframework.org" target="_blank">Community forums</a></li>
+              <li><a href="https://discuss.dradisframework.org" target="_blank">Community forums</a></li>
+              <li class="divider"></li>
+              <li><a href="https://dradisframework.com/careers/" target="_blank">We're hiring</a></li>
               <%# FIXME: re-enable Tour %>
-              <!-- 
+              <!--
               <li class="divider"></li>
               <li><a href="javascript:void(0)" class="js-tour-start">Show Tour</a></li>
               -->

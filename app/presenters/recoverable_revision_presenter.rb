@@ -44,14 +44,12 @@ class RecoverableRevisionPresenter < BasePresenter
     # Get node if object is a Note or an Evidence.
     if ['Note','Evidence'].include?(type)
       if type == "Evidence"
-        if trashed_object.issue
-          result << " for #{trashed_object.issue.title} issue "
-        else
+        unless trashed_object.issue
           result << " for an issue which has since been deleted "
         end
       end
-      if trashed_object.node
-        result << "at " + h.link_to(trashed_object.node.label, trashed_object.node)
+      if (node = trashed_object.node)
+        result << "at " + h.link_to(node.label, [node.project, node])
       else
         result << 'at a node which has since been deleted'
       end
@@ -60,12 +58,14 @@ class RecoverableRevisionPresenter < BasePresenter
   end
 
   def title
-    title = if trashed_object.is_a?(Note) && trashed_object.node == Node.methodology_library
-              note = trashed_object
-              Methodology.new(filename: note.id, content: note.text).name
-            else
-              trashed_object.title
-            end
+    title =
+      if trashed_object.is_a?(Note) && trashed_object.node == project.methodology_library
+        note = trashed_object
+        Methodology.new(filename: note.id, content: note.text).name
+      else
+        trashed_object.title
+      end
+
     truncated_title = h.truncate(title, length: 25, separator: "...")
     h.content_tag(:span, truncated_title, class: 'item-content')
   end
@@ -76,5 +76,9 @@ class RecoverableRevisionPresenter < BasePresenter
 
   def revision
     @revision ||= recoverable_revision.version
+  end
+
+  def project
+    h.current_project
   end
 end

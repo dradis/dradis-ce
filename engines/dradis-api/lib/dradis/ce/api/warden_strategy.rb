@@ -21,7 +21,8 @@ module Dradis::CE::API
         password = auth.credentials.last
 
         if not ( username.blank? || password.nil? || ::BCrypt::Password.new(::Configuration.shared_password) != password )
-          success!(User.new(email: username))
+          user = User.find_or_create_by(email: username)
+          success!(user)
         else
           custom!(unauthorized(403))
         end

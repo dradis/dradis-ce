@@ -1,6 +1,6 @@
 <%= content_tag :div, id: "plugin-#{info[:name]}", class: 'tab-pane tab-panel' do %>
 
-  <%= form_tag export_manager_path, target: '_blank' do %>
+  <%= form_tag project_export_manager_path(current_project), target: '_blank' do %>
     <%= hidden_field_tag :plugin, info[:name] %>
 
     <% if info[:routes].count == 0 %>
@@ -33,7 +33,7 @@
         <%= hidden_field_tag :template, info[:templates].first %>
         <div class="text-center">
           <h3>Ready when you are!</h3>
-          <button id="export-button" class="btn btn-large btn-dradispro">Export</button>
+          <button id="export-button" class="btn btn-large btn-primary">Export</button>
         </div>
       <% else %>
         <h2>Choose a template</h2>
@@ -47,7 +47,7 @@
         <% end %>
 
         <div class="text-center">
-          <button id="export-button" class="btn btn-large btn-dradispro">Export</button>
+          <button id="export-button" class="btn btn-large btn-primary">Export</button>
         </div>
       <% end %>
     <% end %>

@@ -54,6 +54,9 @@ class DiffedRevision
                end
   end
 
+  # Issue/Note have the `text` attribute aliased as `content` but we can't use
+  # it here because 1) the saved object does not use the aliased method and
+  # 2) the #attributes method does not return the aliased method.
   def content_attribute
     case @record
     when Issue, Note; 'text' # FIXME - ISSUE/NOTE INHERITANCE

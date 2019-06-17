@@ -7,7 +7,7 @@
 #   * jQuery.fileUpload  - handles attachment uploads (gem: jquery-fileupload-rails)
 #   * jQuery.Textile     - handles the note editor (/vendor/)
 
-jQuery ->
+document.addEventListener "turbolinks:load", ->
   # --------------------------------------------------- Standard jQuery plugins
   # Activate jQuery.fileUpload
   $('.jquery-upload').fileupload
@@ -95,6 +95,10 @@ jQuery ->
 
       title = switch term
         when 'boards' then '[<span>Dradis Pro feature</span>] Advanced boards and task assignment'
+        when 'contact-support' then '[<span>Dradis Pro feature</span>] Dedicated Support team'
+        when 'issuelib' then '[<span>Dradis Pro feature</span>] Integrated library of vulnerability descriptions'
+        when 'projects' then '[<span>Dradis Pro feature</span>] Work with multiple projects'
+        when 'remediation' then '[<span>Dradis Pro feature</span>] Integrated remediation tracker'
         when 'training-course' then 'Dradis Training Course'
         when 'try-pro' then 'Upgrade to Dradis Pro'
         when 'word-reports' then '[<span>Dradis Pro feature</span>] Custom Word reports'
@@ -124,6 +128,9 @@ jQuery ->
 
       $body.css('height', "#{height}px")
 
+  if !(/^\/projects\/1(\/|$)/.test(window.location.pathname))
+    $('[data-behavior~=project-teaser]').removeClass('hide')
+
   # ------------------------------------------------------ Non-plugin behaviors
 
   # Close button that hides instead of removing the container
@@ -141,8 +148,9 @@ jQuery ->
       img.src = $this.attr('src')
 
   if ($poller = $("#activities-poller")).length
-    ActivitiesPoller.init($poller)
-    ActivitiesPoller.poll()
+    unless ActivitiesPoller.initialized
+      ActivitiesPoller.init($poller)
+      ActivitiesPoller.poll()
 
   # Disable form buttons after submitting them.
   $('form').submit (ev)->
@@ -166,11 +174,3 @@ jQuery ->
 
   $('.navbar .btn-search').on 'click', ->
     $('.form-search').submit()
-
-  # Table filtering
-  $('.js-table-filter').on 'keyup', ->
-    rex = new RegExp($(this).val(), 'i')
-    $('tbody tr').hide()
-    $('tbody tr').filter( ->
-      rex.test($(this).text())
-    ).show()

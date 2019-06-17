@@ -5,10 +5,11 @@ describe "Evidence API" do
   include_context "project scoped API"
   include_context "https"
 
-  let(:node) { create(:node) }
+  let(:node)  { create(:node, project: current_project) }
+  let(:issue) { create(:issue, node: current_project.issue_library) }
 
   context "as unauthenticated user" do
-    let(:evidence) { create(:evidence) }
+    let(:evidence) { create(:evidence, issue: issue, node: node) }
 
     describe "GET /api/nodes/:node_id/evidence" do
       it "throws 401" do
@@ -55,13 +56,13 @@ describe "Evidence API" do
 
     describe "GET /api/nodes/:node_id/evidence" do
       before do
-        @issues = create_list(:issue, 3)
+        @issues = create_list(:issue, 3, node: current_project.issue_library)
         @evidence = [
           Evidence.create!(node: node, content: "#[a]#\nA", issue: @issues[0]),
           Evidence.create!(node: node, content: "#[b]#\nB", issue: @issues[1]),
           Evidence.create!(node: node, content: "#[c]#\nC", issue: @issues[2]),
         ]
-        @other_evidence = create(:evidence)
+        @other_evidence = create(:evidence, issue: issue, node: current_project.issue_library)
         get "/api/nodes/#{node.id}/evidence", env: @env
       end
 
@@ -82,13 +83,16 @@ describe "Evidence API" do
         ev_1 = retrieved_evidence.find { |n| n["issue"]["id"] == @issues[1].id }
         ev_2 = retrieved_evidence.find { |n| n["issue"]["id"] == @issues[2].id }
 
-        expect(ev_0["fields"].keys).to match_array %w[Label a]
+        expect(ev_0["fields"].keys).to \
+          match_array (@evidence[0].local_fields.keys << "a")
         expect(ev_0["fields"]["a"]).to eq "A"
         expect(ev_0["issue"]["title"]).to eq @issues[0].title
-        expect(ev_1["fields"].keys).to match_array %w[Label b]
+        expect(ev_1["fields"].keys).to \
+          match_array (@evidence[2].local_fields.keys << "b")
         expect(ev_1["fields"]["b"]).to eq "B"
         expect(ev_1["issue"]["title"]).to eq @issues[1].title
-        expect(ev_2["fields"].keys).to match_array %w[Label c]
+        expect(ev_2["fields"].keys).to \
+          match_array (@evidence[2].local_fields.keys << "c")
         expect(ev_2["fields"]["c"]).to eq "C"
         expect(ev_2["issue"]["title"]).to eq @issues[2].title
       end
@@ -101,7 +105,7 @@ describe "Evidence API" do
 
     describe "GET /api/nodes/:node_id/evidence/:id" do
       before do
-        @issue    = create(:issue)
+        @issue    = create(:issue, node: current_project.issue_library)
         @evidence = node.evidence.create!(
           content: "#[foo]#\nbar\n#[fizz]#\nbuzz",
           issue:   @issue,
@@ -117,7 +121,7 @@ describe "Evidence API" do
         retrieved_evidence = JSON.parse(response.body)
         expect(retrieved_evidence["id"]).to eq @evidence.id
         expect(retrieved_evidence["fields"].keys).to match_array(
-          %w[Label foo fizz]
+          @evidence.local_fields.keys + %w(fizz foo)
         )
         expect(retrieved_evidence["fields"]["foo"]).to eq "bar"
         expect(retrieved_evidence["fields"]["fizz"]).to eq "buzz"
@@ -128,7 +132,7 @@ describe "Evidence API" do
 
     describe "POST /api/nodes/:node_id/evidence" do
       let(:url) { "/api/nodes/#{node.id}/evidence" }
-      let(:issue) { create(:issue) }
+      let(:issue) { create(:issue, node: current_project.issue_library) }
       let(:post_evidence) { post url, params: params.to_json, env: @env }
 
       context "when content_type header = application/json" do
@@ -199,7 +203,7 @@ describe "Evidence API" do
 
     describe "PUT /api/nodes/:node_id/evidence/:id" do
       let(:evidence) do
-        create(:evidence, node: node, content: "My content")
+        create(:evidence, node: node, content: "My content", issue: issue)
       end
 
       let(:url) { "/api/nodes/#{node.id}/evidence/#{evidence.id}" }
@@ -278,7 +282,7 @@ describe "Evidence API" do
     end
 
     describe "DELETE /api/nodes/:node_id/evidence/:id" do
-      let(:evidence) { create(:evidence, node: node, content: "My Evidence") }
+      let(:evidence) { create(:evidence, node: node, content: "My Evidence", issue: issue) }
 
       let(:delete_evidence) do
         delete "/api/nodes/#{node.id}/evidence/#{evidence.id}", env: @env

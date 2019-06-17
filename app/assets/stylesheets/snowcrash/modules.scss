@@ -1,11 +1,15 @@
 @import "snowcrash/modules/activities";
 @import "snowcrash/modules/alerts";
+@import "snowcrash/modules/comments";
 @import "snowcrash/modules/configurations";
+@import "snowcrash/modules/console";
 @import "snowcrash/modules/export";
 @import "snowcrash/modules/issues";
+@import "snowcrash/modules/issues/import";
 @import "snowcrash/modules/issues/merge";
 @import "snowcrash/modules/methodologies";
 @import "snowcrash/modules/modals";
+@import "snowcrash/modules/notifications";
 @import "snowcrash/modules/nodes";
 @import "snowcrash/modules/projects";
 @import "snowcrash/modules/textile";
@@ -43,8 +47,9 @@
     }
 
     .list-item-actions {
-      display: none;
       padding-right: 1ex;
+      text-align: right;
+      visibility: hidden;
     }
 
     .list-item-edit {
@@ -53,11 +58,10 @@
     }
 
     &:hover {
-      background-color: lighten(#ccc,10%);
+      background-color: lighten($secondaryNavBarBgColor,10%);
 
       .list-item-actions {
-        display: block;
-        text-align: right;
+        visibility: visible;
       }
     }
   }

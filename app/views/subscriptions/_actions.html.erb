@@ -1,0 +1,27 @@
+<%= link_to \
+      project_subscription_path(
+        current_project,
+        0, # not really used
+        subscription: {
+          subscribable_type: subscribable.class.to_s,
+          subscribable_id: subscribable.id
+        }
+      ),
+      class: 'action-link hide text-error',
+      data: {'behavior': 'unsubscribe'},
+      method: :delete do %>
+    <i class="fa fa-bell-slash"></i> Unsubscribe
+<% end %>
+<%= link_to \
+      project_subscriptions_path(
+        current_project,
+        subscription: {
+          subscribable_type: subscribable.class.to_s,
+          subscribable_id: subscribable.id
+        }
+      ),
+      class: 'action-link hide',
+      data: {'behavior': 'subscribe'},
+      method: :post do %>
+  <i class="fa fa-bell"></i> Subscribe
+<% end %>

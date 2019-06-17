@@ -8,22 +8,23 @@ describe "node pages", js: true do
   before do
     login_to_project_as_user
     @other_user = create(:user)
-    @node       = create(:node)
+    @node       = create(:node, project: current_project)
     @note_0     = create(:note, node: @node, text:"#[Title]#\nNote 0")
     @note_1     = create(:note, node: @node, text:"#[Title]#\nNote 1")
-    @evidence_0 = create(:evidence, node: @node, content:"#[Title]#\nEv 0")
-    @evidence_1 = create(:evidence, node: @node, content:"#[Title]#\nEv 1")
+    issue       = create(:issue, node: current_project.issue_library)
+    @evidence_0 = create(:evidence, issue: issue, node: @node, content:"#[Title]#\nEv 0")
+    @evidence_1 = create(:evidence, issue: issue, node: @node, content:"#[Title]#\nEv 1")
   end
 
   describe "when another user adds a new node to the current project" do
     context "and the new node is a root node" do
       before do
-        visit node_path(@node)
-        @new_node = create(:node, label: "New node", parent_id: nil)
+        visit project_node_path(@node.project, @node)
+        @new_node = create(:node, label: "New node", parent_id: nil, project: current_project)
       end
 
       let(:add_node) do
-        track_created(@new_node, @other_user)
+        create(:activity, action: :create, trackable: @new_node, user: @other_user)
         call_poller
       end
 
@@ -48,8 +49,8 @@ describe "node pages", js: true do
     context "and the new node is a subnode" do
       before do
         # Give the node another subnode so it's expandable:
-        create(:node, label: "Other Sub", parent: @node)
-        visit node_path(@node)
+        create(:node, label: "Other Sub", parent: @node, project: current_project)
+        visit project_node_path(@node.project, @node)
       end
 
       context "and its parent is visible" do
@@ -59,9 +60,9 @@ describe "node pages", js: true do
           it "adds the node to the sidebar" do
             within_main_sidebar do
               should have_selector node_link_selector(@node)
-              @subnode = create(:node, label: "Sub", parent: @node)
+              @subnode = create(:node, label: "Sub", parent: @node, project: current_project)
               should have_no_selector node_link_selector(@subnode)
-              track_created(@subnode, @other_user)
+              create(:activity, action: :create, trackable: @subnode, user: @other_user)
               call_poller
               should have_selector node_link_selector(@subnode)
             end
@@ -77,9 +78,9 @@ describe "node pages", js: true do
           it "adds the node to the sidebar" do
             within_move_node_nodal do
               should have_selector node_link_selector(@node)
-              @subnode = create(:node, label: "Sub", parent: @node)
+              @subnode = create(:node, label: "Sub", parent: @node, project: current_project)
               should have_no_selector node_link_selector(@subnode)
-              track_created(@subnode, @other_user)
+              create(:activity, action: :create, trackable: @subnode, user: @other_user)
               call_poller
               should have_selector node_link_selector(@subnode)
             end
@@ -89,8 +90,8 @@ describe "node pages", js: true do
 
       context "and its parent has no other subnodes" do
         specify "the 'expand' link appears, and works" do
-          @sub = create(:node, label: "Sub", parent: @node)
-          track_created(@sub, @other_user)
+          @sub = create(:node, label: "Sub", parent: @node, project: current_project)
+          create(:activity, action: :create, trackable: @sub, user: @other_user)
           call_poller
           within_main_sidebar do
             should have_selector "#{node_li_selector(@node)} > a.toggle"
@@ -103,11 +104,11 @@ describe "node pages", js: true do
   end
 
   describe "when another user deletes the current node" do
-    before { visit node_path(@node) }
+    before { visit project_node_path(@node.project, @node) }
 
     it "displays a warning" do
       @node.destroy
-      track_destroyed(@node, @other_user)
+      create(:activity, action: :destroy, trackable: @node, user: @other_user)
       call_poller
 
       should have_selector "#node-deleted-alert"
@@ -116,13 +117,13 @@ describe "node pages", js: true do
 
   describe "when another user deletes a root node" do
     before do
-      @other_node = create(:node, label: "Delete me")
-      visit node_path(@node)
+      @other_node = create(:node, label: "Delete me", project: current_project)
+      visit project_node_path(@node.project, @node)
     end
 
     let(:delete_node) do
       @other_node.destroy
-      track_destroyed(@other_node, @other_user)
+      create(:activity, action: :destroy, trackable: @other_node, user: @other_user)
       call_poller
     end
 
@@ -146,13 +147,13 @@ describe "node pages", js: true do
 
   describe "when another user deletes a non-root node" do
     before do
-      @subnode = create(:node, label: "Sub", parent: @node)
-      visit node_path(@node)
+      @subnode = create(:node, label: "Sub", parent: @node, project: current_project)
+      visit project_node_path(@node.project, @node)
     end
 
     let(:delete_node) do
       @subnode.destroy
-      track_destroyed(@subnode, @other_user)
+      create(:activity, action: :destroy, trackable: @subnode, user: @other_user)
       call_poller
     end
 
@@ -215,13 +216,13 @@ describe "node pages", js: true do
 
   describe "when another user updates a node" do
     before do
-      @other_node = create(:node, label: "Other")
-      visit node_path(@node)
+      @other_node = create(:node, label: "Other", project: current_project)
+      visit project_node_path(@node.project, @node)
     end
 
     let(:update_node) do
       @other_node.update_attributes!(label: "New name")
-      track_updated(@other_node, @other_user)
+      create(:activity, action: :update, trackable: @other_node, user: @other_user)
       call_poller
     end
 
@@ -252,7 +253,7 @@ describe "node pages", js: true do
   end
 
   def node_link_selector(node)
-    "#{node_li_selector(node)} > a[href='#{node_path(node)}']"
+    "#{node_li_selector(node)} > a[href='#{project_node_path(node.project, node)}']"
   end
 
   def within_move_node_nodal

@@ -1,30 +1,49 @@
 class ProjectsController < AuthenticatedController
-  helper :snowcrash
-  layout 'snowcrash'
+  before_action :set_project
+
+  helper        :snowcrash
+  helper_method :current_project
+  layout        'snowcrash'
+
+  def index
+    redirect_to project_path(current_project)
+  end
 
   def show
-    @nodes   = Node.in_tree
-    @issues  = Issue.where(node_id: Node.issue_library.id).includes(:tags).sort
-    @authors = [current_user]
+    @activities    = Activity.latest
+    @authors       = [current_user]
+    @issues        = current_project.issues.includes(:tags).sort
+    @methodologies = current_project.methodology_library.notes.map{|n| Methodology.new(filename: n.id, content: n.text)}
+    @nodes         = current_project.nodes.in_tree
+    @tags          = current_project.tags
 
-    @methodologies = Node.methodology_library.notes.map{|n| Methodology.new(filename: n.id, content: n.text)}
-
-    @tags = Tag.all
+    @count_by_tag  = { unassigned: 0 }
     @issues_by_tag = Hash.new{|h,k| h[k] = [] }
-    assigned = nil
 
-    @activities = Activity.latest
+    @tag_names = @tags.map do |tag|
+      @count_by_tag[tag.name] = 0
+      [tag.name, [tag.display_name, tag.color]]
+    end.to_h
 
     @issues.each do |issue|
-      assigned = false
-      @tags.each do |tag|
-        if issue.tags.include?(tag)
+      if issue.tags.empty?
+        @issues_by_tag[:unassigned] << issue
+        @count_by_tag[:unassigned]  += 1
+      else
+        issue.tags.each do |tag|
           @issues_by_tag[tag.name] << issue
-          assigned = true
+          @count_by_tag[tag.name]  += 1
         end
       end
-      @issues_by_tag[:unassigned] << issue unless assigned
     end
+  end
 
+  private
+  def set_project
+    current_project
+  end
+
+  def current_project
+    @current_project ||= Project.new
   end
 end

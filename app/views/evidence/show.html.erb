@@ -18,30 +18,35 @@
   <li><a href="#activity-tab" data-toggle="tab"><i class="fa fa-refresh"></i> Recent activity</a></li>
 </ul>
 
-
 <div class="tab-content">
-  <% cache ['evidence-evidence-tab', @evidence] do %>
-    <div class="tab-pane active" id="evidence-tab">
+  <div class="tab-pane active" id="evidence-tab" data-behavior="subscription-actions" data-subscribed="<%= !@subscription.nil? %>">
+    <% cache ['evidence-evidence-tab', @evidence] do %>
       <div class="inner note-text-inner">
         <h3>
           Evidence for this instance -
           <span class="actions">
-            <%= link_to edit_node_evidence_path(@node, @evidence) do %>
+            <%= link_to edit_project_node_evidence_path(@node.project, @node, @evidence), class: 'action-link' do %>
               <i class="fa fa-pencil"></i> Edit
             <% end %>
-            <%= link_to [@node, @evidence],
-                  class: 'text-error',
+            <%= link_to [current_project, @node, @evidence],
+                  class: 'action-link text-error',
                   data: { confirm: 'Are you sure?' },
                   method: :delete do %>
               <i class="fa fa-trash"></i> Delete
-            <% end %>
+            <% end %> -
+            <%= render 'subscriptions/actions', subscribable: @evidence %>
           </span>
         </h3>
 
         <div class="content-textile"><%= markup(@evidence.content) %></div>
       </div>
+    <% end %>
+
+    <div class="inner">
+      <%= render 'comments/feed' %>
+      <%= render 'subscriptions/feed', subscribable: @evidence %>
     </div>
-  <% end %>
+  </div>
 
   <% cache ['evidence-information-tab', @issue] do %>
     <div class="tab-pane" id="info-tab">
@@ -51,7 +56,7 @@
           <h3>
             Issue information -
             <span class="actions">
-            <%= link_to 'Open', issue_path(@issue)%> -
+            <%= link_to 'Open', project_issue_path(current_project, @issue), class: 'action-link' %> -
             <%= tag_and_name_for(@issue) %>
             </span>
           </h3>
@@ -63,7 +68,7 @@
     </div>
   <% end %>
 
-  <% cache ['evidence-activity-tab', @evidence, @activity] do %>
+  <% cache ['evidence-activity-tab', @evidence, @activities] do %>
     <div class="tab-pane" id="activity-tab">
       <div class="inner">
         <h3>
@@ -76,7 +81,8 @@
               #%>
             <%= link_to(
                   'revision history',
-                  node_evidence_revisions_path(@node, @evidence)
+                  project_node_evidence_revisions_path(@node.project, @node, @evidence),
+                  class: 'action-link'
                 ) if @evidence.has_revision_history? %>
           </span>
         </h3>

@@ -1,11 +1,11 @@
-jQuery ->
+document.addEventListener "turbolinks:load", ->
   if $('body.issues.show').length
     $('#evidence-tabs li').first().addClass('active')
     $('#evidence-tabs .tab-pane').first().addClass('active')
 
     $('i[data-toggle="tooltip"]').tooltip()
 
-    $('#evidence-tabs a[data-toggle="tab"]').on 'shown', (ev)->
+    $('#evidence-host-list a[data-toggle="tab"]').on 'shown', (ev)->
       tabContentHeight = $('#evidence-tabs .tab-content').height()
       $tabs            = $('#evidence-tabs #evidence-host-list')
 
@@ -14,6 +14,16 @@ jQuery ->
       # visual effect than the other way around (short tabs w/ tall content)
       if $tabs.height() < tabContentHeight
         $tabs.css('height', tabContentHeight)
+
+      path   = $(this).data('path')
+      node   = $(this).data('node')
+      fetch(path, {credentials: 'include'}).then (response) ->
+        if response.redirected
+          window.location.href = '/'
+        else
+          response.text()
+          .then (html) ->
+            $("##{node}").html(html)
 
     $('.js-add-evidence').click ->
       $('#js-add-evidence-container').slideToggle()

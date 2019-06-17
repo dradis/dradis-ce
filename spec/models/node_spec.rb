@@ -4,6 +4,7 @@ describe Node do
   let(:node) { build(:node) }
 
   it { should validate_presence_of(:label) }
+  it { should validate_length_of(:label).is_at_most(DB_MAX_STRING_LENGTH) }
 
   it 'acts as tree and deletes nested nodes on delete' do
     should have_many(:children).class_name('Node').dependent(:destroy)
@@ -110,22 +111,6 @@ describe Node do
     expect(node.type_id).to eq(Node::Types::DEFAULT)
   end
 
-  it 'creates a ISSUELIB node when none exists' do
-    Node.destroy_all
-    issuelib = Node.issue_library
-    expect(Node.count).to eq(1)
-    expect(issuelib.type_id).to eq(Node::Types::ISSUELIB)
-    issuelib.destroy
-  end
-
-  it 'returns the ISSUELIB node if one exists' do
-    Node.destroy_all
-    node = Node.issue_library
-    issuelib = Node.issue_library
-    expect(issuelib).to eq(node)
-    node.destroy
-  end
-
   describe '#properties' do
     it 'exposes working setters and getters values' do
       node.set_property(:test_property, 80)
@@ -198,6 +183,202 @@ describe Node do
     it 'doesn\'t store value as an array when provided array has only one item' do
       node.set_property(:test_property, [80])
       expect(node.properties[:test_property]).to eq(80)
+    end
+
+    it 'raises if you try to set :services or services_extras' do
+      expect do
+        node.set_property(:services, [{port: '22', protocol: 'tcp'}])
+      end.to raise_error(ArgumentError, /set_service/)
+
+      expect do
+        node.set_property(:services_extras, { 'tcp/22' => {} })
+      end.to raise_error(ArgumentError, /set_service/)
+    end
+  end
+
+  describe '#set_service' do
+    example 'when no service is present with this port & protocol' do
+      node.set_service(
+        port: '22',
+        protocol: 'tcp',
+        source: 'my_plugin',
+        state: 'open',
+        reason: 'because',
+        name: 'name',
+        version: '1',
+        product: 'my_product',
+      )
+      expect(node.properties[:services].length).to eq 1
+      expect(node.properties[:services][0]).to eq({
+        port: '22',
+        protocol: 'tcp',
+        state: 'open',
+        reason: 'because',
+        name: 'name',
+        version: '1',
+        product: 'my_product',
+      })
+
+      # add another one with a different port & protocol:
+      node.set_service(
+        port: '80',
+        protocol: 'http',
+        source: 'other_plugin',
+        state: 'texas',
+        reason: 'porque',
+        name: 'nombre',
+        version: '2.1',
+        product: 'producto',
+      )
+      expect(node.properties[:services].length).to eq 2
+      expect(node.properties[:services][1]).to eq(
+        port: '80',
+        protocol: 'http',
+        state: 'texas',
+        reason: 'porque',
+        name: 'nombre',
+        version: '2.1',
+        product: 'producto',
+        # (source is ignored if there are no extras)
+      )
+    end
+
+    example 'when a service is already present with this port & protocol' do
+      # minimum args required = port, protocol, service
+      node.set_service(port: '22', protocol: 'tcp', source: 'my_plugin')
+      expect(node.properties[:services].length).to eq 1
+
+      node.set_service(
+        port: '22',
+        protocol: 'tcp',
+        source: 'my_plugin',
+        state: 'open',
+        reason: 'because',
+        name: 'nombre',
+        version: '1',
+        product: 'my_product',
+      )
+      expect(node.properties[:services].length).to eq 1
+      # It overrides the existing details:
+      expect(node.properties[:services][0]).to eq(
+        port: '22',
+        protocol: 'tcp',
+        state: 'open',
+        reason: 'because',
+        name: 'nombre',
+        version: '1',
+        product: 'my_product',
+      )
+    end
+
+    example 'service with no "extra" info' do
+      node.set_service(
+        port: '22',
+        protocol: 'tcp',
+        source: 'my_plugin',
+        state: 'open',
+        reason: 'because',
+        name: 'name',
+        version: '1',
+        product: 'my_product',
+      )
+      expect(node.properties[:services_extras]).to be nil
+    end
+
+    example 'service with extra info - same port/protocol' do
+      node.set_service(
+        port: '22',
+        protocol: 'tcp',
+        source: 'plugin',
+        state: 'open',
+        reason: 'because',
+        name: 'name',
+        version: '1',
+        product: 'my_product',
+        foo: 'bar',
+        fizz: 'buzz',
+        uno: 'dos',
+      )
+
+      expect(node.properties[:services_extras].keys).to eq ['tcp/22']
+      expect(node.properties[:services_extras]['tcp/22']).to eq(
+        [
+          { source: 'plugin', id: 'foo', output: 'bar' },
+          { source: 'plugin', id: 'fizz', output: 'buzz' },
+          { source: 'plugin', id: 'uno', output: 'dos' },
+        ]
+      )
+
+      # Adding a service with the same port + protocol:
+      node.set_service(
+        port: '22',
+        protocol: 'tcp',
+        source: 'other_source',
+        state: 'open',
+        reason: 'because',
+        name: 'name',
+        version: '1',
+        product: 'my_product',
+        foo: 'bar', # existing key, different source
+        qwer: 'tyui', # keys we haven't seen before
+        asdf: 'ghjk',
+      )
+
+      # doesn't add a new service, or a new key to services_extras:
+      expect(node.properties[:services].length).to eq 1
+      expect(node.properties[:services_extras].keys).to eq ['tcp/22']
+      # But does add new info to the existing key on services_extras
+      expect(node.properties[:services_extras]['tcp/22']).to eq(
+        [
+          { source: 'plugin', id: 'foo', output: 'bar' },
+          { source: 'plugin', id: 'fizz', output: 'buzz' },
+          { source: 'plugin', id: 'uno', output: 'dos' },
+          { source: 'other_source', id: 'foo', output: 'bar' },
+          { source: 'other_source', id: 'qwer', output: 'tyui' },
+          { source: 'other_source', id: 'asdf', output: 'ghjk' },
+        ]
+      )
+    end
+
+    example 'service with extra info - different port/protocol' do
+      node.set_service(
+        port: '22',
+        protocol: 'tcp',
+        source: 'plugin',
+        state: 'open',
+        reason: 'because',
+        name: 'name',
+        version: '1',
+        product: 'my_product',
+        foo: 'bar',
+        fizz: 'buzz',
+        uno: 'dos',
+      )
+
+      expect(node.properties[:services_extras].keys).to eq ['tcp/22']
+
+      node.set_service(
+        port: '443',
+        protocol: 'https',
+        source: 'plugin',
+        state: 'open',
+        reason: 'because',
+        name: 'name',
+        version: '1',
+        product: 'my_product',
+        foo: 'bar',
+        fizz: 'buzz',
+        uno: 'dos',
+      )
+
+      expect(node.properties[:services_extras].keys).to eq ['tcp/22', 'https/443']
+      expect(node.properties[:services_extras]['https/443']).to eq(
+        [
+          { source: 'plugin', id: 'foo', output: 'bar' },
+          { source: 'plugin', id: 'fizz', output: 'buzz' },
+          { source: 'plugin', id: 'uno', output: 'dos' },
+        ]
+      )
     end
   end
 

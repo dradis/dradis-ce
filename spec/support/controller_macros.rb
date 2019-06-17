@@ -4,8 +4,6 @@ module ControllerMacros
   included { fixtures :configurations }
 
   # Macro to emulate user login
-  # FIXME: User singleton
-  # def login_as_user(user=create(:user))
   def login_as_user(user=create(:user))
     allow_any_instance_of(ApplicationController).to \
       receive(:authenticated?).and_return(true)
@@ -16,7 +14,11 @@ module ControllerMacros
 
   def login_to_project_as_user
     login_as_user
-    @project    = OpenStruct.new
-    @project.id = 1
+
+    @project = Project.new
+  end
+
+  def current_project
+    @project
   end
 end

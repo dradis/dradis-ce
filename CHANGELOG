@@ -1,7 +1,70 @@
-v3.8 (XXX 2017)
+v3.13 (June 2019)
+ - User-provided content takes priority over default local fields.
+ - Fix subnodes disappearing when moved
+ - Add auto-save JS that uses localStorage on textarea textchange events
+ - Better welcome content
+
+v3.12 (April 2019)
+ - Using ajax in comments
+ - Fixed nodes sidebar header margin
+ - Added bold font to improve bold text visibility
+ - Fix links display in Textile fields
+ - Fix redirection destinations after edit/delete evidence
+ - Refactoring cache keys in pages with comments
+ - Disable turbolinks cache when displaying flash messages
+ - Sort attachments in alphabetical ASCII order
+ - Fix methodology checklist edit error
+
+v3.11.1 (February 2019)
+ - Fix blockcode vulnerability in Textile formatting
+
+v3.11 (November 2018)
+ - Added comments, subscriptions and notifications to notes
+ - Added comments, subscriptions and notifications to evidence
+ - Fix blockcode characters displaying incorrectly
+ - Fix red dot still being displayed on the first visit to the page that
+   caused the single unread notification
+ - Upgraded some ruby gems (nokogiri, unicorn, ffi, rubyzip)
+ - Fix wrong 'There are no comments' message
+ - Escape html in comments
+ - Track activities when multiple-creating evidence
+ - Revert validating email format
+ - Fix usage of set_property to use set_service in nexpose plugin
+ - Note and evidence comments in export/import in dradis-projects
+
+v3.10 (August 2018)
+ - Add comments for issues
+ - Add notifications for comments
+ - Add subscriptions for issues in a project
+ - Nest the dradis elements under the project scope
+ - Add 'Send to...' menu for issues
+ - Add better handling of the Services table
+ - Use puma for the development and test server
+ - Remove resque dependency
+ - Improve redirect on Evidence#edit
+ - Fix password reset
+ - Fix XSS issue in Textile textarea inputs
+ - Bugs fixed: #102, #118, #321
+
+v3.9 (January 2018)
+ - Fixed issues multi delete
+ - Added notes and evidence tab to node view
+ - Fixed project show turbolinks
+ - Restyle secondary navbar
+ - Update CE theme with a green palette
+ - Add paper_trail author metadata
  - Upgrade to Rails 5.1 and Ruby 2.4
- - Bugs fixed: #130, #349
- 
+ - Bugs fixed: #128, #130, #134, #173, #349
+ - Add Node properties to Acunetix plugin
+ - Add Node properties to Qualys plugin
+ - Add metric-specific fields to the CVSS calculator
+ - Add fields and Node properties to Burp plugin
+ - Add Issues, Evidence and Node properties to Nikto plugin
+ - Validate parent node (if present) on nodes
+ - Improved pool parameter definition in database.yml.template file
+ - Fixed local_time gem usage
+ - Updated nokogiri gem
+
 v3.7 (July 2017)
  - Fix dradis:reset thor task.
  - Bugs fixed: #119

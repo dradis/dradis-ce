@@ -11,7 +11,7 @@ module HTML
       def call
         output = @text.dup
 
-        Hash[ *@text.scan(/#\[(.+?)\]#[\r|\n](.*?)(?=#\[|\z)/m).flatten.collect{ |str| str.strip } ].keys.each do |field|
+        Hash[ *@text.scan(HasFields::REGEX).flatten.collect{ |str| str.strip } ].keys.each do |field|
           output.gsub!(/#\[#{Regexp.escape(field)}\]#[\r|\n]/, "h4. #{field}\n\n")
         end
 

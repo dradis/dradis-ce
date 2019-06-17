@@ -1,29 +1,20 @@
-class ProjectScopedController < AuthenticatedController
-  include ActivityTracking
-
-  before_action :set_current_project
-  helper :snowcrash
-  layout 'snowcrash'
-
+module ConflictResolver
   protected
 
-  # Initialize the instance varables used in the sidebar for nodes pages
-  # (@sorted_evidence and @sorted_notes, displayed in
-  # `nodes/_sidebar.html.erb`.
+  # This concern lets us guard users against the following scenario:
   #
-  # Used in node, evidence, note, and revision controllers.
-  def initialize_nodes_sidebar
-    # If you just tried to save an invalid Note, then that Note will be
-    # included in @node.notes and will crash the sidebar (because the sidebar
-    # won't be able to generate a route for a Note with no id) So filter out
-    # Notes that haven't been saved:
-    @sorted_notes    = @node.notes.sort_by(&:title).select(&:persisted?)
-    @sorted_evidence = @node.evidence.sort_by { |e1| e1.issue.title }
-  end
-
-  def set_current_project
-    @nodes = Node.in_tree
-  end
+  # 1. User 1 opens a record's 'edit' page
+  # 2. User 2 opens the same record's 'edit' page
+  # 3. User 1 saves an update
+  # 4. User 2 saves their own update, overwriting User 1's recent changes
+  #
+  # With this method we don't prevent the overwrite from happening, but we
+  # detect when it happens and warn the user post-save, so they can check in
+  # the record's revision history and fix any problems.
+  #
+  # To make it work, call check_for_edit_conflicts in #update after a
+  # successful update, then call load_conflicting_revisions in whatever
+  # controller action the user is redirected to next (typically #show)
 
   def check_for_edit_conflicts(record, updated_at_before_save)
     name = record.model_name.name.downcase

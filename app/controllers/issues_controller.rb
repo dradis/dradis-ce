@@ -1,24 +1,41 @@
-class IssuesController < ProjectScopedController
+class IssuesController < AuthenticatedController
+  include ActivityTracking
+  include Commented
   include ContentFromTemplate
+  include ConflictResolver
+  include Mentioned
+  include MultipleDestroy
+  include NotificationsReader
+  include ProjectScoped
 
-  before_action :find_issuelib
-  before_action :find_issues, except: [:destroy, :merging]
+  before_action :set_issuelib
+  before_action :set_issues, except: [:destroy]
 
-  before_action :find_or_initialize_issue, except: [:import, :index, :merging]
-  before_action :find_or_initialize_tags, except: [:destroy]
+  before_action :set_or_initialize_issue, except: [:import, :index]
+  before_action :set_or_initialize_tags, except: [:destroy]
 
   def index
     @columns = @issues.map(&:fields).map(&:keys).uniq.flatten | ['Title', 'Tags', 'Affected', 'Created', 'Created by', 'Updated']
   end
 
   def show
-    @activities = @issue.activities.latest
+    @activities = @issue.commentable_activities.latest
 
     # We can't use the existing @nodes variable as it only contains root-level
     # nodes, and we need the auto-complete to have the full list.
-    @nodes_for_add_evidence = Node.user_nodes.order(:label)
+    @nodes_for_add_evidence = current_project.nodes.user_nodes.order(:label)
+
+    @affected_nodes = Node.joins(:evidence)
+                        .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')
+                        .where('evidence.issue_id = ?', @issue.id)
+                        .group('nodes.id')
+                        .sort_by { |node, _| node.label }
+
+    @first_node      = @affected_nodes.first
+    @first_evidence  = Evidence.where(node: @first_node, issue: @issue)
 
     load_conflicting_revisions(@issue)
+    @subscription = @issue.subscription_for(user: current_user)
   end
 
   def new
@@ -36,17 +53,18 @@ class IssuesController < ProjectScopedController
           # For some reason we can't save the :tags before we save the model,
           # so first we save it, then we apply the tags.
           #
-          # See #find_or_initialize_issue()
+          # See #set_or_initialize_issue()
           #
           @issue.update_attributes(issue_params)
 
 
         track_created(@issue)
+
         # Only after we save the issue, we can create valid taggings (w/ valid
         # taggable IDs)
-        tag_issue_from_field_content(@issue)
+        @issue.tag_from_field_content!
 
-        format.html { redirect_to @issue, notice: 'Issue added.' }
+        format.html { redirect_to [current_project, @issue], notice: 'Issue added.' }
       else
         format.html { render 'new', alert: 'Issue couldn\'t be added.' }
       end
@@ -65,7 +83,7 @@ class IssuesController < ProjectScopedController
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
-        format.html { redirect_to @issue, notice: 'Issue updated' }
+        format.html { redirect_to project_issue_path(current_project, @issue), notice: 'Issue updated' }
       else
         format.html { render 'edit' }
       end
@@ -78,15 +96,14 @@ class IssuesController < ProjectScopedController
     respond_to do |format|
       if @issue.destroy
         track_destroyed(@issue)
-        format.html { redirect_to issues_url, notice: 'Issue deleted.' }
+        format.html { redirect_to project_issues_path(current_project), notice: 'Issue deleted.' }
         format.json
       else
-        format.html { redirect_to issues_url, notice: "Error while deleting issue: #{@issue.errors}" }
+        format.html { redirect_to project_issues_path(current_project), notice: "Error while deleting issue: #{@issue.errors}" }
         format.json
       end
     end
   end
-
 
   def import
     importer = IssueImporter.new(params)
@@ -99,7 +116,7 @@ class IssuesController < ProjectScopedController
 
   private
 
-  def find_issues
+  def set_issues
     # We need a transaction because multiple DELETE calls can be issued from
     # index and a TOCTOR can appear between the Note read and the Issue.find
     Note.transaction do
@@ -107,13 +124,13 @@ class IssuesController < ProjectScopedController
     end
   end
 
-  def find_issuelib
-    @issuelib = Node.issue_library
+  def set_issuelib
+    @issuelib = current_project.issue_library
   end
 
   # Once a valid @issuelib is set by the previous filter we look for the Issue we
   # are going to be working with based on the :id passed by the user.
-  def find_or_initialize_issue
+  def set_or_initialize_issue
     if params[:id]
       @issue = Issue.find(params[:id])
     elsif params[:issue]
@@ -127,36 +144,12 @@ class IssuesController < ProjectScopedController
 
   # Load all the colour tags in the project (those that start with !). If none
   # exist, initialize a set of tags.
-  def find_or_initialize_tags
-    @tags = Tag.where('name like ?', '!%')
-    if @tags.empty?
-      # Create a few default tags.
-      @tags = [
-        Tag.create(name: '!9467bd_Critical'),
-        Tag.create(name: '!d62728_High'),
-        Tag.create(name: '!ff7f0e_Medium'),
-        Tag.create(name: '!6baed6_Low'),
-        Tag.create(name: '!2ca02c_Info'),
-      ]
-    end
+  def set_or_initialize_tags
+    @tags = current_project.tags.where('name like ?', '!%')
   end
 
   def issue_params
     params.require(:issue).permit(:tag_list, :text)
   end
 
-  # This method inspect the issues' Tag field and if present tags the issue
-  # accordingly.
-  def tag_issue_from_field_content(issue)
-    # If the Issue already has tags (e.g. from the HTML form), or if it doesn't
-    # have a Tags field, bail.
-    return if @issue.tags.any?
-    return unless issue.fields['Tags'].present?
-
-    # For now we just care about the first tag
-    if (tag_name = issue.fields['Tags'].split(',').first)
-      issue.tag_list = tag_name
-      issue.save
-    end
-  end
 end

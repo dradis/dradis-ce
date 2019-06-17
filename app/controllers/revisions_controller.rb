@@ -1,4 +1,8 @@
-class RevisionsController < ProjectScopedController
+class RevisionsController < AuthenticatedController
+  include ActivityTracking
+  include NodesSidebar
+  include ProjectScoped
+
   before_action :load_node, except: [ :trash, :recover ]
   before_action :load_record, except: [ :trash, :recover ]
 
@@ -16,11 +20,11 @@ class RevisionsController < ProjectScopedController
 
   def trash
     # Get all revisions whose event is destroy.
-    @revisions = RecoverableRevision.all
+    @revisions = RecoverableRevision.all(project_id: current_project.id)
   end
 
   def recover
-    revision = RecoverableRevision.find(params[:id])
+    revision = RecoverableRevision.find(id: params[:id], project_id: current_project.id)
     if revision.recover
       track_recovered(revision.object)
       flash[:info] = "#{revision.type} recovered"
@@ -28,17 +32,17 @@ class RevisionsController < ProjectScopedController
       flash[:error] = "Can't recover #{revision.type}: #{revision.errors.full_messages.join(',')}"
     end
     
-    redirect_to trash_path
+    redirect_to project_trash_path(current_project)
   end
 
   private
   def load_node
     if params[:evidence_id] || params[:note_id]
-      @node = Node.includes(
+      @node = current_project.nodes.includes(
         :notes, :evidence, evidence: [:issue, { issue: :tags }]
       ).find_by_id(params[:node_id])
 
-      # FIXME: from ProjectScopedController
+      # FIXME: from ProjectScoped
       initialize_nodes_sidebar
     end
   end

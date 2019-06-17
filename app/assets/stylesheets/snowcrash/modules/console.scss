@@ -1,0 +1,7 @@
+@import 'shared/mixins';
+
+#console {
+  @include ajax-console;
+
+  max-height: 200px;
+}

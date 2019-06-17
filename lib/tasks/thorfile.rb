@@ -63,7 +63,14 @@ class DradisTasks < Thor
 
 
   class Setup < Thor
+    include Thor::Actions
+    include ::Rails.application.config.dradis.thor_helper_module
+
     namespace     "dradis:setup"
+
+    def self.source_root
+      File.join(File.dirname(__FILE__), 'templates')
+    end
 
     desc "configure", "Creates the Dradis configuration files from their templates (see config/*.yml.template)"
     def configure
@@ -113,6 +120,39 @@ class DradisTasks < Thor
       puts "[  DONE  ]"
     end
 
+    desc "welcome", "adds initial content to the repo for demonstration purposes"
+    def welcome
+      # --------------------------------------------------------- Note template
+      if NoteTemplate.pwd.exist?
+        say 'Note templates folder already exists. Skipping.'
+      else
+        template 'note.txt', NoteTemplate.pwd.join('basic_fields.txt')
+      end
+
+      # ----------------------------------------------------------- Methodology
+      if Methodology.pwd.exist?
+        say 'Methodology templates folder already exists. Skipping.'
+      else
+        template 'methodology.xml', Methodology.pwd.join('owasp2017.xml')
+      end
+
+      # ---------------------------------------------------------- Project data
+      detect_and_set_project_scope
+
+      task_options.merge!({
+        plugin: Dradis::Plugins::Projects::Upload::Template,
+        default_user_id: 1
+      })
+
+      importer = Dradis::Plugins::Projects::Upload::Template::Importer.new(task_options)
+      importer.import(file: File.expand_path('../templates/project.xml', __FILE__))
+
+      # dradis:reset:database truncates the tables and resets the :id column so
+      # we know the right node ID we're going to get based on the project.xml
+      # structure.
+      Dir.mkdir(Attachment.pwd.join('5'))
+      template 'command-01.png', Attachment.pwd.join('5/command-01.png')
+    end
   end
 
   class Logs < Thor
@@ -140,15 +180,16 @@ class DradisTasks < Thor
 
     desc "database", "removes all data from a dradis repository, except configurations"
     def database
-      require 'config/environment'
+      return if defined?(Dradis::Pro)
 
+      require 'config/environment'
       print "** Cleaning database...                                               "
 
-      Note.destroy_all
-      Node.destroy_all
-      Category.destroy_all
-
-      Log.destroy_all
+      Rails.application.eager_load!
+      (ApplicationRecord.descendants - [Configuration]).each do |model|
+        ActiveRecord::Base.connection.execute("DELETE FROM #{model.table_name}")
+        ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='#{model.table_name}'")
+      end
 
       puts "[  DONE  ]"
     end
@@ -169,7 +210,7 @@ class DradisTasks < Thor
       confirmation = ask "Retype new Dradis password:"
 
       if !password.blank? && password == confirmation
-        Configuration.find_or_create_by(name: 'password').update_attribute(:value, ::Digest::SHA512.hexdigest(password))
+        Configuration.find_or_create_by(name: 'admin:password').update_attribute(:value, ::BCrypt::Password.create(password))
         say("Password Changed.", Thor::Shell::Color::GREEN)
       else
         say("Passwords do not match. Password Unchanged.", Thor::Shell::Color::RED)

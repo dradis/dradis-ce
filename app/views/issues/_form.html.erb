@@ -1,7 +1,19 @@
-<%= simple_form_for @issue do |f| %>
+<%= simple_form_for [current_project, @issue] do |f| %>
   <%= f.error_notification %>
 
-  <%= f.input :text, label: false, input_html: { class: 'textile', data: { preview_url: preview_path, help_url: markup_path } } %>
+  <%=
+    f.input :text,
+      label: false,
+      input_html: {
+        class: 'textile',
+          data: {
+            behavior: 'auto-save',
+            autosave_key: "#{current_project.id}-issue-#{ @issue.persisted? ? "edit-#{@issue.id}" : 'new' }",
+            help_url: markup_path,
+            preview_url: preview_path
+          }
+      }
+  %>
 
   <% if @issue.persisted? %>
     <%= hidden_field :issue, :original_updated_at, value: @issue.updated_at.to_i %>
@@ -10,7 +22,7 @@
   <%= render 'tag_input', f: f %>
 
   <div class="form-actions">
-    <%= f.button :submit, nil, class: 'btn btn-dradispro' %> or
-    <%= link_to 'Cancel', @issue.new_record? ? issues_path : @issue, class: 'cancel-link' %>
+    <%= f.button :submit, nil, class: 'btn btn-primary' %> or
+    <%= link_to 'Cancel', @issue.new_record? ? project_issues_path(current_project) : [current_project, @issue], class: 'cancel-link' %>
   </div>
 <% end %>

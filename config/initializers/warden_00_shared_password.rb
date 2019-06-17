@@ -4,17 +4,17 @@
 # http://railscasts.com/episodes/305-authentication-with-warden
 
 Warden::Manager.serialize_into_session do |user|
-  user.email
+  user.id
 end
 
 Warden::Manager.serialize_from_session do |id|
-  User.new(email: id)
+  User.find(id)
 end
 
 
 Rails.configuration.middleware.use Warden::Manager do |manager|
   manager.default_strategies :shared_password
-  manager.failure_app = ->(env) { SessionsController.action(:new).call(env) }
+  manager.failure_app = ->(env) { SessionsController.action(:failure).call(env) }
 end
 
 # A simple db-backed strategy that uses the User.authenticate() method.
@@ -22,12 +22,14 @@ Warden::Strategies.add(:shared_password) do
   def valid?
     params['login'] || params['password']
   end
+
   def authenticate!
     username = params.fetch('login', nil)
     password = params.fetch('password', nil)
 
     if not ( username.blank? || password.nil? || ::BCrypt::Password.new(::Configuration.shared_password) != password )
-      success!(User.new(email: username))
+      user = User.find_or_create_by(email: username)
+      success!(user)
     else
       fail 'Invalid credentials.'
     end

@@ -173,6 +173,30 @@ class @ActivitiesPoller
       @_showEvidenceDeletedAlert()
 
 
+  # ------ COMMENTS ------
+
+  @addComment: (commentableId, content) ->
+    # Make sure comment isn't already on the page, e.g. if they
+    # loaded/refreshed the page just after the comment was posted:
+    if commentableId == @modelId && !$("#comment_#{commentId}").length
+      $('[data-notice~=no-comments]').hide()
+      $('.comment-list').append(content)
+      count = parseInt($('#comment-count').html())
+      $('#comment-count').html(count + 1)
+
+  @updateComment: (commentId, commentableId, content) ->
+    comment = $("#comment_#{commentId}")
+    comment.replaceWith(content)
+
+  @deleteComment: (commentId) ->
+    comment = $("#comment_#{commentId}")
+    if comment.length
+      comment.remove()
+      count = parseInt($('#comment-count').html())
+      count = count - 1 if count > 0
+      $('#comment-count').html(count)
+      $('[data-notice~=no-comments]').show() if count == 0
+
   # private
 
   @_addLink: (selector, link) ->

@@ -1,3 +1,5 @@
+@import "bootstrap/variables";
+
 // Set the correct sprite paths
 //$iconSpritePath: image-url('glyphicons-halflings.png');
 //$iconWhiteSpritePath: image-url('glyphicons-halflings-white.png');
@@ -7,9 +9,16 @@ $navbarBackgroundHighlight: #888;
 //$navbarText: #eee;
 //$navbarLinkColor: #eee;
 
+$dradisCEGreen: darken($green,10%);
 $dradisProBlue: #DFE8F6;
-$navbarBackground: darken($dradisProBlue, 20%);
-$navbarBackgroundHighlight: darken($dradisProBlue, 20%);
+
+$primaryColor:                $dradisCEGreen;
+$linkColor:                   $dradisCEGreen;
+$linkColorHover:              darken($linkColor, 15%);
+$dropdownLinkBackgroundHover: $dradisCEGreen;
+
+//$navbarBackground: darken($dradisProBlue, 20%);
+//$navbarBackgroundHighlight: darken($dradisProBlue, 20%);
 $navbarBrandColor: #fff;
 $navbarText: #eee;
 $navbarLinkColor: #eee;
@@ -17,10 +26,6 @@ $navbarLinkColor: #eee;
 $baseFontSize: 14px;
 $baseLineHeight: 20px;
 
-// modal dialogs as used in the Node operations
-// bootstrap3
-//$modal-backdrop-bg: #3d464d;
-//$modal-backdrop-opacity: 0.6;
 
 @import "bootstrap";
 
@@ -28,44 +33,21 @@ body { padding-top: 60px; }
 
 @import "bootstrap-responsive";
 
-//.navbar .brand {
-//  color: #CDCDCD;
-//}
+input[type="text"],
+textarea,
+select {
+  color: #555;
 
-.navbar .nav .active > a, .navbar .nav .active > a:hover {
-  background-color: darken($dradisProBlue, 30%);
-}
-.nav-pills > .active > a, .nav-pills > .active > a:hover {
-  background-color: darken(#DFE8F6, 20%);
-}
-
-.dropdown-menu li > a:hover, .dropdown-menu .active > a, .dropdown-menu .active > a:hover {
-  background-color: darken(#DFE8F6, 20%);
+  &:focus {
+    border-color: $linkColor;
+    outline: 0;
+    outline: thin dotted \9; /* IE6-9 */
+    @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px $linkColor);
+  }
 }
 
 .alert {
   margin-bottom: 0;
-}
-
-.btn-dradispro {
-  background-color: #49afcd;
-  background-image: -moz-linear-gradient(top, darken($dradisProBlue, 10%), darken($dradisProBlue, 40%));
-  background-image: -ms-linear-gradient(top, darken($dradisProBlue, 10%), darken($dradisProBlue, 40%));
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(darken($dradisProBlue, 10%)), to(darken($dradisProBlue, 40%)));
-  background-image: -webkit-linear-gradient(top, darken($dradisProBlue, 10%), darken($dradisProBlue, 40%));
-  background-image: -o-linear-gradient(top, darken($dradisProBlue, 10%), darken($dradisProBlue, 40%));
-  background-image: linear-gradient(top, darken($dradisProBlue, 10%), darken($dradisProBlue, 40%));
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF68A3CF', endColorstr='#FF4D92C6', GradientType=0);
-  border-color: darken($dradisProBlue, 40%) darken($dradisProBlue, 40%) #1f6377;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) fadein(rgba(0, 0, 0, 0.1), 15%);
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  color: #fff !important;
-}
-
-.btn-dradispro:hover, .btn-dradispro:active, .btn-dradispro.active, .btn-dradispro.disabled, .btn-dradispro[disabled] {
-  background-color: darken($dradisProBlue, 40%);
 }
 
 .modal {
@@ -77,4 +59,23 @@ body { padding-top: 60px; }
 
 .modal-backdrop {
   background-color: #3d464d;
+}
+
+.btn {
+  @include button(#e6e6e6);
+  text-shadow: 0 0 0;
+
+
+  &.btn-primary {
+    @include button($primaryColor);
+  }
+  &.btn-danger {
+    @include button($red);
+  }
+  &.btn-success {
+    @include button($green);
+  }
+  &.btn-warning {
+    @include button($orange);
+  }
 }

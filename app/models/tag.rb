@@ -7,6 +7,14 @@
 #   * If they start with ! they define their own colour (e.g. !red needs to be coloured red, !4444dd should be a dark shade of blue).
 #     - We require a 6-digit hex code (no 3-digit shortcut)
 class Tag < ApplicationRecord
+  DEFAULT_TAGS = %w[
+    !9467bd_critical
+    !d62728_high
+    !ff7f0e_medium
+    !6baed6_low
+    !2ca02c_info
+  ].freeze
+
   # -- Relationships ----------------------------------------------------------
   has_many :taggings, dependent: :destroy
 
@@ -28,7 +36,7 @@ class Tag < ApplicationRecord
   #  * If the tag name contains color details, they are stripped
   #  * The result is titleized
   def display_name()
-    if self.name =~ /\A!([abcdef\d]{6})(_([[:word:]]+))?\z/
+    if self.name =~ /\A!(\h{6})(_([[:word:]]+))?\z/
       if $3
         out = $3
       else
@@ -43,7 +51,7 @@ class Tag < ApplicationRecord
   # Strips the tag's name and returns the color details if present
   # if no color information is found, returns a default value of #ccc
   def color()
-    name[/\A(![abcdef\d]{6})_[[:word:]]+?\z/,1].try(:gsub, "!", "#") || "#ccc"
+    name[/\A(!\h{6})_[[:word:]]+?\z/,1].try(:gsub, "!", "#") || "#ccc"
   end
 
   private

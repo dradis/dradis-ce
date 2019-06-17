@@ -1,25 +1,25 @@
 <% content_for :title, 'Configuration Manager' %>
 
-<div class="row-fluid">
-  <div class="span7 offset1">
-    <% if @configs.count == 0 %>
-      <h2>You haven't enabled any add-ons that require configuration</h2>
-      <p>Import plugins like <a href="http://dradisframework.org/addons/vulndb.html" target="_blank">VulnDB</a> or <a href="http://dradisframework.org/addons/mediawiki.html" target="_blank">MediaWiki</a> require configuration and will display here when they are enabled.</p>
-      <p>For more details on enabling add-ons, see our <a href="http://dradisframework.org/documentation/add-ons.html" target="_blank">Enable/Disable Add-ons</a> guide.</p>
-    <% else %>
-      <%= form_tag configurations_path do %>
+<% if @configs.count == 0 %>
+  <h2>You haven't enabled any add-ons that require configuration</h2>
+  <p>Import plugins like <a href="http://vulndbhq.com" target="_blank">VulnDB</a> or <a href="https://dradisframework.com/ce/addons/mediawiki.html?utm_source=ce&utm_medium=app" target="_blank">MediaWiki</a> require configuration and will display here when they are enabled.</p>
+  <p>For more details on enabling add-ons, see our <a href="http://dradisframework.org/documentation/add-ons.html" target="_blank">Enable/Disable Add-ons</a> guide.</p>
+<% else %>
+  <div class="row-fluid">
+    <div class="span7 offset1">
+      <%= form_tag project_configurations_path(current_project) do %>
         <% @configs.each do |configuration| %>
           <%= render partial: configuration[:type], object: configuration %>
         <% end %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
 
-  <div class="span3 offset1" data-spy="affix" data-offset-top="300">
-    <ul class="nav nav-list bs-config-sidenav affix">
-      <% @configs.each do |configuration| -%>
-      <li><%= link_to configuration[:name], {anchor: configuration[:name]} %></a></li>
-      <% end -%>
-    </ul>
+    <div class="span3 offset1" data-spy="affix" data-offset-top="300">
+      <ul class="nav nav-list bs-config-sidenav affix">
+        <% @configs.each do |configuration| -%>
+        <li><%= link_to configuration[:name], {anchor: configuration[:name]} %></a></li>
+        <% end -%>
+      </ul>
+    </div>
   </div>
-</div>
+<% end %>

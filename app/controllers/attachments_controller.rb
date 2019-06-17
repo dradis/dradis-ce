@@ -1,6 +1,8 @@
 # Each Node of the repository can have multiple Attachments associated with it.
 # This controller is used to handle REST operations for the attachments.
-class AttachmentsController < ProjectScopedController
+class AttachmentsController < AuthenticatedController
+  include ProjectScoped
+
   before_action :find_or_initialize_node
 
   # Retrieve all the associated attachments for a given :node_id
@@ -24,13 +26,13 @@ class AttachmentsController < ProjectScopedController
     json = {
       name:        @attachment.filename,
       size:        File.size(@attachment.fullpath),
-      url:         node_attachment_path(@node, @attachment.filename),
-      delete_url:  node_attachment_path(@node, @attachment.filename),
+      url:         project_node_attachment_path(current_project, @node, @attachment.filename),
+      delete_url:  project_node_attachment_path(current_project, @node, @attachment.filename),
       delete_type: 'DELETE'
     }
 
     if Mime::Type.lookup_by_extension(File.extname(@attachment.filename).downcase.tr('.','')).to_s =~ /^image\//
-      json[:thumbnail_url] = node_attachment_path(@node, @attachment.filename)
+      json[:thumbnail_url] = project_node_attachment_path(current_project, @node, @attachment.filename)
     end
 
     render json: [json], content_type: 'text/plain'
@@ -74,7 +76,7 @@ class AttachmentsController < ProjectScopedController
       mime_type = Mime::Type.lookup_by_extension(extname[1..-1])
       if mime_type
         send_options[:type] = mime_type.to_s
-        if mime_type =~ 'image'
+        if mime_type =~ 'image' && !mime_type.svg?
           send_options[:disposition] = 'inline'
         end
       end

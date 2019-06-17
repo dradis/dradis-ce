@@ -8,7 +8,7 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 require 'capybara/rspec'
-require 'capybara/poltergeist'
+require 'paper_trail/frameworks/rspec'
 require 'shoulda/matchers'
 
 
@@ -34,13 +34,14 @@ end
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
-
-Capybara.register_driver :poltergeist do |app|
-  options = { js_errors: false, timeout: 60, window_size: [1920, 1080] }
-  Capybara::Poltergeist::Driver.new(app, options)
+Capybara.register_driver :chrome do |app|
+  options = %w[headless disable-gpu window-size=1920,1080]
+  Capybara::Selenium::Driver.new app, browser: :chrome,
+    options: Selenium::WebDriver::Chrome::Options.new(args: options)
 end
 
-Capybara.javascript_driver = :poltergeist
+Capybara.server = :puma, { Silent: true }
+Capybara.javascript_driver = :chrome
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -77,14 +78,14 @@ RSpec.configure do |config|
   # config.include SupportHelper,    type: :controller
   # config.include SupportHelper,    type: :feature
   # config.include SupportHelper,    type: :request
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   # config.include WaitForAjax, type: :feature
 
   config.example_status_persistence_file_path = Rails.root.join("spec", ".examples.txt")
 
   config.before(:suite) do
     begin
-      FactoryGirl.lint
+      FactoryBot.lint
     ensure
       DatabaseCleaner.clean_with(:truncation)
     end
@@ -130,3 +131,5 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+ActiveJob::Base.queue_adapter = :test

@@ -1,9 +1,20 @@
-<%= simple_form_for [@node, @evidence] do |f| %>
+<%= simple_form_for [current_project, @node, @evidence] do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :issue, collection: Issue.where(node_id: Node.issue_library.id).sort, label_method: :title, prompt: 'Choose an Issue' %>
-    <%= f.input :content, input_html: { class: 'textile', data: { preview_url: preview_path, help_url: markup_path } } %>
+    <%= f.association :issue, collection: current_project.issues.sort, label_method: :title, prompt: 'Choose an Issue' %>
+    <%=
+      f.input :content,
+      input_html: {
+        class: 'textile',
+        data: {
+          behavior: 'auto-save',
+          autosave_key: "#{current_project.id}-evidence-#{ @evidence.persisted? ? "edit-#{@evidence.id}" : "new-for-#{@node.id}" }",
+          preview_url: preview_path,
+          help_url: markup_path
+        }
+      }
+    %>
   </div>
 
   <% if @evidence.persisted? %>
@@ -11,7 +22,8 @@
   <% end %>
 
   <div class="form-actions">
-    <%= f.button :submit, nil, class: 'btn btn-dradispro' %> or
-    <%= link_to 'Cancel', node_path(@node) %>
+    <%= hidden_field_tag :back_to, :issue if params[:back_to] == 'issue' %>
+    <%= f.button :submit, nil, class: 'btn btn-primary' %> or
+    <%= link_to 'Cancel', project_node_path(@node.project, @node) %>
   </div>
 <% end %>

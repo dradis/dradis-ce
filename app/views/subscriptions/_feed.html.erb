@@ -1,0 +1,8 @@
+<% cache ['subscriptions-feed', subscribable.subscriptions] do %>
+  <h3>Subscribers <span class="badge"><%= subscribable.subscriptions.count %></span></h3>
+  <div class="subscriptions-feed">
+    <% subscribable.subscriptions.each do |subscription| %>
+      <%= avatar_image(subscription.user, size: 30) %>
+    <% end %>
+  </div>
+<% end %>

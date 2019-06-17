@@ -14,19 +14,37 @@ class PropertyPresenter < BasePresenter
 
     # We want to always render :services as table, but some times there is a
     # single port. We just turn it into a single-element array
+    #
+    # NB new services will always be an array; legacy data may not be
     if (property_key == 'services') && !property_value.is_a?(Array)
       property[1] = [property[1]]
     end
 
-    if property_value.is_a?(Array)
-      if property_value[0].is_a?(Hash)
+    # 'services' and 'services_extras' are special cases:
+    if property_key == 'services'
+      services = property_value.sort_by { |v| v['port'] }
+      render 'nodes/show/services_table', services: services
+    elsif property_key == 'services_extras'
+      # We want to sort the table by port number - but property_value is and
+      # must remain a Hash, and Hash#sort_by returns an Array.  Hacky solution
+      # is to build a new Hash with the keys in the correct order:
+
+      # (The `to_i` is important here so that e.g. '100' appears after '20')
+      keys   = property_value.keys.sort_by { |k| k.split('/').last.to_i }
+      extras = keys.each_with_object({}) { |k, h| h[k] = property_value[k] }
+      render 'nodes/show/services_extras_table', extras: extras
+    elsif property_value.is_a?(Array)
+      if property_value.all? { |x| x.is_a?(Hash) }
         render_table
       else
-        content_tag(:p, property_value.join(", "))
+        content_tag(:p, property_value.join(', '))
       end
-
     else
-      content_tag(:p, property_value)
+      if property_value =~ /\n/
+        content_tag(:pre, property_value)
+      else
+        content_tag(:p, property_value)
+      end
     end
   end
 
@@ -40,39 +58,8 @@ class PropertyPresenter < BasePresenter
     property[1]
   end
 
-  def render_scripts_table(entry)
-    thead = content_tag(:thead) do
-      content_tag(:tr) do
-        content_tag(:th, 'id').
-          concat(content_tag(:th, 'output'))
-      end
-    end
-    tbody = content_tag(:tbody) do
-      entry[:scripts].map do |script|
-        content_tag(:tr) do
-          content_tag(:td, script[0]).
-            concat content_tag(:td, content_tag(:pre, script[1]))
-        end
-      end.join.html_safe
-    end
-
-    # content_tag(:div,
-    #   content_tag(:table, thead.concat(tbody)),
-    #   class: 'content-textile'
-    # )
-    content_tag(:table, thead.concat(tbody), class: 'table table-condensed')
-  end
-
   def render_table
-    values         = property_value
-    column_names   = values.map(&:keys).flatten.uniq.sort.map(&:to_sym)
-    sorted_entries = column_names.include?(:port) ? values.sort_by{ |h| h[:port] } : values
-
-    output = if column_names.delete(:scripts)
-               render_tabs(sorted_entries)
-             else
-               ''
-             end
+    column_names = property_value.map(&:keys).flatten.uniq.sort.map(&:to_s)
 
     thead = content_tag(:thead) do
       content_tag(:tr) do
@@ -83,7 +70,7 @@ class PropertyPresenter < BasePresenter
     end
 
     tbody = content_tag(:tbody) do
-      sorted_entries.collect do |entry|
+      property_value.map do |entry|
         content_tag(:tr) do
           column_names.collect do |column_name|
             concat content_tag(:td, entry[column_name])
@@ -92,44 +79,10 @@ class PropertyPresenter < BasePresenter
       end.join.html_safe
     end
 
-    content_tag(:div,
+    content_tag(
+      :div,
       content_tag(:table, thead.concat(tbody)),
-      class: 'content-textile'
-    ).concat(output)
-  end
-
-  def render_tab_content(values)
-    content_tag(:div, class: 'tab-content') do
-      values.map do |entry|
-        content_tag(:div, class: 'tab-pane', id: "#{entry[:protocol]}-#{entry[:port]}-tab") do
-          render_scripts_table(entry)
-        end
-      end.join.html_safe
-    end
-  end
-
-  def render_tab_ul(values)
-    content_tag :ul, class: 'nav nav-tabs' do
-      values.map do |entry|
-        content_tag :li do
-          content_tag(:a,
-            "%s/%d" % [entry[:protocol], entry[:port]],
-            data: { toggle: :tab },
-            href: "#%s-%d-tab" % [entry[:protocol], entry[:port]]
-          )
-        end
-      end.join.html_safe
-    end
-  end
-
-  def render_tabs(entries)
-    values = entries.select{ |entry| entry.key?(:scripts) && entry[:scripts].any? }
-    return if values.empty?
-
-    content_tag(:h4, 'NSE script output') +
-    content_tag(:div, class: 'tabbable tabs-left', id: 'scripts-tabs') do
-      concat(render_tab_ul(values)).
-      concat(render_tab_content(values))
-    end
+      class: 'content-textile',
+    )
   end
 end

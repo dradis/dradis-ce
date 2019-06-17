@@ -18,7 +18,7 @@
           <ul class="dropdown-menu">
             <% if @methodology_templates.any? %>
               <% for methodology in @methodology_templates do %>
-              <li><%= link_to methodology.name, add_methodology_path(methodology) %></li>
+              <li><%= link_to methodology.name, add_project_methodology_path(current_project, methodology) %></li>
               <% end %>
             <% else %>
             <li class="disabled"><a href="javascript:void(0)">(no methodology templates defined)</a></li>
@@ -30,42 +30,17 @@
       </ul>
 
       <% if @methodologies.empty? %>
-      <br/>
-      <div class="row-fluid">
-        <div class="span6">
-          <div class="inner">
-            <p>No methodologies have been assigned to this project yet.</p>
-          </div>
-        </div>
-        <div class="span6">
-          <div class="inner">
-            <h2>What is a testing methodology?</h2>
-            <p>It's a series of tasks you want to perform for the assessment.</p>
-            <p>They are useful in a number of scenarios:</p>
-            <ul class="fa-ul">
-              <li><i class="fa fa-check"></i> So you don't forget any of the things you know you need to test.</li>
-              <li><i class="fa fa-check"></i> To do a standard set of tests in every project.</li>
-              <li><i class="fa fa-check"></i> To keep track of what is done and what is next.</li>
-            </ul>
-            <br/>
-            <br/>
-
-            <h2>Where are they stored?</h2>
-            <p>Methodology files can be found under:</p>
-            <code>./<%= Methodology.pwd.relative_path_from(Rails.root) %>/</code>
-          </div>
-        </div>
-      </div>
+        <%= render 'empty' %>
       <% end %>
 
       <div class="tab-content">
         <% for methodology in @methodologies do %>
-        <%= content_tag :div, class: 'tab-pane', id: methodology.to_html_anchor, data: { url: update_task_methodology_path(methodology) } do %>
+        <%= content_tag :div, class: 'tab-pane', id: methodology.to_html_anchor, data: { url: update_task_project_methodology_path(current_project, methodology) } do %>
           <div class="pull-right">
-            <%= link_to edit_methodology_path(methodology) do %>
+            <%= link_to edit_project_methodology_path(current_project, methodology) do %>
               <i class="fa fa-pencil"></i> Edit
             <% end %>
-            <%= link_to methodology_path(methodology),
+            <%= link_to project_methodology_path(current_project, methodology),
                   class: 'text-error',
                   method: :delete,
                   data: { confirm: "Are you sure you want to delete the '#{methodology.name}' methodology?" } do %>

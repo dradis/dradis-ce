@@ -9,8 +9,8 @@
         <h2 style="color: <%= tag.color %>"><%= tag.display_name %></h2>
         <ul class="issue-list drop-target" data-tag="<%= tag.name %>">
           <% for issue in @issues_by_tag[tag.name] %>
-            <%= content_tag_for :li, issue, data: {url: issue_path(issue, format: :json)} do %>
-              <%= link_to issue.title, issue %>
+            <%= content_tag_for :li, issue, data: { url: project_issue_path(current_project, issue, format: :json) } do %>
+              <%= link_to issue.title, [current_project, issue] %>
             <% end %>
           <% end %>
         </ul>
@@ -22,8 +22,8 @@
       <h2>Unassigned</h2>
       <ul class="issue-list drop-target">
           <% for issue in @issues_by_tag[:unassigned] %>
-            <%= content_tag_for :li, issue, data: {url: issue_path(issue, format: :json)} do %>
-              <%= link_to issue.title, issue %>
+            <%= content_tag_for :li, issue, data: { url: project_issue_path(current_project, issue, format: :json) } do %>
+              <%= link_to issue.title, [current_project, issue] %>
             <% end %>
           <% end %>
       </ul>
@@ -31,120 +31,14 @@
 
   <% else %>
     <p class="no-content">There are no issues in this project yet.</p>
-    <div class="row">
-      <div class="span6 text-center">
-        <%= link_to issues_path(), class: 'btn btn-large btn-dradispro' do %>
-          <i class="fa fa-plus"></i> Add new issue
-        <% end %>
-      </div>
-      <div class="span6 text-center">
-        <%= link_to upload_manager_path(), class: 'btn btn-large' do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %>
-      </div>
+    <div>
+      <%= link_to project_issues_path(current_project), class: 'btn btn-large btn-primary' do %>
+        <i class="fa fa-plus"></i> Add new issue
+      <% end %> or <%= link_to project_upload_manager_path(current_project) do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %>
     </div>
   <% end %>
 </section>
 
 <% if @issues.any? %>
-<script type="text/javascript">
-var divWidth = $('#issue-chart').width();
-var leftMargin = (divWidth - 400)/3
-
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
-  width = 400 - margin.left - margin.right,
-  height = 200 - margin.top - margin.bottom;
-
-var x = d3.scale.ordinal()
-    .rangeRoundBands([0, width], .1);
-
-var y = d3.scale.linear()
-    .range([height, 0]);
-
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .tickSize(0)
-    .orient("bottom");
-
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left")
-    .tickSize(1, 1)
-    .tickFormat(d3.format(".0f"))
-    .ticks(2);
-    // .tickValues([1, 3, 4]);
-
-var svg = d3.select("#issue-chart").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-<%# --------------------------------------------------------- Ruby variables %>
-<% highest = 0 %>
-var data = [
-<% @tags.each do |tag| %>
-  <% list = @issues_by_tag[tag.name] %>
-  <% highest = list.count if list.count > highest %>
-  {letter: '<%= j(tag.display_name) %>', frequency: <%= list.count %>},
-<% end %>
-  {letter: 'N/A', frequency: <%= @issues_by_tag[:unassigned].count %>}
-];
-
-var x_domain = [
-  <% @tags.each do |tag| %>
-  '<%= j tag.display_name %>',
-  <% end %>
-  'N/A'
-];
-
-var highest_y = <%= [highest, @issues_by_tag[:unassigned].count].max %>;
-<%# -------------------------------------------------------- /Ruby variables %>
-
-
-// x.domain(['High', 'Medium', 'Low']);
-x.domain(x_domain);
-
-// y.domain([0, 5]);
-y.domain([0, highest_y]);
-
-svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
-    .call(xAxis);
-
-// svg.append("g")
-//     .attr("class", "y axis")
-//     .call(yAxis)
-
-var bars = svg.append("g");
-
-bars.selectAll("rect")
-    .data(data)
-  .enter().append("rect")
-    // .attr("class", function(d){ return "bar-" + d.letter; } )
-    .attr("class", "bar" )
-    .attr("x", function(d) { return x(d.letter); })
-    .attr("width", x.rangeBand())
-    .attr("y", function(d) { return y(d.frequency); })
-    .attr("height", function(d) { return height - y(d.frequency); });
-
-
-bars.selectAll("text")
-    .data(data)
-  .enter().append("text")
-    .attr("x", function(d, i) { return x(d.letter) + x.rangeBand()/2; })
-    .attr("y", function(d) { return y(d.frequency);})
-    .attr("dy", -5)
-    .attr("text-anchor", "middle")
-    .attr("class", "counter" )
-    .text(function(d) {return d.frequency;});
-
-<% @tags.each_with_index do |tag, i| %>
-$($('.tick')[<%= i %>]).attr('fill', '<%=j tag.color %>');
-$($('.bar')[<%= i %>]).attr('fill', '<%=j tag.color %>');
-$($('.counter')[<%= i %>]).attr('fill', '<%=j tag.color %>');
-<% end %>
-$($('.tick')[<%= @tags.count %>]).attr('fill', '#ccc');
-$($('.bar')[<%= @tags.count %>]).attr('fill', '#ccc');
-$($('.counter')[<%= @tags.count %>]).attr('fill', '#ccc');
-</script>
+  <div id='issues-summary-data' data-tags='<%= @tag_names.to_json %>' data-issues-count='<%= @count_by_tag.to_json %>'></div>
 <% end %>

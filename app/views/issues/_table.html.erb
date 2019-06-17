@@ -1,52 +1,54 @@
 <% cache ['issues-table', @columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last] do %>
-  <table class="table table-striped tbl-issues js-tbl-issues">
-    <thead>
-      <tr>
-        <th></th>
-        <% @columns.each do |column| %>
-        <th data-column="<%= column.downcase %>"><%= column %></th>
+  <div class="table-wrapper">
+    <table class="table table-striped items-table">
+      <thead>
+        <tr>
+          <th></th>
+          <% @columns.each do |column| %>
+          <th data-column="<%= column.downcase %>"><%= column %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% issues.each do |issue| %>
+        <% cache [issue, @columns, issue.affected_count, 'issues-table'] do%>
+        <tr>
+          <td class="column-checkbox"><%= check_box_tag dom_id(issue, :checkbox), issue.id, false, class: 'js-multicheck', data: { url: project_issue_path(current_project, issue, format: :json) } %></td>
+          <% @columns.each do |column| %>
+          <td>
+            <%=
+            case column
+            when 'Title'
+              link_to(issue.title, [current_project, issue])
+            when 'Tags'
+              tag_and_name_for(issue)
+            when 'Affected'
+              # this count is coming from the SQL finder in the controller
+              issue.affected_count
+            when 'Created'
+              local_time_ago(issue.created_at)
+            when 'Created by'
+              issue.author
+            when 'Updated'
+              local_time_ago(issue.updated_at)
+            else
+              issue.fields.fetch(column, '')
+            end
+            %>
+          </td>
+          <% end  %>
+          <td class="column-actions">
+            <%= link_to edit_project_issue_path(current_project, issue), class: '' do %>
+              <i class="fa fa-pencil"></i> Edit
+            <% end %>
+            <%= link_to [current_project, issue], method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-error' do %>
+              <i class="fa fa-trash"></i> Delete
+            <% end %>
+          </td>
+        </tr>
         <% end %>
-      </tr>
-    </thead>
-    <tbody>
-      <% issues.each do |issue| %>
-      <% cache [issue, @columns, issue.affected_count, 'issues-table'] do%>
-      <tr>
-        <td class="column-checkbox"><%= check_box_tag dom_id(issue), issue.id, false, class: 'js-multicheck', data: { url: issue_path(issue, format: :json) } %></td>
-        <% @columns.each do |column| %>
-        <td>
-          <%=
-          case column
-          when 'Title'
-            link_to(issue.title, issue)
-          when 'Tags'
-            tag_and_name_for(issue)
-          when 'Affected'
-            # this count is coming from the SQL finder in the controller
-            issue.affected_count
-          when 'Created'
-            local_time_ago(issue.created_at)
-          when 'Created by'
-            issue.author
-          when 'Updated'
-            local_time_ago(issue.updated_at)
-          else
-            issue.fields.fetch(column, '')
-          end
-          %>
-        </td>
-        <% end  %>
-        <td class="column-actions">
-          <%= link_to edit_issue_path(issue), class: '' do %>
-            <i class="fa fa-pencil"></i> Edit
-          <% end %>
-          <%= link_to issue, method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-error' do %>
-            <i class="fa fa-trash"></i> Delete
-          <% end %>
-        </td>
-      </tr>
-      <% end %>
-      <% end %>
-    </tbody>
-  </table>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>
