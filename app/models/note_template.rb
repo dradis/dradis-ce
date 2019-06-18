@@ -8,5 +8,5 @@ class NoteTemplate
   include FileBackedModel
 
   # Tell the FileBackedModel module where to find the files on disk
-  set_pwd setting: 'admin:paths:note_templates', default: Rails.root.join('templates','notes').to_s
+  set_pwd setting: 'admin:paths:note_templates', default: Configuration.paths_templates_notes
 end
