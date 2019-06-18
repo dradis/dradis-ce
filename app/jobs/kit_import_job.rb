@@ -52,16 +52,21 @@ class KitImportJob < ApplicationJob
       return
     end
 
-    project = Project.create(name: File.basename(project_package, '.zip'))
-    if project.errors.any?
-      logger.info { '  - Project errors: '}
-      project.errors.full_messages.each do |error|
-        logger.info { "    - #{error}"}
+
+    if defined?(Dradis::Pro)
+      project = Project.create(name: File.basename(project_package, '.zip'))
+      if project.errors.any?
+        logger.info { '  - Project errors: '}
+        project.errors.full_messages.each do |error|
+          logger.info { "    - #{error}"}
+        end
+        return
       end
-      return
+      project.assign_owner(current_user)
+    else
+      project = Project.new
     end
 
-    project.assign_owner(current_user)
     logger.info { "  - Importing project: #{project.name}" }
     importer = Dradis::Plugins::Projects::Upload::Package::Importer.new(
       project_id: project.id,
