@@ -9,7 +9,7 @@ describe 'issue pages' do
 
       @issue = create(
         :issue,
-        text: "#[Title]#\nIssue1\n\n#[Risk]#\nHigh\n\n#[Description]#\nn/a",
+        content: "#[Title]#\nIssue1\n\n#[Risk]#\nHigh\n\n#[Description]#\nn/a",
         node: current_project.issue_library
 
       )

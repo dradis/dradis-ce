@@ -102,15 +102,15 @@ describe Issue do
 
   end
 
-  let(:fields_column) { :text }
+  let(:fields_column) { :content }
   it_behaves_like 'a model that has fields', Issue
 
   describe '#set_field' do
     it "sets a field and updates 'body'" do
-      issue.text = "#[Title]#\nSomething"
+      issue.content = "#[Title]#\nSomething"
       issue.set_field('Title', 'New title')
       expect(issue.fields['Title']).to eq 'New title'
-      expect(issue.text).to eq "#[Title]#\nNew title"
+      expect(issue.content).to eq "#[Title]#\nNew title"
     end
   end
 

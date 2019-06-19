@@ -2,7 +2,7 @@
 
   <%= f.association :category, collection: Category.all, label_method: :name, prompt: 'Assign note category' %>
   <%=
-    f.input :text,
+    f.input :content,
       label: false,
       input_html: {
         class: 'textile',

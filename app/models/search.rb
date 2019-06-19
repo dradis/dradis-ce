@@ -65,7 +65,7 @@ class Search
 
   def issues
     @issues ||= Issue.where(
-      "node_id = :node AND LOWER(text) LIKE LOWER(:q)",
+      "node_id = :node AND LOWER(content) LIKE LOWER(:q)",
       node: project.issue_library,
       q: "%#{query}%"
     ).order(updated_at: :desc)
@@ -80,7 +80,7 @@ class Search
   def notes
     @notes ||= begin
       Note.where(
-        "node_id IN (:nodes) AND LOWER(text) LIKE LOWER(:q)",
+        "node_id IN (:nodes) AND LOWER(content) LIKE LOWER(:q)",
         nodes: project.nodes.user_nodes.pluck(:id),
         q: "%#{query}%"
       )

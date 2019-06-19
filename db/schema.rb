@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180705112109) do
+ActiveRecord::Schema.define(version: 20190619113214) do
 
-  create_table "activities", force: :cascade do |t|
+  create_table "activities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.string "user", null: false
     t.string "trackable_type", null: false
     t.integer "trackable_id", null: false
@@ -23,13 +23,13 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
   end
 
-  create_table "categories", force: :cascade do |t|
+  create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "comments", force: :cascade do |t|
+  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.text "content"
     t.string "commentable_type"
     t.integer "commentable_id"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "configurations", force: :cascade do |t|
+  create_table "configurations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.string "name"
     t.string "value"
     t.datetime "created_at", null: false
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.index ["name"], name: "index_configurations_on_name", unique: true
   end
 
-  create_table "evidence", force: :cascade do |t|
+  create_table "evidence", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.integer "node_id"
     t.integer "issue_id"
     t.text "content"
@@ -59,14 +59,14 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.index ["node_id"], name: "index_evidence_on_node_id"
   end
 
-  create_table "logs", force: :cascade do |t|
+  create_table "logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.integer "uid"
     t.text "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "nodes", force: :cascade do |t|
+  create_table "nodes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.integer "type_id"
     t.string "label"
     t.integer "parent_id"
@@ -79,9 +79,9 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.index ["type_id"], name: "index_nodes_on_type_id"
   end
 
-  create_table "notes", force: :cascade do |t|
+  create_table "notes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.string "author"
-    t.text "text"
+    t.text "content"
     t.integer "node_id"
     t.integer "category_id"
     t.datetime "created_at", null: false
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.index ["node_id"], name: "index_notes_on_node_id"
   end
 
-  create_table "notifications", force: :cascade do |t|
+  create_table "notifications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.string "action"
     t.datetime "read_at"
     t.string "notifiable_type"
@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.index ["recipient_id"], name: "index_notifications_on_recipient_id"
   end
 
-  create_table "subscriptions", force: :cascade do |t|
+  create_table "subscriptions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.string "subscribable_type"
     t.integer "subscribable_id"
     t.integer "user_id"
@@ -115,7 +115,7 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
-  create_table "taggings", force: :cascade do |t|
+  create_table "taggings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.integer "tag_id"
     t.string "taggable_type"
     t.integer "taggable_id"
@@ -126,7 +126,7 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.index ["taggable_type", "taggable_id"], name: "index_taggings_on_taggable_type_and_taggable_id"
   end
 
-  create_table "tags", force: :cascade do |t|
+  create_table "tags", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.string "name", null: false
     t.integer "taggings_count", default: 0, null: false
     t.datetime "created_at", null: false
@@ -135,19 +135,19 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.index ["taggings_count"], name: "index_tags_on_taggings_count"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.string "email"
     t.string "password_hash"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "versions", force: :cascade do |t|
+  create_table "versions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.string "item_type", null: false
     t.integer "item_id", null: false
     t.string "event", null: false
     t.string "whodunnit"
-    t.text "object", limit: 1073741823
+    t.text "object", limit: 4294967295
     t.datetime "created_at"
     t.integer "project_id"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"

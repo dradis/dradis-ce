@@ -35,7 +35,7 @@ describe 'Issues pages' do
             issuelib.notes.create(
               category: Category.issue,
               author: 'rspec',
-              text: "#[Title]#\n#{title}\n\n#[Description]#\nFoobar\n\n"
+              content: "#[Title]#\n#{title}\n\n#[Description]#\nFoobar\n\n"
             )
           end
 
@@ -54,7 +54,7 @@ describe 'Issues pages' do
         context 'submitting the form with valid information' do
           before do
             visit new_project_issue_path(current_project)
-            fill_in :issue_text,
+            fill_in :issue_content,
               with: "#[Title]#\nRspec issue\n\n#[Description]#\nNew description\n\n"
           end
 
@@ -75,7 +75,7 @@ describe 'Issues pages' do
         context 'submitting the form with invalid information' do
           before do
             visit new_project_issue_path(current_project)
-            fill_in :issue_text, with: 'a' * 65536
+            fill_in :issue_content, with: 'a' * 65536
           end
 
           it "doesn't create a new Issue" do
@@ -86,7 +86,7 @@ describe 'Issues pages' do
 
           it 'shows the form again with an error message' do
             submit_form
-            should have_field :issue_text
+            should have_field :issue_content
             should have_selector '.alert.alert-error'
           end
         end
@@ -99,7 +99,7 @@ describe 'Issues pages' do
             template_content = File.read(template_path.join('simple_note.txt'))
             visit new_project_issue_path(current_project, template: 'simple_note')
 
-            expect(find_field('issue[text]').value).to include(template_content)
+            expect(find_field('issue[content]').value).to include(template_content)
           end
         end
 
@@ -107,7 +107,7 @@ describe 'Issues pages' do
           it 'tags the issue with the corresponding tag if only one is present' do
             tag_field = '!f89406_private'
             visit new_project_issue_path(current_project)
-            fill_in :issue_text,
+            fill_in :issue_content,
               with: "#[Title]#\nRspec issue\n\n#[Tags]#\n#{tag_field}\n\n"
 
             expect { submit_form }.to change { current_project.issues.count }.by(1)
@@ -119,7 +119,7 @@ describe 'Issues pages' do
           it 'tags the issue with the first tag if more than one are present' do
             tag_field = '!f89406_private, !468847_public'
             visit new_project_issue_path(current_project)
-            fill_in :issue_text,
+            fill_in :issue_content,
               with: "#[Title]#\nRspec issue\n\n#[Tags]#\n#{tag_field}\n\n"
 
             expect { submit_form }.to change { current_project.issues.count }.by(1)
@@ -141,13 +141,13 @@ describe 'Issues pages' do
 
         describe 'submitting the form with valid information' do
           let(:new_content) { 'New info' }
-          before { fill_in :issue_text, with: new_content }
+          before { fill_in :issue_content, with: new_content }
 
           let(:submit_form) { click_button 'Update Issue' }
 
           it 'updates and shows the issue' do
             submit_form
-            expect(@issue.reload.text).to eq new_content
+            expect(@issue.reload.content).to eq new_content
             expect(current_path).to eq project_issue_path(current_project, @issue)
           end
 
@@ -161,23 +161,23 @@ describe 'Issues pages' do
             end
           end
 
-          let(:column) { :text }
+          let(:column) { :content }
           let(:record) { @issue }
           it_behaves_like 'a page which handles edit conflicts'
         end
 
         describe 'submitting the form with invalid information' do
-          before { fill_in :issue_text, with: 'a' * 65536 }
+          before { fill_in :issue_content, with: 'a' * 65536 }
 
           it "doesn't update the issue" do
-            expect { submit_form }.not_to change { @issue.reload.text }
+            expect { submit_form }.not_to change { @issue.reload.content }
           end
 
           include_examples "doesn't create an Activity"
 
           it 'shows the form again with an error message' do
             submit_form
-            should have_field :issue_text
+            should have_field :issue_content
             should have_selector '.alert.alert-error'
           end
         end
@@ -188,7 +188,7 @@ describe 'Issues pages' do
           @issue = issuelib.notes.create(
             category: Category.issue,
             author: 'rspec',
-            text: "#[Title]#\nMultiple Apache bugs\n\n",
+            content: "#[Title]#\nMultiple Apache bugs\n\n",
             node: create(:node, :with_project)
           )
           # @issue is currently loaded as a Note, not an Issue. Make sure it

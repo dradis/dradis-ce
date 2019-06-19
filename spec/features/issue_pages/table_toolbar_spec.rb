@@ -10,7 +10,7 @@ describe 'issue table' do
       (::Configuration.max_deleted_inline + 1).times do |i|
         issues << create(
           :issue,
-          text: "#[Title]#\r\ntest#{i}\r\n\r\n#[Description]#\r\nnone#{i}\r\n",
+          content: "#[Title]#\r\ntest#{i}\r\n\r\n#[Description]#\r\nnone#{i}\r\n",
           node: current_project.issue_library,
         )
       end

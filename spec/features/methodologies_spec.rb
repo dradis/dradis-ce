@@ -22,7 +22,7 @@ describe "Describe methodologies" do
     it "presents a list of assigned methodologies" do
       list = [ 'Tiesto', 'Skrillex', 'Swedish House Mafia' ]
       list.each do |name|
-        methodology_library.notes.create!(category: Category.default, author: 'rspec', text: "<methodology><name>#{name}</name></methodology>" )
+        methodology_library.notes.create!(category: Category.default, author: 'rspec', content: "<methodology><name>#{name}</name></methodology>" )
       end
 
       visit project_methodologies_path(current_project)
@@ -36,7 +36,7 @@ describe "Describe methodologies" do
       list = []
       ['methodologies/webapp.xml'].each do |file|
         xml_blob = File.read(Rails.root.join('spec/fixtures/files', file))
-        methodology_library.notes.create(category: Category.default, author: 'rspec', text: xml_blob )
+        methodology_library.notes.create(category: Category.default, author: 'rspec', content: xml_blob )
         list << Methodology.new(content: xml_blob )
       end
 
@@ -59,7 +59,7 @@ describe "Describe methodologies" do
       doc.xpath('//task')[1].set_attribute('checked', 'checked')
       doc.xpath('//task')[2].set_attribute('checked', '')
 
-      methodology_library.notes.create(category: Category.default, author: 'rspec', text: doc.to_s)
+      methodology_library.notes.create(category: Category.default, author: 'rspec', content: doc.to_s)
 
       visit project_methodologies_path(current_project)
       expect(current_path).to eq(project_methodologies_path(current_project))
@@ -71,7 +71,7 @@ describe "Describe methodologies" do
 
     pending "changes the task status in sync with the checkbox in the UI", js: true do
       methodology = Methodology.from_file(Rails.root.join('spec/fixtures/files/methodologies/webapp.xml'))
-      note = methodology_library.notes.create(category: Category.default, author: 'rspec', text: methodology.content )
+      note = methodology_library.notes.create(category: Category.default, author: 'rspec', content: methodology.content )
 
       visit project_methodologies_path(@proejct)
       expect(current_path).to eq(project_methodologies_path(current_project))
@@ -81,7 +81,7 @@ describe "Describe methodologies" do
       begin
         wait_until { page.find('.saved') }
         note = Note.last.reload
-        doc = Nokogiri::XML(note.text)
+        doc = Nokogiri::XML(note.content)
         expect(doc.xpath("//task[@checked and text()='Say a little something']")).to_not be_empty()
       rescue Capybara::TimeoutError
         flunk "Failed at waiting for loading spinner to appear."
@@ -93,7 +93,7 @@ describe "Describe methodologies" do
       ['methodologies/webapp.xml'].each do |file|
         file_path = Rails.root.join('spec/fixtures/files', file)
         xml_blob = File.read(file_path)
-        note = methodology_library.notes.create(category: Category.default, author: 'rspec', text: xml_blob )
+        note = methodology_library.notes.create(category: Category.default, author: 'rspec', content: xml_blob )
         list << Methodology.new(filename: note.id, content: xml_blob)
       end
 

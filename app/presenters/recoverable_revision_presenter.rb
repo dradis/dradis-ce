@@ -61,7 +61,7 @@ class RecoverableRevisionPresenter < BasePresenter
     title =
       if trashed_object.is_a?(Note) && trashed_object.node == project.methodology_library
         note = trashed_object
-        Methodology.new(filename: note.id, content: note.text).name
+        Methodology.new(filename: note.id, content: note.content).name
       else
         trashed_object.title
       end

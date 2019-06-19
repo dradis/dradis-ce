@@ -46,7 +46,7 @@
           </div>
           <div id="<%= "preview_issue_new" %>" class="accordion-body collapse">
             <div id="new_issue">
-              <%= text_area_tag "issue[text]", nil, class: 'textile', data: { preview_url: preview_path, help_url: markup_path } %>
+              <%= text_area_tag "issue[content]", nil, class: 'textile', data: { preview_url: preview_path, help_url: markup_path } %>
             </div>
           </div>
         </div>
@@ -69,10 +69,10 @@
                   <li><a href="#textile_<%= issue.id %>" data-toggle="tab">Source</a></li>
                 </ul>
                 <div id="normal_<%= issue.id %>" class="tab-pane active content-textile">
-                  <%= markup(issue.text) %>
+                  <%= markup(issue.content) %>
                 </div>
                 <div id="textile_<%= issue.id %>" class="tab-pane">
-                  <pre><%= issue.text %></pre>
+                  <pre><%= issue.content %></pre>
                 </div>
               </div>
             </div>

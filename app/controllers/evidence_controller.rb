@@ -159,7 +159,7 @@ class EvidenceController < NestedNodeResourceController
   # If the user selects "Add new issue" in the Evidence editor, we create an empty skeleton
   def create_issue
     Issue.create do |issue|
-      issue.text = "#[Title]#\nNew issue auto-created for node [#{@node.label}]."
+      issue.content = "#[Title]#\nNew issue auto-created for node [#{@node.label}]."
       issue.node = current_project.issue_library
       issue.author = current_user.email
     end

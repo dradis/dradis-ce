@@ -8,7 +8,7 @@ describe 'node pages' do
       login_to_project_as_user
 
       node = create(:node, project: current_project)
-      @note = create(:note, node: node, text: "#[Title]#\nNote1\n\n#[Description]#\nn/a\n#[Extra]#\nExtra field")
+      @note = create(:note, node: node, content: "#[Title]#\nNote1\n\n#[Description]#\nn/a\n#[Extra]#\nExtra field")
       visit project_node_path(current_project, node, tab: 'notes-tab')
     end
 

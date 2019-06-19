@@ -30,7 +30,7 @@ describe 'User notifications', js: true do
 
     context 'the user has some notifications' do
       it 'shows the notification list' do
-        issue = create(:issue, text: 'Test issue')
+        issue = create(:issue, content: 'Test issue')
         comment = create(:comment, commentable: issue, user: @logged_in_as)
         create(:notification, notifiable: comment, actor: @logged_in_as, recipient: @logged_in_as)
 
@@ -43,7 +43,7 @@ describe 'User notifications', js: true do
 
   describe 'notification reading' do
     before do
-      issue = create(:issue, text: 'Test issue')
+      issue = create(:issue, content: 'Test issue')
       comment1 = create(:comment, commentable: issue, user: @logged_in_as)
       @notification1 = create(:notification, notifiable: comment1, actor: @logged_in_as, recipient: @logged_in_as)
       comment2 = create(:comment, commentable: issue, user: @logged_in_as)

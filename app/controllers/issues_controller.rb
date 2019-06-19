@@ -40,7 +40,7 @@ class IssuesController < AuthenticatedController
 
   def new
     # See ContentFromTemplate concern
-    @issue.text = template_content if params[:template]
+    @issue.content = template_content if params[:template]
   end
 
   def create
@@ -120,7 +120,7 @@ class IssuesController < AuthenticatedController
     # We need a transaction because multiple DELETE calls can be issued from
     # index and a TOCTOR can appear between the Note read and the Issue.find
     Note.transaction do
-      @issues = Issue.where(node_id: @issuelib.id).select('notes.id, notes.author, notes.text, count(evidence.id) as affected_count, notes.created_at, notes.updated_at').joins('LEFT OUTER JOIN evidence on notes.id = evidence.issue_id').group('notes.id').includes(:tags).sort
+      @issues = Issue.where(node_id: @issuelib.id).select('notes.id, notes.author, notes.content, count(evidence.id) as affected_count, notes.created_at, notes.updated_at').joins('LEFT OUTER JOIN evidence on notes.id = evidence.issue_id').group('notes.id').includes(:tags).sort
     end
   end
 
@@ -149,7 +149,7 @@ class IssuesController < AuthenticatedController
   end
 
   def issue_params
-    params.require(:issue).permit(:tag_list, :text)
+    params.require(:issue).permit(:tag_list, :content)
   end
 
 end

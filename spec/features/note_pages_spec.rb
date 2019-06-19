@@ -29,7 +29,7 @@ describe "note pages" do
   describe "show page" do
     before do
       text = "#[Title]#\nMy note\n\n#[Description]#\nMy description"
-      @note = create(:note, node: @node, text: text)
+      @note = create(:note, node: @node, content: text)
       create_activities
       create_comments
       visit project_node_note_path(current_project, @node, @note)
@@ -87,7 +87,7 @@ describe "note pages" do
     let(:submit_form) { click_button "Update Note" }
 
     it "has a form to edit the note" do
-      should have_field :note_text
+      should have_field :note_content
       should have_field :note_category_id
     end
 
@@ -99,11 +99,11 @@ describe "note pages" do
 
     describe "submitting the form with valid information" do
       let(:new_content) { 'New note text' }
-      before { fill_in :note_text, with: new_content }
+      before { fill_in :note_content, with: new_content }
 
       it "updates the note" do
         submit_form
-        expect(@note.reload.text).to eq new_content
+        expect(@note.reload.content).to eq new_content
       end
 
       it "shows the updated note" do
@@ -115,25 +115,25 @@ describe "note pages" do
       let(:model) { @note }
       include_examples "creates an Activity", :update
 
-      let(:column) { :text }
+      let(:column) { :content }
       let(:record) { @note }
       it_behaves_like "a page which handles edit conflicts"
     end
 
     describe "submitting the form with invalid information" do
-      before { fill_in :note_text, with: "a"*65536 }
+      before { fill_in :note_content, with: "a"*65536 }
 
       # TODO how to handle conflicting edits in this case?
 
       it "doesn't update the note" do
-        expect{submit_form}.not_to change{@note.reload.text}
+        expect{submit_form}.not_to change{@note.reload.content}
       end
 
       include_examples "doesn't create an Activity"
 
       it "shows the form again with an error message" do
         submit_form
-        should have_field :note_text
+        should have_field :note_content
         should have_selector ".alert.alert-error"
       end
     end
@@ -157,7 +157,7 @@ describe "note pages" do
       let(:params) { {} }
 
       it "displays a blank textarea" do
-        textarea = find("textarea#note_text")
+        textarea = find("textarea#note_content")
         expect(textarea.value.strip).to eq ""
       end
 
@@ -169,8 +169,8 @@ describe "note pages" do
         let(:new_note) { @node.notes.order('created_at ASC').last }
 
         before do
-          # "fill_in :note_text" doesn't work for some reason :(
-          find("#note_text").set('This is a note')
+          # "fill_in :note_content" doesn't work for some reason :(
+          find("#note_content").set('This is a note')
         end
 
         it "creates a new note from the current user" do
@@ -188,7 +188,7 @@ describe "note pages" do
       end
 
       describe "submitting the form with invalid information" do
-        before { fill_in :note_text, with: "a"*65536 }
+        before { fill_in :note_content, with: "a"*65536 }
 
         it "doesn't create a note" do
           expect{submit_form}.not_to change{Note.count}
@@ -198,7 +198,7 @@ describe "note pages" do
 
         it "shows the form again with an error message" do
           submit_form
-          should have_field :note_text
+          should have_field :note_content
           should have_selector ".alert.alert-error"
         end
       end
@@ -208,7 +208,7 @@ describe "note pages" do
       let(:params)  { { template: "tmpnote" } }
 
       it "pre-populates the textarea with the template contents" do
-        textarea = find("textarea#note_text")
+        textarea = find("textarea#note_content")
         expect(textarea.value.strip).to eq content
       end
 

@@ -8,7 +8,7 @@ class MethodologiesController < AuthenticatedController
     @methodologies = []
 
     # How ugly is using the :filename to store the note's :id?
-    @methodologies = @methodologylib.notes.map{|n| Methodology.new(filename: n.id.to_s, content: n.text)}
+    @methodologies = @methodologylib.notes.map{|n| Methodology.new(filename: n.id.to_s, content: n.content)}
 
     @methodology_templates = Methodology.all
   end
@@ -23,7 +23,7 @@ class MethodologiesController < AuthenticatedController
     new_name = methodology_params.fetch(:name, old_name)
     @methodology.name = new_name
 
-    @methodologylib.notes.create(author: 'methodology builder', text: @methodology.content, category: Category.default)
+    @methodologylib.notes.create(author: 'methodology builder', content: @methodology.content, category: Category.default)
 
     flash[:info] = "'#{old_name}' added as '#{new_name}'"
     redirect_to project_methodologies_path(current_project)
@@ -33,7 +33,7 @@ class MethodologiesController < AuthenticatedController
   end
 
   def update
-    if @note.update_attribute(:text, methodology_params[:content])
+    if @note.update_attribute(:content, methodology_params[:content])
       redirect_to project_methodologies_path(current_project), notice: "Methodology [#{@methodology.name}] updated."
     else
       redirect_to project_methodologies_path(current_project), alert: "Methodology [#{@methodology.name}] could not be updated."
@@ -45,7 +45,7 @@ class MethodologiesController < AuthenticatedController
     task    = xpath_escape(params.fetch(:task, 'undefined'))
     checked = params.fetch(:checked, 'false')
 
-    doc         = Nokogiri::XML(@note.text)
+    doc         = Nokogiri::XML(@note.content)
     xpath_query = %{//section/name[text()=concat(#{section})]/..//task[text()=concat(#{task})]}
     task_node   = doc.at_xpath(xpath_query)
 
@@ -57,7 +57,7 @@ class MethodologiesController < AuthenticatedController
       task_node.remove_attribute('checked')
     end
 
-    @note.update_attribute(:text, doc.to_s)
+    @note.update_attribute(:content, doc.to_s)
     render json: { status: 'ok' }
   end
 
@@ -82,7 +82,7 @@ class MethodologiesController < AuthenticatedController
   def find_methodology
     @note = @methodologylib.notes.where(id: params[:id]).first
     if @note
-      @methodology = Methodology.new(filename: @note.id, content: @note.text)
+      @methodology = Methodology.new(filename: @note.id, content: @note.content)
     else
       redirect_to project_methodologies_path(current_project), notice: 'Methodology not found!'
     end

@@ -73,7 +73,7 @@ describe "Issues API" do
 
     describe "GET /api/issue/:id" do
       before(:each) do
-        @issue = create(:issue, node: current_project.issue_library, text: "#[a]#\nb\n\n#[c]#\nd\n\n#[e]#\nf\n\n")
+        @issue = create(:issue, node: current_project.issue_library, content: "#[a]#\nb\n\n#[c]#\nd\n\n#[e]#\nf\n\n")
 
         get "/api/issues/#{ @issue.id }", env: @env
         expect(response.status).to eq(200)
@@ -93,7 +93,7 @@ describe "Issues API" do
     end
 
     describe "POST /api/issues" do
-      let(:valid_params) { { issue: { text: "#[Title]#\nRspec issue\n\n#[c]#\nd\n\n#[e]#\nf\n\n" } } }
+      let(:valid_params) { { issue: { content: "#[Title]#\nRspec issue\n\n#[c]#\nd\n\n#[e]#\nf\n\n" } } }
       let(:valid_post) do
         post "/api/issues", params: valid_params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
       end
@@ -102,12 +102,12 @@ describe "Issues API" do
         expect{valid_post}.to change{ current_project.issues.count }.by(1)
         expect(response.status).to eq(201)
         retrieved_issue = JSON.parse(response.body)
-        expect(retrieved_issue['text']).to eq valid_params[:issue][:text]
+        expect(retrieved_issue['content']).to eq valid_params[:issue][:content]
       end
 
       it "tags the issue from the Tags field" do
         tag_name = '!2ca02c_info'
-        valid_params[:issue][:text] << "#[Tags]#\n\n#{tag_name}\n\n"
+        valid_params[:issue][:content] << "#[Tags]#\n\n#{tag_name}\n\n"
 
         expect { valid_post }.to change{ current_project.issues.count }.by(1)
         expect(response.status).to eq(201)
@@ -128,7 +128,7 @@ describe "Issues API" do
       end
 
       it "throws 422 if issue is invalid" do
-        params = { issue: { text: "A"*(65535+1) } }
+        params = { issue: { content: "A"*(65535+1) } }
         expect {
           post "/api/issues", params: params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
         }.not_to change { current_project.issues.count }
@@ -137,8 +137,8 @@ describe "Issues API" do
     end
 
     describe "PUT /api/issues/:id" do
-      let(:issue) { create(:issue, node: current_project.issue_library, text: "Existing Issue") }
-      let(:valid_params) { { issue: { text: "Updated Issue" } } }
+      let(:issue) { create(:issue, node: current_project.issue_library, content: "Existing Issue") }
+      let(:valid_params) { { issue: { content: "Updated Issue" } } }
       let(:valid_put) do
         put "/api/issues/#{issue.id}", params: valid_params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
       end
@@ -147,10 +147,10 @@ describe "Issues API" do
         valid_put
         expect(response.status).to eq(200)
 
-        expect(current_project.issues.find(issue.id).text).to eq valid_params[:issue][:text]
+        expect(current_project.issues.find(issue.id).content).to eq valid_params[:issue][:content]
 
         retrieved_issue = JSON.parse(response.body)
-        expect(retrieved_issue['text']).to eq valid_params[:issue][:text]
+        expect(retrieved_issue['content']).to eq valid_params[:issue][:content]
       end
 
       let(:submit_form) { valid_put }
@@ -158,13 +158,13 @@ describe "Issues API" do
       include_examples "creates an Activity", :update
 
       it "throws 415 unless JSON is sent" do
-        params = { issue: { text: "Bad issuet" } }
+        params = { issue: { content: "Bad issuet" } }
         put "/api/issues/#{ issue.id }", params: params, env: @env
         expect(response.status).to eq(415)
       end
 
       it "throws 422 if issue is invalid" do
-        params = { issue: { text: "B"*(65535+1) } }
+        params = { issue: { content: "B"*(65535+1) } }
         put "/api/issues/#{ issue.id }", params: params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
         expect(response.status).to eq(422)
       end

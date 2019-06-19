@@ -5,8 +5,8 @@ describe Search do
 
   let(:setup_data) do
     node = create(:node, label: "test", project: project)
-    create(:note, text: "test", node: node)
-    create(:issue, text: "test", node: project.issue_library)
+    create(:note, content: "test", node: node)
+    create(:issue, content: "test", node: project.issue_library)
     create(:evidence, content: "test", node: node)
   end
 
@@ -164,18 +164,18 @@ describe Search do
 
   describe "#issues" do
     it "filters issues by text matching search term" do
-      first  = create(:issue, text: "First issue" , node: project.issue_library)
-      _second = create(:issue, text: "Second issue", node: project.issue_library)
+      first  = create(:issue, content: "First issue" , node: project.issue_library)
+      _second = create(:issue, content: "Second issue", node: project.issue_library)
 
       results = Search.new(query: 'first', scope: :issues, project: project).results
 
       expect(results.size).to eq 1
-      expect(results.first.text).to eq first.text
+      expect(results.first.content).to eq first.content
     end
 
     it "excludes normal notes" do
-      issue = create(:issue, text: "Issue note")
-      note  = create(:note, text: "First note", category: issue.category)
+      issue = create(:issue, content: "Issue note")
+      note  = create(:note, content: "First note", category: issue.category)
 
       results = Search.new(query: 'first', scope: :issues, project: project).results
       expect(results.size).to eq 0
@@ -183,21 +183,21 @@ describe Search do
 
     it "returns list of matches order by updated_at desc" do
       # Without specifying :updated_at, CI would fail to sort properly
-      first  = create(:issue, text: "First issue", updated_at: 10.seconds.ago, node: project.issue_library)
-      second = create(:issue, text: "Second issue", updated_at: 5.seconds.ago, node: project.issue_library)
+      first  = create(:issue, content: "First issue", updated_at: 10.seconds.ago, node: project.issue_library)
+      second = create(:issue, content: "Second issue", updated_at: 5.seconds.ago, node: project.issue_library)
 
       results = Search.new(query: 'issue', scope: :issues, project: project).results
 
-      expect(results.map(&:text)).to eq [second.text, first.text]
+      expect(results.map(&:content)).to eq [second.content, first.content]
     end
 
     it "behaves as case insensitive search" do
-      issue = create(:issue, text: "Issue", node: project.issue_library)
+      issue = create(:issue, content: "Issue", node: project.issue_library)
 
       results = Search.new(query: 'ISSuE', scope: :issues, project: project).results
 
       expect(results.size).to eq 1
-      expect(results.first.text).to eq issue.text
+      expect(results.first.content).to eq issue.content
     end
   end
 
@@ -243,18 +243,18 @@ describe Search do
   describe "#notes" do
     it "filters notes by content matching search term" do
       node    = create(:node, project: project)
-      first   = create(:note, text: "First note",  category: Category.default, node: node)
-      _second = create(:note, text: "Second note", category: Category.default, node: node)
+      first   = create(:note, content: "First note",  category: Category.default, node: node)
+      _second = create(:note, content: "Second note", category: Category.default, node: node)
 
       results = Search.new(query: 'first', scope: :notes, project: project).results
 
       expect(results.size).to eq 1
-      expect(results.first.text).to eq first.text
+      expect(results.first.content).to eq first.content
     end
 
     it "excludes issue notes" do
-      issue = create(:issue, text: "Issue note", node: project.issue_library)
-      _note  = create(:note, text: "First note", node: create(:node, project: project), category: issue.category)
+      issue = create(:issue, content: "Issue note", node: project.issue_library)
+      _note  = create(:note, content: "First note", node: create(:node, project: project), category: issue.category)
 
       results = Search.new(query: 'issue', scope: :notes, project: project).results
       expect(results.size).to eq 0
@@ -263,20 +263,20 @@ describe Search do
     it "returns list of matches order by updated_at desc" do
       node   = create(:node, project: project)
       # Without specifying :updated_at, CI would fail to sort properly
-      first  = create(:note, text: "First note",  category: Category.default, node: node, updated_at: 10.seconds.ago)
-      second = create(:note, text: "Second note", category: Category.default, node: node, updated_at: 5.seconds.ago)
+      first  = create(:note, content: "First note",  category: Category.default, node: node, updated_at: 10.seconds.ago)
+      second = create(:note, content: "Second note", category: Category.default, node: node, updated_at: 5.seconds.ago)
 
       results = Search.new(query: 'note', scope: :notes, project: project).results
-      expect(results.map(&:text)).to eq [second.text, first.text]
+      expect(results.map(&:content)).to eq [second.content, first.content]
     end
 
     it "behaves as case insensitive search" do
-      note = create(:note, text: "note", category: Category.default, node: create(:node, project: project))
+      note = create(:note, content: "note", category: Category.default, node: create(:node, project: project))
 
       results = Search.new(query: 'NOTE', scope: :notes, project: project).results
 
       expect(results.size).to eq 1
-      expect(results.first.text).to eq note.text
+      expect(results.first.content).to eq note.content
     end
   end
 end

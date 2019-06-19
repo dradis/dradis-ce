@@ -59,7 +59,7 @@ describe Note do
         #[Description]#
         Nothing to see here, move on!
       EON
-      note = create(:note, text: text)
+      note = create(:note, content: text)
 
       expect(note.fields.count).to eq(2)
       expect(note.fields.keys).to match_array(['Title', 'Description'])
@@ -68,6 +68,6 @@ describe Note do
     end
   end
 
-  let(:fields_column) { :text }
+  let(:fields_column) { :content }
   it_behaves_like 'a model that has fields', Note
 end

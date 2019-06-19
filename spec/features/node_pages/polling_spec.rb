@@ -9,8 +9,8 @@ describe "node pages", js: true do
     login_to_project_as_user
     @other_user = create(:user)
     @node       = create(:node, project: current_project)
-    @note_0     = create(:note, node: @node, text:"#[Title]#\nNote 0")
-    @note_1     = create(:note, node: @node, text:"#[Title]#\nNote 1")
+    @note_0     = create(:note, node: @node, content: "#[Title]#\nNote 0")
+    @note_1     = create(:note, node: @node, content: "#[Title]#\nNote 1")
     issue       = create(:issue, node: current_project.issue_library)
     @evidence_0 = create(:evidence, issue: issue, node: @node, content:"#[Title]#\nEv 0")
     @evidence_1 = create(:evidence, issue: issue, node: @node, content:"#[Title]#\nEv 1")

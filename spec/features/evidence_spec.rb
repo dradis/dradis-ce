@@ -23,7 +23,7 @@ describe "evidence" do
     before(:each) do
       e_text    = "#[Foobar]#\nBarfoo\n\n#[Fizzbuzz]#\nBuzzfizz"
       i_text    = "#[Issue Title]#\nIssue info"
-      @issue    = create(:issue,    node: @node, text: i_text)
+      @issue    = create(:issue,    node: @node, content: i_text)
       @evidence = create(:evidence, node: @node, issue: @issue, content: e_text)
       create_activities
       create_comments
@@ -140,8 +140,8 @@ describe "evidence" do
       allow(NoteTemplate).to receive(:pwd) { Pathname.new(tmp_dir) }
       FileUtils.mkdir_p(tmp_dir)
       File.write(path, content)
-      @issue_0 = create(:issue, node: issue_lib, text: "#[Title]#\nIssue 0")
-      @issue_1 = create(:issue, node: issue_lib, text: "#[Title]#\nIssue 1")
+      @issue_0 = create(:issue, node: issue_lib, content: "#[Title]#\nIssue 0")
+      @issue_1 = create(:issue, node: issue_lib, content: "#[Title]#\nIssue 1")
       visit new_project_node_evidence_path(current_project, @node, params)
     end
     # Check the file still exists before trying to delete it, or File.delete

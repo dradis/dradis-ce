@@ -61,7 +61,7 @@ describe 'issue pages' do
         expect(page).to have_selector('#new_issue', visible: true)
 
         tag_name = '!2ca02c_info'
-        fill_in :issue_text, with: "#[Title]#\nMerged issue\n\n#[Tags]#\n#{tag_name}\n\n"
+        fill_in :issue_content, with: "#[Title]#\nMerged issue\n\n#[Tags]#\n#{tag_name}\n\n"
 
         # click button like this because the button may be moving down
         # due to bootstrap accordion unfold transition

@@ -56,12 +56,12 @@ describe "Notes API" do
     describe "GET /api/nodes/:node_id/notes" do
       before do
         @notes = [
-          create(:note, node: node, text: "#[Title]#\nNote 0\n\n#[foo]#\nbar"),
-          create(:note, node: node, text: "#[Title]#\nNote 1\n\n#[uno]#\none"),
-          create(:note, node: node, text: "#[Title]#\nNote 2\n\n#[dos]#\ntwo"),
+          create(:note, node: node, content: "#[Title]#\nNote 0\n\n#[foo]#\nbar"),
+          create(:note, node: node, content: "#[Title]#\nNote 1\n\n#[uno]#\none"),
+          create(:note, node: node, content: "#[Title]#\nNote 2\n\n#[dos]#\ntwo"),
         ]
         @other_note = create(
-          :note, node: create(:node, project: current_project), text: "#[Title]#\nOther Note"
+          :note, node: create(:node, project: current_project), content: "#[Title]#\nOther Note"
         )
         get "/api/nodes/#{node.id}/notes", env: @env
       end
@@ -100,7 +100,7 @@ describe "Notes API" do
     describe "GET /api/nodes/:node_id/notes/:id" do
       before do
         @note = node.notes.create!(
-          text:     "#[Title]#\nMy note\n#[foo]#\nbar\n#[fizz]#\nbuzz",
+          content:     "#[Title]#\nMy note\n#[foo]#\nbar\n#[fizz]#\nbuzz",
           category: category,
         )
         get "/api/nodes/#{node.id}/notes/#{@note.id}", env: @env
@@ -131,7 +131,7 @@ describe "Notes API" do
         include_context "content_type: application/json"
 
         context "with params for a valid note" do
-          let(:params) { { note: { text: "New note" } } }
+          let(:params) { { note: { content: "New note" } } }
 
           it "responds with HTTP code 201" do
             post_note
@@ -171,7 +171,7 @@ describe "Notes API" do
         end
 
         context "with params for an invalid note" do
-          let(:params) { { note: { text: "a"*65536 } } } # too long
+          let(:params) { { note: { content: "a"*65536 } } } # too long
 
           it "responds with HTTP code 422" do
             post_note
@@ -216,7 +216,7 @@ describe "Notes API" do
 
     describe "PUT /api/nodes/:node_id/notes/:id" do
       let(:note) do
-        create(:note, node: node, text: "My text")
+        create(:note, node: node, content: "My text")
       end
 
       let(:url) { "/api/nodes/#{node.id}/notes/#{note.id}" }
@@ -226,7 +226,7 @@ describe "Notes API" do
         include_context "content_type: application/json"
 
         context "with params for a valid note" do
-          let(:params) { { note: { text: "New text" } } }
+          let(:params) { { note: { content: "New text" } } }
 
           it "responds with HTTP code 200" do
             put_note
@@ -235,7 +235,7 @@ describe "Notes API" do
 
           it "updates the note" do
             put_note
-            expect(note.reload.text).to eq "New text"
+            expect(note.reload.content).to eq "New text"
           end
 
           let(:submit_form) { put_note }
@@ -245,12 +245,12 @@ describe "Notes API" do
           it "returns the attributes of the updated note as JSON" do
             put_note
             retrieved_note = JSON.parse(response.body)
-            expect(retrieved_note["text"]).to eq "New text"
+            expect(retrieved_note["content"]).to eq "New text"
           end
         end
 
         context "with params for an invalid note" do
-          let(:params) { { note: { text: "a"*65536 } } } # too long
+          let(:params) { { note: { content: "a"*65536 } } } # too long
 
           it "responds with HTTP code 422" do
             put_note
@@ -285,7 +285,7 @@ describe "Notes API" do
       end
 
       context "when JSON is not sent" do
-        let(:params) { { note: { text: "New Note" } } }
+        let(:params) { { note: { content: "New Note" } } }
 
         it "responds with HTTP code 415" do
           expect{put url, params: params, env: @env}.not_to change{note.reload.attributes}
@@ -295,7 +295,7 @@ describe "Notes API" do
     end
 
     describe "DELETE /api/nodes/:node_id/notes/:id" do
-      let(:note) { create(:note, node: node, text: "My Note") }
+      let(:note) { create(:note, node: node, content: "My Note") }
 
       let(:delete_note) do
         delete "/api/nodes/#{node.id}/notes/#{note.id}", env: @env

@@ -1,1 +1,1 @@
-json.(issue, :id, :title, :fields, :text, :created_at, :updated_at)
+json.(issue, :id, :title, :fields, :content, :created_at, :updated_at)

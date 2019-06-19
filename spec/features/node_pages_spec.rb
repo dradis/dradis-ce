@@ -304,7 +304,7 @@ describe "node pages" do
 
     context "when the node has nested notes or evidence" do
       let(:extra_setup) do
-        @note           = create(:note, node: @node, text: "#[Title]#\nMy note")
+        @note           = create(:note, node: @node, content: "#[Title]#\nMy note")
         @issue          = create(:issue, node: current_project.issue_library)
         @evidence       = create(:evidence, issue: @issue, node: @node)
         other_node      = create(:node, project: current_project)

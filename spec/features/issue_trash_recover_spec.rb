@@ -25,7 +25,7 @@ describe "issue trash" do
   def edit_and_delete_issue title
     with_versioning do
       @issue.update_attribute(
-        :text,
+        :content,
         "#[Title]#\r\n#{title}\r\n\r\n#[Description]#\r\n\r\n"
       )
       @issue.destroy

@@ -33,7 +33,7 @@ RSpec.describe RecoverableRevisionPresenter do
 
       note = project.methodology_library.notes.create(
         author:  'methodology builder',
-        text:     methodology_content,
+        content:     methodology_content,
         category: Category.default,
       )
       note.destroy
@@ -53,7 +53,7 @@ RSpec.describe RecoverableRevisionPresenter do
 
   describe 'for an Issue' do
     before do
-      issue = create(:issue, text: "#[Title]#\nMy issue", node: project.issue_library)
+      issue = create(:issue, content: "#[Title]#\nMy issue", node: project.issue_library)
       issue.destroy
       revision = RecoverableRevision.new(issue.versions.last)
 
@@ -71,7 +71,7 @@ RSpec.describe RecoverableRevisionPresenter do
 
   describe 'for a note' do
     before do
-      note = create(:note, text: "#[Title]#\nMy note")
+      note = create(:note, content: "#[Title]#\nMy note")
       note.destroy
       revision = RecoverableRevision.new(note.versions.last)
 

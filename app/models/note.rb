@@ -30,9 +30,7 @@ class Note < ApplicationRecord
   include RevisionTracking
   include Subscribable
 
-  alias_attribute :content, :text
-
-  dradis_has_fields_for :text
+  dradis_has_fields_for :content
 
 
   # -- Relationships --------------------------------------------------------
@@ -59,7 +57,7 @@ class Note < ApplicationRecord
   # -- Validations ----------------------------------------------------------
   validates :category, presence: true
   validates :node, presence: true
-  validates :text, length: { maximum: DB_MAX_TEXT_LENGTH }
+  validates :content, length: { maximum: DB_MAX_TEXT_LENGTH }
 
 
   # -- Scopes ---------------------------------------------------------------
@@ -72,6 +70,6 @@ class Note < ApplicationRecord
   # -- Instance Methods -----------------------------------------------------
 
   def field_or_text(field_name)
-    fields.fetch(field_name, text.truncate(20))
+    fields.fetch(field_name, content.truncate(20))
   end
 end

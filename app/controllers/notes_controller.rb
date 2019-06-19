@@ -15,7 +15,7 @@ class NotesController < NestedNodeResourceController
     @note = @node.notes.new
 
     # See ContentFromTemplate concern
-    @note.text = template_content if params[:template]
+    @note.content = template_content if params[:template]
   end
 
   # Create a new Note for the associated Node.
@@ -84,6 +84,6 @@ class NotesController < NestedNodeResourceController
   end
 
   def note_params
-    params.require(:note).permit(:category_id, :text, :node_id)
+    params.require(:note).permit(:category_id, :content, :node_id)
   end
 end
