@@ -134,16 +134,19 @@ class DradisTasks < Thor
       directory_to_zip = Rails.root.join('lib', 'tasks', 'welcome_kit')
       temporary_zip = Tempfile.new
 
-      entries = Dir["#{directory_to_zip}/**/**"]
+      entries = Dir["#{directory_to_zip}/**/**"] - ['.', '..']
       Zip::File.open(temporary_zip.path, Zip::File::CREATE) do |zipfile|
+        zipfile.mkdir('kit')
         entries.each do |file|
-          next if File.directory?(file)
           in_zip_file = file.sub(Rails.root.join('lib', 'tasks', 'welcome_kit').to_s, 'kit')
-          zipfile.add(in_zip_file, file)
+          if File.directory?(file)
+            zipfile.mkdir(in_zip_file)
+          else
+            zipfile.add(in_zip_file, file)
+          end
         end
       end
 
-      # FileUtils.cp temporary_zip.path, Rails.root.join('tmp')
       invoke 'dradis:setup:kit', [], [temporary_zip.path]
     end
 
