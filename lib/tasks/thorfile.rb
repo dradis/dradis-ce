@@ -143,8 +143,8 @@ class DradisTasks < Thor
         end
       end
 
-      invoke 'dradis:setup:kit', [], [file: temporary_zip.path]
-      #FileUtils.cp temporary_zip.path, Rails.root.join('tmp')
+      # FileUtils.cp temporary_zip.path, Rails.root.join('tmp')
+      invoke 'dradis:setup:kit', [], [temporary_zip.path]
     end
 
     desc "welcome_old", "adds initial content to the repo for demonstration purposes"
