@@ -92,10 +92,11 @@ class KitImportJob < ApplicationJob
       html_export
       word
     }.each do |plugin|
+      reports_dir = "#{temporary_dir}/kit/templates/reports/#{plugin}"
       FileUtils.cp_r(
-        "#{temporary_dir}/kit/templates/reports/#{plugin}/.",
+        "#{reports_dir}/.",
         "#{report_templates_dir}/#{plugin}/"
-      )
+      ) if File.exist?(reports_dir)
     end
   end
 
