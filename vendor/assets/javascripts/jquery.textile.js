@@ -46,15 +46,27 @@
     this._defaults = defaults;
     this._name = pluginName;
 
-    this.init();
+    this.init(this.$element.data('textiled'));
   }
 
   Plugin.prototype = {
-    init: function () {
+    init: function ( exists ) {
       // Place initialization logic here
       // You already have access to the DOM element and the options via the instance,
       // e.g., this.element and this.options
-      this._buildContainer();
+      if (exists) {
+        this.options.$help    = $('.textile-help');
+        this.options.$wrap    = $('.textile-wrap');
+        this.options.$preview = $('.textile-preview');
+
+        $('.btn-write').click( function(evt) { this._onBtnWrite(evt) }.bind(this) );
+        $('.btn-preview').click( function(evt) { this._onBtnPreview(evt) }.bind(this) );
+        $('.btn-fullscreen').click( function(evt) { this._onBtnFullScreen(evt) }.bind(this) );
+        $('.btn-help').click( function(evt) { this._onBtnHelp(evt) }.bind(this) );
+      }
+      else {
+        this._buildContainer();
+      }
 
       this._previousContent = this.$element.val();
       this._previewRendered = false;
@@ -93,23 +105,23 @@
 
       // Write
       button = $('<a class="btn-write active" href="javascript:void(null);"><span>Write</span></a>');
-      button.click( $.proxy( function(evt) { this._onBtnWrite(evt); }, this));
+      button.click( function(evt) { this._onBtnWrite(evt) }.bind(this) );
       $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
 
       // Preview
       button = $('<a class="btn-preview" href="javascript:void(null);"><span>Preview</span></a>');
-      button.click( $.proxy( function(evt) { this._onBtnPreview(evt); }, this));
+      button.click( function(evt) { this._onBtnPreview(evt) }.bind(this) );
       $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
 
       // Full screen
       // button = $('<a class="btn btn-fullscreen" href="javascript:void(null);"><span>&nbsp;</span></a>');
       button = $('<a class="btn-fullscreen fa fa-expand" href="javascript:void(null);"><span>&nbsp;</span></a>');
-      button.click( $.proxy( function(evt) { this._onBtnFullScreen(evt); }, this));
+      button.click( function(evt) { this._onBtnFullScreen(evt) }.bind(this) );
       $('.textile-toolbar', this.options.$wrap).append( $('<li class="right">').append(button) );
 
       // Help
       button = $('<a class="btn-help fa fa-question" href="javascript:void(null);"><span>&nbsp;</span></a>');
-      button.click( $.proxy( function(evt) { this._onBtnHelp(evt); }, this));
+      button.click( function(evt) { this._onBtnHelp(evt) }.bind(this) );
       $('.textile-toolbar', this.options.$wrap).append( $('<li class="right">').append(button) );
     },
     _buildResizer: function() {
@@ -167,8 +179,7 @@
           this._loadPreview();
         }
       }
-      else
-      {
+      else {
         this._loadPreview();
       }
     },
@@ -190,7 +201,7 @@
         this._onFullScreenResize();
 
         // refit whenever the window resizes
-        $(window).resize($.proxy(this._onFullScreenResize, this));
+        $(window).resize(this._onFullScreenResize.bind(this));
 
         // update button icon
         $btnFS.removeClass('fa-expand').addClass('fa-compress');
@@ -203,7 +214,7 @@
         this.options.fullscreen = false;
 
         // stop listening to resize events
-        $(window).unbind('resize', $.proxy(this._onFullScreenResize, this));
+        $(window).unbind('resize', this._onFullScreenResize.bind(this));
         $(document.body).css('overflow', 'visible');
 
         this.options.$wrap.removeClass('textile-fullscreen');
@@ -252,9 +263,7 @@
   // preventing against multiple instantiations
   $.fn[pluginName] = function ( options ) {
     return this.each(function () {
-      if (!$.data(this, 'plugin_' + pluginName) && !$(this).data('textiled')) {
-        $.data(this, 'plugin_' + pluginName, new Plugin( this, options ));
-      }
+      new Plugin( this, options );
     });
   }
 
