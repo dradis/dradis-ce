@@ -21,8 +21,9 @@ do ($ = jQuery, window, document) ->
       @$el = $(@element)
       node_id = @$el.find("li:last").data('node-id')
       $tree_node = @settings.tree.find("[data-node-id='#{node_id}']")
-      $tree_node.parents('[data-node-id]').each @insertElement
-      @$el.attr('data-breadcrumed', true)
+      unless @$el.data('breadcrumed')
+        $tree_node.parents('[data-node-id]').each @insertElement
+        @$el.attr('data-breadcrumed', true)
 
     insertElement: (index,element) =>
       $parent = $(element)
@@ -35,5 +36,4 @@ do ($ = jQuery, window, document) ->
 
   $.fn[pluginName] = (options) ->
     @each ->
-      if !$.data(@, "plugin_#{pluginName}") && !@.data('breadcrumed')
-        $.data(@, "plugin_#{pluginName}", new Plugin(@, options))
+      new Plugin(@, options)
