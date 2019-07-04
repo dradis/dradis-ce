@@ -1,12 +1,5 @@
-<div class="header">
-  <div class="header-inner">
-    <div class="options">
-      <div class="dropdown">
-        <%= link_to raw('<i class="fa fa-chevron-down"></i>'), 'javascript:void(0)', class: 'import-toggle', data: { toggle: 'collapse', target: '.import-box' } %>
-      </div>
-    </div>
-    <h3>Import issues</h3>
-  </div>
+<div class="dropdown">
+  <%= link_to raw('<i class="fa fa-chevron-down"></i>'), 'javascript:void(0)', class: 'import-toggle', data: { toggle: 'collapse', target: '.import-box' } %>
 </div>
 
 <%= content_tag :div, class: 'import-box collapse' do %>

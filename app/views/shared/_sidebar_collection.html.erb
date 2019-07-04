@@ -1,14 +1,16 @@
 <div class="header">
   <div class="header-inner">
+    <h3><%= local_assigns[:index_path] ? link_to(name, index_path) : name %></h3>
     <div class="options">
       <%= render 'shared/add_item_dropdown',
         name: name,
         new_path: new_path,
-        category_id: category_id,
-        menu_class: 'pull-right'
+        category_id: category_id
       %>
+      <% if name =='Issues' %>
+        <%= render 'import_box' %>
+      <% end%>
     </div>
-    <h3><%= local_assigns[:index_path] ? link_to(name, index_path) : name %></h3>
   </div>
 </div>
 
