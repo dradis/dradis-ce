@@ -1,0 +1,13 @@
+document.addEventListener('turbolinks:load', function(){
+<%
+Dradis::Plugins::with_feature(:addon).sort_by(&:plugin_description).each do |plugin|
+  begin
+    plugin_path = ActiveSupport::Inflector.underscore(ActiveSupport::Inflector.deconstantize(plugin.name))
+    %>
+    <%= require_asset "#{plugin_path}/manifests/snowcrash.js" %>
+    <%
+  rescue Sprockets::FileNotFound;
+  end
+end
+%>
+});

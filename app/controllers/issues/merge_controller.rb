@@ -23,7 +23,7 @@ class Issues::MergeController < IssuesController
         @issue.author ||= current_user.email
         if @issue.save && @issue.update_attributes(issue_params)
           track_created(@issue)
-          tag_issue_from_field_content(@issue)
+          @issue.tag_from_field_content!
         end
       end
 

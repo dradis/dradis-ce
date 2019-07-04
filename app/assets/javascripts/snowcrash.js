@@ -24,7 +24,10 @@
 //= require snowcrash/plugins/jquery.treenav
 
 //= require snowcrash/behaviors
+//= require snowcrash/engines
 //= require snowcrash/keyboard_shortcuts
+
+//= require snowcrash/modules/auto_save
 
 //= require snowcrash/modules/comments
 //= require snowcrash/modules/configurations
@@ -35,6 +38,7 @@
 //= require snowcrash/modules/notifications
 //= require snowcrash/modules/search
 //= require snowcrash/modules/activities/poller
+//= require snowcrash/modules/subscriptions
 // require snowcrash/modules/tour
 //= require snowcrash/modules/uploads
 

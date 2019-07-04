@@ -8,6 +8,6 @@ module Dradis
   end
 end
 
+require 'html/pipeline/dradis_code_highlight_filter'
 require 'html/pipeline/dradis_fieldable_filter'
-require 'html/pipeline/dradis_escape_html_filter'
 require 'html/pipeline/dradis_textile_filter'

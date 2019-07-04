@@ -13,19 +13,20 @@
           <li><%= link_to main_app.project_search_path(current_project), id: 'js-search-form-toggle' do %><i class="fa fa-search fa-lg"></i><% end %></li>
           <li><%= link_to main_app.project_upload_manager_path(current_project) do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %></li>
           <li><%= link_to main_app.project_export_manager_path(current_project) do %><i class="fa fa-file-text-o fa-lg"></i> Export results<% end %></li>
+          <li><a href="javascript:void(0)" class="js-try-pro" data-term="projects" data-url="http://drad.is/l/try-pro-projects"><i class="fa fa-random fa-lg"></i> Change project</li>
           <li><%= link_to main_app.project_configurations_path(current_project) do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %></li>
           <li class="notifications dropdown">
             <%= link_to main_app.project_notifications_path(current_project), class: 'dropdown-toggle', data: { behavior: 'notifications-dropdown', toggle: 'dropdown' }, remote: true do %>
               <i class="fa fa-bell fa-lg"></i><b class="caret"></b><i class="notifications-dot hidden" data-behavior="notifications-dot"></i>
             <% end %>
-            <div class="dropdown-menu" data-url="<%= project_notifications_path(current_project) %>"></div>
+            <div class="dropdown-menu" data-url="<%= main_app.project_notifications_path(current_project) %>"></div>
           </li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-question fa-lg"></i><b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="javascript:void(0)" class="js-try-pro" data-term="training-course" data-url="http://drad.is/l/try-pro-course">Free training course</a></li>
               <li class="divider"></li>
-              <li><a href="javascript:void(0)" class="js-try-pro" data-term="contact-support">Contact support</a></li>
+              <li><a href="javascript:void(0)" class="js-try-pro" data-term="contact-support" data-url="http://drad.is/l/try-pro-support">Contact support</a></li>
               <li><a href="https://evening-hamlet-4416.herokuapp.com/" target="_blank">Chat on Slack</a></li>
               <li><a href="https://github.com/dradis/dradis-ce/issues" class="js-hs-beacon">Report an issue</a></li>
               <li><a href="http://dradisframework.org/documentation/" target="_blank">Support website</a></li>

@@ -34,7 +34,7 @@
     &:hover {
       background-color: #f5f5f5;
 
-      .actions {
+      .actions.current_user {
         visibility: visible;
       }
     }

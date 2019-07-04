@@ -10,3 +10,11 @@ document.addEventListener "turbolinks:load", ->
 
   if $('[data-behavior~=mentionable]').length
     Mentions.init(document.querySelectorAll('[data-behavior~=mentionable]'))
+
+  comments = $('[data-behavior~=comment-feed] [data-author]')
+  if comments.length
+    current_user = $('meta[name=current-user-id]').attr('content')
+    for comment in comments
+      comment = $(comment)
+      if `current_user == comment.data('author')`
+        comment.find('.actions').addClass('current_user')

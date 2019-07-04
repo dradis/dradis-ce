@@ -14,7 +14,7 @@ end
 
 Rails.configuration.middleware.use Warden::Manager do |manager|
   manager.default_strategies :shared_password
-  manager.failure_app = ->(env) { SessionsController.action(:new).call(env) }
+  manager.failure_app = ->(env) { SessionsController.action(:failure).call(env) }
 end
 
 # A simple db-backed strategy that uses the User.authenticate() method.

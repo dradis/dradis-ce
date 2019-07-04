@@ -30,6 +30,8 @@ class Note < ApplicationRecord
   include RevisionTracking
   include Subscribable
 
+  alias_attribute :content, :text
+
   dradis_has_fields_for :text
 
 

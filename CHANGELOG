@@ -1,12 +1,26 @@
-v3.12 (XXX)
+v3.14 (#### 2019)
+ - Highlight code snippets.
+
+v3.13 (June 2019)
+ - User-provided content takes priority over default local fields.
+ - Fix subnodes disappearing when moved
+ - Add auto-save JS that uses localStorage on textarea textchange events
+ - Better welcome content
+
+v3.12 (April 2019)
  - Using ajax in comments
  - Fixed nodes sidebar header margin
  - Added bold font to improve bold text visibility
  - Fix links display in Textile fields
+ - Fix redirection destinations after edit/delete evidence
+ - Refactoring cache keys in pages with comments
  - Disable turbolinks cache when displaying flash messages
  - Sort attachments in alphabetical ASCII order
  - Move Import Issues box above issues list
  - Fix methodology checklist edit error
+
+v3.11.1 (February 2019)
+ - Fix blockcode vulnerability in Textile formatting
 
 v3.11 (November 2018)
  - Added comments, subscriptions and notifications to notes

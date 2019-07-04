@@ -7,14 +7,22 @@ module HTML
     #
     # This filter does not write any additional information to the context hash.
     class DradisCodeHighlightFilter < Filter
-      # Locate the %%{{}}%% sequence inside code blocks and highlight it (via
+      REGEX = /\$\$\{\{(.+)\}\}\$\$/
+
+      # Locate the $${{}}$$ sequence inside code blocks and highlight it (via
       # <mark> tags)
       def call
-        doc.search('pre').each do |element|
-          element.inner_html = '<code>' + element.text.gsub(/%%\{\{(.+)\}\}%%/i) do |match|
-            %|<mark>#{$1}</mark>|
-          end + '</code>'
+        doc.search('pre').each do |pre|
+          pre.search('code').each do |node|
+            content = node.to_html
+            html    = content.gsub(REGEX) do |match|
+              %|<mark>#{$1}</mark>|
+            end
+
+            node.replace(html)
+          end
         end
+
         doc
       end
     end

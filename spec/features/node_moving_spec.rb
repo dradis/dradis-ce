@@ -34,8 +34,7 @@ describe "moving a node", js: true do
 
   example "moving a node below another node" do
     within_move_node_modal do
-      click_node_toggle_button(@node_0)
-      find_link(@node_3.label).trigger('click')
+      click_link(@node_3.label)
       find_button("Move").click
     end
     expect(@node_2.reload.parent).to eq @node_3
@@ -59,12 +58,12 @@ describe "moving a node", js: true do
   describe "selecting a descendant of the current node" do
     it "doesn't allow you to submit the form" do
       within_move_node_modal do
-        click_node_toggle_button(@node_0)
         click_node_toggle_button(@node_2)
-        find_link(@node_5.label, visible: :all).trigger("click")
+        expect(page).to have_link "Node 5"
+        click_link(@node_5.label)
       end
 
-      expect(submit_move_button[:disabled]).to be true
+      expect(submit_move_button[:disabled]).to eq 'true'
     end
   end
 

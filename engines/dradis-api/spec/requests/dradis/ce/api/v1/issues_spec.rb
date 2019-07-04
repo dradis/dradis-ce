@@ -105,6 +105,19 @@ describe "Issues API" do
         expect(retrieved_issue['text']).to eq valid_params[:issue][:text]
       end
 
+      it "tags the issue from the Tags field" do
+        tag_name = '!2ca02c_info'
+        valid_params[:issue][:text] << "#[Tags]#\n\n#{tag_name}\n\n"
+
+        expect { valid_post }.to change{ current_project.issues.count }.by(1)
+        expect(response.status).to eq(201)
+
+        retrieved_issue = JSON.parse(response.body)
+        database_issue  = current_project.issues.find(retrieved_issue['id'])
+
+        expect(database_issue.tag_list).to eq(tag_name)
+      end
+
       let(:submit_form) { valid_post }
       include_examples "creates an Activity", :create, Issue
 
