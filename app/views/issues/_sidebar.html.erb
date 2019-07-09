@@ -12,5 +12,7 @@
   name: 'Issues',
   collection: @issues,
   new_path: main_app.new_project_issue_path(current_project),
-  category_id: nil
+  category_id: nil  do
+    render('import_box')
+  end
 %>

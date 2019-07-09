@@ -7,9 +7,7 @@
         new_path: new_path,
         category_id: category_id
       %>
-      <% if name == 'Issues' %>
-        <%= render 'import_box' %>
-      <% end %>
+      <%= yield %>
     </div>
   </div>
 </div>
