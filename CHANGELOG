@@ -1,3 +1,6 @@
+v3.14 (XXX 2019)
+ - Fix textile toolbar and breadcrumb stacking
+
 v3.13 (June 2019)
  - User-provided content takes priority over default local fields.
  - Fix subnodes disappearing when moved
@@ -14,7 +17,6 @@ v3.12 (April 2019)
  - Disable turbolinks cache when displaying flash messages
  - Sort attachments in alphabetical ASCII order
  - Fix methodology checklist edit error
- - Fix textile toolbar stacking
 
 v3.11.1 (February 2019)
  - Fix blockcode vulnerability in Textile formatting
