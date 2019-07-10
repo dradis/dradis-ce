@@ -46,37 +46,28 @@
     this._defaults = defaults;
     this._name = pluginName;
 
-    this.init(this.$element.data('textiled'));
+    this.init();
   }
 
   Plugin.prototype = {
-    init: function ( exists ) {
+    init: function () {
       // Place initialization logic here
       // You already have access to the DOM element and the options via the instance,
       // e.g., this.element and this.options
-      if (exists) {
-        this.options.$help    = $('.textile-help');
-        this.options.$wrap    = $('.textile-wrap');
-        this.options.$preview = $('.textile-preview');
+      this._initElements();
 
-        $('.btn-write').click( function(evt) { this._onBtnWrite(evt) }.bind(this) );
-        $('.btn-preview').click( function(evt) { this._onBtnPreview(evt) }.bind(this) );
-        $('.btn-fullscreen').click( function(evt) { this._onBtnFullScreen(evt) }.bind(this) );
-        $('.btn-help').click( function(evt) { this._onBtnHelp(evt) }.bind(this) );
-      }
-      else {
-        this._buildContainer();
-      }
+      this._buildContainer();
 
       this._previousContent = this.$element.val();
       this._previewRendered = false;
       this._helpRendered = false;
     },
+    // Add wrapper div with toolbar and inner container (see defaults.tpl)
     _buildContainer: function() {
-      // Add wrapper div with toolbar and inner container (see defaults.tpl)
+      // Skip when textile is already initialized
+      if (this.$element.data('textiled')) { return; }
 
       // container
-      this.options.$wrap = $(this.options.tpl.wrap);
       this.$element.parent().append( this.options.$wrap );
 
       // move textarea to container
@@ -86,12 +77,10 @@
       this.$element.attr('rows', 20);
 
       // add Preview to container and hide
-      this.options.$preview = $(this.options.tpl.preview);
       $('.textile-inner', this.options.$wrap).append(this.options.$preview);
       this.options.$preview.hide();
 
       // add Help to container and hide
-      this.options.$help = $(this.options.tpl.help);
       $('.textile-inner', this.options.$wrap).append(this.options.$help)
       this.options.$help.hide();
 
@@ -126,7 +115,11 @@
     },
     _buildResizer: function() {
       if (this.options.resize === false) return false;
-
+    },
+    _initElements: function() {
+      this.options.$wrap    = $(this.options.tpl.wrap);
+      this.options.$preview = $(this.options.tpl.preview);
+      this.options.$help    = $(this.options.tpl.help);
     },
     // Ajax preview
     _loadPreview: function() {
@@ -263,6 +256,16 @@
   // preventing against multiple instantiations
   $.fn[pluginName] = function ( options ) {
     return this.each(function () {
+      // Reuse the same elements when re-initializing
+      if ($(this).data('textiled')) {
+        options = {
+          tpl: {
+            help: $('.textile-help'),
+            preview: $('.textile-preview'),
+            wrap: $('.textile-wrap')
+          }
+        }
+      }
       new Plugin( this, options );
     });
   }
