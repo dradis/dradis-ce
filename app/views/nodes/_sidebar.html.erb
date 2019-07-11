@@ -20,7 +20,10 @@
         collection: @sorted_notes,
         new_path: new_project_node_note_path(@node.project, @node),
         category_id: Category.default.id,
-        index_path: project_node_path(@node.project, @node, tab: 'notes-tab') %>
+        index_path: project_node_path(@node.project, @node, tab: 'notes-tab') do
+          # We pass an empty block here or else "yield" in the rendered partial
+          # will return the whole view.
+        end %>
 
   <!-- Issues -->
   <%= render 'shared/sidebar_collection',
@@ -28,7 +31,10 @@
         collection: @sorted_evidence,
         new_path: new_project_node_evidence_path(@node.project, @node),
         category_id: Category.issue.id,
-        index_path: project_node_path(@node.project, @node, tab: 'evidence-tab') %>
+        index_path: project_node_path(@node.project, @node, tab: 'evidence-tab') do
+          # We pass an empty block here or else "yield" in the rendered partial
+          # will return the whole view.
+        end %>
 
   <!-- Attachments -->
   <%= render 'attachments/attachment_box' %>

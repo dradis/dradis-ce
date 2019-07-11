@@ -7,7 +7,7 @@
         new_path: new_path,
         category_id: category_id
       %>
-      <%= yield %>
+      <%= yield if block_given? %>
     </div>
   </div>
 </div>
