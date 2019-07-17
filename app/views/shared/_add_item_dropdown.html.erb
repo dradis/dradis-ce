@@ -5,12 +5,10 @@
     <i class="fa fa-plus"> </i> <%= local_assigns.fetch(:text, '') %>
   <% end %>
 
-  <% if name == 'Issues' %>
-    <%= link_to 'javascript:void(0)', 
-      class: 'import-toggle', 
-      data: { toggle: 'collapse', target: '#issues' } do %>
-      <i class="fa fa-chevron-up"></i>
-    <% end %>
+  <%= link_to 'javascript:void(0)', 
+    class: 'import-toggle', 
+    data: { toggle: 'collapse', target: "##{name.downcase}" } do %>
+    <i class="fa fa-chevron-up"></i>
   <% end %>
 
   <ul class="dropdown-menu <%= local_assigns.fetch(:menu_class, '') %>" role="menu">

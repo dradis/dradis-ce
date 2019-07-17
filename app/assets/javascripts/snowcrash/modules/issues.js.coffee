@@ -5,7 +5,7 @@
 //= require snowcrash/modules/issues/tag-input
 
 document.addEventListener "turbolinks:load", ->
-  if $('body.issues').length
+  if $('body.issues, body.nodes, body.cards').length
     $('.import-toggle').click ->
       $this = $(this)
       $this.find('i').toggleClass('fa-chevron-down fa-chevron-up')
