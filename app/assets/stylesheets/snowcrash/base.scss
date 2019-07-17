@@ -403,9 +403,13 @@ body {
         .header-inner {
           position: relative;
           .options {
-            position: absolute;
-            top: 0;
-            right: 0;
+            .dropdown {
+              float: right;
+              margin-left: 2px;
+              position: absolute;
+              top: 0;
+              right: 0;
+            }
           }
 
 
