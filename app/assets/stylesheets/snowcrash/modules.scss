@@ -148,3 +148,10 @@ table.table-ajax-inputs {
     }
   }
 }
+
+#issues {
+  height: auto;
+  max-height: 60vh;
+  overflow-y: scroll;
+  margin-bottom: .5em;
+}
