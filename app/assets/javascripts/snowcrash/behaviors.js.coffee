@@ -175,9 +175,8 @@ document.addEventListener "turbolinks:load", ->
     $('.form-search').submit()
 
   # Collapsable div in sidebar collections
-  if $('body.issues, body.nodes, body.cards').length
+  if $('[data-behavior~=collapse-collection]').length
     $('[data-behavior~=collapse-collection]').click ->
       $this = $(this)
       $this.find('[data-behavior~=toggle-chevron]').toggleClass('fa-chevron-down fa-chevron-up')
       $('[data-behavior~=import-box]').find("input[type='text']:first").focus()
-      
