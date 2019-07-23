@@ -149,7 +149,7 @@ table.table-ajax-inputs {
   }
 }
 
-#issues, #notes, #evidence, #tasks {
+.collapsable-collection {
   height: auto;
   max-height: 60vh;
   overflow-y: scroll;
