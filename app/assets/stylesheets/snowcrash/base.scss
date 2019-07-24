@@ -537,7 +537,13 @@ body {
 }
 
 .attachments-box {
-  .table {margin-bottom: 0}
+  .table {
+    margin-bottom: 0;
+    
+    td {
+      border: none;
+    }
+  }
 
   .btn {
     box-shadow: none;
