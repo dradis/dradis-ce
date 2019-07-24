@@ -29,7 +29,7 @@
               <i class="fa fa-paperclip"></i> <%= short_filename(attachment.filename) %>
               <% end %>
 
-              <div class="text-right">
+              <span class="pull-right">
                 <span class="size">
                   <small><%= number_to_human_size(File.size(attachment)) %></small>
                 </span>
@@ -50,7 +50,7 @@
                 >
                   <i class="fa fa-link"></i>
                 </button>
-              </div>
+              </span>
             </div>
           </td>
         </tr>
