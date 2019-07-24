@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
 class Nodes::Merger
-  SOURCES = {
-    activities: :trackable_id,
-    children: :parent_id,
-    evidence: :node_id,
-    notes: :node_id
-  }.freeze
-
   def self.call(target_node, source_node)
     new(target_node, source_node).call
   end
@@ -32,16 +25,23 @@ class Nodes::Merger
 
     undo_attachments_move
 
-    return [e.message]
+    []
   end
 
   private
 
     attr_accessor :target_node, :source_node, :source_attachments
 
+    DESCENDENT_RELATIONSHIPS = {
+      activities: :trackable_id,
+      children: :parent_id,
+      evidence: :node_id,
+      notes: :node_id
+    }.freeze
+
     def move_descendents
-      SOURCES.each do |relation, column|
-        source_node.send(relation).update_all(column => target_node_id)
+      DESCENDENT_RELATIONSHIPS.each do |relation, column|
+        source_node.send(relation).update_all(column => target_node.id)
       end
     end
 
