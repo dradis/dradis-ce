@@ -56,12 +56,6 @@ RSpec.describe Nodes::Merger do
       expect { merge_nodes }.to change(target_node.children, :count).by 1
     end
 
-    it "updates the source node's children counter cache" do
-      create(:node, parent: source_node)
-
-      expect { merge_nodes }.to change { source_node.reload.children_count }.by -1
-    end
-
     it "updates the target node's children counter cache" do
       create(:node, parent: source_node)
 

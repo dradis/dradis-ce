@@ -22,6 +22,7 @@ class Nodes::Merger
       move_descendents
       reset_counter_caches
       move_attachments
+      source_node.destroy
 
       return []
     end
@@ -46,7 +47,6 @@ class Nodes::Merger
 
     def reset_counter_caches
       Node.reset_counters target_node.id, :children_count
-      Node.reset_counters source_node.id, :children_count
     end
 
     def move_attachments
