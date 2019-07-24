@@ -12,7 +12,7 @@
   </div>
 </div>
 
-<div id="<%= name.downcase %>" class="note-list collapsable-collection in collapse">
+<div id="<%= name.downcase %>" class="note-list in collapse">
   <% if collection.any? %>
     <%= render partial: collection.first.to_partial_path, collection: collection %>
   <% end %>
