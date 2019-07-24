@@ -1,90 +1,101 @@
 <% node = @node || @issuelib %>
 
 <div class="attachments-box jquery-upload">
+
   <div class="header">
     <div class="header-inner">
+      <div class="options">
+        <div class="dropdown">
+          <%= link_to 'javascript:void(0)', 
+            data: { toggle: 'collapse', target: '#attachment-box', behavior: 'collapse-collection' } do %>
+            <i class="fa fa-chevron-up" data-behavior="toggle-chevron"></i>
+          <% end %>
+        </div>
+      </div>
       <h3>Attachments</h3>
     </div>
   </div>
 
-  <!-- The table listing the files available for upload/download -->
-  <table class="table">
-    <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery">
-      <% if node.attachments.any? %>
-        <% for attachment in node.attachments do %>
-      <tr class="template-download">
-        <td class="name" colspan="4">
-          <div>
-            <%= link_to project_node_attachment_path(node.project, node, attachment.filename), download: attachment.filename, title: attachment.filename do %>
-            <i class="fa fa-paperclip"></i> <%= short_filename(attachment.filename) %>
-            <% end %>
+  <div class="in collapse" id="attachment-box">
+    <!-- The table listing the files available for upload/download -->
+    <table class="table">
+      <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery">
+        <% if node.attachments.any? %>
+          <% for attachment in node.attachments do %>
+        <tr class="template-download">
+          <td class="name" colspan="4">
+            <div>
+              <%= link_to project_node_attachment_path(node.project, node, attachment.filename), download: attachment.filename, title: attachment.filename do %>
+              <i class="fa fa-paperclip"></i> <%= short_filename(attachment.filename) %>
+              <% end %>
 
-            <div class="text-right">
-              <span class="size">
-                <small><%= number_to_human_size(File.size(attachment)) %></small>
-              </span>
+              <div class="text-right">
+                <span class="size">
+                  <small><%= number_to_human_size(File.size(attachment)) %></small>
+                </span>
 
-              <span class="delete">
+                <span class="delete">
+                  <button
+                    class="btn btn-transparent btn-danger"
+                    data-type="DELETE"
+                    data-url="<%= project_node_attachment_path(node.project, node, attachment.filename) %>"
+                  >
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </span>
+
                 <button
-                  class="btn btn-transparent btn-danger"
-                  data-type="DELETE"
-                  data-url="<%= project_node_attachment_path(node.project, node, attachment.filename) %>"
+                  class="btn btn-transparent js-attachment-url-copy"
+                  data-clipboard-text="!<%= project_node_attachment_path(node.project, node, attachment.filename) %>!"
                 >
-                  <i class="fa fa-trash"></i>
+                  <i class="fa fa-link"></i>
                 </button>
-              </span>
-
-              <button
-                class="btn btn-transparent js-attachment-url-copy"
-                data-clipboard-text="!<%= project_node_attachment_path(node.project, node, attachment.filename) %>!"
-              >
-                <i class="fa fa-link"></i>
-              </button>
+              </div>
             </div>
-          </div>
-        </td>
-      </tr>
+          </td>
+        </tr>
+          <% end %>
+        <% else %>
+          <%# display some sort of Nothing yet message %>
         <% end %>
-      <% else %>
-        <%# display some sort of Nothing yet message %>
-      <% end %>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
 
-  <div id="drop-zone" class="drop-zone" dropzone="" data-toggle="tooltip" data-placement="right" title="Drag attachments from your desktop and drop them here" ondrop="">Drop zone</div>
+    <div id="drop-zone" class="drop-zone" dropzone="" data-toggle="tooltip" data-placement="right" title="Drag attachments from your desktop and drop them here" ondrop="">Drop zone</div>
 
-  <!-- The file upload form used as target for the file upload widget -->
-  <%= form_tag project_node_attachments_path(node.project, node, format: :json), id: 'fileupload', multipart: true do %>
+    <!-- The file upload form used as target for the file upload widget -->
+    <%= form_tag project_node_attachments_path(node.project, node, format: :json), id: 'fileupload', multipart: true do %>
 
-    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-    <div class="row-fluid fileupload-buttonbar">
-      <div class="span8">
-        <!-- The fileinput-button span is used to style the file input field as button -->
-        <span class="btn btn-success fileinput-button" data-toggle="tooltip" data-placement="bottom" title="Add...">
-          <i class="fa fa-plus fa-inverse"></i>
-          <span></span>
-          <input type="file" name="files[]" multiple>
-        </span>
-        <button type="submit" class="btn btn-primary start" data-toggle="tooltip" data-placement="bottom" title="Start">
-          <i class="fa fa-upload fa-inverse"></i>
-          <span></span>
-        </button>
-        <button type="reset" class="btn btn-warning cancel" data-toggle="tooltip" data-placement="bottom" title="Cancel">
-          <i class="fa fa-ban fa-inverse"></i>
-          <span></span>
-        </button>
-      </div>
+      <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+      <div class="row-fluid fileupload-buttonbar">
+        <div class="span8">
+          <!-- The fileinput-button span is used to style the file input field as button -->
+          <span class="btn btn-success fileinput-button" data-toggle="tooltip" data-placement="bottom" title="Add...">
+            <i class="fa fa-plus fa-inverse"></i>
+            <span></span>
+            <input type="file" name="files[]" multiple>
+          </span>
+          <button type="submit" class="btn btn-primary start" data-toggle="tooltip" data-placement="bottom" title="Start">
+            <i class="fa fa-upload fa-inverse"></i>
+            <span></span>
+          </button>
+          <button type="reset" class="btn btn-warning cancel" data-toggle="tooltip" data-placement="bottom" title="Cancel">
+            <i class="fa fa-ban fa-inverse"></i>
+            <span></span>
+          </button>
+        </div>
 
-      <div class="span4">
-        <!-- The global progress bar -->
-        <div class="progress progress-success progress-striped active fade">
-           <div class="bar" style="width:0%;"></div>
+        <div class="span4">
+          <!-- The global progress bar -->
+          <div class="progress progress-success progress-striped active fade">
+            <div class="bar" style="width:0%;"></div>
+          </div>
         </div>
       </div>
-    </div>
-    <!-- The loading indicator is shown during image processing -->
-    <div class="fileupload-loading"></div>
-  <% end %>
+      <!-- The loading indicator is shown during image processing -->
+      <div class="fileupload-loading"></div>
+    <% end %>
+  </div>
 
 </div>
 
