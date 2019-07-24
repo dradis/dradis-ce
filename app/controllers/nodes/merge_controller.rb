@@ -4,9 +4,7 @@ class Nodes::MergeController < NodesController
   def create
     target_node = Node.find(params[:target_id])
 
-    result = Nodes::Merger.call(target_node, @node) do
-      Node.destroy(source_node.id)
-    end
+    result = Nodes::Merger.call(target_node, @node)
 
     respond_to do |format|
       format.html do

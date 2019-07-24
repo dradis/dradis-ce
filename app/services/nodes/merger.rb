@@ -9,7 +9,7 @@ class Nodes::Merger
   }.freeze
 
   def self.call(target_node, source_node)
-    new(target_node, source_node).call(&block)
+    new(target_node, source_node).call
   end
 
   def initialize(target_node, source_node)
@@ -17,13 +17,11 @@ class Nodes::Merger
     @target_node = target_node
   end
 
-  def call(&block)
+  def call
     Node.transaction do
       move_descendents
       reset_counter_caches
       move_attachments
-
-      yield if block
 
       return []
     end

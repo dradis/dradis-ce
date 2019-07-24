@@ -79,23 +79,10 @@ RSpec.describe Nodes::Merger do
       expect { merge_nodes }.to change { target_node.attachments.count }.by 1
     end
 
-    it 'executes a given block within the transaction' do
-      block = double
-      expect(block).to receive(:called!)
-
-      described_class.call(target_node.id, source_node) do
-        block.called!
-      end
-    end
-
     describe 'when an error is raised' do
-      subject(:merge_nodes) {
-        described_class.call(target_node.id, source_node) do
-          raise StandardError
-        end
-      }
-
-      it { should match_array ['StandardError'] }
+      before do
+        expect(source_node).to receive(:destroy).and_raise StandardError
+      end
 
       it 'does not move note' do
         note = create(:note, node: source_node)
