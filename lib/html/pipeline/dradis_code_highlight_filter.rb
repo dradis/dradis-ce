@@ -7,7 +7,7 @@ module HTML
     #
     # This filter does not write any additional information to the context hash.
     class DradisCodeHighlightFilter < Filter
-      REGEX = /\$\$\{\{(.+)\}\}\$\$/
+      REGEX = /\$\$\{\{(.+?)\}\}\$\$/
 
       # Locate the $${{}}$$ sequence inside code blocks and highlight it (via
       # <mark> tags)
