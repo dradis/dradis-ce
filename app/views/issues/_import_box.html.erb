@@ -2,7 +2,12 @@
   <div class="header-inner">
     <div class="options">
       <div class="dropdown">
-        <%= link_to raw('<i class="fa fa-chevron-down" data-behavior="toggle-chevron"></i>'), 'javascript:void(0)', class: 'import-toggle', data: { toggle: 'collapse', target: '.import-box', behavior: 'collapse-collection' } %>
+
+        <%= link_to 'javascript:void(0)', 
+          class: 'import-toggle', 
+          data: { toggle: 'collapse', target: '.import-box', behavior: 'collapse-collection' } do %>
+          <i class="fa fa-chevron-down" data-behavior="toggle-chevron"></i>
+        <% end %>
       </div>
     </div>
     <h3>Import issues</h3>
