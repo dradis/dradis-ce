@@ -8,13 +8,13 @@ class Nodes::Merger
     notes: :node_id
   }.freeze
 
-  def self.call(target_node_id, source_node, &block)
-    new(target_node_id, source_node).call(&block)
+  def self.call(target_node, source_node)
+    new(target_node, source_node).call(&block)
   end
 
-  def initialize(target_node_id, source_node)
+  def initialize(target_node, source_node)
     @source_node = source_node
-    @target_node_id = target_node_id
+    @target_node = target_node
   end
 
   def call(&block)
@@ -38,7 +38,7 @@ class Nodes::Merger
 
   private
 
-    attr_accessor :target_node_id, :source_node, :source_attachments
+    attr_accessor :target_node, :source_node, :source_attachments
 
     def move_descendents
       SOURCES.each do |relation, column|
@@ -47,7 +47,7 @@ class Nodes::Merger
     end
 
     def reset_counter_caches
-      Node.reset_counters target_node_id, :children_count
+      Node.reset_counters target_node.id, :children_count
       Node.reset_counters source_node.id, :children_count
     end
 
@@ -55,7 +55,7 @@ class Nodes::Merger
       self.source_attachments = source_node.attachments
 
       source_node.attachments.each do |attachment|
-        attachment.node_id = target_node_id
+        attachment.node_id = target_node.id
         attachment.save
       end
     end
@@ -65,7 +65,7 @@ class Nodes::Merger
         next if File.exist? attachment.fullpath
 
         saved_attachment = Attachment.find(attachment.filename,
-          conditions: { node_id: target_node_id })
+          conditions: { node_id: target_node.id })
 
         saved_attachment.node_id = source_node.id
         saved_attachment.save

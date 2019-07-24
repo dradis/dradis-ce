@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Nodes::Merger do
   describe '.call' do
-    subject(:merge_nodes) { described_class.call(target_node.id, source_node) }
+    subject(:merge_nodes) { described_class.call(target_node, source_node) }
 
     let(:root_node) { create(:node) }
     let(:source_node) { create(:node, parent_id: root_node) }
