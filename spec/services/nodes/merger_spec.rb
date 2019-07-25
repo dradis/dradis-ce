@@ -80,6 +80,18 @@ RSpec.describe Nodes::Merger do
       Attachment.all.each(&:delete)
     end
 
+    it 'merges properties together' do
+      source_node = create(:node, :with_properties, parent_id: root_node)
+      target_node = create(:node, :with_properties, parent_id: root_node)
+
+      source_node.properties['ip'] = ['1.1.1.1', '1.1.1.3']
+      source_node.save
+
+      described_class.call(target_node, source_node)
+
+      expect(target_node.properties['ip']).to eq ['1.1.1.1', '1.1.1.2', '1.1.1.3']
+    end
+
     describe 'when an error is raised' do
       before do
         expect(source_node).to receive(:destroy).and_raise StandardError

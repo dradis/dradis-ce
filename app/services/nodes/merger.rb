@@ -14,6 +14,7 @@ class Nodes::Merger
     Node.transaction do
       move_descendents
       reset_counter_caches
+      update_properties
       move_attachments
       source_node.destroy
     end
@@ -45,6 +46,14 @@ class Nodes::Merger
 
     def reset_counter_caches
       Node.reset_counters target_node.id, :children_count
+    end
+
+    def update_properties
+      source_node.properties.each do |key, value|
+        target_node.set_property key, value
+      end
+
+      target_node.save
     end
 
     def move_attachments
