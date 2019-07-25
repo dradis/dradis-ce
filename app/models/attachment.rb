@@ -186,7 +186,7 @@ class Attachment < File
       @initialfile = Rails.root.join('tmp', File.basename(@tempfile))
       super(@initialfile, 'wb+')
     else
-      raise "No physical file available"
+      raise 'No physical file available'
     end
   end
 
@@ -201,7 +201,7 @@ class Attachment < File
       FileUtils.mkdir(File.dirname(fullpath)) unless File.exists?(File.dirname(fullpath))
       self.close
       FileUtils.cp(self.path, fullpath) if @intialfile != fullpath
-      if ( @initialfile && @initialfile != fullpath )
+      if (@initialfile && @initialfile != fullpath)
         # If we are still a temp file
         FileUtils.rm(@initialfile)
       end
@@ -212,8 +212,8 @@ class Attachment < File
   # Deletes the file that the instance is pointing to from memory
   def delete
     self.close
-    if ( !@initialfile || (File.dirname(@initialfile) == Rails.root.join('tmp')) )
-      raise "No physical file to delete"
+    if (!@initialfile || (File.dirname(@initialfile) == Rails.root.join('tmp')))
+      raise 'No physical file to delete'
     end
     FileUtils.rm(@initialfile)
   end
@@ -225,12 +225,11 @@ class Attachment < File
 
   # Provide a JSON representation of this object that can be understood by
   # components of the web interface
-  def to_json(options={})
+  def to_json(options = {})
     {
       filename:   @filename,
       size:       File.size(self.fullpath),
       created_at: self.ctime
     }.to_json(options)
   end
-
 end
