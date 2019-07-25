@@ -218,9 +218,22 @@ class Attachment < File
     FileUtils.rm(@initialfile)
   end
 
+  # Makes a copy of itself for the given node.
+  def copy_to(node)
+    name = Attachment.available_name node, original: filename
+    new_file_path = fullpath(node.id, name)
+
+    dir_name = File.dirname new_file_path
+    FileUtils.mkdir dir_name unless File.exists? dir_name
+
+    FileUtils.cp fullpath, new_file_path
+
+    Attachment.find name, conditions: { node_id: node.id }
+  end
+
   # Retruns the full path of an attachment on the file system
-  def fullpath
-    self.class.pwd.join(@node_id.to_s, @filename.to_s)
+  def fullpath(node_id = @node_id, filename = @filename)
+    self.class.pwd.join(node_id.to_s, filename.to_s)
   end
 
   # Provide a JSON representation of this object that can be understood by
