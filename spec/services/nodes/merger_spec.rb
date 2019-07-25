@@ -94,7 +94,7 @@ RSpec.describe Nodes::Merger do
 
     describe 'when an error is raised' do
       before do
-        expect(source_node).to receive(:destroy).and_raise StandardError
+        expect(Node).to receive(:destroy).and_raise StandardError
       end
 
       it { should eq source_node }
