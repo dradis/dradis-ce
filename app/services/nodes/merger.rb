@@ -30,7 +30,7 @@ class Nodes::Merger
 
   private
 
-    attr_accessor :target_node, :source_node, :source_attachments
+    attr_accessor :target_node, :source_node, :moved_attachments
 
     DESCENDENT_RELATIONSHIPS = {
       activities: :trackable_id,
@@ -50,23 +50,15 @@ class Nodes::Merger
     end
 
     def move_attachments
-      self.source_attachments = source_node.attachments
+      self.moved_attachments = []
 
       source_node.attachments.each do |attachment|
-        attachment.node_id = target_node.id
-        attachment.save
+        moved_attachments << attachment.copy_to(target_node)
       end
     end
 
     def undo_attachments_move
-      source_attachments.each do |attachment|
-        next if File.exist? attachment.fullpath
-
-        saved_attachment = Attachment.find(attachment.filename,
-          conditions: { node_id: target_node.id })
-
-        saved_attachment.node_id = source_node.id
-        saved_attachment.save
-      end
+      return unless moved_attachments&.any?
+      moved_attachments.each(&:delete)
     end
 end

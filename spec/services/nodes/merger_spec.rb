@@ -65,7 +65,10 @@ RSpec.describe Nodes::Merger do
     it 'moves attachments to target node' do
       attachment = create(:attachment, node: source_node)
       merge_nodes
-      expect(File.exist?(attachment.fullpath)).to be false
+      target_attachment = Attachment.find(attachment.filename,
+        conditions: { node_id: target_node.id })
+
+      expect(target_attachment).to be_an Attachment
     end
 
     it 'increases the target node attachment count' do
@@ -129,15 +132,14 @@ RSpec.describe Nodes::Merger do
         expect { merge_nodes }.not_to change { target_node.reload.children_count }
       end
 
-      it 'does not move attachments' do
-        attachment = create(:attachment, node: source_node)
-        merge_nodes
-        expect(File.exist?(attachment.fullpath)).to be true
+      it 'does not move attachments to target node' do
+        create(:attachment, node: source_node)
+        expect { merge_nodes }.not_to change { target_node.attachments.count }
       end
 
       it 'does not change source node attachments count' do
         create(:attachment, node: source_node)
-        expect { merge_nodes }.not_to change { target_node.attachments.count }
+        expect { merge_nodes }.not_to change { source_node.attachments.count }
       end
     end
   end
