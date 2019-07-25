@@ -10,7 +10,7 @@ RSpec.describe Nodes::Merger do
     let(:source_node) { create(:node, parent_id: root_node) }
     let(:target_node) { create(:node, parent_id: root_node) }
 
-    it { should match_array [] }
+    it { should eq source_node }
 
     it 'moves notes to target node' do
       note = create(:note, node: source_node)
@@ -84,6 +84,8 @@ RSpec.describe Nodes::Merger do
       before do
         expect(source_node).to receive(:destroy).and_raise StandardError
       end
+
+      it { should eq source_node }
 
       it 'does not move note' do
         note = create(:note, node: source_node)

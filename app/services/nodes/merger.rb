@@ -16,8 +16,6 @@ class Nodes::Merger
       reset_counter_caches
       move_attachments
       source_node.destroy
-
-      return []
     end
   rescue StandardError => e
     Rails.logger.error 'Node merge error occured, attempting to rectify attachments.'
@@ -25,7 +23,7 @@ class Nodes::Merger
 
     undo_attachments_move
 
-    []
+    source_node
   end
 
   private
