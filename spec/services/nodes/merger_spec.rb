@@ -69,11 +69,15 @@ RSpec.describe Nodes::Merger do
         conditions: { node_id: target_node.id })
 
       expect(target_attachment).to be_an Attachment
+
+      Attachment.all.each(&:delete)
     end
 
     it 'increases the target node attachment count' do
       create(:attachment, node: source_node)
       expect { merge_nodes }.to change { target_node.attachments.count }.by 1
+
+      Attachment.all.each(&:delete)
     end
 
     describe 'when an error is raised' do
@@ -135,11 +139,15 @@ RSpec.describe Nodes::Merger do
       it 'does not move attachments to target node' do
         create(:attachment, node: source_node)
         expect { merge_nodes }.not_to change { target_node.attachments.count }
+
+        Attachment.all.each(&:delete)
       end
 
       it 'does not change source node attachments count' do
         create(:attachment, node: source_node)
         expect { merge_nodes }.not_to change { source_node.attachments.count }
+
+        Attachment.all.each(&:delete)
       end
     end
   end
