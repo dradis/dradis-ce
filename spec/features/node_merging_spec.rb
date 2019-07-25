@@ -75,6 +75,21 @@ describe 'merging a node', js: true do
     expect(target_node.children).to include child_node
   end
 
+  it 'mergs properties with the target node' do
+    source_node.properties['ip'] = ['1.1.1.1', '1.1.1.3']
+    source_node.save
+
+    target_node.properties['ip'] = ['1.1.1.1', '1.1.1.2']
+    target_node.save
+
+    within_merge_node_modal do
+      click_link(target_node.label)
+      find_button('Merge').click
+    end
+
+    expect(target_node.reload.properties['ip']).to eq ['1.1.1.1', '1.1.1.2', '1.1.1.3']
+  end
+
   it 'moves attachments to target node' do
     create(:attachment, node: source_node)
 
@@ -83,7 +98,9 @@ describe 'merging a node', js: true do
       find_button('Merge').click
     end
 
-    expect(target_node.reload.attachments.count).to eq 1
+    expect(target_node.attachments.count).to eq 1
+
+    Attachment.all.each(&:delete)
   end
 
   it 'destroys the source node' do
