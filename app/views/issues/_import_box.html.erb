@@ -2,14 +2,19 @@
   <div class="header-inner">
     <div class="options">
       <div class="dropdown">
-        <%= link_to raw('<i class="fa fa-chevron-down"></i>'), 'javascript:void(0)', class: 'import-toggle', data: { toggle: 'collapse', target: '.import-box' } %>
+
+        <%= link_to 'javascript:void(0)', 
+          class: 'import-toggle', 
+          data: { toggle: 'collapse', target: '#import-box', behavior: 'collapse-collection' } do %>
+          <i class="fa fa-chevron-down" data-behavior="toggle-chevron"></i>
+        <% end %>
       </div>
     </div>
     <h3>Import issues</h3>
   </div>
 </div>
 
-<%= content_tag :div, class: 'import-box collapse' do %>
+<%= content_tag :div, class: 'import-box collapse', id: 'import-box', data: { behavior: 'import-box'} do %>
   <% Dradis::Plugins::with_feature(:import).each do |plugin| %>
   <div>
     <h5><%= plugin.plugin_description %></h5>

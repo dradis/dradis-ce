@@ -30,6 +30,11 @@
 
 .note-list {
   margin-bottom: 2em;
+
+  &.collapse {
+    margin-bottom: .5em;
+  }
+
   .list-item {
     line-height: 2em;
     padding-left: 1ex;
@@ -82,6 +87,7 @@
     &.placeholder {
       color: #ccc;
       font-style: italic;
+      margin-bottom: 2rem;
     }
     .remove-note {
       visibility: hidden;
