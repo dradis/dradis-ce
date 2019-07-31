@@ -310,17 +310,7 @@ body {
     overflow-y: auto;
     padding: 0 $mainContentPadding;
 
-    .node-header {
-//      height: $breadCrumbHeight;
 
-      // Styling of the breadcrumbs menu items conflicts when trying to match
-      // dropdown style of the main navigation. The dropdown ends up always
-      // pulling right, off the screen. This pulls it left, and makes it visible
-      .dropdown-menu-more {
-        left: auto;
-        right: 0;
-      }
-    }
     .breadcrumb {
       margin-bottom: 0;
       padding: 0.5em 1em;
