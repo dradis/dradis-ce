@@ -104,6 +104,7 @@ describe "node pages" do
     describe "adding child nodes to an existing node", :js do
       before do
         visit project_node_path(node.project, node)
+        find('[data-behavior~=nodes-more-dropdown]').click
         click_link "Add subnode"
       end
 
