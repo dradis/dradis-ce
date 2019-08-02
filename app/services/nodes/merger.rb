@@ -15,7 +15,7 @@ class Nodes::Merger
       move_descendents
       reset_counter_caches
       update_properties
-      move_attachments
+      copy_attachments
 
       Node.destroy(source_node.id)
     end
@@ -23,14 +23,14 @@ class Nodes::Merger
     Rails.logger.error 'Node merge error occured, attempting to rectify attachments.'
     Rails.logger.error e.backtrace
 
-    undo_attachments_move
+    undo_attachments_copy
 
     source_node
   end
 
   private
 
-    attr_accessor :target_node, :source_node, :moved_attachments
+    attr_accessor :target_node, :source_node, :copied_attachments
 
     DESCENDENT_RELATIONSHIPS = {
       activities: :trackable_id,
@@ -57,16 +57,16 @@ class Nodes::Merger
       target_node.save
     end
 
-    def move_attachments
-      self.moved_attachments = []
+    def copy_attachments
+      self.copied_attachments = []
 
       source_node.attachments.each do |attachment|
-        moved_attachments << attachment.copy_to(target_node)
+        copied_attachments << attachment.copy_to(target_node)
       end
     end
 
-    def undo_attachments_move
-      return unless moved_attachments&.any?
-      moved_attachments.each(&:delete)
+    def undo_attachments_copy
+      return unless copied_attachments&.any?
+      copied_attachments.each(&:delete)
     end
 end
