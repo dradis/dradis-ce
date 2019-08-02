@@ -263,7 +263,7 @@ describe "node pages", js: true do
   def show_move_node_modal
     if !move_modal_visible?
       find('[data-behavior~=nodes-more-dropdown]').click
-      click_link "Move"
+      click_link 'Move'
     end
   end
 
