@@ -21,6 +21,7 @@
 
 # App-specific
 /attachments/
+/backup/
 /config/shared/
 /templates/
 /sample_files/
