@@ -156,7 +156,6 @@ document.addEventListener "turbolinks:load", ->
   $('form').submit (ev)->
     $('input[type=submit]', this).attr('disabled', 'disabled').val('Processing...')
 
-
   # Search form
   $('#js-search-form-toggle').on 'click', (e)->
     e.preventDefault()
@@ -174,3 +173,11 @@ document.addEventListener "turbolinks:load", ->
 
   $('.navbar .btn-search').on 'click', ->
     $('.form-search').submit()
+
+  # Collapsable div in sidebar collections
+  if $('[data-behavior~=collapse-collection]').length
+    $('[data-behavior~=collapse-collection]').click ->
+      $this = $(this)
+      $this.find('[data-behavior~=toggle-chevron]').toggleClass('fa-chevron-down fa-chevron-up')
+      if $('[data-behavior~=import-box]').length
+        $('[data-behavior~=import-box]').find("input[type='text']:first").focus()

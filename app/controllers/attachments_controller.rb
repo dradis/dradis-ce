@@ -11,7 +11,7 @@ class AttachmentsController < AuthenticatedController
     @attachments.each do |a| a.close end
   end
 
-  # Create a new attachment for a give :node_id using a file that has been
+  # Create a new attachment for a given :node_id using a file that has been
   # submitted using an HTML form POST request.
   def create
     uploaded_file = params.fetch(:attachment_file, params.fetch(:files, []).first)

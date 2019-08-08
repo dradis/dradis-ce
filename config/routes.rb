@@ -63,6 +63,8 @@ Rails.application.routes.draw do
         get :tree
       end
 
+      resource :merge, only: [:create], controller: 'nodes/merge'
+
       resources :notes, concerns: :multiple_destroy do
         resources :revisions, only: [:index, :show]
       end

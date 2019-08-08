@@ -1,13 +1,18 @@
 body.nodes, body.notes, body.evidence {
   .node-header  {
     background-color: #f5f5f5;
+
+    li a:hover .text-error {
+      color: white;
+    }
+
+    ul.nav-pills {
+      margin-bottom: 0;
+    }
   }
 }
 
 body.nodes {
-  .node-header ul.nav-pills {
-    margin-bottom: 0;
-  }
 
   &.edit {
     textarea.json {
