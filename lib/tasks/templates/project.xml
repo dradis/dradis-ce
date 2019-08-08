@@ -598,17 +598,11 @@ Blind SQL Injection
 #[CVSSv3.BaseScore]#
 9.8
 
-#[CVSSv3Vector]#
-AV:N/AC:M/Au:N/C:P/I:P/A:P
-
-#[Phase]#
-Webapp
+#[CVSSv3.Vector]#
+CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
 
 #[Type]#
 Internal
-
-#[QA]#
-Pending
 
 #[Description]#
 This script is possibly vulnerable to SQL Injection attacks.
@@ -713,10 +707,10 @@ Scripting (Blind_Sql_Injection.script)/Blind SQL Injection
 Secure HyperText Transfer Protocol (S-HTTP) Detection
 
 #[CVSSv3.BaseScore]#
-3.8
+3.5
 
-#[CVSSv3Vector]#
-CVSS2#AV:N/AC:L/Au:N/C:P/I:N/A:N
+#[CVSSv3.Vector]#
+CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:N/A:N
 
 #[Type]#
 Internal
@@ -759,10 +753,10 @@ nessus
 SSL / TLS Renegotiation Handshakes MiTM Plaintext Data Injection
 
 #[CVSSv3.BaseScore]#
-2.6
+2.4
 
-#[CVSSv3Vector]#
-AV:N/AC:H/Au:N/C:N/I:P/A:N
+#[CVSSv3.Vector]#
+CVSS:3.0/AV:N/AC:L/PR:H/UI:R/S:U/C:L/I:N/A:N
 
 #[Type]#
 Internal
@@ -809,10 +803,10 @@ nessus
 Apache HTTPD: error responses can expose cookies (CVE-2012-0053)
 
 #[CVSSv3.BaseScore]#
-4.3
+4.6
 
-#[CVSSv3Vector]#
-AV:N/AC:M/Au:N/C:P/I:N/A:N
+#[CVSSv3.Vector]#
+CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:N/A:L
 
 #[Type]#
 Internal
@@ -862,8 +856,8 @@ Firewall Detected
 #[CVSSv3.BaseScore]#
 0.0
 
-#[CVSSv3Vector]#
-n/a
+#[CVSSv3.Vector]#
+CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N
 
 #[Type]#
 External
@@ -877,20 +871,12 @@ n/a
 #[References]#
 n/a
 
-#[host]#
-10.0.155.157
-
 #[plugin]#
 qualys
 
 #[plugin_id]#
 34011
-
-#[jira_id]#
-10001
-
-#[jira_key]#
-SF-2]]></text>
+]]></text>
       <activities>
         <activity>
           <action>update</action>
@@ -917,10 +903,10 @@ SF-2]]></text>
 TCP Sequence Number Approximation Based Denial of Service
 
 #[CVSSv3.BaseScore]#
-7.1
+7.5
 
-#[CVSSv3Vector]#
-AV:N/AC:L/Au:N/C:P/I:N/A:N
+#[CVSSv3.Vector]#
+CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N
 
 #[Type]#
 Internal
@@ -992,10 +978,10 @@ qualys
 Apache 1.3 HTTP Server Expect Header Cross-Site Scripting
 
 #[CVSSv3.BaseScore]#
-7.4
+7.3
 
-#[CVSSv3Vector]#
-AV:N/AC:L/Au:N/C:P/I:N/A:N
+#[CVSSv3.Vector]#
+CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L
 
 #[Type]#
 External
@@ -1040,10 +1026,10 @@ SF-3]]></text>
 Apache Web Server ETag Header Information Disclosure Weakness
 
 #[CVSSv3.BaseScore]#
-4.3
+4.6
 
-#[CVSSv3Vector]#
-AV:N/AC:M/Au:N/C:P/I:N/A:N
+#[CVSSv3.Vector]#
+CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:N/A:L
 
 #[Type]#
 External
