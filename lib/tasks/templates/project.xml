@@ -458,8 +458,7 @@ Tests performed:
           <id>7</id>
           <author>Qualys upload plugin</author>
           <category-id>2</category-id>
-          <text><![CDATA[
-                        #[Title]#
+          <text><![CDATA[#[Title]#
 Basic host info
 
 #[Description]#
@@ -555,18 +554,18 @@ Connection: Keep-Alive
 Transfer-Encoding: chunked
 Content-Type: text/html; charset=iso-8859-1
 
-&lt;!DOCTYPE HTML PUBLIC &quot;-//IETF//DTD HTML 2.0//EN&quot;&gt;
-&lt;HTML&gt;&lt;HEAD&gt;
-&lt;TITLE&gt;417 Expectation Failed&lt;/TITLE&gt;
-&lt;/HEAD&gt;&lt;BODY&gt;
-&lt;H1&gt;Expectation Failed&lt;/H1&gt;
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<HTML><HEAD>
+<TITLE>417 Expectation Failed</TITLE>
+</HEAD><BODY>
+<H1>Expectation Failed</H1>
 The expectation given in the Expect request-header
-field could not be met by this server.&lt;P&gt;
-The client sent&lt;PRE&gt;
-Expect: &lt;script&gt;alert(document.domain)&lt;/script&gt;
-&lt;/PRE&gt;
+field could not be met by this server.<P>
+The client sent<PRE>
+$${{Expect: <script>alert(document.domain)</script>}}$$
+</PRE>
 but we only allow the 100-continue expectation.
-&lt;/BODY&gt;&lt;/HTML&gt;
+</BODY></HTML>
 -CR-
 ]]></content>
           <activities/>
@@ -580,7 +579,7 @@ but we only allow the 100-continue expectation.
 tcp/80
 
 #[Output]#
-bc.. &quot;3bee-4f12-00794aef&quot;
+bc.. "3bee-4f12-00794aef"
 ]]></content>
           <activities/>
           <comments/>
@@ -652,12 +651,7 @@ acunetix
 
 #[plugin_id]#
 Scripting (Blind_Sql_Injection.script)/Blind SQL Injection
-
-#[jira_id]#
-10000
-
-#[jira_key]#
-SF-1]]></text>
+]]></text>
       <activities>
         <activity>
           <action>update</action>
@@ -1070,18 +1064,18 @@ Customers are advised to upgrade to the latest version of Apache. In Apache Vers
 
 To do so, include:
 
-bc. &quot;FileETag -INode&quot;
+bc. "FileETag -INode"
 
 in the Apache server configuration file for a specific subdirectory.
 
 In order to fix this vulnerability globally, for the Web server, use the option:
 
-bc. &quot;FileETag None&quot;.
+bc. "FileETag None".
 
 Use the option:
 
-bc.. &quot;FileETag
-MTime Size&quot;
+bc.. "FileETag
+MTime Size"
 
 p. if you just want to remove the Inode information.
 
