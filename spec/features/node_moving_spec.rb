@@ -27,6 +27,7 @@ describe "moving a node", js: true do
 
   before do
     visit project_node_path(current_node.project, current_node)
+    find('[data-behavior~=nodes-more-dropdown]').click
     click_link "Move"
   end
 
