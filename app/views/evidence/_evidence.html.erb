@@ -19,7 +19,7 @@
 
     <%= link_to [current_project, @node, evidence],
           method: :delete,
-          data: { confirm: "Are you sure?\n\n" + 'Proceeding will delete this evidence from the associated node.' },
+          data: { confirm: "Are you sure?\n\n\Proceeding will delete this evidence from the associated node." },
           class: 'list-item-action-delete' do %>
       <i class="fa fa-trash"></i> Delete
     <% end %>
