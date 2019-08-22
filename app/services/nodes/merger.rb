@@ -51,10 +51,7 @@ class Nodes::Merger
     end
 
     def update_properties
-      source_node.properties.each do |key, value|
-        target_node.set_property key, value
-      end
-
+      target_node.merge_properties(source_node.properties)
       target_node.save
     end
 
