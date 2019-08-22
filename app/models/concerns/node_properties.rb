@@ -24,9 +24,9 @@ module NodeProperties
   # Sets a property, storing value as Array when needed
   # and taking care of duplications
   def set_property(key, value)
-    if [:services, :services_extras].include?(key) # let's get defensive
+    if [:services, :services_extras].include?(key.to_sym) # let's get defensive
       raise ArgumentError, "don't use set_property for :services or "\
-                           ":services_extras, use set_service instead"
+                           ':services_extras, use set_service instead'
     end
 
     current_value = self.properties[key]
