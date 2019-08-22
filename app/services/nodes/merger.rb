@@ -21,7 +21,8 @@ class Nodes::Merger
     end
   rescue StandardError => e
     Rails.logger.error 'Node merge error occured, attempting to rectify attachments.'
-    Rails.logger.error e.backtrace
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join("\n")
 
     undo_attachments_copy
 
