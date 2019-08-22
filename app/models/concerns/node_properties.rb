@@ -124,4 +124,23 @@ module NodeProperties
   rescue JSON::ParserError => exception
     @raw_properties = value
   end
+
+  def merge_properties(source_properties)
+    non_service_properties = source_properties.reject { |k, v| [:services, :services_extras].include?(k.to_sym) }
+
+    non_service_properties.each do |key, value|
+      set_property key, value
+    end
+
+    properties[:services] = [properties[:services], source_properties[:services]].flatten.uniq.reject(&:blank?)
+
+    source_properties.fetch(:services_extras, {}).each do |k, v|
+      properties[:services_extras] = {} unless properties[:services_extras]
+
+      value = [properties[:services_extras][k], v].flatten.uniq.reject(&:blank?)
+      properties[:services_extras][k] = value
+    end
+
+    properties
+  end
 end

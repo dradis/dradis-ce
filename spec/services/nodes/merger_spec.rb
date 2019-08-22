@@ -81,8 +81,8 @@ RSpec.describe Nodes::Merger do
     end
 
     it 'merges properties together' do
-      source_node = create(:node, :with_properties, parent_id: root_node)
-      target_node = create(:node, :with_properties, parent_id: root_node)
+      source_node = create(:node, :with_properties)
+      target_node = create(:node, :with_properties)
 
       source_node.properties['ip'] = ['1.1.1.1', '1.1.1.3']
       source_node.save

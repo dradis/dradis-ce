@@ -382,6 +382,77 @@ describe Node do
     end
   end
 
+  describe '#merge_properties' do
+    it 'merges basic properties together' do
+      source_node = create(:node, :with_properties)
+      target_node = create(:node, :with_properties)
+
+      source_node.properties['ip'] = ['1.1.1.1', '1.1.1.3']
+      source_node.save
+
+      target_node.merge_properties(source_node.properties)
+
+      expect(target_node.properties['ip']).to eq ['1.1.1.1', '1.1.1.2', '1.1.1.3']
+    end
+
+    it 'removes duplicate services' do
+      services = [
+        { 'port': 123, 'protocol': 'udp', 'state': 'open', 'name': 'NTP' }
+      ]
+
+      source_node = build(:node, :with_properties)
+      source_node.properties[:services] = services
+      source_node.save
+
+      target_node = build(:node, :with_properties)
+      target_node.properties[:services] = services
+      target_node.save
+
+      target_node.merge_properties(source_node.properties)
+
+      expect(target_node.properties[:services].count).to eq 1
+    end
+
+    it 'keeps closely related but unmergable services' do
+      source_service = {
+        'port': 123, 'protocol': 'udp', 'state': 'open', 'name': 'ntp'
+      }
+
+      source_node = build(:node, :with_properties)
+      source_node.properties[:services] = [source_service]
+      source_node.save
+
+      target_service = {
+        'port': 123, 'protocol': 'udp', 'state': 'closed', 'name': 'NTP'
+      }
+      target_node = build(:node, :with_properties)
+      target_node.properties[:services] = [target_service]
+      target_node.save
+
+      target_node.merge_properties(source_node.properties)
+
+      expect(target_node.properties[:services]).to include(target_service)
+      expect(target_node.properties[:services]).to include(source_service)
+    end
+
+    it 'merges services_extras inforamtion per protocol/port' do
+      source_extra = { 'source': 'nessus', 'id': 'some id', 'output': 'a message' }
+      source_node = build(:node, :with_properties)
+      source_node.properties[:services_extras] = { 'udp/123': [source_extra] }
+      source_node.save
+
+      target_extra = { 'source': 'nmap', 'id': 'some id', 'output': 'a message' }
+      target_node = build(:node, :with_properties)
+      target_node.properties[:services_extras] = { 'udp/123': [target_extra] }
+      target_node.save
+
+      target_node.merge_properties(source_node.properties)
+
+      expect(target_node.properties[:services_extras]['udp/123']).to include source_extra
+      expect(target_node.properties[:services_extras]['udp/123']).to include target_extra
+    end
+  end
+
   describe '#nested_activities' do
     before do
       node.save!
