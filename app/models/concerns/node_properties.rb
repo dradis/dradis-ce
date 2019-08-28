@@ -67,7 +67,7 @@ module NodeProperties
   #
   # Anything else will be saved under the `services_extras` key
   def set_service(data)
-    data.symbolize_keys!
+    data = data.symbolize_keys
     port     = data.fetch(:port)
     protocol = data.fetch(:protocol)
     source   = data.fetch(:source)
