@@ -41,7 +41,7 @@
             <%= link_to [:edit, @node.project, @node, item] do %>
               <i class="fa fa-pencil"></i> Edit
             <% end %>
-            <%= link_to [@node.project, @node, item], method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-error' do %>
+            <%= link_to [@node.project, @node, item], method: :delete, data: { confirm: "Are you sure?\n\nProceeding will delete this item from the associated node." }, class: 'text-error' do %>
               <i class="fa fa-trash"></i> Delete
             <% end %>
           </td>
