@@ -25,7 +25,7 @@ module NodeProperties
   # and taking care of duplications
   def set_property(key, value)
     if [:services, :services_extras].include?(key.to_sym) # let's get defensive
-      raise ArgumentError, "don't use set_property for :services or "\
+      raise ArgumentError, 'don\'t use set_property for :services or '\
                            ':services_extras, use set_service instead'
     end
 
@@ -53,7 +53,7 @@ module NodeProperties
   end
 
   def has_any_property?
-    self.properties.keys.any?{ |p| self.properties[p].present? }
+    self.properties.keys.any? { |p| self.properties[p].present? }
   end
 
   # -------------------------------------------- Individual property management
