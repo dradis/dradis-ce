@@ -310,9 +310,7 @@ body {
     overflow-y: auto;
     padding: 0 $mainContentPadding;
 
-    .node-header {
-//      height: $breadCrumbHeight;
-    }
+
     .breadcrumb {
       margin-bottom: 0;
       padding: 0.5em 1em;
@@ -399,13 +397,23 @@ body {
         padding: 1em;
         min-height: 600px;
 
+        /*.collapsable-collection {
+          height: auto;
+          max-height: 60vh;
+          overflow-y: scroll;
+          margin-bottom: .5em;
+        }*/
 
         .header-inner {
           position: relative;
           .options {
-            position: absolute;
-            top: 0;
-            right: 0;
+            .dropdown {
+              float: right;
+              margin-left: 2px;
+              position: absolute;
+              top: 0;
+              right: 0;
+            }
           }
 
 
@@ -527,7 +535,13 @@ body {
 }
 
 .attachments-box {
-  .table {margin-bottom: 0}
+  .table {
+    margin-bottom: 0;
+    
+    td {
+      border: none;
+    }
+  }
 
   .btn {
     box-shadow: none;
@@ -537,6 +551,7 @@ body {
     }
   }
 }
+
 .drop-zone {
   @include rounded;
   background: lighten($secondaryNavBarBgColor, 10%);

@@ -77,7 +77,7 @@ gem 'bcrypt',   '3.1.12'
 gem 'json', '1.8.6'
 
 # XML manipulation
-gem 'nokogiri', '1.10.3'
+gem 'nokogiri', '1.10.4'
 
 # MySQL backend
 gem 'mysql2', '~> 0.5.1'
@@ -183,12 +183,12 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
-  gem 'capybara', '~> 3.6.0'
-  gem 'chromedriver-helper'
+  gem 'capybara'
   gem 'guard-rspec', require: false
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'timecop'
+  gem 'webdrivers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -206,13 +206,13 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 3.13', github: 'dradis/dradis-plugins'
+gem 'dradis-plugins', '~> 3.14', github: 'dradis/dradis-plugins'
 
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 3.13', github: 'dradis/dradis-projects'
+gem 'dradis-projects', '~> 3.14', github: 'dradis/dradis-projects'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)

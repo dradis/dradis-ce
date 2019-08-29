@@ -33,6 +33,7 @@ module ApplicationHelper # :nodoc:
       HTML::Pipeline::DradisTextileFilter,
       HTML::Pipeline::SanitizationFilter,
       HTML::Pipeline::AutolinkFilter,
+      HTML::Pipeline::DradisCodeHighlightFilter
     ], context
 
     result = textile_pipeline.call(text)

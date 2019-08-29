@@ -13,6 +13,7 @@
           <li><%= link_to main_app.project_search_path(current_project), id: 'js-search-form-toggle' do %><i class="fa fa-search fa-lg"></i><% end %></li>
           <li><%= link_to main_app.project_upload_manager_path(current_project) do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %></li>
           <li><%= link_to main_app.project_export_manager_path(current_project) do %><i class="fa fa-file-text-o fa-lg"></i> Export results<% end %></li>
+          <li><a href="javascript:void(0)" class="js-try-pro" data-term="projects" data-url="http://drad.is/l/try-pro-projects"><i class="fa fa-random fa-lg"></i> Change project</li>
           <li><%= link_to main_app.project_configurations_path(current_project) do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %></li>
           <li class="notifications dropdown">
             <%= link_to main_app.project_notifications_path(current_project), class: 'dropdown-toggle', data: { behavior: 'notifications-dropdown', toggle: 'dropdown' }, remote: true do %>
