@@ -149,40 +149,6 @@ class DradisTasks < Thor
 
       invoke 'dradis:setup:kit', [], [temporary_zip.path]
     end
-
-    desc "welcome_old", "adds initial content to the repo for demonstration purposes"
-    def welcome_old
-      # --------------------------------------------------------- Note template
-      if NoteTemplate.pwd.exist?
-        say 'Note templates folder already exists. Skipping.'
-      else
-        template 'note.txt', NoteTemplate.pwd.join('basic_fields.txt')
-      end
-
-      # ----------------------------------------------------------- Methodology
-      if Methodology.pwd.exist?
-        say 'Methodology templates folder already exists. Skipping.'
-      else
-        template 'methodology.xml', Methodology.pwd.join('owasp2017.xml')
-      end
-
-      # ---------------------------------------------------------- Project data
-      detect_and_set_project_scope
-
-      task_options.merge!({
-        plugin: Dradis::Plugins::Projects::Upload::Template,
-        default_user_id: 1
-      })
-
-      importer = Dradis::Plugins::Projects::Upload::Template::Importer.new(task_options)
-      importer.import(file: File.expand_path('../templates/project.xml', __FILE__))
-
-      # dradis:reset:database truncates the tables and resets the :id column so
-      # we know the right node ID we're going to get based on the project.xml
-      # structure.
-      Dir.mkdir(Attachment.pwd.join('5'))
-      template 'command-01.png', Attachment.pwd.join('5/command-01.png')
-    end
   end
 
   class Logs < Thor
