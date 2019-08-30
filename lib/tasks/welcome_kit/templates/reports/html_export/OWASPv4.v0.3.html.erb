@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Report - Dradis Professional Edition</title>
+  <style type="text/css">
+  /*! normalize.css v2.1.0 | MIT License | git.io/normalize */
+  article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary {display: block;}
+  [hidden] {display: none;}
+  html {font-family: sans-serif; /* 1 */-webkit-text-size-adjust: 100%; /* 2 */-ms-text-size-adjust: 100%; /* 2 */}
+  body {margin: 0;}
+  a:focus {outline: thin dotted;}
+  a:active,a:hover {outline: 0;}
+  h1 {font-size: 2em;margin: 0.67em 0;}
+  abbr[title] {border-bottom: 1px dotted;}
+  b,strong {font-weight: bold;}
+  dfn {font-style: italic;}
+  hr {-moz-box-sizing: content-box;box-sizing: content-box;height: 0;}
+  mark {background: #ff0;color: #000;}
+  code,kbd,pre,samp {font-family: monospace, serif;font-size: 1em;}
+  pre {white-space: pre-wrap;}
+  q {quotes: "\201C" "\201D" "\2018" "\2019";}
+  small {font-size: 80%;}
+  sub,sup {font-size: 75%;line-height: 0;position: relative;vertical-align: baseline;}
+  sup {top: -0.5em;}
+  sub {bottom: -0.25em;}
+  img {border: 0;}
+  svg:not(:root) {overflow: hidden;}
+  figure {margin: 0;}
+  fieldset {border: 1px solid #c0c0c0;margin: 0 2px;padding: 0.35em 0.625em 0.75em;}
+  legend {border: 0; /* 1 */padding: 0; /* 2 */}
+  button,input,select,textarea {font-family: inherit; /* 1 */font-size: 100%; /* 2 */margin: 0; /* 3 */}
+  button,input {line-height: normal;}
+  button,select {text-transform: none;}
+  button,html input[type="button"], /* 1 */input[type="reset"],input[type="submit"] {-webkit-appearance: button; /* 2 */cursor: pointer; /* 3 */}
+  button[disabled],html input[disabled] {cursor: default;}
+  input[type="checkbox"],input[type="radio"] {box-sizing: border-box; /* 1 */padding: 0; /* 2 */}
+  input[type="search"] {-webkit-appearance: textfield; /* 1 */-moz-box-sizing: content-box;-webkit-box-sizing: content-box; /* 2 */box-sizing: content-box;}
+  input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration {-webkit-appearance: none;}
+  button::-moz-focus-inner,input::-moz-focus-inner {border: 0;padding: 0;}
+  textarea {overflow: auto; /* 1 */vertical-align: top; /* 2 */}
+  
+  
+
+  /* custom report styles */
+  body {
+    background: url('/assets/grid.png');
+    margin-top: 70px;; 
+  }
+  header {
+    background-color: #efefef;
+    box-shadow: 2px 0px 5px rgba(0,0,0,0.2);
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+  header .title {
+    background: url('/assets/logopro_tiny_t.png') 0 0 no-repeat;
+    color:#333;
+    float: left;
+    font-family: 'Helvetica neue', Helvetica, sans-serif;
+    font-size: 20px;
+    height: 48px;
+    line-height: 48px;
+    margin-left: 20px;
+    padding-left: 50px;
+    position: relative;
+    text-decoration: none;
+    text-shadow: 1px 1px #fff;
+  }
+  .container {
+    margin: 0 auto;
+    max-width: 960px;
+    max-width: 68.571428571rem;
+    overflow: hidden;
+  }
+  .content .container {
+    background-color: #fff;
+    border-radius: 12px;
+  }
+  .report {
+    padding: 15px;
+  }
+  .field {
+    margin: 10px 0;
+  }
+  .field .field-name {
+    float: left;
+    font-weight: bold;
+    text-align: right;
+    width: 12.5%;
+  }
+  .field .field-content {
+    padding-left: 13.5%;
+  }
+  .cvss-info { color: green; }
+  .cvss-low { color: blue; }
+  .cvss-medium { color: orange; }
+  .cvss-high { color: red; }
+
+  footer .container {
+    color: #6f6f6f;
+    margin-top: 20px;
+    text-align: center;
+    text-shadow: 0 2px 0 #fff;
+  }
+  table {
+    border-collapse: collapse;
+    width: 75%;
+  }
+  table, th, td {
+    border: 1px solid black;
+    padding: 0px 15px 0px 15px;
+  }
+  thead {
+    text-align: center;
+  }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <span class="title"><strong>Dradis</strong> Professional Edition</span>
+    </div>
+  </header>
+  <div class="content">
+    <div class="container">
+      <div class="report">
+        <h1>OWASPv4 HTML report by Kobol Consulting</h1> 
+        <br/>
+        <br/>
+        <h1>Failed Tests</h1>
+        <table>
+          <thead>
+            <tr>
+              <th><h2>Issue</h2></th>
+              <th><h2>Control</h2></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for issue in issues;
+              issue_status = issue.fields['Status'];
+              case issue_status
+              when "Fail"
+                %><tr><td><a href="#note_<%= issue.id %>"><%= markup (issue.fields['Title'])%></a></td><%
+                %><td><%= markup(issue.fields['Control']) %></td></tr><%
+              end
+            end %>
+          </tbody>
+        </table>
+        <br/>
+        <br/>
+        <h1>Detailed findings</h1>
+        <p>This section displays all of the Issues in your project that have a Failed status. For details on all of the Issues in the project, see the <a href="#appendix">Appendix</a> section below.</p>
+        <% for issue in issues;
+          issue_status = issue.fields['Status'];
+          case issue_status
+          when "Fail"
+            %><div id="note_<%= issue.id %>" class="note-content"><%
+              %><h2><%= h issue.fields['Title'] %></h2><%
+              %><p><%= markup(issue.fields['Control']) %></p><%
+              %><p>Status: <span style="color:red;font-weight:bold;">Failed</span></p><%
+              %><strong>Summary</strong><%
+              %><p><%= markup(issue.fields['Summary']) %></p><%
+              %><br/><%
+              %><% if issue.affected.empty? %><%
+                %><p class="well">No evidence.</p><%
+              %><% else %><%
+                %><% issue.evidence_by_node.each do |node, instances| %><%
+                  %><% if instances.count == 1 %><%
+                      %><div class="content-textile" id="node_<%= node.id %>_instance_0"><%
+                        %><strong>Evidence</strong><%
+                        %><%= markup(instances.first.fields['Description']) %><%
+                      %></div><%
+                    %><% else %><%
+                      %><ul class="nav nav-tabs"><%
+                        %><% instances.each_with_index do |evidence, i| %><%
+                        %><li class="<%= 'active' if i==0 %>"><a href="#node_<%= node.id %>_instance_<%= i %>" data-toggle="tab">Instance <%= i %></a></li><%
+                        %><% end %><%
+                      %></ul><%
+
+                      %><div class="tab-content"><%
+                        %><% instances.each_with_index do |evidence, i| %><%
+                        %><div class="content-textile tab-pane<%= ' active' if i==0 %>" id="node_<%= node.id %>_instance_<%= i %>"><%
+                          %><strong>Evidence</strong><%
+                          %><%= markup(evidence.fields['Description']) %><%
+                          %><br/><%
+                        %></div><%
+                        %><% end %><%
+                      %></div><%
+                    %><% end %><%
+                %><% end %><%
+              %><% end %><%
+              %><strong>Reference</strong><%
+              %><p><%= markup(issue.fields['References']) %></p><%
+              %><br/><%
+              %><br/><%
+            %></div><%
+          end
+        end %>
+
+        <div id="appendix">
+          <h1>Appendix</h1>
+          <table>
+            <thead>
+              <tr>
+                <th><h2>Issue</h2></th>
+                <th><h2>Control</h2></th>
+                <th><h2>Status</h2></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for issue in issues;
+                issue_status = issue.fields['Status'];
+                case issue_status
+                when "Fail"
+                  %><tr><td><%= markup (issue.fields['Title'])%></td><%
+                  %><td><%= markup(issue.fields['Control']) %></td><%
+                  %><td><span style="color:red;font-weight:bold;">Failed</span></td></tr><%
+                end
+              end %>
+              <% for issue in issues;
+                issue_status = issue.fields['Status'];
+                case issue_status
+                when "Unknown"
+                  %><tr><td><%= markup (issue.fields['Title'])%></td><%
+                  %><td><%= markup(issue.fields['Control']) %></td><%
+                  %><td><span style="color:purple;font-weight:bold;">Unknown</span></td></tr><%
+                end
+              end %>
+              <% for issue in issues;
+                issue_status = issue.fields['Status'];
+                case issue_status
+                when "Pass"
+                  %><tr><td><%= markup (issue.fields['Title'])%></td><%
+                  %><td><%= markup(issue.fields['Control']) %></td><%
+                  %><td><span style="color:green;font-weight:bold;">Passed</span></td></tr><%
+                end
+              end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="container">the best collaboration solution for security teams<br/><%= title %></div>
+  </footer>
+</body>
+<script type="text/javascript">
+$(function(){
+  // auto-link URLs
+  var link_regexp = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+  $('.field-content.references').each(function(){
+    $(this).html( $(this).html().replace(link_regexp,"<a href='$1'>$1</a>") );
+  });
+})
+</script>
+</html>

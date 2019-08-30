@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<methodology>
+  <name>OWASPv4 Methodology</name>
+  <sections>
+    <section>
+      <name>Information Gathering</name>
+      <tasks>
+        <task>Conduct Search Engine Discovery and Reconnaissance for Information Leakage (OTG-INFO-001)</task>
+        <task>Fingerprint Web Server (OTG-INFO-002)</task>
+        <task>Review Webserver Metafiles for Information Leakage (OTG-INFO-003)</task>
+        <task>Enumerate Applications on Webserver (OTG-INFO-004)</task>
+        <task>Review Webpage Comments and Metadata for Information Leakage (OTG-INFO-005)</task>
+        <task>Identify application entry points (OTG-INFO-006)</task>
+        <task>Map execution paths through application (OTG-INFO-007)</task>
+        <task>Fingerprint Web Application Framework (OTG-INFO-008)</task>
+        <task>Fingerprint Web Application (OTG-INFO-009)</task>
+        <task>Map Application Architecture (OTG-INFO-010)</task>
+      </tasks>
+    </section>
+  </sections>
+  <sections>
+    <section>
+      <name>Configuration and Deployment Management Testing</name>
+      <tasks>
+        <task>Test Network/Infrastructure Configuration (OTG-CONFIG-001)</task>
+        <task>Test Application Platform Configuration (OTG-CONFIG-002)</task>
+        <task>Test File Extensions Handling for Sensitive Information (OTG-CONFIG-003)</task>
+        <task>Review Old, Backup and Unreferenced Files for Sensitive Information (OTG-CONFIG-004)</task>
+        <task>Enumerate Infrastructure and Application Admin Interfaces (OTG-CONFIG-005)</task>
+        <task>Test HTTP Methods (OTG-CONFIG-006)</task>
+        <task>Test HTTP Strict Transport Security (OTG-CONFIG-007)</task>
+        <task>Test RIA cross domain policy (OTG-CONFIG-008)</task>
+      </tasks>
+    </section>
+  </sections>
+  <sections>
+    <section>
+      <name>Identity Management Testing</name>
+      <tasks>
+        <task>Test Role Definitions (OTG-IDENT-001)</task>
+        <task>Test User Registration Process (OTG-IDENT-002)</task>
+        <task>Test Account Provisioning Process (OTG-IDENT-003)</task>
+        <task>Testing for Account Enumeration and Guessable User Account (OTG-IDENT-004)</task>
+        <task>Testing for Weak or unenforced username policy (OTG-IDENT-005)</task>
+      </tasks>
+    </section>
+  </sections>
+  <sections>
+    <section>
+      <name>Authentication Testing</name>
+      <tasks>
+        <task>Testing for Credentials Transported over an Encrypted Channel (OTG-AUTHN-001)</task>
+        <task>Testing for default credentials (OTG-AUTHN-002)</task>
+        <task>Testing for Weak lock out mechanism (OTG-AUTHN-003)</task>
+        <task>Testing for bypassing authentication schema (OTG-AUTHN-004)</task>
+        <task>Test remember password functionality (OTG-AUTHN-005)</task>
+        <task>Testing for Browser cache weakness (OTG-AUTHN-006)</task>
+        <task>Testing for Weak password policy (OTG-AUTHN-007)</task>
+        <task>Testing for Weak security question/answer (OTG-AUTHN-008)</task>
+        <task>Testing for weak password change or reset functionalities (OTG-AUTHN-009)</task>
+        <task>Testing for Weaker authentication in alternative channel (OTG-AUTHN-010)</task>
+      </tasks>
+    </section>
+  </sections>
+  <sections>
+    <section>
+      <name>4.6 Authorization Testing</name>
+      <tasks>
+        <task>Testing Directory traversal/file include (OTG-AUTHZ-001)</task>
+        <task>Testing for bypassing authorization schema (OTG-AUTHZ-002)</task>
+        <task>Testing for Privilege Escalation (OTG-AUTHZ-003)</task>
+        <task>Testing for Insecure Direct Object References (OTG-AUTHZ-004)</task>
+      </tasks>
+    </section>
+  </sections>
+  <sections>
+    <section>
+      <name>Session Management Testing</name>
+      <tasks>
+        <task>Testing for Bypassing Session Management Schema (OTG-SESS-001)</task>
+        <task>Testing for Cookies attributes (OTG-SESS-002)</task>
+        <task>Testing for Session Fixation (OTG-SESS-003)</task>
+        <task>Testing for Exposed Session Variables (OTG-SESS-004)</task>
+        <task>Testing for Cross Site Request Forgery (CSRF) (OTG-SESS-005)</task>
+        <task>Testing for logout functionality (OTG-SESS-006)</task>
+        <task>Test Session Timeout (OTG-SESS-007)</task>
+        <task>Testing for Session puzzling (OTG-SESS-008)</task>
+      </tasks>
+    </section>
+  </sections>
+  <sections>
+    <section>
+      <name>Input Validation Testing</name>
+      <tasks>
+        <task>Testing for Reflected Cross Site Scripting (OTG-INPVAL-001)</task>
+        <task>Testing for Stored Cross Site Scripting (OTG-INPVAL-002)</task>
+        <task>Testing for HTTP Verb Tampering (OTG-INPVAL-003)</task>
+        <task>Testing for HTTP Parameter pollution (OTG-INPVAL-004)</task>
+        <task>Testing for SQL Injection (OTG-INPVAL-005)</task>
+        <task>Testing for SQL Injection (OTG-INPVAL-005) - Oracle Testing</task>
+        <task>Testing for SQL Injection (OTG-INPVAL-005) - MySQL Testing</task>
+        <task>Testing for SQL Injection (OTG-INPVAL-005) - SQL Server Testing</task>
+        <task>Testing for SQL Injection (OTG-INPVAL-005) - Testing PostgreSQL (from OWASP BSP)</task>
+        <task>Testing for SQL Injection (OTG-INPVAL-005) - MS Access Testing</task>
+        <task>Testing for SQL Injection (OTG-INPVAL-005) - Testing for NoSQL injection</task>
+        <task>Testing for LDAP Injection (OTG-INPVAL-006)</task>
+        <task>Testing for ORM Injection (OTG-INPVAL-007)</task>
+        <task>Testing for XML Injection (OTG-INPVAL-008)</task>
+        <task>Testing for SSI Injection (OTG-INPVAL-009)</task>
+        <task>Testing for XPath Injection (OTG-INPVAL-010)</task>
+        <task>IMAP/SMTP Injection (OTG-INPVAL-011)</task>
+        <task>Testing for Code Injection (OTG-INPVAL-012)</task>
+        <task>Testing for Code Injection (OTG-INPVAL-012) - Testing for Local File Inclusion</task>
+        <task>Testing for Code Injection (OTG-INPVAL-012) - Testing for Remote File Inclusion</task>
+        <task>Testing for Command Injection (OTG-INPVAL-013)</task>
+        <task>Testing for Buffer overflow (OTG-INPVAL-014)</task>
+        <task>Testing for Buffer overflow (OTG-INPVAL-014) - Testing for Heap overflow</task>
+        <task>Testing for Buffer overflow (OTG-INPVAL-014) - Testing for Stack overflow</task>
+        <task>Testing for Buffer overflow (OTG-INPVAL-014) - Testing for Format string</task>
+        <task>Testing for incubated vulnerabilities (OTG-INPVAL-015)</task>
+        <task>Testing for HTTP Splitting/Smuggling (OTG-INPVAL-016)</task>
+      </tasks>
+    </section>
+  </sections>
+  <sections>
+    <section>
+      <name>Testing for Error Handling</name>
+      <tasks>
+        <task>Analysis of Error Codes (OTG-ERR-001)</task>
+        <task>Analysis of Stack Traces (OTG-ERR-002)</task>
+      </tasks>
+    </section>
+  </sections>
+  <sections>
+    <section>
+      <name>Testing for weak Cryptography</name>
+      <tasks>
+        <task>Testing for Weak SSL/TLS Ciphers, Insufficient Transport Layer Protection (OTG-CRYPST-001)</task>
+        <task>Testing for Padding Oracle (OTG-CRYPST-002)</task>
+        <task>Testing for Sensitive information sent via unencrypted channels (OTG-CRYPST-003)</task>
+      </tasks>
+    </section>
+  </sections>
+  <sections>
+    <section>
+      <name>Business Logic Testing</name>
+      <tasks>
+        <task>Test Business Logic Data Validation (OTG-BUSLOGIC-001)</task>
+        <task>Test Ability to Forge Requests (OTG-BUSLOGIC-002)</task>
+        <task>Test Integrity Checks (OTG-BUSLOGIC-003)</task>
+        <task>Test for Process Timing (OTG-BUSLOGIC-004)</task>
+        <task>Test Number of Times a Function Can be Used Limits (OTG-BUSLOGIC-005)</task>
+        <task>Testing for the Circumvention of Work Flows (OTG-BUSLOGIC-006)</task>
+        <task>Test Defenses Against Application Mis-use (OTG-BUSLOGIC-007)</task>
+        <task>Test Upload of Unexpected File Types (OTG-BUSLOGIC-008)</task>
+        <task>Test Upload of Malicious Files (OTG-BUSLOGIC-009)</task>
+      </tasks>
+    </section>
+  </sections>
+  <sections>
+    <section>
+      <name>Client Side Testing</name>
+      <tasks>
+        <task>Testing for DOM based Cross Site Scripting (OTG-CLIENT-001)</task>
+        <task>Testing for JavaScript Execution (OTG-CLIENT-002)</task>
+        <task>Testing for HTML Injection (OTG-CLIENT-003)</task>
+        <task>Testing for Client Side URL Redirect (OTG-CLIENT-004)</task>
+        <task>Testing for CSS Injection (OTG-CLIENT-005)</task>
+        <task>Testing for Client Side Resource Manipulation (OTG-CLIENT-006)</task>
+        <task>Test Cross Origin Resource Sharing (OTG-CLIENT-007)</task>
+        <task>Testing for Cross Site Flashing (OTG-CLIENT-008)</task>
+        <task>Testing for Clickjacking (OTG-CLIENT-009)</task>
+        <task>Testing WebSockets (OTG-CLIENT-010)</task>
+        <task>Test Web Messaging (OTG-CLIENT-011)</task>
+        <task>Test Local Storage (OTG-CLIENT-012)</task>
+      </tasks>
+    </section>
+  </sections>
+</methodology>
