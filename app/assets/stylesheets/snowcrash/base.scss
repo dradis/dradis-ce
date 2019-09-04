@@ -563,4 +563,8 @@ body {
 
 ul {
   list-style: none;
+
+  &.tree-navigation {
+    margin: 5px;
+  }
 }
