@@ -111,7 +111,6 @@ body {
       padding:1em;
 
       > ul{
-        list-style: none;
         padding: 0 1em;
         margin: 0 0 2em 0;
         overflow: visible;
@@ -232,7 +231,6 @@ body {
 
         ul.children {
           overflow: visible;
-          list-style: none;
           display: none;
           margin: 0;
           padding: 0;
@@ -565,4 +563,12 @@ body {
   padding: 50px;
   text-align: center;
   margin-bottom: 1em;
+}
+
+ul {
+  list-style: none;
+
+  &.tree-navigation {
+    margin: 5px;
+  }
 }
