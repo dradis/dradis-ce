@@ -34,3 +34,7 @@ remain in the PR's description:
 
 > I assign all rights, including copyright, to any future Dradis
 > work by myself to Security Roots.
+
+### Check List
+
+- [ ] Added a CHANGELOG entry
