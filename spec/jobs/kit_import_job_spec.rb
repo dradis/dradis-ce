@@ -35,7 +35,7 @@ RSpec.describe KitImportJob do
     end
 
     after(:all) do
-      Rails.root.join("tmp", "rspec")
+      Rails.root.join('tmp', 'rspec')
     end
 
     it 'imports kit content' do
