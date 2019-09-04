@@ -36,16 +36,15 @@ body {
   -webkit-font-smoothing: antialiased;
   color: $gray;
 
-  .brand-wrapper {
-    overflow: hidden;
-    max-height: $navbarHeight;
-  }
-
   .brand {
     padding: 0;
     margin: 0;
     text-shadow: 0 0 0;
     letter-spacing: -0.4px;
+    max-width: 500px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .nav {
