@@ -1,14 +1,14 @@
 GIT
   remote: https://github.com/dradis/dradis-plugins.git
-  revision: 01b9535f6c3db5cceca32a0f90ad388cdda455c8
+  revision: 3466cfbd68a823bbb27424175ae7207cc72d0535
   specs:
-    dradis-plugins (3.13.0)
+    dradis-plugins (3.14.0)
 
 GIT
   remote: https://github.com/dradis/dradis-projects.git
-  revision: 750fd58eafbabf44e2dacc139ff72254d8acdd92
+  revision: d99ca1adfd37356fbb5f5f6126082dffd0f7afbd
   specs:
-    dradis-projects (3.13.0)
+    dradis-projects (3.14.0)
       dradis-plugins (~> 3.7)
       rubyzip (~> 1.2.2)
 
@@ -194,7 +194,7 @@ GEM
     mysql2 (0.5.2)
     nenv (0.3.0)
     nio4r (2.3.1)
-    nokogiri (1.10.3)
+    nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
     nokogumbo (2.0.1)
       nokogiri (~> 1.8, >= 1.8.4)
@@ -402,8 +402,8 @@ DEPENDENCIES
   database_cleaner
   differ (~> 0.1.2)
   dradis-api!
-  dradis-plugins (~> 3.13)!
-  dradis-projects (~> 3.13)!
+  dradis-plugins (~> 3.14)!
+  dradis-projects (~> 3.14)!
   factory_bot_rails
   font-awesome-sass (~> 4.7.0)
   foreman
@@ -421,7 +421,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.2)
   local_time (>= 2.0.0)
   mysql2 (~> 0.5.1)
-  nokogiri (= 1.10.3)
+  nokogiri (= 1.10.4)
   paper_trail (~> 6.0)
   parslet (~> 1.6.0)
   puma

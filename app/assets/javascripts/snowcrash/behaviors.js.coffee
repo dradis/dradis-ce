@@ -13,7 +13,7 @@ document.addEventListener "turbolinks:load", ->
   $('.jquery-upload').fileupload
     dropZone: $('#drop-zone')
     destroy: (e, data) ->
-      if confirm('Are you sure?')
+      if confirm('Are you sure?\n\nProceeding will delete this attachment from the associated node.')
         $.blueimp.fileupload.prototype.options.destroy.call(this, e, data)
 
     paste: (e, data)->

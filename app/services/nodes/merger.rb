@@ -21,7 +21,8 @@ class Nodes::Merger
     end
   rescue StandardError => e
     Rails.logger.error 'Node merge error occured, attempting to rectify attachments.'
-    Rails.logger.error e.backtrace
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join("\n")
 
     undo_attachments_copy
 
@@ -51,7 +52,30 @@ class Nodes::Merger
 
     def update_properties
       source_node.properties.each do |key, value|
-        target_node.set_property key, value
+        case key.to_sym
+        when :services
+          value.each do |service|
+            data = service.merge(source: :merge)
+            target_node.set_service data
+          end
+        when :services_extras
+          value.each do |protocol_port, extras|
+            protocol, port = protocol_port.split('/')
+
+            extras.each do |extra|
+              data = {
+                extra[:id] => extra[:output],
+                source: extra[:source],
+                port: port.to_i,
+                protocol: protocol
+              }
+
+              target_node.set_service data
+            end
+          end
+        else
+          target_node.set_property key, value
+        end
       end
 
       target_node.save

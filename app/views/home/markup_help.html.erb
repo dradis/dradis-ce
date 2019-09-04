@@ -25,6 +25,7 @@ _You *can* combine them_
   <h3>Block Code (bc.)</h3>
   <div class="row-fluid">
     <div class="span6">
+      <p>Single paragraph:</p>
       <pre>We start with normal text.
 
 bc. This would extend
@@ -42,6 +43,7 @@ until the first blank line.</pre>
 
   <div class="row-fluid">
     <div class="span6">
+      <p>Multi paragraph:</p>
       <pre>Before the code block, we have normal text.
 
 bc.. This will extend
@@ -59,6 +61,30 @@ across blank lines until
 the next paragraph block
 </pre>
       <p>Which you start with the 'p.' signature.</p>
+    </div>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span6">
+      <p>Code highlights:</p>
+      <pre>bc.. &lt;H1&gt;Expectation Failed&lt;/H1&gt;
+The expectation given in the Expect request-header
+field could not be met by this server.<P>
+The client sent&lt;PRE&gt;
+$${{Expect: &lt;script&gt;alert(document.domain)&lt;/script&gt;}}$$
+&lt;/PRE&gt;
+but we only allow the 100-continue expectation.
+      </pre>
+    </div>
+    <div class="span6">
+      <pre>&lt;H1&gt;Expectation Failed&lt;/H1&gt;
+The expectation given in the Expect request-header
+field could not be met by this server.<P>
+The client sent&lt;PRE&gt;
+<mark>Expect: &lt;script&gt;alert(document.domain)&lt;/script&gt;</mark>
+&lt;/PRE&gt;
+but we only allow the 100-continue expectation.
+      </pre>
     </div>
   </div>
 
@@ -104,12 +130,12 @@ the next paragraph block
   <div class="row-fluid">
     <div class="span6">
       <p>Images</p>
-      <pre>!/images/logo_small.png!
-Format: !url!
-      </pre>
+      <pre>Format: !url(caption)!</pre>
+      <p>Example</p>
+      <pre>!/images/logo_small.png(Dradis logo)!</pre>
     </div>
     <div class="span6">
-      <%= image_tag 'logo_small.png' %>
+      <%= image_tag 'logo_small.png', title: 'Dradis logo' %>
     </div>
   </div>
 
