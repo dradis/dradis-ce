@@ -120,15 +120,15 @@ class DradisTasks < Thor
       puts "[  DONE  ]"
     end
 
-    desc "kit SETUP_PACKAGE", "import files and projects from a specified kit file"
-    method_option :file, :type => :string, :desc => "full path to a zip file"
+    desc 'kit SETUP_PACKAGE', 'import files and projects from a specified kit file'
+    method_option :file, :type => :string, :desc => 'full path to a zip file'
     def kit(file)
-      puts "** Importing package..."
+      puts '** Importing package...'
       KitImportJob.perform_now(file: file, logger: default_logger)
-      puts "[  DONE  ]"
+      puts '[  DONE  ]'
     end
 
-    desc "welcome", "adds initial content to the repo for demonstration purposes"
+    desc 'welcome', 'adds initial content to the repo for demonstration purposes'
     def welcome
       # zip lib/tasks/welcome_kit
       directory_to_zip = Rails.root.join('lib', 'tasks', 'welcome_kit')

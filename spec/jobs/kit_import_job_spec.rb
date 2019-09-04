@@ -7,7 +7,7 @@ RSpec.describe KitImportJob do
 
     before(:each) do
       file     = File.new(Rails.root.join('spec', 'fixtures', 'files', 'templates', 'kit.zip'))
-      tmp_dir = Rails.root.join("tmp", "rspec")
+      tmp_dir = Rails.root.join('tmp', 'rspec')
       @user    = create(:user)
 
       conf = Configuration.find_or_initialize_by(name: 'admin:paths:note_templates')
