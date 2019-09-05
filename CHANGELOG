@@ -1,6 +1,7 @@
 v3.15 (* 2019)
  - Fix node merging bug when `services_extras` properties are present
  - Removed bullet style in node modals.
+ - Fix partially hidden dropdown menu's when sidebar is narrow.
 
 v3.14 (August 2019)
  - Highlight code snippets.
