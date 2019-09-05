@@ -184,8 +184,9 @@ document.addEventListener "turbolinks:load", ->
 
   # Dropdown menu position in sidebar based on sidebar width
   $(window).on('resize', ->
-    if (($('[data-behavior=sidebar-dropdown]').outerWidth() + 30) > $('[data-behavior=secondary-navbar]').width())
-      $('[data-behavior=sidebar-dropdown]').css({
-        right: $('[data-behavior=secondary-navbar]').width() - ($('[data-behavior=sidebar-dropdown]').width() + 30)
-      })
+    $('[data-behavior=sidebar-dropdown]').each ->
+      if (($(this).outerWidth() + 30) > $('[data-behavior=secondary-navbar]').width())
+        $(this).css({
+          right: $('[data-behavior=secondary-navbar]').width() - ($(this).width() + 30)
+        })
   ).resize()
