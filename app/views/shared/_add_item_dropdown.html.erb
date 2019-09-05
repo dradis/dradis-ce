@@ -10,7 +10,7 @@
     <i class="fa fa-chevron-up" data-behavior="toggle-chevron"></i>
   <% end %>
 
-  <ul class="dropdown-menu <%= local_assigns.fetch(:menu_class, '') %>" role="menu">
+  <ul class="dropdown-menu <%= local_assigns.fetch(:menu_class, '') %>" role="menu" data-behavior="sidebar-dropdown">
     <li>
       <%= link_to 'Empty (no template)',
         new_path,

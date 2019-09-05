@@ -181,3 +181,11 @@ document.addEventListener "turbolinks:load", ->
       $this.find('[data-behavior~=toggle-chevron]').toggleClass('fa-chevron-down fa-chevron-up')
       if $('[data-behavior~=import-box]').length
         $('[data-behavior~=import-box]').find("input[type='text']:first").focus()
+
+  # Dropdown menu position in sidebar based on sidebar width
+  $(window).on('resize', ->
+    if (($('[data-behavior=sidebar-dropdown]').outerWidth() + 30) > $('[data-behavior=secondary-navbar]').width())
+      $('[data-behavior=sidebar-dropdown]').css({
+        right: $('[data-behavior=secondary-navbar]').width() - ($('[data-behavior=sidebar-dropdown]').width() + 30)
+      })
+  ).resize()
