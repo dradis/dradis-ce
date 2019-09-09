@@ -35,16 +35,27 @@ body {
   line-height: $navbarHeight;
   -webkit-font-smoothing: antialiased;
   color: $gray;
+  padding: 0 !important;
 
+  .btn-navbar {
+    margin-top: 1em;
+  }
   .brand {
     padding: 0;
     margin: 0;
     text-shadow: 0 0 0;
     letter-spacing: -0.4px;
-    max-width: 500px;
+    min-width: 180px;
+    width: calc(100% - 760px);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .container-fluid {
+    @media screen and (max-width: 979px) {
+      padding-left: 20px;
+    }
   }
 
   .nav {
