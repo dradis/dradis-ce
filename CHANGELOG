@@ -1,5 +1,6 @@
 v3.15 (* 2019)
  - Fix node merging bug when `services_extras` properties are present
+ - Limit project name length when viewing a project
  - Removed bullet style in node modals.
  - Fix overflow issue where content would expand out of view.
 
