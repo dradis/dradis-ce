@@ -19,6 +19,10 @@ class Project
 
   def persisted?; true; end
 
+  def activities
+    Activity.all
+  end
+
   def evidence
     Evidence.all
   end
