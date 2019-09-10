@@ -21,7 +21,6 @@ class Board < ApplicationRecord
   def project=(new_project); end
 
   # -- Callbacks ------------------------------------------------------------
-  after_save :set_default_node
 
   # -- Validations ----------------------------------------------------------
   validates :name, presence: true, length: { maximum: DB_MAX_STRING_LENGTH }
@@ -45,10 +44,6 @@ class Board < ApplicationRecord
   end
 
   private
-
-  def set_default_node
-    self.node = Project.find(1).methodology_library
-  end
 
   def validate_node_has_no_other_board
     if self.node.try(:type_id) != Node::Types::METHODOLOGY \
