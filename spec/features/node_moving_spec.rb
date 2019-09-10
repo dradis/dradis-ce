@@ -35,6 +35,7 @@ describe "moving a node", js: true do
 
   example "moving a node below another node" do
     within_move_node_modal do
+      save_screenshot
       click_link(@node_3.label)
       find_button("Move").click
     end
@@ -46,6 +47,7 @@ describe "moving a node", js: true do
   # Bug fix ;)
   example "moving a node below a sub-node of a different root node" do
     within_move_node_modal do
+      save_screenshot
       click_node_toggle_button(@node_1)
       click_link @node_4.label
       click_button "Move"
@@ -59,6 +61,7 @@ describe "moving a node", js: true do
   describe "selecting a descendant of the current node" do
     it "doesn't allow you to submit the form" do
       within_move_node_modal do
+        save_screenshot
         click_node_toggle_button(@node_2)
         expect(page).to have_link "Node 5"
         click_link(@node_5.label)
@@ -80,6 +83,7 @@ describe "moving a node", js: true do
       end
 
       it "makes the node a root node" do
+        save_screenshot
         expect(current_node.reload)
       end
     end
@@ -93,6 +97,7 @@ describe "moving a node", js: true do
       end
 
       it "selects the 'Move below node' radio button again" do
+        save_screenshot
         root_radio_button = find("#node_move_destination_root")
         node_radio_button = find("#node_move_destination_node")
         expect(root_radio_button).not_to be_checked
@@ -107,6 +112,7 @@ describe "moving a node", js: true do
 
     it "doesn't show the 'move to root' radio buttons" do
       within_move_node_modal do
+        save_screenshot
         should_not have_field :node_move_destination_root
         should_not have_field :node_move_destination_node
       end

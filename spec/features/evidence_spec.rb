@@ -64,6 +64,7 @@ describe "evidence" do
       end
       
       it "deletes the Evidence" do
+        save_screenshot
         id = @evidence.id
         submit_form
         #expect(page).to have_text "Successfully deleted evidence for '#{@evidence.issue.title}.'"

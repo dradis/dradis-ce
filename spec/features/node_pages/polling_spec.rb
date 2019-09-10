@@ -37,6 +37,7 @@ describe "node pages", js: true do
       end
 
       it "adds it to the 'move node' modal" do
+        save_screenshot
         show_move_node_modal
         within_move_node_nodal do
           should have_no_selector node_link_selector(@new_node)
@@ -77,6 +78,7 @@ describe "node pages", js: true do
 
           it "adds the node to the sidebar" do
             within_move_node_nodal do
+              save_screenshot
               should have_selector node_link_selector(@node)
               @subnode = create(:node, label: "Sub", parent: @node, project: current_project)
               should have_no_selector node_link_selector(@subnode)
@@ -136,6 +138,7 @@ describe "node pages", js: true do
     end
 
     it "is removed from the move node nodal" do
+      save_screenshot
       show_move_node_modal
       within_move_node_nodal do
         should have_selector node_link_selector(@other_node)
@@ -174,6 +177,7 @@ describe "node pages", js: true do
 
       it "does not appear when the parent node is expanded in the modal" do
         within_move_node_nodal do
+          save_screenshot
           should have_no_selector node_link_selector(@subnode)
           delete_node
           expand_node_in_modal(@node)
@@ -205,6 +209,7 @@ describe "node pages", js: true do
 
       it "is removed from the move node nodal" do
         within_move_node_nodal do
+          save_screenshot
           should have_selector node_link_selector(@subnode)
           delete_node
           should have_no_selector node_link_selector(@subnode)
@@ -235,6 +240,7 @@ describe "node pages", js: true do
     end
 
     it "updates the link in the move node nodal" do
+      save_screenshot
       show_move_node_modal
       within_move_node_nodal do
         should have_selector node_link_selector(@other_node), text: "Other"
