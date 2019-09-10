@@ -35,7 +35,6 @@ describe 'issue table' do
       end
 
       it 'resets toolbar after applying tags' do
-        save_screenshot
         issue = @issues.first
         check "checkbox_issue_#{issue.id}"
         expect(page).to have_css('.js-items-table-actions')

@@ -23,7 +23,6 @@ describe 'merging a node', js: true do
 
   it 'redirects to the target node' do
     within_merge_node_modal do
-      save_screenshot
       click_link(target_node.label)
       find_button('Merge').click
     end
@@ -32,7 +31,6 @@ describe 'merging a node', js: true do
   end
 
   it 'moves notes to target node' do
-    save_screenshot
     note = create(:note, node: source_node)
 
     within_merge_node_modal do
@@ -45,7 +43,6 @@ describe 'merging a node', js: true do
   end
 
   it 'moves evidence to target node' do
-    save_screenshot
     evidence = create(:evidence, node: source_node)
 
     within_merge_node_modal do
@@ -57,7 +54,6 @@ describe 'merging a node', js: true do
   end
 
   it 'moves activity to target node' do
-    save_screenshot
     activity = create(:activity, trackable: source_node)
 
     within_merge_node_modal do
@@ -69,7 +65,6 @@ describe 'merging a node', js: true do
   end
 
   it 'moves children to target node' do
-    save_screenshot
     child_node = create(:node, parent: source_node)
 
     within_merge_node_modal do
@@ -81,7 +76,6 @@ describe 'merging a node', js: true do
   end
 
   it 'mergs properties with the target node' do
-    save_screenshot
     source_node.properties['ip'] = ['1.1.1.1', '1.1.1.3']
     source_node.save
 
@@ -97,7 +91,6 @@ describe 'merging a node', js: true do
   end
 
   it 'moves attachments to target node' do
-    save_screenshot
     create(:attachment, node: source_node)
 
     within_merge_node_modal do
@@ -112,7 +105,6 @@ describe 'merging a node', js: true do
 
   it 'destroys the source node' do
     within_merge_node_modal do
-      save_screenshot
       click_link(target_node.label)
       find_button('Merge').click
     end

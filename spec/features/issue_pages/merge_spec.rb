@@ -19,7 +19,6 @@ describe 'issue pages' do
     end
 
     it 'merges issues into an existing one' do
-      save_screenshot
       expect(page).to have_content "You're merging 2 Issues into a target Issue"
 
       click_button 'Merge issues'
@@ -29,7 +28,6 @@ describe 'issue pages' do
 
     context "merge issues into a new one" do
       it 'creates a new issue' do
-        save_screenshot
         expect(page).to have_content "You're merging 2 Issues into a target Issue"
 
         # new issue form should not be visible yet
@@ -52,7 +50,6 @@ describe 'issue pages' do
       end
 
       it 'tags the new issue based on the #[Tags]#' do
-        save_screenshot
         expect(page).to have_content "You're merging 2 Issues into a target Issue"
 
         # new issue form should not be visible yet

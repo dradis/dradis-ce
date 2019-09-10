@@ -111,7 +111,6 @@ describe "node pages" do
       let(:node) { create(:node, project: current_project) }
 
       example "adding a single node" do
-        save_screenshot
         fill_in :node_label, with: "My new node"
         expect do
           click_button 'Add'
@@ -129,7 +128,6 @@ describe "node pages" do
       end
 
       example "adding multiple nodes" do
-        save_screenshot
         choose "Add multiple"
         expect(page).to have_no_field :node_label
         expect(page).to have_field :nodes_list
@@ -174,7 +172,6 @@ describe "node pages" do
       end
 
       example "adding multiple nodes - submitting a blank textarea" do
-        save_screenshot
         choose "Add multiple"
         fill_in :nodes_list, with: "   \n \n \n    \n "
         click_button "Add"
@@ -195,7 +192,6 @@ describe "node pages" do
     let(:submit_form) { click_button "Rename" }
 
     it "shows a modal to rename the node" do
-      save_screenshot
       should have_content "Rename My node node"
       should have_field :node_label
     end
@@ -204,13 +200,11 @@ describe "node pages" do
       before { fill_in :node_label, with: "new node name" }
 
       it "updates the node's name" do
-        save_screenshot
         submit_form
         expect(@node.reload.label).to eq "new node name"
       end
 
       it "creates an Activity" do
-        save_screenshot
         expect { submit_form }.to have_enqueued_job(ActivityTrackingJob).with(
           action: 'update',
           project_id: current_project.id,
@@ -225,7 +219,6 @@ describe "node pages" do
       before { fill_in :node_label, with: "" }
 
       it "doesn't update the node's name" do
-        save_screenshot
         expect{ submit_form }.not_to change{ @node.reload.label }
       end
 
@@ -243,7 +236,6 @@ describe "node pages" do
     end
 
     it "shows a modal to rename the node" do
-      save_screenshot
       should have_content(
         'Are you sure you want to delete the "My node" node from your project?'
       )
@@ -252,7 +244,6 @@ describe "node pages" do
     describe "confirming the deletion" do
       let(:submit_form) do
         within "#modal_delete_node" do
-          save_screenshot
           click_link "Delete"
           expect(current_path).to eq project_path(current_project)
         end

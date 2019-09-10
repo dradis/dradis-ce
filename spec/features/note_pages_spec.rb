@@ -57,7 +57,6 @@ describe "note pages" do
     describe "clicking 'delete'", js: true do
       let(:submit_form) do
         page.accept_confirm do
-          save_screenshot
           within('.note-text-inner') do
             click_link 'Delete'
           end

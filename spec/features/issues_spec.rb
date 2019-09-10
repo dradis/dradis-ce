@@ -286,14 +286,12 @@ describe 'Issues pages' do
           end
 
           it 'displays evidence form when add link clicked' do
-            save_screenshot
             expect(page).to have_selector('#js-add-evidence-container', visible: false)
             find('.js-add-evidence').click
             expect(page).to have_selector('#js-add-evidence-container', visible: true)
           end
 
           it 'filters nodes' do
-            save_screenshot
             find('.js-add-evidence').click
             within('#existing-node-list') do
               current_project.nodes.user_nodes.each do |n|
@@ -309,7 +307,6 @@ describe 'Issues pages' do
           end
 
           it 'creates an evidence with the selected template for selected node' do
-            save_screenshot
             find('.js-add-evidence').click
             check('192.168.0.1')
             select('Simple Note', from: 'evidence_content')
@@ -320,7 +317,6 @@ describe 'Issues pages' do
           end
 
           it 'creates an evidence for new nodes and existing nodes too' do
-            save_screenshot
             find('.js-add-evidence').click
             fill_in 'Paste list of nodes', with: "192.168.0.1\r\n192.168.0.2\r\n192.168.0.3"
             expect do
@@ -335,7 +331,6 @@ describe 'Issues pages' do
           end
 
           it 'assigns new nodes to the right parent' do
-            save_screenshot
             find('.js-add-evidence').click
             fill_in 'Paste list of nodes', with: "#{@node.label}\r\naaaa"
             select @node.label, from: 'Create new nodes under'
@@ -350,7 +345,6 @@ describe 'Issues pages' do
           end
 
           it 'tracks "create" activities for new evidence and nodes' do
-            save_screenshot
             find('.js-add-evidence').click
             # one new node, one existing node:
             fill_in 'Paste list of nodes', with: "#{@node.label}\r\naaaa"
