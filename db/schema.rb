@@ -23,6 +23,33 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
   end
 
+  create_table "boards", force: :cascade do |t|
+    t.string "name"
+    t.integer "node_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["node_id"], name: "index_boards_on_node_id"
+  end
+
+  create_table "cards", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.date "due_date"
+    t.integer "list_id"
+    t.integer "previous_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["list_id"], name: "index_cards_on_list_id"
+    t.index ["previous_id"], name: "index_cards_on_previous_id"
+  end
+
+  create_table "cards_users", id: false, force: :cascade do |t|
+    t.integer "card_id", null: false
+    t.integer "user_id", null: false
+    t.index ["card_id", "user_id"], name: "index_cards_users_on_card_id_and_user_id"
+    t.index ["user_id", "card_id"], name: "index_cards_users_on_user_id_and_card_id"
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -33,7 +60,7 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.text "content"
     t.string "commentable_type"
     t.integer "commentable_id"
-    t.bigint "user_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
@@ -57,6 +84,16 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.datetime "updated_at", null: false
     t.index ["issue_id"], name: "index_evidence_on_issue_id"
     t.index ["node_id"], name: "index_evidence_on_node_id"
+  end
+
+  create_table "lists", force: :cascade do |t|
+    t.string "name"
+    t.integer "board_id"
+    t.integer "previous_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["board_id"], name: "index_lists_on_board_id"
+    t.index ["previous_id"], name: "index_lists_on_previous_id"
   end
 
   create_table "logs", force: :cascade do |t|
@@ -95,8 +132,8 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.datetime "read_at"
     t.string "notifiable_type"
     t.integer "notifiable_id"
-    t.bigint "actor_id"
-    t.bigint "recipient_id"
+    t.integer "actor_id"
+    t.integer "recipient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["actor_id"], name: "index_notifications_on_actor_id"
@@ -154,7 +191,4 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.index ["project_id"], name: "index_versions_on_project_id"
   end
 
-  add_foreign_key "comments", "users", on_delete: :nullify
-  add_foreign_key "notifications", "users", column: "actor_id", on_delete: :cascade
-  add_foreign_key "notifications", "users", column: "recipient_id", on_delete: :cascade
 end
