@@ -53,7 +53,14 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :boards
+    resources :boards do
+      resources :lists, except: [:index] do
+        member { post :move }
+        resources :cards, except: [:index] do
+          member { post :move }
+        end
+      end
+    end
 
     resources :nodes do
       collection do
