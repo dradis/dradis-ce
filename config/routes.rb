@@ -53,6 +53,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :boards
+
     resources :nodes do
       collection do
         post :sort

@@ -1,0 +1,10 @@
+<% if board %>
+  <%= presenter.verb %> the
+  <%= link_to board.name, [board.project, board] %> methodology.
+<% else %>
+  <% if activity.action == 'destroy' %>
+    deleted a methodology.
+  <% else %>
+    <%= presenter.verb %> a methodology which has since been deleted.
+  <% end %>
+<% end %>
