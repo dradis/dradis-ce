@@ -25,6 +25,8 @@ class RecoverableRevisionPresenter < BasePresenter
     # Set icon css depending on object type.
     icon_css = %w{fa}
     icon_css << case type
+                when 'Card'
+                  'fa-list-alt'
                 when 'Evidence'
                   'fa-flag'
                 when 'Issue'
@@ -40,18 +42,28 @@ class RecoverableRevisionPresenter < BasePresenter
   end
 
   def location
-    result = ""
+    result = ''
     # Get node if object is a Note or an Evidence.
     if ['Note','Evidence'].include?(type)
-      if type == "Evidence"
+      if type == 'Evidence'
         unless trashed_object.issue
-          result << " for an issue which has since been deleted "
+          result << ' for an issue which has since been deleted '
         end
       end
       if (node = trashed_object.node)
-        result << "at " + h.link_to(node.label, [node.project, node])
+        result << 'at ' + h.link_to(node.label, [node.project, node])
       else
         result << 'at a node which has since been deleted'
+      end
+    elsif 'Card' == type
+      board = recoverable_revision.associated_board
+      board_name = board ? board.name : '[deleted]'
+      result << " from the board #{board_name}"
+
+      if board
+        list = trashed_object.list
+        list_name = list ? list.name : '[deleted]'
+        result << " from the list #{list_name}"
       end
     end
     result
@@ -62,11 +74,13 @@ class RecoverableRevisionPresenter < BasePresenter
       if trashed_object.is_a?(Note) && trashed_object.node == project.methodology_library
         note = trashed_object
         Methodology.new(filename: note.id, content: note.text).name
+      elsif trashed_object.is_a?(Card)
+        trashed_object.name
       else
         trashed_object.title
       end
 
-    truncated_title = h.truncate(title, length: 25, separator: "...")
+    truncated_title = h.truncate(title, length: 25, separator: '...')
     h.content_tag(:span, truncated_title, class: 'item-content')
   end
 
