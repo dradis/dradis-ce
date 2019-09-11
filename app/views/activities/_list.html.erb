@@ -1,0 +1,15 @@
+<% if list %>
+  <% board   = list.board %>
+  <% project = board.project %>
+  <%= presenter.verb %> the <%= link_to list.name, [project, board] %> list
+  <% if activity.action == 'move' %>
+  in board <%= link_to board.name, [project, board] %>
+  <% end %>
+  .
+<% else %>
+  <% if activity.action == 'destroy' %>
+    deleted a list.
+  <% else %>
+    <%= presenter.verb %> a list which has since been deleted.
+  <% end %>
+<% end %>
