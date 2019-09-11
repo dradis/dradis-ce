@@ -47,6 +47,10 @@ class Project
     Tag.all
   end
 
+  def boards
+    Board.all
+  end
+
   # Returns or creates the Node that acts as container for all Methodologies in
   # a given project
   def methodology_library

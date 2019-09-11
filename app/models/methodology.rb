@@ -176,6 +176,15 @@ class Methodology
     ].join('-')
   end
 
+  def version
+    @version ||= if !doc.root
+                   nil
+                 elsif doc.root[:version].nil?
+                   doc.root.name == 'board' ? 2 : 1
+                 else
+                   doc.root[:version].to_i
+                 end
+  end
 
   # ----------------------------------------------------------- Sections, tasks
   def sections
