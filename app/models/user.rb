@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   alias_attribute :name, :email
+
   # -- Relationships --------------------------------------------------------
   has_many :activities
   has_many :comments, dependent: :nullify
