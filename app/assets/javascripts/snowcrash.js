@@ -42,6 +42,7 @@
 // require snowcrash/modules/tour
 //= require snowcrash/modules/uploads
 
+//= require snowcrash/pages/boards
 //= require snowcrash/pages/methodologies
 //= require snowcrash/pages/nodes/tables
 //= require snowcrash/pages/projects/methodologies_chart
