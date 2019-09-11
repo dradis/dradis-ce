@@ -12,6 +12,10 @@ class Project
   end
 
   # -- Instance Methods -----------------------------------------------------
+  def authors
+    User.all
+  end
+
   def initialize(id: 1, name: 'Dradis CE', **_attrs)
     @id   = id
     @name = name

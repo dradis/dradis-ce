@@ -39,5 +39,11 @@ describe 'Board pages:' do
         expect(page).not_to have_text node_board.name
       end
     end
+
+    describe 'when in show page' do
+      let(:board_path) { project_board_path(current_project, board) }
+
+      include_examples 'managing lists'
+    end
   end
 end
