@@ -88,7 +88,7 @@ shared_examples 'managing boards' do
         expect do
           submit_form
           expect(page).to have_text('Methodology renamed')
-          expect(page).to have_text(/New Board Name/i)
+          expect(page).to have_text('New Board Name')
           expect(page).to have_current_path board_path
         end.not_to(change{Board.count})
       end

@@ -24,10 +24,6 @@ class Node < ApplicationRecord
   has_many :issues, -> { distinct }, through: :evidence
   has_many :notes, dependent: :destroy
 
-  def boards
-    Board.all
-  end
-
   def project
     # dummy project; this makes Node's interface more similar to how it is
     # in Pro and makes it easier to deal with node in URL helpers
