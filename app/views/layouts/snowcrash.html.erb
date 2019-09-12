@@ -89,6 +89,7 @@
               <%= content_for?(:content) ? yield(:content) : yield %>
             </div>
           <% else %>
+            <%= yield(:breadcrumbs) if content_for?(:breadcrumbs) %>
             <%= content_tag :h1, yield(:title) if content_for?(:title) %>
             <div class="row-fluid">
               <div class="span12">
