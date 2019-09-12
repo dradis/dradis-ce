@@ -14,7 +14,11 @@ describe 'Board pages:' do
     before { login_to_project_as_user }
 
     let(:board) do
-      create(:board, node: current_project.methodology_library)
+      create(
+        :board,
+        node: current_project.methodology_library,
+        project: current_project
+      )
     end
 
     describe 'when in index page' do
@@ -24,15 +28,15 @@ describe 'Board pages:' do
 
       include_examples 'managing boards'
 
-      it 'displays all boards' do
+      it 'only displays global boards' do
         board
         node = create(:node, project: current_project)
-        node_board = create(:board)
+        node_board = create(:board, project: current_project, node: node)
 
         visit project_boards_path(current_project)
 
         expect(page).to have_text board.name
-        expect(page).to have_text node_board.name
+        expect(page).not_to have_text node_board.name
       end
     end
   end

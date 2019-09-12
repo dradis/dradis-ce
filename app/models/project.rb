@@ -19,6 +19,10 @@ class Project
 
   def persisted?; true; end
 
+  def boards
+    Board.all
+  end
+
   def evidence
     Evidence.all
   end
@@ -45,10 +49,6 @@ class Project
 
   def tags
     Tag.all
-  end
-
-  def boards
-    Board.all
   end
 
   # Returns or creates the Node that acts as container for all Methodologies in

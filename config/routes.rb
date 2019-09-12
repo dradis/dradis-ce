@@ -27,6 +27,15 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :boards do
+      resources :lists, except: [:index] do
+        member { post :move }
+        resources :cards, except: [:index] do
+          member { post :move }
+        end
+      end
+    end
+
     resources :comments
 
     constraints id: %r{[(0-z)\/]+} do
@@ -50,15 +59,6 @@ Rails.application.routes.draw do
       member do
         get :add
         put :update_task
-      end
-    end
-
-    resources :boards do
-      resources :lists, except: [:index] do
-        member { post :move }
-        resources :cards, except: [:index] do
-          member { post :move }
-        end
       end
     end
 
