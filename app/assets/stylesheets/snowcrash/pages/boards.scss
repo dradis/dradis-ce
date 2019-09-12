@@ -50,7 +50,7 @@ body.boards.index {
     }
 
     .board-tile {
-      background-color: lighten($primaryBgColor, 40%);
+      background-color: lighten($primaryBgColor, 20%);
       border-radius: 3px;
       color: #fff;
       display: block;
@@ -61,7 +61,7 @@ body.boards.index {
       text-decoration: none;
 
       &:hover {
-        background-color: lighten($primaryBgColor, 30%);
+        background-color: lighten($primaryBgColor, 15%);
       }
     }
 
@@ -103,7 +103,7 @@ body.boards.show {
   .main-content {
 
     .board {
-      background-color: lighten($primaryBgColor, 40%);
+      background-color: lighten($primaryBgColor, 20%);
       display: flex;
       flex-direction: row;
       overflow-x: scroll;
@@ -226,13 +226,13 @@ body.boards.show {
     }
 
     .list-new {
-      background-color: lighten($primaryBgColor, 30%);
+      background-color: lighten($primaryBgColor, 15%);
       border-radius: 3px;
       min-height: 30px;
       padding: 4px;
 
       &:hover {
-        background-color: lighten($primaryBgColor, 20%);
+        background-color: lighten($primaryBgColor, 10%);
       }
 
       a {
