@@ -10,7 +10,8 @@ class MethodologyMigrationService
       # create a board for each methodology
       board = Board.new(
         name: methodology.name,
-        node: node || project.methodology_library
+        node: node || project.methodology_library,
+        project: @project
       )
 
       # create 2 lists in each board: Pending and Done
@@ -58,7 +59,7 @@ class MethodologyMigrationService
       section.tasks.each do |task|
         # create a card for each task on the methodology
         card = Card.new
-        card.name = "[#{section.name}] #{task.name}".truncate(Card.columns_hash['name'].limit || 256)
+        card.name = "[#{section.name}] #{task.name}".truncate(Card.columns_hash['name'].limit || 255)
         card.description = <<-DESCRIPTION.gsub(/^ +/, "")
         This card was automatically created by importing the data from the old methodologies section, these were the values on **#{Time.now.strftime("%d %b %Y")}**:
 
