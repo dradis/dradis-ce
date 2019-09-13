@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This shared shared_example needs the folowing *let* variables:
 # - board:
 #   how to create a board (project level or node level)
@@ -88,7 +90,7 @@ shared_examples 'managing boards' do
             submit_form
             expect(page).to have_text('Methodology added')
             expect(page).to have_current_path(board_path)
-          end.to change{Board.count}.by(1)
+          end.to change { Board.count }.by(1)
         end
 
         include_examples 'creates an Activity', :create, Board
@@ -187,7 +189,7 @@ shared_examples 'managing boards' do
           expect(page).to have_text('Methodology renamed')
           expect(page).to have_text('New Board Name')
           expect(page).to have_current_path board_path
-        end.not_to(change{Board.count})
+        end.not_to(change { Board.count })
       end
 
       include_examples 'creates an Activity', :update, @b
