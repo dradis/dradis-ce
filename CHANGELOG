@@ -1,3 +1,6 @@
+v3.15 (XXX 2019)
+ - Export plugins also get template as a request param
+
 v3.14 (August 2019)
  - Highlight code snippets.
  - Collapsable sidebar in issues
