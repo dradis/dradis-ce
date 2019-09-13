@@ -64,6 +64,103 @@ shared_examples 'managing boards' do
     include_examples 'creates an Activity', :destroy
   end
 
+  describe 'adding a board' do
+    let(:submit_form) { click_button 'Add methodology' }
+
+    before do
+      # this allows us to load test methodology templates
+      allow(Methodology).to receive(:pwd).and_return(Rails.root.join('tmp/templates/methodologies'))
+      visit boards_path
+      find(create_link).click
+      expect(page).to have_selector('#modal-board-new', visible: true)
+    end
+
+    describe 'submitting the form with valid information' do
+      before do
+        within '#modal-board-new' do
+          fill_in :board_name, with: 'New Board'
+        end
+      end
+
+      context 'choosing no template' do
+        it 'creates a new board' do
+          expect do
+            submit_form
+            expect(page).to have_text('Methodology added')
+            expect(page).to have_current_path(board_path)
+          end.to change{Board.count}.by(1)
+        end
+
+        include_examples 'creates an Activity', :create, Board
+      end
+
+      context 'choosing a template' do
+        before do
+          FileUtils.mkdir_p(Methodology.pwd) unless File.exist?(Methodology.pwd)
+          Dir[Rails.root.join('spec/fixtures/files/methodologies/**.xml')].collect do |file|
+            FileUtils.cp(file, Methodology.pwd.join(File.basename(file)))
+          end
+        end
+        after(:all) do
+          FileUtils.rm_rf('tmp/templates')
+        end
+
+        it 'allows to create boards from Mv1 template' do
+          # force reload to get the new test templates
+          visit boards_path
+          find(create_link).click
+          within '#modal-board-new' do
+            fill_in :board_name, with: 'New Board'
+          end
+          choose id: 'use_template_yes'
+          select 'Webapp' # one of the existing v1 templates
+          submit_form
+
+          expect(page).to have_current_path(board_path)
+          expect(page).to have_text('Methodology added')
+          expect(Board.last.lists.count).to be >= 1
+          expect(Board.last.name).to eq 'New Board'
+        end
+
+        it 'allows to create boards from Mv2 template' do
+          # force reload to get the new test templates
+          visit boards_path
+          find(create_link).click
+          within '#modal-board-new' do
+            fill_in :board_name, with: 'New Board'
+          end
+          choose id: 'use_template_yes'
+          select 'New Methodology v2' # a v2 template
+          submit_form
+
+          expect(page).to have_current_path(board_path)
+          expect(page).to have_text('Methodology added')
+          expect(Board.last.lists.count).to be >= 1
+          expect(Board.last.name).to eq 'New Board'
+        end
+
+        include_examples 'creates an Activity', :create, Board
+      end
+    end
+
+    describe 'submitting the form with invalid information' do
+      before do
+        within '#modal-board-new' do
+          fill_in :board_name, with: ''
+        end
+      end
+
+      it "doesn't create a new board" do
+        old_count = Board.count
+        submit_form
+        expect(page).to have_text("can't be blank")
+        expect(old_count).to eq Board.count
+      end
+
+      include_examples "doesn't create an Activity"
+    end
+  end
+
   describe 'updating a board', js: true do
     let(:submit_form) { click_button 'Update methodology' }
 
@@ -119,9 +216,8 @@ shared_examples 'a board page with poller' do
   describe 'when someone else updates that board' do
     before do
       @board.update_attributes(name: 'whatever new board name')
-      create(:activity, action: :update, trackable: @board, user: @other_user)
+      create(:activity, action: :update, trackable: @board, user: @other_user, project: current_project)
       call_poller
-      wait_for_ajax
     end
 
     it 'updates the board' do
@@ -134,7 +230,7 @@ shared_examples 'a board page with poller' do
       PaperTrail.enabled = true
 
       @board.destroy
-      create(:activity, action: :destroy, trackable: @board, user: @other_user)
+      create(:activity, action: :destroy, trackable: @board, user: @other_user, project: current_project)
       call_poller
     end
 
@@ -150,9 +246,9 @@ shared_examples 'a board page with poller' do
       PaperTrail.enabled = true
 
       @board.update_attributes(name: 'whatever')
-      create(:activity, action: :update, trackable: @board, user: @other_user)
+      create(:activity, action: :update, trackable: @board, user: @other_user, project: current_project)
       @board.destroy
-      create(:activity, action: :destroy, trackable: @board, user: @other_user)
+      create(:activity, action: :destroy, trackable: @board, user: @other_user, project: current_project)
       call_poller
     end
 
@@ -168,7 +264,7 @@ shared_examples 'a board page with poller' do
   describe 'when someone else adds a list to that board' do
     before do
       @new_list = create(:list, board: @board, previous_id: @other_list.id)
-      create(:activity, action: :create, trackable: @new_list, user: @other_user)
+      create(:activity, action: :create, trackable: @new_list, user: @other_user, project: current_project)
       call_poller
     end
 
@@ -181,9 +277,8 @@ shared_examples 'a board page with poller' do
     before do
       @other_list.update_attributes(previous_id: nil)
       @list.update_attributes(previous_id: @other_list.id)
-      create(:activity, action: :update, trackable: @other_list, user: @other_user)
+      create(:activity, action: :update, trackable: @other_list, user: @other_user, project: current_project)
       call_poller
-      wait_for_ajax
     end
 
     it 'moves the list' do
@@ -197,7 +292,7 @@ shared_examples 'a board page with poller' do
   describe 'when someone else deletes a list on that board' do
     before do
       @other_list.destroy
-      create(:activity, action: :destroy, trackable: @other_list, user: @other_user)
+      create(:activity, action: :destroy, trackable: @other_list, user: @other_user, project: current_project)
       call_poller
     end
 
@@ -209,7 +304,7 @@ shared_examples 'a board page with poller' do
   describe 'when someone updates a list on that board' do
     before do
       @other_list.update_attributes(name: 'updated list')
-      create(:activity, action: :update, trackable: @other_list, user: @other_user)
+      create(:activity, action: :update, trackable: @other_list, user: @other_user, project: current_project)
       call_poller
     end
 
@@ -221,7 +316,7 @@ shared_examples 'a board page with poller' do
   describe 'when someone adds a card on that board' do
     before do
       @new_card = create(:card, list: @list, previous_id: @card.id)
-      create(:activity, action: :create, trackable: @new_card, user: @other_user)
+      create(:activity, action: :create, trackable: @new_card, user: @other_user, project: current_project)
       call_poller
     end
 
@@ -234,7 +329,7 @@ shared_examples 'a board page with poller' do
   describe 'when someone updates a card on that board' do
     before do
       @card.update_attributes(name: 'updated card')
-      create(:activity, action: :update, trackable: @card, user: @other_user)
+      create(:activity, action: :update, trackable: @card, user: @other_user, project: current_project)
       call_poller
     end
 
@@ -248,7 +343,7 @@ shared_examples 'a board page with poller' do
       PaperTrail.enabled = true
 
       @card.destroy
-      create(:activity, action: :destroy, trackable: @card, user: @other_user)
+      create(:activity, action: :destroy, trackable: @card, user: @other_user, project: current_project)
       call_poller
     end
 
@@ -262,7 +357,7 @@ shared_examples 'a board page with poller' do
   describe 'when someone moves a card on that board' do
     before do
       @card.update_attributes(list_id: @other_list.id)
-      create(:activity, action: :update, trackable: @card, user: @other_user)
+      create(:activity, action: :update, trackable: @card, user: @other_user, project: current_project)
       call_poller
     end
 
