@@ -131,6 +131,10 @@ document.addEventListener "turbolinks:load", ->
   if !(/^\/projects\/1(\/|$)/.test(window.location.pathname))
     $('[data-behavior~=project-teaser]').removeClass('hide')
 
+  if window.location.hash
+    tabName = window.location.hash
+    $("[data-toggle~=tab][href='#{tabName}']").tab('show')
+
   # ------------------------------------------------------ Non-plugin behaviors
 
   # Close button that hides instead of removing the container
