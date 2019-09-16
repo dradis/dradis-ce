@@ -10,20 +10,19 @@ document.addEventListener('turbolinks:load', function(){
       width = 400 - margin.left - margin.right,
       height = 200 - margin.top - margin.bottom;
 
-    var x = d3.scale.ordinal()
-        .rangeRoundBands([0, width], .1);
+    var x = d3.scaleBand()
+        .rangeRound([0, width])
+        .padding(0.1);
 
-    var y = d3.scale.linear()
+    var y = d3.scaleLinear()
         .range([height, 0]);
 
-    var xAxis = d3.svg.axis()
+    var xAxis = d3.axisBottom()
         .scale(x)
         .tickSize(0)
-        .orient('bottom');
 
-    var yAxis = d3.svg.axis()
+    var yAxis = d3.axisLeft()
         .scale(y)
-        .orient('left')
         .tickSize(1, 1)
         .tickFormat(d3.format('.0f'))
         .ticks(2);
@@ -78,7 +77,7 @@ document.addEventListener('turbolinks:load', function(){
         // .attr('class', function(d){ return 'bar-' + d.letter; } )
         .attr('class', 'bar' )
         .attr('x', function(d) { return x(d.letter); })
-        .attr('width', x.rangeBand())
+        .attr('width', x.bandwidth())
         .attr('y', function(d) { return y(d.frequency); })
         .attr('height', function(d) { return height - y(d.frequency); });
 
@@ -86,7 +85,7 @@ document.addEventListener('turbolinks:load', function(){
     bars.selectAll('text')
         .data(data)
       .enter().append('text')
-        .attr('x', function(d, i) { return x(d.letter) + x.rangeBand()/2; })
+        .attr('x', function(d, i) { return x(d.letter) + x.bandwidth()/2; })
         .attr('y', function(d) { return y(d.frequency);})
         .attr('dy', -5)
         .attr('text-anchor', 'middle')
