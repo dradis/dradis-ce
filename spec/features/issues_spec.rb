@@ -306,14 +306,25 @@ describe 'Issues pages' do
             expect(all('#existing-node-list label').count).to eq 1
           end
 
-          it 'creates an evidence with the selected template for selected node' do
-            find('.js-add-evidence').click
-            check('192.168.0.1')
-            select('Simple Note', from: 'evidence_content')
-            expect { click_button('Save Evidence') }.to change { Evidence.count }.by(1)
-            evidence = Evidence.last
-            expect(evidence.content).to eq(NoteTemplate.find('simple_note').content.gsub("\n", "\r\n"))
-            expect(evidence.node.label).to eq '192.168.0.1'
+          context 'when adding an evidence through the evidence tab' do
+            before do
+              find('.js-add-evidence').click
+              check('192.168.0.1')
+              select('Simple Note', from: 'evidence_content')
+            end
+
+            it 'creates an evidence with the selected template for selected node' do
+              expect { click_button('Save Evidence') }.to change { Evidence.count }.by(1)
+              evidence = Evidence.last
+              expect(evidence.content).to eq(NoteTemplate.find('simple_note').content.gsub("\n", "\r\n"))
+              expect(evidence.node.label).to eq '192.168.0.1'
+            end
+
+            it 'routes back to the issues page with the evidence tab open' do
+              expect { click_button('Save Evidence') }.to change { Evidence.count }.by(1)
+              expect(current_path).to eq "/projects/#{current_project.id}/issues/#{@issue.id}"
+              expect(find('li.active a[href~="#evidence-tab"]')).to_not be_nil
+            end
           end
 
           it 'creates an evidence for new nodes and existing nodes too' do
