@@ -10,19 +10,15 @@ document.addEventListener('turbolinks:load', function(){
       width = 400 - margin.left - margin.right,
       height = 200 - margin.top - margin.bottom;
 
-    var x = d3.scaleBand()
-        .rangeRound([0, width])
-        .padding(0.1);
+    var x = d3.scaleBand().rangeRound([0, width]);
 
     var y = d3.scaleLinear()
         .range([height, 0]);
 
-    var xAxis = d3.axisBottom()
-        .scale(x)
-        .tickSize(0)
+    var xAxis = d3.axisBottom(x)
+        .tickSize(0);
 
-    var yAxis = d3.axisLeft()
-        .scale(y)
+    var yAxis = d3.axisLeft(y)
         .tickSize(1, 1)
         .tickFormat(d3.format('.0f'))
         .ticks(2);
@@ -60,10 +56,12 @@ document.addEventListener('turbolinks:load', function(){
     // y.domain([0, 5]);
     y.domain([0, highest_y]);
 
-    svg.append('g')
+    x_axis = svg.append('g')
         .attr('class', 'x axis')
         .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis);
+    x_axis.selectAll("text").style("fill", "inherit");
+    x_axis.selectAll("path").style("stroke", "none");
 
     // svg.append('g')
     //     .attr('class', 'y axis')
