@@ -179,5 +179,5 @@ document.addEventListener "turbolinks:load", ->
     $('[data-behavior~=collapse-collection]').click ->
       $this = $(this)
       $this.find('[data-behavior~=toggle-chevron]').toggleClass('fa-chevron-down fa-chevron-up')
-      if $('[data-behavior~=import-box]').length
+      if $this.hasClass('import-toggle')
         $('[data-behavior~=import-box]').find("input[type='text']:first").focus()
