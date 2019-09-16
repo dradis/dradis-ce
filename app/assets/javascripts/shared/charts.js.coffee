@@ -182,6 +182,8 @@ class @DonutChart
 
             thisDonut = that.container.select('.type0')
 
+            thisDonut.select('.value').style('display', 'block')
+
             thisDonut.select('.type').text (donut_d)->
                 # return d.data.val.toFixed(1) + donut_d.unit
                 return datum.data.category
@@ -202,6 +204,9 @@ class @DonutChart
             thisDonut = that.container.select('.type0')
             that._setCenterText(thisDonut)
 
+            if (thisDonut.selectAll('.clicked').empty())
+              thisDonut.select('.value').style('display', 'none')
+
             # thisDonut.select('.value').text('')
 
         , 'click': (datum, index, nodes) ->
@@ -216,6 +221,10 @@ class @DonutChart
             thisPath.classed('clicked', !clicked)
 
             that._setCenterText(thisDonut)
+
+            if (clicked)
+              if (thisDonut.selectAll('.clicked').empty())
+                thisDonut.select('.value').style('display', 'none')
       }
 
 
