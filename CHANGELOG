@@ -1,4 +1,10 @@
 v3.15 (* 2019)
+ - Methodologies v2:
+   - Kanban-style boards replaced the checklists
+   - Tasks can move between lists
+   - Assign tasks to different team members
+   - Keep Notes and information on each task
+   - Export Methodology details into your reports
  - Fix node merging bug when `services_extras` properties are present
  - Removed bullet style in node modals.
  - Fix overflow issue where content would expand out of view.
