@@ -56,12 +56,19 @@ document.addEventListener('turbolinks:load', function(){
     // y.domain([0, 5]);
     y.domain([0, highest_y]);
 
+    d3.selection.prototype.last = function() {
+      return d3.select(
+          this.nodes()[this.size() - 1]
+      );
+    };
+
     x_axis = svg.append('g')
         .attr('class', 'x axis')
         .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis);
     x_axis.selectAll("text").style("fill", "inherit");
     x_axis.selectAll("path").style("stroke", "none");
+    x_axis.selectAll("text").last().style("fill", "#000");
 
     // svg.append('g')
     //     .attr('class', 'y axis')
