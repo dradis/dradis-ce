@@ -5,6 +5,8 @@ module Dradis::CE::API
     before_action :api_authentication_required
     before_action :json_required, only: [:create, :update]
 
+    before_action :set_paper_trail_whodunnit
+
     rescue_from ActionController::ParameterMissing do |exception|
       # after_action is not called for exceptions
       skip_set_cookies_header
@@ -19,6 +21,12 @@ module Dradis::CE::API
 
     # No CSRF protection for the wicked!
     protect_from_forgery with: :null_session
+
+    # Set 'whodunnit' in paper trail versions to be the email address of the
+    # current user
+    def user_for_paper_trail
+      current_user.email if current_user
+    end
 
     protected
     # def ssl_configured?
