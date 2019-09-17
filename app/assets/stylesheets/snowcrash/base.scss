@@ -47,18 +47,72 @@ body {
     text-shadow: 0 0 0;
     letter-spacing: -0.4px;
     min-width: 145px;
-    width: calc(100% - 795px);
+    max-width: calc(100% - 810px);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 
     @media screen and (max-width: 767px) {
       padding-left: 20px;
-      width: calc(100% - 80px);
+      max-width: calc(100% - 80px);
     }
 
     @media screen and (min-width: 768px) and (max-width: 979px) {
-      width: calc(100% - 65px);
+      max-width: calc(100% - 65px);
+    }
+  }
+
+  @media screen and (max-width: 979px) {
+
+    .nav-collapse.collapse.in {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      z-index: 999;
+      background: $primaryBgColor;
+      position: absolute;
+      top: $navbarHeight;
+      right: 0;
+      width: 450px;
+      border-bottom-left-radius: 8px;
+
+      ul {
+        margin-bottom: 0;
+
+        li {
+
+          a:focus {
+            background: inherit;
+          }
+
+          a:hover,
+          &.open {
+            background: $dradisCEGreen !important;
+            color: lighten($primaryBgColor, 40%);
+
+            .fa {
+              color: lighten($primaryBgColor, 40%);
+            }
+            .caret {
+              border-top-color: #eee;
+              border-bottom-color: #eee;
+            }
+          }
+
+          .caret {
+            border-top-color: #eee;
+            border-bottom-color: #eee;
+          }
+          
+          .form-search {
+            padding: 0 1em;
+
+            &.hide {
+              display: none;
+            }
+          }
+        }
+      }
     }
   }
 
