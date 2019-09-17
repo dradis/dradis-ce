@@ -9,9 +9,11 @@
           <span class="icon-bar"></span>
         </a>
         <%= link_to current_project.name, main_app.project_path(current_project), class: 'brand' %>
-        <div class="navbar-collapse" id="bs-navbar-collapse">
+        <div class="nav-collapse" id="bs-navbar-collapse">
           <ul class="nav pull-right">
-            <li><%= link_to main_app.project_search_path(current_project), id: 'js-search-form-toggle' do %><i class="fa fa-search fa-lg"></i><% end %></li>
+            <li><%= link_to main_app.project_search_path(current_project), id: 'js-search-form-toggle' do %><i class="fa fa-search fa-lg"></i><% end %>
+              <%= render "layouts/snowcrash/search" %>
+            </li>
             <li><%= link_to main_app.project_upload_manager_path(current_project) do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %></li>
             <li><%= link_to main_app.project_export_manager_path(current_project) do %><i class="fa fa-file-text-o fa-lg"></i> Export results<% end %></li>
             <li><a href="javascript:void(0)" class="js-try-pro" data-term="projects" data-url="http://drad.is/l/try-pro-projects"><i class="fa fa-random fa-lg"></i> Change project</li>
@@ -50,7 +52,6 @@
               </ul>
             </li>
           </ul>
-          <%= render "layouts/snowcrash/search" %>
         </div>
       </div>
     </div>
