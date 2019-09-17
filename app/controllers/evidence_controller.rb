@@ -80,7 +80,7 @@ class EvidenceController < NestedNodeResourceController
         track_created(evidence)
       end
     end
-    redirect_to "#{project_issue_path(current_project, evidence_params[:issue_id])}#evidence-tab", notice: 'Evidence added for selected nodes.'
+    redirect_to project_issue_path(current_project, evidence_params[:issue_id], tab: 'evidence-tab'), notice: 'Evidence added for selected nodes.'
   end
 
   def edit
@@ -94,7 +94,7 @@ class EvidenceController < NestedNodeResourceController
         check_for_edit_conflicts(@evidence, updated_at_before_save)
         format.html do
           path = if params[:back_to] == 'issue'
-                   "#{url_for([current_project, @evidence.issue])}#evidence-tab"
+                   project_issue_path(current_project, @evidence.issue, tab: 'evidence-tab')
                  else
                    [current_project, @node, @evidence]
                  end
@@ -122,12 +122,14 @@ class EvidenceController < NestedNodeResourceController
           # 2. from the node evidence tab
           # 3. from the evidence show page itself (under node)
           # When using redirect_back in case 3, we find an evidence not found error,
-          # since the evidence does not exist anymore. That's why we check the 'Referer' here:
-          referer_path = request.headers['Referer']
-          if !referer_path || referer_path == project_node_evidence_url(current_project, @node, @evidence)
+          # since the evidence does not exist anymore. That's why we check the referrer here.
+          referrer_path = URI(request.referrer).tap { |u| u.query = nil }.to_s
+          if !referrer_path || referrer_path == project_node_evidence_url(current_project, @node, @evidence)
             redirect_to project_node_path(current_project, @node), notice: notice
+          elsif referrer_path == project_node_path(current_project, @node)
+            redirect_to referrer_path, notice: notice
           else
-            redirect_to "#{referer_path}#evidence-tab", notice: notice
+            redirect_to "#{referrer_path}?tab=evidence-tab", notice: notice
           end
         }
         format.js
