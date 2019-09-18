@@ -6,8 +6,8 @@
   <li <%= "class=active" if params[:tab] == 'notes-tab' %>>
     <a href="#notes-tab" data-toggle="tab"><i class="fa fa-file-text-o"></i> Notes</a>
   </li>
-  <li <%= "class=active" if params[:tab] == 'methodology-tab' %>>
-    <a href="#methodology-tab" data-toggle="tab"><i class="fa fa-trello"></i> Methodology</a>
+  <li>
+    <a class="js-try-pro" href="javascript:void(0)" data-term="node-boards" data-url="http://drad.is/l/try-pro-consistency"><i class="fa fa-trello"></i> Methodology</a>
   </li>
   <li <%= "class=active" if !params[:tab] || params[:tab] == 'properties-tab' %>>
     <a href="#properties-tab" data-toggle="tab">
@@ -92,11 +92,6 @@
     <div class="inner">
       <%= render partial: 'activity' %>
     </div>
-  </div>
-
-  <div class="tab-pane inner <%= "active" if params[:tab] == "methodology-tab" %>" id="methodology-tab">
-    <h3>Methodology</h3>
-    <%= render 'nodes/show/empty_board' %>
   </div>
 
   <%= render 'console/console' %>
