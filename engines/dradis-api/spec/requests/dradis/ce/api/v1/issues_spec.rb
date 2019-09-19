@@ -120,6 +120,7 @@ describe "Issues API" do
 
       let(:submit_form) { valid_post }
       include_examples "creates an Activity", :create, Issue
+      include_examples 'sets the whodunnit', :create, Issue
 
       it "throws 415 unless JSON is sent" do
         params = { issue: { name: "Bad Issue" } }
@@ -156,6 +157,7 @@ describe "Issues API" do
       let(:submit_form) { valid_put }
       let(:model) { issue }
       include_examples "creates an Activity", :update
+      include_examples 'sets the whodunnit', :update
 
       it "throws 415 unless JSON is sent" do
         params = { issue: { text: "Bad issuet" } }
