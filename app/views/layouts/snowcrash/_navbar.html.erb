@@ -9,7 +9,7 @@
           <span class="icon-bar"></span>
         </a>
         <%= link_to current_project.name, main_app.project_path(current_project), class: 'brand' %>
-        <div class="nav-collapse" id="bs-navbar-collapse">
+        <div class="nav-collapse collapse" id="bs-navbar-collapse">
           <ul class="nav pull-right">
             <li><%= link_to main_app.project_search_path(current_project), id: 'js-search-form-toggle' do %><i class="fa fa-search fa-lg"></i><% end %>
               <%= render "layouts/snowcrash/search" %>
