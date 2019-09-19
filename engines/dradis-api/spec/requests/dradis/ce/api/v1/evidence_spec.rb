@@ -155,6 +155,7 @@ describe "Evidence API" do
 
           let(:submit_form) { post_evidence }
           include_examples "creates an Activity", :create, Evidence
+          include_examples 'sets the whodunnit', :create, Evidence
         end
 
         context "with params for an invalid evidence" do
@@ -234,6 +235,7 @@ describe "Evidence API" do
           let(:submit_form) { put_evidence }
           let(:model) { evidence }
           include_examples "creates an Activity", :update
+          include_examples 'sets the whodunnit', :update
         end
 
         context "with params for an invalid evidence" do
