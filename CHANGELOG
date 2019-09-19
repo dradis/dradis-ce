@@ -4,6 +4,7 @@ v3.15 (* 2019)
  - Removed bullet style in node modals.
  - Fix overflow issue where content would expand out of view.
  - Set the "by" attribute when using the API
+ - Fix page jump when issues list is collapsed.
 
 v3.14 (August 2019)
  - Highlight code snippets.
