@@ -75,24 +75,31 @@ body {
       right: 0;
       width: 450px;
       border-bottom-left-radius: 8px;
+      box-shadow: 0px 25px 50px -25px rgba(0,0,0,0.5);
 
       ul {
         margin-bottom: 0;
 
         li {
 
-          a:focus {
-            background: inherit;
+          a {
+            font-weight: normal;
+            margin-bottom: 0;
+
+            &:focus {
+              background: inherit;
+            }
           }
 
           a:hover,
           &.open {
-            background: $dradisCEGreen !important;
+            background: $dradisCEGreen;
             color: lighten($primaryBgColor, 40%);
 
             .fa {
               color: lighten($primaryBgColor, 40%);
             }
+
             .caret {
               border-top-color: #eee;
               border-bottom-color: #eee;
@@ -106,9 +113,64 @@ body {
           
           .form-search {
             padding: 0 1em;
+            height: 60px;
 
             &.hide {
               display: none;
+            }
+          }
+
+          &.notifications {
+
+            a {
+              color: $linkColor;
+              
+              &:hover {
+                color: $linkColorHover;
+              }
+            }
+
+            .dropdown-menu {
+              padding-bottom: 1rem;
+            }
+
+            .fa {
+              color: lighten($primaryBgColor, 40%);
+            }
+
+            .notification-container {
+              background-color: #fff;
+              border-top-left-radius: 6px;
+              border-top-right-radius: 6px;
+
+              a {
+                background: transparent;
+                padding: 0;
+              }
+    
+              .notification {
+                .notification-icon {
+                  color: #bbb;
+                }
+    
+                .title {
+    
+                  a {
+                    padding: 0;
+                  }
+                }
+              }
+            }
+  
+            .footer {
+              background-color: #fff;
+              border-bottom-left-radius: 6px;
+              border-bottom-right-radius: 6px;
+              padding-bottom: 5px;
+
+              a {
+                background: transparent;
+              }
             }
           }
         }
