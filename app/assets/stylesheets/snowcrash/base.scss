@@ -93,7 +93,7 @@ body {
 
           a:hover,
           &.open {
-            background: $dradisCEGreen;
+            background: lighten($primaryBgColor, 10%);
             color: lighten($primaryBgColor, 40%);
 
             .fa {
