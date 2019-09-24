@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dradis-template version="3">
+  <nodes>
+    <node>
+      <id>2085</id>
+      <label>10.0.0.1</label>
+      <parent-id />
+      <position>0</position>
+      <properties><![CDATA[{
+}]]></properties>
+      <type-id>0</type-id>
+      <notes />
+      <evidence />
+      <activities />
+    </node>
+  </nodes>
+  <issues />
+  <methodologies>
+    <board version="2">
+      <id>119</id>
+      <name>Board</name>
+      <node_id>2085</node_id>
+    </board>
+    <board version="2">
+      <id>120</id>
+      <name>Project Board</name>
+      <node_id></node_id>
+    </board>
+  </methodologies>
+  <categories />
+  <tags />
+  <content_blocks />
+</dradis-template>

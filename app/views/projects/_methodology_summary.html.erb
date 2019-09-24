@@ -1,31 +1,14 @@
-<% total_tasks = 0 %>
-<% completed_tasks = 0 %>
-
 <section class="inner summary-panel">
   <h2>Methodology progress</h2>
 
-  <% if @methodologies.any? %>
   <div id="methodology-chart" class="pull-left"></div>
-  <div class="methodology-summary">
-    <ul>
-      <% for methodology in @methodologies do %>
-      <li>
-        <%= methodology.name %><br/>
-        <small><%= methodology.completed_tasks.count %>/<%= methodology.tasks.count %> completed tasks</small>
-      </li>
-      <% total_tasks += methodology.tasks.count %>
-      <% completed_tasks += methodology.completed_tasks.count %>
-      <% end %>
-    </ul>
-  </div>
-  <% else %>
+  <div id='boards-summary' data-behavior='boards-summary' data-url='<%= project_boards_path(current_project) %>'></div>
+  <div id='boards-empty' class='hidden'>
     <p class="no-content">There are no methodologies in this project yet.</p>
     <div>
-      <%= link_to project_methodologies_path(current_project) do %><i class="fa fa-plus"></i> Add a testing methodology<% end %>
+      <%= link_to project_boards_path(current_project) do %>
+        <i class="fa fa-plus"></i> Add a testing methodology
+      <% end %>
     </div>
-  <% end %>
+  </div>
 </section>
-
-<% if @methodologies.any?  %>
-  <div id='methodology-chart-data' data-total='<%= total_tasks %>' data-completed='<%= completed_tasks %>'></div>
-<% end %>

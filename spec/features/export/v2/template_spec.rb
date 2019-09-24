@@ -5,7 +5,10 @@ describe 'exporting comments' do
 
   context 'issue with a comment' do
     before do
-      @issue = create(:issue, text: 'Sample issue')
+      @issue = create(:issue,
+        text: 'Sample issue',
+        node: current_project.issue_library
+      )
       @comment = create(:comment,
         content: 'Sample comment',
         commentable: @issue,
@@ -14,7 +17,10 @@ describe 'exporting comments' do
     end
 
     it 'creates the comment xml' do
-      export_options = { plugin: Dradis::Plugins::Projects }
+      export_options = {
+        plugin: Dradis::Plugins::Projects,
+        project_id: current_project.id
+      }
       exporter =
         Dradis::Plugins::Projects::Export::V2::Template.new(export_options)
 

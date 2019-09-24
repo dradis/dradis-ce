@@ -1,0 +1,33 @@
+<board>
+  <name>New Methodology v2</name>
+  <list>
+    <name>List 1</name>
+    <card>
+      <name>Task #1.1</name>
+      <description>
+        <![CDATA[
+          Description field content here.
+        ]]>
+      </description>
+    </card>
+    <card>
+      <name>Task #1.2</name>
+      <description>
+        <![CDATA[
+          Description field content here.
+        ]]>
+      </description>
+    </card>
+  </list>
+  <list>
+    <name>List 2</name>
+    <card>
+      <name>Task #2.1</name>
+      <description>
+        <![CDATA[
+          Description field content here.
+        ]]>
+      </description>
+    </card>
+  </list>
+</board>

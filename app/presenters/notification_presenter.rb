@@ -14,6 +14,8 @@ class NotificationPresenter < BasePresenter
     path_to_comment =
       if commentable.respond_to?(:node) && !commentable.is_a?(Issue)
         [current_project, commentable.node, commentable]
+      elsif commentable.is_a?(Card)
+        [current_project, commentable.board, commentable.list, commentable]
       else
         [current_project, commentable]
       end
