@@ -9,6 +9,7 @@ v3.15 (* 2019)
  - Limit project name length when viewing a project
  - Removed bullet style in node modals.
  - Fix overflow issue where content would expand out of view.
+ - Fix hamburger dropdown menu functionality.
  - Fix page jump when issues list is collapsed.
 
 v3.14 (August 2019)
