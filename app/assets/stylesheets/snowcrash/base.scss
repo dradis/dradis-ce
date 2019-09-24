@@ -39,6 +39,35 @@ body {
 
   .btn-navbar {
     margin-top: 1em;
+    background: transparent;
+    border: 1px solid lighten($primaryBgColor, 50%);
+
+    &:hover {
+      background: transparent;
+    }
+
+    .icon-bar {
+      background-color: lighten($primaryBgColor, 50%);
+    }
+
+    &.collapsed {
+      background: transparent;
+      border: 1px solid lighten($primaryBgColor, 40%);
+
+      &:hover {
+        background: transparent;
+        border: 1px solid lighten($primaryBgColor, 50%);
+
+        & .icon-bar {
+          background-color: lighten($primaryBgColor, 50%);
+        }
+      }
+
+      .icon-bar {
+        background-color: lighten($primaryBgColor, 40%);
+      }
+    }
+    
   }
 
   .brand {
