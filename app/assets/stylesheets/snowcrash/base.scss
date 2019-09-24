@@ -121,6 +121,10 @@ body {
             &:focus {
               background: inherit;
             }
+
+            .hidden-desktop {
+              display: inline-block !important;
+            }
           }
 
           a:hover,
@@ -159,6 +163,10 @@ body {
               
               &:hover {
                 color: $linkColorHover;
+              }
+
+              .hidden-desktop {
+                color: lighten($primaryBgColor, 40%);
               }
             }
 
