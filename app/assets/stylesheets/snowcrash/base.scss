@@ -109,6 +109,15 @@ body {
       border-bottom-left-radius: 8px;
       box-shadow: 0px 25px 50px -25px rgba(0,0,0,0.5);
 
+      .dropdown-menu {
+
+        a {
+          &:hover {
+            color: lighten($primaryBgColor, 50%);
+          }
+        }
+      }
+
       ul {
         margin-bottom: 0;
 
@@ -117,6 +126,7 @@ body {
           a {
             font-weight: normal;
             margin-bottom: 0;
+            color: lighten($primaryBgColor, 40%);
 
             &:focus {
               background: inherit;
@@ -124,27 +134,36 @@ body {
 
             .hidden-desktop {
               display: inline-block !important;
+              color: lighten($primaryBgColor, 40%);
+            }
+          }
+
+          &.dropdown {
+
+            &.open {
+
+              .dropdown-toggle {
+                color: lighten($primaryBgColor, 40%);
+              }
             }
           }
 
           a:hover,
           &.open {
             background: lighten($primaryBgColor, 10%);
-            color: lighten($primaryBgColor, 40%);
-
             .fa {
               color: lighten($primaryBgColor, 40%);
             }
 
             .caret {
-              border-top-color: #eee;
-              border-bottom-color: #eee;
+              border-top-color: lighten($primaryBgColor, 40%);
+              border-bottom-color: lighten($primaryBgColor, 40%);
             }
           }
 
           .caret {
-            border-top-color: #eee;
-            border-bottom-color: #eee;
+            border-top-color: lighten($primaryBgColor, 40%);
+            border-bottom-color: lighten($primaryBgColor, 40%);
           }
           
           .form-search {
