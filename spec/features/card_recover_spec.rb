@@ -71,7 +71,7 @@ describe 'Board recover', js: true do
 
       it "should be inside the project's Recovered board and list" do
         card = Card.find(@card.id)
-        board = Board.find_by(name: 'Recovered')
+        board = current_project.boards.find_by(name: 'Recovered')
         expect(card).not_to be_nil
         expect(card.board).to eq(board)
         expect(card.list).to eq(board.recovered_list)
