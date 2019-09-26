@@ -17,11 +17,12 @@
   document.addEventListener("turbolinks:load", function() {
     if ($('[data-behavior~=copy-node-label]').length) {
       $('[data-behavior~=copy-node-label]').click(function(eventData) {
-        var $nodeType = $('#node_type_id'),
-            $nodesType = $('#nodes_type_id'),
+        var $modal = $(this).parents('.modal'),
+            $nodeType = $modal.find('#node_type_id'),
+            $nodesType = $modal.find('#nodes_type_id'),
 
-            $multi = $('#nodes_list'),
-            $label = $('#node_label'),
+            $multi = $modal.find('#nodes_list'),
+            $label = $modal.find('#node_label'),
 
             multiVal = $multi.val(),
             labelVal = $label.val();
