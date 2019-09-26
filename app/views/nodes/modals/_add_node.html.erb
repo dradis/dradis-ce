@@ -21,7 +21,7 @@
     <%# we need to scope the names of the radio buttons to this specific modal
       # so that clicking a radio in the 'add child' modal won't deselect the
       # radios in the 'add branch' modal %>
-    <div class="radio">
+    <div class="radio" data-behavior="one-node">
       <label>
         <%= radio_button_tag(
           "add_#{type}_node",
@@ -32,7 +32,7 @@
       </label>
     </div>
 
-    <div class="radio" data-behavior="new-node">
+    <div class="radio" data-behavior="multi-node">
       <label>
         <%= radio_button_tag(
           "add_#{type}_node",
