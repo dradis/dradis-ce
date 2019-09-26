@@ -45,6 +45,7 @@
 
 //= require snowcrash/pages/boards
 //= require snowcrash/pages/methodologies
+//= require snowcrash/pages/nodes/new_form
 //= require snowcrash/pages/nodes/tables
 //= require snowcrash/pages/projects/boards_summary
 //= require snowcrash/pages/projects/issues_chart
