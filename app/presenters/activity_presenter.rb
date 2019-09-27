@@ -14,6 +14,8 @@ class ActivityPresenter < BasePresenter
     path_to_comment =
       if commentable.respond_to?(:node) && !commentable.is_a?(Issue)
         [current_project, commentable.node, commentable]
+      elsif commentable.is_a?(Card)
+        [current_project, commentable.board, commentable.list, commentable]
       else
         [current_project, commentable]
       end
@@ -32,6 +34,8 @@ class ActivityPresenter < BasePresenter
   def icon
     icon_css = %w{activity-icon fa}
     icon_css << case activity.trackable_type
+                when 'Board', 'List', 'Card'
+                  'fa-trello'
                 when 'Comment'
                   'fa-comment'
                 when 'Evidence'

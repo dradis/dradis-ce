@@ -12,12 +12,20 @@ class Project
   end
 
   # -- Instance Methods -----------------------------------------------------
+  def authors
+    User.all
+  end
+
   def initialize(id: 1, name: 'Dradis CE', **_attrs)
     @id   = id
     @name = name
   end
 
   def persisted?; true; end
+
+  def boards
+    Board.all
+  end
 
   def evidence
     Evidence.all
