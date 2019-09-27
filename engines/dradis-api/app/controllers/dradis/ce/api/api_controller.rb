@@ -25,7 +25,7 @@ module Dradis::CE::API
     # Set 'whodunnit' in paper trail versions to be the email address of the
     # current user
     def user_for_paper_trail
-      current_user.email if current_user
+      current_user.email
     end
 
     protected
