@@ -51,7 +51,6 @@ class KitImportJob < ApplicationJob
       return
     end
 
-
     if defined?(Dradis::Pro)
       project = Project.create(name: File.basename(project_package, '.zip'))
       if project.errors.any?
