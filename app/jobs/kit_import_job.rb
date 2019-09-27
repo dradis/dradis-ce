@@ -23,7 +23,6 @@ class KitImportJob < ApplicationJob
       import_report_template_properties
       import_rules
     end
-
   ensure
     logger.info('Worker process completed.')
     FileUtils.remove_entry temporary_dir
