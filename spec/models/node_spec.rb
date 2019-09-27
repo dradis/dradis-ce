@@ -10,6 +10,7 @@ describe Node do
     should have_many(:children).class_name('Node').dependent(:destroy)
   end
 
+  it { should have_many(:boards).dependent(:destroy) }
   it { should have_many(:notes).dependent(:destroy) }
   it { should have_many(:evidence).dependent(:destroy) }
   it { should have_many(:activities) }
@@ -106,7 +107,7 @@ describe Node do
     end
   end
 
-  it 'uses a default type ID if none provieded' do
+  it 'uses a default type ID if none provided' do
     node = Node.create(label: 'Foo')
     expect(node.type_id).to eq(Node::Types::DEFAULT)
   end

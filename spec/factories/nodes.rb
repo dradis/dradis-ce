@@ -27,7 +27,16 @@ FactoryBot.define do
               'state': 'open',
               'name': 'NTP'
             }
-          ]
+          ],
+          'services_extras': {
+            'udp/123': [
+              {
+                'source': 'nessus',
+                'id': 'some id',
+                'output': 'a message'
+              }
+            ]
+          }
         }
       }
     end

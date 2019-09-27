@@ -1,0 +1,29 @@
+<div
+  id="modal-board-edit-<%= board.id %>"
+  class="modal hide boards-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="modal-board-header"
+  aria-hidden="true"
+>
+
+  <%= simple_form_for [current_project, board] do |f| %>
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        ×
+      </button>
+      <h3 id="modal-board-header">Rename methodology</h3>
+    </div>
+
+    <div class="modal-body">
+      <input type="hidden" name="_method" value="patch" />
+      <%= f.input :name %>
+    </div>
+
+    <div class="modal-footer">
+      <input type="submit" value="Update methodology" class="btn btn-primary" />
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+  <% end %>
+
+</div>

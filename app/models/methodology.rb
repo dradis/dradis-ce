@@ -29,6 +29,10 @@ class Methodology
 
   # validates_presence_of :name
   # validates_format_of :name, :with => /\A\w+[\w\s]*\z/
+  validate :xml_syntax
+  # FIXME: uncomment when we require all created methodologies to follow
+  # v2 format (probably when all available templates are migrated)
+  # validate :current_version
 
   # For ActiveModel::Dirty
   define_attribute_methods [:name]
@@ -38,7 +42,11 @@ class Methodology
   # Returns a Pathname to location configured in the database through the
   # 'admin:paths:templates:methodologies' setting
   def self.pwd
-    @pwd ||= Pathname.new(Configuration.paths_templates_methodologies)
+    @pwd ||= begin
+      conf = Configuration.create_with(value: Rails.root.join('../../shared/templates/methodologies/').to_s).
+        find_or_create_by(name: 'admin:paths:templates:methodologies')
+      Pathname.new(conf.value)
+    end
   end
 
 
@@ -144,7 +152,7 @@ class Methodology
 
   def content
     if name_changed?
-      doc.xpath('/methodology/name/text()')[0].replace(@name)
+      doc.xpath('/*/name/text()')[0].replace(@name)
       @content = doc.to_s
       @changed_attributes.clear
     end
@@ -152,8 +160,9 @@ class Methodology
   end
 
   def name
-    @name ||= (name_node = self.doc.search('/methodology/name')[0]) ? name_node.text : 'undefined'
+    @name ||= doc.xpath('/*/name').try(:text) || 'undefined'
   end
+
   def name=(new_name)
     name_will_change! unless new_name == @name
     @name = new_name
@@ -172,15 +181,41 @@ class Methodology
     ].join('-')
   end
 
+  def version
+    @version ||= if !doc.root
+                   nil
+                 elsif doc.root[:version].nil?
+                   doc.root.name == 'board' ? 2 : 1
+                 else
+                   doc.root[:version].to_i
+                 end
+  end
 
-  # ----------------------------------------------------------- Sections, tasks
+  # ----------------------------------------------------- Sections, lists, tasks
+  def lists
+    doc.xpath('board/list').collect do |l|
+      list = List.new(name: l.at('./name').text)
+      l.xpath('./card').each do |c|
+        list.cards.build(
+          name: c.at_xpath('./name').try(:text),
+          description: c.at_xpath('./description').try(:text)
+        )
+      end
+      list
+    end
+  end
+
   def sections
     self.doc.xpath('methodology/sections/section').collect{|s| Section.new(s) }
   end
 
   # This should be replaced by a has_many association
   def tasks
-    self.sections.collect(&:tasks).flatten
+    if version == 1
+      sections.collect(&:tasks).flatten
+    elsif version == 2
+      lists.collect(&:cards).flatten
+    end
   end
 
   def completed_tasks
@@ -190,5 +225,16 @@ class Methodology
   private
   def full_path
     Methodology.pwd.join("#{self.filename}.xml")
+  end
+
+  def xml_syntax
+    xml = Nokogiri::XML(content)
+    xml.errors.each do |error|
+      errors.add(:base, error.message)
+    end
+  end
+
+  def current_version
+    errors.add(:version, 'must be 2') if version != 2
   end
 end

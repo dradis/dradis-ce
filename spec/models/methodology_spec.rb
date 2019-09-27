@@ -26,7 +26,10 @@ describe Methodology do
 
   describe "#destroy" do
     it "deletes file from disk on destroy" do
-      mt = Methodology.new(content: 'FooBar', filename: 'mt_test')
+      mt = Methodology.new(
+        content: '<foo version="2">bar</foo>',
+        filename: 'mt_test'
+      )
       mt.save
 
       filename = Methodology.pwd.join('mt_test.xml')
@@ -68,13 +71,14 @@ describe Methodology do
 
       Timecop.freeze(Time.now)
 
-      mt = Methodology.new(content: 'Simple methodology content: *kapow*!')
+      content = '<board version="2">Simple methodology content: *kapow*!</board>'
+      mt = Methodology.new(content: content)
       expect(mt.save).to be true
 
       new_methodology = Methodology.pwd.join("auto_#{Time.now.to_i}.xml")
       expect(File.exists?(Methodology.pwd)).to be true
       expect(File.exists?(new_methodology)).to be true
-      expect(File.read(new_methodology)).to eq('Simple methodology content: *kapow*!')
+      expect(File.read(new_methodology)).to eq(content)
       File.delete(new_methodology)
 
       Timecop.return
@@ -82,11 +86,14 @@ describe Methodology do
 
 
     it "saves the template contents when saving the instance" do
-      mt = Methodology.new(content: 'FooBar', filename: 'mt_test')
+      mt = Methodology.new(
+        content: '<foo version="2">bar</foo>',
+        filename: 'mt_test'
+      )
       expect(mt.save).to be true
       filename = Methodology.pwd.join('mt_test.xml')
       expect(File.exists?(filename)).to be true
-      expect(File.read(filename)).to eq('FooBar')
+      expect(File.read(filename)).to eq('<foo version="2">bar</foo>')
       File.delete(filename)
     end
   end
@@ -111,7 +118,7 @@ describe Methodology do
       methodology = Methodology.from_file('spec/fixtures/files/methodologies/webapp.xml')
       expect(methodology).to respond_to(:tasks)
       expect(methodology.tasks).to respond_to(:count)
-      expect(methodology.tasks.count).to eq(3)
+      expect(methodology.tasks.count).to eq(4)
     end
 
     it "defines a #completed_tasks method that returns the list of tasks already completed" do
@@ -123,6 +130,38 @@ describe Methodology do
       # Where is my developer pride? You let me know when you find it. Ugg!
       methodology.doc.at_xpath('//task').set_attribute('checked', 'checked')
       expect(methodology.completed_tasks.count).to eq(1)
+    end
+  end
+
+  describe '#lists' do
+    it 'defines a #lists method that returns the list of tasks across sections' do
+      methodology = Methodology.from_file('spec/fixtures/files/methodologies/v2_template.xml')
+      expect(methodology).to respond_to(:lists)
+      expect(methodology.lists).to respond_to(:count)
+      expect(methodology.lists.count).to eq(2)
+      # NOTE: ".lists" is an Array of "List" objects, we can
+      # call Array#count on it. But for each lists, the "#cards"
+      # method is an unpersisted ActiveRecord Collection, so count
+      # will always be 0 (until we call "save" on the list)
+      expect(methodology.lists.first.cards.size).to eq(2)
+      expect(methodology.lists.last.cards.size).to eq(1)
+    end
+  end
+
+  describe '#version' do
+    it 'returns 1 when not specified and root element is "methodology"' do
+      methodology = Methodology.from_file('spec/fixtures/files/methodologies/webapp.xml')
+      expect(methodology.version).to eq(1)
+    end
+
+    it 'returns 2 when not specified and root element is "board"' do
+      methodology = Methodology.from_file('spec/fixtures/files/methodologies/v2_template.xml')
+      expect(methodology.version).to eq(2)
+    end
+
+    it 'returns the version specified when available' do
+      methodology = Methodology.from_file('spec/fixtures/files/methodologies/vX_template.xml')
+      expect(methodology.version).to eq(96)
     end
   end
 end

@@ -1,0 +1,16 @@
+<% if card %>
+  <% list    = card.list %>
+  <% board   = list.board %>
+  <% project = board.project %>
+  <%= presenter.verb %> the <%= link_to card.name, [project, board, list, card] %> card
+  <% if activity.action == 'move' %>
+    in list <%= link_to card.list.name, [project, board, list] %>
+  <% end %>
+  .
+<% else %>
+  <% if activity.action == 'destroy' %>
+    deleted a card.
+  <% else %>
+    <%= presenter.verb %> a card which has since been deleted.
+  <% end %>
+<% end %>
