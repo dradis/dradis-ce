@@ -16,7 +16,7 @@
 
   document.addEventListener('turbolinks:load', function() {
     if ($('[data-behavior~=copy-node-label]').length) {
-      $('[data-behavior~=copy-node-label]').click(function(eventData) {
+      $('[data-behavior~=copy-node-label]').click(function() {
         var $modal = $(this).parents('.modal'),
             $nodeType = $modal.find('#node_type_id'),
             $nodesType = $modal.find('#nodes_type_id'),
@@ -35,4 +35,4 @@
       });
     }
   });
-}).call(this);
+})();
