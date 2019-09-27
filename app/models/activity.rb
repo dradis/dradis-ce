@@ -4,6 +4,8 @@ class Activity < ApplicationRecord
 
   belongs_to :trackable, polymorphic: true, required: false
 
+  def project=(new_project); end
+
   # NOTE: when the project importer creates activities, it will try to match
   # them to existing users based on the 'user email' field in the XML. If it
   # can't find any users with the given address, it will save user_id as '-1'.

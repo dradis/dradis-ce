@@ -1,0 +1,66 @@
+<div
+  id="modal-board-new"
+  class="modal hide boards-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="modal-board-header"
+  aria-hidden="true"
+>
+
+  <%= simple_form_for [current_project, current_project.boards.build], html: { novalidate: false } do |f| %>
+    <%= f.hidden_field(
+          :node_id,
+          value: @node.try(:id) || current_project.methodology_library.id) %>
+
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        ×
+      </button>
+      <h3 id="modal-board-header">Add new methodology</h3>
+    </div>
+
+    <div class="modal-body">
+      <div class="radio">
+        <label>
+          <%= radio_button_tag( "use_template", "no", true) %>
+          Blank methodology
+        </label>
+      </div>
+
+      <div class="radio">
+        <% @templates ||= [] %>
+        <label class="<%= @templates.empty? ? "muted" : "" %>">
+          <%= radio_button_tag("use_template", "yes", false,
+              {disabled: @templates.empty?}) %>
+          From template
+          <% if @templates.any? %>
+            <div>
+              <%= select_tag "template",
+                  options_from_collection_for_select(@templates, :id, :name) %>
+            </div>
+          <% else %>
+            <p>
+              No methodology templates defined<br>
+              Log in as admin: Templates > Methodologies
+            </p>
+          <% end %>
+          <a href="http://dradisframework.org/academy/industry/compliance/"
+             target="_blank">
+             Download more
+          </a>
+
+        </label>
+      </div>
+
+      <hr>
+
+      <%= f.input :name, required: true %>
+    </div>
+
+    <div class="modal-footer">
+      <input type="submit" value="Add methodology" class="btn btn-primary" />
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+  <% end %>
+
+</div>

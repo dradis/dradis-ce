@@ -1,0 +1,11 @@
+<ul class="breadcrumb">
+  <li>
+    <%= link_to @board.node.label, project_boards_path(current_project, node_id: @board.node_id) %>
+    <span class="divider">/</span>
+  </li>
+  <li>
+    <%= link_to "#{@board.name} - #{@list.name}", project_board_path(current_project, @board) %>
+    <span class="divider">/</span>
+  </li>
+  <li class="active"><%= @card.try!(:name) || 'New task' %></li>
+</ul>

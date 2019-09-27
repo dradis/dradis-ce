@@ -1,0 +1,12 @@
+<% content_for :title, "Edit task: #{@card.name}" %>
+
+<%= render partial: 'poller_alerts' %>
+
+<%= render partial: 'breadcrumbs' %>
+
+<div id="cards_editor">
+  <div class="inner note-text-inner">
+    <h3>Edit task</h3>
+    <%= render 'form' %>
+  </div>
+</div>

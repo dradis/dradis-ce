@@ -10,20 +10,15 @@ document.addEventListener('turbolinks:load', function(){
       width = 400 - margin.left - margin.right,
       height = 200 - margin.top - margin.bottom;
 
-    var x = d3.scale.ordinal()
-        .rangeRoundBands([0, width], .1);
+    var x = d3.scaleBand().rangeRound([0, width]);
 
-    var y = d3.scale.linear()
+    var y = d3.scaleLinear()
         .range([height, 0]);
 
-    var xAxis = d3.svg.axis()
-        .scale(x)
-        .tickSize(0)
-        .orient('bottom');
+    var xAxis = d3.axisBottom(x)
+        .tickSize(0);
 
-    var yAxis = d3.svg.axis()
-        .scale(y)
-        .orient('left')
+    var yAxis = d3.axisLeft(y)
         .tickSize(1, 1)
         .tickFormat(d3.format('.0f'))
         .ticks(2);
@@ -61,10 +56,19 @@ document.addEventListener('turbolinks:load', function(){
     // y.domain([0, 5]);
     y.domain([0, highest_y]);
 
-    svg.append('g')
+    d3.selection.prototype.last = function() {
+      return d3.select(
+          this.nodes()[this.size() - 1]
+      );
+    };
+
+    x_axis = svg.append('g')
         .attr('class', 'x axis')
         .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis);
+    x_axis.selectAll("text").style("fill", "inherit");
+    x_axis.selectAll("path").style("stroke", "none");
+    x_axis.selectAll("text").last().style("fill", "#000");
 
     // svg.append('g')
     //     .attr('class', 'y axis')
@@ -78,7 +82,7 @@ document.addEventListener('turbolinks:load', function(){
         // .attr('class', function(d){ return 'bar-' + d.letter; } )
         .attr('class', 'bar' )
         .attr('x', function(d) { return x(d.letter); })
-        .attr('width', x.rangeBand())
+        .attr('width', x.bandwidth())
         .attr('y', function(d) { return y(d.frequency); })
         .attr('height', function(d) { return height - y(d.frequency); });
 
@@ -86,7 +90,7 @@ document.addEventListener('turbolinks:load', function(){
     bars.selectAll('text')
         .data(data)
       .enter().append('text')
-        .attr('x', function(d, i) { return x(d.letter) + x.rangeBand()/2; })
+        .attr('x', function(d, i) { return x(d.letter) + x.bandwidth()/2; })
         .attr('y', function(d) { return y(d.frequency);})
         .attr('dy', -5)
         .attr('text-anchor', 'middle')
