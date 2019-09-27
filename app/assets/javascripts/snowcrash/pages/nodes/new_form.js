@@ -14,7 +14,7 @@
     }
   }
 
-  document.addEventListener("turbolinks:load", function() {
+  document.addEventListener('turbolinks:load', function() {
     if ($('[data-behavior~=copy-node-label]').length) {
       $('[data-behavior~=copy-node-label]').click(function(eventData) {
         var $modal = $(this).parents('.modal'),
