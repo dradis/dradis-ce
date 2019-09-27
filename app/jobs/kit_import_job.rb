@@ -69,7 +69,7 @@ class KitImportJob < ApplicationJob
     importer = Dradis::Plugins::Projects::Upload::Package::Importer.new(
       project_id: project.id,
       plugin: Dradis::Plugins::Projects::Upload::Package,
-      default_user_id: current_user.id
+      default_user_id: current_user.try(:id)
     )
     importer.import(file: project_package)
 
