@@ -98,9 +98,35 @@ class KitImportJob < ApplicationJob
     end
   end
 
-  def import_report_template_properties;end
+  def import_report_template_properties
+    logger.info { 'Adding properties to report template files...' }
 
-  def import_rules;end
+    (Dradis::Plugins.with_feature(:export) - [
+      Dradis::Plugins::CSV::Engine,
+      Dradis::Plugins::Projects::Engine,
+    ]).each do |plugin|
+      Dir.glob(File.join(report_templates_dir, plugin.plugin_name.to_s, '*')) do |template|
+        reports_dir = "#{temporary_dir}/kit/templates/reports"
+        basename = File.basename(template, '.*')
+        default_properties = "#{reports_dir}/#{plugin.plugin_name}/#{basename}.rb"
+        if File.exist?(default_properties)
+          load default_properties
+        else
+          ReportTemplateProperties.find_or_initialize_by(
+            template_file: File.basename(template),
+          ).update_attributes!(
+            plugin_name: plugin.plugin_name
+          )
+        end
+      end
+    end
+  end
+
+  def import_rules
+    logger.info { 'Adding Rules Engine rules...' }
+    rules_seed = "#{temporary_dir}/kit/rules_seed.rb"
+    load rules_seed if File.exist?(rules_seed)
+  end
 
   def import_templates(template_type)
     FileUtils.cp_r(
