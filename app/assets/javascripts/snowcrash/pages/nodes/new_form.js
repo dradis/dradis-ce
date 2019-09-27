@@ -1,7 +1,7 @@
 (function() {
   var copyOver = function($to, from, $typeTo, $typeFrom) {
     if ($to.val() === '' && from !== '') {
-      $to.val(from.split('\n')[0] + '\n');
+      $to.val(from.trim().split('\n')[0] + '\n');
       $typeTo.val($typeFrom.val());
 
       // The click function we're in actually takes focus when clicked. If
