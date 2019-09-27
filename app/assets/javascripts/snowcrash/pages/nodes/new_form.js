@@ -1,8 +1,8 @@
 (function() {
-  var copyOver = function($to, from, $typeTo, $typeFrom) {
-    if ($to.val() === '' && from !== '') {
-      $to.val(from.trim().split('\n')[0] + '\n');
-      $typeTo.val($typeFrom.val());
+  var copyOver = function($to, fromVal, $typeTo, typeFromVal) {
+    if ($to.val() === '' && fromVal !== '') {
+      $to.val(fromVal.trim().split('\n')[0] + '\n');
+      $typeTo.val(typeFromVal);
 
       // The click function we're in actually takes focus when clicked. If
       // we called focus within the function it gets cancelled out. We give
@@ -20,17 +20,13 @@
         var $modal = $(this).parents('.modal'),
             $nodeType = $modal.find('#node_type_id'),
             $nodesType = $modal.find('#nodes_type_id'),
-
             $multi = $modal.find('#nodes_list'),
-            $label = $modal.find('#node_label'),
-
-            multiVal = $multi.val(),
-            labelVal = $label.val();
+            $label = $modal.find('#node_label');
 
         if ($(this).find('input').val() === 'one') {
-          copyOver($label, multiVal, $nodeType, $nodesType);
+          copyOver($label, $multi.val(), $nodeType, $nodesType.val());
         } else {
-          copyOver($multi, labelVal, $nodesType, $nodeType);
+          copyOver($multi, $label.val(), $nodesType, $nodeType.val());
         }
       });
     }
