@@ -382,6 +382,44 @@ describe 'Issues pages' do
             job_hashes.map { |h| h[:args].map { |h2| h2[key] } }.flatten
           end
         end
+
+        describe 'editing evidence', js: true do
+          before do
+            issuelib = current_project.issue_library
+            @issue = create(:issue, node: issuelib)
+            @node = create(:node, :with_project)
+            @evidence = create(:evidence, node: @node, issue: @issue)
+
+            visit project_issue_path(current_project, @issue)
+            click_link('Evidence')
+            click_link('Edit')
+          end
+
+          it 'reroutes back to the issue with the evidence tab open' do
+            fill_in :evidence_content, with: ''
+            click_button 'Update Evidence'
+            expect(current_path).to eq "/projects/#{current_project.id}/issues/#{@issue.id}"
+            expect(find('li.active a[href~="#evidence-tab"]')).to_not be_nil
+          end
+        end
+
+        describe 'deleting evidence', js: true do
+          before do
+            issuelib = current_project.issue_library
+            @issue = create(:issue, node: issuelib)
+            @node = create(:node, :with_project)
+            @evidence = create(:evidence, node: @node, issue: @issue)
+
+            visit project_issue_path(current_project, @issue)
+            click_link('Evidence')
+            accept_confirm { click_link('Delete') }
+          end
+
+          it 'reroutes back to the issue with the evidence tab open' do
+            expect(current_path).to eq "/projects/#{current_project.id}/issues/#{@issue.id}"
+            expect(find('li.active a[href~="#evidence-tab"]')).to_not be_nil
+          end
+        end
       end
     end
   end
