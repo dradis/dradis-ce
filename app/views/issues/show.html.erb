@@ -15,21 +15,21 @@
 </ul>
 
 <ul class="nav nav-tabs main-tabs">
-  <li <%= "class=active" if !params[:tab] || params[:tab] == 'info-tab' %>>
+  <%= content_tag :li, class: !params[:tab] || params[:tab] == 'info-tab' ? 'active' : '' do%>
     <a href="#info-tab" data-toggle="tab">
       <%= colored_icon_for_model(@issue, 'fa-bug') %> Information
     </a>
-  </li>
-  <li <%= "class=active" if params[:tab] == 'evidence-tab' %>>
+  <% end %>
+  <%= content_tag :li, class: params[:tab] == 'evidence-tab' ? 'active' : '' do%>
     <a href="#evidence-tab" data-toggle="tab">
       <i class="fa fa-laptop"></i> Evidence <span class="badge"><%= @issue.evidence.count %></span>
     </a>
-  </li>
-  <li <%= "class=active" if params[:tab] == 'activity-tab' %>>
+  <% end %>
+  <%= content_tag :li, class: params[:tab] == 'activity-tab' ? 'active' : '' do%>
     <a href="#activity-tab" data-toggle="tab">
       <i class="fa fa-refresh"></i> Recent activity
     </a>
-  </li>
+  <% end %>
   <%= render_view_hooks 'issues/show-tabs' %>
 </ul>
 
