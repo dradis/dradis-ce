@@ -12,6 +12,8 @@ v3.15 (* 2019)
  - Set the "by" attribute for item revisions when using the API
  - Fix hamburger dropdown menu functionality.
  - Fix page jump when issues list is collapsed.
+ - Enhancement when adding new nodes to copy node label data between the single
+   and multiple node forms.
 
 v3.14 (August 2019)
  - Highlight code snippets.
