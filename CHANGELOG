@@ -9,7 +9,7 @@ v3.15 (* 2019)
  - Limit project name length when viewing a project
  - Removed bullet style in node modals.
  - Fix overflow issue where content would expand out of view.
- - Set the "by" attribute when using the API
+ - Set the "by" attribute for item revisions when using the API
  - Fix hamburger dropdown menu functionality.
  - Fix page jump when issues list is collapsed.
 
