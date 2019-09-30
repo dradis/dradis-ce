@@ -7,12 +7,12 @@ GIT
 
 GIT
   remote: https://github.com/dradis/dradis-projects.git
-  revision: d07acb17e8bb5cf933462a6db331945df25a3efa
+  revision: fbda4685fd85ff1326c48014c4832015e3778c16
   branch: master
   specs:
     dradis-projects (3.14.0)
       dradis-plugins (~> 3.7)
-      rubyzip (~> 1.2.2)
+      rubyzip
 
 PATH
   remote: engines/dradis-api
@@ -302,7 +302,7 @@ GEM
       unicode-display_width (~> 1.4.0)
     ruby-progressbar (1.10.0)
     ruby_dep (1.5.0)
-    rubyzip (1.2.3)
+    rubyzip (1.3.0)
     sanitize (5.0.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.8.0)
