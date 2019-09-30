@@ -154,7 +154,7 @@ describe "Evidence API" do
           end
 
           let(:submit_form) { post_evidence }
-          include_examples "creates an Activity", :create, Evidence
+          include_examples 'creates an Activity', :create, Evidence
           include_examples 'sets the whodunnit', :create, Evidence
         end
 
@@ -234,7 +234,7 @@ describe "Evidence API" do
 
           let(:submit_form) { put_evidence }
           let(:model) { evidence }
-          include_examples "creates an Activity", :update
+          include_examples 'creates an Activity', :update
           include_examples 'sets the whodunnit', :update
         end
 

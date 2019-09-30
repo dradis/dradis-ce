@@ -4,7 +4,6 @@ module Dradis::CE::API
 
     before_action :api_authentication_required
     before_action :json_required, only: [:create, :update]
-
     before_action :set_paper_trail_whodunnit
 
     rescue_from ActionController::ParameterMissing do |exception|
