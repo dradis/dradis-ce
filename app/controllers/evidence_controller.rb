@@ -125,9 +125,7 @@ class EvidenceController < NestedNodeResourceController
           # since the evidence does not exist anymore. That's why we check the referrer here.
           referrer_path = URI(request.referrer).tap { |u| u.query = nil }.to_s
           if !referrer_path || referrer_path == project_node_evidence_url(current_project, @node, @evidence)
-            redirect_to project_node_path(current_project, @node), notice: notice
-          elsif referrer_path == project_node_path(current_project, @node)
-            redirect_to referrer_path, notice: notice
+            redirect_to project_node_path(current_project, @node, tab: 'evidence-tab'), notice: notice
           else
             redirect_to "#{referrer_path}?tab=evidence-tab", notice: notice
           end
