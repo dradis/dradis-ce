@@ -21,12 +21,6 @@ module Dradis::CE::API
     # No CSRF protection for the wicked!
     protect_from_forgery with: :null_session
 
-    # Set 'whodunnit' in paper trail versions to be the email address of the
-    # current user
-    def user_for_paper_trail
-      current_user.email
-    end
-
     protected
     # def ssl_configured?
     #   !Rails.env.development?
@@ -54,6 +48,12 @@ module Dradis::CE::API
           description: "A Content-Type header set to 'application/json' must be sent for this request"
         }, status: 415
       end
+    end
+
+    # Set 'whodunnit' in paper trail versions to be the email address of the
+    # current user
+    def user_for_paper_trail
+      current_user.email
     end
 
     # ---------------------------------------------------------- Authentication
