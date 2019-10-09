@@ -78,7 +78,6 @@ body {
     margin: 0;
     text-shadow: 0 0 0;
     letter-spacing: -0.4px;
-    min-width: 145px;
     max-width: calc(100% - 810px);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -86,7 +85,7 @@ body {
 
     @media screen and (max-width: 767px) {
       padding-left: 20px;
-      max-width: calc(100% - 80px);
+      max-width: calc(100% - 95px);
     }
 
     @media screen and (min-width: 768px) and (max-width: 979px) {
