@@ -16,19 +16,19 @@
 
 <ul class="nav nav-tabs main-tabs">
   <%= content_tag :li, class: !params[:tab] || params[:tab] == 'info-tab' ? 'active' : '' do%>
-    <a href="#info-tab" data-toggle="tab">
+    <%= link_to project_issue_path(current_project, @issue, tab: 'info-tab') do %>
       <%= colored_icon_for_model(@issue, 'fa-bug') %> Information
-    </a>
+    <% end %>
   <% end %>
   <%= content_tag :li, class: params[:tab] == 'evidence-tab' ? 'active' : '' do%>
-    <a href="#evidence-tab" data-toggle="tab">
+    <%= link_to project_issue_path(current_project, @issue, tab: 'evidence-tab') do %>
       <i class="fa fa-laptop"></i> Evidence <span class="badge"><%= @issue.evidence.count %></span>
-    </a>
+    <% end %>
   <% end %>
   <%= content_tag :li, class: params[:tab] == 'activity-tab' ? 'active' : '' do%>
-    <a href="#activity-tab" data-toggle="tab">
+    <%= link_to project_issue_path(current_project, @issue, tab: 'activity-tab') do %>
       <i class="fa fa-refresh"></i> Recent activity
-    </a>
+    <% end %>
   <% end %>
   <%= render_view_hooks 'issues/show-tabs' %>
 </ul>
