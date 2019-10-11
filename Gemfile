@@ -80,7 +80,7 @@ gem 'json', '1.8.6'
 gem 'nokogiri', '1.10.4'
 
 # MySQL backend
-gem 'mysql2', '~> 0.5.1'
+# gem 'mysql2', '~> 0.5.1'
 
 # actionpack depends on rails-html-sanitizer, which has an XSS vulnerability
 # before 1.0.4, so make sure we're using 1.0.4+:
