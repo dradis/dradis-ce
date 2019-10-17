@@ -102,7 +102,7 @@ class Node < ApplicationRecord
   end
 
   def parent_node
-    if self.parent.nil?
+    if self.parent.nil? || self.parent.project.id != self.project.id
       errors.add(:parent_id, 'is missing/invalid.')
       return false
     end
