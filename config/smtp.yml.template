@@ -1,0 +1,20 @@
+default: &default
+  default_url_options:
+    host: example.com
+  smtp_settings:
+    address:               smtp.gmail.com
+    port:                  587
+    domain:                gmail.com
+    user_name:             <user_name>
+    password:              <password>>
+    authentication:        plain
+    enable_starttls_auto:  true
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
