@@ -177,6 +177,7 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.string "password_hash"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "preferences"
   end
 
   create_table "versions", force: :cascade do |t|
