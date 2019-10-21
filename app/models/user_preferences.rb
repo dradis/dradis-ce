@@ -14,8 +14,16 @@
 
 class UserPreferences
   class InvalidTourException < Exception; end
+  include ActiveModel::Validations
 
-  VALID_TOURS = [:first_sign_in, :projects_show]
+  VALID_TOURS = %i[first_sign_in projects_show]
+  DIGEST_FREQUENCIES = %i[none instant daily].freeze
+
+  validates :digest_frequency,
+    inclusion: {
+      in: DIGEST_FREQUENCIES,
+      digest_frequencies: "'#{DIGEST_FREQUENCIES.join("', '")}'"
+    }
 
   # -- Class Methods ----------------------------------------------------------
   # Used for `serialize` method in ActiveRecord
@@ -52,14 +60,18 @@ class UserPreferences
   # -- Instance Methods -------------------------------------------------------
 
   # Preferences:
-  #   :tours - This setting stores a dictionary of all the tours this user has
-  #            seen. Since we can have multiple versions of each tour we need
-  #            to be able to track what was the last version we presented to
-  #            them. See TourRegistry class.
-  attr_accessor :tours
+  #   tours - This setting stores a dictionary of all the tours this user has
+  #           seen. Since we can have multiple versions of each tour we need
+  #           to be able to track what was the last version we presented to
+  #           them. See TourRegistry class.
+  #
+  #   digest_frequency - A user preference for how often they wish to receive
+  #                      notification emails.
+  attr_accessor :tours, :digest_frequency
 
   def initialize(args={})
     @tours = Hash.new { |hash, key| hash[key] = '0' }
+    @digest_frequency = :none
 
     args.each do |key, value|
       if key.to_s =~ /\Atour_([\w_]*)\z/

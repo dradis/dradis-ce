@@ -20,4 +20,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activemodel:
+    errors:
+      models:
+        user_preferences:
+          attributes:
+            digest_frequency:
+              inclusion: "'%{value}' is not a valid digest frequency. Valid values are %{digest_frequencies}"
