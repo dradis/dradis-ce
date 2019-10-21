@@ -71,7 +71,7 @@ class UserPreferences
 
   def initialize(args={})
     @tours = Hash.new { |hash, key| hash[key] = '0' }
-    @digest_frequency = :none
+    @digest_frequency = :daily
 
     args.each do |key, value|
       if key.to_s =~ /\Atour_([\w_]*)\z/
