@@ -29,7 +29,7 @@
     </div>
 
     <div class="content">
-      <%= simple_format(h(comment.content)) %>
+      <%= simple_format(comment_avatars(h(comment.content))) %>
     </div>
   </div>
 <% end %>
