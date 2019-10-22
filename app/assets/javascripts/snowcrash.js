@@ -14,6 +14,8 @@
 //= require clipboard
 //= require tribute
 
+//= require vendor/stupidtable
+
 //= require cable
 
 //= require shared/console_updater
