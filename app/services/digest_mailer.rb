@@ -29,7 +29,9 @@ class DigestMailer
       unread.
       newest
 
-    NotificationMailer.with(user: user, notifications: notifications).instant
+    NotificationMailer.with(user: user, notifications: notifications).
+      send(type).
+      deliver_now
   end
 
 
