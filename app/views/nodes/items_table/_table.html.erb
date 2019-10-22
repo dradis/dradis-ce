@@ -4,7 +4,12 @@
       <tr>
         <th></th>
         <% columns.each do |column| %>
-          <th data-column="<%= column.downcase %>"><%= column %></th>
+          <th
+            data-column="<%= column.downcase %>"
+            data-sort="<%= %w{Created Updated}.include?(column) ? 'int' : 'string' %>"
+            >
+            <%= column %>
+          </th>
         <% end %>
       </tr>
     </thead>
@@ -13,29 +18,32 @@
         <tr data-id="<%= item.id %>">
           <td class="column-checkbox"><%= check_box_tag dom_id(item, :checkbox), item.id, false, class: 'js-multicheck' %></td>
           <% columns.each do |column| %>
-          <td>
-            <%=
+            <%
+            sort, display =
             case column
             when 'Title'
-              link_to([@node.project, @node, item]) do
-                icon = ''
-                if item.is_a?(Evidence)
-                  icon =
-                    colored_icon_for_model(item, 'fa-flag', 'list-item-icon')
+              [
+                item.title,
+                link_to([@node.project, @node, item]) do
+                  icon = ''
+                  if item.is_a?(Evidence)
+                    icon =
+                      colored_icon_for_model(item, 'fa-flag', 'list-item-icon')
+                  end
+                  icon + ' ' + item.title
                 end
-                icon + ' ' + item.title
-              end
+              ]
             when 'Created'
-              local_time_ago(item.created_at)
+              [item.created_at.to_i, local_time_ago(item.created_at)]
             when 'Created by'
-              item.author
+              [item.author, item.author]
             when 'Updated'
-              local_time_ago(item.updated_at)
+              [item.updated_at.to_i, local_time_ago(item.updated_at)]
             else
-              item.fields.fetch(column, '')
+              [item.fields.fetch(column, ''), item.fields.fetch(column, '')]
             end
             %>
-          </td>
+            <td data-sort-value="<%= sort %>"><%= display %></td>
           <% end %>
           <td class="column-actions">
             <%= link_to [:edit, @node.project, @node, item] do %>
