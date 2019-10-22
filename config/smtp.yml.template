@@ -1,6 +1,6 @@
 default: &default
   default_url_options:
-    host: example.com
+    host: dradis-pro.dev
   smtp_settings:
     address:               smtp.gmail.com
     port:                  587
