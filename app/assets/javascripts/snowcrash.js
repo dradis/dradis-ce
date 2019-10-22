@@ -9,7 +9,7 @@
 //= require jquery-fileupload
 //= require jquery-hotkeys
 //= require bootstrap
-//= require d3
+//= require d3-4.0.0
 //= require local-time
 //= require clipboard
 //= require tribute
@@ -18,6 +18,7 @@
 
 //= require cable
 
+//= require shared/charts
 //= require shared/console_updater
 //= require shared/items_table
 
@@ -44,8 +45,10 @@
 // require snowcrash/modules/tour
 //= require snowcrash/modules/uploads
 
+//= require snowcrash/pages/boards
 //= require snowcrash/pages/methodologies
+//= require snowcrash/pages/nodes/new_form
 //= require snowcrash/pages/nodes/tables
-//= require snowcrash/pages/projects/methodologies_chart
+//= require snowcrash/pages/projects/boards_summary
 //= require snowcrash/pages/projects/issues_chart
 //= require snowcrash/pages/revisions

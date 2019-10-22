@@ -37,7 +37,7 @@
             <% end %>
             <%= link_to [current_project, @issue],
                   class: 'action-link text-error',
-                  data: { confirm: 'Are you sure?' },
+                  data: { confirm: "Are you sure?\n\nProceeding will delete this issue and any associated evidence." },
                   method: :delete do %>
               <i class="fa fa-trash"></i> Delete
             <% end %> -

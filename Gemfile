@@ -77,7 +77,7 @@ gem 'bcrypt',   '3.1.12'
 gem 'json', '1.8.6'
 
 # XML manipulation
-gem 'nokogiri', '1.10.3'
+gem 'nokogiri', '1.10.4'
 
 # MySQL backend
 gem 'mysql2', '~> 0.5.1'
@@ -206,13 +206,13 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 3.13', github: 'dradis/dradis-plugins'
+gem 'dradis-plugins', github: 'dradis/dradis-plugins', branch: :master
 
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 3.13', github: 'dradis/dradis-projects'
+gem 'dradis-projects', github: 'dradis/dradis-projects', branch: :master
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)

@@ -13,7 +13,7 @@ document.addEventListener "turbolinks:load", ->
   $('.jquery-upload').fileupload
     dropZone: $('#drop-zone')
     destroy: (e, data) ->
-      if confirm('Are you sure?')
+      if confirm('Are you sure?\n\nProceeding will delete this attachment from the associated node.')
         $.blueimp.fileupload.prototype.options.destroy.call(this, e, data)
 
     paste: (e, data)->
@@ -103,6 +103,7 @@ document.addEventListener "turbolinks:load", ->
         when 'try-pro' then 'Upgrade to Dradis Pro'
         when 'word-reports' then '[<span>Dradis Pro feature</span>] Custom Word reports'
         when 'excel-reports' then '[<span>Dradis Pro feature</span>] Custom Excel reports'
+        when 'node-boards' then '[<span>Dradis Pro feature</span>] Node-level methodologies'
 
       $modal.find('.modal-header h3').html(title)
     else
@@ -179,5 +180,6 @@ document.addEventListener "turbolinks:load", ->
     $('[data-behavior~=collapse-collection]').click ->
       $this = $(this)
       $this.find('[data-behavior~=toggle-chevron]').toggleClass('fa-chevron-down fa-chevron-up')
-      if $('[data-behavior~=import-box]').length
-        $('[data-behavior~=import-box]').find("input[type='text']:first").focus()
+
+      if $this.is('[data-behavior~=import-box]')
+        $($this.data('target')).find("input[type='text']:first").focus()

@@ -1,5 +1,22 @@
-v3.14 (#### 2019)
+v3.15 (* 2019)
+ - Methodologies v2:
+   - Kanban-style boards replaced the checklists
+   - Tasks can move between lists
+   - Assign tasks to different team members
+   - Keep Notes and information on each task
+   - Export Methodology details into your reports
+ - Fix node merging bug when `services_extras` properties are present
+ - Limit project name length when viewing a project
+ - Removed bullet style in node modals.
+ - Fix overflow issue where content would expand out of view.
+ - Fix hamburger dropdown menu functionality.
+ - Fix page jump when issues list is collapsed.
+ - Enhancement when adding new nodes to copy node label data between the single
+   and multiple node forms.
+
+v3.14 (August 2019)
  - Highlight code snippets.
+ - Collapsable sidebar in issues
  - Added Node merging feature
  - All tables can be sorted by column
 

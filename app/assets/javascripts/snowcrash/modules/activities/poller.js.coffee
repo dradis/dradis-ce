@@ -16,21 +16,38 @@ class @ActivitiesPoller
   POLLING_INTERVAL_MS = 10000
 
   @init: ($poller)->
-    @initialized = true
-    # Current controller name and action:
-    @action      = $poller.data("action")
-    @controller  = $poller.data("controller")
+    @initialized  = true
+    # Current action name
+    @action       = $poller.data("action")
+    # Current board, if there is one. This might not be present.
+    @boardId      = $poller.data('board-id')
+    # Current board name, if there is one. This might not be present.
+    @boardName    = $poller.data('board-name')
+    # Current board path, if there is one. This might not be present.
+    @boardPath    = $poller.data('board-path')
+    # Current boards path
+    @boardsPath   = $poller.data('boards-path')
+    # Current card, if there is one. This might not be present.
+    @cardId       = $poller.data('card-id')
+    # Current card path, if there is one. This might not be present.
+    @cardPath     = $poller.data('card-path')
+    # Current controller name
+    @controller   = $poller.data("controller")
+    # Current list, if there is one. This might not be present.
+    @listId       = $poller.data('list-id')
+    # Current list name, if there is one. This might not be present.
+    @listName     = $poller.data('list-name')
     # The ID of the Note, Node, Evidence etc that we're currently
     # viewing/editing (if there is one):
-    @modelId     = $poller.data("id")
+    @modelId      = $poller.data("id")
     # Current node, if there is one. (If we're looking at a Note or Evidence
     # this will be the ID of the parent node). This might not be present,
     # e.g. on projects#show or the import/export pages.
-    @nodeId      = $poller.data('node-id')
-    @url         = $poller.data('url')
+    @nodeId       = $poller.data('node-id')
+    @url          = $poller.data('url')
     # Unix timestamp integer of the last time the poller was called. (We need
     # to load all relevant activities which were created since this time)
-    @lastPoll    = $poller.data('last-poll')
+    @lastPoll     = $poller.data('last-poll')
     unless @url? && @action? && @controller?
       throw "Activity poller not configured correctly"
     @
@@ -173,6 +190,126 @@ class @ActivitiesPoller
       @_showEvidenceDeletedAlert()
 
 
+  # ------ CARDS ------
+
+  @addCard: (listId, boardId, linkForSidebar) ->
+    if @controller == 'cards' && @listId == listId # card added to current list
+      @_addLink('tasks', linkForSidebar)
+
+    else if @_currentlyViewingBoard(boardId)
+      @_refreshBoard(boardId)
+
+
+  @deleteCard: (cardId) ->
+    if @controller == 'cards' # viewing cards, a card was deleted
+      $link = @_findCardLink(cardId)
+      if $link.length # if the card was on current list (link present) remove it
+        @_removeCardLink($link)
+      if @_currentlyViewingCard(cardId) # if it was the current card, warn
+        @_showCardDeletedAlert()
+
+    else if @controller in ['boards', 'nodes']
+      $link = $(".card[data-card-id='#{cardId}']")
+      if $link.length
+        $link.remove()
+
+
+  @updateCard: (cardId, listId, boardId, linkForSidebar) ->
+    if @controller == 'cards' # viewing cards, a card was moved
+      $link = @_findCardLink(cardId)
+      if @listId == listId # if card updated/moved in current list
+        if !$link.length # if sidebar link not yet present, add it
+          @_addLink('tasks', linkForSidebar)
+        else
+          $link.replaceWith(linkForSidebar)
+      else # card updated/moved in another list
+        if $link.length # if sidebar link present, remove it
+          @_removeCardLink($link)
+
+      if @_currentlyViewingCard(cardId) # if it was the current card
+        if @action == 'show' # update card when viewing it
+          @_refreshCard(cardPath)
+        else # warn if editing it
+          message =
+            "<p>
+              <strong>Warning</strong>. This task has been updated by another user
+              since you started viewing it. Check its most recent version
+              <strong><a href='#{cardPath}'>here</a></strong>.
+            </p>"
+          $('#card-updated-alert').html(message)
+          $('#card-updated-alert').show()
+
+    else if @_currentlyViewingBoard(boardId)
+      @_refreshBoard(boardId)
+
+
+  # ------ BOARDS ------
+
+  @deleteBoard: (boardId) ->
+    if @controller in ['cards', 'nodes'] && boardId == @boardId
+        @_showBoardDeletedAlert()
+
+    else if @controller == "boards"
+      if @action == "index"
+        $board = $("li.board-list-item[data-board-id='#{boardId}']")
+        if $board.length
+          $board.remove()
+      else if @_currentlyViewingBoard(boardId)
+        @_showBoardDeletedAlert()
+
+  @updateBoard: (boardId, boardName) ->
+    if @controller == 'boards'
+      if @action == 'index'
+        $board = $("li.board-list-item[data-board-id='#{boardId}']")
+        if $board.length
+          $board.find('.board-tile-details-name').html(boardName)
+      else if @_currentlyViewingBoard(boardId)
+        document.title = boardName
+        $('#view-content h1').html(boardName)
+        $('ul.breadcrumb li:nth-child(2)').html(boardName)
+
+    if @controller == 'nodes' && @_currentlyViewingBoard(boardId)
+        $('[data-behavior~=board-name]').html(boardName)
+
+    else if @controller == 'cards' && boardId == @boardId
+      if @action == 'show'
+        @_refreshCard()
+      else
+        $("ul.breadcrumb li:nth-child(2) a").html("#{boardName} - #{@listName}")
+
+
+  @addBoard: (boardId) ->
+    if @controller == "boards" && @action == "index"
+      @_refreshBoardIndex()
+
+
+  # ------ LISTS ------
+
+  @deleteList: (listId) ->
+    if @controller == 'cards' && listId == @listId
+      @_showListDeletedAlert()
+
+    else if @controller in ['boards', 'nodes']
+      $list = $("li.list[data-list-id='#{listId}']")
+      if $list.length
+        $list.remove()
+
+
+  @updateList: (listId, boardId, listName) ->
+    if @_currentlyViewingBoard(boardId)
+      @_refreshBoard(boardId)
+    else if @controller == 'cards' && @listId == listId
+      if @action == 'show'
+        @_refreshCard(@cardId, listId, boardId)
+      else
+        $("ul.breadcrumb li:nth-child(2) a").html("#{@boardName} - #{listName}")
+
+
+  @addList: (listId, boardId) ->
+    if @_currentlyViewingBoard(boardId)
+      @_refreshBoard(boardId)
+
+
   # ------ COMMENTS ------
 
   @addComment: (commentableId, content) ->
@@ -204,6 +341,21 @@ class @ActivitiesPoller
     $("##{selector} .placeholder").hide()
 
 
+  @_removeCardLink: (link) ->
+    link.remove()
+    if ($('#tasks .list-item').size() == 1)
+      $('#tasks .placeholder').slideDown(300)
+
+
+  @_currentlyViewingBoard: (boardId) ->
+    (@controller == "boards" && @modelId == boardId) ||
+    (@controller == "nodes" && @boardId == boardId)
+
+
+  @_currentlyViewingCard: (cardId) ->
+    @controller == "cards" && @modelId == cardId
+
+
   @_currentlyViewingEvidence: (evidenceId) ->
     @controller == "evidence" && @modelId == evidenceId
 
@@ -231,6 +383,31 @@ class @ActivitiesPoller
     $("#evidence_#{evidenceId}_link")
 
 
+  @_findCardLink: (cardId) ->
+    $("#card_#{cardId}_link")
+
+
+  @_refreshBoard: (boardId) ->
+    # FIXME: use Turbolinks.visit("...") and a turbolinks event ?
+    $.get @boardPath, (html) ->
+      $("ul.board[data-board-id='#{boardId}']").replaceWith(html)
+      $(document).trigger 'sortable:init'
+
+
+  @_refreshBoardIndex: () ->
+    # FIXME: use Turbolinks.visit("...") and a turbolinks event ?
+    $.get @boardsPath, (html) ->
+      $("ul.board-list").replaceWith(html)
+      $(document).trigger 'sortable:init'
+
+
+  @_refreshCard: (cardPath = @cardPath) ->
+    # FIXME: use Turbolinks.visit("...") and a turbolinks event?
+    $.get cardPath, (html) ->
+      $("#js-card").replaceWith(html)
+      $(document).trigger 'sortable:init'
+
+
   @_showEvidenceDeletedAlert: ->
     $("#evidence-updated-alert").hide()
     $("#evidence-deleted-alert").show()
@@ -243,3 +420,16 @@ class @ActivitiesPoller
 
   @_showNodeDeletedAlert: ->
     $('#node-deleted-alert').show()
+
+
+  @_showBoardDeletedAlert: ->
+    $("#board-deleted-alert").show()
+
+
+  @_showCardDeletedAlert: ->
+    $("#card-updated-alert").hide()
+    $("#card-deleted-alert").show()
+
+
+  @_showListDeletedAlert: ->
+    $("#list-deleted-alert").show()

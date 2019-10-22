@@ -18,10 +18,11 @@ class Node < ApplicationRecord
   acts_as_tree counter_cache: true, order: :label
 
   # -- Relationships --------------------------------------------------------
-  has_many :notes, dependent: :destroy
+  has_many :activities, as: :trackable
+  has_many :boards, dependent: :destroy
   has_many :evidence, dependent: :destroy
   has_many :issues, -> { distinct }, through: :evidence
-  has_many :activities, as: :trackable
+  has_many :notes, dependent: :destroy
 
   def project
     # dummy project; this makes Node's interface more similar to how it is

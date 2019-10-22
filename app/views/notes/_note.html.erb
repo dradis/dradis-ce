@@ -19,7 +19,7 @@
 
     <%= link_to [@node.project, @node, note],
           method: :delete,
-          data: { confirm: 'Are you sure?' },
+          data: { confirm: "Are you sure?\n\nProceeding will delete this note from the associated node." },
           class: 'list-item-action-delete' do %>
       <i class="fa fa-trash"></i> Delete
     <% end %>

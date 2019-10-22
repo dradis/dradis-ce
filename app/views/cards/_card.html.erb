@@ -1,0 +1,28 @@
+<%
+  item_css = ['list-item']
+  item_css << ' active' if @card == card
+%>
+
+<%= content_tag :div, id: "#{dom_id(card)}_link", class: item_css.join do %>
+
+  <div class="expansion-container">
+    <%= link_to project_board_list_card_path(current_project, @board, @list, card) do %>
+      <i class="fa fa-address-card-o list-item-icon"></i>
+      <%= card.name %>
+    <% end %>
+  </div>
+
+  <div class="list-item-actions">
+    <%= link_to edit_project_board_list_card_path(current_project, @board, @list, card), class:'list-item-action-edit' do %>
+      <i class="fa fa-pencil"></i> Edit
+    <% end %>
+
+    <%= link_to [current_project, @board, @list, card],
+          method: :delete,
+          data: { confirm: "Are you sure?\n\nProceeding will delete this card from the task list." },
+          class: 'list-item-action-delete' do %>
+      <i class="fa fa-trash"></i> Delete
+    <% end %>
+  </div>
+
+<% end %>

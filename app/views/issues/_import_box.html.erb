@@ -5,7 +5,7 @@
 
         <%= link_to 'javascript:void(0)', 
           class: 'import-toggle', 
-          data: { toggle: 'collapse', target: '#import-box', behavior: 'collapse-collection' } do %>
+          data: { toggle: 'collapse', target: '#import-box', behavior: 'collapse-collection import-box' } do %>
           <i class="fa fa-chevron-down" data-behavior="toggle-chevron"></i>
         <% end %>
       </div>
@@ -14,7 +14,7 @@
   </div>
 </div>
 
-<%= content_tag :div, class: 'import-box collapse', id: 'import-box', data: { behavior: 'import-box' } do %>
+<%= content_tag :div, class: 'import-box collapse', id: 'import-box' do %>
   <% if Dradis::Plugins::with_feature(:import).empty? %>
     <p>
       Connect Dradis to a library of issue descriptions so you don't have to
