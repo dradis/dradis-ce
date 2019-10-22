@@ -17,7 +17,7 @@ class UserPreferences
   include ActiveModel::Validations
 
   VALID_TOURS = %i[first_sign_in projects_show]
-  DIGEST_FREQUENCIES = %i[none instant daily].freeze
+  DIGEST_FREQUENCIES = %w[none instant daily].freeze
 
   validates :digest_frequency,
     inclusion: {
@@ -71,7 +71,7 @@ class UserPreferences
 
   def initialize(args={})
     @tours = Hash.new { |hash, key| hash[key] = '0' }
-    @digest_frequency = :daily
+    @digest_frequency = 'daily'
 
     args.each do |key, value|
       if key.to_s =~ /\Atour_([\w_]*)\z/
