@@ -82,4 +82,25 @@ describe UserPreferences do
       expect(subject.last_tour_rspec4).to eq('2')
     end
   end
+
+  context '#digest_frequency' do
+    it 'is valid with pre-defined values' do
+      described_class::DIGEST_FREQUENCIES.each do |setting|
+        subject.digest_frequency = setting
+        expect(subject).to be_valid
+      end
+    end
+
+    it 'is not valid with non-defined values' do
+      subject.digest_frequency = 'notvalid'
+      expect(subject).to be_invalid
+    end
+
+    it 'does not accept pre-defined values symbols' do
+      described_class::DIGEST_FREQUENCIES.each do |setting|
+        subject.digest_frequency = setting.to_sym
+        expect(subject).to be_invalid
+      end
+    end
+  end
 end
