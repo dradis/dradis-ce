@@ -21,7 +21,7 @@
           <td class="column-checkbox"><%= check_box_tag dom_id(issue, :checkbox), issue.id, false, class: 'js-multicheck', data: { url: project_issue_path(current_project, issue, format: :json) } %></td>
           <% @columns.each do |column| %>
             <%
-            sort, display =
+             sort, display =
              case column
              when 'Title'
                [issue.title, link_to(issue.title, [current_project, issue])]
