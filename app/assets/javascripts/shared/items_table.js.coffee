@@ -103,6 +103,8 @@ class @ItemsTable
     else
       console.log "The browser doesn't support local storage of settings."
 
+    @sortData ||= { column: 1, direction: 'asc' }
+
   resetToolbar: =>
     $("#{@tableId} .js-items-table-actions").css('display', 'none')
     $("#{@tableId} .js-items-select-all #select-all").prop('checked', false)
