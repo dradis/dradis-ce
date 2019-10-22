@@ -23,4 +23,11 @@ module AvatarHelper
       ) + (include_name ? ' ' + user.email : '')
     end
   end
+
+  def comment_avatars(comment)
+    comment.gsub(/@\w*@\w*\.\w*/) do |capture|
+      user = User.find_by(email: capture[1..-1])
+      user ? avatar_image(user, size: 20, include_name: true) : capture
+    end
+  end
 end
