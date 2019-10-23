@@ -25,9 +25,15 @@ module AvatarHelper
   end
 
   def comment_avatars(comment)
-    comment.gsub(/@\w*@\w*\.\w*/) do |capture|
-      user = User.find_by(email: capture[1..-1])
-      user ? avatar_image(user, size: 20, include_name: true) : capture
+    # Match any string that starts with an @ has another @ and ends with whitespace
+    emails = comment.scan(/@(\S*@\S*)\s/).flatten.uniq
+    users = current_project.authors.where(email: emails)
+
+    replacement_rules = users.each_with_object({}) do |user, hash|
+      hash['@' + user.email] = avatar_image(user, size: 20, include_name: true)
     end
+
+    matcher = /#{users.map { |user| '@' + user.email }.join('|')}/
+    comment.gsub(matcher, replacement_rules)
   end
 end
