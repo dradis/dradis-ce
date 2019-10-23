@@ -17,6 +17,8 @@ v3.15 (* 2019)
    scrolled.
  - Fix bug that prevents the mentions dialog from appearing after navigating
    through the app.
+ - Fixed elongated avatar images so they are round once again.
+ - Added avatar images to mentions in comments.
 
 v3.14 (August 2019)
  - Highlight code snippets.
