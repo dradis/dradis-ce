@@ -1,14 +1,15 @@
 default: &default
   default_url_options:
-    host: dradis-framework.dev
+    host:         dradis-framework.dev
+    script_name:  ''
   smtp_settings:
-    address:               smtp.gmail.com
-    port:                  587
-    domain:                gmail.com
-    user_name:             <user_name>
-    password:              <password>>
-    authentication:        plain
-    enable_starttls_auto:  true
+    address:               ''
+    port:                  ''
+    domain:                ''
+    user_name:             ''
+    password:              ''
+    authentication:        ''
+    enable_starttls_auto:  ''
 
 development:
   <<: *default
