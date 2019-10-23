@@ -36,4 +36,8 @@ module AvatarHelper
     matcher = /#{users.map { |user| '@' + user.email }.join('|')}/
     comment.gsub(matcher, replacement_rules)
   end
+
+  def comment_formatter(comment)
+    simple_format(comment_avatars(h(comment)))
+  end
 end
