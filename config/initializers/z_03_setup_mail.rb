@@ -1,5 +1,5 @@
 # Defaults
-ActionMailer::Base.default_url_options[:host] = 'dradis-pro.dev'
+ActionMailer::Base.default_url_options[:host] = 'dradis-framework.dev'
 ActionMailer::Base.default_url_options[:script_name] = '' if Rails.env.production?
 
 config_path = Rails.root.join('config/smtp.yml')
