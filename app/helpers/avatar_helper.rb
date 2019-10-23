@@ -30,7 +30,7 @@ module AvatarHelper
     users = current_project.authors.where(email: emails)
 
     replacement_rules = users.each_with_object({}) do |user, hash|
-      hash['@' + user.email] = avatar_image(user, size: 20, include_name: true)
+      hash['@' + user.email] = avatar_image(user, size: 20, include_name: true, class: 'gravatar gravatar-inline')
     end
 
     matcher = /#{users.map { |user| '@' + user.email }.join('|')}/
