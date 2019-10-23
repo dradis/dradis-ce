@@ -19,7 +19,8 @@ module AvatarHelper
         data: { fallback_image: fallback_image },
         title: title,
         height: size,
-        width: size
+        width: size,
+        style: "width: #{size}px; height: #{size}px"
       ) + (include_name ? ' ' + user.email : '')
     end
   end
@@ -38,6 +39,6 @@ module AvatarHelper
   end
 
   def comment_formatter(comment)
-    simple_format(comment_avatars(h(comment)))
+    comment_avatars(simple_format(h(comment))).html_safe
   end
 end

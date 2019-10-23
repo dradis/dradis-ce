@@ -88,7 +88,8 @@ class ActivityPresenter < BasePresenter
         class: 'gravatar',
         data: { fallback_image: image_path('logo_small.png') },
         title: activity.user,
-        width: size
+        width: size,
+        style: "width: #{size}px; height: #{size}px"
       )
     else
       h.image_tag 'logo_small.png', width: size, alt: 'This user has been deleted from the system'
