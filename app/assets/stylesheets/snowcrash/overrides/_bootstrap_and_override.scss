@@ -79,3 +79,13 @@ select {
     @include button($orange);
   }
 }
+
+.table thead:first-child tr:first-child th {
+  cursor: pointer;
+  position: relative;
+
+  .arrow {
+    float: right;
+    position: absolute;
+  }
+}
