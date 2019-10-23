@@ -138,7 +138,9 @@
   }
 
   &.gravatar-inline {
-    margin-bottom: -3px;
+    margin: 0 0 -3px 0;
+    float: none;
+    white-space: nowrap;
   }
 }
 
