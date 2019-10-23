@@ -12,4 +12,7 @@ class @Mentions
         values: JSON.parse($('meta[name=mentionable-users]').attr('content'))
       )
 
+      $('.main-content').scroll ()=>
+        @tribute.hideMenu()
+
     @tribute.attach(elements);
