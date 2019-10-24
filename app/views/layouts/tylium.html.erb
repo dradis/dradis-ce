@@ -21,13 +21,13 @@
 
   <%= favicon_link_tag %>
 
-  <%= stylesheet_link_tag 'snowcrash', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'snowcrash', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'tylium', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'tylium', 'data-turbolinks-track' => true %>
 
   <%= csrf_meta_tag %>
 </head>
 <body class="<%= controller_name %> <%= action_name %>">
-  <%= render "layouts/snowcrash/navbar" %>
+  <%= render "layouts/tylium/navbar" %>
 
   <div class="body-wrapper">
     <div class="main-wrapper">
@@ -51,7 +51,7 @@
             <% end %>
           </ul>
 
-          <%= render 'layouts/snowcrash/nodes' %>
+          <%= render 'layouts/tylium/nodes' %>
 
           <%# need to include this modal here, because not all pages have
             breadcrumbs (e.g. Project#show). Can't move it inside _nodes,
@@ -85,7 +85,7 @@
             </div>
             <div class="secondary-navbar-content">
               <%= flash_messages %>
-              <%= render "layouts/snowcrash/breadcrumb" %>
+              <%= render "layouts/tylium/breadcrumb" %>
               <%= content_for?(:content) ? yield(:content) : yield %>
             </div>
           <% else %>
@@ -106,9 +106,9 @@
     </div>
   </div>
   <%= render 'activities/poller' %>
-  <%= render 'layouts/snowcrash/modals' %>
+  <%= render 'layouts/tylium/modals' %>
   <%# Always render the Tour content, the user may click on the link in the help menu. %>
   <%# FIXME: re-enable Tour %>
-  <%#= render 'layouts/snowcrash/tour' %>
+  <%#= render 'layouts/tylium/tour' %>
 </body>
 </html>

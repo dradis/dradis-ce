@@ -1,4 +1,4 @@
-module SnowcrashHelper
+module TyliumHelper
   def css_class_for_node(node)
     classes = []
     classes << 'hasSubmenu' if node.children_count > 0

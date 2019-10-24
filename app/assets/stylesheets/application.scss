@@ -5,7 +5,7 @@ $linkColor: darken($green,10%);
 @import 'bootstrap';
 @import 'bootstrap-responsive';
 
-@import 'snowcrash/mixins';
+@import 'tylium/mixins';
 
 body.authenticated {
   #status {

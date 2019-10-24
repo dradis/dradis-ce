@@ -3,7 +3,7 @@
   # there are no children, remove the triangle icon from the parent.
 %>
 <% if @children.any? %>
-$("[data-id=<%= dom_id(@node, 'menu') %>]").html("<%= j(render partial: 'layouts/snowcrash/node', collection: @children) %>");
+$("[data-id=<%= dom_id(@node, 'menu') %>]").html("<%= j(render partial: 'layouts/tylium/node', collection: @children) %>");
 <% else %>
 $menu = $("[data-id=<%= dom_id(@node, 'menu') %>]")
 $menu.find('li.error').remove()

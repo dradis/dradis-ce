@@ -10,6 +10,24 @@ $grayDark: darken($gray, 20);
 $asphalt: #34495e;
 $asphaltDark: darken($asphalt,10);
 
+$navbarBackground: #555;
+$navbarBackgroundHighlight: #888;
+
+$dradisCEGreen: darken($green,10%);
+$dradisProBlue: #DFE8F6;
+
+$primaryColor:                $dradisCEGreen;
+$linkColor:                   $dradisCEGreen;
+$linkColorHover:              darken($linkColor, 15%);
+$dropdownLinkBackgroundHover: $dradisCEGreen;
+
+$navbarBrandColor: #fff;
+$navbarText: #eee;
+$navbarLinkColor: #eee;
+
+$baseFontSize: 14px;
+$baseLineHeight: 20px;
+
 $primaryBgColor: darken($primaryColor, 10);
 $secondaryBgColor: lighten($grayLight, 5%);
 $secondaryNavBarBgColor: darken( $secondaryBgColor, 1%);
@@ -19,6 +37,8 @@ $navbarHeight: 60px;
 $sidebarWidth: 250px;
 $breadCrumbHeight: 48px;
 $secondarySidebarWidth: 25%;
+
+$errorText: #b94a48 !default;
 
 @font-face {
   font-family: 'OpenSans';

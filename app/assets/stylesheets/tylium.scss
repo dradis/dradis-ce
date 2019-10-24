@@ -1,29 +1,29 @@
+@import "tylium/vendor/bootstrap-4.3.1.min.css";
 @import "bootstrap/mixins";
 @import "shared/mixins";
-@import "snowcrash/mixins";
+@import "tylium/mixins";
 
 // theme-level imports and overrides
-@import "snowcrash/overrides/bootstrap_and_override";
-@import "snowcrash/overrides/fileupload-ui_and_override";
+@import "tylium/overrides/fileupload-ui_and_override";
 
 @import 'font-awesome-sprockets';
 @import "font-awesome";
 
 
 // theme-level mixins and variables
-@import "snowcrash/variables";
+@import "tylium/variables";
 
 // shared styles
 @import "shared/items_table";
 
 // styles for base HTML elements like body, h1, etc.
-@import "snowcrash/base";
+@import "tylium/base";
 // styles for managing the layout in the screen (columns, floats, etc.)
-@import "snowcrash/layout";
+@import "tylium/layout";
 // specific styles for the different views, consider splitting in multiple
 // files
-@import "snowcrash/modules";
+@import "tylium/modules";
 
-@import "snowcrash/overrides/jquery-textile_and_override";
+@import "tylium/overrides/jquery-textile_and_override";
 
-@import "snowcrash/pages";
+@import "tylium/pages";
