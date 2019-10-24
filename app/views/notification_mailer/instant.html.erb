@@ -1,1 +1,31 @@
-<p>Instant digest email content</p>
+<h2 class="digest-header">Your Recent Notifications</h2> <!-- if there is only 1 notification, the copy should be singular -->
+
+<hr>
+
+<div class="notification">
+
+  <div class="avatar">
+    <!-- avatar of the user who's action triggered the notification -->
+    <%= image_tag 'profile.jpg' %>
+  </div>
+
+  <p class="notification-text"><span class="user-name">Oscar Puckett</span> commented on <a href= "javascript:void(0)">Blind SQL Injection</a>. <span class="time-stamp">1m ago</span></p>
+
+</div>
+
+<hr>
+
+<div class="notification">
+
+  <div class="avatar">
+    <!-- avatar of the user who's action triggered the notification -->
+    <%= image_tag 'profile.jpg' %>
+  </div>
+
+  <p class="notification-text"><span class="user-name">Mary Bishop + 3 others</span> commented on <a href= "javascript:void(0)">TCP Sequence Number Approximation Based Denial of Service</a>. <span class="time-stamp">8m ago</span></p>
+
+</div>
+
+<hr>
+
+<a class="button" href="javascript:void(0)">See all notifications</a>
