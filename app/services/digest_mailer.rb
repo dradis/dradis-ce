@@ -30,7 +30,7 @@ class DigestMailer
       newest
 
     NotificationMailer.with(user: user, notifications: notifications).
-      send(type).
+      digest.
       deliver_now
   end
 
