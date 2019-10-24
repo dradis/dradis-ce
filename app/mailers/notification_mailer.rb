@@ -6,13 +6,6 @@ class NotificationMailer < ApplicationMailer
     @user = params[:user]
     @notifications = params[:notifications]
 
-    mail to: @user.email, subject: 'Digest Email'
-  end
-
-  def instant
-    @user = params[:user]
-    @notifications = params[:notifications]
-
-    mail to: @user.email, subject: 'Notifications in the last 10 minutes.'
+    mail to: @user.email, subject: "You have #{@notifications.count} of unread #{'notification'.pluralize(count)}"
   end
 end
