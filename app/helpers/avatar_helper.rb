@@ -26,16 +26,7 @@ module AvatarHelper
   end
 
   def comment_avatars(comment)
-    # Match any string that starts with an @ has another @ and ends with whitespace
-    emails = comment.scan(/@(\S*@\S*)\s/).flatten.uniq
-    users = current_project.authors.where(email: emails)
-
-    replacement_rules = users.each_with_object({}) do |user, hash|
-      hash['@' + user.email] = avatar_image(user, size: 20, include_name: true, class: 'gravatar gravatar-inline')
-    end
-
-    matcher = /#{users.map { |user| '@' + user.email }.join('|')}/
-    comment.gsub(matcher, replacement_rules)
+    comment.gsub(mentioned_users_matcher, mentioned_users_replacement_rules)
   end
 
   def comment_formatter(comment)
