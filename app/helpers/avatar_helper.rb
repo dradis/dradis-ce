@@ -26,7 +26,11 @@ module AvatarHelper
   end
 
   def comment_avatars(comment)
-    comment.gsub(mentioned_users_matcher, mentioned_users_replacement_rules)
+    # Support both concers/commented Comments collection for most views
+    # as well as rendering 1-off's for polling and ajax requests.
+    collection = comments ? comments.map(&:content) : Array(comment)
+    matcher, rules = mentions_builder(collection)
+    comment.gsub(matcher, rules)
   end
 
   def comment_formatter(comment)
