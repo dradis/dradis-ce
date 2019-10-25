@@ -13,7 +13,7 @@
     li {
         margin-right: .5em;
       a {
-        @include border-radius( 3px );
+        border-radius: 3px;
         border: 0px none;
         color: $blue;
         &:hover {
