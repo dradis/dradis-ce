@@ -8,54 +8,72 @@ $gray: #bdc3c7;
 $grayLight: lighten($gray, 15);
 $grayDark: darken($gray, 20);
 $asphalt: #34495e;
-$asphaltDark: darken($asphalt,10);
 
-$navbarBackground: #555;
-$navbarBackgroundHighlight: #888;
+$defaultText: #707070;
+$errorText: #b94a48;
+
+$primaryBgColor: #fff;
+$secondaryBgColor: #F4F5F6;
 
 $dradisCEGreen: darken($green,10%);
-$dradisProBlue: #DFE8F6;
+
+$navbarBackground: $primaryBgColor;
+$sidebarBackground: $dradisCEGreen;
+
+
 
 $primaryColor:                $dradisCEGreen;
 $linkColor:                   $dradisCEGreen;
 $linkColorHover:              darken($linkColor, 15%);
 $dropdownLinkBackgroundHover: $dradisCEGreen;
 
-$navbarBrandColor: #fff;
-$navbarText: #eee;
-$navbarLinkColor: #eee;
 
-$baseFontSize: 14px;
-$baseLineHeight: 20px;
-
-$primaryBgColor: darken($primaryColor, 10);
-$secondaryBgColor: lighten($grayLight, 5%);
-$secondaryNavBarBgColor: darken( $secondaryBgColor, 1%);
-$mainContentPadding: 0;
+$mainContentPadding: 2rem;
+$mainContentMargin: 2rem;
 
 $navbarHeight: 60px;
-$sidebarWidth: 250px;
+$sidebarWidth: 43px;
 $breadCrumbHeight: 48px;
 $secondarySidebarWidth: 25%;
 
-$errorText: #b94a48 !default;
-
 @font-face {
   font-family: 'OpenSans';
-  src: font-url('OpenSans-Regular.eot');
-  src: url(font-path('OpenSans-Regular.eot') + '?#iefix') format('embedded-opentype'),
-       font-url('OpenSans-Regular.woff') format('woff'),
-       font-url('OpenSans-Regular.ttf') format('truetype'),
-       url(font-path('OpenSans-Regular.svg') + '#open_sans') format('svg');
+  src: url('OpenSans-Regular.ttf');
+  font-weight: 400;
+  font-style: normal;
 }
 
 @font-face {
   font-family: 'OpenSans';
-  src: font-url('OpenSans-Bold.eot');
-  src: url(font-path('OpenSans-Bold.eot') + '?#iefix') format('embedded-opentype'),
-       font-url('OpenSans-Bold.woff') format('woff'),
-       font-url('OpenSans-Bold.ttf') format('truetype'),
-       url(font-path('OpenSans-Bold.svg') + '#open_sans') format('svg');
-  font-weight: bold;
+  src: url('OpenSans-Italic.ttf');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('OpenSans-Light.ttf');
+  font-weight: 300;
   font-style: normal;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('OpenSans-LightItalic.ttf');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('OpenSans-Bold.ttf');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('OpenSans-BoldItalic.ttf');
+  font-weight: 600;
+  font-style: italic;
 }
