@@ -23,6 +23,10 @@ class Project
 
   def persisted?; true; end
 
+  def activities
+    Activity.all
+  end
+
   def boards
     Board.all
   end
