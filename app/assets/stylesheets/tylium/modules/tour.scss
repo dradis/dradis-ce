@@ -37,23 +37,6 @@
         font-style: italic;
       }
 
-      // tweak Bootstrap's gutter space. See:
-      // vendor/bundle/ruby/2.0.0/gems/bootstrap-sass-2.3.2.2/vendor/assets/stylesheets/bootstrap/_variables.scss#617
-//      .row-fluid {
-//        .no-gutter {
-//          margin-left: $fluidGridGutterWidth/2;
-//          *margin-left: ($fluidGridGutterWidth - (.5 / $gridRowWidth * 100px * 1%))/2;
-//        }
-//        .span2 {
-//          width: (($fluidGridColumnWidth * 2) + ($fluidGridGutterWidth * (2 - 1))) + $fluidGridGutterWidth;
-//          *width: (($fluidGridColumnWidth * 2) + ($fluidGridGutterWidth * (2 - 1)) - (.5 / $gridRowWidth * 100px * 1%)) + $fluidGridGutterWidth;
-//        }
-//        .span8 {
-//          width: (($fluidGridColumnWidth * 8) + ($fluidGridGutterWidth * (8 - 1))) + $fluidGridGutterWidth;
-//          *width: (($fluidGridColumnWidth * 8) + ($fluidGridGutterWidth * (8 - 1)) - (.5 / $gridRowWidth * 100px * 1%)) + $fluidGridGutterWidth;
-//        }
-//      }
-
       .left-column2 {
         text-align: right;
       }
