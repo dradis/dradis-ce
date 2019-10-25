@@ -1,10 +1,4 @@
-// Bootstrapp variables
-@import 'bootstrap/variables';
-$linkColor: darken($green,10%);
-
-@import 'bootstrap';
-@import 'bootstrap-responsive';
-
+@import 'tylium/variables.scss';
 @import 'tylium/mixins';
 
 body.authenticated {
@@ -44,7 +38,7 @@ body.unauthenticated {
       border-color: $linkColor;
       outline: 0;
       outline: thin dotted \9; /* IE6-9 */
-      @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px $linkColor);
+      box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px $linkColor;
     }
   }
 
