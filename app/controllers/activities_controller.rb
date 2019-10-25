@@ -3,6 +3,7 @@
 
 class ActivitiesController < AuthenticatedController
   include ProjectScoped
+  include Commented
 
   def poll
     @this_poll  = Time.now.to_i
