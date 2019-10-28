@@ -16,8 +16,12 @@ class NotificationMailer < ApplicationMailer
   private
 
   def set_inline_attachments
-    attachments.inline['profile'] = File.read(Rails.root.join('app/assets/images/profile.jpg'))
-    attachments.inline['logo_small'] = File.read(Rails.root.join('app/assets/images/logo_small.png'))
-    attachments.inline['DradisCE_full_small'] = File.read(Rails.root.join('app/assets/images/DradisCE_full_small.png'))
+    attachments.inline['profile'] = File.read(find_asset('profile.jpg'))
+    attachments.inline['logo_small'] = File.read(find_asset('logo_small.png'))
+    attachments.inline['DradisCE_full_small'] = File.read(find_asset('DradisCE_full_small.png'))
+  end
+
+  def find_asset(name)
+    Rails.application.assets.find_asset(name).pathname
   end
 end

@@ -1,14 +1,13 @@
 class DigestPresenter < NotificationPresenter
   def self.build_presenters(notifications, template)
-    notifications.map do |item, list|
-      DigestPresenter.new(item, list, template)
+    notifications.map do |_, item_notifications|
+      DigestPresenter.new(item_notifications, template)
     end
   end
 
-  attr_accessor :item, :notifications, :template
+  attr_accessor :notifications, :template
 
-  def initialize(item, notifications, template)
-    @item = item
+  def initialize(notifications, template)
     @notifications = notifications
     @template = template
   end
