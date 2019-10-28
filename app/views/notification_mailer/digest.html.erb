@@ -1,14 +1,17 @@
-<h2 class="digest-header">Your Notifications From The Past 24h</h2>
-<!-- Use this instead if Instant Email Notifications are selected 
-<h2 class="digest-header">Your Recent Notifications</h2> -->
+<h2 class="digest-header">
+  <% if @type == :digest %>
+    Your Notifications From The Past 24h
+  <% elsif @type == :instant %>
+    Your Recent Notifications
+  <% end %>
+</h2>
 
 <hr>
 
 <% @presenters.each do |presenter| %>
   <%= render partial: 'notification_mailer/notification', locals: { presenter: presenter } %>
+
+  <hr>
 <% end %>
 
-<hr>
-
 <a class="button" href="javascript:void(0)">See all notifications</a>
-  

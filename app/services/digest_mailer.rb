@@ -33,7 +33,7 @@ class DigestMailer
 
     notifications = notifications.group_by { |n| n.notifiable.commentable }
 
-    NotificationMailer.with(user: user, notifications: notifications).
+    NotificationMailer.with(user: user, notifications: notifications, type: type).
       digest.
       deliver_now
   end

@@ -34,6 +34,11 @@ class DigestPresenter < NotificationPresenter
     )
   end
 
+  def created_at_ago
+    # We can't use the local_time gem here because there's no JS
+    time_ago_in_words(notification.created_at)
+  end
+
   private
 
   def avatar_image(size)
@@ -54,7 +59,6 @@ class DigestPresenter < NotificationPresenter
   def linked_email
     if notifications.count > 1
       if notification.actor
-        # h.link_to(notification.actor.email, 'javascript:void(0);')
         h.content_tag :strong, notification.actor.email
       else
         'a user who has since been deleted'

@@ -7,9 +7,10 @@ class NotificationMailer < ApplicationMailer
   def digest
     @user = params[:user]
     @notifications = params[:notifications]
-    count = @notifications.count
+    @type = params[:type]
     @presenters = DigestPresenter.build_presenters(@notifications, view_context)
 
+    count = @notifications.count
     mail to: @user.email, subject: "You have #{count} of unread #{'notification'.pluralize(count)}"
   end
 
