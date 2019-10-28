@@ -14,6 +14,7 @@
 
 class UserPreferences
   class InvalidTourException < Exception; end
+  include ActiveModel::Conversion
   include ActiveModel::Validations
 
   VALID_TOURS = %i[first_sign_in projects_show]
@@ -71,14 +72,19 @@ class UserPreferences
   attr_accessor :tours, :digest_frequency
 
   def initialize(args={})
+    @digest_frequency = args[:digest_frequency] || DIGEST_FREQUENCY_DEFAULT
     @tours = Hash.new { |hash, key| hash[key] = '0' }
-    @digest_frequency = DIGEST_FREQUENCY_DEFAULT
 
     args.each do |key, value|
       if key.to_s =~ /\Atour_([\w_]*)\z/
         @tours[$1.to_sym] = value
       end
     end
+  end
+
+  # Needed for active model conversions, to work with form_with
+  def persisted?
+    true
   end
 
   # ----------------------------------------------------------------- YAML.load
