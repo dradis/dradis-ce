@@ -24,10 +24,14 @@ class DigestMailer
   attr_accessor :type, :user
 
   def send
+    # FIXME: This only applies to notifications coming from a comment
     notifications = user.notifications.
       where('created_at >= ?', Time.now - interval).
+      includes(notifiable: :commentable).
       unread.
       newest
+
+    notifications = notifications.group_by { |n| n.notifiable.commentable }
 
     NotificationMailer.with(user: user, notifications: notifications).
       digest.
