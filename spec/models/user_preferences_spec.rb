@@ -6,9 +6,11 @@ describe UserPreferences do
 
     up1 = UserPreferences.new
     expect(up1.last_tour_rspec1).to eq('0')
+    expect(up1.digest_frequency).to eq 'instant'
 
-    up1 = UserPreferences.new(tour_tour_rspec1: '1')
+    up1 = UserPreferences.new(tour_tour_rspec1: '1', digest_frequency: 'daily')
     expect(up1.last_tour_rspec1).to eq('1')
+    expect(up1.digest_frequency).to eq 'daily'
   end
 
   # UPGRADE: this is the right place to test
@@ -84,23 +86,14 @@ describe UserPreferences do
   end
 
   context '#digest_frequency' do
-    it 'is valid with pre-defined values' do
-      described_class::DIGEST_FREQUENCIES.each do |setting|
-        subject.digest_frequency = setting
-        expect(subject).to be_valid
-      end
+    it do
+      should validate_inclusion_of(:digest_frequency).
+        in_array(described_class::DIGEST_FREQUENCIES)
     end
 
-    it 'is not valid with non-defined values' do
-      subject.digest_frequency = 'notvalid'
-      expect(subject).to be_invalid
-    end
-
-    it 'does not accept pre-defined values symbols' do
-      described_class::DIGEST_FREQUENCIES.each do |setting|
-        subject.digest_frequency = setting.to_sym
-        expect(subject).to be_invalid
-      end
+    it 'does not accept values as symbols' do
+      should_not validate_inclusion_of(:digest_frequency).
+        in_array(described_class::DIGEST_FREQUENCIES.map(&:to_sym))
     end
   end
 end
