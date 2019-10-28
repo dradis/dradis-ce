@@ -17,6 +17,14 @@ class Notification < ApplicationRecord
   scope :read,    -> { where.not(read_at: nil) }
   scope :unread,  -> { where(read_at: nil) }
 
+  # All unread notifications within a given interval
+  scope :for_digest, -> (interval) {
+    where('created_at >= ?', Time.now - interval).
+      includes(notifiable: :commentable).
+      unread.
+      newest
+  }
+
   # -- Class Methods --------------------------------------------------------
 
   def self.mark_all_as_read!
