@@ -2,8 +2,8 @@
 # users.
 
 class ActivitiesController < AuthenticatedController
-  include ProjectScoped
   include Commented
+  include ProjectScoped
 
   def poll
     @this_poll  = Time.now.to_i
