@@ -79,7 +79,7 @@ gem 'json', '1.8.6'
 # XML manipulation
 gem 'nokogiri', '1.10.4'
 
-# MySQL backend
+# MySQL DB driver: Uncomment this gem to enable MySQL on your instance.
 # gem 'mysql2', '~> 0.5.1'
 
 # actionpack depends on rails-html-sanitizer, which has an XSS vulnerability
@@ -97,7 +97,7 @@ gem 'rinku'
 # html-pipeline dependency for html sanitization
 gem 'sanitize'
 
-# SQLite3 DB driver
+# SQLite3 DB driver: Uncomment this gem to enable SQLite on your instance.
 gem 'sqlite3'#,  '1.3.10'
 
 # --------------------------------------------------------- Dradis Professional
