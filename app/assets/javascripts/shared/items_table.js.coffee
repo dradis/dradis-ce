@@ -29,7 +29,6 @@ class @ItemsTable
     @showHideColumns()
 
     @loadSortState()
-    @showHideSortArrow()
 
     # -------------------------------------------------- Install event handlers
     # We're hooking into Rails UJS data-confirm behavior to only fire the Ajax
@@ -113,7 +112,6 @@ class @ItemsTable
     @sortData.column    = data.column
     @sortData.direction = data.direction
     @saveSortState()
-    @showHideSortArrow()
 
   onColumnPickerClick: (event) =>
     $target = $(event.currentTarget)
@@ -192,13 +190,6 @@ class @ItemsTable
     else
       console.log "The browser doesn't support local storage of settings."
       console.log "Column sorting can't be saved."
-
-  showHideSortArrow : =>
-    $th = @$table.find('th')
-    $th.find('.arrow').remove()
-    dir = $.fn.stupidtable.dir
-    arrow = if (@sortData.direction == dir.ASC) then "&uarr;" else "&darr;"
-    $th.eq(@sortData.column).append(" <span class=\"arrow\">#{arrow}</span>")
 
   showHideColumns: =>
     that = this
