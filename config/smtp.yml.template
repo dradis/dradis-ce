@@ -1,0 +1,27 @@
+# This file is a template for configuring SMTP for Dradis. The actual settings
+# will be read from config/smtp.yml.
+# For a guide in configuring the mailer and a full list of options, see:
+# https://guides.rubyonrails.org/action_mailer_basics.html#action-mailer-configuration
+
+default: &default
+  default_url_options:
+    host:         dradis-framework.dev
+    script_name:  ''
+  smtp_settings:
+    address:               mail.starfleet.com
+    port:                  123456
+    domain:                starfleet.com
+    user_name:             username
+    password:              password
+    authentication:        plain
+    enable_starttls_auto:  true
+    openssl_verify_mode:   none
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
