@@ -19,6 +19,7 @@ v3.15 (* 2019)
    through the app.
  - Fixed elongated avatar images so they are round once again.
  - Added avatar images to mentions in comments.
+ - Load gravatars for users who's email has been setup with gravatar.
 
 v3.14 (August 2019)
  - Highlight code snippets.
