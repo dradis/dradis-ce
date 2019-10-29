@@ -1,7 +1,12 @@
 module AvatarHelper
   def avatar_url(user, options = {})
-    # The arguments are a noop here for CE-Pro parity.
-    image_path('profile.jpg')
+    if user.nil?
+      image_path('profile.png')
+    else
+      gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
+      size = options.fetch(:size, 64).to_i
+      "https://secure.gravatar.com/avatar/#{gravatar_id}.png?r=PG&s=#{size}"
+    end
   end
 
   def avatar_image(user, options = {})
