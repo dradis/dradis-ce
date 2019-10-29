@@ -60,13 +60,13 @@ class UserPreferences
   # -- Instance Methods -------------------------------------------------------
 
   # Preferences:
+  #   digest_frequency - A user preference for how often they wish to receive
+  #                      notification emails.
+  #
   #   tours - This setting stores a dictionary of all the tours this user has
   #           seen. Since we can have multiple versions of each tour we need
   #           to be able to track what was the last version we presented to
   #           them. See TourRegistry class.
-  #
-  #   digest_frequency - A user preference for how often they wish to receive
-  #                      notification emails.
   ATTRIBUTES = %i[digest_frequency tours]
   attr_accessor *ATTRIBUTES
 
