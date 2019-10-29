@@ -10,7 +10,7 @@
         values: JSON.parse($('meta[name=mentionable-users]').attr('content'))
       });
 
-      $('[data-behavior=mentions-scroll]').scroll(function(){
+      $('[data-behavior~=mentions-scroll]').scroll(function(){
         tribute.hideMenu();
       });
 
