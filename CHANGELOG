@@ -13,6 +13,7 @@ v3.15 (* 2019)
  - Fix page jump when issues list is collapsed.
  - Enhancement when adding new nodes to copy node label data between the single
    and multiple node forms.
+ - Fix errors on content overwrite flash messages
 
 v3.14 (August 2019)
  - Highlight code snippets.
