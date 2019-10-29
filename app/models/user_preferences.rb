@@ -37,7 +37,6 @@ class UserPreferences
         "Attribute was supposed to be a #{self}, but was a #{obj.class}. -- #{obj.inspect}"
     end
 
-    # YAML.dump(obj.attributes)
     YAML.dump(obj)
   end
 
@@ -58,7 +57,6 @@ class UserPreferences
     obj
   end
 
-
   # -- Instance Methods -------------------------------------------------------
 
   # Preferences:
@@ -69,7 +67,12 @@ class UserPreferences
   #
   #   digest_frequency - A user preference for how often they wish to receive
   #                      notification emails.
-  attr_accessor :tours, :digest_frequency
+  ATTRIBUTES = %i[digest_frequency tours]
+  attr_accessor *ATTRIBUTES
+
+  def to_yaml_properties
+    ATTRIBUTES.map { |attr| :"@#{attr}" }
+  end
 
   def initialize(args={})
     @digest_frequency = args[:digest_frequency] || DIGEST_FREQUENCY_DEFAULT
