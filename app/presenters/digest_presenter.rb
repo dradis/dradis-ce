@@ -57,20 +57,25 @@ class DigestPresenter < NotificationPresenter
   end
 
   def linked_email
-    if notifications.count > 1
+    actor_count = notifications.pluck(:actor_id).uniq.compact.count
+    if actor_count == 1
       if notification.actor
         h.content_tag :span, notification.actor.email, class: 'user-name'
       else
         'a user who has since been deleted'
       end
     else
-      count = notifications.pluck(:actor_id).uniq.count
-      h.content_tag :span, "#{notification.actor.email} and #{pluralize(count, 'other')}", class: 'user-name'
+      h.content_tag :span, "#{notification.actor.email} and #{pluralize(actor_count - 1, 'other')}", class: 'user-name'
     end
   end
 
   def notification
-    notifications.first
+    @notification ||=
+      if notifications.count > 1
+        notifications.first(&:actor_id)
+      else
+        notifications.first
+      end
   end
 
   def current_project
