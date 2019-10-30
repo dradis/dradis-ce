@@ -63,7 +63,7 @@
     }
 
     &:hover {
-      background-color: lighten($secondaryNavBarBgColor,10%);
+      background-color: lighten($sidebarBackground,10%);
 
       .list-item-actions {
         visibility: visible;
@@ -73,9 +73,9 @@
 
   .note {
     cursor: pointer;
-    color: darken($secondaryNavBarBgColor,30);
+    color: darken($sidebarBackground,30);
     &:hover {
-      color: darken($secondaryNavBarBgColor,45);
+      color: darken($sidebarBackground,45);
     }
     &.on {
       .remove-note {

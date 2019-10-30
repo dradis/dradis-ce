@@ -5,6 +5,7 @@ $yellow: #f1c40f;
 $orange: #e67e22;
 $purple: #9b59b6;
 $gray: #bdc3c7;
+$white: #fff;
 $grayLight: lighten($gray, 15);
 $grayDark: darken($gray, 20);
 $asphalt: #34495e;
@@ -12,27 +13,29 @@ $asphalt: #34495e;
 $defaultText: #707070;
 $errorText: #b94a48;
 
-$primaryBgColor: #fff;
+$primaryBgColor: $white;
 $secondaryBgColor: #F4F5F6;
+
+$borderColor: #ddd;
+$activeFillColor: #eceeef;
 
 $dradisCEGreen: darken($green,10%);
 
 $navbarBackground: $primaryBgColor;
 $sidebarBackground: $dradisCEGreen;
-
-
+$sidebarText: $white;
 
 $primaryColor:                $dradisCEGreen;
 $linkColor:                   $dradisCEGreen;
 $linkColorHover:              darken($linkColor, 15%);
 $dropdownLinkBackgroundHover: $dradisCEGreen;
 
-
 $mainContentPadding: 2rem;
 $mainContentMargin: 2rem;
 
 $navbarHeight: 60px;
-$sidebarWidth: 43px;
+$sidebarCollapsed: 43px;
+$siebarExpanded: 250px;
 $breadCrumbHeight: 48px;
 $secondarySidebarWidth: 25%;
 
