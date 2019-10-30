@@ -36,7 +36,7 @@ class DigestPresenter < NotificationPresenter
 
   def created_at_ago
     # We can't use the local_time gem here because there's no JS
-    time_ago_in_words(notification.created_at)
+    "#{time_ago_in_words(notification.created_at)} ago"
   end
 
   private
