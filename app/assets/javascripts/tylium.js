@@ -50,4 +50,5 @@
 //= require tylium/pages/projects/issues_chart
 //= require tylium/pages/revisions
 
+//= require tylium/vendor/popper.min
 //= require tylium/vendor/bootstrap-4.3.1.min
