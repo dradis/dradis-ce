@@ -11,7 +11,7 @@ class NotificationMailer < ApplicationMailer
     @presenters = DigestPresenter.build_presenters(@notifications, view_context)
 
     count = @notifications.count
-    mail to: @user.email, subject: "You have #{count} of unread #{'notification'.pluralize(count)}"
+    mail to: @user.email, subject: "You have #{count} unread #{'notification'.pluralize(count)}"
   end
 
   private
