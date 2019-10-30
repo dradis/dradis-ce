@@ -20,8 +20,12 @@
   }
 }
 
-#issues-table {
+#issues-table,
+#node-notes-table,
+#node-evidence-table
+ {
   display: grid;
+  word-break: initial;;
 }
 
 .table-wrapper {
