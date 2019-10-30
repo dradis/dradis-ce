@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>
-      @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap');
+      @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap');
       body {
         font-family: 'Open Sans', sans-serif;
         color: #222;
@@ -47,14 +47,13 @@
         box-shadow: 0 7px 30px 0 rgba(33, 55, 74, 0.2)
       }
       .mail-wrapper .gravatar {
-        height: 80px;
-        width: 80px;
+        height: 70px;
+        width: 70px;
         border-radius: 50%;
-        border: 1px solid #ddd;
       }
       .mail-wrapper .gravatar img {
-        height: 80px;
-        width: 80px;
+        height: 70px;
+        width: 70px;
         object-fit: cover;
         border-radius: 50%;
       }
@@ -83,7 +82,7 @@
         border-radius: 5px;
         padding: 8px 15px;
         color: #fff;
-        margin: 1rem;
+        margin: 1rem 0 0.5rem 0;
       }
       .main .button:hover {
         background-color: #204b20; /* #2070a2 in pro */
@@ -92,46 +91,65 @@
         font-weight: 300;
         margin: 1rem 0 1.5rem 0;
       }
+      .main .project-wrapper {
+        display: flex;
+        flex-direction: column;
+      }
       .main hr {
         width: 100%;
         height: 0;
-        border-top: 1px solid #ddd;
+        border-top: 0.5px solid #ddd;
+        border-bottom: 0.5px solid #ddd;
+        border-right: 0.5px solid transparent;
+        border-left: 0.5px solid transparent;
       }
-      .main .notification {
+      .main .project-wrapper .notification {
         display: flex;
         align-items: center;
         margin: 1rem 0;
       }
-      .main .notification .avatar {
+      .main .project-wrapper .notification .avatar {
         height: 50px;
         width: 50px;
         border-radius: 50%;
         border: 1px solid #ddd;
         margin: 0 20px 0 10px;
       }
-      .main .notification .avatar img {
+      .main .project-wrapper .notification .avatar img {
         height: 50px;
         width: 50px;
         object-fit: cover;
         border-radius: 50%;
       }
-      .main .notification .notification-text {
+      .main .project-wrapper .notification .notification-text {
         text-align: left;
         margin: 0;
         font-weight: 400;
       }
-      .main .notification .notification-text .user-name {
-        font-weight: 700;
+      .main .project-wrapper .notification .notification-text .user-name {
+        font-weight: 600;
       }
-      .main .notification .notification-text .time-stamp {
+      .main .project-wrapper .notification .notification-text .time-stamp {
         font-size: 80%;
         color: #777;
         white-space: nowrap;
       }
       @media (max-width: 320px) {
-        .main .notification .notification-text .time-stamp {
+        .main .project-wrapper .notification .notification-text .time-stamp {
           display: block;
         }
+      }
+      .main .project-wrapper .project-name-wrapper {
+        display: flex;
+        flex-direction: row;
+        white-space: nowrap;
+        align-items: center;
+      }
+      .main .project-wrapper .project-name-wrapper .project-name {
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin: 0 0.5rem;
+        line-height: 1.2rem;
       }
     </style>
   </head>
