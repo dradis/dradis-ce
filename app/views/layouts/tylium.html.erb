@@ -1,11 +1,7 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>    <html class="lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+<html>
 <head>
   <title><%= content_for?(:title) ? yield(:title) : "Dradis Community Edition" %></title>
-  <!-- Meta -->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -29,37 +25,40 @@
 <body class="<%= controller_name %> <%= action_name %>">
   <%= render "layouts/tylium/navbar" %>
 
+  <div class="main-sidebar">
+    <div class="inner">
+      <ul id="main-menu">
+        <%= content_tag :li, :class => controller_name == 'issues' ? 'active' : '' do %>
+          <%= link_to main_app.project_issues_path(current_project) do %>
+            <i class="fa fa-bug"></i> <span>All issues</span>
+          <% end %>
+        <% end %>
+        <%= content_tag :li, :class => controller_name == 'methodologies' ? 'active' : '' do %>
+          <%= link_to main_app.project_boards_path(current_project) do %>
+            <i class="fa fa-check"></i> <span>Methodologies</span>
+          <% end %>
+        <% end %>
+        <%= content_tag :li, :class => action_name == 'trash' ? 'active' : '' do %>
+          <%= link_to main_app.project_trash_path(current_project) do %>
+            <i class="fa fa-trash" aria-hidden="true"></i> <span>Trash</span>
+          <% end %>
+        <% end %>
+      </ul>
+
+      <%= render 'layouts/tylium/nodes' %>
+      <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
+
+    </div>
+
+    <div class="version-wrapper">
+      <div class="version">
+        <span>v<%= Dradis::CE.version %></span>
+      </div>
+    </div>
+  </div>
+
   <div class="body-wrapper">
     <div class="main-wrapper">
-      <div class="main-sidebar">
-        <div class="inner">
-          <ul id="main-menu">
-            <%= content_tag :li, :class => controller_name == 'issues' ? 'active' : '' do %>
-              <%= link_to main_app.project_issues_path(current_project) do %>
-                <i class="fa fa-bug"></i> <span>All issues</span>
-              <% end %>
-            <% end %>
-            <%= content_tag :li, :class => controller_name == 'methodologies' ? 'active' : '' do %>
-              <%= link_to main_app.project_boards_path(current_project) do %>
-                <i class="fa fa-check"></i> <span>Methodologies</span>
-              <% end %>
-            <% end %>
-            <%= content_tag :li, :class => action_name == 'trash' ? 'active' : '' do %>
-              <%= link_to main_app.project_trash_path(current_project) do %>
-                <i class="fa fa-trash" aria-hidden="true"></i> <span>Trash</span>
-              <% end %>
-            <% end %>
-          </ul>
-
-          <%= render 'layouts/tylium/nodes' %>
-
-          <%# need to include this modal here, because not all pages have
-            breadcrumbs (e.g. Project#show). Can't move it inside _nodes,
-            because _nodes is already used inside the "Move node" modal, and it
-            would nest :form tags breaking them %>
-          <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
-      </div>
-      </div>
       <div class="main-content <%= content_for?(:sidebar) ? 'no-padding' : ''%>" data-behavior='mentions-scroll'>
         <noscript>
           <div class="alert alert-error" style="margin: 2em">
@@ -100,9 +99,6 @@
           <% end %>
         </div>
       </div>
-    </div>
-    <div class="version">
-      <small>Dradis Community v<%= Dradis::CE.version %></small>
     </div>
   </div>
   <%= render 'activities/poller' %>

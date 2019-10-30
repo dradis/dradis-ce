@@ -1,0 +1,218 @@
+.navbar {
+  background-color: $navbarBackground;
+  height: $navbarHeight;
+  border-bottom: 1px solid $borderColor;
+  z-index: 3;
+
+  .navbar-brand {
+    color: $defaultText;
+    margin-left: 3.7rem;
+
+    &:hover {
+      color: $defaultText;
+    }
+  }
+
+  .navbar-toggler {
+    position: relative;
+    margin-left: auto;
+    margin-right: 0.2rem;
+    border: 1px solid $borderColor;
+    border-radius: 50px;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    background-color: $activeFillColor;
+    color: $linkColorHover;
+    outline: none;
+
+    .navbar-toggler-icon {
+      background-image: none;
+      position: absolute;
+      top: 10px;
+      left: 5px;
+    }
+
+    &.collapsed {
+      background-color: transparent;
+
+      .navbar-toggler-icon {
+        color: $linkColor
+      }
+    
+    &:hover {
+      background-color: $activeFillColor;
+
+        .navbar-toggler-icon {
+          color: $linkColorHover;
+        }
+      }
+    } 
+  }
+
+  .navbar-collapse {
+
+    &.show,
+    &.collapsing {
+      position: absolute;
+      background: white;
+      top: 100%;
+      right: 0%;
+      display: flex;
+      flex-direction: column;
+      
+      .navbar-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: .25rem 0;
+        border: 1px solid $borderColor;
+
+        .nav-item {
+          width: 100%;
+
+          .nav-link {
+            padding: .25rem 1.5rem;
+            font-size: 1rem;
+            color: $defaultText;
+            transition: color 0s;
+  
+            &:hover {
+              background-color: $primaryColor;
+              color: white;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .navbar-nav {
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    float: right;
+
+    .nav-item {
+      font-size: 0.9rem;
+      transition: all 0.2s ease-in-out;
+
+      &.dropdown {
+
+        .dropdown-menu {
+          position: absolute;
+          margin: 0.65rem 0 0;
+          border: 1px solid $borderColor;
+          border-radius: 0 0 .25rem .25rem;
+          right: -50%;
+          z-index: 2;
+          padding: .25rem 0;
+
+          .divider {
+            height: 0;
+            border-top: 1px solid $borderColor;
+            margin: .25rem;
+          }
+
+          .dropdown-item {
+            color: $defaultText;
+            transition: color 0s;
+
+            &:hover {
+              background-color: $primaryColor;
+              color: white;
+            }
+          }
+        }
+      }
+
+      &.round {
+        border: 1px solid $borderColor;
+        border-radius: 50px;
+        height: 40px;
+        width: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 0.2rem;
+        cursor: pointer;
+
+        .nav-link {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &:hover,
+        &.show {
+          background-color: $activeFillColor;
+
+          .nav-link {
+            color: $linkColorHover;
+          }
+        }
+
+        &.search {
+          width: auto;
+          border: none;
+        }
+      }
+
+      .nav-link {
+        color: $linkColor;
+
+        &:hover {
+          color: $linkColorHover;
+        }
+
+        &.dropdown-toggle::after {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.main-sidebar {
+  background: $sidebarBackground;
+  color: $sidebarText;
+  width: $sidebarCollapsed;
+  //width: 400px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: table-cell;
+  z-index: 5;
+
+  .inner {
+    padding: 0.5rem;
+
+    
+
+    li {
+      @include active-nav;
+    }
+
+  }
+
+  .version-wrapper {
+    display: flex;
+    justify-content: center;
+
+    .version {
+      position: fixed;
+      bottom: 0;
+      text-align: center;
+      padding: 0.2em 0;
+      font-size: 10px;
+    }
+  }
+}
