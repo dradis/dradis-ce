@@ -59,7 +59,7 @@ class DigestPresenter < NotificationPresenter
   def linked_email
     if notifications.count > 1
       if notification.actor
-        h.content_tag :strong, notification.actor.email, class: 'user-name'
+        h.content_tag :span, notification.actor.email, class: 'user-name'
       else
         'a user who has since been deleted'
       end
