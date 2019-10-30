@@ -7,7 +7,7 @@
           <th
             data-column="<%= column.downcase %>"
             data-sort="<%= %w{Created Updated}.include?(column) ? 'int' : 'string' %>"
-            >
+            class="sortable">
             <%= column %>
           </th>
         <% end %>
