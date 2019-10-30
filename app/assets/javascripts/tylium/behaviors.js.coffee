@@ -130,14 +130,7 @@ document.addEventListener "turbolinks:load", ->
       $body.css('height', "#{height}px")
 
   if !(/^\/projects\/1(\/|$)/.test(window.location.pathname))
-    $('[data-behavior~=project-teaser]').removeClass('hide')
-
-  # ------------------------------------------------------ Non-plugin behaviors
-
-  # Close button that hides instead of removing the container
-  # We don't need this any more
-  # $("[data-hide]").on 'click', ->
-  #   $(this).closest("." + $(this).data('hide')).hide();
+    $('[data-behavior~=project-teaser]').removeClass('d-none')
 
   if ($poller = $("#activities-poller")).length
     unless ActivitiesPoller.initialized
@@ -149,22 +142,24 @@ document.addEventListener "turbolinks:load", ->
     $('input[type=submit]', this).attr('disabled', 'disabled').val('Processing...')
 
   # Search form
-  $('#js-search-form-toggle').on 'click', (e)->
+  $('.navbar-nav .form-search').hover ->
+    $('.navbar-nav .search-query').focus() 
+
+  $('.form-search .btn').on 'click', (e)->
     e.preventDefault()
-    $('.navbar .form-search').toggleClass('hide')
-    $('.navbar .search-query').focus()
-    $(this).hide()
+    if $('.navbar-nav .search-query').val() != ''
+      $('.navbar-nav .form-search').submit()
+    else 
+      $('.navbar-nav .search-query').effect( "shake", { direction: "left", times: 2, distance: 5}, 'fast' );
 
-  $('.navbar .search-query').on 'blur', ->
-    # Without this, the form will be hidden before the user has a chance to
-    # click on the submit button with the mouse.
-    setTimeout ->
-      $('.navbar .form-search').toggleClass('hide')
-      $('#js-search-form-toggle').show()
-    , 10
-
-  $('.navbar .btn-search').on 'click', ->
-    $('.form-search').submit()
+  $('.navbar-nav .search-query').on 'keypress', (e)->
+    if e.which == 13
+      if $('.navbar-nav .search-query').val() != ''
+        $('.navbar-nav .form-search').submit();
+        $('.navbar-nav .seach-querty').val('Searching...') 
+        return false;
+      else
+        $('.navbar-nav .search-query').effect( "shake", { direction: "left", times: 2, distance: 5}, 'fast' );
 
   # Collapsable div in sidebar collections
   if $('[data-behavior~=collapse-collection]').length
