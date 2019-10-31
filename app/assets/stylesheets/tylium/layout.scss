@@ -13,6 +13,10 @@
     }
   }
 
+  .navbar-collapse.show ~ .dropdown-menu.show{
+    display: none;
+  }
+
   .navbar-toggler {
     position: relative;
     margin-left: auto;
@@ -30,7 +34,7 @@
       background-image: none;
       position: absolute;
       top: 10px;
-      left: 5px;
+      left: 0.25rem;
     }
 
     &.collapsed {
@@ -40,8 +44,8 @@
         color: $linkColor
       }
     
-    &:hover {
-      background-color: $activeFillColor;
+      &:hover {
+        background-color: $activeFillColor;
 
         .navbar-toggler-icon {
           color: $linkColorHover;
@@ -52,8 +56,12 @@
 
   .navbar-collapse {
 
-    &.show,
     &.collapsing {
+      transition: none;
+      display: none;
+    }
+
+    &.show {
       position: absolute;
       background: white;
       top: 100%;
@@ -97,13 +105,14 @@
       transition: all 0.2s ease-in-out;
 
       &.dropdown {
+        position: initial;
 
         .dropdown-menu {
           position: absolute;
-          margin: 0.65rem 0 0;
+          margin: 0;
           border: 1px solid $borderColor;
-          border-radius: 0 0 .25rem .25rem;
-          right: -50%;
+          border-radius: 0 0 0 .5rem;
+          right: 0;
           z-index: 2;
           padding: .25rem 0;
 
