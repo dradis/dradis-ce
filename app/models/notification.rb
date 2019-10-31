@@ -17,10 +17,9 @@ class Notification < ApplicationRecord
   scope :read,    -> { where.not(read_at: nil) }
   scope :unread,  -> { where(read_at: nil) }
 
-  # All unread notifications within a given interval
-  scope :for_digest, -> (interval) {
-    where('created_at >= ?', Time.now - interval).
-      includes(notifiable: :commentable).
+  # All unread notifications within a given span of time
+  scope :current, -> (time_ago=1.day) {
+    where('created_at >= ?', Time.now - time_ago).
       unread.
       newest
   }
@@ -30,6 +29,14 @@ class Notification < ApplicationRecord
   def self.mark_all_as_read!
     # update_all doesnt update timestamps, so do it manually to bust the cache:
     update_all(read_at: Time.now, updated_at: Time.now)
+  end
+
+  def self.for_digest(interval)
+    self.current(interval).
+      includes(notifiable: :commentable).
+      # FIXME: This only applies to notifications coming from a comment
+      group_by { |n| n.notifiable.commentable }.
+      group_by { |item, _| item.project.id }
   end
 
   # -- Instance Methods -----------------------------------------------------

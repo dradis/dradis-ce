@@ -1,7 +1,15 @@
 class DigestPresenter < NotificationPresenter
+  # Build a hash of DigestPresenters with
+  # keys:    Project
+  # values:  List of DigestPresenters of notifications under a Project
   def self.build_presenters(notifications, template)
-    notifications.map do |_, item_notifications|
-      DigestPresenter.new(item_notifications, template)
+    notifications.each_with_object({}) do |per_project_notifs, memo|
+      p = per_project_notifs[0]
+      project = p.is_a?(Integer) ? Project.find(p) : p
+
+      memo[project] = per_project_notifs[1].map do |_, item_notifs|
+        DigestPresenter.new(item_notifs, template)
+      end
     end
   end
 

@@ -25,10 +25,6 @@ class DigestMailer
 
   def send
     notifications = user.notifications.for_digest(interval)
-
-    # FIXME: This only applies to notifications coming from a comment
-    notifications = notifications.group_by { |n| n.notifiable.commentable }
-
     NotificationMailer.with(user: user, notifications: notifications, type: type).
       digest.
       deliver_now

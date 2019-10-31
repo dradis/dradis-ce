@@ -6,16 +6,19 @@
   <% end %>
 </h2>
 
-<div class="project-wrapper"> <!-- This should render for each project that has a notification, this may be the wrong spot for this div. -->
-  <div class="project-name-wrapper">
-    <span class="project-name">Pro Project Name</span> <!-- Name of project that the below notifications belong to (Pro Only) do not render this span element in CE --> 
-    <hr>
+<% @presenters_hash.each do |project, presenters| %>
+  <div class="project-wrapper">
+    <div class="project-name-wrapper">
+      <span class="project-name"><%= project.name %></span>
+      <hr>
+    </div>
+
+    <% presenters.each do |presenter| %>
+      <%= render partial: 'notification_mailer/notification', locals: { presenter: presenter } %>
+    <% end %>
   </div>
-  <% @presenters.each do |presenter| %>
-    <%= render partial: 'notification_mailer/notification', locals: { presenter: presenter } %>
-  <% end %>
-</div>
+<% end %>
 
 <hr>
 
-<a class="button" href="javascript:void(0)">See all notifications</a> <!-- Only in CE for now -->
+<a class="button" href="javascript:void(0)">See all notifications</a>
