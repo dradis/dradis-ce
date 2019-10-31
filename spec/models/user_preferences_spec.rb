@@ -13,35 +13,37 @@ describe UserPreferences do
     expect(up1.digest_frequency).to eq 'daily'
   end
 
-  # UPGRADE: this is the right place to test
   context "loading from YAML" do
-    # context "valid tour name" do
-    #   it "returns 0 for a fresh set of preferences for a valid tour" do
-    #     subject.class::VALID_TOURS << :tour_rspec4
-    #
-    #     preferences = subject.class.load "--- !ruby/object:UserPreferences\ntours: {}\n"
-    #
-    #     expect do
-    #       preferences.last_tour_rspec4
-    #     end.not_to raise_error
-    #
-    #     expect(preferences.last_tour_rspec4).to eq('0')
-    #   end
-    #
-    #   it "returns the last tour version of XXX type that was visited for a valid tour" do
-    #     subject.class::VALID_TOURS << :tour_rspec5
-    #
-    #     preferences = subject.class.load "--- !ruby/object:UserPreferences\ntours:\n :tour_rspec5: 2.0.0\n"
-    #
-    #     expect do
-    #       preferences.last_tour_rspec5
-    #     end.not_to raise_error
-    #
-    #     expect(preferences.last_tour_rspec5).to eq('2.0.0')
-    #   end
-    # end
-  end
+    context "valid tour name" do
+      it "returns 0 for a fresh set of preferences for a valid tour" do
+        preferences = subject.class.load "--- !ruby/object:UserPreferences\ntours: {}\n"
 
+        expect do
+          preferences.last_first_sign_in
+        end.not_to raise_error
+
+        expect(preferences.last_first_sign_in).to eq('0')
+      end
+
+      it "returns the last tour version of XXX type that was visited for a valid tour" do
+        preferences = subject.class.load "--- !ruby/object:UserPreferences\ntours:\n :first_sign_in: '2.0.0'\n"
+
+        expect do
+          preferences.last_first_sign_in
+        end.not_to raise_error
+
+        expect(preferences.last_first_sign_in).to eq('2.0.0')
+      end
+    end
+
+    it "only serializes designated attributes" do
+      preferences = UserPreferences.new
+      yaml = UserPreferences.dump(preferences)
+
+      expect(yaml).to eq "--- !ruby/object:UserPreferences\ndigest_frequency: instant\ntours: {}\n"
+      expect(yaml).not_to include 'errors'
+    end
+  end
 
   context "#last_tour_XXX" do
     context "invalid tour name" do

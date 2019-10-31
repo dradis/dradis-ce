@@ -99,7 +99,7 @@ class UserPreferences
       if key == 'last_tour'
         @tours = Hash.new { |hash, key| hash[key] = '0' }
         @tours[:projects_show] = value
-      elsif key == 'tour' && value == {}
+      elsif (key == 'tour' || key == 'tours') && value == {}
         @tours = Hash.new { |hash, key| hash[key] = '0' }
       else
         instance_variable_set(:"@#{key}", value)
