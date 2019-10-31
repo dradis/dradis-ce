@@ -1,23 +1,17 @@
 class NotificationGroup
-  def initialize(notifications)
-    @notifications = build_notifications_hash(notifications)
-  end
+  attr_reader :count, :notifications_hash
 
-  def count
-    @notifications.values.inject(0) do |sum, project_notifications|
-      project_total = project_notifications.inject(0) do |p_sum, p_notifications|
-        p_sum + p_notifications[1].count
-      end
-      sum + project_total
-    end
+  def initialize(notifications)
+    @notifications_hash = build_notifications_hash(notifications)
+    @count = notifications.count
   end
 
   def each(&block)
-    @notifications.each(&block)
+    @notifications_hash.each(&block)
   end
 
   def raw_hash
-    @notifications
+    @notifications_hash
   end
 
 
@@ -32,12 +26,12 @@ class NotificationGroup
   #   project2 => ...
   # }
   def build_notifications_hash(notifications)
-    notifications_hash = notifications.
+    hash = notifications.
       # FIXME: This only applies to notifications coming from a comment
       group_by { |n| n.notifiable.commentable }
 
     project = Project.new
-    notifications_hash.group_by do |item, _|
+    hash.group_by do |item, _|
       if defined?(Dradis::Pro)
         item.project
       else
