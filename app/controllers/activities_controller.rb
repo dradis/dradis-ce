@@ -2,6 +2,7 @@
 # users.
 
 class ActivitiesController < AuthenticatedController
+  include Commented
   include ProjectScoped
 
   def poll

@@ -87,6 +87,7 @@ class ActivityPresenter < BasePresenter
         alt: activity.user,
         class: 'gravatar',
         data: { fallback_image: image_path('logo_small.png') },
+        style: "width: #{size}px; height: #{size}px",
         title: activity.user,
         width: size
       )
