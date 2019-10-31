@@ -23,11 +23,11 @@ class NotificationGroup
 
   private
 
-  # The notifications hash has the format:
+  # The resulting notifications hash has the format:
   # {
   #   project1 => [
-  #     item1, [notifications],
-  #     item2, ...
+  #     [item1, [notifications]],
+  #     [item2, ...]
   #   ],
   #   project2 => ...
   # }
@@ -36,13 +36,15 @@ class NotificationGroup
       # FIXME: This only applies to notifications coming from a comment
       group_by { |n| n.notifiable.commentable }
 
-    if defined?(Dradis::Pro)
-      notifications_hash.group_by { |item, _| item.project }
-    else
-      # We use a single instance of Project since the project instance in each
-      # item.project call is different.
-      project = Project.new
-      notifications_hash.group_by { |item, _| project }
+    project = Project.new
+    notifications_hash.group_by do |item, _|
+      if defined?(Dradis::Pro)
+        item.project
+      else
+        # We use a single instance of Project since the project instance in each
+        # item.project call in CE is different.
+        project
+      end
     end
   end
 end

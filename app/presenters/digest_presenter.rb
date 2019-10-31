@@ -40,7 +40,9 @@ class DigestPresenter < NotificationPresenter
   end
 
   def linked_email
+    # Get the count of the unique list of actors from the list of notifications
     actor_count = notifications.pluck(:actor_id).uniq.compact.count
+
     if actor_count == 1
       if notification.actor
         h.content_tag :span, notification.actor.email, class: 'user-name'
@@ -55,6 +57,7 @@ class DigestPresenter < NotificationPresenter
   def notification
     @notification ||=
       if notifications.count > 1
+        # Get the first notification with an existing actor
         notifications.first(&:actor_id)
       else
         notifications.first

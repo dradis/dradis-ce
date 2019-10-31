@@ -19,9 +19,7 @@ class Notification < ApplicationRecord
 
   # All unread notifications within a given span of time
   scope :current, -> (time_ago=1.day) {
-    where('created_at >= ?', Time.now - time_ago).
-      unread.
-      newest
+    where('created_at >= ?', Time.now - time_ago).unread.newest
   }
 
   # -- Class Methods --------------------------------------------------------
@@ -32,7 +30,7 @@ class Notification < ApplicationRecord
   end
 
   def self.for_digest(interval)
-    NotificationGroup.new(self.current(interval).includes(notifiable: :commentable))
+    NotificationGroup.new(current(interval).includes(notifiable: :commentable))
   end
 
   # -- Instance Methods -----------------------------------------------------

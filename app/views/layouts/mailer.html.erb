@@ -163,7 +163,7 @@
           <%#= image_tag attachments['DradisPro_full_small'].url %> <!-- Pro Only -->
         </div>
         <div class="gravatar"> <!-- Gravatar of the user recieving this email. Only render this div if a gravatar image is available or if the user uploaded a custom profile pic in pro. Do not render this div if the fallback/placeholder image will be rendered. If the is no gravatar that will be rendered, add class "center" to div.header above. -->
-          <%= image_tag 'profile.jpg' %> 
+          <%= image_tag attachments['profile'].url %>
         </div>
       </div>
 
