@@ -6,14 +6,15 @@
   <% end %>
 </h2>
 
-<% @presenters_hash.each do |project, presenters| %>
+<% @notifications.each do |project, project_notifications| %>
   <div class="project-wrapper">
     <div class="project-name-wrapper">
       <span class="project-name"><%= project.name %></span>
       <hr>
     </div>
 
-    <% presenters.each do |presenter| %>
+    <% project_notifications.each do |_, notifications| %>
+      <% presenter = DigestPresenter.new(notifications, self) %>
       <%= render partial: 'notification_mailer/notification', locals: { presenter: presenter } %>
     <% end %>
   </div>

@@ -32,11 +32,7 @@ class Notification < ApplicationRecord
   end
 
   def self.for_digest(interval)
-    self.current(interval).
-      includes(notifiable: :commentable).
-      # FIXME: This only applies to notifications coming from a comment
-      group_by { |n| n.notifiable.commentable }.
-      group_by { |item, _| item.project.id }
+    NotificationGroup.new(self.current(interval).includes(notifiable: :commentable))
   end
 
   # -- Instance Methods -----------------------------------------------------
