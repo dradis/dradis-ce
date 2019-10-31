@@ -2,13 +2,15 @@ require 'rails_helper'
 
 describe UserPreferences do
   it 'provides an empty set of preferences with defaults if none have been initialized' do
-    up = UserPreferences.new
-    expect(up.last_first_sign_in).to eq('0')
-    expect(up.digest_frequency).to eq 'instant'
+    preferences = UserPreferences.new
+    expect(preferences.last_first_sign_in).to eq('0')
+    expect(preferences.digest_frequency).to eq 'instant'
+  end
 
-    up1 = UserPreferences.new(tour_first_sign_in: '1', digest_frequency: 'daily')
-    expect(up1.last_first_sign_in).to eq('1')
-    expect(up1.digest_frequency).to eq 'daily'
+  it 'accepts defaults for a new set of preferences' do
+    preferences = UserPreferences.new(tour_first_sign_in: '1', digest_frequency: 'daily')
+    expect(preferences.last_first_sign_in).to eq('1')
+    expect(preferences.digest_frequency).to eq 'daily'
   end
 
   context "loading from YAML" do
