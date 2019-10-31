@@ -3,7 +3,7 @@
   <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"><i class="fa fa-ellipsis-h"></i></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbar">
+  <div class="collapse navbar-collapse" id="navbar" data-behavior="navbar-collapse">
     <ul class="navbar-nav ml-auto mt-lg-0">
       <li class="nav-item">
         <%= link_to main_app.project_upload_manager_path(current_project), class: 'nav-link' do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %>

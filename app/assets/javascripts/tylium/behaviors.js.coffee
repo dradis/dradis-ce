@@ -169,3 +169,8 @@ document.addEventListener "turbolinks:load", ->
 
       if $this.is('[data-behavior~=import-box]')
         $($this.data('target')).find("input[type='text']:first").focus()
+
+  # Close bs4-collapse when clicked outside of element
+  $('body').click (e) ->
+    $('[data-behavior~=navbar-collapse]').collapse 'hide'
+    return
