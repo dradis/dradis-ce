@@ -39,11 +39,11 @@
 .notifications {
   .notifications-dot {
     position: absolute;
-    top: 20px;
-    left: 22px;
+    top: 0px;
+    left: 28px;
     background: red;
-    height: 7px;
-    width: 7px;
+    height: 12px;
+    width: 12px;
     border-radius: 50%;
   }
 
@@ -61,6 +61,8 @@
       max-height: 500px;
       margin: 0;
       overflow: auto;
+      padding: 0;
+      font-size: 0.8rem;
 
       .notification-header {
         padding: 0 1em;
