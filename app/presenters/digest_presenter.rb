@@ -21,21 +21,6 @@ class DigestPresenter < NotificationPresenter
   end
 
   def comment_path(anchor: false)
-    # FIXME - ISSUE/NOTE INHERITANCE
-    # Would like to use only `commentable.respond_to?(:node)` here, but
-    # that would return a wrong path for issues
-    comment         = notification.notifiable
-    commentable     = comment.commentable
-    path_to_comment =
-      if commentable.respond_to?(:node) && !commentable.is_a?(Issue)
-        [current_project, commentable.node, commentable]
-      elsif commentable.is_a?(Card)
-        [current_project, commentable.board, commentable.list, commentable]
-      else
-        [current_project, commentable]
-      end
-
-    anchor = dom_id(comment) if anchor
     polymorphic_url(
       path_to_comment,
       anchor: anchor
@@ -60,7 +45,11 @@ class DigestPresenter < NotificationPresenter
         width: size
       )
     else
-      h.image_tag 'logo_small.png', width: size, alt: 'This user has been deleted from the system'
+      h.image_tag(
+        attachments['logo_small.png'].url,
+        width: size,
+        alt: 'This user has been deleted from the system'
+      )
     end
   end
 
