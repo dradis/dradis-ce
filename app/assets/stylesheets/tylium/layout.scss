@@ -7,9 +7,17 @@
   .navbar-brand {
     color: $defaultText;
     margin-left: 3.7rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: calc(100% - 350px);
 
     &:hover {
       color: $defaultText;
+    }
+
+    @media screen and (min-width: 992px) {
+      max-width: calc(100% - 780px);
     }
   }
 
