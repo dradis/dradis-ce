@@ -84,7 +84,7 @@
 
           .nav-link {
             padding: .25rem 1.5rem;
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: $defaultText;
             transition: color 0s;
   
@@ -119,6 +119,7 @@
           right: 0;
           z-index: 2;
           padding: .25rem 0;
+          font-size: 0.9rem;
 
           .divider {
             height: 0;

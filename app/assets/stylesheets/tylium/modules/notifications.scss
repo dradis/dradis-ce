@@ -1,27 +1,40 @@
 @mixin notification-list-item {
   position: relative;
-  border-top: 1px solid $gray;
-  padding: 0.5em 3em 0.5em 3.5em;
+  border-bottom: 1px solid $borderColor;
+  padding: 0 2rem 0.5rem 1rem;
+  display: flex;
 
   .body {
     display: block;
+    padding-top: 0.5rem;
     padding-left: 5px;
-
-    .notification-icon {
-      color: #bbb;
-      font-size: 32px;
-      left: 2px;
-      position: absolute;
-      top: 11px;
-    }
+    z-index: 2;
 
     .time {
-      color: #888;
+      color: $mutedText;
+    }
+  }
+
+  .details {
+    display: flex;
+    align-items: center;
+
+    img {
+      border-radius: 50%;
     }
 
-    .details {
-      display: inline-block;
-    }
+  }
+
+  .notification-icon {
+    position: absolute;
+    display: flex;
+    color: #bbb;
+    opacity: 0.1;
+    font-size: 3rem;
+    right: 1.5rem;
+    height: 100%;
+    align-items: center;
+    z-index: 1;
   }
 
   .notification-read {
@@ -32,6 +45,10 @@
 
   &.unread {
     background-color: $grayLight;
+
+    .notification-icon {
+      opacity: 0.15;
+    }
   }
 }
 
@@ -55,7 +72,6 @@
   }
 
   .dropdown-menu {
-    color: lighten(#000, 20%);
 
     .notification-container {
       width: 420px;
@@ -65,28 +81,35 @@
       padding: 0;
       font-size: 0.8rem;
 
-      .notification-header {
-        padding: 0 1em;
-        line-height: 2em;
+      li.notification {
+        @include notification-list-item;
 
-        div {
-          display: inline-block;
+        &:last-child {
+          border-bottom: none;
         }
       }
 
-      li.notification {
-        @include notification-list-item;
-      }
-
       li.no-content {
-        border-top: 1px solid $gray;
-        line-height: inherit;
+        padding: 0.5rem;
       }
 
     }
+
+    .notification-header {
+      padding: 0 1em;
+      line-height: 2em;
+      font-size: 0.8rem;
+      border-bottom: 1px solid $borderColor;
+
+      div {
+        display: inline-block;
+      }
+    }
+
     .footer {
       line-height: 2em;
-      border-top: 1px solid $gray;
+      border-top: 1px solid $borderColor;
+      font-size: 0.8rem;
     }
   }
 }
