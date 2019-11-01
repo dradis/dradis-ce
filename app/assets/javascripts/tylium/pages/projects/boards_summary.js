@@ -35,7 +35,7 @@ document.addEventListener('turbolinks:load', function(){
         }
         else {
           var $boardsEmpty = $('#boards-empty');
-          $boardsEmpty.removeClass('hidden');
+          $boardsEmpty.removeClass('d-none');
           $boardsSummary.hide();
         }
       }).

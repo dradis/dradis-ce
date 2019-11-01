@@ -4,7 +4,7 @@
   <div class="comment-list">
     <%= render(comments, cached: true) if comments.any? %>
 
-    <div data-notice="no-comments" class="comment <% if comments.any? %>hide<% end %>">
+    <div data-notice="no-comments" class="comment <% if comments.any? %>d-none<% end %>">
       There have been no comments yet.
     </div>
   </div>

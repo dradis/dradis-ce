@@ -1,4 +1,4 @@
-<div id="modal_move_node" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modal_move_node" class="modal d-none" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <%= simple_form_for [current_project, @node], html: { class: 'form-horizontal modal-node-selection-form', data: { node_id: @node.id, hidden_field: '#node_parent_id' } } do |f| %>
     <%= f.hidden_field :parent_id %>
 

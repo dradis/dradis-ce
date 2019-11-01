@@ -1,4 +1,4 @@
-<div id="modal-console" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modal-console" class="modal d-none" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-body">
     <h2>Output console</h2>
     <%= content_tag :div,
@@ -14,7 +14,7 @@
       <div id="console"></div>
     <% end %>
   </div>
-  <div class="modal-footer hide">
+  <div class="modal-footer d-none">
     <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Done!</button>
   </div>
 </div>
