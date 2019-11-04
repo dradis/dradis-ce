@@ -1,20 +1,26 @@
-<div id="modal_delete_node" class="modal d-none" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Delete node?</h3>
-  </div>
-  <div class="modal-body">
-    <p>Are you sure you want to delete the "<strong><%= @node.label %></strong>" node from your project?</p>
-    <p>When you delete a node, all of the following are deleted with it:</p>
-    <ul>
-      <li>Notes</li>
-      <li>Attachments</li>
-      <li>Evidence</li>
-      <li>Child nodes (and their children)</li>
-    </ul>
-  </div>
-  <div class="modal-footer">
-    <%= link_to 'Delete', [@node.project, @node], :class => 'btn btn-danger', :method => :delete %>
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+<div id="modal_delete_node" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="myModalLabel">Delete node?</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete the "<strong><%= @node.label %></strong>" node from your project?</p>
+        <p>When you delete a node, all of the following are deleted with it:</p>
+        <ul>
+          <li>Notes</li>
+          <li>Attachments</li>
+          <li>Evidence</li>
+          <li>Child nodes (and their children)</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <%= link_to 'Delete', [@node.project, @node], :class => 'btn btn-danger', :method => :delete %>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      </div>
+    </div>
   </div>
 </div>

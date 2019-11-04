@@ -1,25 +1,29 @@
 <div
   id="modal-list-edit-<%= list.id %>"
-  class="modal d-none boards-modal"
+  class="modal fade boards-modal"
   tabindex="-1"
   role="dialog"
   aria-labelledby="modal-list-header"
   aria-hidden="true"
 >
-  <%= simple_form_for [current_project, board, list] do |f| %>
-    <div class='modal-header'>
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-       ×
-      </button>
-      <h3 id="modal-board-header">Rename list</h3>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <%= simple_form_for [current_project, board, list] do |f| %>
+        <div class="modal-header">
+          <h3 id="modal-board-header">Rename list</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <i class="fa fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="_method" value="patch" />
+          <%= f.input :name %>
+        </div>
+        <div class="modal-footer">
+          <input type="submit" value="Update list" class="btn btn-primary" />
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+      <% end %>
     </div>
-    <div class="modal-body">
-      <input type="hidden" name="_method" value="patch" />
-      <%= f.input :name %>
-    </div>
-    <div class="modal-footer">
-      <input type="submit" value="Update list" class="btn btn-primary" />
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    </div>
-  <% end %>
+  </div>
 </div>

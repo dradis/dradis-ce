@@ -1,20 +1,26 @@
-<div id="modal-console" class="modal d-none" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-body">
-    <h2>Output console</h2>
-    <%= content_tag :div,
-                    id: 'result',
-                    style: 'display:none',
-                    data: {
-                      url: status_console_index_path
-                    }  do %>
-      <div>
-        This task can take some time and will be executed in the background.<br>
-        Progress can be tracked here:
+<div id="modal-console" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Output console</h3>
       </div>
-      <div id="console"></div>
-    <% end %>
-  </div>
-  <div class="modal-footer d-none">
-    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Done!</button>
+      <div class="modal-body">
+        <%= content_tag :div,
+                        id: 'result',
+                        style: 'display:none',
+                        data: {
+                          url: status_console_index_path
+                        }  do %>
+          <div>
+            This task can take some time and will be executed in the background.<br>
+            Progress can be tracked here:
+          </div>
+          <div id="console"></div>
+        <% end %>
+      </div>
+      <div class="modal-footer d-none">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Done!</button>
+      </div>
+    </div>
   </div>
 </div>

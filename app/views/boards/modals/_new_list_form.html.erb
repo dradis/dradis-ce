@@ -1,28 +1,30 @@
 <div
   id="modal-list-new"
-  class="modal d-none boards-modal"
+  class="modal fade boards-modal"
   tabindex="-1"
   role="dialog"
   aria-labelledby="modal-list-header"
   aria-hidden="true"
 >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <%= simple_form_for [current_project, @board, List.new], html: { novalidate: false } do |f| %>
+        <div class="modal-header">
+          <h3 id="modal-list-header">Add new list</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
 
-  <%= simple_form_for [current_project, @board, List.new], html: { novalidate: false } do |f| %>
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-        ×
-      </button>
-      <h3 id="modal-list-header">Add new list</h3>
+        <div class="modal-body">
+          <%= f.input :name, required: true %>
+        </div>
+
+        <div class="modal-footer">
+          <input type="submit" value="Add list" class="btn btn-primary" />
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+      <% end %>
     </div>
-
-    <div class="modal-body">
-      <%= f.input :name, required: true %>
-    </div>
-
-    <div class="modal-footer">
-      <input type="submit" value="Add list" class="btn btn-primary" />
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    </div>
-  <% end %>
-
+  </div>
 </div>

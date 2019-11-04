@@ -1,11 +1,3 @@
-@mixin board-modals {
-  .boards-modal {
-    .form-control {
-      width: 515px;
-    }
-  }
-}
-
 body.boards {
   input:focus:invalid:focus {
     border-color: $dradisCEGreen;
@@ -95,8 +87,6 @@ body.boards.index {
       }
     }
   }
-
-  @include board-modals;
 }
 
 body.boards.show {
@@ -241,6 +231,4 @@ body.boards.show {
       }
     }
   }
-
-  @include board-modals;
 }

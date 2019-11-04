@@ -92,14 +92,14 @@ document.addEventListener "turbolinks:load", ->
       url = $this.data('url')
 
       title = switch term
-        when 'boards' then 'Advanced boards and task assignment <span>(Dradis Pro feature)</span>'
-        when 'contact-support' then 'Dedicated Support team <span>(Dradis Pro feature)</span>'
-        when 'issuelib' then 'Integrated library of vulnerability descriptions <span>(Dradis Pro feature)</span>'
-        when 'projects' then 'Work with multiple projects <span>(Dradis Pro feature)</span>'
-        when 'remediation' then 'Integrated remediation tracker <span>(Dradis Pro feature)</span>'
-        when 'word-reports' then 'Custom Word reports <span>(Dradis Pro feature)</span>'
-        when 'excel-reports' then 'Custom Excel reports <span>(Dradis Pro feature)</span>'
-        when 'node-boards' then 'Node-level methodologies <span>(Dradis Pro feature)</span>'
+        when 'boards' then '<span>[Dradis Pro feature]</span> Advanced boards and task assignment'
+        when 'contact-support' then '<span>[Dradis Pro feature]</span> Dedicated Support team'
+        when 'issuelib' then '<span>[Dradis Pro feature]</span> Integrated library of vulnerability descriptions'
+        when 'projects' then '<span>[Dradis Pro feature]</span> Work with multiple projects'
+        when 'remediation' then '<span>[Dradis Pro feature]</span> Integrated remediation tracker'
+        when 'word-reports' then '<span>[Dradis Pro feature]</span> Custom Word reports'
+        when 'excel-reports' then '<span>[Dradis Pro feature]</span> Custom Excel reports'
+        when 'node-boards' then '<span>[Dradis Pro feature]</span> Node-level methodologies'
         when 'training-course' then 'Dradis Training Course'
         when 'try-pro' then 'Upgrade to Dradis Pro'
 

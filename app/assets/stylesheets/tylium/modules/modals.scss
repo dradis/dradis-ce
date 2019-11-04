@@ -1,101 +1,143 @@
-// ------------------------------------------------------------ Move node modal
-// These styles are used by the jQuery.treeModal plugin
-.tree-modal-box {
-  @include rounded;
-  border: 1px solid #ccc;
-  padding: 0.5em 1em;
-  margin-bottom: 0.5em;
+.modal {
 
-  // In modal mode, hide the title
-  li.tree-header {
-    display: none;
-  }
+  .modal-dialog {
+    max-width: 560px;
 
-  // In modal mode, hide the 'add node' form
-  .node-editor {
-    display: none;
-  }
+    .modal-content {
+      font-size: 0.9rem;
 
-  .active-selection {
-    text-decoration: underline;
-    &:hover {
-      text-decoration: underline !important;
+      .modal-body {
+
+        .add_multiple_nodes_form {
+          display: none;
+        
+          .add_multiple_nodes_error {
+            display: none;
+            color: #b94a48;
+            margin-top: 10px;
+          }
+
+          #nodes_list {
+            margin-top: 10px;
+            width: 100%;
+          }
+        }
+
+        #console {
+          margin: 1.5rem 0 0 0;
+        }
+      }
+
+      .modal-header {
+        align-items: center;
+        background-color: $secondaryBgColor;
+
+        .close {
+          margin: 0;
+          padding: 0;
+          font-size: 120%;
+        }
+
+        h3 {
+          margin: 0;
+          font-size: 1.4em;
+        }
+      }
+
+      .modal-footer {
+        background-color: $secondaryBgColor;
+      }
     }
   }
 
-  ul.children {
-    overflow: visible;
-    display: none;
-    margin: 0;
-    padding: 0;
+  &#modal_delete_node {
 
-    li {
-      line-height: 2em;
-      padding-left: 1em;
-      display: block;
+    ul {
+      list-style: disc;
+      padding-left: 30px;
+    }
+  }
 
-      &.loading {
-        font-size: 10px;
-        padding-left: 3em;
+  &#modal_move_node {
+    // These styles are used by the jQuery.treeModal plugin
+    .tree-modal-box {
+      @include rounded;
+      border: 1px solid #ccc;
+      padding: 0.5em 1em;
+      margin-bottom: 0.5em;
+
+      .active-selection {
+        text-decoration: underline;
+        &:hover {
+          text-decoration: underline !important;
+        }
       }
-      &.error {
+      
+      .invalid-selection {
+        cursor: not-allowed;
+      }
+
+      // In modal mode, hide the title
+      li.tree-header {
         display: none;
-        font-size: 10px;
-        padding-left: 3em;
+      }
+
+      // In modal mode, hide the 'add node' form
+      .node-editor {
+        display: none;
+      }
+
+      ul {
+        padding-left: 0;
+
+        &.children {
+          overflow: visible;
+          display: none;
+          margin: 0;
+          padding: 0;
+        }
+
+        li {
+          line-height: 2em;
+          padding-left: 1em;
+          display: block;
+
+          &.loading {
+            font-size: 10px;
+            padding-left: 3em;
+          }
+
+          &.error {
+            display: none;
+            font-size: 10px;
+            padding-left: 3em;
+          }
+        }
       }
     }
   }
 
-  .invalid-selection {
-    cursor: not-allowed;
-  }
-}
-
-
-#modal_delete_node {
-  ul {
-    list-style: disc;
-    padding-left: 30px;
-  }
-}
-
-#nodes_list {
-  margin-top: 10px;
-  width: 100%;
-}
-
-.add_multiple_nodes_form {
-  display: none;
-
-  .add_multiple_nodes_error {
-    display: none;
-    color: #b94a48;
-    margin-top: 10px;
-  }
-}
-
-#try-pro {
-  bottom: 10%;
-  display: none;
-  margin-left: -350px;
-  width: 700px;
-
-  iframe {
-    border: none;
-    bottom: 0;
-    left: 0;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-  }
-
-  .modal-body {
-    max-height: inherit;
-  }
-
-  .modal-header h3 span {
-    color: #1857D2;
+  &#try-pro {
+    
+    .modal-dialog {
+      max-width: 80%;
+  
+      .modal-body {
+        height: 80vh;
+    
+        iframe {
+          border: none;
+          top: 0;
+          left: 0;
+          height: 100%;
+          position: absolute;
+          width: 100%;
+        }
+      }
+  
+      .modal-header h3 span {
+        color: $blue;
+      }
+    }
   }
 }
