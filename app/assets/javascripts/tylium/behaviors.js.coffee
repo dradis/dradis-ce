@@ -90,45 +90,29 @@ document.addEventListener "turbolinks:load", ->
 
     if $this.data('url')
       url = $this.data('url')
-      $modal.css('width', '80%')
-      $modal.css('margin-left', '-40%')
 
       title = switch term
-        when 'boards' then '[<span>Dradis Pro feature</span>] Advanced boards and task assignment'
-        when 'contact-support' then '[<span>Dradis Pro feature</span>] Dedicated Support team'
-        when 'issuelib' then '[<span>Dradis Pro feature</span>] Integrated library of vulnerability descriptions'
-        when 'projects' then '[<span>Dradis Pro feature</span>] Work with multiple projects'
-        when 'remediation' then '[<span>Dradis Pro feature</span>] Integrated remediation tracker'
+        when 'boards' then 'Advanced boards and task assignment <span>(Dradis Pro feature)</span>'
+        when 'contact-support' then 'Dedicated Support team <span>(Dradis Pro feature)</span>'
+        when 'issuelib' then 'Integrated library of vulnerability descriptions <span>(Dradis Pro feature)</span>'
+        when 'projects' then 'Work with multiple projects <span>(Dradis Pro feature)</span>'
+        when 'remediation' then 'Integrated remediation tracker <span>(Dradis Pro feature)</span>'
+        when 'word-reports' then 'Custom Word reports <span>(Dradis Pro feature)</span>'
+        when 'excel-reports' then 'Custom Excel reports <span>(Dradis Pro feature)</span>'
+        when 'node-boards' then 'Node-level methodologies <span>(Dradis Pro feature)</span>'
         when 'training-course' then 'Dradis Training Course'
         when 'try-pro' then 'Upgrade to Dradis Pro'
-        when 'word-reports' then '[<span>Dradis Pro feature</span>] Custom Word reports'
-        when 'excel-reports' then '[<span>Dradis Pro feature</span>] Custom Excel reports'
-        when 'node-boards' then '[<span>Dradis Pro feature</span>] Node-level methodologies'
 
       $modal.find('.modal-header h3').html(title)
     else
-      $modal.css('width', '700px')
-      $modal.css('margin-left', '-350px')
       $modal.find('.modal-header h3').text('Dradis Framework editions')
 
-    url = url +
-              '?utm_source=ce&utm_medium=app&utm_campaign=try-pro&utm_term=' +
-              term
+    url = url + '?utm_source=ce&utm_medium=app&utm_campaign=try-pro&utm_term=' + term
 
     $iframe.attr('src', url)
     $('#try-pro').modal()
 
-    # Wait for the animations to finish before resizing the .modal-body
-    $modal.on 'shown', ->
-      $header      = $modal.find('.modal-header')
-      $body        = $modal.find('.modal-body')
-      modalheight  = parseInt($modal.css('height'))
-      headerheight = parseInt($header.css('height')) + parseInt($header.css('padding-top')) + parseInt($header.css('padding-bottom'))
-      bodypaddings = parseInt($body.css('padding-top')) + parseInt($body.css('padding-bottom'))
-      height       = modalheight - headerheight - bodypaddings - 5 # fudge factor
-
-      $body.css('height', "#{height}px")
-
+  # If project id is changed in project path
   if !(/^\/projects\/1(\/|$)/.test(window.location.pathname))
     $('[data-behavior~=project-teaser]').removeClass('d-none')
 
@@ -143,23 +127,23 @@ document.addEventListener "turbolinks:load", ->
 
   # Search form
   $('.navbar-nav .form-search').hover ->
-    $('.navbar-nav .search-query').focus() 
+    $('.navbar-nav .search-query').val('').focus() 
 
-  $('.form-search .btn').on 'click', (e)->
-    e.preventDefault()
+  submitSearch = ->
     if $('.navbar-nav .search-query').val() != ''
       $('.navbar-nav .form-search').submit()
+      $('.navbar-nav .search-query').val('Searching...') 
+      return false
     else 
       $('.navbar-nav .search-query').effect( "shake", { direction: "left", times: 2, distance: 5}, 'fast' );
 
+  $('.form-search .btn').on 'click', (e)->
+    e.preventDefault()
+    submitSearch()
+
   $('.navbar-nav .search-query').on 'keypress', (e)->
     if e.which == 13
-      if $('.navbar-nav .search-query').val() != ''
-        $('.navbar-nav .form-search').submit();
-        $('.navbar-nav .seach-querty').val('Searching...') 
-        return false;
-      else
-        $('.navbar-nav .search-query').effect( "shake", { direction: "left", times: 2, distance: 5}, 'fast' );
+      submitSearch()
 
   # Collapsable div in sidebar collections
   if $('[data-behavior~=collapse-collection]').length
