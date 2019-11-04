@@ -6,24 +6,51 @@ body {
   background-color: $primaryBgColor;
   font-family: 'OpenSans';
   padding-top: 0px;
+}
 
-  a {
-    color: $linkColor;
-    transition: color 0.2s ease-in-out;
+a {
+  color: $linkColor;
+  transition: color 0.2s ease-in-out;
 
-    &:hover {
-      color: $linkColorHover;
-      text-decoration: none;
-    }
+  &:hover {
+    color: $linkColorHover;
+    text-decoration: none;
   }
+}
   
-  .body-wrapper {
-    top: $navbarHeight;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    position: absolute;
-    overflow: hidden;
+.body-wrapper {
+  top: $navbarHeight;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  overflow: hidden;
+}
+
+button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.btn {
+  @include button(#e6e6e6);
+  text-shadow: 0 0 0;
+
+  &.btn-primary {
+    @include button($primaryColor);
+  }
+  &.btn-danger {
+    @include button($red);
+  }
+  &.btn-success {
+    @include button($green);
+  }
+  &.btn-warning {
+    @include button($orange);
   }
 }
 
