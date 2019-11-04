@@ -3,7 +3,7 @@ class DradisTasks < Thor
     include Thor::Actions
     include ::Rails.application.config.dradis.thor_helper_module
 
-    namespace     'dradis:setup'
+    namespace 'dradis:setup'
 
     def self.source_root
       File.join(File.dirname(__FILE__), 'templates')
@@ -14,8 +14,8 @@ class DradisTasks < Thor
       # init the config files
       init_all = false
       Dir['config/*.template'].each do |template|
-        config = File.join( 'config', File.basename(template, '.template') )
-        if !(File.exists?( config ))
+        config = File.join('config', File.basename(template, '.template'))
+        if !(File.exists?(config))
           if (init_all)
             puts "Initilizing #{config}..."
             FileUtils.cp(template, config)
@@ -23,7 +23,7 @@ class DradisTasks < Thor
             puts "The config file [#{template}] was found not to be ready to use."
             puts 'Do you want to initialize it? [y]es | [N]o | initialize [a]ll'
             response = STDIN.gets.chomp.downcase
-            response = 'Y' if ( response.empty? || !['y', 'n', 'a'].include?(response) )
+            response = 'Y' if (response.empty? || !['y', 'n', 'a'].include?(response))
 
             if response == 'n'
               next
@@ -76,10 +76,10 @@ class DradisTasks < Thor
       # ---------------------------------------------------------- Project data
       detect_and_set_project_scope
 
-      task_options.merge!({
+      task_options.merge!(
         plugin: Dradis::Plugins::Projects::Upload::Template,
         default_user_id: 1
-      })
+      )
 
       importer = Dradis::Plugins::Projects::Upload::Template::Importer.new(task_options)
       importer.import(file: File.expand_path('../templates/project.xml', __FILE__))

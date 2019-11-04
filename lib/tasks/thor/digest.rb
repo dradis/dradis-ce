@@ -1,6 +1,6 @@
 class DradisTasks < Thor
   class Digest < Thor
-    namespace     'dradis:digests'
+    namespace 'dradis:digests'
 
     desc 'send', 'Send a daily digest to all users'
     def send_digests

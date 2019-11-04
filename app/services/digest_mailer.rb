@@ -34,7 +34,6 @@ class DigestMailer
       deliver_now
   end
 
-
   private
 
   def interval

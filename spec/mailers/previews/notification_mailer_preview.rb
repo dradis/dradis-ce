@@ -3,3 +3,4 @@ class NotificationMailerPreview < ActionMailer::Preview
     NotificationMailer.with(user: User.first).digest
   end
 end
+
