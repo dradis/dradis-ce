@@ -75,10 +75,8 @@ document.addEventListener "turbolinks:load", ->
   # ------------------------------------------------------- Bootstrap behaviors
 
   # Focus first input on modal window display.
-  # Note: Bootstrap 3 uses the 'shown.bs.modal' event name.
-  # See:
-  #   ./app/views/nodes/modals/
-  $('.modal').on 'shown', ->
+
+  $('.modal').on 'shown.bs.modal', ->
     $(this).find('input:text:visible:first').focus()
 
   $('.js-try-pro').on 'click', ->
