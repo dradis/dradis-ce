@@ -17,6 +17,7 @@
       display: flex;
       width: 38px;
       height: 38px;
+      background: initial;
       position: absolute;
       top: 0;
       right: 0;
@@ -41,7 +42,7 @@
       border-radius: 50px;
       padding: 0 50px 0 20px;
       color: $defaultText;
-      transition: all 0.5s ease-in-out;
+      transition: width 0.5s ease-in-out;
 
       &::-webkit-search-cancel-button {
         position: relative;
@@ -52,7 +53,6 @@
     &:hover {
       width: 200px;
       cursor: pointer;
-      transition: all 0.5s ease-in-out;
 
       .btn {
         background: $activeFillColor;
