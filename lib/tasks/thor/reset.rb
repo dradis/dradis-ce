@@ -1,12 +1,12 @@
 class DradisTasks < Thor
   class Reset < Thor
-    namespace     'dradis:reset'
+    namespace 'dradis:reset'
 
     desc 'attachments', 'removes all attachments'
     def attachments
       print '** Deleting all attachments...                                        '
-      FileUtils.rm_rf(Dir.glob( Attachment::AttachmentPwd.join('*')) )
-      puts(Dir.glob( Attachment::AttachmentPwd.join('*')).empty? ? '[  DONE  ]' : '[ FAILED ]')
+      FileUtils.rm_rf(Dir.glob(Attachment::AttachmentPwd.join('*')))
+      puts(Dir.glob(Attachment::AttachmentPwd.join('*')).empty? ? '[  DONE  ]' : '[ FAILED ]')
     end
 
     desc 'database', 'removes all data from a dradis repository, except configurations'
