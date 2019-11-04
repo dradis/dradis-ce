@@ -124,22 +124,22 @@ document.addEventListener "turbolinks:load", ->
     $('input[type=submit]', this).attr('disabled', 'disabled').val('Processing...')
 
   # Search form
-  $('.navbar-nav .form-search').hover ->
-    $('.navbar-nav .search-query').val('').focus() 
+  $('[data-behavior~=form-search]').hover ->
+    $('[data-behavior~=search-query]').val('').focus() 
 
   submitSearch = ->
-    if $('.navbar-nav .search-query').val() != ''
-      $('.navbar-nav .form-search').submit()
-      $('.navbar-nav .search-query').val('Searching...') 
+    if $('[data-behavior~=search-query]').val() != ''
+      $('[data-behavior~=form-search]').submit()
+      $('[data-behavior~=search-query]').val('Searching...') 
       return false
     else 
-      $('.navbar-nav .search-query').effect( "shake", { direction: "left", times: 2, distance: 5}, 'fast' );
+      $('[data-behavior~=search-query]').effect( "shake", { direction: "left", times: 2, distance: 5}, 'fast' ).focus();
 
-  $('.form-search .btn').on 'click', (e)->
+  $('[data-behavior~=search-button]').on 'click', (e)->
     e.preventDefault()
     submitSearch()
 
-  $('.navbar-nav .search-query').on 'keypress', (e)->
+  $('[data-behavior~=search-query]').on 'keypress', (e)->
     if e.which == 13
       submitSearch()
 
