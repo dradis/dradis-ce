@@ -32,7 +32,7 @@
             when 'Updated'
               local_time_ago(item.updated_at)
             else
-              item.fields.fetch(column, '')
+              markup(item.fields.fetch(column, ''))
             end
             %>
           </td>

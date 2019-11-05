@@ -32,7 +32,7 @@
             when 'Updated'
               local_time_ago(issue.updated_at)
             else
-              issue.fields.fetch(column, '')
+              markup(issue.fields.fetch(column, ''))
             end
             %>
           </td>
