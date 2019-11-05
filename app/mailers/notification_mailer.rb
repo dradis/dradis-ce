@@ -1,7 +1,4 @@
 class NotificationMailer < ApplicationMailer
-  default from: 'email@securityroots.com'
-  default to: 'admin@securityroots.com'
-
   def digest
     @user = params[:user]
     @notifications = params[:notifications]
