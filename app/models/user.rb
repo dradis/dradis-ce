@@ -17,6 +17,10 @@ class User < ApplicationRecord
   # -- Callbacks ------------------------------------------------------------
   # -- Validations ----------------------------------------------------------
   # -- Scopes ---------------------------------------------------------------
+  # Preferred notification frequencies
+  scope :dailies, -> { where('preferences LIKE "%digest_frequency: daily%"') }
+  scope :instants, -> { where('preferences LIKE "%digest_frequency: instant%"') }
+
   # -- Class Methods --------------------------------------------------------
   # -- Instance Methods -----------------------------------------------------
 end

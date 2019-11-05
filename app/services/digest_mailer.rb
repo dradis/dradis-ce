@@ -3,14 +3,14 @@ class DigestMailer
   INSTANT_INTERVAL  = 10.minutes
 
   def self.send_digests
-    digest_users = User.includes(:notifications).all
+    digest_users = User.includes(:notifications).dailies
     digest_users.each do |user|
       DigestMailer.new(user: user, type: :digest).send
     end
   end
 
   def self.send_instants
-    instant_users = User.includes(:notifications).all
+    instant_users = User.includes(:notifications).instants
     instant_users.each do |user|
       DigestMailer.new(user: user, type: :instant).send
     end
