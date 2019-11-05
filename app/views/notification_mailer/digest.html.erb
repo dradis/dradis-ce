@@ -1,61 +1,27 @@
-<h2 class="digest-header">Your Notifications From The Past 24h</h2>
-<!-- Use this instead if Instant Email Notifications are selected 
-<h2 class="digest-header">Your Recent Notifications</h2> -->
+<h2 class='digest-header'>
+  <% if @type == :digest %>
+    Your Notifications From The Past 24h
+  <% elsif @type == :instant %>
+    Your Recent Notifications
+  <% end %>
+</h2>
 
-<div class="project-wrapper">
-
-  <div class="project-name-wrapper">
-    <span class="project-name">Some Project Name</span>
-    <hr>
-  </div>
-
-  <div class="notification">
-
-    <div class="avatar">
-      <!-- avatar of the user who's action triggered the notification -->
-      <%= image_tag 'profile.jpg' %>
+<% @notifications.each do |project, project_notifications| %>
+  <div class='project-wrapper'>
+    <div class='project-name-wrapper'>
+      <span class='project-name'><%= project.name %></span>
+      <hr>
     </div>
 
-    <p class="notification-text"><span class="user-name">Christine Ballard</span> created <a href="javascript:void(0)">a piece of evidence</a> for <a href= "javascript:void(0)">Blind SQL Injection</a> at <a href="javascript:void(0)">1.1.1.1</a>. <span class="time-stamp">1h ago</span></p>
-
+    <% project_notifications.each do |_, notifications| %>
+      <% presenter = DigestPresenter.new(notifications, self) %>
+      <%= render partial: 'notification_mailer/notification', locals: { presenter: presenter } %>
+    <% end %>
   </div>
-
-</div>
-
-
-
-<div class="project-wrapper">
-
-  <div class="project-name-wrapper">
-    <span class="project-name">Another Project</span>
-    <hr>
-  </div>
-
-  <div class="notification">
-
-    <div class="avatar">
-      <!-- avatar of the user who's action triggered the notification -->
-      <%= image_tag 'profile.jpg' %>
-    </div>
-
-    <p class="notification-text"><span class="user-name">Oscar Puckett</span> commented on <a href= "javascript:void(0)">Blind SQL Injection</a>. <span class="time-stamp">7h ago</span></p>
-
-  </div>
-
-  <div class="notification">
-
-    <div class="avatar">
-      <!-- avatar of the user who's action triggered the notification -->
-      <%= image_tag 'profile.jpg' %>
-    </div>
-
-    <p class="notification-text"><span class="user-name">Mary Bishop + 3 others</span> commented on <a href= "javascript:void(0)">TCP Sequence Number Approximation Based Denial of Service</a>. <span class="time-stamp">18h ago</span></p>
-
-  </div>
-
-</div>
+<% end %>
 
 <hr>
 
-<a class="button" href="javascript:void(0)">See all notifications</a> <!-- For now only in CE -->
-  
+<% unless defined?(Dradis::Pro) %>
+  <%= link_to 'See all notifications', project_notifications_url(1), class: 'button' %>
+<% end %>

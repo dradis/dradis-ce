@@ -24,12 +24,8 @@ class DigestMailer
   attr_accessor :type, :user
 
   def send
-    notifications = user.notifications.
-      where('created_at >= ?', Time.now - interval).
-      unread.
-      newest
-
-    NotificationMailer.with(user: user, notifications: notifications).
+    notifications = user.notifications.for_digest(interval)
+    NotificationMailer.with(user: user, notifications: notifications, type: type).
       digest.
       deliver_now
   end
