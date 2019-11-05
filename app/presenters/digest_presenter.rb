@@ -26,13 +26,14 @@ class DigestPresenter < NotificationPresenter
         attachments['profile'].url,
         alt: notification.actor.email,
         class: 'gravatar',
-        data: { fallback_image: attachments['logo_small'].url },
         title: notification.actor.email,
-        width: size
+        width: size,
+        # Fallback image
+        onerror: "this.src = '#{image_path('logo_small')}';"
       )
     else
       h.image_tag(
-        attachments['logo_small.png'].url,
+        attachments['logo_small'].url,
         width: size,
         alt: 'This user has been deleted from the system'
       )

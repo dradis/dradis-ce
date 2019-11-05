@@ -159,11 +159,10 @@
 
       <div class="header"> <!-- add class "center" if there is no gravatar or profile picture available for this user -->
         <div class="logo">
-          <%= image_tag attachments['DradisCE_full_small'].url %> <!-- CE Only -->
-          <%#= image_tag attachments['DradisPro_full_small'].url %> <!-- Pro Only -->
+          <%= image_tag attachments['DradisCE_full_small'].url %>
         </div>
         <div class="gravatar"> <!-- Gravatar of the user recieving this email. Only render this div if a gravatar image is available or if the user uploaded a custom profile pic in pro. Do not render this div if the fallback/placeholder image will be rendered. If the is no gravatar that will be rendered, add class "center" to div.header above. -->
-          <%= image_tag attachments['profile'].url %>
+          <%= image_tag @avatar_url, alt: @user.email %>
         </div>
       </div>
 
@@ -173,11 +172,13 @@
     </div>
 
     <div class="mail-footer">
+      <% if defined?(Dradis::Pro) %>
+        <div class="row">
+          <%= link_to 'Manage your Dradis email preferences', edit_notifications_url %>
+        </div>
+      <% end %>
       <div class="row">
-        <a href="javascript:void(0)">Manage your Dradis email preferences</a>
-      </div>
-      <div class="row">
-        <a href="https://dradisframework.com/privacy.html">Privacy</a> | <a href="javascript:void(0)">Login to Dradis</a>
+        <a href="https://dradisframework.com/privacy.html">Privacy</a> | <%= link_to 'Login to Dradis', login_url %>
       </div>
       <div class="row copyright">
        <p>© 2012-2019 Dradis Framework — Security Roots Ltd</p>

@@ -9,4 +9,5 @@ if File.exist?(config_path)
 
   ActionMailer::Base.smtp_settings = config['smtp_settings']
   ActionMailer::Base.default_url_options = config['default_url_options'].symbolize_keys
+  ActionMailer::Base.asset_host = ActionMailer::Base.default_url_options[:host] if Rails.env.production?
 end
