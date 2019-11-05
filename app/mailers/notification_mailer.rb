@@ -1,6 +1,4 @@
 class NotificationMailer < ApplicationMailer
-  default from: 'email@securityroots.com'
-  default to: 'admin@securityroots.com'
   helper :application
 
   before_action :set_inline_attachments
