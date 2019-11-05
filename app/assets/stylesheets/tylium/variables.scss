@@ -1,45 +1,58 @@
+// Colors
+$asphalt: #34495e;
 $blue: #3498db;
-$green: #2ecc71;
-$red: #E4485D;
-$yellow: #f1c40f;
-$orange: #e67e22;
-$purple: #9b59b6;
 $gray: #bdc3c7;
-$white: #fff;
 $grayLight: lighten($gray, 15);
 $grayDark: darken($gray, 20);
-$asphalt: #34495e;
+$green: #2ecc71;
+$orange: #e67e22;
+$purple: #9b59b6;
+$red: #e4485d;
+$white: #fff;
+$yellow: #f1c40f;
 
+// Edition Colors
+$lightGreen: #86cb86;
+$ceGreen: #378137;
+$darkGreen: #285d28;
+
+$lightBlue: #7796b4;
+$proBlue: #3498db;
+$darkBlue: #22303d;
+
+$lightColor: $lightGreen;
+$primaryColor: $ceGreen;
+$darkColor: $darkGreen;
+
+// Text Colors
 $defaultText: #707070;
-$mutedText: #888;
 $errorText: #b94a48;
-
-$primaryBgColor: $white;
-$secondaryBgColor: #F4F5F6;
-
-$borderColor: #ddd;
-$activeFillColor: #eceeef;
-
-$dradisCEGreen: darken($green,10%);
-
-$navbarBackground: $primaryBgColor;
-$sidebarBackground: $dradisCEGreen;
+$mutedText: #888;
 $sidebarText: $white;
+$linkColor: $primaryColor;
+$linkColorHover: darken($linkColor, 15%);
 
-$primaryColor:                $dradisCEGreen;
-$linkColor:                   $dradisCEGreen;
-$linkColorHover:              darken($linkColor, 15%);
-$dropdownLinkBackgroundHover: $dradisCEGreen;
+// Background, Border, Fill Colors
+$primaryBgColor: $white;
+$secondaryBgColor: #f4f5f6;
+$activeFillColor: #eceeef;
+$borderColor: #ddd;
+$dropdownLinkBackgroundHover: $darkColor;
+$navbarBackground: $primaryBgColor;
+$sidebarBackground: $darkColor;
 
+// Spacing
 $mainContentPadding: 2rem;
 $mainContentMargin: 2rem;
 
+// Sizing
 $navbarHeight: 60px;
 $sidebarCollapsed: 43px;
-$siebarExpanded: 250px;
+$sidebarExpanded: 250px;
 $breadCrumbHeight: 48px;
 $secondarySidebarWidth: 25%;
 
+// Fonts
 @font-face {
   font-family: 'OpenSans';
   src: url('OpenSans-Regular.ttf');
