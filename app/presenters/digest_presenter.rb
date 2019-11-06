@@ -44,11 +44,11 @@ class DigestPresenter < NotificationPresenter
     # Get the count of the unique list of actors from the list of notifications
     actor_count = notifications.pluck(:actor_id).uniq.compact.count
 
-    if actor_count == 1
+    if actor_count <= 1
       if notification.actor
         h.content_tag :span, notification.actor.email, class: 'user-name'
       else
-        'a user who has since been deleted'
+        'A user who has since been deleted'
       end
     else
       h.content_tag :span, "#{notification.actor.email} and #{pluralize(actor_count - 1, 'other')}", class: 'user-name'

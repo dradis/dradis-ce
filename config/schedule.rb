@@ -9,9 +9,9 @@ set :output, 'log/cron.log'
 job_type :thor, 'cd :path && RAILS_ENV=:environment bundle exec thor :task :output'
 
 every 10.minutes do
-  thor 'dradis:digests:send_instant'
+  thor 'dradis:digests:send_instants'
 end
 
 every 1.day, at: '9:00' do
-  thor 'dradis:digests:send'
+  thor 'dradis:digests:send_digests'
 end
