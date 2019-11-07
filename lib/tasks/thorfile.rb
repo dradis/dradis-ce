@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DradisTasks < Thor
   namespace       'dradis'
 
@@ -5,7 +7,7 @@ class DradisTasks < Thor
   long_desc 'Creates a backup of the current repository, including all nodes, notes and ' +
             'attachments as a zipped archive. The backup can be imported into another ' +
             "dradis instance using the 'Project Package Upload' option."
-  method_option   :path, :type => :string, :desc => 'the backup file destination directory'
+  method_option :path, type: :string, desc: 'the backup file destination directory'
   def backup
     require 'config/environment'
 
@@ -14,10 +16,10 @@ class DradisTasks < Thor
 
   desc      'reset', 'resets your local dradis repository'
   long_desc 'Resets your dradis repository, removing all nodes, notes and attachments and log files ' +
-            "so it is ready to start a new project.\n\nA backup of the current repository "+
+            "so it is ready to start a new project.\n\nA backup of the current repository " +
             'will be taken before anything is removed.'
-  method_option   :file, :type => :string, :desc => 'the backup file to create, or directory to create it in'
-  method_option   :no_backup, :type => :boolean, :desc => 'do not create a backup of the current repository'
+  method_option   :file, type: :string, desc: 'the backup file to create, or directory to create it in'
+  method_option   :no_backup, type: :boolean, desc: 'do not create a backup of the current repository'
   def reset
     invoke 'dradis:setup:configure', [], []
     invoke 'dradis:setup:migrate', [], []
