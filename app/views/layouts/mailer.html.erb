@@ -157,11 +157,11 @@
   <body>
     <div class="mail-wrapper">
 
-      <div class="header"> <!-- add class "center" if there is no gravatar or profile picture available for this user -->
+      <div class="header">
         <div class="logo">
           <%= image_tag attachments['DradisCE_full_small'].url %>
         </div>
-        <div class="gravatar"> <!-- Gravatar of the user recieving this email. Only render this div if a gravatar image is available or if the user uploaded a custom profile pic in pro. Do not render this div if the fallback/placeholder image will be rendered. If the is no gravatar that will be rendered, add class "center" to div.header above. -->
+        <div class="gravatar">
           <%= image_tag @avatar_url, alt: @user.email %>
         </div>
       </div>

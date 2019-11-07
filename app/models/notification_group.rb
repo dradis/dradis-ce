@@ -10,10 +10,9 @@ class NotificationGroup
     @notifications_hash.each(&block)
   end
 
-  def raw_hash
+  def to_h
     @notifications_hash
   end
-
 
   private
 

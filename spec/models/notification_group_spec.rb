@@ -6,9 +6,8 @@ describe NotificationGroup do
     @issue = create(:issue)
     @comment = create(:comment, commentable: @issue)
     @notification = create(:notification, notifiable: @comment, recipient: @user)
-    @user_notifications = @user.notifications.current
+    @user_notifications = @user.notifications.since
   end
-
 
   describe '#new' do
     it 'creates a grouped hash of notifications' do
@@ -16,7 +15,7 @@ describe NotificationGroup do
         Project.new => [ [@issue, [@notification]] ]
       }
       group = NotificationGroup.new(@user_notifications)
-      expect(group.raw_hash.values).to eq(expected_hash.values)
+      expect(group.to_h.values).to eq(expected_hash.values)
     end
   end
 
