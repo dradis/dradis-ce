@@ -78,7 +78,6 @@ ul {
   .main-content {
     color: lighten(#000, 20%);
     background: $secondaryBgColor;
-    border-radius: 8px 0 0 0;
     width: auto;
     position: absolute;
     top: 0;
@@ -98,7 +97,6 @@ ul {
     .view-content {
       
       position: relative;
-      padding: 0em 2em 2em 2em;
       height: 100%;
       width: 100%;
       box-sizing: border-box;
@@ -138,24 +136,15 @@ ul {
       }
     }
 
-    &.no-padding {
-
-      .view-content {
-        padding: 0;
-        display: table;
-      }
-    }
 
     .secondary-navbar {
-      background: $sidebarBackground;
-      border-right: 1px solid #ddd;
+      background: $sidebarActiveColor;
       display: table-cell;
-      margin-left: -$mainContentPadding;
       vertical-align: top;
       width: $secondarySidebarWidth;
 
       > .inner {
-        background: $sidebarBackground;
+        background: $sidebarActiveColor;
         padding: 1em;
         min-height: 600px;
 

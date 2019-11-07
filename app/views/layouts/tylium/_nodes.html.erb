@@ -1,14 +1,17 @@
 <ul class="nodes-nav tree-navigation">
-  <li class="tree-header">
+  <li class="tree-header <%= 'active' if controller_name == 'nodes' %>" data-behavior="sidebar-toggle open-only">
+    <i class="fa fa-sitemap sidebar-link-icon"></i>
+    <span class="sidebar-link-label">Nodes</span>
     <div class="add-subnode">
       <a href="#modal_add_branch_node" data-toggle="modal"><i class="fa fa-plus"></i></a>
     </div>
-    <h4><i class="fa fa-sitemap"></i> Nodes</h4>
   </li>
 
-  <% if @nodes.empty? %>
-    <li class="no-nodes">No nodes defined yet</li>
-  <% else %>
-    <%= render partial: 'layouts/tylium/node', collection: @nodes %>
-  <% end %>
+  <div class="nodes-list">
+    <% if @nodes.empty? %>
+      <li class="no-nodes">No nodes defined yet</li>
+    <% else %>
+      <%= render partial: 'layouts/tylium/node', collection: @nodes %>
+    <% end %>
+  </div>
 </ul>

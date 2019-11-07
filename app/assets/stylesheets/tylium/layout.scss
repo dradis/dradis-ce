@@ -1,3 +1,304 @@
+.back-fade {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  z-index: 4;
+  transition: all 0.5s ease-in-out;
+
+  &.faded {
+    opacity: 0.7;
+    visibility: initial;
+  }
+
+  &.not-faded {
+    opacity: 0;
+   visibility: hidden;
+  }
+}
+
+.main-sidebar {
+  background: $sidebarBackground;
+  color: $sidebarText;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: table-cell;
+  z-index: 5;
+  transition: width 0.5s ease-in-out;  
+
+  a {
+    color: $lightColor;
+
+    &:hover {
+      color: $white;
+    }
+  }
+
+  .main-menu {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: $navbarHeight;
+    left: 0;
+    width: 100%;
+
+    li {
+      @include active-nav;
+    }
+
+  }
+
+  .nodes-nav {
+    margin: 2rem 0 0 0;
+    padding: 0;
+    position: absolute;
+    top: 250px;
+    left: 0;
+    width: 100%;
+
+    .nodes-list {
+      visibility: hidden;
+      transition: all 0.5s ease-in-out;
+
+      .no-nodes {
+        white-space: nowrap;
+        padding-left: 2.5rem;
+      }
+
+      .node {
+        padding-left: 1.5rem;
+        font-size: 0.9rem;
+        line-height: 2em;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 230px;
+        display: block;
+        overflow: hidden;
+        
+        &.active > a {
+          color: $white;
+        }
+      }
+
+      .toggle i {
+        min-width: 0.6rem;
+      }
+
+      ul.children {
+        display: none;
+        margin: 0;
+        padding: 0;
+
+        .error {
+          display: none;
+        }
+  
+        .node {
+          padding-left: 0.5rem;
+        }
+      }
+    }
+
+    .tree-header {
+      @include active-nav;
+      display: flex;
+      position: relative;
+      justify-content: space-between;
+      align-items: center;
+      cursor: default;
+      width: 100%;
+      padding: 0.6rem 1rem 0.6rem 1.5rem;
+      margin-bottom: 0.5rem;
+
+      &.active {
+        color: $white;
+      }
+
+      .add-subnode {
+        position: absolute;
+        left: 12.5rem;
+
+        a {
+          padding: 0.5rem;
+
+          i {
+            font-size: 1rem;
+            margin: 0;
+          }
+        }
+      }
+
+      i {
+        font-size: 1.6rem;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      span {
+        position: absolute;
+        left: 4rem;
+        transition: transform 0.5s ease-in-out;
+      }
+    }
+  }
+
+  .sidebar-header {
+    height: $navbarHeight;
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    .team-logo {
+      height: 35px;
+      min-width: 35px;
+      border: 1px solid $borderColor;
+      border-radius: 50%;
+      background: $primaryBgColor;
+      position: relative;
+      opacity: 0;
+      transition: all 0.5s ease-in-out;
+      visibility: hidden;
+
+      img {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        height: 25px;
+        width: auto;
+      }
+    }
+
+    .team-name {
+      font-size: 1.25rem;
+      margin-left: 0.75rem;
+      color: $white;
+      white-space: nowrap;
+      opacity: 0;
+      transition: all 0.5s ease-in-out;
+      visibility: hidden;
+    }
+
+    .sidebar-toggle {
+      position: absolute;
+      right: 1rem;
+
+      .sidebar-toggle-link {
+        padding: 0.5rem;
+      }
+    }
+  }
+
+  .sidebar-link {
+    display: flex;
+    position: relative;
+    width: 100%;
+    align-items: center;
+    padding: 0.6rem 1.5rem;
+    transition: all 0.2s ease-in-out;
+    
+    &:hover {
+      background-color: $sidebarActiveColor;       
+    }
+    
+    .sidebar-link-icon {
+      font-size: 1.6rem;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .sidebar-link-label {
+      position: absolute;
+      left: 4rem;
+      white-space: nowrap;
+      transition: transform 0.5s ease-in-out;
+    }
+    
+  }
+
+  &.sidebar-collapsed {
+    width: $sidebarCollapsed;
+
+    .sidebar-link-label,
+    .sidebar-link-icon {
+      transform: translateX(-15px);
+    }
+
+    .sidebar-toggle {
+      right: 0.65rem;
+    }
+
+    .team-logo,
+    .team-name,
+    .nodes-list {
+      transform: translateX(-15px);
+      animation: fadeout 0.5s;
+    }
+    
+    .tree-header {
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        background-color: $sidebarActiveColor;
+        color: $white;
+      }
+    }
+
+    @keyframes fadeout {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+  }
+
+  &.sidebar-expanded {
+    width: $sidebarExpanded;
+
+    .sidebar-toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    .team-logo,
+    .team-name,
+    .nodes-list {
+      visibility: initial;
+      animation: fadein 1s;
+      opacity: 1;
+    }
+
+    @keyframes fadein {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
+
+  .version-wrapper {
+    display: flex;
+    justify-content: center;
+
+    .version {
+      position: fixed;
+      bottom: 0;
+      text-align: center;
+      padding: 0.2em 0;
+      font-size: 10px;
+    }
+  }
+}
+
 .navbar {
   background-color: $navbarBackground;
   height: $navbarHeight;
@@ -127,7 +428,7 @@
           .divider {
             height: 0;
             border-top: 1px solid $borderColor;
-            margin: .25rem;
+            margin: .25rem 0;
           }
 
           .dropdown-item {
@@ -187,45 +488,6 @@
           color: $linkColorHover;
         }
       }
-    }
-  }
-}
-
-.main-sidebar {
-  background: $sidebarBackground;
-  color: $sidebarText;
-  width: $sidebarCollapsed;
-  //width: 400px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  display: table-cell;
-  z-index: 5;
-
-  .inner {
-    padding: 0.5rem;
-
-    
-
-    li {
-      @include active-nav;
-    }
-
-  }
-
-  .version-wrapper {
-    display: flex;
-    justify-content: center;
-
-    .version {
-      position: fixed;
-      bottom: 0;
-      text-align: center;
-      padding: 0.2em 0;
-      font-size: 10px;
     }
   }
 }
