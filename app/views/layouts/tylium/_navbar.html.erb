@@ -21,16 +21,16 @@
         <%= render "layouts/tylium/search" %>
       </li>
       <li class="nav-item round">
-        <%= link_to main_app.project_configurations_path(current_project), class: 'nav-link' do %><i class="fa fa-cog fa-lg"></i><% end %>
+        <%= link_to main_app.project_configurations_path(current_project), class: 'nav-link', title: 'Configuration Manager' do %><i class="fa fa-cog fa-lg"></i><% end %>
       </li>
       <li class="nav-item notifications dropdown round">
-        <%= link_to main_app.project_notifications_path(current_project), class: 'nav-link dropdown-toggle', data: { behavior: 'notifications-dropdown close-collapse', toggle: 'dropdown' }, remote: true, role: 'button' do %>
+        <%= link_to main_app.project_notifications_path(current_project), class: 'nav-link dropdown-toggle', data: { behavior: 'notifications-dropdown close-collapse', toggle: 'dropdown' }, remote: true, role: 'button', title: 'Notifications' do %>
           <i class="fa fa-bell fa-lg"></i><i class="notifications-dot d-none" data-behavior="notifications-dot"></i>
         <% end %>
         <div class="dropdown-menu dropdown-menu-right" data-url="<%= main_app.project_notifications_path(current_project) %>"></div>
       </li>
       <li class="nav-item dropdown round">
-        <%= link_to '#', class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown', behavior: 'close-collapse' }, remote: true, role: 'button' do %>
+        <%= link_to '#', class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown', behavior: 'close-collapse' }, remote: true, role: 'button', title: 'Help Menu' do %>
           <i class="fa fa-question fa-lg"></i>
         <% end %>
         <div class="dropdown-menu dropdown-menu-right">
@@ -53,7 +53,7 @@
         </div>
       </li>
       <li class="nav-item dropdown round">
-        <a href="javascript:void(0)" class="nav-link dropdown-toggle" data-toggle="dropdown" data-behavior="close-collapse"><i class="fa fa-user fa-lg"></i></a>
+        <a href="javascript:void(0)" class="nav-link dropdown-toggle" data-toggle="dropdown" data-behavior="close-collapse" title="User Menu"><i class="fa fa-user fa-lg"></i></a>
         <div class="dropdown-menu dropdown-menu-right">
           <%= link_to 'Log out', main_app.logout_path, class:'dropdown-item' %>
         </div>
