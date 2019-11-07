@@ -10,7 +10,7 @@ describe Notification do
   it { should validate_presence_of :notifiable }
   it { should validate_presence_of :recipient }
 
-  describe 'current' do
+  describe 'since' do
     before do
       @user = create(:user)
       @issue = create(:issue)
@@ -22,7 +22,7 @@ describe Notification do
     end
 
     it 'returns all the unread notifications within a span of time' do
-      current_notifications = @user.notifications.current(5.minutes)
+      current_notifications = @user.notifications.since(5.minutes)
 
       expect(current_notifications).to include(@notification1)
       expect(current_notifications).to_not include(@notification2)
