@@ -1,4 +1,6 @@
 class DigestPresenter < NotificationPresenter
+  include AvatarHelper
+
   attr_accessor :notifications, :template
 
   def initialize(notifications, template)
@@ -23,7 +25,7 @@ class DigestPresenter < NotificationPresenter
   def avatar_image(size)
     if notification.actor
       h.image_tag(
-        attachments['profile'].url,
+        avatar_url(notification.actor, size: size),
         alt: notification.actor.email,
         class: 'gravatar',
         title: notification.actor.email,

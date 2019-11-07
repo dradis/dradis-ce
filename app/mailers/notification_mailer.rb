@@ -1,5 +1,5 @@
 class NotificationMailer < ApplicationMailer
-  helper :application
+  include AvatarHelper
 
   before_action :set_inline_attachments
 
@@ -27,7 +27,6 @@ class NotificationMailer < ApplicationMailer
   end
 
   def set_user_avatar
-    # The arguments are a noop here for CE-Pro parity.
-    @avatar_url = attachments['profile'].url
+    @avatar_url = avatar_url(@user)
   end
 end
