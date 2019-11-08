@@ -3,15 +3,19 @@ class DigestSender
   INSTANT_INTERVAL  = 10.minutes
 
   def self.send_digests
-    daily_users.each do |user|
+    digest_users(type: :daily).each do |user|
       DigestSender.new(user: user, type: :digest).send
     end
   end
 
   def self.send_instants
-    instant_users.each do |user|
+    digest_users(type: :instant).each do |user|
       DigestSender.new(user: user, type: :instant).send
     end
+  end
+
+  def self.digest_users(type:)
+    User.includes(:notifications).where("preferences LIKE '%digest_frequency: #{type}%'")
   end
 
   def initialize(type:, user:)
@@ -38,13 +42,5 @@ class DigestSender
     else
       raise 'Invalid digest type'
     end
-  end
-
-  def daily_users
-    User.where('preferences LIKE "%digest_frequency: daily%"')
-  end
-
-  def instant_users
-    User.where('preferences LIKE "%digest_frequency: instant%"')
   end
 end
