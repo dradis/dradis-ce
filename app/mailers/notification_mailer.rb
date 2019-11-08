@@ -10,8 +10,7 @@ class NotificationMailer < ApplicationMailer
 
     set_user_avatar
 
-    count = @notifications.count
-    mail to: @user.email, subject: "You have #{count} unread #{'notification'.pluralize(count)}"
+    mail to: @user.email, subject: 'You have unread notifications.'
   end
 
   private
