@@ -27,6 +27,8 @@ class DigestSender
 
   def send
     notifications = user.notifications.for_digest(interval)
+    return if notifications.count == 0
+
     NotificationMailer.with(user: user, notifications: notifications, type: type).
       digest.
       deliver_now
