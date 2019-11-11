@@ -4,7 +4,8 @@ class NotificationsController < AuthenticatedController
   def index
     notifications = current_user.notifications.newest.includes(
       :actor, notifiable: [:user, :commentable]
-    )
+    ).where(project_id: current_project.id)
+
     respond_to do |format|
       format.html do
         @notifications = notifications.page(params[:page])
