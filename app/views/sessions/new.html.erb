@@ -1,28 +1,34 @@
-<%= form_tag session_path, class: 'form-horizontal' do -%>
-  <div class="page-header">
-    <h1>Dradis Community Edition</h1>
-  </div>
-
-  <%= flash_messages %>
-
-  <div class="control-group">
-    <label class="control-label" for="login">Your username</label>
-    <div class="controls">
-      <%= text_field_tag 'login', nil, placeholder: 'Choose any user name you want', class: 'input-xlarge', autofocus: true %>
+<div class="col-6 offset-3">
+  <div class="card">
+    <div class="card-header bg-custom">
+      <h5 class="m-0">Dradis Community Edition</h5>
     </div>
-  </div>
+    <div class="card-body">
+      <%= form_tag session_path, class: 'form-horizontal' do -%>
 
-  <div class="control-group">
-    <label class="control-label" for="password">Password</label>
-    <div class="controls">
-      <%= password_field_tag 'password', nil, class: 'input-xlarge' %>
-    </div>
-  </div>
+        <%= flash_messages %>
 
-  <div class="control-group">
-    <div class="controls">
-      <%= submit_tag 'Let me in!', class: 'btn btn-large btn-primary' %>
-    </div>
-  </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="login">Username</label>
+          <div class="col-sm-9">
+            <%= text_field_tag 'login', nil, placeholder: 'Choose any user name you want', class: 'form-control', autofocus: true %>
+          </div>
+        </div>
 
-<% end -%>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="password">Password</label>
+          <div class="col-sm-9">
+            <%= password_field_tag 'password', nil, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class="form-group mb-0 row">
+          <div class="col-sm-9 offset-sm-3">
+            <%= submit_tag 'Let me in!', class: 'btn btn-lg btn-primary mt-2' %>
+          </div>
+        </div>
+
+      <% end -%>
+    <div>
+  </div>
+</div>
