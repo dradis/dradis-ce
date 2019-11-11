@@ -25,19 +25,30 @@ describe 'notifications index page' do
     expect(page).to have_content 'You have no notifications yet'
   end
 
-  example 'when I have notifications' do
-    # my notifications: 1 read, 1 unread
-    create_notification(recipient: me)
-    create_notification(recipient: me, read_at: Time.now)
+  context 'when I have notifications' do
+    example 'only shows notifications for a user' do
+      # my notifications: 1 read, 1 unread
+      create_notification(recipient: me)
+      create_notification(recipient: me, read_at: Time.now)
 
-    # other people's notifications:
-    create_notification(recipient: u1)
-    create_notification(recipient: u2)
+      # other people's notifications:
+      create_notification(recipient: u1)
+      create_notification(recipient: u2)
 
-    visit project_notifications_path(@project)
+      visit project_notifications_path(@project)
 
-    expect(page).to have_selector '.notification', count: 2
-    expect(page).not_to have_content 'You have no notifications yet'
+      expect(page).to have_selector '.notification', count: 2
+      expect(page).not_to have_content 'You have no notifications yet'
+    end
+
+    example 'only shows notifications under a project' do
+      create_notification(recipient: me)
+      create_notification(recipient: me)
+
+      visit project_notifications_path(@project)
+
+      expect(page).to have_selector '.notification', count: 1
+    end
   end
 
   example 'marking all notifications as read', :js do

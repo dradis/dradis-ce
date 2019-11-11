@@ -14,8 +14,6 @@ class AddProjectIdToNotifications < ActiveRecord::Migration[5.1]
   end
 
   def down
-    Notification.update_all(project_id: nil)
-
     remove_reference :notifications, :project, index: true
   end
 end

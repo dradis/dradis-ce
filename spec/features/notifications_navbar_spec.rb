@@ -36,7 +36,27 @@ describe 'User notifications', js: true do
 
         find('[data-behavior~=notifications-dropdown]').click
 
-        expect(page).to have_content("#{@logged_in_as.email} commented")
+        within('.notification-container') do
+          expect(page).to have_content("#{@logged_in_as.email} commented")
+        end
+      end
+
+      it 'shows only the notifications under the project' do
+        project1 = create(:project)
+        issue1 = create(:issue, text: "#[Title]#\nProject1 Issue", node: project1.issue_library)
+        comment1 = create(:comment, commentable: issue1, user: @logged_in_as)
+        create(:notification, notifiable: comment1, actor: @logged_in_as, recipient: @logged_in_as)
+
+        issue2 = create(:issue, text: "#[Title]#\nProject2 Issue", node: @project.issue_library)
+        comment2 = create(:comment, commentable: issue2, user: @logged_in_as)
+        create(:notification, notifiable: comment2, actor: @logged_in_as, recipient: @logged_in_as)
+
+        find('[data-behavior~=notifications-dropdown]').click
+
+        within('.notification-container') do
+          expect(page).to_not have_content("#{issue1.title} Issue")
+          expect(page).to have_content("#{issue2.title} Issue")
+        end
       end
     end
   end

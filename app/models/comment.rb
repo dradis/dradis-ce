@@ -39,10 +39,18 @@ class Comment < ApplicationRecord
     case action.to_s
     when 'create'
       subscribe_mentioned()
-      create_notifications(action: :mention, recipients: mentions)
+      create_notifications(
+        action: :mention,
+        project: commentable.project,
+        recipients: mentions
+      )
 
       subscribers = commentable.subscriptions.where.not(user: user).map(&:user)
-      create_notifications(action: :create, recipients: subscribers - mentions)
+      create_notifications(
+        action: :create,
+        project: commentable.project,
+        recipients: subscribers - mentions
+      )
     end
   end
 

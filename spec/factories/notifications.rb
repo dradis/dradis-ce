@@ -4,6 +4,7 @@ FactoryBot.define do
     association :actor, factory: :user
     association :recipient, factory: :user
     association :project
+
     action { :create }
   end
 end
