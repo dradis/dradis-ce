@@ -55,6 +55,10 @@ class Project
     Note.all
   end
 
+  def notifications
+    Notification.all
+  end
+
   def tags
     Tag.all
   end
