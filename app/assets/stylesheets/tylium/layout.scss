@@ -454,6 +454,10 @@
         margin: 0 0.2rem;
         cursor: pointer;
 
+        .dropdown-menu {
+          cursor: default;
+        }
+
         .nav-link {
           display: flex;
           justify-content: center;
