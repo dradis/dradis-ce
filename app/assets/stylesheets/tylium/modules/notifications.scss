@@ -116,16 +116,21 @@
 
 /* Notifications on the main body of /projects/X/notifications */
 .notifications-index {
-  ul {
-    list-style-type: none;
+
+  hr {
+    margin: 0;
   }
 
   li.notification {
     @include notification-list-item;
     border: none;
-  }
 
-  hr {
-    margin: 0;
+    .notification-icon {
+      display: none;
+    }
+  }
+  
+  ul {
+    list-style-type: none;
   }
 }

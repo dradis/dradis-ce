@@ -28,6 +28,14 @@ a {
   overflow: hidden;
 }
 
+@mixin button($color) {
+  border: 0px none;
+  background: $color;
+  &:hover {
+    background: darken($color, 10);
+  }
+}
+
 .btn {
   @include button(#e6e6e6);
   text-shadow: 0 0 0;
@@ -323,7 +331,6 @@ ul {
 }
 
 .drop-zone {
-  @include rounded;
   background: lighten($sidebarBackground, 10%);
   border: 1px dashed $grayDark;
   color: #ccc;

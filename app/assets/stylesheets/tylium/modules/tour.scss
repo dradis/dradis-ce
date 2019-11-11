@@ -49,8 +49,6 @@
     }
 
     .textile-wrap {
-      @include rounded(4px);
-      @include shadow;
       background-color: #f2f2f2;
       border: 1px solid #ccc;
 
@@ -78,7 +76,6 @@
       }
 
       .textile-preview {
-        @include rounded(4px);
         border: 1px solid #e3e3e3;
       }
 

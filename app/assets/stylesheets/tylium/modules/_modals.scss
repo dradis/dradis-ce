@@ -61,7 +61,6 @@
   &#modal_move_node {
     // These styles are used by the jQuery.treeModal plugin
     .tree-modal-box {
-      @include rounded;
       border: 1px solid #ccc;
       padding: 0.5em 1em;
       margin-bottom: 0.5em;

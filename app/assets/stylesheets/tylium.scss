@@ -1,28 +1,24 @@
 @import "tylium/vendor/bootstrap-4.3.1.min.css";
 @import "shared/mixins";
-@import "tylium/mixins";
-
-// theme-level imports and overrides
-@import "tylium/overrides/fileupload-ui_and_override";
-
-@import 'font-awesome-sprockets';
-@import "font-awesome";
-
 
 // theme-level variables
 @import "tylium/variables";
+
+// theme-level imports and overrides
+@import "tylium/overrides/fileupload-ui_and_override";
+@import "tylium/overrides/jquery-textile_and_override";
+
+@import 'font-awesome-sprockets';
+@import "font-awesome";
 
 // shared styles
 @import "shared/items_table";
 
 // styles for base HTML elements like body, h1, etc.
 @import "tylium/base";
+
 // styles for managing the layout in the screen (columns, floats, etc.)
 @import "tylium/layout";
-// specific styles for the different views, consider splitting in multiple
-// files
+
+// specific styles for the different views
 @import "tylium/modules";
-
-@import "tylium/overrides/jquery-textile_and_override";
-
-@import "tylium/pages";

@@ -1,5 +1,6 @@
 @import "tylium/modules/activities";
 @import "tylium/modules/alerts";
+@import "tylium/modules/boards";
 @import "tylium/modules/comments";
 @import "tylium/modules/configurations";
 @import "tylium/modules/console";
@@ -7,11 +8,12 @@
 @import "tylium/modules/issues";
 @import "tylium/modules/issues/import";
 @import "tylium/modules/issues/merge";
-@import "tylium/modules/methodologies";
 @import "tylium/modules/modals";
+@import "tylium/modules/navbar";
 @import "tylium/modules/notifications";
 @import "tylium/modules/nodes";
 @import "tylium/modules/projects";
+@import "tylium/modules/sidebar";
 @import "tylium/modules/textile";
 @import "tylium/modules/uploads";
 @import "tylium/modules/search";
@@ -134,7 +136,7 @@
   float: left;
   margin-right: 5px;
   img {
-    @include rounded(50%)
+    border-radius: 50%;
   }
 
   &.gravatar-inline {
