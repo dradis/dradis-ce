@@ -2,9 +2,9 @@ class NotificationsController < AuthenticatedController
   include ProjectScoped
 
   def index
-    notifications = current_user.notifications.newest.includes(
+    notifications = current_project.notifications.newest.includes(
       :actor, notifiable: [:user, :commentable]
-    ).where(project_id: current_project.id)
+    ).where(recipient_id: current_user.id)
 
     respond_to do |format|
       format.html do

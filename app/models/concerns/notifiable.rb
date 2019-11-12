@@ -12,7 +12,7 @@ module Notifiable
           action: action,
           actor: user,
           notifiable: self,
-          project_id: project.id,
+          project: project,
           recipient: recipient
         )
       end

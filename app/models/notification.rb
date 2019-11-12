@@ -3,7 +3,6 @@ class Notification < ApplicationRecord
   belongs_to :actor, class_name: 'User'
   belongs_to :recipient, class_name: 'User'
   belongs_to :notifiable, polymorphic: true
-  belongs_to :project
 
   # -- Callbacks ------------------------------------------------------------
 
@@ -12,7 +11,6 @@ class Notification < ApplicationRecord
   validates :actor, presence: true, associated: true
   validates :notifiable, presence: true, associated: true
   validates :recipient, presence: true, associated: true
-  validates :project, presence: true, associated: true
 
   # -- Scopes ---------------------------------------------------------------
   scope :newest,  -> { order(created_at: :desc) }
@@ -27,6 +25,17 @@ class Notification < ApplicationRecord
   end
 
   # -- Instance Methods -----------------------------------------------------
+  def project
+    # dummy project; this makes Node's interface more similar to how it is
+    # in Pro and makes it easier to deal with node in URL helpers
+    @project ||= Project.new
+  end
+
+  def project=(new_project);
+    self.project_id = new_project.id
+    self.save
+  end
+
   def read?
     self.read_at
   end

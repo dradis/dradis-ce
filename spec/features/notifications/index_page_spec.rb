@@ -11,6 +11,7 @@ describe 'notifications index page' do
 
   def create_notification(opts = {})
     opts[:notifiable] ||= create(:comment)
+    opts[:project] ||= @project
     create(:notification, opts)
   end
 
@@ -41,9 +42,9 @@ describe 'notifications index page' do
       expect(page).not_to have_content 'You have no notifications yet'
     end
 
-    example 'only shows notifications under a project' do
+    example 'only shows notifications under a project', if: defined?(Dradis::Pro) do
       create_notification(recipient: me)
-      create_notification(recipient: me)
+      create_notification(recipient: me, project: create(:project))
 
       visit project_notifications_path(@project)
 
