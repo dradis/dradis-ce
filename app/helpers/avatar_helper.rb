@@ -26,7 +26,7 @@ module AvatarHelper
         height: size,
         width: size,
         style: "width: #{size}px; height: #{size}px"
-      ) + (include_name ? ' ' + user.email : '')
+      ) + (include_name ? ' ' + user.try(:email) : '')
     end
   end
 
