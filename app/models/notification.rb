@@ -26,12 +26,10 @@ class Notification < ApplicationRecord
 
   # -- Instance Methods -----------------------------------------------------
   def project
-    # dummy project; this makes Node's interface more similar to how it is
-    # in Pro and makes it easier to deal with node in URL helpers
     @project ||= Project.new
   end
 
-  def project=(new_project);
+  def project=(new_project)
     self.project_id = new_project.id
     self.save
   end
