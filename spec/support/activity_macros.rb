@@ -31,7 +31,7 @@ module ActivityMacros
   end
 
   def within_sidebar
-    within(".secondary-navbar") { yield }
+    within(".secondary-sidebar") { yield }
   end
 
 end
