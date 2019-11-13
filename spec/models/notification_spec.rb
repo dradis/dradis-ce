@@ -22,7 +22,7 @@ describe Notification do
     end
 
     it 'returns all the unread notifications within a span of time' do
-      current_notifications = @user.notifications.since(5.minutes)
+      current_notifications = @user.notifications.since(5.minutes.ago)
 
       expect(current_notifications).to include(@notification1)
       expect(current_notifications).to_not include(@notification2)

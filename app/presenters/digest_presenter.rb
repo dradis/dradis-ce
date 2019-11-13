@@ -33,11 +33,11 @@ class DigestPresenter < NotificationPresenter
         # HACK: we can't use data-fallback-image for setting the fallback image
         # because there's no JS in the mail. Instead, we're relying on onerror
         # callback to re-set the image tag's src attribute.
-        onerror: "this.src = '#{image_path('logo_small')}';"
+        onerror: "this.src = '#{image_path('profile')}';"
       )
     else
       h.image_tag(
-        attachments['logo_small'].url,
+        image_path('logo_small'),
         width: size,
         alt: 'This user has been deleted from the system'
       )

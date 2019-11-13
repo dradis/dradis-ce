@@ -10,7 +10,7 @@ class NotificationGroup
   end
 
   def each(&block)
-    @notifications_hash.each(&block)
+    @grouped_notifications.each(&block)
   end
 
   def to_h

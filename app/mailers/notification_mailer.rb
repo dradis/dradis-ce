@@ -20,9 +20,12 @@ class NotificationMailer < ApplicationMailer
   end
 
   def set_inline_attachments
-    attachments.inline['profile'] = File.read(find_asset('profile.jpg'))
-    attachments.inline['logo_small'] = File.read(find_asset('logo_small.png'))
-    attachments.inline['DradisCE_full_small'] = File.read(find_asset('DradisCE_full_small.png'))
+    attachments.inline['dradis_logo'] =
+      if defined?(Dradis::Pro)
+        File.read(find_asset('DradisPro_full_small.png'))
+      else
+        File.read(find_asset('DradisCE_full_small.png'))
+      end
   end
 
   def set_user_avatar
