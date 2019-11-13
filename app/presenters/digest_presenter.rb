@@ -20,6 +20,17 @@ class DigestPresenter < NotificationPresenter
     "#{time_ago_in_words(notification.created_at)} ago"
   end
 
+  def text_title
+    email =
+      if notification.actor
+        notification.actor.email
+      else
+        'A user who has since been deleted'
+      end
+
+    [email, render_partial.strip].join(' ')
+  end
+
   private
 
   def avatar_image(size)

@@ -1,0 +1,12 @@
+<% if @type == :digest %>
+  Your Notifications From The Past 24h
+<% elsif @type == :instant %>
+  Your Recent Notifications
+<% end %>
+
+<% @notifications.each do |project, project_notifications| %>
+  <% project_notifications.each do |_, notifications| %>
+    <% presenter = DigestPresenter.new(notifications, self) %>
+    <%= render partial: 'notification_mailer/notification', locals: { presenter: presenter } %>
+  <% end %>
+<% end %>
