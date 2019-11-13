@@ -1,6 +1,7 @@
 .alert {
-  border: 0px none;
-  padding: 1em;
+  padding: $mainContentPadding;
+  margin: $mainContentMargin;
+  border: 1px solid #ddd;
   
   .close {
     font-size: 1rem;
