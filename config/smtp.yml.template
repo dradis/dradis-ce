@@ -5,11 +5,11 @@
 
 default: &default
   default_url_options:
-    host:         dradis-framework.dev
+    host:         dradisframework.dev
     script_name:  ''
   default_options:
-    from:     from@dradis-framework.dev
-    reply_to: reply@dradis-framework.dev
+    from:     from@dradisframework.dev
+    reply_to: reply@dradisframework.dev
   smtp_settings:
     address:               mail.starfleet.com
     port:                  123456

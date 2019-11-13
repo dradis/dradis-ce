@@ -1,8 +1,11 @@
+# This class represents the notifications of a user that is grouped under each
+# project and on each item. The goal of this class is to provide an easy way
+# to group and manage a user's notifications.
 class NotificationGroup
   attr_reader :count, :notifications_hash
 
   def initialize(notifications)
-    @notifications_hash = build_notifications_hash(notifications)
+    @grouped_notifications = group_notifications(notifications)
     @count = notifications.count
   end
 
@@ -11,12 +14,15 @@ class NotificationGroup
   end
 
   def to_h
-    @notifications_hash
+    @grouped_notifications
   end
 
   private
 
-  # The resulting notifications hash has the format:
+  # This method groups the given notifications according to their source item
+  # and project.
+  # Input: List of notifications
+  # Output: Hash with the following format:
   # {
   #   project1 => [
   #     [item1, [notifications]],
@@ -24,20 +30,17 @@ class NotificationGroup
   #   ],
   #   project2 => ...
   # }
-  def build_notifications_hash(notifications)
-    hash = notifications.
-      # FIXME: This only applies to notifications coming from a comment
-      group_by { |n| n.notifiable.commentable }
-
-    project = Project.new
-    hash.group_by do |item, _|
-      if defined?(Dradis::Pro)
-        item.project
+  def group_notifications(notifications)
+    # Group each notification using their source item
+    hash = notifications.group_by do |n|
+      if n.notifiable.is_a?(Comment)
+        n.notifiable.commentable
       else
-        # We use a single instance of Project since the project instance in each
-        # item.project call in CE is different.
-        project
+        raise 'Unsupported class!'
       end
     end
+
+    # Group each item using their projects
+    hash.group_by { |item, _| item.project }
   end
 end

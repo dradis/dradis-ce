@@ -12,6 +12,20 @@ class Project
   end
 
   # -- Instance Methods -----------------------------------------------------
+  # Compare Project instances using the ID attribute
+  def eql?(item)
+    if item.is_a?(Project)
+      self.id == item.id
+    else
+      false
+    end
+  end
+
+  # Override Object's #hash method to better compare Project instances
+  def hash
+    self.id
+  end
+
   def authors
     User.all
   end

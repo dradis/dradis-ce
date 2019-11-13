@@ -1,8 +1,15 @@
 class DigestSender
-  DIGEST_INTERVAL   = 1.day
-  INSTANT_INTERVAL  = 10.minutes
+  DAILY_INTERVAL    = 1.day.ago
+  INSTANT_INTERVAL  = 10.minutes.ago
 
-  def self.send_digests
+  attr_accessor :type, :user
+
+  # -- Class Methods --------------------------------------------------------
+  def self.digest_users(type:)
+    User.includes(:notifications).where("preferences LIKE '%digest_frequency: #{type}%'")
+  end
+
+  def self.send_dailies
     digest_users(type: :daily).each do |user|
       DigestSender.new(user: user, type: :digest).send
     end
@@ -14,16 +21,11 @@ class DigestSender
     end
   end
 
-  def self.digest_users(type:)
-    User.includes(:notifications).where("preferences LIKE '%digest_frequency: #{type}%'")
-  end
-
+  # -- Instance Methods -----------------------------------------------------
   def initialize(type:, user:)
     @type = type
     @user = user
   end
-
-  attr_accessor :type, :user
 
   def send
     notifications = user.notifications.for_digest(interval)
@@ -38,7 +40,7 @@ class DigestSender
 
   def interval
     if type == :digest
-      DIGEST_INTERVAL
+      DAILY_INTERVAL
     elsif type == :instant
       INSTANT_INTERVAL
     else

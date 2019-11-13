@@ -2,10 +2,10 @@ class DradisTasks < Thor
   class Digest < Thor
     namespace 'dradis:digests'
 
-    desc 'send_digests', 'Send a daily digest to all users'
-    def send_digests
+    desc 'send_dailies', 'Send a daily digest to all users'
+    def send_dailies
       print '** Sending digest to all users...'
-      DigestSender.send_digests
+      DigestSender.send_dailies
     end
 
     desc 'send_instants', 'Send an instant digest to all users'

@@ -18,8 +18,8 @@ class Notification < ApplicationRecord
   scope :unread,  -> { where(read_at: nil) }
 
   # All unread notifications within a given span of time
-  scope :since, -> (time_ago = 1.day) {
-    where('created_at >= ?', Time.now - time_ago).unread.newest
+  scope :since, -> (time_ago = 1.day.ago) {
+    where('created_at >= ?', time_ago).unread.newest
   }
 
   # -- Class Methods --------------------------------------------------------
