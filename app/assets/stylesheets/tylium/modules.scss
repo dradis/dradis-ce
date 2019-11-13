@@ -31,18 +31,15 @@
 }
 
 .note-list {
-  margin-bottom: 2em;
-
-  &.collapse {
-    margin-bottom: .5em;
-  }
 
   .list-item {
-    line-height: 2em;
-    padding-left: 1ex;
+    line-height: 1.5rem;
+    padding: 0.5rem;
+    transition: all 0.2s ease-in-out;
 
     &.note-editor{
       border-bottom: 0;
+
       .form-actions {
         border: 0;
         background-color: #fff;
@@ -54,9 +51,10 @@
     }
 
     .list-item-actions {
-      padding-right: 1ex;
+      padding-top: 0.25rem;
       text-align: right;
       visibility: hidden;
+      transition: visibility 0.1s ease-in-out;
     }
 
     .list-item-edit {
@@ -65,8 +63,12 @@
     }
 
     &:hover {
-      background-color: lighten($sidebarBackground,10%);
+      background-color: $primaryBgColor;
 
+      a {
+        color: $defaultText;
+      }
+      
       .list-item-actions {
         visibility: visible;
       }
