@@ -17,10 +17,10 @@
       <%= render partial: 'notification_mailer/notification', locals: { presenter: presenter } %>
     <% end %>
   </div>
-<% end %>
 
-<hr>
+  <hr>
 
-<% unless defined?(Dradis::Pro) %>
-  <%= link_to 'See all notifications', project_notifications_url(1), class: 'button' %>
+  <% unless defined?(Dradis::Pro) %>
+    <%= link_to 'See all notifications', project_notifications_url(project), class: 'button' %>
+  <% end %>
 <% end %>
