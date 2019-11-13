@@ -5,22 +5,25 @@
 <% end %>
 
 <!-- Main content -->
-<div id="issue-viewer">
 
-  <div class="inner note-text-inner">
+<div class="content-container">
+  <div id="issue-viewer">
 
-    <% if @issues.any? %>
-      <div id="issues-table"
-           data-destroy-url="<%= multiple_destroy_project_issues_path(current_project) %>"
-           data-storage-key="project.ce.issue_columns"
-           data-close-console-url="<%= project_issues_path(current_project) %>">
-        <%= render 'toolbar' %>
-        <%= render 'table', issues: @issues %>
-      </div>
-    <% else %>
-      <%= render 'empty' %>
-    <% end %>
+    <div class="inner note-text-inner">
+
+      <% if @issues.any? %>
+        <div id="issues-table"
+            data-destroy-url="<%= multiple_destroy_project_issues_path(current_project) %>"
+            data-storage-key="project.ce.issue_columns"
+            data-close-console-url="<%= project_issues_path(current_project) %>">
+          <%= render 'toolbar' %>
+          <%= render 'table', issues: @issues %>
+        </div>
+      <% else %>
+        <%= render 'empty' %>
+      <% end %>
+    </div>
   </div>
-</div>
 
-<%= render 'console/console' %>
+  <%= render 'console/console' %>
+</div>
