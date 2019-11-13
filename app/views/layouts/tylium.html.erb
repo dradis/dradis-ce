@@ -22,58 +22,41 @@
 
     <%= csrf_meta_tag %>
   </head>
+
   <body class="<%= controller_name %> <%= action_name %>">
 
     <%= render 'layouts/tylium/navbar' %>
-
     <%= render 'layouts/tylium/sidebar' %>
 
-    <div class="body-wrapper">
-      <div class="main-wrapper">
-        <div class="main-content <%= content_for?(:sidebar) ? 'pl-0' : ''%>">
-          <noscript>
-            <div class="alert alert-error" style="margin: 2em">
-              <h4>Error</h4>
-              <p>Please enable JavaScript support.</p>
+    <noscript>
+      <div class="alert alert-error m-4">
+        <h4>Error</h4>
+        <p>Please enable JavaScript support.</p>
+      </div>
+    </noscript>
+    
+    <div id="view-content" class="view-content">
+      <div class="row m-0">
+        <% if content_for?(:sidebar) %>
+          <div class="secondary-sidebar col-2 p-0">
+            <div class="inner">
+              <%= yield :sidebar %>
             </div>
-          </noscript>
-
-  <div class="body-wrapper">
-    <div class="main-wrapper">
-      <div class="main-content <%= content_for?(:sidebar) ? 'no-padding' : ''%>" data-behavior='mentions-scroll'>
-        <noscript>
-          <div class="alert alert-notice d-none" style="margin: 2em" data-behavior="project-teaser">
-            <h3>This isn't the project you're looking for</h3>
-            <p>
-              If you're looking to work with multiple projects, consider <a href="javascript:void(0)"
-              class="js-try-pro" data-term="projects" data-url="http://drad.is/l/try-pro-projects">checking Dradis Pro out</a>.
-            </p>
           </div>
-
-          <div id="view-content" class="view-content">
-            <% if content_for?(:sidebar) %>
-              <div class="secondary-navbar">
-                <div class="inner">
-                  <%= yield :sidebar %>
-                </div>
-              </div>
-              <div class="secondary-navbar-content">
-                <%= flash_messages %>
-                <%= render "layouts/tylium/breadcrumb" %>
-                <%= content_for?(:content) ? yield(:content) : yield %>
-              </div>
-            <% else %>
-              <%= yield(:breadcrumbs) if content_for?(:breadcrumbs) %>
-              <%= content_tag :h1, yield(:title) if content_for?(:title) %>
-              <div class="row-fluid">
-                <div class="col-12">
-                  <%= flash_messages %>
-                  <%= content_for?(:content) ? yield(:content) : yield %>
-                </div>
-              </div>
-            <% end %>
+          <div class="secondary-sidebar-content col-10">
+            <%= render "layouts/tylium/project_teaser" %>
+            <%= flash_messages %>
+            <%= render "layouts/tylium/breadcrumb" %>
+            <%= content_for?(:content) ? yield(:content) : yield %>
           </div>
-        </div>
+        <% else %>
+          <div class="col-12 p-0">
+            <%= render "layouts/tylium/project_teaser" %>
+            <%= yield(:breadcrumbs) if content_for?(:breadcrumbs) %>
+            <%= flash_messages %>
+            <%= content_for?(:content) ? yield(:content) : yield %>
+          </div>
+        <% end %>
       </div>
     </div>
 
