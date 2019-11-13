@@ -37,3 +37,24 @@
    visibility: hidden;
   }
 }
+
+.view-content {
+  background: $secondaryBgColor;
+  position: fixed;
+  height: calc(100vh - 60px);
+  width: calc(100vw - 43px);
+  top: $navbarHeight;
+  left: $sidebarCollapsed;
+  overflow: scroll;
+
+  .content-container {
+    margin: $mainContentMargin;
+    padding: $mainContentPadding;
+    background-color: $primaryBgColor;
+    border: 1px solid $borderColor;
+  }
+
+  .view-title {
+    margin: $mainContentMargin;
+  }
+}

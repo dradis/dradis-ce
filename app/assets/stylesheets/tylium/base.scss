@@ -3,10 +3,11 @@ html, body {
 }
 
 body {
-  background-color: $primaryBgColor;
+  background-color: $darkColor;
   font-family: 'OpenSans';
   padding-top: 0px;
   font-weight: 300;
+  color: $defaultText;
 }
 
 a {
@@ -18,14 +19,10 @@ a {
     text-decoration: none;
   }
 }
-  
-.body-wrapper {
-  top: $navbarHeight;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  position: absolute;
-  overflow: hidden;
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 300;
+  text-transform: uppercase;
 }
 
 @mixin button($color) {
@@ -86,227 +83,114 @@ ul {
 }
 
 /* Un-reviewed snowcrash styles */
+  
+.secondary-sidebar { /* checked */ 
+  background: $sidebarActiveColor;
+  color: $white;
+  border-right: 1px solid $borderColor;
 
-.main-wrapper {
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
+  a {
+    color: $white;
+  }
 
-  .main-content {
-    color: lighten(#000, 20%);
-    background: $secondaryBgColor;
-    width: auto;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: $sidebarCollapsed;
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding: 0 $mainContentPadding;
+  .inner { /* checked */ 
+    background: $sidebarActiveColor;
+    padding: 1rem;
+    height: calc(100vh - 60px);
+    position: fixed;
+    overflow: scroll;
+    width: 16%;
 
-    .breadcrumb {
-      margin-bottom: 0;
-      padding: 0.5em 1em;
-      box-sizing: border-box;
-    }
-
-    .view-content {
-      
+    .header-inner {
       position: relative;
-      height: 100%;
-      width: 100%;
-      box-sizing: border-box;
+      margin-top: 0.5rem;
 
-      ul.nav-tabs {
-        padding: 0;
-        margin: 0;
+      .options {
+
+        .dropdown {
+          float: right;
+          margin-left: 2px;
+          position: absolute;
+          top: 0;
+          right: 0;
+        }
       }
 
-      .inner, 
-      .page {
-        
-        background: #fff;
-        padding: 2em;
-        margin-bottom: 1.5em;
-
-        .inner, 
-        .page {
-          padding: 0;
-        }
-
-        h2, 
-        h3 {
-          margin: 0 0 0.5em 0;
-          line-height: 1em;
-          padding-bottom: 0.5em;
-          border-bottom: 1px solid $grayLight;
-
-          .actions {
-            font-size: 75%;
-
-            .action-link {
-              padding: 0 4px;
-            }
-          }
-        }
+      .header-underline {
+        margin-bottom: .5em;
+        padding-bottom: .5em;
+        border-bottom: 1px solid $white;
       }
     }
 
+    table {
 
-    .secondary-navbar {
-      background: $sidebarActiveColor;
-      display: table-cell;
-      vertical-align: top;
-      width: $secondarySidebarWidth;
+      td {
+        padding: 0 0 1em;
 
-      > .inner {
-        background: $sidebarActiveColor;
-        padding: 1em;
-        min-height: 600px;
-
-        .header-inner {
-          position: relative;
-
-          .options {
-
-            .dropdown {
-              float: right;
-              margin-left: 2px;
-              position: absolute;
-              top: 0;
-              right: 0;
-            }
-          }
-
-          h3 {
-            margin-bottom: .5em;
-            padding-bottom: .5em;
-            color: darken($sidebarBackground, 60%);
-            border-bottom: 1px solid darken($sidebarBackground,5);
-
-            a {
-              color: inherit;
-            }
-          }
+        .btn {
+          padding: 4px 6px;
         }
 
-        table {
-
-          td {
-            padding: 0 0 1em;
-
-            .btn {
-              padding: 4px 6px;
-            }
-
-            .btn-danger {
-              color: $red;
-            }
-
-            .btn-transparent {
-              background: transparent;
-            }
-          }
+        .btn-danger {
+          color: $red;
         }
 
-        // there are links in the secondary-navbar that are outside a .list-item
-        // and we them with the right color.
-        a {
-          color: darken($sidebarBackground, 40%);
-
-          &:hover {
-            color: darken($sidebarBackground, 60%);
-          }
-        }
-
-        .list-item {
-          &.active a {
-            color: darken($sidebarBackground, 90%);
-          }
-        }
-
-        // Keep the original light blue color for the Edit link.
-        a.list-item-edit {
-          color: $linkColor;
-
-          &:hover,
-          &:focus {
-            color: $linkColorHover;
-          }
-        }
-
-        .list-item-actions {
-          font-size: 90%;
-
-          a {
-            padding: 0 4px;
-          }
-
-          a.list-item-action-delete {
-            color: $errorText;
-
-            &:hover,
-            &:focus {
-              color: darken($errorText, 10%);
-            }
-          }
-
-          a.list-item-action-edit {
-            color: $linkColor;
-
-            &:hover,
-            &:focus {
-              color: $linkColorHover;
-            }
-          }
+        .btn-transparent {
+          background: transparent;
         }
       }
     }
 
-    .secondary-navbar-content {
-      background: #fff;
-      display: table-cell;
-      vertical-align: top;
-      position: relative;
+    // Keep the original light blue color for the Edit link.
+    a.list-item-edit {
+      color: $linkColor;
 
-      width: 100vw;
+      &:hover,
+      &:focus {
+        color: $linkColorHover;
+      }
+    }
 
-      .main-tabs {
-        background-color: #f5f5f5;
-        padding: 0 0 0 1em;
+    .list-item-actions {
+      font-size: 90%;
+
+      a {
+        padding: 0 4px;
       }
 
-      .tab-content {
+      a.list-item-action-delete {
+        color: $errorText;
 
-        .inner {
-          word-break: break-word;
+        &:hover,
+        &:focus {
+          color: darken($errorText, 10%);
+        }
+      }
+
+      a.list-item-action-edit {
+        color: $linkColor;
+
+        &:hover,
+        &:focus {
+          color: $linkColorHover;
         }
       }
     }
+  }
+}
 
-    a:hover {
-      text-decoration: none;
-    }
+.secondary-sidebar-content {
 
-    h1, h2, h3 {
-      color: $asphalt;
-      font-weight: normal;
-    }
+  .main-tabs {
+    background-color: #f5f5f5;
+    padding: 0 0 0 1em;
+  }
 
-    h1 {
-      font-size: 2em;
-      text-transform: uppercase;
-      margin: 20px 0;
-    }
+  .tab-content {
 
-    h2 {
-      font-size: 1.7em;
-    }
-
-    h3 {
-      font-size: 1.4em;
+    .inner {
+      word-break: break-word;
     }
   }
 }
