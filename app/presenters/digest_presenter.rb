@@ -9,6 +9,7 @@ class DigestPresenter < NotificationPresenter
   end
 
   def comment_path(anchor: false)
+    anchor = dom_id(notification.notifiable) if anchor
     polymorphic_url(
       path_to_comment,
       anchor: anchor
