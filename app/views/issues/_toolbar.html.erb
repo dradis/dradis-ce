@@ -29,17 +29,15 @@
         Tag
         <span class="caret"></span>
       </a>
-      <ul class="dropdown-menu">
+      <div class="dropdown-menu">
         <% @tags.each do |tag| %>
           <% cache [tag, 'issues-toolbar'] do %>
-            <li>
-              <%= link_to 'javascript:void(0)', class: 'js-taglink', style: "color: #{tag.color}", data: { tag: h(tag.name) } do %>
-                <i class="fa fa-tag"></i> <%= h(tag.display_name) %>
-              <% end %>
-            </li>
+            <%= link_to 'javascript:void(0)', class: 'js-taglink dropdown-item', style: "color: #{tag.color}", data: { tag: h(tag.name) } do %>
+              <i class="fa fa-tag"></i> <%= h(tag.display_name) %>
+            <% end %>
           <% end %>
         <% end %>
-      </ul>
+      </div>
     </div>
   </div>
 

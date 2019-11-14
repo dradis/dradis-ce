@@ -15,20 +15,16 @@
     <% end %>
     <span class="caret"></span>
   </button>
-  <ul class="dropdown-menu">
-    <li>
-      <%= link_to 'javascript:void(0)', class: 'js-taglink',  style: "color: #555", data: { tag: "" } do %>
-        <i class="icon fa fa-tag"></i>
-        No tag
-      <% end %>
-    </li>
+  <div class="dropdown-menu">
+    <%= link_to 'javascript:void(0)', class: 'js-taglink dropdown-item',  style: "color: #555", data: { tag: "" } do %>
+      <i class="icon fa fa-tag"></i>
+      No tag
+    <% end %>
     <% @tags.each do |tag| %>
-    <li>
-      <%= link_to 'javascript:void(0)', class: 'js-taglink',  style: "color: #{ tag.color }", data: { tag: h(tag.name) } do %>
+      <%= link_to 'javascript:void(0)', class: 'js-taglink dropdown-item',  style: "color: #{ tag.color }", data: { tag: h(tag.name) } do %>
         <i class="icon fa fa-tag"></i>
         <%= h(tag.display_name) %>
       <% end %>
-    </li>
     <% end %>
-  </ul>
+  </div>
 </div>

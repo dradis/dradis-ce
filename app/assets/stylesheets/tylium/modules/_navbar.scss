@@ -111,35 +111,8 @@
       font-size: 0.9rem;
       transition: all 0.2s ease-in-out;
 
-      &.dropdown {
-        position: initial;
-
-        .dropdown-menu {
-          position: absolute;
-          margin: 0;
-          border: 1px solid $borderColor;
-          border-radius: 0 0 0 .5rem;
-          right: 0;
-          z-index: 2;
-          padding: .25rem 0;
-          font-size: 0.9rem;
-
-          .divider {
-            height: 0;
-            border-top: 1px solid $borderColor;
-            margin: .25rem 0;
-          }
-
-          .dropdown-item {
-            color: $defaultText;
-            transition: color 0s;
-
-            &:hover {
-              background-color: $primaryColor;
-              color: white;
-            }
-          }
-        }
+      .dropdown-menu {
+        border-radius: 0 0 0 .5rem;
       }
 
       &.round {
