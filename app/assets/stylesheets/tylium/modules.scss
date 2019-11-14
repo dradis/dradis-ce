@@ -21,6 +21,7 @@
 @import "tylium/modules/tour";
 @import "tylium/modules/versions";
 
+
 .page {
   &.page-mini {
     padding: 10px;
@@ -36,6 +37,7 @@
   .list-item {
     line-height: 1.5rem;
     padding: 0.5rem;
+    border-radius: 3px;
     transition: all 0.2s ease-in-out;
 
     &.note-editor{
@@ -67,7 +69,11 @@
       background-color: $primaryBgColor;
 
       a {
-        color: $defaultText;
+        color: $linkColor;
+
+        &:hover {
+          color: $linkColorHover;
+        }
       }
       
       .list-item-actions {
@@ -78,26 +84,17 @@
 
   .note {
     cursor: pointer;
-    color: darken($sidebarBackground,30);
-    &:hover {
-      color: darken($sidebarBackground,45);
-    }
-    &.on {
-      .remove-note {
-        visibility: visible;
-        a:last-child:hover { color:#7b0000; }
-        font-size: 0.9em;
-      }
-    }
+
     &.placeholder {
-      color: #ccc;
       font-style: italic;
-      margin-bottom: 2rem;
+      margin: 0 0 2rem 1rem;
     }
+
     .remove-note {
       visibility: hidden;
     }
   }
+
   .note-text-inner {
     padding: 1em;
     background: lighten($grayLight, 5%);

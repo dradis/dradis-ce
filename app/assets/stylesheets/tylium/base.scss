@@ -74,6 +74,18 @@ p {
   font-weight: 300;
 }
 
+.text-error {
+  color: $errorText !important;
+}
+
+.text-error-hover {
+  color: $errorText !important;
+
+  &:hover {
+    color: darken($errorText, 10%) !important;
+  }
+}
+
 ul {
   list-style: none;
 
@@ -100,6 +112,14 @@ ul {
     position: fixed;
     overflow: scroll;
     width: 16%;
+
+    @media screen and (max-width: 1199px) {
+      width: 24%;
+    }
+
+    @media screen and (max-width: 991px) {
+      width: 31%;
+    }
 
     .header-inner {
       position: relative;

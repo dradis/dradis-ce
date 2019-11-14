@@ -16,7 +16,5 @@
   <% if collection.any? %>
     <%= render partial: collection.first.to_partial_path, collection: collection %>
   <% end %>
-  <div class="list-item">
-    <div class="note placeholder <%= 'd-none' if collection.any? %>">(nothing yet)</div>
-  </div>
+  <div class="note placeholder <%= 'd-none' if collection.any? %>">(nothing yet)</div>
 </div>
