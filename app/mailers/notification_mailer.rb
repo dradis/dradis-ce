@@ -8,7 +8,7 @@ class NotificationMailer < ApplicationMailer
     @notifications = params[:notifications]
     @type = params[:type]
 
-    set_user_avatar
+    @avatar_url = avatar_url(@user)
 
     mail to: @user.email, subject: 'You have unread notifications.'
   end
@@ -26,9 +26,5 @@ class NotificationMailer < ApplicationMailer
       else
         File.read(find_asset('DradisCE_full_small.png'))
       end
-  end
-
-  def set_user_avatar
-    @avatar_url = avatar_url(@user)
   end
 end

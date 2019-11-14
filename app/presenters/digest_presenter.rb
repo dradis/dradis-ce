@@ -48,7 +48,7 @@ class DigestPresenter < NotificationPresenter
       )
     else
       h.image_tag(
-        image_path('logo_small'),
+        image_path('profile'),
         width: size,
         alt: 'This user has been deleted from the system'
       )
