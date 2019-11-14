@@ -43,7 +43,6 @@
 //= require tylium/modules/uploads
 
 //= require tylium/pages/boards
-//= require tylium/pages/methodologies
 //= require tylium/pages/nodes/new_form
 //= require tylium/pages/nodes/tables
 //= require tylium/pages/projects/boards_summary
