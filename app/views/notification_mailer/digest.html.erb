@@ -9,6 +9,9 @@
 <% @notifications.each do |project, project_notifications| %>
   <div class='project-wrapper'>
     <div class='project-name-wrapper'>
+      <% if defined?(Dradis::Pro) %>
+        <span class='project-name'><%= project.name %></span>
+      <% end %>
       <hr>
     </div>
 

@@ -5,6 +5,7 @@
 <% end %>
 
 <% @notifications.each do |project, project_notifications| %>
+  <%= project.name if defined?(Dradis::Pro) %>
   <% project_notifications.each do |_, notifications| %>
     <% presenter = DigestPresenter.new(notifications, self) %>
     <%= render partial: 'notification_mailer/notification', locals: { presenter: presenter } %>

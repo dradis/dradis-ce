@@ -3,7 +3,8 @@ require 'rails_helper'
 describe NotificationGroup do
   before do
     @user = create(:user)
-    @issue = create(:issue)
+    @project = create(:project)
+    @issue = create(:issue, node: @project.issue_library)
     @comment = create(:comment, commentable: @issue)
     @notification = create(:notification, notifiable: @comment, recipient: @user)
     @user_notifications = @user.notifications.since
@@ -12,10 +13,10 @@ describe NotificationGroup do
   describe '#new' do
     it 'creates a grouped hash of notifications' do
       expected_hash = {
-        Project.new => [ [@issue, [@notification]] ]
+        @project => [ [@issue, [@notification]] ]
       }
       group = NotificationGroup.new(@user_notifications)
-      expect(group.to_h.values).to eq(expected_hash.values)
+      expect(group.to_h).to eq(expected_hash)
     end
   end
 
