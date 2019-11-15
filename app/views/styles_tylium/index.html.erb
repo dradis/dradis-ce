@@ -1,0 +1,93 @@
+<% content_for :title, 'Tylium Style Guide' %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+
+      <div class="content-container">
+        <h1 class="text-center mb-4">Tylium Style Guide [ WIP ]</h1>
+        <p>Welcome to the Tylium style guide, here you will see all the major style components that we use in the Tylium layout.</p>
+        <p>If you find something you would like to implement in the view you are working on, you can simply press the <i class="fa fa-code"></i> button to reveal the code structure including all the element tags, classes, data-attributes etc.</p>
+        <div class="mt-4">
+          <button class="btn btn-primary">Content Container</button>
+          <button class="btn btn-primary">Typography</button>
+          <button class="btn btn-primary">Section 3</button>
+          <button class="btn btn-primary">Section 4</button>
+          <button class="btn btn-primary">Section 5</button>
+          <button class="btn btn-primary">Section 6</button>
+        </div>
+      </div>
+
+      <div class="content-container" data-behavior="content-container">
+
+        <div class="style-header">
+          <h3>Content Container</h3>
+          <button class="reveal-code" data-behavior="reveal-code"><i class="fa fa-code"></i></button>
+        </div>
+        <div class="style-example">
+          <p>Each individual section of Tylium should be wrapped in a content container with an optional header element. The content container gives the elements a white background, grey border with subtle border radius as well as uniform padding and margin.</p>
+        </div>
+        
+        <div class="style-code-wrapper d-none" data-behavior="style-code">
+          <pre class="style-code">
+<code><span class="et">&lt;div</span><span class="cn"> class=</span><span class="cv">"content-container"</span><span class="et">></span>
+  <span class="et">&lt;h3</span><span class="et">></span>Header Text Here<span class="et">&lt;/h3</span><span class="et">></span>
+  <span class="et">&lt;p</span><span class="et">></span>content Here<span class="et">&lt;/p</span><span class="et">></span>
+<span class="et">&lt;/div</span><span class="et">></span></code>
+          </pre>
+        </div>
+
+      </div>
+
+      <div class="content-container" data-behavior="content-container">
+
+        <div class="style-header">
+          <h3>Typography</h3>
+          <button class="reveal-code" data-behavior="reveal-code"><i class="fa fa-code"></i></button>
+        </div>
+        <div class="style-example">
+          <div class="row">
+            <div class="col-12">
+              <p>Tylium uses the <a href="https://www.google.com/fonts/specimen/Open+Sans" target="_blank">Open Sans</a> font. The font-weight is set to 300 but we also have <span class="fw4">400</span> and <span class="fw6">600</span> available. The font size is set to 1rem = 16px.</p> 
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="col-6">
+              <h1>Heading 1</h1>
+              <h2>Heading 2</h2>
+              <h3>Heading 3</h3>
+              <h4>Heading 4</h4>
+              <h5>Heading 5</h5>
+              <h6>Heading 6</h6>
+            </div>
+            <div class="col-6">
+              <p class="lead">Paragraph with lead class</p>
+              <p>Normal paragraph</p>
+              <p><a href="javascript:void(0)">Link example</a></p>
+              <p class="text-error">Error text</p>
+              <p class="text-muted">Muted text</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="style-code-wrapper d-none" data-behavior="style-code">
+          <pre class="style-code">
+<code><span class="et">&lt;h1</span><span class="et">></span>Heading 1<span class="et">&lt;/h1</span><span class="et">></span>
+<span class="et">&lt;h2</span><span class="et">></span>Heading 2<span class="et">&lt;/h2</span><span class="et">></span>
+<span class="et">&lt;h3</span><span class="et">></span>Heading 3<span class="et">&lt;/h3</span><span class="et">></span>
+<span class="et">&lt;h4</span><span class="et">></span>Heading 4<span class="et">&lt;/h4</span><span class="et">></span>
+<span class="et">&lt;h5</span><span class="et">></span>Heading 5<span class="et">&lt;/h5</span><span class="et">></span>
+<span class="et">&lt;h6</span><span class="et">></span>Heading 6<span class="et">&lt;/h6</span><span class="et">></span>
+
+<span class="et">&lt;p</span><span class="cn"> class=</span><span class="cv">"lead"</span><span class="et">></span>Paragraph with lead class<span class="et">&lt;/p</span><span class="et">></span>
+<span class="et">&lt;p</span><span class="et">></span>Normal paragraph<span class="et">&lt;/p</span><span class="et">></span>
+<span class="et">&lt;a</span><span class="cn"> href=</span><span class="cv">"#"</span><span class="et">></span>Link example<span class="et">&lt;/a</span><span class="et">></span>
+<span class="et">&lt;p</span><span class="cn"> class=</span><span class="cv">"text-error"</span><span class="et">></span>Error text<span class="et">&lt;/p</span><span class="et">></span>
+<span class="et">&lt;p</span><span class="cn"> class=</span><span class="cv">"text-muted"</span><span class="et">></span>Muted text<span class="et">&lt;/p</span><span class="et">></span></code>
+          </pre>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,68 @@
+body.styles_tylium {
+
+  .style-code-wrapper {
+    position: relative;
+
+    .style-code {
+      display: flex;
+      background-color: #222;
+      margin-top: 2rem;
+      padding: 1rem;
+      border-radius: 5px;
+
+      code {
+        color: #fff;
+
+        .et {
+          color: #669bd1;
+        }
+
+        .cn {
+          color: #a9dbfa;
+        }
+
+        .ct {
+          color: #74975c;
+        }
+
+        .cv {
+          color: #c2917b;
+        }
+      }
+    }
+  }
+
+  .style-example {
+    
+    .fw4 {
+      font-weight: 400;
+    }
+
+    .fw6 {
+      font-weight: 600;
+    }
+  }
+
+  .style-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    .reveal-code {
+      font-size: 1.1rem;
+
+      display: inline-flex;
+      background-color: $primaryBgColor;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      padding: 0.3rem;
+      margin: 0 0 0.5rem 0.5rem;
+
+      &:hover {
+        background-color: $secondaryBgColor;
+        border: 1px solid $borderColor;
+      }
+    }
+  }
+}
