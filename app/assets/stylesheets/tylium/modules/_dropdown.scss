@@ -20,6 +20,7 @@
       color: $linkColor;
       transition: color 0s;
 
+      &:active,
       &:hover {
         color: $linkColorHover;
       }
