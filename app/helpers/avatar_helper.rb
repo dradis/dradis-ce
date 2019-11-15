@@ -30,15 +30,25 @@ module AvatarHelper
     end
   end
 
-  def comment_avatars(comment)
-    # Support both concers/commented Comments collection for most views
-    # as well as rendering 1-off's for polling and ajax requests.
-    collection = comments ? comments.map(&:content) : Array(comment)
-    matcher, rules = mentions_builder(collection)
-    comment.gsub(matcher, rules)
+  def mention_matcher
+    @mention_matcher ||= begin
+      users = current_project.authors.all.select(:email, :name)
+
+      matcher = /#{users.map { |user| '@' + user.email }.join('|')}/
+      rules = users.each_with_object({}) do |user, hash|
+        hash['@' + user.email] = avatar_image(user, size: 20, include_name: true, class: 'gravatar gravatar-inline')
+      end
+
+      [matcher, rules]
+    end
+  end
+
+  def mentions_formatter(content)
+    matcher, rules = mention_matcher
+    content.gsub(matcher, rules)
   end
 
   def comment_formatter(comment)
-    comment_avatars(simple_format(h(comment))).html_safe
+    mentions_formatter(simple_format(h(comment))).html_safe
   end
 end
