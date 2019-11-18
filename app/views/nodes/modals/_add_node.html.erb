@@ -9,9 +9,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <% if type == :branch %>
-          <h3>Add top-level node</h3>
+          <h3 class="modal-title">Add top-level node</h3>
         <% else %>
-          <h3>Add a child to the <strong><%= @node.label %></strong> node</h3>
+          <h3 class="modal-title">Add a child to the <strong><%= @node.label %></strong> node</h3>
         <% end %>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
           <i class="fa fa-times"></i>
