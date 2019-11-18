@@ -1,75 +1,76 @@
 <% content_for :title, 'Tylium Style Guide' %>
 
-<div class="row">
-  <div class="col-12">
+<div class="container">
+  <div class="row">
+    <div class="col-12">
 
-    <div class="content-container">
-      <h1 class="text-center mb-4">Tylium Style Guide [ WIP ]</h1>
-      <p>Welcome to the Tylium style guide, here you will see all the major style components that we use in the Tylium layout.</p>
-      <p>If you find something you would like to implement in the view you are working on, you can simply press the <i class="fa fa-code"></i> button to reveal the code structure including all the element tags, classes, data-attributes etc.</p>
-      <div class="mt-4 text-center">
-        <button class="btn btn-primary" data-behavior="quick-nav-btn" data-target="content-container-example">Content Container</button>
-        <button class="btn btn-primary" data-behavior="quick-nav-btn" data-target="typography">Typography</button>
-        <button class="btn btn-primary" data-behavior="quick-nav-btn" data-target="tables">Tables</button>
-        <button class="btn btn-primary" data-behavior="quick-nav-btn" data-target="modals">Modals</button>
-        <button class="btn btn-primary" data-behavior="quick-nav-btn">Section 5</button>
-        <button class="btn btn-primary" data-behavior="quick-nav-btn">Section 6</button>
+      <div class="content-container">
+        <h1 class="text-center mb-4">Tylium Style Guide [ WIP ]</h1>
+        <p>Welcome to the Tylium style guide, here you will see all the major style components that we use in the Tylium layout.</p>
+        <p>If you find something you would like to implement in the view you are working on, you can simply press the <i class="fa fa-code"></i> button to reveal the code structure including all the element tags, classes, data-attributes etc.</p>
+        <div class="mt-4 text-center">
+          <button class="btn btn-primary" data-behavior="quick-nav-btn" data-target="content-container-example">Content Container</button>
+          <button class="btn btn-primary" data-behavior="quick-nav-btn" data-target="typography">Typography</button>
+          <button class="btn btn-primary" data-behavior="quick-nav-btn" data-target="tables">Tables</button>
+          <button class="btn btn-primary" data-behavior="quick-nav-btn" data-target="modals">Modals</button>
+          <button class="btn btn-primary" data-behavior="quick-nav-btn">Section 5</button>
+          <button class="btn btn-primary" data-behavior="quick-nav-btn">Section 6</button>
+        </div>
       </div>
-    </div>
 
-    <div class="content-container">
-      <div class="scroll-offset" data-id="content-container-example"></div>
-      <div class="style-header">
-        <h3>Content Container</h3>
-        <button class="reveal-code" data-toggle="collapse" data-target="#content-container-code"><i class="fa fa-code"></i></button>
-      </div>
-      <div class="style-example">
-        <p>Each individual section of Tylium should be wrapped in a content container with an optional header element. The content container gives the elements a white background, grey border with subtle border radius as well as uniform padding and margin.</p>
-      </div>
-      
-      <div class="style-code-wrapper collapse" id="content-container-code">
-        <pre class="style-code">
+      <div class="content-container">
+        <div class="scroll-offset" data-id="content-container-example"></div>
+        <div class="style-header">
+          <h3>Content Container</h3>
+          <button class="reveal-code" data-toggle="collapse" data-target="#content-container-code"><i class="fa fa-code"></i></button>
+        </div>
+        <div class="style-example">
+          <p>Each individual section of Tylium should be wrapped in a content container with an optional header element. The content container gives the elements a white background, grey border with subtle border radius as well as uniform padding and margin.</p>
+        </div>
+        
+        <div class="style-code-wrapper collapse" id="content-container-code">
+          <pre class="style-code">
 <code><span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"content-container"</span><span class="et">></span>
   <span class="et">&lt;h3</span><span class="et">></span>Header Text Here<span class="et">&lt;/h3</span><span class="et">></span>
   <span class="et">&lt;p</span><span class="et">></span>content Here<span class="et">&lt;/p</span><span class="et">></span>
 <span class="et">&lt;/div</span><span class="et">></span></code>
-        </pre>
+          </pre>
+        </div>
       </div>
-    </div>
 
-    <div class="content-container">
-      <div class="scroll-offset" data-id="typography"></div>
-      <div class="style-header">
-        <h3>Typography</h3>
-        <button class="reveal-code" data-toggle="collapse" data-target="#typography-code"><i class="fa fa-code"></i></button>
-      </div>
-      <div class="style-example">
-        <div class="row">
-          <div class="col-12">
-            <p>Tylium uses the <a href="https://www.google.com/fonts/specimen/Open+Sans" target="_blank">Open Sans</a> font. The font-weight is set to 300 but we also have <span class="fw4">400</span> and <span class="fw6">600</span> available. The font size is set to 1rem = 16px.</p> 
+      <div class="content-container">
+        <div class="scroll-offset" data-id="typography"></div>
+        <div class="style-header">
+          <h3>Typography</h3>
+          <button class="reveal-code" data-toggle="collapse" data-target="#typography-code"><i class="fa fa-code"></i></button>
+        </div>
+        <div class="style-example">
+          <div class="row">
+            <div class="col-12">
+              <p>Tylium uses the <a href="https://www.google.com/fonts/specimen/Open+Sans" target="_blank">Open Sans</a> font. The font-weight is set to 300 but we also have <span class="fw4">400</span> and <span class="fw6">600</span> available. The font size is set to 1rem = 16px.</p> 
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="col-6 text-center">
+              <h1>Heading 1</h1>
+              <h2>Heading 2</h2>
+              <h3>Heading 3</h3>
+              <h4>Heading 4</h4>
+              <h5>Heading 5</h5>
+              <h6>Heading 6</h6>
+            </div>
+            <div class="col-6 text-center">
+              <p class="lead">Paragraph with lead class</p>
+              <p>Normal paragraph</p>
+              <p><a href="javascript:void(0)">Link example</a></p>
+              <p class="text-error">Error text</p>
+              <p class="text-muted">Muted text</p>
+            </div>
           </div>
         </div>
-        <div class="row mt-4">
-          <div class="col-6 text-center">
-            <h1>Heading 1</h1>
-            <h2>Heading 2</h2>
-            <h3>Heading 3</h3>
-            <h4>Heading 4</h4>
-            <h5>Heading 5</h5>
-            <h6>Heading 6</h6>
-          </div>
-          <div class="col-6 text-center">
-            <p class="lead">Paragraph with lead class</p>
-            <p>Normal paragraph</p>
-            <p><a href="javascript:void(0)">Link example</a></p>
-            <p class="text-error">Error text</p>
-            <p class="text-muted">Muted text</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="style-code-wrapper collapse" id="typography-code">
-        <pre class="style-code">
+        
+        <div class="style-code-wrapper collapse" id="typography-code">
+          <pre class="style-code">
 <code><span class="et">&lt;h1</span><span class="et">></span>Heading 1<span class="et">&lt;/h1</span><span class="et">></span>
 <span class="et">&lt;h2</span><span class="et">></span>Heading 2<span class="et">&lt;/h2</span><span class="et">></span>
 <span class="et">&lt;h3</span><span class="et">></span>Heading 3<span class="et">&lt;/h3</span><span class="et">></span>
@@ -82,58 +83,58 @@
 <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"#"</span><span class="et">></span>Link example<span class="et">&lt;/a</span><span class="et">></span>
 <span class="et">&lt;p</span><span class="an"> class=</span><span class="av">"text-error"</span><span class="et">></span>Error text<span class="et">&lt;/p</span><span class="et">></span>
 <span class="et">&lt;p</span><span class="an"> class=</span><span class="av">"text-muted"</span><span class="et">></span>Muted text<span class="et">&lt;/p</span><span class="et">></span></code>
-        </pre>
-      </div>
-    </div>
-
-    <div class="content-container">
-      <div class="scroll-offset" data-id="tables"></div>
-      <div class="style-header">
-        <h3>Tables</h3>
-        <button class="reveal-code" data-toggle="collapse" data-target="#tables-code"><i class="fa fa-code"></i></button>
-      </div>
-      <div class="style-example">
-        <p>Tables in Dradis have a special structure in order to allow them to be scrollable and sortable. The below table is an example of a table exceeding the container boundaries but all data is still visisible thanks to a horizontally scrollable table wrapper.</p>
-        
-        <div class="d-flex justify-content-center mt-4">
-          <div class="table-wrapper">
-            <table class="table table-striped items-table">
-              <thead>
-                <tr>
-                  <th data-column="col-1" data-sort="string" class="sortable sorting-asc">Col 1 Header</th>
-                  <th data-column="col-2" data-sort="string" class="sortable">Col 2 Header</th>
-                  <th data-column="col-3" data-sort="string" class="sortable">Col 3 Header</th>
-                  <th data-column="col-4" data-sort="string" class="sortable">Col 4 Header</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td data-sort-value="Row 1 Col 1 Data">Row 1 Col 1 Data</td>
-                  <td data-sort-value="Row 1 Col 2 Data">Row 1 Col 2 Data</td>
-                  <td data-sort-value="Row 1 Col 3 Data">Row 1 Col 3 Data</td>
-                  <td data-sort-value="Row 1 Col 4 Data">Row 1 Col 4 Data</td>
-                </tr>
-                <tr>
-                  <td data-sort-value="Row 2 Col 1 Data">Row 2 Col 1 Data</td>
-                  <td data-sort-value="Row 2 Col 2 Data">Row 2 Col 2 Data</td>
-                  <td data-sort-value="Row 2 Col 3 Data">Row 2 Col 3 Data</td>
-                  <td data-sort-value="Row 2 Col 4 Data">Row 2 Col 4 Data</td>
-                </tr>
-                <tr>
-                  <td data-sort-value="Row 3 Col 1 Data">Row 3 Col 1 Data</td>
-                  <td data-sort-value="Row 3 Col 2 Data">Row 3 Col 2 Data</td>
-                  <td data-sort-value="Row 3 Col 3 Data">Row 3 Col 3 Data</td>
-                  <td data-sort-value="Row 3 Col 4 Data">Row 3 Col 4 Data</td>
-                </tr>
-              </tbody>
-            </table>
-
-          </div>
+          </pre>
         </div>
       </div>
-      
-      <div class="style-code-wrapper collapse" id="tables-code">
-        <pre class="style-code">
+
+      <div class="content-container">
+        <div class="scroll-offset" data-id="tables"></div>
+        <div class="style-header">
+          <h3>Tables</h3>
+          <button class="reveal-code" data-toggle="collapse" data-target="#tables-code"><i class="fa fa-code"></i></button>
+        </div>
+        <div class="style-example">
+          <p>Tables in Dradis have a special structure in order to allow them to be scrollable and sortable. The below table is an example of a table exceeding the container boundaries but all data is still visisible thanks to a horizontally scrollable table wrapper.</p>
+          
+          <div class="d-flex justify-content-center mt-4">
+            <div class="table-wrapper">
+              <table class="table table-striped items-table">
+                <thead>
+                  <tr>
+                    <th data-column="col-1" data-sort="string" class="sortable sorting-asc">Col 1 Header</th>
+                    <th data-column="col-2" data-sort="string" class="sortable">Col 2 Header</th>
+                    <th data-column="col-3" data-sort="string" class="sortable">Col 3 Header</th>
+                    <th data-column="col-4" data-sort="string" class="sortable">Col 4 Header</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td data-sort-value="Row 1 Col 1 Data">Row 1 Col 1 Data</td>
+                    <td data-sort-value="Row 1 Col 2 Data">Row 1 Col 2 Data</td>
+                    <td data-sort-value="Row 1 Col 3 Data">Row 1 Col 3 Data</td>
+                    <td data-sort-value="Row 1 Col 4 Data">Row 1 Col 4 Data</td>
+                  </tr>
+                  <tr>
+                    <td data-sort-value="Row 2 Col 1 Data">Row 2 Col 1 Data</td>
+                    <td data-sort-value="Row 2 Col 2 Data">Row 2 Col 2 Data</td>
+                    <td data-sort-value="Row 2 Col 3 Data">Row 2 Col 3 Data</td>
+                    <td data-sort-value="Row 2 Col 4 Data">Row 2 Col 4 Data</td>
+                  </tr>
+                  <tr>
+                    <td data-sort-value="Row 3 Col 1 Data">Row 3 Col 1 Data</td>
+                    <td data-sort-value="Row 3 Col 2 Data">Row 3 Col 2 Data</td>
+                    <td data-sort-value="Row 3 Col 3 Data">Row 3 Col 3 Data</td>
+                    <td data-sort-value="Row 3 Col 4 Data">Row 3 Col 4 Data</td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+        
+        <div class="style-code-wrapper collapse" id="tables-code">
+          <pre class="style-code">
 <code><span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"table-wrapper"</span><span class="et">></span>
   <span class="et">&lt;table</span><span class="an"> class=</span><span class="av">"table table-striped items-table"</span><span class="et">></span>
     <span class="et">&lt;thead></span>
@@ -166,22 +167,22 @@
     <span class="et">&lt;/tbody></span>
   <span class="et">&lt;/table></span>
 <span class="et">&lt;/div></span></code>
-        </pre>
+          </pre>
+        </div>
       </div>
-    </div>
 
-    <div class="content-container">
-      <div class="scroll-offset" data-id="modals"></div>
-      <div class="style-header">
-        <h3>Modals</h3>
-        <button class="reveal-code" data-toggle="collapse" data-target="#content-container-code"><i class="fa fa-code"></i></button>
-      </div>
-      <div class="style-example text-center">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-example">Click for modal</button>          
-      </div>
-      
-      <div class="style-code-wrapper collapse" id="content-container-code">
-        <pre class="style-code">
+      <div class="content-container">
+        <div class="scroll-offset" data-id="modals"></div>
+        <div class="style-header">
+          <h3>Modals</h3>
+          <button class="reveal-code" data-toggle="collapse" data-target="#content-container-code"><i class="fa fa-code"></i></button>
+        </div>
+        <div class="style-example text-center">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-example">Click for modal</button>          
+        </div>
+        
+        <div class="style-code-wrapper collapse" id="content-container-code">
+          <pre class="style-code">
 <code><span class="ct">// This line goes in the view where you would want to use a button or link to trigger the modal dialog.</span>
 <span class="et">&lt;button</span><span class="an"> class=</span><span class="av">"btn btn-primary"</span><span class="an"> data-toggle=</span><span class="av">"modal"</span><span class="an"> data-target=</span><span class="av">"#modal-example"</span><span class="et">></span>Click for modal<span class="et">&lt;/button></span>
 
@@ -205,9 +206,10 @@
     <span class="et">&lt;/div></span>
   <span class="et">&lt;/div></span>
 <span class="et">&lt;/div></span></code>
-        </pre>
+          </pre>
+        </div>
       </div>
-    </div>
 
+    </div>
   </div>
 </div>
