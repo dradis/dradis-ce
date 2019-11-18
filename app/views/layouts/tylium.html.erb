@@ -61,8 +61,11 @@
     </div>
 
     <%= render 'activities/poller' %>
+
+    <!-- All modals go here -->
     <%= render 'layouts/tylium/modals' %>
     <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
+    
     <% if @node %>
       <%= render partial: 'nodes/modals/add_node', locals: { type: :child } %>
       <%= render partial: 'nodes/modals/delete' %>
@@ -70,6 +73,11 @@
       <%= render partial: 'nodes/modals/move' %>
       <%= render partial: 'nodes/modals/rename' %>
     <% end %>
+    
+    <% if controller_name = 'styles_tylium' %>
+      <%= render partial: 'styles_tylium/modal' %>
+    <% end %>
+    <!-- End of modals -->
 
     <a class="back-fade not-faded" data-behavior="back-fade"></div>
 

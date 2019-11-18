@@ -1,32 +1,39 @@
 body.styles_tylium {
 
+  .scroll-offset {
+    position: absolute;
+    top: -2rem;
+  }
+
   .style-code-wrapper {
     position: relative;
+    margin-top: 2rem;
 
     .style-code {
       display: flex;
       background-color: #222;
-      margin-top: 2rem;
+      margin-bottom: 0;
       padding: 1rem;
       border-radius: 5px;
+      font-size: 0.8rem;
 
       code {
         color: #fff;
 
-        .et {
-          color: #669bd1;
+        .an {
+          color: #a9dbfa;
         }
 
-        .cn {
-          color: #a9dbfa;
+        .av {
+          color: #c2917b;
         }
 
         .ct {
           color: #74975c;
         }
-
-        .cv {
-          color: #c2917b;
+        
+        .et {
+          color: #669bd1;
         }
       }
     }
@@ -40,6 +47,14 @@ body.styles_tylium {
 
     .fw6 {
       font-weight: 600;
+    }
+
+    .table-wrapper {
+      width: 500px;
+
+      .items-table {
+        white-space: nowrap;
+      }
     }
   }
 
