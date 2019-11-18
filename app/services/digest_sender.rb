@@ -1,6 +1,6 @@
 class DigestSender
-  DAILY_INTERVAL    = 1.day.ago
-  INSTANT_INTERVAL  = 10.minutes.ago
+  DAILY_INTERVAL    = 1.day
+  INSTANT_INTERVAL  = 10.minutes
 
   attr_accessor :type, :user
 
