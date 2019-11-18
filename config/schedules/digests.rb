@@ -5,5 +5,5 @@ every 10.minutes do
 end
 
 every 1.day, at: '9:00' do
-  thor 'dradis:digests:send_digests'
+  thor 'dradis:digests:send_dailies'
 end
