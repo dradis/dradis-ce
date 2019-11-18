@@ -11,7 +11,7 @@ class DigestSender
 
   def self.send_dailies
     digest_users(type: :daily).each do |user|
-      DigestSender.new(user: user, type: :digest).send
+      DigestSender.new(user: user, type: :daily).send
     end
   end
 
@@ -28,7 +28,7 @@ class DigestSender
   end
 
   def send
-    notifications = user.notifications.for_digest(interval)
+    notifications = user.notifications.for_digest(interval.ago)
     return if notifications.count == 0
 
     NotificationMailer.with(user: user, notifications: notifications, type: type).
@@ -39,7 +39,7 @@ class DigestSender
   private
 
   def interval
-    if type == :digest
+    if type == :daily
       DAILY_INTERVAL
     elsif type == :instant
       INSTANT_INTERVAL
