@@ -58,59 +58,56 @@
     }
   }
 
-  &#modal_move_node {
-    // These styles are used by the jQuery.treeModal plugin
-    .tree-modal-box {
-      border: 1px solid #ccc;
-      padding: 0.5em 1em;
-      margin-bottom: 0.5em;
+  .tree-modal-box {
+    border: 1px solid #ccc;
+    padding: 0.5em 1em;
+    margin-bottom: 0.5em;
 
-      .active-selection {
-        text-decoration: underline;
-        &:hover {
-          text-decoration: underline !important;
+    .active-selection {
+      text-decoration: underline;
+      &:hover {
+        text-decoration: underline !important;
+      }
+    }
+    
+    .invalid-selection {
+      cursor: not-allowed;
+    }
+
+    // In modal mode, hide the title
+    li.tree-header {
+      display: none;
+    }
+
+    // In modal mode, hide the 'add node' form
+    .node-editor {
+      display: none;
+    }
+
+    ul {
+      padding-left: 0;
+
+      &.children {
+        overflow: visible;
+        display: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      li {
+        line-height: 2em;
+        padding-left: 1em;
+        display: block;
+
+        &.loading {
+          font-size: 10px;
+          padding-left: 3em;
         }
-      }
-      
-      .invalid-selection {
-        cursor: not-allowed;
-      }
 
-      // In modal mode, hide the title
-      li.tree-header {
-        display: none;
-      }
-
-      // In modal mode, hide the 'add node' form
-      .node-editor {
-        display: none;
-      }
-
-      ul {
-        padding-left: 0;
-
-        &.children {
-          overflow: visible;
+        &.error {
           display: none;
-          margin: 0;
-          padding: 0;
-        }
-
-        li {
-          line-height: 2em;
-          padding-left: 1em;
-          display: block;
-
-          &.loading {
-            font-size: 10px;
-            padding-left: 3em;
-          }
-
-          &.error {
-            display: none;
-            font-size: 10px;
-            padding-left: 3em;
-          }
+          font-size: 10px;
+          padding-left: 3em;
         }
       }
     }
