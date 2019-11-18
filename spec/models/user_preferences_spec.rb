@@ -1,16 +1,16 @@
 require 'rails_helper'
 
 describe UserPreferences do
-  it "provides an empty set of preferences with defaults if none have been initialized" do
-    subject.class::VALID_TOURS << :tour_rspec1
+  it 'provides an empty set of preferences with defaults if none have been initialized' do
+    preferences = UserPreferences.new
+    expect(preferences.last_first_sign_in).to eq('0')
+    expect(preferences.digest_frequency).to eq 'instant'
+  end
 
-    up1 = UserPreferences.new
-    expect(up1.last_tour_rspec1).to eq('0')
-    expect(up1.digest_frequency).to eq 'instant'
-
-    up1 = UserPreferences.new(tour_tour_rspec1: '1', digest_frequency: 'daily')
-    expect(up1.last_tour_rspec1).to eq('1')
-    expect(up1.digest_frequency).to eq 'daily'
+  it 'accepts defaults for a new set of preferences' do
+    preferences = UserPreferences.new(tour_first_sign_in: '1', digest_frequency: 'daily')
+    expect(preferences.last_first_sign_in).to eq('1')
+    expect(preferences.digest_frequency).to eq 'daily'
   end
 
   context "loading from YAML" do
@@ -50,40 +50,36 @@ describe UserPreferences do
       it "raises an exception if the tour name isn't valid" do
         expect do
           subject.last_tour_rspec2
-        end.to raise_error(UserPreferences::InvalidTourException)
+        end.to raise_error(NoMethodError)
       end
     end
 
     context "valid tour name" do
       it "returns 0 for a fresh set of preferences for a valid tour" do
-        subject.class::VALID_TOURS << :tour_rspec3
         expect do
-          subject.last_tour_rspec3
+          subject.last_first_sign_in
         end.not_to raise_error
-        expect(subject.last_tour_rspec3).to eq('0')
+        expect(subject.last_first_sign_in).to eq('0')
       end
 
       it "returns the last tour version of XXX type that was visited for a valid tour" do
-        subject.class::VALID_TOURS << :tour_rspec3
-        subject.tours[:tour_rspec3] = '1'
+        subject.tours[:first_sign_in] = '1'
 
         expect do
-          subject.last_tour_rspec3
+          subject.last_first_sign_in
         end.not_to raise_error
-        expect(subject.last_tour_rspec3).to eq('1')
+        expect(subject.last_first_sign_in).to eq('1')
       end
     end
   end
 
-  context "#last_tour_XXX=" do
+  context "#last_projects_show=" do
     it "sets the new tour value" do
-      subject.class::VALID_TOURS << :tour_rspec4
-
       expect do
-        subject.last_tour_rspec4 = '2'
+        subject.last_projects_show = '2'
       end.not_to raise_error
 
-      expect(subject.last_tour_rspec4).to eq('2')
+      expect(subject.last_projects_show).to eq('2')
     end
   end
 

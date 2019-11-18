@@ -13,11 +13,10 @@
 #   http://ruby-journal.com/how-to-write-custom-serializer-for-activerecord-number-serialize/
 
 class UserPreferences
-  class InvalidTourException < Exception; end
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  VALID_TOURS = %i[first_sign_in projects_show]
+  VALID_TOURS = %i[first_sign_in projects_show].freeze
   DIGEST_FREQUENCIES = %w[none instant daily].freeze
   DIGEST_FREQUENCY_DEFAULT = 'instant'.freeze
 
@@ -107,32 +106,13 @@ class UserPreferences
     end
   end
 
-
-  def method_missing(method_sym, *arguments, &block)
-    if method_sym.to_s =~ /\Alast_([\w_]*)=?\z/
-      method = $1
-      raise InvalidTourException.new('Tour not found!') unless VALID_TOURS.include?(method.to_sym)
-
-      if method_sym.to_s.ends_with?('=')
-        @tours[method.to_sym] = arguments.first
-      else
-        @tours[method.to_sym]
-      end
-    else
-      super
+  VALID_TOURS.each do |tour|
+    define_method "last_#{tour}" do
+      @tours[tour]
     end
-  end
 
-  def respond_to?(method_sym, include_private = false)
-    if method_sym.to_s =~ /\Alast_([\w_]*)\z/
-      method = $1
-      if VALID_TOURS.include?(method.to_sym)
-        true
-      else
-        false
-      end
-    else
-      super
+    define_method "last_#{tour}=" do |*args|
+      @tours[tour] = args.first
     end
   end
 end
