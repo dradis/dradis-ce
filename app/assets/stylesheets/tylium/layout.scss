@@ -48,6 +48,7 @@
   overflow: scroll;
 
   .content-container {
+    position: relative;
     margin: $mainContentMargin;
     padding: $mainContentPadding;
     background-color: $primaryBgColor;
