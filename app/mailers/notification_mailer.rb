@@ -20,7 +20,7 @@ class NotificationMailer < ApplicationMailer
   end
 
   def set_inline_attachments
-    attachments.inline['dradis_logo'] =
+    attachments.inline['dradis_logo.png'] =
       if defined?(Dradis::Pro)
         File.read(find_asset('DradisPro_full_small.png'))
       else
