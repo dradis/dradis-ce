@@ -1,5 +1,5 @@
 <h2 class='digest-header'>
-  <% if @type == :digest %>
+  <% if @type == :daily %>
     Your Notifications From The Past 24h
   <% elsif @type == :instant %>
     Your Recent Notifications
@@ -9,9 +9,7 @@
 <% @notifications.each do |project, project_notifications| %>
   <div class='project-wrapper'>
     <div class='project-name-wrapper'>
-      <% if defined?(Dradis::Pro) %>
-        <span class='project-name'><%= project.name %></span>
-      <% end %>
+      <span class='project-name'><%= project.name %></span>
       <hr>
     </div>
 
@@ -23,7 +21,5 @@
 
   <hr>
 
-  <% unless defined?(Dradis::Pro) %>
-    <%= link_to 'See all notifications', project_notifications_url(project), class: 'button' %>
-  <% end %>
+  <%= link_to 'See all notifications', project_notifications_url(project), class: 'button' %>
 <% end %>

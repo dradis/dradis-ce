@@ -5,6 +5,7 @@ class NotificationGroup
   attr_reader :count, :notifications_hash
 
   def initialize(notifications)
+    # Group notifications into nested collections in the order of Project > Items > Comments
     @grouped_notifications = group_notifications(notifications)
     @count = notifications.count
   end
