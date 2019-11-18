@@ -21,11 +21,13 @@ v3.15 (* 2019)
  - Fixed elongated avatar images so they are round once again.
  - Added avatar images to mentions in comments.
  - Load gravatars for users who's email has been setup with gravatar.
+ - Upgraded Nokogiri as per suggested solution for CVE-2019-13117
 
 v3.14 (August 2019)
  - Highlight code snippets.
  - Collapsable sidebar in issues
  - Added Node merging feature
+ - All tables can be sorted by column
 
 v3.13 (June 2019)
  - User-provided content takes priority over default local fields.

@@ -6,21 +6,7 @@ class NotificationPresenter < BasePresenter
   end
 
   def comment_path(anchor: false)
-    # FIXME - ISSUE/NOTE INHERITANCE
-    # Would like to use only `commentable.respond_to?(:node)` here, but
-    # that would return a wrong path for issues
-    comment         = notification.notifiable
-    commentable     = comment.commentable
-    path_to_comment =
-      if commentable.respond_to?(:node) && !commentable.is_a?(Issue)
-        [current_project, commentable.node, commentable]
-      elsif commentable.is_a?(Card)
-        [current_project, commentable.board, commentable.list, commentable]
-      else
-        [current_project, commentable]
-      end
-
-    anchor = dom_id(comment) if anchor
+    anchor = dom_id(notification.notifiable) if anchor
     polymorphic_path(
       path_to_comment,
       anchor: anchor
@@ -93,5 +79,21 @@ class NotificationPresenter < BasePresenter
 
   def partial_paths
     ["notifications/#{notification.notifiable_type.underscore}"]
+  end
+
+  def path_to_comment
+    # FIXME - ISSUE/NOTE INHERITANCE
+    # Would like to use only `commentable.respond_to?(:node)` here, but
+    # that would return a wrong path for issues
+    comment         = notification.notifiable
+    commentable     = comment.commentable
+
+    if commentable.respond_to?(:node) && !commentable.is_a?(Issue)
+      [current_project, commentable.node, commentable]
+    elsif commentable.is_a?(Card)
+      [current_project, commentable.board, commentable.list, commentable]
+    else
+      [current_project, commentable]
+    end
   end
 end
