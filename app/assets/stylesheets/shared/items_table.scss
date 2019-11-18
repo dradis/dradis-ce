@@ -20,17 +20,52 @@
   }
 }
 
-#issues-table {
+#issues-table,
+#node-notes-table,
+#node-evidence-table
+ {
   display: grid;
+  word-break: initial;;
 }
 
 .table-wrapper {
   overflow: scroll;
 
   .items-table {
+    
     td.loading {
       background: image-url('loading.gif') no-repeat left center;
       padding-left: 20px;
+    }
+
+    th {
+      padding: 8px 20px 8px 8px;
+      cursor: pointer;
+      position: relative;
+    
+      &.sortable {
+        position: relative;
+        cursor: pointer;
+    
+        &::after {
+          font-family: FontAwesome;
+          content: "\f0dc";
+          position: absolute;
+          margin-left: 5px;
+          color: #000;
+          opacity: 0;
+        }
+    
+        &.sorting-asc::after {
+          content: "\f0d8";
+          opacity: 1;
+        }
+    
+        &.sorting-desc::after {
+          content: "\f0d7";
+          opacity: 1;
+        }
+      }
     }
 
     .column-actions {
