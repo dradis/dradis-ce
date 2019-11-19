@@ -7,7 +7,7 @@ module AvatarHelper
   # the default image is not desired. Instead force an error by using a bad
   # default url and let our fallback image code take effect.
   def avatar_url(user, options = {})
-    return DEFAULT_PROFILE_IMAGE if user.nil?
+    return DEFAULT_PROFILE_IMAGE if user.nil? || !user.email.include?('@')
 
     gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
     size = options.fetch(:size, 80).to_i
