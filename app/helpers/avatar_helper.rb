@@ -2,6 +2,7 @@
 
 module AvatarHelper
   DEFAULT_PROFILE_IMAGE = ActionController::Base.helpers.image_path('profile')
+  DEFAULT_PROFILE_IMAGE_SIZE = 80
 
   # Gravatar will use a default image if one is not found. Having gravatar serve
   # the default image is not desired. Instead force an error by using a bad
@@ -10,7 +11,7 @@ module AvatarHelper
     return DEFAULT_PROFILE_IMAGE if user.nil? || !user.email.include?('@')
 
     gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
-    size = options.fetch(:size, 80).to_i
+    size = options.fetch(:size, DEFAULT_PROFILE_IMAGE_SIZE).to_i * 2 # Retna displays mean dot density can be higher.
     "https://secure.gravatar.com/avatar/#{gravatar_id}.png?r=PG&s=#{size}&d=forceErrorOnDefault"
   end
 
@@ -35,13 +36,13 @@ module AvatarHelper
 
     alt            = options.fetch(:alt, "#{user.email}'s avatar")
     fallback_image = options.fetch(:fallback_image, DEFAULT_PROFILE_IMAGE)
-    gravatar_size  = options.fetch(:gravatar_size, 80)
     include_name   = options.fetch(:include_name, false)
     title          = options.fetch(:title, user.email)
+    size           = options.fetch(:size, DEFAULT_PROFILE_IMAGE_SIZE)
 
     content_tag :span, class: klass do
       image_tag(
-        avatar_url(user, size: gravatar_size),
+        avatar_url(user, size: size),
         alt: alt,
         data: { fallback_image: fallback_image },
         height: size,
