@@ -15,30 +15,14 @@ module AvatarHelper
     "https://secure.gravatar.com/avatar/#{gravatar_id}.png?r=PG&s=#{size}&d=forceErrorOnDefault"
   end
 
-  def nil_user_avatar(klass, size)
-    removed_msg = 'This user has been deleted from the system'
-
-    content_tag :span, class: klass do
-      image_tag(
-        DEFAULT_PROFILE_IMAGE,
-        alt: removed_msg,
-        title: removed_msg,
-        width: size
-      )
-    end
-  end
-
   def avatar_image(user, options = {})
-    klass          = options.fetch(:class, 'gravatar')
-    size           = options.fetch(:size, 73)
-
-    return nil_user_avatar(klass, size) if user.nil?
-
-    alt            = options.fetch(:alt, "#{user.email}'s avatar")
+    removed_msg    = 'This user has been deleted from the system'
+    alt            = options.fetch(:alt, (user ? "#{user.name}'s avatar" : removed_msg))
     fallback_image = options.fetch(:fallback_image, DEFAULT_PROFILE_IMAGE)
     include_name   = options.fetch(:include_name, false)
-    title          = options.fetch(:title, user.email)
+    klass          = options.fetch(:class, 'gravatar')
     size           = options.fetch(:size, DEFAULT_PROFILE_IMAGE_SIZE)
+    title          = options.fetch(:title, user.try(:name))
 
     content_tag :span, class: klass do
       image_tag(
