@@ -16,8 +16,7 @@ module AvatarHelper
   end
 
   def avatar_image(user, options = {})
-    removed_msg    = 'This user has been deleted from the system'
-    alt            = options.fetch(:alt, (user ? "#{user.name}'s avatar" : removed_msg))
+    alt            = options.fetch(:alt, I18n.t(user ? :alt : :removed, name: user.try(:name), scope: 'helpers.avatar_helper'))
     fallback_image = options.fetch(:fallback_image, DEFAULT_PROFILE_IMAGE)
     include_name   = options.fetch(:include_name, false)
     klass          = options.fetch(:class, 'gravatar')

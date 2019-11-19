@@ -6,3 +6,7 @@ en:
           attributes:
             digest_frequency:
               inclusion: "'%{value}' is not a valid digest frequency. Valid values are %{digest_frequencies}"
+  helpers:
+    avatar_helper:
+      alt: "%{name}'s avatar"
+      removed: Avatar of a user who has been removed from the system
