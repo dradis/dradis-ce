@@ -3,20 +3,17 @@ module HTML
     # HTML Filter that replaces mentions with avatar images and names
     #
     # Context options:
-    #   mention_matchers: rules for replacing mentions with avatar images
+    #   mentionable_users: The list of possible users to match from
     #
-    # This filter does not write any additional information to the context hash.
-    class DradisMentionsFilter < Filter
-      def call
-        matcher, rules = context[:mention_matcher]
-        doc.search('.//text()').each do |node|
-          text = node.text
+    #   username_pattern: The regex used to find and replace logins
+    #
+    #   view_context: Needed to render the avatars
+    class DradisMentionsFilter < HTML::Pipeline::MentionFilter
+      def link_to_mentioned_user(login)
+        user = context[:mentionable_users].find { |u| u.email == login }
+        result[:mentioned_usernames] |= [login]
 
-          html = text.gsub matcher, rules
-          node.replace html
-        end
-
-        doc
+        context[:view_context].avatar_image(user, size: 20, include_name: true, class: 'gravatar gravatar-inline')
       end
     end
   end
