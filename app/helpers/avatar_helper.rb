@@ -19,20 +19,25 @@ module AvatarHelper
     alt            = options.fetch(:alt, I18n.t(user ? :alt : :removed, name: user.try(:name), scope: 'helpers.avatar_helper'))
     fallback_image = options.fetch(:fallback_image, DEFAULT_PROFILE_IMAGE)
     include_name   = options.fetch(:include_name, false)
+    inline_onerror = options.fetch(:inline_onerror, false)
     klass          = options.fetch(:class, 'gravatar')
     size           = options.fetch(:size, DEFAULT_PROFILE_IMAGE_SIZE)
     title          = options.fetch(:title, user.try(:name))
 
+    opts = {
+      alt: alt,
+      data: { fallback_image: fallback_image },
+      height: size,
+      style: "width: #{size}px; height: #{size}px",
+      title: title,
+      width: size
+    }
+
+    opts.merge!(onerror: "this.src = '#{fallback_image}';") if inline_onerror
+
     content_tag :span, class: klass do
-      image_tag(
-        avatar_url(user, size: size),
-        alt: alt,
-        data: { fallback_image: fallback_image },
-        height: size,
-        style: "width: #{size}px; height: #{size}px",
-        title: title,
-        width: size
-      ) + (include_name ? ' ' + user.try(:name) : '')
+      image_tag(avatar_url(user, size: size), opts) +
+        (include_name ? ' ' + user.try(:name) : '')
     end
   end
 end
