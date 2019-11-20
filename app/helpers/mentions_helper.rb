@@ -3,7 +3,7 @@
 module MentionsHelper
   def mention_matcher
     @mention_matcher ||= begin
-      users = current_project.authors.all.select(:email, :name)
+      users = @mentionable_users || current_project.authors
 
       matcher = /#{users.map { |user| '@' + user.email }.join('|')}/
       rules = users.each_with_object({}) do |user, hash|
