@@ -14,7 +14,7 @@
     </div>
 
     <% project_notifications.each do |_, notifications| %>
-      <% presenter = DigestPresenter.new(notifications, self) %>
+      <% presenter = DigestPresenter.new(notifications, project, self) %>
       <%= render partial: 'notification_mailer/notification', locals: { presenter: presenter } %>
     <% end %>
   </div>

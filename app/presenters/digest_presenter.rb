@@ -1,9 +1,10 @@
 class DigestPresenter < NotificationPresenter
   include AvatarHelper
 
-  attr_accessor :notifications, :template
+  attr_reader :current_project, :notifications, :template
 
-  def initialize(notifications, template)
+  def initialize(notifications, project, template)
+    @current_project = project
     @notifications = notifications
     @template = template
   end
@@ -79,9 +80,5 @@ class DigestPresenter < NotificationPresenter
       else
         notifications.first
       end
-  end
-
-  def current_project
-    @current_project ||= Project.new
   end
 end
