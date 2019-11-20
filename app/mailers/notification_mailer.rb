@@ -1,5 +1,5 @@
 class NotificationMailer < ApplicationMailer
-  include AvatarHelper
+  helper :avatar
 
   before_action :set_inline_attachments
 
@@ -7,8 +7,6 @@ class NotificationMailer < ApplicationMailer
     @user = params[:user]
     @notifications = params[:notifications]
     @type = params[:type]
-
-    @avatar_url = avatar_url(@user)
 
     mail to: @user.email, subject: 'You have unread notifications.'
   end

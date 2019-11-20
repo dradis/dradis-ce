@@ -161,9 +161,7 @@
         <div class="logo">
           <%= image_tag attachments['dradis_logo.png'].url %>
         </div>
-        <div class="gravatar">
-          <%= image_tag @avatar_url, alt: @user.email %>
-        </div>
+        <%= avatar_image @user %>
       </div>
 
       <div class="main">

@@ -1,6 +1,4 @@
 class DigestPresenter < NotificationPresenter
-  include AvatarHelper
-
   attr_reader :current_project, :notifications, :template
 
   def initialize(notifications, project, template)
