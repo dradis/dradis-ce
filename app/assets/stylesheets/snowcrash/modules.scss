@@ -136,6 +136,12 @@
   img {
     @include rounded(50%)
   }
+
+  &.gravatar-inline {
+    margin: 0 0 -3px 0;
+    float: none;
+    white-space: nowrap;
+  }
 }
 
 table.table-ajax-inputs {

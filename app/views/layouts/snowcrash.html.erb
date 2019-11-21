@@ -60,7 +60,7 @@
           <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
       </div>
       </div>
-      <div class="main-content <%= content_for?(:sidebar) ? 'no-padding' : ''%>">
+      <div class="main-content <%= content_for?(:sidebar) ? 'no-padding' : ''%>" data-behavior='mentions-scroll'>
         <noscript>
           <div class="alert alert-error" style="margin: 2em">
             <h4>Error</h4>

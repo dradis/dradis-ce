@@ -9,16 +9,27 @@ v3.15 (* 2019)
  - Limit project name length when viewing a project
  - Removed bullet style in node modals.
  - Fix overflow issue where content would expand out of view.
+ - Set the "by" attribute for item revisions when using the API
  - Fix hamburger dropdown menu functionality.
  - Fix page jump when issues list is collapsed.
  - Enhancement when adding new nodes to copy node label data between the single
    and multiple node forms.
+ - Add an smtp.yml config file to handle the SMTP configuration
+ - Enhance the mentions box in comments to close when it is open and the page is
+   scrolled.
+ - Fix bug that prevents the mentions dialog from appearing after navigating
+   through the app.
+ - Fixed elongated avatar images so they are round once again.
+ - Added avatar images to mentions in comments.
+ - Load gravatars for users who's email has been setup with gravatar.
+ - Upgraded Nokogiri as per suggested solution for CVE-2019-13117
  - Fix conflicting version message when updating records with ajax 
 
 v3.14 (August 2019)
  - Highlight code snippets.
  - Collapsable sidebar in issues
  - Added Node merging feature
+ - All tables can be sorted by column
 
 v3.13 (June 2019)
  - User-provided content takes priority over default local fields.
