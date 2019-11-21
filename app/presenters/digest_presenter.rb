@@ -7,6 +7,10 @@ class DigestPresenter < NotificationPresenter
     @template = template
   end
 
+  def avatar_with_link(size)
+    h.link_to(avatar_image(notification.actor, size: size, inline_onerror: true), 'javascript:void(0)')
+  end
+
   def comment_path(anchor: false)
     anchor = dom_id(notification.notifiable) if anchor
     polymorphic_url(
@@ -32,28 +36,6 @@ class DigestPresenter < NotificationPresenter
   end
 
   private
-
-  def avatar_image(size)
-    if notification.actor
-      h.image_tag(
-        avatar_url(notification.actor, size: size),
-        alt: notification.actor.email,
-        class: 'gravatar',
-        title: notification.actor.email,
-        width: size,
-        # HACK: we can't use data-fallback-image for setting the fallback image
-        # because there's no JS in the mail. Instead, we're relying on onerror
-        # callback to re-set the image tag's src attribute.
-        onerror: "this.src = '#{image_path('profile')}';"
-      )
-    else
-      h.image_tag(
-        image_path('profile'),
-        width: size,
-        alt: 'This user has been deleted from the system'
-      )
-    end
-  end
 
   def linked_email
     # Get the count of the unique list of actors from the list of notifications
