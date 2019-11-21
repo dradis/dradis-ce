@@ -28,7 +28,7 @@ module AvatarHelper
       alt: alt,
       data: { fallback_image: fallback_image },
       height: size,
-      style: "width: #{size}px; height: #{size}px",
+      style: "width: #{size}px; height: #{size}px; border-radius: 50%;",
       title: title,
       width: size
     }

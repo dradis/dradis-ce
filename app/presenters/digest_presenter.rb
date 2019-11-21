@@ -43,12 +43,12 @@ class DigestPresenter < NotificationPresenter
 
     if actor_count <= 1
       if notification.actor
-        h.content_tag :span, notification.actor.email, class: 'user-name'
+        h.content_tag :span, notification.actor.email, style: 'font-weight: 600;'
       else
         'A user who has since been deleted'
       end
     else
-      h.content_tag :span, "#{notification.actor.email} and #{pluralize(actor_count - 1, 'other')}", class: 'user-name'
+      h.content_tag :span, "#{notification.actor.email} and #{pluralize(actor_count - 1, 'other')}", style: 'font-weight: 600;'
     end
   end
 
