@@ -23,6 +23,7 @@ v3.15 (* 2019)
  - Added avatar images to mentions in comments.
  - Load gravatars for users who's email has been setup with gravatar.
  - Upgraded Nokogiri as per suggested solution for CVE-2019-13117
+ - Fix conflicting version message when updating records with ajax 
 
 v3.14 (August 2019)
  - Highlight code snippets.
