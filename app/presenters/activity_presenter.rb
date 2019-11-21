@@ -2,7 +2,7 @@ class ActivityPresenter < BasePresenter
   presents :activity
 
   def avatar_with_link(size)
-    h.link_to(avatar_image(size), 'javascript:void(0)')
+    h.link_to(avatar_image(User.new(email: activity.user), size: size), 'javascript:void(0)')
   end
 
   def comment_path(anchor: false)
@@ -79,22 +79,6 @@ class ActivityPresenter < BasePresenter
   end
 
   private
-
-  def avatar_image(size)
-    if activity.user
-      h.image_tag(
-        image_path('profile.jpg'),
-        alt: activity.user,
-        class: 'gravatar',
-        data: { fallback_image: image_path('logo_small.png') },
-        style: "width: #{size}px; height: #{size}px",
-        title: activity.user,
-        width: size
-      )
-    else
-      h.image_tag 'logo_small.png', width: size, alt: 'This user has been deleted from the system'
-    end
-  end
 
   # Interestingly enough we're not linking the email to anything yet as we
   # don't know what we should link to. For the time being lets just enclose
