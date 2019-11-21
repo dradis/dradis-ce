@@ -82,3 +82,15 @@ shared_examples "recover deleted item without node" do |item_type|
     end
   end
 end
+
+shared_examples 'sets the whodunnit' do |action = nil, klass = nil|
+  it 'should set the by attribute' do
+    with_versioning do
+      submit_form
+
+      instance = action == :create ? klass.last : model
+
+      expect(instance.versions.last.whodunnit).to eq(@logged_in_as.email)
+    end
+  end
+end

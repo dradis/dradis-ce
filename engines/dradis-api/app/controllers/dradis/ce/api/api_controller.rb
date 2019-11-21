@@ -4,6 +4,7 @@ module Dradis::CE::API
 
     before_action :api_authentication_required
     before_action :json_required, only: [:create, :update]
+    before_action :set_paper_trail_whodunnit
 
     rescue_from ActionController::ParameterMissing do |exception|
       # after_action is not called for exceptions
@@ -47,6 +48,12 @@ module Dradis::CE::API
           description: "A Content-Type header set to 'application/json' must be sent for this request"
         }, status: 415
       end
+    end
+
+    # Set 'whodunnit' in paper trail versions to be the email address of the
+    # current user
+    def user_for_paper_trail
+      current_user.email
     end
 
     # ---------------------------------------------------------- Authentication
