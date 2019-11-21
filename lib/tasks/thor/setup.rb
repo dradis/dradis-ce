@@ -8,7 +8,7 @@ class DradisTasks < Thor
     namespace 'dradis:setup'
 
     def self.source_root
-      File.join(File.dirname(__FILE__), 'templates')
+      File.join(File.dirname(__FILE__), '../templates')
     end
 
     desc 'configure', 'Creates the Dradis configuration files from their templates (see config/*.yml.template)'
@@ -84,7 +84,7 @@ class DradisTasks < Thor
       )
 
       importer = Dradis::Plugins::Projects::Upload::Template::Importer.new(task_options)
-      importer.import(file: File.expand_path('../templates/project.xml', __FILE__))
+      importer.import(file: template('project.xml'))
 
       # dradis:reset:database truncates the tables and resets the :id column so
       # we know the right node ID we're going to get based on the project.xml
