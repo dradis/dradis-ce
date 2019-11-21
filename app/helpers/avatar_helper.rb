@@ -37,7 +37,7 @@ module AvatarHelper
 
     content_tag :span, class: klass do
       image_tag(avatar_url(user, size: size), opts) +
-        (include_name ? ' ' + user.try(:name).to_s : '')
+        (include_name ? " #{user.try(:name)}" : '')
     end
   end
 end
