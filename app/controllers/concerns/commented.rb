@@ -1,3 +1,9 @@
+# This module can be included anywhere comments are rendered. Any item that is
+# commentable can use this module to help render comment collections in views.
+# It will load comments and authors without n+1 as well as build avatars for all
+# mentions within the collection of comments. Additionally it can be used where
+# a single comment is rendered such as activity polling, or comment creation via
+# ajax.
 module Commented
   extend ActiveSupport::Concern
 
@@ -10,6 +16,6 @@ module Commented
   end
 
   def comments
-    @comments ||= commentable.comments.includes(:user)
+    @comments ||= commentable&.comments&.includes(:user)
   end
 end

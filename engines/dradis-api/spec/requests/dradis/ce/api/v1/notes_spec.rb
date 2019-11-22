@@ -139,7 +139,8 @@ describe "Notes API" do
           end
 
           let(:submit_form) { post_note }
-          include_examples "creates an Activity", :create, Note
+          include_examples 'creates an Activity', :create, Note
+          include_examples 'sets the whodunnit', :create, Note
 
           context "specifying a category" do
             before { params[:note][:category_id] = category.id }
@@ -240,7 +241,8 @@ describe "Notes API" do
 
           let(:submit_form) { put_note }
           let(:model) { note }
-          include_examples "creates an Activity", :update
+          include_examples 'creates an Activity', :update
+          include_examples 'sets the whodunnit', :update
 
           it "returns the attributes of the updated note as JSON" do
             put_note

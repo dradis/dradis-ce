@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180705112109) do
+ActiveRecord::Schema.define(version: 20190627061318) do
 
   create_table "activities", force: :cascade do |t|
     t.string "user", null: false
@@ -177,6 +177,7 @@ ActiveRecord::Schema.define(version: 20180705112109) do
     t.string "password_hash"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "preferences"
   end
 
   create_table "versions", force: :cascade do |t|

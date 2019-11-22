@@ -1,6 +1,8 @@
 class Comment < ApplicationRecord
   include Notifiable
 
+  MENTION_PATTERN = /[a-z0-9][a-z0-9\-@\.]*/.freeze
+
   # -- Relationships --------------------------------------------------------
   belongs_to :commentable, polymorphic: true
   belongs_to :user
@@ -49,14 +51,13 @@ class Comment < ApplicationRecord
   def mentions
     @mentions = nil if content_changed?
     @mentions ||= begin
-      mentioned_users = []
-      HTML::Pipeline::MentionFilter.mentioned_logins_in(content, /[a-z0-9][a-z0-9\-@\.]*/) do |match, login, is_mentioned|
-        if (mentioned_user = User.find_by_email(login))
-          mentioned_users << mentioned_user
-        end
+      emails = []
+      HTML::Pipeline::MentionFilter.mentioned_logins_in(content, MENTION_PATTERN) do |_, login, _|
+        emails << login
       end
 
-      mentioned_users
+      project = commentable.project
+      project.authors.where(email: emails.uniq)
     end
   end
 
