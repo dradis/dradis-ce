@@ -84,7 +84,7 @@ class DradisTasks < Thor
       )
 
       importer = Dradis::Plugins::Projects::Upload::Template::Importer.new(task_options)
-      importer.import(file: template('project.xml'))
+      importer.import(file: File.join(self.class.source_root, 'project.xml'))
 
       # dradis:reset:database truncates the tables and resets the :id column so
       # we know the right node ID we're going to get based on the project.xml
