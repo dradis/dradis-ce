@@ -7,8 +7,9 @@ class DigestPresenter < NotificationPresenter
     @template = template
   end
 
-  def avatar_with_link(size)
-    h.link_to(avatar_image(notification.actor, size: size, inline_onerror: true), 'javascript:void(0)')
+  def avatar_with_link(opts)
+    opts.merge!(inline_onerror: true)
+    h.link_to(avatar_image(notification.actor, opts), 'javascript:void(0)')
   end
 
   def comment_path(anchor: false)

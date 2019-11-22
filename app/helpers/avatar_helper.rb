@@ -22,13 +22,14 @@ module AvatarHelper
     inline_onerror = options.fetch(:inline_onerror, false)
     klass          = options.fetch(:class, 'gravatar')
     size           = options.fetch(:size, DEFAULT_PROFILE_IMAGE_SIZE)
+    style          = options.fetch(:style, "width: #{size}px; height: #{size}px;")
     title          = options.fetch(:title, user.try(:name))
-
+    
     opts = {
       alt: alt,
       data: { fallback_image: fallback_image },
       height: size,
-      style: "width: #{size}px; height: #{size}px; border-radius: 50%;",
+      style: style,
       title: title,
       width: size
     }
