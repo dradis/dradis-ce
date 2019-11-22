@@ -8,7 +8,7 @@ class DradisTasks < Thor
     namespace 'dradis:setup'
 
     def self.source_root
-      File.join(File.dirname(__FILE__), '../templates')
+      File.join(__dir__, '../templates')
     end
 
     desc 'configure', 'Creates the Dradis configuration files from their templates (see config/*.yml.template)'
