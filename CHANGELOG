@@ -27,7 +27,7 @@ v3.15 (* 2019)
  - Validate parent node project
 
 v3.14 (August 2019)
- - Highlight code snippets.
+ - Highlight code snippets
  - Collapsable sidebar in issues
  - Added Node merging feature
  - All tables can be sorted by column
