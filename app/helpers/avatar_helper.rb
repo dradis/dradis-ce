@@ -15,29 +15,33 @@ module AvatarHelper
     "https://secure.gravatar.com/avatar/#{gravatar_id}.png?r=PG&s=#{size}&d=#{image_url(DEFAULT_PROFILE_IMAGE)}"
   end
 
-  def avatar_image(user, options = {})
-    alt            = options.fetch(:alt, I18n.t(user ? :alt : :removed, name: user.try(:name), scope: 'helpers.avatar_helper'))
-    fallback_image = options.fetch(:fallback_image, image_url(DEFAULT_PROFILE_IMAGE))
-    include_name   = options.fetch(:include_name, false)
-    inline_onerror = options.fetch(:inline_onerror, false)
-    klass          = options.fetch(:class, 'gravatar')
-    size           = options.fetch(:size, DEFAULT_PROFILE_IMAGE_SIZE)
-    title          = options.fetch(:title, user.try(:name))
+  def avatar_image(user, opt = {})
+    opt.reverse_merge!( # Defaults if not provided
+      alt: I18n.t(user ? :alt : :removed, name: user.try(:name), scope: 'helpers.avatar_helper'),
+      fallback_image: image_url(DEFAULT_PROFILE_IMAGE),
+      include_name: false,
+      inline_onerror: false,
+      size: DEFAULT_PROFILE_IMAGE_SIZE,
+      title: user.try(:name)
+    ).merge!( # Additive properties
+      class: ['gravatar', opt[:class]].compact.join(' '),
+      style: ["width: #{opt[:size]}px; height: #{opt[:size]}px;", opt[:style]].compact.join(' '),
+    )
 
-    opts = {
-      alt: alt,
-      data: { fallback_image: fallback_image },
-      height: size,
-      style: "width: #{size}px; height: #{size}px",
-      title: title,
-      width: size
+    img_properties = {
+      alt: opt[:alt],
+      data: { fallback_image: opt[:fallback_image] },
+      height: opt[:size],
+      style: opt[:style],
+      title: opt[:title],
+      width: opt[:size]
     }
 
-    opts.merge!(onerror: "this.src = '#{fallback_image}';") if inline_onerror
+    img_properties.merge!(onerror: "this.src = '#{opt[:fallback_image]}';") if opt[:inline_onerror]
 
-    content_tag :span, class: klass do
-      image_tag(avatar_url(user, size: size), opts) +
-        (include_name ? " #{user.try(:name)}" : '')
+    content_tag :span, class: opt[:class] do
+      image_tag(avatar_url(user, size: opt[:size]), img_properties) +
+        (opt[:include_name] ? " #{user.try(:name)}" : '')
     end
   end
 end

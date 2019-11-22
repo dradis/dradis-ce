@@ -15,174 +15,65 @@
         text-decoration: none;
       }
       a:hover {
-        color: #204b20; /* #2070a2 in pro */
+        color: #204b20 !important; /* #2070a2 in pro */
       }
-      .mail-footer {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 1rem 0;
-        font-size: 80%;
-        text-align: center;
-      }
-      .mail-footer .copyright {
-        color: #555;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 1rem;
-      }
-      .mail-footer .copyright p {
-        margin: 0;
-      }
-      .mail-wrapper {
-        background-color: #fff;
-        margin-top: 20px;
-        max-width: 600px;
-        margin-right: auto;
-        margin-left: auto;
-        padding: 20px;
-        border: 1px solid #ddd;
-        border-radius: 15px;
-        box-shadow: 0 7px 30px 0 rgba(33, 55, 74, 0.2)
-      }
-      .mail-wrapper .gravatar {
-        height: 70px;
-        width: 70px;
-        border-radius: 50%;
-      }
-      .mail-wrapper .gravatar img {
-        height: 70px;
-        width: 70px;
-        object-fit: cover;
-        border-radius: 50%;
-      }
-      .mail-wrapper .header {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-      }
-      .mail-wrapper .header.center {
-        justify-content: center;
-      }
-      .mail-wrapper .logo {
-        display: flex;
-        justify-content: center;
-      }
-      .mail-wrapper .logo img {
-        object-fit: cover;
-        height: 80px;
-      }
-      .main {
-        text-align: center;
-      }
-      .main .button {
-        display: inline-block;
-        background-color: #378137; /* #298DCC in pro */
-        border-radius: 5px;
-        padding: 8px 15px;
-        color: #fff;
-        margin: 1rem 0 0.5rem 0;
-      }
-      .main .button:hover {
-        background-color: #204b20; /* #2070a2 in pro */
-      }
-      .main .digest-header {
-        font-weight: 300;
-        margin: 1rem 0 1.5rem 0;
-      }
-      .main .project-wrapper {
-        display: flex;
-        flex-direction: column;
-      }
-      .main hr {
-        width: 100%;
-        height: 0;
-        border-top: 0.5px solid #ddd;
-        border-bottom: 0.5px solid #ddd;
-        border-right: 0.5px solid transparent;
-        border-left: 0.5px solid transparent;
-      }
-      .main .project-wrapper .notification {
-        display: flex;
-        align-items: center;
-        margin: 1rem 0;
-      }
-      .main .project-wrapper .notification .avatar {
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
-        border: 1px solid #ddd;
-        margin: 0 20px 0 10px;
-      }
-      .main .project-wrapper .notification .avatar img {
-        height: 50px;
-        width: 50px;
-        object-fit: cover;
-        border-radius: 50%;
-      }
-      .main .project-wrapper .notification .notification-text {
-        text-align: left;
-        margin: 0;
-        font-weight: 400;
-      }
-      .main .project-wrapper .notification .notification-text .user-name {
-        font-weight: 600;
-      }
-      .main .project-wrapper .notification .notification-text .time-stamp {
-        font-size: 80%;
-        color: #777;
-        white-space: nowrap;
-      }
-      @media (max-width: 320px) {
-        .main .project-wrapper .notification .notification-text .time-stamp {
-          display: block;
-        }
-      }
-      .main .project-wrapper .project-name-wrapper {
-        display: flex;
-        flex-direction: row;
-        white-space: nowrap;
-        align-items: center;
-      }
-      .main .project-wrapper .project-name-wrapper .project-name {
-        font-weight: 700;
-        font-size: 1.1rem;
-        margin: 0 0.5rem;
-        line-height: 1.2rem;
+      .button:hover {
+        color: #fff !important;
+        background-color: #204b20 !important; /* #2070a2 in pro */
       }
     </style>
   </head>
 
   <body>
-    <div class="mail-wrapper">
 
-      <div class="header">
-        <div class="logo">
-          <%= image_tag attachments['dradis_logo.png'].url %>
-        </div>
-        <%= avatar_image @user %>
-      </div>
+    <table cellspacing="0" cellpadding="0" style="max-width: 640px; border: 1px solid #ddd; background-color: #fff; border-radius: 15px; margin: 20px auto; box-shadow: 0 7px 30px 0 rgba(33, 55, 74, 0.2);">
 
-      <div class="main">
-        <%= yield %>
-      </div>
-    </div>
+      <tr>
+        <td>
+          <table cellpadding="20px">
+            <tr>
+              <td width="320" style="padding-bottom: 0;" colspan="6">
+                <div style="text-align: left;">
+                  <%= image_tag attachments['dradis_logo.png'].url, height: '80px' %>
+                </div>
+              </td>
+              <td width="320" style="padding-bottom: 0;" colspan="6">
+                <div style="text-align: right;">
+                  <%= avatar_image @user, alt: @user.email, size: 70, style: 'border-radius: 50%;' %>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
 
-    <div class="mail-footer">
+      <%= yield %>
+
+    </table>
+
+    <table cellspacing="0" cellpadding="0" style="max-width: 640px; margin: 20px auto; font-size: 80%; color: #555;">
       <% if defined?(Dradis::Pro) %>
-        <div class="row">
-          <%= link_to 'Manage your Dradis email preferences', edit_notifications_url %>
-        </div>
+      <tr align="center">
+        <td>
+          <%= link_to 'Manage your Dradis email preferences', edit_notifications_url, style: 'color: #298DCC;' %>
+        </td>
+      </tr>
       <% end %>
-      <div class="row">
-        <a href="https://dradisframework.com/privacy.html">Privacy</a> | <%= link_to 'Login to Dradis', login_url %>
-      </div>
-      <div class="row copyright">
-       <p>© 2012-2019 Dradis Framework — Security Roots Ltd</p>
-       <p>10 Portfleet Place, De Beauvoir Road</p>
-       <p>London, N1 5SZ</p>
-      </div>
-    </div>
+      <tr align="center">
+        <td>
+          <a href="https://dradisframework.com/privacy.html" style="color: #378137; /* color: #298DCC in pro */">Privacy</a> | <%= link_to 'Login to Dradis', login_url, style: 'color: #378137;' %> <%# color: #298DCC in pro %>
+        </td>
+      </tr>
+      <tr>
+        <td height="20px"></td>
+      </tr>
+      <tr align="center">
+        <td>
+          <span>© 2012-2019 Dradis Framework — Security Roots Ltd</span><br>
+          <span>10 Portfleet Place, De Beauvoir Road</span><br>
+          <span>London, N1 5SZ</span>
+        </td>
+      </tr>
+    </table>
   </body>
 </html>

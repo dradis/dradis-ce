@@ -15,7 +15,7 @@ module HTML
 
         result[:mentioned_usernames] |= [login]
 
-        context[:view_context].avatar_image(user, size: 20, include_name: true, class: 'gravatar gravatar-inline')
+        context[:view_context].avatar_image(user, size: 20, include_name: true, class: 'gravatar-inline')
       end
     end
   end
