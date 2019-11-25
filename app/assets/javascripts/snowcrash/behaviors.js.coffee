@@ -139,15 +139,6 @@ document.addEventListener "turbolinks:load", ->
   # $("[data-hide]").on 'click', ->
   #   $(this).closest("." + $(this).data('hide')).hide();
 
-  # Offline Gravatars
-  if $('.gravatar img').length
-    $('.gravatar img').each ->
-      $this = $(this)
-      img = new Image()
-      img.onerror = ->
-        $this.attr('src', $this.data('fallback-image'))
-      img.src = $this.attr('src')
-
   if ($poller = $("#activities-poller")).length
     unless ActivitiesPoller.initialized
       ActivitiesPoller.init($poller)

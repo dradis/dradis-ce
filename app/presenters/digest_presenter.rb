@@ -8,7 +8,6 @@ class DigestPresenter < NotificationPresenter
   end
 
   def avatar_with_link(opts)
-    opts.merge!(inline_onerror: true)
     h.link_to(avatar_image(notification.actor, opts), 'javascript:void(0)')
   end
 
