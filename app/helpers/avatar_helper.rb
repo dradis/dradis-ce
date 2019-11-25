@@ -43,4 +43,14 @@ module AvatarHelper
         (opt[:include_name] ? " #{user.try(:name)}" : '')
     end
   end
+
+  def tribute_hash(users)
+    users.map do |user|
+      {
+        key: h(user.email),
+        value: user.email,
+        avatar_url: avatar_url(user)
+      }
+    end
+  end
 end

@@ -1,10 +1,8 @@
 <%# this is picked up by javascripts/snowcrash/modules/comments.js.coffee %>
 <% cache(@mentionable_users) do %>
-  <meta name="mentionable-users" content="<%= @mentionable_users.map do |user|
-    {
-      key: h(user.email),
-      value: user.email,
-      avatar_url: avatar_url(user)
-    }
-  end.to_json %>" data-fallback-image="<%= image_url(AvatarHelper::DEFAULT_PROFILE_IMAGE) %>">
+  <%= content_tag :meta, '',
+    content: tribute_hash(@mentionable_users).to_json,
+    data: { fallback_image: image_url(AvatarHelper::DEFAULT_PROFILE_IMAGE) },
+    name: 'mentionable-users'
+  %>
 <% end %>
