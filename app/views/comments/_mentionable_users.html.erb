@@ -6,5 +6,5 @@
       value: user.email,
       avatar_url: avatar_url(user)
     }
-  end.to_json %>">
+  end.to_json %>" data-fallback-image="<%= image_url(AvatarHelper::DEFAULT_PROFILE_IMAGE) %>">
 <% end %>
