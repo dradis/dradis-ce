@@ -20,7 +20,6 @@ module AvatarHelper
       alt: I18n.t(user ? :alt : :removed, name: user.try(:name), scope: 'helpers.avatar_helper'),
       fallback_image: image_url(DEFAULT_PROFILE_IMAGE),
       include_name: false,
-      inline_onerror: false,
       size: DEFAULT_PROFILE_IMAGE_SIZE,
       title: user.try(:name)
     ).merge!( # Additive properties
@@ -32,16 +31,26 @@ module AvatarHelper
       alt: opt[:alt],
       data: { fallback_image: opt[:fallback_image] },
       height: opt[:size],
+      onerror: "this.src = '#{opt[:fallback_image]}';",
       style: opt[:style],
       title: opt[:title],
       width: opt[:size]
     }
 
-    img_properties.merge!(onerror: "this.src = '#{opt[:fallback_image]}';") if opt[:inline_onerror]
 
     content_tag :span, class: opt[:class] do
       image_tag(avatar_url(user, size: opt[:size]), img_properties) +
         (opt[:include_name] ? " #{user.try(:name)}" : '')
+    end
+  end
+
+  def tribute_hash(users)
+    users.map do |user|
+      {
+        key: h(user.email),
+        value: user.email,
+        avatar_url: avatar_url(user)
+      }
     end
   end
 end
