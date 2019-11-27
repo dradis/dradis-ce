@@ -26,6 +26,11 @@
       text-align: center;
       font-size: 1.2em;
       transition: all 0.5s ease-in-out;
+
+      .fa-search {
+        top: 10px;
+        position: absolute;
+      }
     }
 
     .search-query {
