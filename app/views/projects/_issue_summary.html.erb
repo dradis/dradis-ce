@@ -18,6 +18,7 @@
     <% end %>
 
     <%# unassigned %>
+    <% if @issues_by_tag[:unassigned].any? %>
     <div class="issue-group">
       <h2>Unassigned</h2>
       <ul class="issue-list drop-target">
@@ -28,6 +29,7 @@
           <% end %>
       </ul>
     </div>
+    <% end %>
 
   <% else %>
     <p class="no-content">There are no issues in this project yet.</p>
