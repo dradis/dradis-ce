@@ -8,17 +8,17 @@ module AvatarHelper
   # the default image is not desired. Instead force an error by using a bad
   # default url and let our fallback image code take effect.
   def avatar_url(user, options = {})
-    return image_url(DEFAULT_PROFILE_IMAGE) if user.nil? || !user.email.include?('@')
+    return image_path(DEFAULT_PROFILE_IMAGE) if user.nil? || !user.email.include?('@')
 
     gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
     size = options.fetch(:size, DEFAULT_PROFILE_IMAGE_SIZE).to_i * 2 # Retina displays mean dot density can be higher.
-    "https://secure.gravatar.com/avatar/#{gravatar_id}.png?r=PG&s=#{size}&d=#{image_url(DEFAULT_PROFILE_IMAGE)}"
+    "https://secure.gravatar.com/avatar/#{gravatar_id}.png?r=PG&s=#{size}&d=#{image_path(DEFAULT_PROFILE_IMAGE)}"
   end
 
   def avatar_image(user, opt = {})
     opt.reverse_merge!( # Defaults if not provided
       alt: I18n.t(user ? :alt : :removed, name: user.try(:name), scope: 'helpers.avatar_helper'),
-      fallback_image: image_url(DEFAULT_PROFILE_IMAGE),
+      fallback_image: image_path(DEFAULT_PROFILE_IMAGE),
       include_name: false,
       size: DEFAULT_PROFILE_IMAGE_SIZE,
       title: user.try(:name)
