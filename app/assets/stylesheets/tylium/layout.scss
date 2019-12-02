@@ -43,6 +43,7 @@
   position: fixed;
   height: calc(100vh - 60px);
   width: calc(100vw - 43px);
+  min-width: 570px;
   top: $navbarHeight;
   left: $sidebarCollapsed;
   overflow: scroll;

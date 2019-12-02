@@ -1,18 +1,18 @@
+// vendor stylesheets
 @import "tylium/vendor/bootstrap-4.3.1.min.css";
-@import "shared/mixins";
+@import 'font-awesome-sprockets';
+@import "font-awesome";
+@import "jquery.fileupload-ui";
 
 // theme-level variables
 @import "tylium/variables";
 
 // theme-level imports and overrides
-@import "tylium/overrides/fileupload-ui_and_override";
 @import "tylium/overrides/jquery-textile_and_override";
-
-@import 'font-awesome-sprockets';
-@import "font-awesome";
 
 // shared styles
 @import "shared/items_table";
+@import "shared/mixins";
 
 // styles for base HTML elements like body, h1, etc.
 @import "tylium/base";

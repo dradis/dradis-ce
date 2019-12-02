@@ -99,6 +99,7 @@ ul {
   background: $sidebarActiveColor;
   color: $white;
   border-right: 1px solid $borderColor;
+  height: calc(100vh - 60px);
 
   a {
     color: $white;
@@ -111,6 +112,7 @@ ul {
     position: fixed;
     overflow: scroll;
     width: 16%;
+    min-width: 190px;
 
     @media screen and (max-width: 1199px) {
       width: 24%;
@@ -125,6 +127,10 @@ ul {
       margin-top: 0.5rem;
 
       .options {
+
+        a:hover {
+          color: $lightColor;
+        }
 
         .dropdown {
           float: right;
@@ -142,24 +148,7 @@ ul {
       }
     }
 
-    table {
-
-      td {
-        padding: 0 0 1em;
-
-        .btn {
-          padding: 4px 6px;
-        }
-
-        .btn-danger {
-          color: $red;
-        }
-
-        .btn-transparent {
-          background: transparent;
-        }
-      }
-    }
+    
 
     // Keep the original light blue color for the Edit link.
     a.list-item-edit {
@@ -212,32 +201,4 @@ ul {
       word-break: break-word;
     }
   }
-}
-
-.attachments-box {
-
-  .table {
-    margin-bottom: 0;
-    
-    td {
-      border: none;
-    }
-  }
-
-  .btn {
-    box-shadow: none;
-
-    &:hover {
-      color: #9A1829 !important;
-    }
-  }
-}
-
-.drop-zone {
-  background: lighten($sidebarBackground, 10%);
-  border: 1px dashed $grayDark;
-  color: #ccc;
-  padding: 50px;
-  text-align: center;
-  margin-bottom: 1em;
 }
