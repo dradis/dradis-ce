@@ -54,7 +54,7 @@ document.addEventListener "turbolinks:load", ->
 
   $(".attachments-box").on "mouseleave", ".js-attachment-url-copy", ->
     $this = $(this)
-    $this.tooltip("hide") if $this.data("tooltip")
+    $this.tooltip('hide')
 
 
   # -------------------------------------------------------- Our jQuery plugins
