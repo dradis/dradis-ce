@@ -8,7 +8,7 @@
         <i class="fa fa-tachometer sidebar-link-icon"></i> <span class="sidebar-link-label">Dashboard</span>
       <% end %>
     <% end %>
-    <%= content_tag :li, :class => controller_name == 'issues' ? 'active' : '' do %>
+    <%= content_tag :li, :class => controller_name == 'issues' || controller_name == 'merge' ? 'active' : '' do %>
       <%= link_to main_app.project_issues_path(current_project), class: 'sidebar-link', data: { behavior: 'sidebar-link' } do %>
         <i class="fa fa-bug sidebar-link-icon"></i> <span class="sidebar-link-label">All issues</span>
       <% end %>
