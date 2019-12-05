@@ -21,7 +21,7 @@ if (anyLogs) {
         Turbolinks.clearCache();
         Turbolinks.visit(close_url);
       });
-      $("#modal-console .modal-footer").show()
+      $("#modal-console .modal-footer").removeClass('d-none');
     } else if (window.location != close_url)  {
       // if Turbolinks isn't present, do it the old-fashioned way:
       window.location = close_url;
