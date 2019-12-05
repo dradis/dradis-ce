@@ -1,14 +1,6 @@
 .attachments-box {
   font-size: 0.9rem;
 
-  .btn-primary {
-    background: darken($sidebarActiveColor, 10%);
-
-    &:hover {
-      background: darken($sidebarActiveColor, 15);
-    }
-  }
-
   .drop-zone {
     background: $lightColor;
     outline: 1px dashed $white;
@@ -19,10 +11,42 @@
     cursor: default;
   }
 
-  .filename {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+  .files {
+
+    .cancel,
+    .copy-link,
+    .delete,
+    .start {
+      width: 30px;
+    }
+
+    .error {
+      width: 120px;
+    }
+
+    .filename {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }  
+
+    .name {
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .progress {
+      width: 100%;
+      height: 0.3rem;
+      margin: 0.5rem 0 1rem 0;
+    }
+
+    .size {
+      font-size: 80%;
+      padding-bottom: 0.3rem;
+    }
   }
 
   table {
@@ -64,38 +88,6 @@
           }
         }
       }
-    }
-  }
-
-  .files {
-
-    .cancel,
-    .copy-link,
-    .delete,
-    .start {
-      width: 30px;
-    }
-
-    .error {
-      width: 120px;
-    }
-
-    .name {
-      width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .progress {
-      width: 100%;
-      height: 0.3rem;
-      margin: 0.5rem 0 1rem 0;
-    }
-
-    .size {
-      font-size: 80%;
-      padding-bottom: 0.3rem;
     }
   }
 }
