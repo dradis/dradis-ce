@@ -1,0 +1,75 @@
+.secondary-sidebar {
+  background: $sidebarActiveColor;
+  color: $lightColor;
+  border-right: 1px solid $borderColor;
+  height: calc(100vh - 60px);
+
+  a {
+    color: lighten($lightColor, 20%);
+
+    &:hover {
+      color: $white;
+    }
+  }
+
+  .collapse:not(.show) {
+    display: block;
+    height: 0;
+    opacity: 0;
+  }
+
+  .inner {
+    background: $sidebarActiveColor;
+    padding: 1rem;
+    height: calc(100vh - 60px);
+    position: fixed;
+    overflow: scroll;
+    width: 16.3%;
+    min-width: 190px;
+
+    @media screen and (max-width: 1199px) {
+      width: 24%;
+    }
+
+    @media screen and (max-width: 991px) {
+      width: 31%;
+    }
+
+    .header-inner {
+      position: relative;
+
+      .options {
+
+        a {
+          color: $lightColor;
+          
+          &:hover {
+            color: $white;
+          } 
+        }
+
+        .dropdown {
+          float: right;
+          margin-left: 2px;
+          position: absolute;
+          top: 0;
+          right: 0;
+        }
+      }
+
+      .header-name a {
+        color: $lightColor;
+
+        &:hover {
+          color: $white;
+        }
+      }
+
+      .header-underline {
+        margin-bottom: .5em;
+        padding-bottom: .5em;
+        border-bottom: 1px solid $lightColor;
+      }
+    }
+  }
+}

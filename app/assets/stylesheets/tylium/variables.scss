@@ -24,6 +24,8 @@ $lightColor: $lightGreen;
 $primaryColor: $ceGreen;
 $darkColor: $darkGreen;
 
+//$lightColor: $lightBlue; $primaryColor: $proBlue; $darkColor: $darkBlue;
+
 // Text Colors
 $defaultText: #707070;
 $errorText: $red;
@@ -39,8 +41,8 @@ $activeFillColor: #eceeef;
 $borderColor: #ddd;
 $dropdownLinkBackgroundHover: $darkColor;
 $navbarBackground: $primaryBgColor;
-$sidebarBackground: $darkColor;
-$sidebarActiveColor: lighten($sidebarBackground, 10%);
+$sidebarBackground: darken($darkColor, 5%);
+$sidebarActiveColor: $darkColor;
 
 // Spacing
 $mainContentPadding: 2rem;
