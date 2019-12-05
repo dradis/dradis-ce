@@ -53,6 +53,9 @@
           <div class="col-12 p-0">
             <%= render "layouts/tylium/project_teaser" %>
             <%= yield(:breadcrumbs) if content_for?(:breadcrumbs) %>
+            <% if content_for?(:title) %>
+              <h2 class="page-title"><%= yield(:title) %></h2>
+            <% end %>
             <%= flash_messages %>
             <%= content_for?(:content) ? yield(:content) : yield %>
           </div>

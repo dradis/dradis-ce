@@ -38,6 +38,10 @@
   }
 }
 
+.page-title {
+  margin: 1rem 0 0 $mainContentMargin;
+}
+
 .view-content {
   background: $secondaryBgColor;
   position: fixed;
