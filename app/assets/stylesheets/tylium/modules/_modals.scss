@@ -74,13 +74,7 @@
       cursor: not-allowed;
     }
 
-    // In modal mode, hide the title
     li.tree-header {
-      display: none;
-    }
-
-    // In modal mode, hide the 'add node' form
-    .node-editor {
       display: none;
     }
 
