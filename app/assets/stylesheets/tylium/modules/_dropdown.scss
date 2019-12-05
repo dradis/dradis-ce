@@ -17,15 +17,13 @@
     }
 
     .dropdown-item {
-      color: $linkColor;
+      color: $linkColor !important;
       transition: color 0s;
 
-      &:active {
-        color: $linkColorHover;
-        background-color: #f8f9fa;
-      }
+      &:active,
       &:hover {
-        color: $linkColorHover;
+        color: $linkColorHover !important;
+        background-color: #f8f9fa;
       }
     }
   }
