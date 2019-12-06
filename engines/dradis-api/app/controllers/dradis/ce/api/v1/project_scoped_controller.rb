@@ -10,7 +10,12 @@ module Dradis::CE::API
     # the server every time you make a change.)
     class ProjectScopedController < Dradis::CE::API::APIController
       include ActivityTracking
-      include Dradis::CE::API::ProjectScoped
+
+      if defined?(Dradis::Pro)
+        include Dradis::Pro::API::ProjectScoped
+      else
+        include Dradis::CE::API::ProjectScoped
+      end
     end
   end
 end
