@@ -12,11 +12,6 @@
     }
   }
 
-  .collapse:not(.show) {
-    display: block;
-    height: 0;
-    opacity: 0;
-  }
 
   .inner {
     background: $sidebarActiveColor;
@@ -37,6 +32,7 @@
 
     .header-inner {
       position: relative;
+      padding-top: 0.5rem;
 
       .header-name a {
         color: $lightColor;
@@ -47,9 +43,7 @@
       }
 
       .header-underline {
-        margin-bottom: .5em;
-        padding-bottom: .5em;
-        border-bottom: 1px solid $lightColor;
+        border-color: $lightColor;
       }
 
       .options {
@@ -73,7 +67,6 @@
     }
 
     .note-list {
-      margin-bottom: 0.5rem;
     
       .active a {
         color: $white;
