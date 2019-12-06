@@ -1,8 +1,8 @@
 <% content_for :title, 'Project summary' %>
 
-<div class="row">
-  <div class="col-6 pr-0">
-    <div class="content-container mr-3">
+<div class="row m-0">
+  <div class="col-6 p-0">
+    <div class="content-container mt-3 mr-3">
       <%= render partial: 'projects/issue_summary' %>
     </div>
 
@@ -15,8 +15,8 @@
     </div>  
   </div>
 
-  <div class="col-6 pl-0">
-    <div class="content-container ml-3">
+  <div class="col-6 p-0">
+    <div class="content-container mt-3 ml-3 restrict-fullsize-height" data-behavior="restrict-height">
       <%= render partial: 'projects/methodology_summary' %>
     </div>
 
