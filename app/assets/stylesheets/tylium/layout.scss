@@ -59,6 +59,50 @@
     background-color: $primaryBgColor;
     border: 1px solid $borderColor;
     border-radius: 5px;
+    
+    &.restrict-fullsize-height {
+      max-height: calc(100vh - 10.2rem);
+      overflow: scroll;
+
+      .scroll-more-wrapper {
+        position: sticky;
+        width: 100%;
+        opacity: 1;
+        bottom: -2rem;
+        left: 0;
+        transition: all 0.3s ease-in-out;
+
+        &.hidden {
+          opacity: 0;
+        }
+
+        .gradient {
+          position: absolute;
+          height: 6rem;
+          width: 100%;
+          bottom: 0;
+          background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.75) 50%, rgba(255,255,255,1) 100%);
+        }
+
+        .line {
+          position: absolute;
+          width: 100%;
+          left: 0;
+          bottom: 2rem;
+          border-bottom: 1px solid #ddd;
+        }
+
+        .scroll-more {
+          position: absolute;
+          bottom: 1rem;
+          left: calc(50% - 3.875rem);
+          background: #fff;
+          border: 1px solid #ddd;
+          padding: 0.125rem 1rem;
+          z-index: 2;
+        }
+      }
+    }
   }
 
   .view-title {
