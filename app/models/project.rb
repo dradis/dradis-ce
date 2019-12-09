@@ -73,7 +73,7 @@ class Project
     Tag.all
   end
 
-  def testers
+  def testers_for_mentions
     User.all
   end
 

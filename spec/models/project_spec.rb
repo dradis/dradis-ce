@@ -34,7 +34,7 @@ describe Project do
     end
   end
 
-  describe '#testers' do
+  describe '#testers_for_mentions' do
     it 'returns all the authors and admins of the project' do
       project = create(:project)
       user1 = create(:user, :admin)
@@ -45,7 +45,7 @@ describe Project do
         project.save
       end
 
-      expect(project.testers).to eq [user1, user2]
+      expect(project.testers_for_mentions).to match_array [user1, user2]
     end
   end
 end
