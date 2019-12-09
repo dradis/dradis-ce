@@ -12,6 +12,7 @@
           <button class="btn btn-primary" data-behavior="quick-nav-btn" data-target="container">Content Container</button>
           <button class="btn btn-primary" data-behavior="quick-nav-btn" data-target="modals">Modals</button>
           <button class="btn btn-primary" data-behavior="quick-nav-btn" data-target="round">Round Navbar Buttons</button>
+          <button class="btn btn-primary" data-behavior="quick-nav-btn" data-target="scroll">Scroll For More</button>
           <button class="btn btn-primary" data-behavior="quick-nav-btn" data-target="tables">Tables</button>
           <button class="btn btn-primary" data-behavior="quick-nav-btn" data-target="typography">Typography</button>
         </div>
@@ -24,7 +25,7 @@
           <button class="reveal-code" data-toggle="collapse" data-target="#container-code"><i class="fa fa-code"></i></button>
         </div>
         <div class="style-example">
-          <p>Each individual section of Tylium should be wrapped in a content container with an optional header element. The content container gives the elements a white background, grey border with subtle border radius as well as uniform padding and margin.</p>
+          <p class="m-0">Each individual section of Tylium should be wrapped in a content container with an optional header element. The content container gives the elements a white background, grey border with subtle border radius as well as uniform padding and margin.</p>
         </div>
         
         <div class="style-code-wrapper collapse" id="container-code">
@@ -140,6 +141,63 @@
     <span class="et">&lt;/li></span>
   <span class="et">&lt;/ul></span>
 <span class="et">&lt;/nav></span></code>
+          </pre>
+        </div>
+      </div>
+
+      <div class="content-container p-0">
+        <div class="content-container m-0 restrict-height half-height" data-behavior="restrict-height" style="border: none;">
+          <div class="scroll-offset" data-id="scroll"></div>
+          <div class="style-header">
+            <h3>Scroll-for-more Indicator</h3>
+            <button class="reveal-code" data-toggle="collapse" data-target="#scroll-code"><i class="fa fa-code"></i></button>
+          </div>
+          <div class="style-example">
+            <p>This content-container has a max-height defined but the content requires more space than the max-height property allows. As a result the "Scroll-for-more" indicator is displayed, allowing the user to scroll through the content while seeing a visual cue, letting the user know that there is more content to see. Note: this indicator will automatically disapear if the view stretches to a point where the content completely fits the view or if there is no more content to scroll to (user is at the bottom of the container).</p>
+
+            <p>The height can be limited using the appropriate class:</p>
+            <ul>
+              <li><em>.full-height</em> - full available height of layout</li>
+              <li><em>.half-height</em> - half available height of layout</li>
+              <li><em>.quarter-height</em> - quarter available height of layout</li>
+            </ul>
+
+            <p>Lorem Content:</p>
+
+            <p>Ut cupidatat aliqua eu eu labore pariatur commodo ipsum. Ad irure reprehenderit velit consequat excepteur dolor et duis sunt culpa aliqua ipsum voluptate voluptate. Enim velit ipsum id aliqua laborum ex mollit nostrud esse eiusmod aute aliqua magna. Dolore voluptate do in esse ullamco aute aliqua ea sint sit do commodo. Laborum ex anim eu fugiat ut qui ex. Proident adipisicing elit duis deserunt culpa amet voluptate. Elit ad incididunt voluptate velit qui adipisicing.</p>
+
+            <p>Eiusmod consectetur et elit magna eu aliquip ex. Do mollit veniam deserunt sint excepteur velit ut elit duis. Lorem voluptate sit velit cupidatat fugiat esse ullamco. Nisi consequat ut Lorem nostrud est sunt duis est excepteur elit esse reprehenderit anim tempor. Et ut eiusmod fugiat commodo eiusmod occaecat Lorem tempor elit excepteur et.</p>
+
+            <p>Dolor quis magna eiusmod ea excepteur nulla dolore amet velit. Qui dolore sint veniam ex magna id labore minim dolore reprehenderit nisi voluptate excepteur. Quis officia fugiat voluptate commodo ea voluptate dolor esse Lorem est. Veniam do anim exercitation culpa sint nisi ex et fugiat anim consectetur. Veniam mollit consectetur est velit aute esse eu Lorem. Veniam mollit eiusmod veniam tempor consequat pariatur nulla consectetur excepteur sunt et.</p>
+
+            <p>Reprehenderit aliqua fugiat in nulla amet. Officia est dolore eu ex culpa occaecat excepteur cupidatat. Laborum do nisi sunt aliqua voluptate.</p>
+
+            <p>In sunt esse adipisicing cillum minim excepteur cupidatat aliquip do eiusmod excepteur. Anim tempor sint mollit sint qui id dolore ad consectetur ea est ex dolore. In eu eu ex commodo anim magna amet aliquip dolor fugiat nisi. Cillum consectetur tempor excepteur deserunt voluptate eiusmod. Velit nostrud id duis et in consequat sit dolor cillum. Minim cupidatat enim ex minim commodo cupidatat cupidatat officia dolor. Magna do aliquip qui dolor consectetur do nulla ea.</p>
+
+            <p>Aute do nostrud ipsum aliquip duis qui reprehenderit quis sint irure cupidatat et excepteur. Esse veniam minim ullamco reprehenderit consectetur ea fugiat tempor proident aliquip cillum deserunt velit. Velit fugiat quis esse et nostrud nostrud enim Lorem irure deserunt officia. Sint nostrud nulla sint eu anim reprehenderit elit ea aliqua excepteur nisi laborum ad aute. Exercitation irure et in esse velit dolore. Magna aliquip pariatur occaecat enim amet est minim pariatur cupidatat occaecat qui elit ex.</p>
+
+            <p>Anim aliqua et sunt sit fugiat tempor proident. Mollit culpa eiusmod labore voluptate. Proident reprehenderit id quis consequat laborum excepteur culpa voluptate occaecat laboris voluptate est.</p>
+
+            <p>Culpa incididunt laborum elit minim cillum pariatur adipisicing velit ut excepteur est fugiat eiusmod. Elit amet enim exercitation esse consequat eiusmod. Fugiat ea eiusmod laboris duis et ipsum sit dolor. Nisi esse cupidatat exercitation excepteur tempor magna occaecat deserunt esse. Quis est culpa irure consectetur officia veniam dolor voluptate ullamco occaecat. Duis ex sunt dolore sint commodo.</p>
+
+            <p>Ut cupidatat aliqua eu eu labore pariatur commodo ipsum. Ad irure reprehenderit velit consequat excepteur dolor et duis sunt culpa aliqua ipsum voluptate voluptate. Enim velit ipsum id aliqua laborum ex mollit nostrud esse eiusmod aute aliqua magna. Dolore voluptate do in esse ullamco aute aliqua ea sint sit do commodo. Laborum ex anim eu fugiat ut qui ex. Proident adipisicing elit duis deserunt culpa amet voluptate. Elit ad incididunt voluptate velit qui adipisicing.</p>
+
+            <p>Eiusmod consectetur et elit magna eu aliquip ex. Do mollit veniam deserunt sint excepteur velit ut elit duis. Lorem voluptate sit velit cupidatat fugiat esse ullamco. Nisi consequat ut Lorem nostrud est sunt duis est excepteur elit esse reprehenderit anim tempor. Et ut eiusmod fugiat commodo eiusmod occaecat Lorem tempor elit excepteur et.</p>
+
+            <p>Dolor quis magna eiusmod ea excepteur nulla dolore amet velit. Qui dolore sint veniam ex magna id labore minim dolore reprehenderit nisi voluptate excepteur. Quis officia fugiat voluptate commodo ea voluptate dolor esse Lorem est. Veniam do anim exercitation culpa sint nisi ex et fugiat anim consectetur. Veniam mollit consectetur est velit aute esse eu Lorem. Veniam mollit eiusmod veniam tempor consequat pariatur nulla consectetur excepteur sunt et.</p>
+
+            <p>Anim aliqua et sunt sit fugiat tempor proident. Mollit culpa eiusmod labore voluptate. Proident reprehenderit id quis consequat laborum excepteur culpa voluptate occaecat laboris voluptate est.</p>
+
+            <p class="m-0">Culpa incididunt laborum elit minim cillum pariatur adipisicing velit ut excepteur est fugiat eiusmod. Elit amet enim exercitation esse consequat eiusmod. Fugiat ea eiusmod laboris duis et ipsum sit dolor. Nisi esse cupidatat exercitation excepteur tempor magna occaecat deserunt esse. Quis est culpa irure consectetur officia veniam dolor voluptate ullamco occaecat. Duis ex sunt dolore sint commodo.</p>
+          </div>
+        </div>
+        
+        <div class="style-code-wrapper collapse" id="scroll-code">
+          <pre class="style-code" style="margin: 2rem;">
+<code><span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"content-container restrict-height half-height"</span><span class="an"> data-behavior=</span><span class="av">"restrict-height"</span><span class="et">></span><span class="ct"> // full-height, half-height or quarter-height &nbsp;</span>
+  <span class="et">&lt;h3</span><span class="et">></span>Scroll-for-more Indicator<span class="et">&lt;/h3</span><span class="et">></span>
+  <span class="et">&lt;p</span><span class="et">></span>Content Here<span class="et">&lt;/p></span>
+<span class="et">&lt;/div</span><span class="et">></span></code>
           </pre>
         </div>
       </div>
