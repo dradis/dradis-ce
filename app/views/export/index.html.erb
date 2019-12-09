@@ -1,6 +1,6 @@
 <% content_for :title, 'Export Manager' %>
 
-<section>
+<div class="content-container mt-3">
   <% if @plugin_info.empty? %>
     <div class="alert alert-error">
       <p class="lead">Sorry, we were unable to detect any export plugins. This is strange because Dradis ships with a number of plugins installed by default.</p>
@@ -11,27 +11,28 @@
     <ul id="plugin-chooser" class="nav nav-tabs">
       <% @plugin_info.each do |info| %>
 
-        <li>
+        <li class="nav-item">
           <%=
             link_to(
               info[:description],
               { path: nil, anchor: info[:name] },
-              data: { toggle: 'tab', target: "#plugin-#{info[:name]}" }
+              data: { toggle: 'tab', target: "#plugin-#{info[:name]}" },
+              class: 'nav-link'
             )
           %>
         </li>
       <% end %>
       <% if !defined?(Dradis::Pro) %>
-      <li><a href="javascript:void(0)" class="js-try-pro" data-term="word-reports" data-url="http://drad.is/l/try-pro-reporting"><i class="fa fa-file-word-o"></i> Custom Word reports</a></li>
-      <li><a href="javascript:void(0)" class="js-try-pro" data-term="excel-reports" data-url="http://drad.is/l/try-pro-excel"><i class="fa fa-file-excel-o"></i> Custom Excel reports</a></li>
+      <li class="nav-item"><a href="javascript:void(0)" class="js-try-pro nav-link" data-term="word-reports" data-url="http://drad.is/l/try-pro-reporting"><i class="fa fa-file-word-o"></i> Custom Word reports</a></li>
+      <li class="nav-item"><a href="javascript:void(0)" class="js-try-pro nav-link" data-term="excel-reports" data-url="http://drad.is/l/try-pro-excel"><i class="fa fa-file-excel-o"></i> Custom Excel reports</a></li>
       <% end %>
     </ul>
 
-    <div class="tab-content">
+    <div class="tab-content mt-4">
       <% @plugin_info.each do |info| %>
         <%= render partial: 'plugin', locals: { info: info } %>
       <% end %>
     </div>
 
   <% end %>
-</section>
+</div>
