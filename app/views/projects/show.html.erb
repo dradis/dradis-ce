@@ -16,11 +16,11 @@
   </div>
 
   <div class="col-6 p-0">
-    <div class="content-container mt-3 ml-3 restrict-fullsize-height" data-behavior="restrict-height">
+    <div class="content-container mt-3 ml-3">
       <%= render partial: 'projects/methodology_summary' %>
     </div>
 
-    <div class="content-container ml-3">
+    <div class="content-container ml-3 restrict-fullsize-height" data-behavior="restrict-height">
       <section class="inner summary-panel">
         <h2>Recent activity</h2>
         <%= render 'activities/feed', activities: @activities %>
