@@ -1,5 +1,13 @@
 body.styles_tylium {
 
+  button[data-behavior~=quick-nav-btn] {
+    margin-bottom: 0.25rem;
+  }
+
+  .page-title {
+    display: none;
+  }
+
   .scroll-offset {
     position: absolute;
     top: -2rem;
