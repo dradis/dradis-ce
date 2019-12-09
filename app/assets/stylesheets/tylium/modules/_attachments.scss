@@ -11,6 +11,10 @@
     cursor: default;
   }
 
+  .fileinput-button:hover {
+    background: darken($primaryColor, 5%);
+  }
+
   .files {
 
     .cancel,
