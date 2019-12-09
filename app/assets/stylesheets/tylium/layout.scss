@@ -60,9 +60,20 @@
     border: 1px solid $borderColor;
     border-radius: 5px;
     
-    &.restrict-fullsize-height {
-      max-height: calc(100vh - 10.2rem);
+    &.restrict-height {
       overflow: scroll;
+
+      &.full-height {
+        max-height: calc(100vh - 10.2rem);
+      }
+
+      &.half-height {
+        max-height: calc(50vh - 4rem);
+      }
+
+      &.quarter-height {
+        max-height: calc(25vh - 3.4rem);
+      }
 
       .scroll-more-wrapper {
         position: sticky;
