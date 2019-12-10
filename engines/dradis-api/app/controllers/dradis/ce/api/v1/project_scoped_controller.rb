@@ -11,11 +11,7 @@ module Dradis::CE::API
     class ProjectScopedController < Dradis::CE::API::APIController
       include ActivityTracking
 
-      if defined?(Dradis::Pro)
-        include Dradis::Pro::API::ProjectScoped
-      else
-        include Dradis::CE::API::ProjectScoped
-      end
+      include Dradis::CE::API::ProjectScoped      
     end
   end
 end

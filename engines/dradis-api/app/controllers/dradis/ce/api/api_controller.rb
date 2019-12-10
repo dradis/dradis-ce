@@ -21,7 +21,7 @@ module Dradis::CE::API
     # Swallow the AccessDenied exception and present it as a 404 Not Found error
     rescue_from CanCan::AccessDenied do |exception|
       render json: {
-        message: 'Resource not found',
+        message: 'Resource not found or not accessible',
       }, status: 404
     end
 

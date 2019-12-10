@@ -4,6 +4,7 @@ module Dradis::CE::API
 
     included do
       before_action :set_project
+
       helper_method :current_project
     end
 
