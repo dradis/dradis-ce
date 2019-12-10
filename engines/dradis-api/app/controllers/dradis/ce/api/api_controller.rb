@@ -7,15 +7,16 @@ module Dradis::CE::API
     before_action :set_paper_trail_whodunnit
 
     rescue_from ActionController::ParameterMissing do |exception|
-      # after_action is not called for exceptions
-      skip_set_cookies_header
       render_json_error(exception, 422)
     end
 
     rescue_from ActiveRecord::RecordNotFound do |exception|
-      # after_action is not called for exceptions
-      skip_set_cookies_header
       render_json_error(exception, 404)
+    end
+
+    # Swallow the AccessDenied exception and present it as a 404 Not Found error
+    rescue_from CanCan::AccessDenied do |exception|
+      render_json_error(ActiveRecord::RecordNotFound.new, 404)
     end
 
     # No CSRF protection for the wicked!
@@ -94,6 +95,8 @@ module Dradis::CE::API
     end
 
     def render_json_error(exception, code)
+      # after_action is not called for exceptions
+      skip_set_cookies_header
       render json: { message: exception.message }, status: code
     end
 

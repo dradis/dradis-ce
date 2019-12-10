@@ -7,40 +7,25 @@ describe "Attachments API" do
   let(:node) { create(:node, project: current_project) }
 
   context "as unauthenticated user" do
-    describe "GET /api/nodes/:node_id/attachments" do
-      it "throws 401" do
-        get "/api/nodes/#{node.id}/attachments", env: @env
-        expect(response.status).to eq 401
-      end
-    end
-    describe "GET /api/nodes/:node_id/attachments/:filename" do
-      it "throws 401" do
-        get "/api/nodes/#{node.id}/attachments/image.jpg", env: @env
-        expect(response.status).to eq 401
-      end
-    end
-    describe "POST /api/nodes/:node_id/attachments" do
-      it "throws 401" do
-        post "/api/nodes/#{node.id}/attachments", env: @env
-        expect(response.status).to eq 401
-      end
-    end
-    describe "PUT /api/nodes/:node_id/attachments/:filename" do
-      it "throws 401" do
-        put "/api/nodes/#{node.id}/attachments/image.jpg", env: @env
-        expect(response.status).to eq 401
-      end
-    end
-    describe "DELETE /api/nodes/:node_id/attachments/:filename" do
-      it "throws 401" do
-        delete "/api/nodes/#{node.id}/attachments/image.jpg", env: @env
-        expect(response.status).to eq 401
+    [
+      ['get', '/api/nodes/1/attachments/'],
+      ['get', '/api/nodes/1/attachments/image.jpg'],
+      ['post', '/api/nodes/1/attachments/'],
+      ['put', '/api/nodes/1/attachments/image.jpg'],
+      ['patch', '/api/nodes/1/attachments/image.jpg'],
+      ['delete', '/api/nodes/1/attachments/image.jpg'],
+    ].each do |verb, url|
+      describe "#{verb.upcase} #{url}" do
+        it 'throws 401' do
+          send(verb, url, params: {}, env: @env)
+          expect(response.status).to eq 401
+        end
       end
     end
   end
 
-  context "as authenticated user" do
-    include_context "authenticated API user"
+  context "as authorized user" do
+    include_context "authorized API user"
 
     before(:each) do
       FileUtils.rm_rf Dir[Attachment.pwd.join('*')] until Dir[Attachment.pwd.join('*')].count == 0
