@@ -1,12 +1,12 @@
 <section class="inner summary-panel">
-  <h2>Issues so far</h2>
+  <h4>Issues so far</h4>
 
   <% if @issues.any? %>
     <div id="issue-chart"></div>
 
     <% for tag in @tags do %>
       <div class="issue-group">
-        <h2 style="color: <%= tag.color %>"><%= tag.display_name %></h2>
+        <h5 style="color: <%= tag.color %>"><%= tag.display_name %></h5>
         <ul class="issue-list drop-target" data-tag="<%= tag.name %>">
           <% for issue in @issues_by_tag[tag.name] %>
             <%= content_tag_for :li, issue, data: { url: project_issue_path(current_project, issue, format: :json) } do %>
@@ -20,7 +20,7 @@
     <%# unassigned %>
     <% if @issues_by_tag[:unassigned].any? %>
     <div class="issue-group">
-      <h2>Unassigned</h2>
+      <h5>Unassigned</h5>
       <ul class="issue-list drop-target">
           <% for issue in @issues_by_tag[:unassigned] %>
             <%= content_tag_for :li, issue, data: { url: project_issue_path(current_project, issue, format: :json) } do %>
