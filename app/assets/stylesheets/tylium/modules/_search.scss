@@ -83,6 +83,14 @@
 
 body.search.index {
 
+  .inset-button-wrapper {
+    max-width: 300px;
+  }
+
+  tr:first-child td {
+      border-top: none;
+  }
+
   .result-details {
     color: #869198;
     margin: 10px 0;
@@ -97,17 +105,8 @@ body.search.index {
   }
 
   .match-snippet {
-    background-color: #F4F5F6;
-    border: 1px solid #ccc;
-    padding: 2px 2px 2px 2px;
-  }
-
-  .pagination {
-    display: flex;
-    padding-left: 8px;
-
-    > * {
-      padding-right: 5px;
-    }
+    background-color: $secondaryBgColor;
+    border: 1px solid $borderColor;
+    padding: 0.25rem;
   }
 }
