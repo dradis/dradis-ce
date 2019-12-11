@@ -33,4 +33,19 @@ describe Project do
       end.not_to change { Node.count }
     end
   end
+
+  describe '#testers_for_mentions' do
+    it 'returns all the authors and admins of the project' do
+      project = create(:project)
+      user1 = create(:user, :admin)
+      user2 = create(:user, :author)
+
+      if defined?(Dradis::Pro)
+        project.authors << user2
+        project.save
+      end
+
+      expect(project.testers_for_mentions).to match_array [user1, user2]
+    end
+  end
 end

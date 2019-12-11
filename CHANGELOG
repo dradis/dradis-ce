@@ -1,36 +1,55 @@
-v3.15 (* 2019)
+v3.15 (November 2019)
  - Methodologies v2:
    - Kanban-style boards replaced the checklists
    - Tasks can move between lists
    - Assign tasks to different team members
    - Keep Notes and information on each task
    - Export Methodology details into your reports
- - Fix node merging bug when `services_extras` properties are present
- - Limit project name length when viewing a project
- - Removed bullet style in node modals.
- - Fix overflow issue where content would expand out of view.
- - Set the "by" attribute for item revisions when using the API
- - Fix hamburger dropdown menu functionality.
- - Fix page jump when issues list is collapsed.
- - Enhancement when adding new nodes to copy node label data between the single
-   and multiple node forms.
+ - Email notifications
+ - Add notification settings to decide how often to get email notifications
  - Add an smtp.yml config file to handle the SMTP configuration
- - Enhance the mentions box in comments to close when it is open and the page is
-   scrolled.
- - Fix bug that prevents the mentions dialog from appearing after navigating
-   through the app.
- - Fixed elongated avatar images so they are round once again.
- - Added avatar images to mentions in comments.
- - Load gravatars for users who's email has been setup with gravatar.
- - Upgraded Nokogiri as per suggested solution for CVE-2019-13117
- - Fix conflicting version message when updating records with ajax
- - Validate parent node project
+ - Various mention related improvements:
+   - Enhance the mentions box in comments to close when it is open and the page is
+   scrolled
+   - Fix bug that prevents the mentions dialog from appearing after navigating
+   through the app
+   - Fixed elongated avatar images so they are round once again
+   - Added avatar images to mentions in comments
+   - Load gravatars for users who's email has been setup with gravatar
+ - Enhancement when adding new nodes to copy node label data between the single
+   and multiple node forms
+ - All tables can be sorted by column
+ - Bugs fixed:
+   - Fix handling of pipe character in node property tables
+   - Fix overflow issue where content would expand out of view
+   - Fix page jump when issues list is collapsed
+   - Fix conflicting version message when updating records with ajax
+   - Fix hamburger dropdown menu functionality
+   - Fix node merging bug when `services_extras` properties are present
+   - Fix cross-project info rendering
+   - Prevent content block group names to be whitespaces only
+   - Fix displaying of content blocks with no block groups
+   - Limit project name length when viewing a project
+   - Removed bullet style in node modals
+   - Validate parent node project
+ - Integration enhancements:
+   - Burp: Make `issue.severity` available at the Issue level
+   - Nessus: Fixed bullet points formatting to handle internal text column widths
+   - Nexpose: Wrap ciphers in code blocks
+   - Netsparker: Fix link parsing of issue.external_references
+   - Jira: Loading custom (required) fields from JIRA by IssueType and Project
+ - REST/JSON API enhancements:
+   - Fix disappearing owner when assigning authors to a Project using the API
+   - Set the "by" attribute for item revisions when using the API
+ - Security Fixes:
+   - Medium: Authenticated author mentioning an existing user outside of the
+     project will subscribe that user to the note/issue/evidence
+   - Upgraded gems: nokogiri (CVE-2019-13117)
 
 v3.14 (August 2019)
  - Highlight code snippets
  - Collapsable sidebar in issues
  - Added Node merging feature
- - All tables can be sorted by column
 
 v3.13 (June 2019)
  - User-provided content takes priority over default local fields.

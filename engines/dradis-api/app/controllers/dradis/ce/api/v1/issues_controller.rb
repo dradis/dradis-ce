@@ -1,6 +1,9 @@
 module Dradis::CE::API
   module V1
-    class IssuesController < Dradis::CE::API::V1::ProjectScopedController
+    class IssuesController < Dradis::CE::API::APIController
+      include ActivityTracking
+      include Dradis::CE::API::ProjectScoped
+
       def index
         @issues  = current_project.issues.includes(:tags).sort
       end

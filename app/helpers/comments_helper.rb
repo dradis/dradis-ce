@@ -6,7 +6,7 @@ module CommentsHelper
       HTML::Pipeline::DradisCommentFilter,
       HTML::Pipeline::DradisMentionsFilter,
     ], {
-      mentionable_users: @mentionable_users || current_project.authors,
+      mentionable_users: @mentionable_users || current_project.testers_for_mentions,
       username_pattern: Comment::MENTION_PATTERN,
       view_context: self
     }

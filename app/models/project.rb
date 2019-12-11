@@ -73,6 +73,10 @@ class Project
     Tag.all
   end
 
+  def testers_for_mentions
+    User.all
+  end
+
   # Returns or creates the Node that acts as container for all Methodologies in
   # a given project
   def methodology_library

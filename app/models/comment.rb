@@ -57,7 +57,7 @@ class Comment < ApplicationRecord
       end
 
       project = commentable.project
-      project.authors.where(email: emails.uniq)
+      project.testers_for_mentions.where(email: emails.uniq)
     end
   end
 

@@ -11,6 +11,6 @@ module Mentioned
   protected
 
   def find_mentionable_users
-    @mentionable_users ||= current_project.authors
+    @mentionable_users ||= current_project.testers_for_mentions
   end
 end
