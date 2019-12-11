@@ -206,13 +206,13 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 3.15', github: 'dradis/dradis-plugins', branch: 'release-3.15'
+gem 'dradis-plugins', '~> 3.15'
 
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 3.15', github: 'dradis/dradis-projects', branch: 'release-3.15'
+gem 'dradis-projects', '~> 3.15'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)
