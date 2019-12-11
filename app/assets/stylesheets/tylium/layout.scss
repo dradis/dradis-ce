@@ -40,6 +40,7 @@
 
 .page-title {
   margin: 1rem 0 0 $mainContentMargin;
+  cursor: default;
 }
 
 .view-content {
@@ -114,9 +115,5 @@
         }
       }
     }
-  }
-
-  .view-title {
-    margin: $mainContentMargin;
   }
 }

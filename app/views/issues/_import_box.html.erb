@@ -42,7 +42,7 @@
             <%= hidden_field_tag :filter, label %>
             <% query = @query if (@plugin == plugin.plugin_name) && (@filter == klass) %>
             <div class="inset-button-wrapper">
-              <%= text_field_tag :query, query, class: 'form-control search-query', placeholder: "Search #{plugin.plugin_name}"  %>
+              <%= search_field_tag :query, query, class: 'form-control search-query', placeholder: "Search #{plugin.plugin_name}"  %>
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
           <% end %>
