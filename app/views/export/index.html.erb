@@ -1,14 +1,15 @@
 <% content_for :title, 'Export Manager' %>
 
-<div class="content-container mt-3">
   <% if @plugin_info.empty? %>
-    <div class="alert alert-error">
-      <p class="lead">Sorry, we were unable to detect any export plugins. This is strange because Dradis ships with a number of plugins installed by default.</p>
-      <p>Check the Export section of your <code><%= Rails.root.join('Gemfile.plugins') %></code> file.</p>
+    <div class="content-container mt-3">
+      <div class="alert alert-error m-0">
+        <p class="lead">Sorry, we were unable to detect any export plugins. This is strange because Dradis ships with a number of plugins installed by default.</p>
+        <p class="mb-0">Check the Export section of your <code><%= Rails.root.join('Gemfile.plugins') %></code> file.</p>
+      </div>
     </div>
   <% else %>
 
-    <ul id="plugin-chooser" class="nav nav-tabs">
+    <ul id="plugin-chooser" class="tabs-container nav nav-tabs">
       <% @plugin_info.each do |info| %>
 
         <li class="nav-item">
@@ -27,12 +28,13 @@
       <li class="nav-item"><a href="javascript:void(0)" class="js-try-pro nav-link" data-term="excel-reports" data-url="http://drad.is/l/try-pro-excel"><i class="fa fa-file-excel-o"></i> Custom Excel reports</a></li>
       <% end %>
     </ul>
-
-    <div class="tab-content mt-4">
-      <% @plugin_info.each do |info| %>
-        <%= render partial: 'plugin', locals: { info: info } %>
-      <% end %>
+    <div class="content-container mt-0">
+      <div class="tab-content mt-0">
+        <% @plugin_info.each do |info| %>
+          <%= render partial: 'plugin', locals: { info: info } %>
+        <% end %>
+      </div>
     </div>
 
   <% end %>
-</div>
+
