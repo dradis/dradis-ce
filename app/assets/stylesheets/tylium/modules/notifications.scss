@@ -22,7 +22,10 @@
     img {
       border-radius: 50%;
     }
+  }
 
+  &:last-child {
+    border-bottom: none;
   }
 
   .notification-icon {
@@ -83,10 +86,6 @@
 
       li.notification {
         @include notification-list-item;
-
-        &:last-child {
-          border-bottom: none;
-        }
       }
 
       li.no-content {
@@ -115,7 +114,11 @@
 }
 
 /* Notifications on the main body of /projects/X/notifications */
-.notifications-index {
+body.notifications {
+
+  .page-title {
+    display: none;
+  }
 
   hr {
     margin: 0;
@@ -123,7 +126,6 @@
 
   li.notification {
     @include notification-list-item;
-    border: none;
 
     .notification-icon {
       display: none;
