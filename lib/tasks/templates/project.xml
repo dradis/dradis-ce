@@ -1089,60 +1089,347 @@ qualys
     </issue>
   </issues>
   <methodologies>
-    <methodology version="1">
-      <text><![CDATA[<?xml version="1.0"?>
-<methodology>
-  <name>Getting started with Dradis checklist</name>
-  <sections>
-    <section>
-      <name>Issues, Evidence, and Plugins</name>
-      <tasks>
-        <task>Create your first Issue</task>
-        <task>Tag your Issue</task>
-        <task>Add a piece of Evidence to an existing Node</task>
-        <task>Edit a piece of Evidence</task>
-        <task>Add a screenshot to an Issue or piece of Evidence</task>
-        <task>Upload output from tool using your favourite plugin</task>
-        <task>Explore Issues and Evidence added by tool output</task>
-      </tasks>
-    </section>
-    <section>
-      <name>Nodes, Notes, and Node properties</name>
-      <tasks>
-        <task>Read the "0.- Start Here" Node</task>
-        <task>Read the "1.- Scope" Node</task>
-        <task>Add a Node manually</task>
-        <task>Add a subnode manually</task>
-        <task>After uploading output from a tool, explore the Nodes added under plugin.output</task>
-        <task>Create a Note on a Node</task>
-        <task>Look at Node properties. You can find sample properties on the 1.1.1.1 subnode under plugin.output</task>
-      </tasks>
-    </section>
-    <section>
-      <name>Methodologies</name>
-      <tasks>
-        <task checked="checked">See the Methodologies overview on the Project Dashboard</task>
-        <task checked="checked">Open the Methodologies view</task>
-        <task>Check off a task</task>
-        <task>Edit this Methodology</task>
-        <task>Add a new "Simple OWASP Checklist" Methodology from the existing template</task>
-        <task>Explore other templates available for download (from the "Add New" drop-down)</task>
-      </tasks>
-    </section>
-    <section>
-      <name>Support and documentation</name>
-      <tasks>
-        <task>Dradis CE Documentation page https://dradisframework.com/ce/documentation/</task>
-        <task>Check out our Dradis CE Forum: http://drad.is/l/forum/</task>
-        <task>Dradis Pro support pages https://dradisframework.com/support/</task>
-        <task>Dradis CE on GitHub https://github.com/dradis/dradis-ce</task>
-        <task>Dradis CE on Slack http://drad.is/l/slack</task>
-      </tasks>
-    </section>
-  </sections>
-</methodology>
-]]></text>
-    </methodology>
+    <board version="3">
+      <name>Getting started with Dradis checklist</name>
+      <node_id/>
+      <list>
+        <id>1</id>
+        <name>Pending</name>
+        <previous_id/>
+        <card>
+          <id>1</id>
+          <name>[Issues, Evidence, and Plugins] Create your first Issue</name>
+          <description><![CDATA[
+  #[Description]#
+  Create your first Issue
+  ]]></description>
+          <due_date/>
+          <previous_id/>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>2</id>
+          <name>[Issues, Evidence, and Plugins] Tag your Issue</name>
+          <description><![CDATA[
+  #[Description]#
+  Tag your Issue
+  ]]></description>
+          <due_date/>
+          <previous_id>1</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>3</id>
+          <name>[Issues, Evidence, and Plugins] Add a piece of Evidence to an existing Node</name>
+          <description><![CDATA[
+  #[Description]#
+  Add a piece of Evidence to an existing Node
+  ]]></description>
+          <due_date/>
+          <previous_id>2</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>4</id>
+          <name>[Issues, Evidence, and Plugins] Edit a piece of Evidence</name>
+          <description><![CDATA[
+  #[Description]#
+  Edit a piece of Evidence
+  ]]></description>
+          <due_date/>
+          <previous_id>3</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>5</id>
+          <name>[Issues, Evidence, and Plugins] Add a screenshot to an Issue or piece of Evidence</name>
+          <description><![CDATA[
+  #[Description]#
+  Add a screenshot to an Issue or piece of Evidence
+  ]]></description>
+          <due_date/>
+          <previous_id>4</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>6</id>
+          <name>[Issues, Evidence, and Plugins] Upload output from tool using your favourite plugin</name>
+          <description><![CDATA[
+  #[Description]#
+  Upload output from tool using your favourite plugin
+  ]]></description>
+          <due_date/>
+          <previous_id>5</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>7</id>
+          <name>[Issues, Evidence, and Plugins] Explore Issues and Evidence added by tool output</name>
+          <description><![CDATA[
+  #[Description]#
+  Explore Issues and Evidence added by tool output
+  ]]></description>
+          <due_date/>
+          <previous_id>6</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>8</id>
+          <name>[Nodes, Notes, and Node properties] Read the "0.- Start Here" Node</name>
+          <description><![CDATA[
+  #[Description]#
+  Read the "0.- Start Here" Node
+  ]]></description>
+          <due_date/>
+          <previous_id>7</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>9</id>
+          <name>[Nodes, Notes, and Node properties] Read the "1.- Scope" Node</name>
+          <description><![CDATA[
+  #[Description]#
+  Read the "1.- Scope" Node
+  ]]></description>
+          <due_date/>
+          <previous_id>8</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>10</id>
+          <name>[Nodes, Notes, and Node properties] Add a Node manually</name>
+          <description><![CDATA[
+  #[Description]#
+  Add a Node manually
+  ]]></description>
+          <due_date/>
+          <previous_id>9</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>11</id>
+          <name>[Nodes, Notes, and Node properties] Add a subnode manually</name>
+          <description><![CDATA[
+  #[Description]#
+  Add a subnode manually
+  ]]></description>
+          <due_date/>
+          <previous_id>10</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>12</id>
+          <name>[Nodes, Notes, and Node properties] After uploading output from a tool, explore the Nodes added under plugin.output</name>
+          <description><![CDATA[
+  #[Description]#
+  After uploading output from a tool, explore the Nodes added under plugin.output
+  ]]></description>
+          <due_date/>
+          <previous_id>11</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>13</id>
+          <name>[Nodes, Notes, and Node properties] Create a Note on a Node</name>
+          <description><![CDATA[
+  #[Description]#
+  Create a Note on a Node
+  ]]></description>
+          <due_date/>
+          <previous_id>12</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>14</id>
+          <name>[Nodes, Notes, and Node properties] Look at Node properties. You can find sample properties on the 1.1.1.1 subnode under plugin.output</name>
+          <description><![CDATA[
+  #[Description]#
+  Look at Node properties. You can find sample properties on the 1.1.1.1 subnode under plugin.output
+  ]]></description>
+          <due_date/>
+          <previous_id>13</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>15</id>
+          <name>[Methodologies] Check off a task</name>
+          <description><![CDATA[
+  #[Description]#
+  Check off a task
+  ]]></description>
+          <due_date/>
+          <previous_id>14</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>16</id>
+          <name>[Methodologies] Edit this Methodology</name>
+          <description><![CDATA[
+  #[Description]#
+  Edit this Methodology
+  ]]></description>
+          <due_date/>
+          <previous_id>15</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>17</id>
+          <name>[Methodologies] Add a new "Simple OWASP Checklist" Methodology from the existing template</name>
+          <description><![CDATA[
+  #[Description]#
+  Add a new "Simple OWASP Checklist" Methodology from the existing template
+
+  #[OriginalStatus]#
+  pending
+  ]]></description>
+          <due_date/>
+          <previous_id>16</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>18</id>
+          <name>[Methodologies] Explore other templates available for download (from the "Add New" drop-down)</name>
+          <description><![CDATA[
+  #[Description]#
+  Explore other templates available for download (from the "Add New" drop-down)
+  ]]></description>
+          <due_date/>
+          <previous_id>17</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>19</id>
+          <name>[Support and documentation] Dradis CE Documentation page https://dradisframework.com/ce/documentation/</name>
+          <description><![CDATA[
+  #[Description]#
+  Dradis CE Documentation page https://dradisframework.com/ce/documentation/
+  ]]></description>
+          <due_date/>
+          <previous_id>18</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>20</id>
+          <name>[Support and documentation] Check out our Dradis CE Forum: http://drad.is/l/forum/</name>
+          <description><![CDATA[
+  #[Description]#
+  Check out our Dradis CE Forum: http://drad.is/l/forum/
+  ]]></description>
+          <due_date/>
+          <previous_id>19</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>21</id>
+          <name>[Support and documentation] Dradis Pro support pages https://dradisframework.com/support/</name>
+          <description><![CDATA[
+  #[Description]#
+  Dradis Pro support pages https://dradisframework.com/support/
+  ]]></description>
+          <due_date/>
+          <previous_id>20</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>22</id>
+          <name>[Support and documentation] Dradis CE on GitHub https://github.com/dradis/dradis-ce</name><description><![CDATA[
+  #[Description]#
+  Dradis CE on GitHub https://github.com/dradis/dradis-ce
+  ]]></description>
+          <due_date/>
+          <previous_id>21</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>23</id>
+          <name>[Support and documentation] Dradis CE on Slack http://drad.is/l/slack</name>
+          <description><![CDATA[
+  #[Description]#
+  Dradis CE on Slack http://drad.is/l/slack
+  ]]></description>
+          <due_date/>
+          <previous_id>22</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+      </list>
+      <list>
+        <id>2</id>
+        <name>Done</name>
+        <previous_id>1</previous_id>
+        <card>
+          <id>24</id>
+          <name>[Methodologies] See the Methodologies overview on the Project Dashboard</name>
+          <description><![CDATA[
+  #[Description]#
+  See the Methodologies overview on the Project Dashboard
+  ]]></description>
+          <due_date/>
+          <previous_id/>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+        <card>
+          <id>25</id>
+          <name>[Methodologies] Open the Methodologies view</name>
+          <description><![CDATA[
+  #[Description]#
+  Open the Methodologies view
+  ]]></description>
+          <due_date/>
+          <previous_id>24</previous_id>
+          <assignees></assignees>
+          <activities></activities>
+          <comments></comments>
+        </card>
+      </list>
+    </board>
   </methodologies>
   <categories>
     <category>
