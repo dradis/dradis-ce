@@ -3,16 +3,17 @@
 <div class="row m-0">
   <div class="col-lg-6 col-xl-5 p-0">
     <div class="content-container mt-3 mr-lg-3 restrict-height full-height" data-behavior="restrict-height">
+      <h4 class="mb-3">Upload Output Files</h4>
       <p>Use the form below to upload output files from other tools.</p>
 
-      <div class="inner">
+      <div class="inner mt-4">
         <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, id: 'new_upload', data: { parse_url: project_upload_parse_path(current_project) } do %>
           <div class="form-group mb-5">
-            <h4 class="header-underline">1. Choose a tool</h4>
+            <h5>1. Choose a tool</h5>
             <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { :class => 'custom-select' } %>
           </div>
           <div class="form-group">
-            <h4 class="header-underline">2. Choose a file</h4>
+            <h5>2. Choose a file</h5>
             <div class="custom-file">
               <%= file_field_tag 'file', class: 'custom-file-input' %>
               <label class="custom-file-label" data-behavior="file-label">Choose file</label>
@@ -31,7 +32,7 @@
 
         <div id="status"></div>
 
-        <h4 class="header-underline">Output console</h4>
+        <h5>Output console</h5>
         <%= content_tag :div, id: 'result', style: 'display:none', data: { url: status_console_index_path }  do %>
           <div><strong>Filename</strong>: <span id="filename"></span> <span id="spinner"><%= image_tag 'loading.gif', style: "margin:0;" %></span></div>
           <div><strong>Size</strong>: <span id="filesize"></span></div>

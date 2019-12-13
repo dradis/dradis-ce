@@ -17,12 +17,13 @@
     }
 
     .dropdown-item {
-      color: $linkColor !important;
+      color: $linkColor;
       transition: color 0s;
+      font-weight: inherit;
 
       &:active,
       &:hover {
-        color: $linkColorHover !important;
+        color: $linkColorHover;
         background-color: #f8f9fa;
       }
     }

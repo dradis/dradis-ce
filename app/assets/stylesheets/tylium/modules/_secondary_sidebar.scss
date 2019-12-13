@@ -61,6 +61,15 @@
           position: absolute;
           top: 6px;
           right: 0;
+
+          .dropdown-item {
+            color: $linkColor;
+      
+            &:active,
+            &:hover {
+              color: $linkColorHover;
+            }
+          }
         }
       }
     }
