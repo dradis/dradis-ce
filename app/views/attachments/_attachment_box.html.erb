@@ -6,7 +6,7 @@
     <div class="header-inner">
       <div class="options">
         <div class="dropdown">
-          <%= link_to 'javascript:void(0)', 
+          <%= link_to 'javascript:void(0)',
             data: { toggle: 'collapse', target: '#attachment-box', behavior: 'collapse-collection' } do %>
             <i class="fa fa-chevron-up" data-behavior="toggle-chevron"></i>
           <% end %>
@@ -46,7 +46,7 @@
 
                 <button
                   class="btn btn-transparent js-attachment-url-copy"
-                  data-clipboard-text="!<%= project_node_attachment_path(node.project, node, attachment.filename) %>!"
+                  data-clipboard-text="!<%= "\n!" + project_node_attachment_path(node.project, node, attachment.filename) + "!\n" %>!"
                 >
                   <i class="fa fa-link"></i>
                 </button>
