@@ -13,7 +13,7 @@
 <div class="tab-content">
   <div class="tab-pane active" id="info-tab" data-behavior="subscription-actions" data-subscribed="<%= !@subscription.nil? %>">
     <% cache ['note-information-tab', @note] do %>
-      <div id="<%= dom_id(@note) %>" class="inner note-text-inner">
+      <div id="<%= dom_id(@note) %>" class="note-text-inner">
         <h3>Content for this note -
           <span class="actions">
             <%= link_to edit_project_node_note_path(@node.project, @node, @note), class: 'action-link' do %>
@@ -37,32 +37,28 @@
       </div>
     <% end %>
 
-    <div class="inner">
-      <%= render 'comments/feed' %>
-      <%= render 'subscriptions/feed', subscribable: @note %>
-    </div>
+    <%= render 'comments/feed' %>
+    <%= render 'subscriptions/feed', subscribable: @note %>
   </div>
 
   <% cache ['note-activity-tab', @note, @activities] do %>
     <div class="tab-pane" id="activity-tab">
-      <div class="inner">
-        <h3>
-          Recent activity -
-          <span class="actions">
-            <%#
-              # Some legacy content was created before paper_trail, so we need to
-              # make sure that there is at least one revision associated to the
-              # model.
-              #%>
-            <%= link_to(
-                  'revision history',
-                  project_node_note_revisions_path(@node.project, @node, @note),
-                  class: 'action-link'
-                ) if @note.has_revision_history? %>
-          </span>
-        </h3>
-        <%= render 'activities/feed', activities: @activities %>
-      </div>
+      <h3>
+        Recent activity -
+        <span class="actions">
+          <%#
+            # Some legacy content was created before paper_trail, so we need to
+            # make sure that there is at least one revision associated to the
+            # model.
+            #%>
+          <%= link_to(
+                'revision history',
+                project_node_note_revisions_path(@node.project, @node, @note),
+                class: 'action-link'
+              ) if @note.has_revision_history? %>
+        </span>
+      </h3>
+      <%= render 'activities/feed', activities: @activities %>
     </div>
   <% end %>
 </div>

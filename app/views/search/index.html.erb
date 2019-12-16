@@ -24,9 +24,7 @@
   <% else %>
     <%= render 'nav', search: @search %>
     <div class="content-container mt-0 py-2">
-      <div class="inner">
-        <%= render 'results', search: @search %>
-      </div>
+      <%= render 'results', search: @search %>
     </div>
   <% end %>
 </div>

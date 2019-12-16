@@ -6,7 +6,7 @@
       <h4 class="mb-3">Upload Output Files</h4>
       <p>Use the form below to upload output files from other tools.</p>
 
-      <div class="inner mt-4">
+      <div class="mt-4">
         <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, id: 'new_upload', data: { parse_url: project_upload_parse_path(current_project) } do %>
           <div class="form-group mb-5">
             <h5>1. Choose a tool</h5>
