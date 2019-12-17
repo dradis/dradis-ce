@@ -13,6 +13,8 @@
 //= require clipboard
 //= require tribute
 
+//= require vendor/stupidtable
+
 //= require cable
 
 //= require shared/charts
