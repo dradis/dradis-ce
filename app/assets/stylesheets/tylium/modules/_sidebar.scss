@@ -5,9 +5,8 @@
   left: 0;
   top: 0;
   bottom: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  display: table-cell;
+  overflow: hidden;
+  height: 100vh;
   z-index: 5;
   transition: width 0.5s ease-in-out;  
 
@@ -62,6 +61,29 @@
         
         &.active > a {
           color: $white;
+        }
+      }
+
+      &.restrict-height {
+        max-height: calc(100vh - 330px - 1.5rem);
+
+        .gradient {
+          background: linear-gradient(180deg, rgba($sidebarBackground, 0) 0%, rgba($sidebarBackground, 0.75) 50%, rgba($sidebarBackground, 1) 100%);
+        }
+
+        li {
+          padding-left: .5rem
+        }
+
+        .line {
+          border-color: $lightColor;
+        }
+
+        .scroll-more {
+          left: calc(50% - 4rem);
+          background: $sidebarBackground;
+          border-color: $lightColor;
+          font-size: 0.9rem;
         }
       }
 
@@ -216,7 +238,8 @@
 
     .team-logo,
     .team-name,
-    .nodes-list {
+    .nodes-list,
+    .scroll-more-wrapper {
       transform: translateX(-15px);
       animation: fadeout 0.5s;
     }
@@ -250,7 +273,8 @@
 
     .team-logo,
     .team-name,
-    .nodes-list {
+    .nodes-list,
+    .scroll-more-wrapper {
       visibility: initial;
       animation: fadein 1s;
       opacity: 1;
@@ -269,6 +293,7 @@
   .version-wrapper {
     display: flex;
     justify-content: center;
+    background: $sidebarBackground;
 
     .version {
       position: fixed;
