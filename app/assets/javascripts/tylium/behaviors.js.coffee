@@ -211,3 +211,8 @@ document.addEventListener "turbolinks:load", ->
         $(this).find($('[data-behavior~=scroll-wrapper')).addClass('hidden');
       else
         $(this).find($('[data-behavior~=scroll-wrapper')).removeClass('hidden');
+
+  # Smooth Scrolling
+  $('[data-behavior~=smooth-scroll]').on 'click', ->
+    target = $(this).data('target');
+    $('[data-id~=' + target + ']')[0].scrollIntoView({behavior: "smooth"});
