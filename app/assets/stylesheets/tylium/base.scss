@@ -93,6 +93,11 @@ mark {
   height: 3rem;
 }
 
+.small {
+  font-size: 75%;
+  font-weight: 300;
+}
+
 .sticky-top {
   position: sticky !important;
   top: $mainContentMargin;

@@ -45,8 +45,8 @@
           </div>
           <div class="secondary-sidebar-content col-8 col-lg-9 col-xl-10 p-0">
             <%= render "layouts/tylium/project_teaser" %>
-            <%= flash_messages %>
             <%= render "layouts/tylium/breadcrumb" %>
+            <%= flash_messages %>
             <%= content_for?(:content) ? yield(:content) : yield %>
           </div>
         <% else %>
