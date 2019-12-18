@@ -123,7 +123,7 @@
 
       .add-subnode {
         position: absolute;
-        left: 12.5rem;
+        left: 13rem;
 
         a {
           padding: 0.5rem;
@@ -227,6 +227,10 @@
   &.sidebar-collapsed {
     width: $sidebarCollapsed;
 
+    .scroll-more-wrapper {
+      animation: fadeoutscroll 1s forwards;
+    }
+
     .sidebar-link-label,
     .sidebar-link-icon {
       transform: translateX(-15px);
@@ -238,8 +242,7 @@
 
     .team-logo,
     .team-name,
-    .nodes-list,
-    .scroll-more-wrapper {
+    .nodes-list {
       transform: translateX(-15px);
       animation: fadeout 0.5s;
     }
@@ -262,10 +265,21 @@
         opacity: 0;
       }
     }
+
+    @keyframes fadeoutscroll {
+      to {
+        opacity: 0;
+      }
+    }
   }
 
   &.sidebar-expanded {
     width: $sidebarExpanded;
+
+    .scroll-more-wrapper:not(.hidden) {
+      opacity: 0;
+      animation: fadein 1s forwards;
+    }
 
     .sidebar-toggle-icon {
       transform: rotate(180deg);
@@ -273,8 +287,7 @@
 
     .team-logo,
     .team-name,
-    .nodes-list,
-    .scroll-more-wrapper {
+    .nodes-list {
       visibility: initial;
       animation: fadein 1s;
       opacity: 1;
