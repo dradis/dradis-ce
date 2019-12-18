@@ -50,6 +50,7 @@
 //= require tylium/pages/projects/boards_summary
 //= require tylium/pages/projects/issues_chart
 //= require tylium/pages/revisions
+//= require tylium/pages/styles
 
 //= require tylium/vendor/popper.min
 //= require tylium/vendor/bootstrap-4.3.1.min

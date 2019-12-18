@@ -267,7 +267,7 @@
         <p>Tables in Dradis have a special structure in order to allow them to be scrollable and sortable. The below table is an example of a table exceeding the container boundaries but all data is still visisible thanks to a horizontally scrollable table wrapper.</p>
         
         <div class="d-flex justify-content-center mt-4">
-          <div class="table-wrapper">
+          <div class="table-wrapper" id="table-example">
             <table class="table table-striped items-table">
               <thead>
                 <tr>
@@ -302,18 +302,22 @@
                 </tr>
               </tbody>
             </table>
-
           </div>
         </div>
       </div>
       
       <div class="style-code-wrapper collapse" id="tables-code">
         <pre class="style-code">
-<code><span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"table-wrapper"</span><span class="et">></span>
+<code><span class="ct">// To enable table sorting you must add this line to the view's js file:
+<span class="et">new </span><span class="an">ItemsTable</span><span style="color: white;">(</span><span class="av">'#table-wrapper-id'</span><span style="color: white;">, </span><span class="av">'item_name'</span><span style="color: white;">)</span>
+<span class="ct">// table-wrapper-id: id of an element wrapping the table and table toolbar
+// item_name: name of model (issue, evidence, etc)</span>
+
+<span class="et">&lt;div</span><span class="an"> id=</span><span class="av">"table-wrapper-id"</span><span class="an"> class=</span><span class="av">"table-wrapper"</span><span class="et">></span>
   <span class="et">&lt;table</span><span class="an"> class=</span><span class="av">"table table-striped items-table"</span><span class="et">></span>
     <span class="et">&lt;thead></span>
       <span class="et">&lt;tr></span>
-        <span class="et">&lt;th</span><span class="an"> data-column=</span><span class="av">"col-1"</span><span class="an"> data-sort=</span><span class="av">"string"</span><span class="an"> class=</span><span class="av">"sortable"</span><span class="et">></span>Col 1 Header<span class="et">&lt;/th></span>
+        <span class="et">&lt;th</span><span class="an"> data-column=</span><span class="av">"col-1"</span><span class="an"> data-sort=</span><span class="av">"string"</span><span class="an"> class=</span><span class="av">"sortable sorting-asc"</span><span class="et">></span>Col 1 Header<span class="et">&lt;/th></span>
         <span class="et">&lt;th</span><span class="an"> data-column=</span><span class="av">"col-2"</span><span class="an"> data-sort=</span><span class="av">"string"</span><span class="an"> class=</span><span class="av">"sortable"</span><span class="et">></span>Col 2 Header<span class="et">&lt;/th></span>
         <span class="et">&lt;th</span><span class="an"> data-column=</span><span class="av">"col-3"</span><span class="an"> data-sort=</span><span class="av">"string"</span><span class="an"> class=</span><span class="av">"sortable"</span><span class="et">></span>Col 3 Header<span class="et">&lt;/th></span>
         <span class="et">&lt;th</span><span class="an"> data-column=</span><span class="av">"col-4"</span><span class="an"> data-sort=</span><span class="av">"string"</span><span class="an"> class=</span><span class="av">"sortable"</span><span class="et">></span>Col 4 Header<span class="et">&lt;/th></span>

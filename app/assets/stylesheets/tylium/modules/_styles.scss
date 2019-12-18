@@ -62,6 +62,10 @@ body.styles_tylium {
 
       .items-table {
         white-space: nowrap;
+
+        th, td {
+          display: table-cell !important;
+        }
       }
     }
   }
