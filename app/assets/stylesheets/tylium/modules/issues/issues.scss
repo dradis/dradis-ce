@@ -1,4 +1,9 @@
 body.issues.show {
+
+  .issue-severity {
+    cursor: default;
+  }
+
   .evidence-content {
     padding-left: 2em;
 
@@ -39,7 +44,7 @@ body.issues.show {
       border: 1px solid #ddd;
       height: 200px;
       overflow-y: scroll;
-      padding: 1ex;
+      padding: 0.5rem 0.5rem 0.5rem 2rem;
     }
   }
 }

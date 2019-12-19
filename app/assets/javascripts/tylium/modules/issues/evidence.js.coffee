@@ -1,7 +1,7 @@
 document.addEventListener "turbolinks:load", ->
   if $('body.issues.show').length
-    $('#evidence-tabs li').first().addClass('active')
-    $('#evidence-tabs .tab-pane').first().addClass('active')
+    $('[data-behavior~=evidence-link]').first().addClass('active')
+    $('[data-behavior~=evidence-tab-pane]').first().addClass('active show')
 
     $('i[data-toggle="tooltip"]').tooltip()
 
