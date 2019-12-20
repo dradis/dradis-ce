@@ -1,13 +1,13 @@
 <% cache [@issue, node, instances, 'evidence-content'] do %>
   <% evidence = instances.first %>
-  <%= content_tag :section, class: 'evidence-for-host' do %>
+  <%= content_tag :section, class: 'evidence-for-host m-0' do %>
     <% if node.evidence_count == 1 %>
       <h5>
         Evidence for <%= link_to node.label, project_node_path(current_project, node) %> -
         <span class="actions small text-capitalize">
           <%= link_to edit_project_node_evidence_path(current_project, node, evidence, back_to: :issue), class: 'action-link' do %>
             <i class="fa fa-pencil"></i> Edit
-          <% end %>
+          <% end %> -
           <%= link_to [current_project, node, evidence],
                 class: 'action-link text-error-hover',
                 data: { confirm: "Are you sure?\n\nProceeding will delete this evidence from the associated node." },
@@ -28,13 +28,13 @@
 
       <div class="tab-content">
         <% instances.each_with_index do |instance, i| %>
-          <div class="tab-pane<%= ' active' if i==0 %>" id="node_<%= node.id %>_instance_<%= instance.id %>">
+          <div class="tab-pane fade <%= 'show active' if i==0 %>" id="node_<%= node.id %>_instance_<%= instance.id %>">
             <h5>
               Instance #<%= i+1 %> for <%= link_to node.label, project_node_path(current_project, node) %> -
               <span class="actions small text-capitalize">
                 <%= link_to edit_project_node_evidence_path(current_project, node, instance, back_to: :issue), class: 'action-link' do %>
                   <i class="fa fa-pencil"></i> Edit
-                <% end %>
+                <% end %> -
                 <%= link_to [current_project, node, instance],
                       class: 'action-link text-error',
                       data: { confirm: "Are you sure?\n\nProceeding will delete this evidence from the associated node." },
@@ -43,7 +43,7 @@
                 <% end %>
               </span>
             </h5>
-            <div class="content-textile">
+            <div class="content-textile mt-4">
               <%= markup(instance.content) %>
             </div>
           </div>
