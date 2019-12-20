@@ -101,7 +101,8 @@ mark {
     transition: all 0s ease-in-out;
 
     &.active {
-      background-color: $primaryColor;
+      background-color: $secondaryBgColor;
+      color: $linkColorHover;
     }
   }
 }
