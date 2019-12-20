@@ -18,6 +18,9 @@ module ConflictResolver
 
   def check_for_edit_conflicts(record, updated_at_before_save)
     name = record.model_name.name.downcase
+
+    return unless params[name][:original_updated_at]
+
     if params[name][:original_updated_at].to_i < updated_at_before_save
       # Even if there have been edit conflicts, the save will still be
       # successful, which means we're going to *redirect* to another action

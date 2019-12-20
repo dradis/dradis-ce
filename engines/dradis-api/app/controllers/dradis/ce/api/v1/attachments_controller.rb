@@ -1,6 +1,9 @@
 module Dradis::CE::API
   module V1
-    class AttachmentsController < Dradis::CE::API::V1::ProjectScopedController
+    class AttachmentsController < Dradis::CE::API::APIController
+      include ActivityTracking
+      include Dradis::CE::API::ProjectScoped
+
       before_action :set_node
 
       skip_before_action :json_required, :only => [:create]

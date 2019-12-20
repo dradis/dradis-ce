@@ -9,48 +9,25 @@ describe "Evidence API" do
   let(:issue) { create(:issue, node: current_project.issue_library) }
 
   context "as unauthenticated user" do
-    let(:evidence) { create(:evidence, issue: issue, node: node) }
-
-    describe "GET /api/nodes/:node_id/evidence" do
-      it "throws 401" do
-        get "/api/nodes/#{node.id}/evidence", env: @env
-        expect(response.status).to eq 401
-      end
-    end
-    describe "GET /api/nodes/:node_id/evidence/:id" do
-      it "throws 401" do
-        get "/api/nodes/#{node.id}/evidence/#{evidence.id}", env: @env
-        expect(response.status).to eq 401
-      end
-    end
-    describe "POST /api/nodes/:node_id/evidence" do
-      it "throws 401" do
-        post "/api/nodes/#{node.id}/evidence", env: @env
-        expect(response.status).to eq 401
-      end
-    end
-    describe "PUT /api/nodes/:node_id/evidence/:id" do
-      it "throws 401" do
-        put "/api/nodes/#{node.id}/evidence/1", env: @env
-        expect(response.status).to eq 401
-      end
-    end
-    describe "PATCH /api/evidence/:id" do
-      it "throws 401" do
-        put "/api/nodes/#{node.id}/evidence/1", env: @env
-        expect(response.status).to eq 401
-      end
-    end
-    describe "DELETE /api/nodes/:node_id/evidence/:id" do
-      it "throws 401" do
-        delete "/api/nodes/#{node.id}/evidence/1", env: @env
-        expect(response.status).to eq 401
+    [
+      ['get', '/api/nodes/1/evidence/'],
+      ['get', '/api/nodes/1/evidence/1'],
+      ['post', '/api/nodes/1/evidence/'],
+      ['put', '/api/nodes/1/evidence/1'],
+      ['patch', '/api/nodes/1/evidence/1'],
+      ['delete', '/api/nodes/1/evidence/1'],
+    ].each do |verb, url|
+      describe "#{verb.upcase} #{url}" do
+        it 'throws 401' do
+          send(verb, url, params: {}, env: @env)
+          expect(response.status).to eq 401
+        end
       end
     end
   end
 
-  context "as authenticated user" do
-    include_context "authenticated API user"
+  context "as authorized user" do
+    include_context "authorized API user"
 
     let(:category) { create(:category) }
 
@@ -154,7 +131,8 @@ describe "Evidence API" do
           end
 
           let(:submit_form) { post_evidence }
-          include_examples "creates an Activity", :create, Evidence
+          include_examples 'creates an Activity', :create, Evidence
+          include_examples 'sets the whodunnit', :create, Evidence
         end
 
         context "with params for an invalid evidence" do
@@ -233,7 +211,8 @@ describe "Evidence API" do
 
           let(:submit_form) { put_evidence }
           let(:model) { evidence }
-          include_examples "creates an Activity", :update
+          include_examples 'creates an Activity', :update
+          include_examples 'sets the whodunnit', :update
         end
 
         context "with params for an invalid evidence" do

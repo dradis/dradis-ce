@@ -7,8 +7,8 @@ RSpec.describe Nodes::Merger do
     subject(:merge_nodes) { described_class.call(target_node, source_node) }
 
     let(:root_node) { create(:node) }
-    let(:source_node) { create(:node, parent_id: root_node) }
-    let(:target_node) { create(:node, parent_id: root_node) }
+    let(:source_node) { create(:node, parent_id: root_node, project: root_node.project) }
+    let(:target_node) { create(:node, parent_id: root_node, project: root_node.project) }
 
     it { should eq source_node }
 
@@ -46,18 +46,18 @@ RSpec.describe Nodes::Merger do
     end
 
     it 'moves children to target node' do
-      child_node = create(:node, parent: source_node)
+      child_node = create(:node, parent: source_node, project: source_node.project)
       merge_nodes
       expect(target_node.children).to include child_node
     end
 
     it 'increases the count of target node children' do
-      create(:node, parent: source_node)
+      create(:node, parent: source_node, project: source_node.project)
       expect { merge_nodes }.to change(target_node.children, :count).by 1
     end
 
     it "updates the target node's children counter cache" do
-      create(:node, parent: source_node)
+      create(:node, parent: source_node, project: source_node.project)
 
       expect { merge_nodes }.to change { target_node.reload.children_count }.by 1
     end
@@ -193,18 +193,18 @@ RSpec.describe Nodes::Merger do
       end
 
       it 'does not move children' do
-        child_node = create(:node, parent: source_node)
+        child_node = create(:node, parent: source_node, project: source_node.project)
         merge_nodes
         expect(target_node.children).not_to include child_node
       end
 
       it 'does not change source node children count' do
-        create(:node, parent: source_node)
+        create(:node, parent: source_node, project: source_node.project)
         expect { merge_nodes }.not_to change(source_node.children, :count)
       end
 
       it 'no changes to counter caches' do
-        create(:node, parent: source_node)
+        create(:node, parent: source_node, project: source_node.project)
 
         expect { merge_nodes }.not_to change { source_node.reload.children_count }
         expect { merge_nodes }.not_to change { target_node.reload.children_count }
