@@ -12,7 +12,7 @@ class MultiDestroyJob < ApplicationJob
     # In controllers we set PaperTrail metadata in
     # ProjectScoped#info_for_paper_trail, but now
     # we are not in a controller, so:
-    PaperTrail.controller_info = { project_id: project_id }
+    PaperTrail.request.controller_info = { project_id: project_id }
     PaperTrail.whodunnit = author_email
 
     items = klass.constantize.where(id: ids)

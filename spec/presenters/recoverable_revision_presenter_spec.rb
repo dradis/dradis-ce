@@ -5,7 +5,7 @@ RSpec.describe RecoverableRevisionPresenter do
 
   before do
     PaperTrail.enabled = true
-    PaperTrail.controller_info = { project_id: project.id }
+    PaperTrail.request.controller_info = { project_id: project.id }
   end
 
   after  { PaperTrail.enabled = false }
