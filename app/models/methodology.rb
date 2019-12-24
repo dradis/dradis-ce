@@ -154,7 +154,7 @@ class Methodology
     if name_changed?
       doc.xpath('/*/name/text()')[0].replace(@name)
       @content = doc.to_s
-      @changed_attributes.clear
+      changes_applied
     end
     @content
   end
