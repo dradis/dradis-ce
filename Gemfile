@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.2'
+ruby '2.4.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.1'
@@ -58,7 +58,7 @@ gem 'html-pipeline'
 
 gem 'kaminari', '~> 1.0.1'
 
-gem 'paper_trail'
+gem 'paper_trail', '~> 10.3'
 
 # gem 'rails_autolink', '~> 1.1'
 
@@ -66,7 +66,7 @@ gem 'record_tag_helper'
 
 gem 'rubyzip', '>= 1.2.2'
 
-gem 'thor'
+gem 'thor', '~> 0.19'
 
 
 # ------------------------------------------------------ With native extensions
@@ -83,7 +83,7 @@ gem 'bcrypt',   '3.1.12'
 gem 'json', '1.8.6'
 
 # XML manipulation
-gem 'nokogiri'
+gem 'nokogiri', '~> 1.10'
 
 # MySQL backend
 gem 'mysql2', '~> 0.5.1'
@@ -185,9 +185,7 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
-  gem 'capybara'
-  # Easy installation and use of chromedriver to run system tests with Chrome
-  gem 'chromedriver-helper'
+  gem 'capybara', '>= 2.15'
   gem 'guard-rspec', require: false
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 3.1'
