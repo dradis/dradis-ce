@@ -2,36 +2,56 @@
   <div class="header-inner">
     <div class="options">
       <div class="dropdown">
-        <%= link_to raw('<i class="fa fa-chevron-down"></i>'), 'javascript:void(0)', class: 'import-toggle', data: { toggle: 'collapse', target: '.import-box' } %>
+
+        <%= link_to 'javascript:void(0)', 
+          class: 'import-toggle', 
+          data: { toggle: 'collapse', target: '#import-box', behavior: 'collapse-collection import-box' } do %>
+          <i class="fa fa-chevron-down" data-behavior="toggle-chevron"></i>
+        <% end %>
       </div>
     </div>
     <h3>Import issues</h3>
   </div>
 </div>
 
-<%= content_tag :div, class: 'import-box collapse' do %>
-  <% Dradis::Plugins::with_feature(:import).each do |plugin| %>
-  <div>
-    <h5><%= plugin.plugin_description %></h5>
+<%= content_tag :div, class: 'import-box collapse', id: 'import-box' do %>
+  <% if Dradis::Plugins::with_feature(:import).empty? %>
+    <p>
+      Connect Dradis to a library of issue descriptions so you don't have to
+      copy & paste findings from an old report.
+    </p>
+    <p>External libraries:</p>
+    <ul class="fa-ul">
+      <li><i class="fa fa-li fa-chevron-right"></i><a href="https://dradisframework.com/ce/addons/mediawiki.html?utm_source=ce&utm_medium=app" target="_blank">MediaWiki</a></li>
+      <li><i class="fa fa-li fa-chevron-right"></i><a href="http://vulndbhq.com" target="_blank">VulnDB</a></li>
+    </ul>
+    <p>
+      Or use the <a href="javascript:void(0)" class="js-try-pro" data-term="issuelib" data-url="http://drad.is/l/try-pro-issuelib"><i class="fa fa-book"></i> built-in IssueLibrary</a> with 60+ entries to get you started.
+    </p>
+  <% else %>
+    <% Dradis::Plugins::with_feature(:import).each do |plugin| %>
+    <div>
+      <h5><%= plugin.plugin_description %></h5>
 
-    <% if Dradis::Plugins::Import::Filters[plugin.plugin_name] %>
-      <% Dradis::Plugins::Import::Filters[plugin.plugin_name].each do |label, klass| %>
-        <% next if label == :find_one_by_field %>
+      <% if Dradis::Plugins::Import::Filters[plugin.plugin_name] %>
+        <% Dradis::Plugins::Import::Filters[plugin.plugin_name].each do |label, klass| %>
+          <% next if label == :find_one_by_field %>
 
-        <%= form_tag main_app.import_project_issues_path, class: 'form-search' do %>
-          <%= hidden_field_tag :scope, plugin.plugin_name %>
-          <%= hidden_field_tag :filter, label %>
+          <%= form_tag main_app.import_project_issues_path, class: 'form-search' do %>
+            <%= hidden_field_tag :scope, plugin.plugin_name %>
+            <%= hidden_field_tag :filter, label %>
 
-          <div class="control-group input-append">
-            <% query = @query if (@plugin == plugin.plugin_name) && (@filter == klass) %>
-            <%= text_field_tag :query, query, class: 'span2 search-query', placeholder: label.to_s.humanize  %>
-            <button type="submit" class="btn">Search</button>
-          </div>
+            <div class="control-group input-append">
+              <% query = @query if (@plugin == plugin.plugin_name) && (@filter == klass) %>
+              <%= text_field_tag :query, query, class: 'span2 search-query', placeholder: label.to_s.humanize  %>
+              <button type="submit" class="btn">Search</button>
+            </div>
+          <% end %>
         <% end %>
+      <% else %>
+      <p>This plugin doesn't define any import filters. Contact the plugin author.</p>
       <% end %>
-    <% else %>
-    <p>This plugin doesn't define any import filters. Contact the plugin author.</p>
+    </div>
     <% end %>
-  </div>
   <% end %>
 <% end %>

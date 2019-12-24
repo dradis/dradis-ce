@@ -57,6 +57,7 @@ describe "evidence" do
     describe "clicking 'delete'", js: true do
       let(:submit_form) do
         page.accept_confirm do
+          find('[data-behavior~=nodes-more-dropdown]').click
           within('.note-text-inner') { click_link "Delete" }
         end
         expect(page).to have_text "Successfully deleted evidence for '#{@evidence.issue.title}.'"

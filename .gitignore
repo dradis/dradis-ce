@@ -7,6 +7,7 @@
 /db/*.sqlite3-journal
 /config/database.yml
 /config/secrets.yml
+/config/smtp.yml
 /log/*
 /tmp/*
 !/log/.keep
@@ -26,6 +27,7 @@
 
 # App-specific
 /attachments/
+/backup/
 /config/shared/
 /templates/
 /sample_files/

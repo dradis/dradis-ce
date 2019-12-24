@@ -7,7 +7,6 @@
 @import "snowcrash/modules/issues";
 @import "snowcrash/modules/issues/import";
 @import "snowcrash/modules/issues/merge";
-@import "snowcrash/modules/items_table";
 @import "snowcrash/modules/methodologies";
 @import "snowcrash/modules/modals";
 @import "snowcrash/modules/notifications";
@@ -31,6 +30,11 @@
 
 .note-list {
   margin-bottom: 2em;
+
+  &.collapse {
+    margin-bottom: .5em;
+  }
+
   .list-item {
     line-height: 2em;
     padding-left: 1ex;
@@ -83,6 +87,7 @@
     &.placeholder {
       color: #ccc;
       font-style: italic;
+      margin-bottom: 2rem;
     }
     .remove-note {
       visibility: hidden;
@@ -116,7 +121,6 @@
   h4:first-child { margin-top: 10px; }
 
   ul {
-    list-style: none;
     margin-top: 1em;
   }
 }
@@ -131,6 +135,12 @@
   margin-right: 5px;
   img {
     @include rounded(50%)
+  }
+
+  &.gravatar-inline {
+    margin: 0 0 -3px 0;
+    float: none;
+    white-space: nowrap;
   }
 }
 

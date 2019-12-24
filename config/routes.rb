@@ -27,6 +27,15 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :boards do
+      resources :lists, except: [:index] do
+        member { post :move }
+        resources :cards, except: [:index] do
+          member { post :move }
+        end
+      end
+    end
+
     resources :comments
 
     constraints id: %r{[(0-z)\/]+} do
@@ -62,6 +71,8 @@ Rails.application.routes.draw do
       member do
         get :tree
       end
+
+      resource :merge, only: [:create], controller: 'nodes/merge'
 
       resources :notes, concerns: :multiple_destroy do
         resources :revisions, only: [:index, :show]

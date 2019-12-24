@@ -2,7 +2,7 @@ class ActivityPresenter < BasePresenter
   presents :activity
 
   def avatar_with_link(size)
-    h.link_to(avatar_image(size), 'javascript:void(0)')
+    h.link_to(avatar_image(User.new(email: activity.user), size: size), 'javascript:void(0)')
   end
 
   def comment_path(anchor: false)
@@ -14,6 +14,8 @@ class ActivityPresenter < BasePresenter
     path_to_comment =
       if commentable.respond_to?(:node) && !commentable.is_a?(Issue)
         [current_project, commentable.node, commentable]
+      elsif commentable.is_a?(Card)
+        [current_project, commentable.board, commentable.list, commentable]
       else
         [current_project, commentable]
       end
@@ -32,6 +34,8 @@ class ActivityPresenter < BasePresenter
   def icon
     icon_css = %w{activity-icon fa}
     icon_css << case activity.trackable_type
+                when 'Board', 'List', 'Card'
+                  'fa-trello'
                 when 'Comment'
                   'fa-comment'
                 when 'Evidence'
@@ -75,21 +79,6 @@ class ActivityPresenter < BasePresenter
   end
 
   private
-
-  def avatar_image(size)
-    if activity.user
-      h.image_tag(
-        image_path('profile.jpg'),
-        alt: activity.user,
-        class: 'gravatar',
-        data: { fallback_image: image_path('logo_small.png') },
-        title: activity.user,
-        width: size
-      )
-    else
-      h.image_tag 'logo_small.png', width: size, alt: 'This user has been deleted from the system'
-    end
-  end
 
   # Interestingly enough we're not linking the email to anything yet as we
   # don't know what we should link to. For the time being lets just enclose

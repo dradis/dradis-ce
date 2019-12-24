@@ -10,6 +10,7 @@ describe Node do
     should have_many(:children).class_name('Node').dependent(:destroy)
   end
 
+  it { should have_many(:boards).dependent(:destroy) }
   it { should have_many(:notes).dependent(:destroy) }
   it { should have_many(:evidence).dependent(:destroy) }
   it { should have_many(:activities) }
@@ -81,10 +82,17 @@ describe Node do
     end
 
     it 'creates the node as a child of the parent node' do
-      parent_node = create(:node)
+      parent_node = create(:node, project: node.project)
       node.parent_id = parent_node.id
       node.save!
       expect(node.parent).to eq(parent_node)
+    end
+
+    it 'does not create with a parent in another project', if: defined?(Dradis::Pro) do
+      other_project_node = create(:node, project: create(:project))
+
+      node.parent_id = other_project_node.id
+      expect(node.save).to eq(false)
     end
   end
 
@@ -106,8 +114,9 @@ describe Node do
     end
   end
 
-  it 'uses a default type ID if none provieded' do
-    node = Node.create(label: 'Foo')
+  it 'uses a default type ID if none provided' do
+    project = create(:project)
+    node = Node.create(label: 'Foo', project: project)
     expect(node.type_id).to eq(Node::Types::DEFAULT)
   end
 

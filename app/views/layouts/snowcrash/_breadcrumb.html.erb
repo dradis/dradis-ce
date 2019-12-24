@@ -10,10 +10,17 @@
   </div>
   <div class="span6">
     <ul class="nav nav-pills pull-right">
-      <li><a href="#modal_add_child_node" tabindex="-1" data-toggle="modal"><i class="fa fa-plus"></i> Add subnode</a></li>
-      <li><a href="#modal_delete_node" class="text-error" tabindex="-1" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
-      <li><a href="#modal_rename_node" tabindex="-1" data-toggle="modal"><i class="fa fa-edit"></i> Rename</a></li>
-      <li><a href="#modal_move_node" tabindex="-1" data-toggle="modal"><i class="fa fa-mail-forward"></i> Move</a></li>
+      
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-behavior="nodes-more-dropdown"><i class="fa fa-ellipsis-h fa-lg"></i></a>
+        <ul class="dropdown-menu pull-right">
+          <li><a href="#modal_add_child_node" tabindex="-1" data-toggle="modal"><i class="fa fa-plus"></i> Add subnode</a></li>
+          <li><a href="#modal_rename_node" tabindex="-1" data-toggle="modal"><i class="fa fa-edit"></i> Rename</a></li>
+          <li><a href="#modal_move_node" tabindex="-1" data-toggle="modal"><i class="fa fa-mail-forward"></i> Move</a></li>
+          <li><a href="#modal_merge_node" tabindex="-1" data-toggle="modal"><i class="fa fa-compress"></i> Merge</a></li>
+          <li><a href="#modal_delete_node" tabindex="-1" data-toggle="modal"><span class="text-error"><i class="fa fa-trash"></i> Delete</span></a></li>
+        </ul>
+      </li>
     </ul>
   </div>
 </div>
@@ -21,8 +28,9 @@
 <!-- Node modal windows -->
 <%= render partial: 'nodes/modals/add_node', locals: { type: :child } %>
 <%= render partial: 'nodes/modals/delete' %>
-<%= render partial: 'nodes/modals/rename' %>
+<%= render partial: 'nodes/modals/merge' %>
 <%= render partial: 'nodes/modals/move' %>
+<%= render partial: 'nodes/modals/rename' %>
 <% end %>
 
 <% if content_for?(:breadcrums) %>

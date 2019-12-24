@@ -185,13 +185,14 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
-  gem 'capybara', '~> 3.6.0'
+  gem 'capybara'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
   gem 'guard-rspec', require: false
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'timecop'
+  gem 'webdrivers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -209,13 +210,13 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 3.12', github: 'dradis/dradis-plugins'
+gem 'dradis-plugins', '~> 3.15'
 
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 3.12', github: 'dradis/dradis-projects'
+gem 'dradis-projects', '~> 3.15'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)

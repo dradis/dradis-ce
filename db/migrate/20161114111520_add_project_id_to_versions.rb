@@ -1,4 +1,4 @@
-class AddProjectIdToVersions < ActiveRecord::Migration[5.0]
+class AddProjectIdToVersions < ActiveRecord::Migration[5.1]
   def change
     add_reference :versions, :project, index: true
   end

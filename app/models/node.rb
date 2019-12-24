@@ -18,10 +18,11 @@ class Node < ApplicationRecord
   acts_as_tree counter_cache: true, order: :label
 
   # -- Relationships --------------------------------------------------------
-  has_many :notes, dependent: :destroy
+  has_many :activities, as: :trackable
+  has_many :boards, dependent: :destroy
   has_many :evidence, dependent: :destroy
   has_many :issues, -> { distinct }, through: :evidence
-  has_many :activities, as: :trackable
+  has_many :notes, dependent: :destroy
 
   def project
     # dummy project; this makes Node's interface more similar to how it is
@@ -30,6 +31,10 @@ class Node < ApplicationRecord
   end
 
   def project=(new_project); end
+
+  def project_id
+    project.id
+  end
 
   def nested_activities
     sql = "(`activities`.`trackable_type`='Node' AND "\
@@ -86,6 +91,12 @@ class Node < ApplicationRecord
     Types::USER_TYPES.include?(self.type_id)
   end
 
+  # SEE: https://github.com/amerine/acts_as_tree/issues/63
+  # We add an empty method to handle the bug in acts_as_tree gem that
+  # causes subnodes to disappear when moved.
+  # FIXME: This expected to be fixed in Rails 6. Remove this when upgraded.
+  def update_parents_counter_cache; end
+
   private
   # Whenever a node is deleted all the associated attachments have to be
   # deleted too
@@ -95,7 +106,7 @@ class Node < ApplicationRecord
   end
 
   def parent_node
-    if self.parent.nil?
+    if self.parent.nil? || self.parent.project_id != self.project_id
       errors.add(:parent_id, 'is missing/invalid.')
       return false
     end

@@ -53,6 +53,7 @@ shared_examples "recover deleted item without node" do |item_type|
     with_versioning do
       submit_form
       visit project_node_path(model.node.project, model.node.id)
+      find('[data-behavior~=nodes-more-dropdown]').click
       click_link 'Delete'
       within '#modal_delete_node' do
         click_link 'Delete'
@@ -78,6 +79,18 @@ shared_examples "recover deleted item without node" do |item_type|
       end
       expect(model.class.find_by_id(model.id)).not_to be_nil
       expect(page).to have_content 'Recovered'
+    end
+  end
+end
+
+shared_examples 'sets the whodunnit' do |action = nil, klass = nil|
+  it 'should set the by attribute' do
+    with_versioning do
+      submit_form
+
+      instance = action == :create ? klass.last : model
+
+      expect(instance.versions.last.whodunnit).to eq(@logged_in_as.email)
     end
   end
 end

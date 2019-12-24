@@ -63,6 +63,21 @@ body.projects {
     }
   }
 
+  #boards-summary {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 16px;
+    min-height: 100px;
+
+    .pie-chart {
+      width: 50%;
+    }
+
+    &.loading {
+      background: image_url('loading.gif') no-repeat center;
+    }
+  }
+
   #issue-chart svg {
     display: block;
     margin: auto;
@@ -79,35 +94,6 @@ body.projects {
 
     text {
       font-size: 14px;
-    }
-  }
-
-  #methodology-chart {
-    .progress-meter .background {
-      fill: #ccc;
-      fill: #5a9dcc;
-      fill: #9ECAE1;
-    }
-
-    .progress-meter .foreground {
-      fill: #000;
-      fill: #1F77B4;
-      fill: #5a9dcc;
-    }
-
-    .progress-meter text {
-      fill: #1F77B4;
-      font-weight: bold;
-    }
-  }
-
-  .methodology-summary {
-    padding-left: 225px;
-
-    ul {
-      li {
-        font-size: 16px;
-      }
     }
   }
 }

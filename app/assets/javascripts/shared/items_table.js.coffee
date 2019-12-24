@@ -10,6 +10,7 @@
 #   - 'item_name' is the name of your model, e.g. 'issue', 'node'
 class @ItemsTable
   project: null
+  sortData: {}
   selectedColumns: []
   selectedItemsSelector: ''
   columnIndices: {}
@@ -26,6 +27,8 @@ class @ItemsTable
     # -------------------------------------------------------- Load table state
     @loadColumnState()
     @showHideColumns()
+
+    @loadSortState()
 
     # -------------------------------------------------- Install event handlers
     # We're hooking into Rails UJS data-confirm behavior to only fire the Ajax
@@ -68,6 +71,11 @@ class @ItemsTable
         rex.test($(this).text())
       ).show()
 
+    # Table sorting
+    @$table.stupidtable()
+    @$table.find('th').eq(@sortData.column).stupidsort(@sortData.direction)
+    @$table.on 'aftertablesort', @onAfterTableSort
+
     @afterInitialize()
 
   # Classes that inherit from this may add extra hooks here
@@ -88,9 +96,22 @@ class @ItemsTable
       if that.selectedColumns.indexOf($link.data('column')) > -1
         $link.find('input').prop('checked', true)
 
+  loadSortState: =>
+    if Storage?
+      @sortData = JSON.parse(localStorage.getItem("#{@storageKey()}-sort-state"))
+    else
+      console.log "The browser doesn't support local storage of settings."
+
+    @sortData ||= { column: 1, direction: 'asc' }
+
   resetToolbar: =>
     $("#{@tableId} .js-items-table-actions").css('display', 'none')
     $("#{@tableId} .js-items-select-all #select-all").prop('checked', false)
+
+  onAfterTableSort: (event, data) =>
+    @sortData.column    = data.column
+    @sortData.direction = data.direction
+    @saveSortState()
 
   onColumnPickerClick: (event) =>
     $target = $(event.currentTarget)
@@ -163,6 +184,13 @@ class @ItemsTable
       console.log "The browser doesn't support local storage of settings."
       console.log "Column selection can't be saved."
 
+  saveSortState: ->
+    if Storage?
+      localStorage.setItem("#{@storageKey()}-sort-state", JSON.stringify( @sortData ))
+    else
+      console.log "The browser doesn't support local storage of settings."
+      console.log "Column sorting can't be saved."
+
   showHideColumns: =>
     that = this
 
@@ -200,7 +228,7 @@ class @ItemsTable
 
     # start console
     ConsoleUpdater.parsing = true;
-    setTimeout(ConsoleUpdater.updateConsole, 200);
+    setTimeout(ConsoleUpdater.updateConsole, 1000);
 
   storageKey: ->
     @$jsTable.data('storage-key')

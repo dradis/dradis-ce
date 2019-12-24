@@ -12,7 +12,7 @@ shared_context "content_type: application/json" do
   end
 end
 
-shared_context "authenticated API user" do
+shared_context "authorized API user" do
   before do
     @logged_in_as = User.find_or_create_by(email: 'rspec')
     @password     = 'rspec_pass'

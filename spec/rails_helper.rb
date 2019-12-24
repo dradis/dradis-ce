@@ -88,6 +88,7 @@ RSpec.configure do |config|
       FactoryBot.lint
     ensure
       DatabaseCleaner.clean_with(:truncation)
+      Attachment.all.each(&:delete)
     end
   end
 

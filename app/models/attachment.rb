@@ -186,7 +186,7 @@ class Attachment < File
       @initialfile = Rails.root.join('tmp', File.basename(@tempfile))
       super(@initialfile, 'wb+')
     else
-      raise "No physical file available"
+      raise 'No physical file available'
     end
   end
 
@@ -201,7 +201,7 @@ class Attachment < File
       FileUtils.mkdir(File.dirname(fullpath)) unless File.exists?(File.dirname(fullpath))
       self.close
       FileUtils.cp(self.path, fullpath) if @intialfile != fullpath
-      if ( @initialfile && @initialfile != fullpath )
+      if (@initialfile && @initialfile != fullpath)
         # If we are still a temp file
         FileUtils.rm(@initialfile)
       end
@@ -212,25 +212,37 @@ class Attachment < File
   # Deletes the file that the instance is pointing to from memory
   def delete
     self.close
-    if ( !@initialfile || (File.dirname(@initialfile) == Rails.root.join('tmp')) )
-      raise "No physical file to delete"
+    if (!@initialfile || (File.dirname(@initialfile) == Rails.root.join('tmp')))
+      raise 'No physical file to delete'
     end
     FileUtils.rm(@initialfile)
   end
 
+  # Makes a copy of itself for the given node.
+  def copy_to(node)
+    name = Attachment.available_name node, original: filename
+    new_file_path = fullpath(node.id, name)
+
+    dir_name = File.dirname new_file_path
+    FileUtils.mkdir dir_name unless File.exists? dir_name
+
+    FileUtils.cp fullpath, new_file_path
+
+    Attachment.find name, conditions: { node_id: node.id }
+  end
+
   # Retruns the full path of an attachment on the file system
-  def fullpath
-    self.class.pwd.join(@node_id.to_s, @filename.to_s)
+  def fullpath(node_id = @node_id, filename = @filename)
+    self.class.pwd.join(node_id.to_s, filename.to_s)
   end
 
   # Provide a JSON representation of this object that can be understood by
   # components of the web interface
-  def to_json(options={})
+  def to_json(options = {})
     {
       filename:   @filename,
       size:       File.size(self.fullpath),
       created_at: self.ctime
     }.to_json(options)
   end
-
 end

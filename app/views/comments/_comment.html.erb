@@ -20,7 +20,7 @@
         <% end %>
         <%= link_to [current_project, comment],
                     method: :delete,
-                    data: { confirm: 'Are you sure?' },
+                    data: { confirm: "Are you sure?\n\nProceeding will delete this comment, making it no longer visible to anyone." },
                     remote: true,
                     class: 'text-error' do %>
           <i class="fa fa-trash"></i> Delete
@@ -29,7 +29,7 @@
     </div>
 
     <div class="content">
-      <%= simple_format(h(comment.content)) %>
+      <%= comment_formatter(comment.content) %>
     </div>
   </div>
 <% end %>

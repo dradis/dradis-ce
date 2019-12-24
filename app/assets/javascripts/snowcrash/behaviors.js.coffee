@@ -13,7 +13,7 @@ document.addEventListener "turbolinks:load", ->
   $('.jquery-upload').fileupload
     dropZone: $('#drop-zone')
     destroy: (e, data) ->
-      if confirm('Are you sure?')
+      if confirm('Are you sure?\n\nProceeding will delete this attachment from the associated node.')
         $.blueimp.fileupload.prototype.options.destroy.call(this, e, data)
 
     paste: (e, data)->
@@ -103,6 +103,7 @@ document.addEventListener "turbolinks:load", ->
         when 'try-pro' then 'Upgrade to Dradis Pro'
         when 'word-reports' then '[<span>Dradis Pro feature</span>] Custom Word reports'
         when 'excel-reports' then '[<span>Dradis Pro feature</span>] Custom Excel reports'
+        when 'node-boards' then '[<span>Dradis Pro feature</span>] Node-level methodologies'
 
       $modal.find('.modal-header h3').html(title)
     else
@@ -138,15 +139,6 @@ document.addEventListener "turbolinks:load", ->
   # $("[data-hide]").on 'click', ->
   #   $(this).closest("." + $(this).data('hide')).hide();
 
-  # Offline Gravatars
-  if $('.gravatar img').length
-    $('.gravatar img').each ->
-      $this = $(this)
-      img = new Image()
-      img.onerror = ->
-        $this.attr('src', $this.data('fallback-image'))
-      img.src = $this.attr('src')
-
   if ($poller = $("#activities-poller")).length
     unless ActivitiesPoller.initialized
       ActivitiesPoller.init($poller)
@@ -155,7 +147,6 @@ document.addEventListener "turbolinks:load", ->
   # Disable form buttons after submitting them.
   $('form').submit (ev)->
     $('input[type=submit]', this).attr('disabled', 'disabled').val('Processing...')
-
 
   # Search form
   $('#js-search-form-toggle').on 'click', (e)->
@@ -174,3 +165,12 @@ document.addEventListener "turbolinks:load", ->
 
   $('.navbar .btn-search').on 'click', ->
     $('.form-search').submit()
+
+  # Collapsable div in sidebar collections
+  if $('[data-behavior~=collapse-collection]').length
+    $('[data-behavior~=collapse-collection]').click ->
+      $this = $(this)
+      $this.find('[data-behavior~=toggle-chevron]').toggleClass('fa-chevron-down fa-chevron-up')
+
+      if $this.is('[data-behavior~=import-box]')
+        $($this.data('target')).find("input[type='text']:first").focus()

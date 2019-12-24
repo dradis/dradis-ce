@@ -11,6 +11,7 @@ class Evidence < ApplicationRecord
   belongs_to :node, touch: true
   has_many :activities, as: :trackable
 
+  delegate :project, to: :node
 
   # -- Callbacks ------------------------------------------------------------
 
