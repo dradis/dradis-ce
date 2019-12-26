@@ -58,7 +58,7 @@ gem 'html-pipeline'
 
 gem 'kaminari', '~> 1.0.1'
 
-gem 'paper_trail', '~> 6.0'
+gem 'paper_trail', '~> 10.3'
 
 # gem 'rails_autolink', '~> 1.1'
 
