@@ -4,7 +4,8 @@
     <title><%= content_for?(:title) ? yield(:title) : "Dradis Community Edition" %></title>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= favicon_link_tag %>
-    <%= csrf_meta_tag %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
