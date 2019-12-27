@@ -1,5 +1,6 @@
 v3.16 (Mmm'YY)
   * Fix errors on content overwrite flash messages
+  * Upgrade to Rails 5.2.4.1
   * Bugs fixed:
     -
   * Integration enhancements:
@@ -7,7 +8,7 @@ v3.16 (Mmm'YY)
   * REST/JSON API enhancements:
     -
   * Security Fixes:
-    - 
+    -
 
 v3.15 (November 2019)
  - Methodologies v2:
