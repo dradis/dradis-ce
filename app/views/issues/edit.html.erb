@@ -4,6 +4,8 @@
   <%= render 'sidebar'%>
 <% end %>
 
+<%= render 'shared/rtp_field_errors' if @rtp_field_errors %>
+
 <div id="issues_editor">
   <div class="inner note-text-inner">
     <h3>Edit issue</h3>

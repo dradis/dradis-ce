@@ -1,5 +1,7 @@
 <% content_for :title, "Edit evidence for #{@node.label} / #{@evidence.issue.title}" %>
 
+<%= render 'shared/rtp_field_errors' if @rtp_field_errors %>
+
 <div class="inner note-text-inner">
   <h3>Edit evidence</h3>
 
