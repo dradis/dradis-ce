@@ -8,6 +8,8 @@
   <%= render "projects/conflicting_revisions", conflicts: @conflicting_revisions, record: @issue %>
 <% end %>
 
+<%= render 'shared/rtp_field_errors' if @rtp_field_errors %>
+
 <!-- Main content -->
 <ul class="breadcrumb">
   <li><%= link_to 'All issues', project_issues_path(current_project) %> <span class="divider">/</span></li>
