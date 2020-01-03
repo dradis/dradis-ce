@@ -20,7 +20,7 @@
         <% if @results.any? %>
           <%= render partial: 'issue_result', collection: issues_from_import_records(@results), as: :issue %>
         <% else %>
-        <p class="lead">This query yielded no results.</p>
+        <p class="mb-0">This query yielded no results.</p>
         <% end %>
       </div>
     </div>
