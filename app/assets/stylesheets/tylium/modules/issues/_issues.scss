@@ -1,3 +1,17 @@
+body.issues.edit, body.issues.new {
+
+  .tag-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    .btn {
+      background: $primaryBgColor;
+      color: $defaultText;
+    }
+  }
+}
+
 body.issues.index {
 
   .tab-content.outer-tab {
@@ -9,20 +23,6 @@ body.issues.index {
   .tab-pane {
     padding: 1.5rem;
   } 
-}
-
-body.issues.edit, body.issues.new {
-
-  .tag-input {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-
-    .btn {
-      background: #fff;
-      color: $defaultText;
-    }
-  }
 }
 
 body.issues.show {
