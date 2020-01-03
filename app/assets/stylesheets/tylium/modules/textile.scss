@@ -22,6 +22,10 @@
     list-style-type: decimal;
   }
 
+  p:last-child {
+    margin: 0;
+  }
+
   pre {
     background-color: $secondaryBgColor;
     border: 1px solid $borderColor;
@@ -121,6 +125,12 @@
 
     textarea {
       resize: vertical !important;
+    }
+
+    .textile-preview {
+      border: 1px solid $borderColor;
+      border-radius: 4px;
+      padding: 1rem;
     }
   }
 
