@@ -22,6 +22,21 @@
 @import "tylium/modules/uploads";
 @import "tylium/modules/versions";
 
+.accordion-group {
+  margin-bottom: 5px;
+  border: 1px solid $borderColor;
+  border-radius: 5px;
+  
+  .accordion-heading {
+    border-bottom: 0;
+
+    .accordion-toggle {
+      display: block;
+      padding: 8px 15px;
+    }
+  }
+}
+
 .attachment {
   margin: 10px 0;
 }
