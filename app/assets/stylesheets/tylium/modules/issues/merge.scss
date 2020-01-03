@@ -1,17 +1,23 @@
 body.merge.new {
-  // overwrite nav-tabs styles in merging to display the "normal vs textile"
-  // tabs as buttons when we expand an issue in the list
+
+  .accordion-group {
+    margin-bottom: 5px;
+    border: 1px solid $borderColor;
+    border-radius: 5px;
+  }
+
   #issues_editor {
 
-    .nav-tabs {
+    .nav-pills {
       border-bottom: none;
 
-      li a {
+      .nav-link {
         font-size: 0.8em;
+        padding: 0.5rem 0.75rem;
         margin-top: 5px;
         margin-right: 5px;
         line-height: 10px;
-        border: 1px solid #ddd;
+        border: 1px solid $borderColor;
         border-radius: 4px;
       }
     }
@@ -21,32 +27,26 @@ body.merge.new {
     margin-right: 15px;
   }
 
-  .radio {
-    padding-left: 30px;
-    padding-top: 5px;
-    padding-right: 5px;
-  }
+  #preview_issue_new {
 
-  .tab-content {
-    padding: 2ex;
-
-    .content-textile {
-      border: 1px solid #CCC;
-      border-radius: 4px;
-      padding: 2ex;
-
-      h4:first-child {
-        margin-top: 0;
-      }
+    #new_issue {
+      padding: 1rem;
+      border-top: 1px solid $borderColor;
     }
   }
 
-  #preview_issue_new {
-    background-color: white;
+  .radio {
+    padding-left: 10px;
+    padding-top: 5px;
+  }
 
-    #new_issue {
-      padding: 2ex;
-      border-top: 1px solid #eee;
+  .tab-content {
+    padding: 1rem;
+
+    .tab-pane {
+      border: 1px solid $borderColor;
+      border-radius: 4px;
+      padding: 1rem;
     }
   }
 }

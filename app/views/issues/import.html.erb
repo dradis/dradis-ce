@@ -5,31 +5,33 @@
 <% end %>
 
 <!-- Main content -->
-<div id="issue-viewer">
-  <div class="results">
-    <div class="page page-none">
+<div class="content-container">
+  <div id="issue-viewer">
+    <div class="results">
+      <div class="page page-none">
 
-      <div class="header">
-        <div class="header-inner">
-          <h1>Search results</h1>
+        <div class="header">
+          <div class="header-inner">
+            <h4>Search results</h4>
+          </div>
         </div>
-      </div>
 
-      <div id="results-accordion" class="accordion">
-      <% if @results.any? %>
-        <%= render partial: 'issue_result', collection: issues_from_import_records(@results), as: :issue %>
-      <% else %>
-      <p class="lead">This query yielded no results.</p>
-      <% end %>
+        <div id="results-accordion" class="accordion">
+        <% if @results.any? %>
+          <%= render partial: 'issue_result', collection: issues_from_import_records(@results), as: :issue %>
+        <% else %>
+        <p class="lead">This query yielded no results.</p>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
 
-<div id="import_results_content" class="results collapse">
-  <div class="page page-none">
-    <div class="header">
-      <div class="header-inner">
-        <h2>Results</h2>
+  <div id="import_results_content" class="results collapse">
+    <div class="page page-none">
+      <div class="header">
+        <div class="header-inner">
+          <h4>Results</h4>
+        </div>
       </div>
     </div>
   </div>
