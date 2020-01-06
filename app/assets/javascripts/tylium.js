@@ -12,6 +12,8 @@
 //= require local-time
 //= require clipboard
 //= require tribute
+//= require popper
+//= require bootstrap
 
 //= require vendor/stupidtable
 
@@ -51,6 +53,3 @@
 //= require tylium/pages/projects/issues_chart
 //= require tylium/pages/revisions
 //= require tylium/pages/styles
-
-//= require tylium/vendor/popper.min
-//= require tylium/vendor/bootstrap-4.3.1.min
