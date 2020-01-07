@@ -2,7 +2,6 @@
   background: $sidebarActiveColor;
   color: $lightColor;
   border-right: 1px solid $borderColor;
-  height: calc(100vh - 60px);
 
   a {
     color: lighten($lightColor, 20%);
@@ -12,7 +11,6 @@
     }
   }
 
-
   .inner {
     background: $sidebarActiveColor;
     padding: 1rem;
@@ -21,6 +19,7 @@
     overflow: scroll;
     width: 16.3%;
     min-width: 190px;
+    z-index: 2;
 
     @media screen and (max-width: 1199px) {
       width: 24%;
@@ -140,6 +139,10 @@
     
       .summary-link {
         color: $lightColor;
+
+        &:hover {
+          color: $white;
+        }
       }
     }
   }

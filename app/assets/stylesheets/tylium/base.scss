@@ -106,6 +106,7 @@ mark {
     }
   }
 }
+
 .placeholder {
   font-style: italic;
   margin-left: 1rem;
@@ -121,6 +122,7 @@ mark {
 .sticky-top {
   position: sticky !important;
   top: $mainContentMargin;
+  margin-bottom: $mainContentMargin;
 }
 
 .table td {
@@ -141,6 +143,10 @@ mark {
 
 .text-muted {
   color: $mutedText !important;
+}
+
+.text-primary {
+  color: $primaryColor !important;
 }
 
 ul {
