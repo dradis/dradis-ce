@@ -87,6 +87,19 @@ h1, h2, h3, h4, h5, h6 {
 mark {
   background-color: yellow;
 }
+
+.nav-pills {
+
+  .nav-link {
+    transition: all 0s ease-in-out;
+
+    &.active {
+      background-color: $secondaryBgColor;
+      color: $linkColorHover;
+    }
+  }
+}
+
 .placeholder {
   font-style: italic;
   margin-left: 1rem;
@@ -102,6 +115,7 @@ mark {
 .sticky-top {
   position: sticky !important;
   top: $mainContentMargin;
+  margin-bottom: $mainContentMargin;
 }
 
 .table td {
@@ -122,6 +136,10 @@ mark {
 
 .text-muted {
   color: $mutedText !important;
+}
+
+.text-primary {
+  color: $primaryColor !important;
 }
 
 ul {
