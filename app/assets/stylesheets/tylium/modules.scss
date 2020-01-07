@@ -58,6 +58,13 @@
 .gravatar {
   float: left;
   margin-right: 5px;
+
+  &.gravatar-inline {
+    margin: 0 0 -3px 0;
+    float: none;
+    white-space: nowrap;
+  }
+
   img {
     border-radius: 50%;
   }
@@ -93,6 +100,13 @@
   cursor: default;
 }
 
+.nav-tabs {
+
+  .nav-link:hover:not(.active) {
+    border-color: transparent;
+  }
+}
+
 .pagination {
   padding-top: 0.75rem;
   margin-bottom: .75rem;
@@ -110,12 +124,6 @@
   &.page-none {
     margin: 0 0;
     padding: 0px;
-  }
-
-  &.gravatar-inline {
-    margin: 0 0 -3px 0;
-    float: none;
-    white-space: nowrap;
   }
 }
 
@@ -233,8 +241,7 @@ table {
     padding-top: 0.5rem;
 
     li {
-      margin-bottom: .25rem;
-      
+      margin-bottom: .25rem; 
     }
   }
 }

@@ -27,6 +27,14 @@ body.issues.index {
 
 body.issues.show {
 
+  .author-info {
+    display: flex;
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    width: 100%;
+    border-top: 1px solid $borderColor;
+  }
+
   .evidence-content {
     padding-left: 2rem;
 
@@ -38,6 +46,13 @@ body.issues.show {
 
     .tab-content {
       padding: 1rem 0 0 1rem;
+    }
+  }
+
+  .header-underline {
+
+    .actions {
+      font-size: 0.9rem;
     }
   }
 
