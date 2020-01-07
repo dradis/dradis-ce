@@ -59,7 +59,7 @@
   }
 
   .tree-modal-box {
-    border: 1px solid #ccc;
+    border: 1px solid $borderColor;
     padding: 0.5em 1em;
     margin-bottom: 0.5em;
 
@@ -126,7 +126,7 @@
       }
   
       .modal-header h3 span {
-        color: $blue;
+        color: $primaryColor;
       }
     }
   }
