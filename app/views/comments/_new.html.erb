@@ -1,14 +1,18 @@
-<%= form_with model: [current_project, Comment.new(commentable: commentable)], data: { behavior: 'add-comment'} do |f| %>
-  <%= f.label "Add a comment" %>
+<%= form_with model: [current_project, Comment.new(commentable: commentable)], data: { behavior: 'add-comment' }, class: 'mt-3' do |f| %>
+  <div class="row m-0">
+    <%= f.label "Add a comment" %>
+  </div>
+  <div class="row m-0 flex-nowrap">
   <%= avatar_image(current_user, size: 30) %>
   <%= f.text_area :content,
                   placeholder: 'Write your comment...',
                   rows: 5,
                   required: 'required',
+                  class: 'form-control',
                   data: { behavior: 'mentionable' } %>
 
   <%= f.hidden_field :commentable_type %>
   <%= f.hidden_field :commentable_id %>
-
-  <%= f.submit "Add comment", class: "btn btn-primary" %>
+  </div>
+  <%= f.submit "Add comment", class: "btn btn-primary mt-2" %>
 <% end %>
