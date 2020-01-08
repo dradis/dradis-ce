@@ -22,7 +22,7 @@ class Activity < ApplicationRecord
   # -- Scopes ---------------------------------------------------------------
 
   scope :latest, -> do
-    includes(:trackable).order(Arel.sql("`activities`.`created_at` DESC")).limit(10)
+    includes(:trackable).order("activities.created_at DESC").limit(10)
   end
 
   # -- Callbacks ------------------------------------------------------------
