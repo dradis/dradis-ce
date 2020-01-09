@@ -127,6 +127,19 @@
   }
 }
 
+pre {
+  padding: 1rem;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  line-height: 20px;
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  background-color: $secondaryBgColor;
+  border: 1px solid $borderColor;
+  border-radius: 5px;
+}
+
 .restrict-height {
   overflow: scroll;
 
