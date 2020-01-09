@@ -38,6 +38,16 @@
   }
 }
 
+.breadcrumb {
+  margin-bottom: 0;
+  padding-left: $mainContentPadding;
+
+  .breadcrumb-item + .breadcrumb-item::before {
+    font-family: "fontawesome";
+    content: "\f105";
+  }
+}
+
 .page-title {
   margin: 1rem 0 0 $mainContentMargin;
   cursor: default;

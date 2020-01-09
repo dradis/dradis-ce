@@ -1,31 +1,26 @@
 <% if @node %>
-<div class="row-fluid node-header">
-  <div class="span6">
-    <ul class="breadcrumb">
-      <li><a href="javascript:void(0)">Nodes</a> <span class="divider">/</span></li>
-      <%= content_tag :li, class: 'active', data: {node_id: @node.id} do %>
-        <%= @node.label %>
-      <% end -%>
-    </ul>
-  </div>
-  <div class="span6">
-    <ul class="nav nav-pills pull-right">
-      
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-behavior="nodes-more-dropdown"><i class="fa fa-ellipsis-h fa-lg"></i></a>
-        <div class="dropdown-menu pull-right">
-          <a href="#modal_add_child_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-plus"></i> Add subnode</a>
-          <a href="#modal_rename_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-edit"></i> Rename</a>
-          <a href="#modal_move_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-mail-forward"></i> Move</a>
-          <a href="#modal_merge_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-compress"></i> Merge</a>
-          <a href="#modal_delete_node" class="dropdown-item text-error-hover" tabindex="-1" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a>
-        </div>
-      </li>
-    </ul>
-  </div>
+<div class="node-header">
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)">Nodes</a></li>
+      <%= content_tag :li, class: 'breadcrumb-item active', data: { node_id: @node.id } do %><%= @node.label %><% end -%>
+    </ol>
+  </nav>
+  <ul class="nav nav-pills pull-right">
+    <li class="dropdown node-dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-behavior="nodes-more-dropdown"><i class="fa fa-ellipsis-h fa-lg"></i></a>
+      <div class="dropdown-menu pull-right">
+        <a href="#modal_add_child_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-plus"></i> Add subnode</a>
+        <a href="#modal_rename_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-edit"></i> Rename</a>
+        <a href="#modal_move_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-mail-forward"></i> Move</a>
+        <a href="#modal_merge_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-compress"></i> Merge</a>
+        <a href="#modal_delete_node" class="dropdown-item text-error-hover" tabindex="-1" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a>
+      </div>
+    </li>
+  </ul>
 </div>
 <% end %>
 
-<% if content_for?(:breadcrums) %>
-<%= yield(:breadcrums) %>
+<% if content_for?(:breadcrumbs) %>
+  <%= yield(:breadcrumbs) %>
 <% end %>

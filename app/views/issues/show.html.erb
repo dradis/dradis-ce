@@ -8,11 +8,13 @@
   <%= render "projects/conflicting_revisions", conflicts: @conflicting_revisions, record: @issue %>
 <% end %>
 
-<% content_for :breadcrums do %>
-  <ul class="breadcrumb">
-    <li><%= link_to 'All issues', project_issues_path(current_project) %> <span class="divider">/</span></li>
-    <li class="active"><%= (@issue.title? ? @issue.title : "Issue ##{@issue.id}")%></li>
-  </ul>
+<% content_for :breadcrumbs do %>
+<nav>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to 'All issues', project_issues_path(current_project) %></li>
+    <li class="breadcrumb-item active"><%= (@issue.title? ? @issue.title : "Issue ##{@issue.id}")%></li>
+  </ol>
+</nav>
 <% end %>
 
 <!-- Main content -->

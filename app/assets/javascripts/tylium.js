@@ -21,7 +21,7 @@
 //= require shared/console_updater
 //= require shared/items_table
 
-//= require tylium/plugins/jquery.breadcrums
+//= require tylium/plugins/jquery.breadcrumbs
 //= require tylium/plugins/jquery.treemodal
 //= require tylium/plugins/jquery.treenav
 

@@ -52,7 +52,7 @@
         <% else %>
           <div class="col-12 p-0">
             <%= render "layouts/tylium/project_teaser" %>
-            <%= yield(:breadcrumbs) if content_for?(:breadcrumbs) %>
+            <%= render "layouts/tylium/breadcrumb" %>
             <% if content_for?(:title) %>
               <h3 class="page-title"><%= yield(:title) %></h3>
             <% end %>

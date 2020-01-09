@@ -1,11 +1,11 @@
-# jQuery.breadcrums
+# jQuery.breadcrumbs
 #
 # This plugin reads the node ancestors from the tree and outputs them on the
-# breadcrums div.
+# breadcrumbs div.
 
 do ($ = jQuery, window, document) ->
 
-  pluginName = "breadcrums"
+  pluginName = "breadcrumbs"
   defaults =
     property: "value"
 
@@ -27,7 +27,7 @@ do ($ = jQuery, window, document) ->
       $parent = $(element)
       parent_label = $parent.data('label')
       parent_href = $parent.data('url')
-      $new_li = $("<li><a href=\"#{parent_href}\"></a> <span class=\"divider\">/</span></li>")
+      $new_li = $("<li class='breadcrumb-item'><a href=\"#{parent_href}\"></a></li>")
         .insertAfter(@$el.find('li:first'))
       $new_li.find('a:last').text(parent_label)
 
