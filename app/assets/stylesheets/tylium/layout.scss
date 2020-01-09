@@ -61,5 +61,9 @@
     background-color: $primaryBgColor;
     border: 1px solid $borderColor;
     border-radius: 5px;
+
+    p:last-child {
+      margin-bottom: 0;
+    }
   }
 }

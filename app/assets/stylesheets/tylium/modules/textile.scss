@@ -1,6 +1,7 @@
 @import "jquery.textile";
 
 .content-textile, .textile-preview {
+  overflow-wrap: break-word;
 
   em {
     font-style: italic;

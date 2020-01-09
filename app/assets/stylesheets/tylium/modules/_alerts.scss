@@ -1,6 +1,6 @@
 .alert {
   padding: 1rem;
-  margin: $mainContentMargin;
+  margin: $mainContentMargin $mainContentMargin 1rem $mainContentMargin;
   border: 1px solid #ddd;
   
   .close {
