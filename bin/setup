@@ -35,6 +35,10 @@ chdir APP_ROOT do
     cp 'config/secrets.yml.template', 'config/secrets.yml'
   end
 
+  unless File.exist?('config/smtp.yml')
+    cp 'config/smtp.yml.template', 'config/smtp.yml'
+  end
+
   puts "\n== Preparing database =="
   system! 'bin/rails db:setup'
 

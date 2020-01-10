@@ -65,7 +65,7 @@ describe 'merging a node', js: true do
   end
 
   it 'moves children to target node' do
-    child_node = create(:node, parent: source_node)
+    child_node = create(:node, parent: source_node, project: source_node.project)
 
     within_merge_node_modal do
       click_link(target_node.label)

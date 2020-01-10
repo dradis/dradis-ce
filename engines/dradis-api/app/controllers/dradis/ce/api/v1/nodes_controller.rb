@@ -1,6 +1,8 @@
 module Dradis::CE::API
   module V1
-    class NodesController < Dradis::CE::API::V1::ProjectScopedController
+    class NodesController < Dradis::CE::API::APIController
+      include ActivityTracking
+      include Dradis::CE::API::ProjectScoped
 
       def index
         @nodes = current_project.nodes.user_nodes.includes(:evidence, :notes, evidence: [:issue]).order('updated_at desc')

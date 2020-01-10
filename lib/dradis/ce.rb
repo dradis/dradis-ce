@@ -9,5 +9,7 @@ module Dradis
 end
 
 require 'html/pipeline/dradis_code_highlight_filter'
+require 'html/pipeline/dradis_comment_filter'
 require 'html/pipeline/dradis_fieldable_filter'
+require 'html/pipeline/dradis_mentions_filter'
 require 'html/pipeline/dradis_textile_filter'

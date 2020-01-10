@@ -5,7 +5,7 @@ describe "API" do
 
     include_context "project scoped API"
     include_context "https"
-    include_context "authenticated API user"
+    include_context "authorized API user"
 
     before do
       # To get the 'renders as HTML' test to work, we need to make show

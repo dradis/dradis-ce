@@ -12,6 +12,20 @@ class Project
   end
 
   # -- Instance Methods -----------------------------------------------------
+  # Compare Project instances using the ID attribute
+  def eql?(item)
+    if item.is_a?(Project)
+      self.id == item.id
+    else
+      false
+    end
+  end
+
+  # Override Object's #hash method to better compare Project instances
+  def hash
+    self.id
+  end
+
   def authors
     User.all
   end
@@ -22,6 +36,10 @@ class Project
   end
 
   def persisted?; true; end
+
+  def activities
+    Activity.all
+  end
 
   def boards
     Board.all
@@ -53,6 +71,10 @@ class Project
 
   def tags
     Tag.all
+  end
+
+  def testers_for_mentions
+    User.all
   end
 
   # Returns or creates the Node that acts as container for all Methodologies in
