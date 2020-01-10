@@ -68,7 +68,11 @@
     <!-- All modals go here -->
     <%= render 'layouts/tylium/modals' %>
     <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
-    
+
+    <% if @boards %>
+      <%= render 'boards/modals/new_board_form' unless  request.xhr? %>
+    <% end %>
+
     <% if @node %>
       <%= render partial: 'nodes/modals/add_node', locals: { type: :child } %>
       <%= render partial: 'nodes/modals/delete' %>

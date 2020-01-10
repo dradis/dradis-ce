@@ -21,41 +21,38 @@
         </div>
 
         <div class="modal-body">
-          <div class="radio">
-            <label>
-              <%= radio_button_tag( "use_template", "no", true) %>
-              Blank methodology
-            </label>
+          <div class="custom-control custom-radio">
+            <%= radio_button_tag( "use_template", "no", true, { :class => 'custom-control-input' }) %>
+            <label class="custom-control-label" for="use_template_no">Blank methodology</label>
           </div>
 
-          <div class="radio">
+          <div class="custom-control custom-radio">
             <% @templates ||= [] %>
-            <label class="<%= @templates.empty? ? "muted" : "" %>">
-              <%= radio_button_tag("use_template", "yes", false,
-                  {disabled: @templates.empty?}) %>
+            <%= radio_button_tag("use_template", "yes", false, { disabled: @templates.empty?, :class => 'custom-control-input' }) %>
+            <label class="custom-control-label <%= @templates.empty? ? "text-muted" : "" %>" for="use_template_yes">
               From template
               <% if @templates.any? %>
                 <div>
-                  <%= select_tag "template",
-                      options_from_collection_for_select(@templates, :id, :name) %>
+                  <%= select_tag "template", options_from_collection_for_select(@templates, :id, :name), class: 'my-1 custom-select' %>
                 </div>
               <% else %>
-                <p>
+                <p class="mb-0">
                   No methodology templates defined<br>
                   Log in as admin: Templates > Methodologies
                 </p>
               <% end %>
               <a href="http://dradisframework.org/academy/industry/compliance/"
                 target="_blank">
-                Download more
+                Download more templates
               </a>
-
             </label>
           </div>
 
           <hr>
-
-          <%= f.input :name, required: true %>
+          <div class="form-group">
+            <label>Name</label>
+            <%= text_field_tag :name, nil, required: true, data: { behavior: 'new-board-name' }, class: 'form-control string', name: 'board[name]' %>
+          </div>
         </div>
 
         <div class="modal-footer">
