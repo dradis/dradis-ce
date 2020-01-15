@@ -22,12 +22,16 @@ a {
   }
 }
 
+.actions {
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
 .badge {
 
   &.bg-primary {
     background-color: $primaryColor !important;
   }
-}
 
 @mixin button($color) {
   border: 0px none;
@@ -69,12 +73,13 @@ button:focus {
   box-shadow: none !important;
 }
 
-.custom-select {
-  font-size: inherit;
-}
-
 .dropdown-toggle::after {
   display: none;
+}
+
+.form-actions {
+  padding-top: 1rem;
+  border-top: 1px solid $borderColor;
 }
 
 .form-control {
@@ -83,6 +88,20 @@ button:focus {
   &:focus {
     border-color: $darkColor;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px $darkColor;
+  }
+}
+
+.form-group {
+
+  select {
+
+    &:first-child {
+      margin-left: 0 !important;
+    }
+
+    &:last-child {
+      margin-right: 0 !important;
+    }
   }
 }
 
