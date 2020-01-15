@@ -33,7 +33,7 @@
               From template
               <% if @templates.any? %>
                 <div>
-                  <%= select_tag "template", options_from_collection_for_select(@templates, :id, :name), class: 'my-1 custom-select' %>
+                  <%= select_tag "template", options_from_collection_for_select(@templates, :id, :name), class: 'my-1 form-control' %>
                 </div>
               <% else %>
                 <p class="mb-0">

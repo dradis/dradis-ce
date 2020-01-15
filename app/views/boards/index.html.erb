@@ -18,7 +18,9 @@
   <ul class="board-list">
 
     <% @boards.each do |board| %>
-      <%= render partial: 'boards/modals/board_rename_form', locals: { board: board } %>
+      <% content_for :board_rename_modal do %>
+        <%= render partial: 'boards/modals/board_rename_form', locals: { board: board } %>
+      <% end %>
 
       <li class="board-list-item" data-board-id="<%= board.id %>">
         <%= link_to main_app.project_board_path(current_project, board), class: 'board-tile' do %>
@@ -49,7 +51,7 @@
       </li>
     <% end %>
 
-    <li class="board-list-item new-board">
+    <li class="board-list-item">
       <a
         class="board-tile board-new js-board-modal"
         data-toggle="modal"

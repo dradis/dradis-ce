@@ -12,8 +12,7 @@
         data: { preview_url: preview_path, help_url: markup_path }
       }
   %>
-
-  <hr>
+  
   <%=
     f.association(
       :assignees,
@@ -27,8 +26,6 @@
       boolean_style: :inline
     )
   %>
-  <hr>
-
 
   <div class="form-actions">
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
