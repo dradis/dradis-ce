@@ -10,7 +10,7 @@
         <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, id: 'new_upload', data: { parse_url: project_upload_parse_path(current_project) } do %>
           <div class="form-group mb-5">
             <h5>1. Choose a tool</h5>
-            <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { :class => 'custom-select' } %>
+            <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { :class => 'form-control' } %>
           </div>
           <div class="form-group">
             <h5>2. Choose a file</h5>
