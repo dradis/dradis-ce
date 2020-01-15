@@ -32,6 +32,7 @@ a {
   &.bg-primary {
     background-color: $primaryColor !important;
   }
+}
 
 @mixin button($color) {
   border: 0px none;
