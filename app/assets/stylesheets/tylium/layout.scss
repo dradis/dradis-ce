@@ -72,6 +72,10 @@
     border: 1px solid $borderColor;
     border-radius: 5px;
 
+    .alert {
+      margin: 1rem 0;
+    }
+
     p:last-child {
       margin-bottom: 0;
     }
