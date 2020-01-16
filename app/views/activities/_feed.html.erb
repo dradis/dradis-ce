@@ -1,5 +1,5 @@
 <div class="activity-feed">
-  <% if !activities.any? %>
+  <% if activities.any? %>
     <% activities.each do |activity| %>
       <% present activity do |activity_presenter| %>
         <%= div_for activity do %>
