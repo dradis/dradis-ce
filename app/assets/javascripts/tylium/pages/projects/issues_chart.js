@@ -3,12 +3,9 @@ document.addEventListener('turbolinks:load', function(){
       $chartElement = $('#issue-chart');
 
   if ($dataElement.length && $chartElement.find('svg').length == 0) {
-    var divWidth = $('#issue-chart').width();
-    var leftMargin = (divWidth - 400)/3
-
-    var margin = {top: 20, right: 20, bottom: 30, left: 40},
-      width = 400 - margin.left - margin.right,
-      height = 200 - margin.top - margin.bottom;
+    var margin = {top: 20, bottom: 30},
+        width = 354;
+        height = 180 - margin.top - margin.bottom;
 
     var x = d3.scaleBand().rangeRound([0, width]);
 
@@ -18,17 +15,11 @@ document.addEventListener('turbolinks:load', function(){
     var xAxis = d3.axisBottom(x)
         .tickSize(0);
 
-    var yAxis = d3.axisLeft(y)
-        .tickSize(1, 1)
-        .tickFormat(d3.format('.0f'))
-        .ticks(2);
-        // .tickValues([1, 3, 4]);
-
     var svg = d3.select('#issue-chart').append('svg')
-        .attr('width', width + margin.left + margin.right)
+        .attr('width', width)
         .attr('height', height + margin.top + margin.bottom)
       .append('g')
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+        .attr('transform', 'translate(0,' + margin.top + ')');
 
     // --------------------------------------------------------- Data variables
     var tags        = $dataElement.data('tags');
@@ -49,11 +40,8 @@ document.addEventListener('turbolinks:load', function(){
     var highest_y = Math.max(highest, issuesByTag['unassigned']);
     // -------------------------------------------------------- /Data variables
 
-
-    // x.domain(['High', 'Medium', 'Low']);
     x.domain(x_domain);
 
-    // y.domain([0, 5]);
     y.domain([0, highest_y]);
 
     d3.selection.prototype.last = function() {
@@ -70,16 +58,11 @@ document.addEventListener('turbolinks:load', function(){
     x_axis.selectAll("path").style("stroke", "none");
     x_axis.selectAll("text").last().style("fill", "#000");
 
-    // svg.append('g')
-    //     .attr('class', 'y axis')
-    //     .call(yAxis)
-
     var bars = svg.append('g');
 
     bars.selectAll('rect')
         .data(data)
       .enter().append('rect')
-        // .attr('class', function(d){ return 'bar-' + d.letter; } )
         .attr('class', 'bar' )
         .attr('x', function(d) { return x(d.letter); })
         .attr('width', x.bandwidth())

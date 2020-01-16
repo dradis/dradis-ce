@@ -1,27 +1,24 @@
 <div class="activity-feed">
-  <% if activities.any? %>
+  <% if !activities.any? %>
     <% activities.each do |activity| %>
       <% present activity do |activity_presenter| %>
         <%= div_for activity do %>
+          <div class="details">
+            <%= activity_presenter.avatar_with_link(35) %>
+          </div>
           <div class="body">
-            <%= activity_presenter.icon %>
-
-            <div class="time">
-              <%= activity_presenter.created_at_ago %>
-            </div>
-
             <div class="title">
               <%= activity_presenter.render_title %>
             </div>
-
-            <div class="details">
-              <%= activity_presenter.avatar_with_link(30) %>
+            <div class="time">
+              <%= activity_presenter.created_at_ago %>
             </div>
           </div>
+          <%= activity_presenter.icon %>
         <% end %>
       <% end %>
     <% end %>
   <% else %>
-    <p>There has been no activity yet.</p>
+    <p class="mb-0">There has been no activity yet.</p>
   <% end %>
 </div>
