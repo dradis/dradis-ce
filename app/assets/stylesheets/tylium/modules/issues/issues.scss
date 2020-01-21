@@ -1,0 +1,76 @@
+body.issues.show {
+  .evidence-content {
+    padding-left: 2em;
+
+    .evidence-for-host {
+      margin: 0.5em 0 2.5em;
+
+      .content-textile {
+        border-left: 6px solid #ddd;
+        margin-left: 1em;
+        padding-left: 1em;
+      }
+    }
+
+    .tabs-left > .nav-tabs > li > a {
+      min-width: auto;
+    }
+    .tab-content {
+      padding: 1em 0 0 2em;
+    }
+  }
+
+  #js-add-evidence-container{
+    display: none;
+
+    .tooltip {
+      ul {
+        list-style: disc;
+        padding-left: 3ex;
+        text-align: left;
+
+        li {
+          margin-bottom: 1ex;
+        }
+      }
+    }
+
+    #existing-node-list {
+      border: 1px solid #ddd;
+      height: 200px;
+      overflow-y: scroll;
+      padding: 1ex;
+    }
+  }
+}
+
+body.issues.index {
+
+  .add-issues {
+    margin-top: 2em;
+  }
+
+  .tab-content.outer-tab {
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+  }
+
+  .tab-pane {
+    padding: 1.5rem;
+  } 
+}
+
+body.issues.new, body.issues.edit {
+
+  .tag-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    .btn {
+      background: #fff;
+      color: $defaultText;
+    }
+  }
+}

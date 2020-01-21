@@ -1,2 +1,2 @@
 //= require jquery
-//= require bootstrap
+//= require tylium/vendor/bootstrap-4.3.1.min

@@ -1,21 +1,22 @@
-<h1>This project doesn't have any issues yet</h1>
-<p class="lead">Here are some ways to add new issues:</p>
+<h4 class="mb-3">This project doesn't have any issues yet</h4>
 
 <div class="add-issues">
-  <h3>1. Add manual finding</h3>
+  <h5>1. Add manual finding</h5>
   <p>
     Just click on the <i class="fa fa-plus"></i> sign next to the
-    <strong>Issues</strong> heading in the sidebar.
+    <strong>ISSUES</strong> heading in the sidebar.
   </p>
 </div>
+
 <div class="add-issues">
-  <h3>2. Upload scanner output</h3>
+  <h5>2. Upload scanner output</h5>
   <p>
     Use the <%= link_to main_app.project_upload_manager_path(current_project) do %>
       <i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool
     <% end %> link at the top of the page.
   </p>
 </div>
+
 <div class="add-issues">
   <%= render 'issues/empty_import_ce' %>
 </div>

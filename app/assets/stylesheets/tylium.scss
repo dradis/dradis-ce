@@ -1,0 +1,21 @@
+// vendor stylesheets
+@import "tylium/vendor/bootstrap-4.3.1.min.css";
+@import 'font-awesome-sprockets';
+@import "font-awesome";
+@import "jquery.fileupload-ui";
+
+// theme-level variables
+@import "tylium/variables";
+
+// shared styles
+@import "shared/items_table";
+@import "shared/mixins";
+
+// styles for base HTML elements like body, h1, etc.
+@import "tylium/base";
+
+// styles for managing the layout in the screen (columns, floats, etc.)
+@import "tylium/layout";
+
+// specific styles for the different views
+@import "tylium/modules";

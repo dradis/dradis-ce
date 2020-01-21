@@ -4,7 +4,7 @@
   <%= render "nodes/sidebar" %>
 <% end %>
 
-<div id="diff" class="container-fluid inner">
+<div id="diff" class="container-fluid">
   <h2>
     <%= @record.class.model_name %>
     #<%= @record.id %> - view changes at <%= @diffed_revision.updated_at %>
@@ -56,7 +56,7 @@
 </div><!-- #diff -->
 
 <div id="<%= dom_id(@record) %>_revisions"
-      class="revisions-table inner note-text-inner">
+      class="revisions-table note-text-inner">
   <h3>Revision History</h3>
 
   <table class="table">

@@ -11,7 +11,7 @@
     }
 
     #merge-selected {
-      display: none; // even when issue-actions becomes visible, keep this one hidden
+      display: none;
     }
   }
 
@@ -32,7 +32,6 @@
   overflow: scroll;
 
   .items-table {
-    
     td.loading {
       background: image-url('loading.gif') no-repeat left center;
       padding-left: 20px;
@@ -79,9 +78,8 @@
     }
 
     .column-checkbox {
-      padding: 0;
+      padding: 0.4rem 0 0 0.5rem;
       text-align: center;
-      vertical-align: middle;
       width: 36px;
 
       input {
@@ -90,7 +88,10 @@
     }
 
     tr:hover {
-      .column-actions a { visibility: visible; }
+
+      .column-actions a { 
+        visibility: visible; 
+      }
     }
   }
 }

@@ -12,51 +12,52 @@
           <% end %>
         </div>
       </div>
-      <h3>Attachments</h3>
+      <h5 class="header-underline">Attachments</h5>
     </div>
   </div>
 
-  <div class="in collapse" id="attachment-box">
+  <div class="collapse show" id="attachment-box">
     <!-- The table listing the files available for upload/download -->
-    <table class="table">
+    <table>
       <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery">
         <% if node.attachments.any? %>
           <% for attachment in node.attachments do %>
-        <tr class="template-download">
-          <td class="name" colspan="4">
-            <div>
-              <%= link_to project_node_attachment_path(node.project, node, attachment.filename), download: attachment.filename, title: attachment.filename do %>
-              <i class="fa fa-paperclip"></i> <%= short_filename(attachment.filename) %>
-              <% end %>
-
-              <span class="pull-right">
-                <span class="size">
-                  <small><%= number_to_human_size(File.size(attachment)) %></small>
-                </span>
-
-                <span class="delete">
-                  <button
-                    class="btn btn-transparent btn-danger"
-                    data-type="DELETE"
-                    data-url="<%= project_node_attachment_path(node.project, node, attachment.filename) %>"
-                  >
-                    <i class="fa fa-trash"></i>
-                  </button>
-                </span>
-
-                <button
-                  class="btn btn-transparent js-attachment-url-copy"
-                  data-clipboard-text="!<%= project_node_attachment_path(node.project, node, attachment.filename) %>!"
-                >
-                  <i class="fa fa-link"></i>
-                </button>
-              </span>
-            </div>
-          </td>
-        </tr>
+            <tr class="template-download">
+              <td colspan="4">
+                <table>
+                  <tr>
+                    <td class="name">
+                      <%= link_to project_node_attachment_path(node.project, node, attachment.filename), download: attachment.filename, title: attachment.filename, class: 'filename' do %>
+                      <i class="fa fa-paperclip"></i> <%= short_filename(attachment.filename) %>
+                      <% end %>
+                    </td>
+                    <td rowspan="2" align="right" class="delete">
+                      <button
+                        class="btn btn-trash btn-transparent"
+                        data-type="DELETE"
+                        data-url="<%= project_node_attachment_path(node.project, node, attachment.filename) %>"
+                      >
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </td>
+                    <td rowspan="2" align="right" class="copy-link">
+                      <button
+                        class="btn btn-copy btn-transparent js-attachment-url-copy"
+                        data-clipboard-text="!<%= project_node_attachment_path(node.project, node, attachment.filename) %>!"
+                      >
+                        <i class="fa fa-link"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="size">
+                      <span><%= number_to_human_size(File.size(attachment)) %></span>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
           <% end %>
-        <% else %>
-          <%# display some sort of Nothing yet message %>
         <% end %>
       </tbody>
     </table>
@@ -67,30 +68,23 @@
     <%= form_tag project_node_attachments_path(node.project, node, format: :json), id: 'fileupload', multipart: true do %>
 
       <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-      <div class="row-fluid fileupload-buttonbar">
-        <div class="span8">
-          <!-- The fileinput-button span is used to style the file input field as button -->
-          <span class="btn btn-success fileinput-button" data-toggle="tooltip" data-placement="bottom" title="Add...">
-            <i class="fa fa-plus fa-inverse"></i>
-            <span></span>
-            <input type="file" name="files[]" multiple>
-          </span>
-          <button type="submit" class="btn btn-primary start" data-toggle="tooltip" data-placement="bottom" title="Start">
-            <i class="fa fa-upload fa-inverse"></i>
-            <span></span>
-          </button>
-          <button type="reset" class="btn btn-warning cancel" data-toggle="tooltip" data-placement="bottom" title="Cancel">
-            <i class="fa fa-ban fa-inverse"></i>
-            <span></span>
-          </button>
-        </div>
+      <div class="fileupload-buttonbar">
+ 
+        <!-- The fileinput-button span is used to style the file input field as button -->
+        <span class="btn btn-primary fileinput-button" data-toggle="tooltip" data-placement="bottom" title="Add...">
+          <i class="fa fa-plus fa-inverse"></i>
+          <span></span>
+          <input type="file" name="files[]" multiple>
+        </span>
+        <button type="submit" class="btn btn-success start" data-toggle="tooltip" data-placement="bottom" title="Start">
+          <i class="fa fa-upload fa-inverse"></i>
+          <span></span>
+        </button>
+        <button type="reset" class="btn btn-warning cancel" data-toggle="tooltip" data-placement="bottom" title="Cancel">
+          <i class="fa fa-ban fa-inverse"></i>
+          <span></span>
+        </button>
 
-        <div class="span4">
-          <!-- The global progress bar -->
-          <div class="progress progress-success progress-striped active fade">
-            <div class="bar" style="width:0%;"></div>
-          </div>
-        </div>
       </div>
       <!-- The loading indicator is shown during image processing -->
       <div class="fileupload-loading"></div>
@@ -99,92 +93,100 @@
 
 </div>
 
-
-
 <!-- The template to display files available for upload -->
 <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-upload fade">
-        <!-- <td class="preview"><span class="fade"></span></td> -->
-        <td class="name"><span>{%= file.name %}</span></td>
-        <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
-        {% if (file.error) { %}
-            <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
-        {% } else if (o.files.valid && !i) { %}
-            <td>
-                <div class="progress progress-success progress-striped active"><div class="bar" style="width:0%;"></div></div>
-            </td>
-            <td class="start">{% if (!o.options.autoUpload) { %}
-                <button class="btn btn-primary">
-                    <i class="fa fa-upload"></i>
-                    <span>{%locale.fileupload.start%}</span>
-                </button>
+    <tr class="template-upload fade show">
+      <td colspan="4">
+        <table>
+          <tr>
+            <td class="name">{%= file.name %}</td>
+            {% if (file.error) { %}
+              <td rowspan="2" class="error" colspan="2"><span>{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
+            {% } else if (o.files.valid && !i) { %}
+              <td rowspan="2" align="right" class="start">{% if (!o.options.autoUpload) { %}
+                  <button class="btn btn-success">
+                      <i class="fa fa-upload"></i>
+                      <span>{%locale.fileupload.start%}</span>
+                  </button>
+              {% } %}</td>
+            {% } else { %}
+              <td rowspan="2" colspan="2"></td>
+            {% } %}
+            <td rowspan="2" align="right" class="cancel">{% if (!i) { %}
+              <button class="btn btn-warning">
+                  <i class="fa fa-ban fa-inverse"></i>
+                  <span>{%locale.fileupload.cancel%}</span>
+              </button>
             {% } %}</td>
-        {% } else { %}
-            <td colspan="2"></td>
-        {% } %}
-        <td class="cancel">{% if (!i) { %}
-            <button class="btn btn-warning">
-                <i class="fa fa-ban"></i>
-                <span>{%locale.fileupload.cancel%}</span>
-            </button>
-        {% } %}</td>
+          </tr>
+          <tr>
+            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              <div class="progress" id="progress">
+                <div class="bar progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar"></div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td>
     </tr>
 {% } %}
 </script>
 <!-- The template to display files available for download -->
 <script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-download fade">
-        {% if (file.error) { %}
-            <!-- <td></td> -->
-            <td class="name"><span>{%=file.name%}</span></td>
-            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
-            <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
-            <td class="delete">
-                <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}">
-                    <i class="fa fa-trash"></i>
-                    <span>{%locale.fileupload.destroy%}</span>
-                </button>
-                <input type="checkbox" name="delete" value="1">
-            </td>
-
-        {% } else { %}
-            <td class="name" colspan="4">
-              <div>
-                <a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}">
-                  <i class="fa fa-paperclip"></i>
-                  {% if (file.name.length > 20) { %}
-                  {%= file.name.substring(0,20) + '...' %}
-                  {% } else { %}
-                  {%= file.name %}
-                  {% } %}
-                </a>
-                <span class="pull-right">
-                  <span class="size">
-                    <small>{%=o.formatFileSize(file.size)%}</small>
-                  </span>
-
-                  <span class="delete">
-                    <button
-                      class="btn btn-transparent btn-danger"
-                      data-type="{%=file.delete_type%}"
-                      data-url="{%=file.delete_url%}"
-                    >
+    <tr class="template-download fade show">
+      <td colspan="4">
+        <table>
+          <tr>
+            {% if (file.error) { %}
+              <td class="name"><span>{%=file.name%}</span></td>
+              <td class="error w-100"><span>{%=locale.fileupload.error%}:</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
+              <td rowpan="2" class="delete">
+                  <button class="btn btn-trash btn-transparent" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}">
                       <i class="fa fa-trash"></i>
-                    </button>
-                  </span>
-
-                  <button
-                    class="btn btn-transparent js-attachment-url-copy"
-                    data-clipboard-text="!{%= file.url %}!"
-                  >
-                    <i class="fa fa-link"></i>
+                      <span>{%locale.fileupload.destroy%}</span>
                   </button>
-                </span>
-              </div>
+                  <input type="checkbox" name="delete" value="1">
+              </td>
+
+            {% } else { %}
+              <td class="name">
+                <a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}" class="filename">
+                  <i class="fa fa-paperclip"></i>
+                  {%= file.name %}
+                </a>
+              </td>
+
+              <td rowspan="2" align="right" class="delete">
+                <button
+                  class="btn btn-trash btn-transparent"
+                  data-type="{%=file.delete_type%}"
+                  data-url="{%=file.delete_url%}"
+                >
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+              <td rowspan="2" align="right" class="copy-link">
+                <button
+                  class="btn btn-copy btn-transparent js-attachment-url-copy"
+                  data-clipboard-text="!{%= file.url %}!"
+                >
+                  <i class="fa fa-link"></i>
+                </button>
+              </td>
+            {% } %}
+          </tr>
+          <tr>
+            <td class="size">
+              <span>{%=o.formatFileSize(file.size)%}</span>
             </td>
-        {% } %}
+          </tr>
+        </table>
+      </td>
     </tr>
 {% } %}
 </script>

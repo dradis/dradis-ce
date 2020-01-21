@@ -1,9 +1,9 @@
 class ProjectsController < AuthenticatedController
   before_action :set_project
 
-  helper        :snowcrash
+  helper        :tylium
   helper_method :current_project
-  layout        'snowcrash'
+  layout        'tylium'
 
   def index
     redirect_to project_path(current_project)

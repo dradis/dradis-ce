@@ -54,8 +54,6 @@ GEM
     bcrypt (3.1.12)
     bindex (0.5.0)
     blankslate (3.1.3)
-    bootstrap-sass (2.3.2.2)
-      sass (~> 3.2)
     brakeman (4.3.1)
     builder (3.2.3)
     bullet (5.8.1)
@@ -145,18 +143,18 @@ GEM
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
     json (1.8.6)
-    kaminari (1.0.1)
+    kaminari (1.1.1)
       activesupport (>= 4.1.0)
-      kaminari-actionview (= 1.0.1)
-      kaminari-activerecord (= 1.0.1)
-      kaminari-core (= 1.0.1)
-    kaminari-actionview (1.0.1)
+      kaminari-actionview (= 1.1.1)
+      kaminari-activerecord (= 1.1.1)
+      kaminari-core (= 1.1.1)
+    kaminari-actionview (1.1.1)
       actionview
-      kaminari-core (= 1.0.1)
-    kaminari-activerecord (1.0.1)
+      kaminari-core (= 1.1.1)
+    kaminari-activerecord (1.1.1)
       activerecord
-      kaminari-core (= 1.0.1)
-    kaminari-core (1.0.1)
+      kaminari-core (= 1.1.1)
+    kaminari-core (1.1.1)
     kgio (2.11.2)
     launchy (2.4.3)
       addressable (~> 2.3)
@@ -381,7 +379,6 @@ DEPENDENCIES
   RedCloth (~> 4.3.2)
   acts_as_tree (~> 2.7.1)
   bcrypt (= 3.1.12)
-  bootstrap-sass (~> 2.3.2.2)
   brakeman
   builder
   bullet
@@ -407,7 +404,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   json (= 1.8.6)
-  kaminari (~> 1.0.1)
+  kaminari (~> 1.1.1)
   letter_opener
   listen (>= 3.0.5, < 3.2)
   local_time (>= 2.0.0)

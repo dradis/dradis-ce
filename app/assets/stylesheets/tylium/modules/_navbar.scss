@@ -1,0 +1,169 @@
+.navbar {
+  background-color: $navbarBackground;
+  height: $navbarHeight;
+  border-bottom: 1px solid $borderColor;
+  z-index: 3;
+
+  .navbar-brand {
+    color: $defaultText;
+    margin-left: 3.7rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: calc(100% - 350px);
+
+    &:hover {
+      color: $defaultText;
+    }
+
+    @media screen and (min-width: 992px) {
+      max-width: calc(100% - 780px);
+    }
+  }
+
+  .navbar-toggler {
+    position: relative;
+    margin-left: auto;
+    margin-right: 0.2rem;
+    border: 1px solid $borderColor;
+    border-radius: 50px;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    background-color: $activeFillColor;
+    color: $linkColorHover;
+    outline: none;
+
+    .navbar-toggler-icon {
+      background-image: none;
+      position: absolute;
+      top: 10px;
+      left: 0.25rem;
+    }
+
+    &.collapsed {
+      background-color: transparent;
+
+      .navbar-toggler-icon {
+        color: $linkColor
+      }
+    
+      &:hover {
+        background-color: $activeFillColor;
+
+        .navbar-toggler-icon {
+          color: $linkColorHover;
+        }
+      }
+    } 
+  }
+
+  .navbar-collapse {
+
+    &.collapsing {
+      transition: none;
+      display: none;
+    }
+
+    &.show {
+
+      @media screen and (max-width: 991px) { 
+        position: absolute;
+        background: white;
+        top: 100%;
+        right: 0%;
+        display: flex;
+        flex-direction: column;
+        
+        .navbar-nav {
+          flex-direction: column;
+          align-items: flex-start;
+          padding: .25rem 0;
+          border: 1px solid $borderColor;
+
+          .nav-item {
+            width: 100%;
+
+            .nav-link {
+              padding: .25rem 1.5rem;
+              font-size: 0.9rem;
+              color: $defaultText;
+              transition: color 0s;
+    
+              &:hover {
+                background-color: $primaryColor;
+                color: white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .navbar-nav {
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    float: right;
+
+    .nav-item {
+      font-size: 0.9rem;
+      transition: all 0.2s ease-in-out;
+
+      .dropdown-menu {
+        border-radius: 0 0 0 .5rem;
+      }
+
+      &.round {
+        border: 1px solid $borderColor;
+        border-radius: 50px;
+        height: 40px;
+        width: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 0.2rem;
+        cursor: pointer;
+
+        .dropdown-menu {
+          cursor: default;
+        }
+
+        .nav-link {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &:hover,
+        &.show {
+          background-color: $activeFillColor;
+
+          .nav-link {
+            color: $linkColorHover;
+          }
+        }
+
+        &.search {
+          width: auto;
+          border: none;
+        }
+      }
+
+      .nav-link {
+        color: $linkColor;
+
+        &:hover {
+          color: $linkColorHover;
+        }
+      }
+    }
+  }
+}

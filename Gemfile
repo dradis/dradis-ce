@@ -31,7 +31,6 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
 # ---------------------------------------------------- Dradis Community Edition
-gem 'bootstrap-sass', '~> 2.3.2.2'
 gem 'font-awesome-sass', '~> 4.7.0'
 
 gem 'jquery-rails'
@@ -50,7 +49,7 @@ gem 'differ', '~> 0.1.2'
 # HTML processing filters and utilities
 gem 'html-pipeline'
 
-gem 'kaminari', '~> 1.0.1'
+gem 'kaminari', '~> 1.1.1'
 
 gem 'paper_trail', '~> 6.0'
 

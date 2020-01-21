@@ -1,25 +1,30 @@
-<div id="modal_move_note" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modal_move_note" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <%= simple_form_for [current_project, @node, @note], html: { class: 'form-horizontal modal-node-selection-form', data: { node_id: @node.id, hidden_field: '#note_node_id', allow_descendants: true } }  do |f| %>
     <%= f.hidden_field :node_id %>
     <%= f.hidden_field :original_updated_at, value: @note.updated_at.to_i %>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Move note</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+        <div class='modal-body'>
+          <p>Where do you want to move the note?</p>
 
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel">Move note</h3>
-    </div>
-    <div class='modal-body'>
-      <p>Where do you want to move the note?</p>
-
-      <div class="tree-modal-box">
-        <%= render "layouts/snowcrash/nodes" %>
+          <div class="tree-modal-box">
+            <%= render "layouts/tylium/nodes" %>
+          </div>
+          <p id='move-under'>
+            Move under: <strong><span id="current-selection"></span></strong>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary">Move</button>
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
       </div>
-      <p id='move-under'>
-        Move under: <strong><span id="current-selection"></span></strong>
-      </p>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-primary">Move</button>
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
     </div>
   <% end %>
 </div>

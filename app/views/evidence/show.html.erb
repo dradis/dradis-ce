@@ -21,15 +21,15 @@
 <div class="tab-content">
   <div class="tab-pane active" id="evidence-tab" data-behavior="subscription-actions" data-subscribed="<%= !@subscription.nil? %>">
     <% cache ['evidence-evidence-tab', @evidence] do %>
-      <div class="inner note-text-inner">
+      <div class="note-text-inner">
         <h3>
           Evidence for this instance -
           <span class="actions">
-            <%= link_to edit_project_node_evidence_path(@node.project, @node, @evidence), class: 'action-link' do %>
+            <%= link_to edit_project_node_evidence_path(@node.project, @node, @evidence) do %>
               <i class="fa fa-pencil"></i> Edit
             <% end %>
             <%= link_to [current_project, @node, @evidence],
-                  class: 'action-link text-error',
+                  class: 'text-error',
                   data: { confirm: "Are you sure?\n\nProceeding will delete this evidence from the associated node." },
                   method: :delete do %>
               <i class="fa fa-trash"></i> Delete
@@ -42,52 +42,42 @@
       </div>
     <% end %>
 
-    <div class="inner">
-      <%= render 'comments/feed' %>
-      <%= render 'subscriptions/feed', subscribable: @evidence %>
-    </div>
+    <%= render 'comments/feed' %>
+    <%= render 'subscriptions/feed', subscribable: @evidence %>
   </div>
 
   <% cache ['evidence-information-tab', @issue] do %>
     <div class="tab-pane" id="info-tab">
-      <div class="inner">
-        <!-- Issue wrapper -->
-        <div>
-          <h3>
-            Issue information -
-            <span class="actions">
-            <%= link_to 'Open', project_issue_path(current_project, @issue), class: 'action-link' %> -
-            <%= tag_and_name_for(@issue) %>
-            </span>
-          </h3>
-          <div id="<%= dom_id(@issue) %>_text" class="content-textile">
-            <%= markup(@issue.text) %>
-          </div>
-        </div>
+      <h3>
+        Issue information -
+        <span class="actions">
+        <%= link_to 'Open', project_issue_path(current_project, @issue) %> -
+        <%= tag_and_name_for(@issue) %>
+        </span>
+      </h3>
+      <div id="<%= dom_id(@issue) %>_text" class="content-textile">
+        <%= markup(@issue.text) %>
       </div>
     </div>
   <% end %>
 
   <% cache ['evidence-activity-tab', @evidence, @activities] do %>
     <div class="tab-pane" id="activity-tab">
-      <div class="inner">
-        <h3>
-          Recent activity -
-          <span class="actions">
-            <%#
-              # Some legacy content was created before paper_trail, so we need to
-              # make sure that there is at least one revision associated to the
-              # model.
-              #%>
-            <%= link_to(
-                  'revision history',
-                  project_node_evidence_revisions_path(@node.project, @node, @evidence),
-                  class: 'action-link'
-                ) if @evidence.has_revision_history? %>
-          </span>
-        </h3>
-        <%= render 'activities/feed', activities: @activities %>
-      </div>
+      <h3>
+        Recent activity -
+        <span class="actions">
+          <%#
+            # Some legacy content was created before paper_trail, so we need to
+            # make sure that there is at least one revision associated to the
+            # model.
+            #%>
+          <%= link_to(
+                'revision history',
+                project_node_evidence_revisions_path(@node.project, @node, @evidence)
+              ) if @evidence.has_revision_history? %>
+        </span>
+      </h3>
+      <%= render 'activities/feed', activities: @activities %>
     </div>
   <% end %>
 </div>

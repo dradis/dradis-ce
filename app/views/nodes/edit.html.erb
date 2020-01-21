@@ -1,7 +1,7 @@
 <% content_for :title, "Edit #{@node.label}" %>
 
 <div id="node_properties_editor">
-  <div class="inner note-text-inner">
+  <div class="note-text-inner">
     <h3>Edit <%= @node.label %></h3>
     <%= simple_form_for [current_project, @node] do |f| %>
       <%= f.input :label, label: "New name" %>

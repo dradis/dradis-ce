@@ -25,7 +25,7 @@
 </ul>
 
 <div class="tab-content">
-  <div class="tab-pane inner <%= "active" if params[:tab] == "evidence-tab" %>" id="evidence-tab">
+  <div class="tab-pane <%= "active" if params[:tab] == "evidence-tab" %>" id="evidence-tab">
     <h3>Evidence</h3>
     <% if @sorted_evidence.any? %>
       <div id="node-evidence-table"
@@ -47,28 +47,25 @@
 
   <div class="tab-pane <%= "active" if !params[:tab] || params[:tab] == 'properties-tab' %>" id="properties-tab">
     <div class="node-content" id="<%= dom_id(@node) %>_content">
-      <div class="inner">
-        <h3>Properties - <span class="actions">
-          <%= link_to edit_project_node_path(@node.project, @node), class: 'action-link' do %>
-            <i class="fa fa-pencil"></i> Edit
-          <% end %>
-          </span>
-        </h3>
+      <h3>Properties - <span class="actions">
+        <%= link_to edit_project_node_path(@node.project, @node) do %>
+          <i class="fa fa-pencil"></i> Edit
+        <% end %>
+        </span>
+      </h3>
 
-        <% if @node.has_any_property?  %>
-          <% @node.properties.sort.each do |key, value| %>
-            <% present [key, value], PropertyPresenter do |property_presenter| %>
-              <h4><%= property_presenter.name %></h4>
-              <%= property_presenter.value %>
-            <% end %>
+      <% if @node.has_any_property?  %>
+        <% @node.properties.sort.each do |key, value| %>
+          <% present [key, value], PropertyPresenter do |property_presenter| %>
+            <h4><%= property_presenter.name %></h4>
+            <%= property_presenter.value %>
           <% end %>
         <% end %>
-
-      </div>
+      <% end %>
     </div>
   </div>
 
-  <div class="tab-pane inner <%= "active" if params[:tab] == "notes-tab" %>" id="notes-tab">
+  <div class="tab-pane <%= "active" if params[:tab] == "notes-tab" %>" id="notes-tab">
     <h3>Notes</h3>
     <% if @sorted_notes.any? %>
       <div id="node-notes-table"
@@ -89,10 +86,7 @@
   </div>
 
   <div class="tab-pane <%= "active" if params[:tab] == "activity-tab" %>" id="activity-tab">
-    <div class="inner">
-      <%= render partial: 'activity' %>
-    </div>
+    <%= render partial: 'activity' %>
   </div>
 
-  <%= render 'console/console' %>
 </div>

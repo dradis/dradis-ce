@@ -226,8 +226,8 @@ describe 'Issues pages' do
           end
 
           it 'presents the list of hosts affected by a given issue'  do
-            expect(find('.secondary-navbar-content')).to have_content('10.0.0.1')
-            expect(find('.secondary-navbar-content')).to have_content('10.0.0.2 (3)')
+            expect(find('.secondary-sidebar-content')).to have_content('10.0.0.1')
+            expect(find('.secondary-sidebar-content')).to have_content('10.0.0.2 (3)')
           end
 
           it 'presents the evidence of the first node' do

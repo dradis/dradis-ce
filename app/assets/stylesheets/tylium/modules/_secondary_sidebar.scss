@@ -1,0 +1,149 @@
+.secondary-sidebar {
+  background: $sidebarActiveColor;
+  color: $lightColor;
+  border-right: 1px solid $borderColor;
+
+  a {
+    color: lighten($lightColor, 20%);
+
+    &:hover {
+      color: $white;
+    }
+  }
+
+  .inner {
+    background: $sidebarActiveColor;
+    padding: 1rem;
+    height: calc(100vh - 60px);
+    position: fixed;
+    overflow: scroll;
+    width: 16.3%;
+    min-width: 190px;
+    z-index: 2;
+
+    @media screen and (max-width: 1199px) {
+      width: 24%;
+    }
+
+    @media screen and (max-width: 991px) {
+      width: 31%;
+    }
+
+    .header-inner {
+      position: relative;
+      padding-top: 0.5rem;
+
+      .header-name a {
+        color: $lightColor;
+
+        &:hover {
+          color: $white;
+        }
+      }
+
+      .header-underline {
+        border-color: $lightColor;
+      }
+
+      .options {
+
+        a {
+          color: $lightColor;
+          
+          &:hover {
+            color: $white;
+          } 
+        }
+
+        .dropdown {
+          float: right;
+          position: absolute;
+          top: 6px;
+          right: 0;
+
+          .dropdown-item {
+            color: $linkColor;
+      
+            &:active,
+            &:hover {
+              color: $linkColorHover;
+            }
+          }
+        }
+      }
+    }
+
+    .note-list {
+    
+      .active a {
+        color: $white;
+      }
+      
+      .list-item {
+        line-height: 1.5rem;
+        padding: 0.5rem;
+        border-radius: 3px;
+        transition: all 0.2s ease-in-out;
+        
+        a {
+          color: $lightColor;
+        }
+    
+        .list-item-actions {
+          padding-top: 0.25rem;
+          text-align: right;
+          visibility: hidden;
+          transition: visibility 0.1s ease-in-out;
+    
+          a {
+            padding: 0 4px;
+          }
+      
+          .list-item-action-delete,
+          .list-item-action-edit {
+            color: $lightColor;
+            font-size: 80%;
+            padding: 0.25rem 0.4rem;
+            background: transparent;
+            border-radius: 5px;
+            transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+          }
+    
+          .list-item-action-delete:hover {
+            color: $white;
+            background-color: $red;
+          }
+    
+          .list-item-action-edit:hover {
+            color: $white;
+            background-color: $green;
+          }
+        }
+    
+        &:hover {
+          background-color: lighten($sidebarActiveColor, 3%);
+    
+          a {
+            color: $lightColor;
+    
+            &:hover {
+              color: $white;
+            }
+          }
+          
+          .list-item-actions {
+            visibility: visible;
+          }
+        }
+      }
+    
+      .summary-link {
+        color: $lightColor;
+
+        &:hover {
+          color: $white;
+        }
+      }
+    }
+  }
+}

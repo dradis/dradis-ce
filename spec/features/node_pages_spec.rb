@@ -316,7 +316,7 @@ describe "node pages" do
       end
 
       it "lists them in the sidebar" do
-        within ".secondary-navbar" do
+        within ".secondary-sidebar" do
           should have_selector "#note_#{@note.id}_link", text: "My note"
           should have_selector "#evidence_#{@evidence.id}_link"
           should_not have_selector "#note_#{@other_note.id}_link"
