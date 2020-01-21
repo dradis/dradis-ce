@@ -18,5 +18,5 @@ document.addEventListener "turbolinks:load", ->
       $(".add_multiple_nodes_error").show()
 
   if $('body.nodes.show').length
-    $('#scripts-tabs li').first().addClass('active')
-    $('#scripts-tabs .tab-pane').first().addClass('active')
+    $('[data-behavior~=services-extras-link]').first().addClass('active')
+    $('[data-behavior~=services-extras-tab-pane]').first().addClass('active')

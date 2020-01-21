@@ -1,26 +1,27 @@
-<div class="btn-toolbar">
-  <div class="btn-group">
-     <span class="btn js-items-table-select-all" title="Select all">
-       <input type="checkbox" id="select-all" />
-     </span>
-  </div>
+<div class="d-flex justify-content-between mb-3">
+  <div class="btn-toolbar">
+    <div class="btn-group mr-1">
+      <span class="btn js-items-table-select-all" title="Select all">
+        <input type="checkbox" id="select-all" />
+      </span>
+    </div>
 
-  <div class="btn-group items-table-actions js-items-table-actions">
-    <a class="btn items-table-delete js-items-table-delete" data-confirm="Are you sure?&#10;&#10;Proceeding will delete the selected item(s) from the associated node." title="Delete selected">
-      <i class="fa fa-trash text-error"></i> Delete
-    </a>
-  </div>
+    <div class="btn-group mr-1 items-table-actions js-items-table-actions">
+      <a class="btn h-100 items-table-delete js-items-table-delete" data-confirm="Are you sure?&#10;&#10;Proceeding will delete the selected item(s) from the associated node." title="Delete selected">
+        <i class="fa fa-trash text-error"></i> Delete
+      </a>
+    </div>
 
-  <div class="dropdown">
-    <button class="btn dropdown-toggle" data-toggle="dropdown" title="Choose columns to show"><i class="fa fa-columns"></i> <span class="caret"></span></button>
-    <div class="dropdown-menu js-table-columns">
-      <% columns.each do |column| %>
-      <a href="javascript:void(0)" data-column="<%= column.downcase %>" class="dropdown-item"><input type="checkbox" /> <%= column %></a>
-      <% end %>
+    <div class="btn-group dropdown">
+      <button class="btn dropdown-toggle" data-toggle="dropdown" title="Choose columns to show"><i class="fa fa-columns"></i> <span class="caret"></span></button>
+      <div class="dropdown-menu js-table-columns">
+        <% columns.each do |column| %>
+        <a href="javascript:void(0)" data-column="<%= column.downcase %>" class="dropdown-item"><input type="checkbox" /> <%= column %></a>
+        <% end %>
+      </div>
     </div>
   </div>
-
-  <div class="filter pull-right">
-    <input type="text" class="form-control input-xlarge js-table-filter" placeholder="Type here to filter table..."/>
-  </div>
+  <div class="w-25">
+      <input type="text" class="form-control js-table-filter" placeholder="Type here to filter table..."/>
+    </div>
 </div>
