@@ -13,49 +13,51 @@
   </nav>
 <% end %>
 
-<%= render 'boards/modals/new_board_form' unless  request.xhr? %>
+<div class="content-container pb-3 mt-3">
+  <ul class="board-list">
 
-<ul class="board-list">
-
-  <% @boards.each do |board| %>
-    <%= render partial: 'boards/modals/board_rename_form', locals: {board: board} %>
-
-    <li class="board-list-item" data-board-id="<%= board.id %>">
-      <%= link_to main_app.project_board_path(current_project, board), class: 'board-tile' do %>
-        <span class="board-tile-details">
-          <span class="board-tile-details-name"><%= board.name %></span>
-        </span>
+    <% @boards.each do |board| %>
+      <% content_for :board_rename_modal do %>
+        <%= render partial: 'boards/modals/board_rename_form', locals: { board: board } %>
       <% end %>
 
-      <div class="board-actions">
-        <%=
-          link_to(
-            "#modal-board-edit-#{board.id}",
-            class: 'js-board-modal'
-          ) do
-        %>
-          <i class="fa fa-pencil"></i> Edit
+      <li class="board-list-item" data-board-id="<%= board.id %>">
+        <%= link_to main_app.project_board_path(current_project, board), class: 'board-tile' do %>
+          <span class="board-tile-details">
+            <span class="board-tile-details-name"><%= board.name %></span>
+          </span>
         <% end %>
-        <%=
-          link_to(
-            [current_project, board],
-            class: 'text-error',
-            data: { confirm: "Are you sure?\n\nProceeding will delete this methodology from the project, as well as with any associated lists and tasks." },
-            method: 'delete'
-          ) do %>
-          <i class="fa fa-trash"></i> Delete
-        <% end %>
-      </div>
-    </li>
-  <% end %>
 
-  <li class="board-list-item new-board">
-    <a
-      class="board-tile board-new js-board-modal"
-      data-toggle="modal"
-      href="#modal-board-new"
-    >
-      Create new methodology...
-    </a>
-  </li>
-</ul>
+        <div class="board-actions">
+          <%=
+            link_to(
+              "#modal-board-edit-#{board.id}",
+              class: 'js-board-modal'
+            ) do
+          %>
+            <i class="fa fa-pencil"></i> Edit
+          <% end %>
+          <%=
+            link_to(
+              [current_project, board],
+              class: 'text-error-hover',
+              data: { confirm: "Are you sure?\n\nProceeding will delete this methodology from the project, as well as with any associated lists and tasks." },
+              method: 'delete'
+            ) do %>
+            <i class="fa fa-trash"></i> Delete
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+
+    <li class="board-list-item">
+      <a
+        class="board-tile board-new js-board-modal"
+        data-toggle="modal"
+        href="#modal-board-new"
+      >
+        Create new methodology...
+      </a>
+    </li>
+  </ul>
+</div>
