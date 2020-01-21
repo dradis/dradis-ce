@@ -1,0 +1,41 @@
+.activity-feed {
+  
+  .activity {
+    border-bottom: 1px solid $borderColor;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 1rem 0;
+
+    .activity-icon {
+      position: absolute;
+      right: 0;
+      font-size: 3rem;
+      opacity: 0.08;
+    }
+
+    .body {
+      display: block;
+
+      .time {
+        color: $mutedText;
+        font-size: 0.8rem;
+      }
+    }
+
+    .details {
+      align-items: center;
+      margin-right: 0.5rem;
+    }
+
+    &:first-child {
+      padding-top: 0.5rem;
+    }
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+}

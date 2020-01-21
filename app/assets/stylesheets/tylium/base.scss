@@ -25,6 +25,14 @@ a {
 .actions {
   text-transform: capitalize;
   white-space: nowrap;
+  font-size: 0.9rem;
+}
+
+.badge {
+
+  &.bg-primary {
+    background-color: $primaryColor !important;
+  }
 }
 
 @mixin button($color) {
@@ -57,7 +65,7 @@ a {
   }
 }
 
-.btn-group>.btn-group:not(:first-child),
+.btn-group > .btn-group:not(:first-child),
 .btn-group > .btn:not(:first-child) {
   margin-left: -4px;
 }
@@ -125,6 +133,10 @@ mark {
   margin-left: 1rem;
   cursor: default;
   height: 3rem;
+}
+
+.required-input {
+  color: $red;
 }
 
 .small {

@@ -15,15 +15,15 @@ document.addEventListener "turbolinks:load", ->
       $('#use_template_yes').prop('checked', true)
 
       selected_option = $('select#template option:selected').text()
-      if !$('#board_name').val()
+      if !$('[data-behavior~=new-board-name]').val()
         # empty board name, use the selected one by default
-        $('#board_name').val(selected_option)
-      else if $('select#template option').filter(-> this.text == $('#board_name').val()).length
+        $('[data-behavior~=new-board-name]').val(selected_option)
+      else if $('select#template option').filter(-> this.text == $('[data-behavior~=new-board-name]').val()).length
         # not empty board name, but it was one of the templates, use the selected one
-        $('#board_name').val(selected_option)
+        $('[data-behavior~=new-board-name]').val(selected_option)
 
     # when we clik the "From template" radio, also populate the name input with
     # the template name
     $('input#use_template_yes').on 'click', ->
       selected_option = $('select#template option:selected').text()
-      $('#board_name').val(selected_option)
+      $('[data-behavior~=new-board-name]').val(selected_option)

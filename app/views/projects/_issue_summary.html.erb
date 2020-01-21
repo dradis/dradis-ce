@@ -1,40 +1,42 @@
 <section class="summary-panel">
-  <h4>Issues so far</h4>
+  <h4 class="header-underline">Issues so far</h4>
 
   <% if @issues.any? %>
     <div id="issue-chart"></div>
 
     <% for tag in @tags do %>
-      <div class="issue-group">
-        <h5 style="color: <%= tag.color %>"><%= tag.display_name %></h5>
-        <ul class="issue-list drop-target" data-tag="<%= tag.name %>">
-          <% for issue in @issues_by_tag[tag.name] %>
-            <%= content_tag_for :li, issue, data: { url: project_issue_path(current_project, issue, format: :json) } do %>
-              <%= link_to issue.title, [current_project, issue] %>
+      <% if @issues_by_tag[tag.name].any? %>
+        <div class="issue-group">
+          <h5 style="color: <%= tag.color %>"><%= tag.display_name %></h5>
+          <ul class="issue-list drop-target" data-tag="<%= tag.name %>">
+            <% for issue in @issues_by_tag[tag.name] %>
+              <%= content_tag_for :li, issue, data: { url: project_issue_path(current_project, issue, format: :json) } do %>
+                <%= link_to issue.title, [current_project, issue] %>
+              <% end %>
             <% end %>
-          <% end %>
-        </ul>
-      </div>
+          </ul>
+        </div>
+      <% end %>
     <% end %>
 
     <%# unassigned %>
     <% if @issues_by_tag[:unassigned].any? %>
-    <div class="issue-group">
-      <h5>Unassigned</h5>
-      <ul class="issue-list drop-target">
-          <% for issue in @issues_by_tag[:unassigned] %>
-            <%= content_tag_for :li, issue, data: { url: project_issue_path(current_project, issue, format: :json) } do %>
-              <%= link_to issue.title, [current_project, issue] %>
+      <div class="issue-group">
+        <h5>Unassigned</h5>
+        <ul class="issue-list drop-target">
+            <% for issue in @issues_by_tag[:unassigned] %>
+              <%= content_tag_for :li, issue, data: { url: project_issue_path(current_project, issue, format: :json) } do %>
+                <%= link_to issue.title, [current_project, issue] %>
+              <% end %>
             <% end %>
-          <% end %>
-      </ul>
-    </div>
+        </ul>
+      </div>
     <% end %>
 
   <% else %>
     <p>There are no issues in this project yet.</p>
     <div>
-      <%= link_to project_issues_path(current_project), class: 'btn btn-large btn-primary' do %>
+      <%= link_to project_issues_path(current_project), class: 'btn btn-primary' do %>
         <i class="fa fa-plus"></i> Add new issue
       <% end %> or <%= link_to project_upload_manager_path(current_project) do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %>
     </div>

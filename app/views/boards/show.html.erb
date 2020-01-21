@@ -3,15 +3,14 @@
 <%= render 'poller_alerts' unless request.xhr? %>
 
 <% content_for :breadcrumbs do %>
-<div class="row-fluid">
-  <ul class="breadcrumb">
-    <li>
+<nav>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
       <%= link_to 'Methodologies', project_boards_path(current_project) %>
-      <span class="divider">/</span>
     </li>
-    <li class="active"><%= @board.name %></li>
-  </ul>
-</div>
+    <li class="breadcrumb-item active"><%= @board.name %></li>
+  </ol>
+</nav>
 <% end %>
 
 <%= render @board %>
