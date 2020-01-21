@@ -29,8 +29,13 @@
 .content {
   padding: 1em;
 
-  h4{ margin-top: 2em; }
-  h4:first-child { margin-top: 10px; }
+  h4 {
+    margin-top: 2em;
+  }
+
+  h4:first-child {
+    margin-top: 10px;
+  }
 
   ul {
     margin-top: 1em;
@@ -40,6 +45,7 @@
 .gravatar {
   float: left;
   margin-right: 5px;
+
   img {
     border-radius: 50%;
   }
