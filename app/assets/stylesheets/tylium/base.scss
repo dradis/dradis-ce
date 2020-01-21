@@ -25,6 +25,7 @@ a {
 .actions {
   text-transform: capitalize;
   white-space: nowrap;
+  font-size: 0.9rem;
 }
 
 .badge {
@@ -132,6 +133,10 @@ mark {
   margin-left: 1rem;
   cursor: default;
   height: 3rem;
+}
+
+.required-input {
+  color: $red;
 }
 
 .small {
