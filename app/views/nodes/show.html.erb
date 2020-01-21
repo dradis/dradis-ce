@@ -48,7 +48,7 @@
   <div class="tab-pane <%= "active" if !params[:tab] || params[:tab] == 'properties-tab' %>" id="properties-tab">
     <div class="node-content" id="<%= dom_id(@node) %>_content">
       <h3>Properties - <span class="actions">
-        <%= link_to edit_project_node_path(@node.project, @node), class: 'action-link' do %>
+        <%= link_to edit_project_node_path(@node.project, @node) do %>
           <i class="fa fa-pencil"></i> Edit
         <% end %>
         </span>

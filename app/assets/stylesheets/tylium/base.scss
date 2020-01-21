@@ -28,6 +28,13 @@ a {
   font-size: 0.9rem;
 }
 
+.badge {
+
+  &.bg-primary {
+    background-color: $primaryColor !important;
+  }
+}
+
 @mixin button($color) {
   border: 0px none;
   background: $color;
@@ -58,7 +65,7 @@ a {
   }
 }
 
-.btn-group>.btn-group:not(:first-child),
+.btn-group > .btn-group:not(:first-child),
 .btn-group > .btn:not(:first-child) {
   margin-left: -4px;
 }

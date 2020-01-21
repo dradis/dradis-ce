@@ -62,6 +62,8 @@ module TyliumHelper
 
     if tag
       options[:style] = "color: #{tag.color}"
+    else
+      options[:style] = "color: #222"
     end
 
     content_tag :i, nil, options

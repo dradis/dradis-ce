@@ -1,35 +1,46 @@
-<%= div_for comment, data: { author: comment.user_id } do %>
-  <div class="body">
-    <%= avatar_image(comment.user, size: 30) %>
+<div class="comment-wrapper">
+  <%= div_for comment, data: { author: comment.user_id } do %>
+    <div class="body">
+      <%= avatar_image(comment.user, size: 35) %>
 
-    <div>
-      <% if comment.user %>
-        <strong><%= comment.user.email %></strong>
-      <% else %>
-        a user who has since been deleted
-      <% end %>
+      <div>
+        <div class="row">
+          <div class="col-12 p-0">
+            <span class="user">
+              <% if comment.user %>
+                <%= comment.user.email %>
+              <% else %>
+                a user who has since been deleted
+              <% end %>
+            </span>
+          
 
-      <span class="time">
-        <%= link_to local_time_ago(comment.created_at), "##{dom_id(comment)}", data: { turbolinks: false } %>
-      </span>
+            <div class="actions pull-right">
+              <%= link_to edit_project_comment_path(current_project, comment), remote: true do %>
+                <i class="fa fa-pencil"></i> Edit
+              <% end %>
+              <%= link_to [current_project, comment],
+                          method: :delete,
+                          data: { confirm: "Are you sure?\n\nProceeding will delete this comment, making it no longer visible to anyone." },
+                          remote: true,
+                          class: 'text-error' do %>
+                <i class="fa fa-trash"></i> Delete
+              <% end %>
+            </div>
+          </div>
+        </div>
 
-      <% # this is not visible, it is shown later with js %>
-      <div class="actions">
-        <%= link_to edit_project_comment_path(current_project, comment), remote: true do %>
-          <i class="fa fa-pencil"></i> Edit
-        <% end %>
-        <%= link_to [current_project, comment],
-                    method: :delete,
-                    data: { confirm: "Are you sure?\n\nProceeding will delete this comment, making it no longer visible to anyone." },
-                    remote: true,
-                    class: 'text-error' do %>
-          <i class="fa fa-trash"></i> Delete
-        <% end %>
+        <div class="row">
+          <span class="time">
+            <%= link_to local_time_ago(comment.created_at), "##{dom_id(comment)}", data: { turbolinks: false } %>
+          </span>
+        </div>
+
+      </div>
+
+      <div class="content">
+        <%= comment_formatter(comment.content) %>
       </div>
     </div>
-
-    <div class="content">
-      <%= comment_formatter(comment.content) %>
-    </div>
-  </div>
-<% end %>
+  <% end %>
+</div>

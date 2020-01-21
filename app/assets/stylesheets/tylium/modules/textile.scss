@@ -23,15 +23,19 @@
     list-style-type: decimal;
   }
 
+  p:last-child {
+    margin: 0;
+  }
+
   pre {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
+    background-color: $secondaryBgColor;
+    border: 1px solid $borderColor;
     border-radius: 3px;
-    margin: 10px 0;
+    margin: 0.75rem 0;
     padding: 10px;
     white-space: pre-wrap;
+    max-height: 200px;
+    overflow-y: auto;
   }
 
   strong {
@@ -122,6 +126,12 @@
 
     textarea {
       resize: vertical !important;
+    }
+
+    .textile-preview {
+      border: 1px solid $borderColor;
+      border-radius: 4px;
+      padding: 1rem;
     }
   }
 

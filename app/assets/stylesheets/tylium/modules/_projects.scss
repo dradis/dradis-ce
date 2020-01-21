@@ -1,0 +1,59 @@
+body.projects {
+
+  .summary-panel {
+
+    #boards-summary {
+      display: flex;
+      flex-wrap: wrap;
+  
+      .pie-chart {
+        width: 50%;
+      }
+  
+      &.loading {
+        background: image_url('loading.gif') no-repeat center;
+      }
+    }
+
+    #issue-chart {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  
+      svg text {
+        font-size: 14px;
+      }
+    }
+
+    .issue-group {
+      margin-top: 1rem;
+      border: 1px solid $borderColor;
+      border-radius: 3px;
+
+      h5 {
+        margin: 0.5rem;
+      }
+
+      .issue-list {
+        margin-bottom: 0;
+        padding: 0;
+
+        li {
+          margin: 0;
+          padding: 0;
+
+          a {
+            display: flex;
+            width: 100%;
+            padding: 0.5rem 1rem;
+            transition: background-color 0.2s ease-in-out;
+
+            &:hover {
+              background-color: darken($primaryBgColor, 3%);
+            }
+          }
+        }
+      }
+    }
+  }
+}

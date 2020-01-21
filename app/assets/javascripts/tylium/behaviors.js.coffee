@@ -61,8 +61,8 @@ document.addEventListener "turbolinks:load", ->
   # Activate jQuery.Textile
   $('.textile').textile()
 
-  # Activate jQuery.breadCrums
-  $('.breadcrumb').breadcrums
+  # Activate jQuery.breadCrumbs
+  $('.breadcrumb').breadcrumbs
     tree: $('.main-sidebar .tree-navigation')
 
   # Activate jQuery.treeNav
