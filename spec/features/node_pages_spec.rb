@@ -83,7 +83,7 @@ describe "node pages" do
         ])
 
         # redirects to project root:
-        expect(page).to have_selector 'h1', text: 'PROJECT SUMMARY'
+        expect(page).to have_selector 'h3', text: /PROJECT SUMMARY/i
       end
 
       example "adding multiple root host nodes" do
@@ -169,7 +169,7 @@ describe "node pages" do
         ])
 
         # redirects to parent node's page
-        expect(page).to have_selector 'ul.breadcrumb > li.active', text: node.label
+        expect(page).to have_selector 'ol.breadcrumb > li.active', text: node.label
       end
 
       example "adding multiple nodes - submitting a blank textarea" do
@@ -193,7 +193,7 @@ describe "node pages" do
     let(:submit_form) { click_button "Rename" }
 
     it "shows a modal to rename the node" do
-      should have_content "Rename My node node"
+      should have_content /Rename My node node/i
       should have_field :node_label
     end
 
