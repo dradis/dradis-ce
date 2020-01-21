@@ -2,11 +2,13 @@
 
 <%= render partial: 'poller_alerts' %>
 
-<%= render partial: 'breadcrumbs' %>
+<% content_for :breadcrumbs do %>
+  <%= render partial: 'breadcrumbs' %>
+<% end %>
 
-<div id="cards_editor">
+<div id="cards_editor" class="content-container">
+  <h4 class="header-underline">Edit task</h4>
   <div class="note-text-inner">
-    <h3>Edit task</h3>
     <%= render 'form' %>
   </div>
 </div>

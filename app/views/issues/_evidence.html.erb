@@ -1,4 +1,4 @@
-<h3>Evidence information - <span class="actions"><a href="javascript:void(0)" class="action-link js-add-evidence">Add new</a></span></h3>
+<h4 class="header-underline">Evidence information - <span class="actions"><a href="javascript:void(0)" class="action-link js-add-evidence text-capitalize">Add new</a></span></h4>
 <%= render 'issues/add_evidence'%>
 
 <%# We need:
@@ -9,34 +9,41 @@
   # %>
 <% cache ['issue-evidence-tab', @issue, @issue.evidence] do %>
   <% if @issue.affected.empty? %>
-    <p>None so far.</p>
+    <p class="mb-0 mt-4">None so far.</p>
   <% else %>
-    <div class="tabbable tabs-left" id="evidence-tabs">
-      <ul class="nav nav-tabs" id="evidence-host-list">
-        <% @affected_nodes.each do |node| %>
-          <% cache [@issue, node, node.evidence_count, 'evidence-nav'] do %>
-            <li>
-              <a href="#evidence_for_<%= dom_id(node) %>" data-toggle="tab" data-path="<%= project_issue_node_path(current_project, @issue, node) %>" data-node="<%= "evidence_for_#{dom_id(node)}" %>">
-                <i class="fa fa-<%= ['folder-o','laptop'][node.type_id] %>"></i> <%= node.label %> (<%= node.evidence_count %>)
-              </a>
-            </li>
-          <% end %>
-        <% end %>
-      </ul>
-      <div class="tab-content">
-        <% @affected_nodes.each do |node| %>
-          <%= content_tag :div, class: 'tab-pane evidence-content', id: "evidence_for_#{dom_id(node)}" do %>
-            <% if node == @first_node %>
-              <%=
-                render partial: 'issues/nodes/evidence',
-                  locals: {
-                    node: node,
-                    instances: @first_evidence
-                  }
-              %>
+    <div id="evidence-tabs">
+      <div class="row mt-4">
+        <div class="col-4 col-lg-3 col-xl-2 pr-0">
+          <ul class="nav nav-pills flex-column" id="evidence-host-list">
+            <% @affected_nodes.each do |node| %>
+              <% cache [@issue, node, node.evidence_count, 'evidence-nav'] do %>
+                <li class="nav-item">
+                  <a href="#evidence_for_<%= dom_id(node) %>" class="nav-link p-2" data-toggle="pill" data-path="<%= project_issue_node_path(current_project, @issue, node) %>" data-node='<%= "evidence_for_#{dom_id(node)}" %>' data-behavior="evidence-link">
+                    <i class="fa fa-<%= ['folder-o','laptop'][node.type_id] %>"></i> <%= node.label %> (<%= node.evidence_count %>)
+                  </a>
+                </li>
+              <% end %>
             <% end %>
-          <% end %>
-        <% end %>
+          </ul>
+        </div>
+        <div class="col-8 col-lg-9 col-xl-10">
+          <div class="tab-content">
+            <% @affected_nodes.each do |node| %>
+              <%= content_tag :div, class: 'tab-pane fade evidence-content', id: "evidence_for_#{dom_id(node)}", data: { behavior: 'evidence-tab-pane' } do %>
+                <% if node == @first_node %>
+                  <%=
+                    render partial: 'issues/nodes/evidence',
+                      locals: {
+                        node: node,
+                        instances: @first_evidence,
+                        class: ''
+                      }
+                  %>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
   <% end %>
