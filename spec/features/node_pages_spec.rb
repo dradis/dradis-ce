@@ -20,7 +20,8 @@ describe "node pages" do
     describe "clicking the '+' button in the 'Nodes' sidebar", js: true do
       before do
         visit project_path(current_project)
-        find(".add-subnode > a").click
+        find('.tree-header').click
+        find('.add-subnode > a').click
       end
 
       let(:submit_form) { click_button "Add" }
@@ -359,6 +360,8 @@ describe "node pages" do
       end
 
       it "shows the current node in the sidebar node tree", js: true do # bug fix
+        find('.tree-header').click
+
         within ".main-sidebar .nodes-nav" do
           click_link class: 'toggle'
           should have_content 'My node'
