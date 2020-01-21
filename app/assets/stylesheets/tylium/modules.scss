@@ -5,7 +5,6 @@
 @import "tylium/modules/comments";
 @import "tylium/modules/console";
 @import "tylium/modules/dropdown";
-@import "tylium/modules/issues/import";
 @import "tylium/modules/issues/issues";
 @import "tylium/modules/issues/merge";
 @import "tylium/modules/modals";
@@ -21,6 +20,21 @@
 @import "tylium/modules/tour";
 @import "tylium/modules/uploads";
 @import "tylium/modules/versions";
+
+.accordion-group {
+  margin-bottom: 5px;
+  border: 1px solid $borderColor;
+  border-radius: 5px;
+  
+  .accordion-heading {
+    border-bottom: 0;
+
+    .accordion-toggle {
+      display: block;
+      padding: 8px 15px;
+    }
+  }
+}
 
 .attachment {
   margin: 10px 0;
@@ -42,9 +56,19 @@
   }
 }
 
+.form-actions {
+  margin-top: 1rem;
+}
+
 .gravatar {
   float: left;
   margin-right: 5px;
+
+  &.gravatar-inline {
+    margin: 0 0 -3px 0;
+    float: none;
+    white-space: nowrap;
+  }
 
   img {
     border-radius: 50%;
@@ -77,6 +101,17 @@
   }
 }
 
+.issue-severity {
+  cursor: default;
+}
+
+.nav-tabs {
+
+  .nav-link:hover:not(.active) {
+    border-color: transparent;
+  }
+}
+
 .pagination {
   padding-top: 0.75rem;
   margin-bottom: .75rem;
@@ -95,12 +130,19 @@
     margin: 0 0;
     padding: 0px;
   }
+}
 
-  &.gravatar-inline {
-    margin: 0 0 -3px 0;
-    float: none;
-    white-space: nowrap;
-  }
+pre {
+  padding: 1rem;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  line-height: 20px;
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  background-color: $secondaryBgColor;
+  border: 1px solid $borderColor;
+  border-radius: 5px;
 }
 
 .restrict-height {
@@ -206,6 +248,20 @@ table {
 
     th {
       border: none;
+    }
+  }
+}
+
+.tooltip-inner {
+    
+  ul {
+    list-style: disc;
+    text-align: left;
+    padding-left: 1.25rem;
+    padding-top: 0.5rem;
+
+    li {
+      margin-bottom: .25rem; 
     }
   }
 }

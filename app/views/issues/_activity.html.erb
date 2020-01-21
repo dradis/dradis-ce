@@ -1,15 +1,17 @@
-<h3>
-  Recent activity -
-  <span class="actions">
-    <%#
-      # Some legacy content was created before paper_trail, so we need to
-      # make sure that there is at least one revision associated to the
-      # model.
-      #%>
+<h4 class="header-underline">
+  Recent activity
+  <%#
+    # Some legacy content was created before paper_trail, so we need to
+    # make sure that there is at least one revision associated to the
+    # model.
+    #%>
+  <% if @issue.has_revision_history? %>
+    - 
     <%= link_to(
           'revision history',
-          project_issue_revisions_path(current_project, @issue)
-    ) if @issue.has_revision_history? %>
-  </span>
-</h3>
+          project_issue_revisions_path(current_project, @issue),
+          class: 'text-capitalize'
+    ) %>
+  <% end %>
+</h4>
 <%= render 'activities/feed', activities: @activities %>

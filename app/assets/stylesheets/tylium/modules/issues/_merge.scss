@@ -1,0 +1,46 @@
+body.merge.new {
+
+  #issues_editor {
+
+    .nav-pills {
+      border-bottom: none;
+
+      .nav-link {
+        font-size: 0.8em;
+        padding: 0.5rem 0.75rem;
+        margin-top: 5px;
+        margin-right: 5px;
+        line-height: 10px;
+        border: 1px solid $borderColor;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  .issue-toggle {
+    margin-right: 15px;
+  }
+
+  #preview_issue_new {
+
+    #new_issue {
+      padding: 1rem;
+      border-top: 1px solid $borderColor;
+    }
+  }
+
+  .radio {
+    padding-left: 10px;
+    padding-top: 5px;
+  }
+
+  .tab-content {
+    padding: 1rem;
+
+    .tab-pane {
+      border: 1px solid $borderColor;
+      border-radius: 4px;
+      padding: 1rem;
+    }
+  }
+}

@@ -27,6 +27,13 @@ a {
   white-space: nowrap;
 }
 
+.badge {
+
+  &.bg-primary {
+    background-color: $primaryColor !important;
+  }
+}
+
 @mixin button($color) {
   border: 0px none;
   background: $color;

@@ -1,0 +1,99 @@
+.comment-feed {
+
+  .actions {
+    float: right;
+    visibility: hidden;
+  }
+
+  .comment-wrapper {
+    border-bottom: 1px solid $borderColor;
+    padding-bottom: 0.5rem;
+
+    .comment {
+      margin-top: 0.5rem;
+      padding: 15px;
+      border-radius: 5px;
+      background-color: $primaryBgColor;
+  
+      .content {
+        margin-left: 20px;
+        padding-bottom: 0;
+
+        p:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      .gravatar {
+        padding-top: 3px;
+      }
+  
+      &:hover {
+        background-color: $secondaryBgColor;
+  
+        .actions.current_user {
+          visibility: visible;
+        }
+      }
+  
+      .time {
+        color: #888;
+        font-size: 12px;
+      }
+
+      .user {
+        font-weight: 600;
+      }
+    }
+  }
+
+  input[type="submit"] {
+    margin-left: 35px;
+  }
+
+  label {
+    font-weight: bold;
+  }
+}
+
+// tribute @-mentions plugin styles
+.tribute-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: auto;
+  max-height: 300px;
+  max-width: 500px;
+  overflow: auto;
+  display: block;
+  z-index: 999999;
+  
+  img {
+    border-radius: 50%;
+  }
+
+  .menu-highlighted {
+    font-weight: bold;
+  }
+
+  ul {
+    margin: 0;
+    margin-top: 2px;
+    padding: 0;
+    background: #efefef;
+
+    li {
+      padding: 5px 5px;
+      cursor: pointer;
+
+      &.highlight, 
+      &:hover {
+        background: #ddd;
+      }
+
+      span {
+        font-weight: bold;
+      }
+    }
+  }
+}

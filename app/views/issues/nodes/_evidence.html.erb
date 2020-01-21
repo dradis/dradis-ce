@@ -1,55 +1,53 @@
 <% cache [@issue, node, instances, 'evidence-content'] do %>
   <% evidence = instances.first %>
-  <%= content_tag :section, class: 'evidence-for-host' do %>
+  <%= content_tag :section, class: 'evidence-for-host m-0' do %>
     <% if node.evidence_count == 1 %>
-      <h3>
+      <h5>
         Evidence for <%= link_to node.label, project_node_path(current_project, node) %> -
-        <span class="actions">
-          <%= link_to edit_project_node_evidence_path(current_project, node, evidence, back_to: :issue) do %>
+        <span class="actions small text-capitalize">
+          <%= link_to edit_project_node_evidence_path(current_project, node, evidence, back_to: :issue), class: 'action-link' do %>
             <i class="fa fa-pencil"></i> Edit
-          <% end %>
+          <% end %> -
           <%= link_to [current_project, node, evidence],
-                class: 'text-error',
+                class: 'action-link text-error-hover',
                 data: { confirm: "Are you sure?\n\nProceeding will delete this evidence from the associated node." },
                 method: :delete do %>
             <i class="fa fa-trash"></i> Delete
           <% end %>
         </span>
-      </h3>
-      <div class="content-textile" id="node_<%= node.id %>_instance_<%= evidence.id %>">
+      </h5>
+      <div class="content-textile mt-4" id="node_<%= node.id %>_instance_<%= evidence.id %>">
         <%= markup(evidence.content) %>
       </div>
     <% else %>
-      <div class="tabbable tabs-left">
-        <ul class="nav nav-tabs">
-          <% instances.each_with_index do |instance, i| %>
-            <li class="<%= 'active' if i==0 %>"><a href="#node_<%= node.id %>_instance_<%= instance.id %>" data-toggle="tab">#<%= i+1 %></a></li>
-          <% end %>
-        </ul>
+      <ul class="nav nav-tabs">
+        <% instances.each_with_index do |instance, i| %>
+          <li class="nav-item"><a href="#node_<%= node.id %>_instance_<%= instance.id %>" class="nav-link <%= 'active' if i==0 %>" data-toggle="tab">#<%= i+1 %></a></li>
+        <% end %>
+      </ul>
 
-        <div class="tab-content">
-          <% instances.each_with_index do |instance, i| %>
-            <div class="tab-pane<%= ' active' if i==0 %>" id="node_<%= node.id %>_instance_<%= instance.id %>">
-              <h3>
-                Instance #<%= i+1 %> for <%= link_to node.label, project_node_path(current_project, node) %> -
-                <span class="actions">
-                  <%= link_to edit_project_node_evidence_path(current_project, node, instance, back_to: :issue) do %>
-                    <i class="fa fa-pencil"></i> Edit
-                  <% end %>
-                  <%= link_to [current_project, node, instance],
-                        class: 'text-error',
-                        data: { confirm: "Are you sure?\n\nProceeding will delete this evidence from the associated node." },
-                        method: :delete do %>
-                    <i class="fa fa-trash"></i> Delete
-                  <% end %>
-                </span>
-              </h3>
-              <div class="content-textile">
-                <%= markup(instance.content) %>
-              </div>
+      <div class="tab-content">
+        <% instances.each_with_index do |instance, i| %>
+          <div class="tab-pane fade <%= 'show active' if i==0 %>" id="node_<%= node.id %>_instance_<%= instance.id %>">
+            <h5>
+              Instance #<%= i+1 %> for <%= link_to node.label, project_node_path(current_project, node) %> -
+              <span class="actions small text-capitalize">
+                <%= link_to edit_project_node_evidence_path(current_project, node, instance, back_to: :issue), class: 'action-link' do %>
+                  <i class="fa fa-pencil"></i> Edit
+                <% end %> -
+                <%= link_to [current_project, node, instance],
+                      class: 'action-link text-error',
+                      data: { confirm: "Are you sure?\n\nProceeding will delete this evidence from the associated node." },
+                      method: :delete do %>
+                  <i class="fa fa-trash"></i> Delete
+                <% end %>
+              </span>
+            </h5>
+            <div class="content-textile mt-4">
+              <%= markup(instance.content) %>
             </div>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       </div>
     <% end %>
   <% end %>
