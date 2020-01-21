@@ -64,7 +64,7 @@ a {
   }
 }
 
-.btn-group>.btn-group:not(:first-child),
+.btn-group > .btn-group:not(:first-child),
 .btn-group > .btn:not(:first-child) {
   margin-left: -4px;
 }

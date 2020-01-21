@@ -1,12 +1,11 @@
 <% content_for :title, 'Notifications for this Project' %>
 
-<div class="content-container pb-2">
-  <div class="d-flex justify-content-between">
-    <h4>Notifications for this Project</h4>
+<div class="content-container">
+  <h4 class="header-underline w-100">Notifications for this Project
     <% if @notifications.any? %>
-      <b><%= link_to 'Mark all as read', project_notification_path(current_project, id: 'all'), class: 'pull-right', method: :put, remote: true %></b>
+      <b><%= link_to 'Mark all as read', project_notification_path(current_project, id: 'all'), class: 'actions pull-right', method: :put, remote: true %></b>
     <% end %>
-  </div>
+  </h4>
   <% cache [current_user, @notifications] do %>
     <% if @notifications.any? %>
       <div class="notifications-index mt-4">

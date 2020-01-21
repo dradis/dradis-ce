@@ -43,8 +43,13 @@
 .content {
   padding: 1em;
 
-  h4{ margin-top: 2em; }
-  h4:first-child { margin-top: 10px; }
+  h4 {
+    margin-top: 2em;
+  }
+
+  h4:first-child {
+    margin-top: 10px;
+  }
 
   ul {
     margin-top: 1em;
@@ -162,9 +167,11 @@ pre {
     bottom: -2rem;
     left: 0;
     transition: all 0.3s ease-in-out;
+    visibility: initial;
 
     &.hidden {
       opacity: 0;
+      visibility: hidden;
     }
 
     .gradient {
