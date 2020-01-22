@@ -1,11 +1,19 @@
 body.revisions {
 
+  .alert {
+    margin-top: 1rem;
+  }
+
   del {
     background-color: #FCC;
   }
 
   ins {
     background-color: #CFC;
+  }
+
+  .node-header {
+    display: none;
   }
 
   .revisions-table tr {

@@ -5,8 +5,8 @@
 <% end %>
 
 <div class="row m-0">
-  <div class="col-9 p-0">
-    <div class="content-container mr-3">
+  <div class="col-12 col-xl-8 col-xxl-9 p-0">
+    <div class="content-container pb-3 mr-xl-3">
       <div id="diff">
         <h4 class="header-underline">
           <%= @record.class.model_name %>
@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <div id="<%= dom_id(@record) %>_revisions" class="content-container mr-3 revisions-table note-text-inner">
+    <div id="<%= dom_id(@record) %>_revisions" class="content-container mr-xl-3 revisions-table note-text-inner">
       <h4 class="header-underline">Revision History</h4>
 
       <table class="table mb-0">
@@ -52,10 +52,10 @@
     </div>
   </div>
 
-  <div class="col-3 p-0">
+  <div class="col-12 col-xl-4 col-xxl-3 p-0">
     <div class="sticky-top">
 
-      <div class="content-container ml-3 mt-3">
+      <div class="content-container mt-0 mt-xl-3 ml-xl-3">
         <h4 class="header-underline">Previous revision</h4>
         <ul>
           <li><strong>Author:</strong> <%= @diffed_revision.previous_author %></li>
@@ -64,7 +64,7 @@
         </ul>
       </div>
 
-      <div class="content-container ml-3">
+      <div class="content-container ml-xl-3">
         <h4 class="header-underline">This revision</h4>
         <ul>
           <li><strong>Author:</strong> <%= @diffed_revision.this_author %></li>
@@ -73,7 +73,7 @@
         </ul>
       </div>
 
-      <div class="content-container ml-3">
+      <div class="content-container d-none d-xl-block ml-xl-3">
          <h4 class="header-underline">Legend</h4>
         <p><del>removed text</del></p>
         <p><ins>added text</ins></p>

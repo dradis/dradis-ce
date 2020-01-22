@@ -25,10 +25,10 @@
             <% cache ['card-information-tab', @card] do %>
               <div class="note-text-inner">
                 <h4 class="mb-4 header-underline"><%= @card.name %> -
-                  <span class="actions small">
+                  <span class="actions">
                     <%= link_to edit_project_board_list_card_path(current_project, @board, @list, @card) do %>
                       <i class="fa fa-pencil"></i> Edit
-                    <% end %>
+                    <% end %> -
                     <%=
                       link_to(
                         project_board_list_card_path(current_project, @board, @list, @card),
@@ -70,7 +70,7 @@
 
           <% cache ['card-activity-tab', @card, @activities] do %>
             <div class="tab-pane" id="activity-tab">
-              <h3>Recent activity</h3>
+              <h4 class="header-underline">Recent activity</h4>
               <%= render 'activities/feed', activities: @activities %>
             </div>
           <% end %>

@@ -1,8 +1,8 @@
-<% if controller_name == 'nodes' %>
+<% if @node %>
 <div class="node-header">
   <nav>
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="javascript:void(0)">Nodes</a></li>
+      <li class="breadcrumb-item"><a href="javascript:void(0)" data-behavior="sidebar-toggle">Nodes</a></li>
       <%= content_tag :li, class: 'breadcrumb-item active', data: { node_id: @node.id } do %><%= @node.label %><% end -%>
     </ol>
   </nav>

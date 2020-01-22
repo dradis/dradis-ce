@@ -78,13 +78,15 @@ body.styles_tylium {
 
     .reveal-code {
       font-size: 1.1rem;
-
+      position: absolute;
+      top: -0.3rem;
+      right: 0;
+      padding: 0.3rem;
       display: inline-flex;
       background-color: $primaryBgColor;
       border: 1px solid transparent;
       border-radius: 5px;
-      padding: 0.3rem;
-      margin: 0 0 0.5rem 0.5rem;
+      transition: all 0.2s ease-in-out;
 
       &:hover {
         background-color: $secondaryBgColor;

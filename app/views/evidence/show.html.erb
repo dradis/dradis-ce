@@ -34,7 +34,7 @@
                 <span class="actions">
                   <%= link_to edit_project_node_evidence_path(@node.project, @node, @evidence), class: 'action-link' do %>
                     <i class="fa fa-pencil"></i> Edit
-                  <% end %>
+                  <% end %> -
                   <%= link_to [current_project, @node, @evidence],
                         class: 'action-link text-error',
                         data: { confirm: "Are you sure?\n\nProceeding will delete this evidence from the associated node." },
@@ -52,13 +52,15 @@
 
         <% cache ['evidence-information-tab', @issue] do %>
           <div class="tab-pane" id="info-tab">
-            <h3>
+            <h4 class="header-underline">
               Issue information -
               <span class="actions">
-              <%= link_to 'Open', project_issue_path(current_project, @issue), class: 'action-link' %> -
+              <%= link_to project_issue_path(current_project, @issue), class: 'action-link' do %>
+                <i class="fa fa-external-link" aria-hidden="true"></i> Open
+              <% end %> -
               <%= tag_and_name_for(@issue) %>
               </span>
-            </h3>
+            </h4>
             <div id="<%= dom_id(@issue) %>_text" class="content-textile">
               <%= markup(@issue.text) %>
             </div>
@@ -67,21 +69,22 @@
 
         <% cache ['evidence-activity-tab', @evidence, @activities] do %>
           <div class="tab-pane" id="activity-tab">
-            <h3>
-              Recent activity -
-              <span class="actions">
-                <%#
-                  # Some legacy content was created before paper_trail, so we need to
-                  # make sure that there is at least one revision associated to the
-                  # model.
-                  #%>
-                <%= link_to(
-                      'revision history',
-                      project_node_evidence_revisions_path(@node.project, @node, @evidence),
-                      class: 'action-link'
-                    ) if @evidence.has_revision_history? %>
-              </span>
-            </h3>
+            <h4 class="header-underline">
+              Recent activity
+              <% if @evidence.has_revision_history? %>
+                -
+                <span class="actions">
+                  <%#
+                    # Some legacy content was created before paper_trail, so we need to
+                    # make sure that there is at least one revision associated to the
+                    # model.
+                    #%>
+                  <%= link_to(project_node_evidence_revisions_path(@node.project, @node, @evidence), class: 'action-link') do %>
+                    <i class="fa fa-history"></i> Revision history
+                  <% end %>
+                </span>
+              <% end %>
+            </h4>
             <%= render 'activities/feed', activities: @activities %>
           </div>
         <% end %>

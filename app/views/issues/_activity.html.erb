@@ -7,11 +7,11 @@
     #%>
   <% if @issue.has_revision_history? %>
     - 
-    <%= link_to(
-          'revision history',
-          project_issue_revisions_path(current_project, @issue),
-          class: 'text-capitalize'
-    ) %>
+    <span class="actions">
+      <%= link_to(project_issue_revisions_path(current_project, @issue), class: 'action-link') do %>
+        <i class="fa fa-history"></i> Revision history
+      <% end %>
+    </span>
   <% end %>
 </h4>
 <%= render 'activities/feed', activities: @activities %>

@@ -21,7 +21,7 @@
 
         <div class="col-lg-4 col-xxl-3 p-0 d-none d-lg-block">
           <div class="content-container mt-3 ml-3 sticky-top">
-            <h4>Quick Nav</h4>
+            <h4 class="header-underline">Quick Nav</h4>
             <nav class="d-flex flex-column">
               <% @configs.each do |configuration| -%>
                 <%= link_to configuration[:name], {anchor: configuration[:name]}, class: 'nav-link' %>
