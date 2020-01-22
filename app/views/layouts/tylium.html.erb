@@ -82,12 +82,16 @@
       <% end %>
     <% end %>
 
-    <% if @node %>
+    <% if controller_name == 'nodes' %>
       <%= render partial: 'nodes/modals/add_node', locals: { type: :child } %>
       <%= render partial: 'nodes/modals/delete' %>
       <%= render partial: 'nodes/modals/merge' %>
       <%= render partial: 'nodes/modals/move' %>
       <%= render partial: 'nodes/modals/rename' %>
+    <% end %>
+
+    <% if controller_name == 'notes'%>
+      <%= render partial: 'notes/modals/move' %>
     <% end %>
     
     <% if controller_name == 'styles_tylium' %>
