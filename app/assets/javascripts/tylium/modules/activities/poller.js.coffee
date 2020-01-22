@@ -265,8 +265,8 @@ class @ActivitiesPoller
           $board.find('.board-tile-details-name').html(boardName)
       else if @_currentlyViewingBoard(boardId)
         document.title = boardName
-        $('#view-content h1').html(boardName)
-        $('ul.breadcrumb li:nth-child(2)').html(boardName)
+        $('#view-content h3').html(boardName)
+        $('ol.breadcrumb li:nth-child(2)').html(boardName)
 
     if @controller == 'nodes' && @_currentlyViewingBoard(boardId)
         $('[data-behavior~=board-name]').html(boardName)
