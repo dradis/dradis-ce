@@ -1,4 +1,4 @@
-<nav>
+<nav data-behavior='breadcrumbs-nav'>
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
       <%= link_to @board.node.label, project_boards_path(current_project, node_id: @board.node_id) %>

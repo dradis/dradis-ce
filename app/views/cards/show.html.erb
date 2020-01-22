@@ -7,6 +7,9 @@
 <%= render partial: 'poller_alerts' unless request.xhr? %>
 
 <div id="js-card">
+  <div class='d-none' data-behavior='breadcrumbs-xhr'>
+    <%= render partial: 'breadcrumbs' %>
+  </div>
 
   <ul class="tabs-container nav nav-tabs main-tabs">
     <li class="nav-item">

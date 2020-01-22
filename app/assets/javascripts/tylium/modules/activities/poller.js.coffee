@@ -101,8 +101,8 @@ class @ActivitiesPoller
         $toggleLink.children("i")
           .removeClass("fa-caret-down")
           .addClass("fa-caret-right")
-        $toggleLink.find('li.loading').show()
-        $toggleLink.find('li.error').hide()
+        $toggleLink.find('li.loading').removeClass('d-none')
+        $toggleLink.find('li.error').addClass('d-none')
         $subNodes.removeClass("opened")
 
 
@@ -150,14 +150,14 @@ class @ActivitiesPoller
       @_findNoteLink(noteId).replaceWith(newLink)
 
       if @_currentlyViewingNote(noteId)
-        $("#note-updated-alert").show()
+        $("#note-updated-alert").removeClass('d-none')
 
 
   @deleteNote: (noteId) ->
     $link = @_findNoteLink(noteId)
     if $link.length
       $link.remove()
-      if ($('#notes .list-item').size() == 1)
+      if ($('#notes .list-item').length == 1)
         $('#notes .placeholder').slideDown(300)
 
       if @_currentlyViewingNote(noteId)
@@ -176,14 +176,14 @@ class @ActivitiesPoller
       @_findEvidenceLink(evidenceId).replaceWith(newLink)
 
       if @_currentlyViewingEvidence(evidenceId)
-        $("#evidence-updated-alert").show()
+        $("#evidence-updated-alert").removeClass('d-none')
 
 
   @deleteEvidence: (evidenceId) ->
     $link = @_findEvidenceLink(evidenceId)
     if $link.length
       $link.remove()
-      if ($('#evidence .list-item').size() == 1)
+      if ($('#evidence .list-item').length == 1)
         $('#notes .placeholder').slideDown(300)
 
     if @_currentlyViewingEvidence(evidenceId)
@@ -237,7 +237,7 @@ class @ActivitiesPoller
               <strong><a href='#{cardPath}'>here</a></strong>.
             </p>"
           $('#card-updated-alert').html(message)
-          $('#card-updated-alert').show()
+          $('#card-updated-alert').removeClass('d-none')
 
     else if @_currentlyViewingBoard(boardId)
       @_refreshBoard(boardId)
@@ -332,7 +332,7 @@ class @ActivitiesPoller
       count = parseInt($('#comment-count').html())
       count = count - 1 if count > 0
       $('#comment-count').html(count)
-      $('[data-notice~=no-comments]').show() if count == 0
+      $('[data-notice~=no-comments]').removeClass('d-none') if count == 0
 
   # private
 
@@ -343,7 +343,7 @@ class @ActivitiesPoller
 
   @_removeCardLink: (link) ->
     link.remove()
-    if ($('#tasks .list-item').size() == 1)
+    if ($('#tasks .list-item').length == 1)
       $('#tasks .placeholder').slideDown(300)
 
 
@@ -407,29 +407,32 @@ class @ActivitiesPoller
       $("#js-card").replaceWith(html)
       $(document).trigger 'sortable:init'
 
+      breadcrumbs = $(html).find("[data-behavior~=breadcrumbs-xhr]").html()
+      $("[data-behavior~=breadcrumbs-nav]").replaceWith(breadcrumbs)
+
 
   @_showEvidenceDeletedAlert: ->
-    $("#evidence-updated-alert").hide()
-    $("#evidence-deleted-alert").show()
+    $("#evidence-updated-alert").addClass('d-none')
+    $("#evidence-deleted-alert").removeClass('d-none')
 
 
   @_showNoteDeletedAlert: ->
-    $("#note-updated-alert").hide()
-    $("#note-deleted-alert").show()
+    $("#note-updated-alert").addClass('d-none')
+    $("#note-deleted-alert").removeClass('d-none')
 
 
   @_showNodeDeletedAlert: ->
-    $('#node-deleted-alert').show()
+    $('#node-deleted-alert').removeClass('d-none')
 
 
   @_showBoardDeletedAlert: ->
-    $("#board-deleted-alert").show()
+    $("#board-deleted-alert").removeClass('d-none')
 
 
   @_showCardDeletedAlert: ->
-    $("#card-updated-alert").hide()
-    $("#card-deleted-alert").show()
+    $("#card-updated-alert").addClass('d-none')
+    $("#card-deleted-alert").removeClass('d-none')
 
 
   @_showListDeletedAlert: ->
-    $("#list-deleted-alert").show()
+    $("#list-deleted-alert").removeClass('d-none')
