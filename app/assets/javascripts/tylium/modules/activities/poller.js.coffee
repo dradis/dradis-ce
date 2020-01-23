@@ -106,10 +106,6 @@ class @ActivitiesPoller
         $subNodes.removeClass("opened")
 
 
-
-
-
-
   @updateNode: (nodeId, linkContent) ->
     $links = @_findNodeLinks(nodeId)
     $links.replaceWith(linkContent)

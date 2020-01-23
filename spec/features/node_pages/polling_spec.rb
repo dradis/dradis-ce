@@ -245,6 +245,7 @@ describe "node pages", js: true do
   end # when another user updates a node
 
   def within_main_sidebar
+    find('.tree-header').click
     within(".main-sidebar") { yield }
   end
 
@@ -282,6 +283,7 @@ describe "node pages", js: true do
   end
 
   def expand_node_in_sidebar(node)
+    find('.tree-header').click
     find(".main-sidebar [data-node-id='#{node.id}'] > .toggle").click
     wait_for_loading_to_finish
   end
