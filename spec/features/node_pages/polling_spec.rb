@@ -38,7 +38,7 @@ describe "node pages", js: true do
 
       it "adds it to the 'move node' modal" do
         show_move_node_modal
-        within_move_node_nodal do
+        within_move_node_modal do
           should have_no_selector node_link_selector(@new_node)
           add_node
           should have_selector node_link_selector(@new_node)
@@ -76,7 +76,7 @@ describe "node pages", js: true do
           end
 
           it "adds the node to the sidebar" do
-            within_move_node_nodal do
+            within_move_node_modal do
               should have_selector node_link_selector(@node)
               @subnode = create(:node, label: "Sub", parent: @node, project: current_project)
               should have_no_selector node_link_selector(@subnode)
@@ -135,9 +135,9 @@ describe "node pages", js: true do
       end
     end
 
-    it "is removed from the move node nodal" do
+    it "is removed from the move node modal" do
       show_move_node_modal
-      within_move_node_nodal do
+      within_move_node_modal do
         should have_selector node_link_selector(@other_node)
         delete_node
         should have_no_selector node_link_selector(@other_node)
@@ -173,7 +173,7 @@ describe "node pages", js: true do
       before { show_move_node_modal }
 
       it "does not appear when the parent node is expanded in the modal" do
-        within_move_node_nodal do
+        within_move_node_modal do
           should have_no_selector node_link_selector(@subnode)
           delete_node
           expand_node_in_modal(@node)
@@ -203,8 +203,8 @@ describe "node pages", js: true do
         expand_node_in_modal(@node)
       end
 
-      it "is removed from the move node nodal" do
-        within_move_node_nodal do
+      it "is removed from the move node modal" do
+        within_move_node_modal do
           should have_selector node_link_selector(@subnode)
           delete_node
           should have_no_selector node_link_selector(@subnode)
@@ -234,9 +234,9 @@ describe "node pages", js: true do
       end
     end
 
-    it "updates the link in the move node nodal" do
+    it "updates the link in the move node modal" do
       show_move_node_modal
-      within_move_node_nodal do
+      within_move_node_modal do
         should have_selector node_link_selector(@other_node), text: "Other"
         update_node
         should have_selector node_link_selector(@other_node), text: "New name"
@@ -257,7 +257,7 @@ describe "node pages", js: true do
     "#{node_li_selector(node)} > a[href='#{project_node_path(node.project, node)}']"
   end
 
-  def within_move_node_nodal
+  def within_move_node_modal
     within("#modal_move_node") { yield }
   end
 
