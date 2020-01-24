@@ -80,7 +80,7 @@ shared_examples 'managing boards' do
     describe 'submitting the form with valid information' do
       before do
         within '#modal-board-new' do
-          find('[data-behavior~=new-board-name]').set('New Board')
+          fill_in :board_name, with: 'New Board'
         end
       end
 
@@ -112,7 +112,7 @@ shared_examples 'managing boards' do
           visit boards_path
           find(create_link).click
           within '#modal-board-new' do
-            find('[data-behavior~=new-board-name]').set('New Board')
+            fill_in :board_name, with: 'New Board'
           end
           choose id: 'use_template_yes'
           select 'Webapp' # one of the existing v1 templates
@@ -129,7 +129,7 @@ shared_examples 'managing boards' do
           visit boards_path
           find(create_link).click
           within '#modal-board-new' do
-            find('[data-behavior~=new-board-name]').set('New Board')
+            fill_in :board_name, with: 'New Board'
           end
           choose id: 'use_template_yes'
           select 'New Methodology v2' # a v2 template
@@ -148,7 +148,7 @@ shared_examples 'managing boards' do
     describe 'submitting the form with invalid information' do
       before do
         within '#modal-board-new' do
-          find('[data-behavior~=new-board-name]').set('')
+          fill_in :board_name, with: ''
         end
       end
 
