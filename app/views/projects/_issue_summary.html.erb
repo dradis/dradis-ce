@@ -4,34 +4,50 @@
   <% if @issues.any? %>
     <div id="issue-chart"></div>
 
-    <% for tag in @tags do %>
-      <% if @issues_by_tag[tag.name].any? %>
-        <div class="issue-group">
-          <h5 style="color: <%= tag.color %>"><%= tag.display_name %></h5>
-          <ul class="issue-list drop-target" data-tag="<%= tag.name %>">
-            <% for issue in @issues_by_tag[tag.name] %>
-              <%= content_tag_for :li, issue, data: { url: project_issue_path(current_project, issue, format: :json) } do %>
-                <%= link_to issue.title, [current_project, issue] %>
-              <% end %>
-            <% end %>
-          </ul>
+    <div id="issues-accordion" role="tablist">
+      <% for tag in @tags do %>
+        <% if @issues_by_tag[tag.name].any? %>
+          <div class="card" style="border-color: <%= tag.color %>">
+            <a data-toggle="collapse" href="#collape<%= tag.display_name %>" class="card-header" style="background: <%= tag.color %>" data-behavior="card-header">
+              <h5><%= tag.display_name %><span class="float-right"><i class="fa fa-caret-up" data-behavior="caret-icon"></i></span></h5>
+            </a>
+
+            <div id="collape<%= tag.display_name %>" class="collapse show">
+              <div class="card-body p-0">
+                <ul class="list-group">
+                  <% @issues_by_tag[tag.name].each do |issue| %>
+                    <%= link_to [current_project, issue], class: 'list-group-item'  do %>
+                      <li style="color: <%= tag.color %>"><%= issue.title %></li>
+                    <% end %>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+      <%# unassigned %>
+      <% if @issues_by_tag[:unassigned].any? %>
+        <div class="card untagged">
+          <a data-toggle="collapse" href="#collapeUnassigned" class="card-header" data-behavior="card-header">
+            <h5>Unassigned<span class="float-right"><i class="fa fa-caret-up" data-behavior="caret-icon"></i></span></h5>
+          </a>
+
+          <div id="collapeUnassigned" class="collapse show">
+            <div class="card-body p-0">
+              <ul class="list-group">
+                <% @issues_by_tag[:unassigned].each do |issue| %>
+                  <%= link_to [current_project, issue], class: 'list-group-item'  do %>
+                    <li><%= issue.title %></li>
+                  <% end %>
+                <% end %>
+              </ul>
+            </div>
+          </div>
         </div>
       <% end %>
-    <% end %>
-
-    <%# unassigned %>
-    <% if @issues_by_tag[:unassigned].any? %>
-      <div class="issue-group">
-        <h5>Unassigned</h5>
-        <ul class="issue-list drop-target">
-            <% for issue in @issues_by_tag[:unassigned] %>
-              <%= content_tag_for :li, issue, data: { url: project_issue_path(current_project, issue, format: :json) } do %>
-                <%= link_to issue.title, [current_project, issue] %>
-              <% end %>
-            <% end %>
-        </ul>
-      </div>
-    <% end %>
+    </div>
 
   <% else %>
     <p>There are no issues in this project yet.</p>

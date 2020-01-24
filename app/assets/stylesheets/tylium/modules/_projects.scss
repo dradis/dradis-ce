@@ -25,32 +25,45 @@ body.projects {
       }
     }
 
-    .issue-group {
+    #issues-accordion {
       margin-top: 1rem;
-      border: 1px solid $borderColor;
-      border-radius: 3px;
 
-      h5 {
-        margin: 0.5rem;
-      }
+      .card {
+        margin-bottom: 1rem;
 
-      .issue-list {
-        margin-bottom: 0;
-        padding: 0;
-
-        li {
-          margin: 0;
-          padding: 0;
-
-          a {
-            display: flex;
-            width: 100%;
-            padding: 0.5rem 1rem;
+        .card-body {
+          
+          .list-group-item {
+            border: none;
             transition: background-color 0.2s ease-in-out;
 
             &:hover {
               background-color: darken($primaryBgColor, 3%);
             }
+          }
+        }
+
+        .card-header {
+          color: $white;
+  
+          h5 {
+            margin-bottom: 0;
+          }
+        }
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        &.untagged {
+          border-color: #222;
+
+          .card-body li {
+            color: #222;
+          };
+
+          .card-header {
+            background-color: #222;
           }
         }
       }
