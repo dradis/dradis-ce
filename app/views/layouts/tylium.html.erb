@@ -82,7 +82,7 @@
       <% end %>
     <% end %>
 
-    <% if controller_name == 'nodes' %>
+    <% if @node %>
       <%= render partial: 'nodes/modals/add_node', locals: { type: :child } %>
       <%= render partial: 'nodes/modals/delete' %>
       <%= render partial: 'nodes/modals/merge' %>
