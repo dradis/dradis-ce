@@ -12,6 +12,15 @@ body.issues.edit, body.issues.new {
   }
 }
 
+body.issues.edit {
+  #cvss-tabs.nav-pills {
+    .nav-link.active {
+      background-color: $primaryColor;
+      color: $white;
+    }
+  }
+}
+
 body.issues.index {
 
   .tab-content.outer-tab {
