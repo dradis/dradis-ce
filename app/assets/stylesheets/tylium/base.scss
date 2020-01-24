@@ -51,7 +51,8 @@ a {
   font-weight: 300;
   font-size: inherit;
 
-  &.btn-primary {
+  &.btn-primary,
+  &.btn-primary:not(:disabled):not(.disabled).active {
     @include button($primaryColor);
   }
   &.btn-danger {
@@ -63,11 +64,6 @@ a {
   &.btn-warning {
     @include button($orange);
   }
-}
-
-.btn-group > .btn-group:not(:first-child),
-.btn-group > .btn:not(:first-child) {
-  margin-left: -4px;
 }
 
 button:focus {

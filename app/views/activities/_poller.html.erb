@@ -15,6 +15,6 @@
   data-list-name="<%= @list.try(:name) %>"
   data-node-id="<%= @node.try(:id) %>"
   data-project-id="<%= current_project.id %>"
-  data-url=<%= main_app.poll_project_activities_path(current_project, format: :js) %>
+  data-url="<%= main_app.poll_project_activities_path(current_project, format: :js) %>"
 >
 </div>

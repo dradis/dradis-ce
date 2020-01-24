@@ -50,8 +50,7 @@
 
           <hr>
           <div class="form-group">
-            <label>Name</label>
-            <%= text_field_tag :name, nil, required: true, data: { behavior: 'new-board-name' }, class: 'form-control string', name: 'board[name]' %>
+            <%= f.input :name %>
           </div>
         </div>
 

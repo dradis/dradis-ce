@@ -57,7 +57,7 @@ class IssuesTable extends ItemsTable
   refreshToolbar: =>
     checked = $(@selectedItemsSelector).length
     if checked
-      $('.js-items-table-actions').css('display', 'inline-block')
+      $('.js-items-table-actions').css('display', 'inline-flex')
     else
       $('.js-items-table-actions').css('display', 'none')
 

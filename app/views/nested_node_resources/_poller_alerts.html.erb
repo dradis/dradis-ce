@@ -10,7 +10,7 @@
 <% if @evidence %>
   <%# This alert is shown by if another user deletes the current evidence %>
   <div id="evidence-deleted-alert"
-       data-evidence-id=<%= @evidence.id %>
+       data-evidence-id="<%= @evidence.id %>"
        class="alert alert-danger d-none">
     <p>
       <strong>Warning</strong>. This piece of evidence has been deleted by
@@ -20,7 +20,7 @@
 
   <%# This alert is shown by activities/poller.js if another user updates the
     current evidence %>
-  <div id="evidence-updated-alert" data-evidence-id=<%= @evidence.id %> class="alert alert-info d-none">
+  <div id="evidence-updated-alert" data-evidence-id="<%= @evidence.id %>" class="alert alert-info d-none">
     <p>
       <strong>Warning</strong>. Another user has updated this piece of evidence
       since you started viewing it. Refresh the page to see their changes.
