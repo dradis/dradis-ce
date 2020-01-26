@@ -18,8 +18,7 @@
     <%= favicon_link_tag %>
 
     <%= stylesheet_link_tag 'tylium', media: 'all', 'data-turbolinks-track' => true %>
-    <%= javascript_include_tag 'tylium', 'data-turbolinks-track' => true %>
-
+    <%= stylesheet_link_tag 'tylium/test', media: 'all' if Rails.env.test? %>
     <%= csrf_meta_tag %>
   </head>
 
@@ -107,5 +106,7 @@
     <%# FIXME: re-enable Tour %>
     <%#= render 'layouts/tylium/tour' %>
     
+    <%= javascript_include_tag 'tylium', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'tylium/test' if Rails.env.test? %>
   </body>
 </html>

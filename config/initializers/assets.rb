@@ -16,4 +16,3 @@ Rails.application.config.assets.precompile += %w( application.css application.js
 
 # Include font files
 Rails.application.config.assets.precompile += %w( .svg .eot .woff .ttf )
-
