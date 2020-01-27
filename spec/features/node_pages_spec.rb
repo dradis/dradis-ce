@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "node pages" do
+describe "node pages", animations: false do
   subject { page }
 
   before do

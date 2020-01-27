@@ -18,7 +18,7 @@
     <%= favicon_link_tag %>
 
     <%= stylesheet_link_tag 'tylium', media: 'all', 'data-turbolinks-track' => true %>
-    <%= stylesheet_link_tag 'tylium/test', media: 'all' if Rails.env.test? %>
+    <%= javascript_include_tag 'tylium', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tag %>
   </head>
 
@@ -105,8 +105,5 @@
     <%# Always render the Tour content, the user may click on the link in the help menu. %>
     <%# FIXME: re-enable Tour %>
     <%#= render 'layouts/tylium/tour' %>
-    
-    <%= javascript_include_tag 'tylium', 'data-turbolinks-track' => true %>
-    <%= javascript_include_tag 'tylium/test' if Rails.env.test? %>
   </body>
 </html>

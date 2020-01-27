@@ -21,4 +21,12 @@ module ControllerMacros
   def current_project
     @project
   end
+
+  def visit(arg)
+    page.visit(arg)
+
+    if RSpec.current_example.metadata[:js] || (RSpec.current_example.metadata[:animations] == false)
+      page.execute_script File.read("#{Rails.root}/spec/support/selenium/disable_animations.js")
+    end
+  end
 end
