@@ -50,7 +50,7 @@
 
           <hr>
           <div class="form-group">
-            <%= f.input :name %>
+            <%= f.input :name, required: true, input_html: { data: { behavior: 'new-board-name' } } %>
           </div>
         </div>
 
