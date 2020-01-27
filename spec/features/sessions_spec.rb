@@ -51,4 +51,16 @@ describe 'Sessions' do
       end
     end
   end
+
+  context 'when the user is deleted' do
+    it 'forces a logout' do
+      login
+
+      @user.destroy
+      visit projects_path
+
+      expect(current_path).to eq(login_path)
+      expect(page).to have_content('Access denied')
+    end
+  end
 end
