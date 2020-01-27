@@ -9,13 +9,18 @@ describe 'Sessions' do
       name: 'admin:password',
       value: ::BCrypt::Password.create('rspec_pass')
     )
+    @user = create(
+      :user,
+      :author,
+      password_hash: ::BCrypt::Password.create('rspec_pass')
+    )
   end
 
   let(:password) { 'rspec_pass' }
 
   let(:login) do
     visit login_path
-    fill_in 'login', with: 'rspec_user'
+    fill_in 'login', with: @user.email
     fill_in 'password', with: password
     click_button 'Let me in!'
   end
@@ -57,7 +62,7 @@ describe 'Sessions' do
       login
 
       @user.destroy
-      visit projects_path
+      visit project_path(Project.find(1))
 
       expect(current_path).to eq(login_path)
       expect(page).to have_content('Access denied')
