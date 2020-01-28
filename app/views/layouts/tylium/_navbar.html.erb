@@ -24,7 +24,7 @@
       <%= link_to main_app.project_configurations_path(current_project), class: 'nav-link', title: 'Configuration Manager' do %><i class="fa fa-cog fa-lg"></i><% end %>
     </li>
     <li class="nav-item notifications dropdown round">
-      <%= link_to main_app.project_notifications_path(current_project), class: 'nav-link dropdown-toggle', data: { behavior: 'notifications-dropdown close-collapse' }, remote: true, role: 'button', title: 'Notifications' do %>
+      <%= link_to main_app.project_notifications_path(current_project), class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown',  behavior: 'notifications-dropdown close-collapse' }, role: 'button', title: 'Notifications' do %>
         <i class="fa fa-bell fa-lg"></i><i class="notifications-dot d-none" data-behavior="notifications-dot"></i>
       <% end %>
       <div class="dropdown-menu dropdown-menu-right" data-url="<%= main_app.project_notifications_path(current_project) %>"></div>
