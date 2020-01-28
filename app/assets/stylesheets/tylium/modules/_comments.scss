@@ -16,7 +16,7 @@
       background-color: $primaryBgColor;
   
       .content {
-        margin-left: 20px;
+        margin-left: 2.5rem;
         padding-bottom: 0;
 
         p:last-child {
@@ -26,6 +26,7 @@
 
       .gravatar {
         padding-top: 3px;
+        margin-right: 0.5rem
       }
   
       &:hover {

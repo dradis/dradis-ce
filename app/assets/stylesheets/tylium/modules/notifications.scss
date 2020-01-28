@@ -24,10 +24,6 @@
     }
   }
 
-  &:last-child {
-    border-bottom: none;
-  }
-
   .notification-icon {
     position: absolute;
     display: flex;
@@ -86,6 +82,10 @@
 
       li.notification {
         @include notification-list-item;
+        
+        &:last-child {
+          border-bottom: none;
+        }
       }
 
       li.no-content {
@@ -126,6 +126,11 @@ body.notifications {
 
   li.notification {
     @include notification-list-item;
+    padding: 1rem 2rem 1rem 1rem;
+
+    &:first-of-type {
+      padding-top: 0;
+    }
 
     .notification-icon {
       display: none;

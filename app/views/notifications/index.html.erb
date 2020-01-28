@@ -8,7 +8,7 @@
   </h4>
   <% cache [current_user, @notifications] do %>
     <% if @notifications.any? %>
-      <div class="notifications-index mt-4">
+      <div class="notifications-index">
         <ul class="p-0 m-0">
           <% @notifications.each do |notification| %>
             <%= render notification %>
