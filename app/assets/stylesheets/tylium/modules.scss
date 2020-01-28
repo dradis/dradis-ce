@@ -152,10 +152,10 @@ pre {
 }
 
 .restrict-height {
-  overflow: scroll;
+  overflow: auto;
 
   &.full-height {
-    max-height: calc(100vh - 10.2rem);
+    max-height: calc(100vh - 10rem);
   }
 
   &.half-height {
@@ -206,6 +206,15 @@ pre {
       z-index: 2;
       cursor: default;
     }
+  }
+}
+
+// Firefox: this fixes ignored padding when parent is scrollable.
+@-moz-document url-prefix() {
+  .restrict-height::after {
+    content: "";
+    height: 2rem;
+    display: block;
   }
 }
 

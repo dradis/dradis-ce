@@ -26,7 +26,10 @@
 
       .gravatar {
         padding-top: 3px;
-        margin-right: 0.5rem
+        
+        &:not(.gravatar-inline) {
+          margin-right: 0.5rem
+        }
       }
   
       &:hover {

@@ -16,7 +16,7 @@
     padding: 1rem;
     height: calc(100vh - 60px);
     position: fixed;
-    overflow: scroll;
+    overflow: auto;
     width: 16.3%;
     min-width: 190px;
     z-index: 2;
@@ -26,7 +26,7 @@
     }
 
     @media screen and (max-width: 991px) {
-      width: 31%;
+      width: 31.8%;
     }
 
     .header-inner {

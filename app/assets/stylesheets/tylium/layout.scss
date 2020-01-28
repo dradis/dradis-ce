@@ -61,7 +61,7 @@
   min-width: 570px;
   top: $navbarHeight;
   left: $sidebarCollapsed;
-  overflow: scroll;
+  overflow: auto;
   font-size: 0.9rem;
 
   .content-container {
