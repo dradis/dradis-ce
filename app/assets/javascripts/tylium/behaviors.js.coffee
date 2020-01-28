@@ -101,9 +101,9 @@ document.addEventListener "turbolinks:load", ->
         when 'training-course' then 'Dradis Training Course'
         when 'try-pro' then 'Upgrade to Dradis Pro'
 
-      $modal.find('.modal-header h3').html(title)
+      $modal.find('[data-behavior~=modal-title]').html(title)
     else
-      $modal.find('.modal-header h3').text('Dradis Framework editions')
+      $modal.find('[data-behavior~=modal-title]').text('Dradis Framework editions')
 
     url = url + '?utm_source=ce&utm_medium=app&utm_campaign=try-pro&utm_term=' + term
 
