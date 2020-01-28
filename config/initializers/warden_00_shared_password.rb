@@ -11,6 +11,12 @@ Warden::Manager.serialize_from_session do |id|
   User.find_by_id(id)
 end
 
+
+Rails.configuration.middleware.use Warden::Manager do |manager|
+  manager.default_strategies :shared_password
+  manager.failure_app = ->(env) { SessionsController.action(:failure).call(env) }
+end
+
 # A simple db-backed strategy that uses the User.authenticate() method.
 Warden::Strategies.add(:shared_password) do
   def valid?
@@ -28,23 +34,4 @@ Warden::Strategies.add(:shared_password) do
       fail 'Invalid credentials.'
     end
   end
-end
-
-# A simple db-backed strategy that uses the User.authenticate() method.
-Warden::Strategies.add(:db) do
-  def valid?
-    params['login'] || params['password']
-  end
-  def authenticate!
-    if (user = User.enabled.authenticate(params['login'], params['password']))
-      success!(user)
-    else
-      fail! 'Invalid credentials.'
-    end
-  end
-end
-
-Rails.configuration.middleware.use Warden::Manager do |manager|
-  manager.default_strategies :shared_password
-  manager.failure_app = ->(env) { SessionsController.action(:failure).call(env) }
 end
