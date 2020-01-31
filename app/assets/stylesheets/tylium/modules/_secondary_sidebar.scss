@@ -35,6 +35,7 @@
 
       .header-name {
         margin-top: 0.5rem;
+        cursor: default;
       
         a {
           color: $lightColor;
@@ -42,10 +43,6 @@
 
         &:first-of-type{
           margin-top: 0;
-        }
-
-        &:hover {
-          color: $white;
         }
       }
 
