@@ -23,6 +23,10 @@ body.issues.edit {
 
 body.issues.index {
 
+  .add-issues {
+    margin-top: 1rem;
+  }
+
   .tab-content.outer-tab {
     border-right: 1px solid $borderColor;
     border-bottom: 1px solid $borderColor;
