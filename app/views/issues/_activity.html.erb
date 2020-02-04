@@ -8,7 +8,7 @@
   <% if @issue.has_revision_history? %>
     - 
     <span class="actions">
-      <%= link_to(project_issue_revisions_path(current_project, @issue), class: 'action-link') do %>
+      <%= link_to(project_issue_revisions_path(current_project, @issue)) do %>
         <i class="fa fa-history"></i> Revision history
       <% end %>
     </span>
