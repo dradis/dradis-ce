@@ -12,3 +12,7 @@ document.addEventListener "turbolinks:load", ->
       replace(insRegex, '<ins class="differ">$1</ins>')
 
     $('.js-diff-body').html(newText)
+
+  if $('body.revisions.trash') 
+    new ItemsTable('#trash-table', 'trash_item')
+    $('[data-behavior~=sortable-header], [data-behavior~=sortable-item]').css('display', 'table-cell')
