@@ -1,7 +1,7 @@
 <% content_for :title, 'Project summary' %>
 
 <div class="row m-0">
-  <div class="col-12 col-lg-6 p-0">
+  <div class="col-12 col-lg-6 col-xxl-4 p-0">
     <div class="content-container mt-3 mr-lg-3">
       <%= render partial: 'projects/issue_summary' %>
     </div>
@@ -15,16 +15,22 @@
     </div>  
   </div>
 
-  <div class="col-12 col-lg-6 p-0">
-    <div class="content-container mt-0 mt-lg-3 ml-lg-3">
-      <%= render partial: 'projects/methodology_summary' %>
-    </div>
+  <div class="col-12 col-lg-6 col-xxl-8 p-0">
+    <div class="row m-0">
+      <div class="col-xxl-6 p-0">
+        <div class="content-container mt-0 mt-lg-3 ml-lg-3 mx-xxl-3">
+          <%= render partial: 'projects/methodology_summary' %>
+        </div>
+      </div>
 
-    <div class="content-container ml-lg-3 restrict-height full-height" data-behavior="restrict-height">
-      <section class="summary-panel">
-        <h4 class="header-underline">Recent activity</h4>
-        <%= render 'activities/feed', activities: @activities %>
-      </section>
+      <div class="col-xxl-6 p-0">
+        <div class="content-container ml-lg-3 mt-0 mt-xxl-3 restrict-height full-height" data-behavior="restrict-height">
+          <section class="summary-panel">
+            <h4 class="header-underline">Recent activity</h4>
+            <%= render 'activities/feed', activities: @activities %>
+          </section>
+        </div>
+      </div>
     </div>
   </div>
 </div>
