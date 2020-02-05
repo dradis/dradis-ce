@@ -24,7 +24,7 @@
                     <tr>
                       <td data-sort-value="<%= recoverable_revision_presenter.title %>" data-behavior="sortable-item"><%= recoverable_revision_presenter.info %></td>
                       <td data-sort-value="<%= recoverable_revision_presenter.whodunnit %>" data-behavior="sortable-item"><%= recoverable_revision_presenter.whodunnit %></td>
-                      <td data-sort-value="<%= recoverable_revision_presenter.recoverable_revision.version.created_at.to_i %>" data-behavior="sortable-item"><%= recoverable_revision_presenter.created_at_ago %></td>
+                      <td data-sort-value="<%= recoverable_revision.version.created_at.to_i %>" data-behavior="sortable-item"><%= recoverable_revision_presenter.created_at_ago %></td>
                       <td>
                         <%= link_to(
                           recover_project_revision_path(
