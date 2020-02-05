@@ -57,7 +57,7 @@ RSpec.describe RecoverableRevisionPresenter do
     end
 
     it 'has the correct title' do
-      expect(@presenter.send(:title)).to eq "My issue"
+      expect(@presenter.send(:title)).to eq 'My issue'
     end
 
     it 'has the correct type' do
