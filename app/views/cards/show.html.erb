@@ -65,7 +65,15 @@
     <% cache ['card-activity-tab', @card, @activities] do %>
       <div class="tab-pane" id="activity-tab">
         <div class="inner">
-          <h3>Recent activity</h3>
+          <h3>Recent activity -
+            <span class="actions">
+              <%= link_to(
+                    'revision history',
+                    project_board_list_card_revisions_path(current_project, @board, @list, @card),
+                    class: 'action-link'
+              ) if @card.has_revision_history? %>
+            </span>
+          </h3>
           <%= render 'activities/feed', activities: @activities %>
         </div>
       </div>

@@ -32,6 +32,7 @@ Rails.application.routes.draw do
         member { post :move }
         resources :cards, except: [:index] do
           member { post :move }
+          resources :revisions, only: [:index, :show]
         end
       end
     end
