@@ -1,6 +1,7 @@
 v3.16 (Mmm'YY)
   * Fix errors on content overwrite flash messages
   * Fail and redirect to login instead of raising an error when attempting to log in as a user that has been removed.
+  * Add revision history for cards
   * Bugs fixed:
     -
   * Integration enhancements:
