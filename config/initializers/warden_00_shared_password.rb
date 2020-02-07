@@ -8,7 +8,7 @@ Warden::Manager.serialize_into_session do |user|
 end
 
 Warden::Manager.serialize_from_session do |id|
-  User.find(id)
+  User.find_by_id(id)
 end
 
 
