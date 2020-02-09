@@ -87,6 +87,7 @@ describe "note pages" do
     end
 
     let(:submit_form) { click_button "Update Note" }
+    let(:cancel_form) { click_link "Cancel" }
 
     it "has a form to edit the note" do
       should have_field :note_text
@@ -139,6 +140,13 @@ describe "note pages" do
         should have_selector ".alert.alert-error"
       end
     end
+
+    describe "cancel button" do
+      it "returns to the note page" do
+        cancel_form
+        expect(current_path).to eq project_node_note_path(current_project, @node, @note)
+      end
+    end
   end
 
 
@@ -154,6 +162,7 @@ describe "note pages" do
     after { File.delete(path) }
 
     let(:submit_form) { click_button "Create Note" }
+    let(:cancel_form) { click_link "Cancel" }
 
     context "when no template is specified" do
       let(:params) { {} }
@@ -202,6 +211,13 @@ describe "note pages" do
           submit_form
           should have_field :note_text
           should have_selector ".alert.alert-error"
+        end
+      end
+
+      describe "cancel button" do
+        it "returns to the node page" do
+          cancel_form
+          expect(current_path).to eq project_node_path(current_project, @node)
         end
       end
     end
