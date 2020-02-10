@@ -57,42 +57,42 @@ $secondarySidebarWidth: 25%;
 // Fonts
 @font-face {
   font-family: 'OpenSans';
-  src: url('OpenSans-Regular.ttf');
+  src: font-url('OpenSans-Regular.ttf');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'OpenSans';
-  src: url('OpenSans-Italic.ttf');
+  src: font-url('OpenSans-Italic.ttf');
   font-weight: 400;
   font-style: italic;
 }
 
 @font-face {
   font-family: 'OpenSans';
-  src: url('OpenSans-Light.ttf');
+  src: font-url('OpenSans-Light.ttf');
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'OpenSans';
-  src: url('OpenSans-LightItalic.ttf');
+  src: font-url('OpenSans-LightItalic.ttf');
   font-weight: 300;
   font-style: italic;
 }
 
 @font-face {
   font-family: 'OpenSans';
-  src: url('OpenSans-Bold.ttf');
+  src: font-url('OpenSans-Bold.ttf');
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'OpenSans';
-  src: url('OpenSans-BoldItalic.ttf');
+  src: font-url('OpenSans-BoldItalic.ttf');
   font-weight: 600;
   font-style: italic;
 }
