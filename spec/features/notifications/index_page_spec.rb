@@ -22,7 +22,7 @@ describe 'notifications index page' do
     visit project_notifications_path(@project)
 
     expect(page).not_to have_selector '.notification'
-    expect(page).to have_content 'You have no notifications yet'
+    expect(page).to have_content "You don't have any notifications yet."
   end
 
   example 'when I have notifications' do
@@ -37,7 +37,7 @@ describe 'notifications index page' do
     visit project_notifications_path(@project)
 
     expect(page).to have_selector '.notification', count: 2
-    expect(page).not_to have_content 'You have no notifications yet'
+    expect(page).not_to have_content "You don't have any notifications yet."
   end
 
   example 'marking all notifications as read', :js do

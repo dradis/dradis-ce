@@ -39,10 +39,10 @@ describe "note pages" do
     let(:create_comments) { nil }
 
     it "shows the note's contents" do
-      should have_selector "h4", text: "Title"
-      should have_selector "p",  text: "My note"
-      should have_selector "h4", text: "Description"
-      should have_selector "p",  text: "My description"
+      should have_selector 'h5', text: 'Title'
+      should have_selector 'p',  text: 'My note'
+      should have_selector 'h5', text: 'Description'
+      should have_selector 'p',  text: 'My description'
     end
 
     let(:trackable) { @note }

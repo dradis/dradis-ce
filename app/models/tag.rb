@@ -51,7 +51,7 @@ class Tag < ApplicationRecord
   # Strips the tag's name and returns the color details if present
   # if no color information is found, returns a default value of #ccc
   def color()
-    name[/\A(!\h{6})_[[:word:]]+?\z/,1].try(:gsub, "!", "#") || "#ccc"
+    name[/\A(!\h{6})_[[:word:]]+?\z/,1].try(:gsub, "!", "#") || "#555"
   end
 
   private

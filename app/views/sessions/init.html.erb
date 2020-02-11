@@ -1,28 +1,33 @@
-<div class="page-header">
-  <h1>Configure a shared password</h1>
+<div class="col-6 offset-3">
+  <div class="card">
+    <div class="card-header bg-custom">
+      <h5 class="m-0">Configure a shared password</h5>
+    </div>
+    <div class="card-body">
+      <%= form_tag( { action: 'setup' }, { class: 'form-horizontal' } ) do -%>
+
+        <%= flash_messages %>
+
+        <p>Please create a shared password which will be used by every user accessing this Dradis server.</p>
+
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label" for="password">Password</label>
+          <div class="col-sm-8">
+            <%= password_field_tag :password, nil, class: 'form-control', autofocus: true %>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label" for="password_confirmation">Confirm Password</label>
+          <div class="col-sm-8">
+            <%= password_field_tag :password_confirmation, nil, class: 'form-control' %>
+          </div>
+        </div>
+        <div class="form-group row mb-0">
+          <div class="col-sm-8 offset-sm-4">
+            <button type="submit" class="btn btn-lg btn-primary">Continue</button>
+          </div>
+        </div>
+      <% end -%>
+    <div>
+  </div>
 </div>
-
-<%= form_tag({action: 'setup'}, {class: 'form-horizontal'}) do -%>
-
-  <%= flash_messages %>
-
-  <p class="lead">The shared password will be used by everyone accessing the server, please set one up:</p>
-
-  <div class="control-group">
-    <label class="control-label" for="password">Password</label>
-    <div class="controls">
-      <%= password_field_tag :password, nil, class: 'input-xlarge' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="password_confirmation">Confirm Password</label>
-    <div class="controls">
-      <%= password_field_tag :password_confirmation, nil, class: 'input-xlarge' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <div class="controls">
-      <button type="submit" class="btn btn-large btn-primary">Create shared password and continue</button>
-    </div>
-  </div>
-<% end -%>

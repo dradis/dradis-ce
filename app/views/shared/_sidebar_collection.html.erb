@@ -8,15 +8,13 @@
         menu_class: 'pull-right'
       %>
     </div>
-    <h3><%= local_assigns[:index_path] ? link_to(name, index_path) : name %></h3>
+    <h5 class="header-underline header-name"><%= local_assigns[:index_path] ? link_to(name, index_path) : name %></h5>
   </div>
 </div>
 
-<div id="<%= name.downcase %>" class="note-list in collapse">
+<div id="<%= name.downcase %>" class="note-list collapse show">
   <% if collection.any? %>
     <%= render partial: collection.first.to_partial_path, collection: collection %>
   <% end %>
-  <div class="list-item">
-    <div class="note placeholder <%= 'hide' if collection.any? %>">(nothing yet)</div>
-  </div>
+  <div class="note placeholder <%= 'd-none' if collection.any? %>">(nothing yet)</div>
 </div>

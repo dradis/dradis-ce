@@ -78,7 +78,7 @@ shared_examples "recover deleted item without node" do |item_type|
         expect(page).not_to have_content item_type.to_s
       end
       expect(model.class.find_by_id(model.id)).not_to be_nil
-      expect(page).to have_content 'Recovered'
+      expect(page).to have_content /Recovered/i
     end
   end
 end

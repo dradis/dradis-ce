@@ -15,7 +15,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
-gem 'therubyracer', platforms: :ruby
+gem 'mini_racer', platforms: :ruby
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
@@ -31,9 +31,8 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
 # ---------------------------------------------------- Dradis Community Edition
-gem 'bootstrap-sass', '~> 2.3.2.2'
 gem 'font-awesome-sass', '~> 4.7.0'
-
+gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jquery-fileupload-rails', '~> 0.3.4'
@@ -50,7 +49,7 @@ gem 'differ', '~> 0.1.2'
 # HTML processing filters and utilities
 gem 'html-pipeline'
 
-gem 'kaminari', '~> 1.0.1'
+gem 'kaminari', '~> 1.1.1'
 
 gem 'paper_trail', '~> 6.0'
 

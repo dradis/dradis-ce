@@ -7,7 +7,7 @@
           subscribable_id: subscribable.id
         }
       ),
-      class: 'action-link hide text-error',
+      class: 'd-none text-error-hover',
       data: {'behavior': 'unsubscribe'},
       method: :delete do %>
     <i class="fa fa-bell-slash"></i> Unsubscribe
@@ -20,7 +20,7 @@
           subscribable_id: subscribable.id
         }
       ),
-      class: 'action-link hide',
+      class: 'd-none',
       data: {'behavior': 'subscribe'},
       method: :post do %>
   <i class="fa fa-bell"></i> Subscribe

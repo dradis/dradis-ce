@@ -1,48 +1,48 @@
 <% content_for :title, 'Trash' %>
 
-<div id="trash">
+<div class="content-container mt-3" id="trash">
   <% if @revisions.any? %>
     <% cache @revisions do %>
-      <div class="btn-toolbar">
-        <div class="filter pull-right">
-          <input type="text" class="form-control input-xlarge js-table-filter" placeholder="Type here to filter table..."/>
-        </div>
+      <div class="filter w-25">
+        <input type="search" class="form-control js-table-filter" placeholder="Type here to filter table..."/>
       </div>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Removed by</th>
-            <th>When</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @revisions.each do |recoverable_revision| %>
-            <% cache recoverable_revision do %>
-              <% present recoverable_revision do |recoverable_revision_presenter| %>
-                <tr>
-                  <td><%= recoverable_revision_presenter.info %></td>
-                  <td><%= recoverable_revision_presenter.whodunnit %></td>
-                  <td><%= recoverable_revision_presenter.created_at_ago %></td>
-                  <td>
-                    <%= link_to(
-                      recover_project_revision_path(
-                        current_project,
-                        recoverable_revision.version,
-                      ),
-                      method: :post,
-                      data: { confirm: 'Are you sure?' }
-                    ) do %>
-                      <i class="fa fa-refresh"></i> Recover
-                    <% end %>
-                  </td>
-                </tr>
+      <div id="trash-table" class="table-wrapper">
+        <table class="table table-striped items-table">
+          <thead>
+            <tr>
+              <th data-column="item" data-sort="string" data-behavior="sortable-header" class="sortable">Item</th>
+              <th data-column="removed" data-sort="string" data-behavior="sortable-header" class="sortable">Removed by</th>
+              <th data-column="when" data-sort="int" data-behavior="sortable-header" class="sortable sorting-desc">When</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @revisions.each do |recoverable_revision| %>
+              <% cache recoverable_revision do %>
+                <% present recoverable_revision do |recoverable_revision_presenter| %>
+                  <tr>
+                    <td data-sort-value="<%= recoverable_revision_presenter.title %>" data-behavior="sortable-item"><%= recoverable_revision_presenter.info %></td>
+                    <td data-sort-value="<%= recoverable_revision_presenter.whodunnit %>" data-behavior="sortable-item"><%= recoverable_revision_presenter.whodunnit %></td>
+                    <td data-sort-value="<%= recoverable_revision.version.created_at.to_i %>" data-behavior="sortable-item"><%= recoverable_revision_presenter.created_at_ago %></td>
+                    <td>
+                      <%= link_to(
+                        recover_project_revision_path(
+                          current_project,
+                          recoverable_revision.version,
+                        ),
+                        method: :post,
+                        data: { confirm: 'Are you sure?' }
+                      ) do %>
+                        <i class="fa fa-refresh"></i> Recover
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
               <% end %>
             <% end %>
-          <% end %>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     <% end %>
   <% else %>
     The trash is empty.

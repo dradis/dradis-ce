@@ -1,11 +1,9 @@
   <div class="note-list">
-    <div class="list-item">
-      <div class="expansion-container">
-        <%= link_to project_board_path(current_project, @board) do %>
-          <i class="fa fa-arrow-left"></i> Back to board view
-        <% end %>
-      </div>
-    </div>
+    <%= content_tag :div, id: 'issue_summary_link', class: current_page?(main_app.project_board_path(current_project, @board)) ? 'p-2 mb-2 active' : 'p-2 mb-2' do %>
+      <%= link_to project_board_path(current_project, @board), class: 'summary-link' do %>
+        <i class="fa fa-arrow-left"></i> Back to board view
+      <% end %>
+    <% end %>
   </div>
 
   <!-- Cards -->

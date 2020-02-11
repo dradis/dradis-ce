@@ -30,7 +30,7 @@ describe 'card pages', js: true do
         if action == :edit
           expect(page).to have_selector '#card-updated-alert'
         elsif action == :show
-          expect(page).to have_selector '#js-card h3', text: 'whatever'
+          expect(page).to have_selector '#js-card h4', text: /whatever/i
         end
       end
     end
@@ -86,7 +86,7 @@ describe 'card pages', js: true do
         elsif action == :show
           expect(page).to\
             have_selector(
-              'ul.breadcrumb li:nth-child(2) a',
+              'ol.breadcrumb li:nth-child(2) a',
               text: "#{@board.name} - #{@other_list.name}"
             )
         end
