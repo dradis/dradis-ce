@@ -135,6 +135,18 @@ mark {
   color: $red;
 }
 
+// Firefox Fixes //
+@-moz-document url-prefix() {
+
+  // fixes ugly selects
+  select {
+    -moz-appearance: none !important;
+    background: transparent url('data:image/gif;base64,R0lGODlhBgAGAKEDAFVVVX9/f9TU1CgmNyH5BAEKAAMALAAAAAAGAAYAAAIODA4hCDKWxlhNvmCnGwUAOw==') right center no-repeat !important;
+    background-position: calc(100% - 5px) center !important;
+    font-family: revert;
+  }
+}
+
 .small {
   font-size: 75%;
   font-weight: 300;

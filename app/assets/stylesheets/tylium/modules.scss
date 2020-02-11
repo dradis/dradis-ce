@@ -209,8 +209,10 @@ pre {
   }
 }
 
-// Firefox: this fixes ignored padding when parent is scrollable.
+// Firefox Fixes //
 @-moz-document url-prefix() {
+
+  // this fixes ignored padding when parent is scrollable.
   .restrict-height::after {
     content: "";
     height: 2rem;
