@@ -1,21 +1,22 @@
 <% if @search.results.any? %>
-  <div class="table">
-    <table id="tbl-search" class="table">
+  <div class="table mb-0">
+    <table id="tbl-search" class="table mb-0">
       <tbody>
         <% search.results.each do |data| %>
           <% class_name = data.class.name.downcase %>
           <tr>
-            <td class="<%= class_name %>-result">
+            <td class="<%= class_name %>-result px-0 py-4">
               <%= render "search/results/#{class_name}", row: data %>
             </td>
           </tr>
         <% end %>
+      </tbody>
     </table>
     <%= paginate @search.results %>
   </div>
 <% else %>
   <div class="clearfix"></div>
-  <div class="alert alert-block alert-info">
-    <p>No matches found!</p>
+  <div class="alert alert-info m-0 my-4">
+    <p class="m-0">No matches found!</p>
   </div>
 <% end %>

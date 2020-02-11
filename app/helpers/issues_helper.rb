@@ -61,7 +61,7 @@ module IssuesHelper
   # ----------------------------------------------------------- /Import plugins
   def tag_and_name_for(issue)
     if tag = issue.tags.first
-      content_tag :span, style: "color: #{tag.color}" do
+      content_tag :span, class: 'issue-severity', style: "color: #{tag.color}" do
         [
           colored_icon_for_model(issue, 'fa-bug'),
           h(tag.display_name)

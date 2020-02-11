@@ -477,7 +477,7 @@ Style/EmptyLineBetweenDefs:
     - 'app/controllers/methodologies_controller.rb'
     - 'app/controllers/nodes_controller.rb'
     - 'app/controllers/sessions_controller.rb'
-    - 'app/helpers/snowcrash_helper.rb'
+    - 'app/helpers/tylium_helper.rb'
     - 'app/models/concerns/node_properties.rb'
     - 'app/models/configuration.rb'
     - 'app/models/methodology.rb'
@@ -517,7 +517,7 @@ Style/EmptyLinesAroundClassBody:
 Style/EmptyLinesAroundMethodBody:
   Exclude:
     - 'app/controllers/projects_controller.rb'
-    - 'app/helpers/snowcrash_helper.rb'
+    - 'app/helpers/tylium_helper.rb'
     - 'app/models/concerns/file_backed_model.rb'
     - 'app/models/concerns/has_fields.rb'
     - 'app/models/methodology.rb'
@@ -531,7 +531,7 @@ Style/EmptyLinesAroundModuleBody:
     - 'app/controllers/concerns/activity_tracking.rb'
     - 'app/controllers/concerns/authentication.rb'
     - 'app/helpers/revisions_helper.rb'
-    - 'app/helpers/snowcrash_helper.rb'
+    - 'app/helpers/tylium_helper.rb'
     - 'app/models/concerns/file_backed_model.rb'
     - 'app/models/concerns/has_fields.rb'
     - 'app/models/concerns/revision_tracking.rb'
@@ -628,7 +628,7 @@ Style/IfUnlessModifier:
   Exclude:
     - 'Gemfile'
     - 'app/controllers/attachments_controller.rb'
-    - 'app/helpers/snowcrash_helper.rb'
+    - 'app/helpers/tylium_helper.rb'
     - 'app/models/category.rb'
     - 'app/models/concerns/file_backed_model.rb'
     - 'app/models/methodology.rb'
