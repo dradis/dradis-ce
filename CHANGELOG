@@ -1,4 +1,5 @@
 v3.16 (February 2020)
+  * Add revision history for cards
   * Update app to new Tylium layout.
   * Bugs fixed:
     - Fix errors on content overwrite flash messages
