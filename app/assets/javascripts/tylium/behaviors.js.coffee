@@ -221,6 +221,6 @@ document.addEventListener "turbolinks:load", ->
     $('[data-id~=' + target + ']')[0].scrollIntoView({behavior: "smooth"});
 
 # Un-bind fileUpload on page unload.
-document.addEventListener "turbolinks:before-cache", ->
+document.addEventListener 'turbolinks:before-cache', ->
   if $('[data-behavior~=jquery-upload]').length
     $('[data-behavior~=jquery-upload]').fileupload 'destroy'
