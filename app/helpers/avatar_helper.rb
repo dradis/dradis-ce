@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AvatarHelper
-  DEFAULT_PROFILE_IMAGE = 'profile'.freeze
+  DEFAULT_PROFILE_IMAGE = 'profile.png'.freeze
   DEFAULT_PROFILE_IMAGE_SIZE = 80
 
   # Gravatar will use a default image if one is not found. Having gravatar serve

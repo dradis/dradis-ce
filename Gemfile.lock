@@ -190,7 +190,7 @@ GEM
     mysql2 (0.5.2)
     nenv (0.3.0)
     nio4r (2.3.1)
-    nokogiri (1.10.5)
+    nokogiri (1.10.8)
       mini_portile2 (~> 2.4.0)
     nokogumbo (2.0.1)
       nokogiri (~> 1.8, >= 1.8.4)
@@ -424,7 +424,7 @@ DEPENDENCIES
   local_time (>= 2.0.0)
   mini_racer
   mysql2 (~> 0.5.1)
-  nokogiri (= 1.10.5)
+  nokogiri (= 1.10.8)
   paper_trail (~> 6.0)
   parslet (~> 1.6.0)
   puma
