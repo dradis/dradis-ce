@@ -12,8 +12,8 @@ document.addEventListener "turbolinks:load", ->
   # --------------------------------------------------- Standard jQuery plugins
 
   # Activate jQuery.fileUpload
-  if $('.jquery-upload').length
-    $('.jquery-upload').fileupload
+  if $('[data-behavior~=jquery-upload]').length
+    $('[data-behavior~=jquery-upload]').fileupload
       dropZone: $('#drop-zone')
       destroy: (e, data) ->
         if confirm('Are you sure?\n\nProceeding will delete this attachment from the associated node.')
@@ -222,5 +222,5 @@ document.addEventListener "turbolinks:load", ->
 
 # Un-bind fileUpload on page unload.
 document.addEventListener "turbolinks:before-cache", ->
-  if $('.jquery-upload').length
-    $('.jquery-upload').fileupload 'destroy'
+  if $('[data-behavior~=jquery-upload]').length
+    $('[data-behavior~=jquery-upload]').fileupload 'destroy'
