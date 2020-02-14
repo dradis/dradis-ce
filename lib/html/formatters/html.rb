@@ -8,8 +8,7 @@
 # problem with that is just consistency. When our users enter a quote they
 # expect to get a quote as output. Not a fancy quote. So we're monkey patching
 # Redcloth to get the desired results as it's not a configurable option. Our
-# Word exporting code has also been adjusted to meet be consistent with this
-# change.
+# Word exporting code has also been adjusted to be consistent with this change.
 module RedCloth::Formatters::HTML
 
   # Override quote1 method to use apostrophe
