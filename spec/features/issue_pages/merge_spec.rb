@@ -19,7 +19,7 @@ describe 'issue pages' do
     end
 
     it 'merges issues into an existing one' do
-      expect(page).to have_content "You're merging 2 Issues into a target Issue"
+      expect(page).to have_content /You're merging 2 Issues into a target Issue/i
 
       click_button 'Merge issues'
 
@@ -28,7 +28,7 @@ describe 'issue pages' do
 
     context "merge issues into a new one" do
       it 'creates a new issue' do
-        expect(page).to have_content "You're merging 2 Issues into a target Issue"
+        expect(page).to have_content /You're merging 2 Issues into a target Issue/i
 
         # new issue form should not be visible yet
         expect(page).to have_selector('#new_issue', visible: false)
@@ -42,7 +42,7 @@ describe 'issue pages' do
         # due to bootstrap accordion unfold transition
         find_button('Merge issues').send_keys(:return) # click_button "Merge issues"
 
-        expect(page).to have_content('2 issues merged into ')
+        expect(page).to have_content(/2 issues merged into/i)
 
         # We start with 2, but merge into a single one
         expect(Issue.count).to eq(1)
@@ -50,7 +50,7 @@ describe 'issue pages' do
       end
 
       it 'tags the new issue based on the #[Tags]#' do
-        expect(page).to have_content "You're merging 2 Issues into a target Issue"
+        expect(page).to have_content /You're merging 2 Issues into a target Issue/i
 
         # new issue form should not be visible yet
         expect(page).to have_selector('#new_issue', visible: false)
@@ -67,7 +67,7 @@ describe 'issue pages' do
         # due to bootstrap accordion unfold transition
         find_button('Merge issues').send_keys(:return) # click_button "Merge issues"
 
-        expect(page).to have_content('2 issues merged into Merged issue')
+        expect(page).to have_content(/2 issues merged into Merged issue/i)
         expect(Issue.last.reload.tag_list).to eq(tag_name)
       end
     end

@@ -20,7 +20,8 @@ describe "node pages" do
     describe "clicking the '+' button in the 'Nodes' sidebar", js: true do
       before do
         visit project_path(current_project)
-        find(".add-subnode > a").click
+        find('.tree-header').click
+        find('.add-subnode > a').click
       end
 
       let(:submit_form) { click_button "Add" }
@@ -82,7 +83,7 @@ describe "node pages" do
         ])
 
         # redirects to project root:
-        expect(page).to have_selector 'h1', text: 'PROJECT SUMMARY'
+        expect(page).to have_selector 'h3', text: /PROJECT SUMMARY/i
       end
 
       example "adding multiple root host nodes" do
@@ -168,7 +169,7 @@ describe "node pages" do
         ])
 
         # redirects to parent node's page
-        expect(page).to have_selector 'ul.breadcrumb > li.active', text: node.label
+        expect(page).to have_selector 'ol.breadcrumb > li.active', text: node.label
       end
 
       example "adding multiple nodes - submitting a blank textarea" do
@@ -192,7 +193,7 @@ describe "node pages" do
     let(:submit_form) { click_button "Rename" }
 
     it "shows a modal to rename the node" do
-      should have_content "Rename My node node"
+      should have_content /Rename My node node/i
       should have_field :node_label
     end
 
@@ -316,7 +317,7 @@ describe "node pages" do
       end
 
       it "lists them in the sidebar" do
-        within ".secondary-navbar" do
+        within ".secondary-sidebar" do
           should have_selector "#note_#{@note.id}_link", text: "My note"
           should have_selector "#evidence_#{@evidence.id}_link"
           should_not have_selector "#note_#{@other_note.id}_link"
@@ -359,6 +360,8 @@ describe "node pages" do
       end
 
       it "shows the current node in the sidebar node tree", js: true do # bug fix
+        find('.tree-header').click
+
         within ".main-sidebar .nodes-nav" do
           click_link class: 'toggle'
           should have_content 'My node'

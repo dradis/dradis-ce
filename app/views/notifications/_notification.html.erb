@@ -2,21 +2,24 @@
 <%# and on notifications#index                                   %>
 <% present notification do |presenter| %>
   <li class="notification <%= notification.read? ? '' : 'unread' %>" data-notification-id="<%= notification.id %>">
+    
+    <div class="details">
+      <%= presenter.avatar_with_link(40) %>
+    </div>
+
     <div class="body">
-      <%= presenter.icon %>
+      
+      <div class="title">
+        <%= presenter.render_title %>
+      </div>
 
       <div class="time">
         <%= presenter.created_at_ago %>
       </div>
 
-      <div class="title">
-        <%= presenter.render_title %>
-      </div>
-
-      <div class="details">
-        <%= presenter.avatar_with_link(30) %>
-      </div>
     </div>
+    <%= presenter.icon %>
+
     <% if !notification.read? %>
       <%= link_to project_notification_path(current_project, notification),
                   title: 'Mark as read',

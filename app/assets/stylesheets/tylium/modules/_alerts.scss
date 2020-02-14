@@ -1,0 +1,22 @@
+.alert {
+  padding: 1rem;
+  margin: $mainContentMargin $mainContentMargin 1rem $mainContentMargin;
+  border: 1px solid #ddd;
+  
+  .close {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+}
+
+.alert-error {
+  background-color: rgba($red, 0.1);
+}
+
+.alert-info {
+  background-color: rgba($blue, 0.1);
+}
+
+.alert-success {
+  background-color: rgba($green, 0.1);
+}

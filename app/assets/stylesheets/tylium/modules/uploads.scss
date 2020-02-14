@@ -1,0 +1,16 @@
+body.upload {
+
+  .progress-bar {
+    position: relative;
+
+    .percent { 
+      position: absolute;
+      display: inline-block;
+      text-align: center;
+      width: 30px;
+      top: 0px;
+      left: calc((100% / 2) - 15px);
+      color: transparent;
+    }
+  }
+}

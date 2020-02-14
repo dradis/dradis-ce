@@ -97,8 +97,8 @@ shared_examples 'managing lists' do
       it 'updates the list' do
         expect do
           submit_form
-          expect(page).to have_text('List renamed')
-          expect(page).to have_text 'New List Name'
+          expect(page).to have_text(/List renamed/i)
+          expect(page).to have_text(/New List Name/i)
           expect(page).to have_current_path(board_path)
         end.not_to(change { List.count } )
       end

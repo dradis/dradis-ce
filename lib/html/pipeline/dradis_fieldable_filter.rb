@@ -12,7 +12,7 @@ module HTML
         output = @text.dup
 
         Hash[ *@text.scan(HasFields::REGEX).flatten.collect{ |str| str.strip } ].keys.each do |field|
-          output.gsub!(/#\[#{Regexp.escape(field)}\]#[\r|\n]/, "h4. #{field}\n\n")
+          output.gsub!(/#\[#{Regexp.escape(field)}\]#[\r|\n]/, "h5. #{field}\n\n")
         end
 
         output

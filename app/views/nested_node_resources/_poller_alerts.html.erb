@@ -1,6 +1,6 @@
 <%# This alert is shown by activities/poller.js if another user deletes the
   current node %>
-<div id="node-deleted-alert" class="alert alert-error" style="display:none;">
+<div id="node-deleted-alert" class="alert alert-error d-none">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
 
   <p><strong>Warning</strong>. This whole node has been deleted by another
@@ -10,8 +10,8 @@
 <% if @evidence %>
   <%# This alert is shown by if another user deletes the current evidence %>
   <div id="evidence-deleted-alert"
-       data-evidence-id=<%= @evidence.id %>
-       class="alert alert-danger" style="display:none;">
+       data-evidence-id="<%= @evidence.id %>"
+       class="alert alert-danger d-none">
     <p>
       <strong>Warning</strong>. This piece of evidence has been deleted by
       another user since you started viewing it.
@@ -20,7 +20,7 @@
 
   <%# This alert is shown by activities/poller.js if another user updates the
     current evidence %>
-  <div id="evidence-updated-alert" data-evidence-id=<%= @evidence.id %> class="alert alert-info" style="display:none;">
+  <div id="evidence-updated-alert" data-evidence-id="<%= @evidence.id %>" class="alert alert-info d-none">
     <p>
       <strong>Warning</strong>. Another user has updated this piece of evidence
       since you started viewing it. Refresh the page to see their changes.
@@ -30,7 +30,7 @@
 
 <%# This alert is shown by activities/poller.js if another user deletes the
   current note %>
-<div id="note-deleted-alert" class="alert alert-danger" style="display:none;">
+<div id="note-deleted-alert" class="alert alert-danger d-none">
   <p>
     <strong>Warning</strong>. This note has been deleted by another user since
     you started viewing it.
@@ -39,7 +39,7 @@
 
 <%# This alert is shown by activities/poller.js if another user updates the
   current note %>
-<div id="note-updated-alert" class="alert alert-info" style="display:none;">
+<div id="note-updated-alert" class="alert alert-info d-none">
   <p>
     <strong>Warning</strong>. Another user has updated this note since you
     started viewing it. Refresh the page to see their changes.
