@@ -2,7 +2,7 @@ v3.16 (Mmm'YY)
   * Fix errors on content overwrite flash messages
   * Fail and redirect to login instead of raising an error when attempting to log in as a user that has been removed.
   * Bugs fixed:
-    - Fix inconsistent quotes in Textile and Word exports
+    - Prevent the conversion of quotes to curly quotes in Textile previews and html report exports
   * Integration enhancements:
     -
   * REST/JSON API enhancements:
