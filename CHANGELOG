@@ -5,7 +5,7 @@ v3.16 (February 2020)
     - Fix errors on content overwrite flash messages
     - Fail and redirect to login instead of raising an error when attempting to log in as a user that has been removed.
   * Integration enhancements:
-    -
+    - Add tags CRUD functions
   * REST/JSON API enhancements:
     -
   * Security Fixes:
