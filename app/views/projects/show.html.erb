@@ -1,22 +1,36 @@
 <% content_for :title, 'Project summary' %>
 
-<div class="row-fluid">
-  <div class="span6">
-    <%= render partial: 'projects/issue_summary' %>
+<div class="row m-0">
+  <div class="col-12 col-lg-6 col-xxl-4 p-0">
+    <div class="content-container mt-3 mr-lg-3">
+      <%= render partial: 'projects/issue_summary' %>
+    </div>
 
-    <h2>Useful articles</h2>
-    <ul class="fa-ul">
-      <li><i class="fa fa-li fa-check"></i><a href="https://dradisframework.com/pro/support/guides/projects/index.html?utm_source=ce&utm_medium=app" target="_blank">Projects 101</a>: learn the basics.</li>
-      <li><i class="fa fa-li fa-check"></i><a href="https://dradisframework.com/pro/support/guides/troubleshooting/index.html?utm_source=ce&utm_medium=app" target="_blank">Troubleshooting Cheatsheet</a>: if you have issues uploading/exporting.</li>
-    </ul>
+    <div class="content-container mr-lg-3">
+      <h4 class="header-underline">Useful articles</h4>
+      <ul class="fa-ul">
+        <li><i class="fa fa-li fa-check"></i><a href="https://dradisframework.com/pro/support/guides/projects/index.html?utm_source=ce&utm_medium=app" target="_blank">Projects 101</a>: learn the basics.</li>
+        <li><i class="fa fa-li fa-check"></i><a href="https://dradisframework.com/pro/support/guides/troubleshooting/index.html?utm_source=ce&utm_medium=app" target="_blank">Troubleshooting Cheatsheet</a>: if you have issues uploading/exporting.</li>
+      </ul>
+    </div>  
   </div>
 
-  <div class="span6">
-    <%= render partial: 'projects/methodology_summary' %>
+  <div class="col-12 col-lg-6 col-xxl-8 p-0">
+    <div class="row m-0">
+      <div class="col-xxl-6 p-0">
+        <div class="content-container mt-0 mt-lg-3 ml-lg-3 mx-xxl-3">
+          <%= render partial: 'projects/methodology_summary' %>
+        </div>
+      </div>
 
-    <section class="inner summary-panel">
-      <h2>Recent activity</h2>
-      <%= render 'activities/feed', activities: @activities %>
-    </section>
+      <div class="col-xxl-6 p-0">
+        <div class="content-container ml-lg-3 mt-0 mt-xxl-3 restrict-height full-height" data-behavior="restrict-height">
+          <section class="summary-panel">
+            <h4 class="header-underline">Recent activity</h4>
+            <%= render 'activities/feed', activities: @activities %>
+          </section>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

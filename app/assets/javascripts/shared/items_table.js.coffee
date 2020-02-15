@@ -207,7 +207,7 @@ class @ItemsTable
           $th.css('display', 'none')
 
   showAlert: (msg, klass) =>
-    $('.secondary-navbar-content').prepend(
+    $('.secondary-sidebar-content').prepend(
       "<div class='alert alert-#{klass}'>
         <a class='close' data-dismiss='alert' href='javascript:void(0)'>x</a>
         #{msg}

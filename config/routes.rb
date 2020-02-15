@@ -32,6 +32,7 @@ Rails.application.routes.draw do
         member { post :move }
         resources :cards, except: [:index] do
           member { post :move }
+          resources :revisions, only: [:index, :show]
         end
       end
     end
@@ -108,6 +109,10 @@ Rails.application.routes.draw do
     get  '/upload'        => 'upload#index',  as: :upload_manager
     post '/upload'        => 'upload#create'
     post '/upload/parse'  => 'upload#parse'
+
+    if Rails.env.development?
+      get '/styles'          => 'styles_tylium#index'
+    end
   end
 
   resources :console, only: [] do

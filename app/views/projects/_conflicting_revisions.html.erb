@@ -1,8 +1,10 @@
 <div class="alert alert-warning">
   <p>
-    Warning: another user updated this
+    <strong>Warning:</strong> Another user updated this
     <%= record.model_name.name.downcase %> while you were editing it. Your
-    changes have been saved, but you may have overwritten their changes. You
+    changes have been saved, but you may have overwritten their changes. 
+  </p>
+  <p>You
     may want to review the
     <%= link_to "revision history", record_revisions_path(record) %>
     to make sure nothing important has been lost:

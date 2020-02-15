@@ -1,0 +1,164 @@
+@import "jquery.textile";
+
+.content-textile, .textile-preview {
+  overflow-wrap: break-word;
+
+  em {
+    font-style: italic;
+  }
+
+  h5 {
+    margin-top: 2rem;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  li { 
+    margin-left: 40px;
+  }
+
+  ol { 
+    list-style-type: decimal;
+  }
+
+  p:last-child {
+    margin: 0;
+  }
+
+  pre {
+    background-color: $secondaryBgColor;
+    border: 1px solid $borderColor;
+    border-radius: 3px;
+    margin: 0.75rem 0;
+    padding: 10px;
+    white-space: pre-wrap;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  strong {
+    font-weight: bold;
+  }
+
+  table {
+    max-width: 100%;
+    background-color: transparent;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+
+    tbody {
+      > tr:nth-child(odd) > td,
+      > tr:nth-child(odd) > th {
+        background-color: #f9f9f9;
+      }
+      tr:hover td,
+      tr:hover th {
+        background-color: #f5f5f5;
+      }
+    }
+
+    // Cells
+    th,
+    td {
+      padding: 8px;
+      line-height: 20px;
+      text-align: left;
+      vertical-align: top;
+      border-top: 1px solid #ddd;
+    }
+
+    th {
+      font-weight: bold;
+    }
+
+    // Bottom align for column headings
+    thead th {
+      vertical-align: bottom;
+    }
+    
+    // Remove top border from thead by default
+    caption + thead tr:first-child th,
+    caption + thead tr:first-child td,
+    colgroup + thead tr:first-child th,
+    colgroup + thead tr:first-child td,
+    thead:first-child tr:first-child th,
+    thead:first-child tr:first-child td {
+      border-top: 0;
+    }
+  }
+
+  ul {
+    list-style-type: square !important;
+  }
+
+  ul, ol {
+    margin-bottom: 2ex;
+  }
+}
+
+.markup-help {
+
+  h5 {
+    margin-top: 2rem;
+  }
+
+  .example-img {
+    height: 140px;
+  }
+
+  ol, ul {
+    padding-left: 0;
+  }
+}
+
+.textile-wrap {
+  background-color: #fff;
+  word-break: break-word;
+
+  .textile-inner {
+    padding: 0;
+    background: transparent;
+
+    textarea {
+      resize: vertical !important;
+    }
+
+    .textile-preview {
+      border: 1px solid $borderColor;
+      border-radius: 4px;
+      padding: 1rem;
+    }
+  }
+
+  ul.textile-toolbar {
+    background: #fff;
+    border-bottom: 0px;
+    margin-bottom: 1em !important;
+
+    li {
+        margin-right: .5em;
+
+      a {
+        border-radius: 3px;
+        border: 0px none;
+        color: $linkColor;
+
+        &:hover {
+          background: #fff;
+          border: 0px none;
+          color: $linkColorHover;
+        }
+
+        &.active {
+          background: $grayDark;
+          color: #fff;
+        }
+      }
+    }
+  }
+}

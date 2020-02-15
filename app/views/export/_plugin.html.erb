@@ -1,4 +1,4 @@
-<%= content_tag :div, id: "plugin-#{info[:name]}", class: 'tab-pane tab-panel' do %>
+<%= content_tag :div, id: "plugin-#{info[:name]}", class: 'tab-pane fade' do %>
 
   <%= form_tag project_export_manager_path(current_project), target: '_blank' do %>
     <%= hidden_field_tag :plugin, info[:name] %>
@@ -16,39 +16,38 @@
       %>
       <%= hidden_field_tag :route, info[:routes].first[0] %>
     <% else %>
-      <h2>Choose an export option</h2>
+      <h4 class="header-underline">Choose an export option</h4>
 
       <% info[:routes].names.each do |route| %>
-      <label class="radio">
-        <%= radio_button_tag :route, route, route == info[:routes].first %>
-        <%= route.to_s.humanize.titleize %>
-      </label>
+        <div class="custom-control custom-radio">
+          <%= radio_button_tag :route, route, route == info[:routes].first, :class => 'custom-control-input' %>
+          <label class="custom-control-label" for="route_<%= route %>"><%= route.to_s.humanize.titleize %></label>
+        </div>
       <% end %>
     <% end %>
 
 
     <% if (info[:routes].count > 0) %>
 
+      <% if info[:templates].count == 0 && info[:routes].count == 1 %>
+        <h4 class="header-underline mb-0">Ready when you are!</h4>
+      <% end %>
+
       <% if info[:templates].count < 2 %>
         <%= hidden_field_tag :template, info[:templates].first %>
-        <div class="text-center">
-          <h3>Ready when you are!</h3>
-          <button id="export-button" class="btn btn-large btn-primary">Export</button>
-        </div>
+        <button id="export-button" class="btn btn-lg btn-primary mt-4">Export</button>
       <% else %>
-        <h2>Choose a template</h2>
+        <h4 class="header-underline">Choose a template</h4>
         <p>Please choose one of the templates available for this plugin (find them in <code>.<%= info[:templates_dir]%></code>)</p>
 
         <% info[:templates].each do |template| %>
-        <label class="radio">
-          <%= radio_button_tag :template, template, template == info[:templates].first %>
-          <%= template %>
-        </label>
+        <div class="custom-control custom-radio">
+          <%= radio_button_tag :template, template, template == info[:templates].first, :class => 'custom-control-input' %>
+          <label class="custom-control-label" for="template_<%= template %>"><%= template %></label>
+        </div>
         <% end %>
 
-        <div class="text-center">
-          <button id="export-button" class="btn btn-large btn-primary">Export</button>
-        </div>
+        <button id="export-button" class="btn btn-lg btn-primary mt-4">Export</button>
       <% end %>
     <% end %>
 

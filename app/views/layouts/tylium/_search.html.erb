@@ -1,0 +1,4 @@
+<%= form_tag main_app.project_search_path(current_project), method: :get, class: 'form-search', data: { behavior: 'form-search' } do %>
+  <%= search_field_tag :q,  params[:q], placeholder: 'Search here...', class: 'search-query', data: { behavior: 'search-query' } %>
+  <button type="submit" id="search-btn" class="btn" data-behavior="search-button"><span class="fa fa-search"></span></button>
+<% end %>
