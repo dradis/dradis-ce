@@ -95,6 +95,8 @@ Rails.application.routes.draw do
     end
 
     resources :subscriptions, only: [:create, :destroy]
+    resources :tags, only: [:create, :update, :destroy] do
+    end
 
     get 'search' => 'search#index'
     get 'trash' => 'revisions#trash'

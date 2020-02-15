@@ -1,0 +1,16 @@
+<%= content_tag :div, id: tag.persisted? ? "tag-#{tag.id}" : 'new-tag', class: 'dropdown-menu' do %>
+  <%= form_for [current_project, tag] do |f| %>
+      <%= f.label :display_name %>
+      <%= f.text_field :display_name, class: 'form-control' %>
+      <%= f.label :color %>
+      <%= f.text_field :color, class: 'form-control' %>
+
+    <% if tag.persisted? %>
+      <%= f.hidden_field :original_updated_at, value: tag.updated_at.to_i %>
+    <% end %>
+
+    <div class="form-actions">
+      <%= f.submit class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+<% end %>

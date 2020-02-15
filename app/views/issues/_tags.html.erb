@@ -1,0 +1,48 @@
+<div class="header">
+  <div class="header-inner">
+    <div class="options">
+
+<div class="dropdown <%= local_assigns.fetch(:dropdown_class, '') %>">
+  <%= link_to 'javascript:void(0)',
+    class: local_assigns.fetch(:button_class, '') + ' dropdown-toggle',
+    data: { name: "new-tag", toggle: 'dropdown' } do %>
+    <i class="fa fa-plus"> </i> <%= local_assigns.fetch(:text, '') %>
+  <% end %>
+
+  <%= link_to 'javascript:void(0)', data: { toggle: 'collapse', target: "#tags", behavior: 'collapse-collection' }, class: local_assigns.fetch(:collapse_class, '') do %>
+    <i class="fa fa-chevron-up" data-behavior="toggle-chevron"></i>
+  <% end %>
+
+    <%= render partial: 'tag_edit_form', locals: { tag: Tag.new(name: "!555555_tag") } %>
+</div>
+
+    </div>
+    <h5 class="header-underline header-name">Tags</h5>
+  </div>
+</div>
+
+<%= content_tag :div, class: 'note-list collapse show', id: 'tags' do %>
+  <% @tags.each do |tag| %>
+    <%= content_tag :div, id: "#{dom_id(tag)}_link", class: 'list-item' do %>
+      <span data-tag-id="<%= tag.id %>" style="color: <%= tag.color %>">
+        <i class="icon fa fa-tag"></i>
+        <%= h(tag.display_name) %>
+      </span>
+
+      <div class="list-item-actions dropdown">
+        <%= link_to 'javascript:void(0)',
+          class: local_assigns.fetch(:button_class, '') + ' dropdown-toggle',
+          data: { id: "#modal-tag-edit-#{tag.id}", toggle: 'dropdown' } do %>
+          <i class="fa fa-pencil"></i> Edit
+        <% end %>
+        <%= link_to main_app.project_tag_path(current_project, tag),
+          method: :delete,
+          data: { confirm: "Are you sure?\n\nProceeding will delete this tag." },
+          class: 'list-item-action-delete' do %>
+          <i class="fa fa-trash"></i> Delete
+        <% end %>
+        <%= render partial: 'tag_edit_form', locals: { tag: tag } %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

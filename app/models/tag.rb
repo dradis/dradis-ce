@@ -22,7 +22,8 @@ class Tag < ApplicationRecord
   before_save :normalize_name
 
   # -- Validations ------------------------------------------------------------
-  validates :name, presence: true, uniqueness: { case_sensitive: false }
+  validates :name, presence: true, uniqueness: { case_sensitive: false },
+    format: { with: /\A(!\h{6}(_([[:word:]]+))?|#[[:word:]]|@[[:word:]])\z/ }
 
   # -- Scopes -----------------------------------------------------------------
 
@@ -48,10 +49,20 @@ class Tag < ApplicationRecord
     return out.titleize
   end
 
+  def display_name=(new_display_name)
+    self.name.gsub!(/\A!(\h{6})_[[:word:]]+?\z/, "!\\1_#{new_display_name}")
+  end
+
   # Strips the tag's name and returns the color details if present
   # if no color information is found, returns a default value of #ccc
   def color()
-    name[/\A(!\h{6})_[[:word:]]+?\z/,1].try(:gsub, "!", "#") || "#555"
+    name[/\A(!\h{6})_[[:word:]]+?\z/,1].try(:gsub, "!", "#") || '#cccccc'
+  end
+
+  def color=(new_color)
+    new_color = new_color.tr('#', '')
+
+    self.name.gsub!(/\A!(\h{6})_([[:word:]]+)?\z/, "!#{new_color}_\\2")
   end
 
   private

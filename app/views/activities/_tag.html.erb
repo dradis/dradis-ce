@@ -1,0 +1,9 @@
+<% if tag %>
+  <%= presenter.verb %> the <%= link_to (tag.display_name ? tag.display_name : tag.name), project_issues_path(current_project) %> Tag.
+<% else %>
+  <% if activity.action == 'destroy' %>
+    deleted a tag.
+  <% else %>
+    <%= presenter.verb %> a tag which has since been deleted.
+  <% end %>
+<% end %>
