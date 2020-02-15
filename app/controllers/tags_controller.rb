@@ -6,7 +6,7 @@ class TagsController < ApplicationController
 
   def create
     respond_to do |format|
-      if @tag.update(tag_params)
+      if @tag.save
         track_created(@tag)
 
         format.html { redirect_to project_issues_path(current_project), notice: 'Tag added.' }
@@ -45,11 +45,11 @@ class TagsController < ApplicationController
     if params[:id]
       @tag = Tag.find(params[:id])
     else
-      @tag = Tag.new(name: '!555555_tag')
+      @tag = Tag.new(tag_params)
     end
   end
 
   def tag_params
-    params.require(:tag).permit(:display_name, :color)
+    params.require(:tag).permit(:name)
   end
 end
