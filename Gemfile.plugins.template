@@ -5,7 +5,7 @@
 #   $ bundle
 
 # ----------------------------------------------------------------- Calculators
-gem 'dradis-calculator_cvss',  '~> 3.15', github: 'dradis/dradis-calculator_cvss'
+gem 'dradis-calculator_cvss',  github: 'dradis/dradis-calculator_cvss', branch: 'master'
 gem 'dradis-calculator_dread', '~> 3.15', github: 'dradis/dradis-calculator_dread'
 
 
