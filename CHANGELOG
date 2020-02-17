@@ -1,9 +1,10 @@
 v3.16 (February 2020)
+  * Update app to new Tylium layout
+  * Upgrade to Rails 5.2.4.1
   * Add revision history for cards
-  * Update app to new Tylium layout.
   * Bugs fixed:
     - Fix errors on content overwrite flash messages
-    - Fail and redirect to login instead of raising an error when attempting to log in as a user that has been removed.
+    - Fail and redirect to login instead of raising an error when attempting to log in as a user that has been removed
     - Fix Cancel link path for the Note Edit page
   * Integration enhancements:
     -

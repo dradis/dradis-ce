@@ -3,6 +3,7 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require turbolinks
+// require activestorage
 //= require jquery.form
 //= require jquery.textchange.min
 //= require jquery.textile
