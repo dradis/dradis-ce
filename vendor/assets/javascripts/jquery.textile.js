@@ -100,6 +100,11 @@
       button.click( $.proxy( function(evt) { this._onBtnWrite(evt); }, this));
       $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
 
+      // Form
+      button = $('<a class="btn-form" href="javascript:void(null);"><span>Form</span></a>');
+      button.click( $.proxy( function(evt) { this._onBtnForm(evt); }, this));
+      $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
+
       // Preview
       button = $('<a class="btn-preview" href="javascript:void(null);"><span>Preview</span></a>');
       button.click( $.proxy( function(evt) { this._onBtnPreview(evt); }, this));
@@ -152,6 +157,8 @@
       this.options.$preview.hide();
       this.options.$help.hide();
       this.$element.show();
+    },
+    _onBtnForm: function() {
     },
     _onBtnPreview: function() {
       // Activate toolbar button
