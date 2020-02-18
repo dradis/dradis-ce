@@ -154,8 +154,10 @@
       $('.textile-toolbar .btn-write', scope).addClass('active');
 
       // Show Write pane
+      this.options.$form.hide();
       this.options.$preview.hide();
       this.options.$help.hide();
+      
       this.$element.show();
     },
     _onBtnForm: function() {
@@ -181,7 +183,9 @@
       // Show Preview pane
       this.$element.hide();
 
+      this.options.$form.hide();
       this.options.$help.hide();
+
       this.options.$preview.show();
 
       // If the text hasn't changed, do nothing.
@@ -247,7 +251,10 @@
 
       // Show Help pane
       this.$element.hide();
+
+      this.options.$form.hide();
       this.options.$preview.hide();
+
       this.options.$help.show();
 
       if (!this._helpRendered) {
