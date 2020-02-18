@@ -125,6 +125,9 @@
       if (this.options.resize === false) return false;
 
     },
+    // Ajax form
+    _loadForm: function() {
+    },
     // Ajax preview
     _loadPreview: function() {
       this._previousContent = this.$element.val();
