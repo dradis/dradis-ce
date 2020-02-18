@@ -28,7 +28,7 @@
         // HTML templates
         tpl: {
           wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner"></div></div>',
-          form: '<div class="textile-form">Loading...</div>',
+          form: '<div class="textile-form loading-indicator">Loading...</div>',
           preview: '<div class="textile-preview loading-indicator">Loading...</div>',
           help: '<div class="textile-help loading-indicator">Loading...</div>'
         }
