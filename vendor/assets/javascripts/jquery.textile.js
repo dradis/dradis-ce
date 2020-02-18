@@ -79,6 +79,11 @@
       $('.textile-inner', this.options.$wrap).append(this.options.$preview);
       this.options.$preview.hide();
 
+      // add Form to container and hide
+      this.options.$form = $(this.options.tpl.form);
+      $('.textile-inner', this.options.$wrap).append(this.options.$form);
+      this.options.$form.hide();
+
       // add Help to container and hide
       this.options.$help = $(this.options.tpl.help);
       $('.textile-inner', this.options.$wrap).append(this.options.$help)
