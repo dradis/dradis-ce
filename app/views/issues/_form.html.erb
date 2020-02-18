@@ -9,8 +9,9 @@
           data: {
             behavior: 'auto-save',
             autosave_key: "#{current_project.id}-issue-#{ @issue.persisted? ? "edit-#{@issue.id}" : 'new' }",
-            help_url: markup_path,
-            preview_url: preview_path
+            form_url: form_path,
+            preview_url: preview_path,
+            help_url: markup_path
           }
       }
   %>

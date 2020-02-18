@@ -10,6 +10,7 @@
         data: {
           behavior: 'auto-save',
           autosave_key: "#{current_project.id}-evidence-#{ @evidence.persisted? ? "edit-#{@evidence.id}" : "new-for-#{@node.id}" }",
+          form_url: form_path,
           preview_url: preview_path,
           help_url: markup_path
         }
