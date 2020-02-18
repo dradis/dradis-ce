@@ -159,6 +159,18 @@
       this.$element.show();
     },
     _onBtnForm: function() {
+      // Activate form button
+      var scope = this.options.$wrap;
+      $('.textile-toolbar a').removeClass('active');
+      $('.textile-toolbar .btn-form', scope).addClass('active');
+
+      // Show form pane
+      this.$element.hide();
+
+      this.options.$preview.hide();
+      this.options.$help.hide();
+
+      this.options.$form.show();
     },
     _onBtnPreview: function() {
       // Activate toolbar button
