@@ -46,10 +46,32 @@ describe MarkupFields do
                 expect(last_field).to eq(MarkupFields::Field.new('Description','Describing the describe! Sweet!'))
             end
 
-            it 'matches final field when match is between #[ and #]'
-            it 'matches two fields on one line'
-            it 'matches two fields on separate lines'
-            it 'returns an array when one match is present'
+            it 'matches two fields on one line' do 
+                field1, field2 = MarkupFields::Field.new('Title','Description of title'), 
+                                 MarkupFields::Field.new('Description', 'Description of description')
+
+                markup = "#{field1} #{field2}"
+
+                markup_fields = MarkupFields.new(markup)
+                expect(markup_fields.fields).to eq([field1, field2])
+            end
+
+            it 'matches two fields on separate lines' do
+                field1, field2 = MarkupFields::Field.new('Title','Description of title'), 
+                                 MarkupFields::Field.new('Description', 'Description of description')
+                markup = "#{field1}\n#{field2}"
+
+                markup_fields = MarkupFields.new(markup)
+                expect(markup_fields.fields).to eq([field1, field2])
+            end
+
+            it 'returns an array containing the only match when one match is present' do
+                field = MarkupFields::Field.new('Title','Description of title') 
+
+                markup_fields = MarkupFields.new(field.to_s)
+                expect(markup_fields.fields).to eq([field])
+            end
+
             it 'strips leading and trailing whitespace from matches' do
                markup = '#[Title]# Description for a title    ' 
                
