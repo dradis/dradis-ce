@@ -127,6 +127,12 @@
     },
     // Ajax form
     _loadForm: function() {
+      var that = this;
+      $.get(this.$element.data('form-url'), function(result) {
+        that.options.$form.removeClass('loading-indicator')
+          .html(result);
+          this._formRendered = true;
+      });
     },
     // Ajax preview
     _loadPreview: function() {
@@ -176,6 +182,9 @@
       this.options.$help.hide();
 
       this.options.$form.show();
+
+      // Get form from markup
+      this._loadForm();
     },
     _onBtnPreview: function() {
       // Activate toolbar button
