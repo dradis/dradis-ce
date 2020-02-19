@@ -71,7 +71,7 @@
             </div>         
           </div>
 
-          <% cache ['card-activity-tab', @card, @activities] do %>
+          <% cache ['card-activity-tab', @card, @card.list, @activities] do %>
             <div class="tab-pane" id="activity-tab">
               <h4 class="header-underline">
                 Recent activity

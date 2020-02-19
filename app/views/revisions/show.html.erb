@@ -55,14 +55,16 @@
   <div class="col-12 col-xl-4 col-xxl-3 p-0">
     <div class="sticky-top">
 
-      <div class="content-container mt-0 mt-xl-3 ml-xl-3">
-        <h4 class="header-underline">Previous revision</h4>
-        <ul>
-          <li><strong>Author:</strong> <%= @diffed_revision.previous_author %></li>
-          <li><strong>Action:</strong> <%= @diffed_revision.previous_action.capitalize %></li>
-          <li><strong>When:</strong> <%= @diffed_revision.last_updated_at %></li>
-        </ul>
-      </div>
+      <% if @revision.previous %>
+        <div class="content-container mt-0 mt-xl-3 ml-xl-3">
+          <h4 class="header-underline">Previous revision</h4>
+          <ul>
+            <li><strong>Author:</strong> <%= @diffed_revision.previous_author %></li>
+            <li><strong>Action:</strong> <%= @diffed_revision.previous_action.capitalize %></li>
+            <li><strong>When:</strong> <%= @diffed_revision.last_updated_at %></li>
+          </ul>
+        </div>
+      <% end %>
 
       <div class="content-container ml-xl-3">
         <h4 class="header-underline">This revision</h4>
