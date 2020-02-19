@@ -3,7 +3,11 @@ class MarkupFields
     # Field regex with capturing groups for name and description
     FIELD_REGEX = /(?<=#\[)([\w\.]+?)(?=\]#).*?(?<=\]#)(.+?)(?=#\[|\z|\n)/i
 
-    Field = Struct.new(:name, :value)
+    Field = Struct.new(:name, :value) do
+        def to_s
+            "#[#{name}]# #{value}"
+        end
+    end
 
     def initialize(markup)
         @markup = markup.to_s

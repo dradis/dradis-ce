@@ -2,6 +2,12 @@ require_relative "../../../lib/text-processing/markup_fields"
 
 describe MarkupFields do
     describe MarkupFields::Field do
+        describe '#to_s' do
+            it 'returns the correct string format' do
+                field = MarkupFields::Field.new('Description', 'This is a description!')
+                expect(field.to_s).to eq('#[Description]# This is a description!')
+            end
+        end
     end
 
     subject { MarkupFields.new('') }
