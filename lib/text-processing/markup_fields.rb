@@ -25,6 +25,6 @@ class MarkupFields
 
     def parse
         markup.scan(FIELD_REGEX)
-            .map { |match| Field.new(match[0], match[1]) }
+            .map { |match| Field.new(match[0].strip, match[1].strip) }
     end
 end
