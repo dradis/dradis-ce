@@ -12,4 +12,15 @@ class MarkupFields
     def fields
         @fields ||= parse
     end
+
+    private
+
+    def markup
+        @markup
+    end
+
+    def parse
+        markup.scan(FIELD_REGEX)
+            .map { |match| Field.new(match[0], match[1]) }
+    end
 end

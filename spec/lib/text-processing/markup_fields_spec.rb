@@ -18,12 +18,25 @@ describe MarkupFields do
         end
 
         describe '#fields' do
-            it 'matches final field when line ends in newline'
+            it 'matches final field when line ends in newline' do
+                markup = <<~DOC
+                #[Title]# Here is a description of the first field.
+                #[Description]# Describing the describe! Sweet!
+
+                DOC
+
+                markup_fields = MarkupFields.new(markup)
+                last_field = markup_fields.fields.last
+
+                expect(last_field).to eq(MarkupFields::Field.new('Description',' Describing the describe! Sweet!'))
+            end
+
             it 'matches final field when line ends in end of string'
             it 'matches final field when match is between #[ and #]'
             it 'matches two fields on one line'
             it 'matches two fields on separate lines'
             it 'returns an array when one match is present'
+            it 'strips leading and trailing whitespace from matches'
         end
     end
 end
