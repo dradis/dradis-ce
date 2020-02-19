@@ -128,7 +128,7 @@
     // Ajax form
     _loadForm: function() {
       var that = this;
-      $.get(this.$element.data('form-url'), function(result) {
+      $.get(this.$element.data('form-url'), {text: this.$element.val()}, function(result) {
         that.options.$form.removeClass('loading-indicator')
           .html(result);
           this._formRendered = true;
