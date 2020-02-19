@@ -8,7 +8,7 @@ class HomeController < AuthenticatedController
   # Returns dradis field markup as a form partial used by the jQuery.Textile plugin
   # Form button
   def markup_form
-      render layout: false
+    render layout: false
   end
   
   # Returns the Textile version of a text passed as parameter
