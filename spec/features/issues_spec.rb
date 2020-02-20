@@ -139,6 +139,28 @@ describe 'Issues pages' do
           visit edit_project_issue_path(current_project, @issue)
         end
 
+        describe 'should have a functioning markup form' do
+            it 'should load controls when clicking the form link', js: true do
+                click_link 'Form'
+                expect(page).to have_selector('input.markup-form-input')
+            end
+
+            it 'should change content in textarea when input changes', js: true do
+                click_link 'Form'
+                title_input = page.find(:css, '#markup-form-input-0')
+
+                title_input.fill_in(with: 'New Title')
+                click_link 'Write'
+
+                # Hack for lack of change event in selenium when calling fill_in
+                # NOT CURRENTLY WORKING
+                page.execute_script %Q{ $('#markup-form-input-0').trigger("change") }
+
+                textile = page.find(:css, '#issue_text')
+                expect(textile).to have_content('New Title')
+            end
+        end
+
         describe 'submitting the form with valid information' do
           let(:new_content) { 'New info' }
           before { fill_in :issue_text, with: new_content }
