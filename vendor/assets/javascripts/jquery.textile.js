@@ -125,6 +125,17 @@
       if (this.options.resize === false) return false;
 
     },
+    // Set text in element when form input changes
+    _populateFromForm: function(selector) {
+      var text = '';
+
+      $(selector).each(function() {
+        jQueryObject = $(this);
+        text += `#[${jQueryObject.data('name')}]#\n${jQueryObject.val()}\n\n`;
+      });
+
+      this.$element.val(text);
+    },
     // Ajax form
     _loadForm: function() {
       var that = this;
@@ -170,6 +181,9 @@
       this.$element.show();
     },
     _onBtnForm: function() {
+      // Save this for access from closure
+      var that = this;
+
       // Activate form button
       var scope = this.options.$wrap;
       $('.textile-toolbar a').removeClass('active');
@@ -185,6 +199,10 @@
 
       // Get form from markup
       this._loadForm();
+
+      $(document).on('change', "input.markup-form-input", function() {
+        that._populateFromForm('input.markup-form-input');
+      });
     },
     _onBtnPreview: function() {
       // Activate toolbar button
