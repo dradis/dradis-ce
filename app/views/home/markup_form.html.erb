@@ -1,6 +1,7 @@
-<% @fields.each do |field| %>
+<% @fields.each_with_index do |field, ord| %>
+    <% field_id = "markup-form-input-#{ord}" %>
     <div class="form-group">
-        <label for=""><%= field.name %></label>
-        <input type="text" class="form-control" value="<%= field.value %>">
+        <label for="<%= field_id %>"><%= field.name %></label>
+        <input type="text" id="<%= field_id %>" class="form-control" data-name="<%= field.name %>" value="<%= field.value %>">
     </div>
 <% end %>
