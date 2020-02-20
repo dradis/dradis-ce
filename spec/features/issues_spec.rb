@@ -144,21 +144,6 @@ describe 'Issues pages' do
                 click_link 'Form'
                 expect(page).to have_selector('input.markup-form-input')
             end
-
-            it 'should change content in textarea when input changes', js: true do
-                click_link 'Form'
-                title_input = page.find(:css, '#markup-form-input-0')
-
-                title_input.fill_in(with: 'New Title')
-                click_link 'Write'
-
-                # Hack for lack of change event in selenium when calling fill_in
-                # NOT CURRENTLY WORKING
-                page.execute_script %Q{ $('#markup-form-input-0').trigger("change") }
-
-                textile = page.find(:css, '#issue_text')
-                expect(textile).to have_content('New Title')
-            end
         end
 
         describe 'submitting the form with valid information' do
