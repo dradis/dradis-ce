@@ -81,6 +81,23 @@ describe MarkupFields do
                expect(first.name).to eq('Title')
                expect(first.value).to eq('Description for a title')
             end
+
+            it 'matches name and value on different lines' do
+                field1, field2 = MarkupFields::Field.new('Title','Description of title'), 
+                                 MarkupFields::Field.new('Description', 'Description of description')
+
+                markup = <<~DOC
+                #[#{field1.name}]#
+                #{field1.value}
+
+                #[#{field2.name}]#
+                #{field2.value}
+                
+                DOC
+
+                markup_fields = MarkupFields.new(markup)
+                expect(markup_fields.fields).to eq([field1, field2])
+            end
         end
     end
 end
