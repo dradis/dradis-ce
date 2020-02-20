@@ -1,1 +1,6 @@
-<%= params[:text] %>
+<% @fields.each do |field| %>
+    <div class="form-group">
+        <label for=""><%= field.name %></label>
+        <input type="text" class="form-control" value="<%= field.value %>">
+    </div>
+<% end %>

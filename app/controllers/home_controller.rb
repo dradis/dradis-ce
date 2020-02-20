@@ -1,3 +1,5 @@
+require 'text-processing/markup_fields'
+
 class HomeController < AuthenticatedController
   # Returns the markup cheatsheet that is used by the jQuery.Textile plugin Help
   # button.
@@ -8,6 +10,7 @@ class HomeController < AuthenticatedController
   # Returns dradis field markup as a form partial used by the jQuery.Textile plugin
   # Form button
   def markup_form
+    @fields = MarkupFields.new(params[:text]).fields
     render layout: false
   end
   
