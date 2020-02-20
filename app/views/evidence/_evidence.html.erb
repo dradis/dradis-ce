@@ -5,12 +5,10 @@
 
 <%= content_tag :div, id: "#{dom_id(evidence)}_link", class: item_css.join do %>
 
-  <div class="expansion-container">
-    <%= link_to project_node_evidence_path(@node.project, @node, evidence) do %>
-      <%= colored_icon_for_model(evidence, 'fa-flag', 'list-item-icon') %>
-      <%= evidence.title %>
-    <% end %>
-  </div>
+  <%= link_to project_node_evidence_path(@node.project, @node, evidence) do %>
+    <%= colored_icon_for_model(evidence, 'fa-flag', 'list-item-icon') %>
+    <%= evidence.title %>
+  <% end %>
 
   <div class="list-item-actions">
     <%= link_to edit_project_node_evidence_path(@node.project, @node, evidence), class:'list-item-action-edit' do %>
@@ -19,7 +17,7 @@
 
     <%= link_to [current_project, @node, evidence],
           method: :delete,
-          data: { confirm: 'Are you sure?' },
+          data: { confirm: "Are you sure?\n\n\Proceeding will delete this evidence from the associated node." },
           class: 'list-item-action-delete' do %>
       <i class="fa fa-trash"></i> Delete
     <% end %>

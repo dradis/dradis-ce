@@ -23,7 +23,7 @@ class RecoverableRevision
     #
     # No need to include Issue in this array because Issue revisions have
     # their item_type saved as `Note`, not `Issue`. FIXME - ISSUE/NOTE INHERITANCE
-    ids = [Evidence, Note].flat_map do |model|
+    ids = [Card, Evidence, Note].flat_map do |model|
       table_name = model.table_name
       versions = PaperTrail::Version.where(
           event: 'destroy', item_type: model.to_s, project_id: project_id
@@ -58,6 +58,10 @@ class RecoverableRevision
   end
 
   def recover
+    if @object.instance_of?(Card)
+      recover_card
+    end
+
     # If we're recovering an issue, revision.reify will return an instance
     # of `Note`, because `revision.reify.item_type == "Note"`. This won't prevent
     # the issue from being recovered correctly (because `revision.reify.node_id
@@ -105,6 +109,20 @@ class RecoverableRevision
     end
   end
 
+  def associated_board
+    # Extract the board_id attribute injected during the Card's after_destroy
+    board_id = @version.object[/(?<=board_id: )([0-9]+)(?=\n)/]
+    Board.find_by(id: board_id)
+  end
+
+  def find_or_create_board
+    self.associated_board ||
+      Board.find_or_create_by(
+        name: 'Recovered',
+        node_id: project.methodology_library.id
+      )
+  end
+
   private
 
   def issue_library
@@ -113,5 +131,16 @@ class RecoverableRevision
 
   def project
     @project ||= Project.find(@version.project_id)
+  end
+
+  def recover_card
+    if !List.exists?(@object.list_id)
+      object.list = self.find_or_create_board.recovered_list
+    end
+
+    # Set the recovered card as the first card on the list
+    object.update_attribute(:previous_id, nil)
+    first_card = object.list.cards.where(previous_id: nil).where.not(id: object.id).first
+    first_card.update_attribute(:previous_id, object.id) if first_card
   end
 end

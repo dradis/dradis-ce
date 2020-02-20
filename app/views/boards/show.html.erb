@@ -1,0 +1,16 @@
+<% content_for :title, @board.name %>
+
+<%= render 'poller_alerts' unless request.xhr? %>
+
+<% content_for :breadcrumbs do %>
+<nav>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to 'Methodologies', project_boards_path(current_project) %>
+    </li>
+    <li class="breadcrumb-item active"><%= @board.name %></li>
+  </ol>
+</nav>
+<% end %>
+
+<%= render @board %>

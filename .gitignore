@@ -7,13 +7,19 @@
 /db/*.sqlite3-journal
 /config/database.yml
 /config/secrets.yml
+/config/smtp.yml
 /log/*
 /tmp/*
 !/log/.keep
 !/tmp/.keep
 
+# Ignore uploaded files in development
+/storage/*
+!/storage/.keep
+
 /node_modules
 /yarn-error.log
+/public/assets
 .byebug_history
 
 # RSpec testing
@@ -34,3 +40,6 @@
 # Random
 .DS_Store
 *.swp
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key

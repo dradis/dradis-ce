@@ -1,6 +1,7 @@
 class CommentsController < AuthenticatedController
   include ActivityTracking
   include ProjectScoped
+  include Mentioned
 
   load_and_authorize_resource
 

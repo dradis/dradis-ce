@@ -11,43 +11,69 @@
     }
 
     #merge-selected {
-      display: none; // even when issue-actions becomes visible, keep this one hidden
+      display: none;
     }
   }
 
   .items-table-delete {
-    color: #b94a48;
+    color: #b94a48 !important;
   }
 }
 
-#issues-table {
-  display: grid;
-}
-
 .table-wrapper {
-  overflow: scroll;
+  overflow: auto;
 
   .items-table {
     td.loading {
       background: image-url('loading.gif') no-repeat left center;
       padding-left: 20px;
+      vertical-align: middle;
+    }
+
+    th {
+      padding: 0.5rem 1.25rem 0.5rem 0.5rem;
+      cursor: pointer;
+      position: relative;
+    
+      &.sortable {
+        position: relative;
+        cursor: pointer;
+    
+        &::after {
+          font-family: FontAwesome;
+          content: "\f0dc";
+          position: absolute;
+          margin-left: 5px;
+          color: #000;
+          opacity: 0;
+        }
+    
+        &.sorting-asc::after {
+          content: "\f0d8";
+          opacity: 1;
+        }
+    
+        &.sorting-desc::after {
+          content: "\f0d7";
+          opacity: 1;
+        }
+      }
     }
 
     .column-actions {
       text-align: right;
-      min-width: 130px;
+      min-width: 9rem;
 
       a {
-        padding-right: 8px;
+        padding-right: 0.5rem;
         visibility: hidden;
       }
     }
 
     .column-checkbox {
-      padding: 0;
+      padding: 0.4rem 0 0 0.5rem;
       text-align: center;
-      vertical-align: middle;
-      width: 36px;
+      width: 2.25rem;
 
       input {
         margin: 0;
@@ -55,7 +81,10 @@
     }
 
     tr:hover {
-      .column-actions a { visibility: visible; }
+
+      .column-actions a { 
+        visibility: visible; 
+      }
     }
   }
 }

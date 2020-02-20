@@ -10,6 +10,8 @@ module RevisionsHelper
     # Note - 'when Issue' must go ABOVE 'when Note', or all Issues will match
     # 'Note' before they can reach 'Issue' FIXME - ISSUE/NOTE INHERITANCE
     case record
+    when Card
+      project_board_list_card_revisions_path(current_project, @board, @list, record)
     when Issue
       project_issue_revisions_path(current_project, record)
     when Note
@@ -23,6 +25,8 @@ module RevisionsHelper
     # Note - 'when Issue' must go ABOVE 'when Note', or all Issues will match
     # 'Note' before they can reach 'Issue' FIXME - ISSUE/NOTE INHERITANCE
     case record
+    when Card
+      project_board_list_card_revision_path(current_project, @board, @list, record, revision)
     when Issue
       project_issue_revision_path(current_project, record, revision)
     when Note

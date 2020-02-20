@@ -1,12 +1,12 @@
-shared_examples "a form with a help button" do
+shared_examples 'a form with a help button' do
   describe "clicking the 'help' button", js: true do
-    before { find("form .btn-help").click }
-    it "displays Textile help" do
-      expect(page).to have_selector "h3", text: "Text styles"
-      expect(page).to have_selector "h3", text: "Block Code (bc.)"
-      expect(page).to have_selector "h3", text: "Lists"
-      expect(page).to have_selector "h3", text: "Miscellaneous"
-      expect(page).to have_selector "h3", text: "Further help"
+    before { find('form .btn-help').click }
+    it 'displays Textile help' do
+      expect(page).to have_selector 'h5', text: /Text styles/i
+      expect(page).to have_selector 'h5', text: /Block Code \(bc.\)/i
+      expect(page).to have_selector 'h5', text: /Lists/i
+      expect(page).to have_selector 'h5', text: /Miscellaneous/i
+      expect(page).to have_selector 'h5', text: /Further help/i
     end
   end
 end

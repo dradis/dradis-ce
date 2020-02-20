@@ -1,0 +1,38 @@
+<%= simple_form_for [current_project, @board, @list, @card] do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :name, required: false %>
+  <%= f.input :due_date %>
+
+  <%=
+    f.input :description,
+      input_html: {
+        class: 'textile',
+        label: false,
+        data: { preview_url: preview_path, help_url: markup_path }
+      }
+  %>
+  
+  <%=
+    f.association(
+      :assignees,
+      collection: current_project.authors.sort_by(&:name),
+      label_method: lambda do |user|
+        avatar_image(user, include_name: true, size: 30)
+      end,
+      value_method: :id,
+      as: :check_boxes,
+      item_wrapper_tag: :div,
+      boolean_style: :inline
+    )
+  %>
+
+  <div class="form-actions">
+    <%= f.button :submit, nil, class: 'btn btn-primary' %> or
+    <%=
+      link_to 'Cancel',
+        @card.persisted? ? [current_project, @board, @list, @card] : [current_project, @board],
+        class: 'cancel-link'
+    %>
+  </div>
+<% end %>

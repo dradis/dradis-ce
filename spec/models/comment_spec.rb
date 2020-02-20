@@ -22,7 +22,15 @@ describe Comment do
       user2   = create(:user, email: 'bar@dradis.test')
       comment = create(:comment, content: 'Hello @foo@dradis.test and hello @bar@dradis.test')
 
-      expect(comment.mentions).to eq [user1, user2]
+      expect(comment.mentions).to match_array [user1, user2]
+    end
+
+    it 'detects admins in mentions' do
+      user1   = create(:user, :admin, email: 'admin@dradis.test')
+      user2   = create(:user, email: 'foo@dradis.test')
+      comment = create(:comment, content: 'Hello @admin@dradis.test and @foo@dradis.test')
+
+      expect(comment.mentions).to match_array [user1, user2]
     end
   end
 

@@ -34,14 +34,14 @@ describe "evidence" do
     let(:create_comments) { nil }
 
     it "shows information about the Evidence" do
-      should have_selector "h4", text: "Foobar"
+      should have_selector "h5", text: "Foobar"
       should have_selector "p",  text: "Barfoo"
-      should have_selector "h4", text: "Fizzbuzz"
+      should have_selector "h5", text: "Fizzbuzz"
       should have_selector "p",  text: "Buzzfizz"
     end
 
     it "shows information about the evidence's Issue" do
-      should have_selector "h4", text: "Issue Title"
+      should have_selector "h5", text: "Issue Title"
       should have_selector "p",  text: "Issue info"
     end
 
@@ -57,7 +57,6 @@ describe "evidence" do
     describe "clicking 'delete'", js: true do
       let(:submit_form) do
         page.accept_confirm do
-          find('[data-behavior~=nodes-more-dropdown]').click
           within('.note-text-inner') { click_link "Delete" }
         end
         expect(page).to have_text "Successfully deleted evidence for '#{@evidence.issue.title}.'"

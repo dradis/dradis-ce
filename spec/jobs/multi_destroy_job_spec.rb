@@ -11,7 +11,7 @@ describe MultiDestroyJob do #, type: :job do
       @project = create(:project)
       @user    = create(:user)
       node     = create(:node, project: @project)
-      PaperTrail.controller_info = { project_id: @project.id }
+      PaperTrail.request.controller_info = { project_id: @project.id }
       @notes = [
         create(:note, node: node),
         create(:note, node: node),

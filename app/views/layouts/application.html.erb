@@ -4,15 +4,14 @@
     <title><%= content_for?(:title) ? yield(:title) : "Dradis Community Edition" %></title>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= favicon_link_tag %>
-    <%= csrf_meta_tag %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
 
   <body class="unauthenticated <%= controller_name %>">
-    <!-- //////////////////////////////////////// -->
-    <!-- ////////// NOSCRIPT WARNING //////////// -->
-    <!-- //////////////////////////////////////// -->
+
     <noscript>
       <div class="alert alert-danger">
         <div class="container">
@@ -23,34 +22,17 @@
       </div>
     </noscript>
 
+    <div class="page-header d-flex justify-content-center mb-5">
+      <%= link_to image_tag('logo_small.png', height: 100), 'http://dradisframework.org' %>
+    </div>
 
-    <!-- //////////////////////////////////////// -->
-    <!-- ////////// PAGE TITLE ////////////////// -->
-    <!-- //////////////////////////////////////// -->
-    <% if content_for?(:title) -%>
-    <section class="page-title">
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-4 col-xs-offset-4">
-            <h1><%= yield(:title) %></h1>
-          </div>
-        </div>
-      </div>
-    </section>
-    <% end %>
+    <div class="container">
+      <%= yield %>
+    </div>
 
-    <!-- //////////////////////////////////////// -->
-    <!-- ////////// MAIN CONTENT SECTION //////// -->
-    <!-- //////////////////////////////////////// -->
-    <%= yield %>
-
-    <!-- //////////////////////////////////////// -->
-    <!-- ////////// FOOTER ////////////////////// -->
-    <!-- //////////////////////////////////////// -->
     <footer>
-      <div class="container">
+      <div class="container mt-3">
         <p><a href="http://dradisframework.org" target="_blank">http://dradisframework.org</a></p>
-        <%= link_to image_tag('logo_tiny.png'), 'http://dradisframework.org' %>
       </div>
     </footer>
   </body>

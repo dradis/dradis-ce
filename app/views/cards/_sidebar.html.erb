@@ -1,0 +1,19 @@
+  <div class="note-list">
+    <%= content_tag :div, id: 'issue_summary_link', class: current_page?(main_app.project_board_path(current_project, @board)) ? 'p-2 mb-2 active' : 'p-2 mb-2' do %>
+      <%= link_to project_board_path(current_project, @board), class: 'summary-link' do %>
+        <i class="fa fa-arrow-left"></i> Back to board view
+      <% end %>
+    <% end %>
+  </div>
+
+  <!-- Cards -->
+  <%=
+    render 'shared/sidebar_collection',
+      name: 'Tasks',
+      collection: @sorted_cards,
+      new_path: new_project_board_list_card_path(current_project, @board, @list, @card),
+      category_id: nil do
+  %>
+    <%#-- We pass an empty block here or else "yield" in the rendered partial %>
+    <%#-- will return the whole view. %>
+  <% end %>

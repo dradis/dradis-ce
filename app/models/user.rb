@@ -1,4 +1,9 @@
 class User < ApplicationRecord
+  alias_attribute :name, :email
+
+  serialize :preferences, UserPreferences
+  validates_associated :preferences
+
   # -- Relationships --------------------------------------------------------
   has_many :activities
   has_many :comments, dependent: :nullify

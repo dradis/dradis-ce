@@ -6,40 +6,25 @@ describe "Nodes API" do
   include_context "https"
 
   context "as unauthenticated user" do
-    describe "GET /api/nodes" do
-      it "throws 401" do
-        get "/api/nodes", env: @env
-        expect(response.status).to eq(401)
-      end
-    end
-    describe "GET /api/nodes/:id" do
-      it "throws 401" do
-        get "/api/nodes/1", env: @env
-        expect(response.status).to eq(401)
-      end
-    end
-    describe "POST /api/nodes" do
-      it "throws 401" do
-        post "/api/nodes", env: @env
-        expect(response.status).to eq(401)
-      end
-    end
-    describe "PUT /api/nodes/:id" do
-      it "throws 401" do
-        put "/api/nodes/1", env: @env
-        expect(response.status).to eq(401)
-      end
-    end
-    describe "DELETE /api/nodes/:id" do
-      it "throws 401" do
-        delete "/api/nodes/1", env: @env
-        expect(response.status).to eq(401)
+    [
+      ['get', '/api/nodes/'],
+      ['get', '/api/nodes/1'],
+      ['post', '/api/nodes/'],
+      ['put', '/api/nodes/1'],
+      ['patch', '/api/nodes/1'],
+      ['delete', '/api/nodes/1'],
+    ].each do |verb, url|
+      describe "#{verb.upcase} #{url}" do
+        it 'throws 401' do
+          send(verb, url, params: {}, env: @env)
+          expect(response.status).to eq 401
+        end
       end
     end
   end
 
-  context "as authenticated user" do
-    include_context "authenticated API user"
+  context "as authauthorized user" do
+    include_context "authorized API user"
 
     describe "GET /api/nodes" do
       it "retrieves all the nodes" do

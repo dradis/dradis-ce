@@ -1,6 +1,9 @@
 module Dradis::CE::API
   module V1
-    class NotesController < Dradis::CE::API::V1::ProjectScopedController
+    class NotesController < Dradis::CE::API::APIController
+      include ActivityTracking
+      include Dradis::CE::API::ProjectScoped
+
       before_action :set_node
 
       def index

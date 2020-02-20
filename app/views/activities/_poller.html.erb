@@ -1,11 +1,20 @@
 <%# only enable polling in the right controller contexts this %>
-<%# is picked up by javascripts/snowcrash/modules/activities/poller.js   %>
+<%# is picked up by javascripts/tylium/modules/activities/poller.js   %>
 <div id="activities-poller"
   data-action="<%= controller.action_name %>"
+  data-board-id="<%= @board.try(:id) %>"
+  data-board-name="<%= @board.try(:name) %>"
+  data-board-path="<%= project_board_path(current_project, @board) unless @board.nil? %>"
+  data-boards-path="<%= main_app.project_boards_path(current_project) %>"
+  data-card-id="<%= @card.try(:id) %>"
+  data-card-path="<%= project_board_list_card_path(current_project, @card.board, @card.list, @card) if @card.try(:persisted?) %>",
   data-controller="<%= controller_name %>"
   data-id="<%= params[:id] %>"
   data-last-poll="<%= Time.now.to_i %>"
+  data-list-id="<%= @list.try(:id) %>"
+  data-list-name="<%= @list.try(:name) %>"
   data-node-id="<%= @node.try(:id) %>"
-  data-url=<%= main_app.poll_project_activities_path(current_project, format: :js) %>
+  data-project-id="<%= current_project.id %>"
+  data-url="<%= main_app.poll_project_activities_path(current_project, format: :js) %>"
 >
 </div>

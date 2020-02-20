@@ -5,21 +5,26 @@
   content_for :title, title
 %>
 
-<% if params[:q].blank? %>
-  <div class="alert alert-block alert-info">
-    <p>Please enter search criteria</p>
-  </div>
+  <% if params[:q].blank? %>
+    <div class="content-container mt-3">
+      <div class="alert alert-info m-0">
+        <p class="m-0">Please enter search criteria</p>
+      </div>
 
-  <br/>
+      <br/>
 
-  <%= form_tag project_search_path(current_project), method: :get, class: 'form' do %>
-    <%= search_field_tag :q,  params[:q], placeholder: 'Search here...', class: 'search-query' %>
-    <button type="submit" class="btn"><span class="fa fa-search"></span></button>
+      <%= form_tag project_search_path(current_project), method: :get, class: 'form' do %>
+        <div class="inset-button-wrapper">
+          <%= search_field_tag :q,  params[:q], placeholder: 'Search here...', class: 'search-query form-control' %>
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+      <% end %>
+    </div>
+
+  <% else %>
+    <%= render 'nav', search: @search %>
+    <div class="content-container mt-0 py-2">
+      <%= render 'results', search: @search %>
+    </div>
   <% end %>
-
-<% else %>
-  <%= render 'nav', search: @search %>
-  <div class="inner">
-    <%= render 'results', search: @search %>
-  </div>
-<% end %>
+</div>

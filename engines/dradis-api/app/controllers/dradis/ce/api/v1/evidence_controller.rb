@@ -1,6 +1,9 @@
 module Dradis::CE::API
   module V1
-    class EvidenceController < Dradis::CE::API::V1::ProjectScopedController
+    class EvidenceController < Dradis::CE::API::APIController
+      include ActivityTracking
+      include Dradis::CE::API::ProjectScoped
+
       before_action :set_node
 
       def index

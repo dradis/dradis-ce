@@ -1,0 +1,107 @@
+<% content_for :title, @card.name %>
+
+<% content_for :breadcrumbs do %>
+  <%= render partial: 'breadcrumbs' %>
+<% end %>
+
+<%= render partial: 'poller_alerts' unless request.xhr? %>
+
+<div id="js-card">
+  <div class='d-none' data-behavior='breadcrumbs-xhr'>
+    <%= render partial: 'breadcrumbs' %>
+  </div>
+
+  <ul class="tabs-container nav nav-tabs main-tabs">
+    <li class="nav-item">
+      <a href="#info-tab" data-toggle="tab" class="nav-link active"><i class="fa fa-address-card-o"></i> Information</a>
+    </li>
+    <li class="nav-item">
+      <a href="#activity-tab" data-toggle="tab" class="nav-link"><i class="fa fa-refresh"></i> Recent activity</a>
+    </li>
+  </ul>
+
+  <div class="row m-0">
+    <div class="col-12 col-xxl-7 p-0">
+      <div class="content-container mt-0 mr-xxl-3">
+        <div class="tab-content mt-0">
+          <div class="tab-pane active" id="info-tab" data-behavior="subscription-actions" data-subscribed="<%= !@subscription.nil? %>">
+            <% cache ['card-information-tab', @card] do %>
+              <div class="note-text-inner">
+                <h4 class="mb-4 header-underline"><%= @card.name %> -
+                  <span class="actions">
+                    <%= link_to edit_project_board_list_card_path(current_project, @board, @list, @card) do %>
+                      <i class="fa fa-pencil"></i> Edit
+                    <% end %> -
+                    <%=
+                      link_to(
+                        project_board_list_card_path(current_project, @board, @list, @card),
+                        class: 'text-error-hover',
+                        data: { confirm: "Are you sure?\n\nProceeding will delete this card from the task list." },
+                        method: :delete
+                      ) do %>
+                        <i class="fa fa-trash"></i> Delete
+                    <% end %> -
+                    <%= render 'subscriptions/actions', subscribable: @card %>
+                  </span>
+                </h4>
+
+                <div class="card-description">
+                  <div class="content-textile">
+                    <%= markup(@card.description) %>
+                  </div>
+                </div>
+
+                <% if @card.due_date %>
+                  <div class="card-due-date mt-4 pt-2">
+                    <h5>Due Date</h5>
+                    <%= @card.due_date %>
+                  </div>
+                <% end %>
+
+                <% if @card.assignees.any? %>
+                  <div class="card-assignees mt-4 pt-2 clearfix">
+                    <h5>Assignees</h5>
+                    <% @card.assignees.each do |user| %>
+                      <%= avatar_image(user, include_name: true, size: 30) %>
+                    <% end %>
+                  </div>
+                <% end %>
+              <% end %>
+
+            </div>         
+          </div>
+
+          <% cache ['card-activity-tab', @card, @activities] do %>
+            <div class="tab-pane" id="activity-tab">
+              <h4 class="header-underline">
+                Recent activity
+                <% if @card.has_revision_history? %>
+                  - 
+                  <span class="actions">
+                    <%= link_to(project_board_list_card_revisions_path(current_project, @board, @list, @card)) do %>
+                      <i class="fa fa-history"></i> Revision history
+                    <% end %>
+                  </span>
+                <% end %>
+              </h4>
+              <%= render 'activities/feed', activities: @activities %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-xxl-5 p-0">
+      <div class="sticky-top">
+        <div class="content-container ml-xxl-3 mt-0">
+          <%= render 'comments/feed' %>
+        </div>
+
+        <div class="content-container ml-xxl-3">
+          <%= render 'subscriptions/feed', subscribable: @card %>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
