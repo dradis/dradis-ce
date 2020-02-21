@@ -10,7 +10,7 @@
   <% end %>
 
   <div class="dropdown-menu <%= local_assigns.fetch(:menu_class, '') %>">
-    <%= link_to 'Empty (no template)',
+    <%= link_to 'Blank',
       new_path,
       :tabindex => '-1',
       :class => 'dropdown-item',
@@ -24,7 +24,7 @@
 
     <% if NoteTemplate.all.any? %>
       <% NoteTemplate.all.each do |template| %>
-        <%= link_to template.name, "#{new_path}?template=#{template.id}", tabindex: '-1', class: 'dropdown-item' %>
+        <%= link_to template.name, "#{new_path}?template=#{template.id}", tabindex: '-1', class: 'dropdown-item', title: template.name %>
       <% end %>
     <% else %>
       <a href="javascript:void(0)" class="dropdown-item disabled">(no templates defined)</a>
