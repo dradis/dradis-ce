@@ -75,6 +75,10 @@ button:focus {
   font-size: inherit;
 }
 
+.disabled {
+  color: $mutedText !important;
+}
+
 .dropdown-toggle::after {
   display: none;
 }
