@@ -1,3 +1,20 @@
+v3.17 (Month’20)
+  * 
+  * Bugs fixed:
+       - Long project names interfering with search bar expansion.
+  * New integrations:
+       - 
+  * Integration enhancements:
+       - 
+  * Reporting enhancements:
+       - 
+  * REST/JSON API enhancements:
+       - 
+  * Security Fixes:
+       - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+       - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+       - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
 v3.16 (February 2020)
   * Update app to new Tylium layout
   * Upgrade to Rails 5.2.4.1
