@@ -191,6 +191,10 @@ document.addEventListener "turbolinks:load", ->
   if $('[data-behavior~=restrict-height').length
     checkOverflow = ->
       $('[data-behavior~=restrict-height').each ->
+        if $(this).is('[data-height~=prev-container')
+          prevContainer = $(this).parent().prev().children('[data-behavior~=content-container]').innerHeight()
+          $(this).innerHeight(prevContainer)
+
         if $(this).innerHeight() + 32 < $(this)[0].scrollHeight && $(this).innerHeight() > 100 # if container is > 100px and has overflowing content
           if $(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight # if already at the bottom
             return
