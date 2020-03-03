@@ -10,7 +10,7 @@ v3.17 ([MMM’YY])
     - [new integration #1]
     - [new integration ...]
   * Integration enhancements:
-       - Nikto: support new nested <niktoscan> format
+    - Nikto: support new nested <niktoscan> format
   * Reporting enhancements:
     - [reporting enhancement #1]
     - [reporting enhancement ...]
