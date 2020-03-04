@@ -4,7 +4,7 @@
       <li class="breadcrumb-item"><a href="javascript:void(0)" data-behavior="sidebar-toggle">Nodes</a></li>
       <%= content_tag :li, class: 'breadcrumb-item active', data: { node_id: @node.id } do %><%= @node.label %><% end -%>
     </ol>
-    <ul class="nav nav-pills">
+    <ul class="nav">
       <li class="dropdown dots-dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-behavior="nodes-more-dropdown"><i class="fa fa-ellipsis-h fa-lg"></i></a>
         <div class="dropdown-menu">

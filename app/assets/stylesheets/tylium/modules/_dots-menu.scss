@@ -23,6 +23,12 @@
         color: $linkColor !important;
         background-color: initial !important;
       }
+
+      &:not(:first-child) {
+        border-top: 1px solid $borderColor;
+        margin-top: 0.3rem;
+        padding-top: 0.3rem;
+      }
     }
 
     .dropdown-menu {
@@ -41,9 +47,5 @@
         color: $linkColorHover;
       }
     }
-  }
-
-  ul.nav-pills {
-    margin-bottom: 0;
   }
 }
