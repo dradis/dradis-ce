@@ -10,6 +10,7 @@ v3.17 ([MMM’YY])
     - [new integration #1]
     - [new integration ...]
   * Integration enhancements:
+    - Nexpose: better cipher wrapping coverage
     - Nikto: support new nested <niktoscan> format
   * Reporting enhancements:
     - [reporting enhancement #1]
