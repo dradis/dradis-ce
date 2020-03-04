@@ -9,26 +9,20 @@
 <% end %>
 
 <% content_for :breadcrumbs do %>
-<div class="node-header">
-  <nav>
+  <nav class="dots-container">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><%= link_to 'All issues', project_issues_path(current_project) %></li>
       <li class="breadcrumb-item active"><%= (@issue.title? ? @issue.title : "Issue ##{@issue.id}")%></li>
     </ol>
+    <ul class="nav nav-pills">
+      <li class="dropdown dots-dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-behavior="nodes-more-dropdown"><i class="fa fa-ellipsis-h fa-lg"></i></a>
+        <div class="dropdown-menu">
+          <%= render partial: 'send_to_menu' %>
+        </div>
+      </li>
+    </ul>
   </nav>
-  <ul class="nav nav-pills pull-right">
-    <li class="dropdown node-dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-behavior="nodes-more-dropdown"><i class="fa fa-ellipsis-h fa-lg"></i></a>
-      <div class="dropdown-menu pull-right">
-        <a href="#modal_add_child_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-plus"></i> Add subnode</a>
-        <a href="#modal_rename_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-edit"></i> Rename</a>
-        <a href="#modal_move_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-mail-forward"></i> Move</a>
-        <a href="#modal_merge_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-compress"></i> Merge</a>
-        <a href="#modal_delete_node" class="dropdown-item text-error-hover" tabindex="-1" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a>
-      </div>
-    </li>
-  </ul>
-</div>
 <% end %>
 
 <!-- Main content -->
@@ -60,7 +54,6 @@
                     <i class="fa fa-trash"></i> Delete
                   <% end %> -
                   <%= render 'subscriptions/actions', subscribable: @issue %> -
-                  <%= render partial: 'send_to_menu' %>
                   <%= tag_and_name_for(@issue) %>
                 </span>
               </h4>
