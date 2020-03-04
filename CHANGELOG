@@ -1,3 +1,26 @@
+v3.17 ([MMM’YY])
+  * Refactored dots-menu to make it available in any view.
+  * Bugs fixed:
+       - [bug fixed #1]
+       - [bug fixed ...]
+       - Bug tracker items: #N, #M, #O, ...
+  * New integrations:
+       - [new integration #1]
+       - [new integration ...]
+  * Integration enhancements:
+       - [integration enhancement #1]
+       - [integration enhancement ...]
+  * Reporting enhancements:
+       - [reporting enhancement #1]
+       - [reporting enhancement ...]
+  * REST/JSON API enhancements:
+       - [API enhancement #1]
+       - [API enhancement ...]
+  * Security Fixes:
+       - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+       - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+       - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
 v3.16 (February 2020)
   * Update app to new Tylium layout
   * Upgrade to Rails 5.2.4.1
