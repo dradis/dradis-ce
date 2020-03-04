@@ -1,25 +1,26 @@
 v3.17 ([MMM’YY])
   * Refactored dots-menu to make it available in any view.
   * Bugs fixed:
-       - [bug fixed #1]
-       - [bug fixed ...]
-       - Bug tracker items: #N, #M, #O, ...
+    - [bug fixed #1]
+    - [bug fixed ...]
+    - Bug tracker items: #N, #M, #O, ...
   * New integrations:
-       - [new integration #1]
-       - [new integration ...]
+    - [new integration #1]
+    - [new integration ...]
   * Integration enhancements:
-       - [integration enhancement #1]
-       - [integration enhancement ...]
+    - Nexpose: better cipher wrapping coverage
+    - Nikto: support new nested <niktoscan> format
   * Reporting enhancements:
-       - [reporting enhancement #1]
-       - [reporting enhancement ...]
+    - [reporting enhancement #1]
+    - [reporting enhancement ...]
   * REST/JSON API enhancements:
-       - [API enhancement #1]
-       - [API enhancement ...]
+    - [API enhancement #1]
+    - [API enhancement ...]
   * Security Fixes:
-       - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-       - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-       - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Upgraded gems: puma
 
 v3.16 (February 2020)
   * Update app to new Tylium layout
