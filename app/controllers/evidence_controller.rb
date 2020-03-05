@@ -51,7 +51,7 @@ class EvidenceController < NestedNodeResourceController
       params[:evidence][:node_ids].reject(&:blank?).each do |node_id|
         node = current_project.nodes.find(node_id)
         evidence = Evidence.create!(
-          author: cirrent_user.email,
+          author: current_user.email,
           content: evidence_params[:content],
           issue_id: issue.id,
           node_id: node.id
