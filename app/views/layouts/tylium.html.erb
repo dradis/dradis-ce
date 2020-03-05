@@ -28,14 +28,8 @@
     <%= render 'layouts/tylium/navbar' %>
     <%= render 'layouts/tylium/sidebar' %>
 
-    <noscript>
-      <div class="alert alert-error m-4">
-        <h4>Error</h4>
-        <p>Please enable JavaScript support.</p>
-      </div>
-    </noscript>
-    
     <div id="view-content" class="view-content">
+      <%= render 'shared/noscript' %>
       <div class="row m-0">
         <% if content_for?(:sidebar) %>
           <div class="secondary-sidebar col-4 col-lg-3 col-xl-2 p-0">
