@@ -51,9 +51,10 @@ class EvidenceController < NestedNodeResourceController
       params[:evidence][:node_ids].reject(&:blank?).each do |node_id|
         node = current_project.nodes.find(node_id)
         evidence = Evidence.create!(
+          author: cirrent_user.email,
+          content: evidence_params[:content],
           issue_id: issue.id,
-          node_id: node.id,
-          content: evidence_params[:content]
+          node_id: node.id
         )
         track_created(evidence)
       end
@@ -73,9 +74,10 @@ class EvidenceController < NestedNodeResourceController
         end
 
         evidence = Evidence.create!(
+          author: current_user.email,
+          content: evidence_params[:content],
           issue_id: issue.id,
-          node_id: node.id,
-          content: evidence_params[:content]
+          node_id: node.id
         )
         track_created(evidence)
       end

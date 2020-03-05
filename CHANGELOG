@@ -3,8 +3,7 @@ v3.17 ([MMM’YY])
   * [feature #2]
   * [feature ...]
   * Bugs fixed:
-    - [bug fixed #1]
-    - [bug fixed ...]
+    - Set :author when creating Evidence from an Issue.
     - Bug tracker items: #N, #M, #O, ...
   * New integrations:
     - [new integration #1]
