@@ -289,7 +289,7 @@
     .team-name,
     .nodes-list {
       visibility: initial;
-      animation: fadein 1s;
+      animation: fadein 1s forwards;
       opacity: 1;
     }
 
