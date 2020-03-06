@@ -29,7 +29,6 @@
     <%= render 'layouts/tylium/sidebar' %>
 
     <div id="view-content" class="view-content">
-      <%= render 'shared/noscript' %>
       <div class="row m-0">
         <% if content_for?(:sidebar) %>
           <div class="secondary-sidebar col-4 col-lg-3 col-xl-2 p-0">
@@ -38,15 +37,17 @@
             </div>
           </div>
           <div class="secondary-sidebar-content col-8 col-lg-9 col-xl-10 p-0">
-            <%= render "layouts/tylium/project_teaser" %>
-            <%= render "layouts/tylium/breadcrumb" %>
+            <%= render 'shared/noscript' %>
+            <%= render 'layouts/tylium/project_teaser' %>
+            <%= render 'layouts/tylium/breadcrumb' %>
             <%= flash_messages %>
             <%= content_for?(:content) ? yield(:content) : yield %>
           </div>
         <% else %>
           <div class="col-12 p-0">
-            <%= render "layouts/tylium/project_teaser" %>
-            <%= render "layouts/tylium/breadcrumb" %>
+            <%= render 'shared/noscript' %>
+            <%= render 'layouts/tylium/project_teaser' %>
+            <%= render 'layouts/tylium/breadcrumb' %>
             <% if content_for?(:title) %>
               <h3 class="page-title"><%= yield(:title) %></h3>
             <% end %>
