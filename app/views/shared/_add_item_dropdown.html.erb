@@ -1,7 +1,7 @@
 <div class="dropdown <%= local_assigns.fetch(:dropdown_class, '') %>">
   <%= link_to 'javascript:void(0)',
     class: local_assigns.fetch(:button_class, '') + ' dropdown-toggle',
-    data: { name: name.downcase, toggle: 'dropdown' } do %>
+    data: { toggle: 'dropdown' } do %>
     <i class="fa fa-plus"> </i> <%= local_assigns.fetch(:text, '') %>
   <% end %>
 

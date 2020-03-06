@@ -30,7 +30,6 @@
 
 //= require tylium/behaviors
 //= require tylium/engines
-//= require tylium/keyboard_shortcuts
 
 //= require tylium/modules/auto_save
 
