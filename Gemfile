@@ -177,7 +177,7 @@ group :development, :test do
 
   gem 'rspec-rails', '~> 3.1'
 
-  gem 'puma'
+  gem 'puma', '4.3.3'
 end
 
 group :test do
