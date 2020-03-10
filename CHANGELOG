@@ -1,5 +1,7 @@
 v3.17 ([MMM’YY])
   * Use shared noscript partial
+  * Update sass-rails to v6.0.0
+  * Update bundler to v2.1.4
   * Bugs fixed:
     - [bug fixed #1]
     - [bug fixed ...]
