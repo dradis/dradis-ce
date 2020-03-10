@@ -30,7 +30,7 @@
       <div class="dropdown-menu dropdown-menu-right" data-url="<%= main_app.project_notifications_path(current_project) %>"></div>
     </li>
     <li class="nav-item dropdown round">
-      <%= link_to '#', class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown', behavior: 'close-collapse' }, remote: true, role: 'button', title: 'Help Menu' do %>
+      <%= link_to 'javascript:void(0)', class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown', behavior: 'close-collapse' }, remote: true, role: 'button', title: 'Help Menu' do %>
         <i class="fa fa-question fa-lg"></i>
       <% end %>
       <div class="dropdown-menu dropdown-menu-right">
