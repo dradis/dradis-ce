@@ -1,4 +1,5 @@
 v3.17 ([MMM’YY])
+  * Render markup inside table columns
   * Use shared noscript partial
   * Bugs fixed:
     - [bug fixed #1]
