@@ -22,69 +22,69 @@
 
 .table-wrapper {
   overflow: auto;
+}
 
-  .items-table {
-    td.loading {
-      background: image-url('loading.gif') no-repeat left center;
-      padding-left: 20px;
-      vertical-align: middle;
-    }
+.items-table {
+  td.loading {
+    background: image-url('loading.gif') no-repeat left center;
+    padding-left: 20px;
+    vertical-align: middle;
+  }
 
-    th {
-      padding: 0.5rem 1.25rem 0.5rem 0.5rem;
-      cursor: pointer;
+  th {
+    padding: 0.5rem 1.25rem 0.5rem 0.5rem;
+    cursor: pointer;
+    position: relative;
+
+    &.sortable {
       position: relative;
-    
-      &.sortable {
-        position: relative;
-        cursor: pointer;
-    
-        &::after {
-          font-family: FontAwesome;
-          content: "\f0dc";
-          position: absolute;
-          margin-left: 5px;
-          color: #000;
-          opacity: 0;
-        }
-    
-        &.sorting-asc::after {
-          content: "\f0d8";
-          opacity: 1;
-        }
-    
-        &.sorting-desc::after {
-          content: "\f0d7";
-          opacity: 1;
-        }
+      cursor: pointer;
+
+      &::after {
+        font-family: FontAwesome;
+        content: "\f0dc";
+        position: absolute;
+        margin-left: 5px;
+        color: #000;
+        opacity: 0;
+      }
+
+      &.sorting-asc::after {
+        content: "\f0d8";
+        opacity: 1;
+      }
+
+      &.sorting-desc::after {
+        content: "\f0d7";
+        opacity: 1;
       }
     }
+  }
 
-    .column-actions {
-      text-align: right;
-      min-width: 9rem;
+  .column-actions {
+    text-align: right;
+    min-width: 9rem;
 
-      a {
-        padding-right: 0.5rem;
-        visibility: hidden;
-      }
+    a {
+      padding-right: 0.5rem;
+      visibility: hidden;
     }
+  }
 
-    .column-checkbox {
-      padding: 0.4rem 0 0 0.5rem;
-      text-align: center;
-      width: 2.25rem;
+  .column-checkbox {
+    padding: 0.4rem 0 0 0.5rem;
+    text-align: center;
+    width: 2.25rem;
 
-      input {
-        margin: 0;
-      }
+    input {
+      margin: 0;
     }
+  }
 
-    tr:hover {
+  tr:hover {
 
-      .column-actions a { 
-        visibility: visible; 
-      }
+    .column-actions a { 
+      visibility: visible;
     }
   }
 }

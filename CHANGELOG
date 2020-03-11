@@ -1,5 +1,6 @@
 v3.17 ([MMM’YY])
   * Refactored dots-menu to make it available in any view.
+  * Use shared noscript partial
   * Bugs fixed:
     - [bug fixed #1]
     - [bug fixed ...]
