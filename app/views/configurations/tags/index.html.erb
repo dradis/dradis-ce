@@ -1,0 +1,29 @@
+<% content_for :title, 'Configuration Manager' %>
+
+<%= render 'configurations/tabs' %>
+
+<div class="content-container mt-3">
+  <table class="table table-striped mb-0 items-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tags.each do |tag| %>
+        <tr>
+          <td class='font-weight-bold' style="color: <%= tag.color %>"><%= tag.display_name %></td>
+          <td class='column-actions'>
+            <%= link_to edit_project_configurations_tag_path(current_project, tag), class: '' do %>
+              <i class="fa fa-pencil"></i> Edit
+            <% end %>
+            <%= link_to project_configurations_tag_path(current_project, tag), method: :delete, data: { confirm: "Are you sure?\n\nProceeding will remove this tag from all issues." }, class: 'text-error' do %>
+              <i class="fa fa-trash"></i> Delete
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

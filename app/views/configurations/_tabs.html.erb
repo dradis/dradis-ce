@@ -1,0 +1,8 @@
+<ul class="nav nav-tabs ml-3 pl-3 mt-3">
+  <li class="nav-item">
+    <%= link_to 'Plugins', main_app.project_configurations_path(current_project), class: "nav-link #{'active' if controller_name == 'configurations'}", title: 'Plugins' %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Tags', main_app.project_configurations_tags_path(current_project), class: "nav-link #{'active' if controller_name == 'tags'}", title: 'Tags' %>
+  </li>
+</ul>

@@ -5,5 +5,6 @@ class Configurations::TagsController < AuthenticatedController
   include ProjectScoped
 
   def index
+    @tags = Tag.all
   end
 end
