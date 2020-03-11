@@ -1,0 +1,11 @@
+<%= simple_form_for @tag_form, url: @tag ? project_configurations_tag_path(current_project, @tag) : project_configurations_tags_path(current_project), method: @tag ? :patch : :post do |f| %>
+
+  <div class="row">
+    <div class="col-lg-4">
+      <%= f.input :name %>
+      <%= f.input :color, input_html: { type: 'color' } %>
+    </div>
+  </div>
+
+  <%= f.button :button, 'Save Tag', class: 'btn-primary' %>
+<% end %>

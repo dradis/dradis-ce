@@ -3,6 +3,15 @@
 <%= render 'configurations/tabs' %>
 
 <div class="content-container mt-3">
+  <div class="row">
+    <div class="col">
+      <h4 class="header-underline">Tags</h4>
+    </div>
+    <div class="col-auto">
+      <%= link_to 'New Tag', new_project_configurations_tag_path(current_project), class: 'btn btn-primary' %>
+    </div>
+  </div>
+
   <table class="table table-striped mb-0 items-table">
     <thead>
       <tr>

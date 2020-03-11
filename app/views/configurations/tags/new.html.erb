@@ -1,0 +1,14 @@
+<% content_for :title, 'Configuration Manager' %>
+
+<div class="content-container mt-3">
+  <div class="row">
+    <div class="col">
+      <h4 class="header-underline">New Tag</h4>
+    </div>
+    <div class="col-auto">
+      <%= link_to 'Back', project_configurations_tags_path(current_project), class: 'btn' %>
+    </div>
+  </div>
+
+  <%= render 'form' %>
+</div>
