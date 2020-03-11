@@ -41,6 +41,9 @@ Rails.application.routes.draw do
 
     constraints id: %r{[(0-z)\/]+} do
       resources :configurations, only: [:index, :update]
+      namespace :configurations do
+        resources :tags, only: [:index, :new, :create, :edit, :update, :destroy]
+      end
     end
 
     post :create_multiple_evidence, to: 'evidence#create_multiple'
