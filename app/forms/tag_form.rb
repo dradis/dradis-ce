@@ -3,7 +3,10 @@ class TagForm
 
   attr_accessor :color, :name, :id
 
-  validates :name, presence: true, format: { with: /\A[a-zA-Z]+\z/, message: 'only allows letters. No spaces or special characters.' }
+  validates :name, presence: true, format: {
+    with: /\A[ a-zA-Z]+\z/,
+    message: 'only allows letters and spaces.'
+  }
 
   def save
     if valid?
@@ -19,6 +22,10 @@ class TagForm
   private
 
   def assign_name
-    "#{color.gsub('#', '!')}_#{name}"
+    "#{color.gsub('#', '!')}_#{underscore_name}"
+  end
+
+  def underscore_name
+    name.gsub(' ', '_')
   end
 end
