@@ -4,7 +4,7 @@
 class Configurations::TagsController < AuthenticatedController
   include ProjectScoped
 
-  before_action :set_tag, only: [:edit, :update]
+  before_action :set_tag, only: [:edit, :update, :destroy]
 
   def index
     @tags = Tag.all
@@ -36,6 +36,11 @@ class Configurations::TagsController < AuthenticatedController
     else
       render :edit
     end
+  end
+
+  def destroy
+    @tag.destroy
+    redirect_to project_configurations_tags_path(current_project), notice: 'Tag deleted.'
   end
 
   private
