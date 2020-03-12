@@ -39,7 +39,7 @@
                 <%= markup(@note.text) %>
               </div>
               <div class="author-info">
-                <span class="ml-auto">Author: <%= @note.author %></span>
+                <span class="ml-auto">Author: <%= @note.author || 'n/a' %></span>
               </div>
             </div>
           <% end %>

@@ -49,7 +49,7 @@
                 <%= markup(@evidence.content) %>
               </div>
               <div class="author-info">
-                <span class="ml-auto">Author: <%= @evidence.author %></span>
+                <span class="ml-auto">Author: <%= @evidence.author || 'n/a' %></span>
               </div>
             </div>
           <% end %>

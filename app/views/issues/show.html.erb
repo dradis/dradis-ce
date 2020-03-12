@@ -54,7 +54,7 @@
                 <%= markup(@issue.text) %>
               </div>
               <div class="author-info">
-                <span class="ml-auto">Author: <%= @issue.author %></span>
+                <span class="ml-auto">Author: <%= @issue.author || 'n/a' %></span>
               </div>
             </div>
           <% end %>
