@@ -1,5 +1,6 @@
 v3.17 (Month’20)
-  * 
+  * Use shared noscript partial
+  * Upgraded gems: puma, sass-rails
   * Bugs fixed:
        - Long project names interfering with search bar expansion.
   * New integrations:
