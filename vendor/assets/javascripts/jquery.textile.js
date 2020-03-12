@@ -65,7 +65,10 @@
     // Add wrapper div with toolbar and inner container (see defaults.tpl)
     _buildContainer: function() {
       // Skip when textile is already initialized
-      if (this.$element.data('textiled')) { return; }
+      if (this.$element.data('textiled')) {
+        this._buildToolbarHandlers();
+        return;
+      }
 
       // container
       this.$element.parent().append( this.options.$wrap );
@@ -86,6 +89,7 @@
 
       // toolbar
       this._buildToolbar();
+      this._buildToolbarHandlers();
 
       this.$element.attr('data-textiled', 'true');
     },
@@ -93,25 +97,27 @@
       var button;
 
       // Write
-      button = $('<a class="btn-write active" href="javascript:void(null);"><span>Write</span></a>');
-      button.click( function(evt) { this._onBtnWrite(evt) }.bind(this) );
+      button = $('<a class="btn-write active" href="javascript:void(0);"><span>Write</span></a>');
       $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
 
       // Preview
-      button = $('<a class="btn-preview" href="javascript:void(null);"><span>Preview</span></a>');
-      button.click( function(evt) { this._onBtnPreview(evt) }.bind(this) );
+      button = $('<a class="btn-preview" href="javascript:void(0);"><span>Preview</span></a>');
       $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
 
       // Full screen
-      // button = $('<a class="btn btn-fullscreen" href="javascript:void(null);"><span>&nbsp;</span></a>');
-      button = $('<a class="btn-fullscreen fa fa-expand" href="javascript:void(null);"><span>&nbsp;</span></a>');
-      button.click( function(evt) { this._onBtnFullScreen(evt) }.bind(this) );
+      // button = $('<a class="btn btn-fullscreen" href="javascript:void(0);"><span>&nbsp;</span></a>');
+      button = $('<a class="btn-fullscreen fa fa-expand" href="javascript:void(0);"><span>&nbsp;</span></a>');
       $('.textile-toolbar', this.options.$wrap).append( $('<li class="right">').append(button) );
 
       // Help
-      button = $('<a class="btn-help fa fa-question" href="javascript:void(null);"><span>&nbsp;</span></a>');
-      button.click( function(evt) { this._onBtnHelp(evt) }.bind(this) );
+      button = $('<a class="btn-help fa fa-question" href="javascript:void(0);"><span>&nbsp;</span></a>');
       $('.textile-toolbar', this.options.$wrap).append( $('<li class="right">').append(button) );
+    },
+    _buildToolbarHandlers: function() {
+      $('.btn-write').click( function(evt) { this._onBtnWrite(evt) }.bind(this) );
+      $('.btn-preview').click( function(evt) { this._onBtnPreview(evt) }.bind(this) );
+      $('.btn-fullscreen').click( function(evt) { this._onBtnFullScreen(evt) }.bind(this) );
+      $('.btn-help').click( function(evt) { this._onBtnHelp(evt) }.bind(this) );
     },
     _buildResizer: function() {
       if (this.options.resize === false) return false;
