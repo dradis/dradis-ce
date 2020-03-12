@@ -21,10 +21,10 @@
     </thead>
     <tbody>
       <% @tags.each do |tag| %>
-        <tr>
+        <tr class='tag-row'>
           <td class='font-weight-bold' style="color: <%= tag.color %>"><%= tag.display_name %></td>
-          <td class='column-actions'>
-            <%= link_to edit_project_configurations_tag_path(current_project, tag), class: '' do %>
+          <td class='text-right'>
+            <%= link_to edit_project_configurations_tag_path(current_project, tag), class: 'pr-2' do %>
               <i class="fa fa-pencil"></i> Edit
             <% end %>
             <%= link_to project_configurations_tag_path(current_project, tag), method: :delete, data: { confirm: "Are you sure?\n\nProceeding will remove this tag from all issues." }, class: 'text-error' do %>
