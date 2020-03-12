@@ -40,6 +40,14 @@
   margin: 10px 0;
 }
 
+.author-info {
+  display: flex;
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  width: 100%;
+  border-top: 1px solid $borderColor;
+}
+
 .column-actions a {
   white-space: nowrap;
 }
