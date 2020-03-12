@@ -30,6 +30,7 @@ class CardsController < AuthenticatedController
     @card = @list.cards.new(card_params)
     # Set the new card as the last card of the list
     @card.previous_id = @list.last_card.try(:id)
+    @card.author = current_user.email
 
     if @card.save
       track_created(@card)

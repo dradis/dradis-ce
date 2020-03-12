@@ -22,7 +22,7 @@
 
   <div class="row m-0">
     <div class="col-12 col-xxl-7 p-0">
-      <div class="content-container mt-0 mr-xxl-3">
+      <div class="content-container mt-0 pb-3 mr-xxl-3">
         <div class="tab-content mt-0">
           <div class="tab-pane active" id="info-tab" data-behavior="subscription-actions" data-subscribed="<%= !@subscription.nil? %>">
             <% cache ['card-information-tab', @card] do %>
@@ -66,6 +66,10 @@
                     <% end %>
                   </div>
                 <% end %>
+                
+                <div class="author-info">
+                  <span class="ml-auto">Author: <%= @card.author %></span>
+                </div>
               <% end %>
 
             </div>         
