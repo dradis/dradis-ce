@@ -24,7 +24,7 @@
 
 <div class="row m-0">
   <div class="col-12 col-xxl-7 p-0">
-    <div class="content-container mt-0 mr-xxl-3">
+    <div class="content-container mt-0 pb-3 mr-xxl-3">
       <div class="tab-content mt-0">
         <div class="tab-pane active" id="evidence-tab" data-behavior="subscription-actions" data-subscribed="<%= !@subscription.nil? %>">
           <% cache ['evidence-evidence-tab', @evidence] do %>
@@ -45,7 +45,12 @@
                 </span>
               </h4>
 
-              <div class="content-textile"><%= markup(@evidence.content) %></div>
+              <div class="content-textile">
+                <%= markup(@evidence.content) %>
+              </div>
+              <div class="author-info">
+                <span class="ml-auto">Author: <%= @evidence.author %></span>
+              </div>
             </div>
           <% end %>
         </div>

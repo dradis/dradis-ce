@@ -13,7 +13,7 @@
 
 <div class="row m-0">
   <div class="col-12 col-xxl-7 p-0">
-    <div class="content-container mt-0 mr-xxl-3">
+    <div class="content-container mt-0 pb-3 mr-xxl-3">
       <div class="tab-content mt-0">
         <div class="tab-pane active" id="info-tab" data-behavior="subscription-actions" data-subscribed="<%= !@subscription.nil? %>">
           <% cache ['note-information-tab', @note] do %>
@@ -37,6 +37,9 @@
               </h4>
               <div class="content-textile">
                 <%= markup(@note.text) %>
+              </div>
+              <div class="author-info">
+                <span class="ml-auto">Author: <%= @note.author %></span>
               </div>
             </div>
           <% end %>
