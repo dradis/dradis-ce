@@ -71,6 +71,14 @@ button:focus {
   box-shadow: none !important;
 }
 
+.custom-select {
+  font-size: inherit;
+}
+
+.disabled {
+  color: $mutedText !important;
+}
+
 .dropdown-toggle::after {
   display: none;
 }

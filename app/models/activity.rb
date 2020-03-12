@@ -22,7 +22,7 @@ class Activity < ApplicationRecord
   # -- Scopes ---------------------------------------------------------------
 
   scope :latest, -> do
-    includes(:trackable).order("`activities`.`created_at` DESC").limit(20)
+    includes(:trackable).order("activities.created_at DESC").limit(20)
   end
 
   # -- Callbacks ------------------------------------------------------------

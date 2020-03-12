@@ -20,6 +20,7 @@
     <%= stylesheet_link_tag 'tylium', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'tylium', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tag %>
+    <%= csp_meta_tag %>
   </head>
 
   <body class="<%= controller_name %> <%= action_name %>">
@@ -27,13 +28,6 @@
     <%= render 'layouts/tylium/navbar' %>
     <%= render 'layouts/tylium/sidebar' %>
 
-    <noscript>
-      <div class="alert alert-error m-4">
-        <h4>Error</h4>
-        <p>Please enable JavaScript support.</p>
-      </div>
-    </noscript>
-    
     <div id="view-content" class="view-content">
       <div class="row m-0">
         <% if content_for?(:sidebar) %>
@@ -43,15 +37,17 @@
             </div>
           </div>
           <div class="secondary-sidebar-content col-8 col-lg-9 col-xl-10 p-0">
-            <%= render "layouts/tylium/project_teaser" %>
-            <%= render "layouts/tylium/breadcrumb" %>
+            <%= render 'shared/noscript' %>
+            <%= render 'layouts/tylium/project_teaser' %>
+            <%= render 'layouts/tylium/breadcrumb' %>
             <%= flash_messages %>
             <%= content_for?(:content) ? yield(:content) : yield %>
           </div>
         <% else %>
           <div class="col-12 p-0">
-            <%= render "layouts/tylium/project_teaser" %>
-            <%= render "layouts/tylium/breadcrumb" %>
+            <%= render 'shared/noscript' %>
+            <%= render 'layouts/tylium/project_teaser' %>
+            <%= render 'layouts/tylium/breadcrumb' %>
             <% if content_for?(:title) %>
               <h3 class="page-title"><%= yield(:title) %></h3>
             <% end %>

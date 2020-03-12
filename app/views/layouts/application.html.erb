@@ -4,24 +4,17 @@
     <title><%= content_for?(:title) ? yield(:title) : "Dradis Community Edition" %></title>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= favicon_link_tag %>
-    <%= csrf_meta_tag %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
 
   <body class="unauthenticated <%= controller_name %>">
 
-    <noscript>
-      <div class="alert alert-danger">
-        <div class="container">
-          <h1>Dradis works best with JavaScript</h1>
-          <p class="lead">Whilst there is a good chance you can get away with using Dradis without JavaScript,<br/>the app design assumes JS will be enabled.</p>
-          <p class="lead">Please <strong>allow JavaScript</strong> to get the most flawless experience!</p>
-        </div>
-      </div>
-    </noscript>
+    <%= render 'shared/noscript' %>
 
-    <div class="page-header d-flex justify-content-center mb-5">
+    <div class="page-header d-flex justify-content-center my-5">
       <%= link_to image_tag('logo_small.png', height: 100), 'http://dradisframework.org' %>
     </div>
 
