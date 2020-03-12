@@ -1,6 +1,7 @@
 v3.17 ([MMM’YY])
   * Add author to cards, evidence and notes views
   * Use shared noscript partial
+  * Upgraded gems: puma, sass-rails
   * Bugs fixed:
     - [bug fixed #1]
     - [bug fixed ...]
@@ -21,7 +22,6 @@ v3.17 ([MMM’YY])
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Upgraded gems: puma
 
 v3.16 (February 2020)
   * Update app to new Tylium layout
