@@ -2,8 +2,7 @@ v3.17 ([MMM’YY])
   * Use shared noscript partial
   * Upgraded gems: puma, sass-rails
   * Bugs fixed:
-    - [bug fixed #1]
-    - [bug fixed ...]
+    - Fix textile toolbar and breadcrumb stacking
     - Bug tracker items: #N, #M, #O, ...
   * New integrations:
     - [new integration #1]
@@ -84,7 +83,6 @@ v3.14 (August 2019)
  - Highlight code snippets
  - Collapsable sidebar in issues
  - Added Node merging feature
- - Fix textile toolbar and breadcrumb stacking
 
 v3.13 (June 2019)
  - User-provided content takes priority over default local fields.
