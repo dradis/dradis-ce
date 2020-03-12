@@ -215,9 +215,7 @@ document.addEventListener "turbolinks:load", ->
   # Disable turbolinks for on-page anchor links (prevents page from jumping to top and allows smooth-scrolling)
   if $('a[href^="#"]').length
     $('a[href^="#"]').each ->
-      if $(this).data('turbolinks')
-        return
-      else
+      if !$(this).data('turbolinks')
         $(this).attr 'data-turbolinks', 'false'
       return
 
