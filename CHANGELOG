@@ -1,4 +1,5 @@
 v3.17 ([MMM’YY])
+  * Add author to cards, evidence and notes views
   * Use shared noscript partial
   * Bugs fixed:
     - [bug fixed #1]
