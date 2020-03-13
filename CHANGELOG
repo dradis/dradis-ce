@@ -1,5 +1,5 @@
 v3.17 ([MMM’YY])
-  * Add author to cards, evidence and notes views
+  * Add author to evidence and notes views
   * Use shared noscript partial
   * Upgraded gems: puma, sass-rails
   * Bugs fixed:
