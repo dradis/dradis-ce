@@ -221,8 +221,8 @@ document.addEventListener "turbolinks:load", ->
 
   # Smooth Scrolling - scroll to element on page load if hash present in current browser url
   if window.location.hash
-    $target = window.location.hash
-    $($target)[0].scrollIntoView behavior: 'smooth'
+    target = window.location.hash
+    $(target)[0].scrollIntoView behavior: 'smooth'
 
   # Smooth Scrolling - scroll to element on click
   # Note: Parent element of anchor links needs: data-attribute="smooth-scroll-nav".
