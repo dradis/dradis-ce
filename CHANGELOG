@@ -1,23 +1,19 @@
-v3.17 ([MMM’YY])
+v3.17 (Month’20)
   * Remove tag color from issue titles in issue summary.
   * Use shared noscript partial
   * Upgraded gems: puma, sass-rails
   * Bugs fixed:
-    - [bug fixed #1]
-    - [bug fixed ...]
+    - Long project names interfering with search bar expansion.
     - Bug tracker items: #N, #M, #O, ...
   * New integrations:
     - [new integration #1]
-    - [new integration ...]
   * Integration enhancements:
     - Nexpose: better cipher wrapping coverage
     - Nikto: support new nested <niktoscan> format
   * Reporting enhancements:
     - [reporting enhancement #1]
-    - [reporting enhancement ...]
   * REST/JSON API enhancements:
-    - [API enhancement #1]
-    - [API enhancement ...]
+    - [API enhancement #1] 
   * Security Fixes:
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
