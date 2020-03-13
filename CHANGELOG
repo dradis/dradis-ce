@@ -1,4 +1,5 @@
 v3.17 ([MMM’YY])
+  * Remove tag color from issue titles in issue summary.
   * Use shared noscript partial
   * Upgraded gems: puma, sass-rails
   * Bugs fixed:
