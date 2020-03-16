@@ -188,10 +188,10 @@ document.addEventListener "turbolinks:load", ->
       sidebarClose() 
 
   # Scroll for more indicator functionality
-  if $('[data-behavior~=restrict-height').length
+  if $('[data-behavior~=restrict-height]').length
     checkOverflow = ->
-      $('[data-behavior~=restrict-height').each ->
-        if $(this).is('[data-height~=prev-container')
+      $('[data-behavior~=restrict-height]').each ->
+        if $(this).is('[data-height~=prev-container]')
           prevContainer = $(this).parent().prev().children('[data-behavior~=content-container]').innerHeight()
           $(this).innerHeight(prevContainer)
 
@@ -199,22 +199,22 @@ document.addEventListener "turbolinks:load", ->
           if $(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight # if already at the bottom
             return
           else
-            $(this).find($('[data-behavior~=scroll-wrapper')).removeClass('hidden');
+            $(this).find($('[data-behavior~=scroll-wrapper]')).removeClass('hidden');
         else
-          $(this).find($('[data-behavior~=scroll-wrapper')).addClass('hidden');
+          $(this).find($('[data-behavior~=scroll-wrapper]')).addClass('hidden');
       return
 
-    $('[data-behavior~=restrict-height').append('<div class="scroll-more-wrapper hidden" data-behavior="scroll-wrapper"><span class="scroll-more">Scroll for more</span><span class="gradient"></span><span class="line"></span></div>')
+    $('[data-behavior~=restrict-height]').append('<div class="scroll-more-wrapper hidden" data-behavior="scroll-wrapper"><span class="scroll-more">Scroll for more</span><span class="gradient"></span><span class="line"></span></div>')
     checkOverflow()
 
     $(window).resize ->
       checkOverflow()
 
-    $('[data-behavior~=restrict-height').on 'scroll', ->
+    $('[data-behavior~=restrict-height]').on 'scroll', ->
       if $(this).scrollTop() + 64 + $(this).innerHeight() >= $(this)[0].scrollHeight
-        $(this).find($('[data-behavior~=scroll-wrapper')).addClass('hidden');
+        $(this).find($('[data-behavior~=scroll-wrapper]')).addClass('hidden');
       else
-        $(this).find($('[data-behavior~=scroll-wrapper')).removeClass('hidden');
+        $(this).find($('[data-behavior~=scroll-wrapper]')).removeClass('hidden');
 
   # Smooth Scrolling
   $('[data-behavior~=smooth-scroll]').on 'click', ->
