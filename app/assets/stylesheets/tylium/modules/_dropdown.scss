@@ -24,7 +24,7 @@
       &:active,
       &:hover {
         color: $linkColorHover;
-        background-color: #f8f9fa;
+        background-color: $dropdownLinkBackgroundHover;
       }
     }
   }
