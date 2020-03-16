@@ -1,4 +1,5 @@
-v3.17 (Month’20)
+v3.17 ([MMM’YY])
+  * Refactored dots-menu to make it available in any view.
   * Remove tag color from issue titles in issue summary.
   * Use shared noscript partial
   * Upgraded gems: puma, sass-rails
