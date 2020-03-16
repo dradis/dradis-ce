@@ -66,7 +66,10 @@ class IssuesController < AuthenticatedController
 
         format.html { redirect_to [current_project, @issue], notice: 'Issue added.' }
       else
-        format.html { render 'new', alert: 'Issue couldn\'t be added.' }
+        format.html do
+          flash.now[:alert] = 'Issue couldn\'t be added.'
+          render :new
+        end
       end
       format.js
     end
@@ -85,7 +88,10 @@ class IssuesController < AuthenticatedController
         track_updated(@issue)
         format.html { redirect_to project_issue_path(current_project, @issue), notice: 'Issue updated' }
       else
-        format.html { render 'edit' }
+        format.html do
+          flash.now[:alert] = 'Issue couldn\'t be updated.'
+          render :edit
+        end
       end
       format.js
       format.json
