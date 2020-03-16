@@ -10,7 +10,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: calc(100% - 350px);
 
     &:hover {
       color: $defaultText;
@@ -110,6 +109,7 @@
     .nav-item {
       font-size: 0.9rem;
       transition: all 0.2s ease-in-out;
+      white-space: nowrap;
 
       .dropdown-menu {
         border-radius: 0 0 0 .5rem;
@@ -164,6 +164,10 @@
           color: $linkColorHover;
         }
       }
+    }
+
+    &.with-text {
+      min-width: 470px;
     }
   }
 }
