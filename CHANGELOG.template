@@ -2,6 +2,7 @@
   * [feature #1]
   * [feature #2] 
   * [feature ...]
+  * Upgraded gems: [gem #1], [gem #2]
   * Bugs fixed:
     - [bug fixed #1]
     - [bug fixed ...]
@@ -22,4 +23,3 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Upgraded gems: [gem #1], [gem #2]

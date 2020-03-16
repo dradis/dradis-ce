@@ -12,17 +12,9 @@
 
   <body class="unauthenticated <%= controller_name %>">
 
-    <noscript>
-      <div class="alert alert-danger">
-        <div class="container">
-          <h1>Dradis works best with JavaScript</h1>
-          <p class="lead">Whilst there is a good chance you can get away with using Dradis without JavaScript,<br/>the app design assumes JS will be enabled.</p>
-          <p class="lead">Please <strong>allow JavaScript</strong> to get the most flawless experience!</p>
-        </div>
-      </div>
-    </noscript>
+    <%= render 'shared/noscript' %>
 
-    <div class="page-header d-flex justify-content-center mb-5">
+    <div class="page-header d-flex justify-content-center my-5">
       <%= link_to image_tag('logo_small.png', height: 100), 'http://dradisframework.org' %>
     </div>
 
