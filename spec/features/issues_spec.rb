@@ -359,6 +359,14 @@ describe 'Issues pages' do
               match_array(%w[Evidence Evidence Node])
           end
 
+          it 'assigns the current user as the evidence author' do
+            find('.js-add-evidence').click
+            check('192.168.0.1')
+            select('Simple Note', from: 'evidence_content')
+            expect { click_button('Save Evidence') }.to change { Evidence.count }.by(1)
+            expect(@node.reload.evidence.last.author).to eq(@logged_in_as.email)
+          end
+
           # we need to filter by job class because a NotificationsReaderJob
           # will also be enqueued
           def enqueued_activity_tracking_jobs

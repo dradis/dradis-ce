@@ -1,26 +1,25 @@
 v3.17 ([MMM’YY])
+  * Refactored dots-menu to make it available in any view.
+  * Remove tag color from issue titles in issue summary.
   * Use shared noscript partial
+  * Upgraded gems: puma, sass-rails
   * Bugs fixed:
-    - [bug fixed #1]
-    - [bug fixed ...]
+    - Long project names interfering with search bar expansion.
+    - Set :author when creating Evidence from an Issue.
     - Bug tracker items: #N, #M, #O, ...
   * New integrations:
     - [new integration #1]
-    - [new integration ...]
   * Integration enhancements:
     - Nexpose: better cipher wrapping coverage
     - Nikto: support new nested <niktoscan> format
   * Reporting enhancements:
-    - [reporting enhancement #1]
-    - [reporting enhancement ...]
+    - HTML reports now use main app's markup rendering.
   * REST/JSON API enhancements:
-    - [API enhancement #1]
-    - [API enhancement ...]
+    - [API enhancement #1] 
   * Security Fixes:
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Upgraded gems: puma
 
 v3.16 (February 2020)
   * Update app to new Tylium layout
