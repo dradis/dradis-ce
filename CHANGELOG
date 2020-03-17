@@ -5,6 +5,7 @@ v3.17 ([MMM’YY])
   * Upgraded gems: puma, sass-rails
   * Bugs fixed:
     - Long project names interfering with search bar expansion.
+    - Report 'Download' button becoming a disabled 'Processing...' button once clicked.
     - Set :author when creating Evidence from an Issue.
     - Bug tracker items: #N, #M, #O, ...
   * New integrations:
