@@ -121,7 +121,8 @@ document.addEventListener "turbolinks:load", ->
 
   # Disable form buttons after submitting them.
   $('form').submit (ev)->
-    $('input[type=submit]', this).attr('disabled', 'disabled').val('Processing...')
+    if !$('input[type=submit]', this).is('[data-behavior~=skip-auto-disable]')
+      $('input[type=submit]', this).attr('disabled', 'disabled').val('Processing...')
 
   # Search form
   $('[data-behavior~=form-search]').hover ->
