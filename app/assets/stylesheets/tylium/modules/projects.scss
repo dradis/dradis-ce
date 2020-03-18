@@ -40,6 +40,10 @@ body.projects {
             &:hover {
               background-color: darken($primaryBgColor, 3%);
             }
+
+            li {
+              transition: color 0.2s ease-in-out;
+            }
           }
         }
 
