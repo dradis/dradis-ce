@@ -1,4 +1,5 @@
-v3.17 ([MMM’YY])
+v3.17 (Month 2020)
+  * Adjusted Uploads layout to provide more visibility to the output console.
   * Refactored dots-menu to make it available in any view.
   * Remove tag color from issue titles in issue summary.
   * Use shared noscript partial
