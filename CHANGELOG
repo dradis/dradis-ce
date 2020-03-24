@@ -7,7 +7,8 @@ v3.17 ([MMM’YY])
     - Long project names interfering with search bar expansion.
     - Report 'Download' button becoming a disabled 'Processing...' button once clicked.
     - Set :author when creating Evidence from an Issue.
-    - Bug tracker items: #N, #M, #O, ...
+    - Stop bin/setup from creating folders outside dradis-ce/
+    - Bug tracker items: #560
   * New integrations:
     - [new integration #1]
   * Integration enhancements:
