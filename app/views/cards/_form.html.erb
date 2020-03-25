@@ -2,7 +2,7 @@
   <%= f.error_notification %>
 
   <%= f.input :name, required: false %>
-  <%= f.input :due_date %>
+  <%= f.input :due_date, include_blank: true %>
 
   <%=
     f.input :description,
