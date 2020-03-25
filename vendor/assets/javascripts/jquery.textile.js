@@ -28,6 +28,7 @@
         // HTML templates
         tpl: {
           wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner"></div></div>',
+          form: '<div class="textile-form"></div>',
           preview: '<div class="textile-preview loading-indicator">Loading...</div>',
           help: '<div class="textile-help loading-indicator">Loading...</div>'
         }
@@ -73,6 +74,11 @@
       this.$element.css('width', '100%');
       this.$element.attr('rows', 20);
 
+      // add Form
+      this.options.$form = $(this.options.tpl.form);
+      $('.textile-inner', this.options.$wrap).append(this.options.$form);
+      this.options.$form.hide();
+
       // add Preview to container and hide
       this.options.$preview = $(this.options.tpl.preview);
       $('.textile-inner', this.options.$wrap).append(this.options.$preview);
@@ -92,6 +98,11 @@
       // Write
       button = $('<a class="btn-write active" href="javascript:void(null);"><span>Write</span></a>');
       button.click( $.proxy( function(evt) { this._onBtnWrite(evt); }, this));
+      $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
+
+      // Form
+      button = $('<a class="btn-form" href="javascript:void(null);"><span>Form</span></a>');
+      button.click( $.proxy( function(evt) { this._onBtnForm(evt); }, this));
       $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
 
       // Preview
@@ -144,8 +155,38 @@
 
       // Show Write pane
       this.options.$preview.hide();
+      this.options.$form.hide();
       this.options.$help.hide();
       this.$element.show();
+    },
+    _onBtnForm: function() {
+      // Activate toolbar button
+      var scope = this.options.$wrap;
+      $('.textile-toolbar a', scope).removeClass('active');
+      $('.textile-toolbar .btn-form', scope).addClass('active');
+
+      $('.textile-form form').remove()
+
+      $('.textile-form').append(
+        '<form>\
+          <div class="row">\
+            <div class="col-3">\
+              <p>Field</p>\
+              <input type="text" class="form-control">\
+            </div>\
+            <div class="col-9">\
+              <p>Value</p>\
+              <textarea rows=1 class="form-control"></textarea>\
+            </div>\
+          </div>\
+          <button class="btn">Add field</button>\
+        </form>'
+      );
+      // Show Form pane
+      this.options.$preview.hide();
+      this.options.$help.hide();
+      this.$element.hide();
+      this.options.$form.show();
     },
     _onBtnPreview: function() {
       // Activate toolbar button
@@ -155,7 +196,7 @@
 
       // Show Preview pane
       this.$element.hide();
-
+      this.options.$form.hide();
       this.options.$help.hide();
       this.options.$preview.show();
 
@@ -223,6 +264,7 @@
       // Show Help pane
       this.$element.hide();
       this.options.$preview.hide();
+      this.options.$form.hide();
       this.options.$help.show();
 
       if (!this._helpRendered) {
