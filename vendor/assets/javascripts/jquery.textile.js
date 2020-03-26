@@ -120,10 +120,16 @@
       this.options.$preview.addClass('loading-indicator').text('Loading...');
 
       var that = this;
-      $.getJSON( this.$element.data('preview-url'), {text: this.$element.val()}, function(result){
-        that.options.$preview.removeClass('loading-indicator')
-          .html(result.html);
-        that._previewRendered = true;
+      $.ajax({
+        dataType: 'json',
+        method: 'POST',
+        url: this.$element.data('preview-url'),
+        data: {text: this.$element.val()},
+        success: function(result){
+          that.options.$preview.removeClass('loading-indicator')
+            .html(result.html);
+          that._previewRendered = true;
+        }
       });
     },
     // Ajax help
