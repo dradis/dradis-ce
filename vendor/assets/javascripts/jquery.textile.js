@@ -73,11 +73,12 @@
       this.$element.css('resize', 'none');
       this.$element.css('width', '100%');
       this.$element.attr('rows', 20);
+      this.$element.hide();
 
       // add Form
       this.options.$form = $(this.options.tpl.form);
       $('.textile-inner', this.options.$wrap).append(this.options.$form);
-      this.options.$form.hide();
+      this._loadForm({});
 
       // add Preview to container and hide
       this.options.$preview = $(this.options.tpl.preview);
@@ -95,14 +96,14 @@
     _buildToolbar: function() {
       var button;
 
-      // Write
-      button = $('<a class="btn-write active" href="javascript:void(null);"><span>Write</span></a>');
-      button.click( $.proxy( function(evt) { this._onBtnWrite(evt); }, this));
+      // Form
+      button = $('<a class="btn-form active" href="javascript:void(null);"><span>Form</span></a>');
+      button.click( $.proxy( function(evt) { this._onBtnForm(evt); }, this));
       $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
 
-      // Form
-      button = $('<a class="btn-form" href="javascript:void(null);"><span>Form</span></a>');
-      button.click( $.proxy( function(evt) { this._onBtnForm(evt); }, this));
+      // Write
+      button = $('<a class="btn-write" href="javascript:void(null);"><span>Write</span></a>');
+      button.click( $.proxy( function(evt) { this._onBtnWrite(evt); }, this));
       $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
 
       // Preview
@@ -146,12 +147,38 @@
         this._helpRendered = true;
       });
     },
+    _loadForm: function(data) {
+      var that = this;
+
+      $.ajax({
+        method: 'POST',
+        url: '/textile/form.html',
+        data: data,
+        beforeSend: function(){
+          that.options.$form.addClass('loading-indicator').text('Loading...');
+        },
+        success: function(result){
+          that.options.$form.removeClass('loading-indicator').html('');
+          that.options.$form.removeClass('loading-indicator').append(result);
+        }
+      });
+    },
     // Toolbar button handlers
     _onBtnWrite: function() {
       // Activate toolbar button
       var scope = this.options.$wrap;
       $('.textile-toolbar a', scope).removeClass('active');
       $('.textile-toolbar .btn-write', scope).addClass('active');
+
+      var that = this;
+      $.ajax({
+        method: 'POST',
+        url: '/textile/source',
+        data: {form: JSON.stringify( $('.textile-form form').serializeArray() )},
+        success: function(result){
+          that.$element.val(result);
+        }
+      });
 
       // Show Write pane
       this.options.$preview.hide();
@@ -167,21 +194,8 @@
 
       $('.textile-form form').remove()
 
-      $('.textile-form').append(
-        '<form>\
-          <div class="row">\
-            <div class="col-3">\
-              <p>Field</p>\
-              <input type="text" class="form-control">\
-            </div>\
-            <div class="col-9">\
-              <p>Value</p>\
-              <textarea rows=1 class="form-control"></textarea>\
-            </div>\
-          </div>\
-          <button class="btn">Add field</button>\
-        </form>'
-      );
+      this._loadForm({form: this.$element.val()});
+
       // Show Form pane
       this.options.$preview.hide();
       this.options.$help.hide();
