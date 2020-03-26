@@ -94,6 +94,67 @@
     </div>
 
     <div class="content-container">
+      <div class="scroll-offset" data-id="dots"></div>
+      <div class="style-header">
+        <h4 class="header-underline">Dots Menu</h4>
+        <button class="reveal-code" data-toggle="collapse" data-target="#dots-code"><i class="fa fa-code"></i></button>
+      </div>
+      <div class="style-example">
+        <nav class="dots-container">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Some area</a></li>
+            <li class="breadcrumb-item active">This area</li>
+          </ol>
+          <ul class="nav">
+            <li class="dropdown dots-dropdown">
+              <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i></a>
+              <div class="dropdown-menu">
+                <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-superpowers"></i> Some action</a>
+                <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-cube"></i> Another action</a>
+                <span class="dropdown-item dots-dropdown-header">Group Header</span>
+                <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-hand-peace-o"></i> Some grouped action</a>
+                <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-hand-spock-o"></i> Another grouped action</a>
+                <span class="dropdown-item dots-dropdown-header">Another Group</span>
+                <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-pie-chart"></i> Group 2 action 1</a>
+                <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-line-chart"></i> Group 2 action 2</a>
+                <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-bar-chart"></i> Group 2 action 3</a>
+                <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-area-chart"></i> Group 2 action 4</a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      
+      <div class="style-code-wrapper collapse" id="dots-code">
+        <pre class="style-code">
+<code><span class="et">&lt;nav</span><span class="an"> class=</span><span class="av">"dots-container"</span><span class="et">></span>
+  <span class="et">&lt;ol</span><span class="an"> class=</span><span class="av">"breadcrumb"</span><span class="et">></span>
+    <span class="et">&lt;li</span><span class="an"> class=</span><span class="av">"breadcrumb-item"</span><span class="et">></span><span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="et">></span>Some area<span class="et">&lt;/a></span><span class="et">&lt;/li></span>
+    <span class="et">&lt;li</span><span class="an"> class=</span><span class="av">"breadcrumb-item active"</span><span class="et">></span>This area<span class="et">&lt;/li></span>
+  <span class="et">&lt;/ol></span>
+  <span class="et">&lt;ul</span><span class="an"> class=</span><span class="av">"nav"</span><span class="et">></span>
+    <span class="et">&lt;li</span><span class="an"> class=</span><span class="av">"dropdown dots-dropdown"</span><span class="et">></span>
+      <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-toggle"</span><span class="an"> data-toggle=</span><span class="av">"dropdown"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-ellipsis-h fa-lg"</span><span class="et">></span><span class="et">&lt;/i></span><span class="et">&lt;/a></span>
+      <span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"dropdown-menu"</span><span class="et">></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-superpowers"</span><span class="et">></span><span class="et">&lt;/i></span> Some action<span class="et">&lt;/a></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-cube"</span><span class="et">></span><span class="et">&lt;/i></span> Another action<span class="et">&lt;/a></span>
+        <span class="et">&lt;span</span><span class="an"> class=</span><span class="av">"dropdown-item dots-dropdown-header"</span><span class="et">></span>Group header<span class="et">&lt;/span></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-hand-peace-o"</span><span class="et">></span><span class="et">&lt;/i></span> Some grouped action<span class="et">&lt;/a></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-hand-spock-o"</span><span class="et">></span><span class="et">&lt;/i></span> Another grouped action<span class="et">&lt;/a></span>
+        <span class="et">&lt;span</span><span class="an"> class=</span><span class="av">"dropdown-item dots-dropdown-header"</span><span class="et">></span>Another header<span class="et">&lt;/span></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-pie-chart"</span><span class="et">></span><span class="et">&lt;/i></span> Group 2 action 1<span class="et">&lt;/a></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-line-chart"</span><span class="et">></span><span class="et">&lt;/i></span> Group 2 action 2<span class="et">&lt;/a></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-bar-chart"</span><span class="et">></span><span class="et">&lt;/i></span> Group 2 action 3<span class="et">&lt;/a></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-area-chart"</span><span class="et">></span><span class="et">&lt;/i></span> Group 2 action 4<span class="et">&lt;/a></span>
+      <span class="et">&lt;/div></span>
+    <span class="et">&lt;/li></span>
+  <span class="et">&lt;/ul></span>
+<span class="et">&lt;/nav></span></code>
+        </pre>
+      </div>
+    </div>
+
+    <div class="content-container">
       <div class="scroll-offset" data-id="modals"></div>
       <div class="style-header">
         <h4 class="header-underline">Modals</h4>
@@ -217,6 +278,9 @@
             <li><em>.quarter-height</em> - quarter available height of layout</li>
           </ul>
 
+          <p>Alternatively, the content-container can be set to match the same height as the next or previous content-container in the row.
+          <br>To achieve this, set the data-behavior value to <em>restrict-height</em> without setting a <em>*-height</em> class. Set the data-height value to either <em>match-next</em> or <em>match-prev</em>.
+
           <p>Lorem Content:</p>
 
           <p>Ut cupidatat aliqua eu eu labore pariatur commodo ipsum. Ad irure reprehenderit velit consequat excepteur dolor et duis sunt culpa aliqua ipsum voluptate voluptate. Enim velit ipsum id aliqua laborum ex mollit nostrud esse eiusmod aute aliqua magna. Dolore voluptate do in esse ullamco aute aliqua ea sint sit do commodo. Laborum ex anim eu fugiat ut qui ex. Proident adipisicing elit duis deserunt culpa amet voluptate. Elit ad incididunt voluptate velit qui adipisicing.</p>
@@ -249,7 +313,12 @@
       
       <div class="style-code-wrapper collapse" id="scroll-code">
         <pre class="style-code" style="margin: 2rem;">
-<code><span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"content-container restrict-height half-height"</span><span class="an"> data-behavior=</span><span class="av">"restrict-height"</span><span class="et">></span><span class="ct"> // full-height, half-height or quarter-height &nbsp;</span>
+<code><span class="ct"> // Example showing a content-container restricted to half the height of the browser view (this is the way this example content-container is set up). Height options are full-height, half-height or quarter-height</span>
+<span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"content-container restrict-height half-height"</span><span class="an"> data-behavior=</span><span class="av">"restrict-height"</span><span class="et">></span>
+
+<span class="ct"> // Example showing a content-container restricted to match the height of the next content-container in the row. Options for 'data-height' are 'match-next' and 'match-prev'</span>
+<span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"content-container restrict-height"</span><span class="an"> data-behavior=</span><span class="av">"restrict-height"</span><span class="an"> data-height=</span><span class="av">"match-next"</span><span class="et">></span>
+
   <span class="et">&lt;h4</span><span class="an"> class=</span><span class="av">"header-underline"</span><span class="et">></span><span class="et">></span>Scroll-for-more Indicator<span class="et">&lt;/h4</span><span class="et">></span>
   <span class="et">&lt;p</span><span class="et">></span>Content Here<span class="et">&lt;/p></span>
 <span class="et">&lt;/div</span><span class="et">></span></code>
@@ -439,6 +508,7 @@
       <nav class="d-flex flex-column">
         <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="container">Content Container</a>
         <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="tabs">Content Container with Tabs</a>
+        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="dots">Dots Menu</a>
         <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="modals">Modals</a>
         <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="round">Round Navbar Buttons</a>
         <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="scroll">Scroll-For-More Indicator</a>
