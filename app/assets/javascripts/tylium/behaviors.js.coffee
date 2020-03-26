@@ -178,7 +178,7 @@ document.addEventListener "turbolinks:load", ->
     # This is required to keep the sidebar state if the user refreshes the page
     localStorage.setItem('sidebar-view-state', $sidebar.attr('data-state')); 
 
-  if localStorage.getItem('sidebar-view-state') && localStorage.getItem('sidebar-view-state') == 'sidebar-collapsed'
+  if localStorage.getItem('sidebar-view-state') == 'sidebar-collapsed'
     sidebarClose(' no-animation')
   else
     sidebarOpen(' no-animation')

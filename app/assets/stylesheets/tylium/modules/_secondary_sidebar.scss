@@ -1,13 +1,13 @@
 .secondary-sidebar {
   background: $sidebarActiveColor;
-  color: $lightColor;
   border-right: 1px solid $borderColor;
-  padding: 1rem;
+  color: $lightColor;
   height: calc(100vh - 60px);
   overflow: auto;
-  z-index: 2;
+  padding: 1rem;
   position: sticky;
   top: 0;
+  z-index: 2;
 
   a {
     color: lighten($lightColor, 20%);
@@ -37,7 +37,7 @@
         color: $lightColor;
       }
 
-      &:first-of-type{
+      &:first-of-type {
         margin-top: 0;
       }
     }
