@@ -8,6 +8,7 @@ v3.17 ([MMM’YY])
     - Report 'Download' button becoming a disabled 'Processing...' button once clicked.
     - Set :author when creating Evidence from an Issue.
     - Stop bin/setup from creating folders outside dradis-ce/
+    - bin/setup will not error if the attachments directory already exists
     - Bug tracker items: #560
   * New integrations:
     - [new integration #1]
