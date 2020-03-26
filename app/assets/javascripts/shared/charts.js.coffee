@@ -37,7 +37,9 @@ class @DonutChart
     @_createCenter = ->
       donuts = @container.selectAll('.donut')
 
-      donuts.append("svg:circle")
+      donuts.append("a")
+        .attr("xlink:href", @$container.data('url'))
+        .append("svg:circle")
         .attr("r", @chart_r * 0.6)
         .style("fill", "#E7E7E7")
         # .on(eventObj);
