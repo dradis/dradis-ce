@@ -121,7 +121,7 @@ Rails.application.routes.draw do
 
   # -------------------------------------------------------------- Static pages
   # jQuery Textile URLs
-  get '/preview' => 'home#textilize',  as: :preview, defaults: { format: 'json' }
+  post '/preview' => 'home#textilize',  as: :preview, defaults: { format: 'json' }
   get '/markup-help' => 'home#markup_help', as: :markup
 
   root to: 'projects#index'
