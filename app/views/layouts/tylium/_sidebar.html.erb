@@ -13,7 +13,7 @@
         <i class="fa fa-bug sidebar-link-icon"></i> <span class="sidebar-link-label">All issues</span>
       <% end %>
     <% end %>
-    <%= content_tag :li, :class => controller_name == 'boards' ? 'active' : '' do %>
+    <%= content_tag :li, :class => controller_name == 'boards' || controller_name == 'cards' ? 'active' : '' do %>
       <%= link_to main_app.project_boards_path(current_project), class: 'sidebar-link', data: { behavior: 'sidebar-link' } do %>
         <i class="fa fa-trello sidebar-link-icon"></i> <span class="sidebar-link-label">Methodologies</span>
       <% end %>
