@@ -20,19 +20,19 @@
         <textarea rows=1 name="field1_value2" class="form-control"></textarea>
       </div>
     </div>
-    <button class="btn">Add field</button>
   <% else %>
-    <% @form_data.each do |field, value| %>
+    <% @form_data.each_with_index do |field, index| %>
       <div class="row">
         <div class="col-3">
           <p>Field</p>
-          <input type="text" name="field_name1" class="form-control" value="<%= field %>">
+          <input type="text" name="field_name_<%= index %> " class="form-control" value="<%= field[0] %>">
         </div>
         <div class="col-9">
           <p>Value</p>
-          <textarea rows=1 name="field1_value1" class="form-control"><%= value %></textarea>
+          <textarea rows=1 name="field_value_<%= index %>" class="form-control"><%= field[1] %></textarea>
         </div>
       </div>
     <% end %>
   <% end %>
+  <button class="btn">Add field</button>
 </form>

@@ -47,7 +47,12 @@
             </div>
             <div id="<%= "preview_issue_new" %>" class="accordion-body collapse">
               <div id="new_issue">
-                <%= text_area_tag "issue[text]", nil, class: 'textile form-control', data: { preview_url: preview_path, help_url: markup_path } %>
+                <%= text_area_tag "issue[text]", nil, class: 'textile form-control', data: {
+                  form_url: form_path,
+                  help_url: markup_path,
+                  preview_url: preview_path,
+                  source_url: source_path
+                } %>
               </div>
             </div>
           </div>

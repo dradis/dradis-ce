@@ -1,8 +1,6 @@
 class TextileController < AuthenticatedController
   def form
-    if params[:form]
-      @form_data = Hash[ *params[:form].scan(HasFields::REGEX).flatten.map(&:strip) ]
-    end
+    @form_data = Note.parse_fields(params[:form]) if params[:form]
 
     render layout: false
   end
@@ -17,11 +15,11 @@ class TextileController < AuthenticatedController
     form_data = JSON.parse(params[:form])
 
     form_data.each_slice(2).map do |field_name, field_value|
-      "#[#{field_name['value']}]#\n#{field_value['value']}"
-    end.join("\n\n")
-  end
+      field = field_name['value']
+      value = field_value['value']
+      next if field.empty? && value.empty?
 
-  def form_params
-    params.require.permit(:form)
+      "#[#{field}]#\n#{value}"
+    end.compact.join("\n\n")
   end
 end

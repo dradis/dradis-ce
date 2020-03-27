@@ -126,6 +126,31 @@
       if (this.options.resize === false) return false;
 
     },
+    // Ajax form
+    _loadForm: function(data) {
+      var that = this;
+
+      $.post({
+        url: this.$element.data('form-url'),
+        data: data,
+        beforeSend: function(){
+          that.options.$form.addClass('loading-indicator').text('Loading...');
+        },
+        success: function(result){
+          that.options.$form.removeClass('loading-indicator').html('');
+          that.options.$form.removeClass('loading-indicator').append(result);
+        }
+      });
+    },
+    // Ajax help
+    _loadHelp: function() {
+      var that = this;
+      $.get( this.$element.data('help-url'), function(result){
+        that.options.$help.removeClass('loading-indicator')
+          .html(result);
+        this._helpRendered = true;
+      });
+    },
     // Ajax preview
     _loadPreview: function() {
       this._previousContent = this.$element.val();
@@ -138,53 +163,16 @@
         that._previewRendered = true;
       });
     },
-    // Ajax help
-    _loadHelp: function() {
+    // Ajax write
+    _loadWrite: function() {
       var that = this;
-      $.get( this.$element.data('help-url'), function(result){
-        that.options.$help.removeClass('loading-indicator')
-          .html(result);
-        this._helpRendered = true;
-      });
-    },
-    _loadForm: function(data) {
-      var that = this;
-
-      $.ajax({
-        method: 'POST',
-        url: '/textile/form.html',
-        data: data,
-        beforeSend: function(){
-          that.options.$form.addClass('loading-indicator').text('Loading...');
-        },
-        success: function(result){
-          that.options.$form.removeClass('loading-indicator').html('');
-          that.options.$form.removeClass('loading-indicator').append(result);
-        }
-      });
-    },
-    // Toolbar button handlers
-    _onBtnWrite: function() {
-      // Activate toolbar button
-      var scope = this.options.$wrap;
-      $('.textile-toolbar a', scope).removeClass('active');
-      $('.textile-toolbar .btn-write', scope).addClass('active');
-
-      var that = this;
-      $.ajax({
-        method: 'POST',
-        url: '/textile/source',
+      $.post({
+        url: this.$element.data('source-url'),
         data: {form: JSON.stringify( $('.textile-form form').serializeArray() )},
         success: function(result){
           that.$element.val(result);
         }
       });
-
-      // Show Write pane
-      this.options.$preview.hide();
-      this.options.$form.hide();
-      this.options.$help.hide();
-      this.$element.show();
     },
     _onBtnForm: function() {
       // Activate toolbar button
@@ -201,29 +189,6 @@
       this.options.$help.hide();
       this.$element.hide();
       this.options.$form.show();
-    },
-    _onBtnPreview: function() {
-      // Activate toolbar button
-      var scope = this.options.$wrap;
-      $('.textile-toolbar a', scope).removeClass('active');
-      $('.textile-toolbar .btn-preview', scope).addClass('active');
-
-      // Show Preview pane
-      this.$element.hide();
-      this.options.$form.hide();
-      this.options.$help.hide();
-      this.options.$preview.show();
-
-      // If the text hasn't changed, do nothing.
-      if (this._previousContent == this.$element.val()) {
-        if (!this._previewRendered) {
-          this._loadPreview();
-        }
-      }
-      else
-      {
-        this._loadPreview();
-      }
     },
     _onBtnFullScreen: function() {
       $btnFS = $('.btn-fullscreen', this.options.$wrap);
@@ -284,6 +249,44 @@
       if (!this._helpRendered) {
         this._loadHelp();
       }
+    },
+    _onBtnPreview: function() {
+      // Activate toolbar button
+      var scope = this.options.$wrap;
+      $('.textile-toolbar a', scope).removeClass('active');
+      $('.textile-toolbar .btn-preview', scope).addClass('active');
+
+      // Show Preview pane
+      this.$element.hide();
+      this.options.$form.hide();
+      this.options.$help.hide();
+      this.options.$preview.show();
+
+      // If the text hasn't changed, do nothing.
+      if (this._previousContent == this.$element.val()) {
+        if (!this._previewRendered) {
+          this._loadPreview();
+        }
+      }
+      else
+      {
+        this._loadPreview();
+      }
+    },
+    // Toolbar button handlers
+    _onBtnWrite: function() {
+      // Activate toolbar button
+      var scope = this.options.$wrap;
+      $('.textile-toolbar a', scope).removeClass('active');
+      $('.textile-toolbar .btn-write', scope).addClass('active');
+
+      this._loadWrite();
+
+      // Show Write pane
+      this.options.$preview.hide();
+      this.options.$form.hide();
+      this.options.$help.hide();
+      this.$element.show();
     },
 
     // --------------------------------------------------- Other event handlers
