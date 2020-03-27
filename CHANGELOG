@@ -3,6 +3,7 @@ v3.17 (Month 2020)
   * Refactored dots-menu to make it available in any view.
   * Remove tag color from issue titles in issue summary.
   * Use shared noscript partial
+  * Make the editor preview a side-by-side preview that auto-updates
   * Upgraded gems: puma, sass-rails
   * Bugs fixed:
     - Long project names interfering with search bar expansion.
