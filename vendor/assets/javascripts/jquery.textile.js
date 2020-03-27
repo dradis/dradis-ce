@@ -128,7 +128,6 @@
     // Ajax preview
     _loadPreview: function() {
       this._previousContent = this.$element.val();
-      this.options.$preview.addClass('loading-indicator').text('Loading...');
 
       var that = this;
       $.post(this.$element.data('preview-url'),
@@ -237,13 +236,20 @@
     _onFullScreenResize: function(){
       if (this.options.fullscreen === false) return;
 
-      var hfix = 42;
-      var hfix = 60;
+      var hfix = 65;
       var height = $(window).height() - hfix;
 
       this.options.$wrap.width($(window).width()-20);
-      this.options.$preview.height(height);
+      this.options.$preview.height(height-44);
       this.$element.height(height-10);
+
+      that = this;
+      this.$element.scroll(function () {
+        that.options.$preview.scrollTop(that.$element.scrollTop());
+      });
+      this.options.$preview.scroll(function () {
+        that.$element.scrollTop(that.options.$preview.scrollTop());
+      });
     }
   };
 
