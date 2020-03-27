@@ -90,7 +90,12 @@ class BoardsController < AuthenticatedController
   def build_methodology_params
     @boards.map do |board|
       next if board.lists.empty?
-      board_data = { id: board.id, name: board.name, total: board.cards.count }
+      board_data = {
+        id: board.id,
+        name: board.name,
+        total: board.cards.count,
+        url: project_board_path(current_project, board)
+      }
       lists = board.lists.map do |list|
         { category: list.name, value: list.cards.count }
       end

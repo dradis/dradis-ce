@@ -1,6 +1,10 @@
 v3.17 (Month 2020)
   * Adjusted Uploads layout to provide more visibility to the output console.
+  * Card improvements:
+    - Activity Feed now shows board name and link.
+    - No mandatory due date.
   * Comments can now have Textile markup.
+  * Link to Methodology from project summary chart.
   * Refactored dots-menu to make it available in any view.
   * Remove tag color from issue titles in issue summary.
   * Use shared noscript partial
@@ -9,7 +13,10 @@ v3.17 (Month 2020)
     - Long project names interfering with search bar expansion.
     - Report 'Download' button becoming a disabled 'Processing...' button once clicked.
     - Set :author when creating Evidence from an Issue.
-    - Bug tracker items: #N, #M, #O, ...
+    - Sidebar items not showing active state.
+    - Stop bin/setup from creating folders outside dradis-ce/
+    - bin/setup will not error if the attachments directory already exists
+    - Bug tracker items: #560
   * New integrations:
     - [new integration #1]
   * Integration enhancements:

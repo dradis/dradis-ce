@@ -37,12 +37,17 @@ class @DonutChart
     @_createCenter = ->
       donuts = @container.selectAll('.donut')
 
-      donuts.append("svg:circle")
+      donuts.append("a")
+        .attr("xlink:href", @$container.data('url'))
+        .append("svg:circle")
         .attr("r", @chart_r * 0.6)
         .style("fill", "#E7E7E7")
         # .on(eventObj);
 
-      textElement = donuts.append('text')
+      textElement = donuts
+        .append("a")
+        .attr("xlink:href", @$container.data('url'))
+        .append('text')
         .attr('class', 'center-txt type')
         .attr('y', @chart_r * -0.16)
         .attr('text-anchor', 'middle')
