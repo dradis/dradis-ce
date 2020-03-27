@@ -27,7 +27,7 @@
         resize: true,
         // HTML templates
         tpl: {
-          wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner"></div></div>',
+          wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row p-3"></div></div>',
           preview: '<div class="textile-preview loading-indicator">Loading...</div>',
           help: '<div class="textile-help loading-indicator">Loading...</div>'
         }
@@ -69,14 +69,30 @@
 
       // move textarea to container
       $('.textile-inner', this.options.$wrap).append(this.$element);
-      this.$element.css('resize', 'none');
-      this.$element.css('width', '100%');
       this.$element.attr('rows', 20);
+      this.$element.addClass('col-6');
 
-      // add Preview to container and hide
+      // add Preview to container and load
       this.options.$preview = $(this.options.tpl.preview);
       $('.textile-inner', this.options.$wrap).append(this.options.$preview);
-      this.options.$preview.hide();
+      this.options.$preview.addClass('col-6');
+      this._loadPreview();
+
+      // Sync preview
+      var typingTimer;
+      var doneTypingInterval = 800;
+
+      // on keyup, start the countdown
+      var that = this;
+      this.$element.on('keyup', function () {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(function() { that._onKeyPressPreview(that) }, doneTypingInterval);
+      });
+
+      // on keydown, clear the countdown
+      this.$element.on('keydown', function () {
+        clearTimeout(typingTimer);
+      });
 
       // add Help to container and hide
       this.options.$help = $(this.options.tpl.help);
@@ -92,11 +108,6 @@
       // Write
       button = $('<a class="btn-write active" href="javascript:void(null);"><span>Write</span></a>');
       button.click( $.proxy( function(evt) { this._onBtnWrite(evt); }, this));
-      $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
-
-      // Preview
-      button = $('<a class="btn-preview" href="javascript:void(null);"><span>Preview</span></a>');
-      button.click( $.proxy( function(evt) { this._onBtnPreview(evt); }, this));
       $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
 
       // Full screen
@@ -138,6 +149,16 @@
         this._helpRendered = true;
       });
     },
+    _onKeyPressPreview: function() {
+      // If the text hasn't changed, do nothing.
+      if (this._previousContent == this.$element.val()) {
+        if (!this._previewRendered) {
+          this._loadPreview();
+        }
+      } else {
+        this._loadPreview();
+      }
+    },
     // Toolbar button handlers
     _onBtnWrite: function() {
       // Activate toolbar button
@@ -146,32 +167,9 @@
       $('.textile-toolbar .btn-write', scope).addClass('active');
 
       // Show Write pane
-      this.options.$preview.hide();
       this.options.$help.hide();
       this.$element.show();
-    },
-    _onBtnPreview: function() {
-      // Activate toolbar button
-      var scope = this.options.$wrap;
-      $('.textile-toolbar a', scope).removeClass('active');
-      $('.textile-toolbar .btn-preview', scope).addClass('active');
-
-      // Show Preview pane
-      this.$element.hide();
-
-      this.options.$help.hide();
       this.options.$preview.show();
-
-      // If the text hasn't changed, do nothing.
-      if (this._previousContent == this.$element.val()) {
-        if (!this._previewRendered) {
-          this._loadPreview();
-        }
-      }
-      else
-      {
-        this._loadPreview();
-      }
     },
     _onBtnFullScreen: function() {
       $btnFS = $('.btn-fullscreen', this.options.$wrap);
@@ -258,5 +256,4 @@
       }
     });
   }
-
 }(jQuery, window));
