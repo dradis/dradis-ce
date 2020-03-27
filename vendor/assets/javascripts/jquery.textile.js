@@ -78,7 +78,7 @@
       // add Form
       this.options.$form = $(this.options.tpl.form);
       $('.textile-inner', this.options.$wrap).append(this.options.$form);
-      this._loadForm({});
+      this._loadForm(this.$element.data('content'));
 
       // add Preview to container and hide
       this.options.$preview = $(this.options.tpl.preview);
@@ -132,7 +132,7 @@
 
       $.post({
         url: this.$element.data('form-url'),
-        data: data,
+        data: {source: data},
         beforeSend: function(){
           that.options.$form.addClass('loading-indicator').text('Loading...');
         },
@@ -168,7 +168,7 @@
       var that = this;
       $.post({
         url: this.$element.data('source-url'),
-        data: {form: JSON.stringify( $('.textile-form form').serializeArray() )},
+        data: {form: JSON.stringify( $('input, textarea', this.options.$form).serializeArray() )},
         success: function(result){
           that.$element.val(result);
         }
@@ -180,9 +180,9 @@
       $('.textile-toolbar a', scope).removeClass('active');
       $('.textile-toolbar .btn-form', scope).addClass('active');
 
-      $('.textile-form form').remove()
+      $('.textile-form').empty()
 
-      this._loadForm({form: this.$element.val()});
+      this._loadForm(this.$element.val());
 
       // Show Form pane
       this.options.$preview.hide();

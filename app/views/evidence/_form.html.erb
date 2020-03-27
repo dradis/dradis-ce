@@ -7,14 +7,11 @@
       f.input :content,
       input_html: {
         class: 'textile',
-        data: {
+        data: textile_form_urls.merge({
           autosave_key: "#{current_project.id}-evidence-#{ @evidence.persisted? ? "edit-#{@evidence.id}" : "new-for-#{@node.id}" }",
           behavior: 'auto-save',
-          form_url: form_path,
-          help_url: markup_path,
-          preview_url: preview_path,
-          source_url: source_path
-        }
+          content: @evidence.content
+        })
       }
     %>
   </div>

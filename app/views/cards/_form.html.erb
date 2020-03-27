@@ -9,12 +9,7 @@
       input_html: {
         class: 'textile',
         label: false,
-        data: {
-          form_url: form_path,
-          help_url: markup_path,
-          preview_url: preview_path,
-          source_url: source_path
-        }
+        data: textile_form_urls.merge({ content: @card.description })
       }
   %>
   
