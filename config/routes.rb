@@ -121,6 +121,7 @@ Rails.application.routes.draw do
 
   # -------------------------------------------------------------- Static pages
   # jQuery Textile URLs
+  get '/field', to: 'textile#field', as: :field, defaults: { format: :js }
   post '/form' => 'textile#form',  as: :form, defaults: { format: :html }
   get '/markup-help' => 'home#markup_help', as: :markup
   get '/preview' => 'home#textilize',  as: :preview, defaults: { format: :json }

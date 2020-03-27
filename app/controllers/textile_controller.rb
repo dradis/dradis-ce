@@ -5,6 +5,10 @@ class TextileController < AuthenticatedController
     render layout: false
   end
 
+  def field
+    @index = params[:index]
+  end
+
   def source
     render plain: build_source
   end
