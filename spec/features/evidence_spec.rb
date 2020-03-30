@@ -97,9 +97,12 @@ describe "evidence" do
 
     it_behaves_like "a form with a help button"
 
-    describe "submitting the form with valid information" do
+    describe "submitting the form with valid information", js: true do
       let(:new_content) { "new content" }
-      before { fill_in :evidence_content, with: new_content }
+      before do
+        click_link 'Write'
+        fill_in :evidence_content, with: new_content
+      end
 
       it "updates the evidence" do
         submit_form

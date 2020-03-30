@@ -26,7 +26,7 @@ describe 'issue pages' do
       expect(page).to have_content('1 issue merged into ')
     end
 
-    context "merge issues into a new one" do
+    context "merge issues into a new one", js: true do
       it 'creates a new issue' do
         expect(page).to have_content /You're merging 2 Issues into a target Issue/i
 
@@ -61,6 +61,7 @@ describe 'issue pages' do
         expect(page).to have_selector('#new_issue', visible: true)
 
         tag_name = '!2ca02c_info'
+        click_link 'Write'
         fill_in :issue_text, with: "#[Title]#\nMerged issue\n\n#[Tags]#\n#{tag_name}\n\n"
 
         # click button like this because the button may be moving down

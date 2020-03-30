@@ -100,9 +100,12 @@ describe "note pages" do
 
     # TODO handle the case where a Note has no paperclip versions (legacy data)
 
-    describe "submitting the form with valid information" do
+    describe "submitting the form with valid information", js: true do
       let(:new_content) { 'New note text' }
-      before { fill_in :note_text, with: new_content }
+      before do
+        click_link 'Write'
+        fill_in :note_text, with: new_content
+      end
 
       it "updates the note" do
         submit_form

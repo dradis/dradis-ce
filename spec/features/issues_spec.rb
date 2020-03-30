@@ -139,9 +139,12 @@ describe 'Issues pages' do
           visit edit_project_issue_path(current_project, @issue)
         end
 
-        describe 'submitting the form with valid information' do
+        describe 'submitting the form with valid information', js: true do
           let(:new_content) { 'New info' }
-          before { fill_in :issue_text, with: new_content }
+          before do
+            click_link 'Write'
+            fill_in :issue_text, with: new_content
+          end
 
           let(:submit_form) { click_button 'Update Issue' }
 
