@@ -10,3 +10,34 @@ shared_examples 'a form with a help button' do
     end
   end
 end
+
+shared_examples 'a textile form view' do
+  before do
+    visit action_path
+  end
+
+  it 'add fields in the form', js: true do
+    within '.textile-form' do
+      click_link 'Add field'
+    end
+
+    expect(find('[name="item_form[field_name_1]"]')).to_not be nil
+    expect(all('.textile-form-field').count).to eq(2)
+  end
+
+  it 'remove fields in the form', js: true do
+    within '.textile-form-field' do
+      click_link 'Delete'
+    end
+    expect(all('.textile-form-field').count).to eq(0)
+  end
+
+  it 'updates the item when submitted', js: true do
+    fill_in('item_form[field_name_0]', with: 'Title')
+    fill_in('item_form[field_value_0]', with: 'Test Issue')
+
+    find('input[type="submit"]').click
+
+    expect(Issue.last.text).to eq("#[Title]#\nTest Issue")
+  end
+end

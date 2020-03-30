@@ -51,6 +51,9 @@ describe 'Issues pages' do
       describe 'new page' do
         let(:submit_form) { click_button 'Create Issue' }
 
+        let(:action_path) { new_project_issue_path(current_project) }
+        it_behaves_like 'a textile form view'
+
         context 'submitting the form with valid information' do
           before do
             visit new_project_issue_path(current_project)

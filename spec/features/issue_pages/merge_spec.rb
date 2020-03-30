@@ -34,6 +34,7 @@ describe 'issue pages' do
         expect(page).to have_selector('#new_issue', visible: false)
 
         choose('Merge into a new issue')
+        click_link 'Write'
 
         # new issue form should be visible now
         expect(page).to have_selector('#new_issue', visible: true)

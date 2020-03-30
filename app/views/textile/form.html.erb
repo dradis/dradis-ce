@@ -1,5 +1,5 @@
+<input type="hidden" name="form" value="true">
 <% if @form_data %>
-  <input type="hidden" name="form" value="true">
 
   <% @form_data.each_with_index do |field, index| %>
     <%= render partial: 'textile/field', locals: { field: field, index: index } %>
