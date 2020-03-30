@@ -1,5 +1,5 @@
 <% field_row = render partial: 'textile/field', locals: { index: @index } %>
-<% add_field_button = link_to 'Add field', field_path(index: @index.to_i + 1), class: 'btn', data: { behavior: 'add-field' }, remote: true %>
+<% add_field_button = link_to 'Add field', field_path(index: @index + 1), class: 'btn', data: { behavior: 'add-field' }, remote: true %>
 
 $('[data-behavior~=add-field]').remove()
 $('.textile-form').append('<%= escape_javascript(field_row) %>')

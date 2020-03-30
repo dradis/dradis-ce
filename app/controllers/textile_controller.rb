@@ -6,7 +6,7 @@ class TextileController < AuthenticatedController
   end
 
   def field
-    @index = params[:index]
+    @index = params[:index].to_i
   end
 
   def source
