@@ -71,6 +71,12 @@ document.addEventListener "turbolinks:load", ->
   # Activate jQuery.treeModal
   $('.modal-node-selection-form').treeModal()
 
+  # Toggle sidebar menu
+  $navbar = $('[data-behavior~=navbar]')
+  $sidebar = $('[data-behavior~=main-sidebar]')
+  $viewContent = $('[data-behavior~=view-content]')
+
+  new Sidebar($navbar, $sidebar, $viewContent, 'sidebar-expanded')
 
   # ------------------------------------------------------- Bootstrap behaviors
 
@@ -158,42 +164,6 @@ document.addEventListener "turbolinks:load", ->
     $('[data-behavior~=navbar-collapse]').collapse 'hide'
     return
 
-  # Toggle sidebar menu
-
-  $navbar = $('[data-behavior~=navbar]')
-  $sidebar = $('[data-behavior~=main-sidebar]')
-  $viewContent = $('[data-behavior~=view-content]')
-
-  sidebarOpen = (animationClass) ->
-    $navbar.css('left', '207px')
-    $sidebar.removeClass('sidebar-collapsed no-animation animate').addClass('sidebar-expanded' + animationClass).attr('data-state', 'sidebar-expanded')
-    $viewContent.css({'left': '250px', 'width': 'calc(100vw - 250px)'})
-    # This is required to keep the sidebar state if the user refreshes the page
-    localStorage.setItem('sidebar-view-state', $sidebar.attr('data-state'));
-    Turbolinks.clearCache()
-
-  sidebarClose = (animationClass) ->
-    $navbar.css('left', '0px')
-    $sidebar.removeClass('sidebar-expanded no-animation animate').addClass('sidebar-collapsed' + animationClass).attr('data-state', 'sidebar-collapsed')
-    $viewContent.css({'left': '43px', 'width': 'calc(100vw - 43px)'})
-    # This is required to keep the sidebar state if the user refreshes the page
-    localStorage.setItem('sidebar-view-state', $sidebar.attr('data-state')); 
-    Turbolinks.clearCache()
-
-  if localStorage.getItem('sidebar-view-state') == 'sidebar-collapsed'
-    sidebarClose(' no-animation')
-  else
-    sidebarOpen(' no-animation')
-
-  $('[data-behavior~=sidebar-toggle]').on 'click', ->
-    if $sidebar.is('[data-state~=sidebar-collapsed]')
-      sidebarOpen(' animate')
-    else
-      if $(this).is('[data-behavior~=open-only]')
-        return
-      else
-        sidebarClose(' animate')
-
   # Scroll for more indicator functionality
   if $('[data-behavior~=restrict-height]').length
     checkOverflow = ->
@@ -230,8 +200,3 @@ document.addEventListener "turbolinks:load", ->
   $('[data-behavior~=smooth-scroll]').on 'click', ->
     target = $(this).data('target');
     $('[data-id~=' + target + ']')[0].scrollIntoView({behavior: "smooth"});
-
-document.addEventListener "turbolinks:before-cache", ->
-  # This is required to keep the state if the user navigates to another page
-  sidebarState = $('[data-behavior~=main-sidebar]').data('state')
-  localStorage.setItem('sidebar-view-state', sidebarState);
