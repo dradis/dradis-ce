@@ -1,8 +1,11 @@
 <% if @form_data %>
+  <input type="hidden" name="form" value="true">
+
   <% @form_data.each_with_index do |field, index| %>
-    <%= render partial: 'textile/field', locals: { index: 0, field: field } %>
+    <%= render partial: 'textile/field', locals: { field: field, index: index } %>
   <% end %>
 <% else %>
   <%= render partial: 'textile/field', locals: { index: 0 } %>
 <% end %>
-<%= link_to 'Add field', field_path(index: @form_data.try(:length) || 1 ), class: 'btn', data: { behavior: 'add-field' }, remote: true %>
+
+<%= link_to 'Add field', field_path(index: @form_data.try(:length) || 1), class: 'btn', data: { behavior: 'add-field' }, remote: true %>

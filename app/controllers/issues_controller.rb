@@ -3,6 +3,7 @@ class IssuesController < AuthenticatedController
   include Commented
   include ContentFromTemplate
   include ConflictResolver
+  include FormDradifier
   include Mentioned
   include MultipleDestroy
   include NotificationsReader
@@ -46,6 +47,8 @@ class IssuesController < AuthenticatedController
   def create
     @issue.author ||= current_user.email
 
+    @issue.text = dradify_form(item_form_params.to_h) if params[:form]
+
     respond_to do |format|
       if @issue.save &&
           # FIXME: need to fix Taggable concern.
@@ -79,6 +82,8 @@ class IssuesController < AuthenticatedController
   end
 
   def update
+    @issue.text = dradify_form(item_form_params.to_h) if params[:form]
+
     respond_to do |format|
       updated_at_before_save = @issue.updated_at.to_i
 
