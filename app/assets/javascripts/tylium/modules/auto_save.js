@@ -12,11 +12,13 @@ document.addEventListener( "turbolinks:load", function(){
 
     if (data !== null) {
       if (item.value === "") {
-        $(item).changeVal(data);
+        item.value = data;
+        $(item).trigger('load-preview');
       } else {
         var response = confirm("There is data in your browser's cache for this form, but the field already contains some data. Would you like to overwrite the contents of the form with the saved data from the browser's cache?")
         if (response) {
-          $(item).changeVal(data);
+          item.value = data;
+          $(item).trigger('load-preview');
         }
       }
     } else {

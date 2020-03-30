@@ -59,8 +59,6 @@
       this._previousContent = this.$element.val();
       this._previewRendered = false;
       this._helpRendered = false;
-
-      $.fn.changeVal = this._changeVal.bind(this);
     },
     _buildContainer: function() {
       // Add wrapper div with toolbar and inner container (see defaults.tpl)
@@ -84,7 +82,7 @@
       var doneTypingInterval = 800;
 
       // on keyup, start the countdown
-      this.$element.on('keyup', function () {
+      this.$element.on('keyup load-preview', function () {
         clearTimeout(typingTimer);
         typingTimer = setTimeout(this._onKeyPressPreview.bind(this), doneTypingInterval);
       }.bind(this));
@@ -240,13 +238,7 @@
       this.options.$wrap.width($(window).width()-20);
       this.options.$preview.height(height-44);
       this.$element.height(height-10);
-    },
-
-    // A custom value setter method that will also trigger the preview update.
-    _changeVal: function(value) {
-      this.$element.val(value);
-      this._onKeyPressPreview();
-    },
+    }
   };
 
   // A really lightweight plugin wrapper around the constructor,
