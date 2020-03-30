@@ -84,11 +84,10 @@
       var doneTypingInterval = 800;
 
       // on keyup, start the countdown
-      var that = this;
       this.$element.on('keyup', function () {
         clearTimeout(typingTimer);
-        typingTimer = setTimeout(function() { that._onKeyPressPreview(that) }, doneTypingInterval);
-      });
+        typingTimer = setTimeout(this._onKeyPressPreview.bind(this), doneTypingInterval);
+      }.bind(this));
 
       // on keydown, clear the countdown
       this.$element.on('keydown', function () {
@@ -130,24 +129,22 @@
     _loadPreview: function() {
       this._previousContent = this.$element.val();
 
-      var that = this;
       $.post(this.$element.data('preview-url'),
         { text: this.$element.val() },
         function(result) {
-          that.options.$preview.removeClass('loading-indicator')
+          this.options.$preview.removeClass('loading-indicator')
             .html(result);
-          that._previewRendered = true;
-        }
+          this._previewRendered = true;
+        }.bind(this)
       );
     },
     // Ajax help
     _loadHelp: function() {
-      var that = this;
       $.get( this.$element.data('help-url'), function(result){
-        that.options.$help.removeClass('loading-indicator')
+        this.options.$help.removeClass('loading-indicator')
           .html(result);
         this._helpRendered = true;
-      });
+      }.bind(this));
     },
     _onKeyPressPreview: function() {
       // If the text hasn't changed, do nothing.
