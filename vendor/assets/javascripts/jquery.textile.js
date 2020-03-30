@@ -59,6 +59,8 @@
       this._previousContent = this.$element.val();
       this._previewRendered = false;
       this._helpRendered = false;
+
+      $.fn.changeVal = this._changeVal.bind(this);
     },
     _buildContainer: function() {
       // Add wrapper div with toolbar and inner container (see defaults.tpl)
@@ -241,7 +243,13 @@
       this.options.$wrap.width($(window).width()-20);
       this.options.$preview.height(height-44);
       this.$element.height(height-10);
-    }
+    },
+
+    // A custom value setter method that will also trigger the preview update.
+    _changeVal: function(value) {
+      this.$element.val(value);
+      this._onKeyPressPreview();
+    },
   };
 
   // A really lightweight plugin wrapper around the constructor,
