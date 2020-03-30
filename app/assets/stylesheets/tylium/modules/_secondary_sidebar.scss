@@ -102,6 +102,10 @@
         a {
           padding: 0 4px;
         }
+
+        &.active a {
+          color: $white;
+        }
     
         .list-item-action-delete,
         .list-item-action-edit {
@@ -144,6 +148,7 @@
     .summary-link {
       color: $lightColor;
 
+      &.active,
       &:hover {
         color: $white;
       }
