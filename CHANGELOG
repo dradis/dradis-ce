@@ -1,13 +1,12 @@
 v3.17 (Month 2020)
-<<<<<<< HEAD
   * Adjusted Uploads layout to provide more visibility to the output console
-  * Refactored dots-menu to make it available in any view
-  * Remove tag color from issue titles in issue summary
   * Card improvements:
     - Activity Feed now shows board name and link
     - No mandatory due date
   * Comments can now have Textile markup
   * Link to Methodology from project summary chart
+  * Refactored dots-menu to make it available in any view
+  * Remove tag color from issue titles in issue summary
   * Use shared noscript partial
   * Make the editor preview a side-by-side preview that auto-updates
   * Upgraded gems: puma, sass-rails
