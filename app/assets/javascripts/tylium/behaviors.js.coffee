@@ -170,6 +170,7 @@ document.addEventListener "turbolinks:load", ->
     $viewContent.css({'left': '250px', 'width': 'calc(100vw - 250px)'})
     # This is required to keep the sidebar state if the user refreshes the page
     localStorage.setItem('sidebar-view-state', $sidebar.attr('data-state'));
+    Turbolinks.clearCache()
 
   sidebarClose = (animationClass) ->
     $navbar.css('left', '0px')
@@ -177,6 +178,7 @@ document.addEventListener "turbolinks:load", ->
     $viewContent.css({'left': '43px', 'width': 'calc(100vw - 43px)'})
     # This is required to keep the sidebar state if the user refreshes the page
     localStorage.setItem('sidebar-view-state', $sidebar.attr('data-state')); 
+    Turbolinks.clearCache()
 
   if localStorage.getItem('sidebar-view-state') == 'sidebar-collapsed'
     sidebarClose(' no-animation')
