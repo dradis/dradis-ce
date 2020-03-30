@@ -27,9 +27,9 @@
         resize: true,
         // HTML templates
         tpl: {
-          wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row p-3"></div></div>',
+          wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row"></div></div>',
           preview: '<div class="textile-preview loading-indicator">Loading...</div>',
-          help: '<div class="textile-help loading-indicator">Loading...</div>'
+          help: '<div class="textile-help col-12 loading-indicator">Loading...</div>'
         }
       };
 
@@ -69,13 +69,12 @@
 
       // move textarea to container
       $('.textile-inner', this.options.$wrap).append(this.$element);
-      this.$element.attr('rows', 20);
-      this.$element.addClass('col-6');
+      this.$element.addClass('h-100').attr('rows', 20).wrap('<div class="col-6"></div>');
 
       // add Preview to container and load
       this.options.$preview = $(this.options.tpl.preview);
       $('.textile-inner', this.options.$wrap).append(this.options.$preview);
-      this.options.$preview.addClass('col-6');
+      this.options.$preview.addClass('h-100').wrap('<div class="col-6"></div>');
       this._loadPreview();
 
       // Sync preview
