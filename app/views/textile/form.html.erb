@@ -1,26 +1,8 @@
-<% if @form_data.nil? %>
-  <div class="row">
-    <div class="col-3">
-      <p>Field</p>
-      <input type="text" name="field_name1" class="form-control">
-    </div>
-    <div class="col-9">
-      <p>Value</p>
-      <textarea rows=1 name="field1_value1" class="form-control"></textarea>
-    </div>
-  </div>
-<% else %>
+<% if @form_data %>
   <% @form_data.each_with_index do |field, index| %>
-    <div class="row">
-      <div class="col-3">
-        <p>Field</p>
-        <input type="text" name="field_name_<%= index %> " class="form-control" value="<%= field[0] %>">
-      </div>
-      <div class="col-9">
-        <p>Value</p>
-        <textarea rows=1 name="field_value_<%= index %>" class="form-control"><%= field[1] %></textarea>
-      </div>
-    </div>
+    <%= render partial: 'textile/field', locals: { index: 0, field: field } %>
   <% end %>
+<% else %>
+  <%= render partial: 'textile/field', locals: { index: 0 } %>
 <% end %>
-<button class="btn">Add field</button>
+<%= link_to 'Add field', field_path(index: @form_data.try(:length) || 1 ), class: 'btn', data: { behavior: 'add-field' }, remote: true %>

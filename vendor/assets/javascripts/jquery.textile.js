@@ -139,6 +139,10 @@
         success: function(result){
           that.options.$form.removeClass('loading-indicator').html('');
           that.options.$form.removeClass('loading-indicator').append(result);
+
+          $('[data-behavior~=delete-field]').click(function(){
+            $(this).closest('.row').remove()
+          });
         }
       });
     },
