@@ -241,14 +241,6 @@
       this.options.$wrap.width($(window).width()-20);
       this.options.$preview.height(height-44);
       this.$element.height(height-10);
-
-      that = this;
-      this.$element.scroll(function () {
-        that.options.$preview.scrollTop(that.$element.scrollTop());
-      });
-      this.options.$preview.scroll(function () {
-        that.$element.scrollTop(that.options.$preview.scrollTop());
-      });
     }
   };
 
