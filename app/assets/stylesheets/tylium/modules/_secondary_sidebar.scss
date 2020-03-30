@@ -96,6 +96,10 @@
         a {
           color: $lightColor;
         }
+
+        &.active a {
+          color: $white;
+        }
     
         .list-item-actions {
           padding-top: 0.3rem;
@@ -148,6 +152,7 @@
       .summary-link {
         color: $lightColor;
 
+        &.active,
         &:hover {
           color: $white;
         }
