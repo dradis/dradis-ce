@@ -23,7 +23,8 @@ document.addEventListener('turbolinks:load', function(){
               id: 'methodology-board-' + board.id,
               class: 'pie-chart',
               'data-behavior': 'interactive-pie-chart',
-              'data-stats': JSON.stringify(stats)
+              'data-stats': JSON.stringify(stats),
+              'data-url': board.url
             });
             $boardChart.appendTo($boardsSummary);
           });
