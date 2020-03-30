@@ -18,7 +18,7 @@
       <li class="list" data-list-id="<%= list.id %>" data-move-url="<%= move_project_board_list_path(current_project, board, list) %>">
         <div class="list-header">
           <h4>
-            <%= list.name %>
+            <span data-behavior="list-name"><%= list.name %></span>
             <span class="js-list-count badge badge-secondary pull-right"><%= list.cards.count %></span>
           </h4>
 
@@ -54,11 +54,11 @@
                     <% if card.due_date %>
                       <% case (card.due_date - Date.today).to_i %>
                       <% when -Float::INFINITY..-1 %>
-                      <div class="badge-due-date badge badge-danger">
+                      <div class="badge-due-date badge badge-danger" data-badge="due-date">
                       <% when 0 %>
-                      <div class="badge-due-date badge badge-warning">
+                      <div class="badge-due-date badge badge-warning" data-badge="due-date">
                       <% else %>
-                      <div class="badge-due-date badge badge-success">
+                      <div class="badge-due-date badge badge-success" data-badge="due-date">
                       <% end %>
                         <span><i class="fa fa-clock-o"></i></span>
                         <span><%= card.due_date.strftime('%b %-d') %></span>

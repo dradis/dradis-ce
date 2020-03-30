@@ -83,6 +83,12 @@ document.addEventListener "turbolinks:load", ->
 
             sortableBoard.updatePosition(currentCard.data('move-url'), params)
 
+          # Hide due-date for cards in "Done" list on drop.
+          currentListName = currentCard.parent().prev().find('[data-behavior~=list-name]').text().toLowerCase().trim()
+          if currentListName == 'done'
+            currentCard.find('[data-badge~=due-date]').addClass('d-none'); 
+          else
+            currentCard.find('[data-badge~=due-date]').removeClass('d-none');
 
       $('.js-sortable-lists').sortable
         connectWith: '.js-sortable-lists'
@@ -102,6 +108,12 @@ document.addEventListener "turbolinks:load", ->
         placeholder:
           element: sortableBoard.generatePlaceholder('list')
           update: (container, p) -> return
+
+      # Hide due-date for cards in "Done" list on load
+      $('[data-list-id]').each ->
+        if $(this).find('[data-behavior~=list-name]').text().toLowerCase().trim() == 'done'
+            $(this).find('[data-badge~=due-date]').addClass('d-none'); 
+        return
 
     $(document).trigger 'sortable:init'
 

@@ -1,5 +1,6 @@
 v3.17 (Month 2020)
   * Adjusted Uploads layout to provide more visibility to the output console
+  * Hide due date for cards in 'Done' lists.
   * Card improvements:
     - Activity Feed now shows board name and link
     - No mandatory due date
