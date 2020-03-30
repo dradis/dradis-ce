@@ -5,8 +5,13 @@
     <p>Field</p>
     <input type="text" name="field_name_<%= index %>" class="form-control" value="<%= field_name %>">
   </div>
-  <div class="col-9">
+  <div class="col-8">
     <p>Value</p>
     <textarea rows=1 name="field_value_<%= index %>" class="form-control"><%= value %></textarea>
+  </div>
+  <div class='pull-right'>
+    <%= link_to 'javascript:void(0)', class: 'text-error',  data: { behavior: 'delete-field'} do %>
+      <i class="fa fa-trash">Delete</i>
+    <% end %>
   </div>
 </div>

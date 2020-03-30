@@ -4,3 +4,7 @@
 $('[data-behavior~=add-field]').remove()
 $('.textile-form').append('<%= escape_javascript(field_row) %>')
 $('.textile-form').append('<%= escape_javascript(add_field_button) %>')
+
+$('[data-behavior~=delete-field]').last().click(function(){
+  $(this).closest('.row').remove()
+});
