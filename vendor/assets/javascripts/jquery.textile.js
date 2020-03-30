@@ -74,7 +74,7 @@
       // add Preview to container and load
       this.options.$preview = $(this.options.tpl.preview);
       $('.textile-inner', this.options.$wrap).append(this.options.$preview);
-      this.options.$preview.addClass('h-100').wrap('<div class="col-6"></div>');
+      this.options.$preview.wrap('<div class="col-6"></div>');
       this._loadPreview();
 
       // Sync preview
@@ -204,7 +204,7 @@
         this.options.$wrap.css('width', this.options.width);
         this.options.tmpspan.after(this.options.$wrap).remove();
 
-        this.options.$preview.css('height', 'auto');
+        this.options.$preview.css('height', '100%');
         this.$element.css('height', this.options.height);
 
         // update button icon

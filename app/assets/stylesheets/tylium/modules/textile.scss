@@ -125,6 +125,13 @@
   background-color: #fff;
   word-break: break-word;
 
+  &.textile-fullscreen {
+    
+    .textile-preview {
+      height: initial;
+    }
+  }
+
   .textile-inner {
     padding: 0;
     background: transparent;
@@ -138,6 +145,7 @@
       border-radius: 4px;
       padding: 1rem;
       overflow: auto;
+      height: 100%;
     }
   }
 
