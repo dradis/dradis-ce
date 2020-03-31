@@ -79,18 +79,13 @@
 
       // Sync preview
       var typingTimer;
-      var doneTypingInterval = 800;
+      var doneTypingInterval = 500;
 
       // on keyup, start the countdown
-      this.$element.on('keyup load-preview', function () {
+      this.$element.on('textchange load-preview', function () {
         clearTimeout(typingTimer);
         typingTimer = setTimeout(this._onKeyPressPreview.bind(this), doneTypingInterval);
       }.bind(this));
-
-      // on keydown, clear the countdown
-      this.$element.on('keydown', function () {
-        clearTimeout(typingTimer);
-      });
 
       // add Help to container and hide
       this.options.$help = $(this.options.tpl.help);
