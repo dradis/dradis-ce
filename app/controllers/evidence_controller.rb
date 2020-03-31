@@ -1,6 +1,7 @@
 class EvidenceController < NestedNodeResourceController
   include Commented
   include ConflictResolver
+  include FormDradifier
   include Mentioned
   include MultipleDestroy
   include NodesSidebar
@@ -25,6 +26,8 @@ class EvidenceController < NestedNodeResourceController
 
   def create
     @evidence.author ||= current_user.email
+
+    @evidence.content = dradify_form if params[:form]
 
     respond_to do |format|
       if @evidence.save
@@ -89,6 +92,8 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def update
+    @evidence.content = dradify_form if params[:form]
+
     respond_to do |format|
       updated_at_before_save = @evidence.updated_at.to_i
       if @evidence.update_attributes(evidence_params)

@@ -2,6 +2,7 @@ class CardsController < AuthenticatedController
   include ActivityTracking
   include Commented
   include ContentFromTemplate
+  include FormDradifier
   include ProjectScoped
   include Mentioned
   include NotificationsReader
@@ -31,6 +32,8 @@ class CardsController < AuthenticatedController
     # Set the new card as the last card of the list
     @card.previous_id = @list.last_card.try(:id)
 
+    @card.description = dradify_form if params[:form]
+
     if @card.save
       track_created(@card)
       redirect_to [current_project, @board, @list, @card], notice: 'Task added.'
@@ -44,6 +47,8 @@ class CardsController < AuthenticatedController
   end
 
   def update
+    @card.description = dradify_form if params[:form]
+
     if @card.update_attributes(card_params)
       track_updated(@card)
       redirect_to [current_project, @board, @list, @card], notice: 'Task updated.'

@@ -11,33 +11,51 @@ shared_examples 'a form with a help button' do
   end
 end
 
-shared_examples 'a textile form view' do
+shared_examples 'a textile form view' do |klass|
   before do
     visit action_path
+
+    required_form if defined?(required_form)
   end
 
   it 'add fields in the form', js: true do
-    within '.textile-form' do
-      click_link 'Add field'
-    end
+    expect {
+      within '.textile-form' do
+        click_link 'Add field'
+      end
 
-    expect(find('[name="item_form[field_name_1]"]')).to_not be nil
-    expect(all('.textile-form-field').count).to eq(2)
+      expect(find('[name="item_form[field_name_1]"]')).to_not be nil
+    }.to change{ all('.textile-form-field').count }.by(1)
   end
 
   it 'remove fields in the form', js: true do
-    within '.textile-form-field' do
-      click_link 'Delete'
-    end
-    expect(all('.textile-form-field').count).to eq(0)
+    expect {
+      within '.textile-form-field', match: :first do
+        click_link 'Delete'
+      end
+    }.to change{ all('.textile-form-field').count }.by(-1)
   end
 
-  it 'updates the item when submitted', js: true do
+  it 'saves the item when submitted', js: true do
     fill_in('item_form[field_name_0]', with: 'Title')
-    fill_in('item_form[field_value_0]', with: 'Test Issue')
+    fill_in('item_form[field_value_0]', with: 'Test Item')
 
     find('input[type="submit"]').click
 
-    expect(Issue.last.text).to eq("#[Title]#\nTest Issue")
+    updated_item = defined?(item) ? item : klass.last
+
+    if klass == Evidence || klass == Note
+      show_path = [current_project, updated_item.node, updated_item]
+      content_attribute = :content
+    elsif klass == Issue
+      show_path = [current_project, updated_item]
+      content_attribute = :text
+    elsif klass == Card
+      show_path = [current_project, updated_item.list.board, updated_item.list, updated_item]
+      content_attribute = :description
+    end
+
+    expect(page).to have_current_path(polymorphic_path(show_path), ignore_query: true)
+    expect(updated_item.reload.send(content_attribute)).to include("#[Title]#\nTest Item")
   end
 end

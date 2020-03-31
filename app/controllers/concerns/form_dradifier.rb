@@ -4,7 +4,9 @@ module FormDradifier
   protected
 
   # Convert serialized form data to Dradis-style item content
-  def dradify_form(form_data)
+  def dradify_form(options = {})
+    form_data = options[:form_data] || item_form_params.to_h
+
     form_data.each_slice(2).map do |field_name, field_value|
       field = field_name[1]
       value = field_value[1]

@@ -52,7 +52,7 @@ describe 'Issues pages' do
         let(:submit_form) { click_button 'Create Issue' }
 
         let(:action_path) { new_project_issue_path(current_project) }
-        it_behaves_like 'a textile form view'
+        it_behaves_like 'a textile form view', Issue
 
         context 'submitting the form with valid information' do
           before do
@@ -136,6 +136,10 @@ describe 'Issues pages' do
       describe 'edit page' do
         let(:submit_form) { click_button 'Update Issue' }
 
+        let(:action_path) { edit_project_issue_path(current_project, @issue) }
+        let(:item) { @issue }
+        it_behaves_like 'a textile form view', Issue
+
         before do
           issuelib = current_project.issue_library
           @issue = create(:issue, node: issuelib, updated_at: 2.seconds.ago)
@@ -143,7 +147,7 @@ describe 'Issues pages' do
         end
 
         describe 'submitting the form with valid information', js: true do
-          let(:new_content) { 'New info' }
+          let(:new_content) { "#[Description]#\r\nNew info" }
           before do
             click_link 'Write'
             fill_in :issue_text, with: new_content

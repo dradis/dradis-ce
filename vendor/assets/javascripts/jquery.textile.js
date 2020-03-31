@@ -288,6 +288,9 @@
 
       this._loadWrite();
 
+      // Clear out the form
+      $('.textile-form').empty();
+
       // Show Write pane
       this.options.$preview.hide();
       this.options.$form.hide();
