@@ -1,6 +1,6 @@
 module HTML
   class Pipeline
-    # HTML Filter that highlights post-processed Textile code blocks.
+    # HTML Filter that highlights post-processed Textile elements.
     #
     # Context options:
     #   n/a
@@ -9,18 +9,15 @@ module HTML
     class DradisCodeHighlightFilter < Filter
       REGEX = /\$\$\{\{(.+?)\}\}\$\$/
 
-      # Locate the $${{}}$$ sequence inside code blocks and highlight it (via
-      # <mark> tags)
+      # Locate the $${{}}$$ sequence and highlight it (via <mark> tags)
       def call
-        doc.search('pre').each do |pre|
-          pre.search('code').each do |node|
-            content = node.to_html
-            html    = content.gsub(REGEX) do |match|
-              %|<mark>#{$1}</mark>|
-            end
-
-            node.replace(html)
+        doc.search('*').each do |node|
+          content = node.to_html
+          html    = content.gsub(REGEX) do |match|
+            %|<mark>#{$1}</mark>|
           end
+
+          node.replace(html)
         end
 
         doc
