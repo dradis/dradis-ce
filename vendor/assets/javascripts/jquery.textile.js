@@ -129,14 +129,12 @@
     },
     // Ajax form
     _loadForm: function(data) {
-      var that = this;
-
       $.post({
         url: this.$element.data('form-url'),
         data: {source: data},
         beforeSend: function(){
           that.options.$form.addClass('loading-indicator').text('Loading...');
-        },
+        }.bind(this),
         success: function(result){
           that.options.$form.removeClass('loading-indicator').html('');
           that.options.$form.removeClass('loading-indicator').append(result);
@@ -144,7 +142,7 @@
           $('[data-behavior~=delete-field]').click(function(){
             $(this).closest('.row').remove()
           });
-        }
+        }.bind(this)
       });
     },
     // Ajax help
@@ -170,14 +168,13 @@
     },
     // Ajax write
     _loadWrite: function() {
-      var that = this;
-      $.post({
-        url: this.$element.data('source-url'),
-        data: {form: JSON.stringify( $('[name^=item_form]', this.options.$form).serializeArray() )},
-        success: function(result){
+      $.post(
+        this.$element.data('source-url'),
+        {form: JSON.stringify( $('[name^=item_form]', this.options.$form).serializeArray() )},
+        function(result){
           that.$element.val(result);
-        }
-      });
+        }.bind(this)
+      );
     },
     _onBtnForm: function() {
       // Activate toolbar button
