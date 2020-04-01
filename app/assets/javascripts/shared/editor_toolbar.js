@@ -27,45 +27,67 @@ class EditorToolbar {
 
     // create toolbar buttons for each toolbar
     $('[data-behavior~=editor-toolbar]').each(function() {
-      $(this).append(
-        '<div class="editor-btn" data-btn="header" aria-label="header text">\
-          <i class="fa fa-header"></i>\
-        </div>\
-        <div class="divider-vertical"></div>\
-        <div class="editor-btn" data-btn="bold" aria-label="bold text">\
-          <i class="fa fa-bold"></i>\
-        </div>\
-        <div class="editor-btn px-2" data-btn="italic" aria-label="italic text">\
-          <i class="fa fa-italic"></i>\
-        </div>\
-        <div class="editor-btn" data-btn="highlight" aria-label="highlighted text">\
-          <i class="fa fa-paint-brush"></i>\
-        </div>\
-        <div class="divider-vertical"></div>\
-        <div class="editor-btn" data-btn="quote" aria-label="quote block">\
-          <i class="fa fa-quote-left"></i>\
-        </div>\
-        <div class="editor-btn" data-btn="link" aria-label="link">\
-          <i class="fa fa-link"></i>\
-        </div>\
-        <div class="editor-btn" data-btn="table" aria-label="table">\
-          <i class="fa fa-table"></i>\
-        </div>\
-        <div class="divider-vertical"></div>\
-        <div class="editor-btn" data-btn="block-code" aria-label="code block">\
-          <i class="fa fa-code"></i>\
-        </div>\
-        <div class="editor-btn" data-btn="inline-code" aria-label="inline code">\
-          <i class="fa fa-terminal"></i>\
-        </div>\
-        <div class="divider-vertical"></div>\
-        <div class="editor-btn" data-btn="list-ul" aria-label="unordered list">\
-          <i class="fa fa-list-ul"></i>\
-        </div>\
-        <div class="editor-btn" data-btn="list-ol" aria-label="ordered list">\
-          <i class="fa fa-list-ol"></i>\
-        </div>\
-      ');
+      if ($(this).prev('textarea').length) { // toolbar for textarea elements
+        $(this).append(
+          '<div class="editor-btn" data-btn="header" aria-label="header text">\
+            <i class="fa fa-header"></i>\
+          </div>\
+          <div class="divider-vertical"></div>\
+          <div class="editor-btn" data-btn="bold" aria-label="bold text">\
+            <i class="fa fa-bold"></i>\
+          </div>\
+          <div class="editor-btn px-2" data-btn="italic" aria-label="italic text">\
+            <i class="fa fa-italic"></i>\
+          </div>\
+          <div class="editor-btn" data-btn="highlight" aria-label="highlighted text">\
+            <i class="fa fa-paint-brush"></i>\
+          </div>\
+          <div class="divider-vertical"></div>\
+          <div class="editor-btn" data-btn="quote" aria-label="quote block">\
+            <i class="fa fa-quote-left"></i>\
+          </div>\
+          <div class="editor-btn" data-btn="link" aria-label="link">\
+            <i class="fa fa-link"></i>\
+          </div>\
+          <div class="editor-btn" data-btn="table" aria-label="table">\
+            <i class="fa fa-table"></i>\
+          </div>\
+          <div class="divider-vertical"></div>\
+          <div class="editor-btn" data-btn="block-code" aria-label="code block">\
+            <i class="fa fa-code"></i>\
+          </div>\
+          <div class="editor-btn" data-btn="inline-code" aria-label="inline code">\
+            <i class="fa fa-terminal"></i>\
+          </div>\
+          <div class="divider-vertical"></div>\
+          <div class="editor-btn" data-btn="list-ul" aria-label="unordered list">\
+            <i class="fa fa-list-ul"></i>\
+          </div>\
+          <div class="editor-btn" data-btn="list-ol" aria-label="ordered list">\
+            <i class="fa fa-list-ol"></i>\
+          </div>\
+        ');
+      }
+      else if ($(this).prev('input[type=text]').length) { // toolbar for input type=text elements
+        $(this).append(
+          '<div class="editor-btn" data-btn="bold" aria-label="bold text">\
+            <i class="fa fa-bold"></i>\
+          </div>\
+          <div class="editor-btn px-2" data-btn="italic" aria-label="italic text">\
+            <i class="fa fa-italic"></i>\
+          </div>\
+          <div class="editor-btn" data-btn="highlight" aria-label="highlighted text">\
+            <i class="fa fa-paint-brush"></i>\
+          </div>\
+          <div class="divider-vertical"></div>\
+          <div class="editor-btn" data-btn="link" aria-label="link">\
+            <i class="fa fa-link"></i>\
+          </div>\
+          <div class="editor-btn" data-btn="inline-code" aria-label="inline code">\
+            <i class="fa fa-terminal"></i>\
+          </div>\
+        ');
+      }
     });
 
     this.behaviors();
@@ -74,19 +96,19 @@ class EditorToolbar {
   behaviors() {
     var that = this;
 
-    // enabling/disabling any toolbar functions on selection
-    $('[data-behavior~=editor-field] textarea, [data-behavior~=editor-field] input[type="text"]').on('click change keyup select', function() {   
+    // enabling/disabling specific toolbar functions for textareas on selection
+    $('[data-behavior~=editor-field] textarea').on('click change keyup select', function() {   
       if (window.getSelection().toString().length > 0 || this.selectionStart != this.selectionEnd) { // when there is text selected
-        $('[data-btn~=table]').addClass('disabled');
+        $(this).parent().find('[data-btn~=table]').addClass('disabled');
       }
       else { // when there is no text selected
-        $('[data-btn~=table]').removeClass('disabled');
+        $(this).parent().find('[data-btn~=table]').removeClass('disabled');
       }
     });
 
     // when a toolbar button is clicked
     $('[data-btn]').click(function () {
-      var $element = $(this).parents('[data-behavior~=editor-field]').children('textarea');
+      var $element = $(this).parents('[data-behavior~=editor-field]').children('textarea, input[type=text]');
       var prefix = '', suffix = '', placeholder = '';
   
       // set the appropriate prefix, placeholder and suffix depending on which button was clicked

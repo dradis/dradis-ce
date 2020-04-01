@@ -64,6 +64,7 @@
   }
 
   .editor-toolbar:hover,
+  input[type='text']:focus + .editor-toolbar,
   textarea:focus + .editor-toolbar {
     opacity: 1;
     visibility: visible;
