@@ -61,6 +61,9 @@ document.addEventListener "turbolinks:load", ->
   # Activate jQuery.Textile
   $('.textile').textile()
 
+  # Activate Editor Toolbar after Textile
+  new EditorToolbar($('[data-behavior~=textile-inner], [data-behavior~=add-comment]'));
+
   # Activate jQuery.breadCrumbs
   $('.breadcrumb').breadcrumbs
     tree: $('.main-sidebar .tree-navigation')
