@@ -27,7 +27,7 @@ class EvidenceController < NestedNodeResourceController
   def create
     @evidence.author ||= current_user.email
 
-    @evidence.content = dradify_form if params[:form]
+    @evidence.content = dradify_form if params[:item_form]
 
     respond_to do |format|
       if @evidence.save
@@ -92,7 +92,7 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def update
-    @evidence.content = dradify_form if params[:form]
+    @evidence.content = dradify_form if params[:item_form]
 
     respond_to do |format|
       updated_at_before_save = @evidence.updated_at.to_i

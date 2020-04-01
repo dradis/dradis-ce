@@ -32,7 +32,7 @@ class CardsController < AuthenticatedController
     # Set the new card as the last card of the list
     @card.previous_id = @list.last_card.try(:id)
 
-    @card.description = dradify_form if params[:form]
+    @card.description = dradify_form if params[:item_form]
 
     if @card.save
       track_created(@card)
@@ -47,7 +47,7 @@ class CardsController < AuthenticatedController
   end
 
   def update
-    @card.description = dradify_form if params[:form]
+    @card.description = dradify_form if params[:item_form]
 
     if @card.update_attributes(card_params)
       track_updated(@card)

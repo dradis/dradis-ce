@@ -47,7 +47,7 @@ class IssuesController < AuthenticatedController
   def create
     @issue.author ||= current_user.email
 
-    @issue.text = dradify_form if params[:form]
+    @issue.text = dradify_form if params[:item_form]
 
     respond_to do |format|
       if @issue.save &&
@@ -82,7 +82,7 @@ class IssuesController < AuthenticatedController
   end
 
   def update
-    @issue.text = dradify_form if params[:form]
+    @issue.text = dradify_form if params[:item_form]
 
     respond_to do |format|
       updated_at_before_save = @issue.updated_at.to_i

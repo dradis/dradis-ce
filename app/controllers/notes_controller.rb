@@ -24,7 +24,7 @@ class NotesController < NestedNodeResourceController
     @note.author = current_user.email
     @note.category ||= Category.default
 
-    @note.text = dradify_form if params[:form]
+    @note.text = dradify_form if params[:item_form]
 
     if @note.save
       track_created(@note)
@@ -50,7 +50,7 @@ class NotesController < NestedNodeResourceController
   def update
     updated_at_before_save = @note.updated_at.to_i
 
-    @note.text = dradify_form if params[:form]
+    @note.text = dradify_form if params[:item_form]
 
     if @note.update_attributes(note_params)
       track_updated(@note)

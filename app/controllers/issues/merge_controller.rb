@@ -18,7 +18,7 @@ class Issues::MergeController < IssuesController
     count = 0
     if params[:sources]
 
-      @issue.text = dradify_form if params[:form]
+      @issue.text = dradify_form if params[:item_form]
 
       # create new issue if existing issue not given
       if @issue.new_record?
