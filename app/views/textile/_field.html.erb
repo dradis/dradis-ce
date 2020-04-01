@@ -4,11 +4,16 @@
 <div class="row textile-form-field">
   <div class="col-3">
     <p>Field</p>
-    <input type="text" name="item_form[field_name_<%= index %>]" class="form-control" value="<%= field_name %>">
+    <%= text_field_tag "item_form[field_name_#{index}]", field_name, class: 'form-control' %>
   </div>
   <div class="col-8">
     <p>Value</p>
-    <textarea rows=1 name="item_form[field_value_<%= index %>]" class="form-control"><%= value %></textarea>
+    <% options = value.split(' | ') %>
+    <% if options.count > 1 %>
+      <%= select :item_form, "field_value_#{index}", options, class: 'form-control' %>
+    <% else %>
+      <%= text_area_tag "item_form[field_value_#{index}]", value, rows: 1, class: 'form-control' %>
+    <% end %>
   </div>
   <div class='pull-right'>
     <%= link_to 'javascript:void(0)', class: 'text-error',  data: { behavior: 'delete-field' } do %>

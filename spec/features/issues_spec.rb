@@ -94,7 +94,7 @@ describe 'Issues pages' do
           end
         end
 
-        context 'when passed a note template' do
+        context 'when passed a note template', js: true do
           it 'preloads the editor with the template' do
             template_path = Rails.root.join('spec/fixtures/files/note_templates/')
             allow(NoteTemplate).to receive(:pwd).and_return(template_path)
@@ -102,7 +102,10 @@ describe 'Issues pages' do
             template_content = File.read(template_path.join('simple_note.txt'))
             visit new_project_issue_path(current_project, template: 'simple_note')
 
-            expect(find_field('issue[text]').value).to include(template_content)
+            expect(find_field('item_form[field_name_0]').value).to include('IPAddress')
+            expect(find_field('item_form[field_name_1]').value).to include('Hostname')
+            expect(find_field('item_form[field_name_2]').value).to include('OS')
+            expect(page).to have_select('item_form[field_value_2]')
           end
         end
 

@@ -160,7 +160,7 @@ describe "note pages" do
 
 
   describe "new page" do
-    let(:content) { "This is an example note" }
+    let(:content) { "#[Title]#\nSample Note" }
     let(:path)    { Rails.root.join("tmp", "templates", "notes", "tmpnote.txt") }
 
     # Create the dummy NoteTemplate:
@@ -231,15 +231,13 @@ describe "note pages" do
       end
     end
 
-    context "when a NoteTemplate is specified" do
+    context "when a NoteTemplate is specified", js: true, focus: true do
       let(:params)  { { template: "tmpnote" } }
 
       it "pre-populates the textarea with the template contents" do
-        textarea = find("textarea#note_text")
-        expect(textarea.value.strip).to eq content
+        expect(find_field('item_form[field_name_0]').value).to include('Title')
+        expect(find_field('item_form[field_value_0]').value).to include('Sample Note')
       end
-
-      it "uses the textile-editor plugin"
     end
 
     describe "textile form view" do
