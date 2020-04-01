@@ -62,7 +62,7 @@ document.addEventListener "turbolinks:load", ->
   $('.textile').textile()
 
   # Activate Editor Toolbar after Textile
-  new EditorToolbar($('[data-behavior~=textile-inner], [data-behavior~=add-comment]'));
+  new EditorToolbar($('[data-behavior~=textile-inner], [data-behavior~=comment-feed]'));
 
   # Activate jQuery.breadCrumbs
   $('.breadcrumb').breadcrumbs
