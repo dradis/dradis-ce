@@ -192,7 +192,7 @@ class EditorToolbar {
   injectMarkdown($element, prefix, suffix, placeholder) {
     var adjustedPrefixLength = prefix.length, adjustedSuffixLength = suffix.length;
     var startIndex = $element[0].selectionStart, endIndex = $element[0].selectionEnd;
-    var elementText = $element.val(), selectedText = $element.val().substring(startIndex, endIndex).split('\n');
+    var selectedText = $element.val().substring(startIndex, endIndex).split('\n');
     var markdownText = '';
 
     // create string to inject with markdown added
@@ -213,16 +213,15 @@ class EditorToolbar {
     });
 
     // remove the original selection (if there was one) and add new markdown string in it's place
-    $element.val(elementText.slice(0, startIndex) + markdownText + elementText.slice(endIndex)); 
-
+    $element.focus(); // bring focus back to $element from the toolbar
+    document.execCommand("insertText", false, markdownText);
+    
     // post-injection cursor location
     if (startIndex == endIndex) { // no text was selected, select injected placeholder text
       $element[0].setSelectionRange(startIndex + prefix.length, startIndex + markdownText.length - suffix.length);
-      $element.focus();
     }
     else { // text was selected, place cursor after the injected string
       $element[0].setSelectionRange(adjustedPrefixLength + endIndex + adjustedSuffixLength, adjustedPrefixLength + endIndex + adjustedSuffixLength);
-      $element.focus();
     }
   }
 }
