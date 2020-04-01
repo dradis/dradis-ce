@@ -218,7 +218,7 @@ class EditorToolbar {
       $element.val(elementText.slice(0, startIndex) + markdownText + elementText.slice(endIndex));
     }
     else { // all other browsers
-      document.execCommand("insertText", false, markdownText);
+      document.execCommand('insertText', false, markdownText);
     }
     
     // post-injection cursor location
