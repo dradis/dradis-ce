@@ -138,7 +138,7 @@ describe "evidence" do
 
 
   describe "new page" do
-    let(:content) { "This is example evidence" }
+    let(:content) { "#[Title]#\nSample Evidence" }
     let(:tmp_dir) { Rails.root.join("tmp", "templates", "notes") }
     let(:path)    { tmp_dir.join("tmpevidence.txt") }
 
@@ -220,15 +220,13 @@ describe "evidence" do
       end
     end
 
-    context "when a NoteTemplate is specified" do
+    context "when a NoteTemplate is specified", js: true do
       let(:params)  { { template: "tmpevidence" } }
 
       it "pre-populates the textarea with the template contents" do
-        textarea = find("textarea#evidence_content")
-        expect(textarea.value.strip).to eq content
+        expect(find_field('item_form[field_name_0]').value).to include('Title')
+        expect(find_field('item_form[field_value_0]').value).to include('Sample Evidence')
       end
-
-      it "uses the textile-editor plugin"
     end
 
   end

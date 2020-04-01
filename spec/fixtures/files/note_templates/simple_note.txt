@@ -7,3 +7,4 @@
 
 
 #[OS]#
+Linux | OSX | Windows
