@@ -231,7 +231,7 @@ describe "note pages" do
       end
     end
 
-    context "when a NoteTemplate is specified", js: true, focus: true do
+    context "when a NoteTemplate is specified", js: true do
       let(:params)  { { template: "tmpnote" } }
 
       it "pre-populates the textarea with the template contents" do
