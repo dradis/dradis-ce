@@ -45,6 +45,11 @@ a {
   }
 }
 
+blockquote {
+  border-left: 3px solid $primaryColor;
+  padding-left: 1rem;
+}
+
 .btn {
   @include button(#e6e6e6);
   text-shadow: 0 0 0;
