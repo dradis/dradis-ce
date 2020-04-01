@@ -44,7 +44,7 @@
       background-color: transparent;
       border: 1px solid transparent;
       border-radius: 1rem;
-      color: darken($defaultText, 5%);
+      color: $defaultText;
       cursor: pointer;
       display: flex;
       justify-content: center;
