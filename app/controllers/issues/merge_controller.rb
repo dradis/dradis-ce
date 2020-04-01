@@ -18,10 +18,14 @@ class Issues::MergeController < IssuesController
     count = 0
     if params[:sources]
 
+      @issue.text = dradify_form if params[:item_form]
+
       # create new issue if existing issue not given
       if @issue.new_record?
         @issue.author ||= current_user.email
-        if @issue.save && @issue.update_attributes(issue_params)
+        if @issue.save &&
+            (params[:issue] && @issue.update_attributes(issue_params))
+
           track_created(@issue)
           @issue.tag_from_field_content!
         end

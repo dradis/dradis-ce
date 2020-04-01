@@ -97,6 +97,12 @@ describe "evidence" do
 
     it_behaves_like "a form with a help button"
 
+    describe 'textile form view' do
+      let(:action_path) { edit_project_node_evidence_path(current_project, @node, @evidence) }
+      let(:item) { @evidence }
+      it_behaves_like 'a textile form view', Evidence
+    end
+
     describe "submitting the form with valid information", js: true do
       let(:new_content) { "new content" }
       before do
@@ -151,6 +157,13 @@ describe "evidence" do
     # will fail noisily (e.g. if the file has been automatically cleaned up by
     # Codeship before the after block runs)
     after { File.delete(path) if File.exists?(path) }
+
+    describe 'textile form view' do
+      let(:action_path) { new_project_node_evidence_path(current_project, @node) }
+      let(:params) { {} }
+      let(:required_form) { find('#evidence_issue_id option:nth-of-type(2)').select_option }
+      it_behaves_like 'a textile form view', Evidence
+    end
 
     context "when no template is specified" do
       let(:params) { {} }

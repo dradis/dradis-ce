@@ -73,6 +73,7 @@
       this.$element.css('resize', 'none');
       this.$element.css('width', '100%');
       this.$element.attr('rows', 20);
+      this.$element.prop('disabled', true);
       this.$element.hide();
 
       // add Form
@@ -172,7 +173,7 @@
       var that = this;
       $.post({
         url: this.$element.data('source-url'),
-        data: {form: JSON.stringify( $('input, textarea', this.options.$form).serializeArray() )},
+        data: {form: JSON.stringify( $('[name^=item_form]', this.options.$form).serializeArray() )},
         success: function(result){
           that.$element.val(result);
         }
@@ -191,6 +192,7 @@
       // Show Form pane
       this.options.$preview.hide();
       this.options.$help.hide();
+      this.$element.prop('disabled', true);
       this.$element.hide();
       this.options.$form.show();
     },
@@ -286,10 +288,14 @@
 
       this._loadWrite();
 
+      // Clear out the form
+      $('.textile-form').empty();
+
       // Show Write pane
       this.options.$preview.hide();
       this.options.$form.hide();
       this.options.$help.hide();
+      this.$element.prop('disabled', false);
       this.$element.show();
     },
 

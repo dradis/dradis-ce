@@ -6,8 +6,8 @@ describe 'issue pages' do
       login_to_project_as_user
 
       # create 2 issues
-      create(:issue, node: current_project.issue_library)
-      create(:issue, node: current_project.issue_library)
+      @issue1 = create(:issue, node: current_project.issue_library)
+      @issue2 = create(:issue, node: current_project.issue_library)
 
       visit project_issues_path(current_project)
 
@@ -27,6 +27,12 @@ describe 'issue pages' do
     end
 
     context "merge issues into a new one", js: true do
+      let(:action_path) { new_project_merge_path(current_project, ids: [@issue1.id, @issue2.id]) }
+      let(:required_form) do
+        choose('Merge into a new issue')
+      end
+      it_behaves_like 'a textile form view', Issue
+
       it 'creates a new issue' do
         expect(page).to have_content /You're merging 2 Issues into a target Issue/i
 
@@ -34,6 +40,7 @@ describe 'issue pages' do
         expect(page).to have_selector('#new_issue', visible: false)
 
         choose('Merge into a new issue')
+        click_link 'Write'
 
         # new issue form should be visible now
         expect(page).to have_selector('#new_issue', visible: true)

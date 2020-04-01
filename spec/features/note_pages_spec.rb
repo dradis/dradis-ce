@@ -98,6 +98,12 @@ describe "note pages" do
 
     it_behaves_like "a form with a help button"
 
+    describe 'textile form view' do
+      let(:action_path) { edit_project_node_note_path(current_project, @node, @note) }
+      let(:item) { @note }
+      it_behaves_like 'a textile form view', Note
+    end
+
     # TODO handle the case where a Note has no paperclip versions (legacy data)
 
     describe "submitting the form with valid information", js: true do
@@ -234,6 +240,13 @@ describe "note pages" do
       end
 
       it "uses the textile-editor plugin"
+    end
+
+    describe "textile form view" do
+      let(:params) { {} }
+
+      let(:action_path) { new_project_node_note_path(current_project, @node) }
+      it_behaves_like 'a textile form view', Note
     end
   end
 end

@@ -3,6 +3,7 @@
 class NotesController < NestedNodeResourceController
   include Commented
   include ConflictResolver
+  include FormDradifier
   include Mentioned
   include MultipleDestroy
   include NodesSidebar
@@ -22,6 +23,8 @@ class NotesController < NestedNodeResourceController
   def create
     @note.author = current_user.email
     @note.category ||= Category.default
+
+    @note.text = dradify_form if params[:item_form]
 
     if @note.save
       track_created(@note)
@@ -46,6 +49,9 @@ class NotesController < NestedNodeResourceController
   # Update the attributes of a Note
   def update
     updated_at_before_save = @note.updated_at.to_i
+
+    @note.text = dradify_form if params[:item_form]
+
     if @note.update_attributes(note_params)
       track_updated(@note)
       check_for_edit_conflicts(@note, updated_at_before_save)
