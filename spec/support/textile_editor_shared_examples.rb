@@ -40,7 +40,9 @@ shared_examples 'a textile form view' do |klass|
     fill_in('item_form[field_name_0]', with: 'Title')
     fill_in('item_form[field_value_0]', with: 'Test Item')
 
-    find('input[type="submit"]').click
+    within '.form-actions' do
+      find('[type="submit"]').click
+    end
 
     updated_item = defined?(item) ? item : klass.last
 
