@@ -79,7 +79,7 @@
       // add Form
       this.options.$form = $(this.options.tpl.form);
       $('.textile-inner', this.options.$wrap).append(this.options.$form);
-      this._loadForm(this.$element.val());
+      this._loadForm(this.$element.val(), this.$element.data('allow-dropdown'));
 
       // add Preview to container and hide
       this.options.$preview = $(this.options.tpl.preview);
@@ -128,10 +128,10 @@
 
     },
     // Ajax form
-    _loadForm: function(data) {
+    _loadForm: function(data, allowDropdown) {
       $.post({
         url: this.$element.data('form-url'),
-        data: {source: data},
+        data: {source: data, allow_dropdown: allowDropdown},
         beforeSend: function(){
           this.options.$form.addClass('loading-indicator').text('Loading...');
         }.bind(this),
@@ -198,7 +198,7 @@
 
       $('.textile-form').empty();
 
-      this._loadForm(this.$element.val());
+      this._loadForm(this.$element.val(), false);
 
       // Show Form pane
       this.options.$preview.hide();

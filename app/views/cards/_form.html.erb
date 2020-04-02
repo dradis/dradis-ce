@@ -9,7 +9,7 @@
       input_html: {
         class: 'textile',
         label: false,
-        data: textile_form_urls
+        data: textile_form_urls.merge(allow_dropdown: action_name == 'new')
       }
   %>
   
