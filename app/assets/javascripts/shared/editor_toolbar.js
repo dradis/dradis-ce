@@ -14,6 +14,7 @@ Each of these input and/or textarea elements will have the Editor Toolbar added.
 class EditorToolbar {
   constructor($target) {
     this.$target = $target;
+    this.affixes = this.affixesLibrary();
     this.init();
   }
 
@@ -54,66 +55,10 @@ class EditorToolbar {
     // when a toolbar button is clicked
     $('[data-btn]').click(function () {
       var $element = $(this).parents('[data-behavior~=editor-field]').children('textarea, input[type=text]');
-      var prefix = '', suffix = '', placeholder = '';
-  
-      // set the appropriate prefix, placeholder and suffix depending on which button was clicked
-      switch ($(this).data('btn')) {
-        case 'header':
-          prefix = '#[';
-          placeholder = 'Header text';
-          suffix = ']#';
-          break;
-        case 'bold':
-          prefix = '*';
-          placeholder = 'Bold text';
-          suffix = '*';
-          break;
-        case 'italic':
-          prefix = '_';
-          placeholder = 'Italic text';
-          suffix = '_';
-          break;
-        case 'highlight':
-          prefix = '$${{';
-          placeholder = 'Highlighted text';
-          suffix = '}}$$';
-          break;
-        case 'quote':
-          prefix = 'bq. ';
-          placeholder = 'Quoted text';
-          break;
-        case 'link':
-          prefix = '"';
-          suffix = '":http://';
-          break;
-        case 'table':
-          placeholder = '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|';
-          break;
-        case 'block-code':
-          prefix = 'bc. ';
-          placeholder = 'Code markup';
-          break;
-        case 'inline-code':
-          prefix = '@';
-          placeholder = 'Inline code';
-          suffix = '@';
-          break;
-        case 'list-ul':
-          prefix = '* ';
-          placeholder = 'Unordered item';
-          break;
-        case 'list-ol':
-          prefix = '# ';
-          placeholder = 'Ordered item';
-          break;
-        default:
-          prefix = '';
-          suffix = '';
-          placeholder = '';
-      }
+      var affix = that.affixes[$(this).data('btn')]
   
       // inject markdown
-      that.injectMarkdown($element, prefix, suffix, placeholder);
+      that.injectMarkdown($element, affix.prefix, affix.suffix, affix.placeholder);
     });
 
     // keyboard shortcuts
@@ -175,6 +120,22 @@ class EditorToolbar {
     }
   }
 
+  affixesLibrary() {
+    return {
+      'block-code':  new Affix({'prefix': 'bc. ', 'placeholder': 'Code markup' }),
+      'bold':        new Affix({'prefix': '*',    'placeholder': 'Bold text',         'suffix': '*' }),
+      'header':      new Affix({'prefix': '#[',   'placeholder': 'Header text',       'suffix': ']#' }),
+      'highlight':   new Affix({'prefix': '$${{', 'placeholder': 'Highlighted text',  'suffix': '}}$$' }),
+      'inline-code': new Affix({'prefix': '@',    'placeholder': 'Inline code',       'suffix': '@' }),
+      'italic':      new Affix({'prefix': '_',    'placeholder': 'Italic text',       'suffix': '_' }),
+      'link':        new Affix({'prefix': '"',    'suffix': '":http://' }),
+      'list-ol':     new Affix({'prefix': '# ',   'placeholder': 'Ordered item' }),
+      'list-ul':     new Affix({'prefix': '* ',   'placeholder': 'Unordered item' }),
+      'quote':       new Affix({'prefix': 'bq. ', 'placeholder': 'Quoted text' }),
+      'table':       new Affix({'placeholder': '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|' })
+    }
+  }
+
   textareaElements() {
     return '<div class="editor-btn" data-btn="header" aria-label="header text">\
       <i class="fa fa-header"></i>\
@@ -232,5 +193,26 @@ class EditorToolbar {
     <div class="editor-btn" data-btn="inline-code" aria-label="inline code">\
       <i class="fa fa-terminal"></i>\
     </div>'
+  }
+}
+
+/*
+ * A helper class to return blank strings when values don't exist
+ */
+class Affix {
+  constructor(opts) {
+    this.opts = opts
+  }
+
+  get prefix() {
+    return this.opts.prefix || ''
+  }
+
+  get placeholder() {
+    return this.opts.placeholder || ''
+  }
+
+  get suffix() {
+    return this.opts.suffix || ''
   }
 }
