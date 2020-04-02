@@ -242,7 +242,7 @@
         $(document.body).css('overflow', 'visible');
 
         this.options.$wrap.removeClass('textile-fullscreen');
-        this.options.$wrap.css('width', this.options.width);
+        this.options.$wrap.css('width', 'auto');
         this.options.tmpspan.after(this.options.$wrap).remove();
 
         this.options.$preview.css('height', 'auto');
