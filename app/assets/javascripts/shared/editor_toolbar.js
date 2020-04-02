@@ -118,6 +118,8 @@ class EditorToolbar {
     else { // text was selected, place cursor after the injected string
       $element[0].setSelectionRange(adjustedPrefixLength + endIndex + adjustedSuffixLength, adjustedPrefixLength + endIndex + adjustedSuffixLength);
     }
+
+    $element.trigger('textchange');
   }
 
   affixesLibrary() {
