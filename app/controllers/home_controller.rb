@@ -7,9 +7,6 @@ class HomeController < AuthenticatedController
   
   # Returns the Textile version of a text passed as parameter
   def textilize
-    respond_to do |format|
-      format.html { head :method_not_allowed }
-      format.json
-    end
+    render layout: false
   end
 end

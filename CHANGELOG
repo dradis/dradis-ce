@@ -7,9 +7,11 @@ v3.17 (Month 2020)
   * Link to Methodology from project summary chart
   * Refactored dots-menu to make it available in any view
   * Remove tag color from issue titles in issue summary
-  * Use shared noscript partial
+  * Side-by-side editor preview that auto-updates
   * Upgraded gems: puma, sass-rails
+  * Use shared noscript partial
   * Bugs fixed:
+    - Fix textile preview not showing on issues with very long text
     - Long project names interfering with search bar expansion
     - Report 'Download' button becoming a disabled 'Processing...' button once clicked
     - Set :author when creating Evidence from an Issue
