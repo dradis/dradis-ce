@@ -119,6 +119,8 @@ class EditorToolbar {
       $element[0].setSelectionRange(adjustedPrefixLength + endIndex + adjustedSuffixLength, adjustedPrefixLength + endIndex + adjustedSuffixLength);
     }
 
+    // Trigger a change event because javascript manipulation doesn't trigger
+    // them. The change event will reload the preview
     $element.trigger('textchange');
   }
 
