@@ -58,7 +58,7 @@ class EditorToolbar {
       var affix = that.affixes[$(this).data('btn')]
   
       // inject markdown
-      that.injectMarkdown($element, affix.prefix, affix.suffix, affix.placeholder);
+      that.injectMarkdown($element, affix);
     });
 
     // keyboard shortcuts
@@ -79,25 +79,25 @@ class EditorToolbar {
     };
   }
 
-  injectMarkdown($element, prefix, suffix, placeholder) {
-    var adjustedPrefixLength = prefix.length, adjustedSuffixLength = suffix.length;
-    var startIndex = $element[0].selectionStart, endIndex = $element[0].selectionEnd;
-    var elementText = $element.val(), selectedText = $element.val().substring(startIndex, endIndex).split('\n');
-    var markdownText = '';
+  injectMarkdown($element, affix) {
+    var adjustedPrefixLength = affix.prefix.length,
+        adjustedSuffixLength = affix.suffix.length,
+        startIndex = $element[0].selectionStart,
+        endIndex = $element[0].selectionEnd,
+        elementText = $element.val(),
+        selectedText = $element.val().substring(startIndex, endIndex).split('\n'),
+        markdownText = affix.asString;
 
     // create string to inject with markdown added
     selectedText.map(function(selection, index) {
-      if (selection == '') { // no text was selected, add markdown to placeholder text
-        markdownText = prefix + placeholder + suffix;
-      }
-      else { // text selected, add markdown to each line of selected text
-        markdownText += prefix + selection + suffix;
+      if (selection !== '') {
+        markdownText = affix.withSelection(selection);
         
         // if not the last line of selection, add new line and account for prefix/suffix length injected on that line
         if (index < selectedText.length - 1) {
           markdownText += '\n';
-          adjustedPrefixLength += prefix.length;
-          adjustedSuffixLength += suffix.length;
+          adjustedPrefixLength *= 2;
+          adjustedSuffixLength *= 2;
         }
       }
     });
@@ -113,7 +113,7 @@ class EditorToolbar {
     
     // post-injection cursor location
     if (startIndex == endIndex) { // no text was selected, select injected placeholder text
-      $element[0].setSelectionRange(startIndex + prefix.length, startIndex + markdownText.length - suffix.length);
+      $element[0].setSelectionRange(startIndex + affix.prefix.length, startIndex + markdownText.length - affix.suffix.length);
     }
     else { // text was selected, place cursor after the injected string
       $element[0].setSelectionRange(adjustedPrefixLength + endIndex + adjustedSuffixLength, adjustedPrefixLength + endIndex + adjustedSuffixLength);
@@ -208,5 +208,13 @@ class Affix {
     this.prefix = prefix;
     this.placeholder = placeholder;
     this.suffix = suffix;
+  }
+
+  get asString() {
+    return this.prefix + this.placeholder + this.suffix
+  }
+
+  withSelection(selection) {
+    return this.prefix + selection + this.suffix
   }
 }
