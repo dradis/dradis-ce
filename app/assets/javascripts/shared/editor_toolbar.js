@@ -126,17 +126,17 @@ class EditorToolbar {
 
   affixesLibrary() {
     return {
-      'block-code':  new Affix({'prefix': 'bc. ', 'placeholder': 'Code markup' }),
-      'bold':        new Affix({'prefix': '*',    'placeholder': 'Bold text',         'suffix': '*' }),
-      'header':      new Affix({'prefix': '#[',   'placeholder': 'Header text',       'suffix': ']#' }),
-      'highlight':   new Affix({'prefix': '$${{', 'placeholder': 'Highlighted text',  'suffix': '}}$$' }),
-      'inline-code': new Affix({'prefix': '@',    'placeholder': 'Inline code',       'suffix': '@' }),
-      'italic':      new Affix({'prefix': '_',    'placeholder': 'Italic text',       'suffix': '_' }),
-      'link':        new Affix({'prefix': '"',    'suffix': '":http://' }),
-      'list-ol':     new Affix({'prefix': '# ',   'placeholder': 'Ordered item' }),
-      'list-ul':     new Affix({'prefix': '* ',   'placeholder': 'Unordered item' }),
-      'quote':       new Affix({'prefix': 'bq. ', 'placeholder': 'Quoted text' }),
-      'table':       new Affix({'placeholder': '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|' })
+      'block-code':  new Affix('bc. ', 'Code markup'),
+      'bold':        new Affix('*', 'Bold text', '*'),
+      'header':      new Affix('#[', 'Header text', ']#'),
+      'highlight':   new Affix('$${{', 'Highlighted text', '}}$$'),
+      'inline-code': new Affix('@', 'Inline code', '@'),
+      'italic':      new Affix('_', 'Italic text', '_'),
+      'link':        new Affix('"', '', '":http://'),
+      'list-ol':     new Affix('# ', 'Ordered item'),
+      'list-ul':     new Affix('* ', 'Unordered item'),
+      'quote':       new Affix('bq. ', 'Quoted text'),
+      'table':       new Affix('', '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|')
     }
   }
 
@@ -204,19 +204,9 @@ class EditorToolbar {
  * A helper class to return blank strings when values don't exist
  */
 class Affix {
-  constructor(opts) {
-    this.opts = opts
-  }
-
-  get prefix() {
-    return this.opts.prefix || ''
-  }
-
-  get placeholder() {
-    return this.opts.placeholder || ''
-  }
-
-  get suffix() {
-    return this.opts.suffix || ''
+  constructor(prefix = '', placeholder = '', suffix = '') {
+    this.prefix = prefix;
+    this.placeholder = placeholder;
+    this.suffix = suffix;
   }
 }
