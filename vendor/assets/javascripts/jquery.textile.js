@@ -88,7 +88,7 @@
 
       // add Help to container and hide
       this.options.$help = $(this.options.tpl.help);
-      $('.textile-inner', this.options.$wrap).append(this.options.$help)
+      $('.textile-inner', this.options.$wrap).append(this.options.$help);
       this.options.$help.hide();
 
       // toolbar
@@ -140,7 +140,21 @@
           this.options.$form.removeClass('loading-indicator').append(result);
 
           $('[data-behavior~=delete-field]').click(function(){
-            $(this).closest('.row').remove()
+            $(this).closest('[data-behavior~=textile-form-field]').remove();
+          });
+
+          $('[data-expand~=auto]').each( function() {
+            $(this).css({'padding': '0.375rem 0.75rem', 'height': this.scrollHeight});
+          });
+          
+          $('[data-expand~=auto]').on('keyup', function(e) {
+            $(this).css({
+              'padding': '0.375rem 0.75rem',
+              'height': '1px'
+            }).css({
+              'padding': '0.375rem 0.75rem',
+              'height': this.scrollHeight + 2
+            });
           });
         }.bind(this)
       });
@@ -182,7 +196,7 @@
       $('.textile-toolbar a', scope).removeClass('active');
       $('.textile-toolbar .btn-form', scope).addClass('active');
 
-      $('.textile-form').empty()
+      $('.textile-form').empty();
 
       this._loadForm(this.$element.val());
 
@@ -320,6 +334,6 @@
         $.data(this, 'plugin_' + pluginName, new Plugin( this, options ));
       }
     });
-  }
+  };
 
 }(jQuery, window));

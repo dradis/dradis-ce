@@ -1,9 +1,26 @@
-<% if @form_data.any? %>
-  <% @form_data.each_with_index do |field, index| %>
-    <%= render partial: 'textile/field', locals: { field: field, index: index } %>
-  <% end %>
-<% else %>
-  <%= render partial: 'textile/field', locals: { index: 0 } %>
-<% end %>
-
-<%= link_to 'Add field', field_path(index: @form_data.length + 1), class: 'btn', data: { behavior: 'add-field' }, remote: true %>
+<div class="table-wrapper">
+  <table class="table mb-0">
+    <thead>
+      <tr>
+        <th>Header Name</th>
+        <th>Field Value</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody data-behavior="textile-form-body">
+    <% if @form_data.any? %>
+      <% @form_data.each_with_index do |field, index| %>
+        <%= render partial: 'textile/field', locals: { field: field, index: index } %>
+      <% end %>
+    <% else %>
+      <%= render partial: 'textile/field', locals: { index: 0 } %>
+    <% end %>
+    </tbody>
+    <tfoot data-behavior="textile-form-footer">
+      <tr>
+        <td colspan="3" class="pt-2">
+          <%= link_to 'Add field', field_path(index: @form_data.length + 1), class: 'btn my-1', data: { behavior: 'add-field' }, remote: true %>
+        </td>
+      </tr>
+  </table>
+</div>

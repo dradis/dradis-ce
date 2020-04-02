@@ -2,9 +2,20 @@
 <% add_field_button = link_to 'Add field', field_path(index: @index + 1), class: 'btn', data: { behavior: 'add-field' }, remote: true %>
 
 $('[data-behavior~=add-field]').remove()
-$('.textile-form').append('<%= escape_javascript(field_row) %>')
-$('.textile-form').append('<%= escape_javascript(add_field_button) %>')
+$('[data-behavior~=textile-form-body]').append('<%= escape_javascript(field_row) %>')
+$('[data-behavior~=textile-form-footer]').find('td').append('<%= escape_javascript(add_field_button) %>')
 
-$('[data-behavior~=delete-field]').last().click(function(){
-  $(this).closest('.row').remove()
+$('[data-behavior~=delete-field]').click(function(){
+  $(this).closest('[data-behavior~=textile-form-field]').remove()
+});
+
+$('[data-expand~=auto]').css({'padding': '0.375rem 0.75rem', 'height': this.scrollHeight});
+$('[data-expand~=auto]').on('keyup', function(e) {
+  $(this).css({
+    'padding': '0.375rem 0.75rem',
+    'height': '1px'
+  }).css({
+    'padding': '0.375rem 0.75rem',
+    'height': this.scrollHeight + 3
+  });
 });

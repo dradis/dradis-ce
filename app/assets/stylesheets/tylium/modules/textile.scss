@@ -133,6 +133,28 @@
       resize: vertical !important;
     }
 
+    .textile-form {
+
+      table {
+        border-bottom: 1px solid $borderColor;
+
+        thead th {
+          border-width: 1px;
+        }
+      }
+
+      .textile-form-field {
+  
+        .actions {
+          padding-top: 1rem;
+        }
+  
+        textarea {
+          min-height: 36px;
+        }
+      } 
+    }
+
     .textile-preview {
       border: 1px solid $borderColor;
       border-radius: 4px;

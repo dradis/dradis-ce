@@ -1,23 +1,21 @@
 <% field_name = local_assigns[:field] ? field[0]  : '' %>
 <% value = local_assigns[:field] ? field[1] : '' %>
 
-<div class="row textile-form-field">
-  <div class="col-3">
-    <p>Field</p>
-    <%= text_field_tag "item_form[field_name_#{index}]", field_name, class: 'form-control' %>
-  </div>
-  <div class="col-8">
-    <p>Value</p>
+<tr class="textile-form-field" data-behavior="textile-form-field">
+  <td>
+    <%= text_field_tag "item_form[field_name_#{index}]", field_name, class: 'form-control my-1', onkeydown: 'return (event.keyCode!=13);', placeholder: 'Enter header value' %>
+  </td>
+  <td width="70%">
     <% options = value.split(' | ') %>
     <% if options.count > 1 %>
-      <%= select :item_form, "field_value_#{index}", options, class: 'form-control' %>
+      <%= select :item_form, "field_value_#{index}", options, class: 'form-control my-1' %>
     <% else %>
-      <%= text_area_tag "item_form[field_value_#{index}]", value, rows: 1, class: 'form-control' %>
+      <%= text_area_tag "item_form[field_value_#{index}]", value, rows: 1, class: 'form-control my-1', data: { expand: 'auto' }, placeholder: 'Enter field value' %>
     <% end %>
-  </div>
-  <div class='pull-right'>
-    <%= link_to 'javascript:void(0)', class: 'text-error',  data: { behavior: 'delete-field' } do %>
-      <i class="fa fa-trash">Delete</i>
+  </td>
+  <td class="actions" align="right">
+    <%= link_to 'javascript:void(0)', class: 'text-error-hover my-1',  data: { behavior: 'delete-field' } do %>
+      <i class="fa fa-trash"></i> Delete
     <% end %>
-  </div>
-</div>
+  </td>
+</tr>
