@@ -133,11 +133,11 @@
         url: this.$element.data('form-url'),
         data: {source: data},
         beforeSend: function(){
-          that.options.$form.addClass('loading-indicator').text('Loading...');
+          this.options.$form.addClass('loading-indicator').text('Loading...');
         }.bind(this),
         success: function(result){
-          that.options.$form.removeClass('loading-indicator').html('');
-          that.options.$form.removeClass('loading-indicator').append(result);
+          this.options.$form.removeClass('loading-indicator').html('');
+          this.options.$form.removeClass('loading-indicator').append(result);
 
           $('[data-behavior~=delete-field]').click(function(){
             $(this).closest('.row').remove()
@@ -172,7 +172,7 @@
         this.$element.data('source-url'),
         {form: JSON.stringify( $('[name^=item_form]', this.options.$form).serializeArray() )},
         function(result){
-          that.$element.val(result);
+          this.$element.val(result);
         }.bind(this)
       );
     },
