@@ -19,13 +19,13 @@ shared_examples 'a textile form view' do |klass|
   end
 
   it 'add fields in the form', js: true do
-    expect {
-      within '.textile-form' do
-        click_link 'Add field'
-      end
+    current_field_count = all('.textile-form-field').count
 
-      expect(find('[name="item_form[field_name_1]"]')).to_not be nil
-    }.to change{ all('.textile-form-field').count }.by(1)
+    within '.textile-form' do
+      click_link 'Add field'
+    end
+
+    expect(page).to have_css('.textile-form-field', count: current_field_count + 1)
   end
 
   it 'remove fields in the form', js: true do

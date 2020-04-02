@@ -9,8 +9,7 @@
         class: 'textile',
         data: textile_form_urls.merge({
           autosave_key: "#{current_project.id}-evidence-#{ @evidence.persisted? ? "edit-#{@evidence.id}" : "new-for-#{@node.id}" }",
-          behavior: 'auto-save',
-          content: @evidence.content
+          behavior: 'auto-save'
         })
       }
     %>

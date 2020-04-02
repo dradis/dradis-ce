@@ -1,5 +1,4 @@
-<% if @form_data %>
-
+<% if @form_data.any? %>
   <% @form_data.each_with_index do |field, index| %>
     <%= render partial: 'textile/field', locals: { field: field, index: index } %>
   <% end %>
@@ -7,4 +6,4 @@
   <%= render partial: 'textile/field', locals: { index: 0 } %>
 <% end %>
 
-<%= link_to 'Add field', field_path(index: @form_data.try(:length) || 1), class: 'btn', data: { behavior: 'add-field' }, remote: true %>
+<%= link_to 'Add field', field_path(index: @form_data.length + 1), class: 'btn', data: { behavior: 'add-field' }, remote: true %>

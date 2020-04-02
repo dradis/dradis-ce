@@ -79,7 +79,7 @@
       // add Form
       this.options.$form = $(this.options.tpl.form);
       $('.textile-inner', this.options.$wrap).append(this.options.$form);
-      this._loadForm(this.$element.data('content'));
+      this._loadForm(this.$element.val());
 
       // add Preview to container and hide
       this.options.$preview = $(this.options.tpl.preview);
