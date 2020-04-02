@@ -27,10 +27,10 @@
         resize: true,
         // HTML templates
         tpl: {
-          wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner"></div></div>',
           form: '<div class="textile-form"></div>',
+          wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row"></div></div>',
           preview: '<div class="textile-preview loading-indicator">Loading...</div>',
-          help: '<div class="textile-help loading-indicator">Loading...</div>'
+          help: '<div class="textile-help col-12 loading-indicator">Loading...</div>'
         }
       };
 
@@ -70,9 +70,7 @@
 
       // move textarea to container
       $('.textile-inner', this.options.$wrap).append(this.$element);
-      this.$element.css('resize', 'none');
-      this.$element.css('width', '100%');
-      this.$element.attr('rows', 20);
+      this.$element.addClass('h-100').attr('rows', 20).wrap('<div class="col-6"></div>');
       this.$element.prop('disabled', true);
       this.$element.hide();
 
@@ -81,10 +79,21 @@
       $('.textile-inner', this.options.$wrap).append(this.options.$form);
       this._loadForm(this.$element.val(), this.$element.data('allow-dropdown'));
 
-      // add Preview to container and hide
+      // add Preview to container and load
       this.options.$preview = $(this.options.tpl.preview);
       $('.textile-inner', this.options.$wrap).append(this.options.$preview);
-      this.options.$preview.hide();
+      this.options.$preview.wrap('<div class="col-6"></div>');
+      this._loadPreview();
+
+      // Sync preview
+      var typingTimer;
+      var doneTypingInterval = 500;
+
+      // on keyup, start the countdown
+      this.$element.on('textchange load-preview', function () {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(this._onKeyPressPreview.bind(this), doneTypingInterval);
+      }.bind(this));
 
       // add Help to container and hide
       this.options.$help = $(this.options.tpl.help);
@@ -105,11 +114,6 @@
       // Write
       button = $('<a class="btn-write" href="javascript:void(null);"><span>Write</span></a>');
       button.click( $.proxy( function(evt) { this._onBtnWrite(evt); }, this));
-      $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
-
-      // Preview
-      button = $('<a class="btn-preview" href="javascript:void(null);"><span>Preview</span></a>');
-      button.click( $.proxy( function(evt) { this._onBtnPreview(evt); }, this));
       $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
 
       // Full screen
@@ -171,14 +175,15 @@
     // Ajax preview
     _loadPreview: function() {
       this._previousContent = this.$element.val();
-      this.options.$preview.addClass('loading-indicator').text('Loading...');
 
-      var that = this;
-      $.getJSON( this.$element.data('preview-url'), {text: this.$element.val()}, function(result){
-        that.options.$preview.removeClass('loading-indicator')
-          .html(result.html);
-        that._previewRendered = true;
-      });
+      $.post(this.$element.data('preview-url'),
+        { text: this.$element.val() },
+        function(result) {
+          this.options.$preview.removeClass('loading-indicator')
+            .html(result);
+          this._previewRendered = true;
+        }.bind(this)
+      );
     },
     // Ajax write
     _loadWrite: function() {
@@ -189,6 +194,16 @@
           this.$element.val(result);
         }.bind(this)
       );
+    // Ajax help
+    _onKeyPressPreview: function() {
+      // If the text hasn't changed, do nothing.
+      if (this._previousContent == this.$element.val()) {
+        if (!this._previewRendered) {
+          this._loadPreview();
+        }
+      } else {
+        this._loadPreview();
+      }
     },
     _onBtnForm: function() {
       // Activate toolbar button
@@ -245,7 +260,7 @@
         this.options.$wrap.css('width', 'auto');
         this.options.tmpspan.after(this.options.$wrap).remove();
 
-        this.options.$preview.css('height', 'auto');
+        this.options.$preview.css('height', '100%');
         this.$element.css('height', this.options.height);
 
         // update button icon
@@ -316,12 +331,11 @@
     _onFullScreenResize: function(){
       if (this.options.fullscreen === false) return;
 
-      var hfix = 42;
-      var hfix = 60;
+      var hfix = 65;
       var height = $(window).height() - hfix;
 
       this.options.$wrap.width($(window).width()-20);
-      this.options.$preview.height(height);
+      this.options.$preview.height(height-44);
       this.$element.height(height-10);
     }
   };
@@ -335,5 +349,4 @@
       }
     });
   };
-
 }(jQuery, window));

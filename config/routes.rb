@@ -124,7 +124,7 @@ Rails.application.routes.draw do
   get '/field', to: 'textile#field', as: :field, defaults: { format: :js }
   post '/form', to: 'textile#form',  as: :form, defaults: { format: :html }
   get '/markup-help', to: 'home#markup_help', as: :markup
-  get '/preview', to: 'home#textilize', as: :preview, defaults: { format: :json }
+  post '/preview', to: 'home#textilize',  as: :preview
   post '/source', to: 'textile#source', as: :source, defaults: { format: :text }
 
   root to: 'projects#index'
