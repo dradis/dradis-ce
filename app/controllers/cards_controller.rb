@@ -9,8 +9,9 @@ class CardsController < AuthenticatedController
 
   # Not sorted because we need the Board and List first!
   before_action :set_current_board_and_list
-  before_action :set_card, only: [:show, :edit, :update, :destroy, :move]
+  before_action :set_or_initialize_card
   before_action :initialize_sidebar, only: [:show, :new, :edit]
+  before_action :convert_form_content, only: [:create, :update]
 
   layout 'cards'
 
@@ -21,18 +22,14 @@ class CardsController < AuthenticatedController
   end
 
   def new
-    @card = @list.cards.new
-
     # See ContentFromTemplate concern
     @card.description = template_content if params[:template]
   end
 
   def create
-    @card = @list.cards.new(card_params)
+    @card.assign_attributes(card_params)
     # Set the new card as the last card of the list
     @card.previous_id = @list.last_card.try(:id)
-
-    @card.description = dradify_form if params[:item_form]
 
     if @card.save
       track_created(@card)
@@ -47,8 +44,6 @@ class CardsController < AuthenticatedController
   end
 
   def update
-    @card.description = dradify_form if params[:item_form]
-
     if @card.update_attributes(card_params)
       track_updated(@card)
       redirect_to [current_project, @board, @list, @card], notice: 'Task updated.'
@@ -99,8 +94,12 @@ class CardsController < AuthenticatedController
     @sorted_cards = @list.ordered_cards.select(&:persisted?)
   end
 
-  def set_card
-    @card = @list.cards.find(params[:id])
+  def set_or_initialize_card
+    if params[:id]
+      @card = @list.cards.find(params[:id])
+    else
+      @card = @list.cards.new
+    end
   end
 
   def set_current_board_and_list

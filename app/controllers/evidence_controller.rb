@@ -9,6 +9,7 @@ class EvidenceController < NestedNodeResourceController
 
   before_action :set_or_initialize_evidence, except: [ :index, :create_multiple ]
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
+  before_action :convert_form_content, only: [:create, :update]
   skip_before_action :find_or_initialize_node, only: [:create_multiple]
 
   def show
@@ -26,8 +27,6 @@ class EvidenceController < NestedNodeResourceController
 
   def create
     @evidence.author ||= current_user.email
-
-    @evidence.content = dradify_form if params[:item_form]
 
     respond_to do |format|
       if @evidence.save
@@ -92,8 +91,6 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def update
-    @evidence.content = dradify_form if params[:item_form]
-
     respond_to do |format|
       updated_at_before_save = @evidence.updated_at.to_i
       if @evidence.update_attributes(evidence_params)

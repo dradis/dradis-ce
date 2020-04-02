@@ -11,6 +11,7 @@ class NotesController < NestedNodeResourceController
 
   before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
+  before_action :convert_form_content, only: [:create, :update]
 
   def new
     @note = @node.notes.new
@@ -23,8 +24,6 @@ class NotesController < NestedNodeResourceController
   def create
     @note.author = current_user.email
     @note.category ||= Category.default
-
-    @note.text = dradify_form if params[:item_form]
 
     if @note.save
       track_created(@note)
@@ -49,8 +48,6 @@ class NotesController < NestedNodeResourceController
   # Update the attributes of a Note
   def update
     updated_at_before_save = @note.updated_at.to_i
-
-    @note.text = dradify_form if params[:item_form]
 
     if @note.update_attributes(note_params)
       track_updated(@note)

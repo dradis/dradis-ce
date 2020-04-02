@@ -15,6 +15,8 @@ class IssuesController < AuthenticatedController
   before_action :set_or_initialize_issue, except: [:import, :index]
   before_action :set_or_initialize_tags, except: [:destroy]
 
+  before_action :convert_form_content, only: [:create, :update]
+
   def index
     @columns = @issues.map(&:fields).map(&:keys).uniq.flatten | ['Title', 'Tags', 'Affected', 'Created', 'Created by', 'Updated']
   end
@@ -46,8 +48,6 @@ class IssuesController < AuthenticatedController
 
   def create
     @issue.author ||= current_user.email
-
-    @issue.text = dradify_form if params[:item_form]
 
     respond_to do |format|
       if @issue.save &&
@@ -82,8 +82,6 @@ class IssuesController < AuthenticatedController
   end
 
   def update
-    @issue.text = dradify_form if params[:item_form]
-
     respond_to do |format|
       updated_at_before_save = @issue.updated_at.to_i
 
