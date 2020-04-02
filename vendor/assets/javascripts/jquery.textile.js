@@ -27,9 +27,9 @@
         resize: true,
         // HTML templates
         tpl: {
-          form: '<div class="textile-form"></div>',
-          wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row"></div></div>',
-          preview: '<div class="textile-preview loading-indicator">Loading...</div>',
+          form: '<div class="textile-form h-100"></div>',
+          wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row"><div class="col-6"></div></div></div>',
+          preview: '<div class="col-6"><div class="textile-preview loading-indicator">Loading...</div></div>',
           help: '<div class="textile-help col-12 loading-indicator">Loading...</div>'
         }
       };
@@ -69,20 +69,19 @@
       this.$element.parent().append( this.options.$wrap );
 
       // move textarea to container
-      $('.textile-inner', this.options.$wrap).append(this.$element);
-      this.$element.addClass('h-100').attr('rows', 20).wrap('<div class="col-6"></div>');
+      $('.col-6', '.textile-inner', this.options.$wrap).append(this.$element);
+      this.$element.attr('rows', 20);
       this.$element.prop('disabled', true);
       this.$element.hide();
 
       // add Form
       this.options.$form = $(this.options.tpl.form);
-      $('.textile-inner', this.options.$wrap).append(this.options.$form);
+      $('.col-6', '.textile-inner', this.options.$wrap).append(this.options.$form);
       this._loadForm(this.$element.val(), this.$element.data('allow-dropdown'));
 
       // add Preview to container and load
       this.options.$preview = $(this.options.tpl.preview);
       $('.textile-inner', this.options.$wrap).append(this.options.$preview);
-      this.options.$preview.wrap('<div class="col-6"></div>');
       this._loadPreview();
 
       // Sync preview
@@ -194,7 +193,7 @@
           this.$element.val(result);
         }.bind(this)
       );
-    // Ajax help
+    },
     _onKeyPressPreview: function() {
       // If the text hasn't changed, do nothing.
       if (this._previousContent == this.$element.val()) {
@@ -216,7 +215,6 @@
       this._loadForm(this.$element.val(), false);
 
       // Show Form pane
-      this.options.$preview.hide();
       this.options.$help.hide();
       this.$element.prop('disabled', true);
       this.$element.hide();
@@ -274,35 +272,11 @@
 
       // Show Help pane
       this.$element.hide();
-      this.options.$preview.hide();
       this.options.$form.hide();
       this.options.$help.show();
 
       if (!this._helpRendered) {
         this._loadHelp();
-      }
-    },
-    _onBtnPreview: function() {
-      // Activate toolbar button
-      var scope = this.options.$wrap;
-      $('.textile-toolbar a', scope).removeClass('active');
-      $('.textile-toolbar .btn-preview', scope).addClass('active');
-
-      // Show Preview pane
-      this.$element.hide();
-      this.options.$form.hide();
-      this.options.$help.hide();
-      this.options.$preview.show();
-
-      // If the text hasn't changed, do nothing.
-      if (this._previousContent == this.$element.val()) {
-        if (!this._previewRendered) {
-          this._loadPreview();
-        }
-      }
-      else
-      {
-        this._loadPreview();
       }
     },
     // Toolbar button handlers
@@ -318,7 +292,6 @@
       $('.textile-form').empty();
 
       // Show Write pane
-      this.options.$preview.hide();
       this.options.$form.hide();
       this.options.$help.hide();
       this.$element.prop('disabled', false);
