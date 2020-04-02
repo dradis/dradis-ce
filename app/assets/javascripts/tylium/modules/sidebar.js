@@ -1,9 +1,10 @@
 (function($, window) {
-  function Sidebar($navbar, $sidebar, $viewContent, storageKey) {
-    this.$navbar = $navbar;
+  function Sidebar($sidebar) {
     this.$sidebar = $sidebar;
-    this.$viewContent = $viewContent;
-    this.storageKey = storageKey;
+
+    this.$navbar = $sidebar.siblings('[data-behavior~=navbar]');
+    this.$viewContent = $sidebar.siblings('[data-behavior~=view-content]');
+    this.storageKey = $sidebar.data('storage-key');
 
     this.init();
   }

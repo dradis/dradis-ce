@@ -71,13 +71,6 @@ document.addEventListener "turbolinks:load", ->
   # Activate jQuery.treeModal
   $('.modal-node-selection-form').treeModal()
 
-  # Toggle sidebar menu
-  $navbar = $('[data-behavior~=navbar]')
-  $sidebar = $('[data-behavior~=main-sidebar]')
-  $viewContent = $('[data-behavior~=view-content]')
-
-  new Sidebar($navbar, $sidebar, $viewContent, 'sidebar-expanded')
-
   # ------------------------------------------------------- Bootstrap behaviors
 
   # Focus first input on modal window display.
@@ -149,6 +142,10 @@ document.addEventListener "turbolinks:load", ->
   $('[data-behavior~=search-query]').on 'keypress', (e)->
     if e.which == 13
       submitSearch()
+
+  # Toggle sidebar menu
+  $('[data-behavior~=expandable-sidebar]').each ->
+    new Sidebar($(this))
 
   # Collapsable div in sidebar collections
   if $('[data-behavior~=collapse-collection]').length
