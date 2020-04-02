@@ -5,7 +5,7 @@
   <td>
     <%= text_field_tag "item_form[field_name_#{index}]", field_name, class: 'form-control my-1', onkeydown: 'return (event.keyCode!=13);', placeholder: 'Enter header value' %>
   </td>
-  <td width="70%">
+  <td width="60%">
     <% options = value.split(' | ') %>
     <% if options.count > 1 %>
       <%= select :item_form, "field_value_#{index}", options, class: 'form-control my-1' %>
