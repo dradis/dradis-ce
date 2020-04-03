@@ -85,17 +85,13 @@ class EditorToolbar {
         startIndex = $element[0].selectionStart,
         endIndex = $element[0].selectionEnd,
         elementText = $element.val(),
-        selectedText = $element.val().substring(startIndex, endIndex).split('\n'),
-        markdownText = affix.asPlaceholder;
+        selectedText = $element.val().substring(startIndex, endIndex);
 
-    // create string to inject with markdown added
-    markdownText = selectedText.filter(Boolean).reduce(function(text, selection, index) {
-      return (index == 0 ? affix.withSelection(selection) : text + '\n' + affix.withSelection(selection))
-    }, '');
+    var markdownText = (startIndex == endIndex) ? affix.asPlaceholder : affix.withSelection(selectedText)
 
-    // Adjust the lengths based on number of lines selected - the last line.
-    if (selectedText.length > 1) {
-      var adjustment = (selectedText.length-1);
+    var lines = selectedText.split('\n').length
+    if (lines > 1) {
+      var adjustment = (lines - 1);
       adjustedPrefixLength *= adjustment;
       adjustedSuffixLength *= adjustment;
     }
@@ -124,7 +120,7 @@ class EditorToolbar {
 
   affixesLibrary() {
     return {
-      'block-code':  new Affix('bc. ', 'Code markup'),
+      'block-code':  new BlockAffix('bc. ', 'Code markup'),
       'bold':        new Affix('*', 'Bold text', '*'),
       'header':      new Affix('#[', 'Header text', ']#'),
       'highlight':   new Affix('$${{', 'Highlighted text', '}}$$'),
@@ -133,7 +129,7 @@ class EditorToolbar {
       'link':        new Affix('"', '', '":http://'),
       'list-ol':     new Affix('# ', 'Ordered item'),
       'list-ul':     new Affix('* ', 'Unordered item'),
-      'quote':       new Affix('bq. ', 'Quoted text'),
+      'quote':       new BlockAffix('bq. ', 'Quoted text'),
       'table':       new Affix('', '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|')
     }
   }
@@ -212,7 +208,30 @@ class Affix {
     return this.prefix + this.placeholder + this.suffix
   }
 
-  withSelection(selection) {
+  wrapped(selection) {
     return this.prefix + selection + this.suffix
+  }
+
+  withSelection(selectedText) {
+    var lines = selectedText.split('\n');
+
+    lines = lines.reduce(function(text, selection, index) {
+      return (index == 0 ? this.wrapped(selection) : text + '\n' + this.wrapped(selection))
+    }.bind(this), '');
+
+    // Account for accidental empty line selections before/after a group
+    var wordSplit = selectedText.split(' '),
+        first = wordSplit[0],
+        last = wordSplit[selectedText.length-1];
+    if (first == '\n') lines.unshift(first);
+    if (last == '\n') lines.push(last);
+
+    return lines
+  }
+}
+
+class BlockAffix extends Affix {
+  withSelection(selectedText) {
+    return this.prefix + selectedText
   }
 }
