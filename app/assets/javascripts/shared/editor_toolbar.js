@@ -62,7 +62,7 @@ class EditorToolbar {
     });
 
     // keyboard shortcuts
-    document.onkeydown = function(e) {
+    $('[data-behavior~=editor-field]').children('textarea, input[type=text]').keydown(function(e) {
       var key = e.which || e.keyCode; // for cross-browser compatibility
       if (e.metaKey && key === 66 ) { // 66 = b
         e.preventDefault();
@@ -76,7 +76,7 @@ class EditorToolbar {
         e.preventDefault();
         $('[data-btn~=link]').click();
       }
-    };
+    });
   }
 
   injectMarkdown($element, affix) {
