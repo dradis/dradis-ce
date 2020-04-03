@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-lg fixed-top navbar-light">
+  <div class="d-flex justify-content-between w-100">
+  <%= link_to current_project.name, main_app.project_path(current_project), class: 'navbar-brand' %>
+  <div class="d-inline-flex">
+    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"><i class="fa fa-ellipsis-h"></i></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar" data-behavior="navbar-collapse">
+      <ul class="navbar-nav ml-auto mt-lg-0">
+        <li class="nav-item">
+          <%= link_to main_app.project_upload_manager_path(current_project), class: 'nav-link' do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to main_app.project_export_manager_path(current_project), class: 'nav-link' do %><i class="fa fa-file-text-o fa-lg"></i> Export results<% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'javascript:void(0)', class: 'js-try-pro nav-link', data: { term: 'projects', url: 'https://dradisframework.com/pro/pages/projects.html'}  do %><i class="fa fa-random fa-lg"></i> Change project<% end %>
+        </li>
+      </ul>
+    </div>
+    <ul class="navbar-nav">
+      <li class="nav-item round search">
+        <%= render "layouts/tylium/search" %>
+      </li>
+      <li class="nav-item round">
+        <%= link_to main_app.project_configurations_path(current_project), class: 'nav-link', title: 'Configuration Manager' do %><i class="fa fa-cog fa-lg"></i><% end %>
+      </li>
+      <li class="nav-item notifications dropdown round">
+        <%= link_to main_app.project_notifications_path(current_project), class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown',  behavior: 'notifications-dropdown close-collapse' }, role: 'button', title: 'Notifications' do %>
+          <i class="fa fa-bell fa-lg"></i><i class="notifications-dot d-none" data-behavior="notifications-dot"></i>
+        <% end %>
+        <div class="dropdown-menu dropdown-menu-right" data-url="<%= main_app.project_notifications_path(current_project) %>"></div>
+      </li>
+      <li class="nav-item dropdown round">
+        <%= link_to '#', class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown', behavior: 'close-collapse' }, remote: true, role: 'button', title: 'Help Menu' do %>
+          <i class="fa fa-question fa-lg"></i>
+        <% end %>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="training-course" data-url="https://dradisframework.com/academy/dradis-course/?utm_source=ce&utm_medium=app&utm_campaign=try-pro&utm_term=training-course">Free training course</a>
+          <div class="divider"></div>
+          <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="contact-support" data-url="https://dradisframework.com/pro/pages/support.html">Contact support</a>
+          <a href="https://evening-hamlet-4416.herokuapp.com/" target="_blank" class="dropdown-item">Chat on Slack</a>
+          <a href="https://github.com/dradis/dradis-ce/issues" class="js-hs-beacon dropdown-item">Report an issue</a>
+          <a href="http://dradisframework.org/documentation/" target="_blank" class="dropdown-item">Support website</a>
+          <a href="https://discuss.dradisframework.org" target="_blank" class="dropdown-item">Community forums</a>
+          <div class="divider"></div>
+          <a href="https://dradisframework.com/careers/" target="_blank" class="dropdown-item">We're hiring</a>
+          <%# FIXME: re-enable Tour %>
+          <!--
+          <div class="divider"></div>
+          <a href="javascript:void(0)" class="js-tour-start dropdown-item">Show Tour</a>
+          -->
+          <div class="divider"></div>
+          <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="try-pro" data-url="https://dradisframework.com/pro/pages/upgrade.html">Try Dradis Pro</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown round">
+        <a href="javascript:void(0)" class="nav-link dropdown-toggle" data-toggle="dropdown" data-behavior="close-collapse" title="User Menu"><i class="fa fa-user fa-lg"></i></a>
+        <div class="dropdown-menu dropdown-menu-right">
+          <%= link_to 'Log out', main_app.logout_path, class:'dropdown-item', data: { turbolinks: false } %>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>

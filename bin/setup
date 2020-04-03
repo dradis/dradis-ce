@@ -1,10 +1,9 @@
 #!/usr/bin/env ruby
-require 'pathname'
 require 'fileutils'
 include FileUtils
 
 # path to your application root.
-APP_ROOT = Pathname.new File.expand_path('../../', __FILE__)
+APP_ROOT = File.expand_path('..', __dir__)
 
 def system!(*args)
   system(*args) || abort("\n== Command #{args} failed ==")
@@ -33,6 +32,10 @@ chdir APP_ROOT do
 
   unless File.exist?('config/secrets.yml')
     cp 'config/secrets.yml.template', 'config/secrets.yml'
+  end
+
+  unless File.exist?('config/smtp.yml')
+    cp 'config/smtp.yml.template', 'config/smtp.yml'
   end
 
   puts "\n== Preparing database =="

@@ -1,34 +1,32 @@
 <div class="tag-input">
   <%= f.input :tag_list, as: :hidden %>
   Tag:
-  <button class="btn dropdown-toggle" data-toggle="dropdown">
-    <% if @issue.tags.any? %>
-      <span class="tag" style="color: <%= @issue.tags.first.color %>">
-        <i class="icon fa fa-tag"></i>
-        <%= @issue.tags.first.display_name %>
-      </span>
-    <% else %>
-      <span class="tag" style="color: #555">
-        <i class='fa fa-tags'> </i>
-        No tag
-      </span>
-    <% end %>
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu">
-    <li>
-      <%= link_to 'javascript:void(0)', class: 'js-taglink',  style: "color: #555", data: { tag: "" } do %>
+  <div class="dropdown">
+    <button class="btn dropdown-toggle" data-toggle="dropdown">
+      <% if @issue.tags.any? %>
+        <span class="tag" style="color: <%= @issue.tags.first.color %>">
+          <i class="icon fa fa-tag"></i>
+          <%= @issue.tags.first.display_name %>
+        </span>
+      <% else %>
+        <span class="tag" style="color: #555">
+          <i class='fa fa-tags'> </i>
+          No tag
+        </span>
+      <% end %>
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-menu">
+      <%= link_to 'javascript:void(0)', class: 'js-taglink dropdown-item',  style: "color: #555", data: { tag: "" } do %>
         <i class="icon fa fa-tag"></i>
         No tag
       <% end %>
-    </li>
-    <% @tags.each do |tag| %>
-    <li>
-      <%= link_to 'javascript:void(0)', class: 'js-taglink',  style: "color: #{ tag.color }", data: { tag: h(tag.name) } do %>
-        <i class="icon fa fa-tag"></i>
-        <%= h(tag.display_name) %>
+      <% @tags.each do |tag| %>
+        <%= link_to 'javascript:void(0)', class: 'js-taglink dropdown-item',  style: "color: #{ tag.color }", data: { tag: h(tag.name) } do %>
+          <i class="icon fa fa-tag"></i>
+          <%= h(tag.display_name) %>
+        <% end %>
       <% end %>
-    </li>
-    <% end %>
-  </ul>
+    </div>
+  </div>
 </div>

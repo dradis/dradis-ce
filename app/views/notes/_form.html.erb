@@ -21,6 +21,10 @@
 
   <div class="form-actions">
     <%= f.button :submit, class: 'btn btn-primary' %> or
-    <%= link_to 'Cancel', project_node_path(@node.project, @node), class: 'cancel-link' %>
+    <% if @note.persisted? %>
+      <%= link_to 'Cancel', project_node_note_path(@node.project, @node, @note), class: 'cancel-link' %>
+    <% else %>
+      <%= link_to 'Cancel', project_node_path(@node.project, @node), class: 'cancel-link' %>
+    <% end %>
   </div>
 <% end %>

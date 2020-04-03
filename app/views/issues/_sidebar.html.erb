@@ -1,11 +1,9 @@
 <div class="note-list">
-  <%= content_tag :div, id: 'issue_summary_link', class: current_page?(main_app.project_issues_path(current_project)) ? 'list-item active' : 'list-item' do %>
-    <div class="expansion-container">
-      <%= link_to main_app.project_issues_path(current_project), class: 'view-toggle-off' do %>
-        <i class="fa fa-bar-chart"></i>
-        Summary of issues
-      <% end %>
-    </div>
+  <%= content_tag :div, id: 'issue_summary_link', class: current_page?(main_app.project_issues_path(current_project)) ? 'p-2 mb-2 active' : 'p-2 mb-2' do %>
+    <%= link_to main_app.project_issues_path(current_project), class: 'summary-link' do %>
+      <i class="fa fa-bar-chart"></i>
+      Issues Summary
+    <% end %>
   <% end %>
 </div>
 

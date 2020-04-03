@@ -1,0 +1,22 @@
+<methodology>
+  <name>Test methodology with checked tasks</name>
+  <sections>
+    <section>
+      <name>Classics to be seen</name>
+      <tasks>
+        <task>Rambo</task>
+        <task>Robocop</task>
+        <task checked="checked">Blade Runner</task>
+      </tasks>
+    </section>
+    <section>
+      <name>Cities to visit</name>
+      <tasks>
+        <task>London</task>
+        <task>Manila</task>
+        <task checked="checked">Madrid</task>
+        <task>Helsinki</task>
+      </tasks>
+    </section>
+  </section>
+</methodology>

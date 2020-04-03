@@ -7,8 +7,8 @@ RSpec.describe Nodes::Merger do
     subject(:merge_nodes) { described_class.call(target_node, source_node) }
 
     let(:root_node) { create(:node) }
-    let(:source_node) { create(:node, parent_id: root_node) }
-    let(:target_node) { create(:node, parent_id: root_node) }
+    let(:source_node) { create(:node, parent_id: root_node, project: root_node.project) }
+    let(:target_node) { create(:node, parent_id: root_node, project: root_node.project) }
 
     it { should eq source_node }
 
@@ -46,18 +46,18 @@ RSpec.describe Nodes::Merger do
     end
 
     it 'moves children to target node' do
-      child_node = create(:node, parent: source_node)
+      child_node = create(:node, parent: source_node, project: source_node.project)
       merge_nodes
       expect(target_node.children).to include child_node
     end
 
     it 'increases the count of target node children' do
-      create(:node, parent: source_node)
+      create(:node, parent: source_node, project: source_node.project)
       expect { merge_nodes }.to change(target_node.children, :count).by 1
     end
 
     it "updates the target node's children counter cache" do
-      create(:node, parent: source_node)
+      create(:node, parent: source_node, project: source_node.project)
 
       expect { merge_nodes }.to change { target_node.reload.children_count }.by 1
     end
@@ -80,16 +80,76 @@ RSpec.describe Nodes::Merger do
       Attachment.all.each(&:delete)
     end
 
-    it 'merges properties together' do
-      source_node = create(:node, :with_properties, parent_id: root_node)
-      target_node = create(:node, :with_properties, parent_id: root_node)
+    describe 'property merges' do
+      it 'merges basic properties together' do
+        source_node = create(:node, :with_properties)
+        target_node = create(:node, :with_properties)
 
-      source_node.properties['ip'] = ['1.1.1.1', '1.1.1.3']
-      source_node.save
+        source_node.properties['ip'] = ['1.1.1.1', '1.1.1.3']
+        source_node.save
 
-      described_class.call(target_node, source_node)
+        described_class.call(target_node, source_node)
 
-      expect(target_node.properties['ip']).to eq ['1.1.1.1', '1.1.1.2', '1.1.1.3']
+        expect(target_node.properties['ip']).to eq ['1.1.1.1', '1.1.1.2', '1.1.1.3']
+      end
+
+      it 'removes duplicate services' do
+        services = [
+          { 'port': 123, 'protocol': 'udp', 'state': 'open', 'name': 'NTP' }
+        ]
+
+        source_node = build(:node, :with_properties)
+        source_node.properties[:services] = services
+        source_node.save
+
+        target_node = build(:node, :with_properties)
+        target_node.properties[:services] = services
+        target_node.save
+
+        described_class.call(target_node, source_node)
+
+        expect(target_node.properties[:services].count).to eq 1
+      end
+
+      it 'updates services with matching port and protocol' do
+        source_service = {
+          'port': 123, 'protocol': 'udp', 'state': 'open', 'name': 'ntp'
+        }
+
+        source_node = build(:node, :with_properties)
+        source_node.properties[:services] = [source_service]
+        source_node.save
+
+        target_service = {
+          'port': 123, 'protocol': 'udp', 'state': 'closed', 'name': 'NTP'
+        }
+        target_node = build(:node, :with_properties)
+        target_node.properties[:services] = [target_service]
+        target_node.save
+
+        described_class.call(target_node, source_node)
+
+        service = target_node.properties[:services].first
+        expect(service['state']).to eq 'open'
+        expect(service['name']).to eq 'ntp'
+      end
+
+      it 'merges services_extras inforamtion per protocol/port' do
+        source_extra = { 'source': 'nessus', 'id': 'some id', 'output': 'a message' }
+        source_node = build(:node, :with_properties)
+        source_node.properties[:services_extras] = { 'udp/123': [source_extra] }
+        source_node.save
+
+        target_extra = { 'source': 'nmap', 'id': 'some id', 'output': 'a message' }
+        target_node = build(:node, :with_properties)
+        target_node.properties[:services_extras] = { 'udp/123': [target_extra] }
+        target_node.save
+
+        described_class.call(target_node, source_node)
+
+        expect(target_node.properties[:services_extras]['udp/123']).to include source_extra
+        expect(target_node.properties[:services_extras]['udp/123']).to include target_extra
+      end
     end
 
     describe 'when an error is raised' do
@@ -133,18 +193,18 @@ RSpec.describe Nodes::Merger do
       end
 
       it 'does not move children' do
-        child_node = create(:node, parent: source_node)
+        child_node = create(:node, parent: source_node, project: source_node.project)
         merge_nodes
         expect(target_node.children).not_to include child_node
       end
 
       it 'does not change source node children count' do
-        create(:node, parent: source_node)
+        create(:node, parent: source_node, project: source_node.project)
         expect { merge_nodes }.not_to change(source_node.children, :count)
       end
 
       it 'no changes to counter caches' do
-        create(:node, parent: source_node)
+        create(:node, parent: source_node, project: source_node.project)
 
         expect { merge_nodes }.not_to change { source_node.reload.children_count }
         expect { merge_nodes }.not_to change { target_node.reload.children_count }

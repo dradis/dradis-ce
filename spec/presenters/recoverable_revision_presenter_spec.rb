@@ -5,7 +5,7 @@ RSpec.describe RecoverableRevisionPresenter do
 
   before do
     PaperTrail.enabled = true
-    PaperTrail.controller_info = { project_id: project.id }
+    PaperTrail.request.controller_info = { project_id: project.id }
   end
 
   after  { PaperTrail.enabled = false }
@@ -15,10 +15,6 @@ RSpec.describe RecoverableRevisionPresenter do
   end
 
   include ActionView::Helpers::TagHelper
-
-  def revision_title_tag(text)
-    content_tag :span, text, class: 'item-content'
-  end
 
   def presenter_for(revision)
     presenter = described_class.new(revision, FakeView.new)
@@ -43,7 +39,7 @@ RSpec.describe RecoverableRevisionPresenter do
     end
 
     it 'has the correct title' do
-      expect(@presenter.send(:title)).to eq revision_title_tag('Webapp')
+      expect(@presenter.send(:title)).to eq 'Webapp'
     end
 
     it 'has the correct type' do
@@ -61,7 +57,7 @@ RSpec.describe RecoverableRevisionPresenter do
     end
 
     it 'has the correct title' do
-      expect(@presenter.send(:title)).to eq revision_title_tag("My issue")
+      expect(@presenter.send(:title)).to eq 'My issue'
     end
 
     it 'has the correct type' do
@@ -79,7 +75,7 @@ RSpec.describe RecoverableRevisionPresenter do
     end
 
     it 'has the correct title' do
-      expect(@presenter.send(:title)).to eq revision_title_tag('My note')
+      expect(@presenter.send(:title)).to eq 'My note'
     end
 
     it 'has the correct type' do

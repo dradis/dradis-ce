@@ -226,8 +226,8 @@ describe 'Issues pages' do
           end
 
           it 'presents the list of hosts affected by a given issue'  do
-            expect(find('.secondary-navbar-content')).to have_content('10.0.0.1')
-            expect(find('.secondary-navbar-content')).to have_content('10.0.0.2 (3)')
+            expect(find('.secondary-sidebar-content')).to have_content('10.0.0.1')
+            expect(find('.secondary-sidebar-content')).to have_content('10.0.0.2 (3)')
           end
 
           it 'presents the evidence of the first node' do
@@ -357,6 +357,14 @@ describe 'Issues pages' do
             expect(enqueued_job_args(jobs, 'action')).to eq Array.new(3, 'create')
             expect(enqueued_job_args(jobs, 'trackable_type')).to \
               match_array(%w[Evidence Evidence Node])
+          end
+
+          it 'assigns the current user as the evidence author' do
+            find('.js-add-evidence').click
+            check('192.168.0.1')
+            select('Simple Note', from: 'evidence_content')
+            expect { click_button('Save Evidence') }.to change { Evidence.count }.by(1)
+            expect(@node.reload.evidence.last.author).to eq(@logged_in_as.email)
           end
 
           # we need to filter by job class because a NotificationsReaderJob

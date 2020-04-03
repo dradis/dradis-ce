@@ -1,11 +1,16 @@
 <% cache ['issues-table', @columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last] do %>
   <div class="table-wrapper">
-    <table class="table table-striped items-table">
+    <table class="table table-striped items-table mb-0">
       <thead>
         <tr>
           <th></th>
           <% @columns.each do |column| %>
-          <th data-column="<%= column.downcase %>"><%= column %></th>
+          <th
+            data-column="<%= column.downcase %>"
+            data-sort="<%= %w{Affected Created Updated}.include?(column) ? 'int' : 'string' %>"
+            class="sortable">
+            <%= column %>
+          </th>
           <% end %>
         </tr>
       </thead>
@@ -15,27 +20,30 @@
         <tr>
           <td class="column-checkbox"><%= check_box_tag dom_id(issue, :checkbox), issue.id, false, class: 'js-multicheck', data: { url: project_issue_path(current_project, issue, format: :json) } %></td>
           <% @columns.each do |column| %>
-          <td>
-            <%=
-            case column
-            when 'Title'
-              link_to(issue.title, [current_project, issue])
-            when 'Tags'
-              tag_and_name_for(issue)
-            when 'Affected'
-              # this count is coming from the SQL finder in the controller
-              issue.affected_count
-            when 'Created'
-              local_time_ago(issue.created_at)
-            when 'Created by'
-              issue.author
-            when 'Updated'
-              local_time_ago(issue.updated_at)
-            else
-              issue.fields.fetch(column, '')
-            end
+            <%
+             sort, display =
+             case column
+             when 'Title'
+               [issue.title, link_to(issue.title, [current_project, issue])]
+             when 'Tags'
+               [
+                 issue.tags.any? ? issue.tags.first.display_name : '',
+                 tag_and_name_for(issue)
+               ]
+             when 'Affected'
+               # this count is coming from the SQL finder in the controller
+               [issue.affected_count, issue.affected_count]
+             when 'Created'
+               [issue.created_at.to_i, local_time_ago(issue.created_at)]
+             when 'Created by'
+               [issue.author, issue.author]
+             when 'Updated'
+               [issue.updated_at.to_i, local_time_ago(issue.updated_at)]
+             else
+               [issue.fields.fetch(column, ''), issue.fields.fetch(column, '')]
+             end
             %>
-          </td>
+          <td data-sort-value="<%= sort %>"><%= display %></td>
           <% end  %>
           <td class="column-actions">
             <%= link_to edit_project_issue_path(current_project, issue), class: '' do %>

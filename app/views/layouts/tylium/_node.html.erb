@@ -1,0 +1,31 @@
+<%= content_tag_for :li, node, data: {node_id: node.id, label: node.label, url: main_app.project_node_path(node.project, node)}, class: css_class_for_node(node) do %>
+
+  <%= link_to(
+    main_app.tree_project_node_path(node.project, node, format: :js),
+    class: 'toggle',
+    # Use 'visibility: hidden' rather than just not outputting the link at
+    # all, so that the node's name is still indented the same amount as nodes
+    # which do have a toggle link
+    style: ('visibility: hidden' if node.children_count == 0)
+
+  ) do %>
+    <i class="fa fa-caret-right"></i>
+  <% end %>
+
+  <%= link_to main_app.project_node_path(node.project, node), title: node.label, data: { behavior: 'sidebar-link' } do %>
+    <% if node.type_id == Node::Types::HOST %>
+      <i class="fa fa-laptop"></i>
+    <% end %>
+    <%= node.label %>
+  <% end %>
+
+  <%= content_tag :ul, data: {id: dom_id(node, 'menu')}, class: "children #{css_class_for_sub_nodes(node)}" do %>
+    <% if node.ancestor_of?(@node) %>
+      <%= render partial: "layouts/tylium/node", collection: node.children %>
+    <% else %>
+      <li class="loading">Loading...</li>
+      <li class="error">Loading error. Please try again.</li>
+    <% end %>
+  <% end %>
+
+<% end %>

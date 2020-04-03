@@ -1,0 +1,539 @@
+<% content_for :title, 'Tylium Style Guide' %>
+
+<div class="row m-0">
+  <div class="col-md-12 col-lg-8 col-xl-9 p-0">
+
+    <div class="content-container">
+      <h1 class="text-center mb-4">Tylium Style Guide [ WIP ]</h1>
+      <p>Welcome to the Tylium style guide, here you will see all the major style components that we use in the Tylium layout.</p>
+      <p class="mb-0">If you find something you would like to implement in the view you are working on, you can simply press the <i class="fa fa-code" style="font-weight: bold;"></i> button to reveal the code structure including all the element tags, classes, data-attributes etc.</p>
+    </div>
+
+    <div class="content-container">
+      <div class="scroll-offset" data-id="container"></div>
+      <div class="style-header">
+        <h4 class="header-underline">Content Container</h4>
+        <button class="reveal-code" data-toggle="collapse" data-target="#container-code"><i class="fa fa-code"></i></button>
+      </div>
+      <div class="style-example">
+        <p class="m-0">Each individual section of Tylium should be wrapped in a content container with an optional header element. The content container gives the elements a white background, grey border with subtle border radius as well as uniform padding and margin. The height is set to auto without a max-height. In order to limit the max-height, please refer to the <a href="javascript:void(0)" data-behavior="smooth-scroll" data-target="scroll">Scroll For More</a> section.</p>
+      </div>
+      
+      <div class="style-code-wrapper collapse" id="container-code">
+        <pre class="style-code">
+<code><span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"content-container"</span><span class="et">></span>
+  <span class="et">&lt;h4</span><span class="an"> class=</span><span class="av">"header-underline"</span><span class="et">></span><span class="et">></span><span class="et">></span>Header Text Here<span class="et">&lt;/h4</span><span class="et">></span>
+  <span class="et">&lt;p</span><span class="et">></span>Content Here<span class="et">&lt;/p</span><span class="et">></span>
+<span class="et">&lt;/div</span><span class="et">></span></code>
+        </pre>
+      </div>
+    </div>
+
+    <ul class="tabs-container nav nav-tabs">
+      <li class="nav-item">
+          <a data-toggle="tab" data-target="#tab1" class="nav-link" href="javascript:void(0)">Tab 1</a>
+        </li>
+        <li class="nav-item">
+          <a data-toggle="tab" data-target="#tab2" class="nav-link active" href="javascript:void(0)">Tab 2</a>
+        </li>
+        <li class="nav-item">
+          <a data-toggle="tab" data-target="#tab3" class="nav-link" href="javascript:void(0)">Tab 3</a>
+        </li>
+    </ul>
+    <div class="content-container mt-0">
+      <div class="scroll-offset" data-id="tabs" style="top: -4rem;"></div>
+
+      <div class="style-header">
+        <h4 class="header-underline">Content Container with Tabs</h4>
+        <button class="reveal-code" data-toggle="collapse" data-target="#tabs-code"><i class="fa fa-code"></i></button>
+      </div>
+
+      <div class="style-example">
+        <div class="tab-content mt-0">
+          <div id="tab1" class="tab-pane fade">
+            <p class="mb-0">Tab 1 Content</p>
+          </div>
+          <div id="tab2" class="tab-pane fade active show">
+            <p class="mb-0">Tab 2 Content</p>
+          </div>
+          <div id="tab3" class="tab-pane fade">
+            <p class="mb-0">Tab 3 Content</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="style-code-wrapper collapse" id="tabs-code">
+        <pre class="style-code">
+<code><span class="et">&lt;ul</span><span class="an"> class=</span><span class="av">"tabs-container nav nav-tabs"</span><span class="et">></span>
+  <span class="et">&lt;li</span><span class="an"> class=</span><span class="av">"nav-item"</span><span class="et">></span>
+    <span class="et">&lt;a</span><span class="an"> data-toggle=</span><span class="av">"tab"</span><span class="an"> data-target=</span><span class="av">"#tab1"</span><span class="an"> class=</span><span class="av">"nav-link"</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="et">></span>Tab 1<span class="et">&lt;/a></span>
+  <span class="et">&lt;/li></span>
+  <span class="et">&lt;li</span><span class="an"> class=</span><span class="av">"nav-item"</span><span class="et">></span>
+    <span class="et">&lt;a</span><span class="an"> data-toggle=</span><span class="av">"tab"</span><span class="an"> data-target=</span><span class="av">"#tab2"</span><span class="an"> class=</span><span class="av">"nav-link active"</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="et">></span>Tab 2<span class="et">&lt;/a></span>
+  <span class="et">&lt;/li></span>
+  <span class="et">&lt;li</span><span class="an"> class=</span><span class="av">"nav-item"</span><span class="et">></span>
+    <span class="et">&lt;a</span><span class="an"> data-toggle=</span><span class="av">"tab"</span><span class="an"> data-target=</span><span class="av">"#tab3"</span><span class="an"> class=</span><span class="av">"nav-link"</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="et">></span>Tab 3<span class="et">&lt;/a></span>
+  <span class="et">&lt;/li></span>
+<span class="et">&lt;/ul></span>
+
+<span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"content-container mt-0"</span><span class="et">></span>
+  <span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"tab-content mt-0"</span><span class="et">></span>
+    <span class="et">&lt;div</span><span class="an"> id=</span><span class="av">"tab1"</span><span class="an"> class=</span><span class="av">"tab-pane fade"</span><span class="et">></span>
+      <span class="et">&lt;p</span><span class="et">></span>Tab 1 Content<span class="et">&lt;/p></span>
+    <span class="et">&lt;/div</span><span class="et">></span>
+    <span class="et">&lt;div</span><span class="an"> id=</span><span class="av">"tab2"</span><span class="an"> class=</span><span class="av">"tab-pane fade active show"</span><span class="et">></span>
+      <span class="et">&lt;p</span><span class="et">></span>Tab 2 Content<span class="et">&lt;/p></span>
+    <span class="et">&lt;/div</span><span class="et">></span>
+    <span class="et">&lt;div</span><span class="an"> id=</span><span class="av">"tab3"</span><span class="an"> class=</span><span class="av">"tab-pane fade"</span><span class="et">></span>
+      <span class="et">&lt;p</span><span class="et">></span>Tab 3 Content<span class="et">&lt;/p></span>
+    <span class="et">&lt;/div</span><span class="et">></span>
+  <span class="et">&lt;/div</span><span class="et">></span>
+<span class="et">&lt;/div</span><span class="et">></span></code>
+        </pre>
+      </div>
+    </div>
+
+    <div class="content-container">
+      <div class="scroll-offset" data-id="dots"></div>
+      <div class="style-header">
+        <h4 class="header-underline">Dots Menu</h4>
+        <button class="reveal-code" data-toggle="collapse" data-target="#dots-code"><i class="fa fa-code"></i></button>
+      </div>
+      <div class="style-example">
+        <nav class="dots-container">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Some area</a></li>
+            <li class="breadcrumb-item active">This area</li>
+          </ol>
+          <ul class="nav">
+            <li class="dropdown dots-dropdown">
+              <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i></a>
+              <div class="dropdown-menu">
+                <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-superpowers"></i> Some action</a>
+                <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-cube"></i> Another action</a>
+                <span class="dropdown-item dots-dropdown-header">Group Header</span>
+                <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-hand-peace-o"></i> Some grouped action</a>
+                <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-hand-spock-o"></i> Another grouped action</a>
+                <span class="dropdown-item dots-dropdown-header">Another Group</span>
+                <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-pie-chart"></i> Group 2 action 1</a>
+                <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-line-chart"></i> Group 2 action 2</a>
+                <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-bar-chart"></i> Group 2 action 3</a>
+                <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-area-chart"></i> Group 2 action 4</a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      
+      <div class="style-code-wrapper collapse" id="dots-code">
+        <pre class="style-code">
+<code><span class="et">&lt;nav</span><span class="an"> class=</span><span class="av">"dots-container"</span><span class="et">></span>
+  <span class="et">&lt;ol</span><span class="an"> class=</span><span class="av">"breadcrumb"</span><span class="et">></span>
+    <span class="et">&lt;li</span><span class="an"> class=</span><span class="av">"breadcrumb-item"</span><span class="et">></span><span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="et">></span>Some area<span class="et">&lt;/a></span><span class="et">&lt;/li></span>
+    <span class="et">&lt;li</span><span class="an"> class=</span><span class="av">"breadcrumb-item active"</span><span class="et">></span>This area<span class="et">&lt;/li></span>
+  <span class="et">&lt;/ol></span>
+  <span class="et">&lt;ul</span><span class="an"> class=</span><span class="av">"nav"</span><span class="et">></span>
+    <span class="et">&lt;li</span><span class="an"> class=</span><span class="av">"dropdown dots-dropdown"</span><span class="et">></span>
+      <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-toggle"</span><span class="an"> data-toggle=</span><span class="av">"dropdown"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-ellipsis-h fa-lg"</span><span class="et">></span><span class="et">&lt;/i></span><span class="et">&lt;/a></span>
+      <span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"dropdown-menu"</span><span class="et">></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-superpowers"</span><span class="et">></span><span class="et">&lt;/i></span> Some action<span class="et">&lt;/a></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-cube"</span><span class="et">></span><span class="et">&lt;/i></span> Another action<span class="et">&lt;/a></span>
+        <span class="et">&lt;span</span><span class="an"> class=</span><span class="av">"dropdown-item dots-dropdown-header"</span><span class="et">></span>Group header<span class="et">&lt;/span></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-hand-peace-o"</span><span class="et">></span><span class="et">&lt;/i></span> Some grouped action<span class="et">&lt;/a></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-hand-spock-o"</span><span class="et">></span><span class="et">&lt;/i></span> Another grouped action<span class="et">&lt;/a></span>
+        <span class="et">&lt;span</span><span class="an"> class=</span><span class="av">"dropdown-item dots-dropdown-header"</span><span class="et">></span>Another header<span class="et">&lt;/span></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-pie-chart"</span><span class="et">></span><span class="et">&lt;/i></span> Group 2 action 1<span class="et">&lt;/a></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-line-chart"</span><span class="et">></span><span class="et">&lt;/i></span> Group 2 action 2<span class="et">&lt;/a></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-bar-chart"</span><span class="et">></span><span class="et">&lt;/i></span> Group 2 action 3<span class="et">&lt;/a></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-area-chart"</span><span class="et">></span><span class="et">&lt;/i></span> Group 2 action 4<span class="et">&lt;/a></span>
+      <span class="et">&lt;/div></span>
+    <span class="et">&lt;/li></span>
+  <span class="et">&lt;/ul></span>
+<span class="et">&lt;/nav></span></code>
+        </pre>
+      </div>
+    </div>
+
+    <div class="content-container">
+      <div class="scroll-offset" data-id="modals"></div>
+      <div class="style-header">
+        <h4 class="header-underline">Modals</h4>
+        <button class="reveal-code" data-toggle="collapse" data-target="#modals-code"><i class="fa fa-code"></i></button>
+      </div>
+      <div class="style-example text-center">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-example">Click for modal</button>          
+      </div>
+      
+      <div class="style-code-wrapper collapse" id="modals-code">
+        <pre class="style-code">
+<code><span class="ct">// This line goes in the view where you would want to use a button or link to trigger the modal dialog.</span>
+<span class="et">&lt;button</span><span class="an"> class=</span><span class="av">"btn btn-primary"</span><span class="an"> data-toggle=</span><span class="av">"modal"</span><span class="an"> data-target=</span><span class="av">"#modal-example"</span><span class="et">></span>Click for modal<span class="et">&lt;/button></span>
+
+<span class="ct">// This block must be added as a partial to the modals section of "layouts/tylium.html.erb" near the end of the file.</span>
+<span class="et">&lt;div</span><span class="an"> id=</span><span class="av">"modal-example"</span><span class="an"> class=</span><span class="av">"modal fade"</span><span class="an"> tab-index=</span><span class="av">"-1"</span><span class="et">></span>
+  <span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"modal-dialog"</span><span class="et">></span>
+    <span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"modal-content"</span><span class="et">></span>
+      <span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"modal-header"</span><span class="et">></span>
+        <span class="et">&lt;h5</span><span class="an"> class=</span><span class="av">"modal-title"</span><span class="et">></span>Modal Title<span class="et">&lt;/h5></span>
+        <span class="et">&lt;button</span><span class="an"> type=</span><span class="av">"button"</span><span class="an"> class=</span><span class="av">"close"</span><span class="an"> data-dismiss=</span><span class="av">"modal"</span><span class="et">></span>
+          <span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-times"</span><span class="et">></span><span class="et">&lt;/i></span>
+        <span class="et">&lt;/button></span>
+      <span class="et">&lt;/div></span>
+      <span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"modal-body"</span><span class="et">></span>
+        <span class="et">&lt;p></span>Modal content goes here<span class="et">&lt;/p></span>
+      <span class="et">&lt;/div></span>
+      <span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"modal-footer"</span><span class="et">></span>
+        <span class="et">&lt;button</span><span class="an"> class=</span><span class="av">"btn btn-primary"</span><span class="et">></span>Submit<span class="et">&lt;/button></span>
+        <span class="et">&lt;button</span><span class="an"> class=</span><span class="av">"btn"</span><span class="an"> data-dismiss=</span><span class="av">"modal"</span><span class="et">></span>Cancel<span class="et">&lt;/button></span>
+      <span class="et">&lt;/div></span>
+    <span class="et">&lt;/div></span>
+  <span class="et">&lt;/div></span>
+<span class="et">&lt;/div></span></code>
+        </pre>
+      </div>
+    </div>
+
+    <div class="content-container">
+      <div class="scroll-offset" data-id="round"></div>
+      <div class="style-header">
+        <h4 class="header-underline">Round Navbar Buttons</h4>
+        <button class="reveal-code" data-toggle="collapse" data-target="#round-code"><i class="fa fa-code"></i></button>
+      </div>
+      <div class="style-example text-center">
+        <div class="row">
+          <div class="col-3 ml-auto">
+            <p>Without Dropdown</p>
+            <nav class="navbar justify-content-center" style="border: none;">
+              <ul class="navbar-nav">
+                <li class="nav-item round">
+                  <a href="javascript:void(0)" class="nav-link"><i class="fa fa-thumbs-up fa-lg"></i></a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div class="col-3 mr-auto">
+            <p>With Dropdown</p>
+            <nav class="navbar justify-content-center" style="border: none;">
+              <ul class="navbar-nav">
+                <li class="nav-item dropdown round">
+                  <a href="javascript:void(0)" class="nav-link dropdown-toggle" data-toggle="dropdown" data-behavior="close-collapse"><i class="fa fa-thumbs-up fa-lg"></i></a>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a href="javascript:void(0)" class="dropdown-item">A dropdown link</a>
+                    <a href="javascript:void(0)" class="dropdown-item">Another link</a>
+                    <a href="javascript:void(0)" class="dropdown-item">One more link</a>
+                    <div class="divider"></div>
+                    <a href="javascript:void(0)" class="dropdown-item">Link under divider</a>
+                  </div>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      
+      <div class="style-code-wrapper collapse" id="round-code">
+        <pre class="style-code">
+<code><span class="ct">// Round navbar button without dropdown</span>
+<span class="et">&lt;nav</span><span class="an"> class=</span><span class="av">"navbar"</span><span class="et">></span>
+  <span class="et">&lt;ul</span><span class="an"> class=</span><span class="av">"navbar-nav"</span><span class="et">></span>
+    <span class="et">&lt;li</span><span class="an"> class=</span><span class="av">"nav-item round"</span><span class="et">></span>
+      <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"nav-link"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-thumbs-up fa-lg"</span><span class="et">></span><span class="et">&lt;/i></span><span class="et">&lt;/a></span>
+    <span class="et">&lt;/li></span>
+  <span class="et">&lt;/ul></span>
+<span class="et">&lt;/nav></span>
+
+<span class="ct">// Round navbar button with dropdown menu</span>
+<span class="et">&lt;nav</span><span class="an"> class=</span><span class="av">"navbar"</span><span class="et">></span>
+  <span class="et">&lt;ul</span><span class="an"> class=</span><span class="av">"navbar-nav"</span><span class="et">></span>
+    <span class="et">&lt;li</span><span class="an"> class=</span><span class="av">"nav-item round"</span><span class="et">></span>
+      <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"nav-link"</span><span class="et">></span><span class="et">&lt;i</span><span class="an"> class=</span><span class="av">"fa fa-thumbs-up fa-lg"</span><span class="et">></span><span class="et">&lt;/i></span><span class="et">&lt;/a></span>
+      <span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"dropdown-menu dropdown-menu-right"</span><span class="et">></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span>A dropdown link<span class="et">&lt;/a></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span>Another link<span class="et">&lt;/a></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span>One more link<span class="et">&lt;/a></span>
+        <span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"divider"</span><span class="et">></span><span class="et">&lt;/div></span>
+        <span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="an"> class=</span><span class="av">"dropdown-item"</span><span class="et">></span>Link under divider<span class="et">&lt;/a></span>
+      <span class="et">&lt;/div></span>
+    <span class="et">&lt;/li></span>
+  <span class="et">&lt;/ul></span>
+<span class="et">&lt;/nav></span></code>
+        </pre>
+      </div>
+    </div>
+
+    <div class="content-container p-0">
+      <div class="content-container m-0 restrict-height half-height" data-behavior="restrict-height" style="border: none;">
+        <div class="scroll-offset" data-id="scroll"></div>
+        <div class="style-header">
+          <h4 class="header-underline">Scroll-for-more Indicator</h4>
+          <button class="reveal-code" data-toggle="collapse" data-target="#scroll-code"><i class="fa fa-code"></i></button>
+        </div>
+        <div class="style-example">
+          <p>This content-container has a max-height defined but the content requires more space than the max-height property allows. As a result the "Scroll-for-more" indicator is displayed, allowing the user to scroll through the content while seeing a visual cue, letting the user know that there is more content to see.</p>
+
+          <p>The height can be limited using the appropriate class:</p>
+          <ul>
+            <li><em>.full-height</em> - full available height of layout</li>
+            <li><em>.half-height</em> - half available height of layout</li>
+            <li><em>.quarter-height</em> - quarter available height of layout</li>
+          </ul>
+
+          <p>Alternatively, the content-container can be set to match the same height as the next or previous content-container in the row.
+          <br>To achieve this, set the data-behavior value to <em>restrict-height</em> without setting a <em>*-height</em> class. Set the data-height value to either <em>match-next</em> or <em>match-prev</em>.
+
+          <p>Lorem Content:</p>
+
+          <p>Ut cupidatat aliqua eu eu labore pariatur commodo ipsum. Ad irure reprehenderit velit consequat excepteur dolor et duis sunt culpa aliqua ipsum voluptate voluptate. Enim velit ipsum id aliqua laborum ex mollit nostrud esse eiusmod aute aliqua magna. Dolore voluptate do in esse ullamco aute aliqua ea sint sit do commodo. Laborum ex anim eu fugiat ut qui ex. Proident adipisicing elit duis deserunt culpa amet voluptate. Elit ad incididunt voluptate velit qui adipisicing.</p>
+
+          <p>Eiusmod consectetur et elit magna eu aliquip ex. Do mollit veniam deserunt sint excepteur velit ut elit duis. Lorem voluptate sit velit cupidatat fugiat esse ullamco. Nisi consequat ut Lorem nostrud est sunt duis est excepteur elit esse reprehenderit anim tempor. Et ut eiusmod fugiat commodo eiusmod occaecat Lorem tempor elit excepteur et.</p>
+
+          <p>Dolor quis magna eiusmod ea excepteur nulla dolore amet velit. Qui dolore sint veniam ex magna id labore minim dolore reprehenderit nisi voluptate excepteur. Quis officia fugiat voluptate commodo ea voluptate dolor esse Lorem est. Veniam do anim exercitation culpa sint nisi ex et fugiat anim consectetur. Veniam mollit consectetur est velit aute esse eu Lorem. Veniam mollit eiusmod veniam tempor consequat pariatur nulla consectetur excepteur sunt et.</p>
+
+          <p>Reprehenderit aliqua fugiat in nulla amet. Officia est dolore eu ex culpa occaecat excepteur cupidatat. Laborum do nisi sunt aliqua voluptate.</p>
+
+          <p>In sunt esse adipisicing cillum minim excepteur cupidatat aliquip do eiusmod excepteur. Anim tempor sint mollit sint qui id dolore ad consectetur ea est ex dolore. In eu eu ex commodo anim magna amet aliquip dolor fugiat nisi. Cillum consectetur tempor excepteur deserunt voluptate eiusmod. Velit nostrud id duis et in consequat sit dolor cillum. Minim cupidatat enim ex minim commodo cupidatat cupidatat officia dolor. Magna do aliquip qui dolor consectetur do nulla ea.</p>
+
+          <p>Aute do nostrud ipsum aliquip duis qui reprehenderit quis sint irure cupidatat et excepteur. Esse veniam minim ullamco reprehenderit consectetur ea fugiat tempor proident aliquip cillum deserunt velit. Velit fugiat quis esse et nostrud nostrud enim Lorem irure deserunt officia. Sint nostrud nulla sint eu anim reprehenderit elit ea aliqua excepteur nisi laborum ad aute. Exercitation irure et in esse velit dolore. Magna aliquip pariatur occaecat enim amet est minim pariatur cupidatat occaecat qui elit ex.</p>
+
+          <p>Anim aliqua et sunt sit fugiat tempor proident. Mollit culpa eiusmod labore voluptate. Proident reprehenderit id quis consequat laborum excepteur culpa voluptate occaecat laboris voluptate est.</p>
+
+          <p>Culpa incididunt laborum elit minim cillum pariatur adipisicing velit ut excepteur est fugiat eiusmod. Elit amet enim exercitation esse consequat eiusmod. Fugiat ea eiusmod laboris duis et ipsum sit dolor. Nisi esse cupidatat exercitation excepteur tempor magna occaecat deserunt esse. Quis est culpa irure consectetur officia veniam dolor voluptate ullamco occaecat. Duis ex sunt dolore sint commodo.</p>
+
+          <p>Ut cupidatat aliqua eu eu labore pariatur commodo ipsum. Ad irure reprehenderit velit consequat excepteur dolor et duis sunt culpa aliqua ipsum voluptate voluptate. Enim velit ipsum id aliqua laborum ex mollit nostrud esse eiusmod aute aliqua magna. Dolore voluptate do in esse ullamco aute aliqua ea sint sit do commodo. Laborum ex anim eu fugiat ut qui ex. Proident adipisicing elit duis deserunt culpa amet voluptate. Elit ad incididunt voluptate velit qui adipisicing.</p>
+
+          <p>Eiusmod consectetur et elit magna eu aliquip ex. Do mollit veniam deserunt sint excepteur velit ut elit duis. Lorem voluptate sit velit cupidatat fugiat esse ullamco. Nisi consequat ut Lorem nostrud est sunt duis est excepteur elit esse reprehenderit anim tempor. Et ut eiusmod fugiat commodo eiusmod occaecat Lorem tempor elit excepteur et.</p>
+
+          <p>Dolor quis magna eiusmod ea excepteur nulla dolore amet velit. Qui dolore sint veniam ex magna id labore minim dolore reprehenderit nisi voluptate excepteur. Quis officia fugiat voluptate commodo ea voluptate dolor esse Lorem est. Veniam do anim exercitation culpa sint nisi ex et fugiat anim consectetur. Veniam mollit consectetur est velit aute esse eu Lorem. Veniam mollit eiusmod veniam tempor consequat pariatur nulla consectetur excepteur sunt et.</p>
+
+          <p>Anim aliqua et sunt sit fugiat tempor proident. Mollit culpa eiusmod labore voluptate. Proident reprehenderit id quis consequat laborum excepteur culpa voluptate occaecat laboris voluptate est.</p>
+
+          <p class="m-0">Culpa incididunt laborum elit minim cillum pariatur adipisicing velit ut excepteur est fugiat eiusmod. Elit amet enim exercitation esse consequat eiusmod. Fugiat ea eiusmod laboris duis et ipsum sit dolor. Nisi esse cupidatat exercitation excepteur tempor magna occaecat deserunt esse. Quis est culpa irure consectetur officia veniam dolor voluptate ullamco occaecat. Duis ex sunt dolore sint commodo.</p>
+        </div>
+      </div>
+      
+      <div class="style-code-wrapper collapse" id="scroll-code">
+        <pre class="style-code" style="margin: 2rem;">
+<code><span class="ct"> // Example showing a content-container restricted to half the height of the browser view (this is the way this example content-container is set up). Height options are full-height, half-height or quarter-height</span>
+<span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"content-container restrict-height half-height"</span><span class="an"> data-behavior=</span><span class="av">"restrict-height"</span><span class="et">></span>
+
+<span class="ct"> // Example showing a content-container restricted to match the height of the next content-container in the row. Options for 'data-height' are 'match-next' and 'match-prev'</span>
+<span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"content-container restrict-height"</span><span class="an"> data-behavior=</span><span class="av">"restrict-height"</span><span class="an"> data-height=</span><span class="av">"match-next"</span><span class="et">></span>
+
+  <span class="et">&lt;h4</span><span class="an"> class=</span><span class="av">"header-underline"</span><span class="et">></span><span class="et">></span>Scroll-for-more Indicator<span class="et">&lt;/h4</span><span class="et">></span>
+  <span class="et">&lt;p</span><span class="et">></span>Content Here<span class="et">&lt;/p></span>
+<span class="et">&lt;/div</span><span class="et">></span></code>
+        </pre>
+      </div>
+    </div>
+
+    <div class="content-container">
+      <div class="scroll-offset" data-id="tables"></div>
+      <div class="style-header">
+        <h4 class="header-underline">Tables</h4>
+        <button class="reveal-code" data-toggle="collapse" data-target="#tables-code"><i class="fa fa-code"></i></button>
+      </div>
+      <div class="style-example">
+        <p>Tables in Dradis have a special structure in order to allow them to be scrollable and sortable. The below table is an example of a table exceeding the container boundaries but all data is still visisible thanks to a horizontally scrollable table wrapper.</p>
+        
+        <div class="d-flex justify-content-center mt-4">
+          <div class="table-wrapper" id="table-example">
+            <table class="table table-striped items-table">
+              <thead>
+                <tr>
+                  <th data-column="col-1" data-sort="string" class="sortable sorting-asc">Col 1 Header</th>
+                  <th data-column="col-2" data-sort="string" class="sortable">Col 2 Header</th>
+                  <th data-column="col-3" data-sort="string" class="sortable">Col 3 Header</th>
+                  <th data-column="col-4" data-sort="string" class="sortable">Col 4 Header</th>
+                  <th data-column="col-5" data-sort="string" class="sortable">Col 5 Header</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-sort-value="Row 1 Col 1 Data">Row 1 Col 1 Data</td>
+                  <td data-sort-value="Row 1 Col 2 Data">Row 1 Col 2 Data</td>
+                  <td data-sort-value="Row 1 Col 3 Data">Row 1 Col 3 Data</td>
+                  <td data-sort-value="Row 1 Col 4 Data">Row 1 Col 4 Data</td>
+                  <td data-sort-value="Row 1 Col 4 Data">Row 1 Col 5 Data</td>
+                </tr>
+                <tr>
+                  <td data-sort-value="Row 2 Col 1 Data">Row 2 Col 1 Data</td>
+                  <td data-sort-value="Row 2 Col 2 Data">Row 2 Col 2 Data</td>
+                  <td data-sort-value="Row 2 Col 3 Data">Row 2 Col 3 Data</td>
+                  <td data-sort-value="Row 2 Col 4 Data">Row 2 Col 4 Data</td>
+                  <td data-sort-value="Row 2 Col 4 Data">Row 2 Col 5 Data</td>
+                </tr>
+                <tr>
+                  <td data-sort-value="Row 3 Col 1 Data">Row 3 Col 1 Data</td>
+                  <td data-sort-value="Row 3 Col 2 Data">Row 3 Col 2 Data</td>
+                  <td data-sort-value="Row 3 Col 3 Data">Row 3 Col 3 Data</td>
+                  <td data-sort-value="Row 3 Col 4 Data">Row 3 Col 4 Data</td>
+                  <td data-sort-value="Row 3 Col 4 Data">Row 3 Col 5 Data</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      <div class="style-code-wrapper collapse" id="tables-code">
+        <pre class="style-code">
+<code><span class="ct">// To enable table sorting you must add this line to the view's js file:
+<span class="et">new </span><span class="an">ItemsTable</span><span style="color: white;">(</span><span class="av">'#table-wrapper-id'</span><span style="color: white;">, </span><span class="av">'item_name'</span><span style="color: white;">)</span>
+<span class="ct">// table-wrapper-id: id of an element wrapping the table and table toolbar
+// item_name: name of model (issue, evidence, etc)</span>
+
+<span class="et">&lt;div</span><span class="an"> id=</span><span class="av">"table-wrapper-id"</span><span class="an"> class=</span><span class="av">"table-wrapper"</span><span class="et">></span>
+  <span class="et">&lt;table</span><span class="an"> class=</span><span class="av">"table table-striped items-table"</span><span class="et">></span>
+    <span class="et">&lt;thead></span>
+      <span class="et">&lt;tr></span>
+        <span class="et">&lt;th</span><span class="an"> data-column=</span><span class="av">"col-1"</span><span class="an"> data-sort=</span><span class="av">"string"</span><span class="an"> class=</span><span class="av">"sortable sorting-asc"</span><span class="et">></span>Col 1 Header<span class="et">&lt;/th></span>
+        <span class="et">&lt;th</span><span class="an"> data-column=</span><span class="av">"col-2"</span><span class="an"> data-sort=</span><span class="av">"string"</span><span class="an"> class=</span><span class="av">"sortable"</span><span class="et">></span>Col 2 Header<span class="et">&lt;/th></span>
+        <span class="et">&lt;th</span><span class="an"> data-column=</span><span class="av">"col-3"</span><span class="an"> data-sort=</span><span class="av">"string"</span><span class="an"> class=</span><span class="av">"sortable"</span><span class="et">></span>Col 3 Header<span class="et">&lt;/th></span>
+        <span class="et">&lt;th</span><span class="an"> data-column=</span><span class="av">"col-4"</span><span class="an"> data-sort=</span><span class="av">"string"</span><span class="an"> class=</span><span class="av">"sortable"</span><span class="et">></span>Col 4 Header<span class="et">&lt;/th></span>
+        <span class="et">&lt;th</span><span class="an"> data-column=</span><span class="av">"col-5"</span><span class="an"> data-sort=</span><span class="av">"string"</span><span class="an"> class=</span><span class="av">"sortable"</span><span class="et">></span>Col 5 Header<span class="et">&lt;/th></span>
+      <span class="et">&lt;/tr></span>
+    <span class="et">&lt;/thead></span>
+    <span class="et">&lt;tbody></span>
+      <span class="et">&lt;tr></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 1 Col 1 Data"</span><span class="et">></span>Row 1 Col 1 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 1 Col 2 Data"</span><span class="et">></span>Row 1 Col 2 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 1 Col 3 Data"</span><span class="et">></span>Row 1 Col 3 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 1 Col 4 Data"</span><span class="et">></span>Row 1 Col 4 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 1 Col 5 Data"</span><span class="et">></span>Row 1 Col 5 Data<span class="et">&lt;/td></span>
+      <span class="et">&lt;/tr></span>
+      <span class="et">&lt;tr></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 2 Col 1 Data"</span><span class="et">></span>Row 2 Col 1 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 2 Col 2 Data"</span><span class="et">></span>Row 2 Col 2 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 2 Col 3 Data"</span><span class="et">></span>Row 2 Col 3 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 2 Col 4 Data"</span><span class="et">></span>Row 2 Col 4 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 2 Col 5 Data"</span><span class="et">></span>Row 2 Col 5 Data<span class="et">&lt;/td></span>
+      <span class="et">&lt;/tr></span>
+      <span class="et">&lt;tr></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 3 Col 1 Data"</span><span class="et">></span>Row 3 Col 1 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 3 Col 2 Data"</span><span class="et">></span>Row 3 Col 2 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 3 Col 3 Data"</span><span class="et">></span>Row 3 Col 3 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 3 Col 4 Data"</span><span class="et">></span>Row 3 Col 4 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 3 Col 5 Data"</span><span class="et">></span>Row 3 Col 5 Data<span class="et">&lt;/td></span>
+      <span class="et">&lt;/tr></span>
+    <span class="et">&lt;/tbody></span>
+  <span class="et">&lt;/table></span>
+<span class="et">&lt;/div></span></code>
+        </pre>
+      </div>
+    </div>
+
+    <div class="content-container">
+      <div class="scroll-offset" data-id="input"></div>
+      <div class="style-header">
+        <h4 class="header-underline">Text Input with Inset Button</h4>
+        <button class="reveal-code" data-toggle="collapse" data-target="#input-code"><i class="fa fa-code"></i></button>
+      </div>
+      <div class="style-example">
+        <div class="container">
+          <div class="row">
+            <div class="col-8 offset-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+              <div class="inset-button-wrapper">
+                <input type="text" class="form-control" placeholder="Placeholder Text...">
+                <button type="submit" class="btn btn-primary">Button</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="style-code-wrapper collapse" id="input-code">
+        <pre class="style-code">
+<code><span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"inset-button-wrapper"</span><span class="et">></span>
+  <span class="et">&lt;input</span><span class="an"> type=</span><span class="av">"text"</span><span class="an"> class=</span><span class="av">"form-control"</span><span class="an"> placeholder=</span><span class="av">"Placeholder Text..."</span><span class="et">></span>
+  <span class="et">&lt;button</span><span class="an"> type=</span><span class="av">"submit"</span><span class="an"> class=</span><span class="av">"btn btn-primary"</span><span class="et">></span>Button<span class="et">&lt;/button></span>
+<span class="et">&lt;/div</span><span class="et">></span></code>
+        </pre>
+      </div>
+    </div>
+
+    <div class="content-container">
+      <div class="scroll-offset" data-id="typography"></div>
+      <div class="style-header">
+        <h4 class="header-underline">Typography</h4>
+        <button class="reveal-code" data-toggle="collapse" data-target="#typography-code"><i class="fa fa-code"></i></button>
+      </div>
+      <div class="style-example">
+        <div class="row">
+          <div class="col-12">
+            <p>Tylium uses the <a href="https://www.google.com/fonts/specimen/Open+Sans" target="_blank">Open Sans</a> font. The font-weight is set to 300 but we also have <span class="fw4">400</span> and <span class="fw6">600</span> available. The font size is set to 1rem = 16px.</p> 
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-6 text-center">
+            <h1>Heading 1</h1>
+            <h2>Heading 2</h2>
+            <h3>Heading 3</h3>
+            <h4>Heading 4</h4>
+            <h5>Heading 5</h5>
+            <h6>Heading 6</h6>
+          </div>
+          <div class="col-6 text-center">
+            <p class="lead">Paragraph with lead class</p>
+            <p>Normal paragraph</p>
+            <p><a href="javascript:void(0)">Link example</a></p>
+            <p class="text-error">Error text</p>
+            <p class="text-muted">Muted text</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="style-code-wrapper collapse" id="typography-code">
+        <pre class="style-code">
+<code><span class="et">&lt;h1</span><span class="et">></span>Heading 1<span class="et">&lt;/h1</span><span class="et">></span>
+<span class="et">&lt;h2</span><span class="et">></span>Heading 2<span class="et">&lt;/h2</span><span class="et">></span>
+<span class="et">&lt;h4</span><span class="an"> class=</span><span class="av">"header-underline"</span><span class="et">></span><span class="et">></span>Heading 3<span class="et">&lt;/h4</span><span class="et">></span>
+<span class="et">&lt;h4</span><span class="an"> class=</span><span class="av">"header-underline"</span><span class="et">></span><span class="et">></span>Heading 4<span class="et">&lt;/h4</span><span class="et">></span>
+<span class="et">&lt;h5</span><span class="et">></span>Heading 5<span class="et">&lt;/h5</span><span class="et">></span>
+<span class="et">&lt;h6</span><span class="et">></span>Heading 6<span class="et">&lt;/h6</span><span class="et">></span>
+
+<span class="et">&lt;p</span><span class="an"> class=</span><span class="av">"lead"</span><span class="et">></span>Paragraph with lead class<span class="et">&lt;/p</span><span class="et">></span>
+<span class="et">&lt;p</span><span class="et">></span>Normal paragraph<span class="et">&lt;/p</span><span class="et">></span>
+<span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"#"</span><span class="et">></span>Link example<span class="et">&lt;/a</span><span class="et">></span>
+<span class="et">&lt;p</span><span class="an"> class=</span><span class="av">"text-error"</span><span class="et">></span>Error text<span class="et">&lt;/p</span><span class="et">></span>
+<span class="et">&lt;p</span><span class="an"> class=</span><span class="av">"text-muted"</span><span class="et">></span>Muted text<span class="et">&lt;/p</span><span class="et">></span></code>
+        </pre>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-lg-4 col-xl-3 p-0 d-none d-lg-block">
+    <div class="content-container sticky-top ml-0">
+      <h4 class="header-underline">Quick Nav</h4>
+      <nav class="d-flex flex-column">
+        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="container">Content Container</a>
+        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="tabs">Content Container with Tabs</a>
+        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="dots">Dots Menu</a>
+        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="modals">Modals</a>
+        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="round">Round Navbar Buttons</a>
+        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="scroll">Scroll-For-More Indicator</a>
+        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="tables">Tables</a>
+        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="input">Text Input with Inset Button</a>
+        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="typography">Typography</a>
+      </nav>
+
+      <div class="style-header mt-5">
+        <h4 class="header-underline">Sticky Top</h4>
+        <button class="reveal-code" data-toggle="collapse" data-target="#sticky-code"><i class="fa fa-code"></i></button>
+      </div>
+      <div class="style-example">
+        <p class="m-0">This is an example of a sticky container that will stay at the top of the view as the user scrolls.
+      </div>
+      
+      <div class="style-code-wrapper collapse" id="sticky-code">
+        <pre class="style-code">
+<code><span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"content-container sticky-top"</span><span class="et">></span>
+  <span class="et">&lt;h4</span><span class="an"> class=</span><span class="av">"header-underline"</span><span class="et">></span><span class="et">></span>Header Text Here<span class="et">&lt;/h4</span><span class="et">></span>
+  <span class="et">&lt;p</span><span class="et">></span>Content Here<span class="et">&lt;/p</span><span class="et">></span>
+<span class="et">&lt;/div</span><span class="et">></span></code>
+        </pre>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for?(:title) ? yield(:title) : "Dradis Community Edition" %></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="current-user-id" content="<%= current_user.id %>">
+    <% if flash.any? %>
+      <% # when flash messages present, disable turbolinks cache to avoid
+        # the message appear and disappear in the next page load %>
+      <meta name="turbolinks-cache-control" content="no-cache">
+    <% end %>
+    <%= render 'comments/mentionable_users' if @mentionable_users %>
+
+    <%= favicon_link_tag %>
+
+    <%= stylesheet_link_tag 'tylium', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'tylium', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tag %>
+    <%= csp_meta_tag %>
+  </head>
+
+  <body class="<%= controller_name %> <%= action_name %>">
+
+    <%= render 'layouts/tylium/navbar' %>
+    <%= render 'layouts/tylium/sidebar' %>
+
+    <div id="view-content" class="view-content">
+      <div class="row m-0">
+        <% if content_for?(:sidebar) %>
+          <div class="secondary-sidebar col-4 col-lg-3 col-xl-2 p-0">
+            <div class="inner">
+              <%= yield :sidebar %>
+            </div>
+          </div>
+          <div class="secondary-sidebar-content col-8 col-lg-9 col-xl-10 p-0">
+            <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
+            <%= render 'shared/noscript' %>
+            <%= render "layouts/tylium/project_teaser" %>
+            <%= flash_messages %>
+            <%= content_for?(:content) ? yield(:content) : yield %>
+          </div>
+        <% else %>
+          <div class="col-12 p-0">
+            <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
+            <%= render 'shared/noscript' %>
+            <%= render "layouts/tylium/project_teaser" %>
+            <% if content_for?(:title) %>
+              <h3 class="page-title"><%= yield(:title) %></h3>
+            <% end %>
+            <%= flash_messages %>
+            <%= content_for?(:content) ? yield(:content) : yield %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <%= render 'activities/poller' %>
+
+    <!-- All modals go here -->
+    <%= render 'layouts/tylium/modals' %>
+    <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
+
+    <% if controller_name == 'boards' %>
+      <%= render 'boards/modals/new_board_form' unless  request.xhr? %>
+      <% if content_for?(:board_rename_modal) %>
+        <%= yield(:board_rename_modal) %>
+      <% end %>
+      <% if content_for?(:list_new_modal) %>
+        <%= yield(:list_new_modal) %>
+      <% end %>
+      <% if content_for?(:list_rename_modal) %>
+        <%= yield(:list_rename_modal) %>
+      <% end %>
+    <% end %>
+
+    <% if @node %>
+      <%= render partial: 'nodes/modals/add_node', locals: { type: :child } %>
+      <%= render partial: 'nodes/modals/delete' %>
+      <%= render partial: 'nodes/modals/merge' %>
+      <%= render partial: 'nodes/modals/move' %>
+      <%= render partial: 'nodes/modals/rename' %>
+    <% end %>
+
+    <% if controller_name == 'notes'%>
+      <%= render partial: 'notes/modals/move' %>
+    <% end %>
+    
+    <% if controller_name == 'styles_tylium' %>
+      <%= render partial: 'styles_tylium/modal' %>
+    <% end %>
+
+    <%= render 'console/console' %>
+    <!-- End of modals -->
+
+    <a class="back-fade not-faded" data-behavior="back-fade"></a>
+
+    <%# Always render the Tour content, the user may click on the link in the help menu. %>
+    <%# FIXME: re-enable Tour %>
+    <%#= render 'layouts/tylium/tour' %>
+  </body>
+</html>

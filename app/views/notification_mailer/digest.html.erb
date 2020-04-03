@@ -1,0 +1,90 @@
+<tr>
+  <td>
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="640px" align="center" colspan="12">
+          <h2 style="font-weight: 300; margin: 0; width: 100%;">
+            <% if @type == :daily %>
+              Your Notifications From The Past 24h
+            <% elsif @type == :instant %>
+              Your Recent Notifications
+            <% end %>
+          </h2>
+        </td>
+      </tr>
+    </table>
+  </tr>
+</td>
+
+<tr>
+  <td>
+    <table cellspacing="0" cellpadding="0">
+      <% @notifications.each do |project, project_notifications| %>
+        <tr>
+          <td colspan="12">
+            <table cellspacing="0" cellpadding="0" align="center">
+              <tr>
+                <td height="20px"></td>
+              </tr>
+              <tr>
+                <td width="20px"></td>
+                <td align="left" nowrap style="font-weight: 700; font-size: 1.1rem; line-height: 1.2rem;"><%= project.name %></td>
+                <td width="20px"></td>
+                <td style="width: 590px">
+                  <hr style="border-top: 0.5px solid #ddd; border-bottom: 0.5px solid #ddd; border-right: 0.5px solid transparent; border-left: 0.5px solid transparent;">
+                </td>
+                <td width="20px"></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        
+        <% project_notifications.each do |_, notifications| %>
+        <tr>
+          <td>
+            <table cellspacing="0" cellpadding="20px">
+              <% presenter = DigestPresenter.new(notifications, project, self) %>
+              <%= render partial: 'notification_mailer/notification', locals: { presenter: presenter } %>
+            </table>
+          </td>
+        </tr>
+        <% end %>
+
+        <tr>
+          <td colspan="12">
+            <table cellspacing="0" cellpadding="0" align="center">
+              <tr>
+                <td width="40px"></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        
+        <% unless defined?(Dradis::Pro) %>
+          <tr>
+            <td colspan="12" align="center">
+              <table cellspacing="0" cellpadding="0">
+                <tr>
+                  <td width="590px">
+                    <hr style="border-top: 0.5px solid #ddd; border-bottom: 0.5px solid #ddd; border-right: 0.5px solid transparent; border-left: 0.5px solid transparent;">
+                  </td>
+                </tr>
+                <tr>
+                  <td height="10px"></td>
+                </tr>
+                <tr>
+                  <td align="center">
+                    <%= link_to 'See all notifications', project_notifications_url(project), class: 'button', style: 'display: inline-block; border-radius: 5px; padding: 8px 15px; color: #fff;background-color: #378137;' %> <%# background-color: #298DCC in pro %>
+                  </td>
+                </tr>
+                <tr>
+                  <td height="20px"></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
+  </tr>
+</td>

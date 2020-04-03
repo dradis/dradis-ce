@@ -5,9 +5,9 @@ module ProjectScoped
     before_action :set_project
     before_action :set_nodes
 
-    helper        :snowcrash
+    helper        :tylium
     helper_method :current_project
-    layout        'snowcrash'
+    layout        'tylium'
   end
 
   protected

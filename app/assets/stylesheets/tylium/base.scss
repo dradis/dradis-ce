@@ -1,0 +1,200 @@
+html, body {
+  height: 100%;
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: darken($darkColor, 5%);
+  font-family: 'OpenSans';
+  padding-top: 0px;
+  font-weight: 300;
+  color: $defaultText;
+}
+
+a {
+  color: $linkColor;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: $linkColorHover;
+    text-decoration: none;
+  }
+}
+
+.actions {
+  text-transform: capitalize;
+  white-space: nowrap;
+  font-size: 0.9rem;
+}
+
+.badge {
+
+  &.bg-primary {
+    background-color: $primaryColor !important;
+  }
+}
+
+@mixin button($color) {
+  border: 0px none;
+  background: $color;
+
+  &:hover,
+  &:not(:disabled):not(.disabled):active {
+    background: darken($color, 10);
+  }
+}
+
+.btn {
+  @include button(#e6e6e6);
+  text-shadow: 0 0 0;
+  font-weight: 300;
+  font-size: inherit;
+
+  &.btn-primary,
+  &.btn-primary:not(:disabled):not(.disabled).active {
+    @include button($primaryColor);
+  }
+  &.btn-danger {
+    @include button($red);
+  }
+  &.btn-success {
+    @include button($green);
+  }
+  &.btn-warning {
+    @include button($orange);
+  }
+}
+
+button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.custom-select {
+  font-size: inherit;
+}
+
+.disabled {
+  color: $mutedText !important;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.form-actions {
+  padding-top: 1rem;
+  border-top: 1px solid $borderColor;
+}
+
+.form-control {
+  font-size: inherit;
+
+  &:focus {
+    border-color: $darkColor;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px $darkColor;
+  }
+}
+
+.form-group {
+
+  select {
+
+    &:first-child {
+      margin-left: 0 !important;
+    }
+
+    &:last-child {
+      margin-right: 0 !important;
+    }
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+mark {
+  background-color: yellow;
+}
+
+.nav-pills {
+
+  .nav-link {
+    transition: all 0s ease-in-out;
+
+    &.active {
+      background-color: $secondaryBgColor;
+      color: $linkColorHover;
+    }
+  }
+}
+
+.placeholder {
+  font-style: italic;
+  margin-left: 1rem;
+  cursor: default;
+  height: 3rem;
+}
+
+.required-input {
+  color: $red;
+}
+
+// Firefox Fixes //
+@-moz-document url-prefix() {
+
+  // fixes ugly selects
+  select {
+    -moz-appearance: none !important;
+    background: transparent url('data:image/gif;base64,R0lGODlhBgAGAKEDAFVVVX9/f9TU1CgmNyH5BAEKAAMALAAAAAAGAAYAAAIODA4hCDKWxlhNvmCnGwUAOw==') right center no-repeat !important;
+    background-position: calc(100% - 5px) center !important;
+    font-family: revert;
+  }
+}
+
+.small {
+  font-size: 75%;
+  font-weight: 300;
+}
+
+.sticky-top {
+  position: sticky !important;
+  top: $mainContentMargin;
+  margin-bottom: $mainContentMargin;
+  z-index: 2;
+}
+
+.table td {
+  padding: 0.4rem .75rem;
+}
+
+.text-error {
+  color: $errorText !important;
+}
+
+.text-error-hover {
+  color: $errorText !important;
+
+  &:hover {
+    color: darken($errorText, 10%) !important;
+  }
+}
+
+.text-muted {
+  color: $mutedText !important;
+}
+
+.text-primary {
+  color: $primaryColor !important;
+}
+
+ul {
+  list-style: none;
+
+  &.tree-navigation {
+    margin: 5px;
+  }
+}

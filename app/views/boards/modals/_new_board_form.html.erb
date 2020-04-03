@@ -1,0 +1,64 @@
+<div
+  id="modal-board-new"
+  class="modal fade boards-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="modal-board-header"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <%= simple_form_for [current_project, current_project.boards.build], html: { novalidate: false } do |f| %>
+        <%= f.hidden_field(
+              :node_id,
+              value: @node.try(:id) || current_project.methodology_library.id) %>
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-board-header">Add new methodology</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="custom-control custom-radio">
+            <%= radio_button_tag( "use_template", "no", true, { :class => 'custom-control-input' }) %>
+            <label class="custom-control-label" for="use_template_no">Blank methodology</label>
+          </div>
+
+          <div class="custom-control custom-radio">
+            <% @templates ||= [] %>
+            <%= radio_button_tag("use_template", "yes", false, { disabled: @templates.empty?, :class => 'custom-control-input' }) %>
+            <label class="custom-control-label <%= @templates.empty? ? "text-muted" : "" %>" for="use_template_yes">
+              From template
+              <% if @templates.any? %>
+                <div>
+                  <%= select_tag "template", options_from_collection_for_select(@templates, :id, :name), class: 'my-1 form-control' %>
+                </div>
+              <% else %>
+                <p class="mb-0">
+                  No methodology templates defined<br>
+                  Log in as admin: Templates > Methodologies
+                </p>
+              <% end %>
+              <a href="http://dradisframework.org/academy/industry/compliance/"
+                target="_blank">
+                Download more templates
+              </a>
+            </label>
+          </div>
+
+          <hr>
+          <div class="form-group">
+            <%= f.input :name, required: true, input_html: { data: { behavior: 'new-board-name' } } %>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <input type="submit" value="Add methodology" class="btn btn-primary" />
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
