@@ -123,8 +123,8 @@ Rails.application.routes.draw do
   # jQuery Textile URLs
   get '/field', to: 'textile#field', as: :field, defaults: { format: :js }
   post '/form', to: 'textile#form',  as: :form, defaults: { format: :html }
-  get '/markup-help', to: 'home#markup_help', as: :markup
-  post '/preview', to: 'home#textilize',  as: :preview
+  get '/markup-help', to: 'textile#markup_help', as: :markup
+  post '/preview', to: 'textile#textilize',  as: :preview
   post '/source', to: 'textile#source', as: :source, defaults: { format: :text }
 
   root to: 'projects#index'
