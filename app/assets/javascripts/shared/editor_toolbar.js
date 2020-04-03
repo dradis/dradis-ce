@@ -89,12 +89,8 @@ class EditorToolbar {
 
     var markdownText = (startIndex == endIndex) ? affix.asPlaceholder : affix.withSelection(selectedText)
 
-    var lines = selectedText.split('\n').length
-    if (lines > 1) {
-      var adjustment = (lines - 1);
-      adjustedPrefixLength *= adjustment;
-      adjustedSuffixLength *= adjustment;
-    }
+    adjustedPrefixLength *= selectedText.split('\n').length;
+    adjustedSuffixLength *= selectedText.split('\n').length;
 
     // remove the original selection (if there was one) and add new markdown string in it's place
     $element.focus(); // bring focus back to $element from the toolbar
