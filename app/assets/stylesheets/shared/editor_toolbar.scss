@@ -1,4 +1,5 @@
 .editor-field {
+  height: 100%;
   position: relative;
   width: 100%;
 
@@ -69,5 +70,9 @@
     opacity: 1;
     visibility: visible;
     transition: opacity 0.3s 0.2s ease-in-out;
+  }
+
+  textarea {
+    height: 100%;
   }
 }
