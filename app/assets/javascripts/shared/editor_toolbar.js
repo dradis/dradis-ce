@@ -86,21 +86,19 @@ class EditorToolbar {
         endIndex = $element[0].selectionEnd,
         elementText = $element.val(),
         selectedText = $element.val().substring(startIndex, endIndex).split('\n'),
-        markdownText = affix.asString;
+        markdownText = affix.asPlaceholder;
 
     // create string to inject with markdown added
-    selectedText.map(function(selection, index) {
-      if (selection !== '') {
-        markdownText = affix.withSelection(selection);
-        
-        // if not the last line of selection, add new line and account for prefix/suffix length injected on that line
-        if (index < selectedText.length - 1) {
-          markdownText += '\n';
-          adjustedPrefixLength *= 2;
-          adjustedSuffixLength *= 2;
-        }
-      }
-    });
+    markdownText = selectedText.filter(Boolean).reduce(function(text, selection, index) {
+      return (index == 0 ? affix.withSelection(selection) : text + '\n' + affix.withSelection(selection))
+    }, '');
+
+    // Adjust the lengths based on number of lines selected - the last line.
+    if (selectedText.length > 1) {
+      var adjustment = (selectedText.length-1);
+      adjustedPrefixLength *= adjustment;
+      adjustedSuffixLength *= adjustment;
+    }
 
     // remove the original selection (if there was one) and add new markdown string in it's place
     $element.focus(); // bring focus back to $element from the toolbar
@@ -210,7 +208,7 @@ class Affix {
     this.suffix = suffix;
   }
 
-  get asString() {
+  get asPlaceholder() {
     return this.prefix + this.placeholder + this.suffix
   }
 
