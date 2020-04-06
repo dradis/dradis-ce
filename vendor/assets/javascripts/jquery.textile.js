@@ -82,7 +82,7 @@
       // add Preview to container and load
       this.options.$preview = $(this.options.tpl.preview);
       $('.textile-inner', this.options.$wrap).append(this.options.$preview);
-      this._loadPreview();
+      this._loadPreview({ text: this.$element.val() });
 
       // Sync preview
       var typingTimer;
@@ -91,7 +91,7 @@
       // on keyup, start the countdown
       this.$element.on('textchange load-preview', function () {
         clearTimeout(typingTimer);
-        typingTimer = setTimeout(this._onKeyPressPreview.bind(this), doneTypingInterval);
+        typingTimer = setTimeout(this._onKeyPressPreview.bind(this, 'text'), doneTypingInterval);
       }.bind(this));
 
       // add Help to container and hide
@@ -150,11 +150,11 @@
       });
     },
     // Ajax preview
-    _loadPreview: function() {
+    _loadPreview: function(data) {
       this._previousContent = this.$element.val();
 
       $.post(this.$element.data('preview-url'),
-        { text: this.$element.val() },
+        data,
         function(result) {
           this.options.$preview.removeClass('loading-indicator')
             .html(result);
@@ -166,20 +166,25 @@
     _loadWrite: function() {
       $.post(
         this.$element.data('source-url'),
-        {form: JSON.stringify( $('[name^=item_form]', this.options.$form).serializeArray() )},
+        { form: this._serializedFormData() },
         function(result){
           this.$element.val(result);
         }.bind(this)
       );
     },
-    _onKeyPressPreview: function() {
-      // If the text hasn't changed, do nothing.
-      if (this._previousContent == this.$element.val()) {
-        if (!this._previewRendered) {
-          this._loadPreview();
+    _onKeyPressPreview: function(type) {
+      if (type == 'form') {
+        this._loadPreview({ form: this._serializedFormData() });
+      }
+      else if (type == 'text') {
+        // If the text hasn't changed, do nothing.
+        if (this._previousContent == this.$element.val()) {
+          if (!this._previewRendered) {
+            this._loadPreview({ text: this.$element.val() });
+          }
+        } else {
+          this._loadPreview({ text: this.$element.val() });
         }
-      } else {
-        this._loadPreview();
       }
     },
     _onBtnForm: function() {
@@ -292,6 +297,10 @@
       this.options.$wrap.width($(window).width()-20);
       this.options.$preview.height(height-44);
       this.$element.height(height-10);
+    },
+
+    _serializedFormData: function() {
+      return JSON.stringify( $('[name^=item_form]', this.options.$form).serializeArray() );
     }
   };
 
