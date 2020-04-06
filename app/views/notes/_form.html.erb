@@ -10,7 +10,9 @@
           allow_dropdown: @note.new_record?,
           autosave_key: "#{current_project.id}-note-#{ @note.persisted? ? "edit-#{@note.id}" : "new-for-#{@node.id}" }",
           behavior: 'auto-save'
-        })
+        }),
+        disabled: true,
+        rows: 20
       }
   %>
 

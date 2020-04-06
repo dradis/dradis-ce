@@ -4,14 +4,14 @@
 
 <tr class="textile-form-field" data-behavior="textile-form-field">
   <td>
-    <%= text_field_tag "item_form[field_name_#{index}]", field_name, class: 'form-control my-1', onkeydown: 'return (event.keyCode!=13);', placeholder: 'Enter header value' %>
+    <%= text_field_tag "item_form[field_name_#{index}]", field_name, class: 'form-control my-1', onkeydown: 'return (event.keyCode!=13);', data: { behavior: 'preview-enabled' }, placeholder: 'Enter header value' %>
   </td>
   <td width="60%">
     <% options = value.split(' | ') %>
     <% if allow_dropdown && options.count > 1 %>
-      <%= select :item_form, "field_value_#{index}", options, {}, { class: 'form-control my-1' } %>
+      <%= select :item_form, "field_value_#{index}", options, {}, { class: 'form-control my-1', data: { behavior: 'preview-enabled' } } %>
     <% else %>
-      <%= text_area_tag "item_form[field_value_#{index}]", value, rows: 1, class: 'form-control my-1', data: { expand: 'auto' }, placeholder: 'Enter field value' %>
+      <%= text_area_tag "item_form[field_value_#{index}]", value, rows: 1, class: 'form-control my-1', data: { behavior: 'preview-enabled', expand: 'auto' }, placeholder: 'Enter field value' %>
     <% end %>
   </td>
   <td class="actions" align="right">

@@ -60,6 +60,7 @@
       this._previousContent = this.$element.val();
       this._previewRendered = false;
       this._helpRendered = false;
+      this._doneTypingInterval = 500;
     },
     _buildContainer: function() {
       // Add wrapper div with toolbar and inner container (see defaults.tpl)
@@ -70,8 +71,6 @@
 
       // move textarea to container
       $('.col-6', '.textile-inner', this.options.$wrap).append(this.$element);
-      this.$element.attr('rows', 20);
-      this.$element.prop('disabled', true);
       this.$element.hide();
 
       // add Form
@@ -82,17 +81,7 @@
       // add Preview to container and load
       this.options.$preview = $(this.options.tpl.preview);
       $('.textile-inner', this.options.$wrap).append(this.options.$preview);
-      this._loadPreview();
-
-      // Sync preview
-      var typingTimer;
-      var doneTypingInterval = 500;
-
-      // on keyup, start the countdown
-      this.$element.on('textchange load-preview', function () {
-        clearTimeout(typingTimer);
-        typingTimer = setTimeout(this._onKeyPressPreview.bind(this), doneTypingInterval);
-      }.bind(this));
+      this._loadPreview({ text: this.$element.val() });
 
       // add Help to container and hide
       this.options.$help = $(this.options.tpl.help);
@@ -101,6 +90,51 @@
 
       // toolbar
       this._buildToolbar();
+
+      // Event bindings
+      this._bindBehaviors();
+    },
+    _bindBehaviors: function() {
+      // Sync preview
+      // on keyup, start the countdown
+      this.$element.on('textchange load-preview', function() {
+        clearTimeout(this._typingTimer);
+        this._typingTimer = setTimeout(this._onKeyPressPreview.bind(this, 'text'), this._doneTypingInterval);
+      }.bind(this));
+
+      // Bind all form element actions within container
+      this.bindFieldGroup(this.options.$form);
+    },
+    bindFieldGroup: function($parent) {
+      var that = this;
+
+      $parent.find('[data-behavior~=delete-field]').click(function(){
+        $(this).closest('[data-behavior~=textile-form-field]').remove();
+        that._loadPreview({ form: that._serializedFormData() })
+      });
+
+      // Handler for setting the correct scrollHeight for current values
+      paddingStr = '0.375rem 0.75rem'
+      $parent.find('[data-expand~=auto]').each(function() {
+        $(this).css({'padding': paddingStr, 'height': this.scrollHeight});
+      });
+
+      // Handler for setting the correct scrollHeight on keyboard input
+      $parent.find('[data-expand~=auto]').on('keyup', function(e) {
+        $(this).css({
+          'padding': paddingStr,
+          'height': '1px'
+        }).css({
+          'padding': paddingStr,
+          'height': this.scrollHeight + 2
+        });
+      });
+
+      // Handler for triggering the preview on keyboard input
+      $parent.find('[data-behavior~=preview-enabled]').on('textchange load-preview', function() {
+        clearTimeout(this._typingTimer);
+        this._typingTimer = setTimeout(this._onKeyPressPreview.bind(this, 'form'), this._doneTypingInterval);
+      }.bind(this));
     },
     _buildToolbar: function() {
       var button;
@@ -150,11 +184,11 @@
       });
     },
     // Ajax preview
-    _loadPreview: function() {
+    _loadPreview: function(data) {
       this._previousContent = this.$element.val();
 
       $.post(this.$element.data('preview-url'),
-        { text: this.$element.val() },
+        data,
         function(result) {
           this.options.$preview.removeClass('loading-indicator')
             .html(result);
@@ -166,20 +200,25 @@
     _loadWrite: function() {
       $.post(
         this.$element.data('source-url'),
-        {form: JSON.stringify( $('[name^=item_form]', this.options.$form).serializeArray() )},
+        { form: this._serializedFormData() },
         function(result){
           this.$element.val(result);
         }.bind(this)
       );
     },
-    _onKeyPressPreview: function() {
-      // If the text hasn't changed, do nothing.
-      if (this._previousContent == this.$element.val()) {
-        if (!this._previewRendered) {
-          this._loadPreview();
+    _onKeyPressPreview: function(type) {
+      if (type == 'form') {
+        this._loadPreview({ form: this._serializedFormData() });
+      }
+      else if (type == 'text') {
+        // If the text hasn't changed, do nothing.
+        if (this._previousContent == this.$element.val()) {
+          if (!this._previewRendered) {
+            this._loadPreview({ text: this.$element.val() });
+          }
+        } else {
+          this._loadPreview({ text: this.$element.val() });
         }
-      } else {
-        this._loadPreview();
       }
     },
     _onBtnForm: function() {
@@ -292,6 +331,10 @@
       this.options.$wrap.width($(window).width()-20);
       this.options.$preview.height(height-44);
       this.$element.height(height-10);
+    },
+
+    _serializedFormData: function() {
+      return JSON.stringify( $('[name^=item_form]', this.options.$form).serializeArray() );
     }
   };
 
