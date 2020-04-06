@@ -9,7 +9,7 @@
   <td width="60%">
     <% options = value.split(' | ') %>
     <% if allow_dropdown && options.count > 1 %>
-      <%= select :item_form, "field_value_#{index}", options, {}, { class: 'form-control my-1' } %>
+      <%= select :item_form, "field_value_#{index}", options, {}, { class: 'form-control my-1', data: { behavior: 'preview-enabled' } } %>
     <% else %>
       <%= text_area_tag "item_form[field_value_#{index}]", value, rows: 1, class: 'form-control my-1', data: { behavior: 'preview-enabled', expand: 'auto' }, placeholder: 'Enter field value' %>
     <% end %>
