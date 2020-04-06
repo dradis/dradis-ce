@@ -72,6 +72,21 @@
     transition: opacity 0.3s 0.2s ease-in-out;
   }
 
+  &.sticky-toolbar {
+
+    .editor-toolbar {
+      border-radius: 0px;
+      box-shadow: none;
+      left: 1px;
+      width: 99.6%;
+
+      &:after,
+      &:before {
+        display: none;
+      }
+    }
+  }
+
   textarea {
     height: 100%;
   }

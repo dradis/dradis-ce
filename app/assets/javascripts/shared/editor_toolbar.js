@@ -55,10 +55,10 @@ class EditorToolbar {
     // when a toolbar button is clicked
     $('[data-btn]').click(function () {
       var $element = $(this).parents('[data-behavior~=editor-field]').children('textarea, input[type=text]');
-      var affix = that.affixes[$(this).data('btn')]
+      var affix = that.affixes[$(this).data('btn')];
   
       // inject markdown
-      that.injectMarkdown($element, affix);
+      that.injectSyntax($element, affix);
     });
 
     // keyboard shortcuts
@@ -77,9 +77,35 @@ class EditorToolbar {
         $('[data-btn~=link]').click();
       }
     });
+
+    // toolbar sticky positioning
+    $('[data-behavior~=editor-field]').children('textarea').on('focus', function() {
+      var $inputElement = $(this),
+          $toolbarElement = $inputElement.next(),
+          $parentElement = $inputElement.parent();
+
+      // this is needed incase user sets focus on textarea where toolbar would render off screen
+      if ($parentElement.offset().top < $(window).scrollTop() + 60) {
+        $parentElement.addClass('sticky-toolbar');
+        $toolbarElement.css({'top': parseInt(60 - $parentElement.offset().top)});
+      }
+
+      // adjust position on scroll to make toolbar always appear at the top of the textarea
+      document.querySelector('[data-id~=view-content]').addEventListener('scroll', (function stickyToolbar() {
+        var $parentOffset = $parentElement.offset().top;
+        if ($parentOffset < $(window).scrollTop() + 60) {
+          $parentElement.addClass('sticky-toolbar');
+          $toolbarElement.css({'top': parseInt(60 - $parentOffset)});
+        }
+        else {
+          $parentElement.removeClass('sticky-toolbar');
+          $toolbarElement.css({'top': '-3.4rem'});
+        }
+      }));
+    });
   }
 
-  injectMarkdown($element, affix) {
+  injectSyntax($element, affix) {
     var adjustedPrefixLength = affix.prefix.length,
         adjustedSuffixLength = affix.suffix.length,
         startIndex = $element[0].selectionStart,
@@ -87,7 +113,7 @@ class EditorToolbar {
         elementText = $element.val(),
         selectedText = $element.val().substring(startIndex, endIndex);
 
-    var markdownText = (startIndex == endIndex) ? affix.asPlaceholder : affix.withSelection(selectedText)
+    var markdownText = (startIndex == endIndex) ? affix.asPlaceholder : affix.withSelection(selectedText);
 
     adjustedPrefixLength *= selectedText.split('\n').length;
     adjustedSuffixLength *= selectedText.split('\n').length;
@@ -127,7 +153,7 @@ class EditorToolbar {
       'list-ul':     new Affix('* ', 'Unordered item'),
       'quote':       new BlockAffix('bq. ', 'Quoted text'),
       'table':       new Affix('', '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|')
-    }
+    };
   }
 
   textareaElements() {
@@ -167,7 +193,7 @@ class EditorToolbar {
     </div>\
     <div class="editor-btn" data-btn="list-ol" aria-label="ordered list">\
       <i class="fa fa-list-ol"></i>\
-    </div>'
+    </div>';
   }
 
   inputTextElements() {
@@ -186,7 +212,7 @@ class EditorToolbar {
     </div>\
     <div class="editor-btn" data-btn="inline-code" aria-label="inline code">\
       <i class="fa fa-terminal"></i>\
-    </div>'
+    </div>';
   }
 }
 
@@ -201,18 +227,18 @@ class Affix {
   }
 
   get asPlaceholder() {
-    return this.prefix + this.placeholder + this.suffix
+    return this.prefix + this.placeholder + this.suffix;
   }
 
   wrapped(selection) {
-    return this.prefix + selection + this.suffix
+    return this.prefix + selection + this.suffix;
   }
 
   withSelection(selectedText) {
     var lines = selectedText.split('\n');
 
     lines = lines.reduce(function(text, selection, index) {
-      return (index == 0 ? this.wrapped(selection) : text + '\n' + this.wrapped(selection))
+      return (index == 0 ? this.wrapped(selection) : text + '\n' + this.wrapped(selection));
     }.bind(this), '');
 
     // Account for accidental empty line selections before/after a group
@@ -222,12 +248,12 @@ class Affix {
     if (first == '\n') lines.unshift(first);
     if (last == '\n') lines.push(last);
 
-    return lines
+    return lines;
   }
 }
 
 class BlockAffix extends Affix {
   withSelection(selectedText) {
-    return this.prefix + selectedText
+    return this.prefix + selectedText;
   }
 }
