@@ -102,6 +102,11 @@
         this._typingTimer = setTimeout(this._onKeyPressPreview.bind(this, 'text'), this._doneTypingInterval);
       }.bind(this));
 
+      // When auto-save populates data into source view refresh the form
+      this.$element.on('load-preview', function() {
+        this._loadForm(this.$element.val());
+      }.bind(this));
+
       // Bind all form element actions within container
       this.bindFieldGroup(this.options.$form);
     },
@@ -113,6 +118,8 @@
         that._loadPreview({ form: that._serializedFormData() })
       });
 
+      // These are cross-browser hacks to keep textareas expanded to content
+      // while users are typing
       // Handler for setting the correct scrollHeight for current values
       paddingStr = '0.375rem 0.75rem'
       $parent.find('[data-expand~=auto]').each(function() {
@@ -133,7 +140,14 @@
       // Handler for triggering the preview on keyboard input
       $parent.find('[data-behavior~=preview-enabled]').on('textchange load-preview', function() {
         clearTimeout(this._typingTimer);
-        this._typingTimer = setTimeout(this._onKeyPressPreview.bind(this, 'form'), this._doneTypingInterval);
+        this._typingTimer = setTimeout(function() {
+          this._onKeyPressPreview.bind(this, 'form')
+
+          // Piggy back this event for the purpose of updating the source view, which will trigger auto-save
+          // This will be updated/refactored when auto-save is re-worked. Currently it will cause an extra request per edit.
+          this._loadWrite();
+          this.$element.trigger('textchange');
+        }.bind(this), this._doneTypingInterval);
       }.bind(this));
     },
     _buildToolbar: function() {
