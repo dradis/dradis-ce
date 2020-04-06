@@ -146,12 +146,12 @@ class EditorToolbar {
       'bold':        new Affix('*', 'Bold text', '*'),
       'header':      new Affix('#[', 'Header text', ']#'),
       'highlight':   new Affix('$${{', 'Highlighted text', '}}$$'),
-      'inline-code': new Affix('@', 'Inline code', '@'),
+      //'inline-code': new Affix('@', 'Inline code', '@'),
       'italic':      new Affix('_', 'Italic text', '_'),
       'link':        new Affix('"', '', '":http://'),
       'list-ol':     new Affix('# ', 'Ordered item'),
       'list-ul':     new Affix('* ', 'Unordered item'),
-      'quote':       new BlockAffix('bq. ', 'Quoted text'),
+      //'quote':       new BlockAffix('bq. ', 'Quoted text'),
       'table':       new Affix('', '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|')
     };
   }
@@ -167,13 +167,7 @@ class EditorToolbar {
     <div class="editor-btn px-2" data-btn="italic" aria-label="italic text">\
       <i class="fa fa-italic"></i>\
     </div>\
-    <div class="editor-btn" data-btn="highlight" aria-label="highlighted text">\
-      <i class="fa fa-paint-brush"></i>\
-    </div>\
     <div class="divider-vertical"></div>\
-    <div class="editor-btn" data-btn="quote" aria-label="quote block">\
-      <i class="fa fa-quote-left"></i>\
-    </div>\
     <div class="editor-btn" data-btn="link" aria-label="link">\
       <i class="fa fa-link"></i>\
     </div>\
@@ -184,8 +178,8 @@ class EditorToolbar {
     <div class="editor-btn" data-btn="block-code" aria-label="code block">\
       <i class="fa fa-code"></i>\
     </div>\
-    <div class="editor-btn" data-btn="inline-code" aria-label="inline code">\
-      <i class="fa fa-terminal"></i>\
+    <div class="editor-btn" data-btn="highlight" aria-label="highlighted text">\
+      <i class="fa fa-paint-brush"></i>\
     </div>\
     <div class="divider-vertical"></div>\
     <div class="editor-btn" data-btn="list-ul" aria-label="unordered list">\
@@ -194,6 +188,17 @@ class EditorToolbar {
     <div class="editor-btn" data-btn="list-ol" aria-label="ordered list">\
       <i class="fa fa-list-ol"></i>\
     </div>';
+
+    /* Additional buttons for future use
+
+    <div class="editor-btn" data-btn="inline-code" aria-label="inline code">\
+      <i class="fa fa-terminal"></i>\
+    </div>\ 
+    <div class="editor-btn" data-btn="quote" aria-label="quote block">\
+      <i class="fa fa-quote-left"></i>\
+    </div>\
+
+    */
   }
 
   inputTextElements() {
@@ -203,15 +208,9 @@ class EditorToolbar {
     <div class="editor-btn px-2" data-btn="italic" aria-label="italic text">\
       <i class="fa fa-italic"></i>\
     </div>\
-    <div class="editor-btn" data-btn="highlight" aria-label="highlighted text">\
-      <i class="fa fa-paint-brush"></i>\
-    </div>\
     <div class="divider-vertical"></div>\
     <div class="editor-btn" data-btn="link" aria-label="link">\
       <i class="fa fa-link"></i>\
-    </div>\
-    <div class="editor-btn" data-btn="inline-code" aria-label="inline code">\
-      <i class="fa fa-terminal"></i>\
     </div>';
   }
 }
