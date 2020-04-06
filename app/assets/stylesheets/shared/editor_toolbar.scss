@@ -75,14 +75,28 @@
   &.sticky-toolbar {
 
     .editor-toolbar {
+      border: none;
+      border-bottom: 1px solid $borderColor;
       border-radius: 0px;
       box-shadow: none;
-      left: 1px;
-      width: 99.6%;
+      flex-wrap: wrap;
+      left: 0;
+      margin: 0 1px;
 
       &:after,
       &:before {
         display: none;
+      }
+
+      .editor-btn {
+
+        &:first-child {
+          margin-left: auto;
+        }
+  
+        &:last-child {
+          margin-right: auto;
+        }
       }
     }
   }
