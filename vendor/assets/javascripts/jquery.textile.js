@@ -70,8 +70,6 @@
 
       // move textarea to container
       $('.col-6', '.textile-inner', this.options.$wrap).append(this.$element);
-      this.$element.attr('rows', 20);
-      this.$element.prop('disabled', true);
       this.$element.hide();
 
       // add Form

@@ -8,8 +8,10 @@
     f.input :description,
       input_html: {
         class: 'textile',
+        data: textile_form_urls.merge(allow_dropdown: action_name == 'new'),
+        disabled: true,
         label: false,
-        data: textile_form_urls.merge(allow_dropdown: action_name == 'new')
+        rows: 20
       }
   %>
   
