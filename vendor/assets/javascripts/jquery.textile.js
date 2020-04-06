@@ -133,32 +133,10 @@
     // Ajax form
     _loadForm: function(data, allowDropdown) {
       $.post({
-        url: this.$element.data('form-url'),
+        url: this.$element.data('form-url') + '.js',
         data: {source: data, allow_dropdown: allowDropdown},
         beforeSend: function(){
           this.options.$form.addClass('loading-indicator').text('Loading...');
-        }.bind(this),
-        success: function(result){
-          this.options.$form.removeClass('loading-indicator').html('');
-          this.options.$form.removeClass('loading-indicator').append(result);
-
-          $('[data-behavior~=delete-field]').click(function(){
-            $(this).closest('[data-behavior~=textile-form-field]').remove();
-          });
-
-          $('[data-expand~=auto]').each( function() {
-            $(this).css({'padding': '0.375rem 0.75rem', 'height': this.scrollHeight});
-          });
-          
-          $('[data-expand~=auto]').on('keyup', function(e) {
-            $(this).css({
-              'padding': '0.375rem 0.75rem',
-              'height': '1px'
-            }).css({
-              'padding': '0.375rem 0.75rem',
-              'height': this.scrollHeight + 2
-            });
-          });
         }.bind(this)
       });
     },

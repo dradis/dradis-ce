@@ -10,10 +10,10 @@
     <tbody data-behavior="textile-form-body">
     <% if @form_data.any? %>
       <% @form_data.each_with_index do |field, index| %>
-        <%= render partial: 'textile/field', locals: { field: field, index: index, allow_dropdown: @allow_dropdown } %>
+        <%= render partial: 'textile/field', locals: { allow_dropdown: @allow_dropdown, field: field, index: index } %>
       <% end %>
     <% else %>
-      <%= render partial: 'textile/field', locals: { index: 0, allow_dropdown: @allow_dropdown } %>
+      <%= render partial: 'textile/field', locals: { allow_dropdown: @allow_dropdown, index: 0 } %>
     <% end %>
     </tbody>
     <tfoot data-behavior="textile-form-footer">

@@ -10,8 +10,6 @@ class TextileController < AuthenticatedController
   def form
     @form_data = Note.parse_fields(params[:source]) if params[:source]
     @allow_dropdown = JSON.parse(params[:allow_dropdown] || 'false')
-
-    render layout: false
   end
 
   # Returns the markup cheatsheet that is used by the jQuery.Textile plugin Help

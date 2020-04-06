@@ -9,7 +9,9 @@ $('[data-behavior~=delete-field]').click(function(){
   $(this).closest('[data-behavior~=textile-form-field]').remove()
 });
 
-$('[data-expand~=auto]').css({'padding': '0.375rem 0.75rem', 'height': this.scrollHeight});
+$('[data-expand~=auto]').each( function() {
+  $(this).css({'padding': '0.375rem 0.75rem', 'height': this.scrollHeight});
+});
 $('[data-expand~=auto]').on('keyup', function(e) {
   $(this).css({
     'padding': '0.375rem 0.75rem',
