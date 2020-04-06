@@ -194,6 +194,7 @@
 
       // Show Form pane
       this.options.$help.hide();
+      this.options.$preview.show();
       this.$element.prop('disabled', true);
       this.$element.hide();
       this.options.$form.show();
@@ -251,6 +252,7 @@
       // Show Help pane
       this.$element.hide();
       this.options.$form.hide();
+      this.options.$preview.hide();
       this.options.$help.show();
 
       if (!this._helpRendered) {
@@ -264,14 +266,16 @@
       $('.textile-toolbar a', scope).removeClass('active');
       $('.textile-toolbar .btn-write', scope).addClass('active');
 
-      this._loadWrite();
+      // Reload the textarea only when the form has a valid form
+      if (this.options.$form.html() != '') { this._loadWrite(); }
 
       // Clear out the form
-      $('.textile-form').empty();
+      this.options.$form.empty();
 
       // Show Write pane
       this.options.$form.hide();
       this.options.$help.hide();
+      this.options.$preview.show();
       this.$element.prop('disabled', false);
       this.$element.show();
     },
