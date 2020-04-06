@@ -113,11 +113,6 @@
     bindFieldGroup: function($parent) {
       var that = this;
 
-      $parent.find('[data-behavior~=delete-field]').click(function(){
-        $(this).closest('[data-behavior~=textile-form-field]').remove();
-        that._loadPreview({ form: that._serializedFormData() })
-      });
-
       // These are cross-browser hacks to keep textareas expanded to content
       // while users are typing
       // Handler for setting the correct scrollHeight for current values
@@ -137,18 +132,24 @@
         });
       });
 
-      // Handler for triggering the preview on keyboard input
-      $parent.find('[data-behavior~=preview-enabled]').on('textchange load-preview', function() {
-        clearTimeout(this._typingTimer);
-        this._typingTimer = setTimeout(function() {
-          this._onKeyPressPreview.bind(this, 'form')
+      $parent.find('[data-behavior~=delete-field]').click(function(){
+        $(this).closest('[data-behavior~=textile-form-field]').remove();
+        that._timedPreview.bind(that)();
+      });
 
-          // Piggy back this event for the purpose of updating the source view, which will trigger auto-save
-          // This will be updated/refactored when auto-save is re-worked. Currently it will cause an extra request per edit.
-          this._loadWrite();
-          this.$element.trigger('textchange');
-        }.bind(this), this._doneTypingInterval);
-      }.bind(this));
+      // Handler for triggering the preview on keyboard input
+      $parent.find('[data-behavior~=preview-enabled]').on('textchange load-preview', this._timedPreview.bind(this));
+    },
+    _timedPreview: function(view) {
+      clearTimeout(this._typingTimer);
+      this._typingTimer = setTimeout(function() {
+        this._onKeyPressPreview.bind(this, view)
+
+        // Piggy back this event for the purpose of updating the source view, which will trigger auto-save
+        // This will be updated/refactored when auto-save is re-worked. Currently it will cause an extra request per edit.
+        this._loadWrite();
+        this.$element.trigger('textchange');
+      }.bind(this), this._doneTypingInterval);
     },
     _buildToolbar: function() {
       var button;
