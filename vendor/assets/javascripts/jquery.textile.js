@@ -60,6 +60,7 @@
       this._previousContent = this.$element.val();
       this._previewRendered = false;
       this._helpRendered = false;
+      this._doneTypingInterval = 500;
     },
     _buildContainer: function() {
       // Add wrapper div with toolbar and inner container (see defaults.tpl)
@@ -82,16 +83,6 @@
       $('.textile-inner', this.options.$wrap).append(this.options.$preview);
       this._loadPreview({ text: this.$element.val() });
 
-      // Sync preview
-      var typingTimer;
-      var doneTypingInterval = 500;
-
-      // on keyup, start the countdown
-      this.$element.on('textchange load-preview', function () {
-        clearTimeout(typingTimer);
-        typingTimer = setTimeout(this._onKeyPressPreview.bind(this, 'text'), doneTypingInterval);
-      }.bind(this));
-
       // add Help to container and hide
       this.options.$help = $(this.options.tpl.help);
       $('.textile-inner', this.options.$wrap).append(this.options.$help);
@@ -99,6 +90,51 @@
 
       // toolbar
       this._buildToolbar();
+
+      // Event bindings
+      this._bindBehaviors();
+    },
+    _bindBehaviors: function() {
+      // Sync preview
+      // on keyup, start the countdown
+      this.$element.on('textchange load-preview', function() {
+        clearTimeout(this._typingTimer);
+        this._typingTimer = setTimeout(this._onKeyPressPreview.bind(this, 'text'), this._doneTypingInterval);
+      }.bind(this));
+
+      // Bind all form element actions within container
+      this.bindFieldGroup(this.options.$form);
+    },
+    bindFieldGroup: function($parent) {
+      var that = this;
+
+      $parent.find('[data-behavior~=delete-field]').click(function(){
+        $(this).closest('[data-behavior~=textile-form-field]').remove();
+        that._loadPreview({ form: that._serializedFormData() })
+      });
+
+      // Handler for setting the correct scrollHeight for current values
+      paddingStr = '0.375rem 0.75rem'
+      $parent.find('[data-expand~=auto]').each(function() {
+        $(this).css({'padding': paddingStr, 'height': this.scrollHeight});
+      });
+
+      // Handler for setting the correct scrollHeight on keyboard input
+      $parent.find('[data-expand~=auto]').on('keyup', function(e) {
+        $(this).css({
+          'padding': paddingStr,
+          'height': '1px'
+        }).css({
+          'padding': paddingStr,
+          'height': this.scrollHeight + 2
+        });
+      });
+
+      // Handler for triggering the preview on keyboard input
+      $parent.find('[data-behavior~=preview-enabled]').on('textchange load-preview', function() {
+        clearTimeout(this._typingTimer);
+        this._typingTimer = setTimeout(this._onKeyPressPreview.bind(this, 'form'), this._doneTypingInterval);
+      }.bind(this));
     },
     _buildToolbar: function() {
       var button;
