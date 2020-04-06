@@ -144,11 +144,11 @@ class EditorToolbar {
     return {
       'block-code':  new BlockAffix('bc. ', 'Code markup'),
       'bold':        new Affix('*', 'Bold text', '*'),
-      'header':      new Affix('#[', 'Header text', ']#'),
+      'header':      new Affix('#[', 'Header', ']#'),
       'highlight':   new Affix('$${{', 'Highlighted text', '}}$$'),
       //'inline-code': new Affix('@', 'Inline code', '@'),
       'italic':      new Affix('_', 'Italic text', '_'),
-      'link':        new Affix('"', '', '":http://'),
+      'link':        new Affix('"', 'Link text', '":http://'),
       'list-ol':     new Affix('# ', 'Ordered item'),
       'list-ul':     new Affix('* ', 'Unordered item'),
       //'quote':       new BlockAffix('bq. ', 'Quoted text'),
