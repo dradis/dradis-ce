@@ -86,7 +86,7 @@ class ActivityPresenter < BasePresenter
   def linked_email
     if activity.user
       # h.link_to(activity.user.email, 'javascript:void(0);')
-      h.content_tag :strong, activity.user
+      h.content_tag :strong, activity.user.email
     else
       'a user who has since been deleted'
     end
