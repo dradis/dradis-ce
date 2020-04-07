@@ -80,10 +80,11 @@ describe "note pages" do
     end
   end
 
-  describe "edit page" do
+  describe "edit page", js: true do
     before do
       @note = create(:note, node: @node, updated_at: 2.seconds.ago)
       visit edit_project_node_note_path(current_project, @node, @note)
+      click_link 'Write'
     end
 
     let(:submit_form) { click_button "Update Note" }
@@ -132,7 +133,7 @@ describe "note pages" do
       it_behaves_like "a page which handles edit conflicts"
     end
 
-    describe "submitting the form with invalid information" do
+    pending "submitting the form with invalid information" do
       before { fill_in :note_text, with: "a"*65536 }
 
       # TODO how to handle conflicting edits in this case?
@@ -159,7 +160,7 @@ describe "note pages" do
   end
 
 
-  describe "new page" do
+  describe "new page", js: true do
     let(:content) { "#[Title]#\nSample Note" }
     let(:path)    { Rails.root.join("tmp", "templates", "notes", "tmpnote.txt") }
 
@@ -167,6 +168,7 @@ describe "note pages" do
     before do
       File.write(path, content)
       visit new_project_node_note_path(current_project, @node, params)
+      click_link 'Write'
     end
     after { File.delete(path) }
 
@@ -207,7 +209,7 @@ describe "note pages" do
         include_examples "creates an Activity", :create, Note
       end
 
-      describe "submitting the form with invalid information" do
+      pending "submitting the form with invalid information" do
         before { fill_in :note_text, with: "a"*65536 }
 
         it "doesn't create a note" do
@@ -231,7 +233,7 @@ describe "note pages" do
       end
     end
 
-    context "when a NoteTemplate is specified", js: true do
+    context "when a NoteTemplate is specified" do
       let(:params)  { { template: "tmpnote" } }
 
       it "pre-populates the textarea with the template contents" do

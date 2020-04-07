@@ -24,7 +24,7 @@ describe 'Card pages:' do
       @list  = create(:list, board: @board)
     end
 
-    describe 'when in new page' do
+    describe 'when in new page', js: true do
       let(:submit_form) { click_button 'Create Card' }
 
       describe 'textile form view' do
@@ -36,6 +36,7 @@ describe 'Card pages:' do
       describe 'submitting the form with valid information' do
         before do
           visit new_project_board_list_card_path(current_project, @board, @list)
+          click_link 'Write'
           fill_in :card_name, with: 'New Card'
           fill_in :card_description, with: 'New Card Description'
         end
@@ -52,6 +53,7 @@ describe 'Card pages:' do
       describe 'submitting the form with invalid information' do
         before do
           visit new_project_board_list_card_path(current_project, @board, @list)
+          click_link 'Write'
           fill_in :card_name, with: ''
         end
 
@@ -86,7 +88,7 @@ describe 'Card pages:' do
       end
     end
 
-    describe 'when in edit page' do
+    describe 'when in edit page', js: true do
       let(:submit_form) { click_button 'Update Card' }
 
       before do
@@ -102,6 +104,7 @@ describe 'Card pages:' do
       describe 'submitting the form with valid information' do
         before do
           visit edit_project_board_list_card_path(current_project, @board, @list, @card)
+          click_link 'Write'
           fill_in :card_name, with: 'Edited Card'
           fill_in :card_description, with: 'Edited Card Description'
         end
@@ -123,6 +126,7 @@ describe 'Card pages:' do
       describe 'submitting the form with invalid information' do
         before do
           visit edit_project_board_list_card_path(current_project, @board, @list, @card)
+          click_link 'Write'
           fill_in :card_name, with: ''
         end
 

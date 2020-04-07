@@ -79,13 +79,14 @@ describe "evidence" do
   end
 
 
-  describe "edit page" do
+  describe "edit page", js: true do
     let(:submit_form) { click_button "Update Evidence" }
 
     before do
       issue = create(:issue, node: issue_lib)
       @evidence = create(:evidence, issue: issue, node: @node, updated_at: 2.seconds.ago)
       visit edit_project_node_evidence_path(current_project, @node, @evidence)
+      click_link 'Write'
     end
 
     it 'has a form to edit the evidence' do
@@ -124,7 +125,7 @@ describe "evidence" do
       it_behaves_like "a page which handles edit conflicts"
     end
 
-    describe "submitting the form with invalid data" do
+    pending "submitting the form with invalid data" do
       before { fill_in :evidence_content, with: "a"*65536 }
 
       it "doesn't update the evidence" do
@@ -137,7 +138,7 @@ describe "evidence" do
   end
 
 
-  describe "new page" do
+  describe "new page", js: true do
     let(:content) { "#[Title]#\nSample Evidence" }
     let(:tmp_dir) { Rails.root.join("tmp", "templates", "notes") }
     let(:path)    { tmp_dir.join("tmpevidence.txt") }
@@ -152,6 +153,7 @@ describe "evidence" do
       @issue_0 = create(:issue, node: issue_lib, text: "#[Title]#\nIssue 0")
       @issue_1 = create(:issue, node: issue_lib, text: "#[Title]#\nIssue 1")
       visit new_project_node_evidence_path(current_project, @node, params)
+      click_link 'Write'
     end
     # Check the file still exists before trying to delete it, or File.delete
     # will fail noisily (e.g. if the file has been automatically cleaned up by
@@ -200,7 +202,7 @@ describe "evidence" do
         end
       end
 
-      describe "submitting the form with invalid information" do
+      pending "submitting the form with invalid information" do
         before do
           # No issue selected
           fill_in :evidence_content, with: "This is some evidence"
@@ -220,10 +222,11 @@ describe "evidence" do
       end
     end
 
-    context "when a NoteTemplate is specified", js: true do
+    context "when a NoteTemplate is specified" do
       let(:params)  { { template: "tmpevidence" } }
 
       it "pre-populates the textarea with the template contents" do
+        click_link 'Form'
         expect(find_field('item_form[field_name_0]').value).to include('Title')
         expect(find_field('item_form[field_value_0]').value).to include('Sample Evidence')
       end
