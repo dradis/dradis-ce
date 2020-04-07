@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_08_120900) do
+ActiveRecord::Schema.define(version: 2020_04_07_061006) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -34,14 +34,15 @@ ActiveRecord::Schema.define(version: 2020_01_08_120900) do
   end
 
   create_table "activities", force: :cascade do |t|
-    t.string "user", null: false
     t.string "trackable_type", null: false
     t.integer "trackable_id", null: false
     t.string "action", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
     t.index ["created_at"], name: "index_activities_on_created_at"
     t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
+    t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
   create_table "boards", force: :cascade do |t|
