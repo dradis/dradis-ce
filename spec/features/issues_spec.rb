@@ -76,11 +76,13 @@ describe 'Issues pages' do
 
         end
 
-        pending 'submitting the form with invalid information' do
+        context 'submitting the form with invalid information' do
           before do
             visit new_project_issue_path(current_project)
             click_link 'Write'
-            fill_in :issue_text, with: 'a' * 65536
+
+            # Manually update the textarea, otherwise we will get a timeout
+            execute_script("$('#issue_text').val('#{'a' * 65536}')")
           end
 
           it "doesn't create a new Issue" do
@@ -91,7 +93,6 @@ describe 'Issues pages' do
 
           it 'shows the form again with an error message' do
             submit_form
-            should have_field :issue_text
             should have_selector '.alert.alert-error'
           end
         end
@@ -183,8 +184,11 @@ describe 'Issues pages' do
           it_behaves_like 'a page which handles edit conflicts'
         end
 
-        pending 'submitting the form with invalid information' do
-          before { find('#issue_text').set('a' * 65536) }
+        context 'submitting the form with invalid information' do
+          before do
+            # Manually update the textarea, otherwise we will get a timeout
+            execute_script("$('#issue_text').val('#{'a' * 65536}')")
+          end
 
           it "doesn't update the issue" do
             expect { submit_form }.not_to change { @issue.reload.text }

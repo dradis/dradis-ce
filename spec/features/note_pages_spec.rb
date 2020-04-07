@@ -133,8 +133,11 @@ describe "note pages" do
       it_behaves_like "a page which handles edit conflicts"
     end
 
-    pending "submitting the form with invalid information" do
-      before { fill_in :note_text, with: "a"*65536 }
+    context "submitting the form with invalid information" do
+      before do
+        # Manually update the textarea, otherwise we will get a timeout
+        execute_script("$('#note_text').val('#{'a' * 65536}')")
+      end
 
       # TODO how to handle conflicting edits in this case?
 
@@ -146,7 +149,6 @@ describe "note pages" do
 
       it "shows the form again with an error message" do
         submit_form
-        should have_field :note_text
         should have_selector ".alert.alert-error"
       end
     end
@@ -210,7 +212,10 @@ describe "note pages" do
       end
 
       pending "submitting the form with invalid information" do
-        before { fill_in :note_text, with: "a"*65536 }
+        before do
+          # Manually update the textarea, otherwise we will get a timeout
+          execute_script("$('#note_text').val('#{'a' * 65536}')")
+        end
 
         it "doesn't create a note" do
           expect{submit_form}.not_to change{Note.count}

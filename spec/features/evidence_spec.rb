@@ -126,7 +126,10 @@ describe "evidence" do
     end
 
     pending "submitting the form with invalid data" do
-      before { fill_in :evidence_content, with: "a"*65536 }
+      before do
+        # Manually update the textarea, otherwise we will get a timeout
+        execute_script("$('#evidence_content').val('#{'a' * 65536}')")
+      end
 
       it "doesn't update the evidence" do
         expect{submit_form}.not_to change{@evidence.reload.content}
@@ -202,7 +205,7 @@ describe "evidence" do
         end
       end
 
-      pending "submitting the form with invalid information" do
+      context "submitting the form with invalid information" do
         before do
           # No issue selected
           fill_in :evidence_content, with: "This is some evidence"
@@ -217,7 +220,6 @@ describe "evidence" do
         it "shows the form again" do
           submit_form
           expect(page).to have_field :evidence_issue_id
-          expect(page).to have_field :evidence_content
         end
       end
     end

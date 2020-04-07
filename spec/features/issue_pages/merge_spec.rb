@@ -27,7 +27,7 @@ describe 'issue pages' do
     end
 
     context "merge issues into a new one", js: true do
-      describe 'textile form view', focus: true do
+      describe 'textile form view' do
         let(:action_path) { new_project_merge_path(current_project, ids: [@issue1.id, @issue2.id]) }
         let(:required_form) do
           choose('Merge into a new issue')
