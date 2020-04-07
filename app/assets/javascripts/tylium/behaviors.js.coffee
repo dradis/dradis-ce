@@ -71,7 +71,6 @@ document.addEventListener "turbolinks:load", ->
   # Activate jQuery.treeModal
   $('.modal-node-selection-form').treeModal()
 
-
   # ------------------------------------------------------- Bootstrap behaviors
 
   # Focus first input on modal window display.
@@ -144,6 +143,10 @@ document.addEventListener "turbolinks:load", ->
     if e.which == 13
       submitSearch()
 
+  # Toggle sidebar menu
+  $('[data-behavior~=expandable-sidebar]').each ->
+    new Sidebar($(this))
+
   # Collapsable div in sidebar collections
   if $('[data-behavior~=collapse-collection]').length
     $('[data-behavior~=collapse-collection]').click ->
@@ -157,36 +160,6 @@ document.addEventListener "turbolinks:load", ->
   $('[data-behavior~=close-collapse]').on 'click', ->
     $('[data-behavior~=navbar-collapse]').collapse 'hide'
     return
-
-  # Toggle sidebar menu
-
-  $sidebar = $('[data-behavior~=main-sidebar]')
-
-  sidebarOpen = -> 
-    $sidebar.removeClass('sidebar-collapsed').addClass('sidebar-expanded')
-    $sidebar.attr('data-behavior', 'main-sidebar sidebar-expanded')
-    $('[data-behavior~=back-fade]').removeClass('not-faded').addClass('faded')
-
-  sidebarClose = ->
-    $sidebar.removeClass('sidebar-expanded').addClass('sidebar-collapsed')
-    $sidebar.attr('data-behavior', 'main-sidebar sidebar-collapsed')
-    $('[data-behavior~=back-fade]').removeClass('faded').addClass('not-faded')
-
-  $('[data-behavior~=sidebar-toggle]').on 'click', ->
-    if $sidebar.is('[data-behavior~=sidebar-collapsed]')
-      sidebarOpen()
-    else
-      if $(this).is('[data-behavior~=open-only]')
-        return
-      else
-        sidebarClose()
-
-  $('[data-behavior~=back-fade]').on 'click', ->
-    sidebarClose()
-
-  $('[data-behavior~=sidebar-link]').on 'click', ->
-    if $sidebar.is('[data-behavior~=sidebar-expanded]')
-      sidebarClose() 
 
   # Scroll for more indicator functionality
   if $('[data-behavior~=restrict-height]').length
