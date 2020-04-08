@@ -85,6 +85,7 @@
       // add Preview to container and load
       this.options.$preview = $(this.options.tpl.preview);
       $('.textile-inner', this.options.$wrap).append(this.options.$preview);
+      this.options.$preview.children(':first').addClass('textile-preview');
       this._loadPreview({ text: this.$element.val() });
 
       // add Help to container and hide
@@ -211,6 +212,7 @@
         function(result) {
           this.options.$preview.removeClass('loading-indicator')
             .html(result);
+          this.options.$preview.children(':first').addClass('textile-preview');
           this._previewRendered = true;
         }.bind(this)
       );
