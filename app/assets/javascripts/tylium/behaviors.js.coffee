@@ -61,9 +61,6 @@ document.addEventListener "turbolinks:load", ->
   # Activate jQuery.Textile
   $('.textile').textile()
 
-  # Activate Editor Toolbar after Textile
-  new EditorToolbar($('[data-id~=textile-inner], [data-behavior~=comment-feed]'));
-
   # Activate jQuery.breadCrumbs
   $('.breadcrumb').breadcrumbs
     tree: $('.main-sidebar .tree-navigation')
@@ -160,6 +157,10 @@ document.addEventListener "turbolinks:load", ->
   $('[data-behavior~=close-collapse]').on 'click', ->
     $('[data-behavior~=navbar-collapse]').collapse 'hide'
     return
+
+  # Activate Rich Toolbars for the editor, and comments
+  $('[data-behavior~=rich-toolbar]').each ->
+    new EditorToolbar($(this));
 
   # Toggle sidebar menu
 
