@@ -4,7 +4,7 @@ module CommentsHelper
   def comment_formatter(comment)
     @comment_pipeline ||= HTML::Pipeline.new [
       HTML::Pipeline::DradisFieldableFilter,
-      HTML::Pipeline::TextileFilter,
+      HTML::Pipeline::DradisTextileFilter,
       HTML::Pipeline::SanitizationFilter,
       HTML::Pipeline::AutolinkFilter,
       HTML::Pipeline::DradisMentionsFilter,
