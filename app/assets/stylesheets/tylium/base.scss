@@ -45,6 +45,11 @@ a {
   }
 }
 
+blockquote {
+  border-left: 3px solid $primaryColor;
+  padding-left: 1rem;
+}
+
 .btn {
   @include button(#e6e6e6);
   text-shadow: 0 0 0;
@@ -118,6 +123,8 @@ h1, h2, h3, h4, h5, h6 {
 
 mark {
   background-color: yellow;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .nav-pills {

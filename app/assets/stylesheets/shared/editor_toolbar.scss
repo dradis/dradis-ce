@@ -1,0 +1,107 @@
+.editor-field {
+  height: 100%;
+  position: relative;
+  width: 100%;
+
+  .editor-toolbar {
+    background-color: $secondaryBgColor;
+    border: 1px solid $borderColor;
+    border-radius: 20px;
+    box-shadow: 0 20px 30px 0 rgba(33,55,74,0.1);
+    display: inline-flex;
+    right: 0;
+    opacity: 0;
+    padding: 0.25rem;
+    position: absolute;
+    top: -3.4rem;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    visibility: hidden;
+    z-index: 1050;
+
+    &:after {
+      border: 0.5rem solid;
+      border-color: $secondaryBgColor transparent transparent;
+      content: ' ';
+      height: 0;
+      left: 20%;
+      position: absolute;
+      top: 2.45rem;
+      width: 0;
+    }
+
+    &:before {
+      border: 0.5rem solid;
+      border-color: $borderColor transparent transparent;
+      content: ' ';
+      height: 0;
+      left: 20%;
+      position: absolute;
+      top: 2.5rem;
+      width: 0;
+    }
+
+    .editor-btn {
+      align-items: center;
+      background-color: transparent;
+      border: 1px solid transparent;
+      border-radius: 1rem;
+      color: $defaultText;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      width: 2rem;
+      padding: 0.5rem;
+      transition: all 0.2s ease-in-out;
+
+      &.disabled {
+        pointer-events: none;
+      }
+
+      &:hover {
+        background-color: $primaryBgColor;
+        border-color: $borderColor;
+      }
+    }
+  }
+
+  .editor-toolbar:hover,
+  input[type='text']:focus + .editor-toolbar,
+  textarea:focus + .editor-toolbar {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s 0.2s ease-in-out;
+  }
+
+  &.sticky-toolbar {
+
+    .editor-toolbar {
+      border: none;
+      border-bottom: 1px solid $borderColor;
+      border-radius: 0px;
+      box-shadow: none;
+      flex-wrap: wrap;
+      left: 0;
+      margin: 0 1px;
+
+      &:after,
+      &:before {
+        display: none;
+      }
+
+      .editor-btn {
+
+        &:first-child {
+          margin-left: auto;
+        }
+  
+        &:last-child {
+          margin-right: auto;
+        }
+      }
+    }
+  }
+
+  textarea {
+    height: 100%;
+  }
+}

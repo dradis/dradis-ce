@@ -158,6 +158,10 @@ document.addEventListener "turbolinks:load", ->
     $('[data-behavior~=navbar-collapse]').collapse 'hide'
     return
 
+  # Activate Rich Toolbars for the editor, and comments
+  $('[data-behavior~=rich-toolbar]').each ->
+    new EditorToolbar($(this));
+
   # Toggle sidebar menu
 
   $sidebar = $('[data-behavior~=main-sidebar]')

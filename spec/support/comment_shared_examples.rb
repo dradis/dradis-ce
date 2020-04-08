@@ -26,7 +26,7 @@ shared_examples 'a page with a comments feed' do
 
   describe 'add comment', js: true do
     let(:submit_form) do
-      within 'form[data-behavior=add-comment]' do
+      within 'form[data-behavior~=add-comment]' do
         fill_in 'comment[content]', with: 'test comment'
         click_button 'Add comment'
       end
