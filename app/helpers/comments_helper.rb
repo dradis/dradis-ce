@@ -2,8 +2,9 @@
 
 module CommentsHelper
   def comment_formatter(comment)
+    # We don't use Dradis Style headers in comments as the comment doesn't use
+    # the fieldable module or have the concept of fields.
     @comment_pipeline ||= HTML::Pipeline.new [
-      HTML::Pipeline::DradisFieldableFilter,
       HTML::Pipeline::DradisTextileFilter,
       HTML::Pipeline::SanitizationFilter,
       HTML::Pipeline::AutolinkFilter,
