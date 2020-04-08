@@ -42,13 +42,19 @@ class EditorToolbar {
   behaviors() {
     var that = this;
 
-    // enabling/disabling specific toolbar functions for textareas on selection
     $('[data-behavior~=editor-field] textarea').on('click change keyup select', function() {   
+      // enabling/disabling specific toolbar functions for textareas on selection
       if (window.getSelection().toString().length > 0 || this.selectionStart != this.selectionEnd) { // when there is text selected
         $(this).parent().find('[data-btn~=table]').addClass('disabled');
       }
       else { // when there is no text selected
         $(this).parent().find('[data-btn~=table]').removeClass('disabled');
+      }
+
+      // remove field button in comments
+      if ($(this).parents().is('[data-behavior~=comment-feed]')) {
+        $(this).parent().find('[data-btn~=field]').next().remove();
+        $(this).parent().find('[data-btn~=field]').remove();
       }
     });
 
@@ -144,8 +150,8 @@ class EditorToolbar {
     return {
       'block-code':  new BlockAffix('bc. ', 'Code markup'),
       'bold':        new Affix('*', 'Bold text', '*'),
-      'header':      new Affix('#[', 'Header', ']#'),
-      'highlight':   new Affix('$${{', 'Highlighted text', '}}$$'),
+      'field':      new Affix('#[', 'Field', ']#\n'),
+      //'highlight':   new Affix('$${{', 'Highlighted text', '}}$$'),
       //'inline-code': new Affix('@', 'Inline code', '@'),
       'italic':      new Affix('_', 'Italic text', '_'),
       'link':        new Affix('"', 'Link text', '":http://'),
@@ -157,8 +163,8 @@ class EditorToolbar {
   }
 
   textareaElements() {
-    return '<div class="editor-btn" data-btn="header" aria-label="header text">\
-      <i class="fa fa-header"></i>\
+    return '<div class="editor-btn" data-btn="field" aria-label="add new field">\
+      <i class="fa fa-plus"></i>\
     </div>\
     <div class="divider-vertical"></div>\
     <div class="editor-btn" data-btn="bold" aria-label="bold text">\
@@ -168,18 +174,14 @@ class EditorToolbar {
       <i class="fa fa-italic"></i>\
     </div>\
     <div class="divider-vertical"></div>\
+    <div class="editor-btn" data-btn="block-code" aria-label="code block">\
+      <i class="fa fa-code"></i>\
+    </div>\
     <div class="editor-btn" data-btn="link" aria-label="link">\
       <i class="fa fa-link"></i>\
     </div>\
     <div class="editor-btn" data-btn="table" aria-label="table">\
       <i class="fa fa-table"></i>\
-    </div>\
-    <div class="divider-vertical"></div>\
-    <div class="editor-btn" data-btn="block-code" aria-label="code block">\
-      <i class="fa fa-code"></i>\
-    </div>\
-    <div class="editor-btn" data-btn="highlight" aria-label="highlighted text">\
-      <i class="fa fa-paint-brush"></i>\
     </div>\
     <div class="divider-vertical"></div>\
     <div class="editor-btn" data-btn="list-ul" aria-label="unordered list">\
@@ -191,6 +193,9 @@ class EditorToolbar {
 
     /* Additional buttons for future use
 
+    <div class="editor-btn" data-btn="highlight" aria-label="highlighted text">\
+      <i class="fa fa-paint-brush"></i>\
+    </div>\
     <div class="editor-btn" data-btn="inline-code" aria-label="inline code">\
       <i class="fa fa-terminal"></i>\
     </div>\ 
