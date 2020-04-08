@@ -68,6 +68,7 @@
       // container
       this.options.$wrap = $(this.options.tpl.wrap);
       this.$element.parent().append( this.options.$wrap );
+      this.$element.addClass('h-100');
 
       // set data-expand="auto" on textarea element
       this.$element[0].setAttribute('data-expand', 'auto');
@@ -347,8 +348,6 @@
       var height = $(window).height() - hfix;
 
       this.options.$wrap.width($(window).width()-20);
-      this.options.$preview.height(height-44);
-      this.$element.height(height-10);
     },
 
     _serializedFormData: function() {
