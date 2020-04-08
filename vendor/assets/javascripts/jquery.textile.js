@@ -69,6 +69,9 @@
       this.options.$wrap = $(this.options.tpl.wrap);
       this.$element.parent().append( this.options.$wrap );
 
+      // set data-expand="auto" on textarea element
+      this.$element[0].setAttribute('data-expand', 'auto');
+
       // move textarea to container
       $('.col-6', '.textile-inner', this.options.$wrap).append(this.$element);
       this.$element.hide();
