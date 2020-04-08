@@ -126,6 +126,7 @@
   word-break: break-word;
 
   &.textile-fullscreen {
+    overflow: auto;
     
     .textile-preview {
       height: initial;
