@@ -17,7 +17,7 @@ class AddUserIdToActivities < ActiveRecord::Migration[5.2]
 
     Activity.transaction do
       Activity.all.each do |activity|
-        activity.update_attribute :user, activity.user.try(:email)
+        activity.update_column :user, activity.user.try(:email)
       end
     end
 
