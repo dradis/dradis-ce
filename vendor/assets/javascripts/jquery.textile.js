@@ -328,9 +328,6 @@
       $('.textile-toolbar a', scope).removeClass('active');
       $('.textile-toolbar .btn-write', scope).addClass('active');
 
-      // Reload the textarea only when the form has a valid form
-      if (this.options.$inline.html() != '') { this._loadSource(); }
-
       // Clear out the form
       this.options.$inline.empty();
 
