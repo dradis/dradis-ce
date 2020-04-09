@@ -70,17 +70,19 @@ class EditorToolbar {
     // keyboard shortcuts
     $('[data-behavior~=editor-field]').children('textarea, input[type=text]').keydown(function(e) {
       var key = e.which || e.keyCode; // for cross-browser compatibility
+      var scope = $(e.target).parent('[data-behavior~=editor-field]');
+
       if (e.metaKey && key === 66 ) { // 66 = b
         e.preventDefault();
-        $('[data-btn~=bold]').click();
+        scope.find('[data-btn~=bold]').click();
       }
       else if (e.metaKey && key === 73 ) { // 73 = i
         e.preventDefault();
-        $('[data-btn~=italic]').click();
+        scope.find('[data-btn~=italic]').click();
       }
       else if (e.metaKey && key === 75 ) { // 75 = k
         e.preventDefault();
-        $('[data-btn~=link]').click();
+        scope.find('[data-btn~=link]').click();
       }
     });
 
