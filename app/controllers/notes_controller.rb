@@ -3,7 +3,6 @@
 class NotesController < NestedNodeResourceController
   include Commented
   include ConflictResolver
-  include FormDradifier
   include Mentioned
   include MultipleDestroy
   include NodesSidebar
@@ -11,7 +10,6 @@ class NotesController < NestedNodeResourceController
 
   before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
-  before_action :convert_form_content, only: [:create, :update]
 
   def new
     @note = @node.notes.new

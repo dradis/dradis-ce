@@ -11,7 +11,6 @@
           autosave_key: "#{current_project.id}-issue-#{ @issue.persisted? ? "edit-#{@issue.id}" : 'new' }",
           behavior: 'auto-save'
         }),
-        disabled: true,
         rows: 20
       }
   %>

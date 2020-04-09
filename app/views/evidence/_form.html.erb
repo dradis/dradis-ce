@@ -12,7 +12,6 @@
           autosave_key: "#{current_project.id}-evidence-#{ @evidence.persisted? ? "edit-#{@evidence.id}" : "new-for-#{@node.id}" }",
           behavior: 'auto-save'
         }),
-        disabled: true,
         rows: 20
       }
     %>

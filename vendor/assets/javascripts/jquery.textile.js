@@ -339,7 +339,6 @@
       this.options.$inline.hide();
       this.options.$help.hide();
       this.options.$preview.show();
-      this.$element.prop('disabled', false);
       this.$source.show();
     },
 
