@@ -5,7 +5,7 @@
     f.input :text,
       label: false,
       input_html: {
-        class: 'textile',
+        class: 'textile h-100',
         data: textile_default_data.merge({
           allow_dropdown: @issue.new_record?,
           autosave_key: "#{current_project.id}-issue-#{ @issue.persisted? ? "edit-#{@issue.id}" : 'new' }",
