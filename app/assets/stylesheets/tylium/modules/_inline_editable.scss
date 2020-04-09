@@ -1,7 +1,7 @@
 .inline-editable {
 
   .edit-hover {
-    align-items: baseline;
+    align-items: flex-start;
     display: inline-flex;
     width: 100%;
 
@@ -13,6 +13,7 @@
   }
 
   i.fa-pencil {
+    margin-top: 0.75rem;
     opacity: 0.2;
     transition: opacity 0.2s ease-in-out;
   }
