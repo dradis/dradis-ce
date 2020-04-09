@@ -8,7 +8,11 @@
     f.input :description,
       input_html: {
         class: 'textile h-100',
-        data: textile_default_data.merge(allow_dropdown: @card.new_record?),
+        data: textile_default_data.merge(
+          allow_dropdown: @card.new_record?,
+          behavior: 'rich-toolbar',
+          'rich-toolbar': 'block-code bold field italic link list-ol list-ul table'
+        ),
         disabled: true,
         label: false,
         rows: 20

@@ -8,7 +8,15 @@
       <div class="inline-editable w-50" data-behavior="inline-editable">
         <div class="edit-hover">
           <i class="fa fa-pencil" data-behavior="edit-field"></i>
-          <%= text_field_tag "item_form[field_name_#{index}]", field_name, class: 'form-control', onkeydown: 'return (event.keyCode!=13);', data: { behavior: 'preview-enabled' }, placeholder: 'Enter field name' %>
+          <%= text_field_tag "item_form[field_name_#{index}]", field_name,
+            class: 'form-control',
+            onkeydown: 'return (event.keyCode!=13);',
+            data: {
+              behavior: 'preview-enabled rich-toolbar',
+              'rich-toolbar': 'block-code bold italic link list-ol list-ul table'
+            },
+            placeholder: 'Enter field name'
+          %>
         </div>
       </div>
       <div class="actions">
@@ -24,7 +32,15 @@
         <% if allow_dropdown && options.count > 1 %>
           <%= select :item_form, "field_value_#{index}", options, {}, { class: 'form-control', data: { behavior: 'preview-enabled' } } %>
         <% else %>
-          <%= text_area_tag "item_form[field_value_#{index}]", value, rows: 1, class: 'form-control', data: { behavior: 'preview-enabled', expand: 'auto' }, placeholder: 'Enter field value' %>
+          <%= text_area_tag "item_form[field_value_#{index}]", value, rows: 1,
+            class: 'form-control',
+            data: {
+              behavior: 'preview-enabled rich-toolbar',
+              'rich-toolbar': 'block-code bold italic link list-ol list-ul table',
+              expand: 'auto'
+            },
+            placeholder: 'Enter field value'
+          %>
         <% end %>
       </div>
     </div>
