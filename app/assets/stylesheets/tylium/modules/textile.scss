@@ -138,11 +138,14 @@
     background: transparent;
 
     .textile-form {
-      border: 1px solid $borderColor;
-      border-radius: 5px;
 
       .add-field {
         margin: 0.4rem .75rem;
+      }
+
+      .table {
+        border-collapse: separate;
+        border-spacing: 0;
       }
 
       .textile-form-field {
@@ -172,8 +175,22 @@
           }
         }
 
+        &:last-of-type {
+          
+          td {
+            border-bottom: 1px solid $borderColor;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+          }
+        }
+
         textarea {
           min-height: 36px;
+        }
+
+        td {
+          border: 1px solid $borderColor;
+          border-bottom: none;
         }
       } 
     }
