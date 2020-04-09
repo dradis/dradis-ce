@@ -20,7 +20,7 @@ class EditorToolbar {
 
   init() {
     // find all child input text and textarea elements
-    this.$target.find('input[type="text"], textarea').each(function() {
+    this.$target.find('textarea').each(function() {
       // wrap each element in a div and add toolbar element as sibling
       $(this).wrap('<div class="editor-field" data-behavior="editor-field"></div>');
       $(this).parent().append('<div class="editor-toolbar" data-behavior="editor-toolbar"></div>');
@@ -31,9 +31,12 @@ class EditorToolbar {
     $('[data-behavior~=editor-toolbar]').each(function() {
       if ($(this).prev('textarea').length) { // toolbar for textarea elements
         $(this).append(that.textareaElements());
-      } else if ($(this).prev('input[type=text]').length) { // toolbar for input type=text elements
+      } 
+      /*
+      else if ($(this).prev('input[type=text]').length) { // toolbar for input type=text elements
         $(this).append(that.inputTextElements());
       }
+      */
     });
 
     this.behaviors();
@@ -208,6 +211,7 @@ class EditorToolbar {
     */
   }
 
+  /*
   inputTextElements() {
     return '<div class="editor-btn" data-btn="bold" aria-label="bold text">\
       <i class="fa fa-bold"></i>\
@@ -220,6 +224,7 @@ class EditorToolbar {
       <i class="fa fa-link"></i>\
     </div>';
   }
+  */
 }
 
 /*
