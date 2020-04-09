@@ -4,18 +4,18 @@ module FormDradifier
   def convert_form_content
     return unless params[:item_form]
 
-    item = instance_variable_get("@#{controller_name.singularize}")
+    record = instance_variable_get("@#{controller_name.singularize}")
     # Assign the issue for the Issues::MergeController
-    item = @issue if controller_name.singularize == 'merge'
+    record = @issue if controller_name.singularize == 'merge'
 
     content_attribute =
-      case item
+      case record
       when Card; :description
       when Issue, Note; :text
       when Evidence; :content
       end
 
-    item.send("#{content_attribute}=", dradify_form)
+    record.send("#{content_attribute}=", dradify_form)
   end
 
   protected
