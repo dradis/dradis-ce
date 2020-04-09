@@ -28,7 +28,7 @@
         // HTML templates
         tpl: {
           form: '<div class="textile-form h-100"></div>',
-          wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row"><div class="col-6"></div></div></div>',
+          wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row" data-behavior="rich-toolbar"><div class="col-6"></div></div></div>',
           preview: '<div class="col-6"><div class="textile-preview loading-indicator">Loading...</div></div>',
           help: '<div class="textile-help col-12 loading-indicator">Loading...</div>'
         }

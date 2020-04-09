@@ -29,7 +29,17 @@
     li {
       @include active-nav;
     }
+  }
 
+  &.no-animation {
+    .team-logo,
+    .team-name,
+    .nodes-list,
+    .sidebar-link-label,
+    .sidebar-link-icon {
+      animation: none !important;
+      transition: none !important;
+    }
   }
 
   .nodes-nav {
