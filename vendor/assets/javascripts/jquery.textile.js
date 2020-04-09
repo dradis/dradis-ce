@@ -260,7 +260,7 @@
       this.options.$help.hide();
       this.options.$preview.show();
       this.$element.prop('disabled', true);
-      this.$element.hide();
+      this.$element.parent().hide();
       this.options.$form.show();
     },
     _onBtnFullScreen: function() {
@@ -341,6 +341,7 @@
       this.options.$help.hide();
       this.options.$preview.show();
       this.$element.prop('disabled', false);
+      this.$element.parent().show();
       this.$element.show();
     },
 
