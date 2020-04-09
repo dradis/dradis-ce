@@ -71,7 +71,7 @@ class EditorToolbar {
     });
 
     // toolbar sticky positioning
-    this.$editorField.find('textarea').on('focus', function() {
+    $('[data-behavior~=editor-field]').children('textarea').on('focus', function() {
       var $inputElement = $(this),
           $toolbarElement = $inputElement.next(),
           $parentElement = $inputElement.parent();
@@ -79,19 +79,42 @@ class EditorToolbar {
       // this is needed incase user sets focus on textarea where toolbar would render off screen
       if ($parentElement.offset().top < $(window).scrollTop() + 60) {
         $parentElement.addClass('sticky-toolbar');
-        $toolbarElement.css({'top': parseInt(60 - $parentElement.offset().top)});
+        $toolbarElement.css('top', parseInt(60 - $parentElement.offset().top));
+
+        // adjust the toolbar position for field view
+        if ($toolbarElement.parents('[data-behavior~=textile-form-field]').length) {
+          $toolbarElement.css({'left': '-25px', 'right': '-13px'});
+        }
       }
 
       // adjust position on scroll to make toolbar always appear at the top of the textarea
       document.querySelector('[data-behavior~=view-content]').addEventListener('scroll', (function stickyToolbar() {
-        var $parentOffset = $parentElement.offset().top;
-        if ($parentOffset < $(window).scrollTop() + 60) {
+        var parentOffsetTop = $parentElement.offset().top - 60;
+
+        // keep toolbar at the top of text area when scrolling
+        if (parentOffsetTop < $(window).scrollTop()) {
           $parentElement.addClass('sticky-toolbar');
-          $toolbarElement.css({'top': parseInt(60 - $parentOffset)});
+          $toolbarElement.css('top', parseInt($(window).scrollTop() - parentOffsetTop));
+          
+          // when the toolbar reaches the bottom, stop it from moving further.
+          if (parentOffsetTop + $inputElement.outerHeight() < $(window).scrollTop() + $toolbarElement.height()) {
+            $toolbarElement.css('top', parseInt($inputElement.outerHeight() - $toolbarElement.height() - 2));
+          }
+
+          // adjust the toolbar position for field view
+          if ($toolbarElement.parents('[data-behavior~=textile-form-field]').length) {
+            $toolbarElement.css({'left': '-25px', 'right': '-13px'});
+          }
         }
         else {
+          // reset the toolbar to the default positial and appearance
           $parentElement.removeClass('sticky-toolbar');
-          $toolbarElement.css({'top': '-3.4rem'});
+          $toolbarElement.css('top', '-3.4rem');
+
+          // reset field view specific toolbar properties
+          if ($toolbarElement.parents('[data-behavior~=textile-form-field]').length) {
+            $toolbarElement.css({'left': 'initial', 'right': '-0.25rem'});
+          }
         }
       }));
     });
