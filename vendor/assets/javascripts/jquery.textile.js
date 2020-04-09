@@ -27,7 +27,7 @@
         resize: true,
         // HTML templates
         tpl: {
-          form: '<div class="textile-form h-100"></div>',
+          inline: '<div class="textile-form h-100"></div>',
           wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row" data-behavior="rich-toolbar"><div class="col-6"></div></div></div>',
           preview: '<div class="col-6"><div class="textile-preview loading-indicator">Loading...</div></div>',
           help: '<div class="textile-help col-12 loading-indicator">Loading...</div>'
@@ -78,9 +78,9 @@
       this.$element.hide();
 
       // add Form
-      this.options.$form = $(this.options.tpl.form);
-      $('.col-6', '.textile-inner', this.options.$wrap).append(this.options.$form);
-      this._loadForm(this.$element.val(), this.$element.data('allow-dropdown'));
+      this.options.$inline = $(this.options.tpl.inline);
+      $('.textile-inner', this.options.$wrap).append(this.options.$inline);
+      this._loadInline(this.$element.val(), this.$element.data('allow-dropdown'));
 
       // add Preview to container and load
       this.options.$preview = $(this.options.tpl.preview);
@@ -109,11 +109,11 @@
 
       // When auto-save populates data into source view refresh the form
       this.$element.on('load-preview', function() {
-        this._loadForm(this.$element.val());
+        this._loadInline(this.$element.val());
       }.bind(this));
 
       // Bind all form element actions within container
-      this.bindFieldGroup(this.options.$form);
+      this.bindFieldGroup(this.options.$inline);
     },
     bindFieldGroup: function($parent) {
       var that = this;
@@ -156,7 +156,7 @@
 
         // Piggy back this event for the purpose of updating the source view, which will trigger auto-save
         // This will be updated/refactored when auto-save is re-worked. Currently it will cause an extra request per edit.
-        this._loadWrite();
+        this._loadSource();
         this.$element.trigger('textchange');
       }.bind(this), this._doneTypingInterval);
     },
@@ -164,13 +164,13 @@
       var button;
 
       // Form
-      button = $('<a class="btn-form active" href="javascript:void(null);"><span>Form</span></a>');
-      button.click( $.proxy( function(evt) { this._onBtnForm(evt); }, this));
+      button = $('<a class="btn-form active" href="javascript:void(null);"><span>Inline</span></a>');
+      button.click( $.proxy( function(evt) { this._onBtnInline(evt); }, this));
       $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
 
-      // Write
-      button = $('<a class="btn-write" href="javascript:void(null);"><span>Write</span></a>');
-      button.click( $.proxy( function(evt) { this._onBtnWrite(evt); }, this));
+      // Source
+      button = $('<a class="btn-write" href="javascript:void(null);"><span>Source</span></a>');
+      button.click( $.proxy( function(evt) { this._onBtnSource(evt); }, this));
       $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
 
       // Full screen
@@ -189,12 +189,12 @@
 
     },
     // Ajax form
-    _loadForm: function(data, allowDropdown) {
+    _loadInline: function(data, allowDropdown) {
       $.post({
         url: this.$element.data('form-url') + '.js',
         data: {source: data, allow_dropdown: allowDropdown},
         beforeSend: function(){
-          this.options.$form.addClass('loading-indicator').text('Loading...');
+          this.options.$inline.addClass('loading-indicator').text('Loading...');
         }.bind(this)
       });
     },
@@ -222,7 +222,7 @@
       );
     },
     // Ajax write
-    _loadWrite: function() {
+    _loadSource: function() {
       $.post(
         this.$element.data('source-url'),
         { form: this._serializedFormData() },
@@ -232,8 +232,8 @@
       );
     },
     _onKeyPressPreview: function(type) {
-      if (type == 'form') {
-        this._loadPreview({ form: this._serializedFormData() });
+      if (type == 'inline') {
+        this._loadPreview({ inline: this._serializedFormData() });
       }
       else if (type == 'text') {
         // If the text hasn't changed, do nothing.
@@ -246,7 +246,7 @@
         }
       }
     },
-    _onBtnForm: function() {
+    _onBtnInline: function() {
       // Activate toolbar button
       var scope = this.options.$wrap;
       $('.textile-toolbar a', scope).removeClass('active');
@@ -254,7 +254,7 @@
 
       $('.textile-form').empty();
 
-      this._loadForm(this.$element.val(), false);
+      this._loadInline(this.$element.val(), false);
 
       // Show Form pane
       this.options.$help.hide();
@@ -314,8 +314,8 @@
       $('.textile-toolbar .btn-help', scope).addClass('active');
 
       // Show Help pane
-      this.$element.hide();
-      this.options.$form.hide();
+      this.$source.hide();
+      this.options.$inline.hide();
       this.options.$preview.hide();
       this.options.$help.show();
 
@@ -324,25 +324,24 @@
       }
     },
     // Toolbar button handlers
-    _onBtnWrite: function() {
+    _onBtnSource: function() {
       // Activate toolbar button
       var scope = this.options.$wrap;
       $('.textile-toolbar a', scope).removeClass('active');
       $('.textile-toolbar .btn-write', scope).addClass('active');
 
       // Reload the textarea only when the form has a valid form
-      if (this.options.$form.html() != '') { this._loadWrite(); }
+      if (this.options.$inline.html() != '') { this._loadSource(); }
 
       // Clear out the form
-      this.options.$form.empty();
+      this.options.$inline.empty();
 
-      // Show Write pane
-      this.options.$form.hide();
+      // Show Source pane
+      this.options.$inline.hide();
       this.options.$help.hide();
       this.options.$preview.show();
       this.$element.prop('disabled', false);
-      this.$element.parent().show();
-      this.$element.show();
+      this.$source.show();
     },
 
     // --------------------------------------------------- Other event handlers
@@ -358,7 +357,7 @@
     },
 
     _serializedFormData: function() {
-      return JSON.stringify( $('[name^=item_form]', this.options.$form).serializeArray() );
+      return JSON.stringify( $('[name^=item_form]', this.options.$inline).serializeArray() );
     }
   };
 
