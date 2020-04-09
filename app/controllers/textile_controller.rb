@@ -1,6 +1,4 @@
 class TextileController < AuthenticatedController
-  include FormDradifier
-
   # Returns a single field for the form view
   def field
     @index = params[:index].to_i
@@ -20,14 +18,14 @@ class TextileController < AuthenticatedController
 
   # Returns the source test given a form data
   def source
-    render plain: dradify_form(form_data: form_params)
+    render plain: convert_to_source(form_params)
   end
 
   # Returns the Textile version of a text passed as parameter
   def textilize
     @text =
       if params[:form]
-        dradify_form(form_data: form_params)
+        convert_to_source(form_params)
       else
         params[:text]
       end
@@ -36,6 +34,17 @@ class TextileController < AuthenticatedController
   end
 
   private
+
+  # Convert serialized form data to Dradis-style item content
+  def convert_to_source(form_data)
+    form_data.each_slice(2).map do |field_name, field_value|
+      field = field_name[1]
+      value = field_value[1]
+      next if field.empty? || (field.empty? && value.empty?)
+
+      "#[#{field}]#\n#{value}"
+    end.compact.join("\n\n")
+  end
 
   # Reformatted form parameters to be dradified
   def form_params

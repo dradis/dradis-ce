@@ -258,7 +258,6 @@
 
       // Show Form pane
       this.options.$help.hide();
-      this.$element.prop('disabled', true);
       this.$source.hide();
       this.options.$inline.show();
     },
