@@ -12,7 +12,7 @@
   </table>
 </div>
 <div class="add-field">
-  <%= link_to field_path(index: @form_data.length + 1), data: { behavior: 'add-field' }, remote: true do %>
+  <%= link_to field_textile_path(index: @form_data.length + 1), data: { behavior: 'add-field' }, remote: true do %>
     <i class="fa fa-plus"></i> Add field
   <% end %>
 </div>
