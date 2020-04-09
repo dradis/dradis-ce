@@ -143,13 +143,8 @@
       });
 
       $parent.find('[data-behavior~=edit-field]').click(function(){
-        if ($(this).next('[data-behavior~=editor-field]').length) {
-          $(this).next().find('textarea').focus();
-        }
-        else {
-          $(this).next('input[type=text]').focus();
-        }
-     });
+        $parent.find($(this).data('edit-field')).focus();
+      });
 
       // Handler for triggering the preview on keyboard input
       $parent.find('[data-behavior~=preview-enabled]').on('textchange load-preview', this._timedPreview.bind(this));

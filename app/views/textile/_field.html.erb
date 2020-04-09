@@ -7,7 +7,7 @@
     <div class="d-inline-flex justify-content-between w-100">
       <div class="inline-editable w-50" data-behavior="inline-editable">
         <div class="edit-hover">
-          <i class="fa fa-pencil" data-behavior="edit-field"></i>
+          <i class="fa fa-pencil" data-behavior="edit-field" data-edit-field="#item_form_field_name_<%= index %>"></i>
           <%= text_field_tag "item_form[field_name_#{index}]", field_name,
             class: 'form-control',
             onkeydown: 'return (event.keyCode!=13);',
@@ -26,7 +26,7 @@
     </div>
     <div class="inline-editable">
       <div class="edit-hover">
-        <i class="fa fa-pencil" data-behavior="edit-field"></i>
+        <i class="fa fa-pencil" data-behavior="edit-field" data-edit-field="#item_form_field_value_<%= index %>"></i>
         <% options = value.split(' | ') %>
         <% if allow_dropdown && options.count > 1 %>
           <%= select :item_form, "field_value_#{index}", options, {}, { class: 'form-control', data: { behavior: 'preview-enabled' } } %>
