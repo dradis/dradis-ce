@@ -122,13 +122,11 @@ Rails.application.routes.draw do
   # -------------------------------------------------------------- Static pages
   # jQuery Textile URLs
   resource :textile, controller: :textile, only: [] do
-    collection do
-      get :field, as: :field
-      post :form, as: :form
-      get :'markup-help', as: :markup_help
-      post :textilize, as: :textilize
-      post :source, as: :source
-    end
+    get :field, as: :field
+    post :form, as: :form
+    get :'markup-help', as: :markup_help
+    post :textilize, as: :textilize
+    post :source, as: :source
   end
 
   root to: 'projects#index'
