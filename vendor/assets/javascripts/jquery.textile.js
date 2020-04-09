@@ -27,8 +27,8 @@
         resize: true,
         // HTML templates
         tpl: {
-          inline: '<div class="textile-form h-100"></div>',
-          wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row" data-behavior="rich-toolbar"><div class="col-6"></div></div></div>',
+          inline: '<div class="textile-form h-100 col-6"></div>',
+          wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row" data-behavior="rich-toolbar"></div></div>',
           preview: '<div class="col-6"><div class="textile-preview loading-indicator">Loading...</div></div>',
           help: '<div class="textile-help col-12 loading-indicator">Loading...</div>'
         }
@@ -68,14 +68,14 @@
       // container
       this.options.$wrap = $(this.options.tpl.wrap);
       this.$element.parent().append( this.options.$wrap );
-      this.$element.addClass('h-100');
 
       // set data-expand="auto" on textarea element
       this.$element[0].setAttribute('data-expand', 'auto');
 
       // move textarea to container
-      $('.col-6', '.textile-inner', this.options.$wrap).append(this.$element);
-      this.$element.hide();
+      this.$source = this.$element.wrap('<div class="col-6"></div>').parent();
+      $('.textile-inner', this.options.$wrap).append(this.$source);
+      this.$source.hide();
 
       // add Form
       this.options.$inline = $(this.options.tpl.inline);
@@ -258,10 +258,9 @@
 
       // Show Form pane
       this.options.$help.hide();
-      this.options.$preview.show();
       this.$element.prop('disabled', true);
-      this.$element.parent().hide();
-      this.options.$form.show();
+      this.$source.hide();
+      this.options.$inline.show();
     },
     _onBtnFullScreen: function() {
       $btnFS = $('.btn-fullscreen', this.options.$wrap);

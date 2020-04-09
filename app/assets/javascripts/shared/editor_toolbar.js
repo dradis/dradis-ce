@@ -24,9 +24,6 @@ class EditorToolbar {
       // wrap each element in a div and add toolbar element as sibling
       $(this).wrap('<div class="editor-field" data-behavior="editor-field"></div>');
       $(this).parent().append('<div class="editor-toolbar" data-behavior="editor-toolbar"></div>');
-      if ($(this).parents().is('[data-behavior~=rich-toolbar]')) {
-        $(this).parent().hide();
-      }
     });
 
     // create toolbar buttons for each toolbar
