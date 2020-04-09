@@ -53,20 +53,20 @@ class EditorToolbar {
     });
 
     // keyboard shortcuts
-    this.$editorToolbar.children('textarea, input[type=text]').keydown(function(e) {
+    this.$editorField.children('textarea, input[type=text]').keydown(function(e) {
       var key = e.which || e.keyCode; // for cross-browser compatibility
 
       if (e.metaKey && key === 66 ) { // 66 = b
         e.preventDefault();
-        this.$editorToolbar.find('[data-btn~=bold]').click();
+        that.$editorToolbar.find('[data-btn~=bold]').click();
       }
       else if (e.metaKey && key === 73 ) { // 73 = i
         e.preventDefault();
-        this.$editorToolbar.find('[data-btn~=italic]').click();
+        that.$editorToolbar.find('[data-btn~=italic]').click();
       }
       else if (e.metaKey && key === 75 ) { // 75 = k
         e.preventDefault();
-        this.$editorToolbar.find('[data-btn~=link]').click();
+        that.$editorToolbar.find('[data-btn~=link]').click();
       }
     });
 
