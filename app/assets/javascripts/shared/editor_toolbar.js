@@ -97,7 +97,7 @@ class EditorToolbar {
       }
 
       // adjust position on scroll to make toolbar always appear at the top of the textarea
-      document.querySelector('[data-id~=view-content]').addEventListener('scroll', (function stickyToolbar() {
+      document.querySelector('[data-behavior~=view-content]').addEventListener('scroll', (function stickyToolbar() {
         var $parentOffset = $parentElement.offset().top;
         if ($parentOffset < $(window).scrollTop() + 60) {
           $parentElement.addClass('sticky-toolbar');
