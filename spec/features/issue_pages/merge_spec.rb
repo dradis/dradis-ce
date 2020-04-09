@@ -42,7 +42,7 @@ describe 'issue pages' do
         expect(page).to have_selector('#new_issue', visible: false)
 
         choose('Merge into a new issue')
-        click_link 'Write'
+        click_link 'Source'
 
         # new issue form should be visible now
         expect(page).to have_selector('#new_issue', visible: true)
@@ -70,7 +70,7 @@ describe 'issue pages' do
         expect(page).to have_selector('#new_issue', visible: true)
 
         tag_name = '!2ca02c_info'
-        click_link 'Write'
+        click_link 'Source'
         fill_in :issue_text, with: "#[Title]#\nMerged issue\n\n#[Tags]#\n#{tag_name}\n\n"
 
         # click button like this because the button may be moving down

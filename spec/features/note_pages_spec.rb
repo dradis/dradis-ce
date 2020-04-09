@@ -84,7 +84,7 @@ describe "note pages" do
     before do
       @note = create(:note, node: @node, updated_at: 2.seconds.ago)
       visit edit_project_node_note_path(current_project, @node, @note)
-      click_link 'Write'
+      click_link 'Source'
     end
 
     let(:submit_form) { click_button "Update Note" }
@@ -110,7 +110,7 @@ describe "note pages" do
     describe "submitting the form with valid information", js: true do
       let(:new_content) { 'New note text' }
       before do
-        click_link 'Write'
+        click_link 'Source'
         fill_in :note_text, with: new_content
       end
 
@@ -170,7 +170,7 @@ describe "note pages" do
     before do
       File.write(path, content)
       visit new_project_node_note_path(current_project, @node, params)
-      click_link 'Write'
+      click_link 'Source'
     end
     after { File.delete(path) }
 
@@ -242,7 +242,7 @@ describe "note pages" do
       let(:params)  { { template: "tmpnote" } }
 
       it "pre-populates the textarea with the template contents" do
-        click_link 'Form'
+        click_link 'Inline'
         expect(find_field('item_form[field_name_0]').value).to include('Title')
         expect(find_field('item_form[field_value_0]').value).to include('Sample Note')
       end

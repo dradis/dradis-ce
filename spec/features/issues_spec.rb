@@ -57,7 +57,7 @@ describe 'Issues pages' do
         context 'submitting the form with valid information' do
           before do
             visit new_project_issue_path(current_project)
-            click_link 'Write'
+            click_link 'Source'
             fill_in :issue_text,
               with: "#[Title]#\nRspec issue\n\n#[Description]#\nNew description\n\n"
           end
@@ -79,7 +79,7 @@ describe 'Issues pages' do
         context 'submitting the form with invalid information' do
           before do
             visit new_project_issue_path(current_project)
-            click_link 'Write'
+            click_link 'Source'
 
             # Manually update the textarea, otherwise we will get a timeout
             execute_script("$('#issue_text').val('#{'a' * 65536}')")
@@ -116,7 +116,7 @@ describe 'Issues pages' do
           it 'tags the issue with the corresponding tag if only one is present' do
             tag_field = '!f89406_private'
             visit new_project_issue_path(current_project)
-            click_link 'Write'
+            click_link 'Source'
             fill_in :issue_text,
               with: "#[Title]#\nRspec issue\n\n#[Tags]#\n#{tag_field}\n\n"
 
@@ -129,7 +129,7 @@ describe 'Issues pages' do
           it 'tags the issue with the first tag if more than one are present' do
             tag_field = '!f89406_private, !468847_public'
             visit new_project_issue_path(current_project)
-            click_link 'Write'
+            click_link 'Source'
             fill_in :issue_text,
               with: "#[Title]#\nRspec issue\n\n#[Tags]#\n#{tag_field}\n\n"
 
@@ -152,7 +152,7 @@ describe 'Issues pages' do
           issuelib = current_project.issue_library
           @issue = create(:issue, node: issuelib, updated_at: 2.seconds.ago)
           visit edit_project_issue_path(current_project, @issue)
-          click_link 'Write'
+          click_link 'Source'
         end
 
         describe 'submitting the form with valid information' do
