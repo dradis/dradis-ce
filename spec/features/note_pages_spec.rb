@@ -5,16 +5,14 @@ describe "note pages" do
 
   include ActivityMacros
 
+  let(:file) { Tempfile.new(['tmpnote', '.txt']) }
+  let(:tmp_path) { Pathname.new(File.dirname(file.path)) }
+
   before do
     # avoid messing around with any existing templates:
-    allow(NoteTemplate).to receive(:pwd).and_return(Pathname.new('tmp/templates/notes'))
-    FileUtils.mkdir_p(Rails.root.join("tmp","templates","notes"))
+    allow(NoteTemplate).to receive(:pwd).and_return(tmp_path)
     login_to_project_as_user
     @node = create(:node, project: current_project)
-  end
-
-  after(:all) do
-    FileUtils.rm_rf('tmp/templates')
   end
 
   example 'show page with wrong Node ID in URL' do
@@ -164,15 +162,14 @@ describe "note pages" do
 
   describe "new page", js: true do
     let(:content) { "#[Title]#\nSample Note" }
-    let(:path)    { Rails.root.join("tmp", "templates", "notes", "tmpnote.txt") }
 
     # Create the dummy NoteTemplate:
     before do
-      File.write(path, content)
+      file.write(content)
+      file.rewind
       visit new_project_node_note_path(current_project, @node, params)
       click_link 'Source'
     end
-    after { File.delete(path) }
 
     let(:submit_form) { click_button "Create Note" }
     let(:cancel_form) { click_link "Cancel" }
@@ -239,7 +236,7 @@ describe "note pages" do
     end
 
     context "when a NoteTemplate is specified" do
-      let(:params)  { { template: "tmpnote" } }
+      let(:params)  { { template: File.basename(file, '.txt') } }
 
       it "pre-populates the textarea with the template contents" do
         click_link 'Inline'
