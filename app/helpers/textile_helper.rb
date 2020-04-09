@@ -1,5 +1,5 @@
 module TextileHelper
-  def textile_form_urls
+  def textile_default_data
     {
       form_url: form_path,
       help_url: markup_path,
