@@ -127,6 +127,10 @@
 
   &.textile-fullscreen {
     overflow: auto;
+
+    .textile-inner {
+      margin: 0 0 1rem 0;
+    }
     
     .textile-preview {
       height: initial;
