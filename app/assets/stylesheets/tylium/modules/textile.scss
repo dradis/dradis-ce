@@ -137,26 +137,41 @@
     padding: 0;
     background: transparent;
 
-    textarea {
-      resize: vertical !important;
-    }
-
     .textile-form {
+      border: 1px solid $borderColor;
+      border-radius: 5px;
 
-      table {
-        border-bottom: 1px solid $borderColor;
-
-        thead th {
-          border-width: 1px;
-        }
+      .add-field {
+        margin: 0.4rem .75rem;
       }
 
       .textile-form-field {
+        border: 1px solid transparent;
+        border-bottom-color: $borderColor;
+        transition: background-color 0.2s ease-in-out;
   
         .actions {
-          padding-top: 1rem;
+          display: flex;
+          opacity: 0;
+          transition: opacity 0.2s ease-in-out;
         }
-  
+
+        &:first-of-type {
+          
+          td {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+          }
+        }
+
+        &:hover {
+          background-color: darken($primaryBgColor, 3%);
+
+          .actions {
+            opacity: 1;
+          }
+        }
+
         textarea {
           min-height: 36px;
         }
@@ -164,9 +179,7 @@
     }
 
     .textile-preview {
-      border: 1px solid $borderColor;
-      border-radius: 4px;
-      padding: 1rem;
+      padding: 0;
       overflow: auto;
       height: 100%;
     }

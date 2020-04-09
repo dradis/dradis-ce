@@ -1,12 +1,5 @@
 <div class="table-wrapper">
-  <table class="table mb-0">
-    <thead>
-      <tr>
-        <th>Header Name</th>
-        <th>Field Value</th>
-        <th></th>
-      </tr>
-    </thead>
+  <table class="table table-borderless mb-0">
     <tbody data-behavior="textile-form-body">
     <% if @form_data.any? %>
       <% @form_data.each_with_index do |field, index| %>
@@ -16,11 +9,10 @@
       <%= render partial: 'textile/field', locals: { allow_dropdown: @allow_dropdown, index: 0 } %>
     <% end %>
     </tbody>
-    <tfoot data-behavior="textile-form-footer">
-      <tr>
-        <td colspan="3" class="pt-2">
-          <%= link_to 'Add field', field_path(index: @form_data.length + 1), class: 'btn my-1', data: { behavior: 'add-field' }, remote: true %>
-        </td>
-      </tr>
   </table>
+</div>
+<div class="add-field">
+  <%= link_to field_path(index: @form_data.length + 1), data: { behavior: 'add-field' }, remote: true do %>
+    <i class="fa fa-plus"></i> Add field
+  <% end %>
 </div>

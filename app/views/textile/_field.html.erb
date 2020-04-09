@@ -4,19 +4,29 @@
 
 <tr class="textile-form-field" data-behavior="textile-form-field">
   <td>
-    <%= text_field_tag "item_form[field_name_#{index}]", field_name, class: 'form-control my-1', onkeydown: 'return (event.keyCode!=13);', data: { behavior: 'preview-enabled' }, placeholder: 'Enter header value' %>
-  </td>
-  <td width="60%">
-    <% options = value.split(' | ') %>
-    <% if allow_dropdown && options.count > 1 %>
-      <%= select :item_form, "field_value_#{index}", options, {}, { class: 'form-control my-1', data: { behavior: 'preview-enabled' } } %>
-    <% else %>
-      <%= text_area_tag "item_form[field_value_#{index}]", value, rows: 1, class: 'form-control my-1', data: { behavior: 'preview-enabled', expand: 'auto' }, placeholder: 'Enter field value' %>
-    <% end %>
-  </td>
-  <td class="actions" align="right">
-    <%= link_to 'javascript:void(0)', class: 'text-error-hover my-1',  data: { behavior: 'delete-field' } do %>
-      <i class="fa fa-trash"></i> Delete
-    <% end %>
+    <div class="d-inline-flex justify-content-between w-100">
+      <div class="inline-editable w-50" data-behavior="inline-editable">
+        <div class="edit-hover">
+          <i class="fa fa-pencil" data-behavior="edit-field"></i>
+          <%= text_field_tag "item_form[field_name_#{index}]", field_name, class: 'form-control', onkeydown: 'return (event.keyCode!=13);', data: { behavior: 'preview-enabled' }, placeholder: 'Enter field name' %>
+        </div>
+      </div>
+      <div class="actions">
+        <%= link_to 'javascript:void(0)', class: 'text-error-hover',  data: { behavior: 'delete-field' } do %>
+          <i class="fa fa-trash"></i> Delete
+        <% end %>
+      </div>
+    </div>
+    <div class="inline-editable">
+      <div class="edit-hover">
+        <i class="fa fa-pencil" data-behavior="edit-field"></i>
+        <% options = value.split(' | ') %>
+        <% if allow_dropdown && options.count > 1 %>
+          <%= select :item_form, "field_value_#{index}", options, {}, { class: 'form-control', data: { behavior: 'preview-enabled' } } %>
+        <% else %>
+          <%= text_area_tag "item_form[field_value_#{index}]", value, rows: 1, class: 'form-control', data: { behavior: 'preview-enabled', expand: 'auto' }, placeholder: 'Enter field value' %>
+        <% end %>
+      </div>
+    </div>
   </td>
 </tr>

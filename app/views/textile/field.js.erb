@@ -1,9 +1,4 @@
 <% field_row = render partial: 'textile/field', locals: { index: @index } %>
-<% add_field_button = link_to 'Add field', field_path(index: @index + 1), class: 'btn', data: { behavior: 'add-field' }, remote: true %>
-
-$('[data-behavior~=add-field]').remove();
 var fieldGroup = $('<%= escape_javascript(field_row) %>');
 $('[data-behavior~=textile-form-body]').append(fieldGroup);
-$('[data-behavior~=textile-form-footer]').find('td').append('<%= escape_javascript(add_field_button) %>');
-
 $('.textile').data('plugin_textile').bindFieldGroup(fieldGroup);
