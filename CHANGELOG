@@ -6,6 +6,7 @@ v3.17 (Month 2020)
     - No mandatory due date
   * Comments can now have Textile markup
   * Link to Methodology from project summary chart
+  * Navigation sidebar in projects can be kept open while navigating across views
   * Refactored dots-menu to make it available in any view
   * Remove tag color from issue titles in issue summary
   * Side-by-side editor preview that auto-updates
@@ -15,6 +16,7 @@ v3.17 (Month 2020)
     - Fix textile preview not showing on issues with very long text
     - Long project names interfering with search bar expansion
     - Report 'Download' button becoming a disabled 'Processing...' button once clicked
+    - SemVer pre-release appending character
     - Set :author when creating Evidence from an Issue
     - Sidebar items not showing active state
     - Stop bin/setup from creating folders outside dradis-ce/

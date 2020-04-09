@@ -57,12 +57,11 @@
   background: $secondaryBgColor;
   position: fixed;
   height: calc(100vh - 60px);
-  width: calc(100vw - 43px);
   min-width: 570px;
   top: $navbarHeight;
-  left: $sidebarCollapsed;
   overflow: auto;
   font-size: 0.9rem;
+  transition: all 0.5s ease-in-out;
 
   .content-container {
     position: relative;

@@ -28,15 +28,13 @@
     <%= render 'layouts/tylium/navbar' %>
     <%= render 'layouts/tylium/sidebar' %>
 
-    <div id="view-content" class="view-content" data-id="view-content">
+    <div id="view-content" class="view-content" data-behavior="view-content">
       <div class="row m-0">
         <% if content_for?(:sidebar) %>
-          <div class="secondary-sidebar col-4 col-lg-3 col-xl-2 p-0">
-            <div class="inner">
-              <%= yield :sidebar %>
-            </div>
+          <div class="secondary-sidebar col-4 col-lg-3 col-xl-2">
+            <%= yield :sidebar %>
           </div>
-          <div class="secondary-sidebar-content col-8 col-lg-9 col-xl-10 p-0">
+          <div class="secondary-sidebar-content col-8 col-lg-9 col-xl-10 p-0 ml-auto">
             <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
             <%= render 'shared/noscript' %>
             <%= render "layouts/tylium/project_teaser" %>
@@ -95,8 +93,6 @@
 
     <%= render 'console/console' %>
     <!-- End of modals -->
-
-    <a class="back-fade not-faded" data-behavior="back-fade"></a>
 
     <%# Always render the Tour content, the user may click on the link in the help menu. %>
     <%# FIXME: re-enable Tour %>

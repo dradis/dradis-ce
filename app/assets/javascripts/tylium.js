@@ -43,6 +43,7 @@
 //= require tylium/modules/nodes
 //= require tylium/modules/notifications
 //= require tylium/modules/search
+//= require tylium/modules/sidebar
 //= require tylium/modules/activities/poller
 //= require tylium/modules/subscriptions
 // require tylium/modules/tour
