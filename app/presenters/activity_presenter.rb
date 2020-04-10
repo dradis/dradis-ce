@@ -2,7 +2,7 @@ class ActivityPresenter < BasePresenter
   presents :activity
 
   def avatar_with_link(size)
-    h.link_to(avatar_image(User.new(email: activity.user.email), size: size), 'javascript:void(0)')
+    h.link_to(avatar_image(activity.user, size: size), 'javascript:void(0)')
   end
 
   def comment_path(anchor: false)
