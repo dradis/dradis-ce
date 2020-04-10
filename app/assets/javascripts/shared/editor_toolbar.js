@@ -74,22 +74,26 @@ class EditorToolbar {
     $('[data-behavior~=editor-field]').children('textarea').on('focus', function() {
       var $inputElement = $(this),
           $toolbarElement = $inputElement.next(),
-          $parentElement = $inputElement.parent();
+          $parentElement = $inputElement.parent(),
+          topOffset = 60;
+
+      // set offsett to 0 if user is in fullscreen mode.
+      if ($inputElement.parents('.textile-fullscreen').length ? topOffset = 0 : topOffset = 60);
 
       // this is needed incase user sets focus on textarea where toolbar would render off screen
-      if ($parentElement.offset().top < $(window).scrollTop() + 60) {
+      if ($parentElement.offset().top < $(window).scrollTop() + topOffset) {
         $parentElement.addClass('sticky-toolbar');
-        $toolbarElement.css('top', parseInt(60 - $parentElement.offset().top));
+        $toolbarElement.css('top', parseInt(topOffset - $parentElement.offset().top));
 
         // adjust the toolbar position for field view
         if ($toolbarElement.parents('[data-behavior~=textile-form-field]').length) {
-          $toolbarElement.css({'left': '-25px', 'right': '-13px'});
+          $toolbarElement.css({'left': '-27px', 'right': '-13px'});
         }
       }
 
       // adjust position on scroll to make toolbar always appear at the top of the textarea
-      document.querySelector('[data-behavior~=view-content]').addEventListener('scroll', (function stickyToolbar() {
-        var parentOffsetTop = $parentElement.offset().top - 60;
+      document.querySelector('[data-behavior~=view-content], .textile-fullscreen').addEventListener('scroll', (function stickyToolbar() {
+        var parentOffsetTop = $parentElement.offset().top - topOffset;
 
         // keep toolbar at the top of text area when scrolling
         if (parentOffsetTop < $(window).scrollTop()) {
@@ -107,7 +111,7 @@ class EditorToolbar {
           }
         }
         else {
-          // reset the toolbar to the default positial and appearance
+          // reset the toolbar to the default position and appearance
           $parentElement.removeClass('sticky-toolbar');
           $toolbarElement.css('top', '-3.4rem');
 
@@ -117,6 +121,12 @@ class EditorToolbar {
           }
         }
       }));
+    });
+
+    // reset position of toolbar once focus is lost
+    $('[data-behavior~=editor-field]').children('textarea').on('blur', function() {
+      $(this).parent().removeClass('sticky-toolbar');
+      $(this).next().css('top', '-3.4rem');
     });
   }
 
