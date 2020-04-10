@@ -1,5 +1,9 @@
 <% content_for :title, "Edit #{@node.label}" %>
 
+<%= content_for :breadcrumb do %>
+  <%= render partial: 'breadcrumbs' %>
+<% end %>
+
 <div class="content-container">
   <h4 class="header-underline">Edit <%= @node.label %></h4>
   <div id="node_properties_editor">

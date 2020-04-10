@@ -1,5 +1,9 @@
 <% content_for :title, "#{@node.label} - view note" %>
 
+<%= content_for :breadcrumb do %>
+  <%= render partial: 'breadcrumbs' %>
+<% end %>
+
 <% if @conflicting_revisions %>
   <%= render "projects/conflicting_revisions", conflicts: @conflicting_revisions, record: @note %>
 <% end %>

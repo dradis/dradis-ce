@@ -1,5 +1,9 @@
 <% content_for :title, "#{@node.label} - properties" %>
 
+<%= content_for :breadcrumb do %>
+  <%= render partial: 'breadcrumbs' %>
+<% end %>
+
 <ul id="node-tabs" class="tabs-container nav nav-tabs main-tabs">
   <li class="nav-item">
     <a href="#evidence-tab" data-toggle="tab" class="nav-link <%= 'active' if params[:tab] == 'evidence-tab' %>"><i class="fa fa-flag"></i> Evidence</a>

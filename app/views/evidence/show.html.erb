@@ -1,5 +1,9 @@
 <% content_for :title, "View evidence for #{@node.label} / #{@evidence.issue.title}" %>
 
+<%= content_for :breadcrumb do %>
+  <%= render partial: 'breadcrumbs' %>
+<% end %>
+
 <% if @conflicting_revisions %>
   <%= render "projects/conflicting_revisions", conflicts: @conflicting_revisions, record: @evidence %>
 <% end %>
@@ -101,5 +105,5 @@
         <%= render 'subscriptions/feed', subscribable: @evidence %>
       </div>
     </div>
-  </div>   
+  </div>
 </div>
