@@ -42,8 +42,9 @@ class Card < ApplicationRecord
   def assignee_ids=(ids)
     # 1.
     self.touch if self.persisted?
-    # 2.
-    @new_assignees = ids - (assignee_ids + [''])
+    # 2. Convert assignee_ids to string as ids will be an array of
+    # string numbers.
+    @new_assignees = ids - (assignee_ids.map(&:to_s) + [''])
 
     super(ids)
   end
