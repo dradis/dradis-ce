@@ -1,7 +1,6 @@
 class EvidenceController < NestedNodeResourceController
   include Commented
   include ConflictResolver
-  include FormDradifier
   include Mentioned
   include MultipleDestroy
   include NodesSidebar
@@ -9,7 +8,6 @@ class EvidenceController < NestedNodeResourceController
 
   before_action :set_or_initialize_evidence, except: [ :index, :create_multiple ]
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
-  before_action :convert_form_content, only: [:create, :update]
   skip_before_action :find_or_initialize_node, only: [:create_multiple]
 
   def show
