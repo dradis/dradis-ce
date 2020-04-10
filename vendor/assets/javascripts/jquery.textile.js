@@ -259,6 +259,7 @@
       // Show Form pane
       this.options.$help.hide();
       this.$source.hide();
+      this.options.$preview.show();
       this.options.$inline.show();
     },
     _onBtnFullScreen: function() {
