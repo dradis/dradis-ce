@@ -9,6 +9,7 @@ v3.17 (Month 2020)
   * Refactored dots-menu to make it available in any view
   * Remove tag color from issue titles in issue summary
   * Use shared noscript partial
+  * Use user model reference for activities instead of user email
   * Upgraded gems: puma, sass-rails
   * Bugs fixed:
     - Long project names interfering with search bar expansion
@@ -27,7 +28,7 @@ v3.17 (Month 2020)
   * Reporting enhancements:
     - HTML reports now use main app's markup rendering
   * REST/JSON API enhancements:
-    - [API enhancement #1] 
+    - [API enhancement #1]
   * Security Fixes:
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
