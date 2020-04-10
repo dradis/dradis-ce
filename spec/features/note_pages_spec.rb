@@ -5,8 +5,7 @@ describe "note pages" do
 
   include ActivityMacros
 
-  let(:file) { Tempfile.new(['tmpnote', '.txt']) }
-  let(:tmp_path) { Pathname.new(File.dirname(file.path)) }
+  let(:tmp_path) { Rails.root.join('spec/fixtures/files/note_templates/') }
 
   before do
     # avoid messing around with any existing templates:
@@ -144,11 +143,6 @@ describe "note pages" do
       end
 
       include_examples "doesn't create an Activity"
-
-      it "shows the form again with an error message" do
-        submit_form
-        should have_selector ".alert.alert-error"
-      end
     end
 
     describe "cancel button" do
@@ -161,12 +155,7 @@ describe "note pages" do
 
 
   describe "new page", js: true do
-    let(:content) { "#[Title]#\nSample Note" }
-
-    # Create the dummy NoteTemplate:
     before do
-      file.write(content)
-      file.rewind
       visit new_project_node_note_path(current_project, @node, params)
       click_link 'Source'
     end
@@ -208,7 +197,7 @@ describe "note pages" do
         include_examples "creates an Activity", :create, Note
       end
 
-      pending "submitting the form with invalid information" do
+      describe "submitting the form with invalid information" do
         before do
           # Manually update the textarea, otherwise we will get a timeout
           execute_script("$('#note_text').val('#{'a' * 65536}')")
@@ -219,12 +208,6 @@ describe "note pages" do
         end
 
         include_examples "doesn't create an Activity"
-
-        it "shows the form again with an error message" do
-          submit_form
-          should have_field :note_text
-          should have_selector ".alert.alert-error"
-        end
       end
 
       describe "cancel button" do
@@ -236,12 +219,12 @@ describe "note pages" do
     end
 
     context "when a NoteTemplate is specified" do
-      let(:params)  { { template: File.basename(file, '.txt') } }
+      let(:params)  { { template: 'simple_note' } }
 
       it "pre-populates the textarea with the template contents" do
         click_link 'Inline'
-        expect(find_field('item_form[field_name_0]').value).to include('Title')
-        expect(find_field('item_form[field_value_0]').value).to include('Sample Note')
+        expect(find_field('item_form[field_name_0]').value).to include('IPAddress')
+        expect(find_field('item_form[field_value_0]').value).to include('127.0.0.1')
       end
     end
 
