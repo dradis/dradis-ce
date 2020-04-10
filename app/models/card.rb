@@ -84,6 +84,16 @@ class Card < ApplicationRecord
     # FIXME: subscribe all of them in a single query
     @new_assignees.each do |user_id|
       Subscription.subscribe(user: User.find(user_id), to: self)
+
+      actor = User.where(email: versions.last.whodunnit).first
+
+      # Don't notify yourself if assigned to yourself
+      Notification.create(
+        action: :assigned,
+        actor: actor,
+        notifiable: self,
+        recipient_id: user_id
+      ) if actor&.id != user_id.to_i
     end
 
     @new_assignees = []
