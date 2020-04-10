@@ -30,7 +30,7 @@ class Project
     User.all
   end
 
-  def initialize(id: 1, name: 'Dradis CE', **_attrs)
+  def initialize(id: 1, name: 'Dradis Project', **_attrs)
     @id   = id
     @name = name
   end
