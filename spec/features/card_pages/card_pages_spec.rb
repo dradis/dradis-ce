@@ -36,7 +36,7 @@ describe 'Card pages:' do
       describe 'submitting the form with valid information' do
         before do
           visit new_project_board_list_card_path(current_project, @board, @list)
-          click_link 'Write'
+          click_link 'Source'
           fill_in :card_name, with: 'New Card'
           fill_in :card_description, with: 'New Card Description'
         end
@@ -53,7 +53,7 @@ describe 'Card pages:' do
       describe 'submitting the form with invalid information' do
         before do
           visit new_project_board_list_card_path(current_project, @board, @list)
-          click_link 'Write'
+          click_link 'Source'
           fill_in :card_name, with: ''
         end
 
@@ -104,7 +104,7 @@ describe 'Card pages:' do
       describe 'submitting the form with valid information' do
         before do
           visit edit_project_board_list_card_path(current_project, @board, @list, @card)
-          click_link 'Write'
+          click_link 'Source'
           fill_in :card_name, with: 'Edited Card'
           fill_in :card_description, with: 'Edited Card Description'
         end
@@ -126,7 +126,7 @@ describe 'Card pages:' do
       describe 'submitting the form with invalid information' do
         before do
           visit edit_project_board_list_card_path(current_project, @board, @list, @card)
-          click_link 'Write'
+          click_link 'Source'
           fill_in :card_name, with: ''
         end
 

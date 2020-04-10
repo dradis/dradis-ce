@@ -28,7 +28,7 @@
         // HTML templates
         tpl: {
           inline: '<div class="textile-form h-100 col-6"></div>',
-          wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row" data-behavior="rich-toolbar"></div></div>',
+          wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row"></div></div>',
           preview: '<div class="col-6"><div class="textile-preview loading-indicator">Loading...</div></div>',
           help: '<div class="textile-help col-12 loading-indicator">Loading...</div>'
         }
@@ -143,7 +143,7 @@
       });
 
       $parent.find('[data-behavior~=edit-field]').click(function(){
-        $(this).next().focus();
+        $parent.find($(this).data('edit-field')).focus();
       });
 
       // Handler for triggering the preview on keyboard input

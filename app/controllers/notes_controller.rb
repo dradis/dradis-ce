@@ -28,7 +28,6 @@ class NotesController < NestedNodeResourceController
       redirect_to project_node_note_path(current_project, @node, @note), notice: 'Note created'
     else
       initialize_nodes_sidebar
-      flash.now[:alert] = 'Note couldn\'t be added.'
       render 'new'
     end
   end
@@ -56,7 +55,6 @@ class NotesController < NestedNodeResourceController
       redirect_to project_node_note_path(current_project, @note.node, @note), notice: 'Note updated.'
     else
       initialize_nodes_sidebar
-      flash.now[:alert] = 'Note couldn\'t be updated.'
       render 'edit'
     end
   end

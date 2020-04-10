@@ -5,16 +5,13 @@ describe "note pages" do
 
   include ActivityMacros
 
+  let(:tmp_path) { Rails.root.join('spec/fixtures/files/note_templates/') }
+
   before do
     # avoid messing around with any existing templates:
-    allow(NoteTemplate).to receive(:pwd).and_return(Pathname.new('tmp/templates/notes'))
-    FileUtils.mkdir_p(Rails.root.join("tmp","templates","notes"))
+    allow(NoteTemplate).to receive(:pwd).and_return(tmp_path)
     login_to_project_as_user
     @node = create(:node, project: current_project)
-  end
-
-  after(:all) do
-    FileUtils.rm_rf('tmp/templates')
   end
 
   example 'show page with wrong Node ID in URL' do
@@ -84,7 +81,7 @@ describe "note pages" do
     before do
       @note = create(:note, node: @node, updated_at: 2.seconds.ago)
       visit edit_project_node_note_path(current_project, @node, @note)
-      click_link 'Write'
+      click_link 'Source'
     end
 
     let(:submit_form) { click_button "Update Note" }
@@ -110,7 +107,7 @@ describe "note pages" do
     describe "submitting the form with valid information", js: true do
       let(:new_content) { 'New note text' }
       before do
-        click_link 'Write'
+        click_link 'Source'
         fill_in :note_text, with: new_content
       end
 
@@ -146,11 +143,6 @@ describe "note pages" do
       end
 
       include_examples "doesn't create an Activity"
-
-      it "shows the form again with an error message" do
-        submit_form
-        should have_selector ".alert.alert-error"
-      end
     end
 
     describe "cancel button" do
@@ -163,16 +155,10 @@ describe "note pages" do
 
 
   describe "new page", js: true do
-    let(:content) { "#[Title]#\nSample Note" }
-    let(:path)    { Rails.root.join("tmp", "templates", "notes", "tmpnote.txt") }
-
-    # Create the dummy NoteTemplate:
     before do
-      File.write(path, content)
       visit new_project_node_note_path(current_project, @node, params)
-      click_link 'Write'
+      click_link 'Source'
     end
-    after { File.delete(path) }
 
     let(:submit_form) { click_button "Create Note" }
     let(:cancel_form) { click_link "Cancel" }
@@ -211,7 +197,7 @@ describe "note pages" do
         include_examples "creates an Activity", :create, Note
       end
 
-      pending "submitting the form with invalid information" do
+      describe "submitting the form with invalid information" do
         before do
           # Manually update the textarea, otherwise we will get a timeout
           execute_script("$('#note_text').val('#{'a' * 65536}')")
@@ -222,12 +208,6 @@ describe "note pages" do
         end
 
         include_examples "doesn't create an Activity"
-
-        it "shows the form again with an error message" do
-          submit_form
-          should have_field :note_text
-          should have_selector ".alert.alert-error"
-        end
       end
 
       describe "cancel button" do
@@ -239,12 +219,12 @@ describe "note pages" do
     end
 
     context "when a NoteTemplate is specified" do
-      let(:params)  { { template: "tmpnote" } }
+      let(:params)  { { template: 'simple_note' } }
 
       it "pre-populates the textarea with the template contents" do
-        click_link 'Form'
-        expect(find_field('item_form[field_name_0]').value).to include('Title')
-        expect(find_field('item_form[field_value_0]').value).to include('Sample Note')
+        click_link 'Inline'
+        expect(find_field('item_form[field_name_0]').value).to include('IPAddress')
+        expect(find_field('item_form[field_value_0]').value).to include('127.0.0.1')
       end
     end
 

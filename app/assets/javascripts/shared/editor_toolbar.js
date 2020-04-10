@@ -4,8 +4,7 @@ To initialize:
 
 new EditorToolbar($element);
 
-Where `$element` is a jQuery object that has a child input (with type = text) or textarea element.
-Note: Multiple $elements can be stacked: new EditorToolbar($element, $anotherElement, $nthElement);
+Where `$element` is a jQuery object that is an input (with type = text) or textarea element.
 
 Each of these input and/or textarea elements will have the Editor Toolbar added.
 
@@ -13,31 +12,21 @@ Each of these input and/or textarea elements will have the Editor Toolbar added.
 
 class EditorToolbar {
   constructor($target) {
+    if (!$target.is("textarea")) { console.log("Can't initialize a rich toolbar on anything but a textarea"); return; }
+
     this.$target = $target;
+    this.opts = { 'include': $target.data('rich-toolbar').split(' ') };
     this.affixes = this.affixesLibrary();
     this.init();
   }
 
   init() {
-    // find all child input text and textarea elements
-    this.$target.find('textarea').each(function() {
-      // wrap each element in a div and add toolbar element as sibling
-      $(this).wrap('<div class="editor-field" data-behavior="editor-field"></div>');
-      $(this).parent().append('<div class="editor-toolbar" data-behavior="editor-toolbar"></div>');
-    });
+    this.$target.wrap('<div class="editor-field" data-behavior="editor-field"></div>');
+    this.$editorField = this.$target.parent('[data-behavior=editor-field]');
+    this.$editorField.append('<div class="editor-toolbar" data-behavior="editor-toolbar"></div>');
+    this.$editorToolbar = this.$editorField.find('[data-behavior=editor-toolbar]');
 
-    // create toolbar buttons for each toolbar
-    var that = this;
-    $('[data-behavior~=editor-toolbar]').each(function() {
-      if ($(this).prev('textarea').length) { // toolbar for textarea elements
-        $(this).append(that.textareaElements());
-      } 
-      /*
-      else if ($(this).prev('input[type=text]').length) { // toolbar for input type=text elements
-        $(this).append(that.inputTextElements());
-      }
-      */
-    });
+    this.$editorToolbar.append(this.textareaElements(this.opts.include));
 
     this.behaviors();
   }
@@ -45,25 +34,18 @@ class EditorToolbar {
   behaviors() {
     var that = this;
 
-    $('[data-behavior~=editor-field] textarea').on('click change keyup select', function() {   
+    this.$target.on('click change keyup select', function() {
       // enabling/disabling specific toolbar functions for textareas on selection
       if (window.getSelection().toString().length > 0 || this.selectionStart != this.selectionEnd) { // when there is text selected
-        $(this).parent().find('[data-btn~=table]').addClass('disabled');
-      }
-      else { // when there is no text selected
-        $(this).parent().find('[data-btn~=table]').removeClass('disabled');
-      }
-
-      // remove field button in comments
-      if ($(this).parents().is('[data-behavior~=comment-feed]')) {
-        $(this).parent().find('[data-btn~=field]').next().remove();
-        $(this).parent().find('[data-btn~=field]').remove();
+        that.$editorField.find('[data-btn~=table]').addClass('disabled');
+      } else { // when there is no text selected
+        that.$editorField.find('[data-btn~=table]').removeClass('disabled');
       }
     });
 
     // when a toolbar button is clicked
-    $('[data-btn]').click(function () {
-      var $element = $(this).parents('[data-behavior~=editor-field]').children('textarea, input[type=text]');
+    this.$editorToolbar.find('[data-btn]').click(function () {
+      var $element = that.$editorField.children('textarea, input[type=text]');
       var affix = that.affixes[$(this).data('btn')];
   
       // inject markdown
@@ -71,21 +53,20 @@ class EditorToolbar {
     });
 
     // keyboard shortcuts
-    $('[data-behavior~=editor-field]').children('textarea, input[type=text]').keydown(function(e) {
+    this.$editorField.children('textarea, input[type=text]').keydown(function(e) {
       var key = e.which || e.keyCode; // for cross-browser compatibility
-      var scope = $(e.target).parent('[data-behavior~=editor-field]');
 
       if (e.metaKey && key === 66 ) { // 66 = b
         e.preventDefault();
-        scope.find('[data-btn~=bold]').click();
+        that.$editorToolbar.find('[data-btn~=bold]').click();
       }
       else if (e.metaKey && key === 73 ) { // 73 = i
         e.preventDefault();
-        scope.find('[data-btn~=italic]').click();
+        that.$editorToolbar.find('[data-btn~=italic]').click();
       }
       else if (e.metaKey && key === 75 ) { // 75 = k
         e.preventDefault();
-        scope.find('[data-btn~=link]').click();
+        that.$editorToolbar.find('[data-btn~=link]').click();
       }
     });
 
@@ -98,19 +79,42 @@ class EditorToolbar {
       // this is needed incase user sets focus on textarea where toolbar would render off screen
       if ($parentElement.offset().top < $(window).scrollTop() + 60) {
         $parentElement.addClass('sticky-toolbar');
-        $toolbarElement.css({'top': parseInt(60 - $parentElement.offset().top)});
+        $toolbarElement.css('top', parseInt(60 - $parentElement.offset().top));
+
+        // adjust the toolbar position for field view
+        if ($toolbarElement.parents('[data-behavior~=textile-form-field]').length) {
+          $toolbarElement.css({'left': '-25px', 'right': '-13px'});
+        }
       }
 
       // adjust position on scroll to make toolbar always appear at the top of the textarea
       document.querySelector('[data-behavior~=view-content]').addEventListener('scroll', (function stickyToolbar() {
-        var $parentOffset = $parentElement.offset().top;
-        if ($parentOffset < $(window).scrollTop() + 60) {
+        var parentOffsetTop = $parentElement.offset().top - 60;
+
+        // keep toolbar at the top of text area when scrolling
+        if (parentOffsetTop < $(window).scrollTop()) {
           $parentElement.addClass('sticky-toolbar');
-          $toolbarElement.css({'top': parseInt(60 - $parentOffset)});
+          $toolbarElement.css('top', parseInt($(window).scrollTop() - parentOffsetTop));
+          
+          // when the toolbar reaches the bottom, stop it from moving further.
+          if (parentOffsetTop + $inputElement.outerHeight() < $(window).scrollTop() + $toolbarElement.height()) {
+            $toolbarElement.css('top', parseInt($inputElement.outerHeight() - $toolbarElement.height() - 2));
+          }
+
+          // adjust the toolbar position for field view
+          if ($toolbarElement.parents('[data-behavior~=textile-form-field]').length) {
+            $toolbarElement.css({'left': '-25px', 'right': '-13px'});
+          }
         }
         else {
+          // reset the toolbar to the default positial and appearance
           $parentElement.removeClass('sticky-toolbar');
-          $toolbarElement.css({'top': '-3.4rem'});
+          $toolbarElement.css('top', '-3.4rem');
+
+          // reset field view specific toolbar properties
+          if ($toolbarElement.parents('[data-behavior~=textile-form-field]').length) {
+            $toolbarElement.css({'left': 'initial', 'right': '-0.25rem'});
+          }
         }
       }));
     });
@@ -155,7 +159,7 @@ class EditorToolbar {
     return {
       'block-code':  new BlockAffix('bc. ', 'Code markup'),
       'bold':        new Affix('*', 'Bold text', '*'),
-      'field':      new Affix('#[', 'Field', ']#\n'),
+      'field':       new Affix('#[', 'Field', ']#\n'),
       //'highlight':   new Affix('$${{', 'Highlighted text', '}}$$'),
       //'inline-code': new Affix('@', 'Inline code', '@'),
       'italic':      new Affix('_', 'Italic text', '_'),
@@ -167,32 +171,41 @@ class EditorToolbar {
     };
   }
 
-  textareaElements() {
-    return '<div class="editor-btn" data-btn="field" aria-label="add new field">\
+  textareaElements(include) {
+    var str = '';
+
+    if (include.includes('field')) str += '<div class="editor-btn" data-btn="field" aria-label="add new field">\
       <i class="fa fa-plus"></i>\
     </div>\
-    <div class="divider-vertical"></div>\
-    <div class="editor-btn" data-btn="bold" aria-label="bold text">\
+    <div class="divider-vertical"></div>';
+
+    if (include.includes('bold')) str += '<div class="editor-btn" data-btn="bold" aria-label="bold text">\
       <i class="fa fa-bold"></i>\
-    </div>\
-    <div class="editor-btn px-2" data-btn="italic" aria-label="italic text">\
+    </div>';
+
+    if (include.includes('italic')) str += '<div class="editor-btn px-2" data-btn="italic" aria-label="italic text">\
       <i class="fa fa-italic"></i>\
-    </div>\
-    <div class="divider-vertical"></div>\
-    <div class="editor-btn" data-btn="block-code" aria-label="code block">\
+    </div>';
+
+    str += '<div class="divider-vertical"></div>';
+
+    if (include.includes('block-code')) str += '<div class="editor-btn" data-btn="block-code" aria-label="code block">\
       <i class="fa fa-code"></i>\
-    </div>\
-    <div class="editor-btn" data-btn="link" aria-label="link">\
+    </div>';
+
+    if (include.includes('link')) str += '<div class="editor-btn" data-btn="link" aria-label="link">\
       <i class="fa fa-link"></i>\
-    </div>\
-    <div class="editor-btn" data-btn="table" aria-label="table">\
+    </div>';
+    if (include.includes('table')) str += '<div class="editor-btn" data-btn="table" aria-label="table">\
       <i class="fa fa-table"></i>\
-    </div>\
-    <div class="divider-vertical"></div>\
-    <div class="editor-btn" data-btn="list-ul" aria-label="unordered list">\
+    </div>';
+
+    str += '<div class="divider-vertical"></div>'
+
+    if (include.includes('list-ul')) str += '<div class="editor-btn" data-btn="list-ul" aria-label="unordered list">\
       <i class="fa fa-list-ul"></i>\
-    </div>\
-    <div class="editor-btn" data-btn="list-ol" aria-label="ordered list">\
+    </div>';
+    if (include.includes('list-ol')) str += '<div class="editor-btn" data-btn="list-ol" aria-label="ordered list">\
       <i class="fa fa-list-ol"></i>\
     </div>';
 
@@ -209,6 +222,7 @@ class EditorToolbar {
     </div>\
 
     */
+    return str;
   }
 
   /*

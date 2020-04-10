@@ -30,7 +30,8 @@ shared_examples 'a textile form view' do |klass|
 
   it 'remove fields in the form', js: true do
     expect {
-      within '.textile-form-field', match: :first do
+      find('[data-behavior=textile-form-field]', match: :first).hover
+      within '[data-behavior~=textile-form-field]', match: :first do
         click_link 'Delete'
       end
     }.to change{ all('.textile-form-field').count }.by(-1)

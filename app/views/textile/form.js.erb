@@ -5,4 +5,7 @@ $('.textile-form').removeClass('loading-indicator').html('');
 $('.textile-form').removeClass('loading-indicator').append(form);
 
 $('.textile').data('plugin_textile').bindFieldGroup(form);
-new EditorToolbar(form);
+
+$('[data-behavior~=rich-toolbar]', form).each(function() {
+  new EditorToolbar($(this))
+});

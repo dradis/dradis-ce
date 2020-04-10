@@ -1,5 +1,9 @@
 <% field_row = render partial: 'textile/field', locals: { index: @index } %>
 var fieldGroup = $('<%= escape_javascript(field_row) %>');
 $('[data-behavior~=textile-form-body]').append(fieldGroup);
+
 $('.textile').data('plugin_textile').bindFieldGroup(fieldGroup);
-new EditorToolbar(fieldGroup);
+
+$('[data-behavior~=rich-toolbar]', fieldGroup).each(function() {
+  new EditorToolbar($(this));
+});
