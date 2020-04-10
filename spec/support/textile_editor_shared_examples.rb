@@ -41,6 +41,9 @@ shared_examples 'a textile form view' do |klass|
     fill_in('item_form[field_name_0]', with: 'Title')
     fill_in('item_form[field_value_0]', with: 'Test Item')
 
+    # Wait for the source view change buffer time
+    sleep 0.5
+
     within '.form-actions' do
       find('[type="submit"]').click
     end
@@ -59,6 +62,6 @@ shared_examples 'a textile form view' do |klass|
     end
 
     expect(page).to have_current_path(polymorphic_path(show_path), ignore_query: true)
-    expect(updated_item.reload.send(content_attribute)).to include("#[Title]#\nTest Item")
+    expect(updated_item.reload.send(content_attribute)).to include("#[Title]#\r\nTest Item")
   end
 end
