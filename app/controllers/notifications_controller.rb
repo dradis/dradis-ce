@@ -3,7 +3,7 @@ class NotificationsController < AuthenticatedController
 
   def index
     notifications = current_user.notifications.newest.includes(
-      :actor, notifiable: [:user, :commentable]
+      :actor, :notifiable
     )
     respond_to do |format|
       format.html do
