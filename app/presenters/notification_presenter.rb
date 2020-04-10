@@ -13,6 +13,13 @@ class NotificationPresenter < BasePresenter
     )
   end
 
+  def card_path
+    card = notification.notifiable
+    polymorphic_path(
+      [current_project, card.board, card.list, card]
+    )
+  end
+
   def created_at_ago
     h.local_time_ago(notification.created_at)
   end
@@ -22,6 +29,8 @@ class NotificationPresenter < BasePresenter
     icon_css << case notification.notifiable_type
                 when 'Comment'
                   'fa-comment'
+                when 'Card'
+                 'fa-tasks'
                 else
                   ''
                 end
