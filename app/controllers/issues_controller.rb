@@ -3,7 +3,6 @@ class IssuesController < AuthenticatedController
   include Commented
   include ContentFromTemplate
   include ConflictResolver
-  include FormDradifier
   include Mentioned
   include MultipleDestroy
   include NotificationsReader
@@ -14,8 +13,6 @@ class IssuesController < AuthenticatedController
 
   before_action :set_or_initialize_issue, except: [:import, :index]
   before_action :set_or_initialize_tags, except: [:destroy]
-
-  before_action :convert_form_content, only: [:create, :update]
 
   def index
     @columns = @issues.map(&:fields).map(&:keys).uniq.flatten | ['Title', 'Tags', 'Affected', 'Created', 'Created by', 'Updated']

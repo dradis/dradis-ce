@@ -2,7 +2,6 @@ class CardsController < AuthenticatedController
   include ActivityTracking
   include Commented
   include ContentFromTemplate
-  include FormDradifier
   include ProjectScoped
   include Mentioned
   include NotificationsReader
@@ -11,7 +10,6 @@ class CardsController < AuthenticatedController
   before_action :set_current_board_and_list
   before_action :set_or_initialize_card
   before_action :initialize_sidebar, only: [:show, :new, :edit]
-  before_action :convert_form_content, only: [:create, :update]
 
   layout 'cards'
 

@@ -258,8 +258,8 @@
 
       // Show Form pane
       this.options.$help.hide();
-      this.$element.prop('disabled', true);
       this.$source.hide();
+      this.options.$preview.show();
       this.options.$inline.show();
     },
     _onBtnFullScreen: function() {
@@ -329,9 +329,6 @@
       $('.textile-toolbar a', scope).removeClass('active');
       $('.textile-toolbar .btn-write', scope).addClass('active');
 
-      // Reload the textarea only when the form has a valid form
-      if (this.options.$inline.html() != '') { this._loadSource(); }
-
       // Clear out the form
       this.options.$inline.empty();
 
@@ -339,7 +336,6 @@
       this.options.$inline.hide();
       this.options.$help.hide();
       this.options.$preview.show();
-      this.$element.prop('disabled', false);
       this.$source.show();
     },
 
