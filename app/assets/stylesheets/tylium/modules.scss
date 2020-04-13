@@ -90,15 +90,16 @@
 }
 
 .divider {
-  height: 0;
   border-top: 1px solid $borderColor;
+  height: 0;
   margin: .25rem 0;
 }
 
 .divider-vertical {
-  width: 0;
   border-right: 1px solid $borderColor;
-  margin: 0 .25rem;
+  display: initial;
+  margin: 0.25rem;
+  width: 0;
 }
 
 .form-actions {

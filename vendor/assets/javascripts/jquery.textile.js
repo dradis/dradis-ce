@@ -121,20 +121,13 @@
       // These are cross-browser hacks to keep textareas expanded to content
       // while users are typing
       // Handler for setting the correct scrollHeight for current values
-      paddingStr = '0.375rem 0.25rem'
       $parent.find('[data-expand~=auto]').each(function() {
-        $(this).css({'padding': paddingStr, 'height': this.scrollHeight});
+        $(this).css({'height': this.scrollHeight});
       });
 
       // Handler for setting the correct scrollHeight on keyboard input
       $parent.find('[data-expand~=auto]').on('keyup blur', function(e) {
-        $(this).css({
-          'padding': paddingStr,
-          'height': '1px'
-        }).css({
-          'padding': paddingStr,
-          'height': this.scrollHeight + 2
-        });
+        $(this).css({'height': '1px'}).css({'height': this.scrollHeight + 2});
       });
 
       $parent.find('[data-behavior~=delete-field]').click(function(){
