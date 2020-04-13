@@ -4,13 +4,13 @@ v3.17 (Month 2020)
     - Activity Feed now shows board name and link
     - No mandatory due date
   * Comments can now have Textile markup
+  * Display note and evidence titles in breadcrumbs
   * Link to Methodology from project summary chart
   * Navigation sidebar in projects can be kept open while navigating across views
   * Refactored dots-menu to make it available in any view
   * Remove tag color from issue titles in issue summary
   * Use shared noscript partial
   * Upgraded gems: puma, sass-rails
-  * Display note and evidence title on breadcrumb
   * Bugs fixed:
     - Long project names interfering with search bar expansion
     - Report 'Download' button becoming a disabled 'Processing...' button once clicked
