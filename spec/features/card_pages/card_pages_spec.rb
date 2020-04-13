@@ -133,7 +133,10 @@ describe 'Card pages:' do
           @card.assignees = [@first_user]
           @card.save
           visit edit_project_board_list_card_path(current_project, @board, @list, @card)
+          PaperTrail.enabled = true
         end
+
+        after  { PaperTrail.enabled = false }
 
         it 'displays assigned checked and unassigned unchecked' do
           expect(page).to have_selector("input[type=checkbox][id=card_assignee_ids_#{@first_user.id}][checked=checked]")
@@ -148,6 +151,37 @@ describe 'Card pages:' do
 
           expect(page).not_to have_text(@first_user.name)
           expect(page).to have_text(@second_user.name)
+        end
+
+        it 'notifies new assignees' do
+          uncheck @first_user.name
+          check @second_user.name
+
+          submit_form
+
+          expect(
+            Notification.where(
+              recipient: @second_user,
+              notifiable_id: @card.id,
+              notifiable_type: 'Card'
+            )
+          ).to exist
+        end
+
+        it 'does not notify the user if they assign themselves' do
+          uncheck @first_user.name
+          check @logged_in_as.name
+          check @second_user.name
+
+          submit_form
+
+          expect(
+            Notification.where(
+              recipient: @logged_in_as,
+              notifiable_id: @card.id,
+              notifiable_type: 'Card'
+            )
+          ).not_to exist
         end
       end
     end
