@@ -19,26 +19,34 @@
     position: absolute;
     top: 0.65rem;
     transition: opacity 0.2s ease-in-out;
+    z-index: 1;
+  }
+
+  input,
+  textarea,
+  select {
+    background-color: transparent;
+    border: none;
+    margin: 0 0 0.25rem 1.5rem;
+    padding: 0.375rem 0.25rem !important;
+
+    &:focus {
+      background-color: transparent;
+      box-shadow: none;
+      outline: none;
+    }
   }
 
   input,
   textarea {
-    background-color: transparent;
-    border: none;
     border-bottom: 1px solid transparent;
     border-radius: 0;
-    box-shadow: none;
-    margin: 0 0 0.25rem 1.5rem;
-    padding: 0.375rem 0.25rem !important;
     resize: none;
 
     &:focus {
-      background-color: transparent;
       border-bottom: 1px solid $primaryColor;
-      box-shadow: none;
       font-style: italic;
       letter-spacing: 0.4px;
-      outline: none;
     }
   }
 
@@ -54,5 +62,10 @@
 
   .textarea-container {
     padding-right: 2.5rem;
+  }
+
+  select {
+    appearance: none;
+    width: 90%;
   }
 }
