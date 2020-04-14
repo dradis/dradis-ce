@@ -14,7 +14,7 @@
   }
 
   i.fa-pencil {
-    left: 0.4rem;
+    left: 0.5rem;
     opacity: 0.2;
     position: absolute;
     top: 0.65rem;
@@ -22,51 +22,23 @@
     z-index: 1;
   }
 
-  input,
-  textarea,
-  select {
+  input {
     background-color: transparent;
     border: none;
-    margin: 0 0 0.25rem 1.5rem;
-    padding: 0.375rem 0.25rem !important;
+    border-bottom: 1px solid transparent;
+    border-radius: 0;
+    font-weight: 600;
+    margin: 0 0 0.5rem 1.75rem;
+    padding: 0.5rem 0 0 0;
 
     &:focus {
       background-color: transparent;
-      box-shadow: none;
-      outline: none;
-    }
-  }
-
-  input,
-  textarea {
-    border-bottom: 1px solid transparent;
-    border-radius: 0;
-    resize: none;
-
-    &:focus {
       border-bottom: 1px solid $primaryColor;
+      box-shadow: none;
+      font-weight: 400;
       font-style: italic;
       letter-spacing: 0.4px;
+      outline: none;
     }
-  }
-
-  input {
-    font-weight: 600;
-     margin-bottom: 0;
-     margin-top: 0.25rem;
-
-    &:focus {
-      font-weight: 400;
-    }
-  }
-
-  .textarea-container {
-    padding-right: 2.5rem;
-  }
-
-  select {
-    appearance: none;
-    background: none !important; // Firefox
-    width: 90%;
   }
 }

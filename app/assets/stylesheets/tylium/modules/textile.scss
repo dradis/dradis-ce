@@ -127,7 +127,14 @@
     overflow: auto;
 
     .textile-inner {
-      margin: 0 0 1rem 0;
+      bottom: 0;
+      position: absolute;
+      top: 3.5rem;
+      width: 100%;
+
+      .editor-field {
+        margin-bottom: 0.5rem;
+      }
     }
 
     .textile-toolbar {
@@ -155,7 +162,9 @@
       }
 
       .textile-form-field {
+        background-color: $secondaryBgColor;
         border-bottom: 1px solid $borderColor;
+        padding-bottom: 1rem;
         transition: background-color 0.2s ease-in-out;
   
         .actions {
@@ -165,13 +174,16 @@
           transition: opacity 0.2s ease-in-out;
         }
 
+        .editor-field {
+          margin: 0 1.75rem;
+        }
+
         &:first-of-type {
           border-top-left-radius: 5px;
           border-top-right-radius: 5px;
         }
 
         &:hover {
-          background-color: darken($primaryBgColor, 3%);
 
           .actions {
             opacity: 1;
@@ -184,8 +196,15 @@
           border-bottom: none;
         }
 
+        select {
+          margin: 0 1.75rem;
+          background-color: initial;
+          padding-left: 0.25rem;
+        }
+
         textarea {
-          min-height: 36px;
+          min-height: 38px;
+          resize: none;
         }
       } 
     }
