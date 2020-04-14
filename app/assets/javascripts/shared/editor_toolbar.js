@@ -43,6 +43,17 @@ class EditorToolbar {
       }
     });
 
+    // These are cross-browser hacks to keep textareas expanded to content while users are typing
+    // Handler for setting the correct scrollHeight for current values
+    this.$target.each(function() {
+      $(this).css({'height': this.scrollHeight + 2});
+    });
+
+    // Handler for setting the correct scrollHeight on keyboard input
+    this.$target.on('keyup blur', function(e) {
+      $(this).css({'height': '1px'}).css({'height': this.scrollHeight + 2});
+    });
+
     // when a toolbar button is clicked
     this.$editorToolbar.find('[data-btn]').click(function () {
       var $element = that.$editorField.find('textarea, input[type=text]');

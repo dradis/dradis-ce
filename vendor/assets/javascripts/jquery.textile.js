@@ -69,9 +69,6 @@
       this.options.$wrap = $(this.options.tpl.wrap);
       this.$element.parent().append( this.options.$wrap );
 
-      // set data-expand="auto" on textarea element
-      this.$element[0].setAttribute('data-expand', 'auto');
-
       // move textarea to container
       this.$source = this.$element.wrap('<div class="col-6"></div>').parent();
       $('.textile-inner', this.options.$wrap).append(this.$source);
@@ -117,18 +114,6 @@
     },
     bindFieldGroup: function($parent) {
       var that = this;
-
-      // These are cross-browser hacks to keep textareas expanded to content
-      // while users are typing
-      // Handler for setting the correct scrollHeight for current values
-      $parent.find('[data-expand~=auto]').each(function() {
-        $(this).css({'height': this.scrollHeight});
-      });
-
-      // Handler for setting the correct scrollHeight on keyboard input
-      $parent.find('[data-expand~=auto]').on('keyup blur', function(e) {
-        $(this).css({'height': '1px'}).css({'height': this.scrollHeight + 2});
-      });
 
       $parent.find('[data-behavior~=delete-field]').click(function(){
         $(this).closest('[data-behavior~=textile-form-field]').remove();
