@@ -38,8 +38,10 @@
     padding: 0.3rem 0.5rem;
     pointer-events: none;
     position: absolute;
+    right: 50%;
     text-transform: capitalize;
-    top: 125%;
+    top: 110%;
+    transform: translateX(50%);
     white-space: nowrap;
     z-index: 1051;
   }
