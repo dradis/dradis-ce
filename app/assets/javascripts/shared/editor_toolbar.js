@@ -94,7 +94,7 @@ class EditorToolbar {
       if ($inputElement.parents('.textile-fullscreen').length ? topOffset = 0 : topOffset = 60);
 
       // this is needed incase user sets focus on textarea where toolbar would render off screen
-      if ($parentElement.offset().top < $(window).scrollTop() + topOffset) {
+      if ($inputElement.height() > 40 && $parentElement.offset().top < $(window).scrollTop() + topOffset) {
         $parentElement.addClass('sticky-toolbar');
       }
 
@@ -103,7 +103,7 @@ class EditorToolbar {
         var parentOffsetTop = $parentElement.offset().top - topOffset;
 
         // keep toolbar at the top of text area when scrolling
-        if (parentOffsetTop < $(window).scrollTop()) {
+        if ($inputElement.height() > 40 && parentOffsetTop < $(window).scrollTop()) {
           $parentElement.addClass('sticky-toolbar');
         }
         else {
