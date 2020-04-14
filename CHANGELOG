@@ -2,6 +2,7 @@ v3.17 (Month 2020)
   * Adjusted Uploads layout to provide more visibility to the output console
   * Card improvements:
     - Activity Feed now shows board name and link
+    - New Assignees will now receive notification
     - No mandatory due date
   * Comments can now have Textile markup
   * Link to Methodology from project summary chart
@@ -11,7 +12,6 @@ v3.17 (Month 2020)
   * Use shared noscript partial
   * Use user model reference for activities instead of user email
   * Upgraded gems: puma, sass-rails
-  * Card assignees now receive notification
   * Bugs fixed:
     - Long project names interfering with search bar expansion
     - Report 'Download' button becoming a disabled 'Processing...' button once clicked
