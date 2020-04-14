@@ -9,7 +9,7 @@
     border-radius: 20px;
     box-shadow: 0 20px 30px 0 rgba(33,55,74,0.1);
     display: inline-flex;
-    right: 0.25rem;
+    right: 3rem;
     opacity: 0;
     padding: 0.25rem;
     position: absolute;
@@ -100,7 +100,6 @@
   .textarea-container,
   textarea {
     height: 100%;
-    margin-left: -0.6px;
-    margin-right: -1.6px;
+    margin: 0 -1.6px -1px -0.6px;
   }
 }
