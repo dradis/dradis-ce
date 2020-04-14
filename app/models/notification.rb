@@ -33,6 +33,20 @@ class Notification < ApplicationRecord
     NotificationGroup.new(since(interval).includes(notifiable: :commentable))
   end
 
+  def self.preload_objects(notifications)
+    # Eager loading multiple polymorphic associations
+    # https://stackoverflow.com/questions/42773318/eager-load-depending-on-type-of-association-in-ruby-on-rails
+
+    ActiveRecord::Associations::Preloader.new.preload(
+      notifications.select { |notification| notification.notifiable_type == 'Card' },
+      [:actor, :notifiable]
+    )
+    ActiveRecord::Associations::Preloader.new.preload(
+      notifications.select { |notification| notification.notifiable_type == 'Comment' },
+      [:actor, notifiable: [:user, :commentable]]
+    )
+  end
+
   # -- Instance Methods -----------------------------------------------------
   def read?
     self.read_at

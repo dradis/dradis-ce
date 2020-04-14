@@ -2,18 +2,8 @@ class NotificationsController < AuthenticatedController
   include ProjectScoped
 
   def index
-    # Eager loading multiple polymorphic associations
-    # https://stackoverflow.com/questions/42773318/eager-load-depending-on-type-of-association-in-ruby-on-rails
     notifications = current_user.notifications.newest
-
-    ActiveRecord::Associations::Preloader.new.preload(
-      notifications.select { |notification| notification.notifiable_type == 'Card' },
-      [:actor, :notifiable]
-    )
-    ActiveRecord::Associations::Preloader.new.preload(
-      notifications.select { |notification| notification.notifiable_type == 'Comment' },
-      [:actor, notifiable: [:user, :commentable]]
-    )
+    Notification.preload_objects(notifications)
 
     respond_to do |format|
       format.html do
