@@ -135,14 +135,15 @@
       .editor-field {
         padding-bottom: 0.5rem;
       }
+
+      .textile-preview {
+        height: initial;
+        padding-bottom: 0.5rem;
+      }
     }
 
     .textile-toolbar {
       margin-top: 10px !important;
-    }
-    
-    .textile-preview {
-      height: initial;
     }
   }
 
