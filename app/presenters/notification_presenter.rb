@@ -30,7 +30,7 @@ class NotificationPresenter < BasePresenter
                 when 'Comment'
                   'fa-comment'
                 when 'Card'
-                 'fa-tasks'
+                  'fa-tasks'
                 else
                   ''
                 end
