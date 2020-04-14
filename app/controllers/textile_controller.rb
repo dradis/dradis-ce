@@ -16,7 +16,7 @@ class TextileController < AuthenticatedController
     render layout: false
   end
 
-  # Returns the source test given a form data
+  # Returns the source text given a form data
   def source
     render plain: convert_to_source(form_params)
   end
