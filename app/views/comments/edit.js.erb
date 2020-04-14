@@ -2,4 +2,8 @@
   $('#<%= dom_id(@comment) %> .content').hide();
   $('#<%= dom_id(@comment) %> .body').append("<%= j render 'form' %>");
   Mentions.init($('#<%= dom_id(@comment) %> [data-behavior~=mentionable]')[0]);
+
+  $('[data-behavior~=rich-toolbar]', '#<%= dom_id(@comment) %>').each(function() {
+    new EditorToolbar($(this));
+  });
 <% end %>

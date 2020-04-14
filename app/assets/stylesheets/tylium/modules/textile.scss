@@ -125,18 +125,84 @@
   background-color: #fff;
   word-break: break-word;
 
+  &.textile-fullscreen {
+    overflow: auto;
+
+    .textile-inner {
+      margin: 0 0 1rem 0;
+    }
+    
+    .textile-preview {
+      height: initial;
+    }
+  }
+
   .textile-inner {
     padding: 0;
     background: transparent;
 
-    textarea {
-      resize: vertical !important;
+    .textile-form {
+
+      .add-field {
+        margin: 0.4rem .75rem;
+      }
+
+      .table {
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+
+      .textile-form-field {
+        border: 1px solid transparent;
+        border-bottom-color: $borderColor;
+        transition: background-color 0.2s ease-in-out;
+  
+        .actions {
+          display: flex;
+          opacity: 0;
+          transition: opacity 0.2s ease-in-out;
+        }
+
+        &:first-of-type {
+          
+          td {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+          }
+        }
+
+        &:hover {
+          background-color: darken($primaryBgColor, 3%);
+
+          .actions {
+            opacity: 1;
+          }
+        }
+
+        &:last-of-type {
+          
+          td {
+            border-bottom: 1px solid $borderColor;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+          }
+        }
+
+        textarea {
+          min-height: 36px;
+        }
+
+        td {
+          border: 1px solid $borderColor;
+          border-bottom: none;
+        }
+      } 
     }
 
     .textile-preview {
-      border: 1px solid $borderColor;
-      border-radius: 4px;
-      padding: 1rem;
+      padding: 0;
+      overflow: auto;
+      height: 100%;
     }
   }
 
