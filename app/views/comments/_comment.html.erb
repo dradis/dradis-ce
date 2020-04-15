@@ -8,12 +8,12 @@
           <div class="col-12 p-0">
             <span class="user">
               <% if comment.user %>
-                <%= comment.user.email %>
+                <%= comment.user.name %>
               <% else %>
                 a user who has since been deleted
               <% end %>
             </span>
-          
+
 
             <div class="actions pull-right">
               <%= link_to edit_project_comment_path(current_project, comment), remote: true do %>
