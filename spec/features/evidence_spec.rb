@@ -147,26 +147,17 @@ describe 'evidence' do
 
 
   describe 'new page', js: true do
-    let(:content) { "#[Title]#\nSample Evidence" }
-    let(:tmp_dir) { Rails.root.join('tmp', 'templates', 'notes') }
-    let(:path)    { tmp_dir.join('tmpevidence.txt') }
+    let(:tmp_path) { Rails.root.join('spec/fixtures/files/templates/') }
 
     let(:submit_form) { click_button 'Create Evidence' }
 
-    # Create the dummy NoteTemplate:
     before do
-      allow(NoteTemplate).to receive(:pwd) { Pathname.new(tmp_dir) }
-      FileUtils.mkdir_p(tmp_dir)
-      File.write(path, content)
+      allow(NoteTemplate).to receive(:pwd).and_return(tmp_path)
       @issue_0 = create(:issue, node: issue_lib, text: "#[Title]#\nIssue 0")
       @issue_1 = create(:issue, node: issue_lib, text: "#[Title]#\nIssue 1")
       visit new_project_node_evidence_path(current_project, @node, params)
       click_link 'Source'
     end
-    # Check the file still exists before trying to delete it, or File.delete
-    # will fail noisily (e.g. if the file has been automatically cleaned up by
-    # Codeship before the after block runs)
-    after { File.delete(path) if File.exists?(path) }
 
     describe 'textile form view' do
       let(:action_path) { new_project_node_evidence_path(current_project, @node) }
@@ -230,7 +221,7 @@ describe 'evidence' do
     end
 
     context 'when a NoteTemplate is specified' do
-      let(:params)  { { template: 'tmpevidence' } }
+      let(:params)  { { template: 'sample_evidence' } }
 
       it 'pre-populates the textarea with the template contents' do
         click_link 'Inline'
