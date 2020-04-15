@@ -194,6 +194,32 @@
     </div>
 
     <div class="content-container">
+      <div class="scroll-offset" data-id="toolbar"></div>
+      <div class="style-header">
+        <h4 class="header-underline">Rich Toolbar</h4>
+        <button class="reveal-code" data-toggle="collapse" data-target="#toolbar-code"><i class="fa fa-code"></i></button>
+      </div>
+      <div class="style-example">
+        <p>Click the below textarea to reveal the rich toolbar.</p>
+        <div class="d-flex justify-content-center mb-3">
+          <textarea class="form-control" data-behavior="rich-toolbar" data-rich-toolbar="block-code bold italic link list-ol list-ul table" data-expand="auto" placeholder="This is an auto-expanding textarea with a rich toolbar"></textarea>
+        </div>
+        <p>Configuration options:</p>
+        <ul>
+          <li><em>data-expand: auto</em> - this allows the textarea to expand/shrink to fit the contents as the user types</li>
+          <li><em>data-rich-toolbar: block-code | bold | field<sup>1</sup> | highlight<sup>2</sup> | inline-code<sup>2</sup> | italic | link | list-ol | list-ul | quote<sup>2</sup> | table</em></li>
+        </ul>
+        <span><sup>1</sup> omitted from this example</span><span class="pl-3"><sup>2</sup> future feature</span>
+      </div>
+      
+      <div class="style-code-wrapper collapse" id="toolbar-code">
+        <pre class="style-code">
+<code><span class="et">&lt;textarea</span><span class="an"> class=</span><span class="av">"form-control"</span><span class="an"> data-behavior=</span><span class="av">"rich-toolbar"</span><span class="an"> data-rich-toolbar=</span><span class="av">"block-code bold italic link list-ol list-ul table"</span><span class="an"> data-expand=</span><span class="av">"auto"</span><span class="et">></span><span class="et">&lt;/textarea></span></code>
+        </pre>
+      </div>
+    </div>
+
+    <div class="content-container">
       <div class="scroll-offset" data-id="round"></div>
       <div class="style-header">
         <h4 class="header-underline">Round Navbar Buttons</h4>
@@ -530,6 +556,7 @@
         <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="tabs">Content Container with Tabs</a>
         <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="dots">Dots Menu</a>
         <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="modals">Modals</a>
+        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="toolbar">Rich Toolbar</a>
         <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="round">Round Navbar Buttons</a>
         <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="scroll">Scroll-For-More Indicator</a>
         <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="tables">Tables</a>
