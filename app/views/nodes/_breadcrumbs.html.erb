@@ -1,9 +1,4 @@
-<% content_for :breadcrumbs do %>
-  <nav class="dots-container">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="javascript:void(0)" data-behavior="sidebar-toggle">Nodes</a></li>
-      <%= content_tag :li, class: 'breadcrumb-item active', data: { node_id: @node.id } do %><%= @node.label %><% end -%>
-    </ol>
-    <%= render partial: 'breadcrumbs_dropdown' %>
-  </nav>
-<% end %>
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="javascript:void(0)" data-behavior="sidebar-toggle">Nodes</a></li>
+  <%= content_tag :li, class: 'breadcrumb-item active', data: { node_id: @node.id } do %><%= @node.label %><% end -%>
+</ol>
