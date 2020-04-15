@@ -4,8 +4,8 @@ v3.17 (Month 2020)
   * Card improvements:
     - Activity Feed now shows board name and link
     - No mandatory due date
-  * Comments now show author's name instead of email
   * Comments can now have Textile markup
+  * Comments now show author's name instead of email
   * Link to Methodology from project summary chart
   * Navigation sidebar in projects can be kept open while navigating across views
   * Refactored dots-menu to make it available in any view
