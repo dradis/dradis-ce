@@ -22,14 +22,13 @@ shared_examples 'nodes pages breadcrumbs' do |action, klass|
 
   it 'redirects to node page when node label breadcrumb is clicked' do
     find('.breadcrumb li a', text: @node.label).click
-    expect(page).to have_current_path("/projects/#{current_project.id}/nodes/#{@node.id}")
+    expect(page).to have_current_path(project_node_path(current_project, @node))
   end
 
   it 'redirects to node page with tab params when node label breadcrumb is clicked' do
     find('.breadcrumb li a', text: klass.to_s.pluralize).click
     expect(page).to have_current_path(
-      "/projects/#{current_project.id}/nodes/#{@node.id}?"\
-      "tab=#{klass.to_s.pluralize.downcase}-tab"
+      project_node_path(current_project, @node, tab: "#{klass.to_s.pluralize.downcase}-tab")
     )
   end
 
