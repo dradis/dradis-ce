@@ -77,7 +77,7 @@ describe "note pages" do
     end
 
     let(:model) { @note }
-    include_examples "nodes pages breadcrumbs", :show, Note
+    include_examples 'nodes pages breadcrumbs', :show, Note
   end
 
   describe "edit page", js: true do
@@ -156,7 +156,7 @@ describe "note pages" do
     end
 
     let(:model) { @note }
-    include_examples "nodes pages breadcrumbs", :edit, Note
+    include_examples 'nodes pages breadcrumbs', :edit, Note
   end
 
 
@@ -241,6 +241,6 @@ describe "note pages" do
       it_behaves_like 'a textile form view', Note
     end
 
-    include_examples "nodes pages breadcrumbs", :new, Note
+    include_examples 'nodes pages breadcrumbs', :new, Note
   end
 end

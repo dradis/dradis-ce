@@ -142,7 +142,7 @@ describe 'evidence' do
     end
 
     let(:model) { @evidence }
-    include_examples "nodes pages breadcrumbs", :edit, Evidence
+    include_examples 'nodes pages breadcrumbs', :edit, Evidence
   end
 
 
