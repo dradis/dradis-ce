@@ -22,6 +22,7 @@
 
 //= require shared/charts
 //= require shared/console_updater
+//= require shared/editor_toolbar
 //= require shared/items_table
 
 //= require tylium/plugins/jquery.breadcrumbs

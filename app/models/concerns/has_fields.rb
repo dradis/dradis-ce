@@ -23,22 +23,14 @@ module HasFields
   REGEX = /#\[(.+?)\]#[\r|\n](.*?)(?=#\[|\z)/m
 
   module ClassMethods
-
-    # Parse the contentsof the field and split it to return a Hash of field
-    # name/value pairs. Field / values are defined using this syntax:
-    #
-    #   #[Title]#
-    #   This is the value of the Title field
-    #
-    #   #[Description]#
-    #   Lorem ipsum...
+    # Method for models to define which attribute is to be converted to fields.
     #
     # If the given field format does not conform to the expected syntax, an
     # empty Hash is returned.
     def dradis_has_fields_for(container_field)
       define_method :fields do
         if raw_content = self.send(container_field)
-          local_fields.merge(Hash[ *raw_content.scan(REGEX).flatten.map(&:strip) ])
+          local_fields.merge(self.class.parse_fields(raw_content))
         else # if the container field is empty, just return an empty hash:
           {}
         end
@@ -69,7 +61,19 @@ module HasFields
           updated_fields.to_a.map { |h| "#[#{h[0]}]#\n#{h[1]}" }.join("\n\n")
         )
       end
+    end
 
+    # Parse the contents of the field and split it to return a Hash of field
+    # name/value pairs. Field / values are defined using this syntax:
+    #
+    #   #[Title]#
+    #   This is the value of the Title field
+    #
+    #   #[Description]#
+    #   Lorem ipsum...
+    #
+    def parse_fields(string)
+      Hash[ *string.scan(REGEX).flatten.map(&:strip) ]
     end
   end
 

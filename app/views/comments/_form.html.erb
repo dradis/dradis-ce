@@ -4,7 +4,10 @@
                   rows: 5,
                   required: 'required',
                   class: 'form-control mt-3',
-                  data: { behavior: 'mentionable' } %>
+                  data: {
+                    behavior: 'mentionable rich-toolbar',
+                    'rich-toolbar': 'block-code bold italic link list-ol list-ul table'
+                  } %>
     <%= f.submit "Update comment", class: "btn btn-primary mt-2 ml-0", style: 'vertical-align: baseline;' %> or
     <%= link_to 'Cancel',
                 'javascript:void(0)',
