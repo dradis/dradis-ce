@@ -3,6 +3,7 @@ class Activity < ApplicationRecord
   # -- Relationships --------------------------------------------------------
 
   belongs_to :trackable, polymorphic: true, required: false
+  belongs_to :user
 
   def project=(new_project); end
 

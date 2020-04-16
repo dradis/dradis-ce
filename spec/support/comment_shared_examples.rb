@@ -24,9 +24,15 @@ shared_examples 'a page with a comments feed' do
     end
   end
 
+  it 'display user\'s name in comment row' do
+    within "div#comment_#{@comments[0].id}" do
+      expect(page).to have_selector('span.user', text: @logged_in_as.name)
+    end
+  end
+
   describe 'add comment', js: true do
     let(:submit_form) do
-      within 'form[data-behavior=add-comment]' do
+      within 'form[data-behavior~=add-comment]' do
         fill_in 'comment[content]', with: 'test comment'
         click_button 'Add comment'
       end
