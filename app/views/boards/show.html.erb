@@ -10,6 +10,23 @@
     </li>
     <li class="breadcrumb-item active"><%= @board.name %></li>
   </ol>
+  <ul class="nav">
+    <li class="dropdown dots-dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i></a>
+      <div class="dropdown-menu">
+        <%=
+          link_to(
+            [current_project, @board],
+            class: 'dropdown-item text-error',
+            data: { confirm: "Are you sure?\n\nProceeding will delete this methodology from the project, as well as with any associated lists and tasks." },
+            method: 'delete',
+            tabindex: '-1'
+          ) do %>
+          <i class="fa fa-trash"></i> Delete
+        <% end %>
+      </div>
+    </li>
+  </ul>
 </nav>
 <% end %>
 
