@@ -61,7 +61,7 @@ describe 'evidence' do
         end
         expect(page).to have_text "Successfully deleted evidence for '#{@evidence.issue.title}.'"
       end
-      
+
       it 'deletes the Evidence' do
         id = @evidence.id
         submit_form
@@ -76,6 +76,9 @@ describe 'evidence' do
       include_examples 'recover deleted item', :evidence
       include_examples 'recover deleted item without node', :evidence
     end
+
+    let(:model) { @evidence }
+    include_examples 'nodes pages breadcrumbs', :show, Evidence
   end
 
 
@@ -137,6 +140,9 @@ describe 'evidence' do
 
       include_examples "doesn't create an Activity"
     end
+
+    let(:model) { @evidence }
+    include_examples 'nodes pages breadcrumbs', :edit, Evidence
   end
 
 
@@ -224,5 +230,6 @@ describe 'evidence' do
       end
     end
 
+    include_examples 'nodes pages breadcrumbs', :new, Evidence
   end
 end

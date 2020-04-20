@@ -6,6 +6,7 @@ v3.17 (Month 2020)
     - No mandatory due date
   * Comments can now have Textile markup
   * Comments now show author's name instead of email
+  * Display note and evidence titles in breadcrumbs
   * Editor improvements:
     - New form-view to edit each field individually
     - Formatting toolbar to help with markup
