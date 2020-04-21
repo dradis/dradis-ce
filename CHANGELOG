@@ -1,7 +1,7 @@
 v3.17 (Month 2020)
   * Add author to evidence and notes views
   * Adjusted Uploads layout to provide more visibility to the output console
-  * Boards can be deleted through their dots menu
+  * Boards can be renamed and deleted through their dots menu
   * Card improvements:
     - Activity Feed now shows board name and link
     - No mandatory due date
