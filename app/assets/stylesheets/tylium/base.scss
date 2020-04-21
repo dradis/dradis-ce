@@ -162,6 +162,11 @@ mark {
   }
 }
 
+.show > .btn-primary.dropdown-toggle {
+  background-color: $darkColor;
+  border-color: $darkColor;
+}
+
 .small {
   font-size: 75%;
   font-weight: 300;

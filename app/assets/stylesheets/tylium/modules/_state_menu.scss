@@ -1,0 +1,34 @@
+.state-menu {
+
+  .dropdown-item {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    padding: 0.25rem 1rem 0.25rem 2rem;;
+    position: relative;
+
+    &.selected {
+
+      &::after {
+        content: '\f00c';
+        font-family: 'FontAwesome';
+        left: 10px;
+        position: absolute;
+        top: 6px;
+      }
+    }
+    
+    .state-details {
+      font-size: 0.8rem;
+    }
+  
+    .state-header {
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+  }
+
+  .dropdown-toggle-split {
+    border-left: 1px solid $darkColor;
+  }
+}
