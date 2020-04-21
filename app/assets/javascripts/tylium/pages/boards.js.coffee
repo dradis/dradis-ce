@@ -4,7 +4,7 @@
 document.addEventListener "turbolinks:load", ->
   if $('body.boards').length
 
-    $('.js-board-modal').on 'click', (e)->
+    $('[data-behavior~=board-modal]').on 'click', (e)->
       e.preventDefault()
       $($(this).attr('href')).modal()
 

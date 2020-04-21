@@ -23,7 +23,8 @@
         <%=
           link_to(
             "#modal-board-edit-#{@board.id}",
-            class: 'dropdown-item js-board-modal',
+            class: 'dropdown-item',
+            data: { behavior: 'board-modal' },
             tabindex: -1
           ) do
         %>
