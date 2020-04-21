@@ -44,7 +44,7 @@ class IssuesController < AuthenticatedController
   end
 
   def create
-    @issue.author ||= current_user.email
+    @issue.author = current_user.email
 
     respond_to do |format|
       if @issue.save &&

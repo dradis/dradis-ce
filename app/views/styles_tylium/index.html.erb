@@ -278,6 +278,9 @@
             <li><em>.quarter-height</em> - quarter available height of layout</li>
           </ul>
 
+          <p>Alternatively, the content-container can be set to match the same height as the next or previous content-container in the row.
+          <br>To achieve this, set the data-behavior value to <em>restrict-height</em> without setting a <em>*-height</em> class. Set the data-height value to either <em>match-next</em> or <em>match-prev</em>.
+
           <p>Lorem Content:</p>
 
           <p>Ut cupidatat aliqua eu eu labore pariatur commodo ipsum. Ad irure reprehenderit velit consequat excepteur dolor et duis sunt culpa aliqua ipsum voluptate voluptate. Enim velit ipsum id aliqua laborum ex mollit nostrud esse eiusmod aute aliqua magna. Dolore voluptate do in esse ullamco aute aliqua ea sint sit do commodo. Laborum ex anim eu fugiat ut qui ex. Proident adipisicing elit duis deserunt culpa amet voluptate. Elit ad incididunt voluptate velit qui adipisicing.</p>
@@ -310,7 +313,12 @@
       
       <div class="style-code-wrapper collapse" id="scroll-code">
         <pre class="style-code" style="margin: 2rem;">
-<code><span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"content-container restrict-height half-height"</span><span class="an"> data-behavior=</span><span class="av">"restrict-height"</span><span class="et">></span><span class="ct"> // full-height, half-height or quarter-height &nbsp;</span>
+<code><span class="ct"> // Example showing a content-container restricted to half the height of the browser view (this is the way this example content-container is set up). Height options are full-height, half-height or quarter-height</span>
+<span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"content-container restrict-height half-height"</span><span class="an"> data-behavior=</span><span class="av">"restrict-height"</span><span class="et">></span>
+
+<span class="ct"> // Example showing a content-container restricted to match the height of the next content-container in the row. Options for 'data-height' are 'match-next' and 'match-prev'</span>
+<span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"content-container restrict-height"</span><span class="an"> data-behavior=</span><span class="av">"restrict-height"</span><span class="an"> data-height=</span><span class="av">"match-next"</span><span class="et">></span>
+
   <span class="et">&lt;h4</span><span class="an"> class=</span><span class="av">"header-underline"</span><span class="et">></span><span class="et">></span>Scroll-for-more Indicator<span class="et">&lt;/h4</span><span class="et">></span>
   <span class="et">&lt;p</span><span class="et">></span>Content Here<span class="et">&lt;/p></span>
 <span class="et">&lt;/div</span><span class="et">></span></code>

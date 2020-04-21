@@ -71,7 +71,6 @@ document.addEventListener "turbolinks:load", ->
   # Activate jQuery.treeModal
   $('.modal-node-selection-form').treeModal()
 
-
   # ------------------------------------------------------- Bootstrap behaviors
 
   # Focus first input on modal window display.
@@ -121,7 +120,8 @@ document.addEventListener "turbolinks:load", ->
 
   # Disable form buttons after submitting them.
   $('form').submit (ev)->
-    $('input[type=submit]', this).attr('disabled', 'disabled').val('Processing...')
+    if !$('input[type=submit]', this).is('[data-behavior~=skip-auto-disable]')
+      $('input[type=submit]', this).attr('disabled', 'disabled').val('Processing...')
 
   # Search form
   $('[data-behavior~=form-search]').hover ->
@@ -143,6 +143,10 @@ document.addEventListener "turbolinks:load", ->
     if e.which == 13
       submitSearch()
 
+  # Toggle sidebar menu
+  $('[data-behavior~=expandable-sidebar]').each ->
+    new Sidebar($(this))
+
   # Collapsable div in sidebar collections
   if $('[data-behavior~=collapse-collection]').length
     $('[data-behavior~=collapse-collection]').click ->
@@ -157,60 +161,41 @@ document.addEventListener "turbolinks:load", ->
     $('[data-behavior~=navbar-collapse]').collapse 'hide'
     return
 
-  # Toggle sidebar menu
-
-  $sidebar = $('[data-behavior~=main-sidebar]')
-
-  sidebarOpen = -> 
-    $sidebar.removeClass('sidebar-collapsed').addClass('sidebar-expanded')
-    $sidebar.attr('data-behavior', 'main-sidebar sidebar-expanded')
-    $('[data-behavior~=back-fade]').removeClass('not-faded').addClass('faded')
-
-  sidebarClose = ->
-    $sidebar.removeClass('sidebar-expanded').addClass('sidebar-collapsed')
-    $sidebar.attr('data-behavior', 'main-sidebar sidebar-collapsed')
-    $('[data-behavior~=back-fade]').removeClass('faded').addClass('not-faded')
-
-  $('[data-behavior~=sidebar-toggle]').on 'click', ->
-    if $sidebar.is('[data-behavior~=sidebar-collapsed]')
-      sidebarOpen()
-    else
-      if $(this).is('[data-behavior~=open-only]')
-        return
-      else
-        sidebarClose()
-
-  $('[data-behavior~=back-fade]').on 'click', ->
-    sidebarClose()
-
-  $('[data-behavior~=sidebar-link]').on 'click', ->
-    if $sidebar.is('[data-behavior~=sidebar-expanded]')
-      sidebarClose() 
+  # Activate Rich Toolbars for the editor, and comments
+  $('[data-behavior~=rich-toolbar]').each ->
+    new EditorToolbar($(this))
 
   # Scroll for more indicator functionality
-  if $('[data-behavior~=restrict-height').length
+  if $('[data-behavior~=restrict-height]').length
     checkOverflow = ->
-      $('[data-behavior~=restrict-height').each ->
+      $('[data-behavior~=restrict-height]').each ->
+        if $(this).is('[data-height~=match-prev]')
+          prevContainer = $(this).parent().prev().children('[data-behavior~=content-container]').innerHeight()
+          $(this).innerHeight(prevContainer)
+        else if $(this).is('[data-height~=match-next]')
+          nextContainer = $(this).parent().next().children('[data-behavior~=content-container]').innerHeight()
+          $(this).innerHeight(nextContainer)
+
         if $(this).innerHeight() + 32 < $(this)[0].scrollHeight && $(this).innerHeight() > 100 # if container is > 100px and has overflowing content
           if $(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight # if already at the bottom
             return
           else
-            $(this).find($('[data-behavior~=scroll-wrapper')).removeClass('hidden');
+            $(this).find($('[data-behavior~=scroll-wrapper]')).removeClass('hidden');
         else
-          $(this).find($('[data-behavior~=scroll-wrapper')).addClass('hidden');
+          $(this).find($('[data-behavior~=scroll-wrapper]')).addClass('hidden');
       return
 
-    $('[data-behavior~=restrict-height').append('<div class="scroll-more-wrapper hidden" data-behavior="scroll-wrapper"><span class="scroll-more">Scroll for more</span><span class="gradient"></span><span class="line"></span></div>')
+    $('[data-behavior~=restrict-height]').append('<div class="scroll-more-wrapper hidden" data-behavior="scroll-wrapper"><span class="scroll-more">Scroll for more</span><span class="gradient"></span><span class="line"></span></div>')
     checkOverflow()
 
     $(window).resize ->
       checkOverflow()
 
-    $('[data-behavior~=restrict-height').on 'scroll', ->
+    $('[data-behavior~=restrict-height]').on 'scroll', ->
       if $(this).scrollTop() + 64 + $(this).innerHeight() >= $(this)[0].scrollHeight
-        $(this).find($('[data-behavior~=scroll-wrapper')).addClass('hidden');
+        $(this).find($('[data-behavior~=scroll-wrapper]')).addClass('hidden');
       else
-        $(this).find($('[data-behavior~=scroll-wrapper')).removeClass('hidden');
+        $(this).find($('[data-behavior~=scroll-wrapper]')).removeClass('hidden');
 
   # Disable turbolinks for on-page anchor links (prevents page from jumping to top and allows smooth-scrolling)
   if $('a[href^="#"]').length

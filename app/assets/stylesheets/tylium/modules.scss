@@ -6,6 +6,7 @@
 @import "tylium/modules/console";
 @import "tylium/modules/dots-menu";
 @import "tylium/modules/dropdown";
+@import "tylium/modules/inline_editable";
 @import "tylium/modules/issues/issues";
 @import "tylium/modules/issues/merge";
 @import "tylium/modules/modals";
@@ -21,6 +22,33 @@
 @import "tylium/modules/tour";
 @import "tylium/modules/uploads";
 @import "tylium/modules/versions";
+
+[aria-label] {
+  position: relative;
+  
+  &:after {
+    background-color: $darkColor;
+    border-radius: 5px;
+    box-shadow: 1px 2px 6px rgba(0,0,0,0.5);
+    color: $white;
+    content: attr(aria-label);
+    font-size: .7em;
+    line-height: 15px;
+    opacity: 0;
+    padding: 0.3rem 0.5rem;
+    pointer-events: none;
+    position: absolute;
+    text-transform: capitalize;
+    top: 125%;
+    white-space: nowrap;
+    z-index: 1051;
+  }
+  
+  &:hover:after {
+    opacity: 0.9;
+    transition: all 0.3s 0.3s ease-in-out;
+  }
+}
 
 .accordion-group {
   margin-bottom: 5px;
@@ -41,6 +69,14 @@
   margin: 10px 0;
 }
 
+.author-info {
+  display: flex;
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  width: 100%;
+  border-top: 1px solid $borderColor;
+}
+
 .column-actions a {
   white-space: nowrap;
 }
@@ -59,6 +95,18 @@
   ul {
     margin-top: 1em;
   }
+}
+
+.divider {
+  height: 0;
+  border-top: 1px solid $borderColor;
+  margin: .25rem 0;
+}
+
+.divider-vertical {
+  width: 0;
+  border-right: 1px solid $borderColor;
+  margin: 0 .25rem;
 }
 
 .form-actions {
