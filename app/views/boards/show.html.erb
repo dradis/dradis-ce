@@ -3,7 +3,7 @@
 <%= render 'poller_alerts' unless request.xhr? %>
 
 <% content_for :breadcrumbs do %>
-<nav>
+<nav class="dots-container">
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
       <%= link_to 'Methodologies', project_boards_path(current_project) %>
