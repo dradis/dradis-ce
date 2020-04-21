@@ -2,6 +2,12 @@
 
 <%= render 'poller_alerts' unless request.xhr? %>
 
+<%# FIXME: this is the current convention for modal rendering in Tylium. We
+  #   could probably improve it by making use of a single :content_for block %>
+<% content_for :board_rename_modal do %>
+  <%= render partial: 'boards/modals/board_rename_form', locals: { board: @board } %>
+<% end %>
+
 <% content_for :breadcrumbs do %>
 <nav class="dots-container">
   <ol class="breadcrumb">
@@ -16,11 +22,20 @@
       <div class="dropdown-menu">
         <%=
           link_to(
+            "#modal-board-edit-#{@board.id}",
+            class: 'dropdown-item js-board-modal',
+            tabindex: -1
+          ) do
+        %>
+          <i class="fa fa-pencil"></i> Edit
+        <% end %>
+        <%=
+          link_to(
             [current_project, @board],
             class: 'dropdown-item text-error',
             data: { confirm: "Are you sure?\n\nProceeding will delete this methodology from the project, as well as with any associated lists and tasks." },
             method: 'delete',
-            tabindex: '-1'
+            tabindex: -1
           ) do %>
           <i class="fa fa-trash"></i> Delete
         <% end %>
