@@ -165,6 +165,10 @@ document.addEventListener "turbolinks:load", ->
   $('[data-behavior~=rich-toolbar]').each ->
     new EditorToolbar($(this))
 
+  # Initialize server side auto save
+  $('[data-behavior~=server-auto-save]').each ->
+    new ServerAutoSave(this)
+
   # Scroll for more indicator functionality
   if $('[data-behavior~=restrict-height]').length
     checkOverflow = ->

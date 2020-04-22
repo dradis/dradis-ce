@@ -1,4 +1,11 @@
-<%= simple_form_for [current_project, @issue] do |f| %>
+<%= simple_form_for [current_project, @issue], html: {
+  data: {
+    'as-project-id': current_project.id,
+    'as-resource_id': @issue.id,
+    'as-resource_type': 'issue',
+    behavior: 'server-auto-save'
+  }
+} do |f| %>
   <%= f.error_notification %>
 
   <%=
