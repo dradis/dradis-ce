@@ -100,4 +100,37 @@ shared_examples 'a page with a comments feed' do
       end
     end
   end
+
+  describe 'local caching', js: true do
+    let!(:original_page_with_comment_path) { page.current_path }
+
+    context 'when comment is not saved' do
+      it 'prefills textarea with cached value' do
+        # save_and_open_page
+        within 'form[data-behavior~=add-comment]' do
+          fill_in 'comment[content]', with: 'test comment'
+          sleep 2 # Needed for setTimeout function in local_auto_save.js
+        end
+        visit root_path
+        visit original_page_with_comment_path
+        content = page.find_field('comment[content]').value
+        expect(content).to eq 'test comment'
+      end
+    end
+
+    context 'when comment is saved' do
+      it 'clears cached value' do
+        # save_and_open_page
+        within 'form[data-behavior~=add-comment]' do
+          fill_in 'comment[content]', with: 'test comment'
+          sleep 2 # Needed for setTimeout function in local_auto_save.js
+          click_button 'Add comment'
+        end
+        visit root_path
+        visit original_page_with_comment_path
+        content = page.find_field('comment[content]').value
+        expect(content).to eq ''
+      end
+    end
+  end
 end
