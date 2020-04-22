@@ -4,8 +4,10 @@ v3.17 (Month 2020)
   * Card improvements:
     - Activity Feed now shows board name and link
     - No mandatory due date
-  * Comments can now have Textile markup
-  * Comments now show author's name instead of email
+  * Comments
+    - Added auto-save JS that uses localStorage on comment textarea
+    - Added Textile markup
+    - Update comments feed to show author's name instead of email
   * Display note and evidence titles in breadcrumbs
   * Editor improvements:
     - New form-view to edit each field individually
