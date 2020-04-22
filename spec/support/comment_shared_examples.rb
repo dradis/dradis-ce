@@ -106,7 +106,6 @@ shared_examples 'a page with a comments feed' do
 
     context 'when comment is not saved' do
       it 'prefills textarea with cached value' do
-        # save_and_open_page
         within 'form[data-behavior~=add-comment]' do
           fill_in 'comment[content]', with: 'test comment'
           sleep 2 # Needed for setTimeout function in local_auto_save.js
@@ -120,7 +119,6 @@ shared_examples 'a page with a comments feed' do
 
     context 'when comment is saved' do
       it 'clears cached value' do
-        # save_and_open_page
         within 'form[data-behavior~=add-comment]' do
           fill_in 'comment[content]', with: 'test comment'
           sleep 2 # Needed for setTimeout function in local_auto_save.js
