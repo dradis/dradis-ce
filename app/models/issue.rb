@@ -3,6 +3,8 @@ class Issue < Note
   include Subscribable
   include Taggable
 
+  enum state: [:draft, :review, :published]
+
   # -- Relationships --------------------------------------------------------
   has_many :evidence, dependent: :destroy
   has_many :affected, through: :evidence, source: :node
@@ -74,11 +76,6 @@ class Issue < Note
     end
     Hash[issues_map]
   end
-
-  def self.states
-    {draft: 0, review: 1, published: 2}
-  end
-
 
   # -- Instance Methods -----------------------------------------------------
 
