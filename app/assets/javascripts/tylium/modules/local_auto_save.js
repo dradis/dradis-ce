@@ -1,6 +1,6 @@
-document.addEventListener( "turbolinks:load", function(){
+document.addEventListener("turbolinks:load", function() {
 
-  document.querySelectorAll("[data-behavior~=local-auto-save").forEach( function(form){
+  document.querySelectorAll("[data-behavior~=local-auto-save").forEach(function(form) {
     var key  = form.dataset.autoSaveKey;
     var data = "";
 
@@ -51,5 +51,11 @@ document.addEventListener( "turbolinks:load", function(){
 
       return formInputs.reduce(reducer, {})
     }
+
+    form.addEventListener("submit", function(event) {
+      if (typeof Storage !== "undefined" && Storage !== null) {
+        localStorage.removeItem(key);
+      }
+    });
   });
 });
