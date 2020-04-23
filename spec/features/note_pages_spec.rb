@@ -241,6 +241,77 @@ describe "note pages" do
       it_behaves_like 'a textile form view', Note
     end
 
+    describe 'local caching' do
+      let(:params) { {} }
+
+      let(:add_categories) do
+        @category_1  = create(:category)
+        @category_2 = create(:category)
+      end
+
+      before do
+        add_categories
+        visit new_project_node_note_path(current_project, @node)
+        click_link 'Source'
+        select @category_1.name, from: :note_category_id
+        fill_in :note_text, with: 'New Note Text'
+        sleep 1 # Needed for setTimeout function in local_auto_save.js
+      end
+
+      context 'when note is not saved' do
+        context 'on the same project and node' do
+          it 'prefill fields with cached data' do
+            visit root_path
+            visit new_project_node_note_path(current_project, @node)
+            click_link 'Source'
+
+            aggregate_failures do
+              expect(page.find_field('note[text]').value).to eq 'New Note Text'
+              expect(page).to have_select('note_category_id', selected: @category_1.name)
+            end
+          end
+        end
+
+        context 'on different node' do
+          before do
+            @new_node = create(:node, project: current_project)
+          end
+
+          it 'does not prefill fields with cached data' do
+            visit root_path
+            visit new_project_node_note_path(current_project, @new_node)
+            click_link 'Source'
+
+            aggregate_failures do
+              expect(page.find_field('note[text]').value).to eq ''
+              expect(page).to have_select('note_category_id', selected: 'Assign note category')
+            end
+          end
+        end
+      end
+
+      context 'when evidence is saved' do
+        it 'clears cached data' do
+          click_button 'Create Note'
+          visit new_project_node_note_path(current_project, @node)
+          click_link 'Source'
+
+          expect(page.find_field('note[text]').value).to eq ''
+        end
+      end
+
+      context 'when "Cancel" link is clicked' do
+        it 'clears cached data' do
+          click_link 'Cancel'
+
+          visit new_project_node_note_path(current_project, @node)
+          click_link 'Source'
+
+          expect(page.find_field('note[text]').value).to eq ''
+        end
+      end
+    end
+
     include_examples 'nodes pages breadcrumbs', :new, Note
   end
 end

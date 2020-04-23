@@ -86,6 +86,78 @@ describe 'Card pages:' do
           expect(Card.last.assignees.count).to eq 2
         end
       end
+
+      describe 'local caching' do
+        before do
+          add_users
+          visit new_project_board_list_card_path(current_project, @board, @list)
+          click_link 'Source'
+          fill_in :card_name, with: 'New Card'
+          fill_in :card_description, with: 'New Card Description'
+          fill_in :card_due_date, with: Date.today
+          check @first_user.name
+          sleep 1 # Needed for setTimeout function in local_auto_save.js
+        end
+
+        context 'when card is not saved' do
+          context 'on the same list' do
+            it 'prefill fields with cached data' do
+              visit root_path
+              visit new_project_board_list_card_path(current_project, @board, @list)
+              click_link 'Source'
+
+              aggregate_failures do
+                expect(page.find_field('card[name]').value).to eq 'New Card'
+                expect(page.find_field('card[description]').value).to eq 'New Card Description'
+                expect(page.find_field('card[due_date]').value).to eq Date.today.strftime('%Y-%m-%d')
+                expect(page.find("input#card_assignee_ids_#{@first_user.id}")).to be_checked
+              end
+            end
+          end
+
+          context 'on different list' do
+            before do
+              @new_board = create(:board, project: current_project, node: current_project.methodology_library)
+              @new_list  = create(:list, board: @new_board)
+            end
+
+            it 'does not prefill fields with cached data' do
+              visit root_path
+              visit new_project_board_list_card_path(current_project, @new_board, @new_list)
+              click_link 'Source'
+
+              aggregate_failures do
+                expect(page.find_field('card[name]').value).to eq ''
+                expect(page.find_field('card[description]').value).to eq ''
+                expect(page.find_field('card[due_date]').value).to eq ''
+                expect(page.find("input#card_assignee_ids_#{@first_user.id}")).not_to be_checked
+              end
+            end
+          end
+        end
+
+        context 'when card is saved' do
+          it 'clears cached data' do
+            click_button 'Create Card'
+
+            visit new_project_board_list_card_path(current_project, @board, @list)
+            click_link 'Source'
+
+            expect(page.find_field('card[name]').value).to eq ''
+          end
+        end
+
+        context 'when "Cancel" link is clicked' do
+          it 'clears cached data' do
+            click_link 'Cancel'
+
+            visit new_project_board_list_card_path(current_project, @board, @list)
+            click_link 'Source'
+
+            expect(page.find_field('card[name]').value).to eq ''
+          end
+        end
+      end
     end
 
     describe 'when in edit page', js: true do
