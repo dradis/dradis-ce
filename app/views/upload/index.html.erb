@@ -1,41 +1,60 @@
 <% content_for :title, 'Upload Manager' %>
 
 <div class="row m-0">
-  <div class="col-lg-6 col-xl-5 p-0">
-    <div class="content-container mt-3 mr-lg-3" data-behavior="content-container">
+  <div class="col-12 order-1 col-xxl-6 p-0">
+    <div class="content-container mt-3 mr-xxl-3" data-behavior="content-container">
       <h4 class="header-underline">Upload Output Files</h4>
-      <p class="mt-4">Use the form below to upload output files from other tools.</p>
+      <p class="mb-4">Use the form below to upload output files from other tools.</p>
 
-      <div class="mt-4">
-        <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, id: 'new_upload', data: { parse_url: project_upload_parse_path(current_project) } do %>
-          <div class="form-group mb-5 mt-4 pt-2">
-            <h5>1. Choose a tool</h5>
-            <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { :class => 'form-control' } %>
+      <div class="row">
+        <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, id: 'new_upload', class: 'd-flex w-100', data: { parse_url: project_upload_parse_path(current_project) } do %>
+          <div class="col-4">
+            <div class="form-group">
+              <h5>1. Choose a tool</h5>
+              <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { :class => 'form-control' } %>
+            </div>
           </div>
-          <div class="form-group mb-4">
-            <h5>2. Choose a file</h5>
-            <div class="custom-file">
-              <%= file_field_tag 'file', class: 'custom-file-input' %>
-              <label class="custom-file-label" data-behavior="file-label">Choose file</label>
-              <%= hidden_field_tag 'item_id' %>
-              <%= hidden_field_tag 'format', 'js' %>
+
+          <div class="col-4">
+            <div class="form-group">
+              <h5>2. Choose state</h5>
+              <select class="form-control">
+                <option>Draft</option>
+                <option>Ready For Review</option>
+                <option selected>Published</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div class="form-group">
+              <h5>3. Choose a file</h5>
+              <div class="custom-file">
+                <%= file_field_tag 'file', class: 'custom-file-input' %>
+                <label class="custom-file-label text-truncate" data-behavior="file-label">Choose file</label>
+                <%= hidden_field_tag 'item_id' %>
+                <%= hidden_field_tag 'format', 'js' %>
+              </div>
             </div>
           </div>
         <% end %>
-            
-        <p>Upload progress:</p>
-        <div class="progress mb-2">
-          <div class="progress-bar progress-bar-striped">
-            <div class="percent">0%</div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <p class="mt-3">Upload progress:</p>
+          <div class="progress mb-2">
+            <div class="progress-bar progress-bar-striped">
+              <div class="percent">0%</div>
+            </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
 
-  <div class="col-lg-6 col-xl-7 p-0">
-    <div class="content-container mt-0 mt-lg-3 ml-lg-3 restrict-height" data-height="match-prev" data-behavior="restrict-height">
+  <div class="col-12 order-3 order-xxl-2 col-xxl-6 p-0">
+    <div class="content-container mt-0 ml-xxl-3 mt-xxl-3 restrict-height" data-height="match-prev" data-behavior="restrict-height">
       <h4 class="header-underline">Available plugins</h4>
 
       <div id="plugin-list">
@@ -61,7 +80,7 @@
     </div>
   </div>
 
-  <div class="col-12 p-0">
+  <div class="col-12 order-2 order-xxl-3 p-0">
     <div class="content-container mt-0">
       <h4 class="header-underline">Output console</h4>
       <div id="status"></div>

@@ -76,6 +76,13 @@ button:focus {
   box-shadow: none !important;
 }
 
+.custom-file-label {
+  padding-right: 5.25rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .custom-select {
   font-size: inherit;
 }
