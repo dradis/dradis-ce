@@ -1,5 +1,4 @@
-<%=
-  simple_form_for [current_project, @node, @evidence],
+<%= simple_form_for [current_project, @node, @evidence],
   html: {
     data: {
       behavior: ('local-auto-save' if @evidence.new_record?),
