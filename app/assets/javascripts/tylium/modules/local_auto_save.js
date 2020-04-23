@@ -22,7 +22,7 @@ document.addEventListener("turbolinks:load", function() {
 
     // List of available inputs: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
     // Exclude these inputs so that it does not store unnecessary data in local cache
-    var excludedInputTypes = ["button", "file", "hidden", "image", "password", "reset", "submit"]
+    var excludedInputTypes = ["button", "file", "image", "password", "reset", "submit"]
 
     // Find all inputs and textareas of form, then exclude base on excluded input types
     var formInputs = Array.from(form.querySelectorAll("input, textarea, select")).filter(function(input) {
@@ -37,6 +37,7 @@ document.addEventListener("turbolinks:load", function() {
       $(input).on("textchange", function(event, previousText) {
         timer = setTimeout(function(){
           if (typeof Storage !== "undefined" && Storage !== null) {
+            console.log(getData(formInputs))
             localStorage.setItem(key, JSON.stringify(getData(formInputs)));
           } else {
             console.log("The browser doesn't support local storage of settings.");
@@ -55,6 +56,7 @@ document.addEventListener("turbolinks:load", function() {
     }
 
     form.addEventListener("submit", function(event) {
+      console.log($(form).serialize())
       if (typeof Storage !== "undefined" && Storage !== null) {
         localStorage.removeItem(key);
       }

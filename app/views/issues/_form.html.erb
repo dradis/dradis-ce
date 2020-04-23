@@ -1,4 +1,11 @@
-<%= simple_form_for [current_project, @issue] do |f| %>
+<%= simple_form_for [current_project, @issue],
+  html: {
+    data: {
+      behavior: ('local-auto-save' if @issue.new_record?),
+      auto_save_key: ("project-#{current_project.id}-issue" if @issue.new_record?)
+    }
+  } do |f| %>
+
   <%= f.error_notification %>
 
   <%=
@@ -24,6 +31,17 @@
 
   <div class="form-actions">
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
-    <%= link_to 'Cancel', @issue.new_record? ? project_issues_path(current_project) : [current_project, @issue], class: 'cancel-link' %>
+    <% if @issue.new_record? %>
+      <%=
+        link_to 'Cancel',
+        project_issues_path(current_project),
+        class: 'cancel-link',
+        data: {
+          behavior: 'clear-local-auto-save'
+        }
+      %>
+    <% else %>
+      <%= link_to 'Cancel', [current_project, @issue], class: 'cancel-link' %>
+    <% end %>
   </div>
 <% end %>
