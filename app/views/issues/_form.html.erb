@@ -15,8 +15,7 @@
         class: 'textile h-100',
         data: textile_default_data.merge(
           allow_dropdown: @issue.new_record?,
-          autosave_key: "#{current_project.id}-issue-#{ @issue.persisted? ? "edit-#{@issue.id}" : 'new' }",
-          behavior: 'auto-save rich-toolbar',
+          behavior: 'rich-toolbar',
           'rich-toolbar': 'block-code bold field italic link list-ol list-ul table'
         ),
         rows: 20

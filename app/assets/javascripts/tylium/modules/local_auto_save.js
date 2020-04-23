@@ -1,5 +1,4 @@
 document.addEventListener("turbolinks:load", function() {
-
   document.querySelectorAll("[data-behavior~=local-auto-save]").forEach(function(form) {
     var key  = form.dataset.autoSaveKey;
     var data = "";
@@ -24,9 +23,12 @@ document.addEventListener("turbolinks:load", function() {
     // Exclude these inputs so that it does not store unnecessary data in local cache
     var excludedInputTypes = ["button", "file", "image", "password", "reset", "submit"]
 
+    // Don't store authenticity_token and utf8
+    var excludedHiddenInputNames = ["utf8", "authenticity_token"]
+
     // Find all inputs and textareas of form, then exclude base on excluded input types
     var formInputs = Array.from(form.querySelectorAll("input, textarea, select")).filter(function(input) {
-      return !excludedInputTypes.includes(input.getAttribute("type"))
+      return !excludedInputTypes.includes(input.getAttribute("type")) && !excludedHiddenInputNames.includes(input.name)
     })
 
     var timer;
@@ -37,7 +39,6 @@ document.addEventListener("turbolinks:load", function() {
       $(input).on("textchange", function(event, previousText) {
         timer = setTimeout(function(){
           if (typeof Storage !== "undefined" && Storage !== null) {
-            console.log(getData(formInputs))
             localStorage.setItem(key, JSON.stringify(getData(formInputs)));
           } else {
             console.log("The browser doesn't support local storage of settings.");
@@ -56,7 +57,6 @@ document.addEventListener("turbolinks:load", function() {
     }
 
     form.addEventListener("submit", function(event) {
-      console.log($(form).serialize())
       if (typeof Storage !== "undefined" && Storage !== null) {
         localStorage.removeItem(key);
       }
