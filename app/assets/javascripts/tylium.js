@@ -33,7 +33,6 @@
 //= require tylium/engines
 //= require tylium/keyboard_shortcuts
 
-//= require tylium/modules/auto_save
 //= require tylium/modules/local_auto_save
 
 //= require tylium/modules/comments
