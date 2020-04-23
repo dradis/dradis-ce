@@ -11,9 +11,16 @@ document.addEventListener("turbolinks:load", function() {
 
     if (data !== null) {
       for (let [key, value] of Object.entries(data)) {
-        var $input = $(form).find(`[name='${key}']`)
-        $input.val(value)
-        $input.trigger('load-preview')
+        if (key.slice(-2) == "[]") {
+          value.forEach(function(checkboxValue) {
+            var $input = $(form).find(`[name="${key}"][value="${checkboxValue}"]`)
+            $input.prop("checked", true)
+          })
+        } else {
+          var $input = $(form).find(`[name="${key}"]`)
+          $input.val(value)
+          $input.trigger("load-preview")
+        }
       }
     } else {
       console.log("No data in localStorage for " + key);
@@ -36,7 +43,7 @@ document.addEventListener("turbolinks:load", function() {
     formInputs.forEach(function(input) {
       // we're using a jQuery plugin for :textchange event, so need to use $()
 
-      $(input).on("textchange", function(event, previousText) {
+      $(input).on("textchange change", function(event, previousText) {
         timer = setTimeout(function(){
           if (typeof Storage !== "undefined" && Storage !== null) {
             localStorage.setItem(key, JSON.stringify(getData(formInputs)));
@@ -49,7 +56,15 @@ document.addEventListener("turbolinks:load", function() {
 
     function getData(formInputs) {
       var reducer = function(hash, input) {
-        hash[input.name] = input.value;
+        // Check if name is an array, i.e. checkboxes
+        if (input.name.slice(-2) == "[]") {
+          var a = hash[input.name] = Array.from(form.querySelectorAll(`[name="${input.name}"]:checked`)).map(function(input) {
+            return input.value
+          });
+        } else {
+          hash[input.name] = input.value;
+
+        }
         return hash
       }
 
