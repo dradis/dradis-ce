@@ -1,9 +1,9 @@
-# Wraps around an instance of `PaperTrail::Version` (where event==update) and
+# Wraps around an instance of `PaperTrail::Version` (where event==update|auto-save) and
 # lets us show a diff
 class DiffedRevision
 
   def initialize(revision, record)
-    raise 'undiffable revision' unless revision.event == 'update'
+    raise 'undiffable revision' unless record.class::REVISABLE_EVENTS.include? revision.event
     @revision = revision
     @record   = record
   end

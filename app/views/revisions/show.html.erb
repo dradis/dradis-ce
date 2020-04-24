@@ -39,7 +39,7 @@
                   <% unless revision == @revisions.last %>
                     <% if revision == @revision %>
                       Currently Viewing
-                    <% elsif revision.event == "update" %>
+                    <% elsif revision_presenter.revisable? %>
                       <%= link_to "View Changes", record_revision_path(@record, revision) %>
                     <% end %>
                   <% end %>
