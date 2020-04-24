@@ -1,20 +1,24 @@
 v3.17 (Month 2020)
-  * Added formatting toolbar
+  * Add author to evidence and notes views
   * Adjusted Uploads layout to provide more visibility to the output console
+  * Boards can be renamed and deleted through their dots menu
   * Card improvements:
     - Activity Feed now shows board name and link
     - No mandatory due date
   * Comments can now have Textile markup
   * Comments now show author's name instead of email
+  * Display note and evidence titles in breadcrumbs
+  * Editor improvements:
+    - New form-view to edit each field individually
+    - Formatting toolbar to help with markup
+    - Side-by-side editor preview that auto-updates
   * Link to Methodology from project summary chart
   * Navigation sidebar in projects can be kept open while navigating across views
   * Refactored dots-menu to make it available in any view
   * Remove tag color from issue titles in issue summary
-  * Side-by-side editor preview that auto-updates
   * Use shared noscript partial
   * Use user model reference for activities instead of user email
   * Upgraded gems: puma, sass-rails
-  * Use shared noscript partial
   * Bugs fixed:
     - Fix textile preview not showing on issues with very long text
     - Long project names interfering with search bar expansion

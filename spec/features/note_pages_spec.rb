@@ -75,6 +75,9 @@ describe "note pages" do
       include_examples "recover deleted item", :note
       include_examples "recover deleted item without node", :note
     end
+
+    let(:model) { @note }
+    include_examples 'nodes pages breadcrumbs', :show, Note
   end
 
   describe "edit page", js: true do
@@ -151,6 +154,9 @@ describe "note pages" do
         expect(current_path).to eq project_node_note_path(current_project, @node, @note)
       end
     end
+
+    let(:model) { @note }
+    include_examples 'nodes pages breadcrumbs', :edit, Note
   end
 
 
@@ -234,5 +240,7 @@ describe "note pages" do
       let(:action_path) { new_project_node_note_path(current_project, @node) }
       it_behaves_like 'a textile form view', Note
     end
+
+    include_examples 'nodes pages breadcrumbs', :new, Note
   end
 end
