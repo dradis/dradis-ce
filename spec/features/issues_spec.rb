@@ -139,6 +139,21 @@ describe 'Issues pages' do
             expect(issue.tag_list).to eq(tag_field.split(', ').first)
           end
         end
+
+        context 'when selecting a state for the issue' do
+          it 'creates an issue with the correct state' do
+            Issue.states.each do |state, state_id|
+              visit new_project_issue_path(current_project)
+              within('.state-menu') do
+                find('.dropdown-toggle').click
+                find("[data-state='#{state_id}']").click
+                find('[data-behavior~=state-submit-button]').click
+              end
+
+              expect(current_project.issues.last.state).to eq(state_id)
+            end
+          end
+        end
       end
 
       describe 'edit page', js: true do
@@ -150,7 +165,7 @@ describe 'Issues pages' do
 
         before do
           issuelib = current_project.issue_library
-          @issue = create(:issue, node: issuelib, updated_at: 2.seconds.ago)
+          @issue = create(:issue, node: issuelib, updated_at: 2.seconds.ago, state: 0)
           visit edit_project_issue_path(current_project, @issue)
           click_link 'Source'
         end
@@ -160,8 +175,6 @@ describe 'Issues pages' do
           before do
             fill_in :issue_text, with: new_content
           end
-
-          let(:submit_form) { find('[data-behavior~=state-submit-button]').click }
 
           it 'updates and shows the issue' do
             submit_form
@@ -177,6 +190,18 @@ describe 'Issues pages' do
               submit_form
               expect(@issue.reload.versions.last.whodunnit).to eq @logged_in_as.email
             end
+          end
+
+          it 'updates the issue\'s state' do
+            new_state = Issue.states[:published]
+
+            within('.state-menu') do
+              find('.dropdown-toggle').click
+              find("[data-state='#{new_state}']").click
+            end
+
+            submit_form
+            expect(@issue.reload.state).to eq(new_state)
           end
 
           let(:column) { :text }
