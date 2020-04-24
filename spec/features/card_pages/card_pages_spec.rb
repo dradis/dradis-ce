@@ -88,12 +88,15 @@ describe 'Card pages:' do
       end
 
       describe 'local caching' do
+        let(:textarea_content) { 'textarea_content' }
+        let(:textarea_content_for_template) { 'textarea_content_for_template' }
+
         before do
           add_users
           visit new_project_board_list_card_path(current_project, @board, @list)
           click_link 'Source'
           fill_in :card_name, with: 'New Card'
-          fill_in :card_description, with: 'New Card Description'
+          fill_in :card_description, with: textarea_content
           fill_in :card_due_date, with: Date.today
           check @first_user.name
           sleep 1 # Needed for setTimeout function in local_auto_save.js
@@ -108,7 +111,7 @@ describe 'Card pages:' do
 
               aggregate_failures do
                 expect(page.find_field('card[name]').value).to eq 'New Card'
-                expect(page.find_field('card[description]').value).to eq 'New Card Description'
+                expect(page.find_field('card[description]').value).to eq textarea_content
                 expect(page.find_field('card[due_date]').value).to eq Date.today.strftime('%Y-%m-%d')
                 expect(page.find("input#card_assignee_ids_#{@first_user.id}")).to be_checked
               end
@@ -155,6 +158,51 @@ describe 'Card pages:' do
             click_link 'Source'
 
             expect(page.find_field('card[name]').value).to eq ''
+          end
+        end
+
+        context 'with template' do
+          before do
+            template_path = Rails.root.join('spec/fixtures/files/note_templates/')
+            allow(NoteTemplate).to receive(:pwd).and_return(template_path)
+          end
+
+          let(:params)  { { template: 'simple_note' } }
+
+          it 'prefills fields with cached data' do
+            visit new_project_board_list_card_path(current_project, @board, @list, params)
+            click_link 'Source'
+            fill_in :card_description, with: textarea_content_for_template
+            sleep 1 # Needed for setTimeout function in local_auto_save.js
+
+            visit root_path
+            visit new_project_board_list_card_path(current_project, @board, @list, params)
+            click_link 'Source'
+
+            expect(page.find_field('card[description]').value).to eq textarea_content_for_template
+          end
+
+          context 'when blank card is filled then navigated to new template card' do
+            it 'does not prefill fields with cached data of blank card' do
+              visit new_project_board_list_card_path(current_project, @board, @list, params)
+              click_link 'Source'
+
+              expect(page.find_field('card[description]').value).not_to eq textarea_content
+            end
+          end
+
+          context 'when template is filled then navigated to new blank card' do
+            it 'does not prefill new blank card form with template data' do
+              visit new_project_board_list_card_path(current_project, @board, @list, params)
+              click_link 'Source'
+              fill_in :card_description, with: textarea_content_for_template
+              sleep 1 # Needed for setTimeout function in local_auto_save.js
+
+              visit new_project_board_list_card_path(current_project, @board, @list)
+              click_link 'Source'
+
+              expect(page.find_field('card[description]').value).not_to eq textarea_content_for_template
+            end
           end
         end
       end

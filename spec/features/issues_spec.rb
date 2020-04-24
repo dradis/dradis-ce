@@ -146,11 +146,14 @@ describe 'Issues pages' do
             @tag_2 = create(:tag, name: '!d62728_high')
           end
 
+          let(:textarea_content) { 'textarea_content '}
+          let(:textarea_content_for_template) { 'textarea_content_for_template '}
+
           before do
             add_tags
             visit new_project_issue_path(current_project)
             click_link 'Source'
-            fill_in :issue_text, with: 'New Issue Text'
+            fill_in :issue_text, with: textarea_content
 
             no_tag = page.find('.dropdown-toggle span.tag')
             no_tag.click
@@ -166,7 +169,7 @@ describe 'Issues pages' do
               click_link 'Source'
 
               aggregate_failures do
-                expect(page.find_field('issue[text]').value).to eq 'New Issue Text'
+                expect(page.find_field('issue[text]').value).to eq textarea_content
                 expect(page).to have_button(@tag_1.display_name)
               end
             end
@@ -190,6 +193,51 @@ describe 'Issues pages' do
               click_link 'Source'
 
               expect(page.find_field('issue[text]').value).to eq ''
+            end
+          end
+
+          context 'with template' do
+            before do
+              template_path = Rails.root.join('spec/fixtures/files/note_templates/')
+              allow(NoteTemplate).to receive(:pwd).and_return(template_path)
+            end
+
+            let(:params)  { { template: 'simple_note' } }
+
+            it 'prefills fields with cached data' do
+              visit new_project_issue_path(current_project, params)
+              click_link 'Source'
+              fill_in :issue_text, with: textarea_content_for_template
+              sleep 1 # Needed for setTimeout function in local_auto_save.js
+
+              visit root_path
+              visit new_project_issue_path(current_project, params)
+              click_link 'Source'
+
+              expect(page.find_field('issue[text]').value).to eq textarea_content_for_template
+            end
+
+            context 'when blank issue is filled then navigated to new template issue' do
+              it 'does not prefill fields with cached data of blank issue' do
+                visit new_project_issue_path(current_project, params)
+                click_link 'Source'
+
+                expect(page.find_field('issue[text]').value).not_to eq textarea_content
+              end
+            end
+
+            context 'when template is filled then navigated to new blank issue' do
+              it 'does not prefill new blank issue form with template data' do
+                visit new_project_issue_path(current_project, params)
+                click_link 'Source'
+                fill_in :issue_text, with: textarea_content_for_template
+                sleep 1 # Needed for setTimeout function in local_auto_save.js
+
+                visit new_project_issue_path(current_project)
+                click_link 'Source'
+
+                expect(page.find_field('issue[text]').value).not_to eq textarea_content_for_template
+              end
             end
           end
         end
