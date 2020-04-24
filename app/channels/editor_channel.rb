@@ -1,3 +1,7 @@
+# The Editor Channel is opened when a user navigates to the `Edit` page of an
+# Evidence, Issue, or Note. The channel is closed when the user navigates away
+# from the `edit` page. When open the channel receives updates from the editor
+# and saves them as new revisions of the resource.
 class EditorChannel < ApplicationCable::Channel
   include ProjectScopedChannels
   include PaperTrailActivity
@@ -5,7 +9,7 @@ class EditorChannel < ApplicationCable::Channel
   attr_accessor :resource
 
   def subscribed
-    @resource = find_resource(params)
+    reject and return unless find_resource(params)
 
     stream_for [current_user, current_project, resource]
   end
@@ -22,7 +26,7 @@ class EditorChannel < ApplicationCable::Channel
 
   def find_resource(params)
     return unless %w[evidence issue note].include? params['resource_type']
-    current_project.send(params['resource_type'].pluralize).find params['resource_id']
+    @resource ||= current_project.send(params['resource_type'].pluralize).find_by id: params['resource_id']
   end
 
   def parsed_params(data)

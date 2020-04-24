@@ -8,6 +8,8 @@ GEM
   remote: https://rubygems.org/
   specs:
     RedCloth (4.3.2)
+    action-cable-testing (0.6.1)
+      actioncable (>= 5.0)
     actioncable (5.2.4.2)
       actionpack (= 5.2.4.2)
       nio4r (~> 2.0)
@@ -448,6 +450,7 @@ PLATFORMS
 
 DEPENDENCIES
   RedCloth (~> 4.3.2)
+  action-cable-testing
   acts_as_tree (~> 2.7.1)
   bcrypt (= 3.1.12)
   bootsnap (>= 1.1.0)

@@ -181,6 +181,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'action-cable-testing' # Merged into Rails 6, and Rspec 4. Remove when we upgrade
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'capybara', '>= 2.15'

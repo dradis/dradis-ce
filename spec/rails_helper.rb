@@ -7,6 +7,8 @@ require 'spec_helper'
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
+require 'action_cable/testing/rspec'
+require 'action_cable/testing/rspec/features'
 require 'capybara/rspec'
 require 'paper_trail/frameworks/rspec'
 require 'shoulda/matchers'
