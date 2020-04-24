@@ -7,7 +7,7 @@ class RevisionsController < AuthenticatedController
   before_action :load_record, except: [ :trash, :recover ]
 
   def index
-    redirect_to action: :show, id: @record.versions.where(event: 'update').last.try(:id) || 0
+    redirect_to action: :show, id: @record.revisable_versions.last.try(:id) || 0
   end
 
   def show
