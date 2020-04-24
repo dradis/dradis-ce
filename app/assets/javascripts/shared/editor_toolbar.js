@@ -43,15 +43,25 @@ class EditorToolbar {
       }
     });
 
-    // These are cross-browser hacks to keep textareas expanded to content while users are typing
-    // Handler for setting the correct scrollHeight for current values
+    // These are cross-browser hacks to keep textareas expanded to content
+    // Handler for setting the correct textarea heights for current values
     this.$target.each(function() {
       $(this).css({'height': this.scrollHeight + 2});
     });
 
-    // Handler for setting the correct scrollHeight on keyboard input
+    // Handler for setting the correct textarea height on keyboard input
     this.$target.on('keyup blur', function(e) {
-      $(this).css({'height': '1px'}).css({'height': this.scrollHeight + 2});
+      var key = e.which || e.keyCode; // for cross-browser compatibility
+
+      if (key === 46 || key === 8) {
+        // only shrink textarea when backspacing or deleting
+        // this prevents screen jumping when the user is at the bottom of the view
+        $(this).css({'height': '1px'});
+      }
+
+      $(this).css({'height': this.scrollHeight + 2});
+      
+      // nice to have: trigger keypress event to focus view on cursor position in case curor is out of view.
     });
 
     // when a toolbar button is clicked
