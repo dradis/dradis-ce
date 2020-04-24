@@ -14,6 +14,11 @@ v3.17 (Month 2020)
     - Formatting toolbar to help with markup
     - Side-by-side editor preview that auto-updates
   * Link to Methodology from project summary chart
+  * Local Caching Improvements
+    - Added local cache when creating new Card, Evidence, Issue, and Note
+    - Clear local cache when 'Cancel' link is clicked
+    - Now cache the whole form instead of only textarea
+    - Remove prompt to restore cached data
   * Navigation sidebar in projects can be kept open while navigating across views
   * Refactored dots-menu to make it available in any view
   * Remove tag color from issue titles in issue summary
