@@ -1,8 +1,10 @@
-document.addEventListener( "turbolinks:load", function(){
+document.addEventListener('turbolinks:load', function(){
+  var issueStates = ['draft', 'ready for review', 'published']
 
   function setBtnText(prefix, state) {
-    var btnText, $submitBtn = $('[data-behavior~=state-submit-button]');
-    var verboseState = ((state == 'review') ? 'ready for review' : state);
+    var btnText;
+    var $submitBtn = $('[data-behavior~=state-submit-button]');
+    var verboseState = issueStates[state];
 
     $('[data-state]').each(function() {
       $(this).removeClass('selected');
@@ -16,19 +18,10 @@ document.addEventListener( "turbolinks:load", function(){
   }
 
   if ($('[data-behavior~=state-menu]').length) {
-    var textPrefix, currentState;
+    var currentState = $('[data-behavior~=issue-state]').val();
+    var textPrefix = $('body.new').length ? 'create' : 'update';
 
-    // once we have states implemented this if block can be streamlined
-    if ($('body.new').length) {
-      textPrefix = 'create';
-      currentState = 'draft';
-      setBtnText(textPrefix, currentState);
-    }
-    else {
-      textPrefix = 'update';
-      currentState = 'draft'; // This will need to be updated to use the current state of the issue on load.
-      setBtnText(textPrefix, currentState);
-    }
+    setBtnText(textPrefix, currentState);
 
     $('[data-state-header]').each(function() {
       var headerText = $(this).text();
@@ -37,7 +30,10 @@ document.addEventListener( "turbolinks:load", function(){
 
     $('[data-state]').click(function () {
       var selectedState = $(this).data('state');
+      var $stateField = $('[data-behavior~=issue-state]');
+
       setBtnText(textPrefix, selectedState);
+      $stateField.val(selectedState);
     });
   }
 });
