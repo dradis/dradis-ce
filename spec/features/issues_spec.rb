@@ -146,11 +146,11 @@ describe 'Issues pages' do
               visit new_project_issue_path(current_project)
               within('.state-menu') do
                 find('.dropdown-toggle').click
-                find("[data-state='#{state_id}']").click
+                find("[data-state='#{state}']").click
                 find('[data-behavior~=state-submit-button]').click
               end
 
-              expect(current_project.issues.last.state).to eq(state_id)
+              expect(current_project.issues.last.state).to eq(state)
             end
           end
         end
@@ -193,7 +193,7 @@ describe 'Issues pages' do
           end
 
           it 'updates the issue\'s state' do
-            new_state = Issue.states[:published]
+            new_state = 'published'
 
             within('.state-menu') do
               find('.dropdown-toggle').click

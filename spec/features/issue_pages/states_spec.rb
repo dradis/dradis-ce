@@ -18,14 +18,14 @@ describe 'issue pages' do
     end
 
     it 'updates the state of the issues' do
-      find('[data-state="2"]').click
+      find('[data-state="published"]').click
 
       # Replace with loading check once implemented
       # wait for ajax
       sleep(1)
 
-      expect(@issue1.reload.state).to eq(2)
-      expect(@issue2.reload.state).to eq(2)
+      expect(@issue1.reload.state).to eq('published')
+      expect(@issue2.reload.state).to eq('published')
     end
   end
 end

@@ -1,10 +1,8 @@
 document.addEventListener('turbolinks:load', function(){
-  var issueStates = ['draft', 'ready for review', 'published'];
-
   function setBtnText(prefix, state) {
     var btnText;
     var $submitBtn = $('[data-behavior~=state-submit-button]');
-    var verboseState = issueStates[state];
+    var verboseState = (state == 'review') ? 'ready for review' : state;
 
     $('[data-state]').each(function() {
       $(this).removeClass('selected');
