@@ -1,10 +1,11 @@
 class EditorChannel < ApplicationCable::Channel
-  attr_accessor :current_project, :resource
+  include ProjectScopedChannels
+
+  attr_accessor :resource
 
   def subscribed
-    stream_from "editor_#{params[:project_id]}_#{params[:resource_type]}:#{params[:resource_id]}"
+    stream_from "editor:#{current_user.id}:#{current_project.id}:#{params[:resource_type]}:#{params[:resource_id]}"
 
-    @current_project = Project.find(params[:project_id])
     @resource = find_resource(params)
   end
 
