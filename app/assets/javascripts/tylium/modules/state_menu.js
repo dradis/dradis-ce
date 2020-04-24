@@ -1,5 +1,5 @@
 document.addEventListener('turbolinks:load', function(){
-  var issueStates = ['draft', 'ready for review', 'published']
+  var issueStates = ['draft', 'ready for review', 'published'];
 
   function setBtnText(prefix, state) {
     var btnText;

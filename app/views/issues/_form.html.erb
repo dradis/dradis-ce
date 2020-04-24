@@ -23,15 +23,14 @@
   <%= render 'tag_input', f: f %>
 
   <div class="form-actions">
+    <%= f.hidden_field :state, data: { behavior: 'issue-state' } %>
     <div class="btn-group dropdown state-menu">
-      <%= f.hidden_field :state, data: { behavior: 'issue-state' } %>
       <%= f.button :submit, nil, class: 'btn btn-primary text-capitalize', data: { behavior: 'state-submit-button' } %>
       <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split ml-0" data-toggle="dropdown">
         <i class="fa fa-caret-down"></i>
       </button>
       <div class="dropdown-menu" data-behavior="state-menu">
         <div class="dropdown-item" data-state="0">
-          <!-- We need the ability to change the copy for state-header and state-details for #new vs #edit -->
           <span class="state-header" data-state-header="draft"> Draft Issue</span>
           <span class="state-details">If you feel there is still more work before this issue is ready.</span>
         </div>
