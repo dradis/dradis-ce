@@ -227,7 +227,7 @@ describe 'evidence' do
       let(:params)  { { template: 'tmpevidence' } }
 
       it 'pre-populates the textarea with the template contents' do
-        click_link 'Inline'
+        click_link 'Fields'
         expect(find_field('item_form[field_name_0]').value).to include('Title')
         expect(find_field('item_form[field_value_0]').value).to include('Sample Evidence')
       end
