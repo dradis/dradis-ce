@@ -35,10 +35,12 @@
     },
     behaviors: function() {
       // When we navigate away form the page tidy up the channel
-      document.addEventListener('turbolinks:before-cache', this.cleanup.bind(this))
+      this._cleanupBound = this.cleanup.bind(this);
+      document.addEventListener('turbolinks:before-cache', this._cleanupBound)
 
       // we're using a jQuery plugin for :textchange event, so need to use $()
-      $(this.form).on('textchange', this._changeTimeout.bind(this));
+      this._changeTimeoutBound = this._changeTimeout.bind(this);
+      $(this.form).on('textchange', this._changeTimeoutBound);
 
       // A save every 60 seconds?
       // this._saveInterval = setInterval(this._changeTimeout.bind(this), this._autoSaveTimedInterval);
@@ -47,8 +49,8 @@
       clearInterval(this._saveInterval); // Clear out the save timer
       this.editorChannel.save(); // Save the results once more
 
-      document.removeEventListener('turbolinks:before-cache', this.cleanup)
-      this.form.removeEventListener('textchange', this._changeTimeout)
+      document.removeEventListener('turbolinks:before-cache', this._cleanupBound)
+      this.form.removeEventListener('textchange', this._changeTimeoutBound)
 
       this.editorChannel.unsubscribe(); // Unsubscribe from the channel
       window.App.cable.subscriptions.remove(this.editorChannel); // Clean up the subscriptions
