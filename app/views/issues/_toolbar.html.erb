@@ -45,10 +45,10 @@
           State
           <i class="fa fa-caret-down"></i>
         </button>
-        <div class="dropdown-menu">
-          <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-pencil-square-o"></i> Draft</a>
-          <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-share-square-o"></i> Ready For Review</a>
-          <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-check-square-o"></i> Published</a>
+        <div class="dropdown-menu" data-url="<%= update_states_project_states_path(current_project) %>">
+          <a href="javascript:void(0)" class="dropdown-item" data-behavior="change-state" data-state="0"><i class="fa fa-pencil-square-o"></i> Draft</a>
+          <a href="javascript:void(0)" class="dropdown-item" data-behavior="change-state" data-state="1"><i class="fa fa-share-square-o"></i> Ready For Review</a>
+          <a href="javascript:void(0)" class="dropdown-item" data-behavior="change-state" data-state="2"><i class="fa fa-check-square-o"></i> Published</a>
         </div>
       </div>
 

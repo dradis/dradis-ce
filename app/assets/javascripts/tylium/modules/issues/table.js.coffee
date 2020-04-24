@@ -1,8 +1,36 @@
 class IssuesTable extends ItemsTable
 
   afterInitialize: ->
-    @$jsTable.on('click', '.js-taglink', @onTagSelected)
     @$jsTable.on('click', '#merge-selected', @onMergeSelected)
+    @$jsTable.on('click', '[data-behavior~=change-state]', @onStateChangeSelected)
+    @$jsTable.on('click', '.js-taglink', @onTagSelected)
+
+  onMergeSelected: (event) =>
+    url = $(event.target).data('url')
+    issues_to_merge = []
+
+    $(@selectedItemsSelector).each ->
+      $row = $(this).parent().parent()
+
+      id = @.name.split('_')[2]
+      issues_to_merge.push(id)
+
+    location.href = "#{url}?ids=#{issues_to_merge}"
+
+  onStateChangeSelected: (event) =>
+    $target = $(event.target)
+
+    issues_to_update = []
+    $(@selectedItemsSelector).each ->
+      id = @.name.split('_')[2]
+      issues_to_update.push(id)
+
+    # Add loading code here when states column is implemented
+
+    $.ajax $target.parent().data('url'), {
+      method: 'PUT',
+      data: {ids: issues_to_update, state: $target.data('state')},
+    }
 
   onTagSelected: (event) =>
     that = this
@@ -41,18 +69,6 @@ class IssuesTable extends ItemsTable
         error: (foo,bar,foobar) ->
           $($row.find('td')[tagColumnIndex]).replaceWith("<td class='text-error'>Please try again</td>")
       }
-
-  onMergeSelected: (event) =>
-    url = $(event.target).data('url')
-    issues_to_merge = []
-
-    $(@selectedItemsSelector).each ->
-      $row = $(this).parent().parent()
-
-      id = @.name.split('_')[2]
-      issues_to_merge.push(id)
-
-    location.href = "#{url}?ids=#{issues_to_merge}"
 
   refreshToolbar: =>
     checked = $(@selectedItemsSelector).length
