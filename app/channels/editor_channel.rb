@@ -8,6 +8,8 @@ class EditorChannel < ApplicationCable::Channel
 
   attr_accessor :resource
 
+  AUTOSAVE_EVENT = 'auto-save'.freeze
+
   def subscribed
     reject and return unless find_resource(params)
 
@@ -15,10 +17,10 @@ class EditorChannel < ApplicationCable::Channel
   end
 
   def save(params)
-    resource.paper_trail_event = 'auto-save'
+    resource.paper_trail_event = AUTOSAVE_EVENT
 
     if resource.update_attributes parsed_params(params['data'])
-      track_activity(resource, 'auto-save')
+      track_activity(resource, AUTOSAVE_EVENT)
     end
   end
 
