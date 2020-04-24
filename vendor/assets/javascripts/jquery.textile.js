@@ -27,7 +27,7 @@
         resize: true,
         // HTML templates
         tpl: {
-          inline: '<div class="textile-form h-100 col-6"></div>',
+          fields: '<div class="textile-form h-100 col-6"></div>',
           wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row"></div></div>',
           preview: '<div class="col-6"><div class="textile-preview loading-indicator">Loading...</div></div>',
           help: '<div class="textile-help col-12 loading-indicator">Loading...</div>'
@@ -75,9 +75,9 @@
       this.$source.hide();
 
       // add Form
-      this.options.$inline = $(this.options.tpl.inline);
-      $('.textile-inner', this.options.$wrap).append(this.options.$inline);
-      this._loadInline(this.$element.val(), this.$element.data('allow-dropdown'));
+      this.options.$fields = $(this.options.tpl.fields);
+      $('.textile-inner', this.options.$wrap).append(this.options.$fields);
+      this._loadFields(this.$element.val(), this.$element.data('allow-dropdown'));
 
       // add Preview to container and load
       this.options.$preview = $(this.options.tpl.preview);
@@ -106,11 +106,11 @@
 
       // When auto-save populates data into source view refresh the form
       this.$element.on('load-preview', function() {
-        this._loadInline(this.$element.val());
+        this._loadFields(this.$element.val());
       }.bind(this));
 
       // Bind all form element actions within container
-      this.bindFieldGroup(this.options.$inline);
+      this.bindFieldGroup(this.options.$fields);
     },
     bindFieldGroup: function($parent) {
       var that = this;
@@ -142,8 +142,8 @@
       var button;
 
       // Form
-      button = $('<a class="btn-form active" href="javascript:void(null);"><span>Inline</span></a>');
-      button.click( $.proxy( function(evt) { this._onBtnInline(evt); }, this));
+      button = $('<a class="btn-form active" href="javascript:void(null);"><span>Fields</span></a>');
+      button.click( $.proxy( function(evt) { this._onBtnFields(evt); }, this));
       $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
 
       // Source
@@ -167,12 +167,12 @@
 
     },
     // Ajax form
-    _loadInline: function(data, allowDropdown) {
+    _loadFields: function(data, allowDropdown) {
       $.post({
         url: this.$element.data('form-url') + '.js',
         data: {source: data, allow_dropdown: allowDropdown},
         beforeSend: function(){
-          this.options.$inline.addClass('loading-indicator').text('Loading...');
+          this.options.$fields.addClass('loading-indicator').text('Loading...');
         }.bind(this)
       });
     },
@@ -210,8 +210,8 @@
       );
     },
     _onKeyPressPreview: function(type) {
-      if (type == 'inline') {
-        this._loadPreview({ inline: this._serializedFormData() });
+      if (type == 'fields') {
+        this._loadPreview({ fields: this._serializedFormData() });
       }
       else if (type == 'text') {
         // If the text hasn't changed, do nothing.
@@ -224,7 +224,7 @@
         }
       }
     },
-    _onBtnInline: function() {
+    _onBtnFields: function() {
       // Activate toolbar button
       var scope = this.options.$wrap;
       $('.textile-toolbar a', scope).removeClass('active');
@@ -232,13 +232,13 @@
 
       $('.textile-form').empty();
 
-      this._loadInline(this.$element.val(), false);
+      this._loadFields(this.$element.val(), false);
 
       // Show Form pane
       this.options.$help.hide();
       this.$source.hide();
       this.options.$preview.show();
-      this.options.$inline.show();
+      this.options.$fields.show();
     },
     _onBtnFullScreen: function() {
       $btnFS = $('.btn-fullscreen', this.options.$wrap);
@@ -292,7 +292,7 @@
 
       // Show Help pane
       this.$source.hide();
-      this.options.$inline.hide();
+      this.options.$fields.hide();
       this.options.$preview.hide();
       this.options.$help.show();
 
@@ -308,10 +308,10 @@
       $('.textile-toolbar .btn-write', scope).addClass('active');
 
       // Clear out the form
-      this.options.$inline.empty();
+      this.options.$fields.empty();
 
       // Show Source pane
-      this.options.$inline.hide();
+      this.options.$fields.hide();
       this.options.$help.hide();
       this.options.$preview.show();
       this.$source.show();
@@ -330,7 +330,7 @@
     },
 
     _serializedFormData: function() {
-      return JSON.stringify( $('[name^=item_form]', this.options.$inline).serializeArray() );
+      return JSON.stringify( $('[name^=item_form]', this.options.$fields).serializeArray() );
     }
   };
 
