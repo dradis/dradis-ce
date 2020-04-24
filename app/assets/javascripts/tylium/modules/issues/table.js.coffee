@@ -19,17 +19,31 @@ class IssuesTable extends ItemsTable
 
   onStateChangeSelected: (event) =>
     $target = $(event.target)
+    stateColumnIndex = @columnIndices['state']
+    targetState = $target.data('state')
 
     issues_to_update = []
     $(@selectedItemsSelector).each ->
+      $row = $(this).parent().parent()
+      $stateTD = $row.find('td').eq(stateColumnIndex)
+      $stateTD.removeClass().addClass('loading').text('Loading...')
+
       id = @.name.split('_')[2]
       issues_to_update.push(id)
 
-    # Add loading code here when states column is implemented
-
+    that = this
     $.ajax $target.parent().data('url'), {
       method: 'PUT',
-      data: {ids: issues_to_update, state: $target.data('state')},
+      data: { ids: issues_to_update, state: targetState },
+      success: (data) ->
+        $(that.selectedItemsSelector).each ->
+          $row = $(this).parent().parent()
+          $stateTD = $row.find('td').eq(stateColumnIndex)
+          $stateTD.data('sort-value', targetState)
+          $stateTD.removeClass('loading')
+
+          # Capitalized
+          $stateTD.text(targetState.charAt(0).toUpperCase() + targetState.slice(1))
     }
 
   onTagSelected: (event) =>

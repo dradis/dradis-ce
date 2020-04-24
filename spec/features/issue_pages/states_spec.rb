@@ -11,8 +11,18 @@ describe 'issue pages' do
 
       visit project_issues_path(current_project)
 
+
+      # Enable 'State' as a column for the issues table
+      within('.btn-toolbar') do
+        find('.btn-group.dropdown').click
+      end
+
+      within('.js-table-columns') do
+        find('[data-column="state"]').click
+      end
+
       # click > 1 issue checkboxes
-      page.all('input.js-multicheck').each(&:click)
+      all('input.js-multicheck').each(&:click)
 
       find('#state-selected').click
     end
@@ -20,9 +30,7 @@ describe 'issue pages' do
     it 'updates the state of the issues' do
       find('[data-state="published"]').click
 
-      # Replace with loading check once implemented
-      # wait for ajax
-      sleep(1)
+      find('td', text: 'Published', match: :first)
 
       expect(@issue1.reload.state).to eq('published')
       expect(@issue2.reload.state).to eq('published')
