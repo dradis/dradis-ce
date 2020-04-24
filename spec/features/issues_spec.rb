@@ -49,7 +49,7 @@ describe 'Issues pages' do
       end
 
       describe 'new page', js: true do
-        let(:submit_form) { click_button 'Create Issue' }
+        let(:submit_form) { find('[data-behavior~=state-submit-button]').click }
 
         let(:action_path) { new_project_issue_path(current_project) }
         it_behaves_like 'a textile form view', Issue
@@ -142,7 +142,7 @@ describe 'Issues pages' do
       end
 
       describe 'edit page', js: true do
-        let(:submit_form) { click_button 'Update Issue' }
+        let(:submit_form) { find('[data-behavior~=state-submit-button]').click }
 
         let(:action_path) { edit_project_issue_path(current_project, @issue) }
         let(:item) { @issue }
@@ -161,7 +161,7 @@ describe 'Issues pages' do
             fill_in :issue_text, with: new_content
           end
 
-          let(:submit_form) { click_button 'Update Issue' }
+          let(:submit_form) { find('[data-behavior~=state-submit-button]').click }
 
           it 'updates and shows the issue' do
             submit_form
