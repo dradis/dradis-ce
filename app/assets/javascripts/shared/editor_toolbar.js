@@ -115,7 +115,6 @@ class EditorToolbar {
 
     // reset position and hide toolbar once focus is lost
     $('[data-behavior~=editor-field]').find('textarea').on('blur', function() {
-      $(this).parents('[data-behavior~=editor-field]').removeClass('sticky-toolbar');
       $(this).parent().prev().css({'opacity': 0, 'visibility': 'hidden'});
     });
   }
