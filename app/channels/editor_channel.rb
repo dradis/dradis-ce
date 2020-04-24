@@ -1,30 +1,29 @@
 class EditorChannel < ApplicationCable::Channel
   include ProjectScopedChannels
+  include PaperTrailActivity
 
   attr_accessor :resource
 
   def subscribed
-    stream_from "editor:#{current_user.id}:#{current_project.id}:#{params[:resource_type]}:#{params[:resource_id]}"
-
     @resource = find_resource(params)
+
+    stream_for [current_user, current_project, resource]
   end
 
   def save(params)
-    # In controllers we set PaperTrail metadata in
-    # ProjectScoped#info_for_paper_trail, but now
-    # we are not in a controller, so:
-    PaperTrail.request.controller_info = { project_id: current_project.id }
-    PaperTrail.request.whodunnit = current_user.email
     resource.paper_trail_event = 'auto-save'
 
-    puts 'auto save is happening'
-
     if resource.update_attributes parsed_params(params['data'])
-      track_activity
+      track_activity(resource, 'auto-save')
     end
   end
 
   private
+
+  def find_resource(params)
+    return unless %w[evidence issue note].include? params['resource_type']
+    current_project.send(params['resource_type'].pluralize).find params['resource_id']
+  end
 
   def parsed_params(data)
     wrapped_params = Rack::Utils.parse_nested_query data
@@ -41,21 +40,5 @@ class EditorChannel < ApplicationCable::Channel
     when 'note' then %i[category_id text node_id]
     else []
     end
-  end
-
-  def find_resource(params)
-    return unless %w[evidence issue note].include? params['resource_type']
-    current_project.send(params['resource_type'].pluralize).find params['resource_id']
-  end
-
-
-  def track_activity
-    ActivityTrackingJob.perform_later(
-      action: 'auto-save',
-      project_id: current_project.id,
-      trackable_id: resource.id,
-      trackable_type: resource.class.to_s,
-      user_id: current_user.id
-    )
   end
 end
