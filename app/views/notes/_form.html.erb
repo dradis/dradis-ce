@@ -1,5 +1,11 @@
-<%= simple_form_for [current_project, @node, @note] do |f| %>
-
+<%= simple_form_for [current_project, @node, @note], html: {
+  data: {
+    'as-project-id': current_project.id,
+    'as-resource_id': @note.id,
+    'as-resource_type': 'note',
+    behavior: 'server-auto-save'
+  }
+} do |f| %>
   <%= f.association :category, collection: Category.all, label_method: :name, prompt: 'Assign note category' %>
   <%=
     f.input :text,
@@ -17,7 +23,7 @@
   %>
 
   <% if @note.persisted? %>
-    <%= hidden_field :note, :original_updated_at, value: @note.updated_at.to_i %>
+    <%= hidden_field :note, :original_updated_at, value: @note.updated_at.to_i, data: { behavior: 'updated-as-auto-save' } %>
   <% end %>
 
   <div class="form-actions">

@@ -1,4 +1,11 @@
-<%= simple_form_for [current_project, @node, @evidence] do |f| %>
+<%= simple_form_for [current_project, @node, @evidence], html: {
+  data: {
+    'as-project-id': current_project.id,
+    'as-resource_id': @evidence.id,
+    'as-resource_type': 'evidence',
+    behavior: 'server-auto-save'
+  }
+} do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
@@ -19,7 +26,7 @@
   </div>
 
   <% if @evidence.persisted? %>
-    <%= hidden_field :evidence, :original_updated_at, value: @evidence.updated_at.to_i %>
+    <%= hidden_field :evidence, :original_updated_at, value: @evidence.updated_at.to_i, data: { behavior: 'updated-as-auto-save' } %>
   <% end %>
 
   <div class="form-actions">
