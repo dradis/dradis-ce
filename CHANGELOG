@@ -9,9 +9,10 @@ v3.17 (Month 2020)
   * Comments now show author's name instead of email
   * Display note and evidence titles in breadcrumbs
   * Editor improvements:
-    - New form-view to edit each field individually
     - Formatting toolbar to help with markup
+    - New form-view to edit each field individually
     - Side-by-side editor preview that auto-updates
+    - Server side auto saving with revision history
   * Link to Methodology from project summary chart
   * Navigation sidebar in projects can be kept open while navigating across views
   * Refactored dots-menu to make it available in any view
