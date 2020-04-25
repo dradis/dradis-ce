@@ -51,12 +51,8 @@
       // we're using a jQuery plugin for :textchange event, so need to use $()
       this._changeTimeoutBound = this._changeTimeout.bind(this);
       $(this.form).on('textchange', this._changeTimeoutBound);
-
-      // A save every 60 seconds?
-      // this._saveInterval = setInterval(this._changeTimeout.bind(this), this._autoSaveTimedInterval);
     },
     cleanup: function() {
-      clearInterval(this._saveInterval); // Clear out the save timer
       this.editorChannel.save(); // Save the results once more
 
       document.removeEventListener('turbolinks:before-cache', this._cleanupBound)
