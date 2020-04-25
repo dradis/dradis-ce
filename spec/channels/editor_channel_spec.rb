@@ -28,8 +28,8 @@ describe EditorChannel, type: :channel do
     expect(subscription).to be_rejected
   end
 
-  it 'accepts evidence, issues, and notes' do
-    [create(:evidence), create(:issue), create(:note)].each do |resource|
+  it 'accepts evidence, issues, notes, and cards' do
+    [create(:evidence), create(:issue), create(:note), create(:card)].each do |resource|
       subscribe(resource_id: resource.id, resource_type: resource.model_name.param_key)
 
       expect(subscription).to be_confirmed
