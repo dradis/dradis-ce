@@ -95,6 +95,10 @@ describe 'Card pages:' do
         @card = create(:card, list: @list)
       end
 
+      let(:autosaveable) { @card }
+      let(:path_params) { [current_project, @board, @list, @card] }
+      it_behaves_like 'an editor with server side auto-save'
+
       describe 'textile form view' do
         let(:action_path) { edit_project_board_list_card_path(current_project, @board, @list, @card) }
         let(:item) { @card }
