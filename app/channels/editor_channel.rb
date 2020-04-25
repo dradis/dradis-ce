@@ -21,6 +21,8 @@ class EditorChannel < ApplicationCable::Channel
 
     if resource.update_attributes parsed_params(params['data'])
       track_activity(resource, AUTOSAVE_EVENT)
+
+      self.class.broadcast_to([current_user, current_project, resource], resource.reload.updated_at.to_i)
     end
   end
 

@@ -5,6 +5,7 @@
     this.projectId = form.dataset.asProjectId;
     this.resourceType = form.dataset.asResourceType;
     this.resourceId = form.dataset.asResourceId;
+    this.originalUpdatedAt = form.querySelector('[data-behavior~=updated-as-auto-save]');
     this._doneTypingInterval = 500;
     this._autoSaveTimedInterval = 60000;
 
@@ -28,6 +29,9 @@
         },
         save: function() {
           this.perform('save', { data: $(that.form).serialize() });
+        },
+        received: function(newUpdatedAtTime) {
+          that.originalUpdatedAt.value = newUpdatedAtTime;
         }
       })
 

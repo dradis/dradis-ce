@@ -24,7 +24,7 @@
   %>
 
   <% if @issue.persisted? %>
-    <%= hidden_field :issue, :original_updated_at, value: @issue.updated_at.to_i %>
+    <%= hidden_field :issue, :original_updated_at, value: @issue.updated_at.to_i, data: { behavior: 'updated-as-auto-save' } %>
   <% end %>
 
   <%= render 'tag_input', f: f %>
