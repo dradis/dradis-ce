@@ -37,9 +37,9 @@ module ConflictResolver
 
   def load_conflicting_revisions(record)
     if session[:update_conflicts_since]
-      @conflicting_revisions = record.versions\
-        .order('created_at ASC')\
-        .where("created_at > '#{flash[:update_conflicts_since]}'")
+      @conflicting_revisions = record.versions
+        .order('created_at ASC')
+        .where("created_at > '#{session[:update_conflicts_since]}'")
       session.delete(:update_conflicts_since)
     end
   end
