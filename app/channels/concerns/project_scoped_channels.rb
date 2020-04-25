@@ -1,3 +1,6 @@
+# Project scoping for channels. Normally the ProjectScoped concern handles this
+# in controllers or API requests. Here we will do it before the channels are
+# subscribed when this module is included.
 module ProjectScopedChannels
   extend ActiveSupport::Concern
 

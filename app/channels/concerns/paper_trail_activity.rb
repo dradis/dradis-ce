@@ -1,3 +1,8 @@
+# This module exists to assist with PaperTrail::Version properties in Channels.
+# Typically the controllers take care of this but this request process does not
+# utilize controllers. In controllers we set PaperTrail metadata in
+# ProjectScoped#info_for_paper_trail. For channels we will do it here as a
+# before_subscribe action.
 module PaperTrailActivity
   extend ActiveSupport::Concern
   include ActivityTracking
@@ -7,9 +12,6 @@ module PaperTrailActivity
   end
 
   def set_info
-    # In controllers we set PaperTrail metadata in
-    # ProjectScoped#info_for_paper_trail, but now
-    # we are not in a controller, so:
     PaperTrail.request.controller_info = { project_id: current_project.id }
     PaperTrail.request.whodunnit = current_user.email
   end

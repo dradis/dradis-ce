@@ -1,7 +1,7 @@
 # The Editor Channel is opened when a user navigates to the `Edit` page of an
-# Evidence, Issue, or Note. The channel is closed when the user navigates away
-# from the `edit` page. When open the channel receives updates from the editor
-# and saves them as new revisions of the resource.
+# Evidence, Issue, Note, or Card. The channel is closed when the user navigates
+# away from the `edit` page. When open the channel receives updates from the
+# editor and saves them as new revisions of the resource.
 class EditorChannel < ApplicationCable::Channel
   include ProjectScopedChannels
   include PaperTrailActivity

@@ -1,3 +1,9 @@
+// Server Auto Save module is initialized on elements with
+// data-behavior=server-auto-save. This module creates an action cable
+// subscription bound to the editor it's initialized from. The socket will
+// accept content for resources to update, and create revisions from. It will
+// receive timestamps back from the server to update the `original_updated_at`
+// field which helps us with conflict resolution.
 (function($, window) {
   function ServerAutoSave(form) {
     this.form = form;
