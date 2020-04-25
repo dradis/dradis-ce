@@ -37,7 +37,9 @@
           this.perform('save', { data: $(that.form).serialize() });
         },
         received: function(newUpdatedAtTime) {
-          that.originalUpdatedAt.value = newUpdatedAtTime;
+          if (that.originalUpdatedAt !== null) {
+            that.originalUpdatedAt.value = newUpdatedAtTime;
+          }
         }
       })
 

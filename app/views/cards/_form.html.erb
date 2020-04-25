@@ -1,4 +1,11 @@
-<%= simple_form_for [current_project, @board, @list, @card] do |f| %>
+<%= simple_form_for [current_project, @board, @list, @card], html: {
+  data: {
+    'as-project-id': current_project.id,
+    'as-resource_id': @card.id,
+    'as-resource_type': 'card',
+    behavior: 'server-auto-save'
+  }
+} do |f| %>
   <%= f.error_notification %>
 
   <%= f.input :name, required: false %>

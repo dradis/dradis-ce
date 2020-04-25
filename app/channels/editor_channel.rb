@@ -29,8 +29,14 @@ class EditorChannel < ApplicationCable::Channel
   private
 
   def find_resource(params)
-    return unless %w[evidence issue note].include? params['resource_type']
-    @resource ||= current_project.send(params['resource_type'].pluralize).find_by id: params['resource_id']
+    return unless %w[evidence issue note card].include? params['resource_type']
+
+    if params['resource_type'] == 'card'
+      authorized_list_ids = List.where(board_id: current_project.boards.select(:id)).select(:id)
+      @resource ||= Card.find_by(id: params['resource_id'], list_id: authorized_list_ids)
+    else
+      @resource ||= current_project.send(params['resource_type'].pluralize).find_by id: params['resource_id']
+    end
   end
 
   def parsed_params(data)
@@ -46,6 +52,7 @@ class EditorChannel < ApplicationCable::Channel
     when 'evidence' then %i[author content issue_id node_id]
     when 'issue' then %i[tag_list text]
     when 'note' then %i[category_id text node_id]
+    when 'card' then %i[name description due_date assignee_ids]
     else []
     end
   end

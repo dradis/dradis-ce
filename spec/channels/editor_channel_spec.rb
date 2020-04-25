@@ -22,7 +22,7 @@ describe EditorChannel, type: :channel do
   end
 
   it 'rejects when resource is not proper type' do
-    resource = create(:card)
+    resource = create(:list)
     subscribe(resource_id: resource.id, resource_type: resource.model_name.param_key)
 
     expect(subscription).to be_rejected
