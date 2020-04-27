@@ -36,7 +36,6 @@ shared_examples 'an editor with server side auto-save' do
       end
 
       it 'creates a papertrail version' do
-        require 'pry'
         expect do
           find('.editor-field textarea').set new_content
           wait_for_js_events
