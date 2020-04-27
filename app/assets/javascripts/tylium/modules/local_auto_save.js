@@ -1,8 +1,8 @@
 document.addEventListener('turbolinks:load', function() {
   document.querySelectorAll('[data-behavior~=local-auto-save]').forEach(function(form) {
     var key  = form.dataset.autoSaveKey;
-    var data = JSON.parse(localStorage.getItem(key));
-
+    // var data = JSON.parse(localStorage.getItem(key));
+    var data = {}
     if (data !== null) {
       for (let [key, value] of Object.entries(data)) {
         if (key.slice(-2) == '[]') {
@@ -33,44 +33,59 @@ document.addEventListener('turbolinks:load', function() {
       return !excludedInputTypes.includes(input.getAttribute('type')) && !excludedHiddenInputNames.includes(input.name);
     })
 
-    var timer;
-
     var setData = debounce(function() {
-      console.log(JSON.stringify(getData(formInputs)))
       localStorage.setItem(key, JSON.stringify(getData(formInputs)));
     }, 500);
 
     formInputs.forEach(function(input) {
       // we're using a jQuery plugin for :textchange event, so need to use $()
-      $(input).on('textchange change', storeData);
+      $(input).on('textchange change', setData);
     })
 
-    function getData(formInputs) {
-      var hashBuilder = function(hash, input) {
-        // Check if name is an array, i.e. checkboxes
-        if (input.name.slice(-2) == '[]') {
-          hash[input.name] = Array.from(form.querySelectorAll(`[name='${input.name}']:checked`)).map(function(input) {
-            return input.value;
-          });
-        } else {
-          hash[input.name] = input.value;
-
+    function getData() {
+      // serializeArray() returns an array of objects with key and value attributes.
+      // i.e. [{ name: 'card[name]', value: 1 }, { name: 'card[description]', value: 2 }]
+      var hashBuilder = function(hash, serializedField) {
+        // Don't store utf8 and authenticity_token inputs
+        if (excludedHiddenInputNames.includes(serializedField.name)) {
+          return hash;
         }
+
+        // Check if name is an array, i.e. collection checkboxes
+        if (serializedField.name.slice(-2) == '[]') {
+          // When using collection checkboxes, rails/simple_form will create a hidden input with
+          // the same name
+          if (!serializedField.value.length) {
+            return hash;
+          }
+          // if array exist, push value to array, else create new array
+          if (hash[serializedField.name]) {
+            hash[serializedField.name].push(serializedField.value);
+          } else {
+            hash[serializedField.name] = [serializedField.value];
+          }
+        } else {
+          hash[serializedField.name] = serializedField.value;
+        }
+
         return hash;
       }
 
-      return formInputs.reduce(hashBuilder, {});
+      return $(form).serializeArray().reduce(hashBuilder, {});
     }
 
     function debounce(func, wait, immediate) {
       var timeout;
+
       return function() {
         var context = this, args = arguments;
+
         var later = function() {
           timeout = null;
           if (!immediate) func.apply(context, args);
         };
         var callNow = immediate && !timeout;
+
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
         if (callNow) func.apply(context, args);
