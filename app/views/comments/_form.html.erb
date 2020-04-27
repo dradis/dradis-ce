@@ -1,4 +1,10 @@
-<%= form_with model: [current_project, @comment] do |f| %>
+<%= form_with model: [current_project, @comment],
+  html: {
+    data: {
+      behavior: 'local-auto-save',
+      auto_save_key: "comment-#{@comment.id}"
+    }
+  } do |f| %>
   <%= f.text_area :content,
                   value: @comment.content,
                   rows: 5,
@@ -12,5 +18,7 @@
     <%= link_to 'Cancel',
                 'javascript:void(0)',
                 class: 'cancel-link',
-                data: { behavior: 'cancel-comment' } %>
+                data: {
+                  behavior: 'cancel-comment clear-local-auto-save'
+                } %>
 <% end %>
