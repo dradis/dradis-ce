@@ -5,7 +5,7 @@ class LocalAutoSave {
     this.key = target.dataset.autoSaveKey;
 
     // List of available inputs: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
-    // Exclude these inputs so that it does not store unnecessary data in local cache
+    // Only permit these inputs to be saved so that it does not store unnecessary data in local cache
     this.permittedInputTypes = [
       'checkbox',
       'color',
