@@ -18,6 +18,7 @@ class UploadController < AuthenticatedController
 
   def index
     @last_job = Log.new.uid
+    @issue_states = Issue.states.map { |k, v| [k.capitalize, v] }
   end
 
   # TODO: this would overwrite an existing file with the same name.
@@ -29,8 +30,9 @@ class UploadController < AuthenticatedController
     @attachment << params[:file].read
     @attachment.save
 
-    @success = true
     @item_id = params[:item_id].to_i
+    @state  = default_issue_state
+    @success = true
     flash.now[:notice] = "Successfully uploaded #{ filename }"
   end
 
@@ -56,6 +58,14 @@ class UploadController < AuthenticatedController
   end
 
   private
+
+  def default_issue_state
+    if Issue.states.values.include?(params[:state].to_i)
+      params[:state].to_i
+    else
+      Issue.states[:draft]
+    end
+  end
 
   def job_logger
     @job_logger ||= Log.new(uid: params[:item_id].to_i)
@@ -87,7 +97,8 @@ class UploadController < AuthenticatedController
         default_user_id: current_user.id,
         logger:     job_logger,
         plugin:     @uploader,
-        project_id: current_project.id
+        project_id: current_project.id,
+        state:      default_issue_state
       )
 
       importer.import(file: attachment.fullpath)
@@ -125,4 +136,5 @@ class UploadController < AuthenticatedController
       redirect_to project_upload_manager_path(current_project), alert: 'Something fishy is going on...'
     end
   end
+
 end

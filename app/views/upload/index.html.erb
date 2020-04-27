@@ -18,11 +18,7 @@
           <div class="col-4">
             <div class="form-group">
               <h5>2. Choose state</h5>
-              <select class="form-control">
-                <option>Draft</option>
-                <option>Ready For Review</option>
-                <option selected>Published</option>
-              </select>
+              <%= select_tag 'state', options_for_select(@issue_states), { class: 'form-control' } %>
             </div>
           </div>
 
