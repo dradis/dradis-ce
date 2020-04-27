@@ -49,10 +49,10 @@ class EditorChannel < ApplicationCable::Channel
 
   def permissable_params(type)
     case type
+    when 'card' then %i[name description due_date assignee_ids]
     when 'evidence' then %i[author content issue_id node_id]
     when 'issue' then %i[tag_list text]
     when 'note' then %i[category_id text node_id]
-    when 'card' then %i[name description due_date assignee_ids]
     else []
     end
   end

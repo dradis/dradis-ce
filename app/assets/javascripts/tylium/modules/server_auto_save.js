@@ -8,11 +8,11 @@
   function ServerAutoSave(form) {
     this.form = form;
 
-    this.projectId = form.dataset.asProjectId;
-    this.resourceType = form.dataset.asResourceType;
-    this.resourceId = form.dataset.asResourceId;
-    this.originalUpdatedAt = form.querySelector('[data-behavior~=updated-as-auto-save]');
     this._doneTypingInterval = 500;
+    this.originalUpdatedAt = form.querySelector('[data-behavior~=updated-as-auto-save]');
+    this.projectId = form.dataset.asProjectId;
+    this.resourceId = form.dataset.asResourceId;
+    this.resourceType = form.dataset.asResourceType;
 
     this.init();
   }
@@ -29,16 +29,16 @@
         connected: function() {
           console.log('Subscribed to EditorChannel');
         },
+        received: function(newUpdatedAtTime) {
+          if (that.originalUpdatedAt !== null) {
+            that.originalUpdatedAt.value = newUpdatedAtTime;
+          }
+        },
         rejected: function() {
           console.log('Error subscribing to EditorChannel');
         },
         save: function() {
           this.perform('save', { data: $(that.form).serialize() });
-        },
-        received: function(newUpdatedAtTime) {
-          if (that.originalUpdatedAt !== null) {
-            that.originalUpdatedAt.value = newUpdatedAtTime;
-          }
         }
       })
 
