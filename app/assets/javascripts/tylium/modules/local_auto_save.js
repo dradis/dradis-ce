@@ -44,10 +44,12 @@ class LocalAutoSave {
       })
     }
 
-    // Find all inputs and textareas of form, then exclude base on excluded input types
-    var formInputs = Array.from(this.target.querySelectorAll('input, textarea, select')).filter(function(input) {
+    // Find all inputs in the form, then exclude base on excluded input types
+    var formInputs = Array.from(this.target.querySelectorAll('input')).filter(function(input) {
       return that.permittedInputTypes.includes(input.getAttribute('type')) && !that.excludedInputNames.includes(input.name);
     })
+
+    formInputs = formInputs.concat(Array.from(this.target.querySelectorAll('textarea, select')));
 
     var setData = this.debounce(function() {
       localStorage.setItem(that.key, JSON.stringify(that.getData()));
