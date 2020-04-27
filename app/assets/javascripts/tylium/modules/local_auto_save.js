@@ -1,13 +1,7 @@
 document.addEventListener("turbolinks:load", function() {
   document.querySelectorAll("[data-behavior~=local-auto-save]").forEach(function(form) {
     var key  = form.dataset.autoSaveKey;
-    var data = "";
-
-    if (typeof Storage !== "undefined" && Storage !== null) {
-      data = JSON.parse(localStorage.getItem(key))
-    } else {
-      console.log("The browser doesn't support local storage of settings.")
-    }
+    var data = JSON.parse(localStorage.getItem(key));
 
     if (data !== null) {
       for (let [key, value] of Object.entries(data)) {
@@ -45,11 +39,7 @@ document.addEventListener("turbolinks:load", function() {
 
       $(input).on("textchange change", function(event, previousText) {
         timer = setTimeout(function(){
-          if (typeof Storage !== "undefined" && Storage !== null) {
-            localStorage.setItem(key, JSON.stringify(getData(formInputs)));
-          } else {
-            console.log("The browser doesn't support local storage of settings.");
-          }
+          localStorage.setItem(key, JSON.stringify(getData(formInputs)));
         }, 1000);
       })
     })
@@ -72,16 +62,12 @@ document.addEventListener("turbolinks:load", function() {
     }
 
     form.addEventListener("submit", function(event) {
-      if (typeof Storage !== "undefined" && Storage !== null) {
-        localStorage.removeItem(key);
-      }
+      localStorage.removeItem(key);
     });
 
     document.querySelectorAll("[data-behavior~=clear-local-auto-save]").forEach(function(element) {
       element.addEventListener("click", function(event) {
-        if (typeof Storage !== "undefined" && Storage !== null) {
-          localStorage.removeItem(key);
-        }
+        localStorage.removeItem(key);
       })
     });
   });
