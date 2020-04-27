@@ -45,10 +45,10 @@ document.addEventListener("turbolinks:load", function() {
     })
 
     function getData(formInputs) {
-      var reducer = function(hash, input) {
+      var hashBuilder = function(hash, input) {
         // Check if name is an array, i.e. checkboxes
         if (input.name.slice(-2) == "[]") {
-          var a = hash[input.name] = Array.from(form.querySelectorAll(`[name="${input.name}"]:checked`)).map(function(input) {
+          hash[input.name] = Array.from(form.querySelectorAll(`[name="${input.name}"]:checked`)).map(function(input) {
             return input.value;
           });
         } else {
@@ -58,7 +58,7 @@ document.addEventListener("turbolinks:load", function() {
         return hash;
       }
 
-      return formInputs.reduce(reducer, {});
+      return formInputs.reduce(hashBuilder, {});
     }
 
     form.addEventListener("submit", function(event) {
