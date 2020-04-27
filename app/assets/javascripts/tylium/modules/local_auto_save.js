@@ -6,10 +6,20 @@ class LocalAutoSave {
 
     // List of available inputs: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
     // Exclude these inputs so that it does not store unnecessary data in local cache
-    this.excludedInputTypes = ['button', 'file', 'image', 'password', 'reset', 'submit'];
+    this.permittedInputTypes = [
+      'checkbox',
+      'color',
+      'date',
+      'email',
+      'hidden', // Needed for hidden tag_input in issues/form
+      'number',
+      'radio',
+      'tel',
+      'text'
+    ];
 
     // Don't store authenticity_token and utf8
-    this.excludedHiddenInputNames = ['utf8', 'authenticity_token'];
+    this.excludedInputNames = ['utf8', 'authenticity_token'];
 
     this.init();
   }
@@ -36,7 +46,7 @@ class LocalAutoSave {
 
     // Find all inputs and textareas of form, then exclude base on excluded input types
     var formInputs = Array.from(this.target.querySelectorAll('input, textarea, select')).filter(function(input) {
-      return !that.excludedInputTypes.includes(input.getAttribute('type')) && !that.excludedHiddenInputNames.includes(input.name);
+      return that.permittedInputTypes.includes(input.getAttribute('type')) && !that.excludedInputNames.includes(input.name);
     })
 
     var setData = this.debounce(function() {
@@ -72,13 +82,14 @@ class LocalAutoSave {
 
     var hashBuilder = function(hash, serializedField) {
       // Don't store utf8 and authenticity_token inputs
-      if (that.excludedHiddenInputNames.includes(serializedField.name)) { return hash; }
+      if (that.excludedInputNames.includes(serializedField.name)) { return hash; }
 
       // Check if name is an array, i.e. collection checkboxes
       if (serializedField.name.slice(-2) == '[]') {
 
         // When using collection checkboxes, rails/simple_form will create a hidden input with
-        // the same name
+        // the same name, i.e. <input type="hidden" name="card[assignee_ids][]" value="">
+        // Don't store that hidden input
         if (!serializedField.value.length) { return hash; }
 
         // if array exist, push value to array, else create new array
