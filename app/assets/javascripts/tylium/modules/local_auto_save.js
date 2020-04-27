@@ -1,20 +1,32 @@
 document.addEventListener('turbolinks:load', function() {
   document.querySelectorAll('[data-behavior~=local-auto-save]').forEach(function(form) {
     var key  = form.dataset.autoSaveKey;
-    // var data = JSON.parse(localStorage.getItem(key));
-    var data = {}
+    var data = JSON.parse(localStorage.getItem(key));
+
     if (data !== null) {
       for (let [key, value] of Object.entries(data)) {
         if (key.slice(-2) == '[]') {
           value.forEach(function(checkboxValue) {
-            var $input = $(form).find(`[name='${key}'][value='${checkboxValue}']`);
-            $input.prop('checked', true);
+            var input = form.querySelector(`[name='${key}'][value='${checkboxValue}']`);
+            input.checked = true;
           })
         } else {
-          var $input = $(form).find(`[name='${key}']`)
-          console.log(value)
-          $input.val(value);
-          $input.trigger('load-preview');
+          // Query for inputs here first so that we don't query twice
+          var inputs = form.querySelectorAll(`[name='${key}']`);
+
+          if (inputs.length) {
+            // Handle checking for radio button and check boxes
+            if (['checkbox', 'radio'].includes(inputs[0].type)) {
+              inputs.forEach(function(input) {
+                if (input.value == value) {
+                  input.checked = true;
+                }
+              });
+            } else {
+              inputs[0].value = value;
+              $(inputs[0]).trigger('load-preview');
+            }
+          }
         }
       }
     } else {
@@ -35,6 +47,7 @@ document.addEventListener('turbolinks:load', function() {
 
     var setData = debounce(function() {
       localStorage.setItem(key, JSON.stringify(getData(formInputs)));
+      console.log(getData(formInputs))
     }, 500);
 
     formInputs.forEach(function(input) {
@@ -43,8 +56,6 @@ document.addEventListener('turbolinks:load', function() {
     })
 
     function getData() {
-      // serializeArray() returns an array of objects with key and value attributes.
-      // i.e. [{ name: 'card[name]', value: 1 }, { name: 'card[description]', value: 2 }]
       var hashBuilder = function(hash, serializedField) {
         // Don't store utf8 and authenticity_token inputs
         if (excludedHiddenInputNames.includes(serializedField.name)) {
@@ -71,6 +82,8 @@ document.addEventListener('turbolinks:load', function() {
         return hash;
       }
 
+      // serializeArray() returns an array of objects with key and value attributes.
+      // i.e. [{ name: 'card[name]', value: 1 }, { name: 'card[description]', value: 2 }]
       return $(form).serializeArray().reduce(hashBuilder, {});
     }
 
