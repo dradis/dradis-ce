@@ -5,7 +5,6 @@
 # before_subscribe action.
 module PaperTrailActivity
   extend ActiveSupport::Concern
-  include ActivityTracking
 
   included do
     before_subscribe :set_info

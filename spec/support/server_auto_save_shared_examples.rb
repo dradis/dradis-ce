@@ -30,13 +30,6 @@ shared_examples 'an editor with server side auto-save' do
       expect(autosaveable.reload.send(content_attribute)).to eq new_content
     end
 
-    it 'creates an autosave activity' do
-      expect do
-        find('.editor-field textarea').set new_content
-        wait_for_js_events
-      end.to change { enqueued_activity_tracking_jobs.size }.by(1)
-    end
-
     context 'with papertrail active' do
       before do
         PaperTrail.enabled = true
@@ -58,14 +51,6 @@ shared_examples 'an editor with server side auto-save' do
 
         revision = autosaveable.versions.last
         expect(revision.event).to eq 'auto-save'
-      end
-    end
-
-    # we need to filter by job class because a NotificationsReaderJob
-    # will also be enqueued
-    def enqueued_activity_tracking_jobs
-      ActiveJob::Base.queue_adapter.enqueued_jobs.select do |hash|
-        hash[:job] == ActivityTrackingJob
       end
     end
 
