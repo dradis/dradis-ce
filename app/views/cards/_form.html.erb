@@ -1,8 +1,8 @@
 <%= simple_form_for [current_project, @board, @list, @card], html: {
   data: {
     'as-project-id': current_project.id,
-    'as-resource_id': @card.id,
-    'as-resource_type': 'card',
+    'as-resource-id': @card.id,
+    'as-resource-type': 'card',
     behavior: 'server-auto-save'
   }
 } do |f| %>

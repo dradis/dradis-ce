@@ -1,8 +1,8 @@
 <%= simple_form_for [current_project, @node, @evidence], html: {
   data: {
     'as-project-id': current_project.id,
-    'as-resource_id': @evidence.id,
-    'as-resource_type': 'evidence',
+    'as-resource-id': @evidence.id,
+    'as-resource-type': 'evidence',
     behavior: 'server-auto-save'
   }
 } do |f| %>
