@@ -1,7 +1,12 @@
-# The Editor Channel is opened when a user navigates to the `Edit` page of an
-# Evidence, Issue, Note, or Card. The channel is closed when the user navigates
-# away from the `edit` page. When open the channel receives updates from the
-# editor and saves them as new revisions of the resource.
+# The Editor Channel is opened when a user navigates to the edit page of an
+# Evidence, Issue, Note, or Card. The subscription is closed when the user
+# navigates away from the edit page. An open subscription receives updates
+# from the editor and saves them as new revisions of the resource. The channel
+# then broadcasts the resource's updated_at field back to the subscriber so
+# the form can update the original_updated_at field used for conflict
+# resolution. Although multiple users may be subscribed the channel broadcasts
+# messages out with a user scope. This means users will not receive live updates
+# of changes from other users.
 class EditorChannel < ApplicationCable::Channel
   include ProjectScopedChannels
   include PaperTrailActivity
