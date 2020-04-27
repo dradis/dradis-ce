@@ -47,7 +47,6 @@ document.addEventListener('turbolinks:load', function() {
 
     var setData = debounce(function() {
       localStorage.setItem(key, JSON.stringify(getData(formInputs)));
-      console.log(getData(formInputs))
     }, 500);
 
     formInputs.forEach(function(input) {
