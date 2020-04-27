@@ -1,5 +1,26 @@
 <% content_for :title, "#{@node.label} - properties" %>
 
+<% content_for :breadcrumbs do %>
+  <nav class="dots-container">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:void(0)" data-behavior="sidebar-toggle">Nodes</a></li>
+      <%= content_tag :li, class: 'breadcrumb-item active', data: { node_id: @node.id } do %><%= @node.label %><% end -%>
+    </ol>
+    <ul class="nav">
+      <li class="dropdown dots-dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-behavior="nodes-more-dropdown"><i class="fa fa-ellipsis-h fa-lg"></i></a>
+        <div class="dropdown-menu">
+          <a href="#modal_add_child_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-plus fa-fw"></i> Add subnode</a>
+          <a href="#modal_rename_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-pencil fa-fw"></i> Rename</a>
+          <a href="#modal_move_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-mail-forward fa-fw"></i> Move</a>
+          <a href="#modal_merge_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-compress fa-fw"></i> Merge</a>
+          <a href="#modal_delete_node" class="dropdown-item text-error-hover" tabindex="-1" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Delete</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
+<% end %>
+
 <ul id="node-tabs" class="tabs-container nav nav-tabs main-tabs">
   <li class="nav-item">
     <a href="#evidence-tab" data-toggle="tab" class="nav-link <%= 'active' if params[:tab] == 'evidence-tab' %>"><i class="fa fa-flag"></i> Evidence</a>
