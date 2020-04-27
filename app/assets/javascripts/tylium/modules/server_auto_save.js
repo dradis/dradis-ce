@@ -13,7 +13,6 @@
     this.resourceId = form.dataset.asResourceId;
     this.originalUpdatedAt = form.querySelector('[data-behavior~=updated-as-auto-save]');
     this._doneTypingInterval = 500;
-    this._autoSaveTimedInterval = 60000;
 
     this.init();
   }
