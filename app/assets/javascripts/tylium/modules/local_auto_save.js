@@ -44,7 +44,7 @@ class LocalAutoSave {
       })
     }
 
-    // Find all inputs in the form, then exclude base on excluded input types
+    // Find all inputs in the form, then exclude based on excluded input types
     var formInputs = Array.from(this.target.querySelectorAll('input')).filter(function(input) {
       return that.permittedInputTypes.includes(input.getAttribute('type')) && !that.excludedInputNames.includes(input.name);
     })
@@ -88,7 +88,6 @@ class LocalAutoSave {
 
       // Check if name is an array, i.e. collection checkboxes
       if (serializedField.name.slice(-2) == '[]') {
-
         // When using collection checkboxes, rails/simple_form will create a hidden input with
         // the same name, i.e. <input type="hidden" name="card[assignee_ids][]" value="">
         // Don't store that hidden input
