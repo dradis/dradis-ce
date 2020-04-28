@@ -248,18 +248,8 @@ describe "note pages" do
       end
 
       let(:new_model_path) { new_project_node_note_path(current_project, @node) }
-
-      let(:new_model_attributes) do
-        [
-          { name: :text, value: 'New Note' }
-        ]
-      end
-
-      let(:new_model_attributes_for_template) do
-        [
-          { name: :text, value: 'New Note Template' }
-        ]
-      end
+      let(:new_model_attributes) { [{ name: :text, value: 'New Note' }] }
+      let(:new_model_attributes_for_template) { [{ name: :text, value: 'New Note Template' }] }
 
       include_examples 'a form with local auto save', Note
     end

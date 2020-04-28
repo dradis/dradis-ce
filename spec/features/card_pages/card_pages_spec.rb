@@ -89,6 +89,7 @@ describe 'Card pages:' do
 
       describe 'local caching' do
         let(:new_model_path) { new_project_board_list_card_path(current_project, @board, @list) }
+
         let(:new_model_attributes) do
           [
             { name: :name, value: 'New Card' },

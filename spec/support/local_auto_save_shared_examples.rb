@@ -20,7 +20,6 @@
 #     { name: :due_date, value: Date.today + 5.day }
 #   ]
 # }
-
 # include_examples 'a form with local auto save', Card
 
 shared_examples 'a form with local auto save' do |klass|
@@ -53,8 +52,7 @@ shared_examples 'a form with local auto save' do |klass|
 
   context 'when form is not saved' do
     it 'prefill fields with cached data' do
-      visit root_path
-      visit new_model_path
+      page.driver.browser.navigate.refresh
       click_link 'Source'
 
       if klass == Card
@@ -128,8 +126,7 @@ shared_examples 'a form with local auto save' do |klass|
 
     context 'when form is not saved' do
       it 'prefill fields with cached data' do
-        visit root_path
-        visit "#{new_model_path}?template=simple_note"
+        page.driver.browser.navigate.refresh
         click_link 'Source'
 
         new_model_attributes_for_template.each do |model_attribute|

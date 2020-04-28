@@ -115,14 +115,12 @@ shared_examples 'a page with a comments feed' do
           click_link 'Edit'
           fill_in 'comment[content]', with: 'test comment edited'
           sleep 1 # Needed for debounce function in local_auto_save.js
-          # click_button 'Update comment'
         end
       end
 
       context 'when comment is not updated' do
         it 'prefills textarea with cached value' do
-          visit root_path
-          visit original_page_with_comment_path
+          page.driver.browser.navigate.refresh
           find("div#comment_#{model.id}").hover
           within "div#comment_#{model.id}" do
             click_link 'Edit'
@@ -138,16 +136,14 @@ shared_examples 'a page with a comments feed' do
 
       context 'when cancel is clicked' do
         it 'clears cached value' do
-          visit root_path
-          visit original_page_with_comment_path
+          page.driver.browser.navigate.refresh
           find("div#comment_#{model.id}").hover
           within "div#comment_#{model.id}" do
             click_link 'Edit'
             click_link 'Cancel'
           end
 
-          visit root_path
-          visit original_page_with_comment_path
+          page.driver.browser.navigate.refresh
           find("div#comment_#{model.id}").hover
 
           within "div#comment_#{model.id}" do

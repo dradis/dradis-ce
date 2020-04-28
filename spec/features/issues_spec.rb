@@ -11,7 +11,6 @@ describe 'Issues pages' do
   end
 
   context 'as authenticated user' do
-
     before { login_to_project_as_user }
 
     context 'with an Issue library' do
@@ -147,18 +146,8 @@ describe 'Issues pages' do
           end
 
           let(:new_model_path) { new_project_issue_path(current_project) }
-
-          let(:new_model_attributes) do
-            [
-              { name: :text, value: 'New Issue' }
-            ]
-          end
-
-          let(:new_model_attributes_for_template) do
-            [
-              { name: :text, value: 'New Issue Template' }
-            ]
-          end
+          let(:new_model_attributes) { [{ name: :text, value: 'New Issue' }] }
+          let(:new_model_attributes_for_template) { [{ name: :text, value: 'New Issue Template' }] }
 
           include_examples 'a form with local auto save', Issue
         end
