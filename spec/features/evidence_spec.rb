@@ -231,68 +231,11 @@ describe 'evidence' do
     end
 
     describe 'local caching' do
-      let(:params) { {} }
+      let(:new_model_path) { new_project_node_evidence_path(current_project, @node) }
 
-      before do
-        visit new_project_node_evidence_path(current_project, @node)
-        click_link 'Source'
-        select @issue_1.title, from: :evidence_issue_id
-        fill_in :evidence_content, with: 'New Evidence Content'
-        sleep 1 # Needed for setTimeout function in local_auto_save.js
-      end
+      let(:new_model_attributes) { [{ name: :content, value: 'New Evidence' }] }
 
-      context 'when evidence is not saved' do
-        context 'on the same project and node' do
-          it 'prefill fields with cached data' do
-            visit root_path
-            visit new_project_node_evidence_path(current_project, @node)
-            click_link 'Source'
-
-            aggregate_failures do
-              expect(page.find_field('evidence[content]').value).to eq 'New Evidence Content'
-              expect(page).to have_select('evidence_issue_id', selected: @issue_1.title)
-            end
-          end
-        end
-
-        context 'on different node' do
-          before do
-            @new_node = create(:node, project: current_project)
-          end
-
-          it 'does not prefill fields with cached data' do
-            visit root_path
-            visit new_project_node_evidence_path(current_project, @new_node)
-            click_link 'Source'
-
-            aggregate_failures do
-              expect(page.find_field('evidence[content]').value).to eq ''
-              expect(page).to have_select('evidence_issue_id', selected: 'Choose an Issue')
-            end
-          end
-        end
-      end
-
-      context 'when evidence is saved' do
-        it 'clears cached data' do
-          click_button 'Create Evidence'
-          visit new_project_node_evidence_path(current_project, @node)
-          click_link 'Source'
-
-          expect(page.find_field('evidence[content]').value).to eq ''
-        end
-      end
-
-      context 'when "Cancel" link is clicked' do
-        it 'clears cached data' do
-          click_link 'Cancel'
-
-          visit new_project_node_evidence_path(current_project, @node)
-          click_link 'Source'
-
-          expect(page.find_field('evidence[content]').value).to eq ''
-        end
-      end
+      include_examples 'a form with local auto save', Evidence
     end
 
     include_examples 'nodes pages breadcrumbs', :new, Evidence

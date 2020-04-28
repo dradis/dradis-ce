@@ -146,52 +146,10 @@ describe 'Issues pages' do
             @tag_2 = create(:tag, name: '!d62728_high')
           end
 
-          before do
-            add_tags
-            visit new_project_issue_path(current_project)
-            click_link 'Source'
-            fill_in :issue_text, with: 'New Issue Text'
+          let(:new_model_path) { new_project_issue_path(current_project) }
+          let(:new_model_attributes) { [{ name: :text, value: 'New Issue' }] }
 
-            no_tag = page.find('.dropdown-toggle span.tag')
-            no_tag.click
-
-            click_on @tag_1.display_name
-            sleep 1 # Needed for setTimeout function in local_auto_save.js
-          end
-
-          context 'when issue is not saved' do
-            it 'prefill fields with cached data' do
-              visit root_path
-              visit new_project_issue_path(current_project)
-              click_link 'Source'
-
-              aggregate_failures do
-                expect(page.find_field('issue[text]').value).to eq 'New Issue Text'
-                expect(page).to have_button(@tag_1.display_name)
-              end
-            end
-          end
-
-          context 'when issue is saved' do
-            it 'clears cached data' do
-              click_button 'Create Issue'
-              visit new_project_issue_path(current_project)
-              click_link 'Source'
-
-              expect(page.find_field('issue[text]').value).to eq ''
-            end
-          end
-
-          context 'when "Cancel" link is clicked' do
-            it 'clears cached data' do
-              click_link 'Cancel'
-
-              visit new_project_issue_path(current_project)
-              click_link 'Source'
-
-              expect(page.find_field('issue[text]').value).to eq ''
-            end
-          end
+          include_examples 'a form with local auto save', Issue
         end
       end
 
