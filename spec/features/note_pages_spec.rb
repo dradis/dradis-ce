@@ -236,15 +236,11 @@ describe "note pages" do
 
     describe "textile form view" do
       let(:params) { {} }
-                does not save unsaved changes in database
-              when cancel is clicked
-
 
       let(:action_path) { new_project_node_note_path(current_project, @node) }
       it_behaves_like 'a textile form view', Note
     end
 
-    # Needed to wrap this particular shared example in a describe block as it's failing otherwise
     describe 'local caching' do
       let(:add_categories) do
         @category_1  = create(:category)

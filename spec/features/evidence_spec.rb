@@ -230,7 +230,6 @@ describe 'evidence' do
       end
     end
 
-    # Needed to wrap this particular shared example in a describe block as it's failing otherwise
     describe 'local caching' do
       let(:new_model_path) { new_project_node_evidence_path(current_project, @node) }
 
