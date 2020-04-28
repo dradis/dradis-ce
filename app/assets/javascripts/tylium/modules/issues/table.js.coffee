@@ -42,8 +42,8 @@ class IssuesTable extends ItemsTable
           $stateTD.data('sort-value', targetState)
           $stateTD.removeClass('loading')
 
-          # Capitalized
-          $stateTD.text(targetState.charAt(0).toUpperCase() + targetState.slice(1))
+          stateString = if targetState == 'review' then 'Ready for Review' else targetState
+          $stateTD.text(stateString.charAt(0).toUpperCase() + stateString.slice(1))
     }
 
   onTagSelected: (event) =>

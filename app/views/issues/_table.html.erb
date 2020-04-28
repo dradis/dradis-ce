@@ -26,7 +26,8 @@
              when 'Title'
                [issue.title, link_to(issue.title, [current_project, issue])]
              when 'State'
-               [issue.state, issue.state.capitalize]
+               state = issue.state == 'review' ? 'Ready for Review' : issue.state.capitalize
+               [issue.state, state]
              when 'Tags'
                [
                  issue.tags.any? ? issue.tags.first.display_name : '',
