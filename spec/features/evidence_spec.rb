@@ -230,114 +230,23 @@ describe 'evidence' do
       end
     end
 
+    # Needed to wrap this particular shared example in a describe block as it's failing otherwise
     describe 'local caching' do
-      let(:params) { {} }
-      let(:texarea_content) { 'texarea_content' }
-      let(:textarea_content_for_template) { 'textarea_content_for_template' }
+      let(:new_model_path) { new_project_node_evidence_path(current_project, @node) }
 
-      before do
-        visit new_project_node_evidence_path(current_project, @node)
-        click_link 'Source'
-        select @issue_1.title, from: :evidence_issue_id
-        fill_in :evidence_content, with: texarea_content
-        sleep 1 # Needed for setTimeout function in local_auto_save.js
+      let(:new_model_attributes) do
+        [
+          { name: :content, value: 'New Evidence' }
+        ]
       end
 
-      context 'when evidence is not saved' do
-        context 'on the same project and node' do
-          it 'prefill fields with cached data' do
-            visit root_path
-            visit new_project_node_evidence_path(current_project, @node)
-            click_link 'Source'
-
-            aggregate_failures do
-              expect(page.find_field('evidence[content]').value).to eq texarea_content
-              expect(page).to have_select('evidence_issue_id', selected: @issue_1.title)
-            end
-          end
-        end
-
-        context 'on different node' do
-          before do
-            @new_node = create(:node, project: current_project)
-          end
-
-          it 'does not prefill fields with cached data' do
-            visit root_path
-            visit new_project_node_evidence_path(current_project, @new_node)
-            click_link 'Source'
-
-            aggregate_failures do
-              expect(page.find_field('evidence[content]').value).to eq ''
-              expect(page).to have_select('evidence_issue_id', selected: 'Choose an Issue')
-            end
-          end
-        end
+      let(:new_model_attributes_for_template) do
+        [
+          { name: :content, value: 'New Evidence Template' }
+        ]
       end
 
-      context 'when evidence is saved' do
-        it 'clears cached data' do
-          click_button 'Create Evidence'
-          visit new_project_node_evidence_path(current_project, @node)
-          click_link 'Source'
-
-          expect(page.find_field('evidence[content]').value).to eq ''
-        end
-      end
-
-      context 'when "Cancel" link is clicked' do
-        it 'clears cached data' do
-          click_link 'Cancel'
-
-          visit new_project_node_evidence_path(current_project, @node)
-          click_link 'Source'
-
-          expect(page.find_field('evidence[content]').value).to eq ''
-        end
-      end
-
-      context 'with template' do
-        let(:params)  { { template: 'sample_evidence' } }
-
-        it 'prefills fields with cached data' do
-          visit new_project_node_evidence_path(current_project, @node, params)
-          click_link 'Source'
-          fill_in :evidence_content, with: textarea_content_for_template
-          sleep 1 # Needed for setTimeout function in local_auto_save.js
-
-          visit root_path
-          visit new_project_node_evidence_path(current_project, @node, params)
-          click_link 'Source'
-
-          expect(page.find_field('evidence[content]').value).to eq textarea_content_for_template
-        end
-
-        context 'when blank evidence is filled then navigated to new template evidence' do
-          it 'does not prefill fields with cached data of blank template' do
-            visit new_project_node_evidence_path(current_project, @node, params)
-            click_link 'Source'
-
-            aggregate_failures do
-              expect(page.find_field('evidence[content]').value).not_to eq texarea_content
-              expect(page).to have_select('evidence_issue_id', selected: 'Choose an Issue')
-            end
-          end
-        end
-
-        context 'when template is filled then navigated to new blank evidence' do
-          it 'does not prefill new blank evidence form with template data' do
-            visit new_project_node_evidence_path(current_project, @node, params)
-            click_link 'Source'
-            fill_in :evidence_content, with: textarea_content_for_template
-            sleep 1 # Needed for setTimeout function in local_auto_save.js
-
-            visit new_project_node_evidence_path(current_project, @node)
-            click_link 'Source'
-
-            expect(page.find_field('evidence[content]').value).not_to eq textarea_content_for_template
-          end
-        end
-      end
+      include_examples 'a form with local auto save', Evidence
     end
 
     include_examples 'nodes pages breadcrumbs', :new, Evidence

@@ -236,125 +236,36 @@ describe "note pages" do
 
     describe "textile form view" do
       let(:params) { {} }
+                does not save unsaved changes in database
+              when cancel is clicked
+
 
       let(:action_path) { new_project_node_note_path(current_project, @node) }
       it_behaves_like 'a textile form view', Note
     end
 
+    # Needed to wrap this particular shared example in a describe block as it's failing otherwise
     describe 'local caching' do
-      let(:params) { {} }
-      let(:textarea_content) { 'textarea_content' }
-      let(:textarea_content_for_template) { 'textarea_content_for_template' }
-
       let(:add_categories) do
         @category_1  = create(:category)
         @category_2 = create(:category)
       end
 
-      before do
-        add_categories
-        visit new_project_node_note_path(current_project, @node)
-        click_link 'Source'
-        select @category_1.name, from: :note_category_id
-        fill_in :note_text, with: textarea_content
-        sleep 1 # Needed for setTimeout function in local_auto_save.js
+      let(:new_model_path) { new_project_node_note_path(current_project, @node) }
+
+      let(:new_model_attributes) do
+        [
+          { name: :text, value: 'New Note' }
+        ]
       end
 
-      context 'when note is not saved' do
-        context 'on the same project and node' do
-          it 'prefill fields with cached data' do
-            visit root_path
-            visit new_project_node_note_path(current_project, @node)
-            click_link 'Source'
-
-            aggregate_failures do
-              expect(page.find_field('note[text]').value).to eq textarea_content
-              expect(page).to have_select('note_category_id', selected: @category_1.name)
-            end
-          end
-        end
-
-        context 'on different node' do
-          before do
-            @new_node = create(:node, project: current_project)
-          end
-
-          it 'does not prefill fields with cached data' do
-            visit root_path
-            visit new_project_node_note_path(current_project, @new_node)
-            click_link 'Source'
-
-            aggregate_failures do
-              expect(page.find_field('note[text]').value).to eq ''
-              expect(page).to have_select('note_category_id', selected: 'Assign note category')
-            end
-          end
-        end
+      let(:new_model_attributes_for_template) do
+        [
+          { name: :text, value: 'New Note Template' }
+        ]
       end
 
-      context 'when note is saved' do
-        it 'clears cached data' do
-          click_button 'Create Note'
-          visit new_project_node_note_path(current_project, @node)
-          click_link 'Source'
-
-          expect(page.find_field('note[text]').value).to eq ''
-        end
-      end
-
-      context 'when "Cancel" link is clicked' do
-        it 'clears cached data' do
-          click_link 'Cancel'
-
-          visit new_project_node_note_path(current_project, @node)
-          click_link 'Source'
-
-          expect(page.find_field('note[text]').value).to eq ''
-        end
-      end
-
-      context 'with template' do
-        let(:params)  { { template: 'simple_note' } }
-
-        it 'prefills fields with cached data' do
-          visit new_project_node_note_path(current_project, @node, params)
-          click_link 'Source'
-          fill_in :note_text, with: textarea_content_for_template
-          sleep 1 # Needed for setTimeout function in local_auto_save.js
-
-          visit root_path
-          visit new_project_node_note_path(current_project, @node, params)
-          click_link 'Source'
-
-          expect(page.find_field('note[text]').value).to eq textarea_content_for_template
-        end
-
-        context 'when blank issue is filled then navigated to new template note' do
-          it 'does not prefill fields with cached data of blank template' do
-            visit new_project_node_note_path(current_project, @node, params)
-            click_link 'Source'
-
-            aggregate_failures do
-              expect(page.find_field('note[text]').value).not_to eq textarea_content
-              expect(page).to have_select('note_category_id', selected: 'Assign note category')
-            end
-          end
-        end
-
-        context 'when template is filled then navigated to new blank note' do
-          it 'does not prefill new blank note form with template data' do
-            visit new_project_node_note_path(current_project, @node, params)
-            click_link 'Source'
-            fill_in :note_text, with: textarea_content_for_template
-            sleep 1 # Needed for setTimeout function in local_auto_save.js
-
-            visit new_project_node_note_path(current_project, @node)
-            click_link 'Source'
-
-            expect(page.find_field('note[text]').value).not_to eq textarea_content_for_template
-          end
-        end
-      end
+      include_examples 'a form with local auto save', Note
     end
 
     include_examples 'nodes pages breadcrumbs', :new, Note
