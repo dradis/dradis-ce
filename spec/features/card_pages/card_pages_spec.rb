@@ -202,7 +202,12 @@ describe 'Card pages:' do
         before { PaperTrail.enabled = true }
         after  { PaperTrail.enabled = false }
 
-        let(:submit_form) { click_link 'Delete' }
+        let(:submit_form) do
+          within('.dots-container') do
+            find('.dots-dropdown').click
+            click_link 'Delete'
+          end
+        end
 
         it 'deletes the card' do
           id = @card.id
@@ -219,7 +224,12 @@ describe 'Card pages:' do
         end
 
         let(:model) { @card }
-        let(:submit_form) { within('.note-text-inner') { click_link 'Delete' } }
+        let(:submit_form) do
+          within('.dots-container') do
+            find('.dots-dropdown').click
+            click_link 'Delete'
+          end
+        end
         let(:trackable) { @card }
 
         include_examples 'creates an Activity', :destroy
