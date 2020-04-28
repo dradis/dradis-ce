@@ -18,7 +18,11 @@ class UploadController < AuthenticatedController
 
   def index
     @last_job = Log.new.uid
-    @issue_states = Issue.states.map { |k, v| [k.capitalize, v] }
+    # Build the issue states collection for the form select
+    @issue_states = Issue.states.map do |state, state_id|
+      state = state == 'review' ? 'Ready for Review' : state.capitalize
+      [state, state_id]
+    end
   end
 
   # TODO: this would overwrite an existing file with the same name.
