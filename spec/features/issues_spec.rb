@@ -11,7 +11,6 @@ describe 'Issues pages' do
   end
 
   context 'as authenticated user' do
-
     before { login_to_project_as_user }
 
     context 'with an Issue library' do
