@@ -44,6 +44,37 @@ shared_examples 'a page with a comments feed' do
       submit_form
     end
 
+    describe 'local caching', js: true do
+      let!(:original_page_with_comment_path) { page.current_path }
+
+      context 'when comment is not saved' do
+        it 'prefills textarea with cached value' do
+          within 'form[data-behavior~=local-auto-save]' do
+            fill_in 'comment[content]', with: 'test comment'
+            sleep 1 # Needed for debounce function in local_auto_save.js
+          end
+          visit root_path
+          visit original_page_with_comment_path
+          content = page.find_field('comment[content]').value
+          expect(content).to eq 'test comment'
+        end
+      end
+
+      context 'when comment is saved' do
+        it 'clears cached value' do
+          within 'form[data-behavior~=local-auto-save]' do
+            fill_in 'comment[content]', with: 'test comment'
+            sleep 1 # Needed for debounce function in local_auto_save.js
+            click_button 'Add comment'
+          end
+          visit root_path
+          visit original_page_with_comment_path
+          content = page.find_field('comment[content]').value
+          expect(content).to eq ''
+        end
+      end
+    end
+
     include_examples 'creates an Activity', :create, Comment
   end
 
@@ -74,6 +105,59 @@ shared_examples 'a page with a comments feed' do
         expect(page).not_to have_css "form#edit_comment_#{id}"
       end
     end
+
+    describe 'local caching', js: true do
+      let!(:original_page_with_comment_path) { page.current_path }
+
+      before do
+        find("div#comment_#{model.id}").hover
+        within "div#comment_#{model.id}" do
+          click_link 'Edit'
+          fill_in 'comment[content]', with: 'test comment edited'
+          sleep 1 # Needed for debounce function in local_auto_save.js
+          # click_button 'Update comment'
+        end
+      end
+
+      context 'when comment is not updated' do
+        it 'prefills textarea with cached value' do
+          visit root_path
+          visit original_page_with_comment_path
+          find("div#comment_#{model.id}").hover
+          within "div#comment_#{model.id}" do
+            click_link 'Edit'
+            content = page.find_field('comment[content]').value
+            expect(content).to eq 'test comment edited'
+          end
+        end
+
+        it 'does not save unsaved changes in database' do
+          expect(model.content).not_to eq 'test comment edited'
+        end
+      end
+
+      context 'when cancel is clicked' do
+        it 'clears cached value' do
+          visit root_path
+          visit original_page_with_comment_path
+          find("div#comment_#{model.id}").hover
+          within "div#comment_#{model.id}" do
+            click_link 'Edit'
+            click_link 'Cancel'
+          end
+
+          visit root_path
+          visit original_page_with_comment_path
+          find("div#comment_#{model.id}").hover
+
+          within "div#comment_#{model.id}" do
+            click_link 'Edit'
+            content = page.find_field('comment[content]').value
+            expect(content).not_to eq 'test comment edited'
+          end
+        end
+      end
+    end
   end
 
   describe 'delete comment', js: true do
@@ -97,37 +181,6 @@ shared_examples 'a page with a comments feed' do
       id = @comments[1].id
       within "div#comment_#{id}" do
         expect(page).to have_link('Delete', visible: false)
-      end
-    end
-  end
-
-  describe 'local caching', js: true do
-    let!(:original_page_with_comment_path) { page.current_path }
-
-    context 'when comment is not saved' do
-      it 'prefills textarea with cached value' do
-        within 'form[data-behavior~=add-comment]' do
-          fill_in 'comment[content]', with: 'test comment'
-          sleep 1 # Needed for setTimeout function in local_auto_save.js
-        end
-        visit root_path
-        visit original_page_with_comment_path
-        content = page.find_field('comment[content]').value
-        expect(content).to eq 'test comment'
-      end
-    end
-
-    context 'when comment is saved' do
-      it 'clears cached value' do
-        within 'form[data-behavior~=add-comment]' do
-          fill_in 'comment[content]', with: 'test comment'
-          sleep 1 # Needed for setTimeout function in local_auto_save.js
-          click_button 'Add comment'
-        end
-        visit root_path
-        visit original_page_with_comment_path
-        content = page.find_field('comment[content]').value
-        expect(content).to eq ''
       end
     end
   end
