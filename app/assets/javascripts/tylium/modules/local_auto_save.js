@@ -113,18 +113,19 @@ class LocalAutoSave {
   }
 
   restoreData() {
+    var that = this;
     var data = JSON.parse(localStorage.getItem(this.key));
 
     if (data !== null) {
       for (let [key, value] of Object.entries(data)) {
         if (key.slice(-2) == '[]') {
           value.forEach(function(checkboxValue) {
-            var input = this.target.querySelector(`[name='${key}'][value='${checkboxValue}']`);
+            var input = that.target.querySelector(`[name='${key}'][value='${checkboxValue}']`);
             input.checked = true;
           })
         } else {
           // Query for inputs here first so that we don't query twice
-          var inputs = this.target.querySelectorAll(`[name='${key}']`);
+          var inputs = that.target.querySelectorAll(`[name='${key}']`);
 
           if (inputs.length) {
             // Handle checking for radio button and check boxes
