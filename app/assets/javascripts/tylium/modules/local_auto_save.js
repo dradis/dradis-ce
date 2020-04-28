@@ -146,9 +146,3 @@ class LocalAutoSave {
     }
   }
 }
-
-document.addEventListener('turbolinks:load', function() {
-  document.querySelectorAll('[data-behavior~=local-auto-save]').forEach(function(form) {
-    new LocalAutoSave(form);
-  });
-});
