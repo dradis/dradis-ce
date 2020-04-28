@@ -8,6 +8,6 @@
   });
 
   $('[data-behavior~=local-auto-save]', '#<%= dom_id(@comment) %>').each(function() {
-    new LocalAutoSave($(this)[0]);
+    new LocalAutoSave(this);
   });
 <% end %>
