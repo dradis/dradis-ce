@@ -165,7 +165,7 @@ describe 'Issues pages' do
 
         before do
           issuelib = current_project.issue_library
-          @issue = create(:issue, node: issuelib, updated_at: 2.seconds.ago, state: 0)
+          @issue = create(:issue, node: issuelib, updated_at: 2.seconds.ago, state: :draft)
           visit edit_project_issue_path(current_project, @issue)
           click_link 'Source'
         end

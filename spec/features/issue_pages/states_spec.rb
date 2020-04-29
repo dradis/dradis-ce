@@ -6,8 +6,8 @@ describe 'issue pages' do
       login_to_project_as_user
 
       # create 2 issues
-      @issue1 = create(:issue, node: current_project.issue_library, state: 0)
-      @issue2 = create(:issue, node: current_project.issue_library, state: 0)
+      @issue1 = create(:issue, node: current_project.issue_library, state: :draft)
+      @issue2 = create(:issue, node: current_project.issue_library, state: :draft)
 
       visit project_issues_path(current_project)
 
