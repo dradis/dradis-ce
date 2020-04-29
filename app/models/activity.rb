@@ -16,9 +16,15 @@ class Activity < ApplicationRecord
 
   validates_presence_of :action, :trackable_id, :trackable_type, :user
 
-  VALID_ACTIONS = %w[auto-save create update destroy recover]
+  VALID_ACTIONS = {
+    autosave: 'auto-save',
+    create: 'create',
+    update: 'update',
+    destroy: 'destroy',
+    recover: 'recover'
+  }.freeze
 
-  validates_inclusion_of :action, in: VALID_ACTIONS
+  validates_inclusion_of :action, in: VALID_ACTIONS.values
 
   # -- Scopes ---------------------------------------------------------------
 
