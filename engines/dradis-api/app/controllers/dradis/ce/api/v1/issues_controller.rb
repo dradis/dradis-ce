@@ -46,7 +46,7 @@ module Dradis::CE::API
 
       private
       def issue_params
-        params.require(:issue).permit(:text)
+        params.require(:issue).permit(:text, :state)
       end
     end
   end
