@@ -43,26 +43,26 @@ class EditorToolbar {
       }
     });
 
-    // These are cross-browser hacks to keep textareas expanded to content
-    // Handler for setting the correct textarea heights for current values
-    this.$target.each(function() {
-      $(this).css({'height': this.scrollHeight + 2});
-    });
-
     // Handler for setting the correct textarea height on keyboard input
-    this.$target.on('input', function() {
-      if ($(this).innerHeight() >= this.scrollHeight) {
-        $(this).css({'height': '1px'}).css({'height': this.scrollHeight + 2});
+    this.$target[0].addEventListener('input', setHeight);
+
+    function setHeight(e) {
+      const shrinkEvents = ['deleteContentForward', 'deleteContentBackward', 'deleteByCut', 'historyUndo', 'historyRedo'];
+
+      if (shrinkEvents.includes(e.inputType)) {
+        // shrink the text area when content is being removed
+        $(this).css({'height': '1px'});
       }
-      else {
-        $(this).css({'height': this.scrollHeight + 2});
-      }
-    });
+      
+      // expand the textarea to fix the content
+      $(this).css({'height': this.scrollHeight + 2});
+    };
+  
+    // Handler for setting the correct textarea heights on load (for current values)
+    this.$target.each(setHeight);
 
     // Handler for setting the correct textarea height when focus is lost
-    this.$target.on('blur', function() {
-      $(this).css({'height': this.scrollHeight + 2});
-    });
+    this.$target.on('blur', setHeight);
 
     // when a toolbar button is clicked
     this.$editorToolbar.find('[data-btn]').click(function () {
