@@ -102,20 +102,6 @@ button:focus {
   }
 }
 
-.form-group {
-
-  select {
-
-    &:first-child {
-      margin-left: 0 !important;
-    }
-
-    &:last-child {
-      margin-right: 0 !important;
-    }
-  }
-}
-
 h1, h2, h3, h4, h5, h6 {
   font-weight: 300;
   text-transform: uppercase;
@@ -156,7 +142,7 @@ mark {
   // fixes ugly selects
   select {
     -moz-appearance: none !important;
-    background: transparent url('data:image/gif;base64,R0lGODlhBgAGAKEDAFVVVX9/f9TU1CgmNyH5BAEKAAMALAAAAAAGAAYAAAIODA4hCDKWxlhNvmCnGwUAOw==') right center no-repeat !important;
+    background: white url('data:image/gif;base64,R0lGODlhBgAGAKEDAFVVVX9/f9TU1CgmNyH5BAEKAAMALAAAAAAGAAYAAAIODA4hCDKWxlhNvmCnGwUAOw==') right center no-repeat !important;
     background-position: calc(100% - 5px) center !important;
     font-family: revert;
   }

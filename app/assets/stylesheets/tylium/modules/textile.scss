@@ -20,10 +20,6 @@
     height: auto;
   }
 
-  li { 
-    margin-left: 40px;
-  }
-
   ol { 
     list-style-type: decimal;
   }
@@ -126,14 +122,28 @@
   word-break: break-word;
 
   &.textile-fullscreen {
+    font-size: 0.9rem;
+    padding-top: 0;
     overflow: auto;
 
     .textile-inner {
-      margin: 0 0 1rem 0;
+      bottom: 0;
+      position: absolute;
+      top: 3.5rem;
+      width: 100%;
+
+      .editor-field {
+        padding-bottom: 0.5rem;
+      }
+
+      .textile-preview {
+        height: initial;
+        padding-bottom: 0.5rem;
+      }
     }
-    
-    .textile-preview {
-      height: initial;
+
+    .textile-toolbar {
+      margin-top: 10px !important;
     }
   }
 
@@ -147,32 +157,34 @@
         margin: 0.4rem .75rem;
       }
 
-      .table {
-        border-collapse: separate;
-        border-spacing: 0;
+      .textile-form-body {
+        border: 1px solid $borderColor;
+        border-radius: 5px;
       }
 
       .textile-form-field {
-        border: 1px solid transparent;
-        border-bottom-color: $borderColor;
+        background-color: $secondaryBgColor;
+        border-bottom: 1px solid $borderColor;
+        padding-bottom: 1rem;
         transition: background-color 0.2s ease-in-out;
   
         .actions {
           display: flex;
           opacity: 0;
+          padding: 0.25rem 0.375rem;
           transition: opacity 0.2s ease-in-out;
         }
 
+        .editor-field {
+          margin: 0 1.75rem;
+        }
+
         &:first-of-type {
-          
-          td {
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-          }
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
         }
 
         &:hover {
-          background-color: darken($primaryBgColor, 3%);
 
           .actions {
             opacity: 1;
@@ -180,21 +192,20 @@
         }
 
         &:last-of-type {
-          
-          td {
-            border-bottom: 1px solid $borderColor;
-            border-bottom-left-radius: 5px;
-            border-bottom-right-radius: 5px;
-          }
+          border-bottom-left-radius: 5px;
+          border-bottom-right-radius: 5px;
+          border-bottom: none;
+        }
+
+        select {
+          margin: 0 1.75rem;
+          background-color: initial;
+          padding-left: 0.25rem;
         }
 
         textarea {
-          min-height: 36px;
-        }
-
-        td {
-          border: 1px solid $borderColor;
-          border-bottom: none;
+          min-height: 38px;
+          resize: none;
         }
       } 
     }

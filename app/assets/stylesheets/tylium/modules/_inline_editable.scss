@@ -3,6 +3,7 @@
   .edit-hover {
     align-items: flex-start;
     display: inline-flex;
+    position: relative;
     width: 100%;
 
     &:hover {
@@ -13,42 +14,31 @@
   }
 
   i.fa-pencil {
-    margin-top: 0.75rem;
+    left: 0.5rem;
     opacity: 0.2;
+    position: absolute;
+    top: 0.65rem;
     transition: opacity 0.2s ease-in-out;
+    z-index: 1;
   }
 
   input {
-    font-weight: 600;
-
-    &:focus {
-      font-weight: 400;
-    }
-  }
-
-  input,
-  textarea {
     background-color: transparent;
     border: none;
     border-bottom: 1px solid transparent;
     border-radius: 0;
-    box-shadow: none;
-    margin-bottom: 0;
-    margin-left: 0.25rem;
-    padding-left: 0.25rem;
-    resize: none;
+    font-weight: 600;
+    margin: 0 0 0.5rem 1.75rem;
+    padding: 0.5rem 0 0 0;
 
     &:focus {
       background-color: transparent;
       border-bottom: 1px solid $primaryColor;
       box-shadow: none;
+      font-weight: 400;
       font-style: italic;
+      letter-spacing: 0.4px;
       outline: none;
-    }
-
-    &.modified {
-      color: $primaryColor;
-      font-style: italic;
     }
   }
 }

@@ -228,7 +228,7 @@ describe "note pages" do
       let(:params)  { { template: 'simple_note' } }
 
       it "pre-populates the textarea with the template contents" do
-        click_link 'Inline'
+        click_link 'Fields'
         expect(find_field('item_form[field_name_0]').value).to include('IPAddress')
         expect(find_field('item_form[field_value_0]').value).to include('127.0.0.1')
       end
