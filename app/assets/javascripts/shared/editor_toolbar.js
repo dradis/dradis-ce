@@ -53,8 +53,8 @@ class EditorToolbar {
     this.$target.on('keyup blur', function(e) {
       var key = e.which || e.keyCode; // for cross-browser compatibility
 
-      if (key === 46 || key === 8) {
-        // only shrink textarea when backspacing or deleting
+      if (key === 46 || key === 8 || key === 91 || key === 17) {
+        // only try to shrink textarea when backspacing, deleting or using meta/ctrl key
         // this prevents screen jumping when the user is at the bottom of the view
         $(this).css({'height': '1px'});
       }
