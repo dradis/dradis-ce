@@ -54,6 +54,14 @@ describe "Issues API" do
           expect(issue['fields'].keys).to eq(db_issue.fields.keys)
         end
       end
+
+      it 'includes the issue state' do
+        @retrieved_issues.each do |issue|
+          db_issue = Issue.find(issue['id'])
+
+          expect(issue['state']).to eq(db_issue.state)
+        end
+      end
     end
 
     describe "GET /api/issue/:id" do
@@ -75,10 +83,14 @@ describe "Issues API" do
         expect(@retrieved_issue['fields'].keys).to eq @issue.fields.keys
         expect(@retrieved_issue['fields'].count).to eq @issue.fields.count
       end
+
+      it 'includes the issue state' do
+        expect(@retrieved_issue['state']).to eq(@issue.state)
+      end
     end
 
     describe "POST /api/issues" do
-      let(:valid_params) { { issue: { text: "#[Title]#\nRspec issue\n\n#[c]#\nd\n\n#[e]#\nf\n\n" } } }
+      let(:valid_params) { { issue: { text: "#[Title]#\nRspec issue\n\n#[c]#\nd\n\n#[e]#\nf\n\n", state: 'published' } } }
       let(:valid_post) do
         post "/api/issues", params: valid_params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
       end
@@ -88,6 +100,7 @@ describe "Issues API" do
         expect(response.status).to eq(201)
         retrieved_issue = JSON.parse(response.body)
         expect(retrieved_issue['text']).to eq valid_params[:issue][:text]
+        expect(retrieved_issue['state']).to eq valid_params[:issue][:state]
       end
 
       it "tags the issue from the Tags field" do
@@ -123,8 +136,8 @@ describe "Issues API" do
     end
 
     describe "PUT /api/issues/:id" do
-      let(:issue) { create(:issue, node: current_project.issue_library, text: "Existing Issue") }
-      let(:valid_params) { { issue: { text: "Updated Issue" } } }
+      let(:issue) { create(:issue, node: current_project.issue_library, text: 'Existing Issue', state: 'draft') }
+      let(:valid_params) { { issue: { text: 'Updated Issue', state: 'published' } } }
       let(:valid_put) do
         put "/api/issues/#{issue.id}", params: valid_params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
       end
@@ -137,6 +150,7 @@ describe "Issues API" do
 
         retrieved_issue = JSON.parse(response.body)
         expect(retrieved_issue['text']).to eq valid_params[:issue][:text]
+        expect(retrieved_issue['state']).to eq valid_params[:issue][:state]
       end
 
       let(:submit_form) { valid_put }
