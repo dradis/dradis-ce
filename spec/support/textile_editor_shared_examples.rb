@@ -50,18 +50,42 @@ shared_examples 'a textile form view' do |klass|
 
     updated_item = defined?(item) ? item : klass.last
 
-    if klass == Evidence || klass == Note
-      show_path = [current_project, updated_item.node, updated_item]
-      content_attribute = :content
-    elsif klass == Issue
-      show_path = [current_project, updated_item]
-      content_attribute = :text
-    elsif klass == Card
-      show_path = [current_project, updated_item.list.board, updated_item.list, updated_item]
-      content_attribute = :description
-    end
+    content_attribute = get_content_attribute(klass)
+    show_path = get_show_path(updated_item, klass)
 
     expect(page).to have_current_path(polymorphic_path(show_path), ignore_query: true)
     expect(updated_item.reload.send(content_attribute)).to include("#[Title]#\r\nTest Item")
+  end
+
+  it 'supports text without field headers' do
+    content_attribute = get_content_attribute(klass)
+
+    click_link 'Source'
+    fill_in "#{klass.to_s.downcase}_#{content_attribute}", with: 'Test content.'
+
+    click_link 'Inline'
+
+    expect(find('#item_form_field_name_0').value).to eq ('')
+    expect(find('#item_form_field_value_0').value).to eq ('Test content.')
+  end
+
+  def get_content_attribute(klass)
+    if klass == Evidence
+      content_attribute = :content
+    elsif klass == Issue || klass == Note
+      content_attribute = :text
+    elsif klass == Card
+      content_attribute = :description
+    end
+  end
+
+  def get_show_path(updated_item, klass)
+    if klass == Evidence || klass == Note
+      show_path = [current_project, updated_item.node, updated_item]
+    elsif klass == Issue
+      show_path = [current_project, updated_item]
+    elsif klass == Card
+      show_path = [current_project, updated_item.list.board, updated_item.list, updated_item]
+    end
   end
 end
