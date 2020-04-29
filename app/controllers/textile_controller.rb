@@ -7,6 +7,9 @@ class TextileController < AuthenticatedController
   # Returns the form view given a source text
   def form
     @form_data = Note.parse_fields(params[:source]) if params[:source]
+    if fieldless_string && !fieldless_string.empty?
+      @form_data = {'': fieldless_string}.merge(@form_data)
+    end
     @allow_dropdown = JSON.parse(params[:allow_dropdown] || 'false')
   end
 
@@ -51,5 +54,11 @@ class TextileController < AuthenticatedController
     JSON.parse(params[:form]).map do |field|
       [field['key'], field['value']]
     end || []
+  end
+
+  # Field-less strings are strings that do not have a field header (#[Field]#).
+  def fieldless_string
+    # Extract all characters before a field header (#[Field]#)
+    @fieldless_string ||= params[:source][/^([\s\S]*?)(?=#\[.+?\]#|$)/, 1]
   end
 end
