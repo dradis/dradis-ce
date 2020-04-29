@@ -3,6 +3,7 @@ class LocalAutoSave {
     if (target.tagName !== 'FORM') { console.log('Can\'t initialize local auto save on anything but a form'); return; }
     this.target = target;
     this.key = target.dataset.autoSaveKey;
+    this.cancelled = false;
 
     // List of available inputs: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
     // Only permit these inputs to be saved so that it does not store unnecessary data in local cache
@@ -40,6 +41,7 @@ class LocalAutoSave {
 
     if (clearCacheElement) {
       clearCacheElement.addEventListener('click', function(event) {
+        that.cancelled = true;
         localStorage.removeItem(that.key);
       })
     }
@@ -52,7 +54,9 @@ class LocalAutoSave {
     formInputs = formInputs.concat(Array.from(this.target.querySelectorAll('textarea, select')));
 
     var setData = this.debounce(function() {
-      localStorage.setItem(that.key, JSON.stringify(that.getData()));
+      if (!that.cancelled) {
+        localStorage.setItem(that.key, JSON.stringify(that.getData()));
+      }
     }, 500);
 
     formInputs.forEach(function(input) {
