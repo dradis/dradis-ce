@@ -12,7 +12,7 @@ class EditorChannel < ApplicationCable::Channel
 
   attr_accessor :resource
 
-  AUTOSAVE_EVENT = 'auto-save'.freeze
+  AUTOSAVE_EVENT = Activity::VALID_ACTIONS[:autosave].freeze
 
   def subscribed
     reject and return unless find_resource

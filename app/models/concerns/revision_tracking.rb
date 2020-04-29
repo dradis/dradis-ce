@@ -1,7 +1,10 @@
 module RevisionTracking
   extend ActiveSupport::Concern
 
-  REVISABLE_EVENTS = %w[auto-save update]
+  REVISABLE_EVENTS = [
+    Activity::VALID_ACTIONS[:autosave],
+    Activity::VALID_ACTIONS[:update]
+  ].freeze
 
   included do
     has_paper_trail
