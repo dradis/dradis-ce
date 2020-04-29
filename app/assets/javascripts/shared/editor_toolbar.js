@@ -50,18 +50,13 @@ class EditorToolbar {
     });
 
     // Handler for setting the correct textarea height on keyboard input
-    this.$target.on('keyup blur', function(e) {
-      var key = e.which || e.keyCode; // for cross-browser compatibility
-
-      if (key === 46 || key === 8) {
-        // only shrink textarea when backspacing or deleting
-        // this prevents screen jumping when the user is at the bottom of the view
-        $(this).css({'height': '1px'});
+    this.$target.on('input blur', function(e) {
+      if ($(this).innerHeight() >= this.scrollHeight) {
+        $(this).css({'height': '1px'}).css({'height': this.scrollHeight + 2});
       }
-
-      $(this).css({'height': this.scrollHeight + 2});
-      
-      // nice to have: trigger keypress event to focus view on cursor position in case curor is out of view.
+      else {
+        $(this).css({'height': this.scrollHeight + 2});
+      }
     });
 
     // when a toolbar button is clicked
