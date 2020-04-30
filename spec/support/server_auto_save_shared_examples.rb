@@ -32,11 +32,7 @@ shared_examples 'an editor with server side auto-save' do
       expect(autosaveable.reload.send(content_attribute)).to eq new_content
     end
 
-    context 'with papertrail active' do
-      before do
-        PaperTrail.enabled = true
-      end
-
+    context 'with papertrail active', versioning: true do
       it 'creates a papertrail version' do
         expect do
           find('.editor-field textarea').set new_content
@@ -76,14 +72,12 @@ shared_examples 'a record with auto-save revisions' do
     before do
       create(:configuration, name: 'admin:password', value: ::BCrypt::Password.create(password))
 
-      PaperTrail.enabled = true
-
       login
       visit polymorphic_path(path_params, action: :edit)
       click_link 'Source'
     end
 
-    it 'creates a single auto-save item in the revision history' do
+    it 'creates a single auto-save item in the revision history', versioning: true do
       find('.editor-field textarea').set new_content
       wait_for_js_events
 
@@ -94,7 +88,7 @@ shared_examples 'a record with auto-save revisions' do
       expect(row).to have_content('Currently Viewing')
     end
 
-    it 'only keeps a single auto-save item in the revision history' do
+    it 'only keeps a single auto-save item in the revision history', versioning: true do
       3.times do
         find('.editor-field textarea').set new_content
         wait_for_js_events

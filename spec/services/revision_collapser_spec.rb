@@ -2,12 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe RevisionCollapser do
+RSpec.describe RevisionCollapser, versioning: true do
   let(:resource) { create(:issue) }
-
-  before do
-    PaperTrail.enabled = true
-  end
 
   describe '.call' do
     subject(:collapse_revisions) { described_class.call(resource) }
