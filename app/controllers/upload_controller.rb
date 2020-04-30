@@ -35,7 +35,7 @@ class UploadController < AuthenticatedController
     @attachment.save
 
     @item_id = params[:item_id].to_i
-    @state  = default_issue_state
+    @state  = validate_issue_state
     @success = true
     flash.now[:notice] = "Successfully uploaded #{ filename }"
   end
@@ -63,14 +63,6 @@ class UploadController < AuthenticatedController
 
   private
 
-  def default_issue_state
-    if Issue.states.values.include?(params[:state].to_i)
-      params[:state].to_i
-    else
-      Issue.states[:draft]
-    end
-  end
-
   def job_logger
     @job_logger ||= Log.new(uid: params[:item_id].to_i)
   end
@@ -84,11 +76,12 @@ class UploadController < AuthenticatedController
     # avoid SQLite3::BusyException when using sqlite and
     # activejob async queue adapter
     UploadJob.perform_later(
-      default_user_id: current_user.id,
-      file: attachment.fullpath.to_s,
-      plugin_name: @uploader.to_s,
-      project_id: current_project.id,
-      uid: params[:item_id].to_i
+      default_user_id:  current_user.id,
+      file:             attachment.fullpath.to_s,
+      plugin_name:      @uploader.to_s,
+      project_id:       current_project.id,
+      state:            validate_issue_state,
+      uid:              params[:item_id].to_i
     )
   end
 
@@ -102,7 +95,7 @@ class UploadController < AuthenticatedController
         logger:     job_logger,
         plugin:     @uploader,
         project_id: current_project.id,
-        state:      default_issue_state
+        state:      validate_issue_state
       )
 
       importer.import(file: attachment.fullpath)
@@ -127,6 +120,14 @@ class UploadController < AuthenticatedController
                      collect(&:uploaders).
                      flatten.
                      sort_by(&:name)
+  end
+
+  def validate_issue_state
+    if Issue.states.values.include?(params[:state].to_i)
+      params[:state].to_i
+    else
+      Issue.states[:draft]
+    end
   end
 
   # Ensure that the requested :uploader is valid and has been included in the

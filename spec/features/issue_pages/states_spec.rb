@@ -11,7 +11,6 @@ describe 'issue pages' do
 
       visit project_issues_path(current_project)
 
-
       # Enable 'State' as a column for the issues table
       within('.btn-toolbar') do
         find('.btn-group.dropdown').click
