@@ -82,7 +82,8 @@ class IssuesController < AuthenticatedController
     respond_to do |format|
       updated_at_before_save = @issue.updated_at.to_i
 
-      if @issue.update_attributes(issue_params)
+      if @issue.update_attributes(issue_params.merge(updated_at: Time.now))
+        RevisionCollapser.call(@issue)
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
