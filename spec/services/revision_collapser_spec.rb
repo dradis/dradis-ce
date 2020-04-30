@@ -9,7 +9,6 @@ RSpec.describe RevisionCollapser do
     PaperTrail.enabled = true
   end
 
-
   describe '.call' do
     subject(:collapse_revisions) { described_class.call(resource) }
 

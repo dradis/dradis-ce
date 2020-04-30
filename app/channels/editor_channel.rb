@@ -24,6 +24,7 @@ class EditorChannel < ApplicationCable::Channel
     resource.paper_trail_event = AUTOSAVE_EVENT
 
     if resource.update_attributes resource_params(params)
+      RevisionCollapser.call(resource)
       self.class.broadcast_to([current_user, current_project, resource], resource.reload.updated_at.to_i)
     end
   end

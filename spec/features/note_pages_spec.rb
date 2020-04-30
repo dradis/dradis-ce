@@ -99,9 +99,12 @@ describe "note pages" do
 
     it_behaves_like "a form with a help button"
 
-    let(:autosaveable) { @note }
-    let(:path_params) { [current_project, @node, @note] }
-    it_behaves_like 'an editor with server side auto-save'
+    describe 'auto-save' do
+      let(:autosaveable) { create(:note, node: @node) }
+      let(:path_params) { [current_project, @node, autosaveable] }
+      it_behaves_like 'an editor with server side auto-save'
+      it_behaves_like 'a record with auto-save revisions'
+    end
 
     describe 'textile form view' do
       let(:action_path) { edit_project_node_note_path(current_project, @node, @note) }
