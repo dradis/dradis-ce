@@ -24,8 +24,8 @@
 
   <div class="form-actions">
     <div class="btn-group dropdown state-menu" data-behavior="state-menu">
-      <%= f.hidden_field :state, data: { behavior: 'issue-state' } %>
       <%= f.button :submit, nil, class: 'btn btn-primary text-capitalize', data: { behavior: 'state-submit-button' } %>
+      <%= f.hidden_field :state, data: { behavior: 'issue-state' } %>
       <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split ml-0" data-toggle="dropdown">
         <i class="fa fa-caret-down"></i>
       </button>
