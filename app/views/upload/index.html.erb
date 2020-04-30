@@ -9,23 +9,33 @@
       <div class="row">
         <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, id: 'new_upload', class: 'd-flex w-100', data: { parse_url: project_upload_parse_path(current_project) } do %>
           <div class="col-4">
-            <div class="form-group">
-              <h5>1. Choose a tool</h5>
-              <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { :class => 'form-control' } %>
+            <div class="form-group h-100 d-flex flex-column justify-content-between m-0">
+              <div>
+                <h5 class="m-0">1. Choose a tool</h5>
+                <label class="small">Select the tool that generated the output file you want to upload.</label>
+              </div>
+              <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { :class => 'form-control mb-2', data: { behavior: 'tool-select' } } %>
             </div>
           </div>
 
           <div class="col-4">
-            <div class="form-group">
-              <h5>2. Choose a state</h5>
-              <%= select_tag 'state', options_for_select(@issue_states), { class: 'form-control' } %>
+            <div class="form-group h-100 d-flex flex-column justify-content-between m-0">
+              <div>
+                <h5 class="m-0">2. Choose a state</h5>
+                <label class="small" data-tool-type="third-party">Select a state for the issues that will be uploaded from the output file.</label>
+                <label class="small d-none" data-tool-type="dradis">Issues uploaded from a Dradis Package/Template will use the state they were exported in or will be set to Published if they do not have a state.</label>
+              </div>
+              <%= select_tag 'state', options_for_select(@issue_states), { class: 'form-control mb-2', data: { behavior: 'state-select' } } %>
             </div>
           </div>
 
           <div class="col-4">
-            <div class="form-group">
-              <h5>3. Choose a file</h5>
-              <div class="custom-file">
+            <div class="form-group h-100 d-flex flex-column justify-content-between m-0">
+              <div>
+                <h5 class="m-0">3. Choose a file</h5>
+                <label class="small">Select the output file to upload.<br></label>
+              </div>
+              <div class="custom-file mb-2">
                 <%= file_field_tag 'file', class: 'custom-file-input' %>
                 <label class="custom-file-label text-truncate" data-behavior="file-label">Choose file</label>
                 <%= hidden_field_tag 'item_id' %>
