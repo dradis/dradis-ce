@@ -23,6 +23,8 @@ class UploadController < AuthenticatedController
       state = state == 'review' ? 'Ready for Review' : state.capitalize
       [state, state_id]
     end
+
+    uploaders_for_select
   end
 
   # TODO: this would overwrite an existing file with the same name.
@@ -118,15 +120,25 @@ class UploadController < AuthenticatedController
     # :upload plugins can define multiple uploaders
     @uploaders ||= Dradis::Plugins::with_feature(:upload).
                      collect(&:uploaders).
-                     flatten.
-                     sort_by(&:name)
+                     flatten
+  end
+
+  def uploaders_for_select
+    @uploaders_for_select ||=
+      @uploaders.map do |uploader|
+        base_name = uploader.name.demodulize
+        if base_name == 'Package' || base_name == 'Template'
+          base_name = "Dradis #{base_name}"
+        end
+        [base_name, uploader.name]
+      end.sort { |a, b| a <=> b }
   end
 
   def validate_issue_state
-    if Issue.states.values.include?(params[:state].to_i)
+    if params[:state] && Issue.states.values.include?(params[:state].to_i)
       params[:state].to_i
     else
-      Issue.states[:draft]
+      Issue.states[:published]
     end
   end
 
