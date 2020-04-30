@@ -133,6 +133,14 @@ describe "Issues API" do
         }.not_to change { current_project.issues.count }
         expect(response.status).to eq(422)
       end
+
+      it 'throws 422 if issue state is invalid' do
+        params = { issue: { text: 'Test Issue', state: 'fakestate' } }
+        expect {
+          post '/api/issues', params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
+        }.not_to change { current_project.issues.count }
+        expect(response.status).to eq(422)
+      end
     end
 
     describe "PUT /api/issues/:id" do
@@ -167,6 +175,14 @@ describe "Issues API" do
       it "throws 422 if issue is invalid" do
         params = { issue: { text: "B"*(65535+1) } }
         put "/api/issues/#{ issue.id }", params: params.to_json, env: @env.merge("CONTENT_TYPE" => 'application/json')
+        expect(response.status).to eq(422)
+      end
+
+      it 'throws 422 if issue state is invalid' do
+        params = { issue: { text: 'Test Issue', state: 'fakestate' } }
+        expect {
+          post '/api/issues', params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
+        }.not_to change { current_project.issues.count }
         expect(response.status).to eq(422)
       end
     end

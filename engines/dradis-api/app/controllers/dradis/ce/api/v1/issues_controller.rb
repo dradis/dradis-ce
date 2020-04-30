@@ -13,12 +13,14 @@ module Dradis::CE::API
       end
 
       def create
-        @issue = current_project.issues.new(issue_params)
+        @issue = current_project.issues.new
         @issue.author   = current_user.email
         @issue.category = Category.issue
         @issue.node     = current_project.issue_library
 
-        if @issue.save
+        if is_valid_state? &&
+            (@issue.assign_attributes(issue_params) || @issue.valid?)
+          @issue.save
           track_created(@issue)
           @issue.tag_from_field_content!
           render status: 201, location: dradis_api.issue_url(@issue)
@@ -29,7 +31,8 @@ module Dradis::CE::API
 
       def update
         @issue = current_project.issues.find(params[:id])
-        if @issue.update_attributes(issue_params)
+
+        if is_valid_state? && @issue.update_attributes(issue_params)
           track_updated(@issue)
           render node: @node
         else
@@ -45,6 +48,18 @@ module Dradis::CE::API
       end
 
       private
+
+      # We validate the state params here, otherwise it will throw an ArgumentError
+      # SEE: https://github.com/rails/rails/issues/13971
+      def is_valid_state?
+        if issue_params[:state] && !Issue.states.keys.include?(issue_params[:state])
+          @issue.errors.add(:state, 'is not valid.')
+          return false
+        end
+
+        true
+      end
+
       def issue_params
         params.require(:issue).permit(:text, :state)
       end
