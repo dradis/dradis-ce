@@ -7,5 +7,4 @@ class Issues::StatesController < AuthenticatedController
 
     head :ok
   end
-
 end

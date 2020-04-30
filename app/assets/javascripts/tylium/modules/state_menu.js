@@ -1,37 +1,34 @@
 document.addEventListener('turbolinks:load', function(){
   function setBtnText(prefix, state) {
-    var btnText;
-    var $submitBtn = $('[data-behavior~=state-submit-button]');
+    var $submitBtn = $('[data-behavior~=state-submit-button]', $(this));
     var verboseState = (state == 'review') ? 'ready for review' : state;
 
-    $('[data-state]').each(function() {
+    $('[data-state]', $(this)).each(function() {
       $(this).removeClass('selected');
     });
+    $('[data-state~=' + state + ']', $(this)).addClass('selected');
     
-    $('[data-state~=' + state + ']').addClass('selected');
-
-    btnText = prefix + ' ' + verboseState + ' Issue';
-
-    $submitBtn.prop('value', btnText);
+    $submitBtn.prop('value', prefix + ' ' + verboseState + ' Issue');
   }
 
-  if ($('[data-behavior~=state-menu]').length) {
-    var currentState = $('[data-behavior~=issue-state]').val();
+  $('[data-behavior~=state-menu]').each( function() {
+    var $scope = $(this);
+    var currentState = $('[data-behavior~=issue-state]', $scope).val();
     var textPrefix = $('body.new').length ? 'create' : 'update';
 
-    setBtnText(textPrefix, currentState);
+    setBtnText.call(this, textPrefix, currentState);
 
-    $('[data-state-header]').each(function() {
+    $('[data-state-header]', $scope).each(function() {
       var headerText = $(this).text();
       $(this).text(textPrefix + headerText);
     });
 
-    $('[data-state]').click(function () {
+    $('[data-state]', $scope).click(function () {
       var selectedState = $(this).data('state');
-      var $stateField = $('[data-behavior~=issue-state]');
+      var $stateField = $('[data-behavior~=issue-state]', $scope);
 
-      setBtnText(textPrefix, selectedState);
+      setBtnText.call($scope[0], textPrefix, selectedState);
       $stateField.val(selectedState);
     });
-  }
+  });
 });
