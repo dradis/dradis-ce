@@ -4,7 +4,7 @@
 
 <div class="textile-form-field" data-behavior="textile-form-field">
   <div class="d-inline-flex justify-content-between w-100">
-    <div class="inline-editable w-50" data-behavior="inline-editable">
+    <div class="inline-editable w-100" data-behavior="inline-editable">
       <div class="edit-hover">
         <i class="fa fa-pencil pt-1" data-behavior="edit-field" data-edit-field="#item_form_field_name_<%= index %>"></i>
         <%= text_field_tag "item_form[field_name_#{index}]", field_name,
@@ -16,11 +16,6 @@
           placeholder: 'Enter field name'
         %>
       </div>
-    </div>
-    <div class="actions">
-      <%= link_to 'javascript:void(0)', class: 'text-error-hover',  data: { behavior: 'delete-field' } do %>
-        <i class="fa fa-trash"></i> Delete
-      <% end %>
     </div>
   </div>
   <div class="inline-editable">
@@ -39,5 +34,10 @@
         %>
       <% end %>
     </div>
+  </div>
+  <div class="actions">
+    <%= link_to 'javascript:void(0)', class: 'text-error-hover',  data: { behavior: 'delete-field' } do %>
+      <i class="fa fa-trash"></i> Delete
+    <% end %>
   </div>
 </div>
