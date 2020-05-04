@@ -12,9 +12,9 @@
 # it in a diff, we want to compare the current state whether it's an autosave or
 # update to the original state before auto-save started. The incremental changes
 # can be discarded with out concern. Orignal <=> Current is what's important.
-# Because of that anytime the previous revision was an autosave we want to carry
-# the original state forward. This happens when the new revision is an update,
-# or autosave.
+# Anytime the previous revision is an auto-save we want to carry the original
+# state forward so we can always have it accessible to compare against. This
+# happens when the new revision is an update, or autosave.
 class RevisionCollapser
   def self.call(resource)
     return unless resource.versions.any? # Lots of specs run without versioning
