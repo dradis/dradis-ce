@@ -241,6 +241,18 @@ describe "note pages" do
       it_behaves_like 'a textile form view', Note
     end
 
+    describe 'local caching' do
+      let(:add_categories) do
+        @category_1  = create(:category)
+        @category_2 = create(:category)
+      end
+
+      let(:new_model_path) { new_project_node_note_path(current_project, @node) }
+      let(:new_model_attributes_for_template) { [{ name: :text, value: 'New Note Template' }] }
+
+      include_examples 'a form with local auto save', Note
+    end
+
     include_examples 'nodes pages breadcrumbs', :new, Note
   end
 end

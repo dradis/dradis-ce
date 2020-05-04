@@ -139,6 +139,18 @@ describe 'Issues pages' do
             expect(issue.tag_list).to eq(tag_field.split(', ').first)
           end
         end
+
+        describe 'local caching' do
+          let(:add_tags) do
+            @tag_1 = create(:tag, name: '!9467bd_critical')
+            @tag_2 = create(:tag, name: '!d62728_high')
+          end
+
+          let(:new_model_path) { new_project_issue_path(current_project) }
+          let(:new_model_attributes_for_template) { [{ name: :text, value: 'New Issue Template' }] }
+
+          include_examples 'a form with local auto save', Issue
+        end
       end
 
       describe 'edit page', js: true do
