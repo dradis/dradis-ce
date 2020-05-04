@@ -32,4 +32,21 @@ class RevisionCollapser
       where(event: Activity::VALID_ACTIONS[:autosave]).
       where('created_at < ?', last_revision.created_at).destroy_all
   end
+
+  def self.discard_and_revert(resource)
+    return unless resource.versions.any? # Lots of specs run without versioning
+
+    last_revision = resource.versions.reorder('created_at DESC').first
+
+    if last_revision.event == Activity::VALID_ACTIONS[:autosave]
+      # Turn papertrail off so it doesn't create a new revision when we restore
+      # the original. The restore is technically just an update, and we would
+      # end up with an 'Update' revision if we don't turn it off.
+      PaperTrail.request(enabled: false) do
+        last_revision.reify.save
+      end
+
+      resource.versions.where(event: Activity::VALID_ACTIONS[:autosave]).destroy_all
+    end
+  end
 end

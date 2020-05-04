@@ -100,4 +100,35 @@ RSpec.describe RevisionCollapser, versioning: true do
       end
     end
   end
+
+  describe '.discard_and_revert' do
+    subject(:discard_and_revert) { described_class.discard_and_revert(resource) }
+
+    it 'removes all auto-save revisions' do
+      2.times do
+        resource.tap { |r| r.paper_trail_event = Activity::VALID_ACTIONS[:autosave] }.touch
+      end
+
+      expect { discard_and_revert }.to change {
+        resource.versions.where(event: Activity::VALID_ACTIONS[:autosave]).count
+      }.by(-2)
+    end
+
+    it 'restores content from before auto-save fired' do
+      resource = create(:issue, text: 'ABC')
+      resource.update(text: 'ABCDEF', paper_trail_event: Activity::VALID_ACTIONS[:autosave])
+
+      described_class.discard_and_revert(resource)
+
+      expect(resource.reload.text).to eq 'ABC'
+    end
+
+    it 'restores without creating a new update event' do
+      resource.update(text: 'ABCDEF', paper_trail_event: Activity::VALID_ACTIONS[:autosave])
+
+      expect { discard_and_revert }.not_to change {
+        resource.versions.where(event: Activity::VALID_ACTIONS[:update]).count
+      }
+    end
+  end
 end
