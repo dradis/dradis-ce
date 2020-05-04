@@ -1,6 +1,6 @@
 class LocalAutoSave {
   constructor(target) {
-    if (target.tagName !== 'FORM') { console.log('Can\'t initialize local auto save on anything but a form'); return; }
+    if (target.tagName !== 'FORM') { console.error('Can\'t initialize local auto save on anything but a form'); return; }
     this.target = target;
     this.key = target.dataset.autoSaveKey;
     this.cancelled = false;
@@ -145,8 +145,6 @@ class LocalAutoSave {
           }
         }
       }
-    } else {
-      console.log('No data in localStorage for ' + this.key);
     }
   }
 }
