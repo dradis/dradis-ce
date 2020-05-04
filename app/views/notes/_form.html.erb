@@ -1,4 +1,10 @@
-<%= simple_form_for [current_project, @node, @note] do |f| %>
+<%= simple_form_for [current_project, @node, @note],
+  html: {
+    data: {
+      behavior: ('local-auto-save' if @note.new_record?),
+      auto_save_key: ("project-#{current_project.id}-node-#{@node.id}-note" if @note.new_record?)
+    }
+  } do |f| %>
 
   <%= f.association :category, collection: Category.all, label_method: :name, prompt: 'Assign note category' %>
   <%=
@@ -9,7 +15,7 @@
         data: textile_default_data.merge(
           allow_dropdown: @note.new_record?,
           autosave_key: "#{current_project.id}-note-#{ @note.persisted? ? "edit-#{@note.id}" : "new-for-#{@node.id}" }",
-          behavior: 'auto-save rich-toolbar',
+          behavior: 'rich-toolbar',
           'rich-toolbar': 'block-code bold field italic link list-ol list-ul table'
         ),
         rows: 20
@@ -25,7 +31,14 @@
     <% if @note.persisted? %>
       <%= link_to 'Cancel', project_node_note_path(@node.project, @node, @note), class: 'cancel-link' %>
     <% else %>
-      <%= link_to 'Cancel', project_node_path(@node.project, @node), class: 'cancel-link' %>
+      <%=
+        link_to 'Cancel',
+        project_node_path(@node.project, @node),
+        class: 'cancel-link',
+        data: {
+          behavior: 'clear-local-auto-save'
+        }
+      %>
     <% end %>
   </div>
 <% end %>

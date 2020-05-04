@@ -243,6 +243,18 @@ describe "note pages" do
       it_behaves_like 'an editor that remembers what view you like'
     end
 
+    describe 'local caching' do
+      let(:add_categories) do
+        @category_1  = create(:category)
+        @category_2 = create(:category)
+      end
+
+      let(:new_model_path) { new_project_node_note_path(current_project, @node) }
+      let(:new_model_attributes) { [{ name: :text, value: 'New Note' }] }
+
+      include_examples 'a form with local auto save', Note
+    end
+
     include_examples 'nodes pages breadcrumbs', :new, Note
   end
 end
