@@ -22,7 +22,7 @@
     <div class="edit-hover">
       <% options = value.split(' | ') %>
       <% if allow_dropdown && options.count > 1 %>
-        <%= select :item_form, "field_value_#{index}", options, {}, { class: 'form-control', data: { behavior: 'preview-enabled' } } %>
+        <%= select :item_form, "field_value_#{index}", options, {}, { class: 'form-control', data: { behavior: 'preview-enabled' }, tabindex: index + 1 } %>
       <% else %>
         <%= text_area_tag "item_form[field_value_#{index}]", value, rows: 1,
           class: 'form-control',
@@ -30,7 +30,8 @@
             behavior: 'preview-enabled rich-toolbar',
             'rich-toolbar': 'block-code bold italic link list-ol list-ul table'
           },
-          placeholder: 'Enter field value'
+          placeholder: 'Enter field value',
+          tabindex: index + 1
         %>
       <% end %>
     </div>
