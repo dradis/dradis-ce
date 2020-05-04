@@ -28,6 +28,8 @@ class RevisionCollapser
       last_revision.update(object: previous_autosave.object)
     end
 
-    resource.versions.where(event: Activity::VALID_ACTIONS[:autosave]).where('created_at < ?', last_revision.created_at).destroy_all
+    resource.versions.
+      where(event: Activity::VALID_ACTIONS[:autosave]).
+      where('created_at < ?', last_revision.created_at).destroy_all
   end
 end

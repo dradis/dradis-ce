@@ -98,6 +98,39 @@ shared_examples 'a record with auto-save revisions' do
 
       expect(page).to have_content('Auto-saved', count: 1)
     end
+
+    it 'removes all auto-saves when updated', versioning: true do
+      find('.editor-field textarea').set new_content
+      wait_for_js_events
+
+      within '.form-actions' do
+        find('[type="submit"]').click
+      end
+
+      visit polymorphic_path(path_params.push(:revisions))
+
+      expect(page).not_to have_content('Auto-saved')
+
+      row = find('.revisions-table table tbody tr.active')
+      expect(row).to have_content('Update')
+      expect(row).to have_content('Currently Viewing')
+    end
+
+    it 'shows entire diff between original and current not just last revision', versioning: true do
+      old_content = autosaveable.title
+      find('.editor-field textarea').set 'intermediary'
+      find('.editor-field textarea').set new_content
+      wait_for_js_events
+
+      within '.form-actions' do
+        find('[type="submit"]').click
+      end
+
+      visit polymorphic_path(path_params.push(:revisions))
+
+      expect(find('#diff del.differ')).to have_content("#[Title]#\n#{old_content}\n\n#[Description]#\nFoo\e")
+      expect(find('#diff ins.differ')).to have_content("#[Description]#\nNew info\e")
+    end
   end
 end
 
