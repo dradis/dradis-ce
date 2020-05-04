@@ -169,7 +169,7 @@
     // Ajax form
     _loadFields: function(data, allowDropdown) {
       $.post({
-        url: this.$element.data('form-url') + '.js',
+        url: this.$element.data('paths').form_url,
         data: {source: data, allow_dropdown: allowDropdown},
         beforeSend: function(){
           this.options.$fields.addClass('loading-indicator').text('Loading...');
@@ -179,7 +179,7 @@
     // Ajax help
     _loadHelp: function() {
       var that = this;
-      $.get( this.$element.data('help-url'), function(result){
+      $.get( this.$element.data('paths').help_url, function(result){
         that.options.$help.removeClass('loading-indicator')
           .html(result);
         this._helpRendered = true;
@@ -189,7 +189,7 @@
     _loadPreview: function(data) {
       this._previousContent = this.$element.val();
 
-      $.post(this.$element.data('preview-url'),
+      $.post(this.$element.data('paths').preview_url,
         data,
         function(result) {
           this.options.$preview.removeClass('loading-indicator')
@@ -202,7 +202,7 @@
     // Ajax write
     _loadSource: function() {
       $.post(
-        this.$element.data('source-url'),
+        this.$element.data('paths').source_url,
         { form: this._serializedFormData() },
         function(result){
           this.$element.val(result);

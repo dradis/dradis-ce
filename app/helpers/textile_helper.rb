@@ -1,10 +1,10 @@
 module TextileHelper
-  def textile_default_data
+  def editor_paths
     {
-      form_url: form_textile_path,
-      help_url: markup_help_textile_path,
-      preview_url: textilize_textile_path,
-      source_url: source_textile_path
+      form_url: form_fields_path(format: :js),
+      help_url: help_markup_path,
+      preview_url: preview_markup_path,
+      source_url: source_fields_path
     }
   end
 end
