@@ -86,6 +86,20 @@ describe 'Card pages:' do
           expect(Card.last.assignees.count).to eq 2
         end
       end
+
+      describe 'local caching' do
+        let(:new_model_path) { new_project_board_list_card_path(current_project, @board, @list) }
+
+        let(:new_model_attributes) do
+          [
+            { name: :name, value: 'New Card' },
+            { name: :description, value: 'New Description' },
+            { name: :due_date, value: Date.today }
+          ]
+        end
+
+        include_examples 'a form with local auto save', Card
+      end
     end
 
     describe 'when in edit page', js: true do
