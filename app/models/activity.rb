@@ -19,9 +19,9 @@ class Activity < ApplicationRecord
   VALID_ACTIONS = {
     autosave: 'auto-save',
     create: 'create',
-    update: 'update',
     destroy: 'destroy',
-    recover: 'recover'
+    recover: 'recover',
+    update: 'update'
   }.freeze
 
   validates_inclusion_of :action, in: VALID_ACTIONS.values
