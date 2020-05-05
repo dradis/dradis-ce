@@ -1,8 +1,8 @@
 <%= simple_form_for [current_project, @node, @evidence],
   html: {
     data: {
-      behavior: ('local-auto-save' if @evidence.new_record?),
-      auto_save_key: ("project-#{current_project.id}-node-#{@node.id}-evidence" if @evidence.new_record?)
+      behavior: 'local-auto-save',
+      auto_save_key: @evidence.new_record? ? "project-#{current_project.id}-node-#{@node.id}-evidence" : "evidence-#{@evidence.id}"
     }
   } do |f| %>
 
@@ -36,7 +36,7 @@
       link_to 'Cancel',
       project_node_path(@node.project, @node),
       data: {
-        behavior: ('clear-local-auto-save' if @evidence.new_record?)
+        behavior: 'clear-local-auto-save'
       }
     %>
   </div>
