@@ -31,13 +31,16 @@ class EditorChannel < ApplicationCable::Channel
   private
 
   def find_resource(params)
-    return unless %w[evidence issue note card].include? params['resource_type']
-
-    if params['resource_type'] == 'card'
+    case params['resource_type']
+    when 'card'
       authorized_list_ids = List.where(board_id: current_project.boards.select(:id)).select(:id)
-      @resource ||= Card.find_by(id: params['resource_id'], list_id: authorized_list_ids)
-    else
-      @resource ||= current_project.send(params['resource_type'].pluralize).find_by id: params['resource_id']
+      @resource = Card.find_by(id: params['resource_id'], list_id: authorized_list_ids)
+    when 'evidence'
+      @resource = current_project.evidence.find_by id: params['resource_id']
+    when 'issue'
+      @resource = current_project.issues.find_by id: params['resource_id']
+    when 'note'
+      @resource = current_project.notes.find_by id: params['resource_id']
     end
   end
 
@@ -51,7 +54,7 @@ class EditorChannel < ApplicationCable::Channel
 
   def permissable_params(type)
     case type
-    when 'card' then %i[name description due_date assignee_ids]
+    when 'card' then [:name, :description, :due_date, assignee_ids: []]
     when 'evidence' then %i[author content issue_id node_id]
     when 'issue' then %i[tag_list text]
     when 'note' then %i[category_id text node_id]
