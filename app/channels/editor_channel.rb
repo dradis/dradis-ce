@@ -15,7 +15,7 @@ class EditorChannel < ApplicationCable::Channel
   AUTOSAVE_EVENT = 'auto-save'.freeze
 
   def subscribed
-    reject and return unless find_resource(params)
+    reject and return unless find_resource
 
     stream_for [current_user, current_project, resource]
   end
@@ -23,42 +23,40 @@ class EditorChannel < ApplicationCable::Channel
   def save(params)
     resource.paper_trail_event = AUTOSAVE_EVENT
 
-    if resource.update_attributes parsed_params(params['data'])
+    if resource.update_attributes resource_params(params)
       self.class.broadcast_to([current_user, current_project, resource], resource.reload.updated_at.to_i)
     end
   end
 
   private
 
-  def find_resource(params)
+  def find_resource
     case params['resource_type']
     when 'card'
       authorized_list_ids = List.where(board_id: current_project.boards.select(:id)).select(:id)
-      @resource = Card.find_by(id: params['resource_id'], list_id: authorized_list_ids)
+      @resource = Card.find_by(id: @params['resource_id'], list_id: authorized_list_ids)
     when 'evidence'
-      @resource = current_project.evidence.find_by id: params['resource_id']
+      @resource = current_project.evidence.find_by id: @params['resource_id']
     when 'issue'
-      @resource = current_project.issues.find_by id: params['resource_id']
+      @resource = current_project.issues.find_by id: @params['resource_id']
     when 'note'
-      @resource = current_project.notes.find_by id: params['resource_id']
+      @resource = current_project.notes.find_by id: @params['resource_id']
     end
   end
 
-  def parsed_params(data)
-    wrapped_params = Rack::Utils.parse_nested_query data
-    ActionController::Parameters.
-      new(wrapped_params).
+  def resource_params(data)
+    permitted_params = case @params['resource_type']
+                       when 'card' then [:name, :description, :due_date, assignee_ids: []]
+                       when 'evidence' then %i[author content issue_id node_id]
+                       when 'issue' then %i[tag_list text]
+                       when 'note' then %i[category_id text node_id]
+                       else []
+                       end
+
+    # Nest the params like in controllers
+    nested_params = Rack::Utils.parse_nested_query(data['data'])
+    ActionController::Parameters.new(nested_params).
       require(@params['resource_type']).
-      permit(permissable_params(@params['resource_type']))
-  end
-
-  def permissable_params(type)
-    case type
-    when 'card' then [:name, :description, :due_date, assignee_ids: []]
-    when 'evidence' then %i[author content issue_id node_id]
-    when 'issue' then %i[tag_list text]
-    when 'note' then %i[category_id text node_id]
-    else []
-    end
+      permit(permitted_params)
   end
 end
