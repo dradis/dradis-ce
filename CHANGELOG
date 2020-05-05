@@ -12,7 +12,7 @@ v3.17 (Month 2020)
     - New form-view to edit each field individually
     - Formatting toolbar to help with markup
     - Side-by-side editor preview that auto-updates
-  * Improve current implementation of persisting data when creating new Card, Evidence, Issue, and Note
+  * Improve current implementation of persisting data when creating and editing Card, Evidence, Issue, and Note
     - Data now persists for the whole form instead of only the textarea
     - Data will be cleared when the "Cancel" link is clicked
     - Removed prompt to restore data
