@@ -88,9 +88,9 @@ describe 'Card pages:' do
       end
 
       describe 'local caching' do
-        let(:new_model_path) { new_project_board_list_card_path(current_project, @board, @list) }
+        let(:model_path) { new_project_board_list_card_path(current_project, @board, @list) }
 
-        let(:new_model_attributes) do
+        let(:model_attributes) do
           [
             { name: :name, value: 'New Card' },
             { name: :description, value: 'New Description' },
@@ -98,7 +98,7 @@ describe 'Card pages:' do
           ]
         end
 
-        include_examples 'a form with local auto save', Card
+        include_examples 'a form with local auto save', Card, :new
       end
     end
 
@@ -179,6 +179,20 @@ describe 'Card pages:' do
           expect(page).not_to have_text(@first_user.name)
           expect(page).to have_text(@second_user.name)
         end
+      end
+
+      describe 'local caching' do
+        let(:model_path) { edit_project_board_list_card_path(current_project, @board, @list, @card) }
+
+        let(:model_attributes) do
+          [
+            { name: :name, value: 'Edit Card' },
+            { name: :description, value: 'Edit Description' },
+            { name: :due_date, value: Date.today }
+          ]
+        end
+
+        include_examples 'a form with local auto save', Card, :edit
       end
     end
 

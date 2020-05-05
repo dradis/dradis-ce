@@ -146,10 +146,10 @@ describe 'Issues pages' do
             @tag_2 = create(:tag, name: '!d62728_high')
           end
 
-          let(:new_model_path) { new_project_issue_path(current_project) }
-          let(:new_model_attributes) { [{ name: :text, value: 'New Issue' }] }
+          let(:model_path) { new_project_issue_path(current_project) }
+          let(:model_attributes) { [{ name: :text, value: 'New Issue' }] }
 
-          include_examples 'a form with local auto save', Issue
+          include_examples 'a form with local auto save', Issue, :new
         end
       end
 
@@ -212,6 +212,18 @@ describe 'Issues pages' do
             submit_form
             should have_selector '.alert.alert-error'
           end
+        end
+
+        describe 'local caching' do
+          let(:add_tags) do
+            @tag_1 = create(:tag, name: '!9467bd_critical')
+            @tag_2 = create(:tag, name: '!d62728_high')
+          end
+
+          let(:model_path) { edit_project_issue_path(current_project, @issue) }
+          let(:model_attributes) { [{ name: :text, value: 'Edit Issue' }] }
+
+          include_examples 'a form with local auto save', Issue, :edit
         end
       end
 

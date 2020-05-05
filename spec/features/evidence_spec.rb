@@ -143,6 +143,17 @@ describe 'evidence' do
 
     let(:model) { @evidence }
     include_examples 'nodes pages breadcrumbs', :edit, Evidence
+
+    describe 'local caching' do
+      before do
+        @issue_1 = create(:issue, node: issue_lib, text: "#[Title]#\nIssue 1")
+      end
+
+      let(:model_path) { edit_project_node_evidence_path(current_project, @node, @evidence) }
+      let(:model_attributes) { [{ name: :content, value: 'Edit Evidence' }] }
+
+      include_examples 'a form with local auto save', Evidence, :edit
+    end
   end
 
 
@@ -231,10 +242,10 @@ describe 'evidence' do
     end
 
     describe 'local caching' do
-      let(:new_model_path) { new_project_node_evidence_path(current_project, @node) }
-      let(:new_model_attributes) { [{ name: :content, value: 'New Evidence' }] }
+      let(:model_path) { new_project_node_evidence_path(current_project, @node) }
+      let(:model_attributes) { [{ name: :content, value: 'New Evidence' }] }
 
-      include_examples 'a form with local auto save', Evidence
+      include_examples 'a form with local auto save', Evidence, :new
     end
 
     include_examples 'nodes pages breadcrumbs', :new, Evidence
