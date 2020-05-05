@@ -41,10 +41,11 @@
 
   <div class="form-actions">
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
-    <%=
-      link_to 'Cancel',
-        @card.persisted? ? [current_project, @board, @list, @card] : [current_project, @board],
-        class: 'cancel-link'
-    %>
+
+    <% if @card.new_record? %>
+      <%= link_to 'Discard changes', project_board_path(current_project, @board), class: 'cancel-link' %>
+    <% else %>
+      <%= link_to 'Discard changes', project_board_list_card_revision_path(current_project, @board, @list, @card), method: :delete, class: 'cancel-link' %>
+    <% end %>
   </div>
 <% end %>

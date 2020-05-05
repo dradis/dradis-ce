@@ -88,7 +88,6 @@ describe "note pages" do
     end
 
     let(:submit_form) { click_button "Update Note" }
-    let(:cancel_form) { click_link "Cancel" }
 
     it "has a form to edit the note" do
       should have_field :note_text
@@ -155,17 +154,9 @@ describe "note pages" do
       include_examples "doesn't create an Activity"
     end
 
-    describe "cancel button" do
-      it "returns to the note page" do
-        cancel_form
-        expect(current_path).to eq project_node_note_path(current_project, @node, @note)
-      end
-    end
-
     let(:model) { @note }
     include_examples 'nodes pages breadcrumbs', :edit, Note
   end
-
 
   describe "new page", js: true do
     before do
@@ -174,7 +165,6 @@ describe "note pages" do
     end
 
     let(:submit_form) { click_button "Create Note" }
-    let(:cancel_form) { click_link "Cancel" }
 
     context "when no template is specified" do
       let(:params) { {} }
@@ -221,13 +211,6 @@ describe "note pages" do
         end
 
         include_examples "doesn't create an Activity"
-      end
-
-      describe "cancel button" do
-        it "returns to the node page" do
-          cancel_form
-          expect(current_path).to eq project_node_path(current_project, @node)
-        end
       end
     end
 

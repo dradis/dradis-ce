@@ -32,23 +32,30 @@ shared_examples 'an editor with server side auto-save' do
       expect(autosaveable.reload.send(content_attribute)).to eq new_content
     end
 
-    context 'with papertrail active', versioning: true do
-      it 'creates a papertrail version' do
-        expect do
-          find('.editor-field textarea').set new_content
-          wait_for_js_events
-        end.to change { PaperTrail::Version.all.count }.by_at_least(1)
-        # Evidence specs do something weird where it looks like an edit is being
-        # triggered on load.
-      end
-
-      it 'creates a version with an auto-save event' do
+    it 'creates a papertrail version', versioning: true do
+      expect do
         find('.editor-field textarea').set new_content
         wait_for_js_events
+      end.to change { autosaveable.versions.count }.by_at_least(1)
+      # Evidence specs do something weird where it looks like an edit is being
+      # triggered on load.
+    end
 
-        revision = autosaveable.versions.last
-        expect(revision.event).to eq 'auto-save'
-      end
+    it 'creates a version with an auto-save event', versioning: true do
+      find('.editor-field textarea').set new_content
+      wait_for_js_events
+
+      revision = autosaveable.versions.last
+      expect(revision.event).to eq 'auto-save'
+    end
+
+    it 'discards the autosave when Discard Changes is clicked', versioning: true do
+      find('.editor-field textarea').set new_content
+      wait_for_js_events
+
+      expect do
+        click_link 'Discard changes'
+      end.to change { autosaveable.versions.count }.by(-1)
     end
   end
 end
@@ -128,8 +135,27 @@ shared_examples 'a record with auto-save revisions' do
 
       visit polymorphic_path(path_params.push(:revisions))
 
-      expect(find('#diff del.differ')).to have_content("#[Title]#\n#{old_content}\n\n#[Description]#\nFoo\e")
-      expect(find('#diff ins.differ')).to have_content("#[Description]#\nNew info\e")
+      expect(find('#diff del.differ')).to have_content("#[Title]#\n#{old_content}")
+      expect(find('#diff ins.differ')).to have_content("#[Description]#\nNew info")
+    end
+
+    it 'removes auto-saves when discarded', versioning: true do
+      # Create an update revision otherwise we won't have access to the
+      # revisions page
+      find('.editor-field textarea').set new_content
+      wait_for_js_events
+
+      within '.form-actions' do
+        find('[type="submit"]').click
+      end
+
+      visit polymorphic_path(path_params, action: :edit)
+
+      find('.editor-field textarea').set 'newer_content'
+      click_link 'Discard changes'
+
+      visit polymorphic_path(path_params.push(:revisions))
+      expect(page).not_to have_content('Auto-saved')
     end
   end
 end

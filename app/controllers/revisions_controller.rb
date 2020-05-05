@@ -35,6 +35,14 @@ class RevisionsController < AuthenticatedController
     redirect_to project_trash_path(current_project)
   end
 
+  def destroy
+    RevisionCollapser.discard_and_revert(@record)
+
+    # This is cheeky because either board and list won't be present or node
+    # won't be present and removing nils makes valid paths.
+    redirect_to polymorphic_path([current_project, @board, @list, @node, @record].concat)
+  end
+
   private
 
   def load_list
