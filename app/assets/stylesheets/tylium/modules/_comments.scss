@@ -58,6 +58,11 @@
   label {
     font-weight: bold;
   }
+
+  textarea {
+    min-height: 7.5rem;
+    resize: none;
+  }
 }
 
 // tribute @-mentions plugin styles

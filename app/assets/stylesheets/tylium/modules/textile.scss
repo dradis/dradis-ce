@@ -20,10 +20,6 @@
     height: auto;
   }
 
-  li { 
-    margin-left: 40px;
-  }
-
   ol { 
     list-style-type: decimal;
   }
@@ -126,14 +122,32 @@
   word-break: break-word;
 
   &.textile-fullscreen {
+    font-size: 0.9rem;
+    padding-top: 0;
     overflow: auto;
 
     .textile-inner {
-      margin: 0 0 1rem 0;
+      min-height: calc(100% - 3.5rem);
+      position: absolute;
+      top: 3.5rem;
+      width: 100%;
+
+      .textarea-container {
+        padding-bottom: 0.5rem;
+      }
+
+      .textile-form-field .textarea-container {
+        padding-bottom: 0;
+      }
+
+      .textile-preview {
+        height: initial;
+        padding-bottom: 0.5rem;
+      }
     }
-    
-    .textile-preview {
-      height: initial;
+
+    .textile-toolbar {
+      margin-top: 10px !important;
     }
   }
 
@@ -147,54 +161,66 @@
         margin: 0.4rem .75rem;
       }
 
-      .table {
-        border-collapse: separate;
-        border-spacing: 0;
+      .textile-form-body {
+        background-color: $secondaryBgColor;
+        border: 1px solid $borderColor;
+        border-radius: 5px;
       }
 
       .textile-form-field {
-        border: 1px solid transparent;
-        border-bottom-color: $borderColor;
-        transition: background-color 0.2s ease-in-out;
+        border-bottom: 1px solid transparent;
+        border-top: 1px solid transparent;
+        margin-bottom: -1px;
+        position: relative;
   
         .actions {
-          display: flex;
+          bottom: 0;
+          margin: 0 1rem;
           opacity: 0;
+          padding: 0.5rem 0;
+          position: absolute;
+          right: 0.5rem;
           transition: opacity 0.2s ease-in-out;
         }
 
-        &:first-of-type {
-          
-          td {
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+        .editor-field {
+          margin: 0 1.5rem;
+
+          .editor-toolbar {
+            right: 4.5rem;
+          }
+
+          &.sticky-toolbar .editor-toolbar {
+            margin: 0 -1.5rem -1px -1.5rem;
+            width: initial;
           }
         }
 
+        &:first-of-type:hover {
+          border-top-color: transparent;
+        }
+
         &:hover {
-          background-color: darken($primaryBgColor, 3%);
+          background-color: darken($secondaryBgColor, 2%);
+          border-bottom-color: $borderColor;
+          border-top-color: $borderColor;
 
           .actions {
             opacity: 1;
           }
         }
 
-        &:last-of-type {
-          
-          td {
-            border-bottom: 1px solid $borderColor;
-            border-bottom-left-radius: 5px;
-            border-bottom-right-radius: 5px;
-          }
+        &:last-of-type:hover {
+          border-bottom-color: transparent;
         }
 
         textarea {
-          min-height: 36px;
+          min-height: 34px;
+          resize: none;
         }
 
-        td {
-          border: 1px solid $borderColor;
-          border-bottom: none;
+        .textarea-container {
+          margin: 0 -1.6px 2.25rem -0.6px;
         }
       } 
     }
@@ -212,7 +238,6 @@
     margin-bottom: 1em !important;
 
     li {
-        margin-right: .5em;
 
       a {
         border-radius: 3px;

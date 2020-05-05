@@ -21,9 +21,9 @@ class EditorToolbar {
   }
 
   init() {
-    this.$target.wrap('<div class="editor-field" data-behavior="editor-field"></div>');
-    this.$editorField = this.$target.parent('[data-behavior=editor-field]');
-    this.$editorField.append('<div class="editor-toolbar" data-behavior="editor-toolbar"></div>');
+    this.$target.wrap('<div class="editor-field" data-behavior="editor-field"><div class="textarea-container"></div></div>');
+    this.$editorField = this.$target.parents('[data-behavior=editor-field]');
+    this.$editorField.prepend('<div class="editor-toolbar" data-behavior="editor-toolbar"></div>');
     this.$editorToolbar = this.$editorField.find('[data-behavior=editor-toolbar]');
 
     this.$editorToolbar.append(this.textareaElements(this.opts.include));
@@ -43,9 +43,30 @@ class EditorToolbar {
       }
     });
 
+    // Handler for setting the correct textarea height on keyboard input
+    this.$target[0].addEventListener('input', setHeight);
+
+    function setHeight(e) {
+      const shrinkEvents = ['deleteContentForward', 'deleteContentBackward', 'deleteByCut', 'historyUndo', 'historyRedo'];
+
+      if (shrinkEvents.includes(e.inputType)) {
+        // shrink the text area when content is being removed
+        $(this).css({'height': '1px'});
+      }
+      
+      // expand the textarea to fix the content
+      $(this).css({'height': this.scrollHeight + 2});
+    };
+  
+    // Handler for setting the correct textarea heights on load (for current values)
+    this.$target.each(setHeight);
+
+    // Handler for setting the correct textarea height when focus is lost
+    this.$target.on('blur', setHeight);
+
     // when a toolbar button is clicked
     this.$editorToolbar.find('[data-btn]').click(function () {
-      var $element = that.$editorField.children('textarea, input[type=text]');
+      var $element = that.$editorField.find('textarea, input[type=text]');
       var affix = that.affixes[$(this).data('btn')];
   
       // inject markdown
@@ -53,7 +74,7 @@ class EditorToolbar {
     });
 
     // keyboard shortcuts
-    this.$editorField.children('textarea, input[type=text]').keydown(function(e) {
+    this.$editorField.find('textarea, input[type=text]').keydown(function(e) {
       var key = e.which || e.keyCode; // for cross-browser compatibility
 
       if (e.metaKey && key === 66 ) { // 66 = b
@@ -71,62 +92,40 @@ class EditorToolbar {
     });
 
     // toolbar sticky positioning
-    $('[data-behavior~=editor-field]').children('textarea').on('focus', function() {
+    $('[data-behavior~=editor-field]').find('textarea').on('focus', function() {
       var $inputElement = $(this),
-          $toolbarElement = $inputElement.next(),
-          $parentElement = $inputElement.parent(),
-          topOffset = 60;
+          $toolbarElement = $inputElement.parent().prev(),
+          $parentElement = $inputElement.parents('[data-behavior~=editor-field]'),
+          topOffset;
+      
+      $toolbarElement.css({'opacity': 1, 'visibility': 'visible'});
 
-      // set offsett to 0 if user is in fullscreen mode.
+      // set offset to 0 if user is in fullscreen mode.
       if ($inputElement.parents('.textile-fullscreen').length ? topOffset = 0 : topOffset = 60);
 
       // this is needed incase user sets focus on textarea where toolbar would render off screen
-      if ($parentElement.offset().top < $(window).scrollTop() + topOffset) {
+      if ($inputElement.height() > 40 && $parentElement.offset().top < $(window).scrollTop() + topOffset) {
         $parentElement.addClass('sticky-toolbar');
-        $toolbarElement.css('top', parseInt(topOffset - $parentElement.offset().top));
-
-        // adjust the toolbar position for field view
-        if ($toolbarElement.parents('[data-behavior~=textile-form-field]').length) {
-          $toolbarElement.css({'left': '-27px', 'right': '-13px'});
-        }
       }
 
       // adjust position on scroll to make toolbar always appear at the top of the textarea
-      document.querySelector('[data-behavior~=view-content], .textile-fullscreen').addEventListener('scroll', (function stickyToolbar() {
+      document.querySelector('[data-behavior~=view-content], .textile-fullscreen').addEventListener('scroll', (function () {
         var parentOffsetTop = $parentElement.offset().top - topOffset;
 
         // keep toolbar at the top of text area when scrolling
-        if (parentOffsetTop < $(window).scrollTop()) {
+        if ($inputElement.height() > 40 && parentOffsetTop < $(window).scrollTop()) {
           $parentElement.addClass('sticky-toolbar');
-          $toolbarElement.css('top', parseInt($(window).scrollTop() - parentOffsetTop));
-          
-          // when the toolbar reaches the bottom, stop it from moving further.
-          if (parentOffsetTop + $inputElement.outerHeight() < $(window).scrollTop() + $toolbarElement.height()) {
-            $toolbarElement.css('top', parseInt($inputElement.outerHeight() - $toolbarElement.height() - 2));
-          }
-
-          // adjust the toolbar position for field view
-          if ($toolbarElement.parents('[data-behavior~=textile-form-field]').length) {
-            $toolbarElement.css({'left': '-25px', 'right': '-13px'});
-          }
         }
         else {
           // reset the toolbar to the default position and appearance
           $parentElement.removeClass('sticky-toolbar');
-          $toolbarElement.css('top', '-3.4rem');
-
-          // reset field view specific toolbar properties
-          if ($toolbarElement.parents('[data-behavior~=textile-form-field]').length) {
-            $toolbarElement.css({'left': 'initial', 'right': '-0.25rem'});
-          }
         }
       }));
     });
 
-    // reset position of toolbar once focus is lost
-    $('[data-behavior~=editor-field]').children('textarea').on('blur', function() {
-      $(this).parent().removeClass('sticky-toolbar');
-      $(this).next().css('top', '-3.4rem');
+    // reset position and hide toolbar once focus is lost
+    $('[data-behavior~=editor-field]').find('textarea').on('blur', function() {
+      $(this).parent().prev().css({'opacity': 0, 'visibility': 'hidden'});
     });
   }
 
@@ -210,7 +209,7 @@ class EditorToolbar {
       <i class="fa fa-table"></i>\
     </div>';
 
-    str += '<div class="divider-vertical"></div>'
+    str += '<div class="divider-vertical"></div>';
 
     if (include.includes('list-ul')) str += '<div class="editor-btn" data-btn="list-ul" aria-label="unordered list">\
       <i class="fa fa-list-ul"></i>\

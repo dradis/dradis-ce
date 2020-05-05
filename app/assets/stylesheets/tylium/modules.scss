@@ -39,8 +39,10 @@
     padding: 0.3rem 0.5rem;
     pointer-events: none;
     position: absolute;
+    right: 50%;
     text-transform: capitalize;
-    top: 125%;
+    top: 110%;
+    transform: translateX(50%);
     white-space: nowrap;
     z-index: 1051;
   }
@@ -99,15 +101,16 @@
 }
 
 .divider {
-  height: 0;
   border-top: 1px solid $borderColor;
+  height: 0;
   margin: .25rem 0;
 }
 
 .divider-vertical {
-  width: 0;
   border-right: 1px solid $borderColor;
-  margin: 0 .25rem;
+  display: initial;
+  margin: 0.25rem;
+  width: 0;
 }
 
 .form-actions {
