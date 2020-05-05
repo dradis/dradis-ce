@@ -34,7 +34,7 @@
 //= require tylium/keyboard_shortcuts
 
 //= require tylium/modules/auto_save
-//= require tylium/modules/server_auto_save
+//= require tylium/modules/auto_save/server
 
 //= require tylium/modules/comments
 //= require tylium/modules/configurations
