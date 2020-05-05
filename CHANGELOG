@@ -9,8 +9,10 @@ v3.17 (Month 2020)
   * Card, Evidence, Issue, and Note form data will not be lost even if the form is not saved
     - Form data will be cleared when the "Cancel" link is clicked
     - Removed prompt to restore data
-  * Comments can now have Textile markup
-  * Comments now show author's name instead of email
+  * Comments
+    - Added Textile markup
+    - Uncommitted changes for comments now persists in case it wasn't saved
+    - Update comments feed to show author's name instead of email
   * Display note and evidence titles in breadcrumbs
   * Editor improvements:
     - New form-view to edit each field individually
