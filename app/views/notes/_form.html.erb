@@ -1,8 +1,8 @@
 <%= simple_form_for [current_project, @node, @note],
   html: {
     data: {
-      behavior: ('local-auto-save' if @note.new_record?),
-      auto_save_key: ("project-#{current_project.id}-node-#{@node.id}-note" if @note.new_record?)
+      behavior: 'local-auto-save',
+      auto_save_key: @note.new_record? ? "project-#{current_project.id}-node-#{@node.id}-note" : "note-#{@note.id}"
     }
   } do |f| %>
 
@@ -28,17 +28,13 @@
 
   <div class="form-actions">
     <%= f.button :submit, class: 'btn btn-primary' %> or
-    <% if @note.persisted? %>
-      <%= link_to 'Cancel', project_node_note_path(@node.project, @node, @note), class: 'cancel-link' %>
-    <% else %>
-      <%=
-        link_to 'Cancel',
-        project_node_path(@node.project, @node),
-        class: 'cancel-link',
-        data: {
-          behavior: 'clear-local-auto-save'
-        }
-      %>
-    <% end %>
+    <%=
+      link_to 'Cancel',
+      @note.new_record? ? project_node_path(@node.project, @node) : project_node_note_path(@node.project, @node, @note),
+      class: 'cancel-link',
+      data: {
+        behavior: 'clear-local-auto-save'
+      }
+    %>
   </div>
 <% end %>

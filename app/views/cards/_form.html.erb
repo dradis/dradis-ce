@@ -1,8 +1,8 @@
 <%= simple_form_for [current_project, @board, @list, @card],
   html: {
     data: {
-      behavior: ('local-auto-save' if @card.new_record?),
-      auto_save_key: ("#{@list.id}-card" if @card.new_record?)
+      behavior: 'local-auto-save',
+      auto_save_key: @card.new_record? ? "#{@list.id}-card" : "card-#{@card.id}"
     }
   } do |f| %>
 
@@ -41,17 +41,13 @@
 
   <div class="form-actions">
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
-    <% if @card.persisted? %>
-      <%= link_to 'Cancel', [current_project, @board, @list, @card], class: 'cancel-link' %>
-    <% else %>
-      <%=
-        link_to 'Cancel',
-        [current_project, @board],
-        class: 'cancel-link',
-        data: {
-          behavior: 'clear-local-auto-save'
-        }
-      %>
-    <% end %>
+    <%=
+      link_to 'Cancel',
+      @card.new_record? ? [current_project, @board] : [current_project, @board, @list, @card],
+      class: 'cancel-link',
+      data: {
+        behavior: 'clear-local-auto-save'
+      }
+    %>
   </div>
 <% end %>
