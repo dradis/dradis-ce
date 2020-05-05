@@ -27,7 +27,7 @@
         resource_type: this.resourceType
       },{
         connected: function() {
-          console.log('Subscribed to EditorChannel');
+          // console.log('Subscribed to EditorChannel');
         },
         received: function(newUpdatedAtTime) {
           if (that.originalUpdatedAt !== null) {
@@ -35,7 +35,7 @@
           }
         },
         rejected: function() {
-          console.log('Error subscribing to EditorChannel');
+          // console.error('Error subscribing to EditorChannel');
         },
         save: function() {
           this.perform('save', { data: $(that.form).serialize() });
