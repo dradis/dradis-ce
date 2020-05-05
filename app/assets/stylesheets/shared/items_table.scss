@@ -81,10 +81,21 @@
     }
   }
 
-  tr:hover {
+  tr {
+  
+    &:hover {
 
-    .column-actions a { 
-      visibility: visible;
+      .column-actions a {
+        visibility: visible;
+      }
+    }
+
+    &:last-of-type {
+
+      [aria-label]:after {
+        top: initial;
+        bottom: 110%;
+      }
     }
   }
 }
