@@ -197,7 +197,23 @@ document.addEventListener "turbolinks:load", ->
       else
         $(this).find($('[data-behavior~=scroll-wrapper]')).removeClass('hidden');
 
-  # Smooth Scrolling
-  $('[data-behavior~=smooth-scroll]').on 'click', ->
-    target = $(this).data('target');
-    $('[data-id~=' + target + ']')[0].scrollIntoView({behavior: "smooth"});
+  # Disable turbolinks for on-page anchor links (prevents page from jumping to top and allows smooth-scrolling)
+  if $('a[href^="#"]').length
+    $('a[href^="#"]').each ->
+      if !$(this).data('turbolinks')
+        $(this).attr 'data-turbolinks', 'false'
+      return
+
+  # Smooth Scrolling - scroll to element on page load if hash present in current browser url
+  if window.location.hash
+    target = window.location.hash
+    $(target)[0].scrollIntoView behavior: 'smooth'
+
+  # Smooth Scrolling - scroll to element on click
+  # Note: Parent element of anchor links needs: data-attribute="smooth-scroll-nav".
+  #       This prevents unwanted smooth scrolling when switching tabs, etc.
+  $(document).on 'click', '[data-behavior~=smooth-scroll-nav] a[href^="#"]', (event) ->
+    event.preventDefault()
+    history.pushState({}, '', this.href);
+    $(this.hash)[0].scrollIntoView behavior: 'smooth'
+    return
