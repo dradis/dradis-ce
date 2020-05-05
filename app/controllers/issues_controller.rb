@@ -82,7 +82,7 @@ class IssuesController < AuthenticatedController
     respond_to do |format|
       updated_at_before_save = @issue.updated_at.to_i
 
-      if @issue.update_attributes(issue_params.merge(updated_at: Time.now))
+      if @issue.update_attributes(issue_params)
         RevisionCollapser.call(@issue)
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
@@ -156,7 +156,7 @@ class IssuesController < AuthenticatedController
   end
 
   def issue_params
-    params.require(:issue).permit(:tag_list, :text)
+    params.require(:issue).permit(:tag_list, :text).merge(updated_at: Time.now)
   end
 
 end

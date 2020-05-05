@@ -43,6 +43,7 @@ class CardsController < AuthenticatedController
 
   def update
     if @card.update_attributes(card_params)
+      RevisionCollapser.call(@card)
       track_updated(@card)
       redirect_to [current_project, @board, @list, @card], notice: 'Task updated.'
     else
@@ -85,7 +86,7 @@ class CardsController < AuthenticatedController
   private
 
   def card_params
-    params.require(:card).permit(:name, :description, :due_date, assignee_ids: [])
+    params.require(:card).permit(:name, :description, :due_date, assignee_ids: []).merge(updated_at: Time.now)
   end
 
   def initialize_sidebar

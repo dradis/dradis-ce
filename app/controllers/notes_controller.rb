@@ -47,6 +47,7 @@ class NotesController < NestedNodeResourceController
   def update
     updated_at_before_save = @note.updated_at.to_i
     if @note.update_attributes(note_params)
+      RevisionCollapser.call(@note)
       track_updated(@note)
       check_for_edit_conflicts(@note, updated_at_before_save)
       # if the note has just been moved to another node, we must reload
@@ -84,6 +85,6 @@ class NotesController < NestedNodeResourceController
   end
 
   def note_params
-    params.require(:note).permit(:category_id, :text, :node_id)
+    params.require(:note).permit(:category_id, :text, :node_id).merge(updated_at: Time.now)
   end
 end
