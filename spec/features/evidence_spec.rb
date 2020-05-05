@@ -246,6 +246,7 @@ describe 'evidence' do
     describe 'local caching' do
       let(:model_path) { new_project_node_evidence_path(current_project, @node) }
       let(:model_attributes) { [{ name: :content, value: 'New Evidence' }] }
+      let(:model_attributes_for_template) { [{ name: :content, value: 'New Evidence Template' }] }
 
       include_examples 'a form with local auto save', Evidence, :new
     end
