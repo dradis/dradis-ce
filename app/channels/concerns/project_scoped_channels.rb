@@ -6,6 +6,7 @@ module ProjectScopedChannels
 
   included do
     before_subscribe :set_project
+    before_subscribe :info_for_paper_trail
   end
 
   def set_project
@@ -14,5 +15,10 @@ module ProjectScopedChannels
 
   def current_project
     @current_project ||= Project.new
+  end
+
+  def info_for_paper_trail
+    PaperTrail.request.controller_info = { project_id: current_project.id }
+    PaperTrail.request.whodunnit = current_user.email
   end
 end

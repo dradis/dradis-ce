@@ -9,7 +9,6 @@
 # of changes from other users.
 class EditorChannel < ApplicationCable::Channel
   include ProjectScopedChannels
-  include PaperTrailActivity
 
   attr_accessor :resource
 
