@@ -23,7 +23,7 @@
   %>
 
   <% if @note.persisted? %>
-    <%= hidden_field :note, :original_updated_at, value: @note.updated_at.to_i, data: { behavior: 'updated-as-auto-save' } %>
+    <%= hidden_field :note, :original_updated_at, value: @note.updated_at.to_i, data: { behavior: 'auto-save-updated-at' } %>
   <% end %>
 
   <div class="form-actions">

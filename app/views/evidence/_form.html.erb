@@ -26,7 +26,7 @@
   </div>
 
   <% if @evidence.persisted? %>
-    <%= hidden_field :evidence, :original_updated_at, value: @evidence.updated_at.to_i, data: { behavior: 'updated-as-auto-save' } %>
+    <%= hidden_field :evidence, :original_updated_at, value: @evidence.updated_at.to_i, data: { behavior: 'auto-save-updated-at' } %>
   <% end %>
 
   <div class="form-actions">

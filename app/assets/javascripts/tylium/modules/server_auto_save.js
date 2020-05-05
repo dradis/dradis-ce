@@ -9,7 +9,7 @@
     this.form = form;
 
     this._doneTypingInterval = 500;
-    this.originalUpdatedAt = form.querySelector('[data-behavior~=updated-as-auto-save]');
+    this.originalUpdatedAt = form.querySelector('[data-behavior~=auto-save-updated-at]');
     this.projectId = form.dataset.asProjectId;
     this.resourceId = form.dataset.asResourceId;
     this.resourceType = form.dataset.asResourceType;
