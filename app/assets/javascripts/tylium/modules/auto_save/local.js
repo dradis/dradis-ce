@@ -53,33 +53,20 @@ class LocalAutoSave {
 
     formInputs = formInputs.concat(Array.from(this.target.querySelectorAll('textarea, select')));
 
-    var setData = this.debounce(function() {
-      if (!that.cancelled) {
-        localStorage.setItem(that.key, JSON.stringify(that.getData()));
-      }
-    }, 500);
-
     formInputs.forEach(function(input) {
       // we're using a jQuery plugin for :textchange event, so need to use $()
-      $(input).on('textchange change', setData);
+      $(input).on('textchange change', that.debounce(that.setData.bind(that), 500));
     })
   }
 
-  debounce(func, wait, immediate) {
-    var timeout;
+  debounce(func, delay) {
+    let debounceTimer;
 
-    return function() {
-      var context = this, args = arguments;
-
-      var later = function() {
-        timeout = null;
-        if (!immediate) func.apply(context, args);
-      };
-      var callNow = immediate && !timeout;
-
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-      if (callNow) func.apply(context, args);
+    return function () {
+      const context = this;
+      const args = arguments;
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => func.apply(context, args), delay);
     };
   }
 
@@ -145,6 +132,12 @@ class LocalAutoSave {
           }
         }
       }
+    }
+  }
+
+  setData() {
+    if (!this.cancelled) {
+      localStorage.setItem(this.key, JSON.stringify(this.getData()));
     }
   }
 }
