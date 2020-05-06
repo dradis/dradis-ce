@@ -5,6 +5,10 @@ v3.17 (Month 2020)
   * Card improvements:
     - Activity Feed now shows board name and link
     - No mandatory due date
+  * Card, Evidence, Issue, and Note form data will not be lost even if the form is not saved
+    - Also works when using templates
+    - Form data will be cleared when the "Cancel" link is clicked
+    - Removed prompt to restore data
   * Comments can now have Textile markup
   * Comments now show author's name instead of email
   * Display note and evidence titles in breadcrumbs
@@ -12,11 +16,6 @@ v3.17 (Month 2020)
     - New form-view to edit each field individually
     - Formatting toolbar to help with markup
     - Side-by-side editor preview that auto-updates
-  * Improve current implementation of persisting data when creating and editing Card, Evidence, Issue, and Note
-    - Data now persists for the whole form instead of only the textarea
-    - Data will be cleared when the "Cancel" link is clicked
-    - Extend functionality to work with templates
-    - Removed prompt to restore data
   * Link to Methodology from project summary chart
   * Navigation sidebar in projects can be kept open while navigating across views
   * Refactored dots-menu to make it available in any view
