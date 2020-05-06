@@ -47,17 +47,14 @@ describe 'Board pages:' do
           board
           visit project_boards_path(current_project)
 
-          click_link 'Create new methodology...'
+          expect {
+            click_link 'Create new methodology...'
 
-          find('#modal-board-new', visible: true)
-          find('#template').find(:option, 'Methodology Template v3').select_option
+            find('#modal-board-new', visible: true)
+            find('#template').find(:option, 'Methodology Template v3').select_option
 
-          click_button 'Add methodology'
-
-          board = Board.last
-          list = board.lists.first
-          expect(list.name).to eq('To Do')
-          expect(list.cards.first.name).to eq('Card 1')
+            click_button 'Add methodology'
+          }.to change { Board.count }.by(1)
         end
       end
     end
