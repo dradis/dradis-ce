@@ -73,33 +73,33 @@ class LocalAutoSave {
   getData() {
     var that = this;
 
-    var hashBuilder = function(hash, serializedField) {
+    var data = new FormData(this.target)
+
+    var hashBuilder = function(hash, dataArray) {
       // Don't store utf8 and authenticity_token inputs
-      if (that.excludedInputNames.includes(serializedField.name)) { return hash; }
+      if (that.excludedInputNames.includes(dataArray[0])) { return hash; }
 
       // Check if name is an array, i.e. collection checkboxes
-      if (serializedField.name.slice(-2) == '[]') {
+      if (dataArray[0].slice(-2) == '[]') {
         // When using collection checkboxes, rails/simple_form will create a hidden input with
         // the same name, i.e. <input type="hidden" name="card[assignee_ids][]" value="">
         // Don't store that hidden input
-        if (!serializedField.value.length) { return hash; }
+        if (!dataArray[1].length) { return hash; }
 
         // if array exist, push value to array, else create new array
-        if (hash[serializedField.name]) {
-          hash[serializedField.name].push(serializedField.value);
+        if (hash[dataArray[0]]) {
+          hash[dataArray[0]].push(dataArray[1]);
         } else {
-          hash[serializedField.name] = [serializedField.value];
+          hash[dataArray[0]] = [dataArray[1]];
         }
       } else {
-        hash[serializedField.name] = serializedField.value;
+        hash[dataArray[0]] = dataArray[1];
       }
 
       return hash;
     }
 
-    // serializeArray() is a jquery method that returns an array of objects with key and value attributes.
-    // i.e. [{ name: 'card[name]', value: 1 }, { name: 'card[description]', value: 2 }]
-    return $(this.target).serializeArray().reduce(hashBuilder, {});
+    return Array.from(data.entries()).reduce(hashBuilder, {});
   }
 
   restoreData() {
@@ -131,6 +131,18 @@ class LocalAutoSave {
             }
           }
         }
+      }
+
+      // Restore tag input dropdown in isses/_form
+      if (data['issue[tag_list]'] && data['issue[tag_list]'].length) {
+        var hiddenInput = document.querySelector('#issue_tag_list')
+        hiddenInput.value = data['issue[tag_list]']
+
+        var dropdownBtnSpan = document.querySelector('#issues_editor .dropdown-toggle span.tag')
+        var selectedDropdown = document.querySelector(`.js-taglink[data-tag='${data['issue[tag_list]']}']`)
+
+        dropdownBtnSpan.innerHTML = selectedDropdown.innerHTML
+        dropdownBtnSpan.style.color = selectedDropdown.style.color
       }
     }
   }
