@@ -76,6 +76,13 @@ button:focus {
   box-shadow: none !important;
 }
 
+code {
+  background-color: #f9f2f4;
+  border-radius: 4px;
+  color: $codeText;
+  padding: 2px 4px;
+}
+
 .custom-select {
   font-size: inherit;
 }
