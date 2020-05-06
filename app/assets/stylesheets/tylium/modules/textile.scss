@@ -229,6 +229,18 @@
       padding: 0;
       overflow: auto;
       height: 100%;
+
+      &.preview-placeholder {
+        align-items: center;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+
+        h5 {
+          color: $mutedText;
+          margin-bottom: 1.75rem;
+        }
+      }
     }
   }
 
