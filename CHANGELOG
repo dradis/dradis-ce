@@ -7,7 +7,7 @@ v3.17 (Month 2020)
     - No mandatory due date
   * Comments
     - Added Textile markup
-    - Uncommitted changes for comments now persists in case it wasn't saved
+    - Unsaved comment changes will appear on the comment box even when the comment is not submitted
     - Update comments feed to show author's name instead of email
   * Display note and evidence titles in breadcrumbs
   * Editor improvements:
