@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   end
 
   resources :projects, only: [:show] do
-    resources :activities, only: [] do
+    resources :activities, only: [:index] do
       collection do
         get :poll, constraints: { format: /js/ }
       end

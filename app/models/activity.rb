@@ -26,6 +26,10 @@ class Activity < ApplicationRecord
     includes(:trackable).order("activities.created_at DESC").limit(20)
   end
 
+  scope :all_latest, -> do
+    includes(:trackable).order("activities.created_at DESC")
+  end
+
   # -- Callbacks ------------------------------------------------------------
 
   # Cast action to a string so the 'inclusion' validation works with symbols

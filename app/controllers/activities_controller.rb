@@ -4,6 +4,10 @@
 class ActivitiesController < AuthenticatedController
   include ProjectScoped
 
+  def index
+    @activities = Activity.all_latest
+  end
+
   def poll
     @this_poll  = Time.now.to_i
     @activities = current_project.activities.includes(:trackable).where(
