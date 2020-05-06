@@ -253,6 +253,12 @@ table {
   }
 }
 
+time {
+  &[aria-label]:after {
+    display: none;
+  }
+}
+
 .tooltip-inner {
     
   ul {
