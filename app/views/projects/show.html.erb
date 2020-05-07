@@ -26,7 +26,7 @@
       <div class="col-xxl-6 p-0">
         <div class="content-container ml-lg-3 mt-0 mt-xxl-3 restrict-height full-height" data-behavior="restrict-height">
           <section class="summary-panel">
-            <h4 class="header-underline">Recent activity</h4>
+            <h4 class="header-underline">Recent activity - <span class="text-capitalize small"><%= link_to 'View all project activity', project_activities_path(current_project) %></span></h4>
             <%= render 'activities/feed', activities: @activities %>
           </section>
         </div>
