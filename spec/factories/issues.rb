@@ -4,5 +4,11 @@ FactoryBot.define do
     author { "factory_bot" }
     category { Category.issue }
     node { Project.new.issue_library }
+
+    factory :tagged_issue do
+      after :create do |issue|
+        issue.tags << FactoryBot.create(:tag)
+      end
+    end
   end
 end
