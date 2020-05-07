@@ -52,9 +52,12 @@
       this._cleanupBound = this.cleanup.bind(this);
       document.addEventListener('turbolinks:before-cache', this._cleanupBound)
 
-      this._timedSave = setInterval(function() {
+      boundSave = function() {
         this.editorChannel.save();
-      }.bind(this), this._timedIntervalInMS);
+      }.bind(this);
+
+      window.addEventListener('beforeunload', boundSave);
+      this._timedSave = setInterval(boundSave, this._timedIntervalInMS);
     },
     cleanup: function() {
       this.editorChannel.save(); // Save the results once more
