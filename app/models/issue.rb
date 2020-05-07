@@ -130,6 +130,16 @@ class Issue < Note
     merged
   end
 
+  # Overwrite the setter to rely on validations instead of [ArgumentError]
+  def state=(value)
+    if Issue.states.keys.include?(value.to_s) || Issue.states.values.include?(value)
+      self[:state] = value
+    else
+      self.errors.add(:state, 'is not valid.')
+      return nil
+    end
+  end
+
   # This method inspects the issues' Tag field and if present tags the issue
   # accordingly.
   def tag_from_field_content!
