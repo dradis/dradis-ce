@@ -1,19 +1,24 @@
+// this is shared between activities#index and the projects#show activity feed
+.activity {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+
+  .activity-icon {
+    position: absolute;
+    right: 0;
+    font-size: 3rem;
+    opacity: 0.08;
+  }
+}
+
+// this is for activities in the projects#show feed
 .activity-feed {
   
   .activity {
     border-bottom: 1px solid $borderColor;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    padding: 1rem 0;
-
-    .activity-icon {
-      position: absolute;
-      right: 0;
-      font-size: 3rem;
-      opacity: 0.08;
-    }
 
     .body {
       display: block;
@@ -37,5 +42,34 @@
       border-bottom: none;
       padding-bottom: 0;
     }
+  }
+}
+
+// this is for activities#index
+.all-activities-container {
+
+  .activities-group {
+    width: 50%;
+  }
+
+  .activity-date-header {
+    display: flex;
+    justify-content: center;
+
+    time {
+      background-color: $primaryBgColor;
+      font-size: 1.5rem;
+      padding: 1rem 0;
+    }
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 2rem;
+    bottom: 2rem;
+    left: 50%;
+    margin-left: -1px;
+    border-left: 1px solid rgba(0,0,0,0.1);
   }
 }

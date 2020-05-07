@@ -12,26 +12,31 @@
 <% end %>
 
 <div class="content-container mt-3">
-  <% if @activities.any? %>
-    <% @activities.each do |activity| %>
-      <% present activity do |activity_presenter| %>
-        <%= div_for activity do %>
-          <div class="details">
-            <%= activity_presenter.avatar_with_link(35) %>
+  <div class="all-activities-container">
+    <% if @activities.any? %>
+      <% @activities.each do |activity| %>
+        <% present activity do |activity_presenter| %>
+          <div class="activity-date-header" data-behavior="activity-date-header">
+            <%= activity_presenter.activity_day %>
           </div>
-          <div class="body">
-            <div class="title">
-              <%= activity_presenter.render_title %>
+          <%= div_for(activity, data: { behavior: 'activity' }) do %>
+            <div class="details">
+              <%= activity_presenter.avatar_with_link(35) %>
             </div>
-            <div class="time">
-              <%= activity_presenter.created_at_ago %>
+            <div class="body">
+              <div class="title">
+                <%= activity_presenter.render_title %>
+              </div>
+              <div class="activity-time">
+                <%= activity_presenter.activity_time %>
+              </div>
             </div>
-          </div>
-          <%= activity_presenter.icon %>
+            <%= activity_presenter.icon %>
+          <% end %>
         <% end %>
       <% end %>
+    <% else %>
+      <p class="mb-0">There has been no activity yet.</p>
     <% end %>
-  <% else %>
-    <p class="mb-0">There has been no activity yet.</p>
-  <% end %>
+  </div>
 </div>
