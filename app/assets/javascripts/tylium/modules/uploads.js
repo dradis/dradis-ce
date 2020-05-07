@@ -33,7 +33,7 @@ document.addEventListener("turbolinks:load", function() {
       }
     });
 
-    $('[data-behavior~=tool-select]').change(function() {
+    $('[data-behavior~=integration-select]').change(function() {
       var selectedValue = $(this).find('option:selected').val().toLowerCase()
       if (selectedValue.match(/(package|template)/)) {
         $('[data-tool-type~=third-party]').addClass('d-none');

@@ -14,7 +14,7 @@
                 <h5 class="m-0">1. Choose a tool</h5>
                 <label class="small">Select the tool that generated the output file you want to upload.</label>
               </div>
-              <%= select_tag 'uploader', options_for_select(@uploaders_for_select), { :class => 'form-control mb-2', data: { behavior: 'tool-select' } } %>
+              <%= select_tag 'uploader', options_for_select(@uploaders_for_select), { :class => 'form-control mb-2', data: { behavior: 'integration-select' } } %>
             </div>
           </div>
 
