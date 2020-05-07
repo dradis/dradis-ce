@@ -200,6 +200,13 @@ document.addEventListener "turbolinks:load", ->
       else
         $(this).find($('[data-behavior~=scroll-wrapper]')).removeClass('hidden');
 
+  # Disable turbolinks for on-page anchor links (prevents page from jumping to top and allows smooth-scrolling)
+  if $('a[href^="#"]').length
+    $('a[href^="#"]').each ->
+      if !$(this).data('turbolinks')
+        $(this).attr 'data-turbolinks', 'false'
+      return
+
   # Smooth Scrolling - scroll to element on page load if hash present in current browser url
   if window.location.hash
     target = window.location.hash
@@ -218,9 +225,4 @@ document.addEventListener "turbolinks:load", ->
 document.addEventListener 'turbolinks:before-cache', ->
   if $('[data-behavior~=jquery-upload]').length
     $('[data-behavior~=jquery-upload]').fileupload 'destroy'
-  # Disable turbolinks for on-page anchor links (prevents page from jumping to top and allows smooth-scrolling)
-  if $('a[href^="#"]').length
-    $('a[href^="#"]').each ->
-      if !$(this).data('turbolinks')
-        $(this).attr 'data-turbolinks', 'false'
-      return
+  
