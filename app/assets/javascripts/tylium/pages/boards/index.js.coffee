@@ -2,12 +2,6 @@ document.addEventListener "turbolinks:load", ->
 
   if $('body.boards.index').length
 
-    $('.js-board-modal').on 'click', (e)->
-      e.preventDefault()
-      $($(this).attr('href')).modal()
-
-      false
-
     # when creating a new board and we select a template:
     # - choose the "from template" radio
     # - if board name is empty, populate it with the selected option

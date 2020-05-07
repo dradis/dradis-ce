@@ -74,7 +74,6 @@ document.addEventListener "turbolinks:load", ->
   # Activate jQuery.treeModal
   $('.modal-node-selection-form').treeModal()
 
-
   # ------------------------------------------------------- Bootstrap behaviors
 
   # Focus first input on modal window display.
@@ -147,6 +146,10 @@ document.addEventListener "turbolinks:load", ->
     if e.which == 13
       submitSearch()
 
+  # Toggle sidebar menu
+  $('[data-behavior~=expandable-sidebar]').each ->
+    new Sidebar($(this))
+
   # Collapsable div in sidebar collections
   if $('[data-behavior~=collapse-collection]').length
     $('[data-behavior~=collapse-collection]').click ->
@@ -161,35 +164,9 @@ document.addEventListener "turbolinks:load", ->
     $('[data-behavior~=navbar-collapse]').collapse 'hide'
     return
 
-  # Toggle sidebar menu
-
-  $sidebar = $('[data-behavior~=main-sidebar]')
-
-  sidebarOpen = -> 
-    $sidebar.removeClass('sidebar-collapsed').addClass('sidebar-expanded')
-    $sidebar.attr('data-behavior', 'main-sidebar sidebar-expanded')
-    $('[data-behavior~=back-fade]').removeClass('not-faded').addClass('faded')
-
-  sidebarClose = ->
-    $sidebar.removeClass('sidebar-expanded').addClass('sidebar-collapsed')
-    $sidebar.attr('data-behavior', 'main-sidebar sidebar-collapsed')
-    $('[data-behavior~=back-fade]').removeClass('faded').addClass('not-faded')
-
-  $('[data-behavior~=sidebar-toggle]').on 'click', ->
-    if $sidebar.is('[data-behavior~=sidebar-collapsed]')
-      sidebarOpen()
-    else
-      if $(this).is('[data-behavior~=open-only]')
-        return
-      else
-        sidebarClose()
-
-  $('[data-behavior~=back-fade]').on 'click', ->
-    sidebarClose()
-
-  $('[data-behavior~=sidebar-link]').on 'click', ->
-    if $sidebar.is('[data-behavior~=sidebar-expanded]')
-      sidebarClose() 
+  # Activate Rich Toolbars for the editor, and comments
+  $('[data-behavior~=rich-toolbar]').each ->
+    new EditorToolbar($(this))
 
   # Scroll for more indicator functionality
   if $('[data-behavior~=restrict-height]').length
@@ -223,12 +200,27 @@ document.addEventListener "turbolinks:load", ->
       else
         $(this).find($('[data-behavior~=scroll-wrapper]')).removeClass('hidden');
 
-  # Smooth Scrolling
-  $('[data-behavior~=smooth-scroll]').on 'click', ->
-    target = $(this).data('target');
-    $('[data-id~=' + target + ']')[0].scrollIntoView({behavior: "smooth"});
+  # Smooth Scrolling - scroll to element on page load if hash present in current browser url
+  if window.location.hash
+    target = window.location.hash
+    $(target)[0].scrollIntoView behavior: 'smooth'
+
+  # Smooth Scrolling - scroll to element on click
+  # Note: Parent element of anchor links needs: data-attribute="smooth-scroll-nav".
+  #       This prevents unwanted smooth scrolling when switching tabs, etc.
+  $(document).on 'click', '[data-behavior~=smooth-scroll-nav] a[href^="#"]', (event) ->
+    event.preventDefault()
+    history.pushState({}, '', this.href);
+    $(this.hash)[0].scrollIntoView behavior: 'smooth'
+    return
 
 # Un-bind fileUpload on page unload.
 document.addEventListener 'turbolinks:before-cache', ->
   if $('[data-behavior~=jquery-upload]').length
     $('[data-behavior~=jquery-upload]').fileupload 'destroy'
+  # Disable turbolinks for on-page anchor links (prevents page from jumping to top and allows smooth-scrolling)
+  if $('a[href^="#"]').length
+    $('a[href^="#"]').each ->
+      if !$(this).data('turbolinks')
+        $(this).attr 'data-turbolinks', 'false'
+      return

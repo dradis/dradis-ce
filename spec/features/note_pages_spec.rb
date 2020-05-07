@@ -5,16 +5,13 @@ describe "note pages" do
 
   include ActivityMacros
 
+  let(:tmp_path) { Rails.root.join('spec/fixtures/files/note_templates/') }
+
   before do
     # avoid messing around with any existing templates:
-    allow(NoteTemplate).to receive(:pwd).and_return(Pathname.new('tmp/templates/notes'))
-    FileUtils.mkdir_p(Rails.root.join("tmp","templates","notes"))
+    allow(NoteTemplate).to receive(:pwd).and_return(tmp_path)
     login_to_project_as_user
     @node = create(:node, project: current_project)
-  end
-
-  after(:all) do
-    FileUtils.rm_rf('tmp/templates')
   end
 
   example 'show page with wrong Node ID in URL' do
@@ -78,12 +75,16 @@ describe "note pages" do
       include_examples "recover deleted item", :note
       include_examples "recover deleted item without node", :note
     end
+
+    let(:model) { @note }
+    include_examples 'nodes pages breadcrumbs', :show, Note
   end
 
-  describe "edit page" do
+  describe "edit page", js: true do
     before do
       @note = create(:note, node: @node, updated_at: 2.seconds.ago)
       visit edit_project_node_note_path(current_project, @node, @note)
+      click_link 'Source'
     end
 
     let(:submit_form) { click_button "Update Note" }
@@ -98,11 +99,20 @@ describe "note pages" do
 
     it_behaves_like "a form with a help button"
 
+    describe 'textile form view' do
+      let(:action_path) { edit_project_node_note_path(current_project, @node, @note) }
+      let(:item) { @note }
+      it_behaves_like 'a textile form view', Note
+    end
+
     # TODO handle the case where a Note has no paperclip versions (legacy data)
 
-    describe "submitting the form with valid information" do
+    describe "submitting the form with valid information", js: true do
       let(:new_content) { 'New note text' }
-      before { fill_in :note_text, with: new_content }
+      before do
+        click_link 'Source'
+        fill_in :note_text, with: new_content
+      end
 
       it "updates the note" do
         submit_form
@@ -123,8 +133,11 @@ describe "note pages" do
       it_behaves_like "a page which handles edit conflicts"
     end
 
-    describe "submitting the form with invalid information" do
-      before { fill_in :note_text, with: "a"*65536 }
+    context "submitting the form with invalid information" do
+      before do
+        # Manually update the textarea, otherwise we will get a timeout
+        execute_script("$('#note_text').val('#{'a' * 65536}')")
+      end
 
       # TODO how to handle conflicting edits in this case?
 
@@ -133,12 +146,6 @@ describe "note pages" do
       end
 
       include_examples "doesn't create an Activity"
-
-      it "shows the form again with an error message" do
-        submit_form
-        should have_field :note_text
-        should have_selector ".alert.alert-error"
-      end
     end
 
     describe "cancel button" do
@@ -147,19 +154,17 @@ describe "note pages" do
         expect(current_path).to eq project_node_note_path(current_project, @node, @note)
       end
     end
+
+    let(:model) { @note }
+    include_examples 'nodes pages breadcrumbs', :edit, Note
   end
 
 
-  describe "new page" do
-    let(:content) { "This is an example note" }
-    let(:path)    { Rails.root.join("tmp", "templates", "notes", "tmpnote.txt") }
-
-    # Create the dummy NoteTemplate:
+  describe "new page", js: true do
     before do
-      File.write(path, content)
       visit new_project_node_note_path(current_project, @node, params)
+      click_link 'Source'
     end
-    after { File.delete(path) }
 
     let(:submit_form) { click_button "Create Note" }
     let(:cancel_form) { click_link "Cancel" }
@@ -199,19 +204,16 @@ describe "note pages" do
       end
 
       describe "submitting the form with invalid information" do
-        before { fill_in :note_text, with: "a"*65536 }
+        before do
+          # Manually update the textarea, otherwise we will get a timeout
+          execute_script("$('#note_text').val('#{'a' * 65536}')")
+        end
 
         it "doesn't create a note" do
           expect{submit_form}.not_to change{Note.count}
         end
 
         include_examples "doesn't create an Activity"
-
-        it "shows the form again with an error message" do
-          submit_form
-          should have_field :note_text
-          should have_selector ".alert.alert-error"
-        end
       end
 
       describe "cancel button" do
@@ -223,14 +225,22 @@ describe "note pages" do
     end
 
     context "when a NoteTemplate is specified" do
-      let(:params)  { { template: "tmpnote" } }
+      let(:params)  { { template: 'simple_note' } }
 
       it "pre-populates the textarea with the template contents" do
-        textarea = find("textarea#note_text")
-        expect(textarea.value.strip).to eq content
+        click_link 'Fields'
+        expect(find_field('item_form[field_name_0]').value).to include('IPAddress')
+        expect(find_field('item_form[field_value_0]').value).to include('127.0.0.1')
       end
-
-      it "uses the textile-editor plugin"
     end
+
+    describe "textile form view" do
+      let(:params) { {} }
+
+      let(:action_path) { new_project_node_note_path(current_project, @node) }
+      it_behaves_like 'a textile form view', Note
+    end
+
+    include_examples 'nodes pages breadcrumbs', :new, Note
   end
 end

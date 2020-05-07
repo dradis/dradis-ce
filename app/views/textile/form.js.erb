@@ -1,0 +1,11 @@
+<% form = render 'textile/form' %>
+
+var form = $('<%= escape_javascript(form) %>')
+$('.textile-form').removeClass('loading-indicator').html('');
+$('.textile-form').removeClass('loading-indicator').append(form);
+
+$('.textile').data('plugin_textile').bindFieldGroup(form);
+
+$('[data-behavior~=rich-toolbar]', form).each(function() {
+  new EditorToolbar($(this))
+});
