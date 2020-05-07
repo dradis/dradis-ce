@@ -1,6 +1,14 @@
 class ActivityPresenter < BasePresenter
   presents :activity
 
+  def activity_day
+    h.local_date(activity.created_at, format: '%A, %B %e %Y', data: { behavior: 'activity-day-value' })
+  end
+
+  def activity_time
+    h.local_time(activity.created_at, format: '%l:%M%P')
+  end
+
   def avatar_with_link(size)
     h.link_to(avatar_image(activity.user, size: size), 'javascript:void(0)')
   end
