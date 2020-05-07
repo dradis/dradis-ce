@@ -4,24 +4,11 @@
 # elements in the page in an unobtrusive way.
 #
 # The current list of plugins:
-#   * jQuery.fileUpload  - handles attachment uploads (gem: jquery-fileupload-rails)
 #   * jQuery.Textile     - handles the note editor (/vendor/)
 
 document.addEventListener "turbolinks:load", ->
-  # --------------------------------------------------- Standard jQuery plugins
-  # Activate jQuery.fileUpload
-  $('.jquery-upload').fileupload
-    dropZone: $('#drop-zone')
-    destroy: (e, data) ->
-      if confirm('Are you sure?\n\nProceeding will delete this attachment from the associated node.')
-        $.blueimp.fileupload.prototype.options.destroy.call(this, e, data)
 
-    paste: (e, data)->
-      $.each data.files, (index, file) ->
-        filename = prompt('Please provide a filename for the pasted image', 'screenshot-XX.png') || 'unnamed.png'
-        # Clone file object, edit, then reapply to the data object
-        newFile = new File [file], filename, { type: file.type }
-        data.files[index] = newFile
+  # --------------------------------------------------- Standard jQuery plugins
 
   # Initialize clipboard.js:
   clipboard = new Clipboard('.js-attachment-url-copy')
