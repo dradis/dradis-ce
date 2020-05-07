@@ -44,13 +44,13 @@
 //= require tylium/modules/notifications
 //= require tylium/modules/search
 //= require tylium/modules/sidebar
-//= require tylium/modules/state_menu
 //= require tylium/modules/activities/poller
 //= require tylium/modules/subscriptions
 // require tylium/modules/tour
 //= require tylium/modules/uploads
 
 //= require tylium/pages/boards
+//= require tylium/pages/issues/state_menu
 //= require tylium/pages/nodes/new_form
 //= require tylium/pages/nodes/tables
 //= require tylium/pages/projects/boards_summary
