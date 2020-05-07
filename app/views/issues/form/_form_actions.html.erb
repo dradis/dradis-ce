@@ -1,0 +1,25 @@
+<div class="form-actions">
+  <div class="btn-group dropdown state-menu" data-behavior="state-menu">
+    <%= f.button :submit, nil, class: 'btn btn-primary text-capitalize', data: { behavior: 'state-submit-button' } %>
+    <%= f.hidden_field :state, data: { behavior: 'issue-state' } %>
+    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split ml-0" data-toggle="dropdown">
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-menu">
+      <div class="dropdown-item" data-state="draft">
+        <span class="state-header" data-state-header="draft"> Draft Issue</span>
+        <span class="state-details">If you feel there is still more work before this issue is ready.</span>
+      </div>
+      <div class="dropdown-item" data-state="review">
+        <span class="state-header" data-state-header="review"> Ready for Review Issue</span>
+        <span class="state-details">If you think this issue is ready and would like someone to have a look.</span>
+      </div>
+      <div class="dropdown-item" data-state="published">
+        <span class="state-header" data-state-header="published"> Published Issue</span>
+        <span class="state-details">If this is the final form of the issue and it’s ready for the report.</span>
+      </div>
+    </div>
+  </div>
+  or
+  <%= link_to 'Cancel', @issue.new_record? ? project_issues_path(current_project) : [current_project, @issue], class: 'cancel-link' %>
+</div>
