@@ -3,7 +3,7 @@
 class DiffedRevision
 
   def initialize(revision, record)
-    raise 'undiffable revision' unless record.class::REVISABLE_EVENTS.include? revision.event
+    raise 'undiffable revision' unless record.class::REVISABLE_EVENTS.values.include? revision.event
     @revision = revision
     @record   = record
   end

@@ -12,8 +12,6 @@ class EditorChannel < ApplicationCable::Channel
 
   attr_accessor :resource
 
-  AUTOSAVE_EVENT = Activity::VALID_ACTIONS[:autosave].freeze
-
   def subscribed
     reject and return unless find_resource
 
@@ -21,7 +19,7 @@ class EditorChannel < ApplicationCable::Channel
   end
 
   def save(params)
-    resource.paper_trail_event = AUTOSAVE_EVENT
+    resource.paper_trail_event = RevisionTracking::REVISABLE_EVENTS[:autosave]
 
     if resource.update_attributes resource_params(params)
       RevisionCollapser.call(resource)

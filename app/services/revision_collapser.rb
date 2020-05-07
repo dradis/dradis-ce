@@ -21,15 +21,15 @@ class RevisionCollapser
 
     last_revision = resource.versions.reorder('created_at DESC').first
     # Just in case there is more than a single autosave take the oldest.
-    previous_autosave = resource.versions.where(event: Activity::VALID_ACTIONS[:autosave]).
+    previous_autosave = resource.versions.where(event: RevisionTracking::REVISABLE_EVENTS[:autosave]).
                                  where.not(id: last_revision).reorder('created_at ASC').first
 
-    if resource.class::REVISABLE_EVENTS.include?(last_revision.event) && previous_autosave
+    if RevisionTracking::REVISABLE_EVENTS.values.include?(last_revision.event) && previous_autosave
       last_revision.update(object: previous_autosave.object)
     end
 
     resource.versions.
-      where(event: Activity::VALID_ACTIONS[:autosave]).
+      where(event: RevisionTracking::REVISABLE_EVENTS[:autosave]).
       where('created_at < ?', last_revision.created_at).destroy_all
   end
 
@@ -38,7 +38,7 @@ class RevisionCollapser
 
     last_revision = resource.versions.reorder('created_at DESC').first
 
-    if last_revision.event == Activity::VALID_ACTIONS[:autosave]
+    if last_revision.event == RevisionTracking::REVISABLE_EVENTS[:autosave]
       # Turn papertrail off so it doesn't create a new revision when we restore
       # the original. The restore is technically just an update, and we would
       # end up with an 'Update' revision if we don't turn it off.
@@ -46,7 +46,7 @@ class RevisionCollapser
         last_revision.reify.save
       end
 
-      resource.versions.where(event: Activity::VALID_ACTIONS[:autosave]).destroy_all
+      resource.versions.where(event: RevisionTracking::REVISABLE_EVENTS[:autosave]).destroy_all
     end
   end
 end

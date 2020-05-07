@@ -18,13 +18,13 @@ RSpec.describe RevisionCollapser, versioning: true do
       # should never be more than 2.
       before do
         3.times do
-          resource.tap { |r| r.paper_trail_event = Activity::VALID_ACTIONS[:autosave] }.touch
+          resource.tap { |r| r.paper_trail_event = RevisionTracking::REVISABLE_EVENTS[:autosave] }.touch
         end
       end
 
       it 'removes all but 1 autosave' do
         expect { collapse_revisions }.to change {
-          resource.versions.where(event: Activity::VALID_ACTIONS[:autosave]).count
+          resource.versions.where(event: RevisionTracking::REVISABLE_EVENTS[:autosave]).count
         }.by(-2)
       end
 
@@ -35,10 +35,10 @@ RSpec.describe RevisionCollapser, versioning: true do
       end
 
       it 'removes all autosaves when an update is present' do
-        resource.tap { |r| r.paper_trail_event = Activity::VALID_ACTIONS[:update] }.touch
+        resource.tap { |r| r.paper_trail_event = RevisionTracking::REVISABLE_EVENTS[:update] }.touch
 
         expect { collapse_revisions }.to change {
-          resource.versions.where(event: Activity::VALID_ACTIONS[:autosave]).count
+          resource.versions.where(event: RevisionTracking::REVISABLE_EVENTS[:autosave]).count
         }.by(-3)
       end
     end
@@ -46,9 +46,9 @@ RSpec.describe RevisionCollapser, versioning: true do
     describe 'persisting original state' do
       it 'carrys original state forward over autosaves' do
         resource = create(:issue, text: 'ABC')
-        resource.update(text: 'ABCD', paper_trail_event: Activity::VALID_ACTIONS[:autosave])
-        resource.update(text: 'ABCDE', paper_trail_event: Activity::VALID_ACTIONS[:autosave])
-        resource.update(text: 'ABCDEF', paper_trail_event: Activity::VALID_ACTIONS[:autosave])
+        resource.update(text: 'ABCD', paper_trail_event: RevisionTracking::REVISABLE_EVENTS[:autosave])
+        resource.update(text: 'ABCDE', paper_trail_event: RevisionTracking::REVISABLE_EVENTS[:autosave])
+        resource.update(text: 'ABCDEF', paper_trail_event: RevisionTracking::REVISABLE_EVENTS[:autosave])
 
         described_class.call(resource)
 
@@ -57,10 +57,10 @@ RSpec.describe RevisionCollapser, versioning: true do
 
       it 'carrys original state forward over autosaves to final update' do
         resource = create(:issue, text: 'ABC')
-        resource.update(text: 'ABCD', paper_trail_event: Activity::VALID_ACTIONS[:autosave])
-        resource.update(text: 'ABCDE', paper_trail_event: Activity::VALID_ACTIONS[:autosave])
-        resource.update(text: 'ABCDEF', paper_trail_event: Activity::VALID_ACTIONS[:autosave])
-        resource.update(text: 'ABCDEF', paper_trail_event: Activity::VALID_ACTIONS[:update])
+        resource.update(text: 'ABCD', paper_trail_event: RevisionTracking::REVISABLE_EVENTS[:autosave])
+        resource.update(text: 'ABCDE', paper_trail_event: RevisionTracking::REVISABLE_EVENTS[:autosave])
+        resource.update(text: 'ABCDEF', paper_trail_event: RevisionTracking::REVISABLE_EVENTS[:autosave])
+        resource.update(text: 'ABCDEF', paper_trail_event: RevisionTracking::REVISABLE_EVENTS[:update])
 
         described_class.call(resource)
 
@@ -71,7 +71,7 @@ RSpec.describe RevisionCollapser, versioning: true do
     context 'when the last revision is an update' do
       before do
         3.times do
-          resource.tap { |r| r.paper_trail_event = Activity::VALID_ACTIONS[:autosave] }.touch
+          resource.tap { |r| r.paper_trail_event = RevisionTracking::REVISABLE_EVENTS[:autosave] }.touch
         end
 
         resource.touch
@@ -79,7 +79,7 @@ RSpec.describe RevisionCollapser, versioning: true do
 
       it 'removes all autosave revisions' do
         expect { collapse_revisions }.to change {
-          resource.versions.where(event: Activity::VALID_ACTIONS[:autosave]).count
+          resource.versions.where(event: RevisionTracking::REVISABLE_EVENTS[:autosave]).count
         }.by(-3)
       end
 
@@ -106,17 +106,17 @@ RSpec.describe RevisionCollapser, versioning: true do
 
     it 'removes all auto-save revisions' do
       2.times do
-        resource.tap { |r| r.paper_trail_event = Activity::VALID_ACTIONS[:autosave] }.touch
+        resource.tap { |r| r.paper_trail_event = RevisionTracking::REVISABLE_EVENTS[:autosave] }.touch
       end
 
       expect { discard_and_revert }.to change {
-        resource.versions.where(event: Activity::VALID_ACTIONS[:autosave]).count
+        resource.versions.where(event: RevisionTracking::REVISABLE_EVENTS[:autosave]).count
       }.by(-2)
     end
 
     it 'restores content from before auto-save fired' do
       resource = create(:issue, text: 'ABC')
-      resource.update(text: 'ABCDEF', paper_trail_event: Activity::VALID_ACTIONS[:autosave])
+      resource.update(text: 'ABCDEF', paper_trail_event: RevisionTracking::REVISABLE_EVENTS[:autosave])
 
       described_class.discard_and_revert(resource)
 
@@ -124,10 +124,10 @@ RSpec.describe RevisionCollapser, versioning: true do
     end
 
     it 'restores without creating a new update event' do
-      resource.update(text: 'ABCDEF', paper_trail_event: Activity::VALID_ACTIONS[:autosave])
+      resource.update(text: 'ABCDEF', paper_trail_event: RevisionTracking::REVISABLE_EVENTS[:autosave])
 
       expect { discard_and_revert }.not_to change {
-        resource.versions.where(event: Activity::VALID_ACTIONS[:update]).count
+        resource.versions.where(event: RevisionTracking::REVISABLE_EVENTS[:update]).count
       }
     end
   end
