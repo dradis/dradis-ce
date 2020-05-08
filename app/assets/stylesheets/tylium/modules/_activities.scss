@@ -71,7 +71,8 @@
       transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
       
       .activity-icon {
-        right: -4rem;
+        padding-left: 1rem;
+        right: -3.9rem;
         text-align: center;
         width: 1.2857142857em;
       }
@@ -103,7 +104,9 @@
         margin-left: -1px;
 
         .activity-icon {
-          left: -4.5rem;
+          padding-left: 0;
+          padding-right: 1rem;
+          left: -3.9rem;
           right: initial;
         }
 
