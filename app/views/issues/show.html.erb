@@ -63,12 +63,13 @@
                   <%= tag_and_name_for(@issue) %>
                   <span>
                     <% if @issue.state == 'draft' %>
-                      <i class="fa fa-pencil-square-o"></i> Draft
+                      <i class="fa fa-pencil-square-o"></i>
                     <% elsif @issue.state == 'review' %>
-                      <i class="fa fa-share-square-o"></i> Ready For Review
+                      <i class="fa fa-share-square-o"></i>
                     <% elsif @issue.state == 'published' %>
-                      <i class="fa fa-check-square-o"></i> Published
+                      <i class="fa fa-check-square-o"></i>
                     <% end %>
+                    <%= Issue.state_names[@issue.state] %>
                   </span>
                 </div>
               </h4>

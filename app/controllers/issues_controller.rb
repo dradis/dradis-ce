@@ -8,8 +8,6 @@ class IssuesController < AuthenticatedController
   include NotificationsReader
   include ProjectScoped
 
-  DEFAULT_COLUMNS = %W[Title State Tags Affected Created Created\sby Updated].freeze
-
   before_action :set_issuelib
   before_action :set_issues, except: [:destroy]
 
@@ -17,7 +15,8 @@ class IssuesController < AuthenticatedController
   before_action :set_or_initialize_tags, except: [:destroy]
 
   def index
-    @columns = @issues.map(&:fields).map(&:keys).uniq.flatten | DEFAULT_COLUMNS
+    default_columns = %W[Title State Tags Affected Created Created\sby Updated].freeze
+    @columns = @issues.map(&:fields).map(&:keys).uniq.flatten | default_columns
   end
 
   def show

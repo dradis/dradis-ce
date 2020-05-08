@@ -39,11 +39,9 @@ class IssuesTable extends ItemsTable
         $(that.selectedItemsSelector).each ->
           $row = $(this).parent().parent()
           $stateTD = $row.find('td').eq(stateColumnIndex)
-          $stateTD.data('sort-value', targetState)
+          $stateTD.data('sort-value', data.state)
           $stateTD.removeClass('loading')
-
-          stateString = if targetState == 'review' then 'Ready for Review' else targetState
-          $stateTD.text(stateString.charAt(0).toUpperCase() + stateString.slice(1))
+          $stateTD.text(data.state)
     }
 
   onTagSelected: (event) =>
