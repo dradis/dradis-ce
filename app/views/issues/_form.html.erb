@@ -15,9 +15,10 @@
         class: 'textile h-100',
         data: {
           allow_dropdown: @issue.new_record?,
-          behavior: 'rich-toolbar',
+          autosave_key: "#{current_project.id}-issue-#{ @issue.persisted? ? "edit-#{@issue.id}" : 'new' }",
+          behavior: 'auto-save rich-toolbar drop-zone',
           paths: editor_paths,
-          'rich-toolbar': 'block-code bold field italic link list-ol list-ul table'
+          'rich-toolbar': 'block-code bold field image italic link list-ol list-ul table'
         },
         rows: 20
       }

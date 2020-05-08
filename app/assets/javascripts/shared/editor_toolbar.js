@@ -21,7 +21,7 @@ class EditorToolbar {
   }
 
   init() {
-    this.$target.wrap('<div class="editor-field" data-behavior="editor-field"><div class="textarea-container"></div></div>');
+    this.$target.wrap('<div class="editor-field" data-behavior="editor-field"><div class="textarea-container" data-behavior="jquery-upload"></div></div>');
     this.$editorField = this.$target.parents('[data-behavior=editor-field]');
     this.$editorField.prepend('<div class="editor-toolbar" data-behavior="editor-toolbar"></div>');
     this.$editorToolbar = this.$editorField.find('[data-behavior=editor-toolbar]');
@@ -170,6 +170,7 @@ class EditorToolbar {
       'bold':        new Affix('*', 'Bold text', '*'),
       'field':       new Affix('#[', 'Field', ']#\n'),
       //'highlight':   new Affix('$${{', 'Highlighted text', '}}$$'),
+      'image':       new Affix(''),
       //'inline-code': new Affix('@', 'Inline code', '@'),
       'italic':      new Affix('_', 'Italic text', '_'),
       'link':        new Affix('"', 'Link text', '":http://'),
@@ -216,6 +217,12 @@ class EditorToolbar {
     </div>';
     if (include.includes('list-ol')) str += '<div class="editor-btn" data-btn="list-ol" aria-label="ordered list">\
       <i class="fa fa-list-ol"></i>\
+    </div>';
+
+    str += '<div class="divider-vertical"></div>';
+
+    if (include.includes('image')) str += '<div class="editor-btn" data-btn="image" aria-label="image">\
+      <i class="fa fa-picture-o"></i>\
     </div>';
 
     /* Additional buttons for future use
