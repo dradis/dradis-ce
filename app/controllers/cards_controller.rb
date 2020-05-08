@@ -7,8 +7,7 @@ class CardsController < AuthenticatedController
   include NotificationsReader
 
   # Not sorted because we need the Board and List first!
-  before_action :set_current_board_and_list
-  before_action :set_or_initialize_card
+  before_action :set_resources
   before_action :initialize_sidebar, only: [:show, :new, :edit]
 
   layout 'cards'
@@ -92,16 +91,18 @@ class CardsController < AuthenticatedController
     @sorted_cards = @list.ordered_cards.select(&:persisted?)
   end
 
-  def set_or_initialize_card
+  def set_resources
+    @board = current_project.boards.includes(:lists).find(params[:board_id])
+    @list = @board.lists.includes(:cards).find(params[:list_id])
+
     if params[:id]
-      @card = @list.cards.find(params[:id])
+      # Cards move lists, but don't move boards, assume it's on the same board
+      # somewhere.
+      @card = Card.where(list_id: @board.lists).find(params[:id])
+
+      redirect_to [current_project, @board, @card.list, @card] if @card.list_id != @list.id
     else
       @card = @list.cards.new
     end
-  end
-
-  def set_current_board_and_list
-    @board = current_project.boards.includes(:lists).find(params[:board_id])
-    @list  = @board.lists.includes(:cards).find(params[:list_id])
   end
 end
