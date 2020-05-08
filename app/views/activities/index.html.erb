@@ -12,8 +12,8 @@
 <% end %>
 
 <div class="content-container mt-3">
-  <div class="all-activities-container">
-    <% if @activities.any? %>
+  <% if @activities.any? %>
+    <div class="container all-activities-container">
       <% @activities.each do |activity| %>
         <% present activity do |activity_presenter| %>
           <div class="activity-date-header" data-behavior="activity-date-header">
@@ -31,12 +31,13 @@
                 <%= activity_presenter.activity_time %>
               </div>
             </div>
+            
             <%= activity_presenter.icon %>
           <% end %>
         <% end %>
       <% end %>
-    <% else %>
-      <p class="mb-0">There has been no activity yet.</p>
-    <% end %>
-  </div>
+    </div>
+  <% else %>
+    <p class="text-center">There has been no activity yet.</p>
+  <% end %>
 </div>
