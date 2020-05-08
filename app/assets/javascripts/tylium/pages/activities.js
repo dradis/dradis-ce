@@ -8,13 +8,13 @@ document.addEventListener( "turbolinks:load", function(){
     if (prevDate.length && currentDate == prevDate) {
       $(this).addClass('d-none').attr('data-visible', 'hidden');
     }
-  })
+  });
 
   // select activities between visible date headers and group them together
   $('[data-behavior~=activity-date-header]').not('[data-visible~=hidden]').each(function() {
-    $(this).nextUntil($('[data-behavior~=activity-date-header]').not('[data-visible~=hidden]')).wrapAll('<div class="activities-group" data-behavior="activities-group"></div>')
-  })
+    $(this).nextUntil($('[data-behavior~=activity-date-header]').not('[data-visible~=hidden]')).wrapAll('<div class="activities-group" data-behavior="activities-group"></div>');
+  });
 
   // move every other activity group to the right side
   $('[data-behavior~=activities-group]:odd').addClass('ml-auto');
-})
+});
