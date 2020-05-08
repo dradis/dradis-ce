@@ -1,16 +1,13 @@
 // this is shared between activities#index and the projects#show activity feed
 .activity {
-  position: relative;
-  overflow: hidden;
-  display: flex;
   align-items: center;
-  padding: 1rem 0;
+  display: flex;
+  position: relative;
 
   .activity-icon {
-    position: absolute;
-    right: 0;
     font-size: 3rem;
     opacity: 0.08;
+    position: absolute;
   }
 }
 
@@ -19,6 +16,12 @@
   
   .activity {
     border-bottom: 1px solid $borderColor;
+    overflow: hidden;
+    padding: 1rem 0;
+
+    .activity-icon {
+      right: 0;
+    }
 
     .body {
       display: block;
@@ -48,10 +51,6 @@
 // this is for activities#index
 .all-activities-container {
 
-  .activities-group {
-    width: 50%;
-  }
-
   .activity-date-header {
     display: flex;
     justify-content: center;
@@ -63,13 +62,85 @@
     }
   }
 
+  .activities-group {
+    width: 50%;
+
+    .activity {
+      border: 1px solid transparent;
+      padding: 1rem;
+      transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+      
+      .activity-icon {
+        right: -4rem;
+      }
+
+      .body {
+        display: flex;
+
+        .activity-time {
+          position: absolute;
+          right: 1rem;
+        }
+
+        .title {
+          padding-right: 5rem;
+        }
+      }
+
+      &:hover {
+        background-color: darken($primaryBgColor, 3%);
+        border-color: $borderColor;
+        border-bottom-left-radius: 5px;
+        border-top-left-radius: 5px;
+      }
+    }
+
+    &.ml-auto {
+
+      .activity {
+        margin-left: -1px;
+
+        .activity-icon {
+          left: -4.5rem;
+          right: initial;
+          text-align: center;
+          width: 1.2857142857em;
+        }
+
+        .body {
+          flex-direction: row-reverse;
+
+          .activity-time {
+            left: 1rem;
+          }
+
+          .title {
+            padding-right: 0;
+          }
+        }
+
+        .details {
+          padding-left: 5rem;
+        }
+
+        &:hover {
+          border-bottom-left-radius: 0px;
+          border-bottom-right-radius: 5px;
+          border-top-left-radius: 0px;
+          border-top-right-radius: 5px;
+          
+        }
+      }
+    }
+  }
+
   &:before {
-    content: '';
-    position: absolute;
-    top: 2rem;
+    border-left: 1px solid $borderColor;
     bottom: 2rem;
+    content: '';
     left: 50%;
     margin-left: -1px;
-    border-left: 1px solid rgba(0,0,0,0.1);
+    position: absolute;
+    top: 2rem;
   }
 }
