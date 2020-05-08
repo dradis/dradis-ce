@@ -11,7 +11,7 @@
   </nav>
 <% end %>
 
-<div class="content-container mt-3">
+<div class="content-container mt-3 <%= 'pt-3' if @activities.any? %>">
   <% if @activities.any? %>
     <div class="container all-activities-container">
       <% @activities.each do |activity| %>
