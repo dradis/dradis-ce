@@ -5,6 +5,7 @@ v3.17 (Month 2020)
   * Card improvements:
     - Activity Feed now shows board name and link
     - No mandatory due date
+    - Redirects to new url if the card has changed lists
   * Comments can now have Textile markup
   * Comments now show author's name instead of email
   * Display note and evidence titles in breadcrumbs
