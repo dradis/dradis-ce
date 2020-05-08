@@ -22,6 +22,7 @@ v3.17 (Month 2020)
   * Bugs fixed:
     - Fix textile preview not showing on issues with very long text
     - Long project names interfering with search bar expansion
+    - Repetative prompt when images are pasted after navigating multiple views.
     - Report 'Download' button becoming a disabled 'Processing...' button once clicked
     - SemVer pre-release appending character
     - Set :author when creating Evidence from an Issue
