@@ -1,4 +1,4 @@
-class FieldParser
+module FieldParser
   REGEX = /#\[(.+?)\]#[\r|\n](.*?)(?=#\[|\z)/m
 
   # Parse the contents of the field and split it to return a Hash of field
@@ -10,7 +10,7 @@ class FieldParser
   #   #[Description]#
   #   Lorem ipsum...
   #
-  def self.parse_fields(string)
+  def parse_fields(string)
     Hash[ *string.scan(REGEX).flatten.map(&:strip) ]
   end
 end

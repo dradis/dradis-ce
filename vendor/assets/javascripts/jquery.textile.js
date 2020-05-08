@@ -190,7 +190,7 @@
       this._previousContent = this.$element.val();
 
       $.post({
-        url: this.$element.data('preview-url'),
+        url: this.$element.data('paths').preview_url,
         data: JSON.stringify(data),
         contentType: 'application/json',
         success: function(result) {

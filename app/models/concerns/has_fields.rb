@@ -1,5 +1,6 @@
 module HasFields
   extend ActiveSupport::Concern
+  include FieldParser
 
   # This method can be overridden by classes including the module to add
   # custom fields to the collection that would normally be returned by
@@ -28,7 +29,7 @@ module HasFields
     def dradis_has_fields_for(container_field)
       define_method :fields do
         if raw_content = self.send(container_field)
-          local_fields.merge(FieldParser.parse_fields(raw_content))
+          local_fields.merge(parse_fields(raw_content))
         else # if the container field is empty, just return an empty hash:
           {}
         end
