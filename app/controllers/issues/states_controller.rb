@@ -3,7 +3,7 @@ class Issues::StatesController < AuthenticatedController
 
   def update_states
     issues = current_project.issues.where(id: params[:ids])
-    issues.update_all(state: state_params)
+    issues.update_all(state: state_params, updated_at: Time.now)
 
     render json: { state: Issue.state_names[state_params] }
   end
