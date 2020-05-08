@@ -198,10 +198,7 @@ describe 'Card pages:' do
         expect(page).to have_selector("a[href='#{project_board_list_card_path(current_project, @board, @list, @card)}'][data-method='delete']")
       end
 
-      describe "clicking 'delete'" do
-        before { PaperTrail.enabled = true }
-        after  { PaperTrail.enabled = false }
-
+      describe "clicking 'delete'", versioning: true do
         let(:submit_form) { click_link 'Delete' }
 
         it 'deletes the card' do
