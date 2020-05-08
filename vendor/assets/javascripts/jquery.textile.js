@@ -189,25 +189,28 @@
     _loadPreview: function(data) {
       this._previousContent = this.$element.val();
 
-      $.post(this.$element.data('paths').preview_url,
-        data,
-        function(result) {
+      $.post({
+        url: this.$element.data('paths').preview_url,
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: function(result) {
           this.options.$preview.removeClass('loading-indicator')
             .html(result);
           this.options.$preview.children(':first').addClass('textile-preview');
           this._previewRendered = true;
         }.bind(this)
-      );
+      });
     },
     // Ajax write
     _loadSource: function() {
-      $.post(
-        this.$element.data('paths').source_url,
-        { form: this._serializedFormData() },
-        function(result){
+      $.post({
+        url: this.$element.data('paths').source_url,
+        data: JSON.stringify({ form: this._serializedFormData() }),
+        contentType: 'application/json',
+        success: function(result){
           this.$element.val(result);
         }.bind(this)
-      );
+      });
     },
     _onKeyPressPreview: function(type) {
       if (type == 'fields') {
@@ -330,7 +333,7 @@
     },
 
     _serializedFormData: function() {
-      return JSON.stringify( $('[name^=item_form]', this.options.$fields).serializeArray() );
+      return $('[name^=item_form]', this.options.$fields).serializeArray();
     }
   };
 

@@ -12,15 +12,19 @@ class FieldsController < AuthenticatedController
 
   # Returns the source text given a form data
   def source
-    render plain: FieldParser.convert_to_source(form_params)
+    render plain: convert_to_source
   end
 
   private
 
-  # Reformatted form parameters to be converted to source
-  def form_params
-    JSON.parse(params[:form]).map do |field|
-      [field['key'], field['value']]
-    end || []
+  # Convert serialized form data to Dradis-style item content
+  def convert_to_source
+    params[:form].each_slice(2).map do |field_name, field_value|
+      field = field_name[:value]
+      value = field_value[:value]
+      next if field.empty?
+
+      "#[#{field}]#\n#{value}"
+    end.compact.join("\n\n")
   end
 end

@@ -7,22 +7,7 @@ class MarkupsController < AuthenticatedController
 
   # Returns the Textile version of a text passed as parameter
   def preview
-    @text =
-      if params[:form]
-        FieldParser.convert_to_source(form_params)
-      else
-        params[:text]
-      end
-
+    @text = params[:text]
     render layout: false
-  end
-
-  private
-
-  # Reformatted form parameters to be converted to source
-  def form_params
-    JSON.parse(params[:form]).map do |field|
-      [field['key'], field['value']]
-    end || []
   end
 end
