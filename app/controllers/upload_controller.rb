@@ -151,5 +151,4 @@ class UploadController < AuthenticatedController
       redirect_to project_upload_manager_path(current_project), alert: 'Something fishy is going on...'
     end
   end
-
 end
