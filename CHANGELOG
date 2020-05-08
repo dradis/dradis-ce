@@ -1,5 +1,6 @@
 v3.17 (Month 2020)
   * Add author to evidence and notes views
+  * Add states (draft, review, published) to issues
   * Adjusted Uploads layout to provide more visibility to the output console
   * Boards can be renamed and deleted through their dots menu
   * Card improvements:
