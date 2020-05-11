@@ -143,6 +143,7 @@ describe "Issues API" do
       let(:model) { issue }
       include_examples 'creates an Activity', :update
       include_examples 'sets the whodunnit', :update
+      include_examples 'collapses autosaves'
 
       it "throws 415 unless JSON is sent" do
         params = { issue: { text: "Bad issuet" } }

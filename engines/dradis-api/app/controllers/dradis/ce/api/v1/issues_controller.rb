@@ -30,6 +30,7 @@ module Dradis::CE::API
       def update
         @issue = current_project.issues.find(params[:id])
         if @issue.update_attributes(issue_params)
+          RevisionCollapser.call(@issue)
           track_updated(@issue)
           render node: @node
         else
