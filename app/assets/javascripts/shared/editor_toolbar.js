@@ -21,10 +21,10 @@ class EditorToolbar {
   }
 
   init() {
-    this.$target.wrap('<div class="editor-field" data-behavior="editor-field"><div class="textarea-container" data-behavior="jquery-upload"></div></div>');
-    this.$editorField = this.$target.parents('[data-behavior=editor-field]');
+    this.$target.wrap('<div class="editor-field" data-behavior="editor-field jquery-upload"><div class="textarea-container"></div></div>');
+    this.$editorField = this.$target.parents('[data-behavior~=editor-field]');
     this.$editorField.prepend('<div class="editor-toolbar" data-behavior="editor-toolbar"></div>');
-    this.$editorToolbar = this.$editorField.find('[data-behavior=editor-toolbar]');
+    this.$editorToolbar = this.$editorField.find('[data-behavior~=editor-toolbar]');
 
     this.$editorToolbar.append(this.textareaElements(this.opts.include));
 
@@ -221,8 +221,9 @@ class EditorToolbar {
 
     str += '<div class="divider-vertical"></div>';
 
-    if (include.includes('image')) str += '<div class="editor-btn" data-btn="image" aria-label="image">\
+    if (include.includes('image')) str += '<div class="editor-btn image-btn" data-btn="image" aria-label="image">\
       <i class="fa fa-picture-o"></i>\
+      <input type="file" name="files[]" title="" multiple>\
     </div>';
 
     /* Additional buttons for future use

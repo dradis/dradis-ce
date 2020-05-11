@@ -24,7 +24,7 @@ function fileUploadInit($element = $('[data-behavior~=jquery-upload]')) {
     }).on('fileuploadadd', function (e, data) {
 
       // Auto-upload if file is dropped on editor fields
-      if ($(this).parents('[data-behavior~=editor-field]').length) {
+      if ($(this).is('[data-behavior~=editor-field]')) {
 
         // Use path from attachments box in sidebar
         var attachmentsPath = $(this).parents().find('#fileupload').attr('action');
