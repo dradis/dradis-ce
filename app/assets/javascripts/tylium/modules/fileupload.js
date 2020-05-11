@@ -31,10 +31,28 @@ function fileUploadInit($element = $('[data-behavior~=jquery-upload]')) {
         
         $(this).fileupload('option', { 
           autoUpload: true,
-          url: attachmentsPath
+          url: attachmentsPath,
+          singleFileUploads: true
         });
       }
-    });
+    }).on('fileuploadstart', function (e, data) {
+
+      // inject syntax to editor field textarea
+      if ($(this).is('[data-behavior~=editor-field]')) {
+        $(this).find('[data-behavior~=rich-toolbar').focus()
+
+        document.execCommand('insertText', false, '! File upload in progress... !\n');
+      }
+    }).on('fileuploaddone', function (e, data) {
+
+      // inject syntax to editor field textarea
+      if ($(this).is('[data-behavior~=editor-field]')) {
+        var uploadedFile = data.result[0].url
+        
+        $(this).find('[data-behavior~=rich-toolbar').focus().val($(this).val().replace(/! File upload in progress... !/i, ''));
+        document.execCommand('insertText', false, '!' + uploadedFile + '!\n');
+      }
+    })
   });
 }
 
