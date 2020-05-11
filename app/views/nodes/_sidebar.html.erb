@@ -29,6 +29,6 @@
         index_path: project_node_path(@node.project, @node, tab: 'evidence-tab') %>
 
   <!-- Attachments -->
-  <%= render 'attachments/attachment_box' %>
+  <%= render partial: 'attachments/attachment_box', locals: { attachments_node: @node } %>
 
 <% end %>
