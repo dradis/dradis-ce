@@ -92,21 +92,20 @@ class LocalAutoSave {
         var element   = that.target.elements[name];
 
         // Skip loop if element is undefined
-        if (!element) { continue }
+        if (!element) { continue; }
 
         // RadioNodeList is an array of checkboxes or radio buttons
         if (element instanceof RadioNodeList) {
-          console.log(element)
           element.forEach(function(radioNodeListElement) {
             if (['checkbox', 'radio'].includes(radioNodeListElement.type)) {
-              if (radioNodeListElement.value == item[1]) {
-                radioNodeListElement.checked = true
+              if (radioNodeListElement.value === item[1]) {
+                radioNodeListElement.checked = true;
               }
             }
           })
         } else if (element.type === 'checkbox') {
-          if (element.value == item[1]) {
-            element.checked = true
+          if (element.value === item[1]) {
+            element.checked = true;
           }
         } else if (element.type === 'file') {
           element.value = '';
@@ -114,7 +113,26 @@ class LocalAutoSave {
           element.value = item[1];
           $(element).trigger('load-preview');
         }
+
+        this.restoreTagInputDisplay(data);
       }
+    }
+  }
+
+  restoreTagInputDisplay(data) {
+    var tagInputData = data.find(function(item) {
+      return item[0] === 'issue[tag_list]';
+    })
+
+    if (tagInputData) {
+      var hiddenInput = document.querySelector('#issue_tag_list');
+      hiddenInput.value = tagInputData[1];
+
+      var dropdownBtnSpan = document.querySelector('#issues_editor .dropdown-toggle span.tag');
+      var selectedDropdown = document.querySelector(`.js-taglink[data-tag='${tagInputData[1]}']`);
+
+      dropdownBtnSpan.innerHTML = selectedDropdown.innerHTML;
+      dropdownBtnSpan.style.color = selectedDropdown.style.color;
     }
   }
 
