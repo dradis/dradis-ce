@@ -20,7 +20,7 @@ class LocalAutoSave {
     ];
 
     // Don't store authenticity_token and utf8
-    this.excludedInputNames = ['utf8', 'authenticity_token'];
+    this.excludedInputNames = ['utf8', 'authenticity_token', '_method'];
 
     this.init();
   }
@@ -72,34 +72,12 @@ class LocalAutoSave {
 
   getData() {
     var that = this;
+    var data = new FormData(this.target);
+    var dataArray = Array.from(data).filter(function(dataElement) {
+      return !that.excludedInputNames.includes(dataElement[0] );
+    });
 
-    var data = new FormData(this.target)
-
-    var hashBuilder = function(hash, dataArray) {
-      // Don't store utf8 and authenticity_token inputs
-      if (that.excludedInputNames.includes(dataArray[0])) { return hash; }
-
-      // Check if name is an array, i.e. collection checkboxes
-      if (dataArray[0].slice(-2) == '[]') {
-        // When using collection checkboxes, rails/simple_form will create a hidden input with
-        // the same name, i.e. <input type="hidden" name="card[assignee_ids][]" value="">
-        // Don't store that hidden input
-        if (!dataArray[1].length) { return hash; }
-
-        // if array exist, push value to array, else create new array
-        if (hash[dataArray[0]]) {
-          hash[dataArray[0]].push(dataArray[1]);
-        } else {
-          hash[dataArray[0]] = [dataArray[1]];
-        }
-      } else {
-        hash[dataArray[0]] = dataArray[1];
-      }
-
-      return hash;
-    }
-
-    return Array.from(data.entries()).reduce(hashBuilder, {});
+    return dataArray;
   }
 
   restoreData() {
@@ -107,42 +85,35 @@ class LocalAutoSave {
     var data = JSON.parse(localStorage.getItem(this.key));
 
     if (data !== null) {
-      for (let [key, value] of Object.entries(data)) {
-        if (key.slice(-2) == '[]') {
-          value.forEach(function(checkboxValue) {
-            var input = that.target.querySelector(`[name='${key}'][value='${checkboxValue}']`);
-            input.checked = true;
-          })
-        } else {
-          // Query for inputs here first so that we don't query twice
-          var inputs = that.target.querySelectorAll(`[name='${key}']`);
+      // Deserialization of form data
+      // Reference: https://wildwolf.name/store-formdata-object-in-localstorage/
+      for (var item of data) {
+        var name = item[0];
+        var element   = that.target.elements[name];
 
-          if (inputs.length) {
-            // Handle checking for radio button and check boxes
-            if (['checkbox', 'radio'].includes(inputs[0].type)) {
-              inputs.forEach(function(input) {
-                if (input.value == value) {
-                  input.checked = true;
-                }
-              });
-            } else {
-              inputs[0].value = value;
-              $(inputs[0]).trigger('load-preview');
+        // Skip loop if element is undefined
+        if (!element) { continue }
+
+        // RadioNodeList is an array of checkboxes or radio buttons
+        if (element instanceof RadioNodeList) {
+          console.log(element)
+          element.forEach(function(radioNodeListElement) {
+            if (['checkbox', 'radio'].includes(radioNodeListElement.type)) {
+              if (radioNodeListElement.value == item[1]) {
+                radioNodeListElement.checked = true
+              }
             }
+          })
+        } else if (element.type === 'checkbox') {
+          if (element.value == item[1]) {
+            element.checked = true
           }
+        } else if (element.type === 'file') {
+          element.value = '';
+        } else {
+          element.value = item[1];
+          $(element).trigger('load-preview');
         }
-      }
-
-      // Restore tag input dropdown in isses/_form
-      if (data['issue[tag_list]'] && data['issue[tag_list]'].length) {
-        var hiddenInput = document.querySelector('#issue_tag_list')
-        hiddenInput.value = data['issue[tag_list]']
-
-        var dropdownBtnSpan = document.querySelector('#issues_editor .dropdown-toggle span.tag')
-        var selectedDropdown = document.querySelector(`.js-taglink[data-tag='${data['issue[tag_list]']}']`)
-
-        dropdownBtnSpan.innerHTML = selectedDropdown.innerHTML
-        dropdownBtnSpan.style.color = selectedDropdown.style.color
       }
     }
   }
