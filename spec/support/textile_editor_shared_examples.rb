@@ -11,11 +11,36 @@ shared_examples 'a form with a help button' do
   end
 end
 
+shared_examples 'an editor that remembers what view you like' do
+  before do
+    visit action_path
+  end
+  
+  it 'will load source view after using source view' do
+    click_link 'Source'
+
+    visit action_path
+
+    expect(page).to have_css('textarea.textile')
+  end
+
+  it 'will load fields view after viewing source view but clicking back to fields view' do
+    click_link 'Source'
+    click_link 'Fields'
+
+    visit action_path
+
+    expect(page).to have_css('.textile-form')
+  end
+end
+
 shared_examples 'a textile form view' do |klass|
   before do
     visit action_path
 
     required_form if defined?(required_form)
+
+    click_link 'Fields'
   end
 
   it 'add fields in the form', js: true do

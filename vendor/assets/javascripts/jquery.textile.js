@@ -21,6 +21,7 @@
   var pluginName = 'textile',
       document = window.document,
       defaults = {
+        defaultViewKey: 'editor.view',
         // Start fullscreen?
         fullscreen: false,
         // Add a resizer bar at the bottom of the editor
@@ -95,6 +96,8 @@
 
       // Event bindings
       this._bindBehaviors();
+
+      this._setDefaultView();
     },
     _bindBehaviors: function() {
       // Sync preview
@@ -192,8 +195,10 @@
       $.post(this.$element.data('preview-url'),
         data,
         function(result) {
-          this.options.$preview.removeClass('loading-indicator')
-            .html(result);
+          this.options.$preview.removeClass('loading-indicator').html(result);
+          if (result == '\n') {
+            this.options.$preview.append('<div class="preview-placeholder"><h5>Add some fields to see a live preview here</h5></div>')
+          }
           this.options.$preview.children(':first').addClass('textile-preview');
           this._previewRendered = true;
         }.bind(this)
@@ -225,6 +230,7 @@
       }
     },
     _onBtnFields: function() {
+      localStorage.setItem(this.options.defaultViewKey, 'fields');
       // Activate toolbar button
       var scope = this.options.$wrap;
       $('.textile-toolbar a', scope).removeClass('active');
@@ -278,9 +284,6 @@
         this.options.$wrap.css('width', 'auto');
         this.options.tmpspan.after(this.options.$wrap).remove();
 
-        this.options.$preview.css('height', '100%');
-        this.$element.css('height', this.options.height);
-
         // update button icon
         $btnFS.removeClass('fa-compress').addClass('fa-expand');
       }
@@ -302,6 +305,7 @@
     },
     // Toolbar button handlers
     _onBtnSource: function() {
+      localStorage.setItem(this.options.defaultViewKey, 'source');
       // Activate toolbar button
       var scope = this.options.$wrap;
       $('.textile-toolbar a', scope).removeClass('active');
@@ -331,6 +335,12 @@
 
     _serializedFormData: function() {
       return JSON.stringify( $('[name^=item_form]', this.options.$fields).serializeArray() );
+    },
+
+    _setDefaultView: function() {
+      if (localStorage.getItem(this.options.defaultViewKey) == 'source') {
+        this._onBtnSource();
+      }
     }
   };
 
