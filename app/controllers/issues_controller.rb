@@ -157,7 +157,7 @@ class IssuesController < AuthenticatedController
   end
 
   def issue_params
-    params.require(:issue).permit(:tag_list, :text).merge(updated_at: Time.now)
+    params.require(:issue).permit(:tag_list, :text)
   end
 
 end

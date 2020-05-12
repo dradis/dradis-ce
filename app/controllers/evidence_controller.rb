@@ -154,7 +154,6 @@ class EvidenceController < NestedNodeResourceController
     elsif params[:evidence]
       @evidence = Evidence.new(evidence_params) do |e|
         e.node = @node
-        e.updated_at = Time.now
       end
     else
       @evidence = Evidence.new(node: @node)

@@ -86,6 +86,6 @@ class NotesController < NestedNodeResourceController
   end
 
   def note_params
-    params.require(:note).permit(:category_id, :text, :node_id).merge(updated_at: Time.now)
+    params.require(:note).permit(:category_id, :text, :node_id)
   end
 end

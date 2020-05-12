@@ -87,7 +87,7 @@ class CardsController < AuthenticatedController
   private
 
   def card_params
-    params.require(:card).permit(:name, :description, :due_date, assignee_ids: []).merge(updated_at: Time.now)
+    params.require(:card).permit(:name, :description, :due_date, assignee_ids: [])
   end
 
   def initialize_sidebar

@@ -22,7 +22,7 @@ class EditorChannel < ApplicationCable::Channel
     resource.paper_trail_event = RevisionTracking::REVISABLE_EVENTS[:autosave]
 
     if resource.update_attributes resource_params(params)
-      RevisionCollapser.collapse(resource)
+      RevisionCollapser.collapse(resource, RevisionTracking::REVISABLE_EVENTS[:autosave])
       self.class.broadcast_to([current_user, current_project, resource], resource.reload.updated_at.to_i)
     end
   end
