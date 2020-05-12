@@ -11,7 +11,7 @@
     <% if flash.any? %>
       <% # when flash messages present, disable turbolinks cache to avoid
         # the message appear and disappear in the next page load %>
-      <meta name="turbolinks-cache-control" content="no-cache">
+      <meta name="turbolinks-cache-control" content="reload">
     <% end %>
     <%= render 'comments/mentionable_users' if @mentionable_users %>
 
