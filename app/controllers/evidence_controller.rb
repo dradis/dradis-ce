@@ -5,6 +5,7 @@ class EvidenceController < NestedNodeResourceController
   include MultipleDestroy
   include NodesSidebar
   include NotificationsReader
+  include RevisionCollapsing
 
   before_action :set_or_initialize_evidence, except: [ :index, :create_multiple ]
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
@@ -28,7 +29,7 @@ class EvidenceController < NestedNodeResourceController
 
     respond_to do |format|
       if @evidence.save
-        RevisionCollapser.collapse(@evidence)
+        collapse_revisions(@evidence)
         track_created(@evidence)
         format.html {
           redirect_to [current_project, @evidence.node, @evidence],
