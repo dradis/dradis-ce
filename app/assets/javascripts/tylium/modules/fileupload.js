@@ -4,55 +4,62 @@ function fileUploadInit($element = $('[data-behavior~=jquery-upload]')) {
 
   $element.each(function() {
 
-    $(this).fileupload({
-      dropZone: $(this).find('[data-behavior~=drop-zone]'),
-      destroy: function(e, data) {
-        if (confirm('Are you sure?\n\nProceeding will delete this attachment from the associated node.')) {
-          $.blueimp.fileupload.prototype.options.destroy.call(this, e, data);
-        }
-      },
-      paste: function(e, data) {
-        $.each(data.files, function(index, file) {
-          var filename, newFile;
-          filename = prompt('Please provide a filename for the pasted image', 'screenshot-XX.png') || 'unnamed.png';
-          newFile = new File([file], filename, {
-            type: file.type
-          });
-          data.files[index] = newFile;
-        });
-      }
-    }).on('fileuploadadd', function (e, data) {
+    if ($(this).is($('[data-behavior~=editor-field'))) {
 
-      // Auto-upload if file is dropped on editor fields
-      if ($(this).is('[data-behavior~=editor-field]')) {
+      // Config for Editor Fields
+      var actionPath = $(this).parents().find('#fileupload').attr('action');
 
-        // Use path from attachments box in sidebar
-        var attachmentsPath = $(this).parents().find('#fileupload').attr('action');
-        
-        $(this).fileupload('option', { 
-          autoUpload: true,
-          url: attachmentsPath,
-          singleFileUploads: true
-        });
-      }
-    }).on('fileuploadstart', function (e, data) {
+      $(this).fileupload({
+        autoUpload: true,
+        dropZone: $(this).find('[data-behavior~=drop-zone]'),
+        pasteZone: null, // Disable uploading files on paste in the textarea (this prevents a double upload since the attachment box pasteZone is the entire document)
+        singleFileUploads: true,
+        url: actionPath,
+      }).on('fileuploadadd', function (e, data) {
 
-      // inject syntax to editor field textarea
-      if ($(this).is('[data-behavior~=editor-field]')) {
+        // inject placeholder into textarea for each dragged in file
         $(this).find('[data-behavior~=rich-toolbar').focus()
+        $.each(data.files, function (index, file) {
+          document.execCommand('insertText', false, '! ' + file.name + ' uploading... !\n');
+        })
+      }).on('fileuploaddone', function (e, data) {
 
-        document.execCommand('insertText', false, '! File upload in progress... !\n');
-      }
-    }).on('fileuploaddone', function (e, data) {
-
-      // inject syntax to editor field textarea
-      if ($(this).is('[data-behavior~=editor-field]')) {
         var uploadedFile = data.result[0].url
+        var $textarea = $(this).find('[data-behavior~=rich-toolbar')
         
-        $(this).find('[data-behavior~=rich-toolbar').focus().val($(this).val().replace(/! File upload in progress... !/i, ''));
-        document.execCommand('insertText', false, '!' + uploadedFile + '!\n');
-      }
-    })
+        $.each(data.files, function (index, file) {
+
+          // remove placeholder from textarea for each file once it's uploaded
+          $textarea.focus().val($textarea.val().replace(/\!.*\!\n/, ''));
+
+          // inject syntax into textarea to automatically display uploaded image
+          document.execCommand('insertText', false, '!' + uploadedFile + '!\n');
+        })
+      })
+    } 
+    else {
+
+      // Config for attachments-box
+      $('[data-behavior~=jquery-upload]').fileupload({
+        autoUpload: true,
+        dropZone: $(this).find('[data-behavior~=drop-zone]'),
+        destroy: function(e, data) {
+          if (confirm('Are you sure?\n\nProceeding will delete this attachment from the associated node.')) {
+            $.blueimp.fileupload.prototype.options.destroy.call(this, e, data);
+          }
+        },
+        paste: function(e, data) {
+          $.each(data.files, function(index, file) {
+            var filename, newFile;
+            filename = prompt('Please provide a filename for the pasted image', 'screenshot-XX.png') || 'unnamed.png';
+            newFile = new File([file], filename, {
+              type: file.type
+            });
+            data.files[index] = newFile;
+          });
+        }
+      })
+    }
   });
 }
 
