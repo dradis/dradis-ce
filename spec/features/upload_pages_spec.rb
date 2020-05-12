@@ -10,10 +10,10 @@ describe 'upload pages' do
 
     it 'is disabled when choosing the dradis package/template' do
       find('#uploader').find(:option, 'Dradis Package').select_option
-      expect(page).to have_css('#state:disabled')
+      expect(find('#state:disabled')).to_not be nil
 
       find('#uploader').find(:option, 'Dradis Template').select_option
-      expect(page).to have_css('#state:disabled')
+      expect(find('#state:disabled')).to_not be nil
     end
   end
 end
