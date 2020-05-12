@@ -14,8 +14,8 @@ class UploadController < AuthenticatedController
   # include Plugins::Upload
 
   before_action :find_uploaders
-  before_action :validate_uploader, only: [:create, :parse]
   before_action :validate_issue_state, only: [:create, :parse]
+  before_action :validate_uploader, only: [:create, :parse]
 
   def index
     @last_job = Log.new.uid

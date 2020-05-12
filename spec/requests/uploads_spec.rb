@@ -17,7 +17,7 @@ describe "upload requests" do
   describe "POST #parse" do
     let(:uploader) { 'Dradis::Plugins::Projects::Upload::Template' }
     let(:send_request) do
-      post project_upload_parse_path(@project), params: { file: "temp", format: :js, uploader: uploader }
+      post project_upload_parse_path(@project), params: { file: "temp", format: :js, uploader: uploader, state: :draft }
     end
 
     it "creates issues from the uploaded XML" do
@@ -85,7 +85,8 @@ describe "upload requests" do
         expect(UploadJob).to receive(:perform_later).with(
           hash_including(
             file: attachment_file,
-            plugin_name: uploader
+            plugin_name: uploader,
+            state: 'draft'
           )
         ).once
 
