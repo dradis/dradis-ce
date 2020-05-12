@@ -1,4 +1,12 @@
+.textile-form-field:hover {
+
+  .inline-editable i.fa-pencil {
+    opacity: 0.2;
+  }
+}
+
 .inline-editable {
+  display: flex;
 
   .edit-hover {
     align-items: flex-start;
@@ -15,30 +23,50 @@
 
   i.fa-pencil {
     left: 0.5rem;
-    opacity: 0.2;
+    opacity: 0;
     position: absolute;
     top: 0.65rem;
     transition: opacity 0.2s ease-in-out;
     z-index: 1;
   }
 
+  input,
+  textarea,
+  select {
+    border: 1px solid transparent;
+    border-radius: 0;
+
+    &:focus,
+    &:hover {
+      border-color: transparent;
+      border-bottom-color: $primaryColor;
+    }
+
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
+  }
+
   input {
     background-color: transparent;
-    border: none;
-    border-bottom: 1px solid transparent;
-    border-radius: 0;
     font-weight: 600;
-    margin: 0 0 0.5rem 1.75rem;
-    padding: 0.5rem 0 0 0;
+    margin: 0 1.5rem 0.5rem 1.5rem;
+    padding: 0.5rem 0 0.25rem 0 !important;
+    width: 100%;
 
     &:focus {
       background-color: transparent;
-      border-bottom: 1px solid $primaryColor;
-      box-shadow: none;
-      font-weight: 400;
-      font-style: italic;
-      letter-spacing: 0.4px;
-      outline: none;
     }
+  }
+
+  textarea {
+    margin: 0;
+    padding: 0.5rem !important;
+  }
+
+  select {
+    background-color: $primaryBgColor;
+    margin: 0 1.5rem 2.25rem 1.5rem;
   }
 }

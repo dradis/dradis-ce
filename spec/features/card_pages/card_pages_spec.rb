@@ -234,10 +234,7 @@ describe 'Card pages:' do
         expect(page).to have_selector("a[href='#{project_board_list_card_path(current_project, @board, @list, @card)}'][data-method='delete']")
       end
 
-      describe "clicking 'delete'" do
-        before { PaperTrail.enabled = true }
-        after  { PaperTrail.enabled = false }
-
+      describe "clicking 'delete'", versioning: true do
         let(:submit_form) { click_link 'Delete' }
 
         it 'deletes the card' do
@@ -259,6 +256,25 @@ describe 'Card pages:' do
         let(:trackable) { @card }
 
         include_examples 'creates an Activity', :destroy
+      end
+
+      describe 'card redirects' do
+        it 'redirects to the existing card if list has changed' do
+          new_list = create(:list, board: @board)
+          @card.update(list: new_list)
+
+          visit project_board_list_card_path(current_project, @board, @list, @card)
+          expect(page).to have_current_path project_board_list_card_path(current_project, @board, new_list, @card)
+        end
+
+        it 'does not allow access to cards on other boards' do
+          new_list = create(:list)
+          @card.update(list: new_list)
+
+          expect {
+            visit project_board_list_card_path(current_project, @board, @list, @card)
+          }.to raise_error ActiveRecord::RecordNotFound
+        end
       end
     end
   end

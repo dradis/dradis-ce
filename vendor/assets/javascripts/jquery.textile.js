@@ -192,8 +192,10 @@
       $.post(this.$element.data('preview-url'),
         data,
         function(result) {
-          this.options.$preview.removeClass('loading-indicator')
-            .html(result);
+          this.options.$preview.removeClass('loading-indicator').html(result);
+          if (result == '\n') {
+            this.options.$preview.append('<div class="preview-placeholder"><h5>Add some fields to see a live preview here</h5></div>')
+          }
           this.options.$preview.children(':first').addClass('textile-preview');
           this._previewRendered = true;
         }.bind(this)
@@ -277,9 +279,6 @@
         this.options.$wrap.removeClass('textile-fullscreen');
         this.options.$wrap.css('width', 'auto');
         this.options.tmpspan.after(this.options.$wrap).remove();
-
-        this.options.$preview.css('height', '100%');
-        this.$element.css('height', this.options.height);
 
         // update button icon
         $btnFS.removeClass('fa-compress').addClass('fa-expand');
