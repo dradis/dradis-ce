@@ -4,5 +4,6 @@ FactoryBot.define do
     author { "factory_bot" }
     category { Category.issue }
     node { Project.new.issue_library }
+    state { :draft }
   end
 end
