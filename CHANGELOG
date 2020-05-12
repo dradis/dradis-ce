@@ -21,6 +21,7 @@ v3.17 (Month 2020)
   * Use user model reference for activities instead of user email
   * Upgraded gems: puma, sass-rails
   * Bugs fixed:
+    - Fix bug with v3 board templates not uploading
     - Fix textile preview not showing on issues with very long text
     - Long project names interfering with search bar expansion
     - Repetative prompt when images are pasted after navigating multiple views.

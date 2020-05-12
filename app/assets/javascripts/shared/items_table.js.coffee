@@ -15,7 +15,7 @@ class @ItemsTable
   selectedItemsSelector: ''
   columnIndices: {}
 
-  constructor: (@tableId, @itemName) ->
+  constructor: (@tableId, @itemName, @defaultColumns = ['title', 'created', 'updated']) ->
     @$jsTable     = $(@tableId)
     @$table       = @$jsTable.find('.items-table')
     @$columnMenu  = $("#{@tableId} .dropdown-menu.js-table-columns")
@@ -87,7 +87,7 @@ class @ItemsTable
     else
       console.log "The browser doesn't support local storage of settings."
 
-    @selectedColumns ||= ['title', 'created', 'updated']
+    @selectedColumns ||= @defaultColumns
 
     that = this
 
