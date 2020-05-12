@@ -5,20 +5,6 @@ class LocalAutoSave {
     this.key = target.dataset.autoSaveKey;
     this.cancelled = false;
 
-    // List of available inputs: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
-    // Only permit these inputs to be saved so that it does not store unnecessary data in local cache
-    this.permittedInputTypes = [
-      'checkbox',
-      'color',
-      'date',
-      'email',
-      'hidden', // Needed for hidden tag_input in issues/form
-      'number',
-      'radio',
-      'tel',
-      'text'
-    ];
-
     // Don't store authenticity_token and utf8
     this.excludedInputNames = ['utf8', 'authenticity_token', '_method'];
 
@@ -46,17 +32,20 @@ class LocalAutoSave {
       })
     }
 
-    // Find all inputs in the form, then exclude based on excluded input types
-    var formInputs = Array.from(this.target.querySelectorAll('input')).filter(function(input) {
-      return that.permittedInputTypes.includes(input.getAttribute('type')) && !that.excludedInputNames.includes(input.name);
-    })
+    this._debounceTimer = 500;
 
-    formInputs = formInputs.concat(Array.from(this.target.querySelectorAll('textarea, select')));
-
-    formInputs.forEach(function(input) {
+    this.target.querySelectorAll('input, textarea, select').forEach(function(input) {
       // we're using a jQuery plugin for :textchange event, so need to use $()
-      $(input).on('textchange change', that.debounce(that.setData.bind(that), 500));
+      $(input).on('textchange change', that.handleTextChange.bind(that));
     })
+  }
+
+  handleTextChange() {
+    clearTimeout(this._debounceTimer);
+
+    this._debounceTimer = setTimeout(function() {
+      this.setData();
+    }.bind(this), this._debounceTimer);
   }
 
   debounce(func, delay) {
@@ -128,11 +117,8 @@ class LocalAutoSave {
       var hiddenInput = document.querySelector('#issue_tag_list');
       hiddenInput.value = tagInputData[1];
 
-      var dropdownBtnSpan = document.querySelector('#issues_editor .dropdown-toggle span.tag');
-      var selectedDropdown = document.querySelector(`.js-taglink[data-tag='${tagInputData[1]}']`);
-
-      dropdownBtnSpan.innerHTML = selectedDropdown.innerHTML;
-      dropdownBtnSpan.style.color = selectedDropdown.style.color;
+      var $target = $(`.js-taglink[data-tag='${tagInputData[1]}']`);
+      new SelectTagDropdown($target)
     }
   }
 
