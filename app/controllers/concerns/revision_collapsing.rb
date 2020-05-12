@@ -3,6 +3,6 @@ module RevisionCollapsing
   extend ActiveSupport::Concern
 
   def collapse_revisions(resource)
-    RevisionCollapser.collapse(resource)
+    RevisionCollapserJob.perform_later resource
   end
 end

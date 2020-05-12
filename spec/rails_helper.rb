@@ -75,6 +75,7 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   # config.include ControllerMacros, type: :controller
+  config.include ActiveJob::TestHelper, type: :feature
   config.include ControllerMacros, type: :feature
   # config.include SelecterHelper,   type: :feature
   # config.include SupportHelper,    type: :controller
