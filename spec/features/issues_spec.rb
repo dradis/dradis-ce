@@ -148,6 +148,7 @@ describe 'Issues pages' do
 
           let(:model_path) { new_project_issue_path(current_project) }
           let(:model_attributes) { [{ name: :text, value: 'New Issue' }] }
+          let(:model_attributes_for_template) { [{ name: :text, value: 'New Issue Template' }] }
 
           include_examples 'a form with local auto save', Issue, :new
         end

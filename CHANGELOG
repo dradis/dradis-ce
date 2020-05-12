@@ -6,6 +6,7 @@ v3.17 (Month 2020)
     - Activity Feed now shows board name and link
     - No mandatory due date
   * Card, Evidence, Issue, and Note form data will not be lost even if the form is not saved
+    - Also works when using templates
     - Form data will be cleared when the "Cancel" link is clicked
     - Removed prompt to restore data
   * Comments can now have Textile markup
