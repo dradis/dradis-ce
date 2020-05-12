@@ -1,8 +1,48 @@
 class IssuesTable extends ItemsTable
 
   afterInitialize: ->
-    @$jsTable.on('click', '.js-taglink', @onTagSelected)
     @$jsTable.on('click', '#merge-selected', @onMergeSelected)
+    @$jsTable.on('click', '[data-behavior~=change-state]', @onStateChangeSelected)
+    @$jsTable.on('click', '.js-taglink', @onTagSelected)
+
+  onMergeSelected: (event) =>
+    url = $(event.target).data('url')
+    issues_to_merge = []
+
+    $(@selectedItemsSelector).each ->
+      $row = $(this).parent().parent()
+
+      id = @.name.split('_')[2]
+      issues_to_merge.push(id)
+
+    location.href = "#{url}?ids=#{issues_to_merge}"
+
+  onStateChangeSelected: (event) =>
+    $target = $(event.target)
+    stateColumnIndex = @columnIndices['state']
+    targetState = $target.data('state')
+
+    issues_to_update = []
+    $(@selectedItemsSelector).each ->
+      $row = $(this).parent().parent()
+      $stateTD = $row.find('td').eq(stateColumnIndex)
+      $stateTD.removeClass().addClass('loading').text('Loading...')
+
+      id = @.name.split('_')[2]
+      issues_to_update.push(id)
+
+    that = this
+    $.ajax $target.parent().data('url'), {
+      method: 'PUT',
+      data: { ids: issues_to_update, state: targetState },
+      success: (data) ->
+        $(that.selectedItemsSelector).each ->
+          $row = $(this).parent().parent()
+          $stateTD = $row.find('td').eq(stateColumnIndex)
+          $stateTD.data('sort-value', data.state)
+          $stateTD.removeClass('loading')
+          $stateTD.text(data.state)
+    }
 
   onTagSelected: (event) =>
     that = this
@@ -41,18 +81,6 @@ class IssuesTable extends ItemsTable
         error: (foo,bar,foobar) ->
           $($row.find('td')[tagColumnIndex]).replaceWith("<td class='text-error'>Please try again</td>")
       }
-
-  onMergeSelected: (event) =>
-    url = $(event.target).data('url')
-    issues_to_merge = []
-
-    $(@selectedItemsSelector).each ->
-      $row = $(this).parent().parent()
-
-      id = @.name.split('_')[2]
-      issues_to_merge.push(id)
-
-    location.href = "#{url}?ids=#{issues_to_merge}"
 
   refreshToolbar: =>
     checked = $(@selectedItemsSelector).length

@@ -39,6 +39,19 @@
         </div>
       </div>
 
+      <div class="btn-group dropdown h-100">
+        <button id="state-selected" class="btn dropdown-toggle" data-toggle="dropdown" title="Change state of selected issues">
+          <i class="fa fa-pencil-square-o"></i>
+          State
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-menu" data-url="<%= update_states_project_states_path(current_project) %>">
+          <a href="javascript:void(0)" class="dropdown-item" data-behavior="change-state" data-state="draft"><i class="fa fa-pencil-square-o"></i> Draft</a>
+          <a href="javascript:void(0)" class="dropdown-item" data-behavior="change-state" data-state="review"><i class="fa fa-share-square-o"></i> Ready for Review</a>
+          <a href="javascript:void(0)" class="dropdown-item" data-behavior="change-state" data-state="published"><i class="fa fa-check-square-o"></i> Published</a>
+        </div>
+      </div>
+
     </div>
 
     <div class="btn-group dropdown">

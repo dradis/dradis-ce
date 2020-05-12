@@ -49,6 +49,9 @@ Rails.application.routes.draw do
       collection do
         post :import
         resources :merge, only: [:new, :create], controller: 'issues/merge'
+        resources :states, only: [], controller: 'issues/states' do
+          collection { put :update_states }
+        end
       end
 
       resources :nodes, only: [:show], controller: 'issues/nodes'
