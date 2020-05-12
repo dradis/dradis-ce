@@ -16,7 +16,7 @@
 # state forward so we can always have it accessible to compare against. This
 # happens when the new revision is an update, or autosave.
 class RevisionCollapser
-  def self.call(resource)
+  def self.collapse(resource)
     return unless resource.versions.any? # Lots of specs run without versioning
 
     last_revision = resource.versions.reorder('created_at DESC').first

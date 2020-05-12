@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe RevisionCollapser, versioning: true do
   let(:resource) { create(:issue) }
 
-  describe '.call' do
-    subject(:collapse_revisions) { described_class.call(resource) }
+  describe '.collapse' do
+    subject(:collapse_revisions) { described_class.collapse(resource) }
 
     it 'changes nothing when no autosaves exist' do
       expect { collapse_revisions }.to change { resource.versions.count }.by(0)

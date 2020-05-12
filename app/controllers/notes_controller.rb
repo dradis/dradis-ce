@@ -47,7 +47,7 @@ class NotesController < NestedNodeResourceController
   def update
     updated_at_before_save = @note.updated_at.to_i
     if @note.update_attributes(note_params)
-      RevisionCollapser.call(@note)
+      RevisionCollapser.collapse(@note)
       track_updated(@note)
       check_for_edit_conflicts(@note, updated_at_before_save)
       # if the note has just been moved to another node, we must reload

@@ -28,7 +28,7 @@ class EvidenceController < NestedNodeResourceController
 
     respond_to do |format|
       if @evidence.save
-        RevisionCollapser.call(@evidence)
+        RevisionCollapser.collapse(@evidence)
         track_created(@evidence)
         format.html {
           redirect_to [current_project, @evidence.node, @evidence],

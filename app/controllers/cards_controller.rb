@@ -43,7 +43,7 @@ class CardsController < AuthenticatedController
 
   def update
     if @card.update_attributes(card_params)
-      RevisionCollapser.call(@card)
+      RevisionCollapser.collapse(@card)
       track_updated(@card)
       redirect_to [current_project, @board, @list, @card], notice: 'Task updated.'
     else
