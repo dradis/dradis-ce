@@ -15,9 +15,15 @@ class UploadController < AuthenticatedController
 
   before_action :find_uploaders
   before_action :validate_uploader, only: [:create, :parse]
+  before_action :validate_issue_state, only: [:create, :parse]
 
   def index
     @last_job = Log.new.uid
+
+    # Build the issue states collection for the form select
+    @issue_states = Issue.state_names.map { |state, name| [name, state] }
+
+    @uploaders_for_select = decorated_uploaders_for_select
   end
 
   # TODO: this would overwrite an existing file with the same name.
@@ -29,8 +35,8 @@ class UploadController < AuthenticatedController
     @attachment << params[:file].read
     @attachment.save
 
-    @success = true
     @item_id = params[:item_id].to_i
+    @success = true
     flash.now[:notice] = "Successfully uploaded #{ filename }"
   end
 
@@ -74,6 +80,7 @@ class UploadController < AuthenticatedController
       file: attachment.fullpath.to_s,
       plugin_name: @uploader.to_s,
       project_id: current_project.id,
+      state: @state,
       uid: params[:item_id].to_i
     )
   end
@@ -85,9 +92,10 @@ class UploadController < AuthenticatedController
     begin
       importer = @uploader::Importer.new(
         default_user_id: current_user.id,
-        logger:     job_logger,
-        plugin:     @uploader,
-        project_id: current_project.id
+        logger: job_logger,
+        plugin: @uploader,
+        project_id: current_project.id,
+        state:  @state
       )
 
       importer.import(file: attachment.fullpath)
@@ -110,8 +118,26 @@ class UploadController < AuthenticatedController
     # :upload plugins can define multiple uploaders
     @uploaders ||= Dradis::Plugins::with_feature(:upload).
                      collect(&:uploaders).
-                     flatten.
-                     sort_by(&:name)
+                     flatten
+  end
+
+  def decorated_uploaders_for_select
+    @uploaders.map do |uploader|
+      base_name = uploader.name.demodulize
+      if base_name == 'Package' || base_name == 'Template'
+        base_name = "Dradis #{base_name}"
+      end
+      [base_name, uploader.name]
+    end.sort { |a, b| a <=> b }
+  end
+
+  def validate_issue_state
+    @state =
+      if params[:state] && Issue.states.keys.include?(params[:state])
+        params[:state]
+      else
+        :published
+      end
   end
 
   # Ensure that the requested :uploader is valid and has been included in the

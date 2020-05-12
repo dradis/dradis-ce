@@ -5,9 +5,10 @@
   url = $('#new_upload').data('parse-url');
   $.post(
     url, {
-      item_id: <%= @item_id %>,
-      uploader: '<%= params[:uploader] %>',
       file: '<%= @attachment.filename %>',
+      item_id: <%= @item_id %>,
+      state: '<%= @state %>',
+      uploader: '<%= params[:uploader] %>',
     },
     null,
     'script'
