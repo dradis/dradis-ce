@@ -31,8 +31,8 @@
     vertical-align: middle;
   }
 
-  th {
-    padding: 0.5rem 1.25rem 0.5rem 0.5rem;
+  thead tr th {
+    padding: 0.5rem 1.75rem 0.5rem 0.5rem;
     cursor: pointer;
     position: relative;
 
@@ -83,7 +83,7 @@
 
   tr:hover {
 
-    .column-actions a { 
+    .column-actions a {
       visibility: visible;
     }
   }
