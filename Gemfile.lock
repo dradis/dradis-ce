@@ -257,7 +257,7 @@ GEM
     psych (3.1.0)
     puma (4.3.3)
       nio4r (~> 2.0)
-    rack (2.0.8)
+    rack (2.2.2)
     rack-protection (2.0.2)
       rack
     rack-test (1.1.0)
@@ -519,4 +519,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   2.0.2
+   2.1.4
