@@ -31,6 +31,11 @@
 
   <div class="form-actions">
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
-    <%= link_to 'Cancel', @issue.new_record? ? project_issues_path(current_project) : [current_project, @issue], class: 'cancel-link' %>
+
+    <% if @issue.new_record? %>
+      <%= link_to 'Discard changes', project_issues_path(current_project), class: 'cancel-link' %>
+    <% else %>
+      <%= link_to 'Discard changes', project_issue_revision_path(current_project, @issue), method: :delete, class: 'cancel-link' %>
+    <% end %>
   </div>
 <% end %>

@@ -1,12 +1,13 @@
 class IssuesController < AuthenticatedController
   include ActivityTracking
   include Commented
-  include ContentFromTemplate
   include ConflictResolver
+  include ContentFromTemplate
   include Mentioned
   include MultipleDestroy
   include NotificationsReader
   include ProjectScoped
+  include RevisionCollapsing
 
   before_action :set_issuelib
   before_action :set_issues, except: [:destroy]
@@ -83,6 +84,7 @@ class IssuesController < AuthenticatedController
       updated_at_before_save = @issue.updated_at.to_i
 
       if @issue.update_attributes(issue_params)
+        collapse_revisions(@issue)
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)

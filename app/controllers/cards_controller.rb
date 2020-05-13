@@ -5,6 +5,7 @@ class CardsController < AuthenticatedController
   include ProjectScoped
   include Mentioned
   include NotificationsReader
+  include RevisionCollapsing
 
   # Not sorted because we need the Board and List first!
   before_action :set_current_board_and_list
@@ -43,6 +44,7 @@ class CardsController < AuthenticatedController
 
   def update
     if @card.update_attributes(card_params)
+      collapse_revisions(@card)
       track_updated(@card)
       redirect_to [current_project, @board, @list, @card], notice: 'Task updated.'
     else

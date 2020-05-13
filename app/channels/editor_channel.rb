@@ -9,10 +9,9 @@
 # of changes from other users.
 class EditorChannel < ApplicationCable::Channel
   include ProjectScopedChannels
+  include RevisionCollapsing
 
   attr_accessor :resource
-
-  AUTOSAVE_EVENT = 'auto-save'.freeze
 
   def subscribed
     reject and return unless find_resource
@@ -21,9 +20,10 @@ class EditorChannel < ApplicationCable::Channel
   end
 
   def save(params)
-    resource.paper_trail_event = AUTOSAVE_EVENT
+    resource.paper_trail_event = RevisionTracking::REVISABLE_EVENTS[:autosave]
 
     if resource.update_attributes resource_params(params)
+      collapse_revisions(resource, RevisionTracking::REVISABLE_EVENTS[:autosave])
       self.class.broadcast_to([current_user, current_project, resource], resource.reload.updated_at.to_i)
     end
   end

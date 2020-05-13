@@ -7,6 +7,7 @@ class NotesController < NestedNodeResourceController
   include MultipleDestroy
   include NodesSidebar
   include NotificationsReader
+  include RevisionCollapsing
 
   before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
@@ -47,6 +48,7 @@ class NotesController < NestedNodeResourceController
   def update
     updated_at_before_save = @note.updated_at.to_i
     if @note.update_attributes(note_params)
+      collapse_revisions(@note)
       track_updated(@note)
       check_for_edit_conflicts(@note, updated_at_before_save)
       # if the note has just been moved to another node, we must reload
