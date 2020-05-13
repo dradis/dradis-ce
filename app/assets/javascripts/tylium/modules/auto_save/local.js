@@ -71,7 +71,7 @@ class LocalAutoSave {
       // Reference: https://wildwolf.name/store-formdata-object-in-localstorage/
       for (var item of data) {
         var name = item[0];
-        var element   = that.target.elements[name];
+        var element = that.target.elements[name];
 
         // Skip loop if element is undefined
         if (!element) { continue; }
