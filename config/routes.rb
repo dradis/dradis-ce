@@ -85,7 +85,6 @@ Rails.application.routes.draw do
 
       constraints(filename: /.*/) do
         resources :attachments, param: :filename
-        patch :attachments, to: 'attachments#create'
       end
     end
 
