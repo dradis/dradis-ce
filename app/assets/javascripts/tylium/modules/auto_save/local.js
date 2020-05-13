@@ -4,6 +4,7 @@ class LocalAutoSave {
     this.target = target;
     this.key = target.dataset.autoSaveKey;
     this.cancelled = false;
+    this.submitted = false;
 
     // Don't store authenticity_token and utf8
     this.excludedInputNames = ['utf8', 'authenticity_token', '_method'];
@@ -20,6 +21,7 @@ class LocalAutoSave {
     var that = this;
 
     this.target.addEventListener('submit', function(event) {
+      that.submitted = true;
       localStorage.removeItem(that.key);
     });
 
@@ -35,6 +37,9 @@ class LocalAutoSave {
     this._debounceTimer = 500;
 
     this.target.querySelectorAll('input, textarea, select').forEach(function(input) {
+      // Don't add event handler for submit button
+      if (input.type === 'button') { return true; }
+
       // we're using a jQuery plugin for :textchange event, so need to use $()
       $(input).on('textchange change', that.handleTextChange.bind(that));
     })
@@ -46,17 +51,6 @@ class LocalAutoSave {
     this._debounceTimer = setTimeout(function() {
       this.setData();
     }.bind(this), this._debounceTimer);
-  }
-
-  debounce(func, delay) {
-    let debounceTimer;
-
-    return function () {
-      const context = this;
-      const args = arguments;
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => func.apply(context, args), delay);
-    };
   }
 
   getData() {
@@ -123,8 +117,11 @@ class LocalAutoSave {
   }
 
   setData() {
-    if (!this.cancelled) {
+    if (!this.cancelled && !this.submitted) {
       localStorage.setItem(this.key, JSON.stringify(this.getData()));
+    } else {
+      // Reset the submit state, needed for comment form
+      this.submitted = false;
     }
   }
 }
