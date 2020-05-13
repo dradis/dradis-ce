@@ -19,25 +19,6 @@
   }
 }
 
-.back-fade {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  background: #000;
-  z-index: 4;
-  transition: visibility 0.5s ease-in-out, opacity 0.5s ease-in-out;
-
-  &.faded {
-    opacity: 0.7;
-    visibility: initial;
-  }
-
-  &.not-faded {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-
 .breadcrumb {
   margin-bottom: 0;
   padding-left: $mainContentPadding;

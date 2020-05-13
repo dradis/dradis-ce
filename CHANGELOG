@@ -1,6 +1,6 @@
 v3.17 (Month 2020)
   * Add author to evidence and notes views
-  * Adjusted Uploads layout to provide more visibility to the output console
+  * Adjust Uploads layout to provide more visibility to the output console
   * Boards can be renamed and deleted through their dots menu
   * Card improvements:
     - Activity Feed now shows board name and link
@@ -15,13 +15,17 @@ v3.17 (Month 2020)
     - Side-by-side editor preview that auto-updates
   * Link to Methodology from project summary chart
   * Navigation sidebar in projects can be kept open while navigating across views
-  * Refactored dots-menu to make it available in any view
+  * Dots-menu available in any view
   * Remove tag color from issue titles in issue summary
+  * Update code element style
   * Use shared noscript partial
   * Use user model reference for activities instead of user email
   * Upgraded gems: puma, rack, sass-rails
   * Bugs fixed:
+    - bin/setup creating folders outside dradis-ce/
+    - bin/setup error if the attachments directory already exists
     - Board partial broken structure
+    - ItemsTable extra whitespace causing unnecessary vertical scrolling
     - Fix bug with v3 board templates not uploading
     - Fix textile preview not showing on issues with very long text
     - Long project names interfering with search bar expansion
@@ -30,8 +34,7 @@ v3.17 (Month 2020)
     - SemVer pre-release appending character
     - Set :author when creating Evidence from an Issue
     - Sidebar items not showing active state
-    - Stop bin/setup from creating folders outside dradis-ce/
-    - bin/setup will not error if the attachments directory already exists
+    - Textile preview not showing on issues with very long text
     - Bug tracker items: #560
   * New integrations:
     - [new integration #1]
