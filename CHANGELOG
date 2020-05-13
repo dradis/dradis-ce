@@ -20,10 +20,11 @@ v3.17 (Month 2020)
   * Update code element style
   * Use shared noscript partial
   * Use user model reference for activities instead of user email
-  * Upgraded gems: puma, sass-rails
+  * Upgraded gems: puma, rack, sass-rails
   * Bugs fixed:
     - bin/setup creating folders outside dradis-ce/
     - bin/setup error if the attachments directory already exists
+    - Board partial broken structure
     - ItemsTable extra whitespace causing unnecessary vertical scrolling
     - Fix bug with v3 board templates not uploading
     - Fix textile preview not showing on issues with very long text
