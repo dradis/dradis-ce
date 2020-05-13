@@ -1,14 +1,17 @@
 .btn-toolbar {
+  
+  .dropdown-menu {
+    max-height: 75vh;
+    overflow-y: auto;
+    text-align: left;
+  }
+  
   input[type='checkbox'] {
     margin: 0;
   }
 
   .items-table-actions {
     display: none;
-
-    .dropdown-menu {
-      text-align: left;
-    }
 
     #merge-selected {
       display: none;
