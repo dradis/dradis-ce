@@ -38,15 +38,15 @@ module Dradis::CE::API
     end
 
     def unauthorized(status=401)
-      Rack::Response.new(
-        [JSON.generate({message: 'Requires authentication'})],
+      [
         status,
         {
           'Content-Type'     => 'application/json',
           'Content-Length'   => '0',
           'WWW-Authenticate' => %(Basic realm="API")
-        }
-      )
+        },
+        [ { message: "Requires authentication" }.to_json ]
+      ]
     end
 
   end
