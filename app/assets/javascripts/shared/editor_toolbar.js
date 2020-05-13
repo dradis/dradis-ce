@@ -23,7 +23,7 @@ class EditorToolbar {
   init() {
     this.$target.wrap('<div class="editor-field" data-behavior="editor-field jquery-upload"><div class="textarea-container"></div></div>');
     this.$editorField = this.$target.parents('[data-behavior~=editor-field]');
-    this.$editorField.prepend('<div class="editor-toolbar" data-behavior="editor-toolbar"></div>');
+    this.$editorField.prepend('<div class="editor-toolbar" data-behavior="editor-toolbar" data-edit="#'+ this.$target.data('id') + '"></div>');
     this.$editorToolbar = this.$editorField.find('[data-behavior~=editor-toolbar]');
 
     this.$editorToolbar.append(this.textareaElements(this.opts.include));
