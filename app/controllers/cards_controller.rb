@@ -96,7 +96,8 @@ class CardsController < AuthenticatedController
 
   def set_or_initialize_card
     if params[:id]
-      @card = @list.cards.find(params[:id])
+      @card = @board.cards.find(params[:id])
+      redirect_to [current_project, @board, @card.list, @card] if @card.list_id != @list.id
     else
       @card = @list.cards.new
     end

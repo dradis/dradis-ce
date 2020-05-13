@@ -111,6 +111,7 @@ describe 'evidence' do
       let(:action_path) { edit_project_node_evidence_path(current_project, @node, @evidence) }
       let(:item) { @evidence }
       it_behaves_like 'a textile form view', Evidence
+      it_behaves_like 'an editor that remembers what view you like'
     end
 
     describe 'submitting the form with valid information', js: true do
@@ -170,6 +171,7 @@ describe 'evidence' do
       let(:params) { {} }
       let(:required_form) { find('#evidence_issue_id option:nth-of-type(2)').select_option }
       it_behaves_like 'a textile form view', Evidence
+      it_behaves_like 'an editor that remembers what view you like'
     end
 
     context 'when no template is specified' do

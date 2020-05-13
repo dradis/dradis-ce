@@ -53,6 +53,7 @@ describe 'Issues pages' do
 
         let(:action_path) { new_project_issue_path(current_project) }
         it_behaves_like 'a textile form view', Issue
+        it_behaves_like 'an editor that remembers what view you like'
 
         context 'submitting the form with valid information' do
           before do
@@ -147,6 +148,7 @@ describe 'Issues pages' do
         let(:action_path) { edit_project_issue_path(current_project, @issue) }
         let(:item) { @issue }
         it_behaves_like 'a textile form view', Issue
+        it_behaves_like 'an editor that remembers what view you like'
 
         describe 'auto-save' do
           let(:autosaveable) { create(:issue) }
