@@ -37,8 +37,6 @@ shared_examples 'an editor with server side auto-save' do
         find('.editor-field textarea').set new_content
         wait_for_js_events
       end.to change { autosaveable.versions.count }.by_at_least(1)
-      # Evidence specs do something weird where it looks like an edit is being
-      # triggered on load.
     end
 
     it 'creates a version with an auto-save event', versioning: true do
@@ -55,7 +53,7 @@ shared_examples 'an editor with server side auto-save' do
 
       expect do
         click_link 'Discard changes'
-      end.to change { autosaveable.versions.count }.by(-1)
+      end.to change { autosaveable.versions.count }.by_at_least(-2)
     end
   end
 end
