@@ -61,7 +61,7 @@ describe 'evidence' do
         end
         expect(page).to have_text "Successfully deleted evidence for '#{@evidence.issue.title}.'"
       end
-      
+
       it 'deletes the Evidence' do
         id = @evidence.id
         submit_form
@@ -76,6 +76,9 @@ describe 'evidence' do
       include_examples 'recover deleted item', :evidence
       include_examples 'recover deleted item without node', :evidence
     end
+
+    let(:model) { @evidence }
+    include_examples 'nodes pages breadcrumbs', :show, Evidence
   end
 
 
@@ -102,6 +105,7 @@ describe 'evidence' do
       let(:action_path) { edit_project_node_evidence_path(current_project, @node, @evidence) }
       let(:item) { @evidence }
       it_behaves_like 'a textile form view', Evidence
+      it_behaves_like 'an editor that remembers what view you like'
     end
 
     describe 'submitting the form with valid information', js: true do
@@ -137,6 +141,9 @@ describe 'evidence' do
 
       include_examples "doesn't create an Activity"
     end
+
+    let(:model) { @evidence }
+    include_examples 'nodes pages breadcrumbs', :edit, Evidence
   end
 
 
@@ -158,6 +165,7 @@ describe 'evidence' do
       let(:params) { {} }
       let(:required_form) { find('#evidence_issue_id option:nth-of-type(2)').select_option }
       it_behaves_like 'a textile form view', Evidence
+      it_behaves_like 'an editor that remembers what view you like'
     end
 
     context 'when no template is specified' do
@@ -218,11 +226,12 @@ describe 'evidence' do
       let(:params)  { { template: 'sample_evidence' } }
 
       it 'pre-populates the textarea with the template contents' do
-        click_link 'Inline'
+        click_link 'Fields'
         expect(find_field('item_form[field_name_0]').value).to include('Title')
         expect(find_field('item_form[field_value_0]').value).to include('Sample Evidence')
       end
     end
 
+    include_examples 'nodes pages breadcrumbs', :new, Evidence
   end
 end

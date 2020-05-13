@@ -75,6 +75,9 @@ describe "note pages" do
       include_examples "recover deleted item", :note
       include_examples "recover deleted item without node", :note
     end
+
+    let(:model) { @note }
+    include_examples 'nodes pages breadcrumbs', :show, Note
   end
 
   describe "edit page", js: true do
@@ -100,6 +103,7 @@ describe "note pages" do
       let(:action_path) { edit_project_node_note_path(current_project, @node, @note) }
       let(:item) { @note }
       it_behaves_like 'a textile form view', Note
+      it_behaves_like 'an editor that remembers what view you like'
     end
 
     # TODO handle the case where a Note has no paperclip versions (legacy data)
@@ -151,6 +155,9 @@ describe "note pages" do
         expect(current_path).to eq project_node_note_path(current_project, @node, @note)
       end
     end
+
+    let(:model) { @note }
+    include_examples 'nodes pages breadcrumbs', :edit, Note
   end
 
 
@@ -222,7 +229,7 @@ describe "note pages" do
       let(:params)  { { template: 'simple_note' } }
 
       it "pre-populates the textarea with the template contents" do
-        click_link 'Inline'
+        click_link 'Fields'
         expect(find_field('item_form[field_name_0]').value).to include('IPAddress')
         expect(find_field('item_form[field_value_0]').value).to include('127.0.0.1')
       end
@@ -233,6 +240,9 @@ describe "note pages" do
 
       let(:action_path) { new_project_node_note_path(current_project, @node) }
       it_behaves_like 'a textile form view', Note
+      it_behaves_like 'an editor that remembers what view you like'
     end
+
+    include_examples 'nodes pages breadcrumbs', :new, Note
   end
 end

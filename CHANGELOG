@@ -1,11 +1,14 @@
 v3.17 (Month 2020)
   * Add author to evidence and notes views
   * Adjusted Uploads layout to provide more visibility to the output console
+  * Boards can be renamed and deleted through their dots menu
   * Card improvements:
     - Activity Feed now shows board name and link
     - No mandatory due date
+    - Redirects to new url if the card has changed lists
   * Comments can now have Textile markup
   * Comments now show author's name instead of email
+  * Display note and evidence titles in breadcrumbs
   * Editor improvements:
     - New form-view to edit each field individually
     - Formatting toolbar to help with markup
@@ -18,9 +21,11 @@ v3.17 (Month 2020)
   * Use user model reference for activities instead of user email
   * Upgraded gems: puma, sass-rails
   * Bugs fixed:
+    - Fix bug with v3 board templates not uploading
     - Fix textile preview not showing on issues with very long text
     - Long items_table dropdown menus not scrollable
     - Long project names interfering with search bar expansion
+    - Repetative prompt when images are pasted after navigating multiple views.
     - Report 'Download' button becoming a disabled 'Processing...' button once clicked
     - SemVer pre-release appending character
     - Set :author when creating Evidence from an Issue
