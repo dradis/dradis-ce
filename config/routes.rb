@@ -20,6 +20,10 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :revisable do
+    resources :revisions, only: [:destroy, :index, :show]
+  end
+
   resources :projects, only: [:show] do
     resources :activities, only: [] do
       collection do
@@ -30,9 +34,8 @@ Rails.application.routes.draw do
     resources :boards do
       resources :lists, except: [:index] do
         member { post :move }
-        resources :cards, except: [:index] do
+        resources :cards, except: [:index], concerns: :revisable do
           member { post :move }
-          resources :revisions, only: [:destroy, :index, :show]
         end
       end
     end
@@ -45,14 +48,13 @@ Rails.application.routes.draw do
 
     post :create_multiple_evidence, to: 'evidence#create_multiple'
 
-    resources :issues, concerns: :multiple_destroy do
+    resources :issues, concerns: %i[multiple_destroy revisable] do
       collection do
         post :import
         resources :merge, only: [:new, :create], controller: 'issues/merge'
       end
 
       resources :nodes, only: [:show], controller: 'issues/nodes'
-      resources :revisions, only: [:destroy, :index, :show]
     end
 
     resources :methodologies do
@@ -75,13 +77,9 @@ Rails.application.routes.draw do
 
       resource :merge, only: [:create], controller: 'nodes/merge'
 
-      resources :notes, concerns: :multiple_destroy do
-        resources :revisions, only: [:destroy, :index, :show]
-      end
+      resources :notes, concerns: %i[multiple_destroy revisable]
 
-      resources :evidence, except: :index, concerns: :multiple_destroy do
-        resources :revisions, only: [:destroy, :index, :show]
-      end
+      resources :evidence, except: :index, concerns: %i[multiple_destroy revisable]
 
       constraints(filename: /.*/) do
         resources :attachments, param: :filename
