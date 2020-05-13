@@ -93,9 +93,9 @@ class LocalAutoSave {
           element.value = '';
         } else {
           element.value = item[1];
-          $(element).trigger('load-preview');
         }
 
+        $(element).trigger('load-preview');
         this.restoreTagInputDisplay(data);
       }
     }
