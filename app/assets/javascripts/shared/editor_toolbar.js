@@ -70,8 +70,13 @@ class EditorToolbar {
       var $element = that.$editorField.find('textarea, input[type=text]');
       var affix = that.affixes[$(this).data('btn')];
   
-      // inject markdown
-      that.injectSyntax($element, affix);
+      if ($(this).is('[data-btn~=image')) {
+        $('[data-behavior~=fileupload-input-button').click();
+      }
+      else {
+        // inject markdown
+        that.injectSyntax($element, affix);
+      }
     });
 
     // keyboard shortcuts
@@ -224,7 +229,6 @@ class EditorToolbar {
 
     if (include.includes('image')) str += '<div class="editor-btn image-btn" data-btn="image" aria-label="image">\
       <i class="fa fa-picture-o"></i>\
-      <input type="file" name="files[]" title="" multiple>\
     </div>';
 
     /* Additional buttons for future use
