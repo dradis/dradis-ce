@@ -22,7 +22,7 @@ class RevisionCollapser
     last_revision = resource.versions.reorder('created_at DESC').first
     # Just in case there is more than a single autosave take the oldest.
     previous_autosave = resource.versions.where(event: RevisionTracking::REVISABLE_EVENTS[:autosave]).
-                                 where.not(id: last_revision).reorder('created_at ASC').first
+                                 where.not(id: last_revision).first
 
     if RevisionTracking::REVISABLE_EVENTS.values.include?(last_revision.event) && previous_autosave
       last_revision.update(object: previous_autosave.object, event: event)
@@ -38,7 +38,7 @@ class RevisionCollapser
   def self.discard_and_revert(resource)
     return unless resource.versions.any? # Lots of specs run without versioning
 
-    last_revision = resource.versions.reorder('created_at DESC').first
+    last_revision = resource.versions.last
 
     if last_revision.event == RevisionTracking::REVISABLE_EVENTS[:autosave]
       # Turn papertrail off so it doesn't create a new revision when we restore
