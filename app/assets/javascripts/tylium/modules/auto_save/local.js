@@ -4,6 +4,7 @@ class LocalAutoSave {
     this.target = target;
     this.key = target.dataset.autoSaveKey;
     this.cancelled = false;
+    this.debounceTimer = 500;
     this.submitted = false;
 
     // Don't store authenticity_token and utf8
@@ -34,8 +35,6 @@ class LocalAutoSave {
       })
     }
 
-    this._debounceTimer = 500;
-
     this.target.querySelectorAll('input, textarea, select').forEach(function(input) {
       // Don't add event handler for submit button
       if (input.type === 'button') { return true; }
@@ -46,11 +45,11 @@ class LocalAutoSave {
   }
 
   handleTextChange() {
-    clearTimeout(this._debounceTimer);
+    clearTimeout(this.debounceTimeout);
 
-    this._debounceTimer = setTimeout(function() {
+    this.debounceTimeout = setTimeout(function() {
       this.setData();
-    }.bind(this), this._debounceTimer);
+    }.bind(this), this.debounceTimer);
   }
 
   getData() {
