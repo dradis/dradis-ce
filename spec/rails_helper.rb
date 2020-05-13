@@ -77,6 +77,7 @@ RSpec.configure do |config|
 
   # config.include ControllerMacros, type: :controller
   config.include ActiveJob::TestHelper, type: :feature
+  config.include ActiveJob::TestHelper, type: :request
   config.include ControllerMacros, type: :feature
   # config.include SelecterHelper,   type: :feature
   # config.include SupportHelper,    type: :controller

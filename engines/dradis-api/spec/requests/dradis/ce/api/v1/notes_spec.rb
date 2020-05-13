@@ -220,6 +220,7 @@ describe "Notes API" do
           let(:model) { note }
           include_examples 'creates an Activity', :update
           include_examples 'sets the whodunnit', :update
+          include_examples 'collapses autosaves'
 
           it "returns the attributes of the updated note as JSON" do
             put_note

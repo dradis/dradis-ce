@@ -213,6 +213,7 @@ describe "Evidence API" do
           let(:model) { evidence }
           include_examples 'creates an Activity', :update
           include_examples 'sets the whodunnit', :update
+          include_examples 'collapses autosaves'
         end
 
         context "with params for an invalid evidence" do
