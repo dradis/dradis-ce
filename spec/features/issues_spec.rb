@@ -201,7 +201,8 @@ describe 'Issues pages' do
             end
 
             submit_form
-            expect(@issue.reload.state).to eq(new_state)
+
+            expect(Issue.find(@issue.id).state).to eq(new_state)
           end
 
           let(:column) { :text }

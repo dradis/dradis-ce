@@ -105,6 +105,8 @@ describe Issue do
   let(:fields_column) { :text }
   it_behaves_like 'a model that has fields', Issue
 
+  it_behaves_like 'a model that has states', :issue
+
   describe '#set_field' do
     it "sets a field and updates 'body'" do
       issue.text = "#[Title]#\nSomething"
