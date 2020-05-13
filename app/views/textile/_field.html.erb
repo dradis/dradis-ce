@@ -13,7 +13,8 @@
           data: {
             behavior: 'preview-enabled'
           },
-          placeholder: 'Enter field name'
+          placeholder: 'Enter field name',
+          tabindex: index + 1
         %>
       </div>
     </div>
@@ -37,7 +38,7 @@
     </div>
   </div>
   <div class="actions">
-    <%= link_to 'javascript:void(0)', class: 'text-error-hover',  data: { behavior: 'delete-field' } do %>
+    <%= link_to 'javascript:void(0)', class: 'text-error-hover', tabindex: '-1',  data: { behavior: 'delete-field' } do %>
       <i class="fa fa-trash"></i> Delete
     <% end %>
   </div>
