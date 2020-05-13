@@ -3,6 +3,7 @@ module Dradis::CE::API
     class EvidenceController < Dradis::CE::API::APIController
       include ActivityTracking
       include Dradis::CE::API::ProjectScoped
+      include RevisionCollapsing
 
       before_action :set_node
 
@@ -27,7 +28,7 @@ module Dradis::CE::API
       def update
         @evidence = @node.evidence.find(params[:id])
         if @evidence.update_attributes(evidence_params)
-          RevisionCollapser.call(@evidence)
+          collapse_revisions(@evidence)
           track_updated(@evidence)
           render evidence: @evidence
         else

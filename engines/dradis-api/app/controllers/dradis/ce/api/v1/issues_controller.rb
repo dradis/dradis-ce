@@ -3,6 +3,7 @@ module Dradis::CE::API
     class IssuesController < Dradis::CE::API::APIController
       include ActivityTracking
       include Dradis::CE::API::ProjectScoped
+      include RevisionCollapsing
 
       def index
         @issues  = current_project.issues.includes(:tags).sort
@@ -30,7 +31,7 @@ module Dradis::CE::API
       def update
         @issue = current_project.issues.find(params[:id])
         if @issue.update_attributes(issue_params)
-          RevisionCollapser.call(@issue)
+          collapse_revisions(@issue)
           track_updated(@issue)
           render node: @node
         else
