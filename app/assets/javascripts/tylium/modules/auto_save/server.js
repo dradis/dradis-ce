@@ -6,7 +6,7 @@
 // field which helps us with conflict resolution.
 // Auto-saved forms are set to be saved at two points:
 //  - When the user navigates away from the page
-//  - Every 5 minutes
+//  - Every 3 minutes
 (function($, window) {
   function ServerAutoSave(form) {
     this.form = form;
