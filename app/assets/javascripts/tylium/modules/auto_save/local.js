@@ -93,25 +93,15 @@ class LocalAutoSave {
           element.value = '';
         } else {
           element.value = item[1];
+
+          if (element.name === 'issue[tag_list]') {
+            var $tagDropdownItem = $(`.js-taglink[data-tag='${item[1]}']`);
+            new SelectTagDropdown($tagDropdownItem)
+          }
         }
 
         $(element).trigger('load-preview');
-        this.restoreTagInputDisplay(data);
       }
-    }
-  }
-
-  restoreTagInputDisplay(data) {
-    var tagInputData = data.find(function(item) {
-      return item[0] === 'issue[tag_list]';
-    })
-
-    if (tagInputData) {
-      var hiddenInput = document.querySelector('#issue_tag_list');
-      hiddenInput.value = tagInputData[1];
-
-      var $target = $(`.js-taglink[data-tag='${tagInputData[1]}']`);
-      new SelectTagDropdown($target)
     }
   }
 
