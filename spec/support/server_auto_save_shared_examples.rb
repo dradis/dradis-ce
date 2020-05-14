@@ -18,13 +18,13 @@ shared_examples 'an editor with server side auto-save' do
       create(:configuration, name: 'admin:password', value: ::BCrypt::Password.create(password))
 
       login
-      visit polymorphic_path(path_params, action: :edit)
+      visit edit_polymorphic_path(path_params)
       click_link 'Source'
     end
 
     it 'updates the resource' do
       find('.editor-field textarea').set new_content
-      wait_for_js_events
+      navigate_away_triggering_autosave
 
       visit polymorphic_path(path_params)
 
@@ -35,13 +35,13 @@ shared_examples 'an editor with server side auto-save' do
     it 'creates a papertrail version', versioning: true do
       expect do
         find('.editor-field textarea').set new_content
-        wait_for_js_events
-      end.to change { autosaveable.versions.count }.by_at_least(1)
+        navigate_away_triggering_autosave
+      end.to change { autosaveable.reload.versions.count }.by_at_least(1)
     end
 
     it 'creates a version with an auto-save event', versioning: true do
       find('.editor-field textarea').set new_content
-      wait_for_js_events
+      navigate_away_triggering_autosave
 
       revision = autosaveable.versions.last
       expect(revision.event).to eq 'auto-save'
@@ -49,11 +49,11 @@ shared_examples 'an editor with server side auto-save' do
 
     it 'discards the autosave when Discard Changes is clicked', versioning: true do
       find('.editor-field textarea').set new_content
-      wait_for_js_events
+      navigate_away_triggering_autosave
 
       expect do
         click_link 'Discard changes'
-      end.to change { autosaveable.versions.count }.by_at_least(-2)
+      end.to change { autosaveable.reload.versions.count }.by_at_least(-2)
     end
   end
 end
@@ -84,7 +84,7 @@ shared_examples 'a record with auto-save revisions' do
 
     it 'creates a single auto-save item in the revision history', versioning: true do
       find('.editor-field textarea').set new_content
-      wait_for_js_events
+      navigate_away_triggering_autosave
 
       visit polymorphic_path(path_params.push(:revisions))
       row = find('.revisions-table table tbody tr.active')
@@ -96,7 +96,7 @@ shared_examples 'a record with auto-save revisions' do
     it 'only keeps a single auto-save item in the revision history', versioning: true do
       3.times do
         find('.editor-field textarea').set new_content
-        wait_for_js_events
+        navigate_away_triggering_autosave
       end
 
       visit polymorphic_path(path_params.push(:revisions))
@@ -107,7 +107,7 @@ shared_examples 'a record with auto-save revisions' do
     it 'removes all auto-saves when updated', versioning: true do
       perform_enqueued_jobs do
         find('.editor-field textarea').set new_content
-        wait_for_js_events
+        navigate_away_triggering_autosave
 
         within '.form-actions' do
           find('[type="submit"]').click
@@ -128,7 +128,7 @@ shared_examples 'a record with auto-save revisions' do
         old_content = autosaveable.title
         find('.editor-field textarea').set 'intermediary'
         find('.editor-field textarea').set new_content
-        wait_for_js_events
+        navigate_away_triggering_autosave
 
         within '.form-actions' do
           find('[type="submit"]').click
@@ -146,7 +146,7 @@ shared_examples 'a record with auto-save revisions' do
         # Create an update revision otherwise we won't have access to the
         # revisions page
         find('.editor-field textarea').set new_content
-        wait_for_js_events
+        navigate_away_triggering_autosave
 
         within '.form-actions' do
           find('[type="submit"]').click
@@ -164,10 +164,11 @@ shared_examples 'a record with auto-save revisions' do
   end
 end
 
-# Wait for js events to finish. We know events have fired once preview had
-# reloaded with the new content.
-def wait_for_js_events
-  find('.textile-preview', text: 'New info', wait: 1)
+# Navigate away from the edit screen to trigger autosave then navigate back
+def navigate_away_triggering_autosave
+  visit polymorphic_path(path_params)
+  visit edit_polymorphic_path(path_params)
+  click_link 'Source'
 end
 
 def content_attribute

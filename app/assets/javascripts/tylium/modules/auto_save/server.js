@@ -4,11 +4,14 @@
 // accept content for resources to update, and create revisions from. It will
 // receive timestamps back from the server to update the `original_updated_at`
 // field which helps us with conflict resolution.
+// Auto-saved forms are set to be saved at two points:
+//  - When the user navigates away from the page
+//  - Every 3 minutes
 (function($, window) {
   function ServerAutoSave(form) {
     this.form = form;
 
-    this._doneTypingInterval = 500;
+    this._timedIntervalInMS = 3*60*1000;
     this.originalUpdatedAt = form.querySelector('[data-behavior~=auto-save-updated-at]');
     this.projectId = form.dataset.asProjectId;
     this.resourceId = form.dataset.asResourceId;
@@ -49,24 +52,22 @@
       this._cleanupBound = this.cleanup.bind(this);
       document.addEventListener('turbolinks:before-cache', this._cleanupBound)
 
-      // we're using a jQuery plugin for :textchange event, so need to use $()
-      this._changeTimeoutBound = this._changeTimeout.bind(this);
-      $(this.form).on('textchange', this._changeTimeoutBound);
+      boundSave = function() {
+        this.editorChannel.save();
+      }.bind(this);
+
+      window.addEventListener('beforeunload', boundSave);
+      this._timedSave = setInterval(boundSave, this._timedIntervalInMS);
     },
     cleanup: function() {
       this.editorChannel.save(); // Save the results once more
 
       document.removeEventListener('turbolinks:before-cache', this._cleanupBound)
-      this.form.removeEventListener('textchange', this._changeTimeoutBound)
+
+      clearInterval(this._timedSave); // Clear timed save
 
       this.editorChannel.unsubscribe(); // Unsubscribe from the channel
       window.App.cable.subscriptions.remove(this.editorChannel); // Clean up the subscriptions
-    },
-    _changeTimeout: function() {
-      clearTimeout(this._typingTimer);
-      this._typingTimer = setTimeout(function() {
-        this.editorChannel.save();
-      }.bind(this), this._doneTypingInterval);
     }
   }
 
