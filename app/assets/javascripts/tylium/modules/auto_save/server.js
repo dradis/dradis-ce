@@ -11,7 +11,7 @@
   function ServerAutoSave(form) {
     this.form = form;
 
-    this._timedIntervalInMS = 300000; // 5 minutes in MS
+    this._timedIntervalInMS = 3*60*1000;
     this.originalUpdatedAt = form.querySelector('[data-behavior~=auto-save-updated-at]');
     this.projectId = form.dataset.asProjectId;
     this.resourceId = form.dataset.asResourceId;
