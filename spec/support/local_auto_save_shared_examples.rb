@@ -103,9 +103,9 @@ shared_examples 'a form with local auto save' do |klass, action|
     end
   end
 
-  context 'when Cancel is clicked' do
+  context 'when Discard is clicked' do
     it 'clears cached data' do
-      click_link 'Cancel'
+      click_link 'Discard'
       visit model_path
       click_link 'Source'
 
