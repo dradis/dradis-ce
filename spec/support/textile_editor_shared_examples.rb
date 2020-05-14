@@ -84,15 +84,18 @@ shared_examples 'a textile form view' do |klass|
 
   it 'supports text without field headers' do
     content_attribute = get_content_attribute(klass)
-    test_string = "Line 1\nLine 2\n\nLine 4"
+    fieldless_string = "Line 1\nLine 2\n\nLine 4"
+    field_string = "#[Field]#\nTest Value"
 
     click_link 'Source'
-    fill_in "#{klass.to_s.downcase}_#{content_attribute}", with: test_string
+    fill_in "#{klass.to_s.downcase}_#{content_attribute}", with: fieldless_string + "\n" +  field_string
 
     click_link 'Fields'
 
     expect(find('#item_form_field_name_0').value).to eq ('')
-    expect(find('#item_form_field_value_0').value).to eq (test_string)
+    expect(find('#item_form_field_value_0').value).to eq (fieldless_string)
+    expect(find('#item_form_field_name_1').value).to eq ('Field')
+    expect(find('#item_form_field_value_1').value).to eq ('Test Value')
   end
 
   def get_content_attribute(klass)
