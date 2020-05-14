@@ -26,15 +26,6 @@ module ControllerMacros
     page.visit(arg)
 
     if RSpec.current_example.metadata[:js]
-      # When visiting a form we've already entered data into we will get the
-      # cached data prompt. We won't always, and we can't check for it. So we have
-      # to try and close the prompt every time and rescue if it errors.
-      begin
-        page.driver.browser.switch_to.alert
-        page.dismiss_prompt
-      rescue
-      end
-
       page.execute_script File.read("#{Rails.root}/spec/support/selenium/disable_animations.js")
     end
   end
