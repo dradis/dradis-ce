@@ -112,14 +112,14 @@ document.addEventListener "turbolinks:load", ->
 
   # Search form
   $('[data-behavior~=form-search]').hover ->
-    $('[data-behavior~=search-query]').val('').focus() 
+    $('[data-behavior~=search-query]').val('').focus()
 
   submitSearch = ->
     if $('[data-behavior~=search-query]').val() != ''
       $('[data-behavior~=form-search]').submit()
-      $('[data-behavior~=search-query]').val('Searching...') 
+      $('[data-behavior~=search-query]').val('Searching...')
       return false
-    else 
+    else
       $('[data-behavior~=search-query]').effect( "shake", { direction: "left", times: 2, distance: 5}, 'fast' ).focus();
 
   $('[data-behavior~=search-button]').on 'click', (e)->
@@ -204,3 +204,6 @@ document.addEventListener "turbolinks:load", ->
     history.pushState({}, '', this.href);
     $(this.hash)[0].scrollIntoView behavior: 'smooth'
     return
+
+  $('[data-behavior~=local-auto-save]').each ->
+    new LocalAutoSave(this)

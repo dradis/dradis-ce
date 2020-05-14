@@ -1,4 +1,11 @@
-<%= simple_form_for [current_project, @board, @list, @card] do |f| %>
+<%= simple_form_for [current_project, @board, @list, @card],
+  html: {
+    data: {
+      behavior: 'local-auto-save',
+      auto_save_key: @card.new_record? ? "#{@list.id}-card" : "card-#{@card.id}"
+    }
+  } do |f| %>
+
   <%= f.error_notification %>
 
   <%= f.input :name, required: false %>
@@ -17,7 +24,7 @@
         rows: 20
       }
   %>
-  
+
   <%=
     f.association(
       :assignees,
@@ -36,8 +43,11 @@
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
     <%=
       link_to 'Cancel',
-        @card.persisted? ? [current_project, @board, @list, @card] : [current_project, @board],
-        class: 'cancel-link'
+      @card.new_record? ? [current_project, @board] : [current_project, @board, @list, @card],
+      class: 'cancel-link',
+      data: {
+        behavior: 'clear-local-auto-save'
+      }
     %>
   </div>
 <% end %>
