@@ -3,6 +3,7 @@ module Dradis::CE::API
     class NodesController < Dradis::CE::API::APIController
       include ActivityTracking
       include Dradis::CE::API::ProjectScoped
+      include RevisionCollapsing
 
       def index
         @nodes = current_project.nodes.user_nodes.includes(:evidence, :notes, evidence: [:issue]).order('updated_at desc')
@@ -26,6 +27,7 @@ module Dradis::CE::API
       def update
         @node = current_project.nodes.find(params[:id])
         if @node.update_attributes(node_params)
+          collapse_revisions(@node)
           track_updated(@node)
           render node: @node
         else

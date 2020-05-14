@@ -3,6 +3,7 @@ module Dradis::CE::API
     class NotesController < Dradis::CE::API::APIController
       include ActivityTracking
       include Dradis::CE::API::ProjectScoped
+      include RevisionCollapsing
 
       before_action :set_node
 
@@ -28,6 +29,7 @@ module Dradis::CE::API
       def update
         @note = @node.notes.find(params[:id])
         if @note.update_attributes(note_params)
+          collapse_revisions(@note)
           track_updated(@note)
           render note: @note
         else
