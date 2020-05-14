@@ -89,7 +89,7 @@ shared_examples 'a textile form view' do |klass|
     click_link 'Source'
     fill_in "#{klass.to_s.downcase}_#{content_attribute}", with: test_string
 
-    click_link 'Inline'
+    click_link 'Fields'
 
     expect(find('#item_form_field_name_0').value).to eq ('')
     expect(find('#item_form_field_value_0').value).to eq (test_string)

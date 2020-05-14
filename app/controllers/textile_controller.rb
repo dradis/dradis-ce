@@ -43,9 +43,12 @@ class TextileController < AuthenticatedController
     form_data.each_slice(2).map do |field_name, field_value|
       field = field_name[1]
       value = field_value[1]
-      next if field.empty? || (field.empty? && value.empty?)
 
-      "#[#{field}]#\n#{value}"
+      str = ''
+      str << "#[#{field}]#\n" unless field.empty?
+      str << "#{value}" unless value.empty?
+
+      str
     end.compact.join("\n\n")
   end
 
