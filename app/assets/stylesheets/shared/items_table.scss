@@ -1,14 +1,17 @@
 .btn-toolbar {
+  
+  .dropdown-menu {
+    max-height: 75vh;
+    overflow-y: auto;
+    text-align: left;
+  }
+  
   input[type='checkbox'] {
     margin: 0;
   }
 
   .items-table-actions {
     display: none;
-
-    .dropdown-menu {
-      text-align: left;
-    }
 
     #merge-selected {
       display: none;
@@ -31,8 +34,8 @@
     vertical-align: middle;
   }
 
-  th {
-    padding: 0.5rem 1.25rem 0.5rem 0.5rem;
+  thead tr th {
+    padding: 0.5rem 1.75rem 0.5rem 0.5rem;
     cursor: pointer;
     position: relative;
 
@@ -81,10 +84,21 @@
     }
   }
 
-  tr:hover {
+  tr {
+  
+    &:hover {
 
-    .column-actions a { 
-      visibility: visible;
+      .column-actions a {
+        visibility: visible;
+      }
+    }
+
+    &:last-of-type {
+
+      [aria-label]:after {
+        top: initial;
+        bottom: 110%;
+      }
     }
   }
 }
