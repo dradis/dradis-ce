@@ -3,7 +3,8 @@
     'as-project-id': current_project.id,
     'as-resource-id': @evidence.id,
     'as-resource-type': 'evidence',
-    behavior: 'server-auto-save'
+    auto_save_key: @evidence.new_record? ? "project-#{current_project.id}-node-#{@node.id}-evidence#{"-#{params[:template]}" if params[:template]}" : "evidence-#{@evidence.id}",
+    behavior: 'local-auto-save server-auto-save'
   }
 } do |f| %>
   <%= f.error_notification %>
@@ -17,7 +18,7 @@
         data: textile_default_data.merge(
           allow_dropdown: @evidence.new_record?,
           autosave_key: "#{current_project.id}-evidence-#{ @evidence.persisted? ? "edit-#{@evidence.id}" : "new-for-#{@node.id}" }",
-          behavior: 'auto-save rich-toolbar',
+          behavior: 'rich-toolbar',
           'rich-toolbar': 'block-code bold field italic link list-ol list-ul table'
         ),
         rows: 20
@@ -33,9 +34,9 @@
     <%= hidden_field_tag :back_to, :issue if params[:back_to] == 'issue' %>
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
     <% if @evidence.new_record? %>
-      <%= link_to 'Discard changes', project_node_path(current_project, @node), class: 'cancel-link' %>
+      <%= link_to 'Discard changes', project_node_path(current_project, @node), class: 'cancel-link', data: { behavior: 'clear-local-auto-save' } %>
     <% else %>
-      <%= link_to 'Discard changes', project_node_evidence_revision_path(current_project, @node, @evidence), method: :delete, class: 'cancel-link' %>
+      <%= link_to 'Discard changes', project_node_evidence_revision_path(current_project, @node, @evidence), method: :delete, class: 'cancel-link', data: { behavior: 'clear-local-auto-save' } %>
     <% end %>
   </div>
 <% end %>

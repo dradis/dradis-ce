@@ -3,7 +3,8 @@
     'as-project-id': current_project.id,
     'as-resource-id': @card.id,
     'as-resource-type': 'card',
-    behavior: 'server-auto-save'
+    auto_save_key: @card.new_record? ? "#{@list.id}-card#{"-#{params[:template]}" if params[:template]}" : "card-#{@card.id}",
+    behavior: 'server-auto-save local-auto-save'
   }
 } do |f| %>
   <%= f.error_notification %>
@@ -24,7 +25,7 @@
         rows: 20
       }
   %>
-  
+
   <%=
     f.association(
       :assignees,
@@ -43,9 +44,9 @@
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
 
     <% if @card.new_record? %>
-      <%= link_to 'Discard changes', project_board_path(current_project, @board), class: 'cancel-link' %>
+      <%= link_to 'Discard changes', project_board_path(current_project, @board), class: 'cancel-link', data: { behavior: 'clear-local-auto-save' } %>
     <% else %>
-      <%= link_to 'Discard changes', project_board_list_card_revision_path(current_project, @board, @list, @card), method: :delete, class: 'cancel-link' %>
+      <%= link_to 'Discard changes', project_board_list_card_revision_path(current_project, @board, @list, @card), method: :delete, class: 'cancel-link', data: { behavior: 'clear-local-auto-save' } %>
     <% end %>
   </div>
 <% end %>

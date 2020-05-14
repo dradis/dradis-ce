@@ -3,7 +3,8 @@
     'as-project-id': current_project.id,
     'as-resource-id': @issue.id,
     'as-resource-type': 'issue',
-    behavior: 'server-auto-save'
+    auto_save_key: @issue.new_record? ? "project-#{current_project.id}-issue#{"-#{params[:template]}" if params[:template]}" : "issue-#{@issue.id}",
+    behavior: 'local-auto-save server-auto-save'
   }
 } do |f| %>
   <%= f.error_notification %>
@@ -16,7 +17,7 @@
         data: textile_default_data.merge(
           allow_dropdown: @issue.new_record?,
           autosave_key: "#{current_project.id}-issue-#{ @issue.persisted? ? "edit-#{@issue.id}" : 'new' }",
-          behavior: 'auto-save rich-toolbar',
+          behavior: 'rich-toolbar',
           'rich-toolbar': 'block-code bold field italic link list-ol list-ul table'
         ),
         rows: 20
@@ -33,9 +34,9 @@
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
 
     <% if @issue.new_record? %>
-      <%= link_to 'Discard changes', project_issues_path(current_project), class: 'cancel-link' %>
+      <%= link_to 'Discard changes', project_issues_path(current_project), class: 'cancel-link', data: { behavior: 'clear-local-auto-save' } %>
     <% else %>
-      <%= link_to 'Discard changes', project_issue_revision_path(current_project, @issue), method: :delete, class: 'cancel-link' %>
+      <%= link_to 'Discard changes', project_issue_revision_path(current_project, @issue), method: :delete, class: 'cancel-link', data: { behavior: 'clear-local-auto-save' } %>
     <% end %>
   </div>
 <% end %>

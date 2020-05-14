@@ -78,11 +78,11 @@
   }
 
   .note-list {
-  
-    .active a {
-      color: $white;
+
+    .active > a {
+      color: $white !important;
     }
-    
+
     .list-item {
       line-height: 1.2rem;
       padding: 0.5rem;
@@ -92,7 +92,7 @@
       a {
         color: $lightColor;
       }
-  
+
       .list-item-actions {
         padding-top: 0.3rem;
         text-align: right;
@@ -103,10 +103,6 @@
           padding: 0 4px;
         }
 
-        &.active a {
-          color: $white;
-        }
-    
         .list-item-action-delete,
         .list-item-action-edit {
           color: $lightColor;
@@ -138,7 +134,7 @@
             color: $white;
           }
         }
-        
+
         .list-item-actions {
           visibility: visible;
         }
@@ -148,7 +144,6 @@
     .summary-link {
       color: $lightColor;
 
-      &.active,
       &:hover {
         color: $white;
       }
