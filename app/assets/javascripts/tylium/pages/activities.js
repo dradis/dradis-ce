@@ -1,22 +1,60 @@
-document.addEventListener( "turbolinks:load", function(){
+document.addEventListener('turbolinks:load', function() {
+  var $allActivitiesContainer = $('.all-activities-container');
+  var loading = false;
+  var canLoadMore = true;
 
-  // var $dateHeader = $('[data-behavior~=activity-date-header]')
+  if ($allActivitiesContainer.length) {
+    var $viewContent = $('#view-content');
 
-  // remove date header if the previous date header is the same
-  // $dateHeader.each(function() {
-  //   var currentDate = $(this).find('[data-behavior~=activity-day-value]').text();
-  //   var prevDate = $(this).prevAll('[data-behavior~=activity-date-header]:first').find('[data-behavior~=activity-day-value]').text();
+    $viewContent.on('scroll', function() {
+      var viewHeight = $viewContent.height();
+      var scrollTop = $viewContent.scrollTop();
+      var scrollHeight = $viewContent[0].scrollHeight;
 
-  //   if (prevDate.length && currentDate == prevDate) {
-  //     $(this).remove();
-  //   }
-  // });
+      // 64px is the sum of margin bottom and padding bottom of the content-container class
+      if (canLoadMore && !loading && viewHeight + scrollTop >= (scrollHeight - 64)) {
+        var page = $allActivitiesContainer.data('page') + 1;
+        var url = $allActivitiesContainer.data('url');
+        $('.spinner-container').show();
+        loading = true;
 
-  // select activities between visible date headers and group them together
-  // $dateHeader.each(function() {
-  //   $(this).nextUntil($dateHeader).wrapAll('<div class="activities-group" data-behavior="activities-group"></div>');
-  // });
+        $.ajax({
+          url: url + '.js',
+          data: { page: page },
+          success: function(data, status, XHR) {
+            var $activitiesGroups = $(data);
 
-  // move every other activity group to the right side
-  // $('[data-behavior~=activities-group]:odd').addClass('ml-auto');
+            if ($activitiesGroups.length) {
+              $allActivitiesContainer.data('page', page);
+
+              var activityDayValues = $.map($('[data-behavior~=activity-day-value]'), function(element, index) {
+                return $(element).text();
+              })
+
+              $.each($activitiesGroups, function(index, activitiesGroup) {
+                var $activitiesGroup = $(activitiesGroup);
+                var timeElementDatetime = $activitiesGroup.find('[data-behavior~=activity-day-value]').attr('datetime');
+                var timeElementInDOM = $allActivitiesContainer.find(`[datetime="${timeElementDatetime}"]`);
+
+                // Check if DOM has the time element with this datetime attribute
+                if (timeElementInDOM.length) {
+                  var $activitiesGroupContainer = timeElementInDOM.parents('.activities-group-container');
+                  $.each($activitiesGroup.find('.activity'), function(index, element) {
+                    $activitiesGroupContainer.find('.activities-group').append(element);
+                  })
+                } else {
+                  $allActivitiesContainer.append(activitiesGroup);
+                }
+              })
+            } else {
+              canLoadMore = false;
+            }
+
+            loading = false;
+            $('.spinner-container').hide();
+          }
+        })
+      }
+    });
+  }
 });

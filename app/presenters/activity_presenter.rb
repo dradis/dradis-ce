@@ -2,7 +2,7 @@ class ActivityPresenter < BasePresenter
   presents :activity
 
   def activity_day
-    h.local_date(activity.created_at, format: '%A, %B %e %Y', data: { behavior: 'activity-day-value' })
+    h.local_date(activity.created_at.to_date, format: '%A, %B %e %Y', data: { behavior: 'activity-day-value' })
   end
 
   def activity_time

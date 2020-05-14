@@ -6,7 +6,16 @@ class ActivitiesController < AuthenticatedController
 
   def index
     @activities = Activity.all_latest
-    @activities_groups = Activity.all_latest.page(params[:page]).group_by { |activity| activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT) }
+    @activities_groups = Activity.all_latest.page(params[:page]).group_by do
+      |activity| activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
+    end
+
+    respond_to do |format|
+      format.html
+      format.js do
+        render 'activities/_activities_groups.html.erb', locals: { activities_groups: @activities_groups }
+      end
+    end
   end
 
   def poll
