@@ -99,6 +99,14 @@ describe 'Card pages:' do
           ]
         end
 
+        let(:model_attributes_for_template) do
+          [
+            { name: :name, value: 'New Card Template' },
+            { name: :description, value: 'New Description Template' },
+            { name: :due_date, value: Date.today + 5.day }
+          ]
+        end
+
         include_examples 'a form with local auto save', Card, :new
       end
     end

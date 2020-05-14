@@ -2,7 +2,7 @@
   html: {
     data: {
       behavior: 'local-auto-save',
-      auto_save_key: @evidence.new_record? ? "project-#{current_project.id}-node-#{@node.id}-evidence" : "evidence-#{@evidence.id}"
+      auto_save_key: @evidence.new_record? ? "project-#{current_project.id}-node-#{@node.id}-evidence#{"-#{params[:template]}" if params[:template]}" : "evidence-#{@evidence.id}"
     }
   } do |f| %>
 

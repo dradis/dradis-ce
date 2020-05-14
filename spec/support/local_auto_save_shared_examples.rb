@@ -6,14 +6,22 @@
 # - model_attributes_for_template: attributses to fill in the form with template
 
 # let(:model_path) { new_project_board_list_card_path(current_project, @board, @list) }
-# let(:model_attributes) {
+# let(:model_attributes) do
 #   [
 #     { name: :name, value: 'New Card' },
 #     { name: :description, value: 'New Description' },
 #     { name: :due_date, value: Date.today }
 #   ]
-# }
-
+# end
+#
+# let(:model_attributes_for_template) do
+#   [
+#     { name: :name, value: 'New Card Template' },
+#     { name: :description, value: 'New Description Template' },
+#     { name: :due_date, value: Date.today + 5.day }
+#   ]
+# end
+#
 # include_examples 'a form with local auto save', Card
 
 shared_examples 'a form with local auto save' do |klass, action|
@@ -103,6 +111,68 @@ shared_examples 'a form with local auto save' do |klass, action|
 
       model_attributes.each do |model_attribute|
         expect(page.find_field("#{klass.name.downcase}[#{model_attribute[:name]}]").value).not_to eq model_attribute[:name]
+      end
+    end
+  end
+
+  if action == :new
+    describe 'with template' do
+      before do
+        template_path = Rails.root.join('spec/fixtures/files/note_templates/')
+        allow(NoteTemplate).to receive(:pwd).and_return(template_path)
+        visit "#{model_path}?template=simple_note"
+        click_link 'Source'
+        @template_content = File.read(template_path.join('simple_note.txt'))
+
+        model_attributes_for_template.each do |model_attribute|
+          fill_in "#{klass.name.downcase}_#{model_attribute[:name]}", with: model_attribute[:value]
+        end
+
+        sleep 1 # Needed for debounce function in local_auto_save.js
+      end
+
+      context 'when form is not saved' do
+        it 'prefill fields with cached data' do
+          page.driver.browser.navigate.refresh
+          click_link 'Source'
+
+          model_attributes_for_template.each do |model_attribute|
+            if model_attribute[:value].is_a?(Date)
+              expect(page.find_field("#{klass.name.downcase}[#{model_attribute[:name]}]").value).to eq model_attribute[:value].to_date.strftime('%Y-%m-%d')
+            else
+              expect(page.find_field("#{klass.name.downcase}[#{model_attribute[:name]}]").value).to eq model_attribute[:value]
+            end
+          end
+        end
+      end
+
+      context 'when form is saved' do
+        it 'does not prefill fields with cached data' do
+          page.find('input[type="submit"]').click
+          visit "#{model_path}?template=simple_note"
+          click_link 'Source'
+
+          page_form_values = model_attributes_for_template.collect do |model_attribute|
+            page.find_field("#{klass.name.downcase}[#{model_attribute[:name]}]").value
+          end
+
+          expect(page_form_values.include?(@template_content)).to eq true
+        end
+      end
+
+      context 'when navigated to new form without template params' do
+        it 'does not prefill fields with cached template data' do
+          visit model_path
+          click_link 'Source'
+
+          model_attributes_for_template.each do |model_attribute|
+            if model_attribute[:value].is_a?(Date)
+              expect(page.find_field("#{klass.name.downcase}[#{model_attribute[:name]}]").value).not_to eq model_attribute[:value].to_date.strftime('%Y-%m-%d')
+            else
+              expect(page.find_field("#{klass.name.downcase}[#{model_attribute[:name]}]").value).not_to eq model_attribute[:value]
+            end
+          end
+        end
       end
     end
   end

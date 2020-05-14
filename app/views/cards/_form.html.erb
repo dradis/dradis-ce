@@ -2,7 +2,7 @@
   html: {
     data: {
       behavior: 'local-auto-save',
-      auto_save_key: @card.new_record? ? "#{@list.id}-card" : "card-#{@card.id}"
+      auto_save_key: @card.new_record? ? "#{@list.id}-card#{"-#{params[:template]}" if params[:template]}" : "card-#{@card.id}"
     }
   } do |f| %>
 
