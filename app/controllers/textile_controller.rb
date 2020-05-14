@@ -59,6 +59,6 @@ class TextileController < AuthenticatedController
   # Field-less strings are strings that do not have a field header (#[Field]#).
   def fieldless_string
     # Extract all characters before a field header (#[Field]#)
-    @fieldless_string ||= params[:source][/^([\s\S]*?)(?=#\[.+?\]#|$)/, 1]
+    @fieldless_string ||= params[:source][/^([\s\S]*?)(?=#\[.+?\]#|\z)/, 1]
   end
 end
