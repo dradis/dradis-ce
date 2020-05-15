@@ -1,4 +1,10 @@
-<%= form_with model: [current_project, Comment.new(commentable: commentable)], data: { behavior: 'add-comment' }, class: 'mt-3' do |f| %>
+<%= form_with model: [current_project, Comment.new(commentable: commentable)],
+  class: 'mt-3',
+  data: {
+    behavior: 'add-comment local-auto-save',
+    auto_save_key: "comment-#{request.path}"
+  } do |f| %>
+
   <div class="row m-0">
     <%= f.label "Add a comment" %>
   </div>

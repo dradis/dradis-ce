@@ -21,6 +21,7 @@
   var pluginName = 'textile',
       document = window.document,
       defaults = {
+        defaultViewKey: 'editor.view',
         // Start fullscreen?
         fullscreen: false,
         // Add a resizer bar at the bottom of the editor
@@ -95,6 +96,8 @@
 
       // Event bindings
       this._bindBehaviors();
+
+      this._setDefaultView();
     },
     _bindBehaviors: function() {
       // Sync preview
@@ -230,6 +233,7 @@
       }
     },
     _onBtnFields: function() {
+      localStorage.setItem(this.options.defaultViewKey, 'fields');
       // Activate toolbar button
       var scope = this.options.$wrap;
       $('.textile-toolbar a', scope).removeClass('active');
@@ -304,6 +308,7 @@
     },
     // Toolbar button handlers
     _onBtnSource: function() {
+      localStorage.setItem(this.options.defaultViewKey, 'source');
       // Activate toolbar button
       var scope = this.options.$wrap;
       $('.textile-toolbar a', scope).removeClass('active');
@@ -333,6 +338,12 @@
 
     _serializedFormData: function() {
       return $('[name^=item_form]', this.options.$fields).serializeArray();
+    },
+
+    _setDefaultView: function() {
+      if (localStorage.getItem(this.options.defaultViewKey) == 'source') {
+        this._onBtnSource();
+      }
     }
   };
 
