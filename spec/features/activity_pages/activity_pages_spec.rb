@@ -33,11 +33,11 @@ describe 'Activity pages:' do
         visit project_activities_path(current_project)
       end
 
-      it 'only shows paginated records' do
+      it 'shows paginated records' do
         expect(page).to have_selector('.activity', count: Kaminari.config.default_per_page)
       end
 
-      it 'only show unique date headers' do
+      it 'shows unique date headers' do
         activities_groups = Activity.all_latest.limit(Kaminari.config.default_per_page).group_by do
           |activity| activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
         end
@@ -59,11 +59,11 @@ describe 'Activity pages:' do
           end
         end
 
-        it 'loads more records when scrolled to bottom of page' do
+        it 'loads more records' do
           expect(page).to have_selector('.activity', :count => Activity.count)
         end
 
-        it 'only show unique date headers' do
+        it 'shows unique date headers' do
           activities_groups = Activity.all_latest.group_by do
             |activity| activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
           end
