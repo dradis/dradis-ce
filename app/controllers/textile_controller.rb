@@ -8,7 +8,7 @@ class TextileController < AuthenticatedController
   def form
     @form_data = Note.parse_fields(params[:source]) if params[:source]
 
-    if fieldless_string && !fieldless_string.empty?
+    if fieldless_string.present?
       @form_data = { '': fieldless_string }.merge(@form_data)
     end
 
