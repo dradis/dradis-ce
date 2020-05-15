@@ -14,11 +14,11 @@
 <div class="content-container mt-3 <%= 'pt-3' if @activities_groups.any? %>">
   <% if @activities_groups.any? %>
     <div class="container">
-      <div class="all-activities-container" data-page="<%= params[:page].present? ? params[:page] : 1 %>" data-url="<%= project_activities_path(current_project) %>">
+      <div class="activities-groups-container" data-behavior="activities-groups-container" data-page="<%= params[:page].present? ? params[:page] : 1 %>" data-url="<%= project_activities_path(current_project, format: :js) %>">
         <%= render 'activities_groups', activities_groups: @activities_groups %>
       </div>
 
-      <div class="text-center mt-3 spinner-container">
+      <div class="text-center mt-3 spinner-container" data-behavior="activities-spinner">
         <div class="spinner-border text-primary" role="status"></div>
       </div>
     </div>

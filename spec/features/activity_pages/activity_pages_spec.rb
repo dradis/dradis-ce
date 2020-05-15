@@ -16,7 +16,7 @@ describe 'Activity pages:' do
       let(:user) { create(:user) }
 
       let(:create_activities) do
-        100.times do
+        50.times do
           activity = Activity.create(
             user: user,
             trackable_type: trackable.class,
@@ -38,7 +38,7 @@ describe 'Activity pages:' do
       end
 
       it 'shows unique date headers' do
-        activities_groups = Activity.all_latest.limit(Kaminari.config.default_per_page).group_by do
+        activities_groups = Activity.order(created_at: :desc).limit(Kaminari.config.default_per_page).group_by do
           |activity| activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
         end
 
@@ -54,8 +54,9 @@ describe 'Activity pages:' do
           times_to_scroll = (Activity.count / Kaminari.config.default_per_page.to_f).ceil
 
           times_to_scroll.times do
-            page.execute_script('$("#view-content").scrollTop(100000)')
+            page.execute_script('$("[data-behavior=\'view-content\']").scrollTop(100000)')
             wait_for_ajax
+            sleep 0.25 # Needed due to specs failing occasionally
           end
         end
 
@@ -64,7 +65,7 @@ describe 'Activity pages:' do
         end
 
         it 'shows unique date headers' do
-          activities_groups = Activity.all_latest.group_by do
+          activities_groups = Activity.order(created_at: :desc).group_by do
             |activity| activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
           end
 

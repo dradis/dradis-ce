@@ -49,21 +49,20 @@
 }
 
 // this is for activities#index
-.all-activities-container {
+.activities-groups-container {
+  .activities-group {
+    .activity-date-header {
+      display: flex;
+      justify-content: center;
 
-  .activity-date-header {
-    display: flex;
-    justify-content: center;
-
-    time {
-      background-color: $primaryBgColor;
-      font-size: 1.5rem;
-      padding: 1rem 0;
+      time {
+        background-color: $primaryBgColor;
+        font-size: 1.5rem;
+        padding: 1rem 0;
+      }
     }
-  }
 
-  .activities-group-container {
-    .activities-group {
+    .activities {
       width: 50%;
       position: relative;
 
@@ -114,7 +113,7 @@
     }
 
     &:nth-child(even) {
-      .activities-group {
+      .activities {
         margin-left: auto;
 
         .activity {

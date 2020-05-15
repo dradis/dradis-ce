@@ -1,10 +1,10 @@
 document.addEventListener('turbolinks:load', function() {
-  var $allActivitiesContainer = $('.all-activities-container');
+  var $activitiesGroupsContainer = $('[data-behavior="activities-groups-container"]');
   var loading = false;
   var canLoadMore = true;
 
-  if ($allActivitiesContainer.length) {
-    var $viewContent = $('#view-content');
+  if ($activitiesGroupsContainer.length) {
+    var $viewContent = $('[data-behavior="view-content"]');
 
     $viewContent.on('scroll', function() {
       var viewHeight = $viewContent.height();
@@ -13,19 +13,19 @@ document.addEventListener('turbolinks:load', function() {
 
       // 64px is the sum of margin bottom and padding bottom of the content-container class
       if (canLoadMore && !loading && viewHeight + scrollTop >= (scrollHeight - 64)) {
-        var page = $allActivitiesContainer.data('page') + 1;
-        var url = $allActivitiesContainer.data('url');
-        $('.spinner-container').show();
+        var page = $activitiesGroupsContainer.data('page') + 1;
+        var url = $activitiesGroupsContainer.data('url');
+        $('[data-behavior="activities-spinner"]').show();
         loading = true;
 
         $.ajax({
-          url: url + '.js',
+          url: url,
           data: { page: page },
           success: function(data, status, XHR) {
             var $activitiesGroups = $(data);
 
             if ($activitiesGroups.length) {
-              $allActivitiesContainer.data('page', page);
+              $activitiesGroupsContainer.data('page', page);
 
               var activityDayValues = $.map($('[data-behavior~=activity-day-value]'), function(element, index) {
                 return $(element).text();
@@ -34,16 +34,18 @@ document.addEventListener('turbolinks:load', function() {
               $.each($activitiesGroups, function(index, activitiesGroup) {
                 var $activitiesGroup = $(activitiesGroup);
                 var timeElementDatetime = $activitiesGroup.find('[data-behavior~=activity-day-value]').attr('datetime');
-                var timeElementInDOM = $allActivitiesContainer.find(`[datetime="${timeElementDatetime}"]`);
+                var timeElementInDOM = $activitiesGroupsContainer.find(`[datetime="${timeElementDatetime}"]`);
 
                 // Check if DOM has the time element with this datetime attribute
                 if (timeElementInDOM.length) {
-                  var $activitiesGroupContainer = timeElementInDOM.parents('.activities-group-container');
-                  $.each($activitiesGroup.find('.activity'), function(index, element) {
-                    $activitiesGroupContainer.find('.activities-group').append(element);
+                  var $activitiesGroupContainer = timeElementInDOM.parents('[data-behavior="activities-group"]');
+                  var $activities = $activitiesGroupContainer.find('[data-behavior="activities"]');
+
+                  $.each($activitiesGroup.find('[data-behavior="activity"]'), function(index, element) {
+                    $activities.append(element);
                   })
                 } else {
-                  $allActivitiesContainer.append(activitiesGroup);
+                  $activitiesGroupsContainer.append(activitiesGroup);
                 }
               })
             } else {
@@ -51,7 +53,7 @@ document.addEventListener('turbolinks:load', function() {
             }
 
             loading = false;
-            $('.spinner-container').hide();
+            $('[data-behavior="activities-spinner"]').hide();
           }
         })
       }

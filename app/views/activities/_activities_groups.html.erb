@@ -1,12 +1,12 @@
 <% activities_groups.each do |date, activities| %>
-  <div class="activities-group-container">
+  <div class="activities-group" data-behavior="activities-group">
     <div class="activity-date-header">
       <% present activities.first do |activity_presenter| %>
         <%= activity_presenter.activity_day %>
       <% end %>
     </div>
 
-    <div class="activities-group">
+    <div class="activities" data-behavior="activities">
       <% activities.each do |activity| %>
         <% present activity do |activity_presenter| %>
 
