@@ -5,7 +5,6 @@ class ActivitiesController < AuthenticatedController
   include ProjectScoped
 
   def index
-    @activities = Activity.all_latest
     @activities_groups = Activity.all_latest.page(params[:page]).group_by do
       |activity| activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
     end
