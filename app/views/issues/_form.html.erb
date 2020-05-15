@@ -1,4 +1,11 @@
-<%= simple_form_for [current_project, @issue] do |f| %>
+<%= simple_form_for [current_project, @issue],
+  html: {
+    data: {
+      behavior: 'local-auto-save',
+      auto_save_key: @issue.new_record? ? "project-#{current_project.id}-issue#{"-#{params[:template]}" if params[:template]}" : "issue-#{@issue.id}"
+    }
+  } do |f| %>
+
   <%= f.error_notification %>
 
   <%=
@@ -9,7 +16,7 @@
         data: textile_default_data.merge(
           allow_dropdown: @issue.new_record?,
           autosave_key: "#{current_project.id}-issue-#{ @issue.persisted? ? "edit-#{@issue.id}" : 'new' }",
-          behavior: 'auto-save rich-toolbar',
+          behavior: 'rich-toolbar',
           'rich-toolbar': 'block-code bold field italic link list-ol list-ul table'
         ),
         rows: 20
@@ -24,6 +31,13 @@
 
   <div class="form-actions">
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
-    <%= link_to 'Cancel', @issue.new_record? ? project_issues_path(current_project) : [current_project, @issue], class: 'cancel-link' %>
+    <%=
+      link_to 'Cancel',
+      @issue.new_record? ? project_issues_path(current_project) : [current_project, @issue],
+      class: 'cancel-link',
+      data: {
+        behavior: 'clear-local-auto-save'
+      }
+    %>
   </div>
 <% end %>

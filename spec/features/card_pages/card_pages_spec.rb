@@ -31,6 +31,7 @@ describe 'Card pages:' do
         let(:action_path) { new_project_board_list_card_path(current_project, @board, @list) }
         let(:required_form) { fill_in :card_name, with: 'New Card' }
         it_behaves_like 'a textile form view', Card
+        it_behaves_like 'an editor that remembers what view you like'
       end
 
       describe 'submitting the form with valid information' do
@@ -86,6 +87,28 @@ describe 'Card pages:' do
           expect(Card.last.assignees.count).to eq 2
         end
       end
+
+      describe 'local caching' do
+        let(:model_path) { new_project_board_list_card_path(current_project, @board, @list) }
+
+        let(:model_attributes) do
+          [
+            { name: :name, value: 'New Card' },
+            { name: :description, value: 'New Description' },
+            { name: :due_date, value: Date.today }
+          ]
+        end
+
+        let(:model_attributes_for_template) do
+          [
+            { name: :name, value: 'New Card Template' },
+            { name: :description, value: 'New Description Template' },
+            { name: :due_date, value: Date.today + 5.day }
+          ]
+        end
+
+        include_examples 'a form with local auto save', Card, :new
+      end
     end
 
     describe 'when in edit page', js: true do
@@ -99,6 +122,7 @@ describe 'Card pages:' do
         let(:action_path) { edit_project_board_list_card_path(current_project, @board, @list, @card) }
         let(:item) { @card }
         it_behaves_like 'a textile form view', Card
+        it_behaves_like 'an editor that remembers what view you like'
       end
 
       describe 'submitting the form with valid information' do
@@ -165,6 +189,20 @@ describe 'Card pages:' do
           expect(page).not_to have_text(@first_user.name)
           expect(page).to have_text(@second_user.name)
         end
+      end
+
+      describe 'local caching' do
+        let(:model_path) { edit_project_board_list_card_path(current_project, @board, @list, @card) }
+
+        let(:model_attributes) do
+          [
+            { name: :name, value: 'Edit Card' },
+            { name: :description, value: 'Edit Description' },
+            { name: :due_date, value: Date.today }
+          ]
+        end
+
+        include_examples 'a form with local auto save', Card, :edit
       end
     end
 
@@ -233,6 +271,25 @@ describe 'Card pages:' do
         let(:trackable) { @card }
 
         include_examples 'creates an Activity', :destroy
+      end
+
+      describe 'card redirects' do
+        it 'redirects to the existing card if list has changed' do
+          new_list = create(:list, board: @board)
+          @card.update(list: new_list)
+
+          visit project_board_list_card_path(current_project, @board, @list, @card)
+          expect(page).to have_current_path project_board_list_card_path(current_project, @board, new_list, @card)
+        end
+
+        it 'does not allow access to cards on other boards' do
+          new_list = create(:list)
+          @card.update(list: new_list)
+
+          expect {
+            visit project_board_list_card_path(current_project, @board, @list, @card)
+          }.to raise_error ActiveRecord::RecordNotFound
+        end
       end
     end
   end

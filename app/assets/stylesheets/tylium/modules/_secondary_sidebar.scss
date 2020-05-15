@@ -78,11 +78,11 @@
   }
 
   .note-list {
-  
-    .active a {
-      color: $white;
+
+    .active > a {
+      color: $white !important;
     }
-    
+
     .list-item {
       line-height: 1.2rem;
       padding: 0.5rem;
@@ -138,7 +138,7 @@
             color: $white;
           }
         }
-        
+
         .list-item-actions {
           visibility: visible;
         }
@@ -148,7 +148,6 @@
     .summary-link {
       color: $lightColor;
 
-      &.active,
       &:hover {
         color: $white;
       }

@@ -108,6 +108,7 @@ describe 'evidence' do
       let(:action_path) { edit_project_node_evidence_path(current_project, @node, @evidence) }
       let(:item) { @evidence }
       it_behaves_like 'a textile form view', Evidence
+      it_behaves_like 'an editor that remembers what view you like'
     end
 
     describe 'submitting the form with valid information', js: true do
@@ -146,6 +147,17 @@ describe 'evidence' do
 
     let(:model) { @evidence }
     include_examples 'nodes pages breadcrumbs', :edit, Evidence
+
+    describe 'local caching' do
+      before do
+        @issue_1 = create(:issue, node: issue_lib, text: "#[Title]#\nIssue 1")
+      end
+
+      let(:model_path) { edit_project_node_evidence_path(current_project, @node, @evidence) }
+      let(:model_attributes) { [{ name: :content, value: 'Edit Evidence' }] }
+
+      include_examples 'a form with local auto save', Evidence, :edit
+    end
   end
 
 
@@ -167,6 +179,7 @@ describe 'evidence' do
       let(:params) { {} }
       let(:required_form) { find('#evidence_issue_id option:nth-of-type(2)').select_option }
       it_behaves_like 'a textile form view', Evidence
+      it_behaves_like 'an editor that remembers what view you like'
     end
 
     context 'when no template is specified' do
@@ -227,10 +240,18 @@ describe 'evidence' do
       let(:params)  { { template: 'sample_evidence' } }
 
       it 'pre-populates the textarea with the template contents' do
-        click_link 'Inline'
+        click_link 'Fields'
         expect(find_field('item_form[field_name_0]').value).to include('Title')
         expect(find_field('item_form[field_value_0]').value).to include('Sample Evidence')
       end
+    end
+
+    describe 'local caching' do
+      let(:model_path) { new_project_node_evidence_path(current_project, @node) }
+      let(:model_attributes) { [{ name: :content, value: 'New Evidence' }] }
+      let(:model_attributes_for_template) { [{ name: :content, value: 'New Evidence Template' }] }
+
+      include_examples 'a form with local auto save', Evidence, :new
     end
 
     include_examples 'nodes pages breadcrumbs', :new, Evidence
