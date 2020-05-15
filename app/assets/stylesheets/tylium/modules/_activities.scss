@@ -49,8 +49,10 @@
 }
 
 // this is for activities#index
-.activities-groups-container {
-  .activities-group {
+.activities.index {
+
+  .activities-groups-container {
+
     .activity-date-header {
       display: flex;
       justify-content: center;
@@ -62,104 +64,104 @@
       }
     }
 
-    .activities {
-      width: 50%;
-      position: relative;
+    .activities-group {
 
-      .activity {
-        border: 1px solid transparent;
-        padding: 1rem;
-        transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-
-        .activity-icon {
-          padding-left: 1rem;
-          right: -3.9rem;
-          text-align: center;
-          width: 1.2857142857em;
-        }
-
-        .body {
-          display: flex;
-
-          .activity-time {
-            position: absolute;
-            right: 1rem;
-          }
-
-          .title {
-            padding-right: 5rem;
-            z-index: 1;
-          }
-        }
-
-        &:hover {
-          background-color: darken($primaryBgColor, 3%);
-          border-color: $borderColor;
-          border-bottom-left-radius: 5px;
-          border-top-left-radius: 5px;
-        }
-      }
-
-      &:before {
-        border-left: 1px solid $borderColor;
-        bottom: 2rem;
-        content: '';
-        right: 0;
-        margin-left: -1px;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-      }
-    }
-
-    &:nth-child(even) {
       .activities {
-        margin-left: auto;
+        position: relative;
+        width: 50%;
 
         .activity {
-          margin-left: -1px;
+          border: 1px solid transparent;
+          padding: 1rem;
+          transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 
           .activity-icon {
-            left: -3.9rem;
-            padding-left: 0;
-            padding-right: 1rem;
-            right: initial;
+            padding-left: 1rem;
+            right: -3.9rem;
+            text-align: center;
+            width: 1.2857142857em;
           }
 
           .body {
-            flex-direction: row-reverse;
+            display: flex;
 
             .activity-time {
-              left: 1rem;
+              position: absolute;
+              right: 1rem;
             }
 
             .title {
-              padding-right: 0;
+              padding-right: 5rem;
+              z-index: 1;
             }
           }
 
-          .details {
-            padding-left: 5rem;
-          }
-
           &:hover {
-            border-bottom-left-radius: 0px;
-            border-bottom-right-radius: 5px;
-            border-top-left-radius: 0px;
-            border-top-right-radius: 5px;
-
+            background-color: darken($primaryBgColor, 3%);
+            border-bottom-left-radius: 5px;
+            border-color: $borderColor;
+            border-top-left-radius: 5px;
           }
         }
 
         &:before {
-          left: 0;
+          border-left: 1px solid $borderColor;
+          bottom: 0;
+          content: '';
+          margin-left: -1px;
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+      }
+
+      &:nth-child(even) {
+
+        .activities-group {
+          margin-left: auto;
+
+          .activity {
+            margin-left: -1px;
+
+            .activity-icon {
+              left: -3.9rem;
+              padding-left: 0;
+              padding-right: 1rem;
+              right: initial;
+            }
+
+            .body {
+              flex-direction: row-reverse;
+
+              .activity-time {
+                left: 1rem;
+              }
+
+              .title {
+                padding-right: 0;
+              }
+            }
+
+            .details {
+              padding-left: 5rem;
+            }
+
+            &:hover {
+              border-bottom-left-radius: 0px;
+              border-bottom-right-radius: 5px;
+              border-top-left-radius: 0px;
+              border-top-right-radius: 5px;
+            }
+          }
+
+          &:before {
+            left: 0;
+          }
         }
       }
     }
   }
-}
 
-.activities.index {
   .spinner-container {
     display: none;
   }
