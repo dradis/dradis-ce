@@ -36,6 +36,7 @@ v3.17 (Month 2020)
     - Fix textile preview not showing on issues with very long text
     - Long items_table dropdown menus not scrollable
     - Long project names interfering with search bar expansion
+    - Long unbroken table cell text in textile elements overflows
     - Repetative prompt when images are pasted after navigating multiple views.
     - Report 'Download' button becoming a disabled 'Processing...' button once clicked
     - SemVer pre-release appending character
