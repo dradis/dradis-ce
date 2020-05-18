@@ -38,8 +38,9 @@ describe 'Activity pages:' do
       end
 
       it 'shows unique date headers' do
-        activities_groups = Activity.order(created_at: :desc).limit(Kaminari.config.default_per_page).group_by do
-          |activity| activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
+        activities = Activity.order(created_at: :desc).limit(Kaminari.config.default_per_page)
+        activities_groups = activities.group_by do |activity|
+          activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
         end
 
         date_headers = activities_groups.keys
@@ -55,18 +56,17 @@ describe 'Activity pages:' do
 
           times_to_scroll.times do
             page.execute_script('$("[data-behavior=\'view-content\']").scrollTop(100000)')
-            wait_for_ajax
-            sleep 0.25 # Needed due to specs failing occasionally
           end
         end
 
         it 'loads more records' do
-          expect(page).to have_selector('.activity', :count => Activity.count)
+          expect(page).to have_selector('.activity', count: Activity.count)
         end
 
         it 'shows unique date headers' do
-          activities_groups = Activity.order(created_at: :desc).group_by do
-            |activity| activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
+          activities = Activity.order(created_at: :desc)
+          activities_groups = activities.group_by do |activity|
+            activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
           end
 
           date_headers = activities_groups.keys
