@@ -87,6 +87,28 @@ describe 'Card pages:' do
           expect(Card.last.assignees.count).to eq 2
         end
       end
+
+      describe 'local caching' do
+        let(:model_path) { new_project_board_list_card_path(current_project, @board, @list) }
+
+        let(:model_attributes) do
+          [
+            { name: :name, value: 'New Card' },
+            { name: :description, value: 'New Description' },
+            { name: :due_date, value: Date.today }
+          ]
+        end
+
+        let(:model_attributes_for_template) do
+          [
+            { name: :name, value: 'New Card Template' },
+            { name: :description, value: 'New Description Template' },
+            { name: :due_date, value: Date.today + 5.day }
+          ]
+        end
+
+        include_examples 'a form with local auto save', Card, :new
+      end
     end
 
     describe 'when in edit page', js: true do
@@ -168,6 +190,20 @@ describe 'Card pages:' do
           expect(page).to have_text(@second_user.name)
         end
       end
+
+      describe 'local caching' do
+        let(:model_path) { edit_project_board_list_card_path(current_project, @board, @list, @card) }
+
+        let(:model_attributes) do
+          [
+            { name: :name, value: 'Edit Card' },
+            { name: :description, value: 'Edit Description' },
+            { name: :due_date, value: Date.today }
+          ]
+        end
+
+        include_examples 'a form with local auto save', Card, :edit
+      end
     end
 
     describe 'when in show page' do
@@ -200,8 +236,16 @@ describe 'Card pages:' do
         expect(page).to have_selector("a[href='#{project_board_list_card_path(current_project, @board, @list, @card)}'][data-method='delete']")
       end
 
-      describe "clicking 'delete'", versioning: true do
-        let(:submit_form) { click_link 'Delete' }
+      describe "clicking 'delete'" do
+        before { PaperTrail.enabled = true }
+        after  { PaperTrail.enabled = false }
+
+        let(:submit_form) do
+          within('.dots-container') do
+            find('.dots-dropdown').click
+            click_link 'Delete'
+          end
+        end
 
         it 'deletes the card' do
           id = @card.id
@@ -218,7 +262,12 @@ describe 'Card pages:' do
         end
 
         let(:model) { @card }
-        let(:submit_form) { within('.note-text-inner') { click_link 'Delete' } }
+        let(:submit_form) do
+          within('.dots-container') do
+            find('.dots-dropdown').click
+            click_link 'Delete'
+          end
+        end
         let(:trackable) { @card }
 
         include_examples 'creates an Activity', :destroy

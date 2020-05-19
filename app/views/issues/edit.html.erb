@@ -4,6 +4,12 @@
   <%= render 'sidebar'%>
 <% end %>
 
+<% content_for :breadcrumbs do %>
+  <nav>
+    <%= render partial: 'breadcrumbs' %>
+  </nav>
+<% end %>
+
 <div class="content-container">
   <div id="issues_editor">
     <div class="note-text-inner">

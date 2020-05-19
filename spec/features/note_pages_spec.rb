@@ -54,7 +54,8 @@ describe "note pages" do
     describe "clicking 'delete'", js: true do
       let(:submit_form) do
         page.accept_confirm do
-          within('.note-text-inner') do
+          within('.dots-container') do
+            find('.dots-dropdown').click
             click_link 'Delete'
           end
         end
@@ -158,6 +159,18 @@ describe "note pages" do
 
     let(:model) { @note }
     include_examples 'nodes pages breadcrumbs', :edit, Note
+
+    describe 'local caching' do
+      let(:add_categories) do
+        @category_1  = create(:category)
+        @category_2 = create(:category)
+      end
+
+      let(:model_path) { edit_project_node_note_path(current_project, @node, @note) }
+      let(:model_attributes) { [{ name: :text, value: 'Edit Note' }] }
+
+      include_examples 'a form with local auto save', Note, :edit
+    end
   end
 
 
@@ -241,6 +254,19 @@ describe "note pages" do
       let(:action_path) { new_project_node_note_path(current_project, @node) }
       it_behaves_like 'a textile form view', Note
       it_behaves_like 'an editor that remembers what view you like'
+    end
+
+    describe 'local caching' do
+      let(:add_categories) do
+        @category_1  = create(:category)
+        @category_2 = create(:category)
+      end
+
+      let(:model_path) { new_project_node_note_path(current_project, @node) }
+      let(:model_attributes) { [{ name: :text, value: 'New Note' }] }
+      let(:model_attributes_for_template) { [{ name: :text, value: 'New Note Template' }] }
+
+      include_examples 'a form with local auto save', Note, :new
     end
 
     include_examples 'nodes pages breadcrumbs', :new, Note

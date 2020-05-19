@@ -31,9 +31,11 @@ shared_examples 'nodes pages breadcrumbs' do |action, klass|
       project_node_path(current_project, @node, tab: "#{klass.to_s.pluralize.downcase}-tab")
     )
   end
-
-  it 'displays breadcrumbs dropdown' do
-    expect(page).to have_selector('.dots-container .dropdown.dots-dropdown')
+  
+  if action == :show
+    it 'displays breadcrumbs dropdown' do
+      expect(page).to have_selector('.dots-container .dropdown.dots-dropdown')
+    end
   end
 
   if action == :new

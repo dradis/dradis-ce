@@ -6,14 +6,20 @@ v3.17 (Month 2020)
     - Activity Feed now shows board name and link
     - No mandatory due date
     - Redirects to new url if the card has changed lists
-  * Comments can now have Textile markup
-  * Comments now show author's name instead of email
+  * Card, Evidence, Issue, and Note form data will not be lost even if the form is not saved
+    - Form data will be cleared when the "Cancel" link is clicked
+    - Removed prompt to restore data
+  * Comments
+    - Added Textile markup
+    - Comment changes will not be lost even if the comment is not saved
+    - Update comments feed to show author's name instead of email
   * Display note and evidence titles in breadcrumbs
   * Editor improvements:
     - New form-view to edit each field individually
     - Formatting toolbar to help with markup
     - Side-by-side editor preview that auto-updates
   * Link to Methodology from project summary chart
+  * Move resource action links to dots-menu in breadcrumbs
   * Navigation sidebar in projects can be kept open while navigating across views
   * Dots-menu available in any view
   * Remove tag color from issue titles in issue summary

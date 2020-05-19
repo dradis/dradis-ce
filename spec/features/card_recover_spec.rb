@@ -19,7 +19,12 @@ describe 'Board recover', js: true do
     after { PaperTrail.enabled = false }
 
     let(:submit_form) do
-      accept_confirm { click_link 'Delete' }
+      accept_confirm do
+        within('.dots-container') do
+          find('.dots-dropdown').click
+          click_link 'Delete'
+        end
+      end
       expect(page).to have_text 'Task deleted'
     end
 
