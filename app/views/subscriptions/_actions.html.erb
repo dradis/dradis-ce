@@ -1,3 +1,5 @@
+<% css_class = local_assigns[:dots_menu] ? 'dropdown-item' : '' %>
+
 <%= link_to \
       project_subscription_path(
         current_project,
@@ -7,10 +9,10 @@
           subscribable_id: subscribable.id
         }
       ),
-      class: 'd-none text-error-hover',
+      class: "d-none #{css_class}",
       data: {'behavior': 'unsubscribe'},
       method: :delete do %>
-    <i class="fa fa-bell-slash"></i> Unsubscribe
+    <i class="fa fa-bell-slash fa-fw"></i> Unsubscribe
 <% end %>
 <%= link_to \
       project_subscriptions_path(
@@ -20,8 +22,8 @@
           subscribable_id: subscribable.id
         }
       ),
-      class: 'd-none',
+      class: "d-none #{css_class}",
       data: {'behavior': 'subscribe'},
       method: :post do %>
-  <i class="fa fa-bell"></i> Subscribe
+  <i class="fa fa-bell fa-fw"></i> Subscribe
 <% end %>
