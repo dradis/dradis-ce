@@ -93,6 +93,10 @@
         color: $lightColor;
       }
 
+      &.active a {
+        color: $white;
+      }
+  
       .list-item-actions {
         padding-top: 0.3rem;
         text-align: right;
