@@ -20,6 +20,7 @@ v3.17 (Month 2020)
     - Server side auto saving with revision history
     - Side-by-side editor preview that auto-updates
   * Link to Methodology from project summary chart
+  * Move resource action links to dots-menu in breadcrumbs
   * Navigation sidebar in projects can be kept open while navigating across views
   * Dots-menu available in any view
   * Remove tag color from issue titles in issue summary

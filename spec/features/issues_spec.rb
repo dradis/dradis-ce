@@ -143,8 +143,8 @@ describe 'Issues pages' do
 
         describe 'local caching' do
           let(:add_tags) do
-            @tag_1 = create(:tag, name: '!9467bd_critical')
-            @tag_2 = create(:tag, name: '!d62728_high')
+            @tag_1 = current_project.tags.create(name: '!9467bd_critical')
+            @tag_2 = current_project.tags.create(name: '!d62728_high')
           end
 
           let(:model_path) { new_project_issue_path(current_project) }
@@ -226,8 +226,8 @@ describe 'Issues pages' do
 
         describe 'local caching' do
           let(:add_tags) do
-            @tag_1 = create(:tag, name: '!9467bd_critical')
-            @tag_2 = create(:tag, name: '!d62728_high')
+            @tag_1 = current_project.tags.create(name: '!9467bd_critical')
+            @tag_2 = current_project.tags.create(name: '!d62728_high')
           end
 
           let(:model_path) { edit_project_issue_path(current_project, @issue) }
@@ -310,7 +310,10 @@ describe 'Issues pages' do
 
           let(:submit_form) do
             page.accept_confirm do
-              within('.note-text-inner') { click_link "Delete" }
+              within('.dots-container') do
+                find('.dots-dropdown').click
+                click_link 'Delete'
+              end
             end
             expect(page).to have_text "Issue deleted." # forces waiting
           end
