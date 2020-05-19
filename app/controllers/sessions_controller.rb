@@ -46,6 +46,7 @@ class SessionsController < ApplicationController
     respond_to do |format|
       format.html do
         flash[:alert] = warden_message if warden_message.present?
+        session[:return_to] ||= warden_options[:attempted_path]
         redirect_to login_path
       end
       format.json { head :not_found }

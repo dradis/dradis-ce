@@ -23,6 +23,7 @@ v3.17 (Month 2020)
   * Navigation sidebar in projects can be kept open while navigating across views
   * Dots-menu available in any view
   * Remove tag color from issue titles in issue summary
+  * Return users to the last view before the session expired
   * Update code element style
   * Use shared noscript partial
   * Use user model reference for activities instead of user email
