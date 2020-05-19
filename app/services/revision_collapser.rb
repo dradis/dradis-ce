@@ -16,7 +16,7 @@
 # state forward so we can always have it accessible to compare against. This
 # happens when the new revision is an update, or autosave.
 class RevisionCollapser
-  def self.collapse(resource, whodunnit, event = RevisionTracking::REVISABLE_EVENTS[:update])
+  def self.collapse(resource:, user_email:, event: RevisionTracking::REVISABLE_EVENTS[:update])
     return unless resource.versions.any? # Lots of specs run without versioning
 
     last_revision = resource.versions.reorder('created_at DESC').first
@@ -25,9 +25,9 @@ class RevisionCollapser
                                  where.not(id: last_revision).first
 
     if RevisionTracking::REVISABLE_EVENTS.values.include?(last_revision.event) && previous_autosave
-      last_revision.update(object: previous_autosave.object, event: event, whodunnit: whodunnit)
+      last_revision.update(object: previous_autosave.object, event: event, whodunnit: user_email)
     elsif event == RevisionTracking::REVISABLE_EVENTS[:update] && last_revision.event == RevisionTracking::REVISABLE_EVENTS[:autosave]
-      last_revision.update(event: event, whodunnit: whodunnit)
+      last_revision.update(event: event, whodunnit: user_email)
     end
 
     resource.versions.
