@@ -5,21 +5,15 @@ class ActivitiesController < AuthenticatedController
   include ProjectScoped
 
   def index
-    activities = Activity.includes(:trackable)
-                         .order(created_at: :desc)
-                         .page(params[:page])
+    @page = params[:page].present? ? params[:page].to_i : 1
 
-    @page = params[:page].present? ? params[:page] : 1
+    activities = current_project.activities
+                                .includes(:trackable)
+                                .order(created_at: :desc)
+                                .page(@page)
 
     @activities_groups = activities.group_by do |activity|
       activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
-    end
-
-    respond_to do |format|
-      format.html
-      format.js do
-        render 'activities/_activities_groups.html.erb', locals: { activities_groups: @activities_groups }
-      end
     end
   end
 

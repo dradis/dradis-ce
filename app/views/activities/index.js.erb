@@ -1,0 +1,29 @@
+var $activitiesGroupsContainer = $('[data-behavior="activities-groups-container"]');
+
+<% if @activities_groups.present? %>
+  var template = '<%= j render 'activities/activities_groups', activities_groups: @activities_groups %>';
+  var $template = $(template);
+
+  $.each($template, function(index, activitiesGroup) {
+    var $activitiesGroup = $(activitiesGroup);
+    var timeElementDatetime = $activitiesGroup.find('[data-behavior~=activity-day-value]').attr('datetime');
+    var $timeElementInDOM = $activitiesGroupsContainer.find(`[datetime="${timeElementDatetime}"]`);
+    // console.log($timeElementInDOM);
+    if ($timeElementInDOM.length) {
+      var $activitiesGroupContainer = $timeElementInDOM.parents('[data-behavior="activities-group"]');
+      var $activities = $activitiesGroupContainer.find('[data-behavior="activities"]');
+
+      $.each($activitiesGroup.find('[data-behavior="activity"]'), function(index, element) {
+        $activities.append(element);
+      })
+    } else {
+      $activitiesGroupsContainer.append(activitiesGroup);
+    }
+
+    $('[data-behavior="activities-spinner"]').hide();
+  })
+
+  $activitiesGroupsContainer.data('page', <%= @page %>);
+<% else %>
+  $activitiesGroupsContainer.data('canLoadMore', false);
+<% end %>

@@ -14,7 +14,7 @@
 <div class="content-container mt-3 <%= 'pt-3' if @activities_groups.any? %>">
   <% if @activities_groups.any? %>
     <div class="container">
-      <div class="activities-groups-container" data-behavior="activities-groups-container" data-page="<%= @page %>" data-url="<%= project_activities_path(current_project, format: :js) %>">
+      <div class="activities-groups-container" data-behavior="activities-groups-container" data-page="<%= @page %>" data-url="<%= project_activities_path(current_project, format: :js) %>" data-can-load-more="true">
         <%= render 'activities_groups', activities_groups: @activities_groups %>
       </div>
 
