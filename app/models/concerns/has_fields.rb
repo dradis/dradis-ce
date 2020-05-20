@@ -1,6 +1,7 @@
 module HasFields
   extend ActiveSupport::Concern
-  include FieldParser
+
+  FIELDS_REGEX = /#\[(.+?)\]#[\r|\n](.*?)(?=#\[|\z)/m
 
   # This method can be overridden by classes including the module to add
   # custom fields to the collection that would normally be returned by
@@ -21,6 +22,20 @@ module HasFields
     fields["Title"].present?
   end
 
+  # Parse the contents of the field and split it to return a Hash of field
+  # name/value pairs. Field / values are defined using this syntax:
+  #
+  #   #[Title]#
+  #   This is the value of the Title field
+  #
+  #   #[Description]#
+  #   Lorem ipsum...
+  #
+  def self.parse_fields(string)
+    Hash[ *string.scan(FIELDS_REGEX).flatten.map(&:strip) ]
+  end
+
+
   module ClassMethods
     # Method for models to define which attribute is to be converted to fields.
     #
@@ -29,7 +44,7 @@ module HasFields
     def dradis_has_fields_for(container_field)
       define_method :fields do
         if raw_content = self.send(container_field)
-          local_fields.merge(parse_fields(raw_content))
+          local_fields.merge(HasFields.parse_fields(raw_content))
         else # if the container field is empty, just return an empty hash:
           {}
         end
