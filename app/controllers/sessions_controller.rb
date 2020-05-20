@@ -46,7 +46,7 @@ class SessionsController < ApplicationController
     respond_to do |format|
       format.html do
         flash[:alert] = warden_message if warden_message.present?
-        session[:return_to] ||= warden_options[:attempted_path]
+        session[:return_to] ||= return_to
         redirect_to login_path
       end
       format.json { head :not_found }
@@ -97,5 +97,14 @@ class SessionsController < ApplicationController
 
     @password = pwd1
     return true
+  end
+
+  def return_to
+    # Don't redirect to textile path if user start typing in editor after timed out.
+    if warden_options[:attempted_path].include?('textile')
+      request.env['HTTP_REFERER']
+    else
+      warden_options[:attempted_path]
+    end
   end
 end

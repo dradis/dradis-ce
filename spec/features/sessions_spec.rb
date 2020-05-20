@@ -56,19 +56,35 @@ describe 'Sessions' do
       end
     end
 
-    it 'redirect to previous page after new login' do
-      login
-
-      Timecop.freeze(Time.now + 1.hour) do
-        visit new_project_issue_path(Project.find(1))
-
-        # This not DRY because the (:login) block visits the login page first,
-        # which sets the return_to path to be /login
+    describe 'return after timeout' do
+      let(:submit_login_details) do
         fill_in 'login', with: @user.email
         fill_in 'password', with: password
         click_button 'Let me in!'
+      end
 
-        expect(current_path).to eq(new_project_issue_path(Project.find(1)))
+      it 'redirects to previous page' do
+        login
+
+        Timecop.freeze(Time.now + 1.hour) do
+          visit new_project_issue_path(Project.find(1))
+          submit_login_details
+          expect(current_path).to eq(new_project_issue_path(Project.find(1)))
+        end
+      end
+
+      context 'when editing editor after timeout', js: true do
+        it 'redirects to editor path instead of /textile' do
+          login
+          visit new_project_issue_path(Project.find(1))
+          click_link 'Source'
+
+          Timecop.freeze(Time.now + 1.hour) do
+            fill_in :issue_text, with: 'Issue Text'
+            submit_login_details
+            expect(current_path).to eq(new_project_issue_path(Project.find(1)))
+          end
+        end
       end
     end
   end
