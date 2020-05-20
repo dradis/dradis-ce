@@ -1,7 +1,7 @@
 class FieldsController < AuthenticatedController
   # Returns the form view given a source text
   def form
-    @form_data = HasFields.parse_fields(params[:source])
+    @form_data = HasFields.source_to_fields(params[:source])
     @allow_dropdown = params[:allow_dropdown] == 'true'
   end
 
@@ -12,19 +12,6 @@ class FieldsController < AuthenticatedController
 
   # Returns the source text given a form data
   def source
-    render plain: convert_to_source
-  end
-
-  private
-
-  # Convert serialized form data to Dradis-style item content
-  def convert_to_source
-    params[:form].each_slice(2).map do |field_name, field_value|
-      field = field_name[:value]
-      value = field_value[:value]
-      next if field.empty?
-
-      "#[#{field}]#\n#{value}"
-    end.compact.join("\n\n")
+    render plain: HasFields.fields_to_source(params[:form])
   end
 end
