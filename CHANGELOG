@@ -24,6 +24,7 @@ v3.17 (Month 2020)
   * Dots-menu available in any view
   * Remove tag color from issue titles in issue summary
   * Update code element style
+  * Update navbar button style
   * Use shared noscript partial
   * Use user model reference for activities instead of user email
   * Upgraded gems: puma, rack, rails, sass-rails
