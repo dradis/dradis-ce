@@ -1,33 +1,47 @@
 v3.17 (Month 2020)
   * Add author to evidence and notes views
-  * Adjusted Uploads layout to provide more visibility to the output console
+  * Adjust Uploads layout to provide more visibility to the output console
   * Boards can be renamed and deleted through their dots menu
   * Card improvements:
     - Activity Feed now shows board name and link
     - No mandatory due date
-  * Comments can now have Textile markup
-  * Comments now show author's name instead of email
+    - Redirects to new url if the card has changed lists
+  * Card, Evidence, Issue, and Note form data will not be lost even if the form is not saved
+    - Form data will be cleared when the "Cancel" link is clicked
+    - Removed prompt to restore data
+  * Comments
+    - Added Textile markup
+    - Comment changes will not be lost even if the comment is not saved
+    - Update comments feed to show author's name instead of email
   * Display note and evidence titles in breadcrumbs
   * Editor improvements:
     - New form-view to edit each field individually
     - Formatting toolbar to help with markup
     - Side-by-side editor preview that auto-updates
   * Link to Methodology from project summary chart
+  * Move resource action links to dots-menu in breadcrumbs
   * Navigation sidebar in projects can be kept open while navigating across views
-  * Refactored dots-menu to make it available in any view
+  * Dots-menu available in any view
   * Remove tag color from issue titles in issue summary
+  * Update code element style
   * Use shared noscript partial
   * Use user model reference for activities instead of user email
-  * Upgraded gems: puma, sass-rails
+  * Upgraded gems: puma, rack, rails, sass-rails
   * Bugs fixed:
+    - bin/setup creating folders outside dradis-ce/
+    - bin/setup error if the attachments directory already exists
+    - Board partial broken structure
+    - ItemsTable extra whitespace causing unnecessary vertical scrolling
+    - Fix bug with v3 board templates not uploading
     - Fix textile preview not showing on issues with very long text
+    - Long items_table dropdown menus not scrollable
     - Long project names interfering with search bar expansion
+    - Repetative prompt when images are pasted after navigating multiple views.
     - Report 'Download' button becoming a disabled 'Processing...' button once clicked
     - SemVer pre-release appending character
     - Set :author when creating Evidence from an Issue
     - Sidebar items not showing active state
-    - Stop bin/setup from creating folders outside dradis-ce/
-    - bin/setup will not error if the attachments directory already exists
+    - Textile preview not showing on issues with very long text
     - Bug tracker items: #560
   * New integrations:
     - [new integration #1]

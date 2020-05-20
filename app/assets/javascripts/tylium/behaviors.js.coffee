@@ -4,24 +4,11 @@
 # elements in the page in an unobtrusive way.
 #
 # The current list of plugins:
-#   * jQuery.fileUpload  - handles attachment uploads (gem: jquery-fileupload-rails)
 #   * jQuery.Textile     - handles the note editor (/vendor/)
 
 document.addEventListener "turbolinks:load", ->
-  # --------------------------------------------------- Standard jQuery plugins
-  # Activate jQuery.fileUpload
-  $('.jquery-upload').fileupload
-    dropZone: $('#drop-zone')
-    destroy: (e, data) ->
-      if confirm('Are you sure?\n\nProceeding will delete this attachment from the associated node.')
-        $.blueimp.fileupload.prototype.options.destroy.call(this, e, data)
 
-    paste: (e, data)->
-      $.each data.files, (index, file) ->
-        filename = prompt('Please provide a filename for the pasted image', 'screenshot-XX.png') || 'unnamed.png'
-        # Clone file object, edit, then reapply to the data object
-        newFile = new File [file], filename, { type: file.type }
-        data.files[index] = newFile
+  # --------------------------------------------------- Standard jQuery plugins
 
   # Initialize clipboard.js:
   clipboard = new Clipboard('.js-attachment-url-copy')
@@ -125,14 +112,14 @@ document.addEventListener "turbolinks:load", ->
 
   # Search form
   $('[data-behavior~=form-search]').hover ->
-    $('[data-behavior~=search-query]').val('').focus() 
+    $('[data-behavior~=search-query]').val('').focus()
 
   submitSearch = ->
     if $('[data-behavior~=search-query]').val() != ''
       $('[data-behavior~=form-search]').submit()
-      $('[data-behavior~=search-query]').val('Searching...') 
+      $('[data-behavior~=search-query]').val('Searching...')
       return false
-    else 
+    else
       $('[data-behavior~=search-query]').effect( "shake", { direction: "left", times: 2, distance: 5}, 'fast' ).focus();
 
   $('[data-behavior~=search-button]').on 'click', (e)->
@@ -217,3 +204,6 @@ document.addEventListener "turbolinks:load", ->
     history.pushState({}, '', this.href);
     $(this.hash)[0].scrollIntoView behavior: 'smooth'
     return
+
+  $('[data-behavior~=local-auto-save]').each ->
+    new LocalAutoSave(this)

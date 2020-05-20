@@ -1,5 +1,11 @@
 <% content_for :title, "#{@node.label} - add note" %>
 
+<% content_for :breadcrumbs do %>
+  <nav>
+    <%= render partial: 'breadcrumbs' %>
+  </nav>
+<% end %>
+
 <div class="content-container">
   <h4 class="header-underline">Add note</h4>
   <div class="note-text-inner">
