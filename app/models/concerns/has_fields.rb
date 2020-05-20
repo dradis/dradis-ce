@@ -1,6 +1,9 @@
 module HasFields
   extend ActiveSupport::Concern
 
+  FIELDS_REGEX = /#\[(.+?)\]#[\r|\n](.*?)(?=#\[|\z)/m
+  FIELDLESS_REGEX = /^([\s\S]*?)(?=\n{,2}#\[.+?\]#|\z)/
+
   # This method can be overridden by classes including the module to add
   # custom fields to the collection that would normally be returned by
   # parsing the text blob stored in the property.
@@ -20,7 +23,12 @@ module HasFields
     fields["Title"].present?
   end
 
-  REGEX = /#\[(.+?)\]#[\r|\n](.*?)(?=#\[|\z)/m
+  # Field-less strings are strings that do not have a field header (#[Field]#).
+  # This parses all characters before a field header or end of string.
+  def self.parse_fieldless_string(source)
+    source[FIELDLESS_REGEX, 1]
+  end
+
 
   module ClassMethods
     # Method for models to define which attribute is to be converted to fields.
@@ -73,7 +81,7 @@ module HasFields
     #   Lorem ipsum...
     #
     def parse_fields(string)
-      Hash[ *string.scan(REGEX).flatten.map(&:strip) ]
+      Hash[ *string.scan(FIELDS_REGEX).flatten.map(&:strip) ]
     end
   end
 
