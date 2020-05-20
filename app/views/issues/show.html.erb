@@ -30,7 +30,7 @@
   <ul class="tabs-container nav nav-tabs main-tabs w-100">
     <li class="nav-item"><a href="#info-tab" data-toggle="tab" class="nav-link active"><%= colored_icon_for_model(@issue, 'fa-bug') %> Information</a></li>
     <li class="nav-item"><a href="#evidence-tab" class="nav-link" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge bg-primary text-white"><%= @issue.evidence.count %></span></a></li>
-    <li class="nav-item"><a href="#activity-tab" class="nav-link" data-toggle="tab"><i class="fa fa-refresh"></i> Recent activity</a></li>
+    <li class="nav-item"><a href="#activity-tab" class="nav-link" data-toggle="tab"><i class="fa fa-rss"></i> Recent activity</a></li>
     <%= render_view_hooks 'issues/show-tabs' %>
   </ul>
 </div>
