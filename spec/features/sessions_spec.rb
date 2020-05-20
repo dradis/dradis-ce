@@ -55,6 +55,22 @@ describe 'Sessions' do
         expect(page).to have_content('Session timed out!')
       end
     end
+
+    it 'redirect to previous page after new login' do
+      login
+
+      Timecop.freeze(Time.now + 1.hour) do
+        visit new_project_issue_path(Project.find(1))
+
+        # This not DRY because the (:login) block visits the login page first,
+        # which sets the return_to path to be /login
+        fill_in 'login', with: @user.email
+        fill_in 'password', with: password
+        click_button 'Let me in!'
+
+        expect(current_path).to eq(new_project_issue_path(Project.find(1)))
+      end
+    end
   end
 
   context 'when the user is deleted' do
