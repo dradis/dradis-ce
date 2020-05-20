@@ -303,7 +303,10 @@ describe 'Issues pages' do
 
           let(:submit_form) do
             page.accept_confirm do
-              within('.note-text-inner') { click_link "Delete" }
+              within('.dots-container') do
+                find('.dots-dropdown').click
+                click_link 'Delete'
+              end
             end
             expect(page).to have_text "Issue deleted." # forces waiting
           end

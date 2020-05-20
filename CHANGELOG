@@ -19,13 +19,14 @@ v3.17 (Month 2020)
     - Formatting toolbar to help with markup
     - Side-by-side editor preview that auto-updates
   * Link to Methodology from project summary chart
+  * Move resource action links to dots-menu in breadcrumbs
   * Navigation sidebar in projects can be kept open while navigating across views
   * Dots-menu available in any view
   * Remove tag color from issue titles in issue summary
   * Update code element style
   * Use shared noscript partial
   * Use user model reference for activities instead of user email
-  * Upgraded gems: puma, rack, sass-rails
+  * Upgraded gems: puma, rack, rails, sass-rails
   * Bugs fixed:
     - bin/setup creating folders outside dradis-ce/
     - bin/setup error if the attachments directory already exists
