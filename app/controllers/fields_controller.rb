@@ -4,7 +4,7 @@ class FieldsController < AuthenticatedController
   # Returns the form view given a source text
   def form
     @form_data = parse_fields(params[:source])
-    @allow_dropdown = JSON.parse(params[:allow_dropdown] || 'false')
+    @allow_dropdown = params[:allow_dropdown] == 'true'
   end
 
   # Returns a single field for the form view

@@ -128,7 +128,7 @@ Rails.application.routes.draw do
   end
 
   # -------------------------------------------------------------- Static pages
-  resource :markup, only: [] do
+  resource :markup, controller: :markup, only: [] do
     get :help
     post :preview
   end

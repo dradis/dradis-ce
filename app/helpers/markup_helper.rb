@@ -1,4 +1,4 @@
-module TextileHelper
+module MarkupHelper
   def editor_paths
     {
       form_url: form_fields_path(format: :js),
