@@ -1,22 +1,3 @@
-<% content_for :breadcrumbs do %>
-  <nav class="dots-container">
-    <%= render 'breadcrumbs' %>
-
-    <ul class="nav">
-      <li class="dropdown dots-dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-behavior="nodes-more-dropdown"><i class="fa fa-ellipsis-h fa-lg"></i></a>
-        <div class="dropdown-menu">
-          <a href="#modal_add_child_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-plus"></i> Add subnode</a>
-          <a href="#modal_rename_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-edit"></i> Rename</a>
-          <a href="#modal_move_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-mail-forward"></i> Move</a>
-          <a href="#modal_merge_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-compress"></i> Merge</a>
-          <a href="#modal_delete_node" class="dropdown-item text-error-hover" tabindex="-1" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a>
-        </div>
-      </li>
-    </ul>
-  </nav>
-<% end %>
-
 <% content_for :content do %>
   <%= render "nodes/sidebar" %>
   <%= render "nested_node_resources/poller_alerts" %>

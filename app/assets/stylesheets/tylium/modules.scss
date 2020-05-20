@@ -80,6 +80,10 @@
   border-top: 1px solid $borderColor;
 }
 
+.autofocus {
+  opacity: 0;
+}
+
 .column-actions a {
   white-space: nowrap;
 }
