@@ -18,6 +18,7 @@
         data: textile_default_data.merge(
           allow_dropdown: @card.new_record?,
           behavior: 'rich-toolbar',
+          default_source: @card.fields.empty? && @card.description.present?,
           'rich-toolbar': 'block-code bold field italic link list-ol list-ul table'
         ),
         label: false,

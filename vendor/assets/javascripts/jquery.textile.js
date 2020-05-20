@@ -338,7 +338,7 @@
     },
 
     _setDefaultView: function() {
-      if (localStorage.getItem(this.options.defaultViewKey) == 'source') {
+      if (localStorage.getItem(this.options.defaultViewKey) == 'source' || this.$element.data('default-source')) {
         this._onBtnSource();
       }
     }
