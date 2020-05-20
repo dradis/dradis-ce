@@ -1,10 +1,10 @@
 .navbar {
   background-color: $navbarBackground;
-  height: $navbarHeight;
   border-bottom: 1px solid $borderColor;
-  z-index: 3;
-  transition: left 0.5s ease-in-out;
+  height: $navbarHeight;
   left: initial;
+  transition: left 0.5s ease-in-out;
+  z-index: 3;
 
   .navbar-brand {
     color: $defaultText;
@@ -18,145 +18,44 @@
     }
 
     @media screen and (min-width: 992px) {
-      max-width: calc(100% - 780px);
+      max-width: calc(100% - 110px);
     }
-  }
-
-  .navbar-toggler {
-    position: relative;
-    margin-left: auto;
-    margin-right: 0.2rem;
-    border: 1px solid $borderColor;
-    border-radius: 50px;
-    height: 40px;
-    width: 40px;
-    cursor: pointer;
-    background-color: $activeFillColor;
-    color: $linkColorHover;
-    outline: none;
-
-    .navbar-toggler-icon {
-      background-image: none;
-      position: absolute;
-      top: 10px;
-      left: 0.25rem;
-    }
-
-    &.collapsed {
-      background-color: transparent;
-
-      .navbar-toggler-icon {
-        color: $linkColor
-      }
-    
-      &:hover {
-        background-color: $activeFillColor;
-
-        .navbar-toggler-icon {
-          color: $linkColorHover;
-        }
-      }
-    } 
   }
 
   .navbar-collapse {
+    justify-content: flex-end;
 
     &.collapsing {
-      transition: none;
       display: none;
+      transition: none;
     }
 
     &.show {
 
-      @media screen and (max-width: 991px) { 
-        position: absolute;
-        background: white;
-        top: 100%;
-        right: 0%;
+      @media screen and (max-width: 991px) {
+        background: $primaryBgColor;
         display: flex;
         flex-direction: column;
-        
-        .navbar-nav {
-          flex-direction: column;
-          align-items: flex-start;
-          padding: .25rem 0;
-          border: 1px solid $borderColor;
-
-          .nav-item {
-            width: 100%;
-
-            .nav-link {
-              padding: .25rem 1.5rem;
-              font-size: 0.9rem;
-              color: $linkColor;
-              transition: color 0s;
-    
-              &:hover {
-                background-color: $primaryColor;
-                color: white;
-              }
-            }
-          }
-        }
+        position: absolute;
+        right: 0%;
+        top: 100%;
       }
     }
   }
 
+
   .navbar-nav {
-    justify-content: center;
     align-items: center;
     flex-direction: row;
-    float: right;
+    justify-content: flex-end;
+    transition: background-color $inout3, color $inout3;
 
     .nav-item {
       font-size: 0.9rem;
-      transition: all 0.2s ease-in-out;
       white-space: nowrap;
 
       .dropdown-menu {
         border-radius: 0 0 0 .5rem;
-      }
-
-      &.round {
-        border: 1px solid $borderColor;
-        border-radius: 50px;
-        height: 40px;
-        width: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 0.2rem;
-        cursor: pointer;
-
-        .dropdown-menu {
-          cursor: default;
-        }
-
-        .nav-link {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          height: 100%;
-        }
-
-        &:last-child {
-          margin-right: 0;
-        }
-
-        &:hover,
-        &.show {
-          background-color: $activeFillColor;
-
-          .nav-link {
-            color: $linkColorHover;
-          }
-        }
-
-        &.search {
-          width: auto;
-          border: none;
-        }
       }
 
       .nav-link {
@@ -166,10 +65,224 @@
           color: $linkColorHover;
         }
       }
-    }
 
-    &.with-text {
-      min-width: 470px;
+      &.round {
+        align-items: center;
+        border: 1px solid $borderColor;
+        border-radius: 50px;
+        cursor: pointer;
+        display: flex;
+        height: 40px;
+        margin: 0 0.2rem;
+        width: 40px;
+
+        .dropdown-menu {
+          cursor: default;
+        }
+
+        &:hover,
+        &.show {
+          background-color: $activeFillColor;
+          transition: width $inout3;
+          width: 100%;
+
+          .nav-link {
+            color: $linkColorHover;
+
+            .nav-link-text {
+              opacity: 1;
+              transition: opacity $inout3, visibility $inout3;
+              visibility: visible;
+            }
+          }
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        .nav-link {
+          height: 100%;
+          overflow: hidden;
+          position: relative;
+          transition: color 0s;
+
+          .fa {
+            position: absolute;
+            right: 0.4rem;
+            top: 0.4rem;
+
+            &.fa-fw {
+              line-height: 26px;
+            }
+
+            &.fa-random {
+              line-height: 28px;
+            }
+          }
+
+          .nav-link-text {
+            opacity: 0;
+            padding: 0 1.75rem 0 0.4rem;
+            visibility: hidden;
+          }
+        }
+
+        &.search {
+          border: none;
+        }
+      }
+    }
+  }
+
+  .navbar-toggler {
+    background-color: $activeFillColor;
+    border: 1px solid $borderColor;
+    border-radius: 50px;
+    color: $linkColorHover;
+    cursor: pointer;
+    height: 40px;
+    margin-left: auto;
+    margin-right: 0.2rem;
+    outline: none;
+    position: relative;
+    width: 40px;
+
+    &.collapsed {
+      background-color: transparent;
+
+      &:hover {
+        background-color: $activeFillColor;
+
+        .navbar-toggler-icon {
+          color: $linkColorHover;
+        }
+      }
+
+      .navbar-toggler-icon {
+        color: $linkColor
+      }
+    }
+    
+    .navbar-toggler-icon {
+      background-image: none;
+      left: 0.25rem;
+      position: absolute;
+      top: 10px;
+    }
+  }
+
+  @media screen and (max-width: 991px) {
+    .navbar-nav {
+      align-items: flex-start;
+      border: 1px solid $borderColor;
+      flex-direction: column;
+      padding: .25rem 0;
+
+      .nav-item {
+      
+        &.round {
+          border: none;
+          border-radius: 0;
+          margin: 0;
+          width: 100%;
+
+          &.dropdown {
+            position: relative;
+
+            .dropdown-menu {
+              box-shadow: none;
+              border-radius: 0;
+              border-right: none;
+              left: -1px;
+              width: 100%;
+
+              .divider {
+                display: none;
+              }
+              
+              .dropdown-item {
+                padding-left: 4rem;
+              }
+            }
+          }
+
+          .nav-link {
+            align-items: center;
+            color: $linkColor;
+            display: flex;
+            font-size: 0.9rem;
+            padding: .25rem 1.5rem;
+            width: 100%;
+
+            &:hover {
+              background-color: $primaryColor;
+              color: white;
+            }
+
+            .fa {
+              position: initial;
+              
+              &.fa-lg {
+                line-height: 19px !important;
+              }
+            }
+
+            .nav-link-text {
+              opacity: 1;
+              padding-right: 0;
+              visibility: visible;
+            }
+          }
+
+          &.show {
+            background-color: $primaryColor;
+
+            .nav-link {
+              color: $primaryBgColor;
+            }
+          }
+        }
+
+        &.search {
+          order: -1;
+
+          .form-search {
+            align-items: center;
+            border: none;
+            border-radius: 0;
+            color: $linkColor;
+            display: flex;
+            flex-direction: row-reverse;
+            font-size: 0.9rem;
+            padding: .25rem 1.5rem;
+            width: 100%;
+
+            .btn {
+              background-color: initial;
+              position: initial;
+              color: $linkColor;
+              padding-left: 0;
+
+              .fa {
+                position: initial;
+              }
+            }
+
+            &:hover {
+              background-color: $primaryBgColor;
+            }
+
+            .search-query {
+              animation: none;
+              border-radius: 0;
+              display: block;
+              padding: 0 0.25rem 0 0;
+              position: initial;
+            }
+          }
+        }
+      }
     }
   }
 }
