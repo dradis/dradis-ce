@@ -161,6 +161,29 @@ shared_examples 'a record with auto-save revisions' do
         expect(page).not_to have_content('Auto-saved')
       end
     end
+
+    it 'credits the author of the update', versioning: true do
+      perform_enqueued_jobs do
+        find('.editor-field textarea').set new_content
+        navigate_away_triggering_autosave
+
+        # Login another user to perform the update
+        user = create(:user)
+        login_as_user user
+
+        visit edit_polymorphic_path(path_params)
+
+        within '.form-actions' do
+          find('[type="submit"]').click
+        end
+
+        visit polymorphic_path(path_params.push(:revisions))
+        row = find('.revisions-table table tbody tr.active')
+        expect(row).to have_content('Update')
+        expect(row).to have_content('Currently Viewing')
+        expect(row).to have_content(user.email)
+      end
+    end
   end
 end
 

@@ -4,9 +4,12 @@ require 'rails_helper'
 
 RSpec.describe RevisionCollapser, versioning: true do
   let(:resource) { create(:issue) }
+  let(:user_email) { 'adama@dradisframework.com' }
 
   describe '.collapse' do
-    subject(:collapse_revisions) { described_class.collapse(resource, RevisionTracking::REVISABLE_EVENTS[:autosave]) }
+    subject(:collapse_revisions) do
+      described_class.collapse(resource: resource, user_email: user_email, event: RevisionTracking::REVISABLE_EVENTS[:autosave])
+    end
 
     it 'changes nothing when no autosaves exist' do
       expect { collapse_revisions }.to change { resource.versions.count }.by(0)
@@ -50,7 +53,7 @@ RSpec.describe RevisionCollapser, versioning: true do
         resource.update(text: 'ABCDE', paper_trail_event: RevisionTracking::REVISABLE_EVENTS[:autosave])
         resource.update(text: 'ABCDEF', paper_trail_event: RevisionTracking::REVISABLE_EVENTS[:autosave])
 
-        described_class.collapse(resource)
+        described_class.collapse(resource: resource, user_email: user_email)
 
         expect(resource.versions.last.reify.text).to eq('ABC')
       end
@@ -62,7 +65,7 @@ RSpec.describe RevisionCollapser, versioning: true do
         resource.update(text: 'ABCDEF', paper_trail_event: RevisionTracking::REVISABLE_EVENTS[:autosave])
         resource.update(text: 'ABCDEF', paper_trail_event: RevisionTracking::REVISABLE_EVENTS[:update])
 
-        described_class.collapse(resource)
+        described_class.collapse(resource: resource, user_email: user_email)
 
         expect(resource.versions.last.reify.text).to eq('ABC')
       end
@@ -91,7 +94,7 @@ RSpec.describe RevisionCollapser, versioning: true do
     end
 
     context 'if no resource is passed' do
-      subject(:collapse_revisions) { described_class.collapse(nil) }
+      subject(:collapse_revisions) { described_class.collapse(resource: nil, user_email: nil) }
 
       # Don't save it. Let it blow up and make it easier for us to find.
       it 'raises an exception' do
