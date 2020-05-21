@@ -1,7 +1,7 @@
 class FieldsController < AuthenticatedController
   # Returns the form view given a source text
   def form
-    @form_data = HasFields.source_to_fields(params[:source])
+    @form_data = FieldParser.source_to_fields(params[:source])
     @allow_dropdown = params[:allow_dropdown] == 'true'
   end
 
@@ -12,6 +12,6 @@ class FieldsController < AuthenticatedController
 
   # Returns the source text given a form data
   def source
-    render plain: HasFields.fields_to_source(params[:form])
+    render plain: FieldParser.fields_to_source(params[:form])
   end
 end
