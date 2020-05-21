@@ -40,6 +40,7 @@ v3.17 (Month 2020)
     - Repetative prompt when images are pasted after navigating multiple views.
     - Report 'Download' button becoming a disabled 'Processing...' button once clicked
     - SemVer pre-release appending character
+    - Secondary-sidebar long header names over-lapping icons
     - Set :author when creating Evidence from an Issue
     - Select element text overflowing on to select arrows
     - Sidebar items not showing active state
