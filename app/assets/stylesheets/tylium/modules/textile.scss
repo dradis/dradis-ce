@@ -62,6 +62,10 @@
         background-color: #f5f5f5;
       }
     }
+    
+    td {
+      overflow-wrap: anywhere;
+    }
 
     // Cells
     th,
