@@ -284,6 +284,10 @@
 
             .nav-link {
               color: $primaryBgColor;
+
+              .fa {
+                background-color: transparent;
+              }
             }
           }
         }
