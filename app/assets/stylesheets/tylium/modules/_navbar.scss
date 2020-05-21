@@ -89,6 +89,10 @@
           .nav-link {
             color: $linkColorHover;
 
+            .fa {
+              background-color: $activeFillColor;
+            }
+
             .nav-link-text {
               opacity: 1;
               transition: opacity $inout3, visibility $inout3;
@@ -109,10 +113,13 @@
 
           .fa {
             position: absolute;
-            right: 0.4rem;
+            right: 0;
             top: 0.4rem;
+            z-index: 1;
 
             &.fa-fw {
+              border-radius: 15px;
+              width: 38px;
               line-height: 26px;
             }
 
@@ -123,7 +130,7 @@
 
           .nav-link-text {
             opacity: 0;
-            padding: 0 1.75rem 0 0.4rem;
+            padding: 0 1.85rem 0 0.4rem;
             visibility: hidden;
           }
         }
