@@ -8,7 +8,7 @@
       - <%= render 'subscriptions/actions', subscribable: subscribable %>
     </span>
   </h4>
-  <div class="subscriptions-feed <%= 'mb-5' if subscribable.subscriptions.any? %>">
+  <div class="subscriptions-feed">
     <% subscribable.subscriptions.each do |subscription| %>
       <%= avatar_image(subscription.user, size: 40) %>
     <% end %>
