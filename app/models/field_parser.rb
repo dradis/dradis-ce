@@ -5,8 +5,8 @@ class FieldParser
   # Convert serialized form data to Dradis-style item content.
   def self.fields_to_source(serialized_form)
     serialized_form.each_slice(2).map do |field_name, field_value|
-      field = field_name[1]
-      value = field_value[1]
+      field = field_name[:value]
+      value = field_value[:value]
 
       str = ''
       str << "#[#{field}]#\n" unless field.empty?
