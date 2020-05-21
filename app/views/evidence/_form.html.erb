@@ -18,7 +18,6 @@
           allow_dropdown: @evidence.new_record?,
           autosave_key: "#{current_project.id}-evidence-#{ @evidence.persisted? ? "edit-#{@evidence.id}" : "new-for-#{@node.id}" }",
           behavior: 'rich-toolbar',
-          default_source: @evidence.fields.empty? && @evidence.content.present?,
           'rich-toolbar': 'block-code bold field italic link list-ol list-ul table'
         ),
         rows: 20

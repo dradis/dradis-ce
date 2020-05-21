@@ -17,7 +17,6 @@
           allow_dropdown: @issue.new_record?,
           autosave_key: "#{current_project.id}-issue-#{ @issue.persisted? ? "edit-#{@issue.id}" : 'new' }",
           behavior: 'rich-toolbar',
-          default_source: @issue.fields.empty? && @issue.content.present?,
           'rich-toolbar': 'block-code bold field italic link list-ol list-ul table'
         ),
         rows: 20

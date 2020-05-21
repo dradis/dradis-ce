@@ -16,7 +16,6 @@
           allow_dropdown: @note.new_record?,
           autosave_key: "#{current_project.id}-note-#{ @note.persisted? ? "edit-#{@note.id}" : "new-for-#{@node.id}" }",
           behavior: 'rich-toolbar',
-          default_source: @note.fields.empty? && @note.content.present?,
           'rich-toolbar': 'block-code bold field italic link list-ol list-ul table'
         ),
         rows: 20

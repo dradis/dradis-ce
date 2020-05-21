@@ -169,6 +169,15 @@
       if (this.options.resize === false) return false;
 
     },
+
+    _contentHasFields: function() {
+      // Match the first instance of a field header.
+      var regex = /#\[.+?\]#/;
+
+      // Returns an array of matches (truthy) or null (falsey) if there's no match.
+      return this.$element.val().match(regex);
+    },
+
     // Ajax form
     _loadFields: function(data, allowDropdown) {
       $.post({
@@ -338,7 +347,7 @@
     },
 
     _setDefaultView: function() {
-      if (localStorage.getItem(this.options.defaultViewKey) == 'source' || this.$element.data('default-source')) {
+      if (localStorage.getItem(this.options.defaultViewKey) == 'source' || !this._contentHasFields) {
         this._onBtnSource();
       }
     }
