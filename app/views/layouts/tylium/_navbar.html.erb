@@ -6,13 +6,13 @@
     </button>
     <div class="collapse navbar-collapse" id="navbar" data-behavior="navbar-collapse">
       <ul class="navbar-nav">
-        <li class="nav-item round">
+        <li class="nav-item">
           <%= link_to main_app.project_upload_manager_path(current_project), class: 'nav-link' do %>
             <i class="fa fa-cloud-upload fa-lg fa-fw"></i>
             <span class="nav-link-text">Upload output from tool</span>
           <% end %>
         </li>
-        <li class="nav-item round">
+        <li class="nav-item">
           <%= link_to main_app.project_export_manager_path(current_project), class: 'nav-link' do %>
             <i class="fa fa-file-text-o fa-lg fa-fw"></i>
             <span class="nav-link-text">Export results</span>

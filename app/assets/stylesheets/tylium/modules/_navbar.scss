@@ -187,6 +187,34 @@
       padding: .25rem 0;
 
       .nav-item {
+
+        .nav-link {
+          align-items: center;
+          display: flex;
+
+          .nav-link-text {
+            padding-right: 0;
+          }
+        }
+
+        &:not(.round) {
+          width: 100%;
+          
+          .nav-link {
+            height: 40px;
+            padding: .25rem 1.5rem;
+            transition: none;
+
+            &:hover {
+              background-color: $primaryColor;
+              color: white;
+            }
+
+            .nav-link-text {
+              padding: 0 1.85rem 0 0.4rem;
+            }
+          }
+        }
       
         &.round {
           border: none;
@@ -214,10 +242,15 @@
             }
           }
 
+          &:hover {
+
+            .nav-link .fa {
+              background-color: transparent;
+            }
+          }
+
           .nav-link {
-            align-items: center;
             color: $linkColor;
-            display: flex;
             font-size: 0.9rem;
             padding: .25rem 1.5rem;
             width: 100%;
@@ -228,16 +261,20 @@
             }
 
             .fa {
+              background-color: transparent;
               position: initial;
               
               &.fa-lg {
                 line-height: 19px !important;
               }
+
+              &.fa-fw {
+                width: 1.2857142857em;
+              }
             }
 
             .nav-link-text {
               opacity: 1;
-              padding-right: 0;
               visibility: visible;
             }
           }
