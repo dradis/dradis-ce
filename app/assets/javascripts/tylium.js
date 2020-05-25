@@ -20,7 +20,6 @@
 
 //= require cable
 
-//= require shared/behaviors
 //= require shared/charts
 //= require shared/console_updater
 //= require shared/editor_toolbar
@@ -31,6 +30,8 @@
 //= require tylium/plugins/jquery.treenav
 
 //= require tylium/behaviors
+//= require shared/behaviors
+
 //= require tylium/engines
 //= require tylium/keyboard_shortcuts
 
