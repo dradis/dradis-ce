@@ -20,6 +20,7 @@
 
 //= require cable
 
+//= require shared/behaviors
 //= require shared/charts
 //= require shared/console_updater
 //= require shared/editor_toolbar

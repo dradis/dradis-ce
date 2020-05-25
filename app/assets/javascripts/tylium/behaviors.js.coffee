@@ -148,10 +148,6 @@ document.addEventListener "turbolinks:load", ->
     $('[data-behavior~=navbar-collapse]').collapse 'hide'
     return
 
-  # Activate Rich Toolbars for the editor, and comments
-  $('[data-behavior~=rich-toolbar]').each ->
-    new EditorToolbar($(this))
-
   # Scroll for more indicator functionality
   if $('[data-behavior~=restrict-height]').length
     checkOverflow = ->
