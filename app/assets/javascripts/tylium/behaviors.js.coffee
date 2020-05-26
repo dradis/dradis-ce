@@ -45,8 +45,6 @@ document.addEventListener "turbolinks:load", ->
 
 
   # -------------------------------------------------------- Our jQuery plugins
-  # Activate jQuery.Textile
-  $('.textile').textile()
 
   # Activate jQuery.breadCrumbs
   $('.breadcrumb').breadcrumbs
