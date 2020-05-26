@@ -16,7 +16,7 @@
     top: -3.3rem;
     transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
     visibility: hidden;
-    z-index: 1050;
+    z-index: 999;
 
     &:after {
       border: 0.5rem solid;
@@ -48,10 +48,11 @@
       color: $defaultText;
       cursor: pointer;
       display: flex;
+      height: 2rem;
       justify-content: center;
-      width: 2rem;
       padding: 0.5rem;
       transition: all 0.2s ease-in-out;
+      width: 2rem;
 
       &.disabled {
         pointer-events: none;
