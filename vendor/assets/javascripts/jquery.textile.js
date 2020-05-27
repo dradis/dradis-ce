@@ -169,10 +169,19 @@
       if (this.options.resize === false) return false;
 
     },
+
+    _contentHasFields: function() {
+      // Match the first instance of a field header.
+      var regex = /#\[.+?\]#/;
+
+      // Returns an array of matches (truthy) or null (falsey) if there's no match.
+      return this.$element.val().match(regex);
+    },
+
     // Ajax form
     _loadFields: function(data, allowDropdown) {
       $.post({
-        url: this.$element.data('form-url') + '.js',
+        url: this.$element.data('paths').form_url,
         data: {source: data, allow_dropdown: allowDropdown},
         beforeSend: function(){
           this.options.$fields.addClass('loading-indicator').text('Loading...');
@@ -182,7 +191,7 @@
     // Ajax help
     _loadHelp: function() {
       var that = this;
-      $.get( this.$element.data('help-url'), function(result){
+      $.get( this.$element.data('paths').help_url, function(result){
         that.options.$help.removeClass('loading-indicator')
           .html(result);
         this._helpRendered = true;
@@ -192,9 +201,11 @@
     _loadPreview: function(data) {
       this._previousContent = this.$element.val();
 
-      $.post(this.$element.data('preview-url'),
-        data,
-        function(result) {
+      $.post({
+        url: this.$element.data('paths').preview_url,
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: function(result) {
           this.options.$preview.removeClass('loading-indicator').html(result);
           if (result == '\n') {
             this.options.$preview.append('<div class="preview-placeholder"><h5>Add some fields to see a live preview here</h5></div>')
@@ -202,17 +213,18 @@
           this.options.$preview.children(':first').addClass('textile-preview');
           this._previewRendered = true;
         }.bind(this)
-      );
+      });
     },
     // Ajax write
     _loadSource: function() {
-      $.post(
-        this.$element.data('source-url'),
-        { form: this._serializedFormData() },
-        function(result){
+      $.post({
+        url: this.$element.data('paths').source_url,
+        data: JSON.stringify({ form: this._serializedFormData() }),
+        contentType: 'application/json',
+        success: function(result){
           this.$element.val(result);
         }.bind(this)
-      );
+      });
     },
     _onKeyPressPreview: function(type) {
       if (type == 'fields') {
@@ -334,11 +346,11 @@
     },
 
     _serializedFormData: function() {
-      return JSON.stringify( $('[name^=item_form]', this.options.$fields).serializeArray() );
+      return $('[name^=item_form]', this.options.$fields).serializeArray();
     },
 
     _setDefaultView: function() {
-      if (localStorage.getItem(this.options.defaultViewKey) == 'source') {
+      if (localStorage.getItem(this.options.defaultViewKey) == 'source' || !this._contentHasFields) {
         this._onBtnSource();
       }
     }

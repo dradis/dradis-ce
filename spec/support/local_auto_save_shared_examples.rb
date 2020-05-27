@@ -25,6 +25,8 @@
 # include_examples 'a form with local auto save', Card
 
 shared_examples 'a form with local auto save' do |klass, action|
+  let(:form_object_name) { klass.name.underscore }
+
   before do
     add_users if klass == Card
     add_tags if klass == Issue
@@ -46,7 +48,7 @@ shared_examples 'a form with local auto save' do |klass, action|
     end
 
     model_attributes.each do |model_attribute|
-      fill_in "#{klass.name.downcase}_#{model_attribute[:name]}", with: model_attribute[:value]
+      fill_in "#{form_object_name}_#{model_attribute[:name]}", with: model_attribute[:value]
     end
 
     sleep 1 # Needed for debounce function in local_auto_save.js
@@ -71,9 +73,9 @@ shared_examples 'a form with local auto save' do |klass, action|
 
       model_attributes.each do |model_attribute|
         if model_attribute[:value].is_a?(Date)
-          expect(page.find_field("#{klass.name.downcase}[#{model_attribute[:name]}]").value).to eq model_attribute[:value].to_date.strftime('%Y-%m-%d')
+          expect(page.find_field("#{form_object_name}[#{model_attribute[:name]}]").value).to eq model_attribute[:value].to_date.strftime('%Y-%m-%d')
         else
-          expect(page.find_field("#{klass.name.downcase}[#{model_attribute[:name]}]").value).to eq model_attribute[:value]
+          expect(page.find_field("#{form_object_name}[#{model_attribute[:name]}]").value).to eq model_attribute[:value]
         end
       end
     end
@@ -98,7 +100,7 @@ shared_examples 'a form with local auto save' do |klass, action|
       end
 
       model_attributes.each do |model_attribute|
-        expect(page.find_field("#{klass.name.downcase}[#{model_attribute[:name]}]").value).not_to eq model_attribute[:name]
+        expect(page.find_field("#{form_object_name}[#{model_attribute[:name]}]").value).not_to eq model_attribute[:name]
       end
     end
   end
@@ -110,25 +112,27 @@ shared_examples 'a form with local auto save' do |klass, action|
       click_link 'Source'
 
       model_attributes.each do |model_attribute|
-        expect(page.find_field("#{klass.name.downcase}[#{model_attribute[:name]}]").value).not_to eq model_attribute[:name]
+        expect(page.find_field("#{form_object_name}[#{model_attribute[:name]}]").value).not_to eq model_attribute[:name]
       end
     end
   end
 
   if action == :new
     describe 'with template' do
-      before do
-        template_path = Rails.root.join('spec/fixtures/files/note_templates/')
-        allow(NoteTemplate).to receive(:pwd).and_return(template_path)
-        visit "#{model_path}?template=simple_note"
-        click_link 'Source'
-        @template_content = File.read(template_path.join('simple_note.txt'))
+      if [Card, Evidence, Note, Issue].include? klass
+        before do
+          template_path = Rails.root.join('spec/fixtures/files/note_templates/')
+          allow(NoteTemplate).to receive(:pwd).and_return(template_path)
+          visit "#{model_path}?template=simple_note"
+          click_link 'Source'
+          @template_content = File.read(template_path.join('simple_note.txt'))
 
-        model_attributes_for_template.each do |model_attribute|
-          fill_in "#{klass.name.downcase}_#{model_attribute[:name]}", with: model_attribute[:value]
+          model_attributes_for_template.each do |model_attribute|
+            fill_in "#{form_object_name}_#{model_attribute[:name]}", with: model_attribute[:value]
+          end
+
+          sleep 1 # Needed for debounce function in local_auto_save.js
         end
-
-        sleep 1 # Needed for debounce function in local_auto_save.js
       end
 
       context 'when form is not saved' do
@@ -138,9 +142,9 @@ shared_examples 'a form with local auto save' do |klass, action|
 
           model_attributes_for_template.each do |model_attribute|
             if model_attribute[:value].is_a?(Date)
-              expect(page.find_field("#{klass.name.downcase}[#{model_attribute[:name]}]").value).to eq model_attribute[:value].to_date.strftime('%Y-%m-%d')
+              expect(page.find_field("#{form_object_name}[#{model_attribute[:name]}]").value).to eq model_attribute[:value].to_date.strftime('%Y-%m-%d')
             else
-              expect(page.find_field("#{klass.name.downcase}[#{model_attribute[:name]}]").value).to eq model_attribute[:value]
+              expect(page.find_field("#{form_object_name}[#{model_attribute[:name]}]").value).to eq model_attribute[:value]
             end
           end
         end
@@ -153,7 +157,7 @@ shared_examples 'a form with local auto save' do |klass, action|
           click_link 'Source'
 
           page_form_values = model_attributes_for_template.collect do |model_attribute|
-            page.find_field("#{klass.name.downcase}[#{model_attribute[:name]}]").value
+            page.find_field("#{form_object_name}[#{model_attribute[:name]}]").value
           end
 
           expect(page_form_values.include?(@template_content)).to eq true
@@ -167,9 +171,9 @@ shared_examples 'a form with local auto save' do |klass, action|
 
           model_attributes_for_template.each do |model_attribute|
             if model_attribute[:value].is_a?(Date)
-              expect(page.find_field("#{klass.name.downcase}[#{model_attribute[:name]}]").value).not_to eq model_attribute[:value].to_date.strftime('%Y-%m-%d')
+              expect(page.find_field("#{form_object_name}[#{model_attribute[:name]}]").value).not_to eq model_attribute[:value].to_date.strftime('%Y-%m-%d')
             else
-              expect(page.find_field("#{klass.name.downcase}[#{model_attribute[:name]}]").value).not_to eq model_attribute[:value]
+              expect(page.find_field("#{form_object_name}[#{model_attribute[:name]}]").value).not_to eq model_attribute[:value]
             end
           end
         end

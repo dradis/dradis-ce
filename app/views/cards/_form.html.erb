@@ -15,11 +15,12 @@
     f.input :description,
       input_html: {
         class: 'textile h-100',
-        data: textile_default_data.merge(
+        data: {
           allow_dropdown: @card.new_record?,
           behavior: 'rich-toolbar',
+          paths: editor_paths,
           'rich-toolbar': 'block-code bold field italic link list-ol list-ul table'
-        ),
+        },
         label: false,
         rows: 20
       }

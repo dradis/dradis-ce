@@ -1,4 +1,3 @@
-<% allow_dropdown = local_assigns[:allow_dropdown] ? allow_dropdown : false %>
 <% field_name = local_assigns[:field] ? field[0]  : '' %>
 <% value = local_assigns[:field] ? field[1] : '' %>
 
@@ -13,7 +12,8 @@
           data: {
             behavior: 'preview-enabled'
           },
-          placeholder: 'Enter field name'
+          placeholder: 'Enter field name',
+          tabindex: index + 1
         %>
       </div>
     </div>
@@ -21,7 +21,7 @@
   <div class="inline-editable">
     <div class="edit-hover">
       <% options = value.split(' | ') %>
-      <% if allow_dropdown && options.count > 1 %>
+      <% if @allow_dropdown && options.count > 1 %>
         <%= select :item_form, "field_value_#{index}", options, {}, { class: 'form-control', data: { behavior: 'preview-enabled' }, tabindex: index + 1 } %>
       <% else %>
         <%= text_area_tag "item_form[field_value_#{index}]", value, rows: 1,
@@ -37,7 +37,7 @@
     </div>
   </div>
   <div class="actions">
-    <%= link_to 'javascript:void(0)', class: 'text-error-hover',  data: { behavior: 'delete-field' } do %>
+    <%= link_to 'javascript:void(0)', class: 'text-error-hover', tabindex: '-1',  data: { behavior: 'delete-field' } do %>
       <i class="fa fa-trash"></i> Delete
     <% end %>
   </div>
