@@ -1,74 +1,34 @@
 #tour-content {
   .modal {
-//    margin-left: -380px;
-//    width: 760px;
-    margin-left: -40%;
-    width: 80%;
 
-    .modal-body {
-      max-height: 700px;
+    .modal-dialog {
+      max-width: 80%;
 
-      h1 {
-        margin-bottom: 20px;
-        text-align: center;
-      }
-
-      h2 {
-        margin-top: 20px;
-        @media (min-width: 768px) and (max-width: 979px) {
-          font-size: 18px;
+      .modal-body {
+        max-height: 700px;
+  
+        .navigation {
+          color: $defaultText;
+          text-align: center;
+          font-style: italic;
         }
-      }
-
-      h2.font-responsive {
-        font-size: 24px;
-        @media (min-width: 768px) and (max-width: 979px) {
-          font-size:13px;
-        }
-      }
-
-      strong {
-        font-family: 'Helvetica Neue', helvetica, sans-serif;
-      }
-
-      .navigation {
-        color: $primaryBgColor;
-        text-align: center;
-        font-style: italic;
-      }
-
-      .left-column2 {
-        text-align: right;
       }
     }
   }
 
   #step-two {
-    h1 {
-      margin-bottom: 40px;
-    }
 
     .textile-wrap {
-      background-color: #f2f2f2;
-      border: 1px solid #ccc;
+      background-color: $secondaryBgColor;
+      border: 1px solid $borderColor;
 
-      h1 {
-        font-size: 17.5px;
-        line-height: 20px;
-        margin-bottom: 10px;
-        margin-top: 20px;
-        text-align: left;
-        &:nth-child(1) {
-          margin-top: 10px;
-        }
-      }
-
-      .textile-toolbar {
-        background-color: #f2f2f2;
+      .markup-help {
+        max-height: 500px;
+        overflow-y: auto;
       }
 
       .textile-inner {
-          padding: 0 5px;
+        padding: 0 0.5rem 0.5rem 0.5rem;
 
         textarea {
           min-height: 400px;
@@ -76,24 +36,18 @@
       }
 
       .textile-preview {
-        border: 1px solid #e3e3e3;
+        border: 1px solid $borderColor;
       }
 
-      .markup-help {
-        max-height: 500px;
-        overflow-y: auto;
+      .textile-toolbar {
+        background-color: $secondaryBgColor;
+        margin: 0.5rem !important;
       }
     }
 
     .play-around {
-      margin-top: 40px;
+      margin-top: 2rem;
       text-align: center;
-    }
-  }
-
-  #step-four {
-    h2 {
-      margin-top: 30px;
     }
   }
 
@@ -101,10 +55,11 @@
     margin-bottom: 40px;
     margin-top: 20px;
     text-align: center;
+    
     a {
-      display: block;
       padding: 15px;
     }
+
     p {
       margin-bottom: 15px;
       margin-top: 10px;
