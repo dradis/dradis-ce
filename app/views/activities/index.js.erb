@@ -1,4 +1,4 @@
-var $activitiesGroupsContainer = $('[data-behavior="activities-groups-container"]');
+var $infiniteScrollContainer = $('[data-behavior="infinite-scroll-container"]');
 
 <% if @activities_groups.present? %>
   var template = '<%= j render 'activities/activities_groups', activities_groups: @activities_groups %>';
@@ -7,8 +7,8 @@ var $activitiesGroupsContainer = $('[data-behavior="activities-groups-container"
   $.each($template, function(index, activitiesGroup) {
     var $activitiesGroup = $(activitiesGroup);
     var timeElementDatetime = $activitiesGroup.find('[data-behavior~=activity-day-value]').attr('datetime');
-    var $timeElementInDOM = $activitiesGroupsContainer.find(`[datetime="${timeElementDatetime}"]`);
-    // console.log($timeElementInDOM);
+    var $timeElementInDOM = $infiniteScrollContainer.find(`[datetime="${timeElementDatetime}"]`);
+
     if ($timeElementInDOM.length) {
       var $activitiesGroupContainer = $timeElementInDOM.parents('[data-behavior="activities-group"]');
       var $activities = $activitiesGroupContainer.find('[data-behavior="activities"]');
@@ -17,13 +17,13 @@ var $activitiesGroupsContainer = $('[data-behavior="activities-groups-container"
         $activities.append(element);
       })
     } else {
-      $activitiesGroupsContainer.append(activitiesGroup);
+      $infiniteScrollContainer.append(activitiesGroup);
     }
 
     $('[data-behavior="activities-spinner"]').hide();
   })
 
-  $activitiesGroupsContainer.data('page', <%= @page %>);
+  $infiniteScrollContainer.data('page', <%= @page %>);
 <% else %>
-  $activitiesGroupsContainer.data('canLoadMore', false);
+  $infiniteScrollContainer.data('canLoadMore', false);
 <% end %>
