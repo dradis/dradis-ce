@@ -1,4 +1,3 @@
-<% allow_dropdown = local_assigns[:allow_dropdown] ? allow_dropdown : false %>
 <% field_name = local_assigns[:field] ? field[0]  : '' %>
 <% value = local_assigns[:field] ? field[1] : '' %>
 
@@ -22,7 +21,7 @@
   <div class="inline-editable">
     <div class="edit-hover">
       <% options = value.split(' | ') %>
-      <% if allow_dropdown && options.count > 1 %>
+      <% if @allow_dropdown && options.count > 1 %>
         <%= select :item_form, "field_value_#{index}", options, {}, { class: 'form-control', data: { behavior: 'preview-enabled' }, tabindex: index + 1 } %>
       <% else %>
         <%= text_area_tag "item_form[field_value_#{index}]", value, rows: 1,
