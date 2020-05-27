@@ -16,7 +16,6 @@ class UserPreferences
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  VALID_TOURS = %i[first_sign_in projects_show].freeze
   DIGEST_FREQUENCIES = %w[none instant daily].freeze
   DIGEST_FREQUENCY_DEFAULT = 'instant'.freeze
 
@@ -89,24 +88,7 @@ class UserPreferences
     true
   end
 
-  # ----------------------------------------------------------------- YAML.load
-  # This deals with YAML.load and legacy preferences
-  def init_with(coder)
-    coder.map.each do |key, value|
-      # Move the legacy :last_tour preference under the tour registry
-      # Also, the legacy preferences don't have a :tours attribute
-      if key == 'last_tour'
-        @tours = Hash.new { |hash, key| hash[key] = '0' }
-        @tours[:projects_show] = value
-      elsif (key == 'tour' || key == 'tours') && value == {}
-        @tours = Hash.new { |hash, key| hash[key] = '0' }
-      else
-        instance_variable_set(:"@#{key}", value)
-      end
-    end
-  end
-
-  VALID_TOURS.each do |tour|
+  TourRegistry::TOURS.keys.each do |tour|
     define_method "last_#{tour}" do
       @tours[tour]
     end

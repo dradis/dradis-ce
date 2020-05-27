@@ -1,9 +1,14 @@
 class ProjectsController < AuthenticatedController
+  include Tourable
+
   before_action :set_project
+  before_action :should_display_tour?, only: [:show]
 
   helper        :tylium
   helper_method :current_project
   layout        'tylium'
+
+  has_tour_for :show
 
   def index
     redirect_to project_path(current_project)

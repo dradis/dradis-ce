@@ -47,7 +47,7 @@
 //= require tylium/modules/sidebar
 //= require tylium/modules/activities/poller
 //= require tylium/modules/subscriptions
-// require tylium/modules/tour
+//= require tylium/modules/tour
 //= require tylium/modules/uploads
 
 //= require tylium/pages/boards

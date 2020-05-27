@@ -1,0 +1,219 @@
+<%# http://planscope.io/blog/increasing-paid-conversions-through-better-onboarding/ %>
+<%= content_tag :div, id: 'tour-content', data: (@showTour ? { behavior: 'show-tour', tour_next: 'one' } : {}) do %>
+  <section class="modal hide" data-behavior="tour-step-one">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="navigation">
+            Part 1 of 4
+          </div>
+          <h2 class="text-center mb-3">The elements of a Dradis project</h2>
+
+          <div class="row">
+            <div class="col-12 col-xl-6 col-xxl-8 order-xl-2 text-center">
+              <%= image_tag 'tour/tour-01.png', class: 'img-fluid' %>
+            </div>
+            <div class="col-12 col-xl-3 col-xxl-2 order-xl-1 pr-xxl-0 pl-xl-4">
+              <h4 class="text-center header-underline mt-4">Issues</h4>
+              <p>Issues are findings, vulnerabilities, or problems you find during the project.</p>
+
+              <h4 class="text-center header-underline mt-4">Nodes</h4>
+              <p>Nodes are containers, it's how you give structure to the project.</p>
+              <p>They can be anything: hosts, applications, modules inside an application... you decide.</p>
+              <p>Inside each node you'll find:</p>
+              <ul>
+                <li><strong>Notes</strong>: free-form text for ideas, ToDos, etc.</li>
+                <li><strong>Evidence</strong>: if a node is affected by SQL injection, here you'll add the concrete details (e.g. page, parameter, etc.).</li>
+                <li><strong>Attachments</strong></li>
+              </ul>
+            </div>
+            <div class="col-12 col-xl-3 col-xxl-2 order-3 pl-xxl-0 pr-xl-4">
+              <h4 class="text-center header-underline mt-4">Team</h4>
+              <p>You can decide who has access to each project.</p>
+
+              <h4 class="text-center header-underline mt-4">Methodologies</h4>
+              <p>They are checklists of tasks you need to cover for this project.</p>
+              <p>They are great to keep your results consistent and ensure you don't miss any steps.</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="javascript:void(0)" class="btn" data-dismiss="modal">Close</a>
+          <a href="javascript:void(0)" class="btn btn-primary" data-behavior="tour-step" data-tour-next="two">Next</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal hide" data-behavior="tour-step-two">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="navigation">
+            Part 2 of 4
+          </div>
+          <h2 class="text-center mb-3">Providing rich content for your Issues and Notes</h2>
+
+          <div class="row">
+            <div class="col-6">
+              <%= content_tag :textarea,
+                class: 'textile2 form-control',
+                data: {
+                  behavior: 'rich-toolbar2',
+                  'rich-toolbar': 'block-code bold field italic link list-ol list-ul table',
+                  paths: editor_paths
+                } do %>#[Title]#
+This is the content's title
+
+#[Description]#
+You can use the #[ ... ]# syntax to define *fields* in your content.
+
+You can use "Textile":http://redcloth.org/textile/ markup in your content.
+
+Use "bc." for _blocks of code_ like this one:
+
+bc. def hello_world
+  puts 'hello,world'
+end
+
+And add screenshots like this:
+
+!<%= asset_path 'logo_small.png' %>!
+
+              <% end %>
+            </div>
+            <div class="col-6">
+
+              <h4 class="text-center header-underline mt-4">Fields</h4>
+              <p>You can use the #[ ... ]# syntax to define *fields* in your content. For example, the default content in the editor on the left has <strong>Title</strong> and <strong>Description</strong> fields.</p>
+              <p>You're free to use any fields you want.</p>
+
+              <p class="lead play-around">Feel free to play around with the editor before moving on...</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="javascript:void(0)" class="btn" data-dismiss="modal">Close</a>
+          <a href="javascript:void(0)" class="btn" data-behavior="tour-step" data-tour-next="one">Back</a>
+          <a href="javascript:void(0)" class="btn btn-primary" data-behavior="tour-step" data-tour-next="three">Next</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal hide" data-behavior="tour-step-three">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="navigation">
+            Part 3 of 4
+          </div>
+          <h2 class="text-center mb-3">Uploading output from other tools</h2>
+          <p class="lead text-center">Merge the output of all the scanners into a single place where you can easily review it.</p>
+
+          <div class="row">
+            <div class="col-3">
+              <ul class="plugin-list" style="padding-left:50%">
+                <li>Burp Suite</li>
+                <li>Nessus</li>
+                <li>NeXpose</li>
+                <li>Nikto</li>
+                <li>Nmap</li>
+                <li>OpenVAS</li>
+                <li>OSVDB</li>
+                <li>Qualys</li>
+                <li>WPScan</li>
+              </ul>
+            </div>
+            <div class="col-3">
+              <ul class="plugin-list">
+                <li>Retina</li>
+                <li>SureCheck</li>
+                <li><a href="http://vulndbhq.com">VulnDB</a></li>
+                <li>w3af</li>
+                <li>MediaWiki</li>
+                <li>wXf</li>
+                <li>Zed Attack Proxy</li>
+              </ul>
+            </div>
+            <div class="col-6 text-center">
+              <%= image_tag 'tour/tour-05.png' %>
+              <p style="margin-top:20px">Find the <code>Upload output from tool</code> link in the top navbar (right-hand side).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <a href="javascript:void(0)" class="btn" data-dismiss="modal">Close</a>
+          <a href="javascript:void(0)" class="btn" data-behavior="tour-step" data-tour-next="two">Back</a>
+          <a href="javascript:void(0)" class="btn btn-primary" data-behavior="tour-step" data-tour-next="four">Next</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal hide" data-behavior="tour-step-four">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="navigation">
+            Part 4 of 4
+          </div>
+          <h2 class="text-center mb-3">Reporting</h2>
+
+          <div class="row">
+            <div class="col-6">
+              <h4 class="text-center header-underline mt-4">Fields and placeholders</h4>
+              <p>Remember those fields you can define using the text editor? Now it's the time to put them to use.</p>
+              <p>The reporting engine is quite flexible, it doesn't care about what fields you have <strong>as long as the fields in Dradis match the fields in your template</strong>.</p>
+
+              <p>To create the placeholders, we're using a Word feature called <strong>Content Controls</strong>.
+              <p>This allows you to create arbitrary complex report templates using whatever styling and branding you need.</p>
+
+              <div class="text-center">
+                <h4 class="text-center header-underline mt-4">Generate report</h4>
+                <p>To generate the report use the <code>Export results</code> link in the top navbar (right-hand side).</p>
+                <%= image_tag 'tour/tour-04.png' %>
+              </div>
+            </div>
+            <div class="col-6 text-center">
+              <%= image_tag 'tour/tour-02.png' %>
+              <%= image_tag 'tour/tour-03.png' %>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="javascript:void(0)" class="btn" data-dismiss="modal">Close</a>
+          <a href="javascript:void(0)" class="btn" data-behavior="tour-step" data-tour-next="three">Back</a>
+          <a href="javascript:void(0)" class="btn btn-primary" data-behavior="tour-step" data-tour-next="five">Next</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal hide" data-behavior="tour-step-five">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h2 class="text-center">That's it! Ready to get to work?</h2>
+
+          <div class="row">
+            <div class="col-4 offset-4 options">
+              <a href="javascript:void(0)" class="btn btn-block btn-primary" data-dismiss="modal">Yes, back to project "<%= current_project.name %>"</a>
+              <% if defined?(Dradis::Pro) %>
+              <p class="lead">... or ...</p>
+
+              <% sample_project_name = "Sample project for #{current_user.email.split('@').first.titleize} - Tour - #{Time.zone.now}" %>
+              <%= simple_form_for Project.new, url: main_app.projects_path, html:{id: 'tour-form'} do |f| %>
+                <%= hidden_field_tag 'project[name]', sample_project_name %>
+                <%= hidden_field_tag :template, 'reporting_project' %>
+                <%= link_to 'Play around with a sample project', 'javascript:void(0)', onclick: "$('#tour-form').submit()", class: 'btn btn-block' %>
+              <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<% end %>
