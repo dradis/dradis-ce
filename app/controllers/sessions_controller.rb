@@ -100,8 +100,8 @@ class SessionsController < ApplicationController
   end
 
   def return_to
-    # Don't redirect to textile path if user start typing in editor after timed out.
-    if warden_options[:attempted_path].include?('textile')
+    # Don't redirect to markup path if user start typing in editor after timed out.
+    if warden_options[:attempted_path].include?('markup')
       request.env['HTTP_REFERER']
     else
       warden_options[:attempted_path]
