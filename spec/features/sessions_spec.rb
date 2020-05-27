@@ -57,6 +57,8 @@ describe 'Sessions' do
     end
 
     describe 'return after timeout' do
+      let(:project) { Project.find(1) }
+
       let(:submit_login_details) do
         fill_in 'login', with: @user.email
         fill_in 'password', with: password
@@ -67,22 +69,22 @@ describe 'Sessions' do
         login
 
         Timecop.freeze(Time.now + 1.hour) do
-          visit new_project_issue_path(Project.find(1))
+          visit new_project_issue_path(project)
           submit_login_details
-          expect(current_path).to eq(new_project_issue_path(Project.find(1)))
+          expect(current_path).to eq(new_project_issue_path(project))
         end
       end
 
       context 'when editing editor after timeout', js: true do
         it 'redirects to editor path instead of /textile' do
           login
-          visit new_project_issue_path(Project.find(1))
+          visit new_project_issue_path(project)
           click_link 'Source'
 
           Timecop.freeze(Time.now + 1.hour) do
             fill_in :issue_text, with: 'Issue Text'
             submit_login_details
-            expect(current_path).to eq(new_project_issue_path(Project.find(1)))
+            expect(current_path).to eq(new_project_issue_path(project))
           end
         end
       end
