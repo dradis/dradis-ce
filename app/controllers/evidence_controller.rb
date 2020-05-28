@@ -177,7 +177,7 @@ class EvidenceController < NestedNodeResourceController
                         "evidence-#{@evidence.id}"
                       elsif params[:template]
                         "node-#{@node.id}-evidence-#{params[:template]}"
-                      elsif
+                      else
                         "node-#{@node.id}-evidence"
                       end
   end
