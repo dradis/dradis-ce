@@ -10,6 +10,7 @@ class NotesController < NestedNodeResourceController
 
   before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
+  before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
 
   def new
     @note = @node.notes.new
@@ -85,5 +86,15 @@ class NotesController < NestedNodeResourceController
 
   def note_params
     params.require(:note).permit(:category_id, :text, :node_id)
+  end
+
+  def set_auto_save_key
+    @auto_save_key =  if @note&.persisted?
+                        "note-#{@note.id}"
+                      elsif params[:template]
+                        "node-#{@node.id}-note-#{params[:template]}"
+                      elsif
+                        "node-#{@node.id}-note"
+                      end
   end
 end
