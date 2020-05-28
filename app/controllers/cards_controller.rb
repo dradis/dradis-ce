@@ -112,7 +112,7 @@ class CardsController < AuthenticatedController
                         "card-#{@card.id}"
                       elsif params[:template]
                         "#{@list.id}-card-#{params[:template]}"
-                      elsif
+                      else
                         "#{@list.id}-card"
                       end
   end

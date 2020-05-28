@@ -164,7 +164,7 @@ class IssuesController < AuthenticatedController
                         "issue-#{@issue.id}"
                       elsif params[:template]
                         "project-#{current_project.id}-issue-#{params[:template]}"
-                      elsif
+                      else
                         "project-#{current_project.id}-issue"
                       end
   end

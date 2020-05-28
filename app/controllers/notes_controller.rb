@@ -93,7 +93,7 @@ class NotesController < NestedNodeResourceController
                         "note-#{@note.id}"
                       elsif params[:template]
                         "node-#{@node.id}-note-#{params[:template]}"
-                      elsif
+                      else
                         "node-#{@node.id}-note"
                       end
   end
