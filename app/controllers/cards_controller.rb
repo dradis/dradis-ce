@@ -10,6 +10,7 @@ class CardsController < AuthenticatedController
   before_action :set_current_board_and_list
   before_action :set_or_initialize_card
   before_action :initialize_sidebar, only: [:show, :new, :edit]
+  before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
 
   layout 'cards'
 
@@ -104,5 +105,15 @@ class CardsController < AuthenticatedController
   def set_current_board_and_list
     @board = current_project.boards.includes(:lists).find(params[:board_id])
     @list  = @board.lists.includes(:cards).find(params[:list_id])
+  end
+
+  def set_auto_save_key
+    @auto_save_key =  if @card.persisted?
+                        "card-#{@card.id}"
+                      elsif params[:template]
+                        "#{@list.id}-card-#{params[:template]}"
+                      elsif
+                        "#{@list.id}-card"
+                      end
   end
 end
