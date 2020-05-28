@@ -108,7 +108,7 @@ class CardsController < AuthenticatedController
   end
 
   def set_auto_save_key
-    @auto_save_key =  if @card.persisted?
+    @auto_save_key =  if @card&.persisted?
                         "card-#{@card.id}"
                       elsif params[:template]
                         "#{@list.id}-card-#{params[:template]}"

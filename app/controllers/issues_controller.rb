@@ -160,7 +160,7 @@ class IssuesController < AuthenticatedController
   end
 
   def set_auto_save_key
-    @auto_save_key =  if @issue.persisted?
+    @auto_save_key =  if @issue&.persisted?
                         "issue-#{@issue.id}"
                       elsif params[:template]
                         "project-#{current_project.id}-issue-#{params[:template]}"

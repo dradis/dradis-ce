@@ -173,7 +173,7 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def set_auto_save_key
-    @auto_save_key =  if @evidence.persisted?
+    @auto_save_key =  if @evidence&.persisted?
                         "evidence-#{@evidence.id}"
                       elsif params[:template]
                         "node-#{@node.id}-evidence-#{params[:template]}"
