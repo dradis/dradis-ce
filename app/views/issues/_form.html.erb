@@ -15,7 +15,6 @@
         class: 'textile h-100',
         data: {
           allow_dropdown: @issue.new_record?,
-          autosave_key: "#{current_project.id}-issue-#{ @issue.persisted? ? "edit-#{@issue.id}" : 'new' }",
           behavior: 'rich-toolbar',
           paths: editor_paths,
           'rich-toolbar': 'block-code bold field italic link list-ol list-ul table'
