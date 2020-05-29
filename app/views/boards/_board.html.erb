@@ -1,20 +1,7 @@
-<% content_for :list_new_modal do %>
-  <%= render 'boards/modals/new_list_form' unless request.xhr? %>
-<% end %>
-
-<% board.ordered_lists.each do |list| %>
-  <% content_for :list_rename_modal do %>
-    <%= render partial: 'boards/modals/list_rename_form', locals: { board: board, list: list } %>
-  <% end %>
-<% end %>
-
 <% cache ['board-view', board] do %>
-
-  <div class="content-container mt-3">
-    <ul class="board js-sortable-lists" data-board-id="<%= board.id %>">
-      <% board.ordered_lists.each do |list| %>
-        <% cache ['board-list', list] do %>
-
+  <ul class="board js-sortable-lists" data-board-id="<%= board.id %>">
+    <% board.ordered_lists.each do |list| %>
+      <% cache ['board-list', list] do %>
         <li class="list" data-list-id="<%= list.id %>" data-move-url="<%= move_project_board_list_path(current_project, board, list) %>">
           <div class="list-header">
             <h4>
@@ -54,11 +41,11 @@
                       <% if card.due_date %>
                         <% case (card.due_date - Date.today).to_i %>
                         <% when -Float::INFINITY..-1 %>
-                        <div class="badge-due-date badge badge-danger">
+                          <div class="badge-due-date badge badge-danger">
                         <% when 0 %>
-                        <div class="badge-due-date badge badge-warning">
+                          <div class="badge-due-date badge badge-warning">
                         <% else %>
-                        <div class="badge-due-date badge badge-success">
+                          <div class="badge-due-date badge badge-success">
                         <% end %>
                           <span><i class="fa fa-clock-o"></i></span>
                           <span><%= card.due_date.strftime('%b %-d') %></span>
@@ -78,18 +65,16 @@
           </ul>
           <%= link_to 'Add a task...', new_project_board_list_card_path(current_project, board, list), class: 'card-new' %>
         </li>
-        <% end %> <%# board-list cache %>
-      <% end %>
+      <% end %> <%# board-list cache %>
+    <% end %>
 
-      <li class="list list-new">
-        <a
-          class="js-list-modal"
-          href="#modal-list-new"
-        >
-          Add a list...
-        </a>
-      </li>
-    </ul>
-  </div>
-
+    <li class="list list-new">
+      <a
+        class="js-list-modal"
+        href="#modal-list-new"
+      >
+        Add a list...
+      </a>
+    </li>
+  </ul>
 <% end %><%# /board-view cache %>

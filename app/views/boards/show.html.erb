@@ -9,41 +9,53 @@
 <% end %>
 
 <% content_for :breadcrumbs do %>
-<nav class="dots-container">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <%= link_to 'Methodologies', project_boards_path(current_project) %>
-    </li>
-    <li class="breadcrumb-item active"><%= @board.name %></li>
-  </ol>
-  <ul class="nav">
-    <li class="dropdown dots-dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i></a>
-      <div class="dropdown-menu">
-        <%=
-          link_to(
-            "#modal-board-edit-#{@board.id}",
-            class: 'dropdown-item',
-            data: { behavior: 'board-modal' },
-            tabindex: -1
-          ) do
-        %>
-          <i class="fa fa-pencil fa-fw"></i> Edit
-        <% end %>
-        <%=
-          link_to(
-            [current_project, @board],
-            class: 'dropdown-item text-error',
-            data: { confirm: "Are you sure?\n\nProceeding will delete this methodology from the project, as well as with any associated lists and tasks." },
-            method: 'delete',
-            tabindex: -1
-          ) do %>
-          <i class="fa fa-trash fa-fw"></i> Delete
-        <% end %>
-      </div>
-    </li>
-  </ul>
-</nav>
+  <nav class="dots-container">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <%= link_to 'Methodologies', project_boards_path(current_project) %>
+      </li>
+      <li class="breadcrumb-item active"><%= @board.name %></li>
+    </ol>
+    <ul class="nav">
+      <li class="dropdown dots-dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i></a>
+        <div class="dropdown-menu">
+          <%=
+            link_to(
+              "#modal-board-edit-#{@board.id}",
+              class: 'dropdown-item',
+              data: { behavior: 'board-modal' },
+              tabindex: -1
+            ) do
+          %>
+            <i class="fa fa-pencil fa-fw"></i> Edit
+          <% end %>
+          <%=
+            link_to(
+              [current_project, @board],
+              class: 'dropdown-item text-error',
+              data: { confirm: "Are you sure?\n\nProceeding will delete this methodology from the project, as well as with any associated lists and tasks." },
+              method: 'delete',
+              tabindex: -1
+            ) do %>
+            <i class="fa fa-trash fa-fw"></i> Delete
+          <% end %>
+        </div>
+      </li>
+    </ul>
+  </nav>
 <% end %>
 
-<%= render @board %>
+<% content_for :list_new_modal do %>
+  <%= render 'boards/modals/new_list_form' %>
+<% end %>
+
+<% @board.ordered_lists.each do |list| %>
+  <% content_for :list_rename_modal do %>
+    <%= render partial: 'boards/modals/list_rename_form', locals: { board: @board, list: list } %>
+  <% end %>
+<% end %>
+
+<div class="<%= 'mt-3 content-container' unless request.xhr? %>">
+  <%= render @board %>
+</div>
