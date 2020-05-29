@@ -26,7 +26,7 @@ v3.17 (May 2020)
   * Update code element style
   * Use shared noscript partial
   * Use user model reference for activities instead of user email
-  * Upgraded gems: puma, rack, rails, sass-rails
+  * Upgraded gems: kaminari, puma, rack, rails, sass-rails
   * Bugs fixed:
     - bin/setup creating folders outside dradis-ce/
     - bin/setup error if the attachments directory already exists
