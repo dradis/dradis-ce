@@ -54,7 +54,7 @@ gem 'differ', '~> 0.1.2'
 # HTML processing filters and utilities
 gem 'html-pipeline'
 
-gem 'kaminari', '~> 1.1.1'
+gem 'kaminari', '~> 1.2.1'
 
 gem 'paper_trail', '~> 10.3'
 
