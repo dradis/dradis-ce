@@ -53,7 +53,7 @@ v3.17 (May 2020)
   * REST/JSON API enhancements:
     - Add tags to the Issues API
   * Security Fixes:
-    - Medium: Authenticated author comments cross-site scripting
+    - Medium: Authenticated persistent comments cross-site scripting
 
 v3.16 (February 2020)
   * Update app to new Tylium layout
