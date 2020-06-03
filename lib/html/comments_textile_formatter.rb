@@ -3,7 +3,11 @@ module HTML
     include RedCloth::Formatters::HTML
 
     def code(opts)
-      "@#{opts[:text]}@"
+      if opts[:block]
+        super(opts)
+      else
+        "@#{opts[:text]}@"
+      end
     end
   end
 end
