@@ -1,5 +1,5 @@
 module HTML
-  module CommentsFormatter
+  module CommentsTextileFormatter
     include RedCloth::Formatters::HTML
 
     def code(opts)

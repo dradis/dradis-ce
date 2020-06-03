@@ -8,7 +8,7 @@ module Dradis
   end
 end
 
-require 'html/comments_formatter'
+require 'html/comments_textile_formatter'
 
 require 'html/pipeline/dradis_code_highlight_filter'
 require 'html/pipeline/dradis_fieldable_filter'
