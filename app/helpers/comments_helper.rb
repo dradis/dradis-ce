@@ -3,7 +3,7 @@
 module CommentsHelper
   def comment_formatter(comment)
     @comment_pipeline ||= HTML::Pipeline.new [
-      HTML::Pipeline::TextileFilter,
+      HTML::Pipeline::DradisTextileCommentsFilter,
       HTML::Pipeline::SanitizationFilter,
       HTML::Pipeline::AutolinkFilter,
       HTML::Pipeline::DradisMentionsFilter,
