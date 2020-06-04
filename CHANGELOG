@@ -1,3 +1,28 @@
+v3.18 (Month 2020)
+  * [feature #1]
+  * [feature #2]
+  * [feature ...]
+  * Upgraded gems: [gem #1], [gem #2]
+  * Bugs fixed:
+    - Fix board nested within grey boxes when cards are moved around in the board
+    - Bug tracker items: #N, #M, #O, ...
+  * New integrations:
+    - [new integration #1]
+    - [new integration ...]
+  * Integration enhancements:
+    - [integration enhancement #1]
+    - [integration enhancement ...]
+  * Reporting enhancements:
+    - [reporting enhancement #1]
+    - [reporting enhancement ...]
+  * REST/JSON API enhancements:
+    - [API enhancement #1]
+    - [API enhancement ...]
+  * Security Fixes:
+    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
 v3.17 (May 2020)
   * Add author to evidence and notes views
   * Adjust Uploads layout to provide more visibility to the output console
@@ -33,7 +58,6 @@ v3.17 (May 2020)
     - Board partial broken structure
     - ItemsTable extra whitespace causing unnecessary vertical scrolling
     - Fix bug with v3 board templates not uploading
-    - Fix board nested within grey boxes when cards are moved around in the board
     - Fix textile preview not showing on issues with very long text
     - Long items_table dropdown menus not scrollable
     - Long project names interfering with search bar expansion
