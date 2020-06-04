@@ -54,9 +54,7 @@ v3.17 (May 2020)
   * REST/JSON API enhancements:
     - Add tags to the Issues API
   * Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: Authenticated persistent comments cross-site scripting
 
 v3.16 (February 2020)
   * Update app to new Tylium layout
