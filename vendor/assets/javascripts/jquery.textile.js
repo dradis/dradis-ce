@@ -28,10 +28,10 @@
         resize: true,
         // HTML templates
         tpl: {
-          fields: '<div class="textile-form h-100 col-6"></div>',
+          fields: '<div class="textile-form h-100 col-6 col-sm-6"></div>',
           wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row"></div></div>',
-          preview: '<div class="col-6"><div class="textile-preview loading-indicator">Loading...</div></div>',
-          help: '<div class="textile-help col-12 loading-indicator">Loading...</div>'
+          preview: '<div class="col-6 col-sm-6"><div class="textile-preview loading-indicator">Loading...</div></div>',
+          help: '<div class="textile-help col-12 col-sm-12 loading-indicator">Loading...</div>'
         }
       };
 
@@ -71,7 +71,7 @@
       this.$element.parent().append( this.options.$wrap );
 
       // move textarea to container
-      this.$source = this.$element.wrap('<div class="col-6"></div>').parent();
+      this.$source = this.$element.wrap('<div class="col-6 col-sm-6"></div>').parent();
       $('.textile-inner', this.options.$wrap).append(this.$source);
       this.$source.hide();
 

@@ -2,7 +2,7 @@
   html: {
     data: {
       behavior: 'local-auto-save',
-      auto_save_key: @note.new_record? ? "project-#{current_project.id}-node-#{@node.id}-note#{"-#{params[:template]}" if params[:template]}" : "note-#{@note.id}"
+      auto_save_key: @auto_save_key
     }
   } do |f| %>
 
@@ -14,7 +14,6 @@
         class: 'textile h-100',
         data: {
           allow_dropdown: @note.new_record?,
-          autosave_key: "#{current_project.id}-note-#{ @note.persisted? ? "edit-#{@note.id}" : "new-for-#{@node.id}" }",
           behavior: 'rich-toolbar',
           paths: editor_paths,
           'rich-toolbar': 'block-code bold field italic link list-ol list-ul table'
