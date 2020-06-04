@@ -139,6 +139,10 @@ mark {
   height: 3rem;
 }
 
+pre code {
+  background-color: initial;
+}
+
 .required-input {
   color: $red;
 }
