@@ -1,4 +1,4 @@
-v3.17 (Month 2020)
+v3.17 (May 2020)
   * Add author to evidence and notes views
   * Adjust Uploads layout to provide more visibility to the output console
   * Boards can be renamed and deleted through their dots menu
@@ -27,7 +27,7 @@ v3.17 (Month 2020)
   * Update code element style
   * Use shared noscript partial
   * Use user model reference for activities instead of user email
-  * Upgraded gems: puma, rack, rails, sass-rails
+  * Upgraded gems: kaminari, puma, rack, rails, sass-rails
   * Bugs fixed:
     - bin/setup creating folders outside dradis-ce/
     - bin/setup error if the attachments directory already exists
@@ -54,9 +54,7 @@ v3.17 (Month 2020)
   * REST/JSON API enhancements:
     - Add tags to the Issues API
   * Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: Authenticated persistent comments cross-site scripting
 
 v3.16 (February 2020)
   * Update app to new Tylium layout
