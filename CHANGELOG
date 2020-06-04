@@ -1,3 +1,27 @@
+v3.18 (Month 2020)
+  * Return users to the last view before the session expired
+  * Upgraded gems: [gem #1], [gem #2]
+  * Bugs fixed:
+    - [bug fixed #1]
+    - [bug fixed ...]
+    - Bug tracker items: #N, #M, #O, ...
+  * New integrations:
+    - [new integration #1]
+    - [new integration ...]
+  * Integration enhancements:
+    - [integration enhancement #1]
+    - [integration enhancement ...]
+  * Reporting enhancements:
+    - [reporting enhancement #1]
+    - [reporting enhancement ...]
+  * REST/JSON API enhancements:
+    - [API enhancement #1]
+    - [API enhancement ...]
+  * Security Fixes:
+    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
 v3.17 (May 2020)
   * Add author to evidence and notes views
   * Adjust Uploads layout to provide more visibility to the output console
@@ -23,7 +47,6 @@ v3.17 (May 2020)
   * Navigation sidebar in projects can be kept open while navigating across views
   * Dots-menu available in any view
   * Remove tag color from issue titles in issue summary
-  * Return users to the last view before the session expired
   * Update code element style
   * Use shared noscript partial
   * Use user model reference for activities instead of user email
