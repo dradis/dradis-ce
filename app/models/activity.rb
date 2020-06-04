@@ -1,5 +1,5 @@
 class Activity < ApplicationRecord
-  ACTIVITIES_STRFTIME_FORMAT = '%A, %B %e %Y'
+  ACTIVITIES_STRFTIME_FORMAT = '%A, %B %-e %Y'
 
   # -- Relationships --------------------------------------------------------
 
