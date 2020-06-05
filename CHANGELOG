@@ -1,4 +1,4 @@
-v3.18 (Month 2020)
+v3.#.# (MMM’YY)
   * Return users to the last view before the session expired
   * Upgraded gems: [gem #1], [gem #2]
   * Bugs fixed:
