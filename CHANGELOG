@@ -4,8 +4,7 @@ v3.#.# (MMM’YY)
   * [feature ...]
   * Upgraded gems: websocket-extensions
   * Bugs fixed:
-    - [bug fixed #1]
-    - [bug fixed ...]
+    - Fixed redirect when canceling editing evidence from the issue level
     - Bug tracker items: #N, #M, #O, ...
   * New integrations:
     - [new integration #1]

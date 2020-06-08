@@ -34,7 +34,7 @@
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
     <%=
       link_to 'Cancel',
-      project_node_path(@node.project, @node),
+      params[:back_to] == 'issue' ? [current_project, @evidence.issue] : [current_project, @node, @evidence],
       data: {
         behavior: 'clear-local-auto-save'
       }
