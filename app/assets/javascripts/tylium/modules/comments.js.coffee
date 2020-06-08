@@ -6,6 +6,7 @@ document.addEventListener "turbolinks:load", ->
     comment = element.closest(".comment")
     comment.find(".content").show()
     comment.find("form").hide()
+    comment.find('[data-action~=edit]').show()
   )
 
   if $('[data-behavior~=mentionable]').length
