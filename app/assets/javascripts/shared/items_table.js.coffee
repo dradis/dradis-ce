@@ -200,10 +200,10 @@ class @ItemsTable
       if (column = $(th).data('column'))
         that.columnIndices[column] = index
         if that.selectedColumns.indexOf(column) > -1
-          that.$table.find("td:nth-child(#{index + 1})").css('display', 'table-cell')
+          that.$table.find("td:nth-child(#{index + 1}):first").css('display', 'table-cell')
           $th.css('display', 'table-cell')
         else
-          that.$table.find("td:nth-child(#{index + 1})").css('display', 'none')
+          that.$table.find("td:nth-child(#{index + 1}):first").css('display', 'none')
           $th.css('display', 'none')
 
   showAlert: (msg, klass) =>
