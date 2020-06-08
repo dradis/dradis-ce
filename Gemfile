@@ -5,10 +5,10 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.4.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.4', '>= 5.2.4.1'
+gem 'rails', '~> 5.2.4', '>= 5.2.4.3'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '~> 6.0'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -54,7 +54,7 @@ gem 'differ', '~> 0.1.2'
 # HTML processing filters and utilities
 gem 'html-pipeline'
 
-gem 'kaminari', '~> 1.1.1'
+gem 'kaminari', '~> 1.2.1'
 
 gem 'paper_trail', '~> 10.3'
 
@@ -78,7 +78,7 @@ gem 'thor', '~> 0.18'
 gem 'bcrypt',   '3.1.12'
 
 # Required by Rails (uglifier and activesupport)
-gem 'json', '1.8.6'
+gem 'json', '2.3.0'
 
 # XML manipulation
 gem 'nokogiri', '1.10.8'

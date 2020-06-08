@@ -119,10 +119,19 @@ Rails.application.routes.draw do
     collection { get :status }
   end
 
+  resource :fields, only: [] do
+    collection do
+      get :field
+      post :form
+      post :source
+    end
+  end
+
   # -------------------------------------------------------------- Static pages
-  # jQuery Textile URLs
-  get '/preview' => 'home#textilize',  as: :preview, defaults: { format: 'json' }
-  get '/markup-help' => 'home#markup_help', as: :markup
+  resource :markup, controller: :markup, only: [] do
+    get :help
+    post :preview
+  end
 
   root to: 'projects#index'
 

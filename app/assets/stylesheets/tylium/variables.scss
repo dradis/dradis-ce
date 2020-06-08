@@ -16,18 +16,13 @@ $lightGreen: #86cb86;
 $ceGreen: #378137;
 $darkGreen: #285d28;
 
-$lightBlue: #7796b4;
-$proBlue: #3498db;
-$darkBlue: #22303d;
-
 $lightColor: $lightGreen;
 $primaryColor: $ceGreen;
 $darkColor: $darkGreen;
 
-//$lightColor: $lightBlue; $primaryColor: $proBlue; $darkColor: $darkBlue;
-
 // Text Colors
-$defaultText: #707070;
+$codeText: #c7254e;
+$defaultText: #333;
 $errorText: $red;
 $mutedText: #bbb;
 $sidebarText: $lightColor;
@@ -39,7 +34,7 @@ $primaryBgColor: $white;
 $secondaryBgColor: #f4f5f6;
 $activeFillColor: #eceeef;
 $borderColor: #ddd;
-$dropdownLinkBackgroundHover: $darkColor;
+$dropdownLinkBackgroundHover: #f8f9fa;
 $navbarBackground: $primaryBgColor;
 $sidebarBackground: darken($darkColor, 5%);
 $sidebarActiveColor: $darkColor;

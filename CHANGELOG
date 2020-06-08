@@ -1,6 +1,6 @@
-v3.17 ([MMM’YY])
+v3.#.# (MMM’YY)
   * Render markup inside table columns
-  * Use shared noscript partial
+  * Upgraded gems: [gem #1], [gem #2]
   * Bugs fixed:
     - [bug fixed #1]
     - [bug fixed ...]
@@ -9,8 +9,8 @@ v3.17 ([MMM’YY])
     - [new integration #1]
     - [new integration ...]
   * Integration enhancements:
-    - Nexpose: better cipher wrapping coverage
-    - Nikto: support new nested <niktoscan> format
+    - [integration enhancement #1]
+    - [integration enhancement ...]
   * Reporting enhancements:
     - [reporting enhancement #1]
     - [reporting enhancement ...]
@@ -21,7 +21,63 @@ v3.17 ([MMM’YY])
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Upgraded gems: puma
+
+v3.17 (May 2020)
+  * Add author to evidence and notes views
+  * Adjust Uploads layout to provide more visibility to the output console
+  * Boards can be renamed and deleted through their dots menu
+  * Card improvements:
+    - Activity Feed now shows board name and link
+    - No mandatory due date
+    - Redirects to new url if the card has changed lists
+  * Card, Evidence, Issue, and Note form data will not be lost even if the form is not saved
+    - Form data will be cleared when the "Cancel" link is clicked
+    - Removed prompt to restore data
+  * Comments
+    - Added Textile markup
+    - Comment changes will not be lost even if the comment is not saved
+    - Update comments feed to show author's name instead of email
+  * Display note and evidence titles in breadcrumbs
+  * Editor improvements:
+    - New form-view to edit each field individually
+    - Formatting toolbar to help with markup
+    - Side-by-side editor preview that auto-updates
+  * Link to Methodology from project summary chart
+  * Move resource action links to dots-menu in breadcrumbs
+  * Navigation sidebar in projects can be kept open while navigating across views
+  * Dots-menu available in any view
+  * Remove tag color from issue titles in issue summary
+  * Update code element style
+  * Use shared noscript partial
+  * Use user model reference for activities instead of user email
+  * Upgraded gems: kaminari, puma, rack, rails, sass-rails
+  * Bugs fixed:
+    - bin/setup creating folders outside dradis-ce/
+    - bin/setup error if the attachments directory already exists
+    - Board partial broken structure
+    - ItemsTable extra whitespace causing unnecessary vertical scrolling
+    - Fix bug with v3 board templates not uploading
+    - Fix textile preview not showing on issues with very long text
+    - Long items_table dropdown menus not scrollable
+    - Long project names interfering with search bar expansion
+    - Repetative prompt when images are pasted after navigating multiple views.
+    - Report 'Download' button becoming a disabled 'Processing...' button once clicked
+    - SemVer pre-release appending character
+    - Set :author when creating Evidence from an Issue
+    - Sidebar items not showing active state
+    - Textile preview not showing on issues with very long text
+    - Bug tracker items: #560
+  * New integrations:
+    - [new integration #1]
+  * Integration enhancements:
+    - Nexpose: better cipher wrapping coverage
+    - Nikto: support new nested <niktoscan> format
+  * Reporting enhancements:
+    - HTML reports now use main app's markup rendering
+  * REST/JSON API enhancements:
+    - Add tags to the Issues API
+  * Security Fixes:
+    - Medium: Authenticated persistent comments cross-site scripting
 
 v3.16 (February 2020)
   * Update app to new Tylium layout

@@ -22,6 +22,7 @@
 
 //= require shared/charts
 //= require shared/console_updater
+//= require shared/editor_toolbar
 //= require shared/items_table
 
 //= require tylium/plugins/jquery.breadcrumbs
@@ -29,19 +30,23 @@
 //= require tylium/plugins/jquery.treenav
 
 //= require tylium/behaviors
+//= require shared/behaviors
+
 //= require tylium/engines
 //= require tylium/keyboard_shortcuts
 
-//= require tylium/modules/auto_save
+//= require tylium/modules/auto_save/local
 
 //= require tylium/modules/comments
 //= require tylium/modules/configurations
 //= require tylium/modules/export
+//= require tylium/modules/fileupload
 //= require tylium/modules/issues
 //= require tylium/modules/mentions
 //= require tylium/modules/nodes
 //= require tylium/modules/notifications
 //= require tylium/modules/search
+//= require tylium/modules/sidebar
 //= require tylium/modules/activities/poller
 //= require tylium/modules/subscriptions
 // require tylium/modules/tour

@@ -1,5 +1,13 @@
 <% cache ['subscriptions-feed', subscribable.subscriptions] do %>
-  <h4 class="d-flex header-underline">Subscribers <span class="badge bg-primary text-white ml-2"><%= subscribable.subscriptions.count %></span></h4>
+  <h4 class="d-flex header-underline">
+    Subscribers
+    <span class="badge bg-primary text-white mx-2">
+      <%= subscribable.subscriptions.count %>
+    </span>
+    <span class="actions pt-1">
+      - <%= render 'subscriptions/actions', subscribable: subscribable %>
+    </span>
+  </h4>
   <div class="subscriptions-feed <%= 'mb-5' if subscribable.subscriptions.any? %>">
     <% subscribable.subscriptions.each do |subscription| %>
       <%= avatar_image(subscription.user, size: 40) %>

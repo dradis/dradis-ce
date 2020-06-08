@@ -9,6 +9,7 @@ class EvidenceController < NestedNodeResourceController
   before_action :set_or_initialize_evidence, except: [ :index, :create_multiple ]
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
   skip_before_action :find_or_initialize_node, only: [:create_multiple]
+  before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
 
   def show
     @activities   = @evidence.activities.latest
@@ -24,7 +25,7 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def create
-    @evidence.author ||= current_user.email
+    @evidence.author = current_user.email
 
     respond_to do |format|
       if @evidence.save
@@ -51,9 +52,10 @@ class EvidenceController < NestedNodeResourceController
       params[:evidence][:node_ids].reject(&:blank?).each do |node_id|
         node = current_project.nodes.find(node_id)
         evidence = Evidence.create!(
+          author: current_user.email,
+          content: evidence_params[:content],
           issue_id: issue.id,
-          node_id: node.id,
-          content: evidence_params[:content]
+          node_id: node.id
         )
         track_created(evidence)
       end
@@ -73,9 +75,10 @@ class EvidenceController < NestedNodeResourceController
         end
 
         evidence = Evidence.create!(
+          author: current_user.email,
+          content: evidence_params[:content],
           issue_id: issue.id,
-          node_id: node.id,
-          content: evidence_params[:content]
+          node_id: node.id
         )
         track_created(evidence)
       end
@@ -167,5 +170,15 @@ class EvidenceController < NestedNodeResourceController
 
   def evidence_params
     params.require(:evidence).permit(:author, :content, :issue_id, :node_id)
+  end
+
+  def set_auto_save_key
+    @auto_save_key =  if @evidence&.persisted?
+                        "evidence-#{@evidence.id}"
+                      elsif params[:template]
+                        "node-#{@node.id}-evidence-#{params[:template]}"
+                      else
+                        "node-#{@node.id}-evidence"
+                      end
   end
 end

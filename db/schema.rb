@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 2020_01_08_120900) do
   end
 
   create_table "activities", force: :cascade do |t|
-    t.string "user", null: false
+    t.integer "user_id", null: false
     t.string "trackable_type", null: false
     t.integer "trackable_id", null: false
     t.string "action", null: false
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2020_01_08_120900) do
     t.datetime "updated_at", null: false
     t.index ["created_at"], name: "index_activities_on_created_at"
     t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
+    t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
   create_table "boards", force: :cascade do |t|

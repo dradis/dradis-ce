@@ -11,7 +11,7 @@
     <% if flash.any? %>
       <% # when flash messages present, disable turbolinks cache to avoid
         # the message appear and disappear in the next page load %>
-      <meta name="turbolinks-cache-control" content="no-cache">
+      <meta name="turbolinks-cache-control" content="reload">
     <% end %>
     <%= render 'comments/mentionable_users' if @mentionable_users %>
 
@@ -28,26 +28,24 @@
     <%= render 'layouts/tylium/navbar' %>
     <%= render 'layouts/tylium/sidebar' %>
 
-    <div id="view-content" class="view-content">
+    <div id="view-content" class="view-content" data-behavior="view-content">
       <div class="row m-0">
         <% if content_for?(:sidebar) %>
-          <div class="secondary-sidebar col-4 col-lg-3 col-xl-2 p-0">
-            <div class="inner">
-              <%= yield :sidebar %>
-            </div>
+          <div class="secondary-sidebar col-4 col-lg-3 col-xl-2">
+            <%= yield :sidebar %>
           </div>
-          <div class="secondary-sidebar-content col-8 col-lg-9 col-xl-10 p-0">
+          <div class="secondary-sidebar-content col-8 col-lg-9 col-xl-10 p-0 ml-auto">
+            <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
             <%= render 'shared/noscript' %>
-            <%= render 'layouts/tylium/project_teaser' %>
-            <%= render 'layouts/tylium/breadcrumb' %>
+            <%= render "layouts/tylium/project_teaser" %>
             <%= flash_messages %>
             <%= content_for?(:content) ? yield(:content) : yield %>
           </div>
         <% else %>
           <div class="col-12 p-0">
+            <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
             <%= render 'shared/noscript' %>
-            <%= render 'layouts/tylium/project_teaser' %>
-            <%= render 'layouts/tylium/breadcrumb' %>
+            <%= render "layouts/tylium/project_teaser" %>
             <% if content_for?(:title) %>
               <h3 class="page-title"><%= yield(:title) %></h3>
             <% end %>
@@ -95,8 +93,6 @@
 
     <%= render 'console/console' %>
     <!-- End of modals -->
-
-    <a class="back-fade not-faded" data-behavior="back-fade"></a>
 
     <%# Always render the Tour content, the user may click on the link in the help menu. %>
     <%# FIXME: re-enable Tour %>
