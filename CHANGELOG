@@ -2,7 +2,7 @@ v3.#.# (MMM’YY)
   * [feature #1]
   * [feature #2]
   * [feature ...]
-  * Upgraded gems: websocket-extensions
+  * Upgraded gems: rack, websocket-extensions
   * Bugs fixed:
     - [bug fixed #1]
     - [bug fixed ...]
