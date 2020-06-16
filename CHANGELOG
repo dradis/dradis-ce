@@ -2,7 +2,7 @@ v3.#.# (MMM’YY)
   * [feature #1]
   * [feature #2]
   * [feature ...]
-  * Upgraded gems: rack, websocket-extensions
+  * Upgraded gems: rack
   * Bugs fixed:
     - [bug fixed #1]
     - [bug fixed ...]
@@ -23,6 +23,9 @@ v3.#.# (MMM’YY)
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v3.17.1 (Jun 2020)
+  * Upgraded gems: websocket-extensions
 
 v3.17 (May 2020)
   * Add author to evidence and notes views
