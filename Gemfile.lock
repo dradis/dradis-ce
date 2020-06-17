@@ -353,7 +353,7 @@ GEM
     ruby2_keywords (0.0.2)
     ruby_dep (1.5.0)
     rubyzip (2.2.0)
-    sanitize (5.1.0)
+    sanitize (5.2.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.8.0)
       nokogumbo (~> 2.0)
@@ -496,7 +496,7 @@ DEPENDENCIES
   rspec-rails (~> 3.1)
   rubocop
   rubyzip (>= 1.2.2)
-  sanitize
+  sanitize (= 5.2.1)
   sass-rails (~> 6.0)
   selenium-webdriver
   shoulda-matchers (~> 3.1)
