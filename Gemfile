@@ -99,7 +99,7 @@ gem 'RedCloth', '~> 4.3.2', require: 'redcloth'
 gem 'rinku'
 
 # html-pipeline dependency for html sanitization
-gem 'sanitize'
+gem 'sanitize', '5.2.1'
 
 # SQLite3 DB driver
 gem 'sqlite3'#,  '1.3.10'

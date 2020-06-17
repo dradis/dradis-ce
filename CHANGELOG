@@ -2,7 +2,7 @@ v3.#.# (MMM’YY)
   * [feature #1]
   * [feature #2]
   * [feature ...]
-  * Upgraded gems: rack
+  * Upgraded gems: rack, sanitize
   * Bugs fixed:
     - Comments:
       - Fix `edit` link available while editing
