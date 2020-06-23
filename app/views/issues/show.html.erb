@@ -10,14 +10,21 @@
 
 <% content_for :breadcrumbs do %>
   <nav class="dots-container">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><%= link_to 'All issues', project_issues_path(current_project) %></li>
-      <li class="breadcrumb-item active"><%= (@issue.title? ? @issue.title : "Issue ##{@issue.id}")%></li>
-    </ol>
+    <%= render partial: 'breadcrumbs' %>
     <ul class="nav">
       <li class="dropdown dots-dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i></a>
         <div class="dropdown-menu">
+          <%= link_to edit_project_issue_path(current_project, @issue), class: 'dropdown-item' do %>
+            <i class="fa fa-pencil fa-fw"></i> Edit
+          <% end %>
+          <%= link_to [current_project, @issue],
+            class: 'dropdown-item text-error-hover',
+            data: { confirm: "Are you sure?\n\nProceeding will delete this issue and any associated evidence." },
+            method: :delete do %>
+              <i class="fa fa-trash fa-fw"></i> Delete
+          <% end %>
+          <%= render partial: 'subscriptions/actions', locals: { subscribable: @issue, dots_menu: true } %>
           <%= render partial: 'send_to_menu' %>
         </div>
       </li>
@@ -56,6 +63,7 @@
                     <i class="fa fa-trash"></i> Delete
                   <% end %> -
                   <%= render 'subscriptions/actions', subscribable: @issue %>
+                  <%= tag_and_name_for(@issue) %>
                 </span>
                 <!------------------------------------------------------------------------->
 

@@ -76,6 +76,13 @@ button:focus {
   box-shadow: none !important;
 }
 
+code {
+  background-color: #f9f2f4;
+  border-radius: 4px;
+  color: $codeText;
+  padding: 2px 4px;
+}
+
 .custom-file-label {
   padding-right: 5.25rem;
   overflow: hidden;
@@ -137,6 +144,10 @@ mark {
   margin-left: 1rem;
   cursor: default;
   height: 3rem;
+}
+
+pre code {
+  background-color: initial;
 }
 
 .required-input {

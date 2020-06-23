@@ -1,12 +1,6 @@
 <ol class="breadcrumb">
   <li class="breadcrumb-item"><a href="javascript:void(0)" data-behavior="sidebar-toggle">Nodes</a></li>
-  <li class="breadcrumb-item" data-node-id="<%= @node.id %>">
-    <%= link_to @node.label, main_app.project_node_path(@node.project, @node) %>
-  </li>
-  <li class="breadcrumb-item">
-    <%= link_to 'Notes', main_app.project_node_path(@node.project, @node, tab: 'notes-tab') %>
-  </li>
-  <%= content_tag :li, class: 'breadcrumb-item active' do %>
-    <%= @note.persisted? ? @note.title : 'New Note' %>
-  <% end -%>
+  <li class="breadcrumb-item" data-node-id="<%= @node.id %>"><%= link_to @node.label, main_app.project_node_path(@node.project, @node) %></li>
+  <li class="breadcrumb-item"><%= link_to 'Notes', main_app.project_node_path(@node.project, @node, tab: 'notes-tab') %></li>
+  <%= content_tag :li, class: 'breadcrumb-item active' do %><%= @note.persisted? ? @note.title : 'New Note' %><% end -%>
 </ol>
