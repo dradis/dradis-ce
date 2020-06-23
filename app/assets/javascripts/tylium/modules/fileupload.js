@@ -12,7 +12,7 @@ function fileUploadInit($element = $('[data-behavior~=jquery-upload]')) {
       $(this).fileupload({
         autoUpload: true,
         dropZone: $(this).find('[data-behavior~=drop-zone]'),
-        pasteZone: null, // Disable uploading files on paste in the textarea (this prevents a double upload since the attachment box pasteZone is the entire document)
+        pasteZone: $(this).find('[data-behavior~=drop-zone]'),
         singleFileUploads: true,
         url: actionPath,
       }).on('fileuploadadd', function (e, data) {
@@ -20,7 +20,7 @@ function fileUploadInit($element = $('[data-behavior~=jquery-upload]')) {
         // inject placeholder into textarea for each dragged in file
         $(this).find('[data-behavior~=rich-toolbar').focus()
         $.each(data.files, function (index, file) {
-          document.execCommand('insertText', false, '! ' + file.name + ' uploading... !\n');
+          document.execCommand('insertText', false, '\n! ' + file.name + ' uploading... !\n');
         })
       }).on('fileuploaddone', function (e, data) {
 
@@ -30,10 +30,10 @@ function fileUploadInit($element = $('[data-behavior~=jquery-upload]')) {
         $.each(data.files, function (index, file) {
 
           // remove placeholder from textarea for each file once it's uploaded
-          $textarea.focus().val($textarea.val().replace(/\!.*\!\n/, ''));
+          $textarea.focus().val($textarea.val().replace(/\n\!.*\!\n/, ''));
 
           // inject syntax into textarea to automatically display uploaded image
-          document.execCommand('insertText', false, '!' + uploadedFile + '!\n');
+          document.execCommand('insertText', false, '\n!' + uploadedFile + '!\n');
         })
       })
     } 
@@ -48,16 +48,7 @@ function fileUploadInit($element = $('[data-behavior~=jquery-upload]')) {
             $.blueimp.fileupload.prototype.options.destroy.call(this, e, data);
           }
         },
-        paste: function(e, data) {
-          $.each(data.files, function(index, file) {
-            var filename, newFile;
-            filename = prompt('Please provide a filename for the pasted image', 'screenshot-XX.png') || 'unnamed.png';
-            newFile = new File([file], filename, {
-              type: file.type
-            });
-            data.files[index] = newFile;
-          });
-        }
+        pasteZone: null
       })
     }
   });
