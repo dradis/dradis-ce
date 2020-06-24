@@ -37,7 +37,8 @@ ActiveRecord::Migration.maintain_test_schema!
 Capybara.register_driver :chrome do |app|
   options = %w[headless disable-gpu window-size=1920,1080]
   Capybara::Selenium::Driver.new app, browser: :chrome,
-    options: Selenium::WebDriver::Chrome::Options.new(args: options)
+    options: Selenium::WebDriver::Chrome::Options.new(args: options),
+    clear_local_storage: true
 end
 
 Capybara.server = :puma, { Silent: true }

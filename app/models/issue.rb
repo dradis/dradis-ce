@@ -1,5 +1,6 @@
 class Issue < Note
   include Commentable
+  include HasStates
   include Subscribable
   include Taggable
 
