@@ -8,7 +8,6 @@
   overflow: hidden;
   height: 100vh;
   z-index: 5;
-  transition: width 0.5s ease-in-out;  
 
   a {
     color: $lightColor;
@@ -19,40 +18,20 @@
   }
 
   .main-menu {
-    margin: 0;
     padding: 0;
-    position: absolute;
-    top: $navbarHeight;
-    left: 0;
-    width: 100%;
 
     li {
       @include active-nav;
     }
   }
 
-  &.no-animation {
-    .team-logo,
-    .team-name,
-    .nodes-list,
-    .sidebar-link-label,
-    .sidebar-link-icon {
-      animation: none !important;
-      transition: none !important;
-    }
-  }
-
   .nodes-nav {
     margin: 2rem 0 0 0;
     padding: 0;
-    position: absolute;
-    top: 250px;
-    left: 0;
     width: 100%;
 
     .nodes-list {
-      visibility: hidden;
-      transition: all 0.5s ease-in-out;
+      display: none;
 
       .no-nodes {
         white-space: nowrap;
@@ -117,42 +96,32 @@
     }
 
     .tree-header {
-      @include active-nav;
-      display: flex;
-      position: relative;
-      justify-content: space-between;
-      align-items: center;
       cursor: default;
-      width: 100%;
-      padding: 0.6rem 1rem 0.6rem 1.5rem;
-      margin-bottom: 0.5rem;
+      @include active-nav;
 
       &.active {
         color: $white;
+
+        &:hover {
+          background-color: $sidebarActiveColor;
+        }
       }
 
-      .add-subnode {
-        position: absolute;
-        left: 13rem;
+      .add-node {
+        margin-left: auto;
 
-        a {
-          padding: 0.5rem;
-
-          i {
-            font-size: 1rem;
-            margin: 0;
-          }
+        i {
+          font-size: 1rem;
+          margin-left: 0.5rem;
         }
+      }
+
+      &:hover {
+        background-color: transparent;
       }
 
       i {
         font-size: 1.6rem;
-        transition: transform 0.5s ease-in-out;
-      }
-
-      span {
-        position: absolute;
-        left: 4rem;
         transition: transform 0.5s ease-in-out;
       }
     }
@@ -163,9 +132,6 @@
     display: flex;
     align-items: center;
     padding: 0 1.5rem;
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
 
     .team-logo {
@@ -175,9 +141,6 @@
       border-radius: 50%;
       background: $primaryBgColor;
       position: relative;
-      opacity: 0;
-      transition: all 0.5s ease-in-out;
-      visibility: hidden;
 
       img {
         position: absolute;
@@ -193,18 +156,11 @@
       margin-left: 0.75rem;
       color: $white;
       white-space: nowrap;
-      opacity: 0;
-      transition: all 0.5s ease-in-out;
-      visibility: hidden;
+      display: none;
     }
 
     .sidebar-toggle {
-      position: absolute;
-      right: 1rem;
-
-      .sidebar-toggle-link {
-        padding: 0.5rem;
-      }
+      margin-left: auto;
     }
   }
 
@@ -226,59 +182,39 @@
     }
 
     .sidebar-link-label {
-      position: absolute;
-      left: 4rem;
+      margin-left: 1rem;
       white-space: nowrap;
       transition: transform 0.5s ease-in-out;
     }
-    
   }
 
   &.sidebar-collapsed {
     width: $sidebarCollapsed;
 
-    .scroll-more-wrapper {
-      animation: fadeoutscroll 1s forwards;
+    .sidebar-link {
+      flex-direction: column;
+
+      .sidebar-link-label {
+        font-size: 0.75rem;
+        margin: 0.25rem 0 0;
+      }
     }
 
-    .sidebar-link-label,
-    .sidebar-link-icon {
-      transform: translateX(-15px);
-    }
-
-    .sidebar-toggle {
-      right: 0.65rem;
-    }
-
-    .team-logo,
-    .team-name,
-    .nodes-list {
-      transform: translateX(-15px);
-      animation: fadeout 0.5s;
+    .sidebar-toggle-link {
+      padding-left: 0.8rem;
     }
     
     .tree-header {
       cursor: pointer;
       transition: all 0.2s ease-in-out;
+      
+      .add-node i {
+        font-size: 0.9rem;
+      }
 
       &:hover {
         background-color: $sidebarActiveColor;
         color: $white;
-      }
-    }
-
-    @keyframes fadeout {
-      from {
-        opacity: 1;
-      }
-      to {
-        opacity: 0;
-      }
-    }
-
-    @keyframes fadeoutscroll {
-      to {
-        opacity: 0;
       }
     }
   }
@@ -286,30 +222,13 @@
   &.sidebar-expanded {
     width: $sidebarExpanded;
 
-    .scroll-more-wrapper:not(.hidden) {
-      opacity: 0;
-      animation: fadein 1s forwards;
-    }
-
     .sidebar-toggle-icon {
       transform: rotate(180deg);
     }
 
-    .team-logo,
     .team-name,
     .nodes-list {
-      visibility: initial;
-      animation: fadein 1s forwards;
-      opacity: 1;
-    }
-
-    @keyframes fadein {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+      display: block;
     }
   }
 
