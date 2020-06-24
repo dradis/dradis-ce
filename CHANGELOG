@@ -1,7 +1,5 @@
 v3.#.# (MMM’YY)
-  * [feature #1]
-  * [feature #2]
-  * [feature ...]
+  * Update main sidebar
   * Upgraded gems: rack, sanitize
   * Bugs fixed:
     - Comments:
