@@ -58,7 +58,7 @@ describe "Issues API" do
 
     describe "GET /api/issue/:id" do
       before(:each) do
-        @issue = create(:issue, node: current_project.issue_library, text: "#[a]#\nb\n\n#[c]#\nd\n\n#[e]#\nf\n\n")
+        @issue = create(:issue, :tagged_issue, node: current_project.issue_library, text: "#[a]#\nb\n\n#[c]#\nd\n\n#[e]#\nf\n\n")
 
         get "/api/issues/#{ @issue.id }", env: @env
         expect(response.status).to eq(200)
@@ -74,6 +74,11 @@ describe "Issues API" do
         expect(@retrieved_issue['fields']).not_to be_empty
         expect(@retrieved_issue['fields'].keys).to eq @issue.fields.keys
         expect(@retrieved_issue['fields'].count).to eq @issue.fields.count
+      end
+
+      it 'includes tags' do
+        tag = @issue.tags.first
+        expect(@retrieved_issue['tags']).to eq [{'color' => tag.color, 'display_name' => tag.display_name}]
       end
     end
 

@@ -1,4 +1,4 @@
-<% field_row = render partial: 'textile/field', locals: { index: @index } %>
+<% field_row = render partial: 'field', locals: { index: @index } %>
 var fieldGroup = $('<%= escape_javascript(field_row) %>');
 $('[data-behavior~=textile-form-body]').append(fieldGroup);
 

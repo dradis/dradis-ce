@@ -53,6 +53,7 @@ describe 'Issues pages' do
 
         let(:action_path) { new_project_issue_path(current_project) }
         it_behaves_like 'a textile form view', Issue
+        it_behaves_like 'an editor that remembers what view you like'
 
         context 'submitting the form with valid information' do
           before do
@@ -154,6 +155,19 @@ describe 'Issues pages' do
             end
           end
         end
+
+        describe 'local caching' do
+          let(:add_tags) do
+            @tag_1 = current_project.tags.create(name: '!9467bd_critical')
+            @tag_2 = current_project.tags.create(name: '!d62728_high')
+          end
+
+          let(:model_path) { new_project_issue_path(current_project) }
+          let(:model_attributes) { [{ name: :text, value: 'New Issue' }] }
+          let(:model_attributes_for_template) { [{ name: :text, value: 'New Issue Template' }] }
+
+          include_examples 'a form with local auto save', Issue, :new
+        end
       end
 
       describe 'edit page', js: true do
@@ -162,6 +176,7 @@ describe 'Issues pages' do
         let(:action_path) { edit_project_issue_path(current_project, @issue) }
         let(:item) { @issue }
         it_behaves_like 'a textile form view', Issue
+        it_behaves_like 'an editor that remembers what view you like'
 
         before do
           issuelib = current_project.issue_library
@@ -201,7 +216,8 @@ describe 'Issues pages' do
             end
 
             submit_form
-            expect(@issue.reload.state).to eq(new_state)
+
+            expect(Issue.find(@issue.id).state).to eq(new_state)
           end
 
           let(:column) { :text }
@@ -225,6 +241,18 @@ describe 'Issues pages' do
             submit_form
             should have_selector '.alert.alert-error'
           end
+        end
+
+        describe 'local caching' do
+          let(:add_tags) do
+            @tag_1 = current_project.tags.create(name: '!9467bd_critical')
+            @tag_2 = current_project.tags.create(name: '!d62728_high')
+          end
+
+          let(:model_path) { edit_project_issue_path(current_project, @issue) }
+          let(:model_attributes) { [{ name: :text, value: 'Edit Issue' }] }
+
+          include_examples 'a form with local auto save', Issue, :edit
         end
       end
 
@@ -301,7 +329,10 @@ describe 'Issues pages' do
 
           let(:submit_form) do
             page.accept_confirm do
-              within('.note-text-inner') { click_link "Delete" }
+              within('.dots-container') do
+                find('.dots-dropdown').click
+                click_link 'Delete'
+              end
             end
             expect(page).to have_text "Issue deleted." # forces waiting
           end

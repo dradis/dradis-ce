@@ -45,8 +45,6 @@ document.addEventListener "turbolinks:load", ->
 
 
   # -------------------------------------------------------- Our jQuery plugins
-  # Activate jQuery.Textile
-  $('.textile').textile()
 
   # Activate jQuery.breadCrumbs
   $('.breadcrumb').breadcrumbs
@@ -112,14 +110,14 @@ document.addEventListener "turbolinks:load", ->
 
   # Search form
   $('[data-behavior~=form-search]').hover ->
-    $('[data-behavior~=search-query]').val('').focus() 
+    $('[data-behavior~=search-query]').val('').focus()
 
   submitSearch = ->
     if $('[data-behavior~=search-query]').val() != ''
       $('[data-behavior~=form-search]').submit()
-      $('[data-behavior~=search-query]').val('Searching...') 
+      $('[data-behavior~=search-query]').val('Searching...')
       return false
-    else 
+    else
       $('[data-behavior~=search-query]').effect( "shake", { direction: "left", times: 2, distance: 5}, 'fast' ).focus();
 
   $('[data-behavior~=search-button]').on 'click', (e)->
@@ -147,10 +145,6 @@ document.addEventListener "turbolinks:load", ->
   $('[data-behavior~=close-collapse]').on 'click', ->
     $('[data-behavior~=navbar-collapse]').collapse 'hide'
     return
-
-  # Activate Rich Toolbars for the editor, and comments
-  $('[data-behavior~=rich-toolbar]').each ->
-    new EditorToolbar($(this))
 
   # Scroll for more indicator functionality
   if $('[data-behavior~=restrict-height]').length
@@ -204,3 +198,6 @@ document.addEventListener "turbolinks:load", ->
     history.pushState({}, '', this.href);
     $(this.hash)[0].scrollIntoView behavior: 'smooth'
     return
+
+  $('[data-behavior~=local-auto-save]').each ->
+    new LocalAutoSave(this)
