@@ -29,16 +29,4 @@
 
   <%= render 'issues/form/tag_input', f: f %>
   <%= render 'issues/form/form_actions', f: f %>
-
-  <div class="form-actions">
-    <%= f.button :submit, nil, class: 'btn btn-primary' %> or
-    <%=
-      link_to 'Cancel',
-      @issue.new_record? ? project_issues_path(current_project) : [current_project, @issue],
-      class: 'cancel-link',
-      data: {
-        behavior: 'clear-local-auto-save'
-      }
-    %>
-  </div>
 <% end %>
