@@ -6,10 +6,6 @@
     this.$viewContent = $sidebar.siblings('[data-behavior~=view-content]');
     this.storageKey = $sidebar.data('storage-key');
 
-    // Must match $sidebarCollapsed and $sidebarExpanded values from tyluim/variables.scss
-    this.collapsedWidth = '6rem';
-    this.expandedWidth =  '15.5rem';
-
     this.init();
   }
 
@@ -34,7 +30,7 @@
       this.$sidebar
         .removeClass('sidebar-expanded')
         .addClass('sidebar-collapsed')
-      this.$viewContent.css({'left': this.collapsedWidth, 'width': 'calc(100vw - ' + this.collapsedWidth + ')'});
+      this.$viewContent.css({'left': this.$sidebar.css('width'), 'width': 'calc(100vw - ' + this.$sidebar.css('width') + ')'});
 
       this.changeState(false);
     },
@@ -46,7 +42,7 @@
       this.$sidebar
         .removeClass('sidebar-collapsed')
         .addClass('sidebar-expanded')
-      this.$viewContent.css({'left': this.expandedWidth, 'width': 'calc(100vw - ' + this.expandedWidth + ')'});
+      this.$viewContent.css({'left': this.$sidebar.css('width'), 'width': 'calc(100vw - ' + this.$sidebar.css('width') + ')'});
 
       this.changeState(true);
     },
