@@ -3,7 +3,7 @@
   height: $navbarHeight;
   border-bottom: 1px solid $borderColor;
   z-index: 3;
-  left: initial;
+  left: 0;
 
   .navbar-brand {
     color: $defaultText;
