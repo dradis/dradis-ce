@@ -1,5 +1,8 @@
 v3.#.# (MMM’YY)
-  * Update main sidebar
+  * Main sidebar improvements:
+    - Labels added under icons
+    - Nodes can be added in collapsed state
+    - Removed animations and transitions while expanding and collapsing 
   * Upgraded gems: rack, sanitize
   * Bugs fixed:
     - Comments:
