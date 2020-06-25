@@ -17,9 +17,9 @@
       var that = this;
 
       $('[data-behavior~=sidebar-toggle]').on('click', function(e) {
-        if ((that.isSidebarOpen() && $(this).is('[data-behavior~=open-only]')) || ($(e.target).data('behavior') == 'add-node')) return;
-
-        that.toggle(!that.isSidebarOpen());
+        if (!((that.isSidebarOpen() && $(this).is('[data-behavior~=open-only]')) || ($(e.target).is('[data-behavior~=add-node]')))) {
+          that.toggle(!that.isSidebarOpen());
+        }
       });
     },
     changeState: function(state) {
