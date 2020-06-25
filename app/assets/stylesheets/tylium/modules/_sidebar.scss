@@ -112,7 +112,6 @@
 
         i {
           font-size: 1rem;
-          margin-left: 0.5rem;
         }
       }
 
@@ -215,6 +214,10 @@
       &:hover {
         background-color: $sidebarActiveColor;
         color: $white;
+      }
+
+      .sidebar-link-label {
+        margin-right: 0.5rem;
       }
     }
   }
