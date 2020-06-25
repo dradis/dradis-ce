@@ -1,9 +1,7 @@
 (function($, window) {
   function Sidebar($sidebar) {
     this.$sidebar = $sidebar;
-
-    this.$navbar = $sidebar.siblings('[data-behavior~=navbar]');
-    this.$navbarBrand = this.$navbar.find('[data-behavior~=navbar-brand]');
+    this.$navbarBrand = $sidebar.siblings('[data-behavior~=navbar]').find('[data-behavior~=navbar-brand]');
     this.$viewContent = $sidebar.siblings('[data-behavior~=view-content]');
     this.storageKey = $sidebar.data('storage-key');
 
