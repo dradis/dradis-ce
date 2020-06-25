@@ -33,9 +33,12 @@ document.addEventListener("turbolinks:load", function() {
       }
     });
 
-    $('[data-behavior~=integration-select]').change(function() {
-      var selectedValue = $(this).find('option:selected').val().toLowerCase()
-      if (selectedValue.match(/(package|template)/)) {
+    var toggleStateDropdown = function(){
+      var selectedValue = $('[data-behavior~=integration-select]').find('option:selected').val();
+      var packagePlugin = 'Upload::Package';
+      var templatePlugin = 'Upload::Template';
+
+      if (selectedValue.includes(packagePlugin) || selectedValue.includes(templatePlugin)) {
         $('[data-tool-type~=third-party]').addClass('d-none');
         $('[data-tool-type~=dradis]').removeClass('d-none');
         $('[data-behavior~=state-select]').addClass('disabled').prop('disabled', 'disabled');
@@ -46,7 +49,10 @@ document.addEventListener("turbolinks:load", function() {
         $('[data-tool-type~=dradis]').addClass('d-none');
         $('[data-behavior~=state-select]').removeClass('disabled').prop('disabled', false);
       }
-    });
+    }
+
+    toggleStateDropdown();
+    $('[data-behavior~=integration-select]').change(toggleStateDropdown);
 
     return $(':file').change(function() {
       var fileName;
