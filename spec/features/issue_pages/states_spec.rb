@@ -31,8 +31,8 @@ describe 'issue pages' do
 
       find('td', text: 'Published', match: :first)
 
-      expect(@issue1.reload.state).to eq('published')
-      expect(@issue2.reload.state).to eq('published')
+      expect(Issue.find(@issue1.id).reload.state).to eq('published')
+      expect(Issue.find(@issue2.id).reload.state).to eq('published')
     end
   end
 end
