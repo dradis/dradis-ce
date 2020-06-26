@@ -1,5 +1,6 @@
 class Issue < Note
   include Commentable
+  include HasStates
   include Subscribable
   include Taggable
 
@@ -75,6 +76,15 @@ class Issue < Note
       [issue.fields[field], issue]
     end
     Hash[issues_map]
+  end
+
+  # Dictionary for using the display names of the Issue states
+  def self.state_names
+    state_names = Issue.states.keys.map do |state|
+      state_name = state == 'review' ? 'Ready for Review' : state.capitalize
+      [state, state_name]
+    end
+    Hash[state_names].with_indifferent_access
   end
 
   # -- Instance Methods -----------------------------------------------------

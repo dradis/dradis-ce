@@ -4,24 +4,11 @@
 # elements in the page in an unobtrusive way.
 #
 # The current list of plugins:
-#   * jQuery.fileUpload  - handles attachment uploads (gem: jquery-fileupload-rails)
 #   * jQuery.Textile     - handles the note editor (/vendor/)
 
 document.addEventListener "turbolinks:load", ->
-  # --------------------------------------------------- Standard jQuery plugins
-  # Activate jQuery.fileUpload
-  $('.jquery-upload').fileupload
-    dropZone: $('#drop-zone')
-    destroy: (e, data) ->
-      if confirm('Are you sure?\n\nProceeding will delete this attachment from the associated node.')
-        $.blueimp.fileupload.prototype.options.destroy.call(this, e, data)
 
-    paste: (e, data)->
-      $.each data.files, (index, file) ->
-        filename = prompt('Please provide a filename for the pasted image', 'screenshot-XX.png') || 'unnamed.png'
-        # Clone file object, edit, then reapply to the data object
-        newFile = new File [file], filename, { type: file.type }
-        data.files[index] = newFile
+  # --------------------------------------------------- Standard jQuery plugins
 
   # Initialize clipboard.js:
   clipboard = new Clipboard('.js-attachment-url-copy')
@@ -58,8 +45,6 @@ document.addEventListener "turbolinks:load", ->
 
 
   # -------------------------------------------------------- Our jQuery plugins
-  # Activate jQuery.Textile
-  $('.textile').textile()
 
   # Activate jQuery.breadCrumbs
   $('.breadcrumb').breadcrumbs
@@ -125,14 +110,14 @@ document.addEventListener "turbolinks:load", ->
 
   # Search form
   $('[data-behavior~=form-search]').hover ->
-    $('[data-behavior~=search-query]').val('').focus() 
+    $('[data-behavior~=search-query]').val('').focus()
 
   submitSearch = ->
     if $('[data-behavior~=search-query]').val() != ''
       $('[data-behavior~=form-search]').submit()
-      $('[data-behavior~=search-query]').val('Searching...') 
+      $('[data-behavior~=search-query]').val('Searching...')
       return false
-    else 
+    else
       $('[data-behavior~=search-query]').effect( "shake", { direction: "left", times: 2, distance: 5}, 'fast' ).focus();
 
   $('[data-behavior~=search-button]').on 'click', (e)->
@@ -160,10 +145,6 @@ document.addEventListener "turbolinks:load", ->
   $('[data-behavior~=close-collapse]').on 'click', ->
     $('[data-behavior~=navbar-collapse]').collapse 'hide'
     return
-
-  # Activate Rich Toolbars for the editor, and comments
-  $('[data-behavior~=rich-toolbar]').each ->
-    new EditorToolbar($(this))
 
   # Scroll for more indicator functionality
   if $('[data-behavior~=restrict-height]').length
@@ -197,7 +178,26 @@ document.addEventListener "turbolinks:load", ->
       else
         $(this).find($('[data-behavior~=scroll-wrapper]')).removeClass('hidden');
 
-  # Smooth Scrolling
-  $('[data-behavior~=smooth-scroll]').on 'click', ->
-    target = $(this).data('target');
-    $('[data-id~=' + target + ']')[0].scrollIntoView({behavior: "smooth"});
+  # Disable turbolinks for on-page anchor links (prevents page from jumping to top and allows smooth-scrolling)
+  if $('a[href^="#"]').length
+    $('a[href^="#"]').each ->
+      if !$(this).data('turbolinks')
+        $(this).attr 'data-turbolinks', 'false'
+      return
+
+  # Smooth Scrolling - scroll to element on page load if hash present in current browser url
+  if window.location.hash
+    target = window.location.hash
+    $(target)[0].scrollIntoView behavior: 'smooth'
+
+  # Smooth Scrolling - scroll to element on click
+  # Note: Parent element of anchor links needs: data-attribute="smooth-scroll-nav".
+  #       This prevents unwanted smooth scrolling when switching tabs, etc.
+  $(document).on 'click', '[data-behavior~=smooth-scroll-nav] a[href^="#"]', (event) ->
+    event.preventDefault()
+    history.pushState({}, '', this.href);
+    $(this.hash)[0].scrollIntoView behavior: 'smooth'
+    return
+
+  $('[data-behavior~=local-auto-save]').each ->
+    new LocalAutoSave(this)

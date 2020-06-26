@@ -24,7 +24,9 @@ body.styles_tylium {
       font-size: 0.8rem;
 
       code {
+        background-color: transparent;
         color: #FFF;
+        padding: 0;
 
         .an {
           color: #9CDCFE;
@@ -46,6 +48,16 @@ body.styles_tylium {
   }
 
   .style-example {
+
+    .editor-field {
+      height: initial;
+      width: 50%;
+
+      textarea {
+        min-height: 7.5rem;
+        resize: none;
+      }
+    }
     
     .fw4 {
       font-weight: 400;
@@ -65,6 +77,10 @@ body.styles_tylium {
           display: table-cell !important;
         }
       }
+    }
+
+    ul {
+      list-style-type: disc;
     }
   }
 

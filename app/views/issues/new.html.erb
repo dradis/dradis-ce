@@ -1,5 +1,14 @@
 <% content_for :title, 'Add new issue' %>
 
+<% content_for :breadcrumbs do %>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to 'All issues', project_issues_path(current_project) %></li>
+      <li class="breadcrumb-item active">New Issue</li>
+    </ol>
+  </nav>
+<% end %>
+
 <% content_for :sidebar do %>
   <%= render 'sidebar'%>
 <% end %>
@@ -8,7 +17,7 @@
   <div id="issues_editor">
     <div class="note-text-inner">
       <h4 class="header-underline">Add new issue</h4>
-      <%= render 'form' %>
+      <%= render 'issues/form/form' %>
     </div>
   </div>
 </div>

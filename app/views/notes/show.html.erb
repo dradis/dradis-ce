@@ -4,6 +4,30 @@
   <%= render "projects/conflicting_revisions", conflicts: @conflicting_revisions, record: @note %>
 <% end %>
 
+<% content_for :breadcrumbs do %>
+  <nav class="dots-container">
+    <%= render partial: 'breadcrumbs' %>
+    <ul class="nav">
+      <li class="dropdown dots-dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i></a>
+        <div class="dropdown-menu">
+          <%= link_to edit_project_node_note_path(@node.project, @node, @note), class: 'dropdown-item' do %>
+            <i class="fa fa-pencil fa-fw"></i> Edit
+          <% end %>
+          <%= link_to [current_project, @node, @note],
+            class: 'dropdown-item text-error-hover',
+            data: { confirm: "Are you sure?\n\nProceeding will delete this note from the associated node." },
+            method: :delete do %>
+            <i class="fa fa-trash fa-fw"></i> Delete
+          <% end %>
+          <a href="#modal_move_note" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-mail-forward fa-fw"></i> Move</a>
+          <%= render partial: 'subscriptions/actions', locals: { subscribable: @note, dots_menu: true } %>
+        </div>
+      </li>
+    </ul>
+  </nav>
+<% end %>
+
 <div class="row m-0">
   <ul class="tabs-container nav nav-tabs main-tabs w-100">
     <li class="nav-item"><a class="nav-link active" href="#info-tab" data-toggle="tab"><i class="fa fa-file-text"></i> Information</a></li>
@@ -18,23 +42,7 @@
         <div class="tab-pane active" id="info-tab" data-behavior="subscription-actions" data-subscribed="<%= !@subscription.nil? %>">
           <% cache ['note-information-tab', @note] do %>
             <div id="<%= dom_id(@note) %>" class="note-text-inner">
-              <h4 class="header-underline">Content for this note -
-                <span class="actions">
-                  <%= link_to edit_project_node_note_path(@node.project, @node, @note) do %>
-                    <i class="fa fa-pencil"></i> Edit
-                  <% end %> -
-                  <%= link_to [current_project, @node, @note],
-                        class: 'text-error-hover',
-                        data: { confirm: "Are you sure?\n\nProceeding will delete this note from the associated node." },
-                        method: :delete do %>
-                    <i class="fa fa-trash"></i> Delete
-                  <% end %> -
-                  <a href="#modal_move_note" tabindex="-1" data-toggle="modal">
-                    <i class="fa fa-mail-forward"></i> Move
-                  </a> -
-                  <%= render 'subscriptions/actions', subscribable: @note %>
-                </span>
-              </h4>
+              <h4 class="header-underline">Content for this note</h4>
               <div class="content-textile">
                 <%= markup(@note.text) %>
               </div>

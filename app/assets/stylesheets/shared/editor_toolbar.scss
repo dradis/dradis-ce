@@ -9,14 +9,14 @@
     border-radius: 20px;
     box-shadow: 0 20px 30px 0 rgba(33,55,74,0.1);
     display: inline-flex;
-    right: -0.25rem;
     opacity: 0;
     padding: 0.25rem;
     position: absolute;
-    top: -3.4rem;
+    right: 0;
+    top: -3.3rem;
     transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
     visibility: hidden;
-    z-index: 1050;
+    z-index: 999;
 
     &:after {
       border: 0.5rem solid;
@@ -48,10 +48,11 @@
       color: $defaultText;
       cursor: pointer;
       display: flex;
+      height: 2rem;
       justify-content: center;
-      width: 2rem;
       padding: 0.5rem;
       transition: all 0.2s ease-in-out;
+      width: 2rem;
 
       &.disabled {
         pointer-events: none;
@@ -64,12 +65,9 @@
     }
   }
 
-  .editor-toolbar:hover,
-  input[type='text']:focus + .editor-toolbar,
-  textarea:focus + .editor-toolbar {
+  .editor-toolbar:hover {
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.3s 0.2s ease-in-out;
   }
 
   &.sticky-toolbar {
@@ -79,10 +77,11 @@
       border-bottom: 1px solid $borderColor;
       border-radius: 0px;
       box-shadow: none;
-      flex-wrap: wrap;
-      left: 0;
+      display: block;
       margin: 0 1px;
-      right: 0;
+      position: sticky;
+      text-align: center;
+      top: 0;
 
       &:after,
       &:before {
@@ -90,19 +89,16 @@
       }
 
       .editor-btn {
+        display: inline-flex;
+      }
 
-        &:first-child {
-          margin-left: auto;
-        }
-  
-        &:last-child {
-          margin-right: auto;
-        }
+      &+ .textarea-container {
+        margin-top: -42px !important;
       }
     }
   }
 
-  textarea {
+  .textarea-container {
     height: 100%;
   }
 }
