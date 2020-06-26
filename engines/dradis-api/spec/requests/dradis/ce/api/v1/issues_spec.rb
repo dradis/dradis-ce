@@ -85,7 +85,7 @@ describe "Issues API" do
       end
 
       it 'includes the issue state' do
-        expect(@retrieved_issue['state']).to eq(@issue.state)
+        expect(@retrieved_issue['state']).to eq(@issue.state.to_s)
       end
 
       it 'includes tags' do
