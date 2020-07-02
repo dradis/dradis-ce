@@ -45,17 +45,29 @@
           border: 1px solid $borderColor;
 
           .nav-item {
+            margin: 0;
             width: 100%;
 
             .nav-link {
-              padding: .25rem 1.5rem;
-              font-size: 0.9rem;
               color: $linkColor;
+              font-size: 0.9rem;
+              padding: .25rem 1rem;
               transition: color 0s;
+
+              .fa {
+                width: 1.2em;
+              }
     
               &:hover {
                 background-color: $primaryColor;
-                color: white;
+                color: $white;
+              }
+            }
+
+            &.show {
+              .nav-link {
+                background-color: $primaryColor;
+                color: $white;
               }
             }
           }
@@ -82,8 +94,10 @@
         padding: 0.5rem 0.75rem;
         width: 100%;
         
+        &:focus,
         &:hover {
           color: $linkColorHover;
+          outline: none;
         }
       }
 

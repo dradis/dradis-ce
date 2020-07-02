@@ -1,4 +1,4 @@
-.navbar-nav {
+.navbar-collapse {
   .form-search {
     height: 40px;
     margin-left: 0.25rem;
@@ -36,7 +36,7 @@
       }
 
       .search-query {
-        border-bottom: 1px solid $linkColor;
+        border-bottom-color: $linkColor;
         opacity: 1;
         right: 1.25rem;
         width: 9rem;
@@ -45,6 +45,7 @@
 
     .search-query {
       border: 0;
+      border-bottom: 1px solid transparent;
       color: $defaultText;
       height: 38px;
       opacity: 0;
@@ -59,6 +60,34 @@
         right 0.4s ease-in-out, 
         border-bottom 0.4s 0.25s ease-in-out;
       width: 0;
+    }
+  }
+
+  &.show {
+    .form-search {
+      margin: 0 0 0.5rem;
+      width: 100%;
+
+      .btn {
+        left: 0.25rem;
+        right: initial;
+      }
+
+      &:hover {
+        .btn {
+          background: initial;
+          color: $linkColor;
+        }
+      }
+
+      .search-query {
+        border-bottom: 1px solid $linkColor;
+        margin: 0 0.5rem;
+        opacity: 1;
+        padding: 0 0.5rem 0 2rem;
+        position: initial;
+        width: 150px;
+      }
     }
   }
 }
