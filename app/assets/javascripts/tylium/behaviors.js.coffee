@@ -110,7 +110,7 @@ document.addEventListener "turbolinks:load", ->
 
   # Search form
   $('[data-behavior~=form-search]').hover ->
-    $('[data-behavior~=search-query]').val('').focus()
+    $('[data-behavior~=search-query]').focus()
 
   submitSearch = ->
     if $('[data-behavior~=search-query]').val() != ''
