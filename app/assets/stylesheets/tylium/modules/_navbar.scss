@@ -5,6 +5,7 @@
   z-index: 3;
   transition: left 0.5s ease-in-out;
   left: initial;
+  padding-right: 0.5rem;
 
   .navbar-brand {
     color: $defaultText;
@@ -115,7 +116,7 @@
       display: flex;
       font-size: 0.9rem;
       justify-content: center;
-      margin: 0 -0.15rem;
+      margin: 0 -0.2rem;
       transition: all 0.2s ease-in-out;
       white-space: nowrap;
       z-index: 2;
