@@ -63,30 +63,32 @@
     }
   }
 
-  &.show {
-    .form-search {
-      margin: 0 0 0.5rem;
-      width: 100%;
+  @media (max-width: 991px) {
+    &.show {
+      .form-search {
+        margin: 0 0 0.5rem;
+        width: 100%;
 
-      .btn {
-        left: 0.25rem;
-        right: initial;
-      }
-
-      &:hover {
         .btn {
-          background: initial;
-          color: $linkColor;
+          left: 0.25rem;
+          right: initial;
         }
-      }
 
-      .search-query {
-        border-bottom: 1px solid $linkColor;
-        margin: 0 0.5rem;
-        opacity: 1;
-        padding: 0 0.5rem 0 2rem;
-        position: initial;
-        width: 150px;
+        &:hover {
+          .btn {
+            background: initial;
+            color: $linkColor;
+          }
+        }
+
+        .search-query {
+          border-bottom: 1px solid $linkColor;
+          margin: 0 0.5rem;
+          opacity: 1;
+          padding: 0 0.5rem 0 2rem;
+          position: initial;
+          width: 160px;
+        }
       }
     }
   }

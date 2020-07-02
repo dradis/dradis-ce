@@ -1,10 +1,11 @@
 document.addEventListener 'turbolinks:load', ->
   $dropdown = $('[data-behavior~=notifications-dropdown]')
 
-  if $dropdown.length
-    $dropdown.click (e) ->
-      e.preventDefault()
+  $dropdown.click (e) ->
 
+    if $('[data-behavior~=navbar-collapse]').not('.show').length
+      e.preventDefault()
+      
       $.ajax
         url: $dropdown.attr('href') + '.js'
         dataType: 'script'
@@ -16,3 +17,5 @@ document.addEventListener 'turbolinks:load', ->
           else
             # Don't send out ajax when hiding the dropdown
             return false
+    else
+      $(this).removeAttr('data-toggle')

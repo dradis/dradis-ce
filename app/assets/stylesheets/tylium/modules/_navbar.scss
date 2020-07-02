@@ -48,6 +48,17 @@
             margin: 0;
             width: 100%;
 
+            .dropdown-menu {
+              border: none;
+              border-bottom: 1px solid $borderColor;
+              border-radius: 0;
+              position: initial;
+
+              .dropdown-item {
+                padding-right: 1rem
+              }
+            }
+
             .nav-link {
               color: $linkColor;
               font-size: 0.9rem;

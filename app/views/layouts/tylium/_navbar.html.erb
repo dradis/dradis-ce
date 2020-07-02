@@ -23,8 +23,8 @@
             <%= link_to main_app.project_configurations_path(current_project), class: 'nav-link', title: 'Configuration' do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %>
           </li>
           <li class="nav-item notifications dropdown">
-            <%= link_to main_app.project_notifications_path(current_project), class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown',  behavior: 'notifications-dropdown close-collapse' }, role: 'button', title: 'Notifications' do %>
-              <i class="fa fa-bell fa-lg"></i><i class="notifications-dot d-none" data-behavior="notifications-dot"></i> Notifications
+            <%= link_to main_app.project_notifications_path(current_project), class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown', behavior: 'notifications-dropdown close-collapse' }, role: 'button', title: 'Notifications' do %>
+              <i class="notifications-bell fa fa-bell fa-lg"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i> Notifications
             <% end %>
             <div class="dropdown-menu dropdown-menu-right" data-url="<%= main_app.project_notifications_path(current_project) %>"></div>
           </li>
