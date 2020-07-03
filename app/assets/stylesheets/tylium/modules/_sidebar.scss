@@ -107,11 +107,17 @@
         }
       }
 
-      .add-node {
-        margin-left: auto;
+      .sidebar-link-label-container {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
 
-        i {
-          font-size: 1rem;
+        .add-node {
+          margin-left: auto;
+  
+          i {
+            font-size: 1rem;
+          }
         }
       }
 
@@ -207,17 +213,17 @@
       cursor: pointer;
       transition: all 0.2s ease-in-out;
       
-      .add-node i {
-        font-size: 0.9rem;
+      .sidebar-link-label-container {
+        justify-content: center;
+        
+        .add-node {
+          display: none;
+        }
       }
 
       &:hover {
         background-color: $sidebarActiveColor;
         color: $white;
-      }
-
-      .sidebar-link-label {
-        margin-right: 0.5rem;
       }
     }
   }
