@@ -131,6 +131,10 @@
     margin-right: 0.2rem;
     width: 40px;
 
+    &[aria-label]::after {
+      content: initial;
+    }
+
     &.collapsed {
       background-color: transparent;
 
