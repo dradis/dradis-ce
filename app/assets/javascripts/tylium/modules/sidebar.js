@@ -15,7 +15,7 @@
       var that = this;
 
       $('[data-behavior~=sidebar-toggle]').on('click', function(e) {
-        if (!((that.isSidebarOpen() && $(this).is('[data-behavior~=open-only]')) || ($(e.target).is('[data-behavior~=add-node]')))) {
+        if (!(that.isSidebarOpen() && $(this).is('[data-behavior~=open-only]'))) {
           that.toggle(!that.isSidebarOpen());
         }
       });
