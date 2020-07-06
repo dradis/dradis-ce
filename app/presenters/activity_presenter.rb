@@ -2,7 +2,7 @@ class ActivityPresenter < BasePresenter
   presents :activity
 
   def avatar_with_link(size)
-    h.link_to(avatar_image(User.new(email: activity.user), size: size), 'javascript:void(0)')
+    h.link_to(avatar_image(activity.user, size: size), 'javascript:void(0)')
   end
 
   def comment_path(anchor: false)
@@ -86,7 +86,7 @@ class ActivityPresenter < BasePresenter
   def linked_email
     if activity.user
       # h.link_to(activity.user.email, 'javascript:void(0);')
-      h.content_tag :strong, activity.user
+      h.content_tag :strong, activity.user.email
     else
       'a user who has since been deleted'
     end

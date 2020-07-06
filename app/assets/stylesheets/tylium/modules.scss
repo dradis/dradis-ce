@@ -13,14 +13,43 @@
 @import "tylium/modules/notifications";
 @import "tylium/modules/nodes";
 @import "tylium/modules/projects";
+@import "tylium/modules/restrict_height";
 @import "tylium/modules/search";
 @import "tylium/modules/secondary_sidebar";
 @import "tylium/modules/sidebar";
 @import "tylium/modules/styles";
-@import "tylium/modules/textile";
 @import "tylium/modules/tour";
 @import "tylium/modules/uploads";
 @import "tylium/modules/versions";
+
+[aria-label] {
+  position: relative;
+  
+  &:after {
+    background-color: $darkColor;
+    border-radius: 5px;
+    box-shadow: 1px 2px 6px rgba(0,0,0,0.5);
+    color: $white;
+    content: attr(aria-label);
+    font-size: .7em;
+    line-height: 15px;
+    opacity: 0;
+    padding: 0.3rem 0.5rem;
+    pointer-events: none;
+    position: absolute;
+    right: 50%;
+    text-transform: capitalize;
+    top: 110%;
+    transform: translateX(50%);
+    white-space: nowrap;
+    z-index: 1051;
+  }
+  
+  &:hover:after {
+    opacity: 0.9;
+    transition: all 0.3s 0.3s ease-in-out;
+  }
+}
 
 .accordion-group {
   margin-bottom: 5px;
@@ -41,6 +70,18 @@
   margin: 10px 0;
 }
 
+.author-info {
+  display: flex;
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  width: 100%;
+  border-top: 1px solid $borderColor;
+}
+
+.autofocus {
+  opacity: 0;
+}
+
 .column-actions a {
   white-space: nowrap;
 }
@@ -59,6 +100,19 @@
   ul {
     margin-top: 1em;
   }
+}
+
+.divider {
+  border-top: 1px solid $borderColor;
+  height: 0;
+  margin: .25rem 0;
+}
+
+.divider-vertical {
+  border-right: 1px solid $borderColor;
+  display: initial;
+  margin: 0.25rem;
+  width: 0;
 }
 
 .form-actions {
@@ -152,75 +206,6 @@ pre {
   border-radius: 5px;
 }
 
-.restrict-height {
-  overflow: auto;
-
-  &.full-height {
-    max-height: calc(100vh - 10rem);
-  }
-
-  &.half-height {
-    max-height: calc(50vh - 4rem);
-  }
-
-  &.quarter-height {
-    max-height: calc(25vh - 3.4rem);
-  }
-
-  .scroll-more-wrapper {
-    position: sticky;
-    width: 100%;
-    opacity: 1;
-    bottom: -2rem;
-    left: 0;
-    transition: all 0.3s ease-in-out;
-    visibility: initial;
-
-    &.hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    .gradient {
-      position: absolute;
-      height: 6rem;
-      width: 100%;
-      bottom: 0;
-      background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.75) 50%, rgba(255,255,255,1) 100%);
-    }
-
-    .line {
-      position: absolute;
-      width: 100%;
-      left: 0;
-      bottom: 2rem;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .scroll-more {
-      position: absolute;
-      bottom: 1rem;
-      left: calc(50% - 3.875rem);
-      background: #fff;
-      border: 1px solid #ddd;
-      padding: 0.125rem 1rem;
-      z-index: 2;
-      cursor: default;
-    }
-  }
-}
-
-// Firefox Fixes //
-@-moz-document url-prefix() {
-
-  // this fixes ignored padding when parent is scrollable.
-  .restrict-height::after {
-    content: "";
-    height: 2rem;
-    display: block;
-  }
-}
-
 .tabs-container {
   margin: 1rem $mainContentMargin -1px $mainContentMargin;
   padding-left: 0.25rem;
@@ -267,6 +252,12 @@ table {
     th {
       border: none;
     }
+  }
+}
+
+time {
+  &[aria-label]:after {
+    display: none;
   }
 }
 

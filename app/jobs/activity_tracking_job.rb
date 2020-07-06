@@ -9,7 +9,7 @@ class ActivityTrackingJob < ApplicationJob
       action:    action.to_s,
       trackable_id: trackable_id,
       trackable_type: trackable_type,
-      user:      user.email
+      user:      user
     )
 
     ActiveSupport::Notifications.instrument(

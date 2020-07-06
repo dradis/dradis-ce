@@ -19,32 +19,25 @@
   }
 }
 
-.back-fade {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  background: #000;
-  z-index: 4;
-  transition: visibility 0.5s ease-in-out, opacity 0.5s ease-in-out;
-
-  &.faded {
-    opacity: 0.7;
-    visibility: initial;
-  }
-
-  &.not-faded {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-
 .breadcrumb {
+  flex-wrap: nowrap;
   margin-bottom: 0;
   padding-left: $mainContentPadding;
+  white-space: nowrap;
+  width: calc(100% - 35px);
 
-  .breadcrumb-item + .breadcrumb-item::before {
-    font-family: "fontawesome";
-    content: "\f105";
+  .breadcrumb-item {
+    white-space: nowrap;
+
+    &+ .breadcrumb-item::before {
+      font-family: "fontawesome";
+      content: "\f105";
+    }
+
+    &:last-of-type {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }
 
@@ -57,12 +50,11 @@
   background: $secondaryBgColor;
   position: fixed;
   height: calc(100vh - 60px);
-  width: calc(100vw - 43px);
   min-width: 570px;
   top: $navbarHeight;
-  left: $sidebarCollapsed;
   overflow: auto;
   font-size: 0.9rem;
+  transition: all 0.5s ease-in-out;
 
   .content-container {
     position: relative;

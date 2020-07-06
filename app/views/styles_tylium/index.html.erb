@@ -5,12 +5,13 @@
 
     <div class="content-container">
       <h1 class="text-center mb-4">Tylium Style Guide [ WIP ]</h1>
-      <p>Welcome to the Tylium style guide, here you will see all the major style components that we use in the Tylium layout.</p>
-      <p class="mb-0">If you find something you would like to implement in the view you are working on, you can simply press the <i class="fa fa-code" style="font-weight: bold;"></i> button to reveal the code structure including all the element tags, classes, data-attributes etc.</p>
+      <p>Welcome to the Tylium style guide, here you will see all the major custom style components that we use in the Tylium layout.</p>
+      <p>If you find something you would like to implement in the view you are working on, you can simply press the <i class="fa fa-code" style="font-weight: bold;"></i> button to reveal the code structure including all the element tags, classes, data-attributes etc.</p>
+      <p>Tylium uses Bootstrap 4, please refer to <a href="https://getbootstrap.com/docs/4.0/getting-started/introduction/" target="_blank">the official documentation</a> for standard bootstrap classes and element structure.</p>
     </div>
 
     <div class="content-container">
-      <div class="scroll-offset" data-id="container"></div>
+      <div class="scroll-offset" id="container"></div>
       <div class="style-header">
         <h4 class="header-underline">Content Container</h4>
         <button class="reveal-code" data-toggle="collapse" data-target="#container-code"><i class="fa fa-code"></i></button>
@@ -41,7 +42,7 @@
         </li>
     </ul>
     <div class="content-container mt-0">
-      <div class="scroll-offset" data-id="tabs" style="top: -4rem;"></div>
+      <div class="scroll-offset" id="tabs" style="top: -4rem;"></div>
 
       <div class="style-header">
         <h4 class="header-underline">Content Container with Tabs</h4>
@@ -51,13 +52,13 @@
       <div class="style-example">
         <div class="tab-content mt-0">
           <div id="tab1" class="tab-pane fade">
-            <p class="mb-0">Tab 1 Content</p>
+            <p>Tab 1 Content</p>
           </div>
           <div id="tab2" class="tab-pane fade active show">
-            <p class="mb-0">Tab 2 Content</p>
+            <p>Tab 2 Content</p>
           </div>
           <div id="tab3" class="tab-pane fade">
-            <p class="mb-0">Tab 3 Content</p>
+            <p>Tab 3 Content</p>
           </div>
         </div>
       </div>
@@ -94,7 +95,7 @@
     </div>
 
     <div class="content-container">
-      <div class="scroll-offset" data-id="dots"></div>
+      <div class="scroll-offset" id="dots"></div>
       <div class="style-header">
         <h4 class="header-underline">Dots Menu</h4>
         <button class="reveal-code" data-toggle="collapse" data-target="#dots-code"><i class="fa fa-code"></i></button>
@@ -155,7 +156,7 @@
     </div>
 
     <div class="content-container">
-      <div class="scroll-offset" data-id="modals"></div>
+      <div class="scroll-offset" id="modals"></div>
       <div class="style-header">
         <h4 class="header-underline">Modals</h4>
         <button class="reveal-code" data-toggle="collapse" data-target="#modals-code"><i class="fa fa-code"></i></button>
@@ -189,6 +190,31 @@
     <span class="et">&lt;/div></span>
   <span class="et">&lt;/div></span>
 <span class="et">&lt;/div></span></code>
+        </pre>
+      </div>
+    </div>
+
+    <div class="content-container">
+      <div class="scroll-offset" id="toolbar"></div>
+      <div class="style-header">
+        <h4 class="header-underline">Rich Toolbar</h4>
+        <button class="reveal-code" data-toggle="collapse" data-target="#toolbar-code"><i class="fa fa-code"></i></button>
+      </div>
+      <div class="style-example">
+        <p>Click the below textarea to reveal the rich toolbar.</p>
+        <div class="d-flex justify-content-center mb-3">
+          <textarea class="form-control" data-behavior="rich-toolbar" data-rich-toolbar="block-code bold italic link list-ol list-ul table" placeholder="This is an auto-expanding textarea with a rich toolbar"></textarea>
+        </div>
+        <p>Configuration options:</p>
+        <ul>
+          <li><em>data-rich-toolbar: block-code | bold | field<sup>1</sup> | highlight<sup>2</sup> | inline-code<sup>2</sup> | italic | link | list-ol | list-ul | quote<sup>2</sup> | table</em></li>
+        </ul>
+        <span><sup>1</sup> omitted from this example</span><span class="pl-3"><sup>2</sup> future feature</span>
+      </div>
+      
+      <div class="style-code-wrapper collapse" id="toolbar-code">
+        <pre class="style-code">
+<code><span class="et">&lt;textarea</span><span class="an"> class=</span><span class="av">"form-control"</span><span class="an"> data-behavior=</span><span class="av">"rich-toolbar"</span><span class="an"> data-rich-toolbar=</span><span class="av">"block-code bold italic link list-ol list-ul table"</span><span class="et">></span><span class="et">&lt;/textarea></span></code>
         </pre>
       </div>
     </div>
@@ -263,7 +289,7 @@
 
     <div class="content-container p-0">
       <div class="content-container m-0 restrict-height half-height" data-behavior="restrict-height" style="border: none;">
-        <div class="scroll-offset" data-id="scroll"></div>
+        <div class="scroll-offset" id="scroll"></div>
         <div class="style-header">
           <h4 class="header-underline">Scroll-for-more Indicator</h4>
           <button class="reveal-code" data-toggle="collapse" data-target="#scroll-code"><i class="fa fa-code"></i></button>
@@ -327,7 +353,7 @@
     </div>
 
     <div class="content-container">
-      <div class="scroll-offset" data-id="tables"></div>
+      <div class="scroll-offset" id="tables"></div>
       <div class="style-header">
         <h4 class="header-underline">Tables</h4>
         <button class="reveal-code" data-toggle="collapse" data-target="#tables-code"><i class="fa fa-code"></i></button>
@@ -423,7 +449,7 @@
     </div>
 
     <div class="content-container">
-      <div class="scroll-offset" data-id="input"></div>
+      <div class="scroll-offset" id="input"></div>
       <div class="style-header">
         <h4 class="header-underline">Text Input with Inset Button</h4>
         <button class="reveal-code" data-toggle="collapse" data-target="#input-code"><i class="fa fa-code"></i></button>
@@ -447,6 +473,26 @@
   <span class="et">&lt;input</span><span class="an"> type=</span><span class="av">"text"</span><span class="an"> class=</span><span class="av">"form-control"</span><span class="an"> placeholder=</span><span class="av">"Placeholder Text..."</span><span class="et">></span>
   <span class="et">&lt;button</span><span class="an"> type=</span><span class="av">"submit"</span><span class="an"> class=</span><span class="av">"btn btn-primary"</span><span class="et">></span>Button<span class="et">&lt;/button></span>
 <span class="et">&lt;/div</span><span class="et">></span></code>
+        </pre>
+      </div>
+    </div>
+
+    <div class="content-container">
+      <div class="scroll-offset" id="tooltips"></div>
+      <div class="style-header">
+        <h4 class="header-underline">Tooltips using aria-labels</h4>
+        <button class="reveal-code" data-toggle="collapse" data-target="#tooltips-code"><i class="fa fa-code"></i></button>
+      </div>
+      <div class="style-example">
+        <p>Hover over the below button to see a tooltip using the aria-label attribute. We use aria-labels as tooltips as they are easily customizable and do not require any kind of plugin's or 3rd party code to function. This example uses a button element but this can be used on almost any kind of element.</p>
+        <div class="w-100 d-flex justify-content-center">
+          <button class="btn btn-primary" aria-label="Tooltip text using aria-label">Hover Me!</button>
+        </div>
+      </div>
+      
+      <div class="style-code-wrapper collapse" id="tooltips-code">
+        <pre class="style-code">
+<code><span class="et">&lt;button</span><span class="an"> class=</span><span class="av">"btn btn-primary"</span><span class="an"> aria-label=</span><span class="av">"Tooltip text using aria-labels"</span><span class="et">></span>Hover Me!<span class="et">&lt;/button></span></code>
         </pre>
       </div>
     </div>
@@ -493,7 +539,7 @@
 
 <span class="et">&lt;p</span><span class="an"> class=</span><span class="av">"lead"</span><span class="et">></span>Paragraph with lead class<span class="et">&lt;/p</span><span class="et">></span>
 <span class="et">&lt;p</span><span class="et">></span>Normal paragraph<span class="et">&lt;/p</span><span class="et">></span>
-<span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"#"</span><span class="et">></span>Link example<span class="et">&lt;/a</span><span class="et">></span>
+<span class="et">&lt;a</span><span class="an"> href=</span><span class="av">"javascript:void(0)"</span><span class="et">></span>Link example<span class="et">&lt;/a</span><span class="et">></span>
 <span class="et">&lt;p</span><span class="an"> class=</span><span class="av">"text-error"</span><span class="et">></span>Error text<span class="et">&lt;/p</span><span class="et">></span>
 <span class="et">&lt;p</span><span class="an"> class=</span><span class="av">"text-muted"</span><span class="et">></span>Muted text<span class="et">&lt;/p</span><span class="et">></span></code>
         </pre>
@@ -505,16 +551,18 @@
   <div class="col-lg-4 col-xl-3 p-0 d-none d-lg-block">
     <div class="content-container sticky-top ml-0">
       <h4 class="header-underline">Quick Nav</h4>
-      <nav class="d-flex flex-column">
-        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="container">Content Container</a>
-        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="tabs">Content Container with Tabs</a>
-        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="dots">Dots Menu</a>
-        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="modals">Modals</a>
-        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="round">Round Navbar Buttons</a>
-        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="scroll">Scroll-For-More Indicator</a>
-        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="tables">Tables</a>
-        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="input">Text Input with Inset Button</a>
-        <a href="javascript:void(0)" class="nav-link" data-behavior="smooth-scroll" data-target="typography">Typography</a>
+      <nav class="d-flex flex-column" data-behavior="smooth-scroll-nav">
+        <a href="#container" class="nav-link">Content Container</a>
+        <a href="#tabs" class="nav-link">Content Container with Tabs</a>
+        <a href="#dots" class="nav-link">Dots Menu</a>
+        <a href="#modals" class="nav-link">Modals</a>
+        <a href="#toolbar" class="nav-link">Rich Toolbar</a>
+        <a href="#round" class="nav-link">Round Navbar Buttons</a>
+        <a href="#scroll" class="nav-link">Scroll-For-More Indicator</a>
+        <a href="#tables" class="nav-link">Tables</a>
+        <a href="#input" class="nav-link">Text Input with Inset Button</a>
+        <a href="#tooltips" class="nav-link">Tooltips Using Aria-Labels</a>
+        <a href="#typography" class="nav-link">Typography</a>
       </nav>
 
       <div class="style-header mt-5">

@@ -8,8 +8,9 @@ class CardsController < AuthenticatedController
 
   # Not sorted because we need the Board and List first!
   before_action :set_current_board_and_list
-  before_action :set_card, only: [:show, :edit, :update, :destroy, :move]
+  before_action :set_or_initialize_card
   before_action :initialize_sidebar, only: [:show, :new, :edit]
+  before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
 
   layout 'cards'
 
@@ -20,14 +21,12 @@ class CardsController < AuthenticatedController
   end
 
   def new
-    @card = @list.cards.new
-
     # See ContentFromTemplate concern
     @card.description = template_content if params[:template]
   end
 
   def create
-    @card = @list.cards.new(card_params)
+    @card.assign_attributes(card_params)
     # Set the new card as the last card of the list
     @card.previous_id = @list.last_card.try(:id)
 
@@ -94,12 +93,27 @@ class CardsController < AuthenticatedController
     @sorted_cards = @list.ordered_cards.select(&:persisted?)
   end
 
-  def set_card
-    @card = @list.cards.find(params[:id])
+  def set_or_initialize_card
+    if params[:id]
+      @card = @board.cards.find(params[:id])
+      redirect_to [current_project, @board, @card.list, @card] if @card.list_id != @list.id
+    else
+      @card = @list.cards.new
+    end
   end
 
   def set_current_board_and_list
     @board = current_project.boards.includes(:lists).find(params[:board_id])
     @list  = @board.lists.includes(:cards).find(params[:list_id])
+  end
+
+  def set_auto_save_key
+    @auto_save_key =  if @card&.persisted?
+                        "card-#{@card.id}"
+                      elsif params[:template]
+                        "#{@list.id}-card-#{params[:template]}"
+                      else
+                        "#{@list.id}-card"
+                      end
   end
 end

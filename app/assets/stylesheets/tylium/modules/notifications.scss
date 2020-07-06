@@ -83,6 +83,10 @@
       li.notification {
         @include notification-list-item;
         
+        .body {
+          white-space: initial;
+        }
+        
         &:last-child {
           border-bottom: none;
         }
