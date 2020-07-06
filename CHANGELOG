@@ -4,7 +4,7 @@ v3.#.# (MMM’YY)
   * [feature ...]
   * Upgraded gems: rack, sanitize
   * Bugs fixed:
-		- Fix the HTML export not exporting the current project
+    - Prevent HTML exports from rendering with the wrong template when multiple tabs are open
     - Comments:
       - Fix `edit` link available while editing
       - Fix comment borders remaining after deleting comments
