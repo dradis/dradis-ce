@@ -1,9 +1,10 @@
 v3.#.# (MMM’YY)
   * Render markup inside table columns
-  * Upgraded gems: websocket-extensions
+  * Upgraded gems: rack, sanitize
   * Bugs fixed:
-    - [bug fixed #1]
-    - [bug fixed ...]
+    - Comments:
+      - Fix `edit` link available while editing
+      - Fix comment borders remaining after deleting comments
     - Bug tracker items: #N, #M, #O, ...
   * New integrations:
     - [new integration #1]
@@ -21,6 +22,9 @@ v3.#.# (MMM’YY)
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v3.17.1 (Jun 2020)
+  * Upgraded gems: websocket-extensions
 
 v3.17 (May 2020)
   * Add author to evidence and notes views
