@@ -1,10 +1,11 @@
 .navbar {
   background-color: $navbarBackground;
-  height: $navbarHeight;
   border-bottom: 1px solid $borderColor;
-  z-index: 3;
-  transition: left 0.5s ease-in-out;
+  height: $navbarHeight;
   left: initial;
+  padding-right: 0.5rem;
+  transition: left 0.5s ease-in-out;
+  z-index: 3;
 
   .navbar-brand {
     color: $defaultText;
@@ -22,52 +23,13 @@
     }
   }
 
-  .navbar-toggler {
-    position: relative;
-    margin-left: auto;
-    margin-right: 0.2rem;
-    border: 1px solid $borderColor;
-    border-radius: 50px;
-    height: 40px;
-    width: 40px;
-    cursor: pointer;
-    background-color: $activeFillColor;
-    color: $linkColorHover;
-    outline: none;
-
-    .navbar-toggler-icon {
-      background-image: none;
-      position: absolute;
-      top: 10px;
-      left: 0.25rem;
-    }
-
-    &.collapsed {
-      background-color: transparent;
-
-      .navbar-toggler-icon {
-        color: $linkColor
-      }
-    
-      &:hover {
-        background-color: $activeFillColor;
-
-        .navbar-toggler-icon {
-          color: $linkColorHover;
-        }
-      }
-    } 
-  }
-
   .navbar-collapse {
-
     &.collapsing {
-      transition: none;
       display: none;
+      transition: none;
     }
 
     &.show {
-
       @media screen and (max-width: 991px) { 
         position: absolute;
         background: white;
@@ -83,17 +45,40 @@
           border: 1px solid $borderColor;
 
           .nav-item {
+            margin: 0;
             width: 100%;
 
+            .dropdown-menu {
+              border: none;
+              border-bottom: 1px solid $borderColor;
+              border-radius: 0;
+              position: initial;
+
+              .dropdown-item {
+                padding-right: 1rem
+              }
+            }
+
             .nav-link {
-              padding: .25rem 1.5rem;
-              font-size: 0.9rem;
               color: $linkColor;
+              font-size: 0.9rem;
+              padding: .25rem 1rem;
               transition: color 0s;
+
+              .fa {
+                width: 1.2em;
+              }
     
               &:hover {
                 background-color: $primaryColor;
-                color: white;
+                color: $white;
+              }
+            }
+
+            &.show {
+              .nav-link {
+                background-color: $primaryColor;
+                color: $white;
               }
             }
           }
@@ -103,73 +88,74 @@
   }
 
   .navbar-nav {
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    float: right;
-
     .nav-item {
+      border-radius: 50px;
       font-size: 0.9rem;
+      margin: 0 -0.2rem;
       transition: all 0.2s ease-in-out;
       white-space: nowrap;
+      z-index: 2;
 
       .dropdown-menu {
         border-radius: 0 0 0 .5rem;
       }
 
-      &.round {
-        border: 1px solid $borderColor;
-        border-radius: 50px;
-        height: 40px;
-        width: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 0.2rem;
-        cursor: pointer;
-
-        .dropdown-menu {
-          cursor: default;
-        }
-
-        .nav-link {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          height: 100%;
-        }
-
-        &:last-child {
-          margin-right: 0;
-        }
-
-        &:hover,
-        &.show {
-          background-color: $activeFillColor;
-
-          .nav-link {
-            color: $linkColorHover;
-          }
-        }
-
-        &.search {
-          width: auto;
-          border: none;
+      .nav-link {
+        color: $linkColor;
+        padding: 0.5rem 0.75rem;
+        width: 100%;
+        
+        &:focus,
+        &:hover {
+          color: $linkColorHover;
+          outline: none;
         }
       }
 
-      .nav-link {
-        color: $linkColor;
+      &:hover:not(.search),
+      &.show {
+        background-color: $activeFillColor;
 
-        &:hover {
+        .nav-link {
           color: $linkColorHover;
         }
       }
     }
+  }
 
-    &.with-text {
-      min-width: 470px;
+  .navbar-toggler {
+    background-color: $activeFillColor;
+    border: 1px solid $borderColor;
+    border-radius: 50px;
+    color: $linkColorHover;
+    margin-right: 0.2rem;
+    width: 40px;
+
+    &[aria-label]::after {
+      content: initial;
+    }
+
+    &.collapsed {
+      background-color: transparent;
+
+      &:hover {
+        background-color: $activeFillColor;
+
+        .navbar-toggler-icon {
+          color: $linkColorHover;
+        }
+      }
+
+      .navbar-toggler-icon {
+        color: $linkColor
+      }
+    } 
+
+    .navbar-toggler-icon {
+      background-image: none;
+      left: 0.28rem;
+      position: absolute;
+      top: 0.6rem;
     }
   }
 }

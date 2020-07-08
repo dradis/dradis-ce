@@ -52,69 +52,76 @@
 }
 
 /* Notifications in the navbar */
-.notifications {
+.navbar-collapse {
+  .notifications {
+    .notifications-bell {
+      position: relative;
 
-  .notifications-dot {
-    position: absolute;
-    top: 0.5rem;
-    right: 6.8rem;
-    background: red;
-    height: 12px;
-    width: 12px;
-    border-radius: 50%;
-  }
+      .notifications-dot {
+        background: red;
+        border-radius: 50%;
+        height: 12px;
+        position: absolute;
+        right: calc(50% - 0.75rem);
+        top: -0.5rem;
+        width: 12px;
+      }
+    }
 
-  .loader {
-    background: image-url('loading.gif') no-repeat center;
-    height: 50px;
-    width: 420px;
-  }
-
-  .dropdown-menu {
-
-    .notification-container {
+    .loader {
+      background: image-url('loading.gif') no-repeat center;
+      height: 50px;
       width: 420px;
-      max-height: 500px;
-      margin: 0;
-      overflow: auto;
-      padding: 0;
-      font-size: 0.8rem;
-
-      li.notification {
-        @include notification-list-item;
-        
-        .body {
-          white-space: initial;
-        }
-        
-        &:last-child {
-          border-bottom: none;
-        }
-      }
-
-      li.no-content {
-        padding: 0.5rem;
-      }
-
     }
 
-    .notification-header {
-      padding: 0 1em;
-      line-height: 2em;
-      font-size: 0.8rem;
-      border-bottom: 1px solid $borderColor;
+    .dropdown-menu {
 
-      div {
-        display: inline-block;
+      .notification-container {
+        width: 420px;
+        max-height: 500px;
+        margin: 0;
+        overflow: auto;
+        padding: 0;
+        font-size: 0.8rem;
+
+        li.notification {
+          @include notification-list-item;
+          
+          .body {
+            white-space: initial;
+          }
+          
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+
+        li.no-content {
+          padding: 0.5rem;
+        }
+
       }
-    }
 
-    .footer {
-      line-height: 2em;
-      border-top: 1px solid $borderColor;
-      font-size: 0.8rem;
+      .notification-header {
+        padding: 0 1em;
+        line-height: 2em;
+        font-size: 0.8rem;
+        border-bottom: 1px solid $borderColor;
+
+        div {
+          display: inline-block;
+        }
+      }
+
+      .footer {
+        line-height: 2em;
+        border-top: 1px solid $borderColor;
+        font-size: 0.8rem;
+      }
     }
   }
+
+ 
 }
 
 /* Notifications on the main body of /projects/X/notifications */
