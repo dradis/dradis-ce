@@ -1,7 +1,7 @@
 v3.#.# (MMM’YY)
   * Render markup inside table columns
   * Update top navigation link styles and collapsed menu
-  * Upgraded gems: rack, sanitize
+  * Upgraded gems: rack, sanitize, sassc
   * Bugs fixed:
     - Comments:
       - Fix `edit` link available while editing
