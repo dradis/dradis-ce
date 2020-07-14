@@ -28,8 +28,8 @@ describe 'Activity pages:' do
       end
 
       before do
-        create_activities
         login_to_project_as_user
+        create_activities
         visit project_activities_path(current_project)
       end
 
