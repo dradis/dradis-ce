@@ -6,6 +6,9 @@ v3.#.# (MMM’YY)
     - Comments:
       - Fix `edit` link available while editing
       - Fix comment borders remaining after deleting comments
+    - Long unbroken table cell text in textile elements overflows
+    - Secondary-sidebar long header names over-lapping icons
+    - Select element text overflowing on to select arrows
     - Bug tracker items: #N, #M, #O, ...
   * New integrations:
     - [new integration #1]
