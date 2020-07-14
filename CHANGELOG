@@ -1,9 +1,12 @@
-v3.18 (Month 2020)
+v3.#.# (MMM’YY)
   * Add all activity view
-  * Upgraded gems: [gem #1], [gem #2]
+  * Render markup inside table columns
+  * Update top navigation link styles and collapsed menu
+  * Upgraded gems: rack, sanitize
   * Bugs fixed:
-    - [bug fixed #1]
-    - [bug fixed ...]
+    - Comments:
+      - Fix `edit` link available while editing
+      - Fix comment borders remaining after deleting comments
     - Bug tracker items: #N, #M, #O, ...
   * New integrations:
     - [new integration #1]
@@ -21,6 +24,9 @@ v3.18 (Month 2020)
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v3.17.1 (Jun 2020)
+  * Upgraded gems: websocket-extensions
 
 v3.17 (May 2020)
   * Add author to evidence and notes views
@@ -77,7 +83,7 @@ v3.17 (May 2020)
   * REST/JSON API enhancements:
     - Add tags to the Issues API
   * Security Fixes:
-    - Medium: Authenticated persistent comments cross-site scripting
+    - Medium: Authenticated (author) persistent comments cross-site scripting
 
 v3.16 (February 2020)
   * Update app to new Tylium layout
