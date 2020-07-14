@@ -6,6 +6,9 @@ v3.#.# (MMM’YY)
     - Comments:
       - Fix `edit` link available while editing
       - Fix comment borders remaining after deleting comments
+    - Long unbroken table cell text in textile elements overflows
+    - Secondary-sidebar long header names over-lapping icons
+    - Select element text overflowing on to select arrows
     - Bug tracker items: #N, #M, #O, ...
   * New integrations:
     - [new integration #1]
@@ -65,13 +68,10 @@ v3.17 (May 2020)
     - Fix textile preview not showing on issues with very long text
     - Long items_table dropdown menus not scrollable
     - Long project names interfering with search bar expansion
-    - Long unbroken table cell text in textile elements overflows
     - Repetative prompt when images are pasted after navigating multiple views.
     - Report 'Download' button becoming a disabled 'Processing...' button once clicked
     - SemVer pre-release appending character
-    - Secondary-sidebar long header names over-lapping icons
     - Set :author when creating Evidence from an Issue
-    - Select element text overflowing on to select arrows
     - Sidebar items not showing active state
     - Textile preview not showing on issues with very long text
     - Bug tracker items: #560
