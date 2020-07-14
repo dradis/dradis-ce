@@ -30,6 +30,8 @@
 //= require tylium/plugins/jquery.treenav
 
 //= require tylium/behaviors
+//= require shared/behaviors
+
 //= require tylium/engines
 //= require tylium/keyboard_shortcuts
 

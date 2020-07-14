@@ -45,8 +45,6 @@ document.addEventListener "turbolinks:load", ->
 
 
   # -------------------------------------------------------- Our jQuery plugins
-  # Activate jQuery.Textile
-  $('.textile').textile()
 
   # Activate jQuery.breadCrumbs
   $('.breadcrumb').breadcrumbs
@@ -112,7 +110,7 @@ document.addEventListener "turbolinks:load", ->
 
   # Search form
   $('[data-behavior~=form-search]').hover ->
-    $('[data-behavior~=search-query]').val('').focus()
+    $('[data-behavior~=search-query]').focus()
 
   submitSearch = ->
     if $('[data-behavior~=search-query]').val() != ''
@@ -142,15 +140,6 @@ document.addEventListener "turbolinks:load", ->
 
       if $this.is('[data-behavior~=import-box]') && $($this.data('target')).innerHeight() == 0
         $($this.data('target')).find("input[type='text']:first").focus()
-
-  # Close nav collapse menu when nav dropdown menu is opened
-  $('[data-behavior~=close-collapse]').on 'click', ->
-    $('[data-behavior~=navbar-collapse]').collapse 'hide'
-    return
-
-  # Activate Rich Toolbars for the editor, and comments
-  $('[data-behavior~=rich-toolbar]').each ->
-    new EditorToolbar($(this))
 
   # Scroll for more indicator functionality
   if $('[data-behavior~=restrict-height]').length

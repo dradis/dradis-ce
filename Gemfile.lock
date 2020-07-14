@@ -178,18 +178,18 @@ GEM
       railties (>= 3.2.16)
     json (2.3.0)
     jwt (2.2.1)
-    kaminari (1.1.1)
+    kaminari (1.2.1)
       activesupport (>= 4.1.0)
-      kaminari-actionview (= 1.1.1)
-      kaminari-activerecord (= 1.1.1)
-      kaminari-core (= 1.1.1)
-    kaminari-actionview (1.1.1)
+      kaminari-actionview (= 1.2.1)
+      kaminari-activerecord (= 1.2.1)
+      kaminari-core (= 1.2.1)
+    kaminari-actionview (1.2.1)
       actionview
-      kaminari-core (= 1.1.1)
-    kaminari-activerecord (1.1.1)
+      kaminari-core (= 1.2.1)
+    kaminari-activerecord (1.2.1)
       activerecord
-      kaminari-core (= 1.1.1)
-    kaminari-core (1.1.1)
+      kaminari-core (= 1.2.1)
+    kaminari-core (1.2.1)
     kgio (2.11.3)
     launchy (2.4.3)
       addressable (~> 2.3)
@@ -255,9 +255,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     psych (3.1.0)
-    puma (4.3.3)
+    puma (4.3.5)
       nio4r (~> 2.0)
-    rack (2.2.2)
+    rack (2.2.3)
     rack-protection (2.0.2)
       rack
     rack-test (1.1.0)
@@ -353,7 +353,7 @@ GEM
     ruby2_keywords (0.0.2)
     ruby_dep (1.5.0)
     rubyzip (2.2.0)
-    sanitize (5.1.0)
+    sanitize (5.2.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.8.0)
       nokogumbo (~> 2.0)
@@ -437,7 +437,7 @@ GEM
       selenium-webdriver (>= 3.0, < 4.0)
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.4)
+    websocket-extensions (0.1.5)
     whenever (1.0.0)
       chronic (>= 0.6.3)
     xpath (3.2.0)
@@ -477,7 +477,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   json (= 2.3.0)
-  kaminari (~> 1.1.1)
+  kaminari (~> 1.2.1)
   letter_opener
   listen (>= 3.0.5, < 3.2)
   local_time (>= 2.0.0)
@@ -496,7 +496,7 @@ DEPENDENCIES
   rspec-rails (~> 3.1)
   rubocop
   rubyzip (>= 1.2.2)
-  sanitize
+  sanitize (= 5.2.1)
   sass-rails (~> 6.0)
   selenium-webdriver
   shoulda-matchers (~> 3.1)

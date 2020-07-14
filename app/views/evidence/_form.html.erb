@@ -2,7 +2,7 @@
   html: {
     data: {
       behavior: 'local-auto-save',
-      auto_save_key: @evidence.new_record? ? "project-#{current_project.id}-node-#{@node.id}-evidence#{"-#{params[:template]}" if params[:template]}" : "evidence-#{@evidence.id}"
+      auto_save_key: @auto_save_key
     }
   } do |f| %>
 
@@ -14,12 +14,12 @@
       f.input :content,
       input_html: {
         class: 'textile h-100',
-        data: textile_default_data.merge(
+        data: {
           allow_dropdown: @evidence.new_record?,
-          autosave_key: "#{current_project.id}-evidence-#{ @evidence.persisted? ? "edit-#{@evidence.id}" : "new-for-#{@node.id}" }",
           behavior: 'rich-toolbar',
+          paths: editor_paths,
           'rich-toolbar': 'block-code bold field italic link list-ol list-ul table'
-        ),
+        },
         rows: 20
       }
     %>

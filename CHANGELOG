@@ -1,4 +1,33 @@
-v3.17 (Month 2020)
+v3.#.# (MMM’YY)
+  * Render markup inside table columns
+  * Update top navigation link styles and collapsed menu
+  * Upgraded gems: rack, sanitize
+  * Bugs fixed:
+    - Comments:
+      - Fix `edit` link available while editing
+      - Fix comment borders remaining after deleting comments
+    - Bug tracker items: #N, #M, #O, ...
+  * New integrations:
+    - [new integration #1]
+    - [new integration ...]
+  * Integration enhancements:
+    - [integration enhancement #1]
+    - [integration enhancement ...]
+  * Reporting enhancements:
+    - [reporting enhancement #1]
+    - [reporting enhancement ...]
+  * REST/JSON API enhancements:
+    - [API enhancement #1]
+    - [API enhancement ...]
+  * Security Fixes:
+    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v3.17.1 (Jun 2020)
+  * Upgraded gems: websocket-extensions
+
+v3.17 (May 2020)
   * Add author to evidence and notes views
   * Adjust Uploads layout to provide more visibility to the output console
   * Boards can be renamed and deleted through their dots menu
@@ -26,7 +55,7 @@ v3.17 (Month 2020)
   * Update code element style
   * Use shared noscript partial
   * Use user model reference for activities instead of user email
-  * Upgraded gems: puma, rack, rails, sass-rails
+  * Upgraded gems: kaminari, puma, rack, rails, sass-rails
   * Bugs fixed:
     - bin/setup creating folders outside dradis-ce/
     - bin/setup error if the attachments directory already exists
@@ -54,11 +83,9 @@ v3.17 (Month 2020)
   * Reporting enhancements:
     - HTML reports now use main app's markup rendering
   * REST/JSON API enhancements:
-    - [API enhancement #1]
+    - Add tags to the Issues API
   * Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: Authenticated (author) persistent comments cross-site scripting
 
 v3.16 (February 2020)
   * Update app to new Tylium layout

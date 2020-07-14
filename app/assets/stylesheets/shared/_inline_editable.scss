@@ -30,7 +30,7 @@
     z-index: 1;
   }
 
-  input,
+  input[type="text"],
   textarea,
   select {
     border: 1px solid transparent;
@@ -48,7 +48,7 @@
     }
   }
 
-  input {
+  input[type="text"] {
     background-color: transparent;
     font-weight: 600;
     margin: 0 1.5rem 0.5rem 1.5rem;

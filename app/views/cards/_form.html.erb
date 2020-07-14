@@ -2,7 +2,7 @@
   html: {
     data: {
       behavior: 'local-auto-save',
-      auto_save_key: @card.new_record? ? "#{@list.id}-card#{"-#{params[:template]}" if params[:template]}" : "card-#{@card.id}"
+      auto_save_key: @auto_save_key
     }
   } do |f| %>
 
@@ -15,11 +15,12 @@
     f.input :description,
       input_html: {
         class: 'textile h-100',
-        data: textile_default_data.merge(
+        data: {
           allow_dropdown: @card.new_record?,
           behavior: 'rich-toolbar',
+          paths: editor_paths,
           'rich-toolbar': 'block-code bold field italic link list-ol list-ul table'
-        ),
+        },
         label: false,
         rows: 20
       }

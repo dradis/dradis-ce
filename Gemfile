@@ -54,7 +54,7 @@ gem 'differ', '~> 0.1.2'
 # HTML processing filters and utilities
 gem 'html-pipeline'
 
-gem 'kaminari', '~> 1.1.1'
+gem 'kaminari', '~> 1.2.1'
 
 gem 'paper_trail', '~> 10.3'
 
@@ -99,7 +99,7 @@ gem 'RedCloth', '~> 4.3.2', require: 'redcloth'
 gem 'rinku'
 
 # html-pipeline dependency for html sanitization
-gem 'sanitize'
+gem 'sanitize', '5.2.1'
 
 # SQLite3 DB driver
 gem 'sqlite3'#,  '1.3.10'
