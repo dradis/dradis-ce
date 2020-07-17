@@ -2,7 +2,7 @@ v3.#.# (MMM’YY)
   * Add all activity view
   * Render markup inside table columns
   * Update top navigation link styles and collapsed menu
-  * Upgraded gems: rack, sanitize
+  * Upgraded gems: rack, sanitize, sassc
   * Bugs fixed:
     - Comments:
       - Fix `edit` link available while editing
