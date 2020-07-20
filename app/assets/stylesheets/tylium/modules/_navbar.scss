@@ -1,9 +1,9 @@
 .navbar {
   background-color: $navbarBackground;
-  height: $navbarHeight;
   border-bottom: 1px solid $borderColor;
-  z-index: 3;
+  height: $navbarHeight;
   left: 0;
+  z-index: 3;
 
   .navbar-brand {
     color: $defaultText;
