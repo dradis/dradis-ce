@@ -26,7 +26,7 @@ $defaultText: #333;
 $errorText: $red;
 $mutedText: #757575;
 $sidebarText: $lightColor;
-$linkColor: $primaryColor;
+$linkColor: darken($primaryColor, 2.25%);
 $linkColorHover: darken($linkColor, 15%);
 
 // Background, Border, Fill Colors
