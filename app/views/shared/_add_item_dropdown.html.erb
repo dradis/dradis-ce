@@ -2,11 +2,11 @@
   <%= link_to 'javascript:void(0)',
     class: local_assigns.fetch(:button_class, '') + ' dropdown-toggle',
     data: { name: name.downcase, toggle: 'dropdown' } do %>
-    <i class="fa fa-plus"> </i> <%= local_assigns.fetch(:text, '') %>
+    <i class="fa fa-plus"> </i> <%= local_assigns.fetch(:text, '') %><span class="sr-only">Add <%= name.downcase %></span>
   <% end %>
 
   <%= link_to 'javascript:void(0)', data: { toggle: 'collapse', target: "##{name.downcase}", behavior: 'collapse-collection' }, class: local_assigns.fetch(:collapse_class, '') do %>
-    <i class="fa fa-chevron-up" data-behavior="toggle-chevron"></i>
+    <i class="fa fa-chevron-up" data-behavior="toggle-chevron"></i><span class="sr-only">Toggle <%= name.downcase %> list</span>
   <% end %>
 
   <div class="dropdown-menu <%= local_assigns.fetch(:menu_class, '') %>">
