@@ -75,7 +75,7 @@
       <% end %>
     <% end %>
 
-    <% if @node %>
+    <% if @node && @node.label != 'Methodologies' %>
       <%= render partial: 'nodes/modals/add_node', locals: { type: :child } %>
       <%= render partial: 'nodes/modals/delete' %>
       <%= render partial: 'nodes/modals/merge' %>
