@@ -1,4 +1,4 @@
-v3.#.# (MMM’YY)
+v3.18.0 (July 2020)
   * Add all activity view
   * Render markup inside table columns
   * Update top navigation link styles and collapsed menu
@@ -10,23 +10,6 @@ v3.#.# (MMM’YY)
     - Long unbroken table cell text in textile elements overflows
     - Secondary-sidebar long header names over-lapping icons
     - Select element text overflowing on to select arrows
-    - Bug tracker items: #N, #M, #O, ...
-  * New integrations:
-    - [new integration #1]
-    - [new integration ...]
-  * Integration enhancements:
-    - [integration enhancement #1]
-    - [integration enhancement ...]
-  * Reporting enhancements:
-    - [reporting enhancement #1]
-    - [reporting enhancement ...]
-  * REST/JSON API enhancements:
-    - [API enhancement #1]
-    - [API enhancement ...]
-  * Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v3.17.1 (Jun 2020)
   * Upgraded gems: websocket-extensions
