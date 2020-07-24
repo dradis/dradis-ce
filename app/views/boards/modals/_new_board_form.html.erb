@@ -16,7 +16,7 @@
         <div class="modal-header">
           <h5 class="modal-title" id="modal-board-header">Add new methodology</h5>
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-            <i class="fa fa-times"></i>
+            <i class="fa fa-times"></i><span class="sr-only">Close modal</span>
           </button>
         </div>
 
@@ -29,28 +29,27 @@
           <div class="custom-control custom-radio">
             <% @templates ||= [] %>
             <%= radio_button_tag("use_template", "yes", false, { disabled: @templates.empty?, :class => 'custom-control-input' }) %>
-            <label class="custom-control-label <%= @templates.empty? ? "text-muted" : "" %>" for="use_template_yes">
-              From template
-              <% if @templates.any? %>
-                <div>
-                  <%= select_tag "template", options_from_collection_for_select(@templates, :id, :name), class: 'my-1 form-control' %>
-                </div>
-              <% else %>
-                <p class="mb-0">
-                  No methodology templates defined<br>
-                  Log in as admin: Templates > Methodologies
-                </p>
-              <% end %>
-              <a href="http://dradisframework.org/academy/industry/compliance/"
-                target="_blank">
-                Download more templates
-              </a>
-            </label>
+            <label class="custom-control-label <%= @templates.empty? ? "text-muted" : "" %>" for="use_template_yes">From template</label>
+            <% if @templates.any? %>
+              <div>
+                <label for="new_board_template" class="sr-only">List of methodology templates</label>
+                <%= select_tag "new_board_template", options_from_collection_for_select(@templates, :id, :name), class: 'my-1 form-control' %>
+              </div>
+            <% else %>
+              <p class="mb-0">
+                No methodology templates defined<br>
+                Log in as admin: Templates > Methodologies
+              </p>
+            <% end %>
+            <a href="http://dradisframework.org/academy/industry/compliance/"
+              target="_blank">
+              Download more templates
+            </a>
           </div>
 
           <hr>
           <div class="form-group">
-            <%= f.input :name, required: true, input_html: { data: { behavior: 'new-board-name' } } %>
+            <%= f.input :name, required: true, input_html: { data: { behavior: 'new-board-name' }, id: 'new_board_name' } %>
           </div>
         </div>
 
