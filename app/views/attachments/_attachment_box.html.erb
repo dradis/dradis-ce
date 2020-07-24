@@ -9,6 +9,7 @@
           <%= link_to 'javascript:void(0)', 
             data: { toggle: 'collapse', target: '#attachment-box', behavior: 'collapse-collection' } do %>
             <i class="fa fa-chevron-up" data-behavior="toggle-chevron"></i>
+            <span class="sr-only">Toggle attachments list</span>
           <% end %>
         </div>
       </div>
@@ -74,10 +75,11 @@
         <span class="btn btn-primary fileinput-button" data-toggle="tooltip" data-placement="bottom" title="Add...">
           <i class="fa fa-plus fa-inverse"></i>
           <span></span>
-          <input type="file" name="files[]" multiple>
+          <label for="file-upload" class="sr-only">Select file to upload</label>
+          <input type="file" name="files[]" multiple id="file-upload">
         </span>
         <button type="submit" class="btn btn-success start" data-toggle="tooltip" data-placement="bottom" title="Start">
-          <i class="fa fa-upload fa-inverse"></i>
+          <i class="fa fa-upload fa-inverse"></i><span class="sr-only">Upload file(s)</span>
           <span></span>
         </button>
         <button type="reset" class="btn btn-warning cancel" data-toggle="tooltip" data-placement="bottom" title="Cancel">
