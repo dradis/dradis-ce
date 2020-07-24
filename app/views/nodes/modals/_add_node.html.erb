@@ -15,6 +15,7 @@
         <% end %>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
           <i class="fa fa-times"></i>
+          <span class="sr-only">Close modal</span>
         </button>
       </div>
 
@@ -73,9 +74,10 @@
           </div>
 
           <%= hidden_field_tag "nodes[parent_id]", @node.id if type == :child %>
+          <label for="nodes_list" class="sr-only">Nodes list</label>
           <%= text_area_tag    "nodes[list]", "", rows: 3, class: "form-control mb-3 nodes_list" %>
 
-          <%= label_tag :type_id, 'Icon' %>
+          <%= label_tag "nodes_#{:type_id}", 'Icon' %>
           <%= select_tag(
             "nodes[type_id]",
             options_for_select(
@@ -94,4 +96,3 @@
     </div>
   </div>
 </div>
-
