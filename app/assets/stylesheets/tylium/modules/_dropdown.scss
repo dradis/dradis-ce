@@ -11,7 +11,9 @@
     box-shadow: 0 20px 30px 0 rgba(33,55,74,0.2);
 
     .dropdown-item {
+      align-items: center;
       color: $linkColor;
+      display: flex;
       transition: color 0s;
       font-weight: inherit;
 
@@ -19,6 +21,14 @@
       &:hover {
         color: $linkColorHover;
         background-color: $dropdownLinkBackgroundHover;
+      }
+
+      input[type=checkbox] {
+        margin-right: 0.5rem;
+      }
+
+      label {
+        margin-bottom: 0;
       }
     }
   }
