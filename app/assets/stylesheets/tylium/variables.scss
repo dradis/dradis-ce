@@ -7,7 +7,7 @@ $grayDark: darken($gray, 20);
 $green: #2ecc71;
 $orange: #e67e22;
 $purple: #9b59b6;
-$red: #e4485d;
+$red: #d62728;
 $white: #fff;
 $yellow: #f1c40f;
 
@@ -16,7 +16,7 @@ $lightGreen: #86cb86;
 $ceGreen: #378137;
 $darkGreen: #285d28;
 
-$lightColor: $lightGreen;
+$lightColor: lighten($lightGreen, 1.75%);
 $primaryColor: $ceGreen;
 $darkColor: $darkGreen;
 
@@ -37,7 +37,7 @@ $borderColor: #ddd;
 $dropdownLinkBackgroundHover: #f8f9fa;
 $navbarBackground: $primaryBgColor;
 $sidebarBackground: darken($darkColor, 5%);
-$sidebarActiveColor: $darkColor;
+$sidebarActiveColor: darken($darkColor, 1.75%);
 
 // Spacing
 $mainContentPadding: 2rem;
