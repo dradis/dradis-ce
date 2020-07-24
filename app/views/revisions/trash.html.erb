@@ -4,7 +4,8 @@
   <% if @revisions.any? %>
     <% cache @revisions do %>
       <div class="filter w-25">
-        <input type="search" class="form-control js-table-filter" placeholder="Type here to filter table..."/>
+        <label for="filter-table" class="sr-only">Filter table by keyword</label>
+        <input type="search" id="filter-table" class="form-control js-table-filter" placeholder="Type here to filter table..."/>
       </div>
       <div id="trash-table" class="table-wrapper">
         <table class="table table-striped items-table">
@@ -13,7 +14,7 @@
               <th data-column="item" data-sort="string" data-behavior="sortable-header" class="sortable">Item</th>
               <th data-column="removed" data-sort="string" data-behavior="sortable-header" class="sortable">Removed by</th>
               <th data-column="when" data-sort="int" data-behavior="sortable-header" class="sortable sorting-desc">When</th>
-              <th></th>
+              <th><span class="sr-only">Actions</span></th>
             </tr>
           </thead>
           <tbody>
