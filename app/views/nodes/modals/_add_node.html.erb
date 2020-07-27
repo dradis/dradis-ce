@@ -55,7 +55,7 @@
           html: { class: 'add_one_node_form form-horizontal', id: "new_#{type}_node_form" }
         ) do |f| %>
           <%= f.hidden_field :parent_id, id: "node_#{@node.id}_parent_id" if type == :child %>
-          <%= f.input :label, input_html: { id: type == :child ? "node_#{@node.id}_label" : 'new_node_label', data: { id: 'node-label' }  } %>
+          <%= f.input :label, input_html: { id: type == :child ? "node_#{@node.id}_label" : 'node_label', data: { id: 'node-label' }  } %>
           <%= f.input :type_id,
             collection: [["No icon", Node::Types::DEFAULT], ["Host", Node::Types::HOST]],
             include_blank: false,
