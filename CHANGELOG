@@ -1,10 +1,12 @@
 v3.#.# (MMM’YY)
   * Add states (draft, review, published) to issues
-  * Upgraded gems: rack, sanitize
+  * [feature #1]
+  * [feature #2]
+  * [feature ...]
+  * Upgraded gems: [gem #1], [gem #2]
   * Bugs fixed:
-    - Comments:
-      - Fix `edit` link available while editing
-      - Fix comment borders remaining after deleting comments
+    - [bug fixed #1]
+    - [bug fixed ...]
     - Bug tracker items: #N, #M, #O, ...
   * New integrations:
     - [new integration #1]
@@ -22,6 +24,19 @@ v3.#.# (MMM’YY)
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v3.18.0 (July 2020)
+  * Add all activity view
+  * Render markup inside table columns
+  * Update top navigation link styles and collapsed menu
+  * Upgraded gems: rack, sanitize, sassc
+  * Bugs fixed:
+    - Comments:
+      - Fix `edit` link available while editing
+      - Fix comment borders remaining after deleting comments
+    - Long unbroken table cell text in textile elements overflows
+    - Secondary-sidebar long header names over-lapping icons
+    - Select element text overflowing on to select arrows
 
 v3.17.1 (Jun 2020)
   * Upgraded gems: websocket-extensions

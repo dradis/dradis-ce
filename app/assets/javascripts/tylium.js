@@ -52,6 +52,7 @@
 // require tylium/modules/tour
 //= require tylium/modules/uploads
 
+//= require tylium/pages/activities
 //= require tylium/pages/boards
 //= require tylium/pages/issues/state_menu
 //= require tylium/pages/nodes/new_form

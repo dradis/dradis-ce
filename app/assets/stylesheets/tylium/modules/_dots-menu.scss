@@ -5,6 +5,10 @@
   align-items: center;
   padding-right: 1rem;
 
+  .breadcrumb {
+    width: calc(100% - 35px);
+  }
+
   .dots-dropdown {
     border: 1px solid darken($borderColor, 2%);
     border-radius: 50px;
