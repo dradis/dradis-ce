@@ -1,21 +1,23 @@
+<% verb = @issue.new_record? ? 'Create' : 'Update' %>
+
 <div class="form-actions">
   <div class="btn-group dropdown state-menu" data-behavior="state-menu">
-    <%= f.button :submit, nil, class: 'btn btn-primary text-capitalize', data: { behavior: 'state-submit-button' } %>
+    <%= f.button :submit, "#{verb} #{Issue.state_names[@issue.state.to_sym]} Issue", class: 'btn btn-primary text-capitalize', data: { behavior: 'state-submit-button' } %>
     <%= f.hidden_field :state, data: { behavior: 'issue-state' } %>
     <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split ml-0" data-toggle="dropdown">
       <i class="fa fa-caret-down"></i>
     </button>
     <div class="dropdown-menu">
-      <div class="dropdown-item" data-state="draft">
-        <span class="state-header" data-state-header="draft"> Draft Issue</span>
+      <div class="dropdown-item <%= 'selected' if @issue.state == 'draft' %>" data-state="draft">
+        <span class="state-header" data-state-header="draft"><%= "#{verb} #{Issue.state_names[:draft]} Issue" %></span>
         <span class="state-details">If you feel there is still more work before this issue is ready.</span>
       </div>
-      <div class="dropdown-item" data-state="review">
-        <span class="state-header" data-state-header="review"> Ready for Review Issue</span>
+      <div class="dropdown-item <%= 'selected' if @issue.state == 'review' %>" data-state="review">
+        <span class="state-header" data-state-header="review"><%= "#{verb} #{Issue.state_names[:review]} Issue" %></span>
         <span class="state-details">If you think this issue is ready and would like someone to have a look.</span>
       </div>
-      <div class="dropdown-item" data-state="published">
-        <span class="state-header" data-state-header="published"> Published Issue</span>
+      <div class="dropdown-item <%= 'selected' if @issue.state == 'published' %>" data-state="published">
+        <span class="state-header" data-state-header="published"><%= "#{verb} #{Issue.state_names[:published]} Issue" %></span>
         <span class="state-details">If this is the final form of the issue and it’s ready for the report.</span>
       </div>
     </div>
