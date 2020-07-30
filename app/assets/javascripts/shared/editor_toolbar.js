@@ -33,7 +33,7 @@ class EditorToolbar {
     this.$editorToolbar = this.$editorField.find('[data-behavior~=editor-toolbar]');
 
     this.$editorToolbar.append(this.textareaElements(this.opts.include));
-    this.$fileField = $('<input type="file" name="' + Math.random().toString(36) + '[]" multiple style="display: none">');
+    this.$fileField = $('<input type="file" name="editor-toolbar-' + Math.random().toString(36) + '[]" multiple style="display: none">');
     this.$editorToolbar.append(this.$fileField);
 
     this.$target.data('editorToolbar', this);
@@ -80,6 +80,9 @@ class EditorToolbar {
         files: this.files,
         $textarea: that.$editorField.find('textarea, input[type=text]')
       });
+
+      // Clear the $fileField so it never submit unexpected filedata
+      $(this).val('');
     });
 
     // when a toolbar button is clicked
