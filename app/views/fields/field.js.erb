@@ -7,8 +7,3 @@ $('.textile').data('plugin_textile').bindFieldGroup(fieldGroup);
 $('[data-behavior~=rich-toolbar]', fieldGroup).each(function() {
   new EditorToolbar($(this));
 });
-
-// if the editor has the image option, bind the jquery upload plugin to the added field
-if ($('[data-rich-toolbar~=image]').length) {
-  fileUploadInit($('[data-behavior~=jquery-upload]', fieldGroup));
-}

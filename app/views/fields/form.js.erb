@@ -9,8 +9,3 @@ $('.textile').data('plugin_textile').bindFieldGroup(form);
 $('[data-behavior~=rich-toolbar]', form).each(function() {
   new EditorToolbar($(this))
 });
-
-// if the editor has the image option, bind the jquery upload plugin to the textareas in fields view
-if ($('[data-rich-toolbar~=image]').length) {
-  fileUploadInit($('[data-behavior~=jquery-upload]', form));
-}
