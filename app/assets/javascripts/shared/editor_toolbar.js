@@ -135,12 +135,24 @@ class EditorToolbar {
     });
   }
 
+  replace(text, $element) {
+    var startIndex = $element[0].selectionStart,
+        endIndex = $element[0].selectionEnd,
+        elementText = $element.val();
+
+    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) { // firefox
+      $element.val(elementText.slice(0, startIndex) + text + elementText.slice(endIndex));
+    }
+    else { // all other browsers
+      document.execCommand('insertText', false, text);
+    }
+  }
+
   injectSyntax($element, affix) {
     var adjustedPrefixLength = affix.prefix.length,
         adjustedSuffixLength = affix.suffix.length,
         startIndex = $element[0].selectionStart,
         endIndex = $element[0].selectionEnd,
-        elementText = $element.val(),
         selectedText = $element.val().substring(startIndex, endIndex);
 
     var markdownText = (startIndex == endIndex) ? affix.asPlaceholder : affix.withSelection(selectedText);
@@ -148,15 +160,10 @@ class EditorToolbar {
     adjustedPrefixLength *= selectedText.split('\n').length;
     adjustedSuffixLength *= selectedText.split('\n').length;
 
-    // remove the original selection (if there was one) and add new markdown string in it's place
     $element.focus(); // bring focus back to $element from the toolbar
-    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) { // firefox
-      $element.val(elementText.slice(0, startIndex) + markdownText + elementText.slice(endIndex));
-    }
-    else { // all other browsers
-      document.execCommand('insertText', false, markdownText);
-    }
-    
+
+    this.replace(markdownText, $element);
+
     // post-injection cursor location
     if (startIndex == endIndex) { // no text was selected, select injected placeholder text
       $element[0].setSelectionRange(startIndex + affix.prefix.length, startIndex + markdownText.length - affix.suffix.length);
@@ -176,7 +183,7 @@ class EditorToolbar {
       'bold':        new Affix('*', 'Bold text', '*'),
       'field':       new Affix('#[', 'Field', ']#\n'),
       //'highlight':   new Affix('$${{', 'Highlighted text', '}}$$'),
-      'image':       new Affix(''),
+      'image':       new Affix('!', 'https://imageUrl', '!'),
       //'inline-code': new Affix('@', 'Inline code', '@'),
       'italic':      new Affix('_', 'Italic text', '_'),
       'link':        new Affix('"', 'Link text', '":http://'),
