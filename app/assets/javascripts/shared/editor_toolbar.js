@@ -15,7 +15,13 @@ class EditorToolbar {
     if (!$target.is("textarea")) { console.log("Can't initialize a rich toolbar on anything but a textarea"); return; }
 
     this.$target = $target;
-    this.opts = { 'include': $target.data('rich-toolbar').split(' ') };
+    this.opts = {
+      'include': $target.data('rich-toolbar').split(' '),
+      'uploader': $target.data('rich-toolbar-uploader')
+    };
+
+    if (this.opts.include.includes('image') && this.opts.uploader === undefined) { console.log("You initialized a RichToolbar with the image uploader option but have not provided an existing uploader to utilize"); return; }
+
     this.affixes = this.affixesLibrary();
     this.init();
   }
@@ -70,7 +76,7 @@ class EditorToolbar {
     this.$target.on('blur', setHeight);
 
     this.$fileField.bind('change', function (e) {
-      $('.attachments-box[data-behavior~=jquery-upload]').fileupload('add', {
+      $(that.opts.uploader).fileupload('add', {
         files: this.files,
         $textarea: that.$editorField.find('textarea, input[type=text]')
       });
