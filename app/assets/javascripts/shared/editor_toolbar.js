@@ -27,6 +27,10 @@ class EditorToolbar {
     this.$editorToolbar = this.$editorField.find('[data-behavior~=editor-toolbar]');
 
     this.$editorToolbar.append(this.textareaElements(this.opts.include));
+    this.$fileField = $('<input type="file" name="' + Math.random().toString(36) + '[]" multiple style="display: none">');
+    this.$editorToolbar.append(this.$fileField);
+
+    this.$target.data('editorToolbar', this);
 
     this.behaviors();
   }
@@ -65,15 +69,21 @@ class EditorToolbar {
     // Handler for setting the correct textarea height when focus is lost
     this.$target.on('blur', setHeight);
 
+    this.$fileField.bind('change', function (e) {
+      $('.attachments-box[data-behavior~=jquery-upload]').fileupload('add', {
+        files: this.files,
+        $textarea: that.$editorField.find('textarea, input[type=text]')
+      });
+    });
+
     // when a toolbar button is clicked
-    this.$editorToolbar.find('[data-btn]').click(function () {
+    this.$editorToolbar.find('[data-btn]').click(function (e) {
       var $element = that.$editorField.find('textarea, input[type=text]');
       var affix = that.affixes[$(this).data('btn')];
   
       if ($(this).is('[data-btn~=image')) {
-        $('[data-behavior~=fileupload-input-button').click();
-      }
-      else {
+        that.$fileField.click();
+      } else {
         // inject markdown
         that.injectSyntax($element, affix);
       }

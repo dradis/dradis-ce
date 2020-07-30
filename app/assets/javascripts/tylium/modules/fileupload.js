@@ -1,58 +1,54 @@
 // jQuery.fileUpload  - handles attachment uploads (gem: jquery-fileupload-rails)
 
-function fileUploadInit($element = $('[data-behavior~=jquery-upload]')) { 
+function fileUploadInit() {
+  $('[data-behavior~=jquery-upload]').fileupload({
+     autoUpload: true,
+     dropZone: function(){ return $('[data-behavior~=drop-zone]') },
+     pasteZone: function(){ return $('[data-behavior~=drop-zone]') },
+     singleFileUploads: true,
+     destroy: function(e, data) {
+       if (confirm('Are you sure?\n\nProceeding will delete this attachment from the associated node.')) {
+         $.blueimp.fileupload.prototype.options.destroy.call(this, e, data);
+       }
+     }
+  }).on('fileuploadadd', function (e, data) {
+    if (e.originalEvent !== undefined) {
+      var $textarea = $(e.originalEvent.target)
 
-  $element.each(function() {
+      if ($textarea.is($('[data-behavior~=rich-toolbar]'))) {
+        data.$textarea = $textarea;
 
-    if ($(this).is($('[data-behavior~=editor-field'))) {
+        var editorToolbar = $textarea.data('editorToolbar');
 
-      // Config for Editor Fields
-      var actionPath = $(this).parents().find('#fileupload').attr('action');
+        $textarea.focus();
+        var that = this;
 
-      $(this).fileupload({
-        autoUpload: true,
-        dropZone: $(this).find('[data-behavior~=drop-zone]'),
-        pasteZone: $(this).find('[data-behavior~=drop-zone]'),
-        singleFileUploads: true,
-        url: actionPath,
-      }).on('fileuploadadd', function (e, data) {
-
-        // inject placeholder into textarea for each dragged in file
-        $(this).find('[data-behavior~=rich-toolbar').focus()
         $.each(data.files, function (index, file) {
-          document.execCommand('insertText', false, '\n! ' + file.name + ' uploading... !\n');
-        })
-      }).on('fileuploaddone', function (e, data) {
+          affix = editorToolbar.affixes['image'];
+          editorToolbar.replace(affix.withSelection(file.name + ' uploading...'), $textarea);
+        });
+      }
+    }
+  }).on('fileuploaddone', function (e, data) {
+    var $textarea = data.$textarea;
 
-        var uploadedFile = data.result[0].url
-        var $textarea = $(this).find('[data-behavior~=rich-toolbar')
-        
-        $.each(data.files, function (index, file) {
+    if ($textarea !== undefined) {
+      var editorToolbar = $textarea.data('editorToolbar');
 
-          // remove placeholder from textarea for each file once it's uploaded
-          $textarea.focus().val($textarea.val().replace(/\n\!.*\!\n/, ''));
+      $.each(data.files, function (index, file) {
+        var uploadedFile = data.result[0].url;
+        // remove placeholder from textarea for each file once it's uploaded
+        str = '!' + file.name + ' uploading...' + '!';
+        $textarea.focus().val($textarea.val().replace(str, ''));
 
-          // inject syntax into textarea to automatically display uploaded image
-          document.execCommand('insertText', false, '\n!' + uploadedFile + '!\n');
-        })
-      })
-    } 
-    else {
-
-      // Config for attachments-box
-      $('[data-behavior~=jquery-upload]').fileupload({
-        autoUpload: true,
-        dropZone: $(this).find('[data-behavior~=drop-zone]'),
-        destroy: function(e, data) {
-          if (confirm('Are you sure?\n\nProceeding will delete this attachment from the associated node.')) {
-            $.blueimp.fileupload.prototype.options.destroy.call(this, e, data);
-          }
-        },
-        pasteZone: null
+        // inject syntax into textarea to automatically display uploaded image
+        affix = editorToolbar.affixes['image'];
+        editorToolbar.replace(affix.withSelection(uploadedFile), $textarea);
+        $textarea.trigger('textchange');
       })
     }
   });
-}
+};
 
 document.addEventListener("turbolinks:load", function() {
   // Bind fileUpload on page load.
@@ -65,4 +61,3 @@ document.addEventListener('turbolinks:before-cache', function() {
     $(this).fileupload('destroy');
   });
 });
-  
