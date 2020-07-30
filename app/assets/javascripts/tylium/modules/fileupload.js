@@ -16,8 +16,7 @@ function fileUploadInit() {
       var $textarea = $(e.originalEvent.target)
 
       if ($textarea.is($('[data-behavior~=rich-toolbar]'))) {
-        var editorToolbar = $textarea.data('editorToolbar'),
-            that = this;
+        var editorToolbar = $textarea.data('editorToolbar');
 
         data.$textarea = $textarea;
 

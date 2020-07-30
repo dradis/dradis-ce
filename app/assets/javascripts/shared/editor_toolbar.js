@@ -86,7 +86,7 @@ class EditorToolbar {
     });
 
     // when a toolbar button is clicked
-    this.$editorToolbar.find('[data-btn]').click(function (e) {
+    this.$editorToolbar.find('[data-btn]').click(function() {
       var $element = that.$editorField.find('textarea, input[type=text]');
       var affix = that.affixes[$(this).data('btn')];
   
