@@ -36,11 +36,11 @@ class EditorToolbar {
 
     this.$target.on('click change keyup select', function() {
       // enabling/disabling specific toolbar functions for textareas on selection
-      var $buttons = $('[data-btn~=table], [data-btn~=image]');
+      var buttons = '[data-btn~=table], [data-btn~=image]';
       if (window.getSelection().toString().length > 0 || this.selectionStart != this.selectionEnd) { // when there is text selected
-        that.$editorField.find($buttons).addClass('disabled');
+        that.$editorField.find(buttons).addClass('disabled');
       } else { // when there is no text selected
-        that.$editorField.find($buttons).removeClass('disabled');
+        that.$editorField.find(buttons).removeClass('disabled');
       }
     });
 
@@ -98,7 +98,7 @@ class EditorToolbar {
     });
 
     // toolbar sticky positioning
-    $('[data-behavior~=editor-field]').find('textarea').on('focus', function() {
+    this.$editorField.find('textarea').on('focus', function() {
       var $inputElement = $(this),
           $toolbarElement = $inputElement.parent().prev(),
           $parentElement = $inputElement.parents('[data-behavior~=editor-field]'),
@@ -130,7 +130,7 @@ class EditorToolbar {
     });
 
     // reset position and hide toolbar once focus is lost
-    $('[data-behavior~=editor-field]').find('textarea').on('blur', function() {
+    this.$editorField.find('textarea').on('blur', function() {
       $(this).parent().prev().css({'opacity': 0, 'visibility': 'hidden'});
     });
   }
