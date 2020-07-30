@@ -1,5 +1,7 @@
-[v#.#.#] ([MMM’YY])
-  * [feature #1]
+[v3.8.0] ([MMM’YY])
+  * Auto upload attachments and screenshots without requiring the use of the staging area
+  * Allow drag & drop, copy & paste, and direct image uploading with the editor toolbar
+  * Cards, Evidence, Issues, and Notes now have their own attachment support
   * [feature #2]
   * [feature ...]
   * Upgraded gems: [gem #1], [gem #2]
