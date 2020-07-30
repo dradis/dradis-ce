@@ -16,12 +16,12 @@ function fileUploadInit() {
       var $textarea = $(e.originalEvent.target)
 
       if ($textarea.is($('[data-behavior~=rich-toolbar]'))) {
+        var editorToolbar = $textarea.data('editorToolbar'),
+            that = this;
+
         data.$textarea = $textarea;
 
-        var editorToolbar = $textarea.data('editorToolbar');
-
         $textarea.focus();
-        var that = this;
 
         $.each(data.files, function (index, file) {
           affix = editorToolbar.affixes['image'];
@@ -36,9 +36,10 @@ function fileUploadInit() {
       var editorToolbar = $textarea.data('editorToolbar');
 
       $.each(data.files, function (index, file) {
-        var uploadedFile = data.result[0].url;
+        var uploadedFile = data.result[0].url,
+            str = '!' + file.name + ' uploading...' + '!';
+
         // remove placeholder from textarea for each file once it's uploaded
-        str = '!' + file.name + ' uploading...' + '!';
         $textarea.focus().val($textarea.val().replace(str, ''));
 
         // inject syntax into textarea to automatically display uploaded image
