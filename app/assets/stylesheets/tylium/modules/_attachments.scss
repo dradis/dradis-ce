@@ -22,8 +22,15 @@
       color: $white;
     }
 
-    input {
-      width: 0;
+    input[type=file] {
+      border: none;
+      height: 1.25rem;
+      transform: none;
+      width: 1.25rem;
+      
+      &::-webkit-file-upload-button {
+        display: none;
+      }
     }
   }
 
