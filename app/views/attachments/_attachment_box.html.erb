@@ -66,7 +66,13 @@
 
     <!-- The file upload form used as target for the file upload widget -->
     <%= form_tag project_node_attachments_path(node.project, node, format: :json), id: 'fileupload', multipart: true do %>
-      <input type="file" name="files[]" multiple style="display: none">
+      <div class="fileupload-buttonbar">	
+        <span class="btn btn-primary fileinput-button" data-toggle="tooltip" data-placement="bottom" title="Add...">	
+          <i class="fa fa-plus fa-inverse"></i>	
+          Add files
+          <input type="file" name="files[]" multiple>	
+        </span>
+      </div>
       <!-- The loading indicator is shown during image processing -->
       <div class="fileupload-loading"></div>
     <% end %>
@@ -84,15 +90,6 @@
             <td class="name">{%= file.name %}</td>
             {% if (file.error) { %}
               <td rowspan="2" class="error" colspan="2"><span>{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
-            {% } else if (o.files.valid && !i) { %}
-              <td rowspan="2" align="right" class="start">{% if (!o.options.autoUpload) { %}
-                  <button class="btn btn-success">
-                      <i class="fa fa-upload"></i>
-                      <span>{%locale.fileupload.start%}</span>
-                  </button>
-              {% } %}</td>
-            {% } else { %}
-              <td rowspan="2" colspan="2"></td>
             {% } %}
             <td rowspan="2" align="right" class="cancel">{% if (!i) { %}
               <button class="btn btn-warning">
