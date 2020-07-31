@@ -169,6 +169,7 @@ class EditorToolbar {
 
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) { // firefox
       $element.val(elementText.slice(0, startIndex) + text + elementText.slice(endIndex));
+      $element.trigger('blur'); // Trigger setHeight
     }
     else { // all other browsers
       document.execCommand('insertText', false, text);
@@ -187,9 +188,9 @@ class EditorToolbar {
     adjustedPrefixLength *= selectedText.split('\n').length;
     adjustedSuffixLength *= selectedText.split('\n').length;
 
-    $element.focus(); // bring focus back to $element from the toolbar
-
     this.replace(markdownText, $element);
+
+    $element.focus(); // bring focus back to $element from the toolbar
 
     // post-injection cursor location
     if (startIndex == endIndex) { // no text was selected, select injected placeholder text
