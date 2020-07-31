@@ -33,12 +33,30 @@ class EditorToolbar {
     this.$editorToolbar = this.$editorField.find('[data-behavior~=editor-toolbar]');
 
     this.$editorToolbar.append(this.textareaElements(this.opts.include));
-    this.$fileField = $('<input type="file" name="editor-toolbar-' + Math.random().toString(36) + '[]" multiple style="display: none">');
-    this.$editorToolbar.append(this.$fileField);
 
     this.$target.data('editorToolbar', this);
 
+    if (this.opts.include.includes('image')) {
+      this.addUploader();
+    }
+
     this.behaviors();
+  }
+
+  addUploader() {
+    var that = this;
+    this.$fileField = $('<input type="file" name="editor-toolbar-' + Math.random().toString(36) + '[]" multiple accept="image/*" style="display: none">');
+    this.$editorToolbar.append(this.$fileField);
+
+    this.$fileField.bind('change', function (e) {
+      $(that.opts.uploader).fileupload('add', {
+        files: this.files,
+        $textarea: that.$editorField.find('textarea, input[type=text]')
+      });
+
+      // Clear the $fileField so it never submit unexpected filedata
+      $(this).val('');
+    });
   }
 
   behaviors() {
@@ -74,16 +92,6 @@ class EditorToolbar {
 
     // Handler for setting the correct textarea height when focus is lost
     this.$target.on('blur', setHeight);
-
-    this.$fileField.bind('change', function (e) {
-      $(that.opts.uploader).fileupload('add', {
-        files: this.files,
-        $textarea: that.$editorField.find('textarea, input[type=text]')
-      });
-
-      // Clear the $fileField so it never submit unexpected filedata
-      $(this).val('');
-    });
 
     // when a toolbar button is clicked
     this.$editorToolbar.find('[data-btn]').click(function() {
