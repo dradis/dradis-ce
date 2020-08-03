@@ -1,4 +1,4 @@
-$("#<%= dom_id(@comment) %>").remove()
+$("#<%= dom_id(@comment) %>").parent().remove()
 <% if @comment.commentable.comments.empty? %>
   $('[data-notice~=no-comments]').show()
 <% end %>

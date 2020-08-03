@@ -99,7 +99,7 @@ gem 'RedCloth', '~> 4.3.2', require: 'redcloth'
 gem 'rinku'
 
 # html-pipeline dependency for html sanitization
-gem 'sanitize'
+gem 'sanitize', '5.2.1'
 
 # SQLite3 DB driver
 gem 'sqlite3'#,  '1.3.10'
@@ -206,13 +206,13 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 3.15'
+gem 'dradis-plugins', '~> 3.18'
 
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 3.15'
+gem 'dradis-projects', '~> 3.18'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)
