@@ -10,6 +10,7 @@ class EvidenceController < NestedNodeResourceController
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
   skip_before_action :find_or_initialize_node, only: [:create_multiple]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
+  before_action :cancel_path, only: [:new, :create, :edit, :update]
 
   def show
     @activities   = @evidence.activities.latest
@@ -180,5 +181,15 @@ class EvidenceController < NestedNodeResourceController
                       else
                         "node-#{@node.id}-evidence"
                       end
+  end
+
+  def cancel_path
+    @cancel_path ||= if params[:back_to] == 'issue'
+                       [current_project, @evidence.issue]
+                     elsif @evidence.persisted?
+                       [current_project, @node, @evidence]
+                     else
+                       [current_project, @node]
+                     end
   end
 end
