@@ -34,7 +34,7 @@
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
     <%=
       link_to 'Cancel',
-      @cancel_path,
+      cancel_path(params[:back_to]),
       data: {
         behavior: 'clear-local-auto-save'
       }
