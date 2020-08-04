@@ -4,7 +4,7 @@
   tabindex="-1"
   role="dialog"
   aria-hidden="true"
-  data-id="add-node"
+  data-behavior="add-node"
   aria-labelledby="modal-title"
 >
   <div class="modal-dialog">
@@ -55,12 +55,12 @@
           html: { class: 'add_one_node_form form-horizontal', id: "new_#{type}_node_form" }
         ) do |f| %>
           <%= f.hidden_field :parent_id, id: "node_#{@node.id}_parent_id" if type == :child %>
-          <%= f.input :label, input_html: { id: type == :child ? "node_#{@node.id}_label" : 'node_label', data: { id: 'node-label' }  } %>
+          <%= f.input :label, input_html: { id: type == :child ? "node_#{@node.id}_label" : 'node_label', data: { behavior: 'node-label' } } %>
           <%= f.input :type_id,
             collection: [["No icon", Node::Types::DEFAULT], ["Host", Node::Types::HOST]],
             include_blank: false,
             label: 'Icon',
-            input_html: { class: 'custom-select', id: type == :child ? "node_#{@node.id}_icon" : 'node_icon', data: { id: 'node-icon' } }
+            input_html: { class: 'custom-select', id: type == :child ? "node_#{@node.id}_icon" : 'node_icon', data: { behavior: 'node-icon' } }
           %>
         <% end %>
 
@@ -76,7 +76,7 @@
 
           <%= hidden_field_tag "nodes[parent_id]", @node.id if type == :child %>
           <label for="<%= type == :child ? "node_#{@node.id}_nodes_list" : 'nodes_list' %>">To create multiple nodes, add one node name per line:</label>
-          <%= text_area_tag "nodes[list]", "", rows: 3, class: 'form-control mb-3 nodes_list', id: type == :child ? "node_#{@node.id}_nodes_list" : 'nodes_list', data: { id: 'nodes-list' } %>
+          <%= text_area_tag "nodes[list]", "", rows: 3, class: 'form-control mb-3 nodes_list', id: type == :child ? "node_#{@node.id}_nodes_list" : 'nodes_list', data: { behavior: 'nodes-list' } %>
           <%= label_tag type == :child ? "node_#{@node.id}_nodes_icon" : 'nodes_icon', 'Icon' %>
           <%= select_tag(
             "nodes[type_id]",
@@ -85,7 +85,8 @@
             ),
             include_blank: false,
             class: 'custom-select',
-            id: type == :child ? "node_#{@node.id}_nodes_icon" : 'nodes_icon')
+            id: type == :child ? "node_#{@node.id}_nodes_icon" : 'nodes_icon',
+            data: { behavior: 'nodes-icon' })
           %>
         <% end %>
       </div>
