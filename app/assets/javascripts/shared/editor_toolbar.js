@@ -188,9 +188,9 @@ class EditorToolbar {
     adjustedPrefixLength *= selectedText.split('\n').length;
     adjustedSuffixLength *= selectedText.split('\n').length;
 
-    this.replace(markdownText, $element);
-
     $element.focus(); // bring focus back to $element from the toolbar
+
+    this.replace(markdownText, $element);
 
     // post-injection cursor location
     if (startIndex == endIndex) { // no text was selected, select injected placeholder text
