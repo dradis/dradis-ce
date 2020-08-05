@@ -32,8 +32,8 @@
             <label class="custom-control-label <%= @templates.empty? ? "text-muted" : "" %>" for="use_template_yes">From template</label>
             <% if @templates.any? %>
               <div>
-                <label for="new_board_template" class="sr-only">List of methodology templates</label>
-                <%= select_tag 'template', options_from_collection_for_select(@templates, :id, :name), class: 'my-1 form-control', id: 'new_board_template', data: { behavior: 'new-board-template' } %>
+                <%= f.label :new_board_template, 'List of methodology templates', class: 'sr-only' %>
+                <%= select_tag 'template', options_from_collection_for_select(@templates, :id, :name), class: 'my-1 form-control', id: 'board_new_board_template', data: { behavior: 'new-board-template' } %>
               </div>
             <% else %>
               <p class="mb-0">

@@ -9,11 +9,15 @@
       <div class="mt-4">
         <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, id: 'new_upload', data: { parse_url: project_upload_parse_path(current_project) } do %>
           <div class="form-group mb-5 mt-4 pt-2">
-            <label for="uploader"><h5>1. Choose a tool</h5></label>
+            <%= label_tag :uploader do %>
+              <h5>1. Choose a tool</h5>
+            <% end %>
             <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { :class => 'form-control' } %>
           </div>
           <div class="form-group mb-4">
-            <label for="file"><h5>2. Choose a file</h5></label>
+            <%= label_tag :file do %>
+              <h5>2. Choose a file</h5>
+            <% end %>
             <div class="custom-file">
               <%= file_field_tag 'file', class: 'custom-file-input' %>
               <label class="custom-file-label" data-behavior="file-label">Choose file</label>

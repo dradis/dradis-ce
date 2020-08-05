@@ -75,7 +75,7 @@
           </div>
 
           <%= hidden_field_tag "nodes[parent_id]", @node.id if type == :child %>
-          <label for="<%= type == :child ? "node_#{@node.id}_nodes_list" : 'nodes_list' %>">To create multiple nodes, add one node name per line:</label>
+          <%= label_tag type == :child ? "node_#{@node.id}_nodes_list" : 'nodes_list', 'To create multiple nodes, add one node name per line:' %>
           <%= text_area_tag "nodes[list]", "", rows: 3, class: 'form-control mb-3 nodes_list', id: type == :child ? "node_#{@node.id}_nodes_list" : 'nodes_list', data: { behavior: 'nodes-list' } %>
           <%= label_tag type == :child ? "node_#{@node.id}_nodes_icon" : 'nodes_icon', 'Icon' %>
           <%= select_tag(
