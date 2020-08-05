@@ -1,5 +1,10 @@
 [v3.19.0] ([MMM’20])
-  * Improve accessibility
+  * Improve accessibility:
+    - Add alt text to any linked images
+    - Add screen reader only text to forms
+    - Adjustments to font and element contrast to meet at minimum Level AA WCAG 2.0 standards.
+    - Fix any broken Aria references
+    - Update element label association & add missing labels
   * Upgraded gems: [gem #1], [gem #2]
   * Bugs fixed:
     - [bug fixed #1]
