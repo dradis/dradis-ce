@@ -7,7 +7,7 @@
 
 
 # Unless the DB is already migrated, do nothing
-if Configuration.table_exists?
+if (ActiveRecord::Base.connection rescue false) && Configuration.table_exists?
   plugin_dir = nil
   source_dir = nil
   destination_dir = nil
