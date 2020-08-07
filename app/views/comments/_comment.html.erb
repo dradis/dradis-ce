@@ -16,7 +16,7 @@
 
 
             <div class="actions pull-right">
-              <%= link_to edit_project_comment_path(current_project, comment), remote: true do %>
+              <%= link_to edit_project_comment_path(current_project, comment), remote: true, data: { action: 'edit' } do %>
                 <i class="fa fa-pencil"></i> Edit
               <% end %>
               <%= link_to [current_project, comment],

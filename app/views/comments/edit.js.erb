@@ -1,5 +1,6 @@
 <% if can? :update, @comment %>
   $('#<%= dom_id(@comment) %> .content').hide();
+  $('#<%= dom_id(@comment) %> [data-action~=edit]').hide();
   $('#<%= dom_id(@comment) %> .body').append("<%= j render 'form' %>");
   Mentions.init($('#<%= dom_id(@comment) %> [data-behavior~=mentionable]')[0]);
 

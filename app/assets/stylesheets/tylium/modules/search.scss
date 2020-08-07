@@ -1,80 +1,93 @@
-.navbar-nav {
-
+.navbar-collapse {
   .form-search {
-    position: relative;
-    transition: all 0.5s ease-in-out;
-    width: 40px;
     height: 40px;
-    background: white;
-    box-sizing: border-box;
-    border-radius: 50px;
-    border: 1px solid $borderColor;
-    padding: 5px;
-    float: right;
+    margin-left: 0.25rem;
+    position: relative;
+    transition: width 0.5s ease-in-out;
+    width: 0px;
+    z-index: 1;
 
     .btn {
-      box-sizing: border-box;
-      display: flex;
-      width: 38px;
-      height: 38px;
       background: initial;
-      position: absolute;
-      top: 0;
-      right: 0;
       border-radius: 50%;
       color: $linkColor;
-      text-align: center;
+      display: flex;
       font-size: 1.2em;
-      transition: all 0.5s ease-in-out;
+      height: 38px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 38px;
 
       .fa-search {
-        top: 10px;
         position: absolute;
-      }
-    }
-
-    .search-query {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;;
-      height: 38px;
-      line-height: 30px;
-      outline: 0;
-      border: 0;
-      display: none;
-      font-size: 1em;
-      border-radius: 50px;
-      padding: 0 50px 0 20px;
-      color: $defaultText;
-      transition: width 0.5s ease-in-out;
-
-      &::-webkit-search-cancel-button {
-        position: relative;
-        right: -5px;
+        top: 10px;
       }
     }
 
     &:hover {
-      width: 200px;
+      width: 9.5rem;
       cursor: pointer;
 
       .btn {
         background: $activeFillColor;
         color: $linkColorHover;
+        transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
       }
 
       .search-query {
-        display: block;
-        animation: search-opacity 0.5s;
+        border-bottom-color: $linkColor;
+        opacity: 1;
+        right: 1.25rem;
+        width: 9rem;
       }
+    }
 
-      @keyframes search-opacity {
-        0%, 50% {
-          opacity: 0;
+    .search-query {
+      border: 0;
+      border-bottom: 1px solid transparent;
+      color: $defaultText;
+      height: 38px;
+      opacity: 0;
+      outline: 0;
+      padding: 0 1.25rem 0 0.5rem;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: 
+        opacity 0.4s ease-in-out,
+        width 0.4s ease-in-out, 
+        right 0.4s ease-in-out, 
+        border-bottom 0.4s 0.25s ease-in-out;
+      width: 0;
+    }
+  }
+
+  @media (max-width: 991px) {
+    &.show {
+      .form-search {
+        margin: 0 0 0.5rem;
+        width: 100%;
+
+        .btn {
+          left: 0.25rem;
+          right: initial;
         }
-        100% {
+
+        &:hover {
+          .btn {
+            background: initial;
+            color: $linkColor;
+          }
+        }
+
+        .search-query {
+          border-bottom: 1px solid $linkColor;
+          margin: 0 0.5rem;
           opacity: 1;
+          padding: 0 0.5rem 0 2rem;
+          position: initial;
+          width: 160px;
         }
       }
     }
@@ -85,6 +98,12 @@ body.search.index {
 
   .inset-button-wrapper {
     max-width: 300px;
+  }
+
+  .match-snippet {
+    background-color: $secondaryBgColor;
+    border: 1px solid $borderColor;
+    padding: 0.25rem;
   }
 
   tr:first-child td {
@@ -102,11 +121,5 @@ body.search.index {
 
   .search-match-title {
     font-weight: 600;
-  }
-
-  .match-snippet {
-    background-color: $secondaryBgColor;
-    border: 1px solid $borderColor;
-    padding: 0.25rem;
   }
 }
