@@ -105,7 +105,6 @@ class LocalAutoSave {
 
   setData() {
     if (!this.cancelled && !this.submitted && this.isFormInsideDOM()) {
-      console.log('getdata', JSON.stringify(this.getData()))
       localStorage.setItem(this.key, JSON.stringify(this.getData()));
     } else {
       // Reset the submit state, needed for comment form
