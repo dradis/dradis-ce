@@ -36,7 +36,7 @@ function fileUploadInit() {
 
       $.each(data.files, function (index, file) {
         var uploadedFile = data.result[0].url,
-            str = '\n\n!' + file.name + ' uploading...' + '!';
+            str = '\n!' + file.name + ' uploading...' + '!\n';
 
         // remove placeholder from textarea for each file once it's uploaded
         $textarea.focus().val($textarea.val().replace(str, ''));
