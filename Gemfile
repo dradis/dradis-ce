@@ -27,13 +27,13 @@ gem 'local_time', '>= 2.0.0'
 gem 'turbolinks', '~> 5'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
+gem 'jbuilder', '~> 2.7'
 
-# Use ActiveStorage variant
-# gem 'mini_magick', '~> 4.8'
+# Use Active Storage variant
+# gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bootsnap', '>= 1.4.2', require: false
 
 # ---------------------------------------------------- Dradis Community Edition
 gem 'font-awesome-sass', '~> 4.7.0'
@@ -73,7 +73,7 @@ gem 'thor', '~> 0.18'
 # See:
 #   http://traveling-ruby.s3-us-west-2.amazonaws.com/list.html
 
-# Use ActiveModel has_secure_password
+# Use Active Model has_secure_password
 # Password digests
 gem 'bcrypt',   '3.1.12'
 
@@ -102,7 +102,7 @@ gem 'rinku'
 gem 'sanitize', '5.2.1'
 
 # SQLite3 DB driver
-gem 'sqlite3'#,  '1.3.10'
+gem 'sqlite3'#,  '1.4.2'
 
 # --------------------------------------------------------- Dradis Professional
 # Authorisation
@@ -145,7 +145,7 @@ end
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'listen', '~> 3.2'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
