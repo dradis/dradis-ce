@@ -17,7 +17,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'mini_racer', platforms: :ruby
 
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2'
+gem 'coffee-rails', '~> 5.0'
 
 # Cache-friendly, client-side local time
 gem 'local_time', '>= 2.0.0'
