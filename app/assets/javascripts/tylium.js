@@ -41,6 +41,7 @@
 //= require tylium/modules/configurations
 //= require tylium/modules/export
 //= require tylium/modules/fileupload
+//= require tylium/modules/image_modals
 //= require tylium/modules/issues
 //= require tylium/modules/mentions
 //= require tylium/modules/nodes
