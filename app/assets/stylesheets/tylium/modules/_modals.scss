@@ -8,7 +8,7 @@
       width: fit-content;
 
       .img-fluid {
-        max-height: 88vh;
+        max-height: calc(100vh - 125px);
       }
 
       .modal-body {
