@@ -3,6 +3,19 @@
   .modal-dialog {
     max-width: 560px;
 
+    &.image-modal {
+      max-width: 95vw;
+      width: fit-content;
+
+      .img-fluid {
+        max-height: 88vh;
+      }
+
+      .modal-body {
+        padding: 0;
+      }
+    }
+
     .modal-content {
       font-size: 0.9rem;
 
