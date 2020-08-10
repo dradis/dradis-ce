@@ -59,7 +59,8 @@
     <%= render 'activities/poller' %>
 
     <!-- All modals go here -->
-    <%= render 'layouts/tylium/modals' %>
+    <%= render partial: 'layouts/tylium/image_modals' %>
+    <%= render partial: 'layouts/tylium/modals' %>
     <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
 
     <% if controller_name == 'boards' %>

@@ -54,7 +54,7 @@
             <div class="note-text-inner">
               <h4 class="header-underline">Evidence for this instance</h4>
 
-              <div class="content-textile">
+              <div class="content-textile" data-behavior="content-textile">
                 <%= markup(@evidence.content) %>
               </div>
               <div class="author-info">
@@ -75,7 +75,7 @@
               <%= tag_and_name_for(@issue) %>
               </span>
             </h4>
-            <div id="<%= dom_id(@issue) %>_text" class="content-textile">
+            <div id="<%= dom_id(@issue) %>_text" class="content-textile" data-behavior="content-textile">
               <%= markup(@issue.text) %>
             </div>
           </div>

@@ -43,7 +43,7 @@
           <% cache ['note-information-tab', @note] do %>
             <div id="<%= dom_id(@note) %>" class="note-text-inner">
               <h4 class="header-underline">Content for this note</h4>
-              <div class="content-textile">
+              <div class="content-textile" data-behavior="content-textile">
                 <%= markup(@note.text) %>
               </div>
               <div class="author-info">
