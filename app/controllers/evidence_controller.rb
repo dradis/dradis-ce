@@ -93,7 +93,7 @@ class EvidenceController < NestedNodeResourceController
   def update
     respond_to do |format|
       updated_at_before_save = @evidence.updated_at.to_i
-      if @evidence.update_attributes(evidence_params)
+      if @evidence.update(evidence_params)
         track_updated(@evidence)
         check_for_edit_conflicts(@evidence, updated_at_before_save)
         format.html do

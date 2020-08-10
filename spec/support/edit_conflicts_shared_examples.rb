@@ -41,7 +41,7 @@ shared_examples 'a page which handles edit conflicts' do
     let(:email_1) { 'someone@example.com' }
     before do
       PaperTrail.enabled = true
-      record.update_attributes!(column => "Someone else's changes")
+      record.update!(column => "Someone else's changes")
       record.versions.last.update!(whodunnit: email_1)
     end
 
@@ -84,7 +84,7 @@ shared_examples 'a page which handles edit conflicts' do
     context 'when there has been more than one edit' do
       let(:email_2) { 'someoneelse@example.com' }
       before do
-        record.update_attributes!(column => 'More conflicts')
+        record.update!(column => 'More conflicts')
         record.versions.last.update!(whodunnit: email_2)
         submit_form
       end
