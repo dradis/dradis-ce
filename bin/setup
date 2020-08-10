@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 require 'fileutils'
-include FileUtils
 
 # path to your application root.
 APP_ROOT = File.expand_path('..', __dir__)
@@ -9,9 +8,9 @@ def system!(*args)
   system(*args) || abort("\n== Command #{args} failed ==")
 end
 
-chdir APP_ROOT do
-  # This script is a starting point to setup your application.
-  # Add necessary setup steps to this file.
+FileUtils.chdir APP_ROOT do
+  # This script is a way to setup or update your development environment automatically.
+  # This script is idempotent, so that you can run it at anytime and get an expectable outcome.
 
   puts "\n== Enabling default add-ons =="
   unless File.exist?('Gemfile.plugins') || File.exist?('lib/dradis/pro.rb')
@@ -22,24 +21,24 @@ chdir APP_ROOT do
   system! 'gem install bundler --conservative'
   system('bundle check') || system!('bundle install')
 
-  # Install JavaScript dependencies if using Yarn
+  # Install JavaScript dependencies
   # system('bin/yarn')
 
   puts "\n== Copying sample files =="
   unless File.exist?('config/database.yml')
-    cp 'config/database.yml.template', 'config/database.yml'
+    FileUtils.cp 'config/database.yml.template', 'config/database.yml'
   end
 
   unless File.exist?('config/secrets.yml')
-    cp 'config/secrets.yml.template', 'config/secrets.yml'
+    FileUtils.cp 'config/secrets.yml.template', 'config/secrets.yml'
   end
 
   unless File.exist?('config/smtp.yml')
-    cp 'config/smtp.yml.template', 'config/smtp.yml'
+    FileUtils.cp 'config/smtp.yml.template', 'config/smtp.yml'
   end
 
   puts "\n== Preparing database =="
-  system! 'bin/rails db:setup'
+  system! 'bin/rails db:prepare'
 
   puts "\n== Loading some sample content =="
   system! 'bin/bundle exec thor dradis:setup:welcome'
