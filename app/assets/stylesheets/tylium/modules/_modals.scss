@@ -5,7 +5,7 @@
 
     &.image-modal {
       max-width: 95vw;
-      width: fit-content;
+      width: max-content;
 
       .img-fluid {
         max-height: calc(100vh - 125px);
