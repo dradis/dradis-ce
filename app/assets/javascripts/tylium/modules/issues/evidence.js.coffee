@@ -3,8 +3,6 @@ document.addEventListener "turbolinks:load", ->
     $('[data-behavior~=evidence-link]').first().addClass('active')
     $('[data-behavior~=evidence-tab-pane]').first().addClass('active show')
 
-    $('i[data-toggle="tooltip"]').tooltip()
-
     $('#evidence-host-list a[data-toggle~=pill]').on 'click', (ev)->
       path   = $(this).data('path')
       node   = $(this).data('node')
