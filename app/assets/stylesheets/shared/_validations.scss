@@ -1,4 +1,4 @@
-.validation-feed {
+.validation {
   .fa-check {
     color: $green;
   }
@@ -7,23 +7,26 @@
     color: $red;
   }
 
-  h4 i {
-    margin-left: 0.5rem;
-  }
+  &.validation-feed {
+
+    h4 i {
+      margin-left: 0.5rem;
+    }
+    
+    .validation-list {
+      margin: 1rem 0 0;
+      padding: 0;
   
-  .validation-list {
-    margin: 1rem 0 0;
-    padding: 0;
-
-    i {
-      margin-right: 0.25rem;
-
-      &.fa-question-circle {
-        color: $mutedText;
-        margin-left: 0.25rem;
-
-        &:hover {
-          color: $defaultText;
+      i {
+        margin-right: 0.25rem;
+  
+        &.fa-question-circle {
+          color: $mutedText;
+          margin-left: 0.25rem;
+  
+          &:hover {
+            color: $defaultText;
+          }
         }
       }
     }

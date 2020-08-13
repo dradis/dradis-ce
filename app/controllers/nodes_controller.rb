@@ -12,7 +12,7 @@ class NodesController < NestedNodeResourceController
     @note_columns     = @sorted_notes.map(&:fields).map(&:keys).uniq.flatten \
                       | ['Title', 'Created', 'Created by', 'Updated']
     @evidence_columns = @sorted_evidence.map(&:fields).map(&:keys).uniq.flatten \
-                      | ['Title', 'Created', 'Created by', 'Updated']
+                      | ['Title', 'Created', 'Created by', 'Updated', 'Validation']
   end
 
   # GET /nodes/<id>/edit

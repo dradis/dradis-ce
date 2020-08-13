@@ -16,7 +16,7 @@ class IssuesController < AuthenticatedController
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
 
   def index
-    @columns = @issues.map(&:fields).map(&:keys).uniq.flatten | ['Title', 'Tags', 'Affected', 'Created', 'Created by', 'Updated']
+    @columns = @issues.map(&:fields).map(&:keys).uniq.flatten | ['Title', 'Tags', 'Affected', 'Created', 'Created by', 'Updated', 'Validation']
   end
 
   def show

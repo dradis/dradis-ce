@@ -40,6 +40,8 @@
                 [item.author, item.author]
               when 'Updated'
                 [item.updated_at.to_i, local_time_ago(item.updated_at)]
+              when 'Validation'
+               ['pass or fail', validation_icon()]
               else
                 [item.fields.fetch(column, ''), markup(item.fields.fetch(column, ''))]
               end
