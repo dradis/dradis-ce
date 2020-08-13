@@ -1,7 +1,7 @@
 <% content_for :title, 'Upload Manager' %>
 
 <div class="row m-0">
-  <div class="col-lg-6 col-xl-5 p-0">
+  <div class="col-lg-7 col-xxl-4 p-0 order-1">
     <div class="content-container mt-3 mr-lg-3" data-behavior="content-container">
       <h4 class="header-underline">Upload Output Files</h4>
       <p class="mt-4">Use the form below to upload output files from other tools.</p>
@@ -34,8 +34,14 @@
     </div>
   </div>
 
-  <div class="col-lg-6 col-xl-7 p-0">
-    <div class="content-container mt-0 mt-lg-3 ml-lg-3 restrict-height" data-height="match-prev" data-behavior="restrict-height">
+  <div class="col-lg-5 col-xxl-3 p-0 order-2">
+    <div class="content-container mt-0 mt-lg-3 ml-lg-3 mr-xxl-3 restrict-height" data-height="match-prev" data-behavior="content-container restrict-height">
+      <%= render partial: 'validations/feed' %>
+    </div>
+  </div>
+
+  <div class="col-lg-12 col-xxl-5 p-0 order-4 order-xxl-3">
+    <div class="content-container mt-0 ml-xxl-3 mt-xxl-3 restrict-height" data-height="match-prev" data-behavior="restrict-height">
       <h4 class="header-underline">Available plugins</h4>
 
       <div id="plugin-list">
@@ -61,7 +67,7 @@
     </div>
   </div>
 
-  <div class="col-12 p-0">
+  <div class="col-12 p-0 order-3 order-xxl-4">
     <div class="content-container mt-0">
       <h4 class="header-underline">Output console</h4>
       <div id="status"></div>
