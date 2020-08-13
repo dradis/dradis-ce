@@ -65,9 +65,11 @@ describe 'Sessions' do
         click_button 'Let me in!'
       end
 
-      it 'redirects to previous page' do
+      before do
         login
+      end
 
+      it 'redirects to previous page' do
         Timecop.freeze(Time.now + 1.hour) do
           visit new_project_issue_path(project)
           submit_login_details
@@ -77,7 +79,6 @@ describe 'Sessions' do
 
       context 'when typing in editor after timeout', js: true do
         before do
-          login
           visit new_project_issue_path(project)
         end
 
@@ -102,6 +103,31 @@ describe 'Sessions' do
             expect(current_path).to eq login_path
             submit_login_details
             expect(current_path).to eq(new_project_issue_path(project))
+          end
+        end
+      end
+
+      context 'when creating evidence in issue page', js: true do
+        let(:issue) { create(:issue, node: project.issue_library) }
+        let(:node) { create(:node, project: project) }
+
+
+        it 'redirects to issue show page' do
+          visit project_issue_path(project, issue)
+
+          within '.tabs-container' do
+            click_link 'Evidence 0'
+          end
+
+          within '#evidence-tab' do
+            find('.js-add-evidence').click
+          end
+
+          Timecop.freeze(Time.now + 1.hour) do
+            click_button 'Save Evidence'
+            expect(current_path).to eq login_path
+            submit_login_details
+            expect(current_path).to eq(project_issue_path(project, issue))
           end
         end
       end
