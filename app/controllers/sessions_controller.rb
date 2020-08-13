@@ -1,6 +1,5 @@
 # This controller handles the login/logout function of the site.
 class SessionsController < ApplicationController
-  include MarkupHelper
   before_action :ensure_setup,          only: :new
   before_action :ensure_not_setup,      only: [:init, :setup]
   before_action :ensure_valid_password, only: :setup
@@ -101,11 +100,6 @@ class SessionsController < ApplicationController
   end
 
   def return_to
-    # Don't redirect to editor paths if user start typing in editor after timed out.
-    if editor_paths.values.include?(warden_options[:attempted_path])
-      request.env['HTTP_REFERER']
-    else
-      warden_options[:attempted_path]
-    end
+    request.env['HTTP_REFERER'] || warden_options[:attempted_path]
   end
 end
