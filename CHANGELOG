@@ -1,5 +1,6 @@
 [v#.#.#] ([MMM’YY])
-  * Fixed breadcrumbs
+  * Layout:
+    - Breadcrumbs have a fixed position
   * Upgraded gems: [gem #1], [gem #2]
   * Bugs fixed:
     - [bug fixed #1]
