@@ -100,6 +100,11 @@ class SessionsController < ApplicationController
   end
 
   def return_to
-    request.env['HTTP_REFERER'] || warden_options[:attempted_path]
+    # Don't redirect to ajax GET request
+    if request.get? && request.format&.html?
+      warden_options[:attempted_path]
+    else
+      request.env['HTTP_REFERER']
+    end
   end
 end
