@@ -1,4 +1,6 @@
 [v#.#.#] ([MMM’YY])
+  * Layout:
+    - Breadcrumbs have a fixed position
   * Return users to the last view before the session expired
   * Upgraded gems: [gem #1], [gem #2]
   * Bugs fixed:
