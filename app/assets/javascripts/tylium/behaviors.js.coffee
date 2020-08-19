@@ -58,6 +58,9 @@ document.addEventListener "turbolinks:load", ->
 
   # ------------------------------------------------------- Bootstrap behaviors
 
+  # Activate Bootstrap tooltips for icons
+  $('i[data-toggle="tooltip"]').tooltip()
+
   # Focus first input on modal window display.
 
   $('.modal').on 'shown.bs.modal', ->
