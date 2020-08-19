@@ -5,9 +5,14 @@
 # When such facility exists we can replace the content of this loop with a
 # simple call to (for instance) <plugin>.copy_templates
 
+# Rails 5.2 now loads the environment on all db rake tasks. Previously it did
+# not for setup or create. This means if the db doesn't exist this code will
+# fail. Technically we shouldn't communicate with AR during initializers so this
+# is workaround.
+# https://github.com/rails/rails/issues/32870
 
 # Unless the DB is already migrated, do nothing
-if Configuration.table_exists?
+if (ActiveRecord::Base.connection rescue false) && Configuration.table_exists?
   plugin_dir = nil
   source_dir = nil
   destination_dir = nil
