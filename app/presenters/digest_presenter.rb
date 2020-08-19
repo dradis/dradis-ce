@@ -1,9 +1,6 @@
 class DigestPresenter < NotificationPresenter
   attr_reader :current_project, :notifications, :template
 
-  # Jul 9th at 2:45pm
-  Time::DATE_FORMATS[:digest_format] = ->(time) { time.strftime "%h #{time.day.ordinalize} at %l:%M%P #{time.zone}" }
-
   def initialize(notifications, project, template)
     @current_project = project
     @notifications = notifications
@@ -23,7 +20,8 @@ class DigestPresenter < NotificationPresenter
   end
 
   def created_at
-    notification.created_at.localtime.to_s(:digest_format)
+    time = notification.created_at.localtime
+    time.strftime("%h #{time.day.ordinalize} at %l:%M%P #{time.zone}") # Jul 9th at 2:45pm CEST
   end
 
   def text_title
