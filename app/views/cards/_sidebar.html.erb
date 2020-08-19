@@ -17,3 +17,6 @@
     <%#-- We pass an empty block here or else "yield" in the rendered partial %>
     <%#-- will return the whole view. %>
   <% end %>
+
+  <!-- Attachments -->
+  <%= render partial: 'attachments/attachment_box', locals: { attachments_node: current_project.plugin_uploads_node } %>

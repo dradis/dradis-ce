@@ -14,3 +14,6 @@
   category_id: nil
 %>
 <%= render 'import_box' %>
+
+<!-- Attachments -->
+<%= render partial: 'attachments/attachment_box', locals: { attachments_node: current_project.plugin_uploads_node } %>

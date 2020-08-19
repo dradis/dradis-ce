@@ -15,20 +15,48 @@ class EditorToolbar {
     if (!$target.is("textarea")) { console.log("Can't initialize a rich toolbar on anything but a textarea"); return; }
 
     this.$target = $target;
-    this.opts = { 'include': $target.data('rich-toolbar').split(' ') };
+    this.opts = {
+      'include': $target.data('rich-toolbar').split(' '),
+      'uploader': $target.data('rich-toolbar-uploader')
+    };
+
+    if (this.opts.include.includes('image') && this.opts.uploader === undefined) { console.log("You initialized a RichToolbar with the image uploader option but have not provided an existing uploader to utilize"); return; }
+
     this.affixes = this.affixesLibrary();
     this.init();
   }
 
   init() {
     this.$target.wrap('<div class="editor-field" data-behavior="editor-field"><div class="textarea-container"></div></div>');
-    this.$editorField = this.$target.parents('[data-behavior=editor-field]');
+    this.$editorField = this.$target.parents('[data-behavior~=editor-field]');
     this.$editorField.prepend('<div class="editor-toolbar" data-behavior="editor-toolbar"></div>');
-    this.$editorToolbar = this.$editorField.find('[data-behavior=editor-toolbar]');
+    this.$editorToolbar = this.$editorField.find('[data-behavior~=editor-toolbar]');
 
     this.$editorToolbar.append(this.textareaElements(this.opts.include));
 
+    this.$target.data('editorToolbar', this);
+
+    if (this.opts.include.includes('image')) {
+      this.addUploader();
+    }
+
     this.behaviors();
+  }
+
+  addUploader() {
+    var that = this;
+    this.$fileField = $('<input type="file" name="editor-toolbar-' + Math.random().toString(36) + '[]" multiple accept="image/*" style="display: none">');
+    this.$editorToolbar.append(this.$fileField);
+
+    this.$fileField.bind('change', function (e) {
+      $(that.opts.uploader).fileupload('add', {
+        files: this.files,
+        $textarea: that.$editorField.find('textarea, input[type=text]')
+      });
+
+      // Clear the $fileField so it never submit unexpected filedata
+      $(this).val('');
+    });
   }
 
   behaviors() {
@@ -36,10 +64,11 @@ class EditorToolbar {
 
     this.$target.on('click change keyup select', function() {
       // enabling/disabling specific toolbar functions for textareas on selection
+      var buttons = '[data-btn~=table], [data-btn~=image]';
       if (window.getSelection().toString().length > 0 || this.selectionStart != this.selectionEnd) { // when there is text selected
-        that.$editorField.find('[data-btn~=table]').addClass('disabled');
+        that.$editorField.find(buttons).addClass('disabled');
       } else { // when there is no text selected
-        that.$editorField.find('[data-btn~=table]').removeClass('disabled');
+        that.$editorField.find(buttons).removeClass('disabled');
       }
     });
 
@@ -65,12 +94,16 @@ class EditorToolbar {
     this.$target.on('blur', setHeight);
 
     // when a toolbar button is clicked
-    this.$editorToolbar.find('[data-btn]').click(function () {
+    this.$editorToolbar.find('[data-btn]').click(function() {
       var $element = that.$editorField.find('textarea, input[type=text]');
       var affix = that.affixes[$(this).data('btn')];
   
-      // inject markdown
-      that.injectSyntax($element, affix);
+      if ($(this).is('[data-btn~=image')) {
+        that.$fileField.click();
+      } else {
+        // inject markdown
+        that.injectSyntax($element, affix);
+      }
     });
 
     // keyboard shortcuts
@@ -92,7 +125,7 @@ class EditorToolbar {
     });
 
     // toolbar sticky positioning
-    $('[data-behavior~=editor-field]').find('textarea').on('focus', function() {
+    this.$editorField.find('textarea').on('focus', function() {
       var $inputElement = $(this),
           $toolbarElement = $inputElement.parent().prev(),
           $parentElement = $inputElement.parents('[data-behavior~=editor-field]'),
@@ -124,9 +157,23 @@ class EditorToolbar {
     });
 
     // reset position and hide toolbar once focus is lost
-    $('[data-behavior~=editor-field]').find('textarea').on('blur', function() {
+    this.$editorField.find('textarea').on('blur', function() {
       $(this).parent().prev().css({'opacity': 0, 'visibility': 'hidden'});
     });
+  }
+
+  replace(text, $element) {
+    var startIndex = $element[0].selectionStart,
+        endIndex = $element[0].selectionEnd,
+        elementText = $element.val();
+
+    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) { // firefox
+      $element.val(elementText.slice(0, startIndex) + text + elementText.slice(endIndex));
+      $element.trigger('blur'); // Trigger setHeight
+    }
+    else { // all other browsers
+      document.execCommand('insertText', false, text);
+    }
   }
 
   injectSyntax($element, affix) {
@@ -134,7 +181,6 @@ class EditorToolbar {
         adjustedSuffixLength = affix.suffix.length,
         startIndex = $element[0].selectionStart,
         endIndex = $element[0].selectionEnd,
-        elementText = $element.val(),
         selectedText = $element.val().substring(startIndex, endIndex);
 
     var markdownText = (startIndex == endIndex) ? affix.asPlaceholder : affix.withSelection(selectedText);
@@ -142,15 +188,10 @@ class EditorToolbar {
     adjustedPrefixLength *= selectedText.split('\n').length;
     adjustedSuffixLength *= selectedText.split('\n').length;
 
-    // remove the original selection (if there was one) and add new markdown string in it's place
     $element.focus(); // bring focus back to $element from the toolbar
-    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) { // firefox
-      $element.val(elementText.slice(0, startIndex) + markdownText + elementText.slice(endIndex));
-    }
-    else { // all other browsers
-      document.execCommand('insertText', false, markdownText);
-    }
-    
+
+    this.replace(markdownText, $element);
+
     // post-injection cursor location
     if (startIndex == endIndex) { // no text was selected, select injected placeholder text
       $element[0].setSelectionRange(startIndex + affix.prefix.length, startIndex + markdownText.length - affix.suffix.length);
@@ -170,9 +211,10 @@ class EditorToolbar {
       'bold':        new Affix('*', 'Bold text', '*'),
       'field':       new Affix('#[', 'Field', ']#\n'),
       //'highlight':   new Affix('$${{', 'Highlighted text', '}}$$'),
+      'image':       new Affix('\n!', 'https://', '!\n'),
       //'inline-code': new Affix('@', 'Inline code', '@'),
       'italic':      new Affix('_', 'Italic text', '_'),
-      'link':        new Affix('"', 'Link text', '":http://'),
+      'link':        new Affix('"', 'Link text', '":https://'),
       'list-ol':     new Affix('# ', 'Ordered item'),
       'list-ul':     new Affix('* ', 'Unordered item'),
       //'quote':       new BlockAffix('bq. ', 'Quoted text'),
@@ -216,6 +258,12 @@ class EditorToolbar {
     </div>';
     if (include.includes('list-ol')) str += '<div class="editor-btn" data-btn="list-ol" aria-label="ordered list">\
       <i class="fa fa-list-ol"></i>\
+    </div>';
+
+    str += '<div class="divider-vertical"></div>';
+
+    if (include.includes('image')) str += '<div class="editor-btn image-btn" data-btn="image" aria-label="image">\
+      <i class="fa fa-picture-o"></i>\
     </div>';
 
     /* Additional buttons for future use
