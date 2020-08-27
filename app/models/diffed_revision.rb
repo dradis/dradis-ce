@@ -9,7 +9,7 @@ class DiffedRevision
   end
 
   def diff
-    @diff ||= Differ.diff_by_line(
+    @diff ||= Differ.diff_by_word(
                 after[content_attribute],
                 before[content_attribute]
               )
