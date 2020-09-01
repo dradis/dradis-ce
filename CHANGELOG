@@ -5,6 +5,7 @@
   * Editor: Allow drag & drop, copy & paste, and direct image uploading
   * Increase the node properties column size by changing it to LONGTEXT
   * Layout: Breadcrumbs have a fixed position
+  * Long dropdown menus are vertically scrollable
   * Upgraded gems: [gem #1], [gem #2]
   * Bugs fixed:
     - Use absolute send times in notification emails instead of relative
