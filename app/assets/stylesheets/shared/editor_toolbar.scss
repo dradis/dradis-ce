@@ -90,7 +90,6 @@
   }
 
   &.sticky-toolbar {
-
     .editor-toolbar {
       border: none;
       border-bottom: 1px solid $borderColor;
@@ -100,7 +99,7 @@
       margin: 0 1px;
       position: sticky;
       text-align: center;
-      top: 0;
+      top: 47px; // breadcrumb height
 
       &:after,
       &:before {

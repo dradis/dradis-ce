@@ -134,7 +134,7 @@ class EditorToolbar {
       $toolbarElement.css({'opacity': 1, 'visibility': 'visible'});
 
       // set offset to 0 if user is in fullscreen mode.
-      if ($inputElement.parents('.textile-fullscreen').length ? topOffset = 0 : topOffset = 60);
+      if ($inputElement.parents('.textile-fullscreen').length ? topOffset = 0 : topOffset = 106); // 106 = navbar height + breadcrumb height
 
       // this is needed incase user sets focus on textarea where toolbar would render off screen
       if ($inputElement.height() > 40 && $parentElement.offset().top < $(window).scrollTop() + topOffset) {
