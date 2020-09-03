@@ -5,6 +5,7 @@ v3.19.0 (September 2020)
   * Editor: Allow drag & drop, copy & paste, and direct image uploading
   * Increase the node properties column size by changing it to LONGTEXT
   * Layout: Breadcrumbs have a fixed position
+  * Link to our support site on the styles help page
   * Long dropdown menus are vertically scrollable
   * Bugs fixed:
     - Use absolute send times in notification emails instead of relative
