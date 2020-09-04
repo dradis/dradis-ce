@@ -72,26 +72,15 @@ class EditorToolbar {
       }
     });
 
+    function setHeight(e) {
+      $(this).css({'height': '1px'}).css({'height': this.scrollHeight + 2});
+    };
+
     // Handler for setting the correct textarea height on keyboard input
     this.$target[0].addEventListener('input', setHeight);
-
-    function setHeight(e) {
-      const shrinkEvents = ['deleteContentForward', 'deleteContentBackward', 'deleteByCut', 'historyUndo', 'historyRedo'];
-
-      if (shrinkEvents.includes(e.inputType)) {
-        // shrink the text area when content is being removed
-        $(this).css({'height': '1px'});
-      }
-      
-      // expand the textarea to fix the content
-      $(this).css({'height': this.scrollHeight + 2});
-    };
   
     // Handler for setting the correct textarea heights on load (for current values)
     this.$target.each(setHeight);
-
-    // Handler for setting the correct textarea height when focus is lost
-    this.$target.on('blur', setHeight);
 
     // when a toolbar button is clicked
     this.$editorToolbar.find('[data-btn]').click(function() {
