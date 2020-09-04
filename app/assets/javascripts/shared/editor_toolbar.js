@@ -82,6 +82,9 @@ class EditorToolbar {
     // Handler for setting the correct textarea heights on load (for current values)
     this.$target.each(setHeight);
 
+    // Handler for setting the correct textarea height when focus is lost
+    this.$target.on('blur', setHeight);
+
     // when a toolbar button is clicked
     this.$editorToolbar.find('[data-btn]').click(function() {
       var $element = that.$editorField.find('textarea, input[type=text]');
