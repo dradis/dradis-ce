@@ -36,14 +36,13 @@ function fileUploadInit() {
 
       $.each(data.files, function (index, file) {
         var uploadedFile = data.result[0].url,
-            str = '\n!' + file.name + ' uploading...' + '!\n';
+            str = '\n!' + file.name + ' uploading...' + '!\n',
+            affix = editorToolbar.affixes['image'];
 
-        // remove placeholder from textarea for each file once it's uploaded
-        $textarea.focus().val($textarea.val().replace(str, ''));
+        // replace placeholder with injected syntax for each file once
+        // it's uploaded to automatically display uploaded image
+        $textarea.focus().val($textarea.val().replace(str, affix.withSelection(uploadedFile), $textarea));
 
-        // inject syntax into textarea to automatically display uploaded image
-        affix = editorToolbar.affixes['image'];
-        editorToolbar.replace(affix.withSelection(uploadedFile), $textarea);
         $textarea.trigger('textchange');
       })
     }
