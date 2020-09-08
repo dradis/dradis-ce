@@ -1,3 +1,29 @@
+[v#.#.#] ([MMM’YY])
+  * [feature #1]
+  * [feature #2]
+  * [feature ...]
+  * Upgraded gems: [gem #1], [gem #2]
+  * Bugs fixed:
+    - [bug fixed #1]
+    - [bug fixed ...]
+    - Bug tracker items: #N, #M, #O, ...
+  * New integrations:
+    - [new integration #1]
+    - [new integration ...]
+  * Integration enhancements:
+    - [integration enhancement #1]
+    - [integration enhancement ...]
+  * Reporting enhancements:
+    - [reporting enhancement #1]
+    - [reporting enhancement ...]
+  * REST/JSON API enhancements:
+    - [API enhancement #1]
+    - [API enhancement ...]
+  * Security Fixes:
+    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
 v3.19.0 (September 2020)
   * Auto upload attachments and screenshots without requiring the use of the staging area
   * Cards, Evidence, Issues, and Notes now have their own attachment support
