@@ -1,4 +1,4 @@
-[v3.19.0] ([MMM’YY])
+v3.19.0 (September 2020)
   * Auto upload attachments and screenshots without requiring the use of the staging area
   * Cards, Evidence, Issues, and Notes now have their own attachment support
   * Displays a notification badge in the browser tab when there are unread notifications
@@ -7,27 +7,8 @@
   * Layout: Breadcrumbs have a fixed position
   * Link to our support site on the styles help page
   * Long dropdown menus are vertically scrollable
-  * Upgraded gems: [gem #1], [gem #2]
   * Bugs fixed:
     - Use absolute send times in notification emails instead of relative
-    - [bug fixed ...]
-    - Bug tracker items: #N, #M, #O, ...
-  * New integrations:
-    - [new integration #1]
-    - [new integration ...]
-  * Integration enhancements:
-    - [integration enhancement #1]
-    - [integration enhancement ...]
-  * Reporting enhancements:
-    - [reporting enhancement #1]
-    - [reporting enhancement ...]
-  * REST/JSON API enhancements:
-    - [API enhancement #1]
-    - [API enhancement ...]
-  * Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v3.18.0 (July 2020)
   * Add all activity view
