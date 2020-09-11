@@ -12,21 +12,22 @@ function fileUploadInit() {
        }
      }
   }).on('fileuploadadd', function (e, data) {
-    if (e.originalEvent !== undefined) {
-      var $textarea = $(e.originalEvent.target)
+    var $textarea = (e.originalEvent !== undefined) ? $(e.originalEvent.target) : data.$textarea;
 
-      if ($textarea.is($('[data-behavior~=rich-toolbar]'))) {
-        var editorToolbar = $textarea.data('editorToolbar');
+    if ($textarea.is($('[data-behavior~=rich-toolbar]'))) {
+      var editorToolbar = $textarea.data('editorToolbar');
 
-        data.$textarea = $textarea;
+      data.$textarea = $textarea;
 
+      $.each(data.files, function (index, file) {
+        affix = editorToolbar.affixes['image'];
+        str = affix.withSelection(file.name + ' uploading...');
+        editorToolbar.replace(str, $textarea);
+
+        var position = $textarea.val().indexOf(str) + str.length;
         $textarea.focus();
-
-        $.each(data.files, function (index, file) {
-          affix = editorToolbar.affixes['image'];
-          editorToolbar.replace(affix.withSelection(file.name + ' uploading...'), $textarea);
-        });
-      }
+        $textarea[0].setSelectionRange(position, position);
+      });
     }
   }).on('fileuploaddone', function (e, data) {
     var $textarea = data.$textarea;
@@ -39,13 +40,18 @@ function fileUploadInit() {
             str = '\n!' + file.name + ' uploading...' + '!\n';
 
         // remove placeholder from textarea for each file once it's uploaded
-        $textarea.focus().val($textarea.val().replace(str, ''));
+        //$textarea.focus().val($textarea.val().replace(str, ''));
 
         // inject syntax into textarea to automatically display uploaded image
-        affix = editorToolbar.affixes['image'];
-        editorToolbar.replace(affix.withSelection(uploadedFile), $textarea);
-        $textarea.trigger('textchange');
+        affix = editorToolbar.affixes['image'].withSelection(uploadedFile);
+        $textarea.val($textarea.val().replace(str, affix, $textarea));
+
+        var position = $textarea.val().indexOf(affix) + affix.length;
+        $textarea.focus();
+        $textarea[0].setSelectionRange(position, position);
       })
+
+      $textarea.trigger('textchange');
     }
   });
 };

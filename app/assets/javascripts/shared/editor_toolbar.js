@@ -93,6 +93,9 @@ class EditorToolbar {
     // Handler for setting the correct textarea height when focus is lost
     this.$target.on('blur', setHeight);
 
+    // Handler for setting the height after content has been injected via js
+    this.$target.on('textchange', setHeight);
+
     // when a toolbar button is clicked
     this.$editorToolbar.find('[data-btn]').click(function() {
       var $element = that.$editorField.find('textarea, input[type=text]');
@@ -169,7 +172,7 @@ class EditorToolbar {
 
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) { // firefox
       $element.val(elementText.slice(0, startIndex) + text + elementText.slice(endIndex));
-      $element.trigger('blur'); // Trigger setHeight
+      //$element.trigger('blur'); // Trigger setHeight
     }
     else { // all other browsers
       document.execCommand('insertText', false, text);
