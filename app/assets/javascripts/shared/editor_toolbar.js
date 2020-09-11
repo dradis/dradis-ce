@@ -22,7 +22,6 @@ class EditorToolbar {
 
     if (this.opts.include.includes('image') && this.opts.uploader === undefined) { console.log("You initialized a RichToolbar with the image uploader option but have not provided an existing uploader to utilize"); return; }
 
-    this.affixes = this.affixesLibrary();
     this.init();
   }
 
@@ -208,8 +207,8 @@ class EditorToolbar {
     $element.trigger('textchange');
   }
 
-  affixesLibrary() {
-    return {
+  affixesLibrary(type, selection) {
+    const library = {
       'block-code':  new BlockAffix('bc. ', 'Code markup'),
       'bold':        new Affix('*', 'Bold text', '*'),
       'field':       new Affix('#[', 'Field', ']#\n'),
@@ -223,6 +222,8 @@ class EditorToolbar {
       //'quote':       new BlockAffix('bq. ', 'Quoted text'),
       'table':       new Affix('', '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|')
     };
+
+    return Object.create(library[type], { selection: { value: selection } })
   }
 
   textareaElements(include) {
@@ -309,27 +310,32 @@ class Affix {
     this.prefix = prefix;
     this.placeholder = placeholder;
     this.suffix = suffix;
+    this.selection = '';
   }
 
-  get asPlaceholder() {
+  asString() {
+    return this.selection == '' ? this.asPlaceholder() : this.withSelection()
+  }
+
+  asPlaceholder() {
     return this.prefix + this.placeholder + this.suffix;
   }
 
-  wrapped(selection) {
-    return this.prefix + selection + this.suffix;
+  wrapped() {
+    return this.prefix + this.selection + this.suffix;
   }
 
-  withSelection(selectedText) {
-    var lines = selectedText.split('\n');
+  withSelection() {
+    var lines = this.selection.split('\n');
 
     lines = lines.reduce(function(text, selection, index) {
-      return (index == 0 ? this.wrapped(selection) : text + '\n' + this.wrapped(selection));
+      return (index == 0 ? this.wrapped() : text + '\n' + this.wrapped());
     }.bind(this), '');
 
     // Account for accidental empty line selections before/after a group
-    var wordSplit = selectedText.split(' '),
+    var wordSplit = this.selection.split(' '),
         first = wordSplit[0],
-        last = wordSplit[selectedText.length-1];
+        last = wordSplit[this.selection.length-1];
     if (first == '\n') lines.unshift(first);
     if (last == '\n') lines.push(last);
 
@@ -338,7 +344,29 @@ class Affix {
 }
 
 class BlockAffix extends Affix {
-  withSelection(selectedText) {
-    return this.prefix + selectedText;
+  withSelection() {
+    return this.prefix + this.selection;
   }
+}
+
+class CursorInfo {
+  constructor(start, end, text) {
+    this.start = start;
+    this.end = end;
+    this.text = text;
+  }
+
+  hasSelection() {
+    return !(this.start == this.end)
+  }
+}
+
+$.fn.cursorInfo = function() {
+  return this.map(function() {
+    var startIndex = this.selectionStart,
+        endIndex = this.selectionEnd,
+        selectedText = $(this).val().substring(startIndex, endIndex);
+
+    return new CursorInfo(startIndex, endIndex, selectedText)
+  })[0];
 }
