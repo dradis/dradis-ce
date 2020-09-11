@@ -1,8 +1,7 @@
 (function($, window) {
   function Sidebar($sidebar) {
     this.$sidebar = $sidebar;
-
-    this.$navbar = $sidebar.siblings('[data-behavior~=navbar]');
+    this.$navbarBrand = $sidebar.siblings('[data-behavior~=navbar]').find('[data-behavior~=navbar-brand]');
     this.$viewContent = $sidebar.siblings('[data-behavior~=view-content]');
     this.storageKey = $sidebar.data('storage-key');
 
@@ -11,45 +10,48 @@
 
   Sidebar.prototype = {
     init: function() {
-      this.toggle(this.isSidebarOpen(), 'no-animation');
+      this.toggle(this.isSidebarOpen());
 
       var that = this;
-      $('[data-behavior~=sidebar-toggle]').on('click', function() {
-        if (that.isSidebarOpen() && $(this).is('[data-behavior~=open-only]')) return;
 
-        that.toggle(!that.isSidebarOpen(), 'animate');
+      $('[data-behavior~=sidebar-toggle]').on('click', function(e) {
+        if (!(that.isSidebarOpen() && $(this).is('[data-behavior~=open-only]'))) {
+          that.toggle(!that.isSidebarOpen());
+        }
       });
     },
     changeState: function(state) {
       localStorage.setItem(this.storageKey, state);
       Turbolinks.clearCache();
     },
-    close: function(animationClass) {
-      this.$navbar.css('left', '0px');
+    close: function() {
+      this.$navbarBrand.css('padding-left', 0);
       this.$sidebar
-        .removeClass('sidebar-expanded no-animation animate')
-        .addClass('sidebar-collapsed ' + animationClass)
-      this.$viewContent.css({'left': '43px', 'width': 'calc(100vw - 43px)'});
+        .removeClass('sidebar-expanded')
+        .addClass('sidebar-collapsed')
+      this.$viewContent.css({'left': this.$sidebar.css('width'), 'width': 'calc(100vw - ' + this.$sidebar.css('width') + ')'});
 
       this.changeState(false);
     },
     isSidebarOpen: function() {
       return JSON.parse(localStorage.getItem(this.storageKey))
     },
-    open: function(animationClass) {
-      this.$navbar.css('left', '207px');
+    open: function() {
       this.$sidebar
-        .removeClass('sidebar-collapsed no-animation animate')
-        .addClass('sidebar-expanded ' + animationClass)
-      this.$viewContent.css({'left': '250px', 'width': 'calc(100vw - 250px)'});
+        .removeClass('sidebar-collapsed')
+        .addClass('sidebar-expanded')
+      this.$viewContent.css({'left': this.$sidebar.css('width'), 'width': 'calc(100vw - ' + this.$sidebar.css('width') + ')'});
 
+      var navbarBrandOffset = parseFloat(this.$navbarBrand.css('padding-left').slice(0,-2)) + parseFloat(this.$sidebar.css('width').slice(0,-2) / 1.65);
+      this.$navbarBrand.css('padding-left', navbarBrandOffset);
+      
       this.changeState(true);
     },
-    toggle: function(openSidebar, animationClass) {
+    toggle: function(openSidebar) {
       if (openSidebar) {
-        this.open(animationClass);
+        this.open();
       } else {
-        this.close(animationClass);
+        this.close();
       }
     }
   }

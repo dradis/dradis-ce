@@ -1,7 +1,8 @@
 [v#.#.#] ([MMM’YY])
-  * [feature #1]
-  * [feature #2]
-  * [feature ...]
+  * Main sidebar improvements:
+    - Labels added under icons
+    - Nodes can be added in collapsed state
+    - Removed animations and transitions while expanding and collapsing 
   * Upgraded gems: rails
   * Bugs fixed:
     - [bug fixed #1]

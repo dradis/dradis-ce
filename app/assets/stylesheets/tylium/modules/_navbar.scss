@@ -2,14 +2,12 @@
   background-color: $navbarBackground;
   border-bottom: 1px solid $borderColor;
   height: $navbarHeight;
-  left: initial;
-  padding-right: 0.5rem;
-  transition: left 0.5s ease-in-out;
+  left: 0;
   z-index: 3;
 
   .navbar-brand {
     color: $defaultText;
-    margin-left: 3rem;
+    margin-left: 6.4rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
