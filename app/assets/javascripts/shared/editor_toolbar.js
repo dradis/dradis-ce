@@ -71,9 +71,6 @@ class EditorToolbar {
       }
     });
 
-    // Handler for setting the correct textarea height on keyboard input
-    this.$target[0].addEventListener('input', setHeight);
-
     function setHeight(e) {
       const shrinkEvents = ['deleteContentForward', 'deleteContentBackward', 'deleteByCut', 'historyUndo', 'historyRedo'];
 
@@ -85,6 +82,9 @@ class EditorToolbar {
       // expand the textarea to fix the content
       $(this).css({'height': this.scrollHeight + 2});
     };
+
+    // Handler for setting the correct textarea height on keyboard input
+    this.$target[0].addEventListener('input', setHeight);
   
     // Handler for setting the correct textarea heights on load (for current values)
     this.$target.each(setHeight);
