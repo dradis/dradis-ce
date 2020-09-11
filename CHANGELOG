@@ -1,19 +1,12 @@
-v3.#.# (MMM’YY)
-  * Add all activity view
+[v#.#.#] ([MMM’YY])
   * Main sidebar improvements:
     - Labels added under icons
     - Nodes can be added in collapsed state
     - Removed animations and transitions while expanding and collapsing 
-  * Render markup inside table columns
-  * Update top navigation link styles and collapsed menu
-  * Upgraded gems: rack, sanitize, sassc
+  * Upgraded gems: rails
   * Bugs fixed:
-    - Comments:
-      - Fix `edit` link available while editing
-      - Fix comment borders remaining after deleting comments
-    - Long unbroken table cell text in textile elements overflows
-    - Secondary-sidebar long header names over-lapping icons
-    - Select element text overflowing on to select arrows
+    - [bug fixed #1]
+    - [bug fixed ...]
     - Bug tracker items: #N, #M, #O, ...
   * New integrations:
     - [new integration #1]
@@ -31,6 +24,31 @@ v3.#.# (MMM’YY)
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v3.19.0 (September 2020)
+  * Auto upload attachments and screenshots without requiring the use of the staging area
+  * Cards, Evidence, Issues, and Notes now have their own attachment support
+  * Displays a notification badge in the browser tab when there are unread notifications
+  * Editor: Allow drag & drop, copy & paste, and direct image uploading
+  * Increase the node properties column size by changing it to LONGTEXT
+  * Layout: Breadcrumbs have a fixed position
+  * Link to our support site on the styles help page
+  * Long dropdown menus are vertically scrollable
+  * Bugs fixed:
+    - Use absolute send times in notification emails instead of relative
+
+v3.18.0 (July 2020)
+  * Add all activity view
+  * Render markup inside table columns
+  * Update top navigation link styles and collapsed menu
+  * Upgraded gems: rack, sanitize, sassc
+  * Bugs fixed:
+    - Comments:
+      - Fix `edit` link available while editing
+      - Fix comment borders remaining after deleting comments
+    - Long unbroken table cell text in textile elements overflows
+    - Secondary-sidebar long header names over-lapping icons
+    - Select element text overflowing on to select arrows
 
 v3.17.1 (Jun 2020)
   * Upgraded gems: websocket-extensions

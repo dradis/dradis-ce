@@ -46,6 +46,12 @@
   cursor: default;
 }
 
+.secondary-sidebar-content {
+  .sticky-top {
+    top: calc(#{$mainContentMargin} + 4.35rem);
+  }
+}
+
 .view-content {
   background: $secondaryBgColor;
   position: fixed;
@@ -70,5 +76,12 @@
     p:last-child {
       margin-bottom: 0;
     }
+  }
+
+  nav:not(.d-flex) {
+    border-bottom: 1px solid $borderColor;
+    position: sticky;
+    top: 0;
+    z-index: 1050;
   }
 }

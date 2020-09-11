@@ -104,7 +104,7 @@ In https://dradisframework.com/ce/download.html you will find the latest package
 
 Please see CONTRIBUTING.md for details.
 
-Many thanks to all Dradis Framework [contributors](https://github.com/dradis/dradis-ce/graphs/contributors). Dradis has been around since 2007, and in 2016 we had to do some nasty Git gimnastics resulting in a lot of the previous SVN + Git history no longer being available in the current repo. We haven't deleted it though, and we're still very much grateful for the work of our former [contributors](https://github.com/dradis/dradis-legacy/graphs/contributors).
+Many thanks to all Dradis Framework [contributors](https://github.com/dradis/dradis-ce/graphs/contributors). Dradis has been around since 2007, and in 2016 we had to do some nasty Git gymnastics resulting in a lot of the previous SVN + Git history no longer being available in the current repo. We haven't deleted it though, and we're still very much grateful for the work of our former [contributors](https://github.com/dradis/dradis-legacy/graphs/contributors).
 
 
 ### Branching model

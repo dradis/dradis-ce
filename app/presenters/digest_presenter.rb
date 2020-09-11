@@ -19,9 +19,9 @@ class DigestPresenter < NotificationPresenter
     )
   end
 
-  def created_at_ago
-    # We can't use the local_time gem here because there's no JS
-    "#{time_ago_in_words(notification.created_at)} ago"
+  def created_at
+    time = notification.created_at.localtime
+    time.strftime("%h #{time.day.ordinalize} at %l:%M%P #{time.zone}") # Jul 9th at 2:45pm CEST
   end
 
   def text_title
