@@ -97,14 +97,14 @@ class EditorToolbar {
 
     // when a toolbar button is clicked
     this.$editorToolbar.find('[data-btn]').click(function() {
-      var $element = that.$editorField.find('textarea, input[type=text]');
-      var affix = that.affixes[$(this).data('btn')];
-  
       if ($(this).is('[data-btn~=image')) {
         that.$fileField.click();
       } else {
-        // inject markdown
-        that.injectSyntax($element, affix);
+        var $element = that.$editorField.find('textarea, input[type=text]'),
+            cursorInfo = $element.cursorInfo(),
+            affix = that.affixesLibrary($(this).data('btn'), cursorInfo.text);
+
+        that.injectSyntax(affix, $element);
       }
     });
 
@@ -164,46 +164,45 @@ class EditorToolbar {
     });
   }
 
-  replace(text, $element) {
-    var startIndex = $element[0].selectionStart,
-        endIndex = $element[0].selectionEnd,
+  insert(text, $element) {
+    var cursorInfo = $element.cursorInfo(),
         elementText = $element.val();
 
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) { // firefox
-      $element.val(elementText.slice(0, startIndex) + text + elementText.slice(endIndex));
-      //$element.trigger('blur'); // Trigger setHeight
-    }
-    else { // all other browsers
+      $element.val(elementText.slice(0, cursorInfo.start) + text + elementText.slice(cursorInfo.end));
+    } else { // all other browsers
       document.execCommand('insertText', false, text);
     }
   }
 
-  injectSyntax($element, affix) {
-    var adjustedPrefixLength = affix.prefix.length,
-        adjustedSuffixLength = affix.suffix.length,
-        startIndex = $element[0].selectionStart,
-        endIndex = $element[0].selectionEnd,
-        selectedText = $element.val().substring(startIndex, endIndex);
-
-    var markdownText = (startIndex == endIndex) ? affix.asPlaceholder : affix.withSelection(selectedText);
-
-    adjustedPrefixLength *= selectedText.split('\n').length;
-    adjustedSuffixLength *= selectedText.split('\n').length;
-
-    $element.focus(); // bring focus back to $element from the toolbar
-
-    this.replace(markdownText, $element);
+  setCursor(affix, cursorInfo, $element) {
+    var adjustedPrefixLength = affix.prefix.length * affix.selection.split('\n').length,
+        adjustedSuffixLength = affix.suffix.length * affix.selection.split('\n').length;
 
     // post-injection cursor location
-    if (startIndex == endIndex) { // no text was selected, select injected placeholder text
-      $element[0].setSelectionRange(startIndex + affix.prefix.length, startIndex + markdownText.length - affix.suffix.length);
+    if (cursorInfo.hasSelection()) { // text was selected, place cursor after the injected string
+      var position = adjustedPrefixLength + cursorInfo.end + adjustedSuffixLength;
+      $element[0].setSelectionRange(position, position);
+    } else { // no text was selected, select injected placeholder text
+      $element[0].setSelectionRange(cursorInfo.start + affix.prefix.length, cursorInfo.start + affix.asString().length - affix.suffix.length);
     }
-    else { // text was selected, place cursor after the injected string
-      $element[0].setSelectionRange(adjustedPrefixLength + endIndex + adjustedSuffixLength, adjustedPrefixLength + endIndex + adjustedSuffixLength);
-    }
+  }
 
-    // Trigger a change event because javascript manipulation doesn't trigger
-    // them. The change event will reload the preview
+  injectSyntax(affix, $element) {
+    $element.focus(); // bring focus back to $element from the toolbar
+    var cursorInfo = $element.cursorInfo(); // Save the original position
+
+    this.insert(affix.asString(), $element);
+    this.setCursor(affix, cursorInfo, $element);
+
+    // Trigger a change event because javascript manipulation doesn't
+    $element.trigger('textchange');
+  }
+
+
+    var position = $element.val().indexOf(affix.asString()) + affix.asString().length,
+        cursorInfo = new CursorInfo(position, position, undefined);
+    this.setCursor(affix, cursorInfo, $element)
     $element.trigger('textchange');
   }
 
