@@ -20,6 +20,7 @@ describe "node pages" do
     describe "clicking the '+' button in the 'Nodes' sidebar", js: true do
       before do
         visit project_path(current_project)
+        find('[data-behavior~=sidebar-toggle]', match: :first).click
         find('.add-node > a').click
       end
 
