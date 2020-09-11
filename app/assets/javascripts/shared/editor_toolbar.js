@@ -199,6 +199,15 @@ class EditorToolbar {
     $element.trigger('textchange');
   }
 
+  insertImagePlaceholder(text, $element) {
+    var affix = this.affixesLibrary('image', text);
+    this.insert(affix.asString(), $element);
+  }
+
+  replaceImagePlaceholder(oldStr, fileUrl, $element) {
+    var affix = this.affixesLibrary('image', fileUrl);
+
+    $element.val($element.val().replace(oldStr, affix.asString(), $element));
 
     var position = $element.val().indexOf(affix.asString()) + affix.asString().length,
         cursorInfo = new CursorInfo(position, position, undefined);
