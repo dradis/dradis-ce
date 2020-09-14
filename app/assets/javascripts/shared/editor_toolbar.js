@@ -94,8 +94,7 @@ class EditorToolbar {
 
     // keyboard shortcuts
     this.$target.keydown(function(e) {
-      var key = e.which || e.keyCode, // for cross-browser compatibility
-          selector = undefined;
+      var key = e.which || e.keyCode; // for cross-browser compatibility
 
       if (e.metaKey) {
         switch (key) {
@@ -195,8 +194,7 @@ class EditorToolbar {
     var affix = this.affixesLibrary('image-placeholder', file.name);
     this.insert(affix.asString());
 
-    var position = this.$target.val().indexOf(affix.asString()) + affix.asString().length,
-        cursorInfo = new CursorInfo(position, position, undefined);
+    var position = this.$target.val().indexOf(affix.asString()) + affix.asString().length;
 
     this.$target.focus();
     this.$target[0].setSelectionRange(position, position);
