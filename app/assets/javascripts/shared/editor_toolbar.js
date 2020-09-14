@@ -71,29 +71,14 @@ class EditorToolbar {
       }
     });
 
-    function setHeight(e) {
-      const shrinkEvents = ['deleteContentForward', 'deleteContentBackward', 'deleteByCut', 'historyUndo', 'historyRedo'];
+    // Handler for setting the correct textarea height on keyboard input, when
+    // focus is lost, or when content is inserted programmatically
+    // Handler for setting the correct textarea height when focus is lost, or
+    // when content is inserted programmatically
+    this.$target.on('blur textchange input', this.setHeight);
 
-      if (shrinkEvents.includes(e.inputType)) {
-        // shrink the text area when content is being removed
-        $(this).css({'height': '1px'});
-      }
-      
-      // expand the textarea to fix the content
-      $(this).css({'height': this.scrollHeight + 2});
-    };
-
-    // Handler for setting the correct textarea height on keyboard input
-    this.$target[0].addEventListener('input', setHeight);
-  
     // Handler for setting the correct textarea heights on load (for current values)
-    this.$target.each(setHeight);
-
-    // Handler for setting the correct textarea height when focus is lost
-    this.$target.on('blur', setHeight);
-
-    // Handler for setting the height after content has been injected via js
-    this.$target.on('textchange', setHeight);
+    this.$target.each(this.setHeight);
 
     // when a toolbar button is clicked
     this.$editorToolbar.find('[data-btn]').click(function() {
@@ -164,9 +149,17 @@ class EditorToolbar {
     });
   }
 
-  insert(text, $element) {
-    var cursorInfo = $element.cursorInfo(),
-        elementText = $element.val();
+  setHeight(e) {
+    const shrinkEvents = ['deleteContentForward', 'deleteContentBackward', 'deleteByCut', 'historyUndo', 'historyRedo'];
+
+    if (e.originalEvent !== undefined && shrinkEvents.includes(e.originalEvent.inputType)) {
+      // shrink the text area when content is being removed
+      $(this).css({'height': '1px'});
+    }
+
+    // expand the textarea to fix the content
+    $(this).css({'height': this.scrollHeight + 2});
+  };
 
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) { // firefox
       $element.val(elementText.slice(0, cursorInfo.start) + text + elementText.slice(cursorInfo.end));
