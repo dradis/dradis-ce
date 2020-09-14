@@ -102,7 +102,7 @@ class EditorToolbar {
           case 66: selector = '[data-btn~=bold]'; break; // 66 = b
           case 73: selector = '[data-btn~=italic]'; break; // 73 = i
           case 75: selector = '[data-btn~=link]'; break; // 75 = k
-        };
+        }
 
         if (selector !== undefined) {
           e.preventDefault();
