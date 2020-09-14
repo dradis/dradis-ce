@@ -94,20 +94,21 @@ class EditorToolbar {
     });
 
     // keyboard shortcuts
-    this.$editorField.find('textarea, input[type=text]').keydown(function(e) {
-      var key = e.which || e.keyCode; // for cross-browser compatibility
+    this.$target.keydown(function(e) {
+      var key = e.which || e.keyCode, // for cross-browser compatibility
+          selector = undefined;
 
-      if (e.metaKey && key === 66 ) { // 66 = b
-        e.preventDefault();
-        that.$editorToolbar.find('[data-btn~=bold]').click();
-      }
-      else if (e.metaKey && key === 73 ) { // 73 = i
-        e.preventDefault();
-        that.$editorToolbar.find('[data-btn~=italic]').click();
-      }
-      else if (e.metaKey && key === 75 ) { // 75 = k
-        e.preventDefault();
-        that.$editorToolbar.find('[data-btn~=link]').click();
+      if (e.metaKey) {
+        switch (key) {
+          case 66: selector = '[data-btn~=bold]'; break; // 66 = b
+          case 73: selector = '[data-btn~=italic]'; break; // 73 = i
+          case 75: selector = '[data-btn~=link]'; break; // 75 = k
+        };
+
+        if (selector !== undefined) {
+          e.preventDefault();
+          that.$editorToolbar.find(selector).click();
+        }
       }
     });
 
