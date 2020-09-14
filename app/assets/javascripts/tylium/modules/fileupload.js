@@ -26,9 +26,9 @@ function fileUploadInit() {
   }).on('fileuploaddone', function (e, data) {
     if (data.replaceImagePlaceholder !== undefined) {
       $.each(data.files, data.replaceImagePlaceholder.bind(null, data));
-    };
+    }
   });
-};
+}
 
 document.addEventListener("turbolinks:load", function() {
   // Bind fileUpload on page load.

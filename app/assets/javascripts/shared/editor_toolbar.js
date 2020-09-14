@@ -158,7 +158,7 @@ class EditorToolbar {
 
     // expand the textarea to fix the content
     $(this).css({'height': this.scrollHeight + 2});
-  };
+  }
 
   insert(text) {
     var cursorInfo = this.$target.cursorInfo(),
@@ -232,7 +232,7 @@ class EditorToolbar {
       'table':              new Affix('', '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|')
     };
 
-    return Object.create(library[type], { selection: { value: selection } })
+    return Object.create(library[type], { selection: { value: selection } });
   }
 
   textareaElements(include) {
@@ -323,7 +323,7 @@ class Affix {
   }
 
   asString() {
-    return this.selection == '' ? this.asPlaceholder() : this.withSelection()
+    return this.selection == '' ? this.asPlaceholder() : this.withSelection();
   }
 
   asPlaceholder() {
@@ -366,7 +366,7 @@ class CursorInfo {
   }
 
   hasSelection() {
-    return !(this.start == this.end)
+    return !(this.start == this.end);
   }
 }
 
@@ -376,6 +376,6 @@ $.fn.cursorInfo = function() {
         endIndex = this.selectionEnd,
         selectedText = $(this).val().substring(startIndex, endIndex);
 
-    return new CursorInfo(startIndex, endIndex, selectedText)
+    return new CursorInfo(startIndex, endIndex, selectedText);
   })[0];
-}
+};
