@@ -212,7 +212,7 @@ class EditorToolbar {
 
     this.$target.val(this.$target.val().replace(placeholder.asString(), affix.asString(), this.$target));
 
-    var position = this.$target.val().indexOf(affix.asString()) + affix.asString().length,
+    var position = this.$target.val().indexOf(affix.asString()),
         cursorInfo = new CursorInfo(position, position, undefined);
 
     this.setCursor(affix, cursorInfo);
