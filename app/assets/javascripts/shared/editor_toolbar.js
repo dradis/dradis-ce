@@ -334,15 +334,15 @@ class Affix {
     return this.prefix + this.placeholder + this.suffix;
   }
 
-  wrapped() {
-    return this.prefix + this.selection + this.suffix;
+  wrapped(selection = this.selection) {
+    return this.prefix + selection + this.suffix;
   }
 
   withSelection() {
     var lines = this.selection.split('\n');
 
     lines = lines.reduce(function(text, selection, index) {
-      return (index == 0 ? this.wrapped() : text + '\n' + this.wrapped());
+      return (index == 0 ? this.wrapped(selection) : text + '\n' + this.wrapped(selection));
     }.bind(this), '');
 
     // Account for accidental empty line selections before/after a group
