@@ -2,9 +2,9 @@
 
 To initialize:
 
-new EditorToolbar($element);
+new EditorToolbar($target);
 
-Where `$element` is a jQuery object that is an input (with type = text) or textarea element.
+Where `$target` is a jQuery object that is an input (with type = text) or textarea element.
 
 Each of these input and/or textarea elements will have the Editor Toolbar added.
 
@@ -50,7 +50,7 @@ class EditorToolbar {
     this.$fileField.bind('change', function (e) {
       $(that.opts.uploader).fileupload('add', {
         files: this.files,
-        $textarea: that.$editorField.find('textarea, input[type=text]')
+        $textarea: that.$target
       });
 
       // Clear the $fileField so it never submit unexpected filedata
@@ -85,11 +85,10 @@ class EditorToolbar {
       if ($(this).is('[data-btn~=image')) {
         that.$fileField.click();
       } else {
-        var $element = that.$editorField.find('textarea, input[type=text]'),
-            cursorInfo = $element.cursorInfo(),
+        var cursorInfo = that.$target.cursorInfo(),
             affix = that.affixesLibrary($(this).data('btn'), cursorInfo.text);
 
-        that.injectSyntax(affix, $element);
+        that.injectSyntax(affix);
       }
     });
 
@@ -113,7 +112,7 @@ class EditorToolbar {
     });
 
     // toolbar sticky positioning
-    this.$editorField.find('textarea').on('focus', function() {
+    this.$target.on('focus', function() {
       var $inputElement = $(this),
           $toolbarElement = $inputElement.parent().prev(),
           $parentElement = $inputElement.parents('[data-behavior~=editor-field]'),
@@ -136,8 +135,7 @@ class EditorToolbar {
         // keep toolbar at the top of text area when scrolling
         if ($inputElement.height() > 40 && parentOffsetTop < $(window).scrollTop()) {
           $parentElement.addClass('sticky-toolbar');
-        }
-        else {
+        } else {
           // reset the toolbar to the default position and appearance
           $parentElement.removeClass('sticky-toolbar');
         }
@@ -145,7 +143,7 @@ class EditorToolbar {
     });
 
     // reset position and hide toolbar once focus is lost
-    this.$editorField.find('textarea').on('blur', function() {
+    this.$target.on('blur', function() {
       $(this).parent().prev().css({'opacity': 0, 'visibility': 'hidden'});
     });
   }
@@ -162,8 +160,12 @@ class EditorToolbar {
     $(this).css({'height': this.scrollHeight + 2});
   };
 
+  insert(text) {
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) { // firefox
-      $element.val(elementText.slice(0, cursorInfo.start) + text + elementText.slice(cursorInfo.end));
+      var cursorInfo = this.$target.cursorInfo(),
+          elementText = this.$target.val();
+
+      this.$target.val(elementText.slice(0, cursorInfo.start) + text + elementText.slice(cursorInfo.end));
     } else { // all other browsers
       document.execCommand('insertText', false, text);
     }
@@ -178,19 +180,19 @@ class EditorToolbar {
       var position = adjustedPrefixLength + cursorInfo.end + adjustedSuffixLength;
       this.$target[0].setSelectionRange(position, position);
     } else { // no text was selected, select injected placeholder text
-      $element[0].setSelectionRange(cursorInfo.start + affix.prefix.length, cursorInfo.start + affix.asString().length - affix.suffix.length);
+      this.$target[0].setSelectionRange(cursorInfo.start + affix.prefix.length, cursorInfo.start + affix.asString().length - affix.suffix.length);
     }
   }
 
   injectSyntax(affix) {
-    $element.focus(); // bring focus back to $element from the toolbar
-    var cursorInfo = $element.cursorInfo(); // Save the original position
+    this.$target.focus(); // bring focus back to $target from the toolbar
+    var cursorInfo = this.$target.cursorInfo(); // Save the original position
 
-    this.insert(affix.asString(), $element);
-    this.setCursor(affix, cursorInfo, $element);
+    this.insert(affix.asString());
+    this.setCursor(affix, cursorInfo);
 
     // Trigger a change event because javascript manipulation doesn't
-    $element.trigger('textchange');
+    this.$target.trigger('textchange');
   }
 
   insertImagePlaceholder(index, file) {
