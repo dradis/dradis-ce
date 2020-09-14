@@ -161,14 +161,10 @@ class EditorToolbar {
   };
 
   insert(text) {
-    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) { // firefox
-      var cursorInfo = this.$target.cursorInfo(),
-          elementText = this.$target.val();
+    var cursorInfo = this.$target.cursorInfo(),
+        elementText = this.$target.val();
 
-      this.$target.val(elementText.slice(0, cursorInfo.start) + text + elementText.slice(cursorInfo.end));
-    } else { // all other browsers
-      document.execCommand('insertText', false, text);
-    }
+    this.$target.val(elementText.slice(0, cursorInfo.start) + text + elementText.slice(cursorInfo.end));
   }
 
   setCursor(affix, cursorInfo) {
