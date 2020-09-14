@@ -5,6 +5,8 @@
     - Removed animations and transitions while expanding and collapsing 
   * Upgraded gems: rails
   * Bugs fixed:
+    - Editor drag and drop, and copy paste inserts attachments at the cursor
+      position instead of at the end of the textarea.
     - [bug fixed #1]
     - [bug fixed ...]
     - Bug tracker items: #N, #M, #O, ...
