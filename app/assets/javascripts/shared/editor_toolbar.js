@@ -169,20 +169,20 @@ class EditorToolbar {
     }
   }
 
-  setCursor(affix, cursorInfo, $element) {
+  setCursor(affix, cursorInfo) {
     var adjustedPrefixLength = affix.prefix.length * affix.selection.split('\n').length,
         adjustedSuffixLength = affix.suffix.length * affix.selection.split('\n').length;
 
     // post-injection cursor location
     if (cursorInfo.hasSelection()) { // text was selected, place cursor after the injected string
       var position = adjustedPrefixLength + cursorInfo.end + adjustedSuffixLength;
-      $element[0].setSelectionRange(position, position);
+      this.$target[0].setSelectionRange(position, position);
     } else { // no text was selected, select injected placeholder text
       $element[0].setSelectionRange(cursorInfo.start + affix.prefix.length, cursorInfo.start + affix.asString().length - affix.suffix.length);
     }
   }
 
-  injectSyntax(affix, $element) {
+  injectSyntax(affix) {
     $element.focus(); // bring focus back to $element from the toolbar
     var cursorInfo = $element.cursorInfo(); // Save the original position
 
@@ -193,36 +193,45 @@ class EditorToolbar {
     $element.trigger('textchange');
   }
 
-  insertImagePlaceholder(text, $element) {
-    var affix = this.affixesLibrary('image', text);
-    this.insert(affix.asString(), $element);
+  insertImagePlaceholder(index, file) {
+    var affix = this.affixesLibrary('image-placeholder', file.name);
+    this.insert(affix.asString());
+
+    var position = this.$target.val().indexOf(affix.asString()) + affix.asString().length,
+        cursorInfo = new CursorInfo(position, position, undefined);
+
+    this.$target.focus();
+    this.$target[0].setSelectionRange(position, position);
   }
 
-  replaceImagePlaceholder(oldStr, fileUrl, $element) {
-    var affix = this.affixesLibrary('image', fileUrl);
+  replaceImagePlaceholder(data, index, file) {
+    var placeholder = this.affixesLibrary('image-placeholder', file.name),
+        affix = this.affixesLibrary('image', data.result[0].url);
 
-    $element.val($element.val().replace(oldStr, affix.asString(), $element));
+    this.$target.val(this.$target.val().replace(placeholder.asString(), affix.asString(), this.$target));
 
-    var position = $element.val().indexOf(affix.asString()) + affix.asString().length,
+    var position = this.$target.val().indexOf(affix.asString()) + affix.asString().length,
         cursorInfo = new CursorInfo(position, position, undefined);
-    this.setCursor(affix, cursorInfo, $element)
-    $element.trigger('textchange');
+
+    this.setCursor(affix, cursorInfo);
+    this.$target.trigger('textchange');
   }
 
   affixesLibrary(type, selection) {
     const library = {
-      'block-code':  new BlockAffix('bc. ', 'Code markup'),
-      'bold':        new Affix('*', 'Bold text', '*'),
-      'field':       new Affix('#[', 'Field', ']#\n'),
-      //'highlight':   new Affix('$${{', 'Highlighted text', '}}$$'),
-      'image':       new Affix('\n!', 'https://', '!\n'),
+      'block-code':         new BlockAffix('bc. ', 'Code markup'),
+      'bold':               new Affix('*', 'Bold text', '*'),
+      'field':              new Affix('#[', 'Field', ']#\n'),
+      //'highlight':          new Affix('$${{', 'Highlighted text', '}}$$'),
+      'image':              new Affix('\n!', 'https://', '!\n'),
+      'image-placeholder':  new Affix('\n!', 'https://', ' uploading...!\n'),
       //'inline-code': new Affix('@', 'Inline code', '@'),
-      'italic':      new Affix('_', 'Italic text', '_'),
-      'link':        new Affix('"', 'Link text', '":https://'),
-      'list-ol':     new Affix('# ', 'Ordered item'),
-      'list-ul':     new Affix('* ', 'Unordered item'),
+      'italic':             new Affix('_', 'Italic text', '_'),
+      'link':               new Affix('"', 'Link text', '":https://'),
+      'list-ol':            new Affix('# ', 'Ordered item'),
+      'list-ul':            new Affix('* ', 'Unordered item'),
       //'quote':       new BlockAffix('bq. ', 'Quoted text'),
-      'table':       new Affix('', '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|')
+      'table':              new Affix('', '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|')
     };
 
     return Object.create(library[type], { selection: { value: selection } })

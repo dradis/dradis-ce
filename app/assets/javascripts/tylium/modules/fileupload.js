@@ -11,33 +11,21 @@ function fileUploadInit() {
          $.blueimp.fileupload.prototype.options.destroy.call(this, e, data);
        }
      }
-  }).on('fileuploadadd', function (e, data) { // data.$textarea is added to the input field owned by the editor. So
-    // copying, or dragging does not append the attribute.
+  }).on('fileuploadadd', function (e, data) {
+    // data.$textarea is added to the input field owned by the editor and is
+    // only present when the image button is clicked. Copying, or dragging does
+    // not append the attribute.
     var $textarea = (e.originalEvent !== undefined) ? $(e.originalEvent.target) : data.$textarea;
 
     if ($textarea.is($('[data-behavior~=rich-toolbar]'))) {
       var editorToolbar = $textarea.data('editorToolbar');
+      data.replaceImagePlaceholder = editorToolbar.replaceImagePlaceholder.bind(editorToolbar);
 
-      data.$textarea = $textarea;
-
-      $.each(data.files, function (index, file) {
-        editorToolbar.insertImagePlaceholder(file.name + ' uploading...', $textarea);
-      });
+      $.each(data.files, editorToolbar.insertImagePlaceholder.bind(editorToolbar));
     }
   }).on('fileuploaddone', function (e, data) {
-    // Here data.$textarea always exists because we added it in the previous
-    // fileuploadadd event, and the data object is shared.
-    var $textarea = data.$textarea;
-
-    if ($textarea !== undefined) {
-      var editorToolbar = $textarea.data('editorToolbar');
-
-      $.each(data.files, function (index, file) {
-        var uploadedFile = data.result[0].url,
-            str = '\n!' + file.name + ' uploading...' + '!\n';
-
-        editorToolbar.replaceImagePlaceholder(str, uploadedFile, $textarea);
-      });
+    if (data.replaceImagePlaceholder !== undefined) {
+      $.each(data.files, data.replaceImagePlaceholder.bind(null, data));
     };
   });
 };
