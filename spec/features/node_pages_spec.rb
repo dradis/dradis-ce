@@ -20,8 +20,8 @@ describe "node pages" do
     describe "clicking the '+' button in the 'Nodes' sidebar", js: true do
       before do
         visit project_path(current_project)
-        find('.tree-header').click
-        find('.add-subnode > a').click
+        find('[data-behavior~=sidebar-toggle]', match: :first).click
+        find('.add-node > a').click
       end
 
       let(:submit_form) { click_button "Add" }

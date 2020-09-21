@@ -1,11 +1,15 @@
-[v3.19.0] ([MMM’20])
+[v#.#.#] ([MMM’YY])
   * Improve accessibility:
     - Add alt text to any linked images
     - Add screen reader only text to forms
     - Adjustments to font and element contrast to meet at minimum Level AA WCAG 2.0 standards.
     - Fix any broken Aria references
     - Update element label association & add missing labels
-  * Upgraded gems: [gem #1], [gem #2]
+  * Main sidebar improvements:
+    - Labels added under icons
+    - Nodes can be added in collapsed state
+    - Removed animations and transitions while expanding and collapsing 
+  * Upgraded gems: rails
   * Bugs fixed:
     - [bug fixed #1]
     - [bug fixed ...]
@@ -26,6 +30,18 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v3.19.0 (September 2020)
+  * Auto upload attachments and screenshots without requiring the use of the staging area
+  * Cards, Evidence, Issues, and Notes now have their own attachment support
+  * Displays a notification badge in the browser tab when there are unread notifications
+  * Editor: Allow drag & drop, copy & paste, and direct image uploading
+  * Increase the node properties column size by changing it to LONGTEXT
+  * Layout: Breadcrumbs have a fixed position
+  * Link to our support site on the styles help page
+  * Long dropdown menus are vertically scrollable
+  * Bugs fixed:
+    - Use absolute send times in notification emails instead of relative
 
 v3.18.0 (July 2020)
   * Add all activity view

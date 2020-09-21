@@ -11,16 +11,34 @@
     cursor: default;
   }
 
-  .fileinput-button:hover {
-    background: darken($primaryColor, 5%);
+  .fileinput-button {
+    background-color: transparent;
+    color: $lightColor;
+    display: inline;
+    float: none;
+    margin: 0;
+    
+    &:hover {
+      color: $white;
+    }
+
+    input[type=file] {
+      border: none;
+      height: 1.25rem;
+      transform: none;
+      width: 1.25rem;
+      
+      &::-webkit-file-upload-button {
+        display: none;
+      }
+    }
   }
 
   .files {
 
     .cancel,
     .copy-link,
-    .delete,
-    .start {
+    .delete {
       width: 30px;
     }
 
@@ -51,6 +69,10 @@
       font-size: 80%;
       padding-bottom: 0.3rem;
     }
+  }
+
+  #fileupload {
+    display: inline-block;
   }
 
   table {

@@ -15,7 +15,10 @@
     <% end %>
     <%= render 'comments/mentionable_users' if @mentionable_users %>
 
-    <%= favicon_link_tag %>
+    <%= favicon_link_tag 'favicon.ico',
+        'data-behavior': 'favicon',
+        'data-unread': image_path('favicon-unread.ico'),
+        'data-read': image_path('favicon.ico') %>
 
     <%= stylesheet_link_tag 'tylium', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'tylium', 'data-turbolinks-track' => true %>

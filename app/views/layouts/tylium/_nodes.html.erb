@@ -1,9 +1,11 @@
 <ul class="nodes-nav tree-navigation">
-  <li class="tree-header m-0 <%= 'active' if %w[nodes notes evidence].include?(controller_name) %>" data-behavior="sidebar-toggle open-only">
+  <li class="tree-header sidebar-link m-0 <%= 'active' if %w[nodes notes evidence].include?(controller_name) %>" data-behavior="sidebar-toggle open-only">
     <i class="fa fa-sitemap sidebar-link-icon"></i>
-    <span class="sidebar-link-label">Nodes</span>
-    <div class="add-subnode">
-      <a href="#modal_add_branch_node" data-toggle="modal" tabindex="-1"><i class="fa fa-plus"></i><span class="sr-only">Add node</span></a>
+    <div class="sidebar-link-label-container">
+      <span class="sidebar-link-label">Nodes</span>
+      <div class="add-node">
+        <a href="#modal_add_branch_node" data-toggle="modal" tabindex="-1"><i class="fa fa-plus" data-behavior="add-node"></i><span class="sr-only">Add node</span></a>
+      </div>
     </div>
   </li>
   
