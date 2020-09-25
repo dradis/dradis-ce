@@ -8,11 +8,12 @@
 </div>
 
 <%= render 'shared/sidebar_collection',
-  name: 'Issues',
+  category_id: nil,
   collection: @issues,
-  new_path: main_app.new_project_issue_path(current_project),
-  category_id: nil
+  name: 'Issues',
+  new_path: main_app.new_project_issue_path(current_project)
 %>
+
 <%= render 'import_box' %>
 
 <!-- Attachments -->
