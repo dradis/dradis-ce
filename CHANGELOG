@@ -7,8 +7,7 @@
   * Bugs fixed:
     - Editor drag and drop, and copy paste inserts attachments at the cursor
       position instead of at the end of the textarea.
-    - [bug fixed #1]
-    - [bug fixed ...]
+    - Fixed redirect when canceling editing evidence from the issue level
     - Bug tracker items: #N, #M, #O, ...
   * New integrations:
     - Nipper
