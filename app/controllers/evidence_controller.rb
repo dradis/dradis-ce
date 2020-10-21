@@ -97,7 +97,7 @@ class EvidenceController < NestedNodeResourceController
         track_updated(@evidence)
         check_for_edit_conflicts(@evidence, updated_at_before_save)
         format.html do
-          redirect_to evidence_redirect_path(params[:back_to]), notice: 'Evidence updated.'
+          redirect_to evidence_redirect_path(params[:return_to]), notice: 'Evidence updated.'
         end
 
       else
