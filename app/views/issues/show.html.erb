@@ -35,18 +35,18 @@
 <!-- Main content -->
 <div class="row m-0">
   <ul class="tabs-container nav nav-tabs main-tabs w-100">
-    <%= content_tag :li, class: !params[:tab] || params[:tab] == 'info-tab' ? 'active' : '' do%>
-      <a href="#info-tab" data-toggle="tab">
+    <%= content_tag :li, class: "nav-item " do %>
+      <a href="#info-tab" class="nav-link <%= 'active' if !params[:tab] || params[:tab] == 'info-tab' %>" data-toggle="tab">
         <%= colored_icon_for_model(@issue, 'fa-bug') %> Information
       </a>
     <% end %>
-    <%= content_tag :li, class: params[:tab] == 'evidence-tab' ? 'active' : '' do%>
-      <a href="#evidence-tab" data-toggle="tab">
-        <i class="fa fa-laptop"></i> Evidence <span class="badge"><%= @issue.evidence.count %></span>
+    <%= content_tag :li, class: "nav-item" do %>
+      <a href="#evidence-tab" class="nav-link <%= 'active' if params[:tab] == 'evidence-tab' %>" data-toggle="tab">
+        <i class="fa fa-laptop"></i> Evidence <span class="badge bg-primary text-white"><%= @issue.evidence.count %></span>
       </a>
     <% end %>
-    <%= content_tag :li, class: params[:tab] == 'activity-tab' ? 'active' : '' do%>
-      <a href="#activity-tab" data-toggle="tab">
+    <%= content_tag :li, class: "nav-item" do %>
+      <a href="#activity-tab" class="nav-link <%= 'active' if params[:tab] == 'activity-tab' %>" data-toggle="tab">
         <i class="fa fa-refresh"></i> Recent activity
       </a>
     <% end %>
@@ -58,7 +58,7 @@
   <div class="col-12 col-xxl-7 p-0">
     <div class="content-container mt-0 pb-3 mr-xxl-3">
       <div class="tab-content mt-0">
-        <div class="tab-pane active" id="info-tab" data-behavior="subscription-actions" data-subscribed="<%= !@subscription.nil? %>" >
+        <div class="tab-pane <%= 'active' if !params[:tab] || params[:tab] == 'info-tab' %>" id="info-tab" data-behavior="subscription-actions" data-subscribed="<%= !@subscription.nil? %>" >
           <% cache ['issue-information-tab', @issue] do %>
             <div class="note-text-inner">
               <h4 class="mb-4 header-underline">Issue information -
