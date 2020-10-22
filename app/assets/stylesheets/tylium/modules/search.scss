@@ -1,0 +1,125 @@
+.navbar-collapse {
+  .form-search {
+    height: 40px;
+    margin-left: 0.25rem;
+    position: relative;
+    transition: width 0.5s ease-in-out;
+    width: 0px;
+    z-index: 1;
+
+    .btn {
+      background: initial;
+      border-radius: 50%;
+      color: $linkColor;
+      display: flex;
+      font-size: 1.2em;
+      height: 38px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 38px;
+
+      .fa-search {
+        position: absolute;
+        top: 10px;
+      }
+    }
+
+    &:hover {
+      width: 9.5rem;
+      cursor: pointer;
+
+      .btn {
+        background: $activeFillColor;
+        color: $linkColorHover;
+        transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+      }
+
+      .search-query {
+        border-bottom-color: $linkColor;
+        opacity: 1;
+        right: 1.25rem;
+        width: 9rem;
+      }
+    }
+
+    .search-query {
+      border: 0;
+      border-bottom: 1px solid transparent;
+      color: $defaultText;
+      height: 38px;
+      opacity: 0;
+      outline: 0;
+      padding: 0 1.25rem 0 0.5rem;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: 
+        opacity 0.4s ease-in-out,
+        width 0.4s ease-in-out, 
+        right 0.4s ease-in-out, 
+        border-bottom 0.4s 0.25s ease-in-out;
+      width: 0;
+    }
+  }
+
+  @media (max-width: 991px) {
+    &.show {
+      .form-search {
+        margin: 0 0 0.5rem;
+        width: 100%;
+
+        .btn {
+          left: 0.25rem;
+          right: initial;
+        }
+
+        &:hover {
+          .btn {
+            background: initial;
+            color: $linkColor;
+          }
+        }
+
+        .search-query {
+          border-bottom: 1px solid $linkColor;
+          margin: 0 0.5rem;
+          opacity: 1;
+          padding: 0 0.5rem 0 2rem;
+          position: initial;
+          width: 160px;
+        }
+      }
+    }
+  }
+}
+
+body.search.index {
+
+  .inset-button-wrapper {
+    max-width: 300px;
+  }
+
+  .match-snippet {
+    background-color: $secondaryBgColor;
+    border: 1px solid $borderColor;
+    padding: 0.25rem;
+  }
+
+  tr:first-child td {
+      border-top: none;
+  }
+
+  .result-details {
+    color: #869198;
+    margin: 10px 0;
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  .search-match-title {
+    font-weight: 600;
+  }
+}

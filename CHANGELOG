@@ -1,14 +1,125 @@
-v3.16 (Mmm'YY)
-  * Fix errors on content overwrite flash messages
+[v#.#.#] ([MMM’YY])
+  * Main sidebar improvements:
+    - Labels added under icons
+    - Nodes can be added in collapsed state
+    - Removed animations and transitions while expanding and collapsing 
 	* Route back to the issue with the evidence tab opened when managing evidence.
+  * Upgraded gems: rails
   * Bugs fixed:
-    -
+    - Editor drag and drop, and copy paste inserts attachments at the cursor
+      position instead of at the end of the textarea.
+    - Fixed redirect when canceling editing evidence from the issue level
+    - Bug tracker items: #N, #M, #O, ...
+  * New integrations:
+    - Nipper
   * Integration enhancements:
-    -
+    - [integration enhancement #1]
+    - [integration enhancement ...]
+  * Reporting enhancements:
+    - [reporting enhancement #1]
+    - [reporting enhancement ...]
   * REST/JSON API enhancements:
-    -
+    - [API enhancement #1]
+    - [API enhancement ...]
   * Security Fixes:
-    - 
+    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v3.19.0 (September 2020)
+  * Auto upload attachments and screenshots without requiring the use of the staging area
+  * Cards, Evidence, Issues, and Notes now have their own attachment support
+  * Displays a notification badge in the browser tab when there are unread notifications
+  * Editor: Allow drag & drop, copy & paste, and direct image uploading
+  * Increase the node properties column size by changing it to LONGTEXT
+  * Layout: Breadcrumbs have a fixed position
+  * Link to our support site on the styles help page
+  * Long dropdown menus are vertically scrollable
+  * Bugs fixed:
+    - Use absolute send times in notification emails instead of relative
+
+v3.18.0 (July 2020)
+  * Add all activity view
+  * Render markup inside table columns
+  * Update top navigation link styles and collapsed menu
+  * Upgraded gems: rack, sanitize, sassc
+  * Bugs fixed:
+    - Comments:
+      - Fix `edit` link available while editing
+      - Fix comment borders remaining after deleting comments
+    - Long unbroken table cell text in textile elements overflows
+    - Secondary-sidebar long header names over-lapping icons
+    - Select element text overflowing on to select arrows
+
+v3.17.1 (Jun 2020)
+  * Upgraded gems: websocket-extensions
+
+v3.17 (May 2020)
+  * Add author to evidence and notes views
+  * Adjust Uploads layout to provide more visibility to the output console
+  * Boards can be renamed and deleted through their dots menu
+  * Card improvements:
+    - Activity Feed now shows board name and link
+    - No mandatory due date
+    - Redirects to new url if the card has changed lists
+  * Card, Evidence, Issue, and Note form data will not be lost even if the form is not saved
+    - Form data will be cleared when the "Cancel" link is clicked
+    - Removed prompt to restore data
+  * Comments
+    - Added Textile markup
+    - Comment changes will not be lost even if the comment is not saved
+    - Update comments feed to show author's name instead of email
+  * Display note and evidence titles in breadcrumbs
+  * Editor improvements:
+    - New form-view to edit each field individually
+    - Formatting toolbar to help with markup
+    - Side-by-side editor preview that auto-updates
+  * Link to Methodology from project summary chart
+  * Move resource action links to dots-menu in breadcrumbs
+  * Navigation sidebar in projects can be kept open while navigating across views
+  * Dots-menu available in any view
+  * Remove tag color from issue titles in issue summary
+  * Update code element style
+  * Use shared noscript partial
+  * Use user model reference for activities instead of user email
+  * Upgraded gems: kaminari, puma, rack, rails, sass-rails
+  * Bugs fixed:
+    - bin/setup creating folders outside dradis-ce/
+    - bin/setup error if the attachments directory already exists
+    - Board partial broken structure
+    - ItemsTable extra whitespace causing unnecessary vertical scrolling
+    - Fix bug with v3 board templates not uploading
+    - Fix textile preview not showing on issues with very long text
+    - Long items_table dropdown menus not scrollable
+    - Long project names interfering with search bar expansion
+    - Repetative prompt when images are pasted after navigating multiple views.
+    - Report 'Download' button becoming a disabled 'Processing...' button once clicked
+    - SemVer pre-release appending character
+    - Set :author when creating Evidence from an Issue
+    - Sidebar items not showing active state
+    - Textile preview not showing on issues with very long text
+    - Bug tracker items: #560
+  * New integrations:
+    - [new integration #1]
+  * Integration enhancements:
+    - Nexpose: better cipher wrapping coverage
+    - Nikto: support new nested <niktoscan> format
+  * Reporting enhancements:
+    - HTML reports now use main app's markup rendering
+  * REST/JSON API enhancements:
+    - Add tags to the Issues API
+  * Security Fixes:
+    - Medium: Authenticated (author) persistent comments cross-site scripting
+
+v3.16 (February 2020)
+  * Update app to new Tylium layout
+  * Upgrade to Rails 5.2.4.1
+  * Add revision history for cards
+  * Remove mysql2 gem dependency
+  * Bugs fixed:
+    - Fix errors on content overwrite flash messages
+    - Fail and redirect to login instead of raising an error when attempting to log in as a user that has been removed
+    - Fix Cancel link path for the Note Edit page
 
 v3.15 (November 2019)
  - Methodologies v2:

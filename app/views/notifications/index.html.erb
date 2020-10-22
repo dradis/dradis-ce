@@ -1,24 +1,23 @@
-<h1>Notifications for this Project</h1>
+<% content_for :title, 'Notifications for this Project' %>
 
-<div class="notifications-index">
-  <% if @notifications.any? %>
-    <b><%= link_to 'Mark all as read', project_notification_path(current_project, id: 'all'), class: 'pull-right', method: :put, remote: true %></b>
-  <% end %>
-  <div class="clearfix"></div><br>
-
+<div class="content-container">
+  <h4 class="header-underline w-100">Notifications for this Project
+    <% if @notifications.any? %>
+      <b><%= link_to 'Mark all as read', project_notification_path(current_project, id: 'all'), class: 'actions pull-right', method: :put, remote: true %></b>
+    <% end %>
+  </h4>
   <% cache [current_user, @notifications] do %>
     <% if @notifications.any? %>
-      <ul>
-        <% @notifications.each do |notification| %>
-          <%= render notification %>
-          <div class="clearfix"></div>
-          <hr>
-        <% end %>
-      </ul>
-
+      <div class="notifications-index">
+        <ul class="p-0 m-0">
+          <% @notifications.each do |notification| %>
+            <%= render notification %>
+          <% end %>
+        </ul>
+      </div>
       <%= paginate @notifications %>
     <% else %>
-      <div class="no-content text-center">You have no notifications yet.</div>
+      <p class="mb-3 text-center">You don't have any notifications yet.</p>
     <% end %>
   <% end %>
 </div>

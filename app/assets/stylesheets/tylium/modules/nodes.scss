@@ -1,0 +1,20 @@
+body.nodes {
+
+  &.edit {
+    textarea.json {
+      font-family: monospace;
+      width: 100%;
+    }
+  }
+
+  &.show {
+
+    .node-content h4:not(.header-underline) { 
+      margin-top: 30px; 
+    }
+  }
+}
+
+td.services-extras-datum-output {
+  word-break: break-all;
+}

@@ -12,7 +12,7 @@ shared_examples 'managing boards' do
   let(:model) { board }
 
   let(:create_link) do
-    'a.board-new.js-board-modal'
+    "a.board-new[data-behavior='board-modal']"
   end
 
   let(:delete_link) do
@@ -271,7 +271,7 @@ shared_examples 'a board page with poller' do
     end
 
     it 'adds the list' do
-      expect(page).to have_selector 'h4', text: "#{@new_list.name}\n0"
+      expect(page).to have_selector 'h4', text: /#{@new_list.name}\n0/i
     end
   end
 
@@ -285,9 +285,9 @@ shared_examples 'a board page with poller' do
 
     it 'moves the list' do
       expect(page.find("ul.board li.list[data-list-id='#{@other_list.id}'] h4"))\
-        .to have_text(@other_list.name)
+        .to have_text(/#{@other_list.name}/i)
       expect(page.find("ul.board li.list[data-list-id='#{@list.id}'] h4"))\
-        .to have_text(@list.name)
+        .to have_text(/#{@list.name}/i)
     end
   end
 
@@ -311,7 +311,7 @@ shared_examples 'a board page with poller' do
     end
 
     it 'updates the list' do
-      expect(page).to have_selector('h4', text: 'updated list')
+      expect(page).to have_selector('h4', text: /updated list/i)
     end
   end
 

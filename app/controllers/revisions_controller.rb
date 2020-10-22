@@ -3,7 +3,7 @@ class RevisionsController < AuthenticatedController
   include NodesSidebar
   include ProjectScoped
 
-  before_action :load_node, except: [ :trash, :recover ]
+  before_action :load_sidebar, except: [ :trash, :recover ]
   before_action :load_record, except: [ :trash, :recover ]
 
   def index
@@ -36,29 +36,44 @@ class RevisionsController < AuthenticatedController
   end
 
   private
-  def load_node
-    if params[:evidence_id] || params[:note_id]
-      @node = current_project.nodes.includes(
-        :notes, :evidence, evidence: [:issue, { issue: :tags }]
-      ).find_by_id(params[:node_id])
 
-      # FIXME: from ProjectScoped
-      initialize_nodes_sidebar
-    end
+  def load_list
+    @board        = current_project.boards.includes(:lists).find(params[:board_id])
+    @list         = @board.lists.includes(:cards).find(params[:list_id])
+    @sorted_cards = @list.ordered_cards.select(&:persisted?)
+  end
+
+  def load_node
+    @node = current_project.nodes.includes(
+      :notes, :evidence, evidence: [:issue, { issue: :tags }]
+    ).find_by_id(params[:node_id])
+
+    # FIXME: from ProjectScoped
+    initialize_nodes_sidebar
   end
 
   def load_record
-    @record = if params[:evidence_id]
+    @record = if params[:card_id]
+                @list.cards.find(params[:card_id])
+              elsif params[:evidence_id]
                 @node.evidence.find(params[:evidence_id])
-              elsif params[:note_id]
-                @node.notes.find(params[:note_id])
               elsif params[:issue_id]
                 Issue.find(params[:issue_id])
+              elsif params[:note_id]
+                @node.notes.find(params[:note_id])
               else
                 raise 'Unable to identify record type'
               end
   rescue ActiveRecord::RecordNotFound
     flash[:error] = 'Record not found'
     redirect_to :back
+  end
+
+  def load_sidebar
+    if params[:evidence_id] || params[:note_id]
+      load_node
+    elsif params[:card_id]
+      load_list
+    end
   end
 end

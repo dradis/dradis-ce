@@ -13,6 +13,7 @@ class IssuesController < AuthenticatedController
 
   before_action :set_or_initialize_issue, except: [:import, :index]
   before_action :set_or_initialize_tags, except: [:destroy]
+  before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
 
   def index
     @columns = @issues.map(&:fields).map(&:keys).uniq.flatten | ['Title', 'Tags', 'Affected', 'Created', 'Created by', 'Updated']
@@ -44,7 +45,7 @@ class IssuesController < AuthenticatedController
   end
 
   def create
-    @issue.author ||= current_user.email
+    @issue.author = current_user.email
 
     respond_to do |format|
       if @issue.save &&
@@ -66,7 +67,10 @@ class IssuesController < AuthenticatedController
 
         format.html { redirect_to [current_project, @issue], notice: 'Issue added.' }
       else
-        format.html { render 'new', alert: 'Issue couldn\'t be added.' }
+        format.html do
+          flash.now[:alert] = 'Issue couldn\'t be added.'
+          render :new
+        end
       end
       format.js
     end
@@ -85,7 +89,10 @@ class IssuesController < AuthenticatedController
         track_updated(@issue)
         format.html { redirect_to project_issue_path(current_project, @issue), notice: 'Issue updated' }
       else
-        format.html { render 'edit' }
+        format.html do
+          flash.now[:alert] = 'Issue couldn\'t be updated.'
+          render :edit
+        end
       end
       format.js
       format.json
@@ -152,4 +159,13 @@ class IssuesController < AuthenticatedController
     params.require(:issue).permit(:tag_list, :text)
   end
 
+  def set_auto_save_key
+    @auto_save_key =  if @issue&.persisted?
+                        "issue-#{@issue.id}"
+                      elsif params[:template]
+                        "project-#{current_project.id}-issue-#{params[:template]}"
+                      else
+                        "project-#{current_project.id}-issue"
+                      end
+  end
 end

@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   end
 
   resources :projects, only: [:show] do
-    resources :activities, only: [] do
+    resources :activities, only: [:index] do
       collection do
         get :poll, constraints: { format: /js/ }
       end
@@ -32,6 +32,7 @@ Rails.application.routes.draw do
         member { post :move }
         resources :cards, except: [:index] do
           member { post :move }
+          resources :revisions, only: [:index, :show]
         end
       end
     end
@@ -108,16 +109,29 @@ Rails.application.routes.draw do
     get  '/upload'        => 'upload#index',  as: :upload_manager
     post '/upload'        => 'upload#create'
     post '/upload/parse'  => 'upload#parse'
+
+    if Rails.env.development?
+      get '/styles'          => 'styles_tylium#index'
+    end
   end
 
   resources :console, only: [] do
     collection { get :status }
   end
 
+  resource :fields, only: [] do
+    collection do
+      get :field
+      post :form
+      post :source
+    end
+  end
+
   # -------------------------------------------------------------- Static pages
-  # jQuery Textile URLs
-  get '/preview' => 'home#textilize',  as: :preview, defaults: { format: 'json' }
-  get '/markup-help' => 'home#markup_help', as: :markup
+  resource :markup, controller: :markup, only: [] do
+    get :help
+    post :preview
+  end
 
   root to: 'projects#index'
 

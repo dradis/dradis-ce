@@ -59,6 +59,7 @@ class DiffedRevision
   # 2) the #attributes method does not return the aliased method.
   def content_attribute
     case @record
+    when Card; 'description'
     when Issue, Note; 'text' # FIXME - ISSUE/NOTE INHERITANCE
     when Evidence; 'content'
     end

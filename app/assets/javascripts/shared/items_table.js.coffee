@@ -15,7 +15,7 @@ class @ItemsTable
   selectedItemsSelector: ''
   columnIndices: {}
 
-  constructor: (@tableId, @itemName) ->
+  constructor: (@tableId, @itemName, @defaultColumns = ['title', 'created', 'updated']) ->
     @$jsTable     = $(@tableId)
     @$table       = @$jsTable.find('.items-table')
     @$columnMenu  = $("#{@tableId} .dropdown-menu.js-table-columns")
@@ -87,7 +87,7 @@ class @ItemsTable
     else
       console.log "The browser doesn't support local storage of settings."
 
-    @selectedColumns ||= ['title', 'created', 'updated']
+    @selectedColumns ||= @defaultColumns
 
     that = this
 
@@ -200,14 +200,14 @@ class @ItemsTable
       if (column = $(th).data('column'))
         that.columnIndices[column] = index
         if that.selectedColumns.indexOf(column) > -1
-          that.$table.find("td:nth-child(#{index + 1})").css('display', 'table-cell')
+          that.$table.children('tbody').children('tr').children("td:nth-child(#{index + 1})").css('display', 'table-cell')
           $th.css('display', 'table-cell')
         else
-          that.$table.find("td:nth-child(#{index + 1})").css('display', 'none')
+          that.$table.children('tbody').children('tr').children("td:nth-child(#{index + 1})").css('display', 'none')
           $th.css('display', 'none')
 
   showAlert: (msg, klass) =>
-    $('.secondary-navbar-content').prepend(
+    $('.secondary-sidebar-content').prepend(
       "<div class='alert alert-#{klass}'>
         <a class='close' data-dismiss='alert' href='javascript:void(0)'>x</a>
         #{msg}

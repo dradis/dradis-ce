@@ -17,7 +17,7 @@ shared_examples 'a page which handles edit conflicts' do
   def conflict_warning
     "Warning: another user updated this #{record.model_name.name.downcase} "\
     'while you were editing it. Your changes have been saved, but you may '\
-    'have overwritten their changes. You may want to review the revision '\
+    'have overwritten their changes.\nYou may want to review the revision '\
     'history to make sure nothing important has been lost'
   end
 
@@ -55,7 +55,7 @@ shared_examples 'a page which handles edit conflicts' do
     it 'shows the updated record with a warning and a link to the revision history' do
       submit_form
       expect(current_path).to eq record_path(record)
-      expect(page).to have_content conflict_warning
+      expect(page).to have_content(/#{conflict_warning}/i)
       expect(page).to have_link 'revision history', href: record_revisions_path(record)
     end
 

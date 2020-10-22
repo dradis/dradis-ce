@@ -1,0 +1,139 @@
+.modal {
+
+  .modal-dialog {
+    max-width: 560px;
+
+    .modal-content {
+      font-size: 0.9rem;
+
+      .modal-body {
+
+        .add_multiple_nodes_form {
+          display: none;
+        
+          .add_multiple_nodes_error {
+            display: none;
+            color: #b94a48;
+            margin-top: 10px;
+          }
+
+          #nodes_list {
+            margin-top: 10px;
+            width: 100%;
+          }
+        }
+
+        #console {
+          margin: 1.5rem 0 0 0;
+          height: 300px;
+          min-height: 300px;
+          max-height: 300px;
+        }
+      }
+
+      .modal-header {
+        align-items: center;
+        background-color: $secondaryBgColor;
+
+        .close {
+          margin: 0;
+          padding: 0;
+          font-size: 120%;
+        }
+
+        h3 {
+          margin: 0;
+          font-size: 1.4em;
+        }
+      }
+
+      .modal-footer {
+        background-color: $secondaryBgColor;
+      }
+    }
+  }
+
+  &#modal_delete_node {
+
+    ul {
+      list-style: disc;
+      padding-left: 30px;
+    }
+  }
+
+  .tree-modal-box {
+    border: 1px solid $borderColor;
+    padding: 0.5em 1em;
+    margin-bottom: 0.5em;
+    max-height: 50vh;
+    overflow: auto;
+
+    .active-selection {
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: underline !important;
+      }
+    }
+    
+    .invalid-selection {
+      cursor: not-allowed;
+    }
+
+    li.tree-header {
+      display: none;
+    }
+
+    ul {
+      padding-left: 0;
+
+      &.children {
+        overflow: visible;
+        display: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      li {
+        line-height: 2em;
+        padding-left: 1em;
+        display: block;
+
+        &.loading {
+          font-size: 10px;
+          padding-left: 3em;
+        }
+
+        &.error {
+          display: none;
+          font-size: 10px;
+          padding-left: 3em;
+        }
+      }
+    }
+  }
+
+  &#try-pro {
+    
+    .modal-dialog {
+      max-width: 80%;
+  
+      .modal-body {
+        height: 80vh;
+    
+        iframe {
+          border: none;
+          top: 0;
+          left: 0;
+          height: 100%;
+          position: absolute;
+          width: 100%;
+        }
+      }
+  
+      .modal-header h5 span {
+        color: $primaryColor;
+      }
+    }
+  }
+}

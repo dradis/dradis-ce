@@ -21,15 +21,17 @@
   var pluginName = 'textile',
       document = window.document,
       defaults = {
+        defaultViewKey: 'editor.view',
         // Start fullscreen?
         fullscreen: false,
         // Add a resizer bar at the bottom of the editor
         resize: true,
         // HTML templates
         tpl: {
-          wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner"></div></div>',
-          preview: '<div class="textile-preview loading-indicator">Loading...</div>',
-          help: '<div class="textile-help loading-indicator">Loading...</div>'
+          fields: '<div class="textile-form h-100 col-6 col-sm-6"></div>',
+          wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row"></div></div>',
+          preview: '<div class="col-6 col-sm-6"><div class="textile-preview loading-indicator">Loading...</div></div>',
+          help: '<div class="textile-help col-12 col-sm-12 loading-indicator">Loading...</div>'
         }
       };
 
@@ -59,6 +61,7 @@
       this._previousContent = this.$element.val();
       this._previewRendered = false;
       this._helpRendered = false;
+      this._doneTypingInterval = 500;
     },
     _buildContainer: function() {
       // Add wrapper div with toolbar and inner container (see defaults.tpl)
@@ -68,35 +71,87 @@
       this.$element.parent().append( this.options.$wrap );
 
       // move textarea to container
-      $('.textile-inner', this.options.$wrap).append(this.$element);
-      this.$element.css('resize', 'none');
-      this.$element.css('width', '100%');
-      this.$element.attr('rows', 20);
+      this.$source = this.$element.wrap('<div class="col-6 col-sm-6"></div>').parent();
+      $('.textile-inner', this.options.$wrap).append(this.$source);
+      this.$source.hide();
 
-      // add Preview to container and hide
+      // add Form
+      this.options.$fields = $(this.options.tpl.fields);
+      $('.textile-inner', this.options.$wrap).append(this.options.$fields);
+      this._loadFields(this.$element.val(), this.$element.data('allow-dropdown'));
+
+      // add Preview to container and load
       this.options.$preview = $(this.options.tpl.preview);
       $('.textile-inner', this.options.$wrap).append(this.options.$preview);
-      this.options.$preview.hide();
+      this.options.$preview.children(':first').addClass('textile-preview');
+      this._loadPreview({ text: this.$element.val() });
 
       // add Help to container and hide
       this.options.$help = $(this.options.tpl.help);
-      $('.textile-inner', this.options.$wrap).append(this.options.$help)
+      $('.textile-inner', this.options.$wrap).append(this.options.$help);
       this.options.$help.hide();
 
       // toolbar
       this._buildToolbar();
+
+      // Event bindings
+      this._bindBehaviors();
+
+      this._setDefaultView();
+    },
+    _bindBehaviors: function() {
+      // Sync preview
+      // on keyup, start the countdown
+      this.$element.on('textchange load-preview', function() {
+        clearTimeout(this._typingTimer);
+        this._typingTimer = setTimeout(this._onKeyPressPreview.bind(this, 'text'), this._doneTypingInterval);
+      }.bind(this));
+
+      // When auto-save populates data into source view refresh the form
+      this.$element.on('load-preview', function() {
+        this._loadFields(this.$element.val());
+      }.bind(this));
+
+      // Bind all form element actions within container
+      this.bindFieldGroup(this.options.$fields);
+    },
+    bindFieldGroup: function($parent) {
+      var that = this;
+
+      $parent.find('[data-behavior~=delete-field]').click(function(){
+        $(this).closest('[data-behavior~=textile-form-field]').remove();
+        that._timedPreview.bind(that)();
+      });
+
+      $parent.find('[data-behavior~=edit-field]').click(function(){
+        $parent.find($(this).data('edit-field')).focus();
+      });
+
+      // Handler for triggering the preview on keyboard input
+      $parent.find('[data-behavior~=preview-enabled]').on('textchange load-preview', this._timedPreview.bind(this));
+    },
+    _timedPreview: function(view) {
+      clearTimeout(this._typingTimer);
+      this._typingTimer = setTimeout(function() {
+        this._onKeyPressPreview.bind(this, view)
+
+        // Piggy back this event for the purpose of updating the source view, which will trigger auto-save
+        // This will be updated/refactored when auto-save is re-worked. Currently it will cause an extra request per edit.
+        this._loadSource();
+        this.$element.trigger('textchange');
+      }.bind(this), this._doneTypingInterval);
     },
     _buildToolbar: function() {
       var button;
 
-      // Write
-      button = $('<a class="btn-write active" href="javascript:void(null);"><span>Write</span></a>');
-      button.click( $.proxy( function(evt) { this._onBtnWrite(evt); }, this));
+      // Form
+      button = $('<a class="btn-form active" href="javascript:void(null);"><span>Fields</span></a>');
+      button.click( $.proxy( function(evt) { this._onBtnFields(evt); }, this));
       $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
 
-      // Preview
-      button = $('<a class="btn-preview" href="javascript:void(null);"><span>Preview</span></a>');
-      button.click( $.proxy( function(evt) { this._onBtnPreview(evt); }, this));
+      // Source
+      button = $('<a class="btn-write" href="javascript:void(null);"><span>Source</span></a>');
+      button.click( $.proxy( function(evt) { this._onBtnSource(evt); }, this));
       $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
 
       // Full screen
@@ -114,61 +169,94 @@
       if (this.options.resize === false) return false;
 
     },
-    // Ajax preview
-    _loadPreview: function() {
-      this._previousContent = this.$element.val();
-      this.options.$preview.addClass('loading-indicator').text('Loading...');
 
-      var that = this;
-      $.getJSON( this.$element.data('preview-url'), {text: this.$element.val()}, function(result){
-        that.options.$preview.removeClass('loading-indicator')
-          .html(result.html);
-        that._previewRendered = true;
+    _contentHasFields: function() {
+      // Match the first instance of a field header.
+      var regex = /#\[.+?\]#/;
+
+      // Returns an array of matches (truthy) or null (falsey) if there's no match.
+      return this.$element.val().match(regex);
+    },
+
+    // Ajax form
+    _loadFields: function(data, allowDropdown) {
+      $.post({
+        url: this.$element.data('paths').form_url,
+        data: {source: data, allow_dropdown: allowDropdown},
+        beforeSend: function(){
+          this.options.$fields.addClass('loading-indicator').text('Loading...');
+        }.bind(this)
       });
     },
     // Ajax help
     _loadHelp: function() {
       var that = this;
-      $.get( this.$element.data('help-url'), function(result){
+      $.get( this.$element.data('paths').help_url, function(result){
         that.options.$help.removeClass('loading-indicator')
           .html(result);
         this._helpRendered = true;
       });
     },
-    // Toolbar button handlers
-    _onBtnWrite: function() {
-      // Activate toolbar button
-      var scope = this.options.$wrap;
-      $('.textile-toolbar a', scope).removeClass('active');
-      $('.textile-toolbar .btn-write', scope).addClass('active');
+    // Ajax preview
+    _loadPreview: function(data) {
+      this._previousContent = this.$element.val();
 
-      // Show Write pane
-      this.options.$preview.hide();
-      this.options.$help.hide();
-      this.$element.show();
+      $.post({
+        url: this.$element.data('paths').preview_url,
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: function(result) {
+          this.options.$preview.removeClass('loading-indicator').html(result);
+          if (result == '\n') {
+            this.options.$preview.append('<div class="preview-placeholder"><h5>Add some fields to see a live preview here</h5></div>')
+          }
+          this.options.$preview.children(':first').addClass('textile-preview');
+          this._previewRendered = true;
+        }.bind(this)
+      });
     },
-    _onBtnPreview: function() {
-      // Activate toolbar button
-      var scope = this.options.$wrap;
-      $('.textile-toolbar a', scope).removeClass('active');
-      $('.textile-toolbar .btn-preview', scope).addClass('active');
-
-      // Show Preview pane
-      this.$element.hide();
-
-      this.options.$help.hide();
-      this.options.$preview.show();
-
-      // If the text hasn't changed, do nothing.
-      if (this._previousContent == this.$element.val()) {
-        if (!this._previewRendered) {
-          this._loadPreview();
+    // Ajax write
+    _loadSource: function() {
+      $.post({
+        url: this.$element.data('paths').source_url,
+        data: JSON.stringify({ form: this._serializedFormData() }),
+        contentType: 'application/json',
+        success: function(result){
+          this.$element.val(result);
+        }.bind(this)
+      });
+    },
+    _onKeyPressPreview: function(type) {
+      if (type == 'fields') {
+        this._loadPreview({ fields: this._serializedFormData() });
+      }
+      else if (type == 'text') {
+        // If the text hasn't changed, do nothing.
+        if (this._previousContent == this.$element.val()) {
+          if (!this._previewRendered) {
+            this._loadPreview({ text: this.$element.val() });
+          }
+        } else {
+          this._loadPreview({ text: this.$element.val() });
         }
       }
-      else
-      {
-        this._loadPreview();
-      }
+    },
+    _onBtnFields: function() {
+      localStorage.setItem(this.options.defaultViewKey, 'fields');
+      // Activate toolbar button
+      var scope = this.options.$wrap;
+      $('.textile-toolbar a', scope).removeClass('active');
+      $('.textile-toolbar .btn-form', scope).addClass('active');
+
+      $('.textile-form').empty();
+
+      this._loadFields(this.$element.val(), false);
+
+      // Show Form pane
+      this.options.$help.hide();
+      this.$source.hide();
+      this.options.$preview.show();
+      this.options.$fields.show();
     },
     _onBtnFullScreen: function() {
       $btnFS = $('.btn-fullscreen', this.options.$wrap);
@@ -205,11 +293,8 @@
         $(document.body).css('overflow', 'visible');
 
         this.options.$wrap.removeClass('textile-fullscreen');
-        this.options.$wrap.css('width', this.options.width);
+        this.options.$wrap.css('width', 'auto');
         this.options.tmpspan.after(this.options.$wrap).remove();
-
-        this.options.$preview.css('height', 'auto');
-        this.$element.css('height', this.options.height);
 
         // update button icon
         $btnFS.removeClass('fa-compress').addClass('fa-expand');
@@ -221,13 +306,31 @@
       $('.textile-toolbar .btn-help', scope).addClass('active');
 
       // Show Help pane
-      this.$element.hide();
+      this.$source.hide();
+      this.options.$fields.hide();
       this.options.$preview.hide();
       this.options.$help.show();
 
       if (!this._helpRendered) {
         this._loadHelp();
       }
+    },
+    // Toolbar button handlers
+    _onBtnSource: function() {
+      localStorage.setItem(this.options.defaultViewKey, 'source');
+      // Activate toolbar button
+      var scope = this.options.$wrap;
+      $('.textile-toolbar a', scope).removeClass('active');
+      $('.textile-toolbar .btn-write', scope).addClass('active');
+
+      // Clear out the form
+      this.options.$fields.empty();
+
+      // Show Source pane
+      this.options.$fields.hide();
+      this.options.$help.hide();
+      this.options.$preview.show();
+      this.$source.show();
     },
 
     // --------------------------------------------------- Other event handlers
@@ -236,13 +339,20 @@
     _onFullScreenResize: function(){
       if (this.options.fullscreen === false) return;
 
-      var hfix = 42;
-      var hfix = 60;
+      var hfix = 65;
       var height = $(window).height() - hfix;
 
       this.options.$wrap.width($(window).width()-20);
-      this.options.$preview.height(height);
-      this.$element.height(height-10);
+    },
+
+    _serializedFormData: function() {
+      return $('[name^=item_form]', this.options.$fields).serializeArray();
+    },
+
+    _setDefaultView: function() {
+      if (localStorage.getItem(this.options.defaultViewKey) == 'source' || !this._contentHasFields) {
+        this._onBtnSource();
+      }
     }
   };
 
@@ -254,6 +364,5 @@
         $.data(this, 'plugin_' + pluginName, new Plugin( this, options ));
       }
     });
-  }
-
+  };
 }(jQuery, window));

@@ -5,12 +5,12 @@
 
 <%= content_tag :div, id: "#{dom_id(card)}_link", class: item_css.join do %>
 
-  <div class="expansion-container">
-    <%= link_to project_board_list_card_path(current_project, @board, @list, card) do %>
-      <i class="fa fa-address-card-o list-item-icon"></i>
-      <%= card.name %>
-    <% end %>
-  </div>
+
+  <%= link_to project_board_list_card_path(current_project, @board, @list, card) do %>
+    <i class="fa fa-address-card-o list-item-icon"></i>
+    <%= card.name %>
+  <% end %>
+
 
   <div class="list-item-actions">
     <%= link_to edit_project_board_list_card_path(current_project, @board, @list, card), class:'list-item-action-edit' do %>

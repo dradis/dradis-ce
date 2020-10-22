@@ -1,0 +1,46 @@
+<% field_name = local_assigns[:field] ? field[0]  : '' %>
+<% value = local_assigns[:field] ? field[1] : '' %>
+
+<div class="textile-form-field" data-behavior="textile-form-field">
+  <div class="d-inline-flex justify-content-between w-100">
+    <div class="inline-editable w-100" data-behavior="inline-editable">
+      <div class="edit-hover">
+        <i class="fa fa-pencil pt-1" data-behavior="edit-field" data-edit-field="#item_form_field_name_<%= index %>"></i>
+        <%= text_field_tag "item_form[field_name_#{index}]", field_name,
+          class: 'form-control',
+          onkeydown: 'return (event.keyCode!=13);',
+          data: {
+            behavior: 'preview-enabled'
+          },
+          placeholder: 'Enter field name',
+          tabindex: index + 1
+        %>
+      </div>
+    </div>
+  </div>
+  <div class="inline-editable">
+    <div class="edit-hover">
+      <% options = value.split(' | ') %>
+      <% if @allow_dropdown && options.count > 1 %>
+        <%= select :item_form, "field_value_#{index}", options, {}, { class: 'form-control', data: { behavior: 'preview-enabled' }, tabindex: index + 1 } %>
+      <% else %>
+        <%= text_area_tag "item_form[field_value_#{index}]", value, rows: 1,
+          class: 'form-control',
+          data: {
+            behavior: 'preview-enabled rich-toolbar drop-zone',
+            'rich-toolbar': 'block-code bold image italic link list-ol list-ul table',
+            'rich-toolbar-uploader': '[data-behavior~=jquery-upload]',
+            id: "item_form_field_value_#{index}"
+          },
+          placeholder: 'Enter field value',
+          tabindex: index + 1
+        %>
+      <% end %>
+    </div>
+  </div>
+  <div class="actions">
+    <%= link_to 'javascript:void(0)', class: 'text-error-hover', tabindex: '-1',  data: { behavior: 'delete-field' } do %>
+      <i class="fa fa-trash"></i> Delete
+    <% end %>
+  </div>
+</div>

@@ -5,12 +5,10 @@
 
 <%= content_tag :div, id: "#{dom_id(note)}_link", class: item_css.join do %>
 
-  <div class="expansion-container">
-    <%= link_to project_node_note_path(@node.project, @node, note) do %>
-      <i class="fa fa-file-text list-item-icon"></i>
-      <%= note.title %>
-    <% end %>
-  </div>
+  <%= link_to project_node_note_path(@node.project, @node, note) do %>
+    <i class="fa fa-file-text list-item-icon"></i>
+    <%= note.title %>
+  <% end %>
 
   <div class="list-item-actions">
     <%= link_to edit_project_node_note_path(@node.project, @node, note), class:'list-item-action-edit' do %>

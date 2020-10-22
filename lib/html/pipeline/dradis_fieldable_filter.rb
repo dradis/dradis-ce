@@ -11,8 +11,8 @@ module HTML
       def call
         output = @text.dup
 
-        Hash[ *@text.scan(HasFields::REGEX).flatten.collect{ |str| str.strip } ].keys.each do |field|
-          output.gsub!(/#\[#{Regexp.escape(field)}\]#[\r|\n]/, "h4. #{field}\n\n")
+        Hash[ *@text.scan(FieldParser::FIELDS_REGEX).flatten.collect{ |str| str.strip } ].keys.each do |field|
+          output.gsub!(/#\[#{Regexp.escape(field)}\]#[\r|\n]/, "h5. #{field}\n\n")
         end
 
         output

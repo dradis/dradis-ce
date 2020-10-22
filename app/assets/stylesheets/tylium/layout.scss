@@ -1,0 +1,87 @@
+@mixin active-nav() {
+  &.active {
+    position: relative;
+    overflow: visible;
+    background-color: $sidebarActiveColor;
+    
+    &:after {
+      position: absolute;
+      content: '';
+      height: 100%;
+      left: 0;
+      top: 0;
+      border-left: 3px solid $white;
+    }
+
+    .sidebar-link {
+      color: $white;
+    }
+  }
+}
+
+.breadcrumb {
+  flex-wrap: nowrap;
+  margin-bottom: 0;
+  padding-left: $mainContentPadding;
+  white-space: nowrap;
+  width: 100%;
+
+  .breadcrumb-item {
+    white-space: nowrap;
+
+    &+ .breadcrumb-item::before {
+      font-family: "fontawesome";
+      content: "\f105";
+    }
+
+    &:last-of-type {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.page-title {
+  margin: 1rem 0 0 $mainContentMargin;
+  cursor: default;
+}
+
+.secondary-sidebar-content {
+  .sticky-top {
+    top: calc(#{$mainContentMargin} + 4.35rem);
+  }
+}
+
+.view-content {
+  background: $secondaryBgColor;
+  position: fixed;
+  height: calc(100vh - 60px);
+  min-width: 570px;
+  top: $navbarHeight;
+  overflow: auto;
+  font-size: 0.9rem;
+
+  .content-container {
+    position: relative;
+    margin: $mainContentMargin;
+    padding: $mainContentPadding;
+    background-color: $primaryBgColor;
+    border: 1px solid $borderColor;
+    border-radius: 5px;
+
+    .alert {
+      margin: 1rem 0;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  nav:not(.d-flex) {
+    border-bottom: 1px solid $borderColor;
+    position: sticky;
+    top: 0;
+    z-index: 1050;
+  }
+}

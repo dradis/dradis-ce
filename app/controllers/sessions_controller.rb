@@ -11,8 +11,8 @@ class SessionsController < ApplicationController
   #
   # GET /setup
   def init
-    # We overwrite the default "access denied" message set by AuthenticatedController
-    flash[:alert] = 'Hold your horses!'
+    # Remove default alert message set by AuthenticatedController
+    flash.discard(:alert)
   end
 
   # POST /setup

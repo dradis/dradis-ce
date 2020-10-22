@@ -1,17 +1,26 @@
-<%= simple_form_for [current_project, @issue] do |f| %>
+<%= simple_form_for [current_project, @issue],
+  html: {
+    data: {
+      behavior: 'local-auto-save',
+      auto_save_key: @auto_save_key
+    }
+  } do |f| %>
+
   <%= f.error_notification %>
 
   <%=
     f.input :text,
       label: false,
       input_html: {
-        class: 'textile',
-          data: {
-            behavior: 'auto-save',
-            autosave_key: "#{current_project.id}-issue-#{ @issue.persisted? ? "edit-#{@issue.id}" : 'new' }",
-            help_url: markup_path,
-            preview_url: preview_path
-          }
+        class: 'textile h-100',
+        data: {
+          allow_dropdown: @issue.new_record?,
+          behavior: 'auto-save rich-toolbar drop-zone',
+          paths: editor_paths,
+          'rich-toolbar': 'block-code bold field image italic link list-ol list-ul table',
+          'rich-toolbar-uploader': '[data-behavior~=jquery-upload]'
+        },
+        rows: 20
       }
   %>
 
@@ -23,6 +32,13 @@
 
   <div class="form-actions">
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
-    <%= link_to 'Cancel', @issue.new_record? ? project_issues_path(current_project) : [current_project, @issue], class: 'cancel-link' %>
+    <%=
+      link_to 'Cancel',
+      @issue.new_record? ? project_issues_path(current_project) : [current_project, @issue],
+      class: 'cancel-link',
+      data: {
+        behavior: 'clear-local-auto-save'
+      }
+    %>
   </div>
 <% end %>

@@ -1,0 +1,93 @@
+// Colors
+$asphalt: #34495e;
+$blue: #3498db;
+$gray: #bdc3c7;
+$grayLight: lighten($gray, 15);
+$grayDark: darken($gray, 20);
+$green: #2ecc71;
+$orange: #e67e22;
+$purple: #9b59b6;
+$red: #e4485d;
+$white: #fff;
+$yellow: #f1c40f;
+
+// Edition Colors
+$lightGreen: #86cb86;
+$ceGreen: #378137;
+$darkGreen: #285d28;
+
+$lightColor: $lightGreen;
+$primaryColor: $ceGreen;
+$darkColor: $darkGreen;
+
+// Text Colors
+$codeText: #c7254e;
+$defaultText: #333;
+$errorText: $red;
+$mutedText: #bbb;
+$sidebarText: $lightColor;
+$linkColor: $primaryColor;
+$linkColorHover: darken($linkColor, 15%);
+
+// Background, Border, Fill Colors
+$primaryBgColor: $white;
+$secondaryBgColor: #f4f5f6;
+$activeFillColor: #eceeef;
+$borderColor: #ddd;
+$dropdownLinkBackgroundHover: #f8f9fa;
+$navbarBackground: $primaryBgColor;
+$sidebarBackground: darken($darkColor, 5%);
+$sidebarActiveColor: $darkColor;
+
+// Spacing
+$mainContentPadding: 2rem;
+$mainContentMargin: 2rem;
+
+// Sizing
+$navbarHeight: 60px;
+$sidebarCollapsed: 6rem;
+$sidebarExpanded: 15.5rem;
+$secondarySidebarWidth: 25%;
+
+// Fonts
+@font-face {
+  font-family: 'OpenSans';
+  src: font-url('OpenSans-Regular.ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: font-url('OpenSans-Italic.ttf');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: font-url('OpenSans-Light.ttf');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: font-url('OpenSans-LightItalic.ttf');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: font-url('OpenSans-Bold.ttf');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'OpenSans';
+  src: font-url('OpenSans-BoldItalic.ttf');
+  font-weight: 600;
+  font-style: italic;
+}
