@@ -454,10 +454,10 @@ describe 'Issues pages' do
           end
 
           it 'reroutes back to the issue with the evidence tab open' do
-            fill_in :evidence_content, with: ''
+            fill_in 'item_form[field_value_0]', with: ''
             click_button 'Update Evidence'
             expect(current_path).to eq "/projects/#{current_project.id}/issues/#{@issue.id}"
-            expect(find('li.active a[href~="#evidence-tab"]')).to_not be_nil
+            expect(find('#evidence-tab.active')).to_not be_nil
           end
         end
 
