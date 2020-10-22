@@ -373,7 +373,7 @@ describe 'Issues pages' do
             it 'routes back to the issues page with the evidence tab open' do
               expect { click_button('Save Evidence') }.to change { Evidence.count }.by(1)
               expect(current_path).to eq "/projects/#{current_project.id}/issues/#{@issue.id}"
-              expect(find('li.active a[href~="#evidence-tab"]')).to_not be_nil
+              expect(find('#evidence-tab.active')).to_not be_nil
             end
           end
 
@@ -475,7 +475,7 @@ describe 'Issues pages' do
 
           it 'reroutes back to the issue with the evidence tab open' do
             expect(current_path).to eq "/projects/#{current_project.id}/issues/#{@issue.id}"
-            expect(find('li.active a[href~="#evidence-tab"]')).to_not be_nil
+            expect(find('#evidence-tab.active')).to_not be_nil
           end
         end
       end
