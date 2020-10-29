@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-light" data-behavior="navbar">
   <div class="d-flex justify-content-between w-100">
-    <%= link_to current_project.name, main_app.project_path(current_project), class: 'navbar-brand' %>
+    <%= link_to current_project.name, main_app.project_path(current_project), class: 'navbar-brand', data: { behavior: 'navbar-brand' } %>
     <div class="d-inline-flex">
       <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"><i class="fa fa-bars"></i></span>

@@ -5,6 +5,7 @@ class EvidenceController < NestedNodeResourceController
   include MultipleDestroy
   include NodesSidebar
   include NotificationsReader
+  include EvidenceHelper
 
   before_action :set_or_initialize_evidence, except: [ :index, :create_multiple ]
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
@@ -96,12 +97,7 @@ class EvidenceController < NestedNodeResourceController
         track_updated(@evidence)
         check_for_edit_conflicts(@evidence, updated_at_before_save)
         format.html do
-          path = if params[:back_to] == 'issue'
-                   [current_project, @evidence.issue]
-                 else
-                   [current_project, @node, @evidence]
-                 end
-          redirect_to path, notice: 'Evidence updated.'
+          redirect_to evidence_redirect_path(params[:return_to]), notice: 'Evidence updated.'
         end
 
       else

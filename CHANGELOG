@@ -1,15 +1,17 @@
 [v#.#.#] ([MMM’YY])
-  * Layout:
-    - Breadcrumbs have a fixed position
   * Return users to the last view before the session expired
-  * Upgraded gems: [gem #1], [gem #2]
+  * Main sidebar improvements:
+    - Labels added under icons
+    - Nodes can be added in collapsed state
+    - Removed animations and transitions while expanding and collapsing 
+  * Upgraded gems: rails
   * Bugs fixed:
-    - [bug fixed #1]
-    - [bug fixed ...]
+    - Editor drag and drop, and copy paste inserts attachments at the cursor
+      position instead of at the end of the textarea.
+    - Fixed redirect when canceling editing evidence from the issue level
     - Bug tracker items: #N, #M, #O, ...
   * New integrations:
-    - [new integration #1]
-    - [new integration ...]
+    - Nipper
   * Integration enhancements:
     - [integration enhancement #1]
     - [integration enhancement ...]
@@ -23,6 +25,18 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v3.19.0 (September 2020)
+  * Auto upload attachments and screenshots without requiring the use of the staging area
+  * Cards, Evidence, Issues, and Notes now have their own attachment support
+  * Displays a notification badge in the browser tab when there are unread notifications
+  * Editor: Allow drag & drop, copy & paste, and direct image uploading
+  * Increase the node properties column size by changing it to LONGTEXT
+  * Layout: Breadcrumbs have a fixed position
+  * Link to our support site on the styles help page
+  * Long dropdown menus are vertically scrollable
+  * Bugs fixed:
+    - Use absolute send times in notification emails instead of relative
 
 v3.18.0 (July 2020)
   * Add all activity view

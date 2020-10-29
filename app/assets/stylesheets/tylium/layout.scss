@@ -10,7 +10,7 @@
       height: 100%;
       left: 0;
       top: 0;
-      border: 1.5px solid $white;
+      border-left: 3px solid $white;
     }
 
     .sidebar-link {
@@ -60,7 +60,6 @@
   top: $navbarHeight;
   overflow: auto;
   font-size: 0.9rem;
-  transition: all 0.5s ease-in-out;
 
   .content-container {
     position: relative;
