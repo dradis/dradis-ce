@@ -45,9 +45,13 @@ class SessionsController < ApplicationController
   def failure
     respond_to do |format|
       format.html do
-        flash[:alert] = warden_message if warden_message.present?
-        session[:return_to] ||= return_to
-        redirect_to login_path
+        if request.xhr?
+          head :not_found
+        else
+          flash[:alert] = warden_message if warden_message.present?
+          session[:return_to] ||= return_to
+          redirect_to login_path
+        end
       end
       format.json { head :not_found }
       format.js { head :not_found }
@@ -100,8 +104,7 @@ class SessionsController < ApplicationController
   end
 
   def return_to
-    # Don't redirect to ajax GET request
-    if request.get? && request.format&.html?
+    if request.get?
       warden_options[:attempted_path]
     else
       request.env['HTTP_REFERER']

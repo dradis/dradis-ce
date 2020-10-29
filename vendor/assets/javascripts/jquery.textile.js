@@ -204,6 +204,7 @@
       $.post({
         url: this.$element.data('paths').preview_url,
         data: JSON.stringify(data),
+        dataType: 'html',
         contentType: 'application/json',
         success: function(result) {
           this.options.$preview.removeClass('loading-indicator').html(result);

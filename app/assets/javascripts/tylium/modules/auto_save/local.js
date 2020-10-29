@@ -104,17 +104,11 @@ class LocalAutoSave {
   }
 
   setData() {
-    if (!this.cancelled && !this.submitted && this.isFormInsideDOM()) {
+    if (!this.cancelled && !this.submitted) {
       localStorage.setItem(this.key, JSON.stringify(this.getData()));
     } else {
       // Reset the submit state, needed for comment form
       this.submitted = false;
     }
-  }
-
-  // Workaround for Turbolinks replacing editor content,
-  // only save data in local storage if the form is inside the DOM.
-  isFormInsideDOM() {
-    return document.querySelectorAll(`[data-auto-save-key="${this.key}"]`).length > 0
   }
 }
