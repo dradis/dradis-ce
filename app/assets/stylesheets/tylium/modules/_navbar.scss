@@ -28,14 +28,14 @@
     }
 
     &.show {
-      @media screen and (max-width: 991px) { 
+      @media screen and (max-width: 991px) {
         position: absolute;
         background: white;
         top: 100%;
         right: 0%;
         display: flex;
         flex-direction: column;
-        
+
         .navbar-nav {
           flex-direction: column;
           align-items: flex-start;
@@ -50,6 +50,7 @@
               border: none;
               border-bottom: 1px solid $borderColor;
               border-radius: 0;
+              margin-top: 0;
               position: initial;
 
               .dropdown-item {
@@ -66,7 +67,7 @@
               .fa {
                 width: 1.2em;
               }
-    
+
               &:hover {
                 background-color: $primaryColor;
                 color: $white;
@@ -90,19 +91,21 @@
       border-radius: 50px;
       font-size: 0.9rem;
       margin: 0 -0.2rem;
+      position: relative;
       transition: all 0.2s ease-in-out;
       white-space: nowrap;
       z-index: 2;
 
       .dropdown-menu {
-        border-radius: 0 0 0 .5rem;
+        border-radius: 0 0 .5rem .5rem;
+        margin-top: 0.6rem;
       }
 
       .nav-link {
         color: $linkColor;
         padding: 0.5rem 0.75rem;
         width: 100%;
-        
+
         &:focus,
         &:hover {
           color: $linkColorHover;
@@ -147,7 +150,7 @@
       .navbar-toggler-icon {
         color: $linkColor
       }
-    } 
+    }
 
     .navbar-toggler-icon {
       background-image: none;
