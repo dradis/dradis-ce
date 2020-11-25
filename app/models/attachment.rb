@@ -245,4 +245,8 @@ class Attachment < File
       created_at: self.ctime
     }.to_json(options)
   end
+
+  def mime_type
+    Mime::Type.lookup_by_extension(File.extname(self.filename.downcase)[1..-1])
+  end
 end

@@ -8,17 +8,17 @@
         <div class="dropdown">
           <!-- The file upload form used as target for the file upload widget -->
           <%= form_tag main_app.project_node_attachments_path(node.project, node, format: :json), id: 'fileupload', multipart: true do %>
-            <div class="fileupload-buttonbar">	
-              <span class="fileinput-button" data-toggle="tooltip" data-placement="bottom" title="Add...">	
+            <div class="fileupload-buttonbar">
+              <span class="fileinput-button" data-toggle="tooltip" data-placement="bottom" title="Add...">
                 <i class="fa fa-plus"></i>
-                <input type="file" name="files[]" multiple>	
+                <input type="file" name="files[]" multiple>
               </span>
             </div>
             <button type="submit" class="sr-only" title="Start">Start Upload</button>
             <!-- The loading indicator is shown during image processing -->
             <div class="fileupload-loading"></div>
           <% end %>
-          <%= link_to 'javascript:void(0)', 
+          <%= link_to 'javascript:void(0)',
             data: { toggle: 'collapse', target: '#attachment-box', behavior: 'collapse-collection' } do %>
             <i class="fa fa-chevron-up" data-behavior="toggle-chevron"></i>
           <% end %>
@@ -35,12 +35,16 @@
         <% if node.attachments.any? %>
           <% for attachment in node.attachments do %>
             <tr class="template-download">
-              <td colspan="4">
+              <td colspan="4" class="position-relative">
                 <table>
                   <tr>
                     <td class="name">
-                      <%= link_to main_app.project_node_attachment_path(node.project, node, attachment.filename), download: attachment.filename, title: attachment.filename, class: 'filename' do %>
-                      <i class="fa fa-paperclip"></i> <%= short_filename(attachment.filename) %>
+                      <%= attachment.mime_type %>
+                      <%= link_to main_app.project_node_attachment_path(node.project, node, attachment.filename), download: attachment.filename, title: attachment.filename, class: 'filename text-truncate' do %>
+                        <i class="fa fa-download"></i> <%= short_filename(attachment.filename) %>
+                        <% if attachment.mime_type =~ 'image' %>
+                          <%= image_tag main_app.project_node_attachment_path(node.project, node, attachment.filename), class: 'hover-preview' %>
+                        <% end %>
                       <% end %>
                     </td>
                     <td rowspan="2" align="right" class="delete">
@@ -117,7 +121,7 @@
 <script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-download fade show">
-      <td colspan="4">
+      <td colspan="4" class="position-relative">
         <table>
           <tr>
             {% if (file.error) { %}
@@ -133,10 +137,13 @@
 
             {% } else { %}
               <td class="name">
-                <a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}" class="filename">
-                  <i class="fa fa-paperclip"></i>
+                <a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}" class="filename text-truncate">
+                  <i class="fa fa-download"></i>
                   {%= file.name %}
                 </a>
+                {% if (file.thumbnail_url) { %}
+                  <img src={%=file.url%} class="hover-preview">
+                {% } %}
               </td>
 
               <td rowspan="2" align="right" class="delete">

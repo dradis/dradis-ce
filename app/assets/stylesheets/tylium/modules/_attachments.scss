@@ -40,6 +40,7 @@
     .copy-link,
     .delete {
       width: 30px;
+      vertical-align: top;
     }
 
     .error {
@@ -50,13 +51,28 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+      max-width: 100%;
+      display: inline-block;
     }  
 
     .name {
       width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+
+      &:hover .hover-preview {
+        display: block;
+      }
+
+      .hover-preview {
+        background-color: $white;
+        border: 1px solid $borderColor;
+        border-radius: 5px;
+        box-shadow: 0 20px 30px 0 rgba(33, 55, 74, 0.2);
+        display: none;
+        position: absolute;
+        bottom: calc(100% + 0.25rem);
+        left: 0;
+        width: 100%;
+      }
     }
 
     .progress {
@@ -68,6 +84,7 @@
     .size {
       font-size: 80%;
       padding-bottom: 0.3rem;
+      cursor: default;
     }
   }
 
@@ -88,7 +105,7 @@
       padding: 0;
 
       .btn {
-        padding: 4px 6px;
+        padding: 0 6px;
 
         &.btn-copy {
           color: $white;
