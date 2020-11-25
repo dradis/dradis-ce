@@ -3,7 +3,8 @@
   border-right: 1px solid $borderColor;
   color: $lightColor;
   height: calc(100vh - 60px);
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   padding: 1rem;
   position: sticky;
   top: 0;
