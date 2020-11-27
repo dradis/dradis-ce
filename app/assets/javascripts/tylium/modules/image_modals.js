@@ -1,74 +1,87 @@
-document.addEventListener("turbolinks:load", function() {
-  const $modal = $('[data-behavior~=image-modal]');
-  const targetImgs = 'img[data-toggle=modal]';
+class ImageModal {
+  constructor(images = [], index = 0, $element) {
+    this.$element = $element;
+    this.images = images;
+    this.index = index;
 
-  var images = [],
-      index = 0
-
-  function changeImage(direction) {
-    if (direction == 'next' && index < images.length - 1) {
-      index += 1;
-    } else if (direction == 'prev' && index > 0) {
-      index -= 1;
-    }
-
-    loadImage(index);
+    this.init();
   }
 
-  function loadImage(index) {
-    $modal.find('[data-behavior~=modal-title]').text(images[index].title);
-    $modal.find('[data-behavior~=image-modal-image]').attr('src', images[index].src);
+  init() {
+    this.fnClick = function(e) {
+      this[$(e.target).data('direction')]();
+    }.bind(this);
 
-    if (index == images.length - 1) {
-      $modal.find('[data-direction~=next]').addClass('d-none');
+    this.fnKeys = function(e) {
+      if (e.which == 39) {
+        this.next();
+      } else if (e.which == 37) {
+        this.prev();
+      }
+    }.bind(this);
+
+    this.$element.find('[data-direction]').click(this.fnClick)
+    this.$element.keydown(this.fnKeys);
+  }
+
+  unbind() {
+    this.$element.find('[data-direction]').unbind('click', this.fnClick);
+    this.$element.unbind('keydown', this.fnKeys);
+  }
+
+  addImage(image) {
+    var $image = $(image);
+    this.images.push( { title: $image.attr('alt'), src: $image.attr('src') } );
+    return image
+  }
+
+  next() {
+    if (this.index + 1 < this.images.length) {
+      this.index += 1;
+      this.loadImage(this.index);
+    }
+  }
+
+  prev() {
+    if (this.index !== 0) {
+      this.index -= 1;
+      this.loadImage(this.index);
+    }
+  }
+
+  setTitle(title) {
+    this.$element.find('[data-behavior~=modal-title]').text(title);
+  }
+
+  setImage(src) {
+    this.$element.find('[data-behavior~=image-modal-image]').attr('src', src);
+  }
+
+  getIndex(img) {
+    var src = $(img).attr('src');
+    return this.images.map(function(e){ return e.src }).indexOf(src)
+  }
+
+  loadImage(index) {
+    this.index = index;
+    var image = this.images[index];
+
+    this.setTitle(image.title);
+    this.setImage(image.src);
+    this.resetChevrons(index);
+  }
+
+  resetChevrons(index) {
+    if (index == this.images.length - 1) {
+      this.$element.find('[data-direction~=next]').addClass('d-none');
     } else {
-      $modal.find('[data-direction~=next]').removeClass('d-none');
+      this.$element.find('[data-direction~=next]').removeClass('d-none');
     }
 
     if (index == 0) {
-      $modal.find('[data-direction~=prev]').addClass('d-none');
+      this.$element.find('[data-direction~=prev]').addClass('d-none');
     } else {
-      $modal.find('[data-direction~=prev]').removeClass('d-none');
+      this.$element.find('[data-direction~=prev]').removeClass('d-none');
     }
   }
-
-  $('[data-behavior~=view-content]').on('click', targetImgs, function() {
-    images = [];
-    index = 0;
-
-    if ($(this).parents('[data-behavior~=comment-feed]').length) {
-      $(this).parents('[data-behavior~=comment-feed]').find('[data-behavior~=content-textile]').each(function() {
-        $(this).find(targetImgs).each(function() {
-          $this = $(this);
-          images.push({title: $this.attr('alt'), src: $this.attr('src')});
-        });
-      });
-    } else {
-      $(this).parents('[data-behavior~=content-textile]').find(targetImgs).each(function() {
-        $this = $(this);
-        images.push({title: $this.attr('alt'), src: $this.attr('src')});
-      });
-    }
-
-    $this = $(this);
-    index = images.map(function(e){ return e.src }).indexOf($(this).attr('src'));
-
-    loadImage(index);
-  });
-
-  $modal.find('[data-direction]').click(function() {
-    if ($(this).is('[data-direction~=next]')) {
-      changeImage('next');
-    } else if ($(this).is('[data-direction~=prev]')) {
-      changeImage('prev');
-    }
-  });
-
-  $($modal).keydown(function(e) {
-    if (e.which == 39) {
-      changeImage('next');
-    } else if (e.which == 37) {
-      changeImage('prev');
-    }
-  });
-});
+}
