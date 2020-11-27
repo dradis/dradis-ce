@@ -1,13 +1,9 @@
 document.addEventListener("turbolinks:load", function() {
   const $modal = $('[data-behavior~=image-modal]');
-  var images = [],
-      index = 0,
-      titles = [];
+  const targetImgs = 'img[data-toggle=modal]';
 
-  function buildArrays($element) {
-    titles.push($element.attr('alt'));
-    images.push($element.attr('src'));
-  }
+  var images = [],
+      index = 0
 
   function changeImage(direction) {
     if (direction == 'next' && index < images.length - 1) {
@@ -20,8 +16,8 @@ document.addEventListener("turbolinks:load", function() {
   }
 
   function loadImage(index) {
-    $modal.find('[data-behavior~=modal-title]').text(titles[index]);
-    $modal.find('[data-behavior~=image-modal-image]').attr('src', images[index]);
+    $modal.find('[data-behavior~=modal-title]').text(images[index].title);
+    $modal.find('[data-behavior~=image-modal-image]').attr('src', images[index].src);
 
     if (index == images.length - 1) {
       $('[data-direction~=next]').addClass('d-none');
@@ -36,28 +32,26 @@ document.addEventListener("turbolinks:load", function() {
     }
   }
 
-  $('[data-behavior~=content-textile] img').each(function() {
-    $(this).attr('data-toggle', 'modal').attr('data-target', '[data-behavior~=image-modal]');
-  });
-
-  $('[data-behavior~=content-textile] img').click(function() {
+  $('[data-behavior~=view-content]').on('click', targetImgs, function() {
     images = [];
     index = 0;
-    titles = [];
 
     if ($(this).parents('[data-behavior~=comment-feed]').length) {
       $(this).parents('[data-behavior~=comment-feed]').find('[data-behavior~=content-textile]').each(function() {
-        $(this).find('img').each(function() {
-          buildArrays($(this));
+        $(this).find(targetImgs).each(function() {
+          $this = $(this);
+          images.push({title: $this.attr('alt'), src: $this.attr('src')});
         });
       });
     } else {
-      $(this).parents('[data-behavior~=content-textile]').find('img').each(function() {
-        buildArrays($(this));
+      $(this).parents('[data-behavior~=content-textile]').find(targetImgs).each(function() {
+        $this = $(this);
+        images.push({title: $this.attr('alt'), src: $this.attr('src')});
       });
     }
 
-    index = images.indexOf($(this).attr('src'));
+    $this = $(this);
+    index = images.map(function(e){ return e.src }).indexOf($(this).attr('src'));
 
     loadImage(index);
   });
