@@ -30,7 +30,7 @@
         tpl: {
           fields: '<div class="textile-form h-100 col-6 col-sm-6"></div>',
           wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row"></div></div>',
-          preview: '<div class="col-6 col-sm-6"><div class="textile-preview loading-indicator">Loading...</div></div>',
+          preview: '<div class="col-6 col-sm-6" data-behavior="content-textile"><div class="textile-preview loading-indicator">Loading...</div></div>',
           help: '<div class="textile-help col-12 col-sm-12 loading-indicator">Loading...</div>'
         }
       };
