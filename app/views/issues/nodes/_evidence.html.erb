@@ -5,7 +5,7 @@
       <h5>
         Evidence for <%= link_to node.label, project_node_path(current_project, node) %> -
         <span class="actions">
-          <%= link_to edit_project_node_evidence_path(current_project, node, evidence, back_to: :issue) do %>
+          <%= link_to edit_project_node_evidence_path(current_project, node, evidence, return_to: :issue) do %>
             <i class="fa fa-pencil"></i> Edit
           <% end %> -
           <%= link_to [current_project, node, evidence],
@@ -32,7 +32,7 @@
             <h5>
               Instance #<%= i+1 %> for <%= link_to node.label, project_node_path(current_project, node) %> -
               <span class="actions">
-                <%= link_to edit_project_node_evidence_path(current_project, node, instance, back_to: :issue) do %>
+                <%= link_to edit_project_node_evidence_path(current_project, node, instance, return_to: :issue) do %>
                   <i class="fa fa-pencil"></i> Edit
                 <% end %> -
                 <%= link_to [current_project, node, instance],
