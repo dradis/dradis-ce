@@ -8,6 +8,11 @@ document.addEventListener('turbolinks:load', function(){
   });
 
   // Activate Modals for images within textile rendered areas
+  // The ImageModal class will control the navigation of the image carousel. In
+  // this case the modal is managed by bootstrap. Bootstrap brings the modal up
+  // on click, we access the needed images as some may have been ajaxed in
+  // (comments, or the editor preview) and add the images to the ImageModal
+  // object to be displayed within the modal.
   const $modal = $('[data-behavior~=image-modal]');
   const targetImgs = 'img[data-toggle=modal]';
 

@@ -1,3 +1,7 @@
+// A class to help the management and navigation of a pseudo image carousel.
+// It accepts an existing modal element and binds events to it. Images are then
+// added to the object. The modal will be manipulated to carousel the images
+// that have been added.
 class ImageModal {
   constructor(images = [], index = 0, $element) {
     this.$element = $element;
