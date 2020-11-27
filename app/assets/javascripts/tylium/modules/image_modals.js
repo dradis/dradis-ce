@@ -20,15 +20,15 @@ document.addEventListener("turbolinks:load", function() {
     $modal.find('[data-behavior~=image-modal-image]').attr('src', images[index].src);
 
     if (index == images.length - 1) {
-      $('[data-direction~=next]').addClass('d-none');
+      $modal.find('[data-direction~=next]').addClass('d-none');
     } else {
-      $('[data-direction~=next]').removeClass('d-none');
+      $modal.find('[data-direction~=next]').removeClass('d-none');
     }
 
     if (index == 0) {
-      $('[data-direction~=prev]').addClass('d-none');
+      $modal.find('[data-direction~=prev]').addClass('d-none');
     } else {
-      $('[data-direction~=prev]').removeClass('d-none');
+      $modal.find('[data-direction~=prev]').removeClass('d-none');
     }
   }
 
@@ -56,7 +56,7 @@ document.addEventListener("turbolinks:load", function() {
     loadImage(index);
   });
 
-  $('[data-direction]').click(function() {
+  $modal.find('[data-direction]').click(function() {
     if ($(this).is('[data-direction~=next]')) {
       changeImage('next');
     } else if ($(this).is('[data-direction~=prev]')) {
