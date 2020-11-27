@@ -7,7 +7,8 @@ module CommentsHelper
       HTML::Pipeline::SanitizationFilter,
       HTML::Pipeline::AutolinkFilter,
       HTML::Pipeline::DradisMentionsFilter,
-      HTML::Pipeline::DradisCodeHighlightFilter
+      HTML::Pipeline::DradisCodeHighlightFilter,
+      HTML::Pipeline::DradisImageModalAttributesFilter
     ], {
       mentionable_users: @mentionable_users || current_project.testers_for_mentions,
       no_inline_code: true,

@@ -9,7 +9,8 @@ module ApplicationHelper # :nodoc:
       HTML::Pipeline::DradisTextileFilter,
       HTML::Pipeline::SanitizationFilter,
       HTML::Pipeline::AutolinkFilter,
-      HTML::Pipeline::DradisCodeHighlightFilter
+      HTML::Pipeline::DradisCodeHighlightFilter,
+      HTML::Pipeline::DradisImageModalAttributesFilter
     ], context
 
     result = textile_pipeline.call(text)
