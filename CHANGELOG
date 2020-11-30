@@ -1,5 +1,5 @@
 [v#.#.#] ([MMM’YY])
-  * Enlarge images on click
+  * Images in cards, comments, evidence, issues, and notes now expand to fill the screen when clicked
   * Main sidebar improvements:
     - Labels added under icons
     - Removed animations and transitions while expanding and collapsing

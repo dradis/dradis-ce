@@ -19,7 +19,7 @@ document.addEventListener('turbolinks:load', function(){
 
   $('[data-behavior~=view-content]').on('click', targetImgs, function() {
     if (modal !== undefined) { modal.unbind(); }
-    modal = new ImageModal([], 0, $modal)
+    modal = new ImageModal([], 0, $modal);
 
     scope = ($(this).parents('[data-behavior~=comment-feed]').length ? 'comment-feed' : 'content-textile');
     $(this).parents('[data-behavior~='+scope+']').find(targetImgs).each(function() {
@@ -29,4 +29,4 @@ document.addEventListener('turbolinks:load', function(){
     var index = modal.getIndex(this);
     modal.loadImage(index);
   });
-})
+});

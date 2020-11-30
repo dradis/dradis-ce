@@ -24,7 +24,7 @@ class ImageModal {
       }
     }.bind(this);
 
-    this.$element.find('[data-direction]').click(this.fnClick)
+    this.$element.find('[data-direction]').click(this.fnClick);
     this.$element.keydown(this.fnKeys);
   }
 
@@ -36,7 +36,7 @@ class ImageModal {
   addImage(image) {
     var $image = $(image);
     this.images.push( { title: $image.attr('alt'), src: $image.attr('src') } );
-    return image
+    return image;
   }
 
   next() {
@@ -63,7 +63,7 @@ class ImageModal {
 
   getIndex(img) {
     var src = $(img).attr('src');
-    return this.images.map(function(e){ return e.src }).indexOf(src)
+    return this.images.map(function(e){ return e.src; }).indexOf(src);
   }
 
   loadImage(index) {
