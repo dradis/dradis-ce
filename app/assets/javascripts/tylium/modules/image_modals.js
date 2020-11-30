@@ -72,17 +72,17 @@ class ImageModal {
 
     this.setTitle(image.title);
     this.setImage(image.src);
-    this.resetChevrons(index);
+    this.resetChevrons();
   }
 
-  resetChevrons(index) {
-    if (index == this.images.length - 1) {
+  resetChevrons() {
+    if (this.index == this.images.length - 1) {
       this.$element.find('[data-direction~=next]').addClass('d-none');
     } else {
       this.$element.find('[data-direction~=next]').removeClass('d-none');
     }
 
-    if (index == 0) {
+    if (this.index == 0) {
       this.$element.find('[data-direction~=prev]').addClass('d-none');
     } else {
       this.$element.find('[data-direction~=prev]').removeClass('d-none');
