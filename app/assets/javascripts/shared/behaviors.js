@@ -15,11 +15,10 @@ document.addEventListener('turbolinks:load', function(){
   // object to be displayed within the modal.
   const $modal = $('[data-behavior~=image-modal]');
   const targetImgs = 'img[data-toggle=modal]';
-
-  var modal = new ImageModal([], 0 , $modal);
+  var modal;
 
   $('[data-behavior~=view-content]').on('click', targetImgs, function() {
-    modal.unbind();
+    if (modal !== undefined) { modal.unbind(); }
     modal = new ImageModal([], 0, $modal)
 
     scope = ($(this).parents('[data-behavior~=comment-feed]').length ? 'comment-feed' : 'content-textile');
