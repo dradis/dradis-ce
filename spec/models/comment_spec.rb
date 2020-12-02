@@ -6,7 +6,6 @@ describe Comment do
 
   it { should validate_presence_of :commentable }
   it { should validate_presence_of :content }
-  it { should validate_presence_of :user }
 
   it 'subscribes the comment author to the commentable' do
     user  = create(:user)
