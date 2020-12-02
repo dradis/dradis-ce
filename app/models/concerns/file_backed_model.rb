@@ -51,8 +51,10 @@ module FileBackedModel
     # Returns a Pathname to location configured in the database through the
     # :setting_name setting
     def pwd
+      return @pwd if defined?(@pwd)
+
       conf = Configuration.find_or_create_by(name: @setting_name, value: @default_path)
-      Pathname.new(conf.value)
+      @pwd = Pathname.new(conf.value)
     end
 
     def set_pwd(options={})
