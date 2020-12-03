@@ -61,6 +61,7 @@
 # Retrieves the test.gif image that is associated with node 1
 
 class Attachment < File
+  include AvailableFilename
 
   require 'fileutils'
   # Set the path to the attachment storage
@@ -148,25 +149,6 @@ class Attachment < File
     AttachmentPwd
   end
 
-  # Obtain a suitable attachment name for a recently uploaded file. If the
-  # original file name is still available, use it, otherwise, provide count-based
-  # an alternative.
-  def self.available_name(node, args={})
-    original = args.fetch(:original)
-
-    if node.attachments.map(&:filename).include?(original)
-      attachments_pwd = Attachment.pwd.join(node.id.to_s)
-
-      # The original name is taken, so we'll add the "_copy-XX." suffix
-      extension = File.extname(original)
-      basename  = File.basename(original, extension)
-      sequence  = Dir.glob(attachments_pwd.join("#{basename}_copy-*#{extension}")).map { |a| a.match(/_copy-([0-9]+)#{extension}\z/)[1].to_i }.max || 0
-      "%s_copy-%02i%s" % [basename, sequence + 1, extension]
-    else
-      original
-    end
-  end
-
   # -- Instance Methods  ------------------------------------------------------
 
   attr_accessor :filename, :node_id, :tempfile
@@ -220,7 +202,11 @@ class Attachment < File
 
   # Makes a copy of itself for the given node.
   def copy_to(node)
-    name = Attachment.available_name node, original: filename
+    name = Attachment.available_filename(
+      original_filename: filename,
+      pathname: Attachment.pwd.join(node.id.to_s)
+    )
+
     new_file_path = fullpath(node.id, name)
 
     dir_name = File.dirname new_file_path
