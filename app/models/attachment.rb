@@ -200,7 +200,7 @@ class Attachment < File
 
   # Makes a copy of itself for the given node.
   def copy_to(node)
-    name = DradisFile.rename(
+    name = RenameService.rename_file(
       original_filename: filename,
       pathname: Attachment.pwd.join(node.id.to_s)
     )

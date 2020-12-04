@@ -1,12 +1,10 @@
-class DradisFile
+class RenameService
   # Obtain a suitable filename for a new file. If the directory
   # does not contain a file with the same filename, use the original filename,
   # otherwise provide count-based alternative.
-
-  # original_filename is a String object
-  # pathname is a Pathname object
-
-  def self.rename(original_filename:, pathname:)
+  #   original_filename is a String object
+  #   pathname is a Pathname object
+  def self.rename_file(original_filename:, pathname:)
     return original_filename unless File.exists?(pathname.join(original_filename))
 
     extension = File.extname(original_filename)
