@@ -25,7 +25,7 @@ module Dradis::CE::API
 
         @attachments = []
         uploaded_files.each do |uploaded_file|
-          attachment_name = Attachment.available_filename(
+          attachment_name = DradisFile.rename(
             original_filename: uploaded_file.original_filename,
             pathname: Attachment.pwd.join(@node.id.to_s)
           )

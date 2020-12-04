@@ -16,7 +16,7 @@ class AttachmentsController < AuthenticatedController
   def create
     uploaded_file = params.fetch(:attachment_file, params.fetch(:files, []).first)
 
-    attachment_name = Attachment.available_filename(
+    attachment_name = DradisFile.rename(
       original_filename: uploaded_file.original_filename,
       pathname: Attachment.pwd.join(@node.id.to_s)
     )

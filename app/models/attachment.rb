@@ -61,8 +61,6 @@
 # Retrieves the test.gif image that is associated with node 1
 
 class Attachment < File
-  include AvailableFilename
-
   require 'fileutils'
   # Set the path to the attachment storage
   AttachmentPwd = Rails.env.test? ? Rails.root.join('tmp', 'attachments') : Rails.root.join('attachments')
@@ -202,7 +200,7 @@ class Attachment < File
 
   # Makes a copy of itself for the given node.
   def copy_to(node)
-    name = Attachment.available_filename(
+    name = DradisFile.rename(
       original_filename: filename,
       pathname: Attachment.pwd.join(node.id.to_s)
     )
