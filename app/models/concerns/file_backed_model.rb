@@ -52,7 +52,8 @@ module FileBackedModel
     # :setting_name setting
     def pwd
       @pwd ||= begin
-        conf = Configuration.find_or_create_by(name: @setting_name, value: @default_path)
+        conf = Configuration.create_with(value: @default_path).
+          find_or_create_by(name: @setting_name)
         Pathname.new(conf.value)
       end
     end
