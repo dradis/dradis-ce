@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe RenameService do
-  let(:temp_path) { Rails.root.join('tmp', 'rename_service_spec') }
+RSpec.describe NamingService do
+  let(:temp_path) { Rails.root.join('tmp', 'naming_service_spec') }
 
-  describe '.rename_file' do
+  describe '.name_file' do
     before do
       FileUtils.rm_rf(temp_path)
     end
