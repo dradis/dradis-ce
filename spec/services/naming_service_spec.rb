@@ -16,7 +16,7 @@ RSpec.describe NamingService do
 
     context 'file does not exist in directory' do
       it 'returns original filename' do
-        result = described_class.rename_file(
+        result = described_class.name_file(
           original_filename: 'rails.png',
           pathname: temp_path
         )
@@ -30,7 +30,7 @@ RSpec.describe NamingService do
         FileUtils.mkdir_p(temp_path)
         FileUtils.cp(Rails.root.join('spec/fixtures/files/rails.png'), temp_path.join('rails.png'))
 
-        result = described_class.rename_file(
+        result = described_class.name_file(
           original_filename: 'rails.png',
           pathname: temp_path
         )
