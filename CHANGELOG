@@ -1,7 +1,9 @@
 [v#.#.#] ([MMM’YY])
   * Main sidebar improvements:
     - Labels added under icons
+    - Nodes can be added in collapsed state
     - Removed animations and transitions while expanding and collapsing
+  * Update logo assets
   * Navbar dropdown menu's are no longer locked to the right side of the browser
   * Upgraded gems: rails
   * Bugs fixed:
