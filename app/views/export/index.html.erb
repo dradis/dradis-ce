@@ -1,6 +1,6 @@
 <% content_for :title, 'Export Manager' %>
 
-<% if @plugin_info.empty? %>
+<% if Dradis::Plugins.with_feature(:export).empty? %>
   <div class="content-container mt-3">
     <div class="alert alert-error m-0">
       <p class="lead">Sorry, we were unable to detect any export plugins. This is strange because Dradis ships with a number of plugins installed by default.</p>
