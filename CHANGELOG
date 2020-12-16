@@ -1,4 +1,5 @@
 [v#.#.#] ([MMM’YY])
+  * Add view hooks for the export view
   * Main sidebar improvements:
     - Labels added under icons
     - Removed animations and transitions while expanding and collapsing
