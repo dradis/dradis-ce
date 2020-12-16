@@ -9,8 +9,23 @@ class NamingService
 
     extension = File.extname(original_filename)
     basename = File.basename(original_filename, extension)
-    files = Dir.glob(pathname.join("#{basename}_copy-*#{extension}"))
-    sequence = files.map { |file| file.match(/_copy-([0-9]+)#{extension}\z/)[1].to_i }.max || 0
-    "%s_copy-%02i%s" % [basename, sequence + 1, extension]
+    matching_filenames = Dir.glob(pathname.join("#{basename}_copy-*#{extension}"))
+
+    new_name(
+      name: basename,
+      sequence: next_sequence(matching_names: matching_filenames, suffix: extension),
+      suffix: extension
+    )
+  end
+
+  private
+
+  def self.new_name(name:, sequence:, suffix: nil)
+    "%s_copy-%02i%s" % [name, sequence, suffix]
+  end
+
+  def self.next_sequence(matching_names: [], suffix: nil)
+    current_sequence = matching_names.map { |matching_name| matching_name.match(/_copy-([0-9]+)#{suffix}\z/)[1].to_i }.max || 0
+    current_sequence + 1
   end
 end
