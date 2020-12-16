@@ -1,6 +1,6 @@
 class NamingService
   # If filename exists within the directory,
-  # return a count based alternative, E.g. filename-copy-01.png, filename-copy-02.png
+  # return a count based alternative, E.g. filename_copy-01.png, filename_copy-02.png
   # If not, return the original filename.
   #   original_filename: the filename in String
   #   pathname: Pathname object
