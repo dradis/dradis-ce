@@ -77,36 +77,6 @@ describe 'Sessions' do
         end
       end
 
-      context 'when typing in editor after timeout', js: true do
-        before do
-          visit new_project_issue_path(project)
-        end
-
-        it 'redirects to same editor form when typing in Fields view' do
-          click_link 'Fields'
-
-          Timecop.freeze(Time.now + 1.hour) do
-            fill_in :item_form_field_name_0, with: 'Issue Text'
-            sleep 1 # Have to sleep due to ajax request
-            expect(current_path).to eq login_path
-            submit_login_details
-            expect(current_path).to eq(new_project_issue_path(project))
-          end
-        end
-
-        it 'redirects to same editor form when typing in Source view' do
-          click_link 'Source'
-
-          Timecop.freeze(Time.now + 1.hour) do
-            fill_in :issue_text, with: 'Issue Text'
-            sleep 1 # Have to sleep due to ajax request
-            expect(current_path).to eq login_path
-            submit_login_details
-            expect(current_path).to eq(new_project_issue_path(project))
-          end
-        end
-      end
-
       context 'when creating evidence in issue page', js: true do
         let(:issue) { create(:issue, node: project.issue_library) }
         let(:node) { create(:node, project: project) }
