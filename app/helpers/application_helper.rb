@@ -16,7 +16,7 @@ module ApplicationHelper # :nodoc:
     result[:output].to_s.html_safe
   end
 
-  def render_view_hooks(partial, feature = :addon, locals: {})
+  def render_view_hooks(partial, locals: {}, feature: :addon)
     Dradis::Plugins::with_feature(feature).sort_by(&:plugin_description).each do |plugin|
       begin
         plugin_path = ActiveSupport::Inflector.underscore(ActiveSupport::Inflector.deconstantize(plugin.name))
