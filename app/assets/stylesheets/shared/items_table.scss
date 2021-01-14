@@ -1,11 +1,10 @@
 .btn-toolbar {
-  
   .dropdown-menu {
     max-height: 75vh;
     overflow-y: auto;
     text-align: left;
   }
-  
+
   input[type='checkbox'] {
     margin: 0;
   }
@@ -23,20 +22,50 @@
   }
 }
 
-.table-wrapper {
-  overflow: auto;
-}
-
 .items-table {
-  td.loading {
-    background: image-url('loading.gif') no-repeat left center;
-    padding-left: 20px;
-    vertical-align: middle;
+  [aria-label] {
+    position: initial;
+  }
+
+  &.table-striped tbody tr:nth-of-type(odd) .column-actions-inner {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  &.table-bordered {
+    border-right: none;
+
+    thead tr th {
+      border-bottom: 0;
+
+      &.column-actions .column-actions-inner {
+        border-top: none;
+      }
+    }
+
+    .column-actions {
+      border: none;
+
+      &-inner {
+        border: 1px solid #dee2e6;
+        border-bottom: none;
+        margin: 0 0 0 -1px;
+      }
+    }
+  }
+
+  td {
+    padding: 8px;
+
+    &.loading {
+      background: image-url('loading.gif') no-repeat left center;
+      padding-left: 20px;
+      vertical-align: middle;
+    }
   }
 
   thead tr th {
-    padding: 0.5rem 1.75rem 0.5rem 0.5rem;
     cursor: pointer;
+    padding: 0.5rem 1.75rem 0.5rem 0.5rem;
     position: relative;
 
     &.sortable {
@@ -62,15 +91,61 @@
         opacity: 1;
       }
     }
+
+    &.sorting-asc::after {
+      content: "\f0d8";
+      opacity: 1;
+    }
+
+    &.sorting-desc::after {
+      content: "\f0d7";
+      opacity: 1;
+    }
   }
 
   .column-actions {
-    text-align: right;
-    min-width: 9rem;
+    background-color: white;
+    cursor: default;
+    height: 0;
+    padding: 0;
+    position: sticky;
+    right: 0;
+    width: 2rem;
 
-    a {
-      padding-right: 0.5rem;
-      visibility: hidden;
+    &-inner {
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      min-width: 2rem;
+      padding-top: 0.5rem;
+
+      .dropleft {
+        .dropdown-menu {
+          box-shadow: none;
+        }
+
+        button {
+          background: transparent;
+          opacity: 0.5;
+
+          &:focus {
+            box-shadow: none;
+          }
+        }
+
+        &.show button {
+          opacity: 1;
+        }
+      }
+
+      .text-danger {
+        color: $grapefruit-light !important;
+
+        // &:hover {
+        //   background-color: $grapefruit-light !important;
+        //   color: $white !important;
+        // } // pro: add to modules and remove from here
+      }
     }
   }
 
@@ -85,20 +160,16 @@
   }
 
   tr {
-  
     &:hover {
-
-      .column-actions a {
-        visibility: visible;
-      }
-    }
-
-    &:last-of-type {
-
-      [aria-label]:after {
-        top: initial;
-        bottom: 110%;
+      .column-actions-inner {
+        button {
+          opacity: 1;
+        }
       }
     }
   }
+}
+
+.table-wrapper {
+  overflow: auto;
 }
