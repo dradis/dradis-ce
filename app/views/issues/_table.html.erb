@@ -12,6 +12,7 @@
             <%= column %>
           </th>
           <% end %>
+          <th class="column-actions"><div class="column-actions-inner"></div></th>
         </tr>
       </thead>
       <tbody>
@@ -46,12 +47,21 @@
           <td data-sort-value="<%= sort %>"><%= display %></td>
           <% end  %>
           <td class="column-actions">
-            <%= link_to edit_project_issue_path(current_project, issue), class: '' do %>
-              <i class="fa fa-pencil"></i> Edit
-            <% end %>
-            <%= link_to [current_project, issue], method: :delete, data: { confirm: "Are you sure?\n\nProceeding will delete this issue and any associated evidence." }, class: 'text-error-hover' do %>
-              <i class="fa fa-trash"></i> Delete
-            <% end %>
+            <div class="column-actions-inner">
+              <div class="dropleft">
+                <button class="btn btn-sm text-dark" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="0,6">
+                  <i class="fa fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu">
+                  <%= link_to edit_project_issue_path(current_project, issue), class: 'dropdown-item' do %>
+                    <i class="fa fa-pencil"></i> Edit
+                  <% end %>
+                  <%= link_to [current_project, issue], method: :delete, class: 'dropdown-item text-danger', data: { confirm: "Are you sure?\n\nProceeding will delete this issue and any associated evidence." } do %>
+                    <i class="fa fa-trash"></i> Delete
+                  <% end %>
+                </div>
+              </div>
+            </div>
           </td>
         </tr>
         <% end %>
