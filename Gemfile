@@ -56,7 +56,7 @@ gem 'html-pipeline'
 
 gem 'kaminari', '~> 1.2.1'
 
-gem 'paper_trail', '~> 10.3'
+gem 'paper_trail', git: 'git@github.com:paper-trail-gem/paper_trail.git'
 
 # gem 'rails_autolink', '~> 1.1'
 
@@ -154,7 +154,7 @@ group :development do
   gem 'spring'
 
   # Alert on n+1 queries
-  gem 'bullet'
+  #gem 'bullet'
 
   # Cleanup logs from asset entries
   # gem 'quiet_assets'
