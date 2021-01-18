@@ -3,6 +3,7 @@
 require_relative 'config/environment'
 
 run Rails.application
+Rails.application.load_server
 
 # Mount the Resque web interface in development. In production is already
 # available through the CIC.
