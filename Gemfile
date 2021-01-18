@@ -208,7 +208,7 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 3.20'
+gem 'dradis-plugins', git: 'git@github.com:dradis/dradis-plugins.git', branch: 'upgrade/rails-6.0.3.2'
 
 
 gem 'dradis-api', path: 'engines/dradis-api'
