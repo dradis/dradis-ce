@@ -64,7 +64,7 @@ gem 'record_tag_helper'
 
 gem 'rubyzip', '>= 1.2.2'
 
-gem 'thor', '~> 0.18'
+gem 'thor', '~> 1.0.1'
 
 
 # ------------------------------------------------------ With native extensions
