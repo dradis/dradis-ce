@@ -7,7 +7,8 @@ GIT
 
 GIT
   remote: git@github.com:paper-trail-gem/paper_trail.git
-  revision: 865f069e091d69ef9c136a27f3372f9d24eb37e9
+  revision: 1e56afdf846b3e6c338ff4fcd13a95334810b4d8
+  ref: 1e56afd
   specs:
     paper_trail (11.1.0)
       activerecord (>= 5.2)
@@ -127,7 +128,7 @@ GEM
     database_cleaner (1.8.2)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
-    diff-lcs (1.3)
+    diff-lcs (1.4.4)
     differ (0.1.2)
     dradis-projects (3.20.0)
       dradis-plugins (~> 3.7)
@@ -349,27 +350,27 @@ GEM
       shoulda (>= 2.10.2)
       uuid (>= 2.0.2)
     rinku (2.0.6)
-    rspec (3.9.0)
-      rspec-core (~> 3.9.0)
-      rspec-expectations (~> 3.9.0)
-      rspec-mocks (~> 3.9.0)
-    rspec-core (3.9.1)
-      rspec-support (~> 3.9.1)
-    rspec-expectations (3.9.0)
+    rspec (3.10.0)
+      rspec-core (~> 3.10.0)
+      rspec-expectations (~> 3.10.0)
+      rspec-mocks (~> 3.10.0)
+    rspec-core (3.10.1)
+      rspec-support (~> 3.10.0)
+    rspec-expectations (3.10.1)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.9.0)
-    rspec-mocks (3.9.1)
+      rspec-support (~> 3.10.0)
+    rspec-mocks (3.10.1)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.9.0)
-    rspec-rails (3.9.0)
-      actionpack (>= 3.0)
-      activesupport (>= 3.0)
-      railties (>= 3.0)
-      rspec-core (~> 3.9.0)
-      rspec-expectations (~> 3.9.0)
-      rspec-mocks (~> 3.9.0)
-      rspec-support (~> 3.9.0)
-    rspec-support (3.9.2)
+      rspec-support (~> 3.10.0)
+    rspec-rails (4.0.2)
+      actionpack (>= 4.2)
+      activesupport (>= 4.2)
+      railties (>= 4.2)
+      rspec-core (~> 3.10)
+      rspec-expectations (~> 3.10)
+      rspec-mocks (~> 3.10)
+      rspec-support (~> 3.10)
+    rspec-support (3.10.1)
     rubocop (0.79.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
@@ -517,7 +518,7 @@ DEPENDENCIES
   resque
   resque-status
   rinku
-  rspec-rails (~> 3.1)
+  rspec-rails (~> 4.0.2)
   rubocop
   rubyzip (>= 1.2.2)
   sanitize (= 5.2.1)
