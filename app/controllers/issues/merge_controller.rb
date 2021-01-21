@@ -21,7 +21,7 @@ class Issues::MergeController < IssuesController
       # create new issue if existing issue not given
       if @issue.new_record?
         @issue.author ||= current_user.email
-        if @issue.save && @issue.update_attributes(issue_params)
+        if @issue.save && @issue.update(issue_params)
           track_created(@issue)
           @issue.tag_from_field_content!
         end
