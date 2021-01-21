@@ -71,7 +71,6 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
-  config.action_cable.url = "wss://localhost:3000/cable"
 
   if ENV['RAILS_RELATIVE_URL_ROOT']
     config.assets.prefix = "#{ENV['RAILS_RELATIVE_URL_ROOT']}/assets"
