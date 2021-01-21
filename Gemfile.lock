@@ -1,7 +1,6 @@
 GIT
   remote: git@github.com:dradis/dradis-plugins.git
-  revision: 3e2f870a39cc63ef7a008a607ad1651853c26abb
-  branch: upgrade/rails-6.0.3.2
+  revision: 5286f722b54412d0e291a1b7c726f49a9dd1ca96
   specs:
     dradis-plugins (3.20.0)
 
