@@ -14,7 +14,7 @@ FileUtils.chdir APP_ROOT do
 
   puts "\n== Enabling default add-ons =="
   unless File.exist?('Gemfile.plugins') || File.exist?('lib/dradis/pro.rb')
-    cp 'Gemfile.plugins.template', 'Gemfile.plugins'
+    FileUtils.cp 'Gemfile.plugins.template', 'Gemfile.plugins'
   end
 
   puts '== Installing dependencies =='
