@@ -73,10 +73,6 @@ class ExportController < AuthenticatedController
     File.join(::Configuration::paths_templates_reports, plugin::Engine.plugin_name.to_s)
   end
 
-  def templates_for(args={})
-    Dir["%s/*" % templates_dir_for(args)]
-  end
-
   # Ensure that the requested :uploader is valid
   def validate_exporter
     valid_exporters = {}
