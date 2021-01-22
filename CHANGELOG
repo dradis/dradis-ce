@@ -1,17 +1,13 @@
-[v#.#.#] ([MMM’YY])
+v3.21.0 (MMM’YY)
   * Add view hooks for the export view
-  * Main sidebar improvements:
-    - Labels added under icons
-    - Removed animations and transitions while expanding and collapsing
-  * Navbar dropdown menu's are no longer locked to the right side of the browser
-  * Upgraded gems: rails
+  * Upgraded gems: [gem #1], [gem #2]
   * Bugs fixed:
-    - Editor drag and drop, and copy paste inserts attachments at the cursor
-      position instead of at the end of the textarea.
-    - Fixed redirect when canceling editing evidence from the issue level
+    - [bug fixed #1]
+    - [bug fixed ...]
     - Bug tracker items: #N, #M, #O, ...
   * New integrations:
-    - Nipper
+    - [new integration #1]
+    - [new integration ...]
   * Integration enhancements:
     - [integration enhancement #1]
     - [integration enhancement ...]
@@ -25,6 +21,21 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v3.20.0 (January 2021)
+  * Main sidebar improvements:
+    - Labels added under icons
+    - Nodes can be added in collapsed state
+    - Removed animations and transitions while expanding and collapsing
+  * Update logo assets
+  * Navbar dropdown menu's are no longer locked to the right side of the browser
+  * Upgraded gems: rails
+  * Bugs fixed:
+    - Editor drag and drop, and copy paste inserts attachments at the cursor
+      position instead of at the end of the textarea.
+    - Fixed redirect when canceling editing evidence from the issue level
+  * New integrations:
+    - Nipper
 
 v3.19.0 (September 2020)
   * Auto upload attachments and screenshots without requiring the use of the staging area
