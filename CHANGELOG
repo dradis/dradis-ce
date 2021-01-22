@@ -1,7 +1,5 @@
 v3.21.0 (MMM’YY)
-  * [feature #1]
-  * [feature #2]
-  * [feature ...]
+  * Add view hooks for the export view
   * Upgraded gems: [gem #1], [gem #2]
   * Bugs fixed:
     - [bug fixed #1]
