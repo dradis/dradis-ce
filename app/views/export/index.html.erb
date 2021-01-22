@@ -10,7 +10,7 @@
 <% else %>
 
   <ul id="plugin-chooser" class="tabs-container nav nav-tabs">
-    <%= render_view_hooks 'export/plugin_description', feature: :export %>
+    <%= render_view_hooks 'export/index-tabs', feature: :export %>
 
     <% if !defined?(Dradis::Pro) %>
     <li class="nav-item"><a href="javascript:void(0)" class="js-try-pro nav-link" data-term="word-reports" data-url="https://dradisframework.com/pro/pages/reporting.html"><i class="fa fa-file-word-o"></i> Custom Word reports</a></li>
