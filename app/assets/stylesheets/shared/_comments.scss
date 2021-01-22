@@ -27,6 +27,7 @@
         padding-top: 3px;
         
         &:not(.gravatar-inline) {
+          float: left;
           margin-right: 0.5rem
         }
       }
