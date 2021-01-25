@@ -54,8 +54,8 @@
           url: main_app.project_nodes_path(current_project),
           html: { class: 'add_one_node_form form-horizontal', id: "new_#{type}_node_form" }
         ) do |f| %>
-          <%= f.hidden_field :parent_id, id: "hidden_#{type}_parent_id" %>
-          <%= f.input :label, input_html: { id: "#{type}_parent_id", data: { behavior: 'node-label' } } %>
+          <%= f.hidden_field :parent_id, id: "#{type}_parent_id" %>
+          <%= f.input :label, input_html: { id: "#{type}_node_label", data: { behavior: 'node-label' } } %>
           <%= f.input :type_id,
             collection: [["No icon", Node::Types::DEFAULT], ["Host", Node::Types::HOST]],
             include_blank: false,
