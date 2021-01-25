@@ -120,6 +120,10 @@ mark {
   padding-right: 0;
 }
 
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+
 .nav-pills {
 
   .nav-link {

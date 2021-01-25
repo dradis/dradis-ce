@@ -5,7 +5,7 @@ class Comment < ApplicationRecord
 
   # -- Relationships --------------------------------------------------------
   belongs_to :commentable, polymorphic: true
-  belongs_to :user
+  belongs_to :user, optional: true
 
   # -- Callbacks ------------------------------------------------------------
   after_create :create_subscription
@@ -13,7 +13,6 @@ class Comment < ApplicationRecord
   # -- Validations ----------------------------------------------------------
   validates :content, presence: true, length: { maximum: DB_MAX_TEXT_LENGTH }
   validates :commentable, presence: true, associated: true
-  validates :user, presence: true, associated: true
 
   # -- Scopes ---------------------------------------------------------------
 
@@ -34,7 +33,7 @@ class Comment < ApplicationRecord
   end
 
   def create_subscription
-    Subscription.subscribe(user: user, to: commentable)
+    Subscription.subscribe(user: user, to: commentable) if user
   end
 
   def notify(action)

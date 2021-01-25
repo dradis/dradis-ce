@@ -12,43 +12,23 @@ function fileUploadInit() {
        }
      }
   }).on('fileuploadadd', function (e, data) {
-    if (e.originalEvent !== undefined) {
-      var $textarea = $(e.originalEvent.target)
+    // data.$textarea is added to the input field owned by the editor and is
+    // only present when the image button is clicked. Copying, or dragging does
+    // not append the attribute.
+    var $textarea = (e.originalEvent !== undefined) ? $(e.originalEvent.target) : data.$textarea;
 
-      if ($textarea.is($('[data-behavior~=rich-toolbar]'))) {
-        var editorToolbar = $textarea.data('editorToolbar');
+    if ($textarea.is($('[data-behavior~=rich-toolbar]'))) {
+      var editorToolbar = $textarea.data('editorToolbar');
+      data.replaceImagePlaceholder = editorToolbar.replaceImagePlaceholder.bind(editorToolbar);
 
-        data.$textarea = $textarea;
-
-        $textarea.focus();
-
-        $.each(data.files, function (index, file) {
-          affix = editorToolbar.affixes['image'];
-          editorToolbar.replace(affix.withSelection(file.name + ' uploading...'), $textarea);
-        });
-      }
+      $.each(data.files, editorToolbar.insertImagePlaceholder.bind(editorToolbar));
     }
   }).on('fileuploaddone', function (e, data) {
-    var $textarea = data.$textarea;
-
-    if ($textarea !== undefined) {
-      var editorToolbar = $textarea.data('editorToolbar');
-
-      $.each(data.files, function (index, file) {
-        var uploadedFile = data.result[0].url,
-            str = '\n!' + file.name + ' uploading...' + '!\n';
-
-        // remove placeholder from textarea for each file once it's uploaded
-        $textarea.focus().val($textarea.val().replace(str, ''));
-
-        // inject syntax into textarea to automatically display uploaded image
-        affix = editorToolbar.affixes['image'];
-        editorToolbar.replace(affix.withSelection(uploadedFile), $textarea);
-        $textarea.trigger('textchange');
-      })
+    if (data.replaceImagePlaceholder !== undefined) {
+      $.each(data.files, data.replaceImagePlaceholder.bind(null, data));
     }
   });
-};
+}
 
 document.addEventListener("turbolinks:load", function() {
   // Bind fileUpload on page load.

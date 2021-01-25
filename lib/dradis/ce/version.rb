@@ -2,7 +2,7 @@ module Dradis
   module CE #:nodoc:
     module VERSION #:nodoc:
       MAJOR = 3
-      MINOR = 19
+      MINOR = 20
       TINY  = 0
       PRE = nil
 

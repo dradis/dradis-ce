@@ -34,11 +34,11 @@
   <% end %>
 
   <div class="form-actions">
-    <%= hidden_field_tag :back_to, :issue if params[:back_to] == 'issue' %>
+    <%= hidden_field_tag :return_to, :issue if params[:return_to] == 'issue' %>
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
     <%=
       link_to 'Cancel',
-      project_node_path(@node.project, @node),
+      evidence_redirect_path(params[:return_to]),
       data: {
         behavior: 'clear-local-auto-save'
       }

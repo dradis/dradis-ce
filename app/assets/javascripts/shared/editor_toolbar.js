@@ -2,9 +2,9 @@
 
 To initialize:
 
-new EditorToolbar($element);
+new EditorToolbar($target);
 
-Where `$element` is a jQuery object that is an input (with type = text) or textarea element.
+Where `$target` is a jQuery object that is an input (with type = text) or textarea element.
 
 Each of these input and/or textarea elements will have the Editor Toolbar added.
 
@@ -22,7 +22,6 @@ class EditorToolbar {
 
     if (this.opts.include.includes('image') && this.opts.uploader === undefined) { console.log("You initialized a RichToolbar with the image uploader option but have not provided an existing uploader to utilize"); return; }
 
-    this.affixes = this.affixesLibrary();
     this.init();
   }
 
@@ -51,7 +50,7 @@ class EditorToolbar {
     this.$fileField.bind('change', function (e) {
       $(that.opts.uploader).fileupload('add', {
         files: this.files,
-        $textarea: that.$editorField.find('textarea, input[type=text]')
+        $textarea: that.$target
       });
 
       // Clear the $fileField so it never submit unexpected filedata
@@ -72,60 +71,47 @@ class EditorToolbar {
       }
     });
 
-    // Handler for setting the correct textarea height on keyboard input
-    this.$target[0].addEventListener('input', setHeight);
+    // Handler for setting the correct textarea height on keyboard input, when
+    // focus is lost, or when content is inserted programmatically
+    // Handler for setting the correct textarea height when focus is lost, or
+    // when content is inserted programmatically
+    this.$target.on('blur textchange input', this.setHeight);
 
-    function setHeight(e) {
-      const shrinkEvents = ['deleteContentForward', 'deleteContentBackward', 'deleteByCut', 'historyUndo', 'historyRedo'];
-
-      if (shrinkEvents.includes(e.inputType)) {
-        // shrink the text area when content is being removed
-        $(this).css({'height': '1px'});
-      }
-      
-      // expand the textarea to fix the content
-      $(this).css({'height': this.scrollHeight + 2});
-    };
-  
     // Handler for setting the correct textarea heights on load (for current values)
-    this.$target.each(setHeight);
-
-    // Handler for setting the correct textarea height when focus is lost
-    this.$target.on('blur', setHeight);
+    this.$target.each(this.setHeight);
 
     // when a toolbar button is clicked
     this.$editorToolbar.find('[data-btn]').click(function() {
-      var $element = that.$editorField.find('textarea, input[type=text]');
-      var affix = that.affixes[$(this).data('btn')];
-  
       if ($(this).is('[data-btn~=image')) {
         that.$fileField.click();
       } else {
-        // inject markdown
-        that.injectSyntax($element, affix);
+        var cursorInfo = that.$target.cursorInfo(),
+            affix = that.affixesLibrary($(this).data('btn'), cursorInfo.text);
+
+        that.injectSyntax(affix);
       }
     });
 
     // keyboard shortcuts
-    this.$editorField.find('textarea, input[type=text]').keydown(function(e) {
+    this.$target.keydown(function(e) {
       var key = e.which || e.keyCode; // for cross-browser compatibility
 
-      if (e.metaKey && key === 66 ) { // 66 = b
-        e.preventDefault();
-        that.$editorToolbar.find('[data-btn~=bold]').click();
-      }
-      else if (e.metaKey && key === 73 ) { // 73 = i
-        e.preventDefault();
-        that.$editorToolbar.find('[data-btn~=italic]').click();
-      }
-      else if (e.metaKey && key === 75 ) { // 75 = k
-        e.preventDefault();
-        that.$editorToolbar.find('[data-btn~=link]').click();
+      if (e.metaKey) {
+        switch (key) {
+          case 66: selector = '[data-btn~=bold]'; break; // 66 = b
+          case 73: selector = '[data-btn~=italic]'; break; // 73 = i
+          case 75: selector = '[data-btn~=link]'; break; // 75 = k
+        }
+
+        if (selector !== undefined) {
+          e.preventDefault();
+          that.$editorToolbar.find(selector).click();
+        }
       }
     });
 
     // toolbar sticky positioning
-    this.$editorField.find('textarea').on('focus', function() {
+    this.$target.on('focus', function() {
       var $inputElement = $(this),
           $toolbarElement = $inputElement.parent().prev(),
           $parentElement = $inputElement.parents('[data-behavior~=editor-field]'),
@@ -148,8 +134,7 @@ class EditorToolbar {
         // keep toolbar at the top of text area when scrolling
         if ($inputElement.height() > 40 && parentOffsetTop < $(window).scrollTop()) {
           $parentElement.addClass('sticky-toolbar');
-        }
-        else {
+        } else {
           // reset the toolbar to the default position and appearance
           $parentElement.removeClass('sticky-toolbar');
         }
@@ -157,69 +142,95 @@ class EditorToolbar {
     });
 
     // reset position and hide toolbar once focus is lost
-    this.$editorField.find('textarea').on('blur', function() {
+    this.$target.on('blur', function() {
       $(this).parent().prev().css({'opacity': 0, 'visibility': 'hidden'});
     });
   }
 
-  replace(text, $element) {
-    var startIndex = $element[0].selectionStart,
-        endIndex = $element[0].selectionEnd,
-        elementText = $element.val();
+  setHeight(e) {
+    const shrinkEvents = ['deleteContentForward', 'deleteContentBackward', 'deleteByCut', 'historyUndo', 'historyRedo'];
 
-    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) { // firefox
-      $element.val(elementText.slice(0, startIndex) + text + elementText.slice(endIndex));
-      $element.trigger('blur'); // Trigger setHeight
+    if (e.originalEvent !== undefined && shrinkEvents.includes(e.originalEvent.inputType)) {
+      // shrink the text area when content is being removed
+      $(this).css({'height': '1px'});
     }
-    else { // all other browsers
-      document.execCommand('insertText', false, text);
-    }
+
+    // expand the textarea to fix the content
+    $(this).css({'height': this.scrollHeight + 2});
   }
 
-  injectSyntax($element, affix) {
-    var adjustedPrefixLength = affix.prefix.length,
-        adjustedSuffixLength = affix.suffix.length,
-        startIndex = $element[0].selectionStart,
-        endIndex = $element[0].selectionEnd,
-        selectedText = $element.val().substring(startIndex, endIndex);
+  insert(text) {
+    var cursorInfo = this.$target.cursorInfo(),
+        elementText = this.$target.val();
 
-    var markdownText = (startIndex == endIndex) ? affix.asPlaceholder : affix.withSelection(selectedText);
+    this.$target.val(elementText.slice(0, cursorInfo.start) + text + elementText.slice(cursorInfo.end));
+  }
 
-    adjustedPrefixLength *= selectedText.split('\n').length;
-    adjustedSuffixLength *= selectedText.split('\n').length;
-
-    $element.focus(); // bring focus back to $element from the toolbar
-
-    this.replace(markdownText, $element);
+  setCursor(affix, cursorInfo) {
+    var adjustedPrefixLength = affix.prefix.length * affix.selection.split('\n').length,
+        adjustedSuffixLength = affix.suffix.length * affix.selection.split('\n').length;
 
     // post-injection cursor location
-    if (startIndex == endIndex) { // no text was selected, select injected placeholder text
-      $element[0].setSelectionRange(startIndex + affix.prefix.length, startIndex + markdownText.length - affix.suffix.length);
+    if (cursorInfo.hasSelection()) { // text was selected, place cursor after the injected string
+      var position = adjustedPrefixLength + cursorInfo.end + adjustedSuffixLength;
+      this.$target[0].setSelectionRange(position, position);
+    } else { // no text was selected, select injected placeholder text
+      this.$target[0].setSelectionRange(cursorInfo.start + affix.prefix.length, cursorInfo.start + affix.asString().length - affix.suffix.length);
     }
-    else { // text was selected, place cursor after the injected string
-      $element[0].setSelectionRange(adjustedPrefixLength + endIndex + adjustedSuffixLength, adjustedPrefixLength + endIndex + adjustedSuffixLength);
-    }
-
-    // Trigger a change event because javascript manipulation doesn't trigger
-    // them. The change event will reload the preview
-    $element.trigger('textchange');
   }
 
-  affixesLibrary() {
-    return {
-      'block-code':  new BlockAffix('bc. ', 'Code markup'),
-      'bold':        new Affix('*', 'Bold text', '*'),
-      'field':       new Affix('#[', 'Field', ']#\n'),
-      //'highlight':   new Affix('$${{', 'Highlighted text', '}}$$'),
-      'image':       new Affix('\n!', 'https://', '!\n'),
+  injectSyntax(affix) {
+    this.$target.focus(); // bring focus back to $target from the toolbar
+    var cursorInfo = this.$target.cursorInfo(); // Save the original position
+
+    this.insert(affix.asString());
+    this.setCursor(affix, cursorInfo);
+
+    // Trigger a change event because javascript manipulation doesn't
+    this.$target.trigger('textchange');
+  }
+
+  insertImagePlaceholder(index, file) {
+    var affix = this.affixesLibrary('image-placeholder', file.name);
+    this.insert(affix.asString());
+
+    var position = this.$target.val().indexOf(affix.asString()) + affix.asString().length;
+
+    this.$target.focus();
+    this.$target[0].setSelectionRange(position, position);
+  }
+
+  replaceImagePlaceholder(data, index, file) {
+    var placeholder = this.affixesLibrary('image-placeholder', file.name),
+        affix = this.affixesLibrary('image', data.result[0].url);
+
+    this.$target.val(this.$target.val().replace(placeholder.asString(), affix.asString(), this.$target));
+
+    var position = this.$target.val().indexOf(affix.asString()),
+        cursorInfo = new CursorInfo(position, position, undefined);
+
+    this.setCursor(affix, cursorInfo);
+    this.$target.trigger('textchange');
+  }
+
+  affixesLibrary(type, selection) {
+    const library = {
+      'block-code':         new BlockAffix('bc. ', 'Code markup'),
+      'bold':               new Affix('*', 'Bold text', '*'),
+      'field':              new Affix('#[', 'Field', ']#\n'),
+      //'highlight':          new Affix('$${{', 'Highlighted text', '}}$$'),
+      'image':              new Affix('\n!', 'https://', '!\n'),
+      'image-placeholder':  new Affix('\n!', 'https://', ' uploading...!\n'),
       //'inline-code': new Affix('@', 'Inline code', '@'),
-      'italic':      new Affix('_', 'Italic text', '_'),
-      'link':        new Affix('"', 'Link text', '":https://'),
-      'list-ol':     new Affix('# ', 'Ordered item'),
-      'list-ul':     new Affix('* ', 'Unordered item'),
+      'italic':             new Affix('_', 'Italic text', '_'),
+      'link':               new Affix('"', 'Link text', '":https://'),
+      'list-ol':            new Affix('# ', 'Ordered item'),
+      'list-ul':            new Affix('* ', 'Unordered item'),
       //'quote':       new BlockAffix('bq. ', 'Quoted text'),
-      'table':       new Affix('', '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|')
+      'table':              new Affix('', '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|')
     };
+
+    return Object.create(library[type], { selection: { value: selection } });
   }
 
   textareaElements(include) {
@@ -306,27 +317,32 @@ class Affix {
     this.prefix = prefix;
     this.placeholder = placeholder;
     this.suffix = suffix;
+    this.selection = '';
   }
 
-  get asPlaceholder() {
+  asString() {
+    return this.selection == '' ? this.asPlaceholder() : this.withSelection();
+  }
+
+  asPlaceholder() {
     return this.prefix + this.placeholder + this.suffix;
   }
 
-  wrapped(selection) {
+  wrapped(selection = this.selection) {
     return this.prefix + selection + this.suffix;
   }
 
-  withSelection(selectedText) {
-    var lines = selectedText.split('\n');
+  withSelection() {
+    var lines = this.selection.split('\n');
 
     lines = lines.reduce(function(text, selection, index) {
       return (index == 0 ? this.wrapped(selection) : text + '\n' + this.wrapped(selection));
     }.bind(this), '');
 
     // Account for accidental empty line selections before/after a group
-    var wordSplit = selectedText.split(' '),
+    var wordSplit = this.selection.split(' '),
         first = wordSplit[0],
-        last = wordSplit[selectedText.length-1];
+        last = wordSplit[this.selection.length-1];
     if (first == '\n') lines.unshift(first);
     if (last == '\n') lines.push(last);
 
@@ -335,7 +351,29 @@ class Affix {
 }
 
 class BlockAffix extends Affix {
-  withSelection(selectedText) {
-    return this.prefix + selectedText;
+  withSelection() {
+    return this.prefix + this.selection;
   }
 }
+
+class CursorInfo {
+  constructor(start, end, text) {
+    this.start = start;
+    this.end = end;
+    this.text = text;
+  }
+
+  hasSelection() {
+    return !(this.start == this.end);
+  }
+}
+
+$.fn.cursorInfo = function() {
+  return this.map(function() {
+    var startIndex = this.selectionStart,
+        endIndex = this.selectionEnd,
+        selectedText = $(this).val().substring(startIndex, endIndex);
+
+    return new CursorInfo(startIndex, endIndex, selectedText);
+  })[0];
+};
