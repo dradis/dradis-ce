@@ -313,7 +313,7 @@ class @ActivitiesPoller
     # loaded/refreshed the page just after the comment was posted:
     if commentableId == @modelId && !$("#comment_#{commentId}").length
       $('[data-notice~=no-comments]').hide()
-      $('.comment-list').append(content)
+      $('[data-behavior~=comment-list]').append(content)
       count = parseInt($('#comment-count').html())
       $('#comment-count').html(count + 1)
 
