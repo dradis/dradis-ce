@@ -9,6 +9,7 @@
 #   https://github.com/plataformatec/devise/blob/master/lib/devise/models/timeoutable.rb
 #   https://github.com/plataformatec/devise/blob/master/lib/devise/hooks/timeoutable.rb
 #
+
 Warden::Manager.after_set_user do |user, warden, options|
   if user &&  warden.authenticated?
     last_request_at = warden.session['last_request_at']
