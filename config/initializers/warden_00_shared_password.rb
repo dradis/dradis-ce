@@ -17,23 +17,21 @@ Rails.configuration.middleware.use Warden::Manager do |manager|
   manager.failure_app = ->(env) { SessionsController.action(:failure).call(env) }
 end
 
-Rails.application.reloader.to_prepare do
-  # A simple db-backed strategy that uses the User.authenticate() method.
-  Warden::Strategies.add(:shared_password) do
-    def valid?
-      params['login'] || params['password']
-    end
+# A simple db-backed strategy that uses the User.authenticate() method.
+Warden::Strategies.add(:shared_password) do
+  def valid?
+    params['login'] || params['password']
+  end
 
-    def authenticate!
-      username = params.fetch('login', nil)
-      password = params.fetch('password', nil)
+  def authenticate!
+    username = params.fetch('login', nil)
+    password = params.fetch('password', nil)
 
-      if not ( username.blank? || password.nil? || ::BCrypt::Password.new(::Configuration.shared_password) != password )
-        user = User.find_or_create_by(email: username)
-        success!(user)
-      else
-        fail 'Invalid credentials.'
-      end
+    if not ( username.blank? || password.nil? || ::BCrypt::Password.new(::Configuration.shared_password) != password )
+      user = User.find_or_create_by(email: username)
+      success!(user)
+    else
+      fail 'Invalid credentials.'
     end
   end
 end

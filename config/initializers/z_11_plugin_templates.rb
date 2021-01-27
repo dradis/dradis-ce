@@ -12,6 +12,7 @@
 # https://github.com/rails/rails/issues/32870
 
 # Unless the DB is already migrated, do nothing
+
 Rails.application.reloader.to_prepare do
   if (ActiveRecord::Base.connection rescue false) && Configuration.table_exists?
     plugin_dir = nil
