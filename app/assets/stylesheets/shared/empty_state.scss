@@ -1,0 +1,21 @@
+.empty-state {
+  &-body {
+    h4 {
+      margin-top: 3rem;
+      text-align: center;
+    }
+  }
+  &-icon {
+    background: $primaryColor;
+    border: 3px solid $lightColor;
+    border-radius: 50%;
+    margin: 0 auto;
+    padding: 1.5rem;
+    width: max-content;
+
+    img {
+      height: auto;
+      width: 10rem;
+    }
+  }
+}
