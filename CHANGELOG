@@ -3,9 +3,7 @@ v3.21.0 (MMM’YY)
   * Increase secondary sidebar width for medium viewports
   * Upgraded gems: [gem #1], [gem #2]
   * Bugs fixed:
-    - [bug fixed #1]
-    - [bug fixed ...]
-    - Bug tracker items: #N, #M, #O, ...
+    - Placeholder gravatars appear if gravatar is not available
   * New integrations:
     - [new integration #1]
     - [new integration ...]
