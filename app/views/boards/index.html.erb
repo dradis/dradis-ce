@@ -2,17 +2,6 @@
 
 <%= render 'poller_alerts' unless  request.xhr? %>
 
-<% content_for :breadcrumbs do %>
-  <nav>
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-        <%= link_to 'Methodologies', project_boards_path(current_project) %>
-      </li>
-      <li class="breadcrumb-item active">All</li>
-    </ol>
-  </nav>
-<% end %>
-
 <div class="content-container pb-3 mt-3">
   <ul class="board-list">
 
@@ -32,7 +21,7 @@
           <%=
             link_to(
               "#modal-board-edit-#{board.id}",
-              class: 'js-board-modal'
+              data: { behavior: 'board-modal' }
             ) do
           %>
             <i class="fa fa-pencil"></i> Edit
@@ -52,7 +41,8 @@
 
     <li class="board-list-item">
       <a
-        class="board-tile board-new js-board-modal"
+        class="board-tile board-new"
+        data-behavior="board-modal"
         data-toggle="modal"
         href="#modal-board-new"
       >

@@ -1,11 +1,23 @@
-<% node = @node || @issuelib %>
+<% node = local_assigns[:attachments_node] ? attachments_node : nil %>
 
-<div class="attachments-box jquery-upload">
+<div class="attachments-box jquery-upload" data-behavior="jquery-upload">
 
   <div class="header">
     <div class="header-inner">
       <div class="options">
         <div class="dropdown">
+          <!-- The file upload form used as target for the file upload widget -->
+          <%= form_tag main_app.project_node_attachments_path(node.project, node, format: :json), id: 'fileupload', multipart: true do %>
+            <div class="fileupload-buttonbar">	
+              <span class="fileinput-button" data-toggle="tooltip" data-placement="bottom" title="Add...">	
+                <i class="fa fa-plus"></i>
+                <input type="file" name="files[]" multiple>	
+              </span>
+            </div>
+            <button type="submit" class="sr-only" title="Start">Start Upload</button>
+            <!-- The loading indicator is shown during image processing -->
+            <div class="fileupload-loading"></div>
+          <% end %>
           <%= link_to 'javascript:void(0)', 
             data: { toggle: 'collapse', target: '#attachment-box', behavior: 'collapse-collection' } do %>
             <i class="fa fa-chevron-up" data-behavior="toggle-chevron"></i>
@@ -27,7 +39,7 @@
                 <table>
                   <tr>
                     <td class="name">
-                      <%= link_to project_node_attachment_path(node.project, node, attachment.filename), download: attachment.filename, title: attachment.filename, class: 'filename' do %>
+                      <%= link_to main_app.project_node_attachment_path(node.project, node, attachment.filename), download: attachment.filename, title: attachment.filename, class: 'filename' do %>
                       <i class="fa fa-paperclip"></i> <%= short_filename(attachment.filename) %>
                       <% end %>
                     </td>
@@ -35,7 +47,7 @@
                       <button
                         class="btn btn-trash btn-transparent"
                         data-type="DELETE"
-                        data-url="<%= project_node_attachment_path(node.project, node, attachment.filename) %>"
+                        data-url="<%= main_app.project_node_attachment_path(node.project, node, attachment.filename) %>"
                       >
                         <i class="fa fa-trash"></i>
                       </button>
@@ -43,7 +55,7 @@
                     <td rowspan="2" align="right" class="copy-link">
                       <button
                         class="btn btn-copy btn-transparent js-attachment-url-copy"
-                        data-clipboard-text="!<%= project_node_attachment_path(node.project, node, attachment.filename) %>!"
+                        data-clipboard-text="!<%= main_app.project_node_attachment_path(node.project, node, attachment.filename) %>!"
                       >
                         <i class="fa fa-link"></i>
                       </button>
@@ -62,33 +74,8 @@
       </tbody>
     </table>
 
-    <div id="drop-zone" class="drop-zone" dropzone="" data-toggle="tooltip" data-placement="right" title="Drag attachments from your desktop and drop them here" ondrop="">Drop zone</div>
+    <div id="drop-zone" class="drop-zone" dropzone="" data-toggle="tooltip" data-placement="right" title="Drag attachments from your desktop and drop them here" ondrop="" data-behavior="drop-zone">Drop zone</div>
 
-    <!-- The file upload form used as target for the file upload widget -->
-    <%= form_tag project_node_attachments_path(node.project, node, format: :json), id: 'fileupload', multipart: true do %>
-
-      <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-      <div class="fileupload-buttonbar">
- 
-        <!-- The fileinput-button span is used to style the file input field as button -->
-        <span class="btn btn-primary fileinput-button" data-toggle="tooltip" data-placement="bottom" title="Add...">
-          <i class="fa fa-plus fa-inverse"></i>
-          <span></span>
-          <input type="file" name="files[]" multiple>
-        </span>
-        <button type="submit" class="btn btn-success start" data-toggle="tooltip" data-placement="bottom" title="Start">
-          <i class="fa fa-upload fa-inverse"></i>
-          <span></span>
-        </button>
-        <button type="reset" class="btn btn-warning cancel" data-toggle="tooltip" data-placement="bottom" title="Cancel">
-          <i class="fa fa-ban fa-inverse"></i>
-          <span></span>
-        </button>
-
-      </div>
-      <!-- The loading indicator is shown during image processing -->
-      <div class="fileupload-loading"></div>
-    <% end %>
   </div>
 
 </div>
@@ -103,15 +90,6 @@
             <td class="name">{%= file.name %}</td>
             {% if (file.error) { %}
               <td rowspan="2" class="error" colspan="2"><span>{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
-            {% } else if (o.files.valid && !i) { %}
-              <td rowspan="2" align="right" class="start">{% if (!o.options.autoUpload) { %}
-                  <button class="btn btn-success">
-                      <i class="fa fa-upload"></i>
-                      <span>{%locale.fileupload.start%}</span>
-                  </button>
-              {% } %}</td>
-            {% } else { %}
-              <td rowspan="2" colspan="2"></td>
             {% } %}
             <td rowspan="2" align="right" class="cancel">{% if (!i) { %}
               <button class="btn btn-warning">

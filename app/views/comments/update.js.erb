@@ -1,3 +1,4 @@
 $('#<%= dom_id(@comment) %> form').hide();
 $('#<%= dom_id(@comment) %> .content').html("<%= j(comment_formatter(@comment.content)) %>");
 $('#<%= dom_id(@comment) %> .content').show();
+$('#<%= dom_id(@comment) %> [data-action~=edit]').show()

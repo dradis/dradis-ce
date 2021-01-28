@@ -1,32 +1,116 @@
-v3.17 (Month 2020)
+v3.21.0 (MMM’YY)
+  * Add view hooks for the export view
+  * Increase secondary sidebar width for medium viewports
+  * Upgraded gems: [gem #1], [gem #2]
+  * Bugs fixed:
+    - Add a default user during Welcome setup
+    - [bug fixed #1]
+    - [bug fixed ...]
+    - Bug tracker items: #N, #M, #O, ...
+  * New integrations:
+    - [new integration #1]
+    - [new integration ...]
+  * Integration enhancements:
+    - [integration enhancement #1]
+    - [integration enhancement ...]
+  * Reporting enhancements:
+    - [reporting enhancement #1]
+    - [reporting enhancement ...]
+  * REST/JSON API enhancements:
+    - [API enhancement #1]
+    - [API enhancement ...]
+  * Security Fixes:
+    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v3.20.0 (January 2021)
+  * Main sidebar improvements:
+    - Labels added under icons
+    - Nodes can be added in collapsed state
+    - Removed animations and transitions while expanding and collapsing
+  * Update logo assets
+  * Navbar dropdown menu's are no longer locked to the right side of the browser
+  * Upgraded gems: rails
+  * Bugs fixed:
+    - Editor drag and drop, and copy paste inserts attachments at the cursor
+      position instead of at the end of the textarea.
+    - Fixed redirect when canceling editing evidence from the issue level
+  * New integrations:
+    - Nipper
+
+v3.19.0 (September 2020)
+  * Auto upload attachments and screenshots without requiring the use of the staging area
+  * Cards, Evidence, Issues, and Notes now have their own attachment support
+  * Displays a notification badge in the browser tab when there are unread notifications
+  * Editor: Allow drag & drop, copy & paste, and direct image uploading
+  * Increase the node properties column size by changing it to LONGTEXT
+  * Layout: Breadcrumbs have a fixed position
+  * Link to our support site on the styles help page
+  * Long dropdown menus are vertically scrollable
+  * Bugs fixed:
+    - Use absolute send times in notification emails instead of relative
+
+v3.18.0 (July 2020)
+  * Add all activity view
+  * Render markup inside table columns
+  * Update top navigation link styles and collapsed menu
+  * Upgraded gems: rack, sanitize, sassc
+  * Bugs fixed:
+    - Comments:
+      - Fix `edit` link available while editing
+      - Fix comment borders remaining after deleting comments
+    - Long unbroken table cell text in textile elements overflows
+    - Secondary-sidebar long header names over-lapping icons
+    - Select element text overflowing on to select arrows
+
+v3.17.1 (Jun 2020)
+  * Upgraded gems: websocket-extensions
+
+v3.17 (May 2020)
   * Add author to evidence and notes views
-  * Adjusted Uploads layout to provide more visibility to the output console
+  * Adjust Uploads layout to provide more visibility to the output console
+  * Boards can be renamed and deleted through their dots menu
   * Card improvements:
     - Activity Feed now shows board name and link
     - No mandatory due date
-  * Comments can now have Textile markup
-  * Comments now show author's name instead of email
+    - Redirects to new url if the card has changed lists
+  * Card, Evidence, Issue, and Note form data will not be lost even if the form is not saved
+    - Form data will be cleared when the "Cancel" link is clicked
+    - Removed prompt to restore data
+  * Comments
+    - Added Textile markup
+    - Comment changes will not be lost even if the comment is not saved
+    - Update comments feed to show author's name instead of email
+  * Display note and evidence titles in breadcrumbs
   * Editor improvements:
     - New form-view to edit each field individually
     - Formatting toolbar to help with markup
     - Side-by-side editor preview that auto-updates
   * Link to Methodology from project summary chart
+  * Move resource action links to dots-menu in breadcrumbs
   * Navigation sidebar in projects can be kept open while navigating across views
-  * Refactored dots-menu to make it available in any view
+  * Dots-menu available in any view
   * Remove tag color from issue titles in issue summary
+  * Update code element style
   * Use shared noscript partial
   * Use user model reference for activities instead of user email
-    - Add a default user during welcome setup to satisfy model relations
-  * Upgraded gems: puma, sass-rails
+  * Upgraded gems: kaminari, puma, rack, rails, sass-rails
   * Bugs fixed:
+    - bin/setup creating folders outside dradis-ce/
+    - bin/setup error if the attachments directory already exists
+    - Board partial broken structure
+    - ItemsTable extra whitespace causing unnecessary vertical scrolling
+    - Fix bug with v3 board templates not uploading
     - Fix textile preview not showing on issues with very long text
+    - Long items_table dropdown menus not scrollable
     - Long project names interfering with search bar expansion
+    - Repetative prompt when images are pasted after navigating multiple views.
     - Report 'Download' button becoming a disabled 'Processing...' button once clicked
     - SemVer pre-release appending character
     - Set :author when creating Evidence from an Issue
     - Sidebar items not showing active state
-    - Stop bin/setup from creating folders outside dradis-ce/
-    - bin/setup will not error if the attachments directory already exists
+    - Textile preview not showing on issues with very long text
     - Bug tracker items: #560
   * New integrations:
     - [new integration #1]
@@ -36,11 +120,9 @@ v3.17 (Month 2020)
   * Reporting enhancements:
     - HTML reports now use main app's markup rendering
   * REST/JSON API enhancements:
-    - [API enhancement #1]
+    - Add tags to the Issues API
   * Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: Authenticated (author) persistent comments cross-site scripting
 
 v3.16 (February 2020)
   * Update app to new Tylium layout

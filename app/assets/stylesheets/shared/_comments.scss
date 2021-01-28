@@ -1,5 +1,4 @@
 .comment-feed {
-
   .actions {
     float: right;
     visibility: hidden;
@@ -17,7 +16,7 @@
   
       .content {
         margin-left: 2.5rem;
-        padding-bottom: 0;
+        padding: 1em 1em 0;
 
         p:last-child {
           margin-bottom: 0;
@@ -28,6 +27,7 @@
         padding-top: 3px;
         
         &:not(.gravatar-inline) {
+          float: left;
           margin-right: 0.5rem
         }
       }
@@ -57,6 +57,17 @@
 
   label {
     font-weight: bold;
+  }
+
+  textarea {
+    min-height: 7.5rem;
+    resize: none;
+  }
+}
+
+.subscriptions-feed {
+  .gravatar {
+    float: initial;
   }
 }
 

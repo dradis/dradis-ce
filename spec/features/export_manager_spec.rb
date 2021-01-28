@@ -17,18 +17,6 @@ describe "Export Manager" do
     # page.should have_content(issue.title)
   end
 
-  context "export plugin selection" do
-    it "presents a list of available export plugins to choose from" do
-      visit project_export_manager_path(current_project)
-
-      Dradis::Plugins::with_feature(:export).each do |engine|
-        expect(page).to have_content(engine.plugin_description.to_s)
-      end
-    end
-
-    it "presents a list of a available templates (if it applies)"
-  end
-
   context "a template is passed to the export action" do
     module FakeExport
       module Actions

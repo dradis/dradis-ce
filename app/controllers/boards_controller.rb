@@ -33,7 +33,7 @@ class BoardsController < AuthenticatedController
         if methodology.version == 1
           migration = MethodologyMigrationService.new(current_project.id)
           migration.migrate(methodology, board_name: board_params[:name], node: @node)
-        elsif methodology.version == 2
+        elsif methodology.version >= 2
           importer = MethodologyImportService.new(current_project.id)
           importer.import(methodology, board_name: board_params[:name], node: @node)
         end

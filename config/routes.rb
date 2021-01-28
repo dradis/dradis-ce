@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   end
 
   resources :projects, only: [:show] do
-    resources :activities, only: [] do
+    resources :activities, only: [:index] do
       collection do
         get :poll, constraints: { format: /js/ }
       end
@@ -119,14 +119,18 @@ Rails.application.routes.draw do
     collection { get :status }
   end
 
+  resource :fields, only: [] do
+    collection do
+      get :field
+      post :form
+      post :source
+    end
+  end
+
   # -------------------------------------------------------------- Static pages
-  # jQuery Textile URLs
-  resource :textile, controller: :textile, only: [] do
-    get :field, as: :field
-    post :form, as: :form
-    get :'markup-help', as: :markup_help
-    post :textilize, as: :textilize
-    post :source, as: :source
+  resource :markup, controller: :markup, only: [] do
+    get :help
+    post :preview
   end
 
   root to: 'projects#index'

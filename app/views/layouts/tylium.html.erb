@@ -11,11 +11,14 @@
     <% if flash.any? %>
       <% # when flash messages present, disable turbolinks cache to avoid
         # the message appear and disappear in the next page load %>
-      <meta name="turbolinks-cache-control" content="no-cache">
+      <meta name="turbolinks-cache-control" content="reload">
     <% end %>
     <%= render 'comments/mentionable_users' if @mentionable_users %>
 
-    <%= favicon_link_tag %>
+    <%= favicon_link_tag 'favicon.ico',
+        'data-behavior': 'favicon',
+        'data-unread': image_path('favicon-unread.ico'),
+        'data-read': image_path('favicon.ico') %>
 
     <%= stylesheet_link_tag 'tylium', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'tylium', 'data-turbolinks-track' => true %>
@@ -31,10 +34,10 @@
     <div id="view-content" class="view-content" data-behavior="view-content">
       <div class="row m-0">
         <% if content_for?(:sidebar) %>
-          <div class="secondary-sidebar col-4 col-lg-3 col-xl-2">
+          <div class="secondary-sidebar col-4 col-lg-3 col-xxl-2">
             <%= yield :sidebar %>
           </div>
-          <div class="secondary-sidebar-content col-8 col-lg-9 col-xl-10 p-0 ml-auto">
+          <div class="secondary-sidebar-content col-8 col-lg-9 col-xxl-10 p-0 ml-auto">
             <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
             <%= render 'shared/noscript' %>
             <%= render "layouts/tylium/project_teaser" %>

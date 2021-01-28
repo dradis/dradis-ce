@@ -21,16 +21,17 @@
   var pluginName = 'textile',
       document = window.document,
       defaults = {
+        defaultViewKey: 'editor.view',
         // Start fullscreen?
         fullscreen: false,
         // Add a resizer bar at the bottom of the editor
         resize: true,
         // HTML templates
         tpl: {
-          inline: '<div class="textile-form h-100 col-6"></div>',
+          fields: '<div class="textile-form h-100 col-6 col-sm-6"></div>',
           wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row"></div></div>',
-          preview: '<div class="col-6"><div class="textile-preview loading-indicator">Loading...</div></div>',
-          help: '<div class="textile-help col-12 loading-indicator">Loading...</div>'
+          preview: '<div class="col-6 col-sm-6"><div class="textile-preview loading-indicator">Loading...</div></div>',
+          help: '<div class="textile-help col-12 col-sm-12 loading-indicator">Loading...</div>'
         }
       };
 
@@ -69,18 +70,15 @@
       this.options.$wrap = $(this.options.tpl.wrap);
       this.$element.parent().append( this.options.$wrap );
 
-      // set data-expand="auto" on textarea element
-      this.$element[0].setAttribute('data-expand', 'auto');
-
       // move textarea to container
-      this.$source = this.$element.wrap('<div class="col-6"></div>').parent();
+      this.$source = this.$element.wrap('<div class="col-6 col-sm-6"></div>').parent();
       $('.textile-inner', this.options.$wrap).append(this.$source);
       this.$source.hide();
 
       // add Form
-      this.options.$inline = $(this.options.tpl.inline);
-      $('.textile-inner', this.options.$wrap).append(this.options.$inline);
-      this._loadInline(this.$element.val(), this.$element.data('allow-dropdown'));
+      this.options.$fields = $(this.options.tpl.fields);
+      $('.textile-inner', this.options.$wrap).append(this.options.$fields);
+      this._loadFields(this.$element.val(), this.$element.data('allow-dropdown'));
 
       // add Preview to container and load
       this.options.$preview = $(this.options.tpl.preview);
@@ -98,6 +96,8 @@
 
       // Event bindings
       this._bindBehaviors();
+
+      this._setDefaultView();
     },
     _bindBehaviors: function() {
       // Sync preview
@@ -109,33 +109,14 @@
 
       // When auto-save populates data into source view refresh the form
       this.$element.on('load-preview', function() {
-        this._loadInline(this.$element.val());
+        this._loadFields(this.$element.val());
       }.bind(this));
 
       // Bind all form element actions within container
-      this.bindFieldGroup(this.options.$inline);
+      this.bindFieldGroup(this.options.$fields);
     },
     bindFieldGroup: function($parent) {
       var that = this;
-
-      // These are cross-browser hacks to keep textareas expanded to content
-      // while users are typing
-      // Handler for setting the correct scrollHeight for current values
-      paddingStr = '0.375rem 0.25rem'
-      $parent.find('[data-expand~=auto]').each(function() {
-        $(this).css({'padding': paddingStr, 'height': this.scrollHeight});
-      });
-
-      // Handler for setting the correct scrollHeight on keyboard input
-      $parent.find('[data-expand~=auto]').on('keyup blur', function(e) {
-        $(this).css({
-          'padding': paddingStr,
-          'height': '1px'
-        }).css({
-          'padding': paddingStr,
-          'height': this.scrollHeight + 2
-        });
-      });
 
       $parent.find('[data-behavior~=delete-field]').click(function(){
         $(this).closest('[data-behavior~=textile-form-field]').remove();
@@ -164,8 +145,8 @@
       var button;
 
       // Form
-      button = $('<a class="btn-form active" href="javascript:void(null);"><span>Inline</span></a>');
-      button.click( $.proxy( function(evt) { this._onBtnInline(evt); }, this));
+      button = $('<a class="btn-form active" href="javascript:void(null);"><span>Fields</span></a>');
+      button.click( $.proxy( function(evt) { this._onBtnFields(evt); }, this));
       $('.textile-toolbar', this.options.$wrap).append( $('<li>').append(button) );
 
       // Source
@@ -188,20 +169,29 @@
       if (this.options.resize === false) return false;
 
     },
+
+    _contentHasFields: function() {
+      // Match the first instance of a field header.
+      var regex = /#\[.+?\]#/;
+
+      // Returns an array of matches (truthy) or null (falsey) if there's no match.
+      return this.$element.val().match(regex);
+    },
+
     // Ajax form
-    _loadInline: function(data, allowDropdown) {
+    _loadFields: function(data, allowDropdown) {
       $.post({
-        url: this.$element.data('form-url') + '.js',
+        url: this.$element.data('paths').form_url,
         data: {source: data, allow_dropdown: allowDropdown},
         beforeSend: function(){
-          this.options.$inline.addClass('loading-indicator').text('Loading...');
+          this.options.$fields.addClass('loading-indicator').text('Loading...');
         }.bind(this)
       });
     },
     // Ajax help
     _loadHelp: function() {
       var that = this;
-      $.get( this.$element.data('help-url'), function(result){
+      $.get( this.$element.data('paths').help_url, function(result){
         that.options.$help.removeClass('loading-indicator')
           .html(result);
         this._helpRendered = true;
@@ -211,29 +201,34 @@
     _loadPreview: function(data) {
       this._previousContent = this.$element.val();
 
-      $.post(this.$element.data('preview-url'),
-        data,
-        function(result) {
-          this.options.$preview.removeClass('loading-indicator')
-            .html(result);
+      $.post({
+        url: this.$element.data('paths').preview_url,
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: function(result) {
+          this.options.$preview.removeClass('loading-indicator').html(result);
+          if (result == '\n') {
+            this.options.$preview.append('<div class="preview-placeholder"><h5>Add some fields to see a live preview here</h5></div>')
+          }
           this.options.$preview.children(':first').addClass('textile-preview');
           this._previewRendered = true;
         }.bind(this)
-      );
+      });
     },
     // Ajax write
     _loadSource: function() {
-      $.post(
-        this.$element.data('source-url'),
-        { form: this._serializedFormData() },
-        function(result){
+      $.post({
+        url: this.$element.data('paths').source_url,
+        data: JSON.stringify({ form: this._serializedFormData() }),
+        contentType: 'application/json',
+        success: function(result){
           this.$element.val(result);
         }.bind(this)
-      );
+      });
     },
     _onKeyPressPreview: function(type) {
-      if (type == 'inline') {
-        this._loadPreview({ inline: this._serializedFormData() });
+      if (type == 'fields') {
+        this._loadPreview({ fields: this._serializedFormData() });
       }
       else if (type == 'text') {
         // If the text hasn't changed, do nothing.
@@ -246,7 +241,8 @@
         }
       }
     },
-    _onBtnInline: function() {
+    _onBtnFields: function() {
+      localStorage.setItem(this.options.defaultViewKey, 'fields');
       // Activate toolbar button
       var scope = this.options.$wrap;
       $('.textile-toolbar a', scope).removeClass('active');
@@ -254,13 +250,13 @@
 
       $('.textile-form').empty();
 
-      this._loadInline(this.$element.val(), false);
+      this._loadFields(this.$element.val(), false);
 
       // Show Form pane
       this.options.$help.hide();
       this.$source.hide();
       this.options.$preview.show();
-      this.options.$inline.show();
+      this.options.$fields.show();
     },
     _onBtnFullScreen: function() {
       $btnFS = $('.btn-fullscreen', this.options.$wrap);
@@ -300,9 +296,6 @@
         this.options.$wrap.css('width', 'auto');
         this.options.tmpspan.after(this.options.$wrap).remove();
 
-        this.options.$preview.css('height', '100%');
-        this.$element.css('height', this.options.height);
-
         // update button icon
         $btnFS.removeClass('fa-compress').addClass('fa-expand');
       }
@@ -314,7 +307,7 @@
 
       // Show Help pane
       this.$source.hide();
-      this.options.$inline.hide();
+      this.options.$fields.hide();
       this.options.$preview.hide();
       this.options.$help.show();
 
@@ -324,16 +317,17 @@
     },
     // Toolbar button handlers
     _onBtnSource: function() {
+      localStorage.setItem(this.options.defaultViewKey, 'source');
       // Activate toolbar button
       var scope = this.options.$wrap;
       $('.textile-toolbar a', scope).removeClass('active');
       $('.textile-toolbar .btn-write', scope).addClass('active');
 
       // Clear out the form
-      this.options.$inline.empty();
+      this.options.$fields.empty();
 
       // Show Source pane
-      this.options.$inline.hide();
+      this.options.$fields.hide();
       this.options.$help.hide();
       this.options.$preview.show();
       this.$source.show();
@@ -352,7 +346,13 @@
     },
 
     _serializedFormData: function() {
-      return JSON.stringify( $('[name^=item_form]', this.options.$inline).serializeArray() );
+      return $('[name^=item_form]', this.options.$fields).serializeArray();
+    },
+
+    _setDefaultView: function() {
+      if (localStorage.getItem(this.options.defaultViewKey) == 'source' || !this._contentHasFields) {
+        this._onBtnSource();
+      }
     }
   };
 

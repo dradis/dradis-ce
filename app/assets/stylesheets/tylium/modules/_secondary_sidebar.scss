@@ -30,8 +30,9 @@
     padding-top: 0.5rem;
 
     .header-name {
-      margin-top: 0.5rem;
       cursor: default;
+      margin-top: 0.5rem;
+      padding-right: 2.5rem;
     
       a {
         color: $lightColor;
@@ -78,11 +79,11 @@
   }
 
   .note-list {
-  
-    .active a {
-      color: $white;
+
+    .active > a {
+      color: $white !important;
     }
-    
+
     .list-item {
       line-height: 1.2rem;
       padding: 0.5rem;
@@ -91,6 +92,10 @@
       
       a {
         color: $lightColor;
+      }
+
+      &.active a {
+        color: $white;
       }
   
       .list-item-actions {
@@ -103,10 +108,6 @@
           padding: 0 4px;
         }
 
-        &.active a {
-          color: $white;
-        }
-    
         .list-item-action-delete,
         .list-item-action-edit {
           color: $lightColor;
@@ -138,7 +139,7 @@
             color: $white;
           }
         }
-        
+
         .list-item-actions {
           visibility: visible;
         }
@@ -148,7 +149,6 @@
     .summary-link {
       color: $lightColor;
 
-      &.active,
       &:hover {
         color: $white;
       }
