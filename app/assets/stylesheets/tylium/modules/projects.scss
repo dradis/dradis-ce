@@ -1,7 +1,5 @@
 body.projects {
-
   .summary-panel {
-
     #boards-summary {
       display: flex;
       flex-wrap: wrap;
@@ -12,6 +10,24 @@ body.projects {
   
       &.loading {
         background: image_url('loading.gif') no-repeat center;
+      }
+    }
+
+    .empty-state {
+      &-actions {
+        margin-top: 1.5rem;
+      }
+
+      &-icon {
+        padding: 0.75rem;
+
+        img {
+          width: 5rem;
+        }
+      }
+
+      &-title {
+        margin: 2rem 0 1rem;
       }
     }
 

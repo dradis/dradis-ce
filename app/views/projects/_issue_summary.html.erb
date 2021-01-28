@@ -1,7 +1,6 @@
 <section class="summary-panel">
-  <h4 class="header-underline">Issues so far</h4>
-
   <% if @issues.any? %>
+    <h4 class="header-underline">Issues so far</h4>
     <div id="issue-chart"></div>
 
     <div id="issues-accordion" role="tablist">
@@ -50,11 +49,31 @@
     </div>
 
   <% else %>
-    <p>There are no issues in this project yet.</p>
-    <div>
-      <%= link_to project_issues_path(current_project), class: 'btn btn-primary' do %>
-        <i class="fa fa-plus"></i> Add new issue
-      <% end %> or <%= link_to project_upload_manager_path(current_project) do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %>
+    <div class="empty-state">
+      <div class="empty-state-icon">
+        <%= image_tag "icons/#{rand(9)}.svg" %>
+      </div>
+      <div class="empty-state-body">
+        <div class="container">
+          <h4 class="empty-state-title">You don't have any issues yet</h4>
+          <p class="text-center">Use issues to represent vulnerabilities or findings.</p>
+          <div class="empty-state-actions">
+            <div class="d-flex align-items-center justify-content-around flex-wrap w-100">
+              <%= render 'shared/add_item_dropdown',
+                name: 'Issues',
+                new_path: new_project_issue_path(current_project),
+                category_id: nil,
+                button_class: 'btn btn-primary btn-lg mb-2 px-5',
+                text: "Add Issue",
+                menu_class: 'mt-1',
+                collapse_class: 'd-none'
+              -%> 
+              <%= link_to project_upload_manager_path(current_project), class: 'mb-2' do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %>
+            </div>
+            <a href="https://dradisframework.com/support/guides/projects/issues.html" class="small mt-3" target="_blank">More about issues</a>
+          </div>
+        </div>
+      </div>
     </div>
   <% end %>
 </section>
