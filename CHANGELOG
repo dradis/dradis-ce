@@ -3,6 +3,7 @@ v3.21.0 (MMM’YY)
   * Increase secondary sidebar width for medium viewports
   * Upgraded gems: [gem #1], [gem #2]
   * Bugs fixed:
+    - Add a default user during Welcome setup
     - [bug fixed #1]
     - [bug fixed ...]
     - Bug tracker items: #N, #M, #O, ...
