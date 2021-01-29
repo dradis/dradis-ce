@@ -25,7 +25,7 @@ shared_examples 'a page which handles edit conflicts' do
     with_versioning do
       submit_form
       expect(page).to have_no_content conflict_warning
-      expect(page).to have_no_link(//, href: record_revisions_path(record))
+      expect(page).to have_no_link('//', href: record_revisions_path(record))
     end
   end
 
@@ -77,7 +77,7 @@ shared_examples 'a page which handles edit conflicts' do
       )
 
       old_versions.each do |version|
-        expect(page).to have_no_link(//, href: record_revision_path(record, version))
+        expect(page).to have_no_link('//', href: record_revision_path(record, version))
       end
     end
 
@@ -109,7 +109,7 @@ shared_examples 'a page which handles edit conflicts' do
         end
 
         old_versions.each do |version|
-          expect(page).to have_no_link(//, href: record_revision_path(record, version))
+          expect(page).to have_no_link('//', href: record_revision_path(record, version))
         end
       end
     end
