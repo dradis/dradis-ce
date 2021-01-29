@@ -37,6 +37,11 @@ class ProjectsController < AuthenticatedController
         end
       end
     end
+
+    respond_to do |format|
+      format.html { render layout: !request.xhr? }
+      format.json { render json: @boards }
+    end
   end
 
   private
