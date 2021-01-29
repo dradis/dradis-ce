@@ -1,5 +1,5 @@
 document.addEventListener('turbolinks:load', function(){
-  if ($('body.projects.show').length) {
+  if ($('[data-behavior~=boards-summary]').length) {
     var $boardsSummary = $('[data-behavior~=boards-summary]');
     var url = $boardsSummary.data('url');
 

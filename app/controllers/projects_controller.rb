@@ -39,7 +39,7 @@ class ProjectsController < AuthenticatedController
     end
 
     respond_to do |format|
-      format.html { render layout: !request.xhr? }
+      format.html { render layout: 'tylium' if !request.xhr?}
       format.json { render json: @boards }
     end
   end
