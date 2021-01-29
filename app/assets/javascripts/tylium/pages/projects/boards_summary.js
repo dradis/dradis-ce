@@ -34,11 +34,6 @@ document.addEventListener('turbolinks:load', function(){
             (new DonutChart('#' + $(chart).attr('id'))).draw();
           });
         }
-        else {
-          var $boardsEmpty = $('#boards-empty');
-          $boardsEmpty.removeClass('d-none');
-          $boardsSummary.hide();
-        }
       }).
       then(function() {
         // Remove the loader

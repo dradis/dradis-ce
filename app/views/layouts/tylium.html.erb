@@ -66,7 +66,6 @@
     <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
 
     <% if controller_name == 'boards' %>
-      <%= render 'boards/modals/new_board_form' unless  request.xhr? %>
       <% if content_for?(:board_rename_modal) %>
         <%= yield(:board_rename_modal) %>
       <% end %>
@@ -76,6 +75,10 @@
       <% if content_for?(:list_rename_modal) %>
         <%= yield(:list_rename_modal) %>
       <% end %>
+    <% end %>
+
+    <% if controller_name == 'boards' || controller_name == 'projects' %>
+      <%= render 'boards/modals/new_board_form' unless request.xhr? %>
     <% end %>
 
     <% if @node %>
