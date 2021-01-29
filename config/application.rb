@@ -23,7 +23,7 @@ Bundler.require(*Rails.groups)
 module Dradis
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.2
+    config.load_defaults 6.0
 
     # Configuration for the application, engines, and railties goes here.
     #
