@@ -2,21 +2,21 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_06_120434) do
+ActiveRecord::Schema.define(version: 2021_02_01_061359) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_120434) do
   end
 
   create_table "activities", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "trackable_type", null: false
     t.integer "trackable_id", null: false
     t.string "action", null: false
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_120434) do
 
   create_table "boards", force: :cascade do |t|
     t.string "name"
-    t.integer "node_id"
+    t.bigint "node_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["node_id"], name: "index_boards_on_node_id"
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_120434) do
     t.text "description"
     t.date "due_date"
     t.integer "list_id"
-    t.integer "previous_id"
+    t.bigint "previous_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["list_id"], name: "index_cards_on_list_id"
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_120434) do
   end
 
   create_table "evidence", force: :cascade do |t|
-    t.integer "node_id"
+    t.bigint "node_id"
     t.integer "issue_id"
     t.text "content"
     t.string "author"
@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_120434) do
   create_table "lists", force: :cascade do |t|
     t.string "name"
     t.integer "board_id"
-    t.integer "previous_id"
+    t.bigint "previous_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["board_id"], name: "index_lists_on_board_id"
@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_120434) do
   create_table "nodes", force: :cascade do |t|
     t.integer "type_id"
     t.string "label"
-    t.integer "parent_id"
+    t.bigint "parent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "position"
@@ -141,7 +141,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_120434) do
   create_table "notes", force: :cascade do |t|
     t.string "author"
     t.text "text"
-    t.integer "node_id"
+    t.bigint "node_id"
     t.integer "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -155,7 +155,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_120434) do
     t.string "notifiable_type"
     t.integer "notifiable_id"
     t.integer "actor_id"
-    t.integer "recipient_id"
+    t.bigint "recipient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["actor_id"], name: "index_notifications_on_actor_id"
@@ -166,7 +166,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_120434) do
   create_table "subscriptions", force: :cascade do |t|
     t.string "subscribable_type"
     t.integer "subscribable_id"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["subscribable_id", "subscribable_type", "user_id"], name: "index_subscriptions_on_subscribablue_and_user", unique: true
@@ -175,7 +175,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_120434) do
   end
 
   create_table "taggings", force: :cascade do |t|
-    t.integer "tag_id"
+    t.bigint "tag_id"
     t.string "taggable_type"
     t.integer "taggable_id"
     t.datetime "created_at", null: false
@@ -204,7 +204,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_120434) do
 
   create_table "versions", force: :cascade do |t|
     t.string "item_type", null: false
-    t.integer "item_id", null: false
+    t.bigint "item_id", null: false
     t.string "event", null: false
     t.string "whodunnit"
     t.text "object", limit: 1073741823
