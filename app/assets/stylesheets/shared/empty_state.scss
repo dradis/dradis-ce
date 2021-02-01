@@ -4,6 +4,10 @@
     display: flex;
     flex-direction: column;
     margin-top: 3rem;
+
+    .small {
+      font-size: 0.8rem;
+    }
   }
 
   &-body {
