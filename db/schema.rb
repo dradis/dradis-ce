@@ -15,8 +15,8 @@ ActiveRecord::Schema.define(version: 2021_02_01_061359) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.bigint "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.integer "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 2021_02_01_061359) do
 
   create_table "cards_users", id: false, force: :cascade do |t|
     t.integer "card_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.index ["card_id", "user_id"], name: "index_cards_users_on_card_id_and_user_id"
     t.index ["user_id", "card_id"], name: "index_cards_users_on_user_id_and_card_id"
   end
@@ -82,10 +82,10 @@ ActiveRecord::Schema.define(version: 2021_02_01_061359) do
     t.text "content"
     t.string "commentable_type"
     t.integer "commentable_id"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(version: 2021_02_01_061359) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "position"
-    t.text "properties", limit: 4294967295
+    t.text "properties", limit: 1073741823
     t.integer "children_count", default: 0, null: false
     t.index ["parent_id"], name: "index_nodes_on_parent_id"
     t.index ["type_id"], name: "index_nodes_on_type_id"
@@ -159,7 +159,7 @@ ActiveRecord::Schema.define(version: 2021_02_01_061359) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["actor_id"], name: "index_notifications_on_actor_id"
-    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable_type_and_notifiable_id"
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
     t.index ["recipient_id"], name: "index_notifications_on_recipient_id"
   end
 
@@ -170,19 +170,19 @@ ActiveRecord::Schema.define(version: 2021_02_01_061359) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["subscribable_id", "subscribable_type", "user_id"], name: "index_subscriptions_on_subscribablue_and_user", unique: true
-    t.index ["subscribable_type", "subscribable_id"], name: "index_subscriptions_on_subscribable_type_and_subscribable_id"
+    t.index ["subscribable_type", "subscribable_id"], name: "index_subscriptions_on_subscribable"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
   create_table "taggings", force: :cascade do |t|
-    t.bigint "tag_id"
+    t.integer "tag_id"
     t.string "taggable_type"
-    t.integer "taggable_id"
+    t.bigint "taggable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["tag_id", "taggable_id", "taggable_type"], name: "index_taggings_on_tag_id_and_taggable_id_and_taggable_type", unique: true
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
-    t.index ["taggable_type", "taggable_id"], name: "index_taggings_on_taggable_type_and_taggable_id"
+    t.index ["taggable_type", "taggable_id"], name: "index_taggings_on_taggable"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -204,14 +204,20 @@ ActiveRecord::Schema.define(version: 2021_02_01_061359) do
 
   create_table "versions", force: :cascade do |t|
     t.string "item_type", null: false
-    t.bigint "item_id", null: false
+    t.integer "item_id", null: false
     t.string "event", null: false
     t.string "whodunnit"
     t.text "object", limit: 1073741823
     t.datetime "created_at"
-    t.integer "project_id"
+    t.bigint "project_id"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
     t.index ["project_id"], name: "index_versions_on_project_id"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "boards", "nodes", on_delete: :cascade
+  add_foreign_key "comments", "users", on_delete: :nullify
+  add_foreign_key "notifications", "users", column: "actor_id", on_delete: :cascade
+  add_foreign_key "notifications", "users", column: "recipient_id", on_delete: :cascade
+  add_foreign_key "subscriptions", "users"
 end
