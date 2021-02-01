@@ -22,9 +22,39 @@ body.issues.edit {
 }
 
 body.issues.index {
-
   .add-issues {
-    margin-top: 1rem;
+    background: $darkColor;
+    border-radius: 5px;
+    color: $lightColor;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1rem;
+    width: 100%;
+
+    a {
+      color: lighten($lightColor, 20%);
+  
+      &:hover {
+        color: $white;
+      }
+    }
+
+    &-body {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: center;
+    }
+
+    strong {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .empty-state-actions {
+    margin-top: 0;
   }
 
   .tab-content.outer-tab {

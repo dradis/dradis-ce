@@ -1,22 +1,53 @@
-<h4 class="header-underline">This project doesn't have any issues yet</h4>
+<div class="empty-state">
+  <div class="empty-state-icon">
+    <%= image_tag "icons/#{rand(9)}.svg" %>
+  </div>
+  <div class="empty-state-body">
+    <div class="container">
+      <h4 class="empty-state-title">You don't have any issues yet</h4>
+      <p>Use issues to represent vulnerabilities or findings. Issues contain general information, such as: Title, Description, Recommendation, CVE's, etc. These are the things you'll end up including in your report.</p>
 
-<div class="add-issues mt-0">
-  <h5>1. Add manual finding</h5>
-  <p>
-    Just click on the <i class="fa fa-plus"></i> sign next to the
-    <strong>ISSUES</strong> heading in the sidebar.
-  </p>
-</div>
+      <p>Add isses using on of these methods:</p>
 
-<div class="add-issues">
-  <h5>2. Upload scanner output</h5>
-  <p>
-    Use the <%= link_to main_app.project_upload_manager_path(current_project) do %>
-      <i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool
-    <% end %> link at the top of the page.
-  </p>
-</div>
-
-<div class="add-issues">
-  <%= render 'issues/empty_import_ce' %>
+      <div class="empty-state-actions">
+        <div class="d-flex justify-content-between">
+          <div class="row">
+            <div class="col-xl-4 mt-4">
+              <div class="add-issues">
+                <strong>Manually</strong>
+                <div class="add-issues-body">
+                  <p>
+                    Use the 
+                    <%= link_to 'javascript:void(0)', data: { behavior: 'issues-dropdown-toggle' } do -%>
+                      <i class="fa fa-plus"></i> sign
+                    <% end %>
+                    in the sidebar next to the ISSUES header.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 mt-4">
+              <div class="add-issues">
+                <strong>Upload scanner input</strong>
+                <div class="add-issues-body">
+                  <p>Click 
+                    <%= link_to main_app.project_upload_manager_path(current_project) do-%>
+                      <i class="fa fa-cloud-upload fa-lg"></i> Upload
+                    <% end %>
+                    in the top navigation bar.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 mt-4">
+              <div class="add-issues">
+                <%= render 'issues/empty_import_ce' %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a href="https://dradisframework.com/support/guides/projects/issues.html" class="small mt-4" target="_blank">More about issues</a>
+      </div>
+    </div>
+  </div>
 </div>
