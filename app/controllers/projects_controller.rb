@@ -12,7 +12,7 @@ class ProjectsController < AuthenticatedController
   def show
     @activities    = Activity.latest
     @authors       = [current_user]
-    @boards        = current_project.boards.where(node_id: current_project.methodology_library.id)
+    @boards        = current_project.methodology_library.boards
     @issues        = current_project.issues.includes(:tags).sort
     @methodologies = current_project.methodology_library.notes.map{|n| Methodology.new(filename: n.id, content: n.text)}
     @nodes         = current_project.nodes.in_tree
