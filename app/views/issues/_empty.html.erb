@@ -13,9 +13,11 @@
         <div class="d-flex justify-content-between">
           <div class="row">
             <div class="col-xl-4 mt-4">
-              <div class="add-issues">
-                <strong>Manually</strong>
-                <div class="add-issues-body">
+              <div class="card add-issues">
+                <div class="card-header">
+                  <p class="card-title">Manually</p>
+                </div>
+                <div class="card-body">
                   <p>
                     Use the 
                     <%= link_to 'javascript:void(0)', data: { behavior: 'issues-dropdown-toggle' } do -%>
@@ -27,9 +29,11 @@
               </div>
             </div>
             <div class="col-xl-4 mt-4">
-              <div class="add-issues">
-                <strong>Upload scanner input</strong>
-                <div class="add-issues-body">
+              <div class="card add-issues">
+                <div class="card-header">
+                  <p class="card-title">Upload scanner input</p>
+                </div>
+                <div class="card-body">
                   <p>Click 
                     <%= link_to main_app.project_upload_manager_path(current_project) do-%>
                       <i class="fa fa-cloud-upload fa-lg"></i> Upload
@@ -40,7 +44,7 @@
               </div>
             </div>
             <div class="col-xl-4 mt-4">
-              <div class="add-issues">
+              <div class="card add-issues">
                 <%= render 'issues/empty_import_ce' %>
               </div>
             </div>
