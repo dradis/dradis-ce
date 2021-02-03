@@ -46,8 +46,8 @@
 <div class="content-container mt-0">
   <div class="tab-content mt-0">
     <div class="tab-pane <%= "active" if params[:tab] == "evidence-tab" %>" id="evidence-tab">
-      <h4 class="header-underline">Evidence</h4>
       <% if @sorted_evidence.any? %>
+        <h4 class="header-underline">Evidence</h4>
         <div id="node-evidence-table"
             data-destroy-url="<%= multiple_destroy_project_node_evidence_index_path(@node.project, @node) %>"
             data-storage-key="<%= "project.ce.#{dom_id(@node)}.evidence_columns" %>"
@@ -60,8 +60,9 @@
         </div>
       <% else %>
         <%= render 'nodes/items_table/empty',
+                  docs_link: 'https://dradisframework.com/support/guides/projects/issues.html',
                   name: 'evidence',
-                  new_link: new_project_node_evidence_path(@node.project, @node) %>
+                  text: 'Use evidence to detail changes from one instance of an issue to the next: port number, specific versions, output of tools' %>
       <% end %>
     </div>
 
@@ -104,8 +105,8 @@
     </div>
 
     <div class="tab-pane <%= "active" if params[:tab] == "notes-tab" %>" id="notes-tab">
-      <h4 class="header-underline">Notes</h4>
       <% if @sorted_notes.any? %>
+        <h4 class="header-underline">Notes</h4>
         <div id="node-notes-table"
             data-destroy-url="<%= multiple_destroy_project_node_notes_path(@node.project, @node) %>"
             data-storage-key="<%= "project.ce.#{dom_id(@node)}.note_columns" %>"
@@ -118,8 +119,9 @@
         </div>
       <% else %>
         <%= render 'nodes/items_table/empty',
+                    docs_link: 'https://dradisframework.com/support/guides/projects/notes.html',
                     name: 'note',
-                    new_link: new_project_node_note_path(@node.project, @node) %>
+                    text: 'Use notes to store your thoughts, ideas, and other content that probably isn\'t going to be exported into your report template.' %>
       <% end %>
     </div>
 

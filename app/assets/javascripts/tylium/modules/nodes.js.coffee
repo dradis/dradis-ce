@@ -20,3 +20,12 @@ document.addEventListener "turbolinks:load", ->
   if $('body.nodes.show').length
     $('[data-behavior~=services-extras-link]').first().addClass('active')
     $('[data-behavior~=services-extras-tab-pane]').first().addClass('active')
+
+    $('[data-behavior~=evidence-dropdown-toggle]').click (e) ->
+      e.stopPropagation()
+      $('[data-name~=evidence]').click()
+
+    $('[data-behavior~=notes-dropdown-toggle]').click (e) ->
+      e.stopPropagation()
+      $('[data-name~=notes]').click()
+
