@@ -11,21 +11,12 @@
   
   <div class="nodes-list restrict-height pb-4 px-3" data-behavior="restrict-height">
     <% if @nodes.empty? %>
-      <div class="empty-state">
-        <div class="empty-state-icon">
-          <%= image_tag "icons/#{rand(9)}.svg" %>
-        </div>
-        <div class="empty-state-body">
-          <div class="container p-0">
-            <h2 class="empty-state-title">You don't have any nodes yet</h2>
-            <p class="text-center">Use nodes to structure and organize your project.</p>
-            <div class="empty-state-actions">
-              <p>Add nodes using the <a href="#modal_add_branch_node" data-toggle="modal" tabindex="-1"><i class="fa fa-plus" data-behavior="add-node"></i> sign</a> in the Nodes header above.</p>
-              <a href="https://dradisframework.com/support/guides/projects/nodes.html" class="small mt-2" target="_blank">More about nodes</a>
-            </div>
-          </div>
-        </div>
-      </div>
+      <%= render 'shared/empty_state',
+        actions_partial: 'layouts/tylium/nodes/empty_state_actions',
+        docs_link: 'https://dradisframework.com/support/guides/projects/nodes.html',
+        name: 'node',
+        text: 'Use nodes to structure and organize your project.'
+      %>
     <% else %>
       <%= render partial: 'layouts/tylium/node', collection: @nodes %>
     <% end %>
