@@ -59,10 +59,12 @@
                     items: @sorted_evidence %>
         </div>
       <% else %>
-        <%= render 'nodes/items_table/empty',
-                  docs_link: 'https://dradisframework.com/support/guides/projects/issues.html',
-                  name: 'evidence',
-                  text: 'Use evidence to detail changes from one instance of an issue to the next: port number, specific versions, output of tools' %>
+        <%= render 'shared/empty_state',
+          actions_partial: 'nodes/evidence/empty_state_actions',
+          docs_link: 'https://dradisframework.com/support/guides/projects/issues.html',
+          name: 'evidence',
+          text: 'Use evidence to detail changes from one instance of an issue to the next: port number, specific versions, output of tools.'
+        %>
       <% end %>
     </div>
 
@@ -84,22 +86,12 @@
             <% end %>
           <% end %>
         <% else %>
-          <div class="empty-state">
-            <div class="empty-state-icon">
-              <%= image_tag "icons/#{rand(9)}.svg" %>
-            </div>
-            <div class="empty-state-body">
-              <div class="container">
-                <h2 class="empty-state-title">You don't have any node properties yet</h2>
-                <p class="text-center mb-0">Use node properties to quickly and easily combine host information from multiple plugins to export into your report templates.</p>
-                <div class="empty-state-actions">
-                  <p class="mb-2">To add node properties:</p>
-                  <%= link_to edit_project_node_path(@node.project, @node), class: 'btn btn-primary btn-lg px-5' do %><i class="fa fa-pencil"></i> Edit Node<% end -%>
-                  <a href="https://dradisframework.com/support/guides/projects/node_properties.html" class="small mt-4" target="_blank">More about node properties</a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <%= render 'shared/empty_state',
+            actions_partial: 'nodes/empty_state_actions',
+            docs_link: 'https://dradisframework.com/support/guides/projects/node_properties.html',
+            name: 'node property',
+            text: 'Use node properties to quickly and easily combine host information from multiple plugins to export into your report templates.'
+          %>
         <% end %>
       </div>
     </div>
@@ -118,10 +110,12 @@
                     items: @sorted_notes %>
         </div>
       <% else %>
-        <%= render 'nodes/items_table/empty',
-                    docs_link: 'https://dradisframework.com/support/guides/projects/notes.html',
-                    name: 'note',
-                    text: 'Use notes to store your thoughts, ideas, and other content that probably isn\'t going to be exported into your report template.' %>
+        <%= render 'shared/empty_state',
+          actions_partial: 'nodes/notes/empty_state_actions',
+          docs_link: 'https://dradisframework.com/support/guides/projects/notes.html',
+          name: 'note',
+          text: 'Use notes to store your thoughts, ideas, and other content that probably isn\'t going to be exported into your report template.'
+        %>
       <% end %>
     </div>
 
