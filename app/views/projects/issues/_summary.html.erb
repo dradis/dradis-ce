@@ -49,31 +49,12 @@
     </div>
 
   <% else %>
-    <div class="empty-state">
-      <div class="empty-state-icon">
-        <%= image_tag "icons/#{rand(9)}.svg" %>
-      </div>
-      <div class="empty-state-body">
-        <div class="container">
-          <h4 class="empty-state-title">You don't have any issues yet</h4>
-          <p class="text-center">Use issues to represent vulnerabilities or findings.</p>
-          <div class="empty-state-actions">
-            <div class="d-flex align-items-center justify-content-center flex-wrap w-100">
-              <%= render 'shared/add_item_dropdown',
-                name: 'Issues',
-                new_path: new_project_issue_path(current_project),
-                category_id: nil,
-                button_class: 'btn btn-primary btn-lg mb-2 mx-4 px-5',
-                text: "Add Issue",
-                collapse_class: 'd-none'
-              -%> 
-              <%= link_to project_upload_manager_path(current_project), class: 'mb-2' do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %>
-            </div>
-            <a href="https://dradisframework.com/support/guides/projects/issues.html" class="small mt-2" target="_blank">More about issues</a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <%= render 'shared/empty_state',
+      actions_partial: 'projects/issues/empty_state_actions',
+      name: 'issue',
+      docs_link: 'https://dradisframework.com/support/guides/projects/issues.html',
+      text: 'Use issues to represent vulnerabilities or findings.'
+    %>
   <% end %>
 </section>
 
