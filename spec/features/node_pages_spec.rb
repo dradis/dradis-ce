@@ -303,7 +303,7 @@ describe "node pages" do
     end
 
     context "when the node has no recent activity" do
-      it { should have_content "no activity" }
+      it { should have_content "You don't have any activities yet" }
     end
 
     context "when the node has nested notes or evidence" do
