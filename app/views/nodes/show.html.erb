@@ -67,20 +67,38 @@
 
     <div class="tab-pane <%= "active" if !params[:tab] || params[:tab] == 'properties-tab' %>" id="properties-tab">
       <div class="node-content" id="<%= dom_id(@node) %>_content">
-        <h4 class="header-underline">Properties - <span class="actions">
-          <%= link_to edit_project_node_path(@node.project, @node) do %>
-            <i class="fa fa-pencil"></i> Edit
-          <% end %>
-          </span>
-        </h4>
 
-        <% if @node.has_any_property?  %>
+        <% if @node.has_any_property? %>
+          <h4 class="header-underline">Properties - <span class="actions">
+            <%= link_to edit_project_node_path(@node.project, @node) do %>
+              <i class="fa fa-pencil"></i> Edit
+            <% end %>
+            </span>
+          </h4>
+
           <% @node.properties.sort.each do |key, value| %>
             <% present [key, value], PropertyPresenter do |property_presenter| %>
               <h4><%= property_presenter.name %></h4>
               <%= property_presenter.value %>
             <% end %>
           <% end %>
+        <% else %>
+          <div class="empty-state">
+            <div class="empty-state-icon">
+              <%= image_tag "icons/#{rand(9)}.svg" %>
+            </div>
+            <div class="empty-state-body">
+              <div class="container">
+                <h2 class="empty-state-title">You don't have any node properties yet</h2>
+                <p class="text-center mb-0">Use node properties to quickly and easily combine host information from multiple plugins to export into your report templates.</p>
+                <div class="empty-state-actions">
+                  <p class="mb-2">To add node properties:</p>
+                  <%= link_to edit_project_node_path(@node.project, @node), class: 'btn btn-primary btn-lg px-5' do %><i class="fa fa-pencil"></i> Edit Node<% end -%>
+                  <a href="https://dradisframework.com/support/guides/projects/node_properties.html" class="small mt-4" target="_blank">More about node properties</a>
+                </div>
+              </div>
+            </div>
+          </div>
         <% end %>
       </div>
     </div>
