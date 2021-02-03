@@ -44,8 +44,14 @@ body.issues.index {
     }
   }
 
-  .empty-state-actions {
-    margin-top: 0;
+  .empty-state {
+    &-actions {
+      margin-top: 0;
+    }
+
+    &-body-text {
+      text-align: left;
+    }
   }
 
   .tab-content.outer-tab {

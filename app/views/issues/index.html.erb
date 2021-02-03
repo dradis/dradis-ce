@@ -21,7 +21,12 @@
           <%= render 'table', issues: @issues %>
         </div>
       <% else %>
-        <%= render 'empty' %>
+        <%= render 'shared/empty_state',
+          actions_partial: 'issues/empty_state_actions',
+          name: 'issue',
+          docs_link: 'https://dradisframework.com/support/guides/projects/issues.html',
+          text: 'Use issues to represent vulnerabilities or findings. Issues contain general information, such as: Title, Description, Recommendation, CVE\'s, etc. These are the things you\'ll end up including in your report.'
+        %>
       <% end %>
     </div>
   </div>

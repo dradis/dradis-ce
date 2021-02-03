@@ -1,0 +1,46 @@
+<p class="mr-auto mt-3">Add issues using one of these methods:</p>
+<div class="d-flex justify-content-between">
+  <div class="row mb-4">
+    <div class="col-xl-4 mt-3">
+      <div class="card add-issues">
+        <div class="card-header">
+          <p class="card-title">Manually</p>
+        </div>
+        <div class="card-body">
+          <p>
+            Use the 
+            <%= link_to 'javascript:void(0)', data: { behavior: 'issues-dropdown-toggle' } do -%>
+              <i class="fa fa-plus"></i> sign
+            <% end %>
+            in the sidebar next to the ISSUES header.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 mt-3">
+      <div class="card add-issues">
+        <div class="card-header">
+          <p class="card-title">Upload scanner input</p>
+        </div>
+        <div class="card-body">
+          <p>Click 
+            <%= link_to main_app.project_upload_manager_path(current_project) do-%>
+              <i class="fa fa-cloud-upload fa-lg"></i> Upload
+            <% end %>
+            in the top navigation bar.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 mt-3">
+      <div class="card add-issues">
+        <div class="card-header">
+          <div class="card-title">Import from a library</div>
+        </div>
+        <div class="card-body">
+          <%= render 'issues/empty_import_ce' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
