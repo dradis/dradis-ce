@@ -51,24 +51,11 @@
       </li>
     </ul>
   <% else %>
-    <div class="empty-state">
-      <div class="empty-state-icon">
-        <%= image_tag "icons/#{rand(9)}.svg" %>
-      </div>
-      <div class="empty-state-body">
-        <div class="container">
-          <h4 class="empty-state-title">You don't have any Methodologies yet</h4>
-          <p class="text-center">Use methodologies to ensure consistency across all of your projects. In a nutshell, methodologies are checklists of tasks you need to perform at some point during the test.</p>
-          <div class="empty-state-actions">
-            <div class="d-flex align-items-center justify-content-around flex-wrap w-100">
-              <%= link_to '#modal-board-new', class: 'btn btn-primary btn-lg mb-2 px-5', data: { behavior: 'board-modal', toggle: 'modal' } do %>
-                <i class="fa fa-plus"> </i> Add Methodology
-              <% end %>
-            </div>
-            <a href="https://dradisframework.com/support/guides/projects/methodologies.html" class="small mt-2" target="_blank">More about methodologies</a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <%= render 'shared/empty_state',
+      actions_partial: 'boards/empty_state_actions',
+      docs_link: 'https://dradisframework.com/support/guides/projects/methodologies.html',
+      name: 'methodology',
+      text: 'Use methodologies to ensure consistency across all of your projects. In a nutshell, methodologies are checklists of tasks you need to perform at some point during the test.'
+    %>
   <% end %>
 </div>
