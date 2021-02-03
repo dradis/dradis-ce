@@ -4,17 +4,14 @@
     display: flex;
     flex-direction: column;
     margin-top: 3rem;
-
-    .small {
-      font-size: 0.8rem;
-    }
   }
 
-  &-body {
-    .empty-state-title {
-      margin: 3rem 0 3rem;
-      text-align: center;
-    }
+  &-body-text {
+    text-align: center;
+  }
+
+  &-docs-link {
+    font-size: 0.8rem;
   }
 
   &-icon {
@@ -28,5 +25,10 @@
       height: auto;
       width: 10rem;
     }
+  }
+
+  &-title {
+    margin: 3rem 0;
+    text-align: center;
   }
 }
