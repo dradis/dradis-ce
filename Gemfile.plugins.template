@@ -5,8 +5,8 @@
 #   $ bundle
 
 # ----------------------------------------------------------------- Calculators
-gem 'dradis-calculator_cvss',  github: 'dradis/dradis-calculator_cvss', branch: 'master'
-gem 'dradis-calculator_dread', '~> 3.20', github: 'dradis/dradis-calculator_dread'
+gem 'dradis-calculator_cvss',  '~> 3.20', github: 'dradis/dradis-calculator_cvss', branch: 'main'
+gem 'dradis-calculator_dread', '~> 3.20', github: 'dradis/dradis-calculator_dread', branch: 'main'
 
 
 # ---------------------------------------------------------------------- Export
