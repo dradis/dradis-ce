@@ -1,8 +1,8 @@
 v3.21.0 (MMM’YY)
-  * [feature #1]
+  * Upgraded DradisPro to run on Ruby 2.7.2 and Rails 6.1.1
   * [feature #2]
   * [feature ...]
-  * Upgraded gems: [gem #1], [gem #2]
+  * Upgraded gems: bundler, papertrail, rails
   * Bugs fixed:
     - [bug fixed #1]
     - [bug fixed ...]
