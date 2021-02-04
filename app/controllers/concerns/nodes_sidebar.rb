@@ -7,6 +7,6 @@ module NodesSidebar
     # won't be able to generate a route for a Note with no id) So filter out
     # Notes that haven't been saved:
     @sorted_notes    = @node.notes.sort_by(&:title).select(&:persisted?)
-    @sorted_evidence = @node.evidence.select(&:persisted?).sort_by { |e1| e1.issue.title }
+    @sorted_evidence = @node.evidence.sort_by(&:title).select(&:persisted?)
   end
 end
