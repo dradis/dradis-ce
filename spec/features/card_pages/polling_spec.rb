@@ -21,7 +21,7 @@ describe 'card pages', js: true do
 
     describe 'when someone else updates that card' do
       before do
-        @card.update_attributes(name: 'whatever')
+        @card.update(name: 'whatever')
         create(:activity, action: :update, trackable: @card, user: @other_user, project: current_project)
         call_poller
       end
@@ -37,7 +37,7 @@ describe 'card pages', js: true do
 
     describe 'when someone else updates another card' do
       before do
-        @other_card.update_attributes(name: 'updated card')
+        @other_card.update(name: 'updated card')
         create(:activity, action: :update, trackable: @other_card, user: @other_user, project: current_project)
         call_poller
       end
@@ -75,7 +75,7 @@ describe 'card pages', js: true do
 
     describe 'when someone else moves that card' do
       before do
-        @card.update_attributes(list_id: @other_list.id)
+        @card.update(list_id: @other_list.id)
         create(:activity, action: :update, trackable: @card, user: @other_user, project: current_project)
         call_poller
       end
@@ -95,7 +95,7 @@ describe 'card pages', js: true do
 
     describe 'when someone else moves (out) another card' do
       before do
-        @other_card.update_attributes(list_id: @other_list.id)
+        @other_card.update(list_id: @other_list.id)
         create(:activity, action: :update, trackable: @other_card, user: @other_user, project: current_project)
         call_poller
       end
@@ -119,7 +119,7 @@ describe 'card pages', js: true do
 
     describe 'and someone updates then deletes that card' do
       before do
-        @card.update_attributes(name: 'whatever')
+        @card.update(name: 'whatever')
         create(:activity, action: :update, trackable: @card, user: @other_user, project: current_project)
         @card.destroy
         create(:activity, action: :destroy, trackable: @card, user: @other_user, project: current_project)

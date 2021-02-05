@@ -1,7 +1,8 @@
 v3.21.0 (MMM’YY)
+  * Upgraded DradisPro to run on Ruby 2.7.2 and Rails 6.1.1
   * Add view hooks for the export view
   * Increase secondary sidebar width for medium viewports
-  * Upgraded gems: [gem #1], [gem #2]
+  * Upgraded gems: bundler, papertrail, rails
   * Bugs fixed:
     - Add a default user during Welcome setup
     - [bug fixed #1]
