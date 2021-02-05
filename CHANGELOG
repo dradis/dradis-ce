@@ -5,25 +5,6 @@ v3.21.0 (MMM’YY)
   * Upgraded gems: bundler, papertrail, rails
   * Bugs fixed:
     - Add a default user during Welcome setup
-    - [bug fixed #1]
-    - [bug fixed ...]
-    - Bug tracker items: #N, #M, #O, ...
-  * New integrations:
-    - [new integration #1]
-    - [new integration ...]
-  * Integration enhancements:
-    - [integration enhancement #1]
-    - [integration enhancement ...]
-  * Reporting enhancements:
-    - [reporting enhancement #1]
-    - [reporting enhancement ...]
-  * REST/JSON API enhancements:
-    - [API enhancement #1]
-    - [API enhancement ...]
-  * Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v3.20.0 (January 2021)
   * Main sidebar improvements:
