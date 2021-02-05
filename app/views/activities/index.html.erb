@@ -23,6 +23,11 @@
       </div>
     </div>
   <% else %>
-    <p class="text-center">There has been no activity yet.</p>
+    <%= render 'shared/empty_state',
+      name: 'activity',
+      docs_link: 'https://dradisframework.com/support/guides/projects/activity.html',
+      docs_name: 'the activity feed',
+      text: 'Use the activity feed to increase group efficiency and effectiveness.'
+    %>
   <% end %>
 <div>
