@@ -5,6 +5,7 @@ v3.21.0 (MMM’YY)
   * Upgraded gems: bundler, papertrail, rails
   * Bugs fixed:
     - Add a default user during Welcome setup
+    - Correct position of sticky editor toolbar in fullscreen source view
 
 v3.20.0 (January 2021)
   * Main sidebar improvements:
