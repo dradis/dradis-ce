@@ -1,5 +1,5 @@
-//= require tylium/pages/boards/index
-//= require tylium/pages/boards/show
+#= require tylium/pages/boards/index
+#= require tylium/pages/boards/show
 
 document.addEventListener "turbolinks:load", ->
   $('[data-behavior~=board-modal]').on 'click', (e)->

@@ -80,7 +80,7 @@ class DradisTasks < Thor
 
       task_options.merge!(
         plugin: Dradis::Plugins::Projects::Upload::Template,
-        default_user_id: 1
+        default_user_id: User.create!(email: 'adama@dradisframework.com').id
       )
 
       importer = Dradis::Plugins::Projects::Upload::Template::Importer.new(task_options)
