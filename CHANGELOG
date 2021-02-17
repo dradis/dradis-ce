@@ -1,7 +1,5 @@
 v3.22.0 (MMM’21)
-  * [feature #1]
-  * [feature #2]
-  * [feature ...]
+  * Replace deprecated font-awesome-sass gem with vendor asset files
   * Upgraded gems: [gem #1], [gem #2]
   * Bugs fixed:
     - [bug fixed #1]
