@@ -141,10 +141,6 @@
       }
 
       .textile-form-field {
-        .editor-field.sticky-toolbar .editor-toolbar {
-          top: 0;
-        }
-
         .textarea-container {
           padding-bottom: 0;
         }
@@ -153,6 +149,10 @@
       .textile-preview {
         height: initial;
         padding-bottom: 0.5rem;
+      }
+
+      .sticky-toolbar .editor-toolbar {
+        top: 0;
       }
     }
 
