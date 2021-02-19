@@ -6,7 +6,7 @@
         <%= link_to 'javascript:void(0)', 
           class: 'import-toggle', 
           data: { toggle: 'collapse', target: '#import-box', behavior: 'collapse-collection import-box' } do %>
-          <i class="fa fa-chevron-down" data-behavior="toggle-chevron"></i>
+          <i class="fa fa-chevron-down" data-behavior="toggle-chevron"></i><span class="sr-only">Toggle import box</span>
         <% end %>
       </div>
     </div>
@@ -35,11 +35,12 @@
           <% next if label == :find_one_by_field %>
 
           <%= form_tag main_app.import_project_issues_path, class: 'form-inline mb-4' do %>
-            <%= hidden_field_tag :scope, plugin.plugin_name %>
-            <%= hidden_field_tag :filter, label %>
+            <%= hidden_field_tag :scope, plugin.plugin_name, id: "scope_#{plugin.plugin_name}" %>
+            <%= hidden_field_tag :filter, label, id: "filter_#{plugin.plugin_name}" %>
             <% query = @query if (@plugin == plugin.plugin_name) && (@filter == klass) %>
             <div class="inset-button-wrapper">
-              <%= search_field_tag :query, query, class: 'form-control search-query', placeholder: "Search #{plugin.plugin_name}"  %>
+              <%= label_tag "query_#{plugin.plugin_name}", "Search #{plugin.plugin_name}", class: 'sr-only' %>
+              <%= search_field_tag :query, query, id: "query_#{plugin.plugin_name}", class: 'form-control search-query', placeholder: "Search #{plugin.plugin_name}" %>
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
           <% end %>

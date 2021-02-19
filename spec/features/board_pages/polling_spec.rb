@@ -25,7 +25,7 @@ describe 'board pages', js: true do
 
     describe 'when someone else updates a board' do
       before do
-        @board.update_attributes(name: 'whatever')
+        @board.update(name: 'whatever')
         create(:activity, action: :update, trackable: @board, user: @other_user, project: current_project)
         call_poller
       end

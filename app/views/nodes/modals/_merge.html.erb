@@ -1,12 +1,13 @@
-<div id="modal_merge_node" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modal_merge_node" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
   <%= form_tag project_node_merge_path(current_project, @node), class: 'form-horizontal modal-node-selection-form', data: { node_id: @node.id, hidden_field: '#target_id' } do |f| %>
     <%= hidden_field_tag :target_id %>
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Merge <%= @node.label %> node</h5>
+          <h5 class="modal-title" id="modal-title">Merge <%= @node.label %> node</h5>
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             <i class="fa fa-times"></i>
+            <span class="sr-only">Close modal</span>
           </button>
         </div>
         <div class="modal-body">
