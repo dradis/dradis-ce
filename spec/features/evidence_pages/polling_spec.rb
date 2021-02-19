@@ -8,7 +8,7 @@ describe "evidence pages", js: true do
   shared_examples "an evidence page with poller" do
     describe "when someone else updates the current Evidence" do
       before do
-        @evidence.update_attributes(content: "whatever")
+        @evidence.update(content: "whatever")
         create(:activity, action: :update, trackable: @evidence, user: @other_user)
 
         call_poller
@@ -33,7 +33,7 @@ describe "evidence pages", js: true do
 
     describe "and someone updates then deletes that evidence" do
       before do
-        @evidence.update_attributes(content: "whatever")
+        @evidence.update(content: "whatever")
         create(:activity, action: :update, trackable: @evidence, user: @other_user)
         @evidence.destroy
         create(:activity, action: :destroy, trackable: @evidence, user: @other_user)

@@ -1,7 +1,8 @@
 <div class="d-flex justify-content-between mb-3">
   <div class="btn-toolbar">
     <div class="btn-group mr-1">
-      <span class="btn js-items-table-select-all" title="Select all">
+      <span class="btn d-flex align-items-center js-items-table-select-all" title="Select all">
+        <label for="select-all" class="sr-only">Select all</label>
         <input type="checkbox" id="select-all" />
       </span>
     </div>
@@ -13,15 +14,16 @@
     </div>
 
     <div class="btn-group dropdown">
-      <button class="btn dropdown-toggle" data-toggle="dropdown" title="Choose columns to show"><i class="fa fa-columns"></i> <span class="caret"></span></button>
+      <button class="btn dropdown-toggle" data-toggle="dropdown" title="Choose columns to show"><i class="fa fa-columns"></i> <span class="caret"></span><span class="sr-only">Select columns to show</span></button>
       <div class="dropdown-menu js-table-columns">
         <% columns.each do |column| %>
-        <a href="javascript:void(0)" data-column="<%= column.downcase %>" class="dropdown-item"><input type="checkbox" /> <%= column %></a>
+          <a href="javascript:void(0)" data-column="<%= column.downcase %>" class="dropdown-item"><input type="checkbox" id="column_<%= column.downcase %>" /> <label for="column_<%= column.downcase %>"><%= column %></label></a>
         <% end %>
       </div>
     </div>
   </div>
   <div class="w-25">
-      <input type="text" class="form-control js-table-filter" placeholder="Type here to filter table..."/>
-    </div>
+    <label for="filter-table" class="sr-only">Filter table by keyword</label>
+    <input type="text" class="form-control js-table-filter" id="filter-table" placeholder="Type here to filter table..."/>
+  </div>
 </div>

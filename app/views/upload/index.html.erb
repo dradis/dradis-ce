@@ -9,11 +9,15 @@
       <div class="mt-4">
         <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, id: 'new_upload', data: { parse_url: project_upload_parse_path(current_project) } do %>
           <div class="form-group mb-5 mt-4 pt-2">
-            <h5>1. Choose a tool</h5>
+            <%= label_tag :uploader do %>
+              <h5>1. Choose a tool</h5>
+            <% end %>
             <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { :class => 'form-control' } %>
           </div>
           <div class="form-group mb-4">
-            <h5>2. Choose a file</h5>
+            <%= label_tag :file do %>
+              <h5>2. Choose a file</h5>
+            <% end %>
             <div class="custom-file">
               <%= file_field_tag 'file', class: 'custom-file-input' %>
               <label class="custom-file-label" data-behavior="file-label">Choose file</label>
@@ -66,7 +70,7 @@
       <h4 class="header-underline">Output console</h4>
       <div id="status"></div>
       <%= content_tag :div, id: 'result', style: 'display:none', data: { url: status_console_index_path }  do %>
-        <div><strong>Filename</strong>: <span id="filename"></span> <span id="spinner"><%= image_tag 'loading.gif', style: "margin:0;" %></span></div>
+        <div><strong>Filename</strong>: <span id="filename"></span> <span id="spinner"><%= image_tag 'loading.gif', style: "margin:0;", alt: 'loading spinner' %></span></div>
         <div><strong>Size</strong>: <span id="filesize"></span></div>
         <div id="console" class="mx-0 mb-0"></div>
       <% end %>
