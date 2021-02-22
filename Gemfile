@@ -208,8 +208,8 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~>3.21'
-
+# gem 'dradis-plugins', '~>3.21'
+gem 'dradis-plugins', github: 'dradis/dradis-plugins', branch: 'version-check'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 

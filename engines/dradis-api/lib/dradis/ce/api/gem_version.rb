@@ -4,7 +4,8 @@ module Dradis
       # Returns the version of the currently loaded Dradis::CE::API as a
       # <tt>Gem::Version</tt>.
       def self.gem_version
-        Gem::Version.new VERSION::STRING
+        dradis_version = File.read(File.expand_path('../../../../../../DRADIS_VERSION', __dir__)).strip
+        Gem::Version.new dradis_version
       end
 
       module VERSION

@@ -1,9 +1,9 @@
-require_relative 'ce/version'
+dradis_version = File.read(File.expand_path("../../DRADIS_VERSION", __dir__)).strip
 
 module Dradis
   module CE
     def self.version
-      VERSION::STRING
+      dradis_version
     end
   end
 end

@@ -7,10 +7,17 @@ GIT
       activerecord (>= 5.2)
       request_store (~> 1.1)
 
+GIT
+  remote: https://github.com/dradis/dradis-plugins.git
+  revision: 23edb752e981c7ae40e0a72bf0c323aafa4daa2d
+  branch: version-check
+  specs:
+    dradis-plugins (3.21.0)
+
 PATH
   remote: engines/dradis-api
   specs:
-    dradis-api (0.0.1)
+    dradis-api (3.21.0)
       jbuilder
 
 GEM
@@ -123,7 +130,6 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.4.4)
     differ (0.1.2)
-    dradis-plugins (3.21.0)
     dradis-projects (3.21.0)
       dradis-plugins (~> 3.7)
       rubyzip
@@ -481,7 +487,7 @@ DEPENDENCIES
   database_cleaner
   differ (~> 0.1.2)
   dradis-api!
-  dradis-plugins (~> 3.21)
+  dradis-plugins!
   dradis-projects (~> 3.21)
   factory_bot_rails
   font-awesome-sass (~> 4.7.0)
