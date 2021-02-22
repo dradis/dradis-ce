@@ -1,9 +1,7 @@
-dradis_version = File.read(File.expand_path("../../DRADIS_VERSION", __dir__)).strip
-
 module Dradis
   module CE
     def self.version
-      dradis_version
+      File.read(File.expand_path("../../DRADIS_VERSION", __dir__)).strip
     end
   end
 end
