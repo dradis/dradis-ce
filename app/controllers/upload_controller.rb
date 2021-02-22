@@ -108,10 +108,17 @@ class UploadController < AuthenticatedController
 
   def find_uploaders
     # :upload plugins can define multiple uploaders
-    @uploaders ||= Dradis::Plugins::with_feature(:upload).
-                     collect(&:uploaders).
-                     flatten.
-                     sort_by(&:name)
+    @uploaders ||=
+      Dradis::Plugins::with_feature(:upload).
+        collect(&:uploaders).
+        flatten.
+        sort_by(&:name)
+
+    @outdated_uploaders ||=
+      Dradis::Plugins::with_feature(:upload, engines: Dradis::Plugins.outdated).
+        collect(&:uploaders).
+        flatten.
+        sort_by(&:name)
   end
 
   # Ensure that the requested :uploader is valid and has been included in the

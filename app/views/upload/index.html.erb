@@ -26,7 +26,7 @@
             </div>
           </div>
         <% end %>
-            
+
         <p>Upload progress:</p>
         <div class="progress mb-2">
           <div class="progress-bar progress-bar-striped">
@@ -40,27 +40,50 @@
 
   <div class="col-lg-6 col-xl-7 p-0">
     <div class="content-container mt-0 mt-lg-3 ml-lg-3 restrict-height" data-height="match-prev" data-behavior="restrict-height">
+
+      <% if @outdated_uploaders.present? %>
+        <h4 class="header-underline">Outdated plugins</h4>
+        <table class="table table-striped mb-5">
+          <thead>
+            <tr>
+              <th>Plugin</th>
+              <th>Description</th>
+              <th>Version</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @outdated_uploaders.each do |uploader| %>
+              <tr>
+                <td><code><%= uploader.name %></code></td>
+                <td><%= uploader.meta[:description] %></td>
+                <td><%= uploader.meta[:version] %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+
       <h4 class="header-underline">Available plugins</h4>
 
       <div id="plugin-list">
-      <table class="table table-striped mb-0">
-        <thead>
-          <tr>
-            <th>Plugin</th>
-            <th>Description</th>
-            <th>Version</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @uploaders.each do |uploader| %>
+        <table class="table table-striped mb-0">
+          <thead>
             <tr>
-              <td><code><%= uploader.name %></code></td>
-              <td><%= uploader.meta[:description] %></td>
-              <td><%= uploader.meta[:version] %></td>
+              <th>Plugin</th>
+              <th>Description</th>
+              <th>Version</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% @uploaders.each do |uploader| %>
+              <tr>
+                <td><code><%= uploader.name %></code></td>
+                <td><%= uploader.meta[:description] %></td>
+                <td><%= uploader.meta[:version] %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
