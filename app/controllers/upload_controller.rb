@@ -115,7 +115,7 @@ class UploadController < AuthenticatedController
         sort_by(&:name)
 
     @outdated_uploaders ||=
-      Dradis::Plugins::with_feature(:upload, engines: Dradis::Plugins.outdated).
+      Dradis::Plugins::with_feature(:upload, outdated: true).
         collect(&:uploaders).
         flatten.
         sort_by(&:name)

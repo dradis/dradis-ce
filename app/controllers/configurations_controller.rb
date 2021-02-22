@@ -7,6 +7,7 @@ class ConfigurationsController < AuthenticatedController
 
   def index
     @configs = all_configurations
+    @outdated_plugins = Dradis::Plugins.outdated_engines
   end
 
   def update

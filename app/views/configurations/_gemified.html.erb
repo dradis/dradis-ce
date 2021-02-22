@@ -1,22 +1,29 @@
 <%= content_tag :h4, gemified[:name], id: gemified[:name] , class: 'header-underline'%>
-<table class="table table-striped table-borderless table-ajax-inputs mb-5">
-  <thead>
-    <tr>
-      <th class="setting" scope="col">Setting Name</th>
-      <th class="status text-center" scope="col">Status</th>
-      <th class="value" scope="col">Value</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% gemified[:settings].each_with_index do |setting, index| %>
-      <tr class="gemified">
-        <td class="setting"><%= setting[:name] %></td>
-        <td class="status text-center"><%= setting[:default] ? 'default' : 'user set' %></td>
-        <td class="value">
-          <%= label_tag "#{gemified[:name].underscore}_settings_#{setting[:name]}", "Value for #{setting[:name]}", class: 'sr-only' %>
-          <%= text_field_tag "#{ gemified[:name].underscore }_settings_#{ setting[:name] }", setting[:value], class: 'form-control w-100' %>
-        </td>
+<% if @outdated_plugins.include?(gemified[:klass].constantize) %>
+  <p class="mb-5">
+    The <%= gemified[:name] %> add-on is outdated. Please update it to
+    <code><%= Dradis::Plugins.gem_version %></code> in your <code>Gemfile.plugins</code> file.
+  </p>
+<% else %>
+  <table class="table table-striped table-borderless table-ajax-inputs mb-5">
+    <thead>
+      <tr>
+        <th class="setting" scope="col">Setting Name</th>
+        <th class="status text-center" scope="col">Status</th>
+        <th class="value" scope="col">Value</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% gemified[:settings].each_with_index do |setting, index| %>
+        <tr class="gemified">
+          <td class="setting"><%= setting[:name] %></td>
+          <td class="status text-center"><%= setting[:default] ? 'default' : 'user set' %></td>
+          <td class="value">
+            <%= label_tag "#{gemified[:name].underscore}_settings_#{setting[:name]}", "Value for #{setting[:name]}", class: 'sr-only' %>
+            <%= text_field_tag "#{ gemified[:name].underscore }_settings_#{ setting[:name] }", setting[:value], class: 'form-control w-100' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
