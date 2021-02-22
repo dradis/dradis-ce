@@ -9,7 +9,7 @@ GIT
 
 GIT
   remote: https://github.com/dradis/dradis-plugins.git
-  revision: 23edb752e981c7ae40e0a72bf0c323aafa4daa2d
+  revision: bf6b344027b13c68f534f62cdbfa71e7277df3e5
   branch: version-check
   specs:
     dradis-plugins (3.21.0)
