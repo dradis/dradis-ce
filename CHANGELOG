@@ -27,13 +27,7 @@ v3.22.0 (MMM’21)
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
-v3.21.0 (MMM’YY)
-  * Upgraded DradisPro to run on Ruby 2.7.2 and Rails 6.1.1
-  * Add view hooks for the export view
-  * Increase secondary sidebar width for medium viewports
-  * Upgraded gems: bundler, papertrail, rails
-
-v3.21.0 (MMM’YY)
+v3.21.0 (February 2021)
   * Upgraded DradisPro to run on Ruby 2.7.2 and Rails 6.1.1
   * Add view hooks for the export view
   * Increase secondary sidebar width for medium viewports
