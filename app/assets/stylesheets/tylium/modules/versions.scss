@@ -1,0 +1,45 @@
+body.revisions {
+
+  .alert {
+    margin-top: 1rem;
+  }
+
+  del {
+    background-color: #FCC;
+  }
+
+  ins {
+    background-color: #CFC;
+  }
+
+  .revisions-table tr {
+    &.active {
+      background-color: #FFE;
+    }
+
+    th {
+      border-top: none;
+      border-bottom: 1px solid $borderColor;
+    }
+  }
+
+  ul {
+    padding-left: 0;
+    margin-bottom: 0;
+  }
+}
+
+body.revisions.show {
+
+  .page-title {
+    display: none;
+  }
+}
+
+body.revisions.trash {
+
+  .item-content {
+    margin-left: 4px;
+    font-weight: 600;
+  }
+}

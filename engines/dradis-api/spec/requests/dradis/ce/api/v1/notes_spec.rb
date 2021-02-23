@@ -8,48 +8,25 @@ describe "Notes API" do
   let(:node) { create(:node, project: current_project) }
 
   context "as unauthenticated user" do
-    let(:note) { create(:note, node: node) }
-
-    describe "GET /api/nodes/:node_id/notes" do
-      it "throws 401" do
-        get "/api/nodes/#{node.id}/notes", env: @env
-        expect(response.status).to eq 401
-      end
-    end
-    describe "GET /api/nodes/:node_id/notes/:id" do
-      it "throws 401" do
-        get "/api/nodes/#{node.id}/notes/#{note.id}", env: @env
-        expect(response.status).to eq 401
-      end
-    end
-    describe "POST /api/nodes/:node_id/notes" do
-      it "throws 401" do
-        post "/api/nodes/#{node.id}/notes", env: @env
-        expect(response.status).to eq 401
-      end
-    end
-    describe "PUT /api/nodes/:node_id/notes/:id" do
-      it "throws 401" do
-        put "/api/nodes/#{node.id}/notes/1", env: @env
-        expect(response.status).to eq 401
-      end
-    end
-    describe "PATCH /api/notes/:id" do
-      it "throws 401" do
-        put "/api/nodes/#{node.id}/notes/1", env: @env
-        expect(response.status).to eq 401
-      end
-    end
-    describe "DELETE /api/nodes/:node_id/notes/:id" do
-      it "throws 401" do
-        delete "/api/nodes/#{node.id}/notes/1", env: @env
-        expect(response.status).to eq 401
+    [
+      ['get', '/api/nodes/1/notes/'],
+      ['get', '/api/nodes/1/notes/1'],
+      ['post', '/api/nodes/1/notes/'],
+      ['put', '/api/nodes/1/notes/1'],
+      ['patch', '/api/nodes/1/notes/1'],
+      ['delete', '/api/nodes/1/notes/1'],
+    ].each do |verb, url|
+      describe "#{verb.upcase} #{url}" do
+        it 'throws 401' do
+          send(verb, url, params: {}, env: @env)
+          expect(response.status).to eq 401
+        end
       end
     end
   end
 
-  context "as authenticated user" do
-    include_context "authenticated API user"
+  context "as authauthorized user" do
+    include_context "authorized API user"
 
     let(:category) { create(:category) }
 
@@ -139,7 +116,8 @@ describe "Notes API" do
           end
 
           let(:submit_form) { post_note }
-          include_examples "creates an Activity", :create, Note
+          include_examples 'creates an Activity', :create, Note
+          include_examples 'sets the whodunnit', :create, Note
 
           context "specifying a category" do
             before { params[:note][:category_id] = category.id }
@@ -240,7 +218,8 @@ describe "Notes API" do
 
           let(:submit_form) { put_note }
           let(:model) { note }
-          include_examples "creates an Activity", :update
+          include_examples 'creates an Activity', :update
+          include_examples 'sets the whodunnit', :update
 
           it "returns the attributes of the updated note as JSON" do
             put_note

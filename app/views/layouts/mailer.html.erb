@@ -3,11 +3,77 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>
-      /* Email styles need to be inline */
+      @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap');
+      body {
+        font-family: 'Open Sans', sans-serif;
+        color: #222;
+        font-weight: 300;
+        background-color: #fafafa;
+      }
+      a {
+        color: #378137; /* #298DCC in pro */
+        text-decoration: none;
+      }
+      a:hover {
+        color: #204b20 !important; /* #2070a2 in pro */
+      }
+      .button:hover {
+        color: #fff !important;
+        background-color: #204b20 !important; /* #2070a2 in pro */
+      }
     </style>
   </head>
 
   <body>
-    <%= yield %>
+
+    <table cellspacing="0" cellpadding="0" style="max-width: 640px; border: 1px solid #ddd; background-color: #fff; border-radius: 15px; margin: 20px auto; box-shadow: 0 7px 30px 0 rgba(33, 55, 74, 0.2);">
+
+      <tr>
+        <td>
+          <table cellpadding="20px">
+            <tr>
+              <td width="320" style="padding-bottom: 0;" colspan="6">
+                <div style="text-align: left;">
+                  <%= image_tag attachments['dradis_logo.png'].url, height: '80px' %>
+                </div>
+              </td>
+              <td width="320" style="padding-bottom: 0;" colspan="6">
+                <div style="text-align: right;">
+                  <%= avatar_image @user, alt: @user.email, size: 70, style: 'border-radius: 50%;' %>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <%= yield %>
+
+    </table>
+
+    <table cellspacing="0" cellpadding="0" style="max-width: 640px; margin: 20px auto; font-size: 80%; color: #555;">
+      <% if defined?(Dradis::Pro) %>
+      <tr align="center">
+        <td>
+          <%= link_to 'Manage your Dradis email preferences', edit_notifications_url, style: 'color: #298DCC;' %>
+        </td>
+      </tr>
+      <% end %>
+      <tr align="center">
+        <td>
+          <a href="https://dradisframework.com/privacy.html" style="color: #378137; /* color: #298DCC in pro */">Privacy</a> | <%= link_to 'Login to Dradis', login_url, style: 'color: #378137;' %> <%# color: #298DCC in pro %>
+        </td>
+      </tr>
+      <tr>
+        <td height="20px"></td>
+      </tr>
+      <tr align="center">
+        <td>
+          <span>© 2012-<%= Time.now.year %> Dradis Framework — Security Roots Ltd</span><br>
+          <span>10 Portfleet Place, De Beauvoir Road</span><br>
+          <span>London, N1 5SZ</span>
+        </td>
+      </tr>
+    </table>
   </body>
 </html>

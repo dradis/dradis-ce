@@ -1,8 +1,16 @@
 class ActivityPresenter < BasePresenter
   presents :activity
 
+  def activity_day
+    h.local_date(activity.created_at.to_date, format: Activity::ACTIVITIES_STRFTIME_FORMAT, data: { behavior: 'activity-day-value' })
+  end
+
+  def activity_time
+    h.local_time(activity.created_at, format: '%l:%M%P')
+  end
+
   def avatar_with_link(size)
-    h.link_to(avatar_image(size), 'javascript:void(0)')
+    h.link_to(avatar_image(activity.user, size: size), 'javascript:void(0)')
   end
 
   def comment_path(anchor: false)
@@ -80,29 +88,13 @@ class ActivityPresenter < BasePresenter
 
   private
 
-  def avatar_image(size)
-    if activity.user
-      h.image_tag(
-        image_path('profile.jpg'),
-        alt: activity.user,
-        class: 'gravatar',
-        data: { fallback_image: image_path('logo_small.png') },
-        style: "width: #{size}px; height: #{size}px",
-        title: activity.user,
-        width: size
-      )
-    else
-      h.image_tag 'logo_small.png', width: size, alt: 'This user has been deleted from the system'
-    end
-  end
-
   # Interestingly enough we're not linking the email to anything yet as we
   # don't know what we should link to. For the time being lets just enclose
   # it in a strong tag.
   def linked_email
     if activity.user
       # h.link_to(activity.user.email, 'javascript:void(0);')
-      h.content_tag :strong, activity.user
+      h.content_tag :strong, activity.user.email
     else
       'a user who has since been deleted'
     end

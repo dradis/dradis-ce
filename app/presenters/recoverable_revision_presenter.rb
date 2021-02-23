@@ -13,10 +13,22 @@ class RecoverableRevisionPresenter < BasePresenter
   def info
     [
       icon,
-      title,
+      truncated_title,
       type.downcase,
       location,
     ].join(" ").html_safe
+  end
+
+  def title
+    title =
+      if trashed_object.is_a?(Note) && trashed_object.node == project.methodology_library
+        note = trashed_object
+        Methodology.new(filename: note.id, content: note.text).name
+      elsif trashed_object.is_a?(Card)
+        trashed_object.name
+      else
+        trashed_object.title
+      end
   end
 
   private
@@ -69,17 +81,7 @@ class RecoverableRevisionPresenter < BasePresenter
     result
   end
 
-  def title
-    title =
-      if trashed_object.is_a?(Note) && trashed_object.node == project.methodology_library
-        note = trashed_object
-        Methodology.new(filename: note.id, content: note.text).name
-      elsif trashed_object.is_a?(Card)
-        trashed_object.name
-      else
-        trashed_object.title
-      end
-
+  def truncated_title
     truncated_title = h.truncate(title, length: 25, separator: '...')
     h.content_tag(:span, truncated_title, class: 'item-content')
   end

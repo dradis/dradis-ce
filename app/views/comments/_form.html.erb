@@ -1,12 +1,26 @@
-<%= form_with model: [current_project, @comment] do |f| %>
+<%= form_with model: [current_project, @comment],
+  html: {
+    data: {
+      behavior: 'local-auto-save',
+      auto_save_key: "comment-#{@comment.id}"
+    }
+  } do |f| %>
+
   <%= f.text_area :content,
                   value: @comment.content,
                   rows: 5,
                   required: 'required',
-                  data: { behavior: 'mentionable' } %>
-  <%= f.submit "Update comment", class: "btn btn-primary" %> or
-  <%= link_to 'Cancel',
-              'javascript:void(0)',
-              class: 'cancel-link',
-              data: { behavior: 'cancel-comment' } %>
+                  class: 'form-control mt-3',
+                  data: {
+                    behavior: 'mentionable rich-toolbar drop-zone',
+                    'rich-toolbar': 'block-code bold image italic link list-ol list-ul table',
+                    'rich-toolbar-uploader': '[data-behavior~=jquery-upload]',
+                  } %>
+    <%= f.submit "Update comment", class: "btn btn-primary mt-2 ml-0", style: 'vertical-align: baseline;' %> or
+    <%= link_to 'Cancel',
+                'javascript:void(0)',
+                class: 'cancel-link',
+                data: {
+                  behavior: 'cancel-comment clear-local-auto-save'
+                } %>
 <% end %>

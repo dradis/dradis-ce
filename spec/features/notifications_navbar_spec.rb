@@ -24,7 +24,7 @@ describe 'User notifications', js: true do
       it 'shows an empty dropdown' do
         find('[data-behavior~=notifications-dropdown]').click
 
-        expect(find('.no-content', text: 'You have no notifications yet.')).to_not be_nil
+        expect(find(".notification-container", text: "You don't have any notifications yet.")).to_not be_nil
       end
     end
 

@@ -6,40 +6,25 @@ describe "Issues API" do
   include_context "https"
 
   context "as unauthenticated user" do
-    describe "GET /api/issues" do
-      it "throws 401" do
-        get "/api/issues", env: @env
-        expect(response.status).to eq(401)
-      end
-    end
-    describe "GET /api/issues/:id" do
-      it "throws 401" do
-        get "/api/issues/1", env: @env
-        expect(response.status).to eq(401)
-      end
-    end
-    describe "POST /api/issues" do
-      it "throws 401" do
-        post "/api/issues", env: @env
-        expect(response.status).to eq(401)
-      end
-    end
-    describe "PUT /api/issues/:id" do
-      it "throws 401" do
-        put "/api/issues/1", env: @env
-        expect(response.status).to eq(401)
-      end
-    end
-    describe "DELETE /api/issues/:id" do
-      it "throws 401" do
-        delete "/api/issues/1", env: @env
-        expect(response.status).to eq(401)
+    [
+      ['get', '/api/issues/'],
+      ['get', '/api/issues/1'],
+      ['post', '/api/issues/'],
+      ['put', '/api/issues/1'],
+      ['patch', '/api/issues/1'],
+      ['delete', '/api/issues/1'],
+    ].each do |verb, url|
+      describe "#{verb.upcase} #{url}" do
+        it 'throws 401' do
+          send(verb, url, params: {}, env: @env)
+          expect(response.status).to eq 401
+        end
       end
     end
   end
 
-  context "as authenticated user" do
-    include_context "authenticated API user"
+  context "as authauthorized user" do
+    include_context "authorized API user"
 
     describe "GET /api/issues" do
       before(:each) do
@@ -73,7 +58,7 @@ describe "Issues API" do
 
     describe "GET /api/issue/:id" do
       before(:each) do
-        @issue = create(:issue, node: current_project.issue_library, text: "#[a]#\nb\n\n#[c]#\nd\n\n#[e]#\nf\n\n")
+        @issue = create(:issue, :tagged_issue, node: current_project.issue_library, text: "#[a]#\nb\n\n#[c]#\nd\n\n#[e]#\nf\n\n")
 
         get "/api/issues/#{ @issue.id }", env: @env
         expect(response.status).to eq(200)
@@ -89,6 +74,11 @@ describe "Issues API" do
         expect(@retrieved_issue['fields']).not_to be_empty
         expect(@retrieved_issue['fields'].keys).to eq @issue.fields.keys
         expect(@retrieved_issue['fields'].count).to eq @issue.fields.count
+      end
+
+      it 'includes tags' do
+        tag = @issue.tags.first
+        expect(@retrieved_issue['tags']).to eq [{'color' => tag.color, 'display_name' => tag.display_name}]
       end
     end
 
@@ -119,7 +109,8 @@ describe "Issues API" do
       end
 
       let(:submit_form) { valid_post }
-      include_examples "creates an Activity", :create, Issue
+      include_examples 'creates an Activity', :create, Issue
+      include_examples 'sets the whodunnit', :create, Issue
 
       it "throws 415 unless JSON is sent" do
         params = { issue: { name: "Bad Issue" } }
@@ -155,7 +146,8 @@ describe "Issues API" do
 
       let(:submit_form) { valid_put }
       let(:model) { issue }
-      include_examples "creates an Activity", :update
+      include_examples 'creates an Activity', :update
+      include_examples 'sets the whodunnit', :update
 
       it "throws 415 unless JSON is sent" do
         params = { issue: { text: "Bad issuet" } }

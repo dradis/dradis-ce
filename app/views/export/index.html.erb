@@ -1,37 +1,26 @@
 <% content_for :title, 'Export Manager' %>
 
-<section>
-  <% if @plugin_info.empty? %>
-    <div class="alert alert-error">
+<% if Dradis::Plugins.with_feature(:export).empty? %>
+  <div class="content-container mt-3">
+    <div class="alert alert-error m-0">
       <p class="lead">Sorry, we were unable to detect any export plugins. This is strange because Dradis ships with a number of plugins installed by default.</p>
-      <p>Check the Export section of your <code><%= Rails.root.join('Gemfile.plugins') %></code> file.</p>
+      <p class="mb-0">Check the Export section of your <code><%= Rails.root.join('Gemfile.plugins') %></code> file.</p>
     </div>
-  <% else %>
+  </div>
+<% else %>
 
-    <ul id="plugin-chooser" class="nav nav-tabs">
-      <% @plugin_info.each do |info| %>
+  <ul id="plugin-chooser" class="tabs-container nav nav-tabs">
+    <%= render_view_hooks 'export/index-tabs', feature: :export %>
 
-        <li>
-          <%=
-            link_to(
-              info[:description],
-              { path: nil, anchor: info[:name] },
-              data: { toggle: 'tab', target: "#plugin-#{info[:name]}" }
-            )
-          %>
-        </li>
-      <% end %>
-      <% if !defined?(Dradis::Pro) %>
-      <li><a href="javascript:void(0)" class="js-try-pro" data-term="word-reports" data-url="http://drad.is/l/try-pro-reporting"><i class="fa fa-file-word-o"></i> Custom Word reports</a></li>
-      <li><a href="javascript:void(0)" class="js-try-pro" data-term="excel-reports" data-url="http://drad.is/l/try-pro-excel"><i class="fa fa-file-excel-o"></i> Custom Excel reports</a></li>
-      <% end %>
-    </ul>
-
-    <div class="tab-content">
-      <% @plugin_info.each do |info| %>
-        <%= render partial: 'plugin', locals: { info: info } %>
-      <% end %>
+    <% if !defined?(Dradis::Pro) %>
+    <li class="nav-item"><a href="javascript:void(0)" class="js-try-pro nav-link" data-term="word-reports" data-url="https://dradisframework.com/pro/pages/reporting.html"><i class="fa fa-file-word-o"></i> Custom Word reports</a></li>
+    <li class="nav-item"><a href="javascript:void(0)" class="js-try-pro nav-link" data-term="excel-reports" data-url="https://dradisframework.com/pro/pages/excel.html"><i class="fa fa-file-excel-o"></i> Custom Excel reports</a></li>
+    <% end %>
+  </ul>
+  <div class="content-container mt-0">
+    <div class="tab-content mt-0">
+      <%= render_view_hooks 'export/index-content', feature: :export %>
     </div>
+  </div>
 
-  <% end %>
-</section>
+<% end %>

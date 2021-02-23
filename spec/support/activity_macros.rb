@@ -14,7 +14,7 @@ module ActivityMacros
   # NOTE: If the tests fail randomly with a message along the lines of "an
   # error occurred in an after hook: unable to find User with id x" - make sure
   # that POLLING_INTERVAL_MS in
-  # app/assets/javascripts/snowcrash/modules/poller.js.coffee is set to a value
+  # app/assets/javascripts/tylium/modules/poller.js.coffee is set to a value
   # that's longer than a couple of seconds. (It's 10 seconds by default, but
   # you might want to reduce this temporarily to help with manual testing.)
   #
@@ -31,7 +31,7 @@ module ActivityMacros
   end
 
   def within_sidebar
-    within(".secondary-navbar") { yield }
+    within(".secondary-sidebar") { yield }
   end
 
 end

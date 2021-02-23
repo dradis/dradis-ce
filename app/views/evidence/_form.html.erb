@@ -1,18 +1,30 @@
-<%= simple_form_for [current_project, @node, @evidence] do |f| %>
+<%= simple_form_for [current_project, @node, @evidence],
+  html: {
+    data: {
+      behavior: 'local-auto-save',
+      auto_save_key: @auto_save_key
+    }
+  } do |f| %>
+
   <%= f.error_notification %>
 
   <div class="form-inputs">
     <%= f.association :issue, collection: current_project.issues.sort, label_method: :title, prompt: 'Choose an Issue' %>
+
+    <%= label_tag :evidence_content, 'Evidence source input', class: 'sr-only' %>
     <%=
       f.input :content,
+      label: false,
       input_html: {
-        class: 'textile',
+        class: 'textile h-100',
         data: {
-          behavior: 'auto-save',
-          autosave_key: "#{current_project.id}-evidence-#{ @evidence.persisted? ? "edit-#{@evidence.id}" : "new-for-#{@node.id}" }",
-          preview_url: preview_path,
-          help_url: markup_path
-        }
+          allow_dropdown: @evidence.new_record?,
+          behavior: 'auto-save rich-toolbar drop-zone',
+          paths: editor_paths,
+          'rich-toolbar': 'block-code bold field image italic link list-ol list-ul table',
+          'rich-toolbar-uploader': '[data-behavior~=jquery-upload]',
+        },
+        rows: 20
       }
     %>
   </div>
@@ -22,8 +34,14 @@
   <% end %>
 
   <div class="form-actions">
-    <%= hidden_field_tag :back_to, :issue if params[:back_to] == 'issue' %>
+    <%= hidden_field_tag :return_to, :issue if params[:return_to] == 'issue' %>
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
-    <%= link_to 'Cancel', project_node_path(@node.project, @node) %>
+    <%=
+      link_to 'Cancel',
+      evidence_redirect_path(params[:return_to]),
+      data: {
+        behavior: 'clear-local-auto-save'
+      }
+    %>
   </div>
 <% end %>

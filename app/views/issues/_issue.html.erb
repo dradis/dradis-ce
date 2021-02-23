@@ -5,12 +5,10 @@
 
 <%= content_tag :div, id: "#{dom_id(issue)}_link", class: item_css.join do %>
 
-  <div class="expansion-container">
-    <%= link_to main_app.project_issue_path(current_project, issue), class: 'view-toggle-off', data: { target: "##{dom_id(issue)}_content" } do %>
-      <%= colored_icon_for_model(issue, 'fa-bug', 'list-item-icon') %>
-      <%= issue.title %>
-    <% end %>
-  </div>
+  <%= link_to main_app.project_issue_path(current_project, issue), class: 'view-toggle-off', data: { target: "##{dom_id(issue)}_content" } do %>
+    <%= colored_icon_for_model(issue, 'fa-bug', 'list-item-icon') %>
+    <%= issue.title %>
+  <% end %>
 
   <div class="list-item-actions">
     <%= link_to main_app.edit_project_issue_path(current_project, issue), class:'list-item-action-edit' do %>

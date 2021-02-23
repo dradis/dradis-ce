@@ -1,0 +1,275 @@
+@import "tylium/modules/activities";
+@import "tylium/modules/alerts";
+@import "tylium/modules/attachments";
+@import "tylium/modules/boards";
+@import "tylium/modules/console";
+@import "tylium/modules/dots-menu";
+@import "tylium/modules/dropdown";
+@import "tylium/modules/issues/issues";
+@import "tylium/modules/issues/merge";
+@import "tylium/modules/modals";
+@import "tylium/modules/navbar";
+@import "tylium/modules/notifications";
+@import "tylium/modules/nodes";
+@import "tylium/modules/projects";
+@import "tylium/modules/restrict_height";
+@import "tylium/modules/search";
+@import "tylium/modules/secondary_sidebar";
+@import "tylium/modules/sidebar";
+@import "tylium/modules/styles";
+@import "tylium/modules/tour";
+@import "tylium/modules/uploads";
+@import "tylium/modules/versions";
+
+[aria-label] {
+  position: relative;
+  
+  &:after {
+    background-color: $darkColor;
+    border-radius: 5px;
+    box-shadow: 1px 2px 6px rgba(0,0,0,0.5);
+    color: $white;
+    content: attr(aria-label);
+    font-size: .7em;
+    line-height: 15px;
+    opacity: 0;
+    padding: 0.3rem 0.5rem;
+    pointer-events: none;
+    position: absolute;
+    right: 50%;
+    text-transform: capitalize;
+    top: 110%;
+    transform: translateX(50%);
+    white-space: nowrap;
+    z-index: 1051;
+  }
+  
+  &:hover:after {
+    opacity: 0.9;
+    transition: all 0.3s 0.3s ease-in-out;
+  }
+}
+
+.accordion-group {
+  margin-bottom: 5px;
+  border: 1px solid $borderColor;
+  border-radius: 5px;
+  
+  .accordion-heading {
+    border-bottom: 0;
+
+    .accordion-toggle {
+      display: block;
+      padding: 8px 15px;
+    }
+  }
+}
+
+.attachment {
+  margin: 10px 0;
+}
+
+.author-info {
+  display: flex;
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  width: 100%;
+  border-top: 1px solid $borderColor;
+}
+
+.autofocus {
+  opacity: 0;
+}
+
+.column-actions a {
+  white-space: nowrap;
+}
+
+.content {
+  padding: 1em;
+
+  h4 {
+    margin-top: 2em;
+  }
+
+  h4:first-child {
+    margin-top: 10px;
+  }
+
+  ul {
+    margin-top: 1em;
+  }
+}
+
+.divider {
+  border-top: 1px solid $borderColor;
+  height: 0;
+  margin: .25rem 0;
+}
+
+.divider-vertical {
+  border-right: 1px solid $borderColor;
+  display: initial;
+  margin: 0.25rem;
+  width: 0;
+}
+
+.form-actions {
+  margin-top: 1rem;
+}
+
+.gravatar {
+  float: left;
+  margin-right: 5px;
+
+  &.gravatar-inline {
+    margin: 0 0 -3px 0;
+    float: none;
+    white-space: nowrap;
+  }
+
+  img {
+    border-radius: 50%;
+  }
+}
+
+.header-underline {
+  margin-bottom: .5em;
+  padding-bottom: 0.5em;
+  margin-top: -0.5rem;
+  border-bottom: 1px solid $borderColor;
+  width: 100%;
+}
+
+.inset-button-wrapper {
+  position: relative;
+  width: 100%;
+  height: 2.5rem;
+
+  .btn{
+    position: absolute;
+    right: 0;
+    font-size: 0.8rem;
+    margin: 0.25rem;
+  }
+
+  .form-control {
+    position: absolute;
+    width: 100%;
+    padding-right: 4.5rem;
+    height: 98%;
+  }
+}
+
+.issue-severity {
+  cursor: default;
+}
+
+.nav-tabs {
+
+  .nav-link:hover:not(.active) {
+    border-color: transparent;
+  }
+}
+
+.pagination {
+  padding-top: 0.75rem;
+  margin-bottom: .75rem;
+  border-top: 1px solid $borderColor;
+
+  > * {
+    padding-right: 5px;
+  }
+}
+
+.page {
+  &.page-mini {
+    padding: 10px;
+  }
+  &.page-none {
+    margin: 0 0;
+    padding: 0px;
+  }
+}
+
+pre {
+  padding: 1rem;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  line-height: 20px;
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  background-color: $secondaryBgColor;
+  border: 1px solid $borderColor;
+  border-radius: 5px;
+}
+
+.tabs-container {
+  margin: 1rem $mainContentMargin -1px $mainContentMargin;
+  padding-left: 0.25rem;
+  border-bottom: 1px solid transparent;
+
+  .nav-item {
+    z-index: 2;
+  }
+}
+
+table {
+
+  &.table-ajax-inputs {
+
+    td {
+
+      &.value input {
+        background-position: right center;
+        background-repeat: no-repeat;
+        padding-right: 20px;
+        width: 80%;
+
+        &.editing { 
+          background-image: image-url('silk/pencil.png');
+        }
+
+        &.failed { 
+          background-image: image-url('silk/stop.png');
+        }
+
+        &.saved { 
+          background-image: image-url('silk/accept.png');
+        }
+
+        &.saving { 
+          background-image: image-url('loading.gif');
+        }
+      }
+    }
+  }
+
+  &.table-striped {
+
+    th {
+      border: none;
+    }
+  }
+}
+
+time {
+  &[aria-label]:after {
+    display: none;
+  }
+}
+
+.tooltip-inner {
+    
+  ul {
+    list-style: disc;
+    text-align: left;
+    padding-left: 1.25rem;
+    padding-top: 0.5rem;
+
+    li {
+      margin-bottom: .25rem; 
+    }
+  }
+}

@@ -1,24 +1,23 @@
 source 'https://rubygems.org'
 
-git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
-  "https://github.com/#{repo_name}.git"
-end
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
+ruby '2.7.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.7'
+gem 'rails', '~> 6.1.2.1'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '~> 6.0'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
-gem 'therubyracer', platforms: :ruby
+gem 'mini_racer', platforms: :ruby
 
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2'
+gem 'coffee-rails', '~> 5.0'
 
 # Cache-friendly, client-side local time
 gem 'local_time', '>= 2.0.0'
@@ -28,12 +27,17 @@ gem 'local_time', '>= 2.0.0'
 gem 'turbolinks', '~> 5'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
+gem 'jbuilder', '~> 2.7'
+
+# Use Active Storage variant
+# gem 'image_processing', '~> 1.2'
+
+# Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', '>= 1.4.4', require: false
 
 # ---------------------------------------------------- Dradis Community Edition
-gem 'bootstrap-sass', '~> 2.3.2.2'
 gem 'font-awesome-sass', '~> 4.7.0'
-
+gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jquery-fileupload-rails', '~> 0.3.4'
@@ -50,9 +54,9 @@ gem 'differ', '~> 0.1.2'
 # HTML processing filters and utilities
 gem 'html-pipeline'
 
-gem 'kaminari', '~> 1.0.1'
+gem 'kaminari', '~> 1.2.1'
 
-gem 'paper_trail', '~> 6.0'
+gem 'paper_trail', git: 'git@github.com:paper-trail-gem/paper_trail.git', ref: '1e56afd'
 
 # gem 'rails_autolink', '~> 1.1'
 
@@ -60,7 +64,7 @@ gem 'record_tag_helper'
 
 gem 'rubyzip', '>= 1.2.2'
 
-gem 'thor', '~> 0.18'
+gem 'thor', '~> 1.0.1'
 
 
 # ------------------------------------------------------ With native extensions
@@ -69,24 +73,24 @@ gem 'thor', '~> 0.18'
 # See:
 #   http://traveling-ruby.s3-us-west-2.amazonaws.com/list.html
 
-# Use ActiveModel has_secure_password
+# Use Active Model has_secure_password
 # Password digests
 gem 'bcrypt',   '3.1.12'
 
 # Required by Rails (uglifier and activesupport)
-gem 'json', '1.8.6'
+gem 'json', '2.3.0'
 
 # XML manipulation
-gem 'nokogiri', '1.10.4'
+gem 'nokogiri', '1.10.8'
 
 # MySQL backend
-gem 'mysql2', '~> 0.5.1'
+# gem 'mysql2', '~> 0.5.1'
 
 # actionpack depends on rails-html-sanitizer, which has an XSS vulnerability
 # before 1.0.4, so make sure we're using 1.0.4+:
 # see https://github.com/rails/rails-html-sanitizer/commit/f3ba1a839a
 # and https://github.com/flavorjones/loofah/issues/144
-gem 'rails-html-sanitizer', '~> 1.0.4'
+gem 'rails-html-sanitizer', '~> 1.3.0'
 
 # Textile markup
 gem 'RedCloth', '~> 4.3.2', require: 'redcloth'
@@ -95,10 +99,10 @@ gem 'RedCloth', '~> 4.3.2', require: 'redcloth'
 gem 'rinku'
 
 # html-pipeline dependency for html sanitization
-gem 'sanitize'
+gem 'sanitize', '5.2.1'
 
 # SQLite3 DB driver
-gem 'sqlite3'#,  '1.3.10'
+gem 'sqlite3'#,  '1.4.2'
 
 # --------------------------------------------------------- Dradis Professional
 # Authorisation
@@ -139,20 +143,18 @@ end
 
 # ----------------------------------------------------- Development and Testing
 group :development do
-  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
-  # guard-rspec depends on `guard`, which depends on `listen`, but versions of
-  # listen higher than 3.1.1 require Ruby version >= 2.2.3 (we're currently on
-  # 2.2.2). Restrict the version of `listen` to prevent `guard-rspec`
-  # introducing an incompatible dependency:
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
+  gem 'web-console', '>= 4.1.0'
+  # Display performance information such as SQL time and flame graphs for each request in your browser.
+  # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
+  gem 'rack-mini-profiler', '~> 2.0'
+  gem 'listen', '~> 3.3'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
 
   # Alert on n+1 queries
-  gem 'bullet'
+  #gem 'bullet'
 
   # Cleanup logs from asset entries
   # gem 'quiet_assets'
@@ -175,15 +177,15 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
 
-  gem 'rspec-rails', '~> 3.1'
+  gem 'rspec-rails', '~> 4.0.2'
 
-  gem 'puma'
+  gem 'puma', '~> 5.0'
 end
 
 group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
-  gem 'capybara'
+  gem 'capybara', '>= 3.26'
   gem 'guard-rspec', require: false
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 3.1'
@@ -206,13 +208,13 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', github: 'dradis/dradis-plugins', branch: :master
+gem 'dradis-plugins', '~>3.21'
 
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', github: 'dradis/dradis-projects', branch: :master
+gem 'dradis-projects', '~>3.21'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)

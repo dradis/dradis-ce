@@ -53,7 +53,7 @@ describe ActivityTrackingJob do #, type: :job do
             raise "unrecognized action, must be 'create', 'update' or 'destroy'"
           end
 
-          expect(activity.user).to eq user.email
+          expect(activity.user.email).to eq user.email
           expect(activity.action).to eq action.to_s
         end
       end

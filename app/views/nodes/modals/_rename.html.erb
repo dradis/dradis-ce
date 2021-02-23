@@ -1,15 +1,22 @@
-<div id="modal_rename_node" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <%= simple_form_for [current_project, @node], html: {class: 'form-horizontal'} do |f| %>
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Rename <%= @node.label%> node</h3>
-  </div>
-  <div class="modal-body">
-    <%= f.input :label, label: "New name" %>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-primary">Rename</button>
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+<div id="modal_rename_node" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+  <%= simple_form_for [current_project, @node], html: { class: 'form-horizontal', id: 'modal_rename_node_form' } do |f| %>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-title">Rename <%= @node.label%> node</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <i class="fa fa-times"></i>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= f.input :label, label: "New name", input_html: { id: 'node_new_label' } %>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary">Rename</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      </div>
+    </div>
   </div>
   <% end %>
 </div>

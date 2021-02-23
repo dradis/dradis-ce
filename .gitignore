@@ -4,16 +4,21 @@
 
 # Rails stuff
 /db/*.sqlite3
-/db/*.sqlite3-journal
+/db/*.sqlite3-*
 /config/database.yml
 /config/secrets.yml
+/config/smtp.yml
 /log/*
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+!/tmp/pids/.keep
 
-/node_modules
-/yarn-error.log
+# Ignore uploaded files in development.
+/storage/*
+!/storage/.keep
+
+/public/assets
 .byebug_history
 
 # RSpec testing
@@ -34,3 +39,6 @@
 # Random
 .DS_Store
 *.swp
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key

@@ -5,8 +5,8 @@ describe Project do
     expect(Project.new.id).to eq 1
   end
 
-  it 'has default name "Dradis CE"' do
-    expect(Project.new.name).to eq 'Dradis CE'
+  it 'has default name "Dradis Project"' do
+    expect(Project.new.name).to eq 'Dradis Project'
   end
 
   it 'allows id and name to be set on initialization' do
@@ -31,6 +31,21 @@ describe Project do
       expect do
         expect(project.issue_library).to eq node
       end.not_to change { Node.count }
+    end
+  end
+
+  describe '#testers_for_mentions' do
+    it 'returns all the authors and admins of the project' do
+      project = create(:project)
+      user1 = create(:user, :admin)
+      user2 = create(:user, :author)
+
+      if defined?(Dradis::Pro)
+        project.authors << user2
+        project.save
+      end
+
+      expect(project.testers_for_mentions).to match_array [user1, user2]
     end
   end
 end

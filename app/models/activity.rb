@@ -1,8 +1,10 @@
 class Activity < ApplicationRecord
+  ACTIVITIES_STRFTIME_FORMAT = '%A, %B %-e %Y'.freeze
 
   # -- Relationships --------------------------------------------------------
 
   belongs_to :trackable, polymorphic: true, required: false
+  belongs_to :user
 
   def project=(new_project); end
 
@@ -22,7 +24,7 @@ class Activity < ApplicationRecord
   # -- Scopes ---------------------------------------------------------------
 
   scope :latest, -> do
-    includes(:trackable).order("`activities`.`created_at` DESC").limit(10)
+    includes(:trackable).order("activities.created_at DESC").limit(20)
   end
 
   # -- Callbacks ------------------------------------------------------------

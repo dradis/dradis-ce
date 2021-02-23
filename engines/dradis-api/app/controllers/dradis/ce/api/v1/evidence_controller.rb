@@ -1,6 +1,9 @@
 module Dradis::CE::API
   module V1
-    class EvidenceController < Dradis::CE::API::V1::ProjectScopedController
+    class EvidenceController < Dradis::CE::API::APIController
+      include ActivityTracking
+      include Dradis::CE::API::ProjectScoped
+
       before_action :set_node
 
       def index
@@ -23,7 +26,7 @@ module Dradis::CE::API
 
       def update
         @evidence = @node.evidence.find(params[:id])
-        if @evidence.update_attributes(evidence_params)
+        if @evidence.update(evidence_params)
           track_updated(@evidence)
           render evidence: @evidence
         else

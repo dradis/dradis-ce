@@ -1,6 +1,9 @@
 module Dradis::CE::API
   module V1
-    class IssuesController < Dradis::CE::API::V1::ProjectScopedController
+    class IssuesController < Dradis::CE::API::APIController
+      include ActivityTracking
+      include Dradis::CE::API::ProjectScoped
+
       def index
         @issues  = current_project.issues.includes(:tags).sort
       end
@@ -26,7 +29,7 @@ module Dradis::CE::API
 
       def update
         @issue = current_project.issues.find(params[:id])
-        if @issue.update_attributes(issue_params)
+        if @issue.update(issue_params)
           track_updated(@issue)
           render node: @node
         else

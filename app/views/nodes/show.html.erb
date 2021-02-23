@@ -1,59 +1,78 @@
 <% content_for :title, "#{@node.label} - properties" %>
-<ul id="node-tabs" class="nav nav-tabs main-tabs">
-  <li <%= "class=active" if params[:tab] == 'evidence-tab' %>>
-    <a href="#evidence-tab" data-toggle="tab"><i class="fa fa-flag"></i> Evidence</a>
+
+<% content_for :breadcrumbs do %>
+  <nav class="dots-container">
+    <%= render partial: 'breadcrumbs' %>
+    <ul class="nav">
+      <li class="dropdown dots-dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-behavior="nodes-more-dropdown"><i class="fa fa-ellipsis-h fa-lg"></i><span class="sr-only">Toggle menu</span></a>
+        <div class="dropdown-menu">
+          <a href="#modal_add_child_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-plus fa-fw"></i> Add subnode</a>
+          <a href="#modal_rename_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-pencil fa-fw"></i> Rename</a>
+          <a href="#modal_move_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-mail-forward fa-fw"></i> Move</a>
+          <a href="#modal_merge_node" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-compress fa-fw"></i> Merge</a>
+          <a href="#modal_delete_node" class="dropdown-item text-error-hover" tabindex="-1" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Delete</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
+<% end %>
+
+<ul id="node-tabs" class="tabs-container nav nav-tabs main-tabs">
+  <li class="nav-item">
+    <a href="#evidence-tab" data-toggle="tab" class="nav-link <%= 'active' if params[:tab] == 'evidence-tab' %>"><i class="fa fa-flag"></i> Evidence</a>
   </li>
-  <li <%= "class=active" if params[:tab] == 'notes-tab' %>>
-    <a href="#notes-tab" data-toggle="tab"><i class="fa fa-file-text-o"></i> Notes</a>
+  <li class="nav-item">
+    <a href="#notes-tab" data-toggle="tab" class="nav-link <%= 'active' if params[:tab] == 'notes-tab' %>"><i class="fa fa-file-text-o"></i> Notes</a>
   </li>
-  <li>
-    <a class="js-try-pro" href="javascript:void(0)" data-term="node-boards" data-url="http://drad.is/l/try-pro-consistency"><i class="fa fa-trello"></i> Methodology</a>
+  <li class="nav-item">
+    <a class="js-try-pro nav-link" href="javascript:void(0)" data-term="node-boards" data-url="https://dradisframework.com/pro/pages/consistency.html"><i class="fa fa-trello"></i> Methodology</a>
   </li>
-  <li <%= "class=active" if !params[:tab] || params[:tab] == 'properties-tab' %>>
-    <a href="#properties-tab" data-toggle="tab">
+  <li class="nav-item">
+    <a href="#properties-tab" data-toggle="tab" class="nav-link <%= 'active' if !params[:tab] || params[:tab] == 'properties-tab' %>">
     <% if @node.type_id == Node::Types::HOST %>
       <i class="fa fa-laptop"></i>
-    <% else%>
+    <% else %>
       <i class="fa fa-cogs"></i>
     <% end %>
       Properties
     </a>
   </li>
-  <li <%= "class=active" if params[:tab] == 'activity-tab' %>>
-    <a href="#activity-tab" data-toggle="tab"><i class="fa fa-refresh"></i> Recent activity</a>
+  <li class="nav-item">
+    <a href="#activity-tab" data-toggle="tab" class="nav-link <%= 'active' if params[:tab] == 'activity-tab' %>"><i class="fa fa-rss"></i> Recent activity</a>
   </li>
 </ul>
 
-<div class="tab-content">
-  <div class="tab-pane inner <%= "active" if params[:tab] == "evidence-tab" %>" id="evidence-tab">
-    <h3>Evidence</h3>
-    <% if @sorted_evidence.any? %>
-      <div id="node-evidence-table"
-           data-destroy-url="<%= multiple_destroy_project_node_evidence_index_path(@node.project, @node) %>"
-           data-storage-key="<%= "project.ce.#{dom_id(@node)}.evidence_columns" %>"
-           data-close-console-url="<%= project_node_path(@node.project, @node, tab: "evidence-tab") %>">
-        <%= render 'nodes/items_table/toolbar',
-                   columns: @evidence_columns %>
-        <%= render 'nodes/items_table/table',
-                   columns: @evidence_columns,
-                   items: @sorted_evidence %>
-      </div>
-    <% else %>
-      <%= render 'nodes/items_table/empty',
-                 name: 'evidence',
-                 new_link: new_project_node_evidence_path(@node.project, @node) %>
-    <% end %>
-  </div>
+<div class="content-container mt-0">
+  <div class="tab-content mt-0">
+    <div class="tab-pane <%= "active" if params[:tab] == "evidence-tab" %>" id="evidence-tab">
+      <h4 class="header-underline">Evidence</h4>
+      <% if @sorted_evidence.any? %>
+        <div id="node-evidence-table"
+            data-destroy-url="<%= multiple_destroy_project_node_evidence_index_path(@node.project, @node) %>"
+            data-storage-key="<%= "project.ce.#{dom_id(@node)}.evidence_columns" %>"
+            data-close-console-url="<%= project_node_path(@node.project, @node, tab: "evidence-tab") %>">
+          <%= render 'nodes/items_table/toolbar',
+                    columns: @evidence_columns %>
+          <%= render 'nodes/items_table/table',
+                    columns: @evidence_columns,
+                    items: @sorted_evidence %>
+        </div>
+      <% else %>
+        <%= render 'nodes/items_table/empty',
+                  name: 'evidence',
+                  new_link: new_project_node_evidence_path(@node.project, @node) %>
+      <% end %>
+    </div>
 
-  <div class="tab-pane <%= "active" if !params[:tab] || params[:tab] == 'properties-tab' %>" id="properties-tab">
-    <div class="node-content" id="<%= dom_id(@node) %>_content">
-      <div class="inner">
-        <h3>Properties - <span class="actions">
-          <%= link_to edit_project_node_path(@node.project, @node), class: 'action-link' do %>
+    <div class="tab-pane <%= "active" if !params[:tab] || params[:tab] == 'properties-tab' %>" id="properties-tab">
+      <div class="node-content" id="<%= dom_id(@node) %>_content">
+        <h4 class="header-underline">Properties - <span class="actions">
+          <%= link_to edit_project_node_path(@node.project, @node) do %>
             <i class="fa fa-pencil"></i> Edit
           <% end %>
           </span>
-        </h3>
+        </h4>
 
         <% if @node.has_any_property?  %>
           <% @node.properties.sort.each do |key, value| %>
@@ -63,36 +82,32 @@
             <% end %>
           <% end %>
         <% end %>
-
       </div>
     </div>
-  </div>
 
-  <div class="tab-pane inner <%= "active" if params[:tab] == "notes-tab" %>" id="notes-tab">
-    <h3>Notes</h3>
-    <% if @sorted_notes.any? %>
-      <div id="node-notes-table"
-           data-destroy-url="<%= multiple_destroy_project_node_notes_path(@node.project, @node) %>"
-           data-storage-key="<%= "project.ce.#{dom_id(@node)}.note_columns" %>"
-           data-close-console-url="<%= project_node_path(@node.project, @node, tab: "notes-tab") %>">
-        <%= render 'nodes/items_table/toolbar',
-                   columns: @note_columns %>
-        <%= render 'nodes/items_table/table',
-                   columns: @note_columns,
-                   items: @sorted_notes %>
-      </div>
-    <% else %>
-      <%= render 'nodes/items_table/empty',
-                  name: 'note',
-                  new_link: new_project_node_note_path(@node.project, @node) %>
-    <% end %>
-  </div>
+    <div class="tab-pane <%= "active" if params[:tab] == "notes-tab" %>" id="notes-tab">
+      <h4 class="header-underline">Notes</h4>
+      <% if @sorted_notes.any? %>
+        <div id="node-notes-table"
+            data-destroy-url="<%= multiple_destroy_project_node_notes_path(@node.project, @node) %>"
+            data-storage-key="<%= "project.ce.#{dom_id(@node)}.note_columns" %>"
+            data-close-console-url="<%= project_node_path(@node.project, @node, tab: "notes-tab") %>">
+          <%= render 'nodes/items_table/toolbar',
+                    columns: @note_columns %>
+          <%= render 'nodes/items_table/table',
+                    columns: @note_columns,
+                    items: @sorted_notes %>
+        </div>
+      <% else %>
+        <%= render 'nodes/items_table/empty',
+                    name: 'note',
+                    new_link: new_project_node_note_path(@node.project, @node) %>
+      <% end %>
+    </div>
 
-  <div class="tab-pane <%= "active" if params[:tab] == "activity-tab" %>" id="activity-tab">
-    <div class="inner">
+    <div class="tab-pane <%= "active" if params[:tab] == "activity-tab" %>" id="activity-tab">
       <%= render partial: 'activity' %>
     </div>
-  </div>
 
-  <%= render 'console/console' %>
+  </div>
 </div>

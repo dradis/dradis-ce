@@ -33,7 +33,7 @@ class BoardsController < AuthenticatedController
         if methodology.version == 1
           migration = MethodologyMigrationService.new(current_project.id)
           migration.migrate(methodology, board_name: board_params[:name], node: @node)
-        elsif methodology.version == 2
+        elsif methodology.version >= 2
           importer = MethodologyImportService.new(current_project.id)
           importer.import(methodology, board_name: board_params[:name], node: @node)
         end
@@ -64,7 +64,7 @@ class BoardsController < AuthenticatedController
   end
 
   def update
-    if @board.update_attributes(board_params)
+    if @board.update(board_params)
       track_updated(@board)
       redirect_to [current_project, @board], notice: 'Methodology renamed.'
     else
@@ -90,7 +90,12 @@ class BoardsController < AuthenticatedController
   def build_methodology_params
     @boards.map do |board|
       next if board.lists.empty?
-      board_data = { id: board.id, name: board.name, total: board.cards.count }
+      board_data = {
+        id: board.id,
+        name: board.name,
+        total: board.cards.count,
+        url: project_board_path(current_project, board)
+      }
       lists = board.lists.map do |list|
         { category: list.name, value: list.cards.count }
       end

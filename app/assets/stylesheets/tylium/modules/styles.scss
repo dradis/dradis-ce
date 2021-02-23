@@ -1,0 +1,111 @@
+body.styles_tylium {
+
+  button[data-behavior~=smooth-scroll] {
+    margin-bottom: 0.25rem;
+  }
+
+  .page-title {
+    display: none;
+  }
+
+  .scroll-offset {
+    position: absolute;
+    top: -2rem;
+  }
+
+  .style-code-wrapper {
+    position: relative;
+
+    .style-code {
+      display: flex;
+      background-color: #222;
+      margin-bottom: 0;
+      margin-top: 2rem;
+      font-size: 0.8rem;
+
+      code {
+        background-color: transparent;
+        color: #FFF;
+        padding: 0;
+
+        .an {
+          color: #9CDCFE;
+        }
+
+        .av {
+          color: #CE9178;
+        }
+
+        .ct {
+          color: #608b4e;
+        }
+        
+        .et {
+          color: #569cd6;
+        }
+      }
+    }
+  }
+
+  .style-example {
+
+    .editor-field {
+      height: initial;
+      width: 50%;
+
+      textarea {
+        min-height: 7.5rem;
+        resize: none;
+      }
+    }
+    
+    .fw4 {
+      font-weight: 400;
+    }
+
+    .fw6 {
+      font-weight: 600;
+    }
+
+    .table-wrapper {
+      width: 500px;
+
+      .items-table {
+        white-space: nowrap;
+
+        th, td {
+          display: table-cell !important;
+        }
+      }
+    }
+
+    ul {
+      list-style-type: disc;
+    }
+  }
+
+  .style-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    .reveal-code {
+      font-size: 1.1rem;
+      position: absolute;
+      top: -0.3rem;
+      right: 0;
+      padding: 0.3rem;
+      display: inline-flex;
+      background-color: $primaryBgColor;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        background-color: $secondaryBgColor;
+        border: 1px solid $borderColor;
+      }
+    }
+  }
+}

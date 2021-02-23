@@ -3,7 +3,7 @@
     <table class="table table-striped items-table">
       <thead>
         <tr>
-          <th></th>
+          <th><span class="sr-only">Select</span></th>
           <% columns.each do |column| %>
             <th
               data-column="<%= column.downcase %>"
@@ -17,7 +17,7 @@
       <tbody>
         <% items.each do |item| %>
           <tr data-id="<%= item.id %>">
-            <td class="column-checkbox"><%= check_box_tag dom_id(item, :checkbox), item.id, false, class: 'js-multicheck' %></td>
+            <td class="column-checkbox"><%= check_box_tag dom_id(item, :checkbox), item.id, false, class: 'js-multicheck' %><%= label_tag dom_id(item, :checkbox), "Select #{item.title}", class: 'sr-only' %></td>
             <% columns.each do |column| %>
               <%
               sort, display =
@@ -41,7 +41,7 @@
               when 'Updated'
                 [item.updated_at.to_i, local_time_ago(item.updated_at)]
               else
-                [item.fields.fetch(column, ''), item.fields.fetch(column, '')]
+                [item.fields.fetch(column, ''), markup(item.fields.fetch(column, ''))]
               end
               %>
               <td data-sort-value="<%= sort %>"><%= display %></td>

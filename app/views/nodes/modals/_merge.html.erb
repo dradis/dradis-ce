@@ -1,24 +1,30 @@
-<div id="modal_merge_node" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modal_merge_node" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
   <%= form_tag project_node_merge_path(current_project, @node), class: 'form-horizontal modal-node-selection-form', data: { node_id: @node.id, hidden_field: '#target_id' } do |f| %>
     <%= hidden_field_tag :target_id %>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-title">Merge <%= @node.label %> node</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <i class="fa fa-times"></i>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Which node do you want to merge <strong><%= @node.label %></strong> into?</p>
 
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel">Merge <%= @node.label %> node</h3>
-    </div>
-    <div class="modal-body">
-      <p>Which node do you want to merge <strong><%= @node.label %></strong> into?</p>
-
-      <div class="tree-modal-box">
-        <%= render "layouts/snowcrash/nodes" %>
+          <div class="tree-modal-box">
+            <%= render "layouts/tylium/nodes" %>
+          </div>
+          <p id="merge-under">
+            <span>This will merge <strong><%= @node.label %></strong> into: <strong><span id="current-selection"></span></strong></span>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary">Merge</button>
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
       </div>
-      <p id="merge-under">
-        <span>This will merge <strong><%= @node.label %></strong> into: <strong><span id="current-selection"></span></strong></span>
-      </p>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-primary">Merge</button>
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
     </div>
   <% end %>
 </div>

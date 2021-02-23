@@ -1,7 +1,7 @@
 class CommentsController < AuthenticatedController
   include ActivityTracking
-  include Commented
   include ProjectScoped
+  include Mentioned
 
   load_and_authorize_resource
 
@@ -14,7 +14,7 @@ class CommentsController < AuthenticatedController
   end
 
   def update
-    if @comment.update_attributes(comment_params)
+    if @comment.update(comment_params)
       track_updated(@comment)
     end
   end
@@ -26,11 +26,6 @@ class CommentsController < AuthenticatedController
   end
 
   private
-
-  # This is cheeky code to make mentions work from concerns/commented
-  def comments
-    [@comment]
-  end
 
   def comment_params
     params.require(:comment).permit(:content, :commentable_type, :commentable_id)

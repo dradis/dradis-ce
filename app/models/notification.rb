@@ -17,11 +17,20 @@ class Notification < ApplicationRecord
   scope :read,    -> { where.not(read_at: nil) }
   scope :unread,  -> { where(read_at: nil) }
 
+  # All unread notifications within a given span of time
+  scope :since, -> (time_ago = 1.day.ago) {
+    where('created_at >= ?', time_ago).unread.newest
+  }
+
   # -- Class Methods --------------------------------------------------------
 
   def self.mark_all_as_read!
     # update_all doesnt update timestamps, so do it manually to bust the cache:
     update_all(read_at: Time.now, updated_at: Time.now)
+  end
+
+  def self.for_digest(interval)
+    NotificationGroup.new(since(interval).includes(notifiable: :commentable))
   end
 
   # -- Instance Methods -----------------------------------------------------

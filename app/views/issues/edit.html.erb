@@ -4,9 +4,18 @@
   <%= render 'sidebar'%>
 <% end %>
 
-<div id="issues_editor">
-  <div class="inner note-text-inner">
-    <h3>Edit issue</h3>
-    <%= render 'form' %>
+<% content_for :breadcrumbs do %>
+  <nav>
+    <%= render partial: 'breadcrumbs' %>
+  </nav>
+<% end %>
+
+<div class="content-container">
+  <div id="issues_editor">
+    <div class="note-text-inner">
+      <h4 class="header-underline">Edit issue</h4>
+      <div class="autofocus" autofocus="true" tabindex="1"></div> <!-- This div is needed to allow correct tabbing order in Chrome with page is loaded with turbolinks -->
+      <%= render 'form' %>
+    </div>
   </div>
 </div>

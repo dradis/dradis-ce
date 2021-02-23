@@ -1,6 +1,9 @@
 module Dradis::CE::API
   module V1
-    class NotesController < Dradis::CE::API::V1::ProjectScopedController
+    class NotesController < Dradis::CE::API::APIController
+      include ActivityTracking
+      include Dradis::CE::API::ProjectScoped
+
       before_action :set_node
 
       def index
@@ -24,7 +27,7 @@ module Dradis::CE::API
 
       def update
         @note = @node.notes.find(params[:id])
-        if @note.update_attributes(note_params)
+        if @note.update(note_params)
           track_updated(@note)
           render note: @note
         else

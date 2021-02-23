@@ -1,0 +1,6 @@
+<% commentable = comment.commentable %>
+<% if commentable.title? %>
+commented on the <%= "#{commentable.title} #{comment.commentable_type}" %>.
+<% else %>
+commented on <%= "#{comment.commentable_type} ##{commentable.id}" %>.
+<% end %>

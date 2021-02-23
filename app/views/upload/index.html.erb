@@ -1,78 +1,83 @@
 <% content_for :title, 'Upload Manager' %>
 
-<p>Use the form below to upload output files from other tools.</p>
+<div class="row m-0">
+  <div class="col-lg-6 col-xl-5 p-0">
+    <div class="content-container mt-3 mr-lg-3" data-behavior="content-container">
+      <h4 class="header-underline">Upload Output Files</h4>
+      <p class="mt-4">Use the form below to upload output files from other tools.</p>
 
+      <div class="mt-4">
+        <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, id: 'new_upload', data: { parse_url: project_upload_parse_path(current_project) } do %>
+          <div class="form-group mb-5 mt-4 pt-2">
+            <%= label_tag :uploader do %>
+              <h5>1. Choose a tool</h5>
+            <% end %>
+            <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { :class => 'form-control' } %>
+          </div>
+          <div class="form-group mb-4">
+            <%= label_tag :file do %>
+              <h5>2. Choose a file</h5>
+            <% end %>
+            <div class="custom-file">
+              <%= file_field_tag 'file', class: 'custom-file-input' %>
+              <label class="custom-file-label" data-behavior="file-label">Choose file</label>
+              <%= hidden_field_tag 'item_id' %>
+              <%= hidden_field_tag 'format', 'js' %>
+            </div>
+          </div>
+        <% end %>
+            
+        <p>Upload progress:</p>
+        <div class="progress mb-2">
+          <div class="progress-bar progress-bar-striped">
+            <div class="percent">0%</div>
+          </div>
+        </div>
 
-<section class="inner">
-  <div class="row-fluid">
-    <div class="span5">
-      <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, id: 'new_upload', data: { parse_url: project_upload_parse_path(current_project) } do %>
-      <h2>1. Choose a tool</h2>
-        <%= select_tag  'uploader', options_from_collection_for_select(@uploaders, :name, :name) %>
+      </div>
+    </div>
+  </div>
 
-      <h2>2. Choose a file</h2>
-        <%= file_field_tag 'file' %>
-        <%= hidden_field_tag 'item_id' %>
-        <%= hidden_field_tag 'format', 'js' %>
+  <div class="col-lg-6 col-xl-7 p-0">
+    <div class="content-container mt-0 mt-lg-3 ml-lg-3 restrict-height" data-height="match-prev" data-behavior="restrict-height">
+      <h4 class="header-underline">Available plugins</h4>
+
+      <div id="plugin-list">
+      <table class="table table-striped mb-0">
+        <thead>
+          <tr>
+            <th>Plugin</th>
+            <th>Description</th>
+            <th>Version</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @uploaders.each do |uploader| %>
+            <tr>
+              <td><code><%= uploader.name %></code></td>
+              <td><%= uploader.meta[:description] %></td>
+              <td><%= uploader.meta[:version] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 p-0">
+    <div class="content-container mt-0">
+      <h4 class="header-underline">Output console</h4>
+      <div id="status"></div>
+      <%= content_tag :div, id: 'result', style: 'display:none', data: { url: status_console_index_path }  do %>
+        <div><strong>Filename</strong>: <span id="filename"></span> <span id="spinner"><%= image_tag 'loading.gif', style: "margin:0;", alt: 'loading spinner' %></span></div>
+        <div><strong>Size</strong>: <span id="filesize"></span></div>
+        <div id="console" class="mx-0 mb-0"></div>
       <% end %>
     </div>
-    <div class="span7">
-      <p>Upload progress:</p>
-      <div class="progress">
-          <div class="bar"></div >
-          <div class="percent">0%</div >
-      </div>
-
-      <div id="status"></div>
-
-      <h2>Output console</h2>
-      <%= content_tag :div, id: 'result', style: 'display:none', data: { url: status_console_index_path }  do %>
-        <div><strong>Filename</strong>: <span id="filename"></span> <span id="spinner"><%= image_tag 'loading.gif', style: "margin:0;" %></span></div>
-        <div><strong>Size</strong>: <span id="filesize"></span></div>
-        <div id="console"></div>
-      <% end %>
-    </section>
   </div>
 </div>
-
 
 <script type="text/javascript" charset="utf-8">
   ConsoleUpdater.jobId = <%= @last_job %>;
 </script>
-
-<section>
-  <h2>Available plugins
-    <span class="dropdown">
-      <small>
-        <a
-          href="javascript:void(0)"
-          class="collapsed"
-          data-behavior="show-hide"
-          data-toggle="collapse"
-          data-target="#plugin-list"
-        ></a>
-      </small>
-    </span>
-  </h2>
-
-  <div id="plugin-list" class="collapse">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Plugin</th>
-        <th>Description</th>
-        <th>Version</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @uploaders.each do |uploader| %>
-        <tr>
-          <td><code><%= uploader.name %></code></td>
-          <td><%= uploader.meta[:description] %></td>
-          <td><%= uploader.meta[:version] %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  </div>
-</section>

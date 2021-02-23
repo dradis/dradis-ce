@@ -1,0 +1,168 @@
+// this is shared between activities#index and the projects#show activity feed
+.activity {
+  align-items: center;
+  display: flex;
+  position: relative;
+
+  .activity-icon {
+    font-size: 3rem;
+    opacity: 0.08;
+    position: absolute;
+  }
+}
+
+// this is for activities in the projects#show feed
+.activity-feed {
+
+  .activity {
+    border-bottom: 1px solid $borderColor;
+    overflow: hidden;
+    padding: 1rem 0;
+
+    .activity-icon {
+      right: 0;
+    }
+
+    .body {
+      display: block;
+
+      .time {
+        color: $mutedText;
+        font-size: 0.8rem;
+      }
+    }
+
+    .details {
+      align-items: center;
+      margin-right: 0.5rem;
+    }
+
+    &:first-child {
+      padding-top: 0.5rem;
+    }
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+}
+
+// this is for activities#index
+.activities.index {
+
+  .activities-groups-container {
+
+    .activity-date-header {
+      display: flex;
+      justify-content: center;
+
+      time {
+        background-color: $primaryBgColor;
+        font-size: 1.5rem;
+        padding: 1rem 0;
+      }
+    }
+
+    .activities-group {
+
+      .activities {
+        position: relative;
+        width: 50%;
+
+        .activity {
+          border: 1px solid transparent;
+          padding: 1rem;
+          transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+
+          .activity-icon {
+            padding-left: 1rem;
+            right: -3.9rem;
+            text-align: center;
+            width: 1.2857142857em;
+          }
+
+          .body {
+            display: flex;
+
+            .activity-time {
+              position: absolute;
+              right: 1rem;
+            }
+
+            .title {
+              padding-right: 5rem;
+              z-index: 1;
+            }
+          }
+
+          &:hover {
+            background-color: darken($primaryBgColor, 3%);
+            border-bottom-left-radius: 5px;
+            border-color: $borderColor;
+            border-top-left-radius: 5px;
+          }
+        }
+
+        &:before {
+          border-left: 1px solid $borderColor;
+          bottom: 0;
+          content: '';
+          margin-left: -1px;
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+      }
+
+      &:nth-child(even) {
+
+        .activities {
+          margin-left: auto;
+
+          .activity {
+            margin-left: -1px;
+
+            .activity-icon {
+              left: -3.9rem;
+              padding-left: 0;
+              padding-right: 1rem;
+              right: initial;
+            }
+
+            .body {
+              flex-direction: row-reverse;
+
+              .activity-time {
+                left: 1rem;
+              }
+
+              .title {
+                padding-right: 0;
+              }
+            }
+
+            .details {
+              padding-left: 5rem;
+            }
+
+            &:hover {
+              border-bottom-left-radius: 0px;
+              border-bottom-right-radius: 5px;
+              border-top-left-radius: 0px;
+              border-top-right-radius: 5px;
+            }
+          }
+
+          &:before {
+            left: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .activities-spinner {
+    display: none;
+  }
+}

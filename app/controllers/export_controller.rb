@@ -1,21 +1,11 @@
 class ExportController < AuthenticatedController
   include ProjectScoped
 
-  before_action :find_plugins
+  before_action :find_plugins, except: [:index, :validation_status]
   before_action :validate_exporter, except: [:index, :validation_status]
   before_action :validate_template, except: [:index, :validation_status]
 
   def index
-    @plugin_info = @plugins.map do |plugin|
-      {
-             engine: plugin::Engine,
-        description: plugin::Engine::plugin_description,
-               name: plugin::Engine.plugin_name,
-             routes: plugin::Engine.routes.named_routes,
-          templates: templates_for(plugin: plugin).collect{|file| File.basename(file)}.sort,
-      templates_dir: templates_dir_for(plugin: plugin)[Rails.root.to_s.length..-1]
-      }
-    end
   end
 
   def create
@@ -81,10 +71,6 @@ class ExportController < AuthenticatedController
   def templates_dir_for(args={})
     plugin = args[:plugin]
     File.join(::Configuration::paths_templates_reports, plugin::Engine.plugin_name.to_s)
-  end
-
-  def templates_for(args={})
-    Dir["%s/*" % templates_dir_for(args)]
   end
 
   # Ensure that the requested :uploader is valid

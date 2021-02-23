@@ -1,0 +1,150 @@
+@mixin notification-list-item {
+  position: relative;
+  border-bottom: 1px solid $borderColor;
+  padding: 0 2rem 0.5rem 1rem;
+  display: flex;
+
+  .body {
+    display: block;
+    padding-top: 0.5rem;
+    padding-left: 5px;
+    z-index: 2;
+
+    .time {
+      color: $mutedText;
+    }
+  }
+
+  .details {
+    display: flex;
+    align-items: center;
+
+    img {
+      border-radius: 50%;
+    }
+  }
+
+  .notification-icon {
+    position: absolute;
+    display: flex;
+    color: #bbb;
+    opacity: 0.1;
+    font-size: 3rem;
+    right: 1.5rem;
+    height: 100%;
+    align-items: center;
+    z-index: 1;
+  }
+
+  .notification-read {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
+
+  &.unread {
+    background-color: $grayLight;
+
+    .notification-icon {
+      opacity: 0.15;
+    }
+  }
+}
+
+/* Notifications in the navbar */
+.navbar-collapse {
+  .notifications {
+    .notifications-bell {
+      position: relative;
+
+      .notifications-dot {
+        background: red;
+        border-radius: 50%;
+        height: 12px;
+        position: absolute;
+        right: calc(50% - 0.75rem);
+        top: -0.5rem;
+        width: 12px;
+      }
+    }
+
+    .loader {
+      background: image-url('loading.gif') no-repeat center;
+      height: 50px;
+      width: 420px;
+    }
+
+    .dropdown-menu {
+
+      .notification-container {
+        width: 420px;
+        max-height: 500px;
+        margin: 0;
+        overflow: auto;
+        padding: 0;
+        font-size: 0.8rem;
+
+        li.notification {
+          @include notification-list-item;
+          
+          .body {
+            white-space: initial;
+          }
+          
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+
+        li.no-content {
+          padding: 0.5rem;
+        }
+
+      }
+
+      .notification-header {
+        padding: 0 1em;
+        line-height: 2em;
+        font-size: 0.8rem;
+        border-bottom: 1px solid $borderColor;
+
+        div {
+          display: inline-block;
+        }
+      }
+
+      .footer {
+        line-height: 2em;
+        border-top: 1px solid $borderColor;
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+ 
+}
+
+/* Notifications on the main body of /projects/X/notifications */
+body.notifications {
+
+  .page-title {
+    display: none;
+  }
+
+  hr {
+    margin: 0;
+  }
+
+  li.notification {
+    @include notification-list-item;
+    padding: 1rem 2rem 1rem 1rem;
+
+    .notification-icon {
+      display: none;
+    }
+  }
+  
+  ul {
+    list-style-type: none;
+  }
+}

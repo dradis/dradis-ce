@@ -23,7 +23,7 @@ describe 'notifications index page' do
     visit project_notifications_path(@project)
 
     expect(page).not_to have_selector '.notification'
-    expect(page).to have_content 'You have no notifications yet'
+    expect(page).to have_content "You don't have any notifications yet."
   end
 
   context 'when I have notifications' do

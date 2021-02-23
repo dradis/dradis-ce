@@ -32,6 +32,10 @@ class Node < ApplicationRecord
 
   def project=(new_project); end
 
+  def project_id
+    project.id
+  end
+
   def nested_activities
     sql = "(`activities`.`trackable_type`='Node' AND "\
           " `activities`.`trackable_id`=#{id})"
@@ -102,7 +106,7 @@ class Node < ApplicationRecord
   end
 
   def parent_node
-    if self.parent.nil?
+    if self.parent.nil? || self.parent.project_id != self.project_id
       errors.add(:parent_id, 'is missing/invalid.')
       return false
     end

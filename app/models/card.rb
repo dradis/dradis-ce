@@ -1,11 +1,10 @@
 class Card < ApplicationRecord
   include Commentable
   include HasFields
+  include RevisionTracking
   include Subscribable
 
   dradis_has_fields_for :description
-
-  has_paper_trail on: [:destroy]
 
   # -- Relationships --------------------------------------------------------
   belongs_to :list, touch: true
