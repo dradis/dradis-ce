@@ -2,6 +2,7 @@ class CommentsController < AuthenticatedController
   include ActivityTracking
   include ProjectScoped
   include Mentioned
+  include Notified
 
   load_and_authorize_resource
 
@@ -10,6 +11,11 @@ class CommentsController < AuthenticatedController
     @comment.user = current_user
     if @comment.save
       track_created(@comment)
+      broadcast_notifications(
+        action: :create,
+        actor: current_user,
+        notifiable: @comment
+      )
     end
   end
 

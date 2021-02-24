@@ -1,9 +1,9 @@
 App.cable.subscriptions.create 'NotificationsChannel',
   connected: ->
     console.log('Subscribed to NotificationsChannel.')
-    @perform('check_unread', {})
+    @perform('check_unread', { project_id: $('[data-behavior~=notifications-dropdown]').data('project-id') })
     $(document).on 'turbolinks:load.notifications', =>
-      @perform('check_unread', {})
+      @perform('check_unread', { project_id: $('[data-behavior~=notifications-dropdown]').data('project-id') })
 
   rejected: ->
     console.log('Error subscribing to NotificationsChannel.')
