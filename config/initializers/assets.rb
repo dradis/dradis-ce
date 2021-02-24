@@ -15,4 +15,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 Rails.application.config.assets.precompile += %w( application.css application.js tylium.js tylium.css bootstrap.css)
 
 # Include font files
-Rails.application.config.assets.precompile += [/\.(?:svg|eot|woff|ttf)\z/]
+Rails.application.config.assets.precompile << ["*.svg", "*.eot", "*.woff", "*.ttf"]

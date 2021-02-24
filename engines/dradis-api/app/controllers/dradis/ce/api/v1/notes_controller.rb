@@ -27,7 +27,7 @@ module Dradis::CE::API
 
       def update
         @note = @node.notes.find(params[:id])
-        if @note.update_attributes(note_params)
+        if @note.update(note_params)
           track_updated(@note)
           render note: @note
         else

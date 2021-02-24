@@ -10,8 +10,11 @@
 
   <div class="form-inputs">
     <%= f.association :issue, collection: current_project.issues.sort, label_method: :title, prompt: 'Choose an Issue' %>
+
+    <%= label_tag :evidence_content, 'Evidence source input', class: 'sr-only' %>
     <%=
       f.input :content,
+      label: false,
       input_html: {
         class: 'textile h-100',
         data: {
