@@ -5,6 +5,7 @@ v3.22.0 (MMM’21)
     - Adjustments to font and element contrast to meet at minimum Level AA WCAG 2.0 standards.
     - Fix any broken Aria references
     - Update element label association & add missing labels
+  * Truncate long hostnames when viewing evidence in an issue
   * Upgraded gems: [gem #1], [gem #2]
   * Bugs fixed:
     - [bug fixed #1]
