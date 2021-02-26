@@ -1,13 +1,12 @@
 <% css_class = local_assigns[:dots_menu] ? 'dropdown-item' : '' %>
 
 <%= link_to \
-      project_subscription_path(
-        current_project,
-        0, # not really used
+      subscription_path(
         subscription: {
           subscribable_type: subscribable.class.to_s,
           subscribable_id: subscribable.id
-        }
+        },
+        fallback_path: request.path
       ),
       class: "d-none #{css_class}",
       data: {'behavior': 'unsubscribe'},
@@ -15,12 +14,12 @@
     <i class="fa fa-bell-slash fa-fw"></i> Unsubscribe
 <% end %>
 <%= link_to \
-      project_subscriptions_path(
-        current_project,
+      subscriptions_path(
         subscription: {
           subscribable_type: subscribable.class.to_s,
           subscribable_id: subscribable.id
-        }
+        },
+        fallback_path: request.path
       ),
       class: "d-none #{css_class}",
       data: {'behavior': 'subscribe'},
