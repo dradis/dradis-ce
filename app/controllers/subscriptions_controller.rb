@@ -1,6 +1,4 @@
 class SubscriptionsController < AuthenticatedController
-  include ProjectScoped
-
   def create
     subscription = Subscription.new(subscription_params)
     subscription.user = current_user
