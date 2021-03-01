@@ -1,7 +1,7 @@
 <% css_class = local_assigns[:dots_menu] ? 'dropdown-item' : '' %>
 
 <%= link_to \
-      subscription_path(
+      main_app.subscription_path(
         subscription: {
           subscribable_type: subscribable.class.to_s,
           subscribable_id: subscribable.id
@@ -14,7 +14,7 @@
     <i class="fa fa-bell-slash fa-fw"></i> Unsubscribe
 <% end %>
 <%= link_to \
-      subscriptions_path(
+      main_app.subscriptions_path(
         subscription: {
           subscribable_type: subscribable.class.to_s,
           subscribable_id: subscribable.id
