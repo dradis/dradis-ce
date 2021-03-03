@@ -12,7 +12,6 @@ module NotificationsReader
     NotificationsReaderJob.perform_later(
       commentable_id: commentable.id,
       commentable_type: commentable.class.to_s,
-      project_id: current_project.id,
       user_id: current_user.id
     )
   end
