@@ -19,7 +19,8 @@ describe NotificationsBroadcastJob do #, type: :job do
         action: 'create',
         actor_id: notifiable.user.id,
         notifiable_id: notifiable.id,
-        notifiable_type: notifiable.class.to_s
+        notifiable_type: notifiable.class.to_s,
+        data: {}
       )
     end
   end
