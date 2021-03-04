@@ -3,6 +3,7 @@
 class DradisTasks < Thor
   class Setup < Thor
     include Thor::Actions
+    include Rails::Generators::Actions
     include ::Rails.application.config.dradis.thor_helper_module
 
     namespace 'dradis:setup'
@@ -46,7 +47,7 @@ class DradisTasks < Thor
       require 'config/environment'
 
       print '** Checking database migrations...                                    '
-      ActiveRecord::Migrator.migrate('db/migrate/', nil)
+      rake('db:migrate')
       puts '[  DONE  ]'
     end
 
