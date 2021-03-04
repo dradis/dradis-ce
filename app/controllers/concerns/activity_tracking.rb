@@ -19,7 +19,7 @@ module ActivityTracking
     track_activity(trackable, :update, user, project)
   end
 
-  def track_destroyed(trackable, user: current_user, project: nil)
+  def track_destroyed(trackable, user: current_user, project: current_project)
     track_activity(trackable, :destroy, user, project)
   end
 
