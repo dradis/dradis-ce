@@ -18,6 +18,22 @@ class NamingService
     )
   end
 
+  # If an project with the name exists,
+  # return a count based alternative, E.g. My Project Name_copy-01, My Project Name_copy-02
+  # If not, return the name with a count based alternative.
+  #   name: the project name
+  def self.name_project(name)
+    return name unless Project.exists?(name: name)
+
+    projects = Project.where("name LIKE ?", "#{name}_copy-%")
+    project_names = projects.map(&:name)
+
+    new_name(
+      name: name,
+      sequence: next_sequence(matching_names: project_names)
+    )
+  end
+
   private
 
   def self.new_name(name:, sequence:, suffix: nil)
