@@ -2,38 +2,28 @@ module ActivityTracking
   protected
 
   def track_activity(trackable, action, user = current_user, project = nil)
-    project_id =
-      if project.nil? && defined?(current_project)
-        current_project.id # current_project is set by ProjectScoped
-      elsif project
-        project.id
-      else
-        nil
-      end
-
-    project = current_project if project.nil? # current_project is set by ProjectScoped
     ActivityTrackingJob.perform_later(
       action: action.to_s,
-      project_id: project_id,
+      project_id: project ? project.id : nil,
       trackable_id: trackable.id,
       trackable_type: trackable.class.to_s,
       user_id: user.id
     )
   end
 
-  def track_created(trackable, user = current_user)
-    track_activity(trackable, :create, user)
+  def track_created(trackable, user: current_user, project: current_project)
+    track_activity(trackable, :create, user, project)
   end
 
-  def track_updated(trackable, user = current_user)
-    track_activity(trackable, :update, user)
+  def track_updated(trackable, user: current_user, project: current_project)
+    track_activity(trackable, :update, user, project)
   end
 
-  def track_destroyed(trackable, user = current_user, project = nil)
+  def track_destroyed(trackable, user: current_user, project: nil)
     track_activity(trackable, :destroy, user, project)
   end
 
-  def track_recovered(trackable, user = current_user)
-    track_activity(trackable, :recover, user)
+  def track_recovered(trackable, user: current_user, project: current_project)
+    track_activity(trackable, :recover, user, project)
   end
 end
