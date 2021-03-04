@@ -36,7 +36,7 @@ class Comment < ApplicationRecord
     Subscription.subscribe(user: user, to: commentable) if user
   end
 
-  def notify(action:, actor:, data: {})
+  def notify(action:, actor:, recipients:)
     case action.to_s
     when 'create'
       subscribe_mentioned()
