@@ -1,4 +1,5 @@
 v3.22.0 (MMM’21)
+  * Configuration Kits
   * Improve accessibility:
     - Add alt text to any linked images
     - Add screen reader only text to forms
