@@ -59,8 +59,21 @@ class DradisTasks < Thor
       puts '[  DONE  ]'
     end
 
+    desc "kit SETUP_PACKAGE", "import files and projects from a specified kit file"
+    method_option :file, :type => :string, :desc => "full path to a zip file"
+    def kit(file)
+      puts "** Importing kit..."
+      KitImportJob.perform_now(file: file, logger: default_logger)
+      puts "[  DONE  ]"
+    end
+
     desc 'welcome', 'adds initial content to the repo for demonstration purposes'
     def welcome
+      # TODO: once dradis:setup:kit is available, replace this entire task with
+      # two steps:
+      #   1. prepare Welcome kit from template files
+      #   2. invoke 'dradis:setup:kit', [], [welcome_kit.path]
+
       # --------------------------------------------------------- Note template
       if NoteTemplate.pwd.exist?
         say 'Note templates folder already exists. Skipping.'
