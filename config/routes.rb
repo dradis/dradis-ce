@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :notifications, only: [:index, :update], path: "/projects/#{Project.new.id}"
+  resources :notifications, only: [:index, :update], path: "/projects/#{Project.new.id}/notifications"
 
   resources :projects, only: [:show] do
     resources :activities, only: [:index] do
