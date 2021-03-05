@@ -39,7 +39,7 @@ class NotificationsController < AuthenticatedController
         end
       end
 
-      f.html { redirect_to project_notifications_path(current_project) }
+      f.html { redirect_to notifications_path }
     end
   end
 end

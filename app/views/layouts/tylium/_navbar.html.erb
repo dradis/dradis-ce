@@ -23,10 +23,10 @@
             <%= link_to main_app.project_configurations_path(current_project), class: 'nav-link', title: 'Configuration' do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %>
           </li>
           <li class="nav-item notifications dropdown">
-            <%= link_to main_app.project_notifications_path(current_project), class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown', behavior: 'notifications-dropdown close-collapse' }, role: 'button', title: 'Notifications' do %>
+            <%= link_to main_app.notifications_path, class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown', behavior: 'notifications-dropdown close-collapse' }, role: 'button', title: 'Notifications' do %>
               <i class="notifications-bell fa fa-bell fa-lg"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i> Notifications
             <% end %>
-            <div class="dropdown-menu dropdown-menu-right" data-url="<%= main_app.project_notifications_path(current_project) %>"></div>
+            <div class="dropdown-menu dropdown-menu-right" data-url="<%= main_app.notifications_path %>"></div>
           </li>
           <li class="nav-item dropdown">
             <%= link_to '#', class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown', behavior: 'close-collapse' }, remote: true, role: 'button', title: 'Help' do %>

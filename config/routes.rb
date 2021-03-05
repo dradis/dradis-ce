@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :notifications, only: [:index, :update], path: "/projects/#{Project.new.id}"
+
   resources :projects, only: [:show] do
     resources :activities, only: [:index] do
       collection do
@@ -87,8 +89,6 @@ Rails.application.routes.draw do
         resources :attachments, param: :filename
       end
     end
-
-    resources :notifications, only: [:index, :update]
 
     resources :revisions, only: [] do
       member { post :recover }
