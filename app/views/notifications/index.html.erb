@@ -1,11 +1,11 @@
 <% content_for :title, 'Notifications for this Project' %>
 
 <div class="content-container">
-  <h4 class="header-underline w-100">Notifications for this Project
-    <% if @notifications.any? %>
+  <% if @notifications.any? %>
+    <h4 class="header-underline w-100">Notifications for this Project
       <b><%= link_to 'Mark all as read', project_notification_path(current_project, id: 'all'), class: 'actions pull-right', method: :put, remote: true %></b>
-    <% end %>
-  </h4>
+    </h4>
+  <% end %>
   <% cache [current_user, @notifications] do %>
     <% if @notifications.any? %>
       <div class="notifications-index">
@@ -17,7 +17,11 @@
       </div>
       <%= paginate @notifications %>
     <% else %>
-      <p class="mb-3 text-center">You don't have any notifications yet.</p>
+      <%= render 'shared/empty_state',
+        name: 'notification',
+        docs_link: 'https://dradisframework.com/support/guides/projects/comments.html#notify',
+        text: 'Use the notifications feed to stay updated on conversations relevant to you.'
+      %>
     <% end %>
   <% end %>
 </div>
