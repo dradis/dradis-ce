@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <title><%= content_for?(:title) ? yield(:title) : "Dradis Community Edition" %></title>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
@@ -15,7 +15,7 @@
     <%= render 'shared/noscript' %>
 
     <div class="page-header d-flex justify-content-center my-5">
-      <%= link_to image_tag('logo_small.png', height: 100), 'http://dradisframework.org' %>
+      <%= link_to image_tag('logo_small.png', height: 100, alt: 'Dradis CE logo'), 'http://dradisframework.org' %>
     </div>
 
     <div class="container">

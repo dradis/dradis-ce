@@ -43,7 +43,7 @@ class CardsController < AuthenticatedController
   end
 
   def update
-    if @card.update_attributes(card_params)
+    if @card.update(card_params)
       track_updated(@card)
       redirect_to [current_project, @board, @list, @card], notice: 'Task updated.'
     else

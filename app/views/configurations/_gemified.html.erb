@@ -13,6 +13,7 @@
         <td class="setting"><%= setting[:name] %></td>
         <td class="status text-center"><%= setting[:default] ? 'default' : 'user set' %></td>
         <td class="value">
+          <%= label_tag "#{gemified[:name].underscore}_settings_#{setting[:name]}", "Value for #{setting[:name]}", class: 'sr-only' %>
           <%= text_field_tag "#{ gemified[:name].underscore }_settings_#{ setting[:name] }", setting[:value], class: 'form-control w-100' %>
         </td>
       </tr>
