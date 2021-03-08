@@ -73,11 +73,11 @@ class NotificationPresenter < BasePresenter
     commentable     = comment.commentable
 
     if commentable.respond_to?(:node) && !commentable.is_a?(Issue)
-      [current_project, commentable.node, commentable]
+      [commentable.project, commentable.node, commentable]
     elsif commentable.is_a?(Card)
-      [current_project, commentable.board, commentable.list, commentable]
+      [commentable.project, commentable.board, commentable.list, commentable]
     else
-      [current_project, commentable]
+      [commentable.project, commentable]
     end
   end
 end
