@@ -24,6 +24,7 @@
 //= require shared/console_updater
 //= require shared/editor_toolbar
 //= require shared/items_table
+//= require shared/notifications
 //= require shared/subscriptions
 
 //= require tylium/plugins/jquery.breadcrumbs
@@ -45,7 +46,6 @@
 //= require tylium/modules/issues
 //= require tylium/modules/mentions
 //= require tylium/modules/nodes
-//= require tylium/modules/notifications
 //= require tylium/modules/search
 //= require tylium/modules/sidebar
 //= require tylium/modules/activities/poller
