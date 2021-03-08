@@ -5,8 +5,7 @@
         subscription: {
           subscribable_type: subscribable.class.to_s,
           subscribable_id: subscribable.id
-        },
-        fallback_path: request.path
+        }
       ),
       class: "d-none #{css_class}",
       data: {'behavior': 'unsubscribe'},
@@ -18,8 +17,7 @@
         subscription: {
           subscribable_type: subscribable.class.to_s,
           subscribable_id: subscribable.id
-        },
-        fallback_path: request.path
+        }
       ),
       class: "d-none #{css_class}",
       data: {'behavior': 'subscribe'},
