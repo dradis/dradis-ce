@@ -13,8 +13,8 @@ class CommentsController < AuthenticatedController
       track_created(@comment)
       broadcast_notifications(
         action: :create,
-        actor: current_user,
-        notifiable: @comment
+        notifiable: @comment,
+        user: current_user
       )
     end
   end
