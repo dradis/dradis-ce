@@ -17,9 +17,9 @@ describe NotificationsBroadcastingJob do #, type: :job do
 
       described_class.new.perform(
         action: 'create',
-        actor_id: notifiable.user.id,
         notifiable_id: notifiable.id,
-        notifiable_type: notifiable.class.to_s
+        notifiable_type: notifiable.class.to_s,
+        user_id: notifiable.user.id
       )
     end
   end
