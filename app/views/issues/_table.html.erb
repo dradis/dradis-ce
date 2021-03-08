@@ -3,7 +3,7 @@
     <table class="table table-striped items-table mb-0">
       <thead>
         <tr>
-          <th></th>
+          <th><span class="sr-only">Select</span></th>
           <% @columns.each do |column| %>
           <th
             data-column="<%= column.downcase %>"
@@ -18,7 +18,7 @@
         <% issues.each do |issue| %>
         <% cache [issue, @columns, issue.affected_count, 'issues-table'] do%>
         <tr>
-          <td class="column-checkbox"><%= check_box_tag dom_id(issue, :checkbox), issue.id, false, class: 'js-multicheck', data: { url: project_issue_path(current_project, issue, format: :json) } %></td>
+          <td class="column-checkbox"><%= check_box_tag dom_id(issue, :checkbox), issue.id, false, class: 'js-multicheck', data: { url: project_issue_path(current_project, issue, format: :json) } %><%= label_tag dom_id(issue, :checkbox), "Select #{issue.title}", class: 'sr-only' %></td>
           <% @columns.each do |column| %>
             <%
              sort, display =

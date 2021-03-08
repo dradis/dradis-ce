@@ -14,7 +14,7 @@ class CommentsController < AuthenticatedController
   end
 
   def update
-    if @comment.update_attributes(comment_params)
+    if @comment.update(comment_params)
       track_updated(@comment)
     end
   end

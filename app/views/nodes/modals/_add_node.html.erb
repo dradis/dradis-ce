@@ -4,17 +4,20 @@
   tabindex="-1"
   role="dialog"
   aria-hidden="true"
+  data-behavior="add-node"
+  aria-labelledby="modal-title"
 >
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <% if type == :branch %>
-          <h5 class="modal-title">Add top-level node</h5>
+          <h5 class="modal-title" id="modal-title">Add top-level node</h5>
         <% else %>
-          <h5 class="modal-title">Add a child to the <strong><%= @node.label %></strong> node</h5>
+          <h5 class="modal-title" id="modal-title">Add a child to the <strong><%= @node.label %></strong> node</h5>
         <% end %>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
           <i class="fa fa-times"></i>
+          <span class="sr-only">Close modal</span>
         </button>
       </div>
 
@@ -49,15 +52,15 @@
         <%= simple_form_for(
           (type == :branch ? Node.new : Node.new(parent_id: @node.id)),
           url: main_app.project_nodes_path(current_project),
-          html: { class: 'add_one_node_form form-horizontal' }
+          html: { class: 'add_one_node_form form-horizontal', id: "new_#{type}_node_form" }
         ) do |f| %>
-          <%= f.hidden_field :parent_id if type == :child %>
-          <%= f.input :label %>
+          <%= f.hidden_field :parent_id, id: "#{type}_parent_id" %>
+          <%= f.input :label, input_html: { id: "#{type}_node_label", data: { behavior: 'node-label' } } %>
           <%= f.input :type_id,
             collection: [["No icon", Node::Types::DEFAULT], ["Host", Node::Types::HOST]],
             include_blank: false,
             label: 'Icon',
-            input_html: { class: 'custom-select' }
+            input_html: { class: 'custom-select', id: "#{type}_node_icon", data: { behavior: 'node-icon' } }
           %>
         <% end %>
 
@@ -66,23 +69,24 @@
           # either because if we pass ':node' or ':nodes' form_for will try to
           # use the @node or @nodes instance variables and we get the same error. %>
         <%= form_tag(main_app.create_multiple_project_nodes_path(current_project), class: 'add_multiple_nodes_form') do %>
-          To create multiple nodes, add one node name per line:
 
           <div class="add_multiple_nodes_error">
             Please add at least one node
           </div>
 
           <%= hidden_field_tag "nodes[parent_id]", @node.id if type == :child %>
-          <%= text_area_tag    "nodes[list]", "", rows: 3, class: "form-control mb-3 nodes_list" %>
-
-          <%= label_tag :type_id, 'Icon' %>
+          <%= label_tag "#{type}_nodes_list", 'To create multiple nodes, add one node name per line:' %>
+          <%= text_area_tag "nodes[list]", "", rows: 3, class: 'form-control mb-3 nodes_list', id: "#{type}_nodes_list", data: { behavior: 'nodes-list' } %>
+          <%= label_tag "#{type}_nodes_icon", 'Icon' %>
           <%= select_tag(
             "nodes[type_id]",
             options_for_select(
               [["No icon", Node::Types::DEFAULT], ["Host", Node::Types::HOST]]
             ),
             include_blank: false,
-            class: 'custom-select')
+            class: 'custom-select',
+            id: "#{type}_nodes_icon",
+            data: { behavior: 'nodes-icon' })
           %>
         <% end %>
       </div>
@@ -94,4 +98,3 @@
     </div>
   </div>
 </div>
-

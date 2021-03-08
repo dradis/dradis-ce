@@ -1,12 +1,13 @@
-<div id="modal_move_node" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <%= simple_form_for [current_project, @node], html: { class: 'form-horizontal modal-node-selection-form', data: { node_id: @node.id, hidden_field: '#node_parent_id' } } do |f| %>
+<div id="modal_move_node" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+  <%= simple_form_for [current_project, @node], html: { class: 'form-horizontal modal-node-selection-form', id: 'modal_move_node_form', data: { node_id: @node.id, hidden_field: '#node_parent_id' } } do |f| %>
     <%= f.hidden_field :parent_id %>
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Move <%= @node.label %> node</h5>
+          <h5 class="modal-title" id="modal-title">Move <%= @node.label %> node</h5>
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             <i class="fa fa-times"></i>
+            <span class="sr-only">Close modal</span>
           </button>
         </div>
         <div class="modal-body">

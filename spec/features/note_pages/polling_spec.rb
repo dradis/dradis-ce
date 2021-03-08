@@ -15,7 +15,7 @@ describe "note pages", js: true do
   shared_examples "a note page with poller" do
     describe "and someone else updates the same Note" do
       before do
-        @note.update_attributes(text: "whatever")
+        @note.update(text: "whatever")
         create(:activity, action: :update, trackable: @note, user: @other_user)
 
 
@@ -42,7 +42,7 @@ describe "note pages", js: true do
 
     describe "and someone updates then deletes that note" do
       before do
-        @note.update_attributes(text: "whatever")
+        @note.update(text: "whatever")
         create(:activity, action: :update, trackable: @note, user: @other_user)
         @note.destroy
         create(:activity, action: :destroy, trackable: @note, user: @other_user)

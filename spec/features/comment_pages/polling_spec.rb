@@ -24,7 +24,7 @@ describe 'comment pages', js: true do
 
     describe 'and someone else updates a comment' do
       before do
-        @comment.update_attributes(content: 'content updated')
+        @comment.update(content: 'content updated')
         create(:activity, action: :update, trackable: @comment, user: @other_user)
         call_poller
       end

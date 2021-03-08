@@ -221,7 +221,7 @@ describe "node pages", js: true do
     end
 
     let(:update_node) do
-      @other_node.update_attributes!(label: "New name")
+      @other_node.update(label: "New name")
       create(:activity, action: :update, trackable: @other_node, user: @other_user)
       call_poller
     end
