@@ -25,7 +25,7 @@ shared_examples 'a page which handles edit conflicts' do
     with_versioning do
       submit_form
       expect(page).to have_no_content conflict_warning
-      expect(page).to have_no_link(//, href: record_revisions_path(record))
+      expect(page).to have_no_link('//', href: record_revisions_path(record))
     end
   end
 
@@ -41,7 +41,7 @@ shared_examples 'a page which handles edit conflicts' do
     let(:email_1) { 'someone@example.com' }
     before do
       PaperTrail.enabled = true
-      record.update_attributes!(column => "Someone else's changes")
+      record.update!(column => "Someone else's changes")
       record.versions.last.update!(whodunnit: email_1)
     end
 
@@ -77,14 +77,14 @@ shared_examples 'a page which handles edit conflicts' do
       )
 
       old_versions.each do |version|
-        expect(page).to have_no_link(//, href: record_revision_path(record, version))
+        expect(page).to have_no_link('//', href: record_revision_path(record, version))
       end
     end
 
     context 'when there has been more than one edit' do
       let(:email_2) { 'someoneelse@example.com' }
       before do
-        record.update_attributes!(column => 'More conflicts')
+        record.update!(column => 'More conflicts')
         record.versions.last.update!(whodunnit: email_2)
         submit_form
       end
@@ -109,7 +109,7 @@ shared_examples 'a page which handles edit conflicts' do
         end
 
         old_versions.each do |version|
-          expect(page).to have_no_link(//, href: record_revision_path(record, version))
+          expect(page).to have_no_link('//', href: record_revision_path(record, version))
         end
       end
     end

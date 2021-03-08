@@ -17,11 +17,11 @@
 
     if ($('[data-behavior~=copy-node-label]').length) {
       $('[data-behavior~=copy-node-label]').click(function() {
-        var $modal = $(this).parents('.modal'),
-            $nodeType = $modal.find('#node_type_id'),
-            $nodesType = $modal.find('#nodes_type_id'),
-            $multi = $modal.find('#nodes_list'),
-            $label = $modal.find('#node_label');
+        var $modal = $(this).parents('[data-behavior~=add-node]'),
+            $nodeType = $modal.find('[data-behavior~=node-icon]'),
+            $nodesType = $modal.find('[data-behavior~=nodes-icon]'),
+            $multi = $modal.find('[data-behavior~=nodes-list]'),
+            $label = $modal.find('[data-behavior~=node-label]');
 
         if ($(this).find('input').val() === 'one') {
           copyOver($label, $multi.val(), $nodeType, $nodesType.val());

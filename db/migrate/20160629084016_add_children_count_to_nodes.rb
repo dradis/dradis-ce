@@ -4,7 +4,7 @@ class AddChildrenCountToNodes < ActiveRecord::Migration[5.1]
     # `counter_cache: true` to `acts_as_tree`. But for some reason, when
     # that option is present, it interferes with this migration and prevents it
     # from working properly because the line
-    # `node.update_attributes!(children_count: node.children.count) doesn't
+    # `node.update!(children_count: node.children.count) doesn't
     # actually update anything; it appears to work but after the migration is
     # done every node still has 'children_count' set to 0.
     #
@@ -35,7 +35,7 @@ class AddChildrenCountToNodes < ActiveRecord::Migration[5.1]
 
         # 1:
         # Node.find_each do |node|
-        #   node.update_attributes!(children_count: node.children.count)
+        #   node.update!(children_count: node.children.count)
         # end
 
         # 2:

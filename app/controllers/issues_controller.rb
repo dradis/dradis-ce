@@ -56,7 +56,7 @@ class IssuesController < AuthenticatedController
           #
           # See #set_or_initialize_issue()
           #
-          @issue.update_attributes(issue_params)
+          @issue.update(issue_params)
 
 
         track_created(@issue)
@@ -83,7 +83,7 @@ class IssuesController < AuthenticatedController
     respond_to do |format|
       updated_at_before_save = @issue.updated_at.to_i
 
-      if @issue.update_attributes(issue_params)
+      if @issue.update(issue_params)
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)

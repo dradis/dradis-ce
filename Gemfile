@@ -2,10 +2,10 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.4.1'
+ruby '2.7.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.4', '>= 5.2.4.4'
+gem 'rails', '~> 6.1.2.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -17,7 +17,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'mini_racer', platforms: :ruby
 
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2'
+gem 'coffee-rails', '~> 5.0'
 
 # Cache-friendly, client-side local time
 gem 'local_time', '>= 2.0.0'
@@ -27,13 +27,13 @@ gem 'local_time', '>= 2.0.0'
 gem 'turbolinks', '~> 5'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
+gem 'jbuilder', '~> 2.7'
 
-# Use ActiveStorage variant
-# gem 'mini_magick', '~> 4.8'
+# Use Active Storage variant
+# gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bootsnap', '>= 1.4.4', require: false
 
 # ---------------------------------------------------- Dradis Community Edition
 gem 'font-awesome-sass', '~> 4.7.0'
@@ -56,7 +56,7 @@ gem 'html-pipeline'
 
 gem 'kaminari', '~> 1.2.1'
 
-gem 'paper_trail', '~> 10.3'
+gem 'paper_trail', git: 'git@github.com:paper-trail-gem/paper_trail.git', ref: '1e56afd'
 
 # gem 'rails_autolink', '~> 1.1'
 
@@ -64,7 +64,7 @@ gem 'record_tag_helper'
 
 gem 'rubyzip', '>= 1.2.2'
 
-gem 'thor', '~> 0.18'
+gem 'thor', '~> 1.0.1'
 
 
 # ------------------------------------------------------ With native extensions
@@ -73,7 +73,7 @@ gem 'thor', '~> 0.18'
 # See:
 #   http://traveling-ruby.s3-us-west-2.amazonaws.com/list.html
 
-# Use ActiveModel has_secure_password
+# Use Active Model has_secure_password
 # Password digests
 gem 'bcrypt',   '3.1.12'
 
@@ -102,7 +102,7 @@ gem 'rinku'
 gem 'sanitize', '5.2.1'
 
 # SQLite3 DB driver
-gem 'sqlite3'#,  '1.3.10'
+gem 'sqlite3'#,  '1.4.2'
 
 # --------------------------------------------------------- Dradis Professional
 # Authorisation
@@ -144,15 +144,17 @@ end
 # ----------------------------------------------------- Development and Testing
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'web-console', '>= 4.1.0'
+  # Display performance information such as SQL time and flame graphs for each request in your browser.
+  # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
+  gem 'rack-mini-profiler', '~> 2.0'
+  gem 'listen', '~> 3.3'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
 
   # Alert on n+1 queries
-  gem 'bullet'
+  #gem 'bullet'
 
   # Cleanup logs from asset entries
   # gem 'quiet_assets'
@@ -175,15 +177,15 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
 
-  gem 'rspec-rails', '~> 3.1'
+  gem 'rspec-rails', '~> 4.0.2'
 
-  gem 'puma'
+  gem 'puma', '~> 5.0'
 end
 
 group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
-  gem 'capybara', '>= 2.15'
+  gem 'capybara', '>= 3.26'
   gem 'guard-rspec', require: false
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 3.1'
@@ -206,13 +208,13 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 3.20'
+gem 'dradis-plugins', '~>3.21'
 
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 3.20'
+gem 'dradis-projects', '~>3.21'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)
