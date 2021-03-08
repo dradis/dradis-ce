@@ -1,12 +1,10 @@
 class SubscriptionsController < AuthenticatedController
-  include ProjectScoped
-
   def create
     subscription = Subscription.new(subscription_params)
     subscription.user = current_user
     subscription.save
 
-    redirect_back fallback_location: project_path(current_project), notice: 'Subscribed!'
+    redirect_back fallback_location: root_path, notice: 'Subscribed!'
   end
 
   def destroy
@@ -17,7 +15,7 @@ class SubscriptionsController < AuthenticatedController
     )
     subscription.destroy
 
-    redirect_back fallback_location: project_path(current_project), notice: 'Unsubscribed!'
+    redirect_back fallback_location: root_path, notice: 'Unsubscribed!'
   end
 
   private
