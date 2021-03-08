@@ -44,7 +44,7 @@ body.boards.index {
   }
 
   .board-tile {
-    background-color: lighten($primaryColor, 20%);
+    background-color: $primaryColor;
     border-radius: 3px;
     color: $white;
     display: block;
@@ -69,7 +69,7 @@ body.boards.index {
     }
 
     &:hover {
-      background-color: lighten($primaryColor, 15%);
+      background-color: darken($primaryColor, 5%);
     }
 
     .board-tile-details {
@@ -189,7 +189,7 @@ body.boards.show {
   }
 
   .list-new {
-    background-color: lighten($primaryColor, 20%);
+    background-color: $primaryColor;
     border: none;
     border-radius: 3px;
     padding: 0.25rem;
@@ -200,7 +200,7 @@ body.boards.show {
     }
 
     &:hover {
-      background-color: lighten($primaryColor, 15%);
+      background-color: darken($primaryColor, 5%);
     }
   }
   
