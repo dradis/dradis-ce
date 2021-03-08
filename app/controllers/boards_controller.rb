@@ -64,7 +64,7 @@ class BoardsController < AuthenticatedController
   end
 
   def update
-    if @board.update_attributes(board_params)
+    if @board.update(board_params)
       track_updated(@board)
       redirect_to [current_project, @board], notice: 'Methodology renamed.'
     else
