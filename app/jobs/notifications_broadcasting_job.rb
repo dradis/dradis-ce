@@ -7,8 +7,8 @@ class NotificationsBroadcastingJob < ApplicationJob
     if notifiable.respond_to?(:notify)
       notifiable.notify(
         action: action,
-        recipients: User.where(id: recipient_ids),
-        user: User.find(user_id)
+        actor: User.find(user_id),
+        recipients: User.where(id: recipient_ids)
       )
 
       notifiable.notifications.each do |notification|

@@ -1,7 +1,7 @@
 module Notified
   protected
 
-  def broadcast_notifications(action:, actor:, notifiable:, user:, recipient_ids: [])
+  def broadcast_notifications(action:, notifiable:, user:, recipient_ids: [])
     NotificationsBroadcastingJob.perform_later(
       action: action.to_s,
       notifiable_id: notifiable.id,
