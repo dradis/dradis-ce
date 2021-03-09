@@ -36,14 +36,14 @@ class Comment < ApplicationRecord
     Subscription.subscribe(user: user, to: commentable) if user
   end
 
-  def notify(action)
+  def notify(action, actor)
     case action.to_s
     when 'create'
       subscribe_mentioned()
-      create_notifications(action: :mention, recipients: mentions)
+      create_notifications(action: :mention, actor: actor,  recipients: mentions)
 
       subscribers = commentable.subscriptions.where.not(user: user).map(&:user)
-      create_notifications(action: :create, recipients: subscribers - mentions)
+      create_notifications(action: :create, actor: actor,  recipients: subscribers - mentions)
     end
   end
 
