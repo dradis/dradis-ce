@@ -156,12 +156,12 @@
 
       // Full screen
       // button = $('<a class="btn btn-fullscreen" href="javascript:void(null);"><span>&nbsp;</span></a>');
-      button = $('<a class="btn-fullscreen fa fa-expand" href="javascript:void(null);"><span>&nbsp;</span></a>');
+      button = $('<a class="btn-fullscreen fa fa-expand" href="javascript:void(null);"><span>&nbsp;</span><span class="sr-only">Toggle Fullscreen</span></a>');
       button.click( $.proxy( function(evt) { this._onBtnFullScreen(evt); }, this));
       $('.textile-toolbar', this.options.$wrap).append( $('<li class="right">').append(button) );
 
       // Help
-      button = $('<a class="btn-help fa fa-question" href="javascript:void(null);"><span>&nbsp;</span></a>');
+      button = $('<a class="btn-help fa fa-question" href="javascript:void(null);"><span>&nbsp;</span><span class="sr-only">Toggle Help</span></a>');
       button.click( $.proxy( function(evt) { this._onBtnHelp(evt); }, this));
       $('.textile-toolbar', this.options.$wrap).append( $('<li class="right">').append(button) );
     },

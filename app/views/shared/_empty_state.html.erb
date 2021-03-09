@@ -1,0 +1,15 @@
+<div class="empty-state">
+  <div class="empty-state-icon">
+    <%= image_tag "icons/#{rand(9)}.svg" %>
+  </div>
+  <div class="empty-state-body">
+    <div class="container">
+      <h4 class="empty-state-title">You don't have any <%= name.pluralize %> yet</h4>
+      <p class="empty-state-body-text"><%= text %></p>
+      <div class="empty-state-actions">
+        <%= render partial: actions_partial if local_assigns[:actions_partial] %>
+        <%= link_to "More about #{local_assigns[:docs_name] ? docs_name : name.pluralize}", docs_link, class: 'empty-state-docs-link', target: '_blank' %>
+      </div>
+    </div>
+  </div>
+</div>
