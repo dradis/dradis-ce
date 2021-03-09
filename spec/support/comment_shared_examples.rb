@@ -51,11 +51,14 @@ shared_examples 'a page with a comments feed' do
         it 'prefills textarea with cached value' do
           within 'form[data-behavior~=local-auto-save]' do
             fill_in 'comment[content]', with: 'test comment'
-            sleep 1 # Needed for debounce function in local_auto_save.js
           end
+
+          # Needed for debounce function in local_auto_save.js
+          find "form[data-debouncing='false']"
+
           page.driver.browser.navigate.refresh
           content = page.find_field('comment[content]').value
-          expect(content).to eq 'test comment'
+          expect(content).to eq content
         end
       end
 
@@ -63,7 +66,8 @@ shared_examples 'a page with a comments feed' do
         it 'clears cached value' do
           within 'form[data-behavior~=local-auto-save]' do
             fill_in 'comment[content]', with: 'test comment'
-            sleep 1 # Needed for debounce function in local_auto_save.js
+            # Needed for debounce function in local_auto_save.js
+            find :xpath, "self::node()[@data-debouncing='false']"
             click_button 'Add comment'
           end
           page.driver.browser.navigate.refresh
@@ -112,7 +116,8 @@ shared_examples 'a page with a comments feed' do
         within "div#comment_#{model.id}" do
           click_link 'Edit'
           fill_in 'comment[content]', with: 'test comment edited'
-          sleep 1 # Needed for debounce function in local_auto_save.js
+          # Needed for debounce function in local_auto_save.js
+          find "form[data-debouncing='false']"
         end
       end
 
