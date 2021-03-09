@@ -94,8 +94,6 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
-    resources :subscriptions, only: [:create, :destroy]
-
     get 'search' => 'search#index'
     get 'trash' => 'revisions#trash'
 
@@ -126,6 +124,8 @@ Rails.application.routes.draw do
       post :source
     end
   end
+
+  resources :subscriptions, only: [:create, :destroy]
 
   # -------------------------------------------------------------- Static pages
   resource :markup, controller: :markup, only: [] do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe NotificationsBroadcastJob do #, type: :job do
+describe NotificationsBroadcastingJob do #, type: :job do
   it 'uses correct queue' do
     expect(described_class.new.queue_name).to eq('dradis_project')
   end
@@ -17,9 +17,9 @@ describe NotificationsBroadcastJob do #, type: :job do
 
       described_class.new.perform(
         action: 'create',
-        actor_id: notifiable.user.id,
         notifiable_id: notifiable.id,
         notifiable_type: notifiable.class.to_s,
+        user_id: notifiable.user.id,
         recipient_ids: []
       )
     end
