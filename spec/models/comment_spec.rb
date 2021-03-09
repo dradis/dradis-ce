@@ -40,7 +40,7 @@ describe Comment do
       comment = create(:comment, commentable: commentable)
 
       expect {
-        comment.notify('create', comment.user)
+        comment.notify(action: 'create', actor: comment.user, recipients: [])
       }.to change { Notification.count }.by(2)
     end
 
@@ -56,7 +56,7 @@ describe Comment do
       )
 
       expect {
-        comment.notify('create', comment.user)
+        comment.notify(action: 'create', actor: comment.user, recipients: [])
       }.to change { Notification.count }.by(3) \
       .and change { Subscription.count }.by(1)
 
