@@ -40,7 +40,7 @@ shared_examples 'creates an Activity' do |action, klass = nil|
     else
       expect { submit_form }.to have_enqueued_job(ActivityTrackingJob).with(
         action: action.to_s,
-        project_id: current_project.id,
+        project_id: current_project ? current_project.id : nil,
         trackable_id: model.id,
         trackable_type: model.class.to_s,
         user_id: @logged_in_as.id
