@@ -193,6 +193,3 @@ document.addEventListener "turbolinks:load", ->
     history.pushState({}, '', this.href);
     $(this.hash)[0].scrollIntoView behavior: 'smooth'
     return
-
-  $('[data-behavior~=local-auto-save]').each ->
-    new LocalAutoSave(this)

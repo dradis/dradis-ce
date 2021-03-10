@@ -20,10 +20,13 @@
 
 //= require cable
 
+//= require shared/auto_save/local
 //= require shared/charts
+//= require shared/comments
 //= require shared/console_updater
 //= require shared/editor_toolbar
 //= require shared/items_table
+//= require shared/mentions
 //= require shared/notifications
 
 //= require tylium/plugins/jquery.breadcrumbs
@@ -36,14 +39,10 @@
 //= require tylium/engines
 //= require tylium/keyboard_shortcuts
 
-//= require tylium/modules/auto_save/local
-
-//= require tylium/modules/comments
 //= require tylium/modules/configurations
 //= require tylium/modules/export
 //= require tylium/modules/fileupload
 //= require tylium/modules/issues
-//= require tylium/modules/mentions
 //= require tylium/modules/nodes
 //= require tylium/modules/search
 //= require tylium/modules/sidebar
