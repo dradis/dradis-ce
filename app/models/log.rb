@@ -7,15 +7,26 @@ class Log < ApplicationRecord
 
   def write(trace = nil, &block)
     text = trace.nil? ? yield : trace
-    Log.create!(attributes.merge(text: text))
+    Log.create!(attributes.except('id').merge(text: text))
   end
 
-  alias :info :write
   alias :debug :write
   alias :error :write
   alias :fatal :write
+  alias :info :write
+  alias :warn :write
+
+  def time
+    created_at.strftime('%H:%M:%S')
+  end
 
   def read
-    "[#{created_at.strftime('%H:%M:%S')}]  #{text}"
+    text.gsub(/\e\[\d+m/, '')
+  end
+
+  def color
+    color_num = text.match(/\e\[(\d+)m/)
+    return '' unless color_num
+    color_num[1]
   end
 end
