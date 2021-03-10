@@ -12,7 +12,7 @@ module AvatarHelper
 
     gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
     size = options.fetch(:size, DEFAULT_PROFILE_IMAGE_SIZE).to_i * 2 # Retina displays mean dot density can be higher.
-    "https://secure.gravatar.com/avatar/#{gravatar_id}?r=PG&s=#{size}&d=404"
+    "https://secure.gravatar.com/avatar/#{gravatar_id}?r=PG&s=#{size}&d=#{image_url(DEFAULT_PROFILE_IMAGE)}"
   end
 
   def avatar_image(user, opt = {})
