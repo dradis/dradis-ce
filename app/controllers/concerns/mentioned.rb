@@ -9,7 +9,7 @@ module Mentioned
   protected
 
   def find_mentionable_users
-    @mentionable_users ||= current_project.testers_for_mentions.enabled
+    @mentionable_users ||= current_project.testers_for_mentions
   end
 
   # For mentionable users in comment textarea select.
@@ -17,7 +17,7 @@ module Mentioned
   # e.g. CardsController, IssuesController.
   # You can override this method in controllers that includes this concern.
   def mentionable_users_for_tributes
-    @mentionable_users_for_tributes ||= current_project.testers_for_mentions.enabled
+    @mentionable_users_for_tributes ||= current_project.testers_for_mentions
   end
 
   # For mentionable users when displaying comment.
