@@ -1,4 +1,8 @@
 class NotificationsController < AuthenticatedController
+  if !defined?(Dradis::Pro)
+    include ProjectScoped
+  end
+
   def index
     notifications = current_user.notifications.newest.includes(
       :actor, notifiable: [:user, :commentable]

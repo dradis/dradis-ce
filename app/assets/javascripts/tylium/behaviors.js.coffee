@@ -95,7 +95,7 @@ document.addEventListener "turbolinks:load", ->
     $('#try-pro').modal()
 
   # If project id is changed in project path
-  if !(/^\/projects\/1(\/|$)/.test(window.location.pathname))
+  if !(/^\/projects\/1(\/|$)/.test(window.location.pathname)) && !$('.notifications.index').length
     $('[data-behavior~=project-teaser]').removeClass('d-none')
 
   if ($poller = $("#activities-poller")).length
