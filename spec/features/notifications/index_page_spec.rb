@@ -19,7 +19,7 @@ describe 'notifications index page' do
     create_notification(recipient: u1)
     create_notification(recipient: u2)
 
-    visit notifications_path
+    visit project_notifications_path(@project)
 
     expect(page).not_to have_selector '.notification'
     expect(page).to have_content "You don't have any notifications yet."
@@ -34,7 +34,7 @@ describe 'notifications index page' do
     create_notification(recipient: u1)
     create_notification(recipient: u2)
 
-    visit notifications_path
+    visit project_notifications_path(@project)
 
     expect(page).to have_selector '.notification', count: 2
     expect(page).not_to have_content "You don't have any notifications yet."
@@ -50,7 +50,7 @@ describe 'notifications index page' do
       create_notification(recipient: u2),
     ]
 
-    visit notifications_path
+    visit project_notifications_path(@project)
 
     expect do
       click_link 'Mark all as read'
@@ -67,7 +67,7 @@ describe 'notifications index page' do
   example 'marking a notification as read', :js do
     notif = create_notification(recipient: me)
 
-    visit notifications_path
+    visit project_notifications_path(@project)
 
     expect(page).to have_css('.notification.unread')
     find('.notification-read').click
