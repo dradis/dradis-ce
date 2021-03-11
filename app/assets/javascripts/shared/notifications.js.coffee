@@ -5,9 +5,10 @@ document.addEventListener 'turbolinks:load', ->
 
     if $('[data-behavior~=navbar-collapse]').not('.show').length
       e.preventDefault()
-      
+
       $.ajax
         url: $dropdown.attr('href') + '.js'
+        data: { project_id: $dropdown.data('projectId') }
         dataType: 'script'
         method: 'GET'
         beforeSend: (e)->

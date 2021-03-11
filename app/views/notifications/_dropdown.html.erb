@@ -21,7 +21,7 @@
   </ul>
   <% if notifications.any? %>
     <div class="footer text-center">
-      <%= link_to 'See all notifications', notifications_path %>
+      <%= link_to 'See all notifications', project_id ? project_notifications_path(project_id) : notifications_path %>
     </div>
   <% end %>
 <% end %>

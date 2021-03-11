@@ -90,6 +90,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :notifications, only: [:index, :update]
+
     resources :revisions, only: [] do
       member { post :recover }
     end
