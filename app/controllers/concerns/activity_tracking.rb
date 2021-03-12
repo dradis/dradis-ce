@@ -11,12 +11,12 @@ module ActivityTracking
     )
   end
 
-  def track_created(trackable, user: current_user, project: current_project)
-    track_activity(trackable, :create, user, project)
+  def track_assigned(trackable, user: current_user, project: current_project)
+    track_activity(trackable, :assign, user, project)
   end
 
-  def track_updated(trackable, user: current_user, project: current_project)
-    track_activity(trackable, :update, user, project)
+  def track_created(trackable, user: current_user, project: current_project)
+    track_activity(trackable, :create, user, project)
   end
 
   def track_destroyed(trackable, user: current_user, project: current_project)
@@ -25,5 +25,9 @@ module ActivityTracking
 
   def track_recovered(trackable, user: current_user, project: current_project)
     track_activity(trackable, :recover, user, project)
+  end
+
+  def track_updated(trackable, user: current_user, project: current_project)
+    track_activity(trackable, :update, user, project)
   end
 end
