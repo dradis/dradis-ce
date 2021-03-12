@@ -6,7 +6,6 @@ class LocalAutoSave {
     this.key = target.dataset.autoSaveKey;
     this.submitted = false;
     this.target = target;
-    this.debouncingValue = false;
 
     // Don't store authenticity_token and utf8
     this.excludedInputNames = ['utf8', 'authenticity_token', '_method'];
@@ -17,17 +16,6 @@ class LocalAutoSave {
   init() {
     this.behaviors();
     this.restoreData();
-  }
-
-  set debouncing(val) {
-    if (val != this.debouncingValue) {
-      this.debouncingValue = val;
-      $(this.target).attr('data-debouncing', val);
-    }
-  }
-
-  get debouncing() {
-    return this.debouncingValue;
   }
 
   behaviors() {
@@ -58,11 +46,9 @@ class LocalAutoSave {
 
   handleTextChange() {
     clearTimeout(this.debounceTimeout);
-    this.debouncing = true;
 
     this.debounceTimeout = setTimeout(function() {
       this.setData();
-      this.debouncing = false;
     }.bind(this), this.debounceTimer);
   }
 
