@@ -12,7 +12,23 @@ module Commented
   end
 
   def commentable
-    instance_variable_get("@#{controller_name.singularize}")
+    @commentable ||= begin
+      case params[:action]
+      when 'index'
+        Comment.new(
+          commentable_type: params[:commentable_type],
+          commentable_id: params[:commentable_id]
+        ).commentable
+      when 'create'
+        Comment.new(
+          commentable_type: params[:comment][:commentable_type],
+          commentable_id: params[:comment][:commentable_id]
+        ).commentable
+      else
+        # update, destroy
+        Comment.find(params[:id]).commentable
+      end
+    end
   end
 
   def comments

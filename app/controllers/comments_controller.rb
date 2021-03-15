@@ -1,15 +1,25 @@
 class CommentsController < AuthenticatedController
-  # Load @comment first
-  load_and_authorize_resource
+  layout false
 
   include ActivityTracking
+  include Commented
   include Mentioned
+  include Notified
+
+  load_and_authorize_resource except: [:index]
+
+  def index; end
 
   def create
     @comment = Comment.new(comment_params)
     @comment.user = current_user
     if @comment.save
       track_created(@comment, project: project)
+      broadcast_notifications(
+        action: :create,
+        notifiable: @comment,
+        user: current_user
+      )
     end
   end
 
@@ -37,8 +47,8 @@ class CommentsController < AuthenticatedController
     return @project if defined?(@project)
 
     @project =
-      if commentable.respond_to?(:project)
-        commentable.project
+      if @comment.commentable.respond_to?(:project)
+        @comment.commentable.project
       else
         nil
       end

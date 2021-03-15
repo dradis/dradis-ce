@@ -80,7 +80,7 @@
   <div class="col-12 col-xxl-5 p-0">
     <div class="sticky-top">
       <div class="content-container ml-xxl-3 mt-0">
-        <%= render 'comments/feed' %>
+        <div data-behavior="fetch-comments" data-path="<%= main_app.comments_path(commentable_type: @note.class, commentable_id: @note.id) %>"></div>
       </div>
 
       <div class="content-container ml-xxl-3">

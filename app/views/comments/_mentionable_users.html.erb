@@ -1,7 +1,7 @@
 <%# this is picked up by javascripts/tylium/modules/comments.js.coffee %>
-<% cache(@mentionable_users_for_tributes) do %>
+<% cache(@mentionable_users) do %>
   <%= content_tag :meta, '',
-    content: tribute_hash(@mentionable_users_for_tributes).to_json,
+    content: tribute_hash(@mentionable_users).to_json,
     data: { fallback_image: image_url(AvatarHelper::DEFAULT_PROFILE_IMAGE) },
     name: 'mentionable-users'
   %>

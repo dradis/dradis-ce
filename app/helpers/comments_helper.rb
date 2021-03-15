@@ -9,7 +9,7 @@ module CommentsHelper
       HTML::Pipeline::DradisMentionsFilter,
       HTML::Pipeline::DradisCodeHighlightFilter
     ], {
-      mentionable_users: @mentionable_users_for_pipeline,
+      mentionable_users: @mentionable_users,
       no_inline_code: true,
       username_pattern: Comment::MENTION_PATTERN,
       view_context: self
