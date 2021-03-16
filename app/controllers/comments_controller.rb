@@ -4,12 +4,12 @@ class CommentsController < AuthenticatedController
   include ActivityTracking
   include Notified
 
+  load_and_authorize_resource except: [:index]
+
   before_action :find_mentionable_users, only: [:index, :create, :update]
   before_action :validate_commentable, only: [:index, :create]
 
   helper_method :commentable, :comments
-
-  load_and_authorize_resource except: [:index]
 
   def index; end
 
@@ -60,7 +60,7 @@ class CommentsController < AuthenticatedController
           commentable_id: comment_params[:commentable_id]
         ).commentable
       when 'update', 'destroy'
-        Comment.find(params[:id]).commentable
+        @comment.commentable
       else
         raise 'Invalid action'
       end
