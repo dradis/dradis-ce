@@ -28,6 +28,17 @@ class List < ApplicationRecord
     board.lists.find_by(previous_id: id)
   end
 
+  def to_xml(xml_builder, includes: [], version: 3)
+    xml_builder.list do |list_builder|
+      list_builder.id(id)
+      list_builder.name(name)
+      list_builder.previous_id(previous_id)
+
+      ordered_items.each do |card|
+        card.to_xml(list_builder, includes: includes)
+      end
+    end
+  end
 
   private
   def adjust_link

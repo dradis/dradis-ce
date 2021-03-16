@@ -42,8 +42,13 @@ class Comment < ApplicationRecord
       subscribe_mentioned()
       create_notifications(action: :mention, recipients: mentions)
 
-      subscribers = commentable.subscriptions.where.not(user: user).map(&:user)
-      create_notifications(action: :create, recipients: subscribers - mentions)
+      # We're finding subscribers that have not been mention here
+      # using ActiveRecord because create_notifications expect recipients
+      # to be an ActiveRecord::Relation.
+      subscribers = User.includes(:subscriptions).where(
+        subscriptions: { subscribable_id: commentable.id }
+      ).where.not(id: [user.id] + mentions.pluck(:id))
+      create_notifications(action: :create, recipients: subscribers)
     end
   end
 
@@ -58,6 +63,14 @@ class Comment < ApplicationRecord
       project = commentable.project
       project.testers_for_mentions.where(email: emails.uniq)
     end
+  end
+
+  def to_xml(xml_builder, version: 3)
+    xml_builder.content do
+      xml_builder.cdata!(content)
+    end
+    xml_builder.author(user.email)
+    xml_builder.created_at(created_at.to_i)
   end
 
   private
