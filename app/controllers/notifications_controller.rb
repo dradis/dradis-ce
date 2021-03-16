@@ -1,4 +1,7 @@
 class NotificationsController < AuthenticatedController
+  skip_before_action :ensure_tester
+  skip_before_action :render_onboarding_tour
+
   include ProjectScoped
 
   def index

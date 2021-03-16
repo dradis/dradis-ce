@@ -1,11 +1,10 @@
-document.addEventListener 'turbolinks:load', ->
+loadNotificationsDropdown = ->
   $dropdown = $('[data-behavior~=notifications-dropdown]')
 
   $dropdown.click (e) ->
-
     if $('[data-behavior~=navbar-collapse]').not('.show').length
       e.preventDefault()
-      
+
       $.ajax
         url: $dropdown.attr('href') + '.js'
         dataType: 'script'
@@ -19,3 +18,8 @@ document.addEventListener 'turbolinks:load', ->
             return false
     else
       $(this).removeAttr('data-toggle')
+
+if (typeof window.Turbolinks != 'undefined' && window.Turbolinks != null)
+  document.addEventListener('turbolinks:load', loadNotificationsDropdown)
+else
+  $(document).ready(loadNotificationsDropdown)
