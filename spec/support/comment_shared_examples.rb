@@ -17,6 +17,9 @@ shared_examples 'a page with a comments feed' do
   end
 
   it 'lists them in the content feed' do
+    # Wait for ajax
+    find('.comment-feed > .comment-list')
+
     within comment_feed do
       should have_comment(@comments[0])
       should have_comment(@comments[1])
@@ -25,6 +28,9 @@ shared_examples 'a page with a comments feed' do
   end
 
   it 'display user\'s name in comment row' do
+    # Wait for ajax
+    find('.comment-feed > .comment-list')
+
     within "div#comment_#{@comments[0].id}" do
       expect(page).to have_selector('span.user', text: @logged_in_as.name)
     end

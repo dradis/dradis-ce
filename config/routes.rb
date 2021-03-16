@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   get '/logout' => 'sessions#destroy'
   resource :session
 
+  resources :comments
+
   # ------------------------------------------------------------ Project routes
   concern :multiple_destroy do
     collection do
@@ -36,8 +38,6 @@ Rails.application.routes.draw do
         end
       end
     end
-
-    resources :comments
 
     constraints id: %r{[(0-z)\/]+} do
       resources :configurations, only: [:index, :update]

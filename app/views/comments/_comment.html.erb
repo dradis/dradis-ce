@@ -1,5 +1,5 @@
-<div class="comment-wrapper">
-  <%= div_for comment, data: { author: comment.user_id } do %>
+<div class="comment-wrapper" data-behavior="comment">
+  <%= div_for comment, data: { author_id: comment.user_id } do %>
     <div class="body">
       <%= avatar_image(comment.user, size: 35) %>
 
@@ -16,10 +16,10 @@
 
 
             <div class="actions pull-right">
-              <%= link_to edit_project_comment_path(current_project, comment), remote: true, data: { action: 'edit' } do %>
+              <%= link_to main_app.edit_comment_path(comment), remote: true, data: { action: 'edit' } do %>
                 <i class="fa fa-pencil"></i> Edit
               <% end %>
-              <%= link_to [current_project, comment],
+              <%= link_to main_app.comment_path(comment),
                           method: :delete,
                           data: { confirm: "Are you sure?\n\nProceeding will delete this comment, making it no longer visible to anyone." },
                           remote: true,

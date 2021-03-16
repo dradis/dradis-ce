@@ -2,7 +2,7 @@
 <% cache ['comment-feed', comments] do %>
   <h4 class="d-flex header-underline mb-0">Comments <span class="badge bg-primary text-white ml-2" id="comment-count"><%= comments.count %></span></h4>
   <div class="comment-list">
-    <%= render(comments, cached: true) if comments.any? %>
+    <%= render(partial: 'comments/comment', collection: comments, cached: true) if comments.any? %>
 
     <div data-notice="no-comments" class="comment mt-3 <% if comments.any? %>d-none<% end %>">
       There have been no comments yet.
@@ -12,3 +12,5 @@
 
 <%= render 'comments/new' %>
 </div>
+
+<%= render 'comments/mentionable_users' %>

@@ -73,7 +73,7 @@
                 <% end %>
               <% end %>
 
-            </div>         
+            </div>
           </div>
 
           <% cache ['card-activity-tab', @card, @activities] do %>
@@ -81,7 +81,7 @@
               <h4 class="header-underline">
                 Recent activity
                 <% if @card.has_revision_history? %>
-                  - 
+                  -
                   <span class="actions">
                     <%= link_to(project_board_list_card_revisions_path(current_project, @board, @list, @card)) do %>
                       <i class="fa fa-history"></i> Revision history
@@ -99,7 +99,7 @@
     <div class="col-12 col-xxl-5 p-0">
       <div class="sticky-top">
         <div class="content-container ml-xxl-3 mt-0">
-          <%= render 'comments/feed' %>
+          <div class="fetch-comments" data-behavior="fetch-comments" data-path="<%= main_app.comments_path(commentable_type: @card.class, commentable_id: @card.id) %>"></div>
         </div>
 
         <div class="content-container ml-xxl-3">
@@ -107,6 +107,6 @@
         </div>
       </div>
     </div>
-    
+
   </div>
 </div>

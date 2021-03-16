@@ -1,16 +1,23 @@
 class CommentsController < AuthenticatedController
+  layout false
+
   include ActivityTracking
-  include ProjectScoped
-  include Mentioned
   include Notified
 
-  load_and_authorize_resource
+  before_action :find_mentionable_users, only: [:index, :create, :update]
+  before_action :validate_commentable, only: [:index, :create]
+
+  helper_method :commentable, :comments
+
+  load_and_authorize_resource except: [:index]
+
+  def index; end
 
   def create
     @comment = Comment.new(comment_params)
     @comment.user = current_user
     if @comment.save
-      track_created(@comment)
+      track_created(@comment, project: project)
       broadcast_notifications(
         action: :create,
         notifiable: @comment,
@@ -21,19 +28,71 @@ class CommentsController < AuthenticatedController
 
   def update
     if @comment.update(comment_params)
-      track_updated(@comment)
+      track_updated(@comment, project: project)
     end
   end
 
   def destroy
     if @comment.destroy
-      track_destroyed(@comment)
+      track_destroyed(@comment, project: project)
     end
   end
 
   private
 
   def comment_params
-    params.require(:comment).permit(:content, :commentable_type, :commentable_id)
+    case params[:action]
+    when 'index'
+      params.permit(:commentable_id, :commentable_type)
+    when 'create', 'update'
+      params.require(:comment).permit(:content, :commentable_type, :commentable_id)
+    else
+      raise 'Invalid action'
+    end
+  end
+
+  def commentable
+    @commentable ||= begin
+      case params[:action]
+      when 'index', 'create'
+        Comment.new(
+          commentable_type: comment_params[:commentable_type],
+          commentable_id: comment_params[:commentable_id]
+        ).commentable
+      when 'update', 'destroy'
+        Comment.find(params[:id]).commentable
+      else
+        raise 'Invalid action'
+      end
+    end
+  end
+
+  def comments
+    @comments ||= commentable&.comments&.includes(:user)
+  end
+
+  def find_mentionable_users
+    @mentionable_users ||= begin
+      project.testers_for_mentions
+    end
+  end
+
+  def project
+    # Using defined? to check for instance variable because @project
+    # can be nil.
+    return @project if defined?(@project)
+
+    @project =
+      if commentable.respond_to?(:project)
+        commentable.project
+      else
+        nil
+      end
+  end
+
+  def validate_commentable
+    if commentable.is_a?(User) || !commentable.respond_to?(:comments)
+      raise 'Invalid commentable'
+    end
   end
 end
