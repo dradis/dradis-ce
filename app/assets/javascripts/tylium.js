@@ -4,6 +4,7 @@
 //= require jquery_ujs
 //= require turbolinks
 // require activestorage
+//= require jquery.are-you-sure
 //= require jquery.form
 //= require jquery.textchange.min
 //= require jquery.textile
@@ -20,10 +21,13 @@
 
 //= require cable
 
+//= require shared/auto_save/local
 //= require shared/charts
+//= require shared/comments
 //= require shared/console_updater
 //= require shared/editor_toolbar
 //= require shared/items_table
+//= require shared/mentions
 //= require shared/notifications
 //= require shared/subscriptions
 
@@ -37,20 +41,18 @@
 //= require tylium/engines
 //= require tylium/keyboard_shortcuts
 
-//= require tylium/modules/auto_save/local
-
-//= require tylium/modules/comments
 //= require tylium/modules/configurations
 //= require tylium/modules/export
 //= require tylium/modules/fileupload
 //= require tylium/modules/issues
-//= require tylium/modules/mentions
 //= require tylium/modules/nodes
 //= require tylium/modules/search
 //= require tylium/modules/sidebar
 //= require tylium/modules/activities/poller
-// require tylium/modules/tour
+//= require tylium/modules/tour
 //= require tylium/modules/uploads
+//= require tylium/modules/validation
+//= require tylium/modules/validation_poller
 
 //= require tylium/pages/activities
 //= require tylium/pages/boards
@@ -59,5 +61,8 @@
 //= require tylium/pages/projects/boards_summary
 //= require tylium/pages/projects/issues_chart
 //= require tylium/pages/projects/summary
+//= require tylium/pages/report_content/content_blocks
+//= require tylium/pages/report_content/document_properties
 //= require tylium/pages/revisions
 //= require tylium/pages/styles
+//= require tylium/pages/uploads/validation
