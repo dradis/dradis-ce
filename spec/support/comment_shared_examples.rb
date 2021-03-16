@@ -16,7 +16,7 @@ shared_examples 'a page with a comments feed' do
     @other_comment = create(:comment, commentable: other_instance)
   end
 
-  it 'lists them in the content feed' do
+  it 'lists them in the content feed', js: true  do
     # Wait for ajax
     find('.comment-feed > .comment-list')
 
@@ -27,7 +27,7 @@ shared_examples 'a page with a comments feed' do
     end
   end
 
-  it 'display user\'s name in comment row' do
+  it 'display user\'s name in comment row', js: true do
     # Wait for ajax
     find('.comment-feed > .comment-list')
 
