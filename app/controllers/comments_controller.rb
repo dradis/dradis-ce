@@ -98,11 +98,5 @@ class CommentsController < AuthenticatedController
     if commentable.is_a?(User) || !commentable.respond_to?(:comments)
       raise 'Invalid commentable'
     end
-
-    if commentable.respond_to?(:project)
-      authorize! :use, commentable.project
-    else
-      authorize! :read, commentable
-    end
   end
 end
