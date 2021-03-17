@@ -91,8 +91,18 @@ class CommentsController < AuthenticatedController
   end
 
   def validate_commentable
+    # Because a user can have many comments, we have to check the type to not
+    # cause any information leakage. We also check if commentable can respond
+    # to the #comments method instead of whitelisting so that we don't have to
+    # hard code plugin models here.
     if commentable.is_a?(User) || !commentable.respond_to?(:comments)
       raise 'Invalid commentable'
+    end
+
+    if commentable.respond_to?(:project)
+      authorize! :use, commentable.project
+    else
+      authorize! :read, commentable
     end
   end
 end
