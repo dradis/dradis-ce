@@ -7,10 +7,9 @@ class ActivitiesController < AuthenticatedController
   def index
     @page = params[:page].present? ? params[:page].to_i : 1
 
-    activities = current_project.activities
-                                .includes(:trackable)
-                                .order(created_at: :desc)
-                                .page(@page)
+    activities = Kaminari.paginate_array(
+      Activity.includes(:trackable).order(created_at: :desc).by_project(current_project)
+    ).page(@page)
 
     @activities_groups = activities.group_by do |activity|
       activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
@@ -19,7 +18,7 @@ class ActivitiesController < AuthenticatedController
 
   def poll
     @this_poll  = Time.now.to_i
-    @activities = current_project.activities.includes(:trackable).where(
+    @activities = Activity.where(
       '`user_id` != (?) AND `created_at` >= (?)',
       current_user.id,
       # passing the string directly doesn't work, must be a Time object:

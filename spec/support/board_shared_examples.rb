@@ -218,7 +218,7 @@ shared_examples 'a board page with poller' do
   describe 'when someone else updates that board' do
     before do
       @board.update(name: 'whatever new board name')
-      create(:activity, action: :update, trackable: @board, user: @other_user, project: current_project)
+      create(:activity, action: :update, trackable: @board, user: @other_user)
       call_poller
     end
 
@@ -232,7 +232,7 @@ shared_examples 'a board page with poller' do
       PaperTrail.enabled = true
 
       @board.destroy
-      create(:activity, action: :destroy, trackable: @board, user: @other_user, project: current_project)
+      create(:activity, action: :destroy, trackable: @board, user: @other_user)
       call_poller
     end
 
@@ -248,9 +248,9 @@ shared_examples 'a board page with poller' do
       PaperTrail.enabled = true
 
       @board.update(name: 'whatever')
-      create(:activity, action: :update, trackable: @board, user: @other_user, project: current_project)
+      create(:activity, action: :update, trackable: @board, user: @other_user)
       @board.destroy
-      create(:activity, action: :destroy, trackable: @board, user: @other_user, project: current_project)
+      create(:activity, action: :destroy, trackable: @board, user: @other_user)
       call_poller
     end
 
@@ -266,7 +266,7 @@ shared_examples 'a board page with poller' do
   describe 'when someone else adds a list to that board' do
     before do
       @new_list = create(:list, board: @board, previous_id: @other_list.id)
-      create(:activity, action: :create, trackable: @new_list, user: @other_user, project: current_project)
+      create(:activity, action: :create, trackable: @new_list, user: @other_user)
       call_poller
     end
 
@@ -279,7 +279,7 @@ shared_examples 'a board page with poller' do
     before do
       @other_list.update(previous_id: nil)
       @list.update(previous_id: @other_list.id)
-      create(:activity, action: :update, trackable: @other_list, user: @other_user, project: current_project)
+      create(:activity, action: :update, trackable: @other_list, user: @other_user)
       call_poller
     end
 
@@ -294,7 +294,7 @@ shared_examples 'a board page with poller' do
   describe 'when someone else deletes a list on that board' do
     before do
       @other_list.destroy
-      create(:activity, action: :destroy, trackable: @other_list, user: @other_user, project: current_project)
+      create(:activity, action: :destroy, trackable: @other_list, user: @other_user)
       call_poller
     end
 
@@ -306,7 +306,7 @@ shared_examples 'a board page with poller' do
   describe 'when someone updates a list on that board' do
     before do
       @other_list.update(name: 'updated list')
-      create(:activity, action: :update, trackable: @other_list, user: @other_user, project: current_project)
+      create(:activity, action: :update, trackable: @other_list, user: @other_user)
       call_poller
     end
 
@@ -318,7 +318,7 @@ shared_examples 'a board page with poller' do
   describe 'when someone adds a card on that board' do
     before do
       @new_card = create(:card, list: @list, previous_id: @card.id)
-      create(:activity, action: :create, trackable: @new_card, user: @other_user, project: current_project)
+      create(:activity, action: :create, trackable: @new_card, user: @other_user)
       call_poller
     end
 
@@ -331,7 +331,7 @@ shared_examples 'a board page with poller' do
   describe 'when someone updates a card on that board' do
     before do
       @card.update(name: 'updated card')
-      create(:activity, action: :update, trackable: @card, user: @other_user, project: current_project)
+      create(:activity, action: :update, trackable: @card, user: @other_user)
       call_poller
     end
 
@@ -345,7 +345,7 @@ shared_examples 'a board page with poller' do
       PaperTrail.enabled = true
 
       @card.destroy
-      create(:activity, action: :destroy, trackable: @card, user: @other_user, project: current_project)
+      create(:activity, action: :destroy, trackable: @card, user: @other_user)
       call_poller
     end
 
@@ -359,7 +359,7 @@ shared_examples 'a board page with poller' do
   describe 'when someone moves a card on that board' do
     before do
       @card.update(list_id: @other_list.id)
-      create(:activity, action: :update, trackable: @card, user: @other_user, project: current_project)
+      create(:activity, action: :update, trackable: @card, user: @other_user)
       call_poller
     end
 

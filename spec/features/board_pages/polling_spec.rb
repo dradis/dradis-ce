@@ -26,7 +26,7 @@ describe 'board pages', js: true do
     describe 'when someone else updates a board' do
       before do
         @board.update(name: 'whatever')
-        create(:activity, action: :update, trackable: @board, user: @other_user, project: current_project)
+        create(:activity, action: :update, trackable: @board, user: @other_user)
         call_poller
       end
 
@@ -40,7 +40,7 @@ describe 'board pages', js: true do
         PaperTrail.enabled = true
 
         @board.destroy
-        create(:activity, action: :destroy, trackable: @board, user: @other_user, project: current_project)
+        create(:activity, action: :destroy, trackable: @board, user: @other_user)
         call_poller
       end
 
@@ -55,7 +55,7 @@ describe 'board pages', js: true do
     describe 'when someone else creates a board' do
       before do
         @other_board = create(:board, project: current_project, node: current_project.methodology_library)
-        create(:activity, action: :create, trackable: @other_board, user: @other_user, project: current_project)
+        create(:activity, action: :create, trackable: @other_board, user: @other_user)
         call_poller
       end
 

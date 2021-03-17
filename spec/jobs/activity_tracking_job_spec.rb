@@ -30,7 +30,6 @@ describe ActivityTrackingJob do #, type: :job do
           expect {
             described_class.new.perform(
               action: action.to_s,
-              project_id: project.id,
               trackable_id: trackable.id,
               trackable_type: trackable.class.to_s,
               user_id: user.id

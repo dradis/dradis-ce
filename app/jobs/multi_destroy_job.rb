@@ -24,7 +24,7 @@ class MultiDestroyJob < ApplicationJob
     ActiveRecord::Base.transaction do
       items.each do |item|
         if item.destroy
-          track_destroyed(item, user: User.find_by_email(author_email), project: project)
+          track_destroyed(item, user: User.find_by_email(author_email))
           logger.write { "Deleted #{item.class} #{item.id}..." }
         end
       end

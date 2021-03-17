@@ -21,6 +21,10 @@ class Project
     end
   end
 
+  def ==(item)
+    eql?(item)
+  end
+
   # Override Object's #hash method to better compare Project instances
   def hash
     self.id
@@ -36,10 +40,6 @@ class Project
   end
 
   def persisted?; true; end
-
-  def activities
-    Activity.all
-  end
 
   def boards
     Board.all
