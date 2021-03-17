@@ -17,12 +17,12 @@ class Comments {
       Mentions.init(document.querySelectorAll('[data-behavior~=mentionable]'));
     }
 
-    var $currentUserComments = $('[data-behavior~=comment] [data-author-id]');
+    var $userComments = $('[data-behavior~=comment][data-author-id]');
 
-    if ($currentUserComments.length) {
+    if ($userComments.length) {
       var currentUserId = $('meta[name=current-user-id]').attr('content');
 
-      $currentUserComments.each(function() {
+      $userComments.each(function() {
         var $comment = $(this);
         var commentAuthorId = $comment.data('author-id');
 
@@ -33,8 +33,3 @@ class Comments {
     }
   }
 }
-
-document.addEventListener('turbolinks:load', function() {
-  new Comments;
-})
-

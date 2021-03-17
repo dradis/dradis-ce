@@ -1,5 +1,5 @@
-<div class="comment-wrapper" data-behavior="comment">
-  <%= div_for comment, data: { author_id: comment.user_id } do %>
+<div class="comment-wrapper">
+  <%= div_for comment, data: { behavior: 'comment', author_id: comment.user_id } do %>
     <div class="body">
       <%= avatar_image(comment.user, size: 35) %>
 
