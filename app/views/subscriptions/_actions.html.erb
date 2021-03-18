@@ -2,6 +2,7 @@
 
 <%= link_to \
       main_app.subscription_path(
+        subscribable,
         subscription: {
           subscribable_type: subscribable.class.to_s,
           subscribable_id: subscribable.id

@@ -1,4 +1,12 @@
 class SubscriptionsController < AuthenticatedController
+  layout false
+
+  before_action :validate_subscribable, only: [:index, :create]
+
+  helper_method :current_user_subscription, :subscribable, :subscriptions
+
+  def index; end
+
   def create
     subscription = Subscription.new(subscription_params)
     subscription.user = current_user
@@ -8,19 +16,49 @@ class SubscriptionsController < AuthenticatedController
   end
 
   def destroy
-    subscription = Subscription.find_by(
-      user: current_user,
-      subscribable_type: subscription_params[:subscribable_type],
-      subscribable_id: subscription_params[:subscribable_id]
-    )
-    subscription.destroy
+    current_user_subscription.destroy
 
     redirect_back fallback_location: root_path, notice: 'Unsubscribed!'
   end
 
   private
 
+  def current_user_subscription
+    @current_user_subscription ||= subscribable.subscription_for(user: current_user)
+  end
+
+  def subscribable
+    @subscribable ||= begin
+      case params[:action]
+      when 'index', 'create', 'destroy'
+        Subscription.new(
+          subscribable_id: subscription_params[:subscribable_id],
+          subscribable_type: subscription_params[:subscribable_type]
+        ).subscribable
+      else
+        raise 'Invalid action'
+      end
+    end
+  end
+
   def subscription_params
-    params.require(:subscription).permit(:subscribable_type, :subscribable_id)
+    case params[:action]
+    when 'index'
+      params.permit(:subscribable_id, :subscribable_type)
+    when 'create', 'destroy'
+      params.require(:subscription).permit(:subscribable_id, :subscribable_type)
+    else
+      raise 'Invalid action'
+    end
+  end
+
+  def subscriptions
+    @subscriptions ||= subscribable.subscriptions.includes(:user)
+  end
+
+  def validate_subscribable
+    unless subscribable.respond_to?(:subscriptions)
+      raise 'Invalid subscribable'
+    end
   end
 end

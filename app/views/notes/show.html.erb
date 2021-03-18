@@ -39,7 +39,7 @@
   <div class="col-12 col-xxl-7 p-0">
     <div class="content-container mt-0 pb-3 mr-xxl-3">
       <div class="tab-content mt-0">
-        <div class="tab-pane active" id="info-tab" data-behavior="subscription-actions" data-subscribed="<%= !@subscription.nil? %>">
+        <div class="tab-pane active" id="info-tab">
           <% cache ['note-information-tab', @note] do %>
             <div id="<%= dom_id(@note) %>" class="note-text-inner">
               <h4 class="header-underline">Content for this note</h4>
@@ -84,7 +84,7 @@
       </div>
 
       <div class="content-container ml-xxl-3">
-        <%= render 'subscriptions/feed', subscribable: @note %>
+        <div class="fetch-container" data-behavior="fetch" data-path="<%= main_app.subscriptions_path(subscribable_type: @note.class, subscribable_id: @note.id) %>"></div>
       </div>
     </div>
   </div>

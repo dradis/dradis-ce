@@ -15,6 +15,7 @@
     });
 
     new Comments;
+    new Subscriptions;
 
     $parent.find('[data-behavior~=fetch]').each(async function() {
       var element = this;

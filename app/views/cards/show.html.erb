@@ -45,7 +45,7 @@
     <div class="col-12 col-xxl-7 p-0">
       <div class="content-container mt-0 mr-xxl-3">
         <div class="tab-content mt-0">
-          <div class="tab-pane active" id="info-tab" data-behavior="subscription-actions" data-subscribed="<%= !@subscription.nil? %>">
+          <div class="tab-pane active" id="info-tab">
             <% cache ['card-information-tab', @card] do %>
               <div class="note-text-inner">
                 <h4 class="mb-4 header-underline"><%= @card.name %></h4>
@@ -103,7 +103,7 @@
         </div>
 
         <div class="content-container ml-xxl-3">
-          <%= render 'subscriptions/feed', subscribable: @card %>
+          <div class="fetch-container" data-behavior="fetch" data-path="<%= main_app.subscriptions_path(subscribable_type: @card.class, subscribable_id: @card.id) %>"></div>
         </div>
       </div>
     </div>
