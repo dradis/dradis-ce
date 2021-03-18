@@ -100,12 +100,6 @@ class ActivityPresenter < BasePresenter
     end
   end
 
-  def render_partial
-    locals = { activity: activity, presenter: self }
-    locals[trackable_name] = activity.trackable
-    render partial_path, locals
-  end
-
   def partial_path
     partial_paths.detect do |path|
       lookup_context.template_exists? path, nil, true
@@ -113,20 +107,17 @@ class ActivityPresenter < BasePresenter
   end
 
   def partial_paths
-    # Search for partials in the plugin directories.
-    plugin_activity_partials =
-      Dradis::Plugins::with_feature(:addon).map do |plugin|
-        plugin_path = ActiveSupport::Inflector.underscore(
-          ActiveSupport::Inflector.deconstantize(plugin.name)
-        )
-        "#{plugin_path}/activities/#{trackable_name}"
-      end
-
     [
       "activities/#{activity.trackable_type.underscore}/#{activity.action}",
       "activities/#{activity.trackable_type.underscore}",
       'activities/activity'
-    ] + plugin_activity_partials
+    ] + [ "#{activity.trackable_type.underscore.downcase.pluralize}/activities/#{trackable_name}" ]
+  end
+
+  def render_partial
+    locals = {activity: activity, presenter: self}
+    locals[trackable_name] = activity.trackable
+    render partial_path, locals
   end
 
   def trackable_name
