@@ -57,7 +57,13 @@ describe "evidence pages", js: true do
   end
 
   describe "when I am viewing an Evidence" do
-    before { visit project_node_evidence_path(current_project, @node, @evidence) }
+    before do
+      visit project_node_evidence_path(current_project, @node, @evidence)
+
+      # Wait for ajax
+      find('.fetch-container > .subscriptions-feed')
+      find('.comment-feed > .comment-list')
+    end
     it_behaves_like "an evidence page with poller"
   end
 

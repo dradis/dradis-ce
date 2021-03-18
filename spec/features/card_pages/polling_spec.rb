@@ -173,7 +173,12 @@ describe 'card pages', js: true do
   after { PaperTrail.enabled = false }
 
   describe 'when I am viewing a card' do
-    before { visit project_board_list_card_path(current_project, @board, @list, @card) }
+    before do
+      visit project_board_list_card_path(current_project, @board, @list, @card)
+      # Wait for ajax
+      find('.fetch-container > .subscriptions-feed')
+      find('.comment-feed > .comment-list')
+    end
     let(:action) { :show }
     it_behaves_like 'a card page with poller'
   end

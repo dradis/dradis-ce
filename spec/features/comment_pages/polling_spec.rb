@@ -66,6 +66,7 @@ describe 'comment pages', js: true do
       visit project_issue_path(@project, @commentable)
 
       # Wait for ajax
+      find('.fetch-container > .subscriptions-feed')
       find('.comment-feed > .comment-list')
     end
 

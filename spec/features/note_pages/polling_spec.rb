@@ -58,7 +58,13 @@ describe "note pages", js: true do
   end
 
   describe "when I am viewing a Note" do
-    before { visit project_node_note_path(current_project, @node, @note) }
+    before do
+      visit project_node_note_path(current_project, @node, @note)
+
+      # Wait for ajax
+      find('.fetch-container > .subscriptions-feed')
+      find('.comment-feed > .comment-list')
+    end
     it_behaves_like "a note page with poller"
   end
 
