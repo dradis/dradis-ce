@@ -99,7 +99,9 @@
     <div class="col-12 col-xxl-5 p-0">
       <div class="sticky-top">
         <div class="content-container ml-xxl-3 mt-0">
-          <div class="fetch-container" data-behavior="fetch" data-path="<%= main_app.comments_path(commentable_type: @card.class, commentable_id: @card.id) %>"></div>
+          <div class="fetch-container" data-behavior="fetch" data-path="<%= main_app.comments_path(commentable_type: @card.class, commentable_id: @card.id) %>">
+            <%= render 'shared/fetch_loader' %>
+          </div>
         </div>
 
         <div class="content-container ml-xxl-3">
