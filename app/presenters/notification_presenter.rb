@@ -69,16 +69,8 @@ class NotificationPresenter < BasePresenter
   end
 
   def partial_paths
-    # Search for partials in the plugin directories.
-    plugin_notification_partials =
-      Dradis::Plugins::with_feature(:addon).map do |plugin|
-        plugin_path = ActiveSupport::Inflector.underscore(
-          ActiveSupport::Inflector.deconstantize(plugin.name)
-        )
-        "#{plugin_path}/notifications/#{notifiable_name}"
-      end
-
-    ["notifications/#{notifiable_name}"] + plugin_notification_partials
+    ["notifications/#{notifiable_name}"] +
+      [ "#{notification.notifiable_type.underscore.pluralize}/notifications/#{notifiable_name}"]
   end
 
   def path_to_comment
@@ -96,4 +88,5 @@ class NotificationPresenter < BasePresenter
       [current_project, commentable]
     end
   end
+
 end
