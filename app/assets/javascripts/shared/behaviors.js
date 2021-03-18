@@ -16,26 +16,19 @@
 
     new Comments;
 
-    $parent.find('[data-behavior~=fetch]').each(async function() {
-      var element = this;
-      element.innerHTML = '<div class="loader"><div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div></div>';
+    $parent.find('[data-behavior~=fetch]').each(function() {
+      var item = this;
 
-      var promiseResult = await fetch(element.dataset.path);
-      var html = await promiseResult.text();
-
-      element.innerHTML = html;
-
-      initBehaviors($(element));
-    })
+      fetch(item.dataset.path, { credentials: 'include' })
+        .then(function(response){ return response.text(); })
+        .then(function(html) {
+          item.innerHTML = html;
+          initBehaviors($(item));
+        });
+    });
   }
 
-  if (typeof Turbolinks !== 'undefined' && Turbolinks !== null) {
-    document.addEventListener('turbolinks:load', function() {
-      initBehaviors($('body'));
-    })
-  } else {
-    $(document).ready(function(){
-      initBehaviors($('body'));
-    })
-  }
+  document.addEventListener('turbolinks:load', function() {
+    initBehaviors($('body'));
+  })
 })($, window);
