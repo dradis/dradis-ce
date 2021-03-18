@@ -105,7 +105,9 @@
         </div>
 
         <div class="content-container ml-xxl-3">
-          <div class="fetch-container" data-behavior="fetch" data-path="<%= main_app.subscriptions_path(subscribable_type: @card.class, subscribable_id: @card.id) %>"></div>
+          <div class="fetch-container" data-behavior="fetch" data-path="<%= main_app.subscriptions_path(subscribable_type: @card.class, subscribable_id: @card.id) %>">
+            <%= render 'shared/fetch_loader' %>
+          </div>
         </div>
       </div>
     </div>
