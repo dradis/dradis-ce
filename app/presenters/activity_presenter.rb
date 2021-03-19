@@ -109,9 +109,9 @@ class ActivityPresenter < BasePresenter
   def partial_paths
     [
       "activities/#{activity.trackable_type.underscore}/#{activity.action}",
-      "activities/#{activity.trackable_type.underscore}",
       'activities/activity'
-    ] + [ "#{activity.trackable_type.underscore.downcase.pluralize}/activities/#{trackable_name}" ]
+    ] +
+    ["#{activity.trackable_type.underscore.downcase.pluralize}/activities/#{trackable_name}"]
   end
 
   def render_partial
