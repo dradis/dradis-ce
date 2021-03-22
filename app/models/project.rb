@@ -4,7 +4,7 @@ class Project
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  attr_reader :id, :name
+  attr_reader :id, :name, :created_at
 
   # -- Class Methods --------------------------------------------------------
   def self.find(id)
@@ -37,6 +37,7 @@ class Project
   def initialize(id: 1, name: 'Dradis Project', **_attrs)
     @id   = id
     @name = name
+    @created_at = 0
   end
 
   def persisted?; true; end

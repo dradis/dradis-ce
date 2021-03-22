@@ -33,7 +33,9 @@ class Activity < ApplicationRecord
   # -- Class Methods -----------------------------------------------------
 
   def self.by_project(project)
-    self.includes(:trackable).select do |activity|
+    activities = self.includes(:trackable).where('created_at >= ?', project.created_at)
+
+    activities.includes(:trackable).select do |activity|
       if activity.trackable_type == 'Comment'
         comment = activity.trackable
         comment.commentable.try(:project) == project if comment
