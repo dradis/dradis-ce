@@ -31,10 +31,7 @@ class SubscriptionsController < AuthenticatedController
     @subscribable ||= begin
       case params[:action]
       when 'index', 'create', 'destroy'
-        Subscription.new(
-          subscribable_id: subscription_params[:subscribable_id],
-          subscribable_type: subscription_params[:subscribable_type]
-        ).subscribable
+        Subscription.new(subscription_params).subscribable
       else
         raise 'Invalid action'
       end
