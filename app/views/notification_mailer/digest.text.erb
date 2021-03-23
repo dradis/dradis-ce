@@ -4,12 +4,16 @@
   Your Recent Notifications
 <% end %>
 
-<% @notifications.each do |project, project_notifications| %>
-  <%= project.name %>
-  <% project_notifications.each do |_, notifications| %>
-    <% presenter = DigestPresenter.new(notifications, project, self) %>
+<% @notifications.each do |entity, entity_notifications| %>
+  <%= entity.is_a?(Project) ? entity.name : entity %>
+  <% entity_notifications.each do |_, notifications| %>
+    <% presenter = DigestPresenter.new(notifications, self) %>
     <%= render partial: 'notification_mailer/notification', locals: { presenter: presenter } %>
   <% end %>
 
-  See all notifications: <%= project_notifications_url(project) %>
+  <% if defined?(Dradis::Pro) %>
+    See all notifications: <%= notifications_url %>
+  <% else %>
+    See all notifications: <%= project_notifications_url(Project.new) %>
+  <% end %>
 <% end %>

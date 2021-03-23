@@ -1,8 +1,7 @@
 class DigestPresenter < NotificationPresenter
-  attr_reader :current_project, :notifications, :template
+  attr_reader :notifications, :template
 
-  def initialize(notifications, project, template)
-    @current_project = project
+  def initialize(notifications, template)
     @notifications = notifications
     @template = template
   end
