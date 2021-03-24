@@ -85,7 +85,7 @@
         <%= content_tag :div,
           data: {
             behavior: 'fetch',
-            path: project_comments_path(
+            path: comments_path(
               comment: {
                 commentable_type: @issue.class,
                 commentable_id: @issue.id

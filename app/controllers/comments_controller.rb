@@ -1,6 +1,5 @@
 class CommentsController < AuthenticatedController
   include ActivityTracking
-  include ProjectScoped
   include Notified
 
   layout false
@@ -17,7 +16,7 @@ class CommentsController < AuthenticatedController
     @comment = Comment.new(comment_params)
     @comment.user = current_user
     if @comment.save
-      track_created(@comment)
+      track_created(@comment, project: commentable.project)
       broadcast_notifications(
         action: :create,
         notifiable: @comment,
@@ -28,13 +27,13 @@ class CommentsController < AuthenticatedController
 
   def update
     if @comment.update(comment_params)
-      track_updated(@comment)
+      track_updated(@comment, project: commentable.project)
     end
   end
 
   def destroy
     if @comment.destroy
-      track_destroyed(@comment)
+      track_destroyed(@comment, project: commentable.project)
     end
   end
 
@@ -63,6 +62,6 @@ class CommentsController < AuthenticatedController
   end
 
   def find_mentionable_users
-    @mentionable_users ||= current_project.testers_for_mentions
+    @mentionable_users ||= commentable.project.testers_for_mentions
   end
 end
