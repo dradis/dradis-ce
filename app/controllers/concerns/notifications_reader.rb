@@ -2,7 +2,7 @@ module NotificationsReader
   extend ActiveSupport::Concern
 
   included do
-    after_action :read_item_notifications, only: :show
+    after_action :read_item_notifications, only: :show, if: -> { defined?(Dradis::Pro) }
   end
 
   protected

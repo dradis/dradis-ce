@@ -58,22 +58,22 @@ describe "node pages" do
         expect do
           click_button "Add"
         end.to change { current_project.nodes.in_tree.count }.by(3) \
-          .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(4)
+          .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(3)
 
         expect(
           ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h|
             h[:job]
-          }.last(4)
+          }.last(3)
         ).to include *Array.new(3, ActivityTrackingJob)
         expect(
           ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
             h1[:args].map { |h2| h2['action'] }
-          }.flatten.last(4)
+          }.flatten.last(3)
         ).to include *Array.new(3, 'create')
         expect(
           ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
             h1[:args].map { |h2| h2['trackable_type'] }
-          }.flatten.last(4)
+          }.flatten.last(3)
         ).to include *Array.new(3, 'Node')
 
         expect(current_project.nodes.last(3).map(&:label)).to match_array([

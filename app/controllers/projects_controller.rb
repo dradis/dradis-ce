@@ -1,4 +1,6 @@
 class ProjectsController < AuthenticatedController
+  include NotificationsReader
+
   before_action :set_project
 
   helper        :tylium

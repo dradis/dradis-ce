@@ -6,20 +6,22 @@ describe NotificationsReaderJob  do #, type: :job do
   end
 
   describe '#perform' do
-    context 'project assignment' do
-      it 'marks the assignment notification as read' do
-        project = create(:project)
-        user = create(:user)
+    if defined?(Dradis::Pro)
+      context 'project assignment' do
+        it 'marks the assignment notification as read' do
+          project = create(:project)
+          user = create(:user)
 
-        create(:notification, notifiable: project, action: :assign, actor: create(:user), recipient: user)
+          create(:notification, notifiable: project, action: :assign, actor: create(:user), recipient: user)
 
-        expect {
-          described_class.new.perform(
-            notifiable_type: project.class.to_s,
-            notifiable_id: project.id,
-            user_id: user.id
-          )
-        }.to change{ Notification.unread.count }.by(-1)
+          expect {
+            described_class.new.perform(
+              notifiable_type: project.class.to_s,
+              notifiable_id: project.id,
+              user_id: user.id
+            )
+          }.to change{ Notification.unread.count }.by(-1)
+        end
       end
     end
 
