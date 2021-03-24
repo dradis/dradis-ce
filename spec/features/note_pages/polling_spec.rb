@@ -14,42 +14,33 @@ describe "note pages", js: true do
 
   shared_examples "a note page with poller" do
     describe "and someone else updates the same Note" do
-      before do
-        @note.update(text: "whatever")
-        create(:activity, action: :update, trackable: @note, user: @other_user)
-
-
-        call_poller
-      end
-
       it "displays a warning" do
+        @note.update(text: "whatever")
+        create(:activity, action: :update, trackable: @note, user: @other_user, project: current_project)
+        call_poller
+
         should have_selector "#note-updated-alert"
       end
     end
 
     describe "and someone deletes that Note" do
-      before do
-        @note.destroy
-        create(:activity, action: :destroy, trackable: @note, user: @other_user)
-
-        call_poller
-      end
-
       it "displays a warning" do
+        @note.destroy
+        create(:activity, action: :destroy, trackable: @note, user: @other_user, project: current_project)
+        call_poller
+
         should have_selector "#note-deleted-alert"
       end
     end
 
     describe "and someone updates then deletes that note" do
-      before do
-        @note.update(text: "whatever")
-        create(:activity, action: :update, trackable: @note, user: @other_user)
-        @note.destroy
-        create(:activity, action: :destroy, trackable: @note, user: @other_user)
-        call_poller
-      end
-
       it "displays a warning" do
+        @note.update(text: "whatever")
+        create(:activity, action: :update, trackable: @note, user: @other_user, project: current_project)
+        @note.destroy
+        create(:activity, action: :destroy, trackable: @note, user: @other_user, project: current_project)
+        call_poller
+
         # Make sure the 'update' actions pointing to a no-longer-existent Note
         # don't crash the poller!
         should have_selector "#note-deleted-alert"
