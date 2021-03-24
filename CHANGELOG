@@ -1,5 +1,6 @@
 v3.22.0 (MMM’21)
-  * Asynchronously load the comments feed
+  * Comments
+    - Load feed asynchronously
   * Improve accessibility:
     - Add alt text to any linked images
     - Add screen reader only text to forms
