@@ -17,8 +17,8 @@ development:
 # If you uncomment this development: block, comment the previous one.
 # development:
 #   adapter: mysql2
-#   encoding: utf8
-#   collation: utf8_bin
+#   collation: utf8mb4_unicode_ci
+#   encoding: utf8mb4
 #   database: dradis_dev
 #   username: root
 #   socket: /tmp/mysql.sock
