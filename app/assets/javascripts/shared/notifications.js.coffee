@@ -19,6 +19,7 @@ loadNotificationsDropdown = ->
     else
       $(this).removeAttr('data-toggle')
 
+# We need to keep this because Gateway isn't using Turbolinks
 if (typeof window.Turbolinks != 'undefined' && window.Turbolinks != null)
   document.addEventListener('turbolinks:load', loadNotificationsDropdown)
 else
