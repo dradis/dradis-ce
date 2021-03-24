@@ -1,2 +1,17 @@
-<%= render 'comments/feed' %>
+<% if @commentable.respond_to?(:project) %>
+
+  <h4 class="d-flex header-underline">Comments <span class="badge bg-primary text-white ml-2" id="comment-count"><%= @comments.count %></span></h4>
+  <%= render 'comments/feed' %>
+<% else %>
+
+  <div class="card">
+    <div class="card-header bg-secondary">
+      <div class="card-title">Comments <span id="comment-count">(<%= @comments.count %>)</span></div>
+    </div>
+    <div class="card-body">
+      <%= render 'comments/feed' %>
+    </div>
+  </div>
+
+<% end %>
 <%= render 'comments/mentionable_users' %>

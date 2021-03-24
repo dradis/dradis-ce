@@ -1,14 +1,11 @@
 <div class="comment-feed" data-behavior="comment-feed">
-<% cache ['comment-feed', @comments, @commentable] do %>
-  <h4 class="d-flex header-underline mb-0">Comments <span class="badge bg-primary text-white ml-2" id="comment-count"><%= @comments.count %></span></h4>
-  <div class="comment-list">
-    <%= render(@comments, cached: true) if @comments.any? %>
-
-    <div data-notice="no-comments" class="comment mt-3 <% if @comments.any? %>d-none<% end %>">
-      There have been no comments yet.
+  <% cache ['comment-feed', @comments, @commentable] do %>
+    <div class="comment-list">
+      <%= render(partial: 'comments/comment', collection: @comments, cached: true) if @comments.any? %>
+      <div data-notice="no-comments" class="comment <%= 'd-none' if @comments.any? %>">
+        There have been no comments yet.
+      </div>
     </div>
-  </div>
-<% end %>
-
-<%= render 'comments/new' %>
+  <% end %>
+  <%= render 'comments/new' %>
 </div>
