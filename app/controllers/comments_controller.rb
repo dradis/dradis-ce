@@ -1,10 +1,17 @@
 class CommentsController < AuthenticatedController
   include ActivityTracking
   include ProjectScoped
-  include Mentioned
   include Notified
 
+  layout false
+
   load_and_authorize_resource
+
+  before_action :find_mentionable_users, only: [:index, :create, :update]
+
+  def index
+    @comments = commentable.comments.includes(:user)
+  end
 
   def create
     @comment = Comment.new(comment_params)
@@ -35,5 +42,27 @@ class CommentsController < AuthenticatedController
 
   def comment_params
     params.require(:comment).permit(:content, :commentable_type, :commentable_id)
+  end
+
+  def commentable
+    @commentable ||= begin
+      if @comment
+        @comment.commentable
+      else
+        commentable_class.find(comment_params[:commentable_id])
+      end
+    end
+  end
+
+  def commentable_class
+    if Comment::COMMENTABLE_TYPES.include?(comment_params[:commentable_type])
+      comment_params[:commentable_type].constantize
+    else
+      raise 'Invalid commentable'
+    end
+  end
+
+  def find_mentionable_users
+    @mentionable_users ||= current_project.testers_for_mentions
   end
 end

@@ -64,6 +64,9 @@ describe 'comment pages', js: true do
       @commentable = create(:issue, node: @project.issue_library)
       @comment = create(:comment, commentable: @commentable, user: @other_user)
       visit project_issue_path(@project, @commentable)
+
+      # Wait for ajax
+      find('[data-behavior="fetch"] > .comment-feed')
     end
 
     it_behaves_like 'a commentable page with poller'

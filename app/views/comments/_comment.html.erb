@@ -1,5 +1,5 @@
 <div class="comment-wrapper">
-  <%= div_for comment, data: { author: comment.user_id } do %>
+  <%= div_for comment, data: { author_id: comment.user_id } do %>
     <div class="body">
       <%= avatar_image(comment.user, size: 35) %>
 
@@ -15,7 +15,7 @@
             </span>
 
 
-            <div class="actions pull-right">
+            <div class="actions pull-right <%= current_user == comment.user ? 'current_user' : '' %>">
               <%= link_to edit_project_comment_path(current_project, comment), remote: true, data: { action: 'edit' } do %>
                 <i class="fa fa-pencil"></i> Edit
               <% end %>

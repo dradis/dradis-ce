@@ -16,7 +16,10 @@ shared_examples 'a page with a comments feed' do
     @other_comment = create(:comment, commentable: other_instance)
   end
 
-  it 'lists them in the content feed' do
+  it 'lists them in the content feed', js: true do
+    # Wait for ajax
+    find('[data-behavior="fetch"] > .comment-feed')
+
     within comment_feed do
       should have_comment(@comments[0])
       should have_comment(@comments[1])
@@ -24,7 +27,10 @@ shared_examples 'a page with a comments feed' do
     end
   end
 
-  it 'display user\'s name in comment row' do
+  it 'display user\'s name in comment row', js: true do
+    # Wait for ajax
+    find('[data-behavior="fetch"] > .comment-feed')
+
     within "div#comment_#{@comments[0].id}" do
       expect(page).to have_selector('span.user', text: @logged_in_as.name)
     end
