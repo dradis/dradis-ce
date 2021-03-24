@@ -13,6 +13,15 @@
       new LocalAutoSave(this);
     });
 
+    parentElement.querySelectorAll('[data-behavior~=comment-feed] [data-author-id]').forEach(function(item) {
+      var currentUserId = document.querySelector('meta[name=current-user-id]').getAttribute('content');
+
+      if (item.dataset.authorId === currentUserId) {
+        var actions = item.querySelector('.actions');
+        actions.classList.add('current_user');
+      }
+    });
+
     // Activate mentions
     var mentionables = parentElement.querySelectorAll('[data-behavior~=mentionable]');
     if (mentionables.length) {
