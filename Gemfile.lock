@@ -10,7 +10,7 @@ GIT
 PATH
   remote: engines/dradis-api
   specs:
-    dradis-api (0.0.1)
+    dradis-api (3.21.0)
       jbuilder
 
 GEM
