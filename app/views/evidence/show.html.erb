@@ -109,6 +109,7 @@
     <div class="sticky-top">
       <div class="content-container ml-xxl-3 mt-0">
         <%= content_tag :div,
+          spinner_tag,
           data: {
             behavior: 'fetch',
             path: project_comments_path(
@@ -117,9 +118,8 @@
                 commentable_id: @evidence.id
               }
             )
-          } do %>
-          <%= spinner_tag %>
-        <% end %>
+          }
+        %>
       </div>
 
       <div class="content-container ml-xxl-3">
