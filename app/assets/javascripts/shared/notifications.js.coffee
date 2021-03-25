@@ -7,6 +7,7 @@ loadNotificationsDropdown = ->
 
       $.ajax
         url: $dropdown.attr('href') + '.js'
+        data: { project_id: $dropdown.data('projectId') }
         dataType: 'script'
         method: 'GET'
         beforeSend: (e)->
