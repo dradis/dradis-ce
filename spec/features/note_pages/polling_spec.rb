@@ -62,7 +62,7 @@ describe "note pages", js: true do
       visit project_node_note_path(current_project, @node, @note)
 
       # Wait for ajax
-      find('[data-behavior="fetch"] > .comment-feed')
+      find('[data-behavior="fetch"] .comment-feed')
     end
 
     it_behaves_like "a note page with poller"
