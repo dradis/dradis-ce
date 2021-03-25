@@ -5,6 +5,8 @@ class Issue < Note
   Commentable.allowed_types << 'Issue'
 
   include Subscribable
+  Subscribable.allowed_types << 'Issue'
+
   include Taggable
 
   # -- Relationships --------------------------------------------------------

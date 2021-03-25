@@ -13,7 +13,6 @@ class EvidenceController < NestedNodeResourceController
   def show
     @activities   = @evidence.activities.latest
     @issue        = @evidence.issue
-    @subscription = @evidence.subscription_for(user: current_user)
 
     load_conflicting_revisions(@evidence)
   end
