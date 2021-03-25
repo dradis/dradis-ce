@@ -61,6 +61,7 @@ describe "evidence pages", js: true do
 
       # Wait for ajax
       find('[data-behavior="fetch"] .comment-feed')
+      find('[data-behavior="fetch"] .subscriptions-feed')
     end
 
     it_behaves_like "an evidence page with poller"
