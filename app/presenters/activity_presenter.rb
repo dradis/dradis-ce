@@ -100,12 +100,6 @@ class ActivityPresenter < BasePresenter
     end
   end
 
-  def render_partial
-    locals = { activity: activity, presenter: self }
-    locals[activity.trackable_type.underscore.to_sym] = activity.trackable
-    render partial_path, locals
-  end
-
   def partial_path
     partial_paths.detect do |path|
       lookup_context.template_exists? path, nil, true
@@ -115,9 +109,22 @@ class ActivityPresenter < BasePresenter
   def partial_paths
     [
       "activities/#{activity.trackable_type.underscore}/#{activity.action}",
-      "activities/#{activity.trackable_type.underscore}",
       'activities/activity'
-    ]
+    ] +
+    ["#{activity.trackable_type.underscore.downcase.pluralize}/activities/#{trackable_name}"]
+  end
+
+  def render_partial
+    locals = {activity: activity, presenter: self}
+    locals[trackable_name] = activity.trackable
+    render partial_path, locals
+  end
+
+  def trackable_name
+    # Models from plugins are namespaced, e.g. "Dradis::Plugins::ModelName"
+    # and activity.trackable_type.underscore will return "dradis/plugins/model_name".
+    # So we demodulize it first to return "model_name" before passing in as locals.
+    @trackable_name ||= activity.trackable_type.demodulize.underscore.to_sym
   end
 
   def trackable_title
