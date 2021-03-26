@@ -1,11 +1,12 @@
 document.addEventListener('turbolinks:load', function() {
-  const callback = function(mutationsList, observer) {
+  function subscriptionFeedObserverCallback(mutationsList, observer) {
     mutationsList.forEach(function(mutationRecord) {
-      var behavior = mutationRecord.target.dataset.behavior;
+      var target = mutationRecord.target;
+      var behavior = target.dataset.behavior;
 
-      // Find the node that triggered the fetch event.
+      // Initialize Mentions for the first time after fetch
       if (behavior && behavior.includes('fetch')) {
-        mutationRecord.target.querySelectorAll('[data-behavior~=subscription-actions]').forEach(function(item) {
+          target.querySelectorAll('[data-behavior~=subscription-actions]').forEach(function(item) {
           // Vanilla js returns a string while jquery returns a boolean instead
           if (item.dataset.subscribed === 'true') {
             document.querySelectorAll('[data-behavior=unsubscribe]').forEach(function(item) {
@@ -19,16 +20,16 @@ document.addEventListener('turbolinks:load', function() {
         });
       }
     });
-
-    observer.disconnect();
   };
 
   // Select the node that will be observed for mutations
   document.querySelectorAll('[data-behavior~=fetch]').forEach(function(item) {
+    // childList: observe changes in direct child
+    // subtree: observe changes in descendants
     var config = { childList: true, subtree: true };
 
-    const observer = new MutationObserver(callback);
+    const observer = new MutationObserver(subscriptionFeedObserverCallback);
 
     observer.observe(item, config);
   });
-});
+})
