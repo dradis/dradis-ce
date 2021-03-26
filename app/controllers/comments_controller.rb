@@ -7,7 +7,7 @@ class CommentsController < AuthenticatedController
 
   load_and_authorize_resource
 
-  before_action :find_mentionable_users, only: [:index, :create, :update]
+  before_action :find_mentionable_users, only: [:index, :create, :show, :update]
 
   def index
     @comments = commentable.comments.includes(:user)
