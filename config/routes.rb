@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :notifications, only: [:index, :update]
+
   resources :projects, only: [:show] do
     resources :activities, only: [:index] do
       collection do
