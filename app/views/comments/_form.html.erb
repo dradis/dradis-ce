@@ -18,8 +18,9 @@
                   } %>
     <%= f.submit "Update comment", class: "btn btn-primary mt-2 ml-0", style: 'vertical-align: baseline;' %> or
     <%= link_to 'Cancel',
-                'javascript:void(0)',
+                project_comment_path(current_project, @comment),
                 class: 'cancel-link',
+                remote: true,
                 data: {
                   behavior: 'cancel-comment clear-local-auto-save'
                 } %>

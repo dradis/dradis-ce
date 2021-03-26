@@ -14,33 +14,42 @@ describe "note pages", js: true do
 
   shared_examples "a note page with poller" do
     describe "and someone else updates the same Note" do
-      it "displays a warning" do
+      before do
         @note.update(text: "whatever")
-        create(:activity, action: :update, trackable: @note, user: @other_user, project: current_project)
-        call_poller
+        create(:activity, action: :update, trackable: @note, user: @other_user)
 
+
+        call_poller
+      end
+
+      it "displays a warning" do
         should have_selector "#note-updated-alert"
       end
     end
 
     describe "and someone deletes that Note" do
-      it "displays a warning" do
+      before do
         @note.destroy
-        create(:activity, action: :destroy, trackable: @note, user: @other_user, project: current_project)
-        call_poller
+        create(:activity, action: :destroy, trackable: @note, user: @other_user)
 
+        call_poller
+      end
+
+      it "displays a warning" do
         should have_selector "#note-deleted-alert"
       end
     end
 
     describe "and someone updates then deletes that note" do
-      it "displays a warning" do
+      before do
         @note.update(text: "whatever")
-        create(:activity, action: :update, trackable: @note, user: @other_user, project: current_project)
+        create(:activity, action: :update, trackable: @note, user: @other_user)
         @note.destroy
-        create(:activity, action: :destroy, trackable: @note, user: @other_user, project: current_project)
+        create(:activity, action: :destroy, trackable: @note, user: @other_user)
         call_poller
+      end
 
+      it "displays a warning" do
         # Make sure the 'update' actions pointing to a no-longer-existent Note
         # don't crash the poller!
         should have_selector "#note-deleted-alert"
@@ -49,7 +58,13 @@ describe "note pages", js: true do
   end
 
   describe "when I am viewing a Note" do
-    before { visit project_node_note_path(current_project, @node, @note) }
+    before do
+      visit project_node_note_path(current_project, @node, @note)
+
+      # Wait for ajax
+      find('[data-behavior="fetch"] .comment-feed')
+    end
+
     it_behaves_like "a note page with poller"
   end
 
