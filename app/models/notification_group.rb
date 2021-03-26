@@ -44,9 +44,9 @@ class NotificationGroup
     # Group each item using their projects or notifiable class
     hash.group_by do |item, _|
       if item.respond_to?(:project)
-        item.project
+        item.project.name
       else
-        item.class.to_s.demodulize.pluralize
+        item.class.name.demodulize.pluralize
       end
     end
   end

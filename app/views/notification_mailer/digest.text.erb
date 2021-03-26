@@ -4,9 +4,9 @@
   Your Recent Notifications
 <% end %>
 
-<% @notifications.each do |entity, entity_notifications| %>
-  <%= entity.is_a?(Project) ? entity.name : entity %>
-  <% entity_notifications.each do |_, notifications| %>
+<% @notifications.each do |notifiable_group, grouped_notifications| %>
+  <%= notifiable_group %>
+  <% grouped_notifications.each do |_, notifications| %>
     <% presenter = DigestPresenter.new(notifications, self) %>
     <%= render partial: 'notification_mailer/notification', locals: { presenter: presenter } %>
   <% end %>

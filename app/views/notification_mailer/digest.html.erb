@@ -19,7 +19,7 @@
 <tr>
   <td>
     <table cellspacing="0" cellpadding="0">
-      <% @notifications.each do |entity, entity_notifications| %>
+      <% @notifications.each do |notifiable_group, grouped_notifications| %>
         <tr>
           <td colspan="12">
             <table cellspacing="0" cellpadding="0" align="center">
@@ -29,7 +29,7 @@
               <tr>
                 <td width="20px">&nbsp;&nbsp;</td>
                 <td align="left" nowrap style="font-weight: 700; font-size: 1.1rem; line-height: 1.2rem;">
-                  <%= entity.is_a?(Project) ? entity.name : entity %>
+                  <%= notifiable_group %>
                 </td>
                 <td width="20px">&nbsp;&nbsp;</td>
                 <td style="width: 590px">
@@ -41,7 +41,7 @@
           </td>
         </tr>
 
-        <% entity_notifications.each do |_, notifications| %>
+        <% grouped_notifications.each do |_, notifications| %>
         <tr>
           <td>
             <table cellspacing="0" cellpadding="20px">

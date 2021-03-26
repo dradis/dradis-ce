@@ -59,6 +59,7 @@ class NotificationPresenter < BasePresenter
   def render_partial
     locals = { presenter: self }
     locals[notifiable_name] = notification.notifiable
+    locals[:current_user] = notification.recipient
     render partial_path, locals
   end
 
