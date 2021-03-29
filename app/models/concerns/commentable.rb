@@ -1,7 +1,11 @@
 module Commentable
   extend ActiveSupport::Concern
 
-  included do
+  mattr_accessor :allowed_types, default: []
+
+  included do |base|
+    Commentable.allowed_types << base.name
+
     has_many :comments, as: :commentable, dependent: :destroy
   end
 

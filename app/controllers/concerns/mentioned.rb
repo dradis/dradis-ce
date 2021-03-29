@@ -4,7 +4,7 @@ module Mentioned
   included do
     # If this needs to be any more complicated put the before actions
     # in each individual controller.
-    actions = controller_path == 'comments' ? [:create, :update] : [:show]
+    actions = controller_path == 'comments' ? [:index, :create, :show, :update] : [:show]
     before_action :find_mentionable_users, only: actions
   end
 

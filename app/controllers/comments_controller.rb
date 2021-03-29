@@ -4,7 +4,13 @@ class CommentsController < AuthenticatedController
   include Mentioned
   include Notified
 
+  layout false
+
   load_and_authorize_resource
+
+  def index
+    @comments = commentable.comments.includes(:user)
+  end
 
   def create
     @comment = Comment.new(comment_params)
@@ -35,5 +41,23 @@ class CommentsController < AuthenticatedController
 
   def comment_params
     params.require(:comment).permit(:content, :commentable_type, :commentable_id)
+  end
+
+  def commentable
+    @commentable ||= begin
+      if @comment
+        @comment.commentable
+      else
+        commentable_class.find(comment_params[:commentable_id])
+      end
+    end
+  end
+
+  def commentable_class
+    if Commentable.allowed_types.include?(comment_params[:commentable_type])
+      comment_params[:commentable_type].constantize
+    else
+      raise 'Invalid commentable'
+    end
   end
 end

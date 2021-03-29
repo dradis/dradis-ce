@@ -1,6 +1,5 @@
 class CardsController < AuthenticatedController
   include ActivityTracking
-  include Commented
   include ContentFromTemplate
   include ProjectScoped
   include Mentioned
