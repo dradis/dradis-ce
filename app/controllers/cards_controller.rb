@@ -2,6 +2,7 @@ class CardsController < AuthenticatedController
   include ActivityTracking
   include ContentFromTemplate
   include ProjectScoped
+  include Mentioned
   include NotificationsReader
 
   # Not sorted because we need the Board and List first!
