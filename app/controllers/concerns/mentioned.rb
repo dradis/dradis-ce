@@ -15,12 +15,6 @@ module Mentioned
   end
 
   def project
-    @project ||= begin
-      if defined?(:current_project)
-        current_project
-      else
-        nil
-      end
-    end
+    @current_project || nil
   end
 end
