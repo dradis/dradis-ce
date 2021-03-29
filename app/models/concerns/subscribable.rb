@@ -16,12 +16,4 @@ module Subscribable
       Subscription.subscribe(user: user, to: self)
     end
   end
-
-  def subscription_for(user:)
-    self.subscriptions.find_by(
-      user: user,
-      subscribable_type: self.class.to_s,
-      subscribable_id: self.id
-    )
-  end
 end

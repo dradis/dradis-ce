@@ -5,7 +5,7 @@ class SubscriptionsController < AuthenticatedController
     @subscriptions = subscribable.subscriptions.includes(:user)
 
     # Used for showing/hiding subscribe and unsubscribe links
-    @subscription = subscribable.subscription_for(user: current_user)
+    @subscription = @subscriptions.find { |subscription| subscription.user == current_user }
   end
 
   def create
