@@ -15,7 +15,6 @@ class CardsController < AuthenticatedController
 
   def show
     @activities   = @card.activities.latest
-    @subscription = @card.subscription_for(user: current_user)
     render layout: !request.xhr?
   end
 

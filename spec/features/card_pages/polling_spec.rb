@@ -178,6 +178,7 @@ describe 'card pages', js: true do
 
       # Wait for ajax
       find('[data-behavior~=fetch-comments] .comment-feed')
+      find('[data-behavior~=fetch-subscriptions] .subscriptions-feed')
     end
 
     let(:action) { :show }
