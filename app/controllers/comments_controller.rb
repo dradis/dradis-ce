@@ -60,7 +60,14 @@ class CommentsController < AuthenticatedController
     end
   end
 
+  # Overwrite method from concerns/mentioned.rb
   def project
-    @project ||= commentable.project
+    @project ||= begin
+      if commentable.respond_to?(:project)
+        commentable.project
+      else
+        nil
+      end
+    end
   end
 end

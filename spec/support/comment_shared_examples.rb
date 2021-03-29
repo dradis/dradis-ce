@@ -3,7 +3,7 @@
 #   create_comments : a block which creates the comments AND IS CALLED
 #                     BEFORE THE PAGE LOADS
 #   commentable: the model which the 'show' page is about
-shared_examples 'a page with a comments feed' do
+shared_examples 'a page with a comments feed' do |commentable_factory|
 
   include CommentMacros
 
@@ -12,7 +12,7 @@ shared_examples 'a page with a comments feed' do
       create(:comment, commentable: commentable, user: @logged_in_as),
       create(:comment, commentable: commentable)
     ]
-    other_instance = create(commentable.class.to_s.underscore)
+    other_instance = create(commentable_factory || commentable.class.to_s.underscore)
     @other_comment = create(:comment, commentable: other_instance)
   end
 
