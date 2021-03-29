@@ -11,6 +11,10 @@ module Mentioned
   protected
 
   def find_mentionable_users
-    @mentionable_users ||= current_project.testers_for_mentions
+    @mentionable_users ||= project.testers_for_mentions
+  end
+
+  def project
+    @project ||= current_project
   end
 end

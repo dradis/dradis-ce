@@ -1,12 +1,11 @@
 class CommentsController < AuthenticatedController
+  load_and_authorize_resource
+
   include ActivityTracking
-  include ProjectScoped
   include Mentioned
   include Notified
 
   layout false
-
-  load_and_authorize_resource
 
   def index
     @comments = commentable.comments.includes(:user)
@@ -16,7 +15,7 @@ class CommentsController < AuthenticatedController
     @comment = Comment.new(comment_params)
     @comment.user = current_user
     if @comment.save
-      track_created(@comment)
+      track_created(@comment, project: project)
       broadcast_notifications(
         action: :create,
         notifiable: @comment,
@@ -27,13 +26,13 @@ class CommentsController < AuthenticatedController
 
   def update
     if @comment.update(comment_params)
-      track_updated(@comment)
+      track_updated(@comment, project: project)
     end
   end
 
   def destroy
     if @comment.destroy
-      track_destroyed(@comment)
+      track_destroyed(@comment, project: project)
     end
   end
 
@@ -59,5 +58,9 @@ class CommentsController < AuthenticatedController
     else
       raise 'Invalid commentable'
     end
+  end
+
+  def project
+    @project ||= commentable.project
   end
 end
