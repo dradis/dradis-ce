@@ -85,7 +85,7 @@
         <%= content_tag :div,
           spinner_tag,
           data: {
-            behavior: 'fetch',
+            behavior: 'fetch fetch-comments',
             path: comments_path(
               comment: {
                 commentable_type: @issue.class,

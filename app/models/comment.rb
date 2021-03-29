@@ -2,7 +2,6 @@ class Comment < ApplicationRecord
   include Notifiable
 
   MENTION_PATTERN = /[a-z0-9][a-z0-9\-@\.]*/.freeze
-  COMMENTABLE_TYPES = ['Card', 'Evidence', 'Issue', 'Note'].freeze
 
   # -- Relationships --------------------------------------------------------
   belongs_to :commentable, polymorphic: true

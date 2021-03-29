@@ -18,7 +18,7 @@ shared_examples 'a page with a comments feed' do |commentable_factory|
 
   it 'lists them in the content feed', js: true do
     # Wait for ajax
-    find('[data-behavior="fetch"] .comment-feed')
+    find('[data-behavior~=fetch-comments] .comment-feed')
 
     within comment_feed do
       should have_comment(@comments[0])
@@ -29,7 +29,7 @@ shared_examples 'a page with a comments feed' do |commentable_factory|
 
   it 'display user\'s name in comment row', js: true do
     # Wait for ajax
-    find('[data-behavior="fetch"] .comment-feed')
+    find('[data-behavior~=fetch-comments] .comment-feed')
 
     within "div#comment_#{@comments[0].id}" do
       expect(page).to have_selector('span.user', text: @logged_in_as.name)

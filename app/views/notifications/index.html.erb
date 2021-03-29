@@ -1,9 +1,9 @@
-<% content_for :title, 'Notifications for this Project' %>
+<% content_for :title, "Notifications#{@current_project ? ' for this project' : ''}" %>
 
 <div class="content-container">
-  <h4 class="header-underline w-100">Notifications for this Project
+  <h4 class="header-underline w-100"><%= @current_project ? 'Notifications for this project' : 'Your Notifications' %>
     <% if @notifications.any? %>
-      <b><%= link_to 'Mark all as read', project_notification_path(current_project, id: 'all'), class: 'actions pull-right', method: :put, remote: true %></b>
+      <b><%= link_to 'Mark all as read', notification_path(id: 'all'), class: 'actions pull-right', method: :put, remote: true %></b>
     <% end %>
   </h4>
   <% cache [current_user, @notifications] do %>

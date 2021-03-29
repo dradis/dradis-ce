@@ -18,6 +18,7 @@
         .then(function(response) { return response.text(); })
         .then(function(html) {
           item.innerHTML = html;
+          $(item).trigger('dradis:fetch');
           initBehaviors(item);
         });
     });
