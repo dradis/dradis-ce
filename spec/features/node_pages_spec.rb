@@ -27,12 +27,12 @@ describe "node pages" do
       let(:submit_form) { click_button "Add" }
 
       it "shows a modal for adding a top-level node" do
-        expect(page).to have_field :node_label
+        expect(page).to have_field :branch_node_label
       end
 
       describe "submitting the 'new top-level node' form" do
         it "creates and shows the new node" do
-          fill_in :node_label, with: "My awesome node"
+          fill_in :branch_node_label, with: "My awesome node"
           expect{submit_form}.to change{Node.count}.by(1)
           expect(page).to have_content "Successfully created node."
           new_node = Node.last
@@ -44,11 +44,11 @@ describe "node pages" do
 
       example "adding multiple root nodes" do
         choose "Add multiple"
-        expect(page).to have_no_field :node_label
-        expect(page).to have_field :nodes_list
+        expect(page).to have_no_field :branch_node_label
+        expect(page).to have_field :branch_nodes_list
 
         # Include a blank line to make sure that no node gets created:
-        fill_in :nodes_list, with: <<-LIST.strip_heredoc
+        fill_in :branch_nodes_list, with: <<-LIST.strip_heredoc
             node 1
 
             node_2
@@ -89,8 +89,8 @@ describe "node pages" do
       example "adding multiple root host nodes" do
         choose "Add multiple"
 
-        fill_in :nodes_list, with: "foo\nbar"
-        select "Host", from: :nodes_type_id
+        fill_in :branch_nodes_list, with: "foo\nbar"
+        select "Host", from: :branch_nodes_icon
 
         expect do
           click_button "Add"
@@ -112,7 +112,7 @@ describe "node pages" do
       let(:node) { create(:node, project: current_project) }
 
       example "adding a single node" do
-        fill_in :node_label, with: "My new node"
+        fill_in "child_node_label", with: "My new node"
         expect do
           click_button 'Add'
         end.to change { node.children.count }.by(1)
@@ -130,11 +130,11 @@ describe "node pages" do
 
       example "adding multiple nodes" do
         choose "Add multiple"
-        expect(page).to have_no_field :node_label
-        expect(page).to have_field :nodes_list
+        expect(page).to have_no_field :child_node_label
+        expect(page).to have_field :child_nodes_list
 
         # Include a blank line to make sure that no node gets created:
-        fill_in :nodes_list, with: <<-LIST.strip_heredoc
+        fill_in :child_nodes_list, with: <<-LIST.strip_heredoc
             node 1
 
             node_2
@@ -174,7 +174,7 @@ describe "node pages" do
 
       example "adding multiple nodes - submitting a blank textarea" do
         choose "Add multiple"
-        fill_in :nodes_list, with: "   \n \n \n    \n "
+        fill_in :child_nodes_list, with: "   \n \n \n    \n "
         click_button "Add"
         expect(page).to have_content "Please add at least one node"
       end
@@ -194,11 +194,11 @@ describe "node pages" do
 
     it "shows a modal to rename the node" do
       should have_content /Rename My node node/i
-      should have_field :node_label
+      should have_field :node_new_label
     end
 
     describe "submitting a new name" do
-      before { fill_in :node_label, with: "new node name" }
+      before { fill_in :node_new_label, with: "new node name" }
 
       it "updates the node's name" do
         submit_form
@@ -217,7 +217,7 @@ describe "node pages" do
     end
 
     describe "submitting an invalid name" do
-      before { fill_in :node_label, with: "" }
+      before { fill_in :node_new_label, with: "" }
 
       it "doesn't update the node's name" do
         expect{ submit_form }.not_to change{ @node.reload.label }

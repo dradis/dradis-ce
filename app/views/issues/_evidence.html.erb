@@ -13,20 +13,24 @@
   <% else %>
     <div id="evidence-tabs">
       <div class="row mt-4">
-        <div class="col-4 col-lg-3 col-xl-2 pr-0">
+        <div class="col-4 col-lg-3 pr-0">
           <ul class="nav nav-pills flex-column" id="evidence-host-list">
             <% @affected_nodes.each do |node| %>
               <% cache [@issue, node, node.evidence_count, 'evidence-nav'] do %>
-                <li class="nav-item">
-                  <a href="#evidence_for_<%= dom_id(node) %>" class="nav-link p-2" data-toggle="pill" data-path="<%= project_issue_node_path(current_project, @issue, node) %>" data-node='<%= "evidence_for_#{dom_id(node)}" %>' data-behavior="evidence-link">
-                    <i class="fa fa-<%= ['folder-o','laptop'][node.type_id] %>"></i> <%= node.label %> (<%= node.evidence_count %>)
+                <li class="nav-item mw-100">
+                  <a href="#evidence_for_<%= dom_id(node) %>" class="nav-link p-2" data-toggle="pill" data-path="<%= project_issue_node_path(current_project, @issue, node) %>" data-node='<%= "evidence_for_#{dom_id(node)}" %>' data-behavior="evidence-link" title="<%= node.label %> (<%= node.evidence_count %>)">
+                    <div class="d-flex align-items-center">
+                      <i class="fa fa-<%= ['folder-o','laptop'][node.type_id] %> mr-1"></i>
+                      <span class="text-truncate"><%= node.label %></span>
+                      <span class="ml-1">(<%= node.evidence_count %>)</span>
+                    </div>
                   </a>
                 </li>
               <% end %>
             <% end %>
           </ul>
         </div>
-        <div class="col-8 col-lg-9 col-xl-10">
+        <div class="col-8 col-lg-9">
           <div class="tab-content">
             <% @affected_nodes.each do |node| %>
               <%= content_tag :div, class: 'tab-pane fade evidence-content', id: "evidence_for_#{dom_id(node)}", data: { behavior: 'evidence-tab-pane' } do %>

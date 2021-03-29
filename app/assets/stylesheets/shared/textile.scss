@@ -269,7 +269,7 @@
         }
 
         &.active {
-          background: $grayDark;
+          background: darken($grayDark, 10%);
           color: #fff;
         }
       }

@@ -1,13 +1,14 @@
 <div class="d-flex justify-content-between mb-3">
   <div class="btn-toolbar">
     <div class="btn-group mr-1">
-      <span class="btn js-items-table-select-all" title="Select all issues">
+      <span class="btn d-flex align-items-center js-items-table-select-all" title="Select all issues">
+        <label for="select-all" class="sr-only">Select all</label>
         <input type="checkbox" id="select-all" />
       </span>
     </div>
 
     <div class="btn-group mr-1">
-      <a class="btn" href="javascript:location.reload(true);" title="Refresh issue list"><i class="fa fa-refresh"></i></a>
+      <a class="btn" href="javascript:location.reload(true);"><i class="fa fa-refresh"></i><span class="sr-only">Refresh issue list</span></a>
     </div>
 
     <div class="btn-group mr-1 items-table-actions js-items-table-actions">
@@ -42,16 +43,17 @@
     </div>
 
     <div class="btn-group dropdown">
-      <button class="btn dropdown-toggle" data-toggle="dropdown" title="Choose columns to show"><i class="fa fa-columns"></i> <i class="fa fa-caret-down"></i></button>
+      <button class="btn dropdown-toggle" data-toggle="dropdown" title="Choose columns to show"><i class="fa fa-columns"></i> <i class="fa fa-caret-down"></i><span class="sr-only">Select columns to show</span></button>
       <ul class="dropdown-menu js-table-columns">
         <% @columns.each do |column| %>
-        <li><a class="dropdown-item" href="javascript:void(0)" data-column="<%= column.downcase %>"><input type="checkbox" /> <%= column %></a></li>
+        <li><a class="dropdown-item" href="javascript:void(0)" data-column="<%= column.downcase %>"><input type="checkbox" id="column_<%= column.downcase %>" /> <label for="column_<%= column.downcase %>"><%= column %></label></a></li>
         <% end %>
       </ul>
     </div>
   </div>
 
   <div class="w-25">
-    <input type="search" class="form-control js-table-filter" placeholder="Type here to filter table..."/>
+    <label for="table-filter" class="sr-only">Filter table by keyword</label>
+    <input type="search" class="form-control js-table-filter" id="table-filter" placeholder="Type here to filter table..."/>
   </div>
 </div>

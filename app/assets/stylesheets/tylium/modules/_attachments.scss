@@ -4,7 +4,7 @@
   .drop-zone {
     background: $lightColor;
     outline: 1px dashed $white;
-    color: $darkColor;
+    color: darken($darkColor, 2%);
     padding: 50px;
     text-align: center;
     margin: 0.5rem 0 1rem 0;

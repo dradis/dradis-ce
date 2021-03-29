@@ -29,6 +29,10 @@
   .breadcrumb-item {
     white-space: nowrap;
 
+    &.active {
+      color: darken($mutedText, 4.15%);
+    }
+
     &+ .breadcrumb-item::before {
       font-family: "fontawesome";
       content: "\f105";
