@@ -61,6 +61,12 @@ class CommentsController < AuthenticatedController
   end
 
   def project
-    @project ||= commentable.project
+    @project ||= begin
+      if commentable.respond_to?(:project)
+        commentable.project
+      else
+        nil
+      end
+    end
   end
 end
