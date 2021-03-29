@@ -85,8 +85,8 @@
         <%= content_tag :div,
           spinner_tag,
           data: {
-            behavior: 'fetch',
-            path: project_comments_path(
+            behavior: 'fetch fetch-comments',
+            path: comments_path(
               comment: {
                 commentable_type: @issue.class,
                 commentable_id: @issue.id
@@ -100,7 +100,7 @@
         <%= content_tag :div,
           spinner_tag,
           data: {
-            behavior: 'fetch',
+            behavior: 'fetch fetch-subscriptions',
             path: subscriptions_path(
               subscription: {
                 subscribable_type: @issue.class,

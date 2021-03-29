@@ -177,8 +177,8 @@ describe 'card pages', js: true do
       visit project_board_list_card_path(current_project, @board, @list, @card)
 
       # Wait for ajax
-      find('[data-behavior="fetch"] .comment-feed')
-      find('[data-behavior="fetch"] .subscriptions-feed')
+      find('[data-behavior~=fetch-comments] .comment-feed')
+      find('[data-behavior~=fetch-subscriptions] .comment-feed')
     end
 
     let(:action) { :show }

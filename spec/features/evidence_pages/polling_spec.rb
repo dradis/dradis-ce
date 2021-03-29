@@ -60,8 +60,8 @@ describe "evidence pages", js: true do
     before do visit project_node_evidence_path(current_project, @node, @evidence)
 
       # Wait for ajax
-      find('[data-behavior="fetch"] .comment-feed')
-      find('[data-behavior="fetch"] .subscriptions-feed')
+      find('[data-behavior~=fetch-comments] .comment-feed')
+      find('[data-behavior~=fetch-subscriptions] .comment-feed')
     end
 
     it_behaves_like "an evidence page with poller"

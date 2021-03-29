@@ -3,7 +3,7 @@
 #   create_comments : a block which creates the comments AND IS CALLED
 #                     BEFORE THE PAGE LOADS
 #   commentable: the model which the 'show' page is about
-shared_examples 'a page with a comments feed' do
+shared_examples 'a page with a comments feed' do |commentable_factory|
 
   include CommentMacros
 
@@ -12,13 +12,13 @@ shared_examples 'a page with a comments feed' do
       create(:comment, commentable: commentable, user: @logged_in_as),
       create(:comment, commentable: commentable)
     ]
-    other_instance = create(commentable.class.to_s.underscore)
+    other_instance = create(commentable_factory || commentable.class.to_s.underscore)
     @other_comment = create(:comment, commentable: other_instance)
   end
 
   it 'lists them in the content feed', js: true do
     # Wait for ajax
-    find('[data-behavior="fetch"] > .comment-feed')
+    find('[data-behavior~=fetch-comments] .comment-feed')
 
     within comment_feed do
       should have_comment(@comments[0])
@@ -29,7 +29,7 @@ shared_examples 'a page with a comments feed' do
 
   it 'display user\'s name in comment row', js: true do
     # Wait for ajax
-    find('[data-behavior="fetch"] > .comment-feed')
+    find('[data-behavior~=fetch-comments] .comment-feed')
 
     within "div#comment_#{@comments[0].id}" do
       expect(page).to have_selector('span.user', text: @logged_in_as.name)

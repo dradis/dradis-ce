@@ -1,13 +1,11 @@
 class CommentsController < AuthenticatedController
+  load_and_authorize_resource
+
   include ActivityTracking
-  include ProjectScoped
+  include Mentioned
   include Notified
 
   layout false
-
-  load_and_authorize_resource
-
-  before_action :find_mentionable_users, only: [:index, :create, :update]
 
   def index
     @comments = commentable.comments.includes(:user)
@@ -17,7 +15,7 @@ class CommentsController < AuthenticatedController
     @comment = Comment.new(comment_params)
     @comment.user = current_user
     if @comment.save
-      track_created(@comment)
+      track_created(@comment, project: project)
       broadcast_notifications(
         action: :create,
         notifiable: @comment,
@@ -28,13 +26,13 @@ class CommentsController < AuthenticatedController
 
   def update
     if @comment.update(comment_params)
-      track_updated(@comment)
+      track_updated(@comment, project: project)
     end
   end
 
   def destroy
     if @comment.destroy
-      track_destroyed(@comment)
+      track_destroyed(@comment, project: project)
     end
   end
 
@@ -55,14 +53,21 @@ class CommentsController < AuthenticatedController
   end
 
   def commentable_class
-    if Comment::COMMENTABLE_TYPES.include?(comment_params[:commentable_type])
+    if Commentable.allowed_types.include?(comment_params[:commentable_type])
       comment_params[:commentable_type].constantize
     else
       raise 'Invalid commentable'
     end
   end
 
-  def find_mentionable_users
-    @mentionable_users ||= current_project.testers_for_mentions
+  # Overwrite method from concerns/mentioned.rb
+  def project
+    @project ||= begin
+      if commentable.respond_to?(:project)
+        commentable.project
+      else
+        nil
+      end
+    end
   end
 end

@@ -2,6 +2,7 @@
 # resource.
 class NotesController < NestedNodeResourceController
   include ConflictResolver
+  include Mentioned
   include MultipleDestroy
   include NodesSidebar
   include NotificationsReader
