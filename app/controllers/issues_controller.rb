@@ -2,6 +2,7 @@ class IssuesController < AuthenticatedController
   include ActivityTracking
   include ContentFromTemplate
   include ConflictResolver
+  include Mentioned
   include MultipleDestroy
   include NotificationsReader
   include ProjectScoped

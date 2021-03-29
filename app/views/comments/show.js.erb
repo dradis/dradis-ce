@@ -1,1 +1,3 @@
 document.querySelector('[data-behavior~=comment][data-id="<%= @comment.id %>"]').outerHTML = '<%= j render(@comment) %>';
+var actions = document.querySelector('[data-behavior~=comment][data-id="<%= @comment.id %>"]').querySelector('.actions');
+actions.classList.add('current_user');

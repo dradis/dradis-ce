@@ -14,6 +14,8 @@
       <meta name="turbolinks-cache-control" content="reload">
     <% end %>
 
+    <%= render 'comments/mentionable_users' if @mentionable_users %>
+
     <%= favicon_link_tag 'favicon.ico',
         'data-behavior': 'favicon',
         'data-unread': image_path('favicon-unread.ico'),
