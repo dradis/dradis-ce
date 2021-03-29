@@ -137,8 +137,6 @@ GEM
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
     ffi (1.14.2)
-    font-awesome-sass (4.7.0)
-      sass (>= 3.2)
     foreman (0.87.0)
     formatador (0.2.5)
     git (1.6.0)
@@ -379,11 +377,6 @@ GEM
       crass (~> 1.0.2)
       nokogiri (>= 1.8.0)
       nokogumbo (~> 2.0)
-    sass (3.7.4)
-      sass-listen (~> 4.0.0)
-    sass-listen (4.0.0)
-      rb-fsevent (~> 0.9, >= 0.9.4)
-      rb-inotify (~> 0.9, >= 0.9.7)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -484,7 +477,6 @@ DEPENDENCIES
   dradis-plugins (~> 3.21)
   dradis-projects (~> 3.21)
   factory_bot_rails
-  font-awesome-sass (~> 4.7.0)
   foreman
   guard-rspec
   html-pipeline
