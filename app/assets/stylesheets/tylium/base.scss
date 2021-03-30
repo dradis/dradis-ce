@@ -168,6 +168,10 @@ select {
   }
 }
 
+.show > .btn-primary.dropdown-toggle {
+  background: darken($primaryColor, 10);
+}
+
 .small {
   font-size: 75%;
   font-weight: 300;

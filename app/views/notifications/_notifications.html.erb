@@ -1,0 +1,18 @@
+<% cache [current_user, @notifications] do %>
+  <% if @notifications.any? %>
+    <div class="notifications-index">
+      <ul class="p-0 m-0">
+        <% @notifications.each do |notification| %>
+          <%= render notification %>
+        <% end %>
+      </ul>
+    </div>
+    <%= paginate @notifications %>
+  <% else %>
+    <%= render 'shared/empty_state',
+      name: 'notification',
+      docs_link: 'https://dradisframework.com/support/guides/projects/comments.html#notify',
+      text: 'Use the notifications feed to stay updated on conversations relevant to you.'
+    %>
+  <% end %>
+<% end %>

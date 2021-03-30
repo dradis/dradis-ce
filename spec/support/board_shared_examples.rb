@@ -12,7 +12,7 @@ shared_examples 'managing boards' do
   let(:model) { board }
 
   let(:create_link) do
-    "a.board-new[data-behavior='board-modal']"
+    "a[data-behavior='board-modal']"
   end
 
   let(:delete_link) do
