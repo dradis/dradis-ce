@@ -57,7 +57,8 @@ describe "evidence pages", js: true do
   end
 
   describe "when I am viewing an Evidence" do
-    before do visit project_node_evidence_path(current_project, @node, @evidence)
+    before do
+      visit project_node_evidence_path(current_project, @node, @evidence)
 
       # Wait for ajax
       find('[data-behavior~=fetch-comments] .comment-feed')
