@@ -70,7 +70,7 @@ class NotificationPresenter < BasePresenter
   end
 
   def partial_paths
-    [ "#{notification.notifiable_type.underscore.pluralize}/notifications/#{notifiable_name}"]
+    ["#{notification.notifiable_type.underscore.pluralize}/notifications/#{notifiable_name}"]
   end
 
   def path_to_comment

@@ -49,7 +49,7 @@
 //= require tylium/modules/search
 //= require tylium/modules/sidebar
 //= require tylium/modules/activities/poller
-// require tylium/modules/tour
+//= require tylium/modules/tour
 //= require tylium/modules/uploads
 
 //= require tylium/pages/activities
