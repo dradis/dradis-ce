@@ -14,9 +14,7 @@ v3.22.0 (MMM’21)
   * Truncate long hostnames when viewing evidence in an issue
   * Upgraded gems: [gem #1], [gem #2]
   * Bugs fixed:
-    - [bug fixed #1]
-    - [bug fixed ...]
-    - Bug tracker items: #N, #M, #O, ...
+    - Placeholder gravatars appear if gravatar is not available
   * New integrations:
     - [new integration #1]
     - [new integration ...]
