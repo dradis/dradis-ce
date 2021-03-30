@@ -1,27 +1,19 @@
-<% content_for :title, 'Notifications for this Project' %>
+<% content_for :title, 'Notifications' %>
 
-<div class="content-container">
-  <% if @notifications.any? %>
-    <h4 class="header-underline w-100">Notifications for this Project
-      <b><%= link_to 'Mark all as read', project_notification_path(current_project, id: 'all'), class: 'actions pull-right', method: :put, remote: true %></b>
+<% if @current_project %>
+  <div class="content-container">
+    <h4 class="header-underline w-100">
+      <%= render partial: 'notifications/header' %>
     </h4>
-  <% end %>
-  <% cache [current_user, @notifications] do %>
-    <% if @notifications.any? %>
-      <div class="notifications-index">
-        <ul class="p-0 m-0">
-          <% @notifications.each do |notification| %>
-            <%= render notification %>
-          <% end %>
-        </ul>
+    <%= render partial: 'notifications/notifications' %>
+  </div>
+<% else %>
+  <div class="card">
+    <div class="card-header bg-primary">
+      <div class="card-title">
+        <%= render partial: 'notifications/header' %>
       </div>
-      <%= paginate @notifications %>
-    <% else %>
-      <%= render 'shared/empty_state',
-        name: 'notification',
-        docs_link: 'https://dradisframework.com/support/guides/projects/comments.html#notify',
-        text: 'Use the notifications feed to stay updated on conversations relevant to you.'
-      %>
-    <% end %>
-  <% end %>
-</div>
+    </div>
+    <%= render partial: 'notifications/notifications' %>
+  </div>
+<% end %>

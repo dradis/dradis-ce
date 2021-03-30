@@ -1,5 +1,7 @@
 v3.22.0 (MMM’21)
   * Added the ability to import Configuration Kits
+  * Comments
+    - Load feed asynchronously
   * Improve accessibility:
     - Add alt text to any linked images
     - Add screen reader only text to forms
@@ -7,6 +9,8 @@ v3.22.0 (MMM’21)
     - Fix any broken Aria references
     - Update element label association & add missing labels
   * Replace deprecated font-awesome-sass gem with vendor asset files
+  * Subscriptions
+    - Load feed asynchronously
   * Truncate long hostnames when viewing evidence in an issue
   * Upgraded gems: [gem #1], [gem #2]
   * Bugs fixed:

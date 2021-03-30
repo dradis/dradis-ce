@@ -174,26 +174,6 @@
   }
 }
 
-.pagination {
-  padding-top: 0.75rem;
-  margin-bottom: .75rem;
-  border-top: 1px solid $borderColor;
-
-  > * {
-    padding-right: 5px;
-  }
-}
-
-.page {
-  &.page-mini {
-    padding: 10px;
-  }
-  &.page-none {
-    margin: 0 0;
-    padding: 0px;
-  }
-}
-
 pre {
   padding: 1rem;
   margin-top: 1.5rem;
