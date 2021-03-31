@@ -12,7 +12,7 @@ v3.22.0 (MMM’21)
   * Subscriptions
     - Load feed asynchronously
   * Truncate long hostnames when viewing evidence in an issue
-  * Upgraded gems: [gem #1], [gem #2]
+  * Upgraded gems: Rails
   * Bugs fixed:
     - Placeholder gravatars appear if gravatar is not available
   * New integrations:
