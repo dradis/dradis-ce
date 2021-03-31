@@ -7,7 +7,7 @@ v3.22.0 (MMM’21)
     - Fix any broken Aria references
     - Update element label association & add missing labels
   * Truncate long hostnames when viewing evidence in an issue
-  * Upgraded gems: [gem #1], [gem #2]
+  * Upgraded gems: Rails
   * Bugs fixed:
     - [bug fixed #1]
     - [bug fixed ...]
