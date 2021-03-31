@@ -282,6 +282,8 @@ GEM
     letter_opener (1.7.0)
       launchy (~> 2.2)
     libv8 (8.4.255.0)
+    libv8 (8.4.255.0-x86_64-darwin-19)
+    libv8 (8.4.255.0-x86_64-linux)
     listen (3.4.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -526,6 +528,8 @@ GEM
 
 PLATFORMS
   ruby
+  x86_64-darwin-19
+  x86_64-linux
 
 DEPENDENCIES
   RedCloth (~> 4.3.2)
