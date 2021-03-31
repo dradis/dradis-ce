@@ -57,10 +57,6 @@ Rails.application.configure do
   # Tell Active Support which deprecation messages to disallow.
   config.active_support.disallowed_deprecation_warnings = []
 
-  config.assets.configure do |env|
-    env.export_concurrent = false
-  end
-
   config.assets.precompile += %w( tylium/test.css tylium/test.js )
 
   # Raises error for missing translations.
