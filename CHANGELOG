@@ -1,16 +1,20 @@
 v3.22.0 (MMM’21)
+  * Added the ability to import Configuration Kits
+  * Comments
+    - Load feed asynchronously
   * Improve accessibility:
     - Add alt text to any linked images
     - Add screen reader only text to forms
     - Adjustments to font and element contrast to meet at minimum Level AA WCAG 2.0 standards.
     - Fix any broken Aria references
     - Update element label association & add missing labels
+  * Replace deprecated font-awesome-sass gem with vendor asset files
+  * Subscriptions
+    - Load feed asynchronously
   * Truncate long hostnames when viewing evidence in an issue
-  * Upgraded gems: [gem #1], [gem #2]
+  * Upgraded gems: Rails
   * Bugs fixed:
-    - [bug fixed #1]
-    - [bug fixed ...]
-    - Bug tracker items: #N, #M, #O, ...
+    - Placeholder gravatars appear if gravatar is not available
   * New integrations:
     - [new integration #1]
     - [new integration ...]

@@ -1,23 +1,19 @@
-<% content_for :title, 'Notifications for this Project' %>
+<% content_for :title, 'Notifications' %>
 
-<div class="content-container">
-  <h4 class="header-underline w-100">Notifications for this Project
-    <% if @notifications.any? %>
-      <b><%= link_to 'Mark all as read', project_notification_path(current_project, id: 'all'), class: 'actions pull-right', method: :put, remote: true %></b>
-    <% end %>
-  </h4>
-  <% cache [current_user, @notifications] do %>
-    <% if @notifications.any? %>
-      <div class="notifications-index">
-        <ul class="p-0 m-0">
-          <% @notifications.each do |notification| %>
-            <%= render notification %>
-          <% end %>
-        </ul>
+<% if @current_project %>
+  <div class="content-container">
+    <h4 class="header-underline w-100">
+      <%= render partial: 'notifications/header' %>
+    </h4>
+    <%= render partial: 'notifications/notifications' %>
+  </div>
+<% else %>
+  <div class="card">
+    <div class="card-header bg-primary">
+      <div class="card-title">
+        <%= render partial: 'notifications/header' %>
       </div>
-      <%= paginate @notifications %>
-    <% else %>
-      <p class="mb-3 text-center">You don't have any notifications yet.</p>
-    <% end %>
-  <% end %>
-</div>
+    </div>
+    <%= render partial: 'notifications/notifications' %>
+  </div>
+<% end %>

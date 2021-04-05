@@ -116,6 +116,10 @@
   margin-top: 1rem;
 }
 
+.fa-li {
+  top: 0.25rem;
+}
+
 .gravatar {
   float: left;
   margin-right: 5px;
@@ -167,26 +171,6 @@
 
   .nav-link:hover:not(.active) {
     border-color: transparent;
-  }
-}
-
-.pagination {
-  padding-top: 0.75rem;
-  margin-bottom: .75rem;
-  border-top: 1px solid $borderColor;
-
-  > * {
-    padding-right: 5px;
-  }
-}
-
-.page {
-  &.page-mini {
-    padding: 10px;
-  }
-  &.page-none {
-    margin: 0 0;
-    padding: 0px;
   }
 }
 

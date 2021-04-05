@@ -1,0 +1,250 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dradis-template>
+  <name>Welcome project template</name>
+  <nodes type='array'>
+  <node>
+    <position type='integer'>0</position>
+    <label>Dradis Professional Edition</label>
+    <created-at type='datetime'>2012-06-09T10:25:57Z</created-at>
+    <updated-at type='datetime'>2012-06-09T10:26:05Z</updated-at>
+    <project-id type='integer'>7</project-id>
+    <type-id type='integer'>0</type-id>
+    <id type='integer'>2199</id>
+    <parent-id type='integer' nil='true'/>
+    <notes type='array'>
+      <note>
+        <created-at type='datetime'>2012-06-09T10:27:03Z</created-at>
+        <author>admin@securityroots.com</author>
+        <updated-at type='datetime'>2012-06-09T10:39:56Z</updated-at>
+        <text>#[Title]#
+Use the tree on the left to browse through the items in this project.</text>
+        <node-id type='integer'>2199</node-id>
+        <id type='integer'>5626</id>
+        <category-id type='integer'>1</category-id>
+      </note>
+      <note>
+        <created-at type='datetime'>2012-06-09T10:27:03Z</created-at>
+        <author>admin@securityroots.com</author>
+        <updated-at type='datetime'>2012-06-09T10:39:56Z</updated-at>
+        <text>#[Title]#
+Ready to try the new interface?
+
+#[Description]#
+Great, click on the "New notes" tab at the bottom of the screen!
+</text>
+        <node-id type='integer'>2199</node-id>
+        <id type='integer'>5626</id>
+        <category-id type='integer'>1</category-id>
+      </note>
+    </notes>
+  </node>
+  <node>
+    <position type='integer'>0</position>
+    <label>Welcome</label>
+    <created-at type='datetime'>2012-06-09T10:26:09Z</created-at>
+    <updated-at type='datetime'>2012-06-09T10:26:26Z</updated-at>
+    <project-id type='integer'>7</project-id>
+    <type-id type='integer'>0</type-id>
+    <id type='integer'>2200</id>
+    <parent-id type='integer'>2199</parent-id>
+    <notes type='array'>
+      <note>
+        <created-at type='datetime'>2012-06-09T10:40:37Z</created-at>
+        <author>admin@securityroots.com</author>
+        <updated-at type='datetime'>2012-06-09T14:18:45Z</updated-at>
+        <text>#[Title]#
+Projects, users, advanced reporting and much more
+
+
+#[Projects and users]#
+
+In Dradis Pro you can have multiple projects at the same time. Each team member signs up and creates a user account within Dradis Pro. Later they can choose in what project they want to work on.
+
+You can go to the *Project selection* page using the link on the top-right corner of this page.
+
+
+#[Note and project templates]#
+
+After a little while of using Dradis Pro, you will realize that you are always using certain fields in your notes and certain structure in your projects.
+
+Inside the *Templates* module (you will have to log in as *Administrator* to see it) you can define new note templates. They will automagically appear in the @add note@ menu of the toolbar.
+
+Learn about how to create project templates with our guide: "Creating project templates and methodologies":http://securityroots.com/dradispro/support/guides/project_templates.html
+
+
+#[Testing methodologies]#
+
+Use Templates &gt; Methodologies to define checklists and testing methodologies that you can use in your projects. "Read more":http://blog.securityroots.com/2012/09/upcoming-in-dradis-pro-v16-checklists.html
+
+
+#[The Plugin Manager]#
+
+The *Plugin Manager* is one of the most powerful tools in Dradis Pro. It lets you customize the output produced by our plugins (e.g. Nessus, Nexpose, etc.) to fit your needs.
+
+Do you want to use Nessus' *plugin name* field in a table in your report, but you prefer to label it *Issue*? No problem, you can define this mapping using the *Plugin Manager*. Every Nessus file you upload will be parsed and the fields will be mapped to suit your needs.
+
+
+#[The Export Manager]#
+
+The first link in our powerful reporting tool chain is the *Export Manager*. In it you can review your notes, sort and rearrange them and select a format in which to export them (and yes, we support Word 2010).
+
+What are you waiting for? Creating your report templates has never been easier, check our "Creating Word reports with DradisReports":http://securityroots.com/dradispro/support/guides/reports_dradisreports.html guide!</text>
+        <node-id type='integer'>2200</node-id>
+        <id type='integer'>5629</id>
+        <category-id type='integer'>1</category-id>
+      </note>
+      <note>
+        <created-at type='datetime'>2012-06-09T10:52:42Z</created-at>
+        <author>admin@securityroots.com</author>
+        <updated-at type='datetime'>2012-06-09T10:52:42Z</updated-at>
+        <text>#[Title]#
+Keeping an eye on us
+
+#[Getting in touch]#
+
+* You can find us on Twitter: "@dradispro":http://twitter.com/dradispro (product) and "@securityroots":http://twitter.com/securityroots (company)
+* And this is "our blog":http://securityroots.com/blog/
+
+If you need support, check the links provided in the *Getting Help* node on the left.</text>
+        <node-id type='integer'>2200</node-id>
+        <id type='integer'>5630</id>
+        <category-id type='integer'>1</category-id>
+      </note>
+      <note>
+        <created-at type='datetime'>2012-06-09T10:53:52Z</created-at>
+        <author>admin@securityroots.com</author>
+        <updated-at type='datetime'>2012-06-09T11:16:30Z</updated-at>
+        <text>#[Title]#
+Thanks for choosing Dradis Pro
+
+#[Just a quick word...]#
+
+!{float:right;}/assets/logopro_small.png!
+
+Thanks for choosing *Dradis Professional Edition* and for the trust you are placing in us.
+
+Dradis Pro is a growing product and we are adding more awesome features every week. Check the information in the *Keeping an eye on us* note to ensure you are always in the loop of what is going on around our products and services.
+
+Hope you enjoy using Dradis Pro as much as we enjoy creating it! And please, let me know if you have any issues at all.
+
+Looking forward to working with you,
+
+Daniel
+
+p{font-size: 80%;}. _Founder of Security Roots Ltd._
+"daniel@securityroots.com":mailto:daniel@securityroots.com | "@etdsoft":http://twitter.com/etdsoft on Twitter</text>
+        <node-id type='integer'>2200</node-id>
+        <id type='integer'>5631</id>
+        <category-id type='integer'>1</category-id>
+      </note>
+    </notes>
+  </node>
+  <node>
+    <position type='integer'>1</position>
+    <label>Getting Help</label>
+    <created-at type='datetime'>2012-06-09T10:26:17Z</created-at>
+    <updated-at type='datetime'>2012-06-09T10:26:21Z</updated-at>
+    <project-id type='integer'>7</project-id>
+    <type-id type='integer'>0</type-id>
+    <id type='integer'>2201</id>
+    <parent-id type='integer'>2199</parent-id>
+    <notes type='array'>
+      <note>
+        <created-at type='datetime'>2012-06-09T10:27:43Z</created-at>
+        <author>admin@securityroots.com</author>
+        <updated-at type='datetime'>2012-06-09T11:20:56Z</updated-at>
+        <text>#[Title]#
+Dradis Professional support
+
+#[Description]#
+Dradis Professional support main communications channel is through the *Dradis Pro users list*:
+
+"http://groups.google.com/group/dradis-pro":http://groups.google.com/group/dradis-pro
+
+Feel free to browse the archive and post new questions. We are all happy to help.
+
+In order to be able to post you will have to sign up by sending an empty email to:
+
+"dradis-pro+subscribe@googlegroups.com":mailto:dradis-pro+subscribe@googlegroups.com
+
+
+#[Dradis Pro Guides]#
+In our support site you will find a great collection of step-by-step guides that will help you to get started, for example:
+
+* "Reporting by host, reporting by issue":http://securityroots.com/dradispro/support/guides/dradisreports_byhost.html (new in v1.7!)
+* "Creating Word reports with DradisReports":http://securityroots.com/dradispro/support/guides/reports_dradisreports.html
+* "Creating project templates and methodologies":http://securityroots.com/dradispro/support/guides/project_templates.html
+* "DradisReports: using custom document properties":http://securityroots.com/dradispro/support/guides/dradisreports_customproperties.html
+
+Find out more at: "http://securityroots.com":http://securityroots.com/support/
+</text>
+        <node-id type='integer'>2201</node-id>
+        <id type='integer'>5627</id>
+        <category-id type='integer'>1</category-id>
+      </note>
+      <note>
+        <created-at type='datetime'>2012-06-09T10:28:04Z</created-at>
+        <author>admin@securityroots.com</author>
+        <updated-at type='datetime'>2012-06-09T10:36:00Z</updated-at>
+        <text>#[Title]#
+Dradis Community support
+
+#[Description]#
+Over the last few years, a rich community of Dradis Framework users has grown around the project. Here are some resources:
+
+* "Dradis Framework site":http://dradisframework.org
+* "Project blog":http://blog.dradisframework.org / "RSS feed":http://blog.dradisframework.org/feeds/posts/default?alt=rss
+* "@dradisfw":http://twitter.com/dradisfw on Twitter
+* GitHub repo and issue tracker: "http://git.io/dradis":http://git.io/dradis
+* "Community Forums":http://dradisframework.org/community/
+* "Mailing lists":http://dradisframework.org/mailing_lists.html
+
+You can also visit the *#dradis* IRC channel in Freenode (irc.freenode.org)</text>
+        <node-id type='integer'>2201</node-id>
+        <id type='integer'>5628</id>
+        <category-id type='integer'>1</category-id>
+      </note>
+    </notes>
+  </node>
+  <node>
+    <position type='integer'>1</position>
+    <label>What's next?</label>
+    <created-at type='datetime'>2012-06-09T10:26:17Z</created-at>
+    <updated-at type='datetime'>2012-06-09T10:26:21Z</updated-at>
+    <project-id type='integer'>7</project-id>
+    <type-id type='integer'>0</type-id>
+    <id type='integer'>2201</id>
+    <parent-id type='integer'>2199</parent-id>
+    <notes type='array'>
+      <note>
+        <created-at type='datetime'>2012-06-09T10:28:04Z</created-at>
+        <author>admin@securityroots.com</author>
+        <updated-at type='datetime'>2012-06-09T10:36:00Z</updated-at>
+        <text>#[Title]#
+Next steps
+
+#[Description]#
+You are now in the "Project view" of Dradis, this is because in the Project Selection screen you clicked on *Use* on this project.
+
+To go back to the Project Selection screen look for the *projects* link in the upper-right corner of the window.
+
+Things to try next:
+
+* Add a few clients to your Dradis
+* Create your first project
+* Browse through the administration modules (Users, templates, Plugins, etc.)
+</text>
+        <node-id type='integer'>2201</node-id>
+        <id type='integer'>5628</id>
+        <category-id type='integer'>1</category-id>
+      </note>
+    </notes>
+  </node>
+</nodes><categories type='array'>
+  <category>
+    <name>Default category</name>
+    <created-at type='datetime'>2012-03-09T07:34:56Z</created-at>
+    <updated-at type='datetime'>2012-03-09T07:34:56Z</updated-at>
+    <id type='integer'>1</id>
+  </category>
+</categories></dradis-template>

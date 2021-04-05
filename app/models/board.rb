@@ -43,6 +43,18 @@ class Board < ApplicationRecord
     list
   end
 
+  def to_xml(xml_builder, includes: [], version: 3)
+    xml_builder.board(version: version) do |board_builder|
+      board_builder.id(id)
+      board_builder.name(name)
+      board_builder.node_id(node_id)
+
+      ordered_items.each do |list|
+        list.to_xml(xml_builder, includes: includes)
+      end
+    end
+  end
+
   private
 
   def validate_node_has_no_other_board

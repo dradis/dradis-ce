@@ -20,14 +20,11 @@
       Connect Dradis to a library of issue descriptions so you don't have to
       copy & paste findings from an old report.
     </p>
-    <p>External libraries:</p>
+    <p class="mb-2">Libraries:</p>
     <ul class="fa-ul">
       <li><i class="fa fa-li fa-chevron-right"></i><a href="https://dradisframework.com/ce/addons/mediawiki.html?utm_source=ce&utm_medium=app" target="_blank">MediaWiki</a></li>
-      <li><i class="fa fa-li fa-chevron-right"></i><a href="http://vulndbhq.com" target="_blank">VulnDB</a></li>
+      <li><i class="fa fa-li fa-chevron-right"></i><a href="javascript:void(0)" class="js-try-pro" data-term="issuelib" data-url="https://dradisframework.com/pro/pages/issuelib.html"><i class="fa fa-book"></i> Built-in Issue Library</a></li>
     </ul>
-    <p>
-      Or use the <a href="javascript:void(0)" class="js-try-pro" data-term="issuelib" data-url="https://dradisframework.com/pro/pages/issuelib.html"><i class="fa fa-book"></i> built-in IssueLibrary</a> with 60+ entries to get you started.
-    </p>
   <% else %>
     <% Dradis::Plugins::with_feature(:import).each do |plugin| %>
     <div>

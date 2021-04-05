@@ -3,6 +3,7 @@
 class DradisTasks < Thor
   class Setup < Thor
     include Thor::Actions
+    include Rails::Generators::Actions
     include ::Rails.application.config.dradis.thor_helper_module
 
     namespace 'dradis:setup'
@@ -46,7 +47,7 @@ class DradisTasks < Thor
       require 'config/environment'
 
       print '** Checking database migrations...                                    '
-      ActiveRecord::Migrator.migrate('db/migrate/', nil)
+      rake('db:migrate')
       puts '[  DONE  ]'
     end
 
@@ -59,8 +60,21 @@ class DradisTasks < Thor
       puts '[  DONE  ]'
     end
 
+    desc 'kit', 'Import files and projects from a specified Kit configuration file'
+    method_option :file, required: true, type: :string, desc: 'full path to the Kit file to use.'
+    def kit(file)
+      puts "** Importing kit..."
+      KitImportJob.perform_now(file: file, logger: default_logger)
+      puts "[  DONE  ]"
+    end
+
     desc 'welcome', 'adds initial content to the repo for demonstration purposes'
     def welcome
+      # TODO: once dradis:setup:kit is available, replace this entire task with
+      # two steps:
+      #   1. prepare Welcome kit from template files
+      #   2. invoke 'dradis:setup:kit', [], [welcome_kit.path]
+
       # --------------------------------------------------------- Note template
       if NoteTemplate.pwd.exist?
         say 'Note templates folder already exists. Skipping.'
