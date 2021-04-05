@@ -15,7 +15,7 @@ class CommentsController < AuthenticatedController
     @comment = Comment.new(comment_params)
     @comment.user = current_user
     if @comment.save
-      track_created(@comment, project: project)
+      track_created(@comment)
       broadcast_notifications(
         action: :create,
         notifiable: @comment,
@@ -26,13 +26,13 @@ class CommentsController < AuthenticatedController
 
   def update
     if @comment.update(comment_params)
-      track_updated(@comment, project: project)
+      track_updated(@comment)
     end
   end
 
   def destroy
     if @comment.destroy
-      track_destroyed(@comment, project: project)
+      track_destroyed(@comment)
     end
   end
 
