@@ -55,8 +55,12 @@ class Comment < ApplicationRecord
         emails << login
       end
 
-      project = commentable.project
-      project.testers_for_mentions.where(email: emails.uniq)
+      if commentable.respond_to?(:project)
+        project = commentable.project
+        project.testers_for_mentions.where(email: emails.uniq)
+      else
+        User.where(email: emails.uniq)
+      end
     end
   end
 
