@@ -62,9 +62,9 @@ class DradisTasks < Thor
 
     desc 'kit', 'Import files and projects from a specified Kit configuration file'
     method_option :file, required: true, type: :string, desc: 'full path to the Kit file to use.'
-    def kit(file)
+    def kit
       puts "** Importing kit..."
-      KitImportJob.perform_now(file: file, logger: default_logger)
+      KitImportJob.perform_now(file: options[:file], logger: default_logger)
       puts "[  DONE  ]"
     end
 
