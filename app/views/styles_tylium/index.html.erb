@@ -14,7 +14,7 @@
       <div class="scroll-offset" id="container"></div>
       <div class="style-header">
         <h4 class="header-underline">Content Container</h4>
-        <button class="reveal-code" data-toggle="collapse" data-target="#container-code"><i class="fa fa-code"></i></button>
+        <button class="reveal-code" data-toggle="collapse" data-target="#container-code"><i class="fa fa-code"></i><label class="sr-only">Toggle code</label></button>
       </div>
       <div class="style-example">
         <p class="m-0">Each individual section of Tylium should be wrapped in a content container with an optional header element. The content container gives the elements a white background, grey border with subtle border radius as well as uniform padding and margin. The height is set to auto without a max-height. In order to limit the max-height, please refer to the <a href="javascript:void(0)" data-behavior="smooth-scroll" data-target="scroll">Scroll For More</a> section.</p>
@@ -46,7 +46,7 @@
 
       <div class="style-header">
         <h4 class="header-underline">Content Container with Tabs</h4>
-        <button class="reveal-code" data-toggle="collapse" data-target="#tabs-code"><i class="fa fa-code"></i></button>
+        <button class="reveal-code" data-toggle="collapse" data-target="#tabs-code"><i class="fa fa-code"></i><label class="sr-only">Toggle code</label></button>
       </div>
 
       <div class="style-example">
@@ -98,7 +98,7 @@
       <div class="scroll-offset" id="dots"></div>
       <div class="style-header">
         <h4 class="header-underline">Dots Menu</h4>
-        <button class="reveal-code" data-toggle="collapse" data-target="#dots-code"><i class="fa fa-code"></i></button>
+        <button class="reveal-code" data-toggle="collapse" data-target="#dots-code"><i class="fa fa-code"></i><label class="sr-only">Toggle code</label></button>
       </div>
       <div class="style-example">
         <nav class="dots-container">
@@ -108,7 +108,7 @@
           </ol>
           <ul class="nav">
             <li class="dropdown dots-dropdown">
-              <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i></a>
+              <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i><span class="sr-only">Toggle menu</span></a>
               <div class="dropdown-menu">
                 <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-superpowers"></i> Some action</a>
                 <a href="javascript:void(0)" class="dropdown-item"><i class="fa fa-cube"></i> Another action</a>
@@ -159,7 +159,7 @@
       <div class="scroll-offset" id="modals"></div>
       <div class="style-header">
         <h4 class="header-underline">Modals</h4>
-        <button class="reveal-code" data-toggle="collapse" data-target="#modals-code"><i class="fa fa-code"></i></button>
+        <button class="reveal-code" data-toggle="collapse" data-target="#modals-code"><i class="fa fa-code"></i><label class="sr-only">Toggle code</label></button>
       </div>
       <div class="style-example text-center">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-example">Click for modal</button>          
@@ -198,12 +198,12 @@
       <div class="scroll-offset" id="toolbar"></div>
       <div class="style-header">
         <h4 class="header-underline">Rich Toolbar</h4>
-        <button class="reveal-code" data-toggle="collapse" data-target="#toolbar-code"><i class="fa fa-code"></i></button>
+        <button class="reveal-code" data-toggle="collapse" data-target="#toolbar-code"><i class="fa fa-code"></i><label class="sr-only">Toggle code</label></button>
       </div>
       <div class="style-example">
-        <p>Click the below textarea to reveal the rich toolbar.</p>
+        <label class="mb-3" for="toolbar-textarea">Click the below textarea to reveal the rich toolbar.</label>
         <div class="d-flex justify-content-center mb-3">
-          <textarea class="form-control" data-behavior="rich-toolbar" data-rich-toolbar="block-code bold italic link list-ol list-ul table" placeholder="This is an auto-expanding textarea with a rich toolbar"></textarea>
+          <textarea class="form-control" id="toolbar-textarea" data-behavior="rich-toolbar" data-rich-toolbar="block-code bold italic link list-ol list-ul table" placeholder="This is an auto-expanding textarea with a rich toolbar"></textarea>
         </div>
         <p>Configuration options:</p>
         <ul>
@@ -224,7 +224,7 @@
         <div class="scroll-offset" id="scroll"></div>
         <div class="style-header">
           <h4 class="header-underline">Scroll-for-more Indicator</h4>
-          <button class="reveal-code" data-toggle="collapse" data-target="#scroll-code"><i class="fa fa-code"></i></button>
+          <button class="reveal-code" data-toggle="collapse" data-target="#scroll-code"><i class="fa fa-code"></i><label class="sr-only">Toggle code</label></button>
         </div>
         <div class="style-example">
           <p>This content-container has a max-height defined but the content requires more space than the max-height property allows. As a result the "Scroll-for-more" indicator is displayed, allowing the user to scroll through the content while seeing a visual cue, letting the user know that there is more content to see.</p>
@@ -288,7 +288,7 @@
       <div class="scroll-offset" id="tables"></div>
       <div class="style-header">
         <h4 class="header-underline">Tables</h4>
-        <button class="reveal-code" data-toggle="collapse" data-target="#tables-code"><i class="fa fa-code"></i></button>
+        <button class="reveal-code" data-toggle="collapse" data-target="#tables-code"><i class="fa fa-code"></i><label class="sr-only">Toggle code</label></button>
       </div>
       <div class="style-example">
         <p>Tables in Dradis have a special structure in order to allow them to be scrollable and sortable. The below table is an example of a table exceeding the container boundaries but all data is still visisible thanks to a horizontally scrollable table wrapper.</p>
@@ -384,14 +384,15 @@
       <div class="scroll-offset" id="input"></div>
       <div class="style-header">
         <h4 class="header-underline">Text Input with Inset Button</h4>
-        <button class="reveal-code" data-toggle="collapse" data-target="#input-code"><i class="fa fa-code"></i></button>
+        <button class="reveal-code" data-toggle="collapse" data-target="#input-code"><i class="fa fa-code"></i><label class="sr-only">Toggle code</label></button>
       </div>
       <div class="style-example">
         <div class="container">
           <div class="row">
             <div class="col-8 offset-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
               <div class="inset-button-wrapper">
-                <input type="text" class="form-control" placeholder="Placeholder Text...">
+                <label for="inset-example" class="sr-only">Example input element with inset button</label>
+                <input type="text" class="form-control" id="inset-example" placeholder="Placeholder Text...">
                 <button type="submit" class="btn btn-primary">Button</button>
               </div>
             </div>
@@ -413,7 +414,7 @@
       <div class="scroll-offset" id="tooltips"></div>
       <div class="style-header">
         <h4 class="header-underline">Tooltips using aria-labels</h4>
-        <button class="reveal-code" data-toggle="collapse" data-target="#tooltips-code"><i class="fa fa-code"></i></button>
+        <button class="reveal-code" data-toggle="collapse" data-target="#tooltips-code"><i class="fa fa-code"></i><label class="sr-only">Toggle code</label></button>
       </div>
       <div class="style-example">
         <p>Hover over the below button to see a tooltip using the aria-label attribute. We use aria-labels as tooltips as they are easily customizable and do not require any kind of plugin's or 3rd party code to function. This example uses a button element but this can be used on almost any kind of element.</p>
@@ -433,7 +434,7 @@
       <div class="scroll-offset" id="typography"></div>
       <div class="style-header">
         <h4 class="header-underline">Typography</h4>
-        <button class="reveal-code" data-toggle="collapse" data-target="#typography-code"><i class="fa fa-code"></i></button>
+        <button class="reveal-code" data-toggle="collapse" data-target="#typography-code"><i class="fa fa-code"></i><label class="sr-only">Toggle code</label></button>
       </div>
       <div class="style-example">
         <div class="row">
@@ -498,7 +499,7 @@
 
       <div class="style-header mt-5">
         <h4 class="header-underline">Sticky Top</h4>
-        <button class="reveal-code" data-toggle="collapse" data-target="#sticky-code"><i class="fa fa-code"></i></button>
+        <button class="reveal-code" data-toggle="collapse" data-target="#sticky-code"><i class="fa fa-code"></i><label class="sr-only">Toggle code</label></button>
       </div>
       <div class="style-example">
         <p class="m-0">This is an example of a sticky container that will stay at the top of the view as the user scrolls.

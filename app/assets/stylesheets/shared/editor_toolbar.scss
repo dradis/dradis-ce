@@ -21,7 +21,7 @@
     &:after {
       border: 0.5rem solid;
       border-color: $secondaryBgColor transparent transparent;
-      content: ' ';
+      content: '';
       height: 0;
       left: 20%;
       position: absolute;
@@ -32,7 +32,7 @@
     &:before {
       border: 0.5rem solid;
       border-color: $borderColor transparent transparent;
-      content: ' ';
+      content: '';
       height: 0;
       left: 20%;
       position: absolute;

@@ -26,7 +26,7 @@ module Dradis::CE::API
 
       def update
         @evidence = @node.evidence.find(params[:id])
-        if @evidence.update_attributes(evidence_params)
+        if @evidence.update(evidence_params)
           track_updated(@evidence)
           render evidence: @evidence
         else

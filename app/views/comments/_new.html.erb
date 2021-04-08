@@ -1,12 +1,12 @@
-<%= form_with model: [current_project, Comment.new(commentable: commentable)],
+<%= form_with model: [Comment.new(commentable: @commentable)],
   class: 'mt-3',
   data: {
     behavior: 'add-comment local-auto-save',
-    auto_save_key: "comment-#{request.path}"
+    auto_save_key: "comment-#{dom_id(@commentable)}"
   } do |f| %>
 
   <div class="row m-0">
-    <%= f.label "Add a comment" %>
+    <%= f.label :content, "Add a comment" %>
   </div>
   <div class="row m-0 flex-nowrap">
   <%= avatar_image(current_user, size: 30) %>

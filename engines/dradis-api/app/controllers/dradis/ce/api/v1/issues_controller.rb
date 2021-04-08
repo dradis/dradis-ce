@@ -29,7 +29,7 @@ module Dradis::CE::API
 
       def update
         @issue = current_project.issues.find(params[:id])
-        if @issue.update_attributes(issue_params)
+        if @issue.update(issue_params)
           track_updated(@issue)
           render node: @node
         else

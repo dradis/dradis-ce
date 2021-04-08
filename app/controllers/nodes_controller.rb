@@ -75,7 +75,7 @@ class NodesController < NestedNodeResourceController
   # PUT /node/<id>
   def update
     respond_to do |format|
-      if @node.update_attributes(node_params)
+      if @node.update(node_params)
         track_updated(@node)
         format.html { redirect_to project_node_path(current_project, @node), notice: 'Node updated.' }
         format.json { render json: { success: true }.to_json }

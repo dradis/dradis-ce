@@ -25,7 +25,7 @@ module Dradis::CE::API
 
       def update
         @node = current_project.nodes.find(params[:id])
-        if @node.update_attributes(node_params)
+        if @node.update(node_params)
           track_updated(@node)
           render node: @node
         else

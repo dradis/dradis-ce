@@ -1,5 +1,4 @@
 class EvidenceController < NestedNodeResourceController
-  include Commented
   include ConflictResolver
   include Mentioned
   include MultipleDestroy
@@ -15,7 +14,6 @@ class EvidenceController < NestedNodeResourceController
   def show
     @activities   = @evidence.activities.latest
     @issue        = @evidence.issue
-    @subscription = @evidence.subscription_for(user: current_user)
 
     load_conflicting_revisions(@evidence)
   end
@@ -93,7 +91,7 @@ class EvidenceController < NestedNodeResourceController
   def update
     respond_to do |format|
       updated_at_before_save = @evidence.updated_at.to_i
-      if @evidence.update_attributes(evidence_params)
+      if @evidence.update(evidence_params)
         track_updated(@evidence)
         check_for_edit_conflicts(@evidence, updated_at_before_save)
         format.html do

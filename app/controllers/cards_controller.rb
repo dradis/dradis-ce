@@ -1,6 +1,5 @@
 class CardsController < AuthenticatedController
   include ActivityTracking
-  include Commented
   include ContentFromTemplate
   include ProjectScoped
   include Mentioned
@@ -16,7 +15,6 @@ class CardsController < AuthenticatedController
 
   def show
     @activities   = @card.activities.latest
-    @subscription = @card.subscription_for(user: current_user)
     render layout: !request.xhr?
   end
 
@@ -43,7 +41,7 @@ class CardsController < AuthenticatedController
   end
 
   def update
-    if @card.update_attributes(card_params)
+    if @card.update(card_params)
       track_updated(@card)
       redirect_to [current_project, @board, @list, @card], notice: 'Task updated.'
     else
