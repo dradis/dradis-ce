@@ -1,4 +1,4 @@
-v3.22.0 (MMM’21)
+v3.22.0 (April 2021)
   * Added the ability to import Configuration Kits
   * Comments
     - Load feed asynchronously
@@ -16,22 +16,6 @@ v3.22.0 (MMM’21)
   * Upgraded gems: Rails
   * Bugs fixed:
     - Placeholder gravatars appear if gravatar is not available
-  * New integrations:
-    - [new integration #1]
-    - [new integration ...]
-  * Integration enhancements:
-    - [integration enhancement #1]
-    - [integration enhancement ...]
-  * Reporting enhancements:
-    - [reporting enhancement #1]
-    - [reporting enhancement ...]
-  * REST/JSON API enhancements:
-    - [API enhancement #1]
-    - [API enhancement ...]
-  * Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v3.21.0 (February 2021)
   * Upgraded DradisPro to run on Ruby 2.7.2 and Rails 6.1.1
