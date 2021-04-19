@@ -55,7 +55,7 @@ gem 'html-pipeline'
 
 gem 'kaminari', '~> 1.2.1'
 
-gem 'paper_trail', git: 'git@github.com:paper-trail-gem/paper_trail.git', ref: '1e56afd'
+gem 'paper_trail', git: 'https://github.com/paper-trail-gem/paper_trail.git', ref: '1e56afd'
 
 # gem 'rails_autolink', '~> 1.1'
 
