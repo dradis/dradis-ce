@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe HTML::Pipeline::DradisTextileFilter do
+describe HTML::Pipeline::Dradis::TextileFilter do
   it 'does not treat the emails with period as inline code with no_inline_code enabled' do
     source = 'Hello @user.test@gmail.com'
     result = '<div><p>Hello @user.test@gmail.com</p></div>'
