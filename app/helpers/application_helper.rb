@@ -1,17 +1,21 @@
 module ApplicationHelper # :nodoc:
-  def markup(text)
+  def markup(text, filters = [])
     return unless text.present?
 
-    context = {}
+    pipeline_filters =
+      if filters.empty?
+        [
+          HTML::Pipeline::Dradis::FieldableFilter,
+          HTML::Pipeline::Dradis::TextileFilter,
+          HTML::Pipeline::SanitizationFilter,
+          HTML::Pipeline::AutolinkFilter,
+          HTML::Pipeline::Dradis::CodeHighlightFilter
+        ]
+      else
+        filters
+      end
 
-    textile_pipeline = HTML::Pipeline.new [
-      HTML::Pipeline::Dradis::FieldableFilter,
-      HTML::Pipeline::Dradis::TextileFilter,
-      HTML::Pipeline::SanitizationFilter,
-      HTML::Pipeline::AutolinkFilter,
-      HTML::Pipeline::Dradis::CodeHighlightFilter
-    ], context
-
+    textile_pipeline = HTML::Pipeline.new pipeline_filters, {}
     result = textile_pipeline.call(text)
     result[:output].to_s.html_safe
   end
