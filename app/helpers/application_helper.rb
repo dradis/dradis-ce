@@ -5,11 +5,11 @@ module ApplicationHelper # :nodoc:
     context = {}
 
     textile_pipeline = HTML::Pipeline.new [
-      HTML::Pipeline::DradisFieldableFilter,
-      HTML::Pipeline::DradisTextileFilter,
+      HTML::Pipeline::Dradis::FieldableFilter,
+      HTML::Pipeline::Dradis::TextileFilter,
       HTML::Pipeline::SanitizationFilter,
       HTML::Pipeline::AutolinkFilter,
-      HTML::Pipeline::DradisCodeHighlightFilter
+      HTML::Pipeline::Dradis::CodeHighlightFilter
     ], context
 
     result = textile_pipeline.call(text)
