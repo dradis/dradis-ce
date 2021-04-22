@@ -48,7 +48,7 @@ class Comment < ApplicationRecord
       subscribers = User.includes(:subscriptions).where(
         subscriptions: { subscribable_id: commentable.id }
       ).where.not(id: [user.id] + mentions.pluck(:id))
-      create_notifications(action: :create, recipients: subscribers)
+      create_notifications(action: :create, actor: actor, recipients: subscribers)
     end
   end
 
