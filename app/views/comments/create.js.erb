@@ -1,4 +1,4 @@
-$(".comment-list").append("<%= j render(@comment) %>")
+$('[data-behavior~=comment-list]').append("<%= j render(@comment) %>")
 
 $('[data-behavior~=add-comment] textarea').val('')
 

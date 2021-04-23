@@ -58,22 +58,5 @@ describe ActivityTrackingJob do #, type: :job do
         end
       end
     end
-
-    it 'broadcasts to the notificationschannel' do
-      expect(NotificationsChannel).to receive(:broadcast_to).twice
-
-      commentable = create(:issue)
-      create_list(:subscription, 2, subscribable: commentable)
-      trackable = create(:comment, commentable: commentable)
-      project = commentable.node.project
-
-      described_class.new.perform(
-        action: 'create',
-        project_id: project.id,
-        trackable_id: trackable.id,
-        trackable_type: trackable.class.to_s,
-        user_id: trackable.user.id
-      )
-    end
   end
 end

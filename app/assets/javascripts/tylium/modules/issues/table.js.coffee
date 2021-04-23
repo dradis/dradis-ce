@@ -1,4 +1,4 @@
-class IssuesTable extends ItemsTable
+class @IssuesTable extends ItemsTable
 
   afterInitialize: ->
     @$jsTable.on('click', '.js-taglink', @onTagSelected)
@@ -65,7 +65,3 @@ class IssuesTable extends ItemsTable
       $('#merge-selected').css('display', 'inline-block')
     else
       $('#merge-selected').css('display', 'none')
-
-document.addEventListener "turbolinks:load", ->
-  if $('body.issues.index').length
-    new IssuesTable('#issues-table', 'issue')

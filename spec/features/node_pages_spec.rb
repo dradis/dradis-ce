@@ -64,17 +64,17 @@ describe "node pages" do
           ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h|
             h[:job]
           }.last(3)
-        ).to eq Array.new(3, ActivityTrackingJob)
+        ).to include *Array.new(3, ActivityTrackingJob)
         expect(
           ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
             h1[:args].map { |h2| h2['action'] }
           }.flatten.last(3)
-        ).to eq Array.new(3, 'create')
+        ).to include *Array.new(3, 'create')
         expect(
           ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
             h1[:args].map { |h2| h2['trackable_type'] }
           }.flatten.last(3)
-        ).to eq Array.new(3, 'Node')
+        ).to include *Array.new(3, 'Node')
 
         expect(current_project.nodes.last(3).map(&:label)).to match_array([
           "node 1",
