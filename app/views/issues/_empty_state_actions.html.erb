@@ -12,7 +12,8 @@
             <%= link_to 'javascript:void(0)', data: { behavior: 'issues-dropdown-toggle' } do -%>
               <i class="fa fa-plus"></i> sign
             <% end %>
-            in the sidebar next to the ISSUES header.
+            in the sidebar and type your <em>Description</em> and
+            <em>Recommendation</em>.
           </p>
         </div>
       </div>
@@ -20,7 +21,7 @@
     <div class="col-xl-4 mt-3">
       <div class="card add-issues">
         <div class="card-header">
-          <p class="card-title">Upload scanner input</p>
+          <p class="card-title">From a scanning tool</p>
         </div>
         <div class="card-body">
           <p>Click 
@@ -29,13 +30,17 @@
             <% end %>
             in the top navigation bar.
           </p>
+          <p>
+            All the usual suspects are supported:
+            <a href="https://dradisframework.com/integrations/" target="_blank">Nessus, Nmap, Burp...</a>
+          </p>
         </div>
       </div>
     </div>
     <div class="col-xl-4 mt-3">
       <div class="card add-issues">
         <div class="card-header">
-          <div class="card-title">Import from a library</div>
+          <div class="card-title">From a library</div>
         </div>
         <div class="card-body">
           <%= render 'issues/empty_import_ce' %>
