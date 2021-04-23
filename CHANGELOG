@@ -1,11 +1,7 @@
-v3.22.0 (MMM’21)
-  * Improve accessibility:
-    - Add alt text to any linked images
-    - Add screen reader only text to forms
-    - Adjustments to font and element contrast to meet at minimum Level AA WCAG 2.0 standards.
-    - Fix any broken Aria references
-    - Update element label association & add missing labels
-  * Truncate long hostnames when viewing evidence in an issue
+[v#.#.#] ([MMM’YY])
+  * [feature #1]
+  * [feature #2]
+  * [feature ...]
   * Upgraded gems: [gem #1], [gem #2]
   * Bugs fixed:
     - [bug fixed #1]
@@ -27,6 +23,25 @@ v3.22.0 (MMM’21)
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v3.22.0 (April 2021)
+  * Added the ability to import Configuration Kits
+  * Comments
+    - Load feed asynchronously
+  * Improve accessibility:
+    - Add alt text to any linked images
+    - Add screen reader only text to forms
+    - Adjustments to font and element contrast to meet at minimum Level AA WCAG 2.0 standards.
+    - Fix any broken Aria references
+    - Update element label association & add missing labels
+  * Kit upload CLI command update
+  * Replace deprecated font-awesome-sass gem with vendor asset files
+  * Subscriptions
+    - Load feed asynchronously
+  * Truncate long hostnames when viewing evidence in an issue
+  * Upgraded gems: Rails
+  * Bugs fixed:
+    - Placeholder gravatars appear if gravatar is not available
 
 v3.21.0 (February 2021)
   * Upgraded DradisPro to run on Ruby 2.7.2 and Rails 6.1.1

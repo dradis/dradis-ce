@@ -13,12 +13,16 @@ Rails.application.routes.draw do
   get '/logout' => 'sessions#destroy'
   resource :session
 
+  resources :comments
+
   # ------------------------------------------------------------ Project routes
   concern :multiple_destroy do
     collection do
       delete :multiple_destroy
     end
   end
+
+  resources :notifications, only: [:index, :update]
 
   resources :projects, only: [:show] do
     resources :activities, only: [:index] do
@@ -36,8 +40,6 @@ Rails.application.routes.draw do
         end
       end
     end
-
-    resources :comments
 
     constraints id: %r{[(0-z)\/]+} do
       resources :configurations, only: [:index, :update]
@@ -94,8 +96,6 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
-    resources :subscriptions, only: [:create, :destroy]
-
     get 'search' => 'search#index'
     get 'trash' => 'revisions#trash'
 
@@ -126,6 +126,8 @@ Rails.application.routes.draw do
       post :source
     end
   end
+
+  resources :subscriptions, only: [:index, :create, :destroy]
 
   # -------------------------------------------------------------- Static pages
   resource :markup, controller: :markup, only: [] do

@@ -1,6 +1,13 @@
 class Issue < Note
   include Commentable
+  # FIXME - ISSUE/NOTE INHERITANCE
+  # Commentable.allowed_types << base.name doesn't work for Issue because it's
+  # an STI model, so we manually allow the class here.
+  Commentable.allowed_types << 'Issue'
+
   include Subscribable
+  Subscribable.allowed_types << 'Issue'
+
   include Taggable
 
   # -- Relationships --------------------------------------------------------

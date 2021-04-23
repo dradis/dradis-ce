@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.2.1'
+gem 'rails', '~> 6.1.3.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -36,7 +36,6 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.4', require: false
 
 # ---------------------------------------------------- Dradis Community Edition
-gem 'font-awesome-sass', '~> 4.7.0'
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
@@ -208,13 +207,13 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~>3.21'
+gem 'dradis-plugins', '~>3.22'
 
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~>3.21'
+gem 'dradis-projects', '~>3.22'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)

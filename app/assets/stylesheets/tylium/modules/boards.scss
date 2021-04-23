@@ -7,7 +7,6 @@ body.cards {
 }
 
 body.boards.index {
-
   .board-actions {
     visibility: hidden;
     float: right;
@@ -84,6 +83,12 @@ body.boards.index {
       display: inline-block;
       max-height: 40px;
       overflow: hidden;
+    }
+  }
+
+  .empty-state {
+    &-docs-link {
+      margin-bottom: 0.5rem;
     }
   }
 }

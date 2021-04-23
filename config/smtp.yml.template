@@ -5,8 +5,8 @@
 
 default: &default
   default_url_options:
-    host:         dradisframework.dev
-    script_name:  ''
+    host:         https://dradisframework.dev
+    script_name:  '/pro'
   default_options:
     from:     from@dradisframework.dev
     reply_to: reply@dradisframework.dev
