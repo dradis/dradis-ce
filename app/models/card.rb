@@ -48,6 +48,42 @@ class Card < ApplicationRecord
     super(ids)
   end
 
+  def to_xml(xml_builder, includes: [], version: 3)
+    xml_builder.card do |card_builder|
+      card_builder.id(id)
+      card_builder.name(name)
+      card_builder.description do
+        card_builder.cdata!(description)
+      end
+      card_builder.due_date(due_date)
+      card_builder.previous_id(previous_id)
+
+      if includes.include?(:assignees)
+        card_builder.assignees do |assignee_builder|
+          assignees.each do |assignee|
+            assignee_builder.assignee(assignee.email)
+          end
+        end
+      end
+
+      if includes.include?(:activities)
+        card_builder.activities do |activity_builder|
+          activities.each do |activity|
+            activity.to_xml(activity_builder)
+          end
+        end
+      end
+
+      if includes.include?(:comments)
+        card_builder.comments do |comment_builder|
+          comments.each do |comment|
+            comment.to_xml(comment_builder)
+          end
+        end
+      end
+    end
+  end
+
   private
   def local_fields
     {

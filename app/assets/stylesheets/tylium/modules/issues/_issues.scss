@@ -22,9 +22,36 @@ body.issues.edit {
 }
 
 body.issues.index {
-
   .add-issues {
-    margin-top: 1rem;
+    border: 1px solid $darkColor;
+    border-radius: 5px;
+    height: 100%;
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .card-header {
+      background: $darkColor;
+      color: lighten($lightColor, 5%);
+
+      .card-title {
+        margin-bottom: 0;
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .empty-state {
+    &-actions {
+      margin-top: 0;
+    }
+
+    &-body-text {
+      text-align: left;
+    }
   }
 
   .tab-content.outer-tab {

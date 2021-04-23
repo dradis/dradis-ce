@@ -14,7 +14,7 @@ describe 'comment pages', js: true do
       end
 
       it 'displays the new comment' do
-        within('.comment-list') do
+        within('[data-behavior~=comment-list]') do
           expect(page).to have_selector("#comment_#{@new_comment.id}") # , visible: :all)
         end
 
@@ -30,7 +30,7 @@ describe 'comment pages', js: true do
       end
 
       it 'displays the updated comment' do
-        within('.comment-list') do
+        within('[data-behavior~=comment-list]') do
           expect(page).to have_text('content updated')
         end
       end
@@ -44,7 +44,7 @@ describe 'comment pages', js: true do
       end
 
       it 'removes the deleted comment' do
-        within('.comment-list') do
+        within('[data-behavior~=comment-list]') do
           expect(page).not_to have_selector("#comment_#{@comment.id}")
         end
 
@@ -64,6 +64,10 @@ describe 'comment pages', js: true do
       @commentable = create(:issue, node: @project.issue_library)
       @comment = create(:comment, commentable: @commentable, user: @other_user)
       visit project_issue_path(@project, @commentable)
+
+      # Wait for ajax
+      find('[data-behavior~=fetch-comments] .comment-feed')
+      find('[data-behavior~=fetch-subscriptions] .subscriptions-feed')
     end
 
     it_behaves_like 'a commentable page with poller'
