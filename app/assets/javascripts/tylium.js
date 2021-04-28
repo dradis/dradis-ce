@@ -16,6 +16,7 @@
 //= require popper
 //= require bootstrap
 
+//= require vendor/datatables.min
 //= require vendor/stupidtable
 
 //= require cable
