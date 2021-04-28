@@ -236,44 +236,44 @@ class EditorToolbar {
   textareaElements(include) {
     var str = '';
 
-    if (include.includes('field')) str += '<div class="editor-btn" data-btn="field" aria-label="add new field">\
+    if (include.includes('field')) str += '<div class="editor-btn" data-btn="field" aria-tooltip="add new field">\
       <i class="fa fa-plus"></i>\
     </div>\
     <div class="divider-vertical"></div>';
 
-    if (include.includes('bold')) str += '<div class="editor-btn" data-btn="bold" aria-label="bold text">\
+    if (include.includes('bold')) str += '<div class="editor-btn" data-btn="bold" aria-tooltip="bold text">\
       <i class="fa fa-bold"></i>\
     </div>';
 
-    if (include.includes('italic')) str += '<div class="editor-btn px-2" data-btn="italic" aria-label="italic text">\
+    if (include.includes('italic')) str += '<div class="editor-btn px-2" data-btn="italic" aria-tooltip="italic text">\
       <i class="fa fa-italic"></i>\
     </div>';
 
     str += '<div class="divider-vertical"></div>';
 
-    if (include.includes('block-code')) str += '<div class="editor-btn" data-btn="block-code" aria-label="code block">\
+    if (include.includes('block-code')) str += '<div class="editor-btn" data-btn="block-code" aria-tooltip="code block">\
       <i class="fa fa-code"></i>\
     </div>';
 
-    if (include.includes('link')) str += '<div class="editor-btn" data-btn="link" aria-label="link">\
+    if (include.includes('link')) str += '<div class="editor-btn" data-btn="link" aria-tooltip="link">\
       <i class="fa fa-link"></i>\
     </div>';
-    if (include.includes('table')) str += '<div class="editor-btn" data-btn="table" aria-label="table">\
+    if (include.includes('table')) str += '<div class="editor-btn" data-btn="table" aria-tooltip="table">\
       <i class="fa fa-table"></i>\
     </div>';
 
     str += '<div class="divider-vertical"></div>';
 
-    if (include.includes('list-ul')) str += '<div class="editor-btn" data-btn="list-ul" aria-label="unordered list">\
+    if (include.includes('list-ul')) str += '<div class="editor-btn" data-btn="list-ul" aria-tooltip="unordered list">\
       <i class="fa fa-list-ul"></i>\
     </div>';
-    if (include.includes('list-ol')) str += '<div class="editor-btn" data-btn="list-ol" aria-label="ordered list">\
+    if (include.includes('list-ol')) str += '<div class="editor-btn" data-btn="list-ol" aria-tooltip="ordered list">\
       <i class="fa fa-list-ol"></i>\
     </div>';
 
     str += '<div class="divider-vertical"></div>';
 
-    if (include.includes('image')) str += '<div class="editor-btn image-btn" data-btn="image" aria-label="image">\
+    if (include.includes('image')) str += '<div class="editor-btn image-btn" data-btn="image" aria-tooltip="image">\
       <i class="fa fa-picture-o"></i>\
     </div>';
 
