@@ -16,12 +16,18 @@ module Dradis::CE::API
     end
 
     def authenticate!
-      if auth.provided? && auth.basic? && auth.credentials
-        username = auth.credentials.first
+      if token
+        user = User.enabled.find_by_api_token(token)
+        if user && secure_compare(user.api_token)
+          success!(user)
+        else
+          custom!(unauthorized(403))
+        end
+      elsif auth.provided? && auth.basic? && auth.credentials
+        email = auth.credentials.first
         password = auth.credentials.last
 
-        if not ( username.blank? || password.nil? || ::BCrypt::Password.new(::Configuration.shared_password) != password )
-          user = User.find_or_create_by(email: username)
+        if ( !email.blank? && !password.nil? && user = User.enabled.authenticate(email, password) )
           success!(user)
         else
           custom!(unauthorized(403))
@@ -32,9 +38,24 @@ module Dradis::CE::API
     end
 
     private
+    def token
+      @token ||= ActionController::HttpAuthentication::Token.token_and_options(ActionDispatch::Request.new(env)).first rescue nil
+    end
 
     def auth
       @auth ||= Rack::Auth::Basic::Request.new(env)
+    end
+
+    # Taken from [Devise](https://github.com/plataformatec/devise).
+    # constant-time comparison algorithm to prevent timing attacks
+    def secure_compare(a)
+      b = token
+      return false if a.blank? || b.blank? || a.bytesize != b.bytesize
+      l = a.unpack "C#{a.bytesize}"
+
+      res = 0
+      b.each_byte { |byte| res |= byte ^ l.shift  }
+      res == 0
     end
 
     def unauthorized(status=401)

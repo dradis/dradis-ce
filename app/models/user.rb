@@ -20,5 +20,12 @@ class User < ApplicationRecord
   scope :enabled, -> { all }
 
   # -- Class Methods --------------------------------------------------------
+  def self.authenticate(email, pass)
+    user = find_or_create_by(email: email)
+    return user if user && BCrypt::Password.new(::Configuration.shared_password) == pass
+  end
+
   # -- Instance Methods -----------------------------------------------------
+
+  ActiveSupport.run_load_hooks(:user_model, self)
 end
