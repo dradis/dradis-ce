@@ -25,6 +25,7 @@
 //= require shared/charts
 //= require shared/comments
 //= require shared/console_updater
+//= require shared/datatable
 //= require shared/editor_toolbar
 //= require shared/items_table
 //= require shared/mentions
