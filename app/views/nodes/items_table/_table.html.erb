@@ -1,6 +1,6 @@
 <% cache ["#{dom_class(items.first).pluralize}-table", columns, items.map(&:id), items.map(&:updated_at).map(&:to_i).sort.last] do %>
   <div class="table-wrapper">
-    <table class="table table-striped items-table">
+    <table class="table" data-behavior="datatable">
       <thead>
         <tr>
           <th><span class="sr-only">Select</span></th>
@@ -12,6 +12,7 @@
               <%= column %>
             </th>
           <% end %>
+          <th><span class="sr-only">Actions</span></th>
         </tr>
       </thead>
       <tbody>
@@ -44,7 +45,7 @@
                 [item.fields.fetch(column, ''), markup(item.fields.fetch(column, ''))]
               end
               %>
-              <td data-sort-value="<%= sort %>"><%= display %></td>
+              <td><%= display %></td>
             <% end %>
             <td class="column-actions">
               <%= link_to [:edit, @node.project, @node, item] do %>
