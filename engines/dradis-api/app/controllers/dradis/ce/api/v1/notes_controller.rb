@@ -8,6 +8,7 @@ module Dradis::CE::API
 
       def index
         @notes = @node.notes.all.order('updated_at desc')
+        @notes = @notes.page(params[:page].to_i) if params[:page]
       end
 
       def show

@@ -8,6 +8,7 @@ module Dradis::CE::API
 
       def index
         @evidence = @node.evidence.all.order('updated_at desc')
+        @evidence = @evidence.page(params[:page].to_i) if params[:page]
       end
 
       def show
