@@ -25,7 +25,7 @@ describe 'Notes API' do
     end
   end
 
-  context 'as authauthorized user' do
+  context 'as authorized user' do
     include_context 'authorized API user'
 
     let(:category) { create(:category) }
