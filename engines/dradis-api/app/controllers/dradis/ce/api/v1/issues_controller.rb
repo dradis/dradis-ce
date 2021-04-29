@@ -6,9 +6,7 @@ module Dradis::CE::API
 
       def index
         @issues  = current_project.issues.includes(:tags)
-
         @issues = @issues.page(params[:page].to_i) if params[:page]
-
         @issues = @issues.sort
       end
 
