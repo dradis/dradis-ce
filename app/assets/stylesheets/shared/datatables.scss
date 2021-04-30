@@ -1,6 +1,7 @@
 .dataTables_wrapper {
   .dataTable {
     .hide-sort {
+      pointer-events: none;
       &:after,
       &:before {
         display: none;
