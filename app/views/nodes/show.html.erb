@@ -51,8 +51,6 @@
         <div data-destroy-url="<%= multiple_destroy_project_node_evidence_index_path(@node.project, @node) %>"
             data-storage-key="<%= "project.ce.#{dom_id(@node)}.evidence_columns" %>"
             data-close-console-url="<%= project_node_path(@node.project, @node, tab: "evidence-tab") %>">
-          <%= render 'nodes/items_table/toolbar',
-                    columns: @evidence_columns %>
           <%= render 'nodes/items_table/table',
                     columns: @evidence_columns,
                     items: @sorted_evidence %>
@@ -90,8 +88,6 @@
         <div data-destroy-url="<%= multiple_destroy_project_node_notes_path(@node.project, @node) %>"
             data-storage-key="<%= "project.ce.#{dom_id(@node)}.note_columns" %>"
             data-close-console-url="<%= project_node_path(@node.project, @node, tab: "notes-tab") %>">
-          <%= render 'nodes/items_table/toolbar',
-                    columns: @note_columns %>
           <%= render 'nodes/items_table/table',
                     columns: @note_columns,
                     items: @sorted_notes %>

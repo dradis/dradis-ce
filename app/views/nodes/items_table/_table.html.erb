@@ -1,16 +1,11 @@
 <% cache ["#{dom_class(items.first).pluralize}-table", columns, items.map(&:id), items.map(&:updated_at).map(&:to_i).sort.last] do %>
   <div class="table-wrapper">
-    <table class="table" data-behavior="datatable">
+    <table class="table table-striped" data-behavior="datatable">
       <thead>
         <tr>
           <th><span class="sr-only">Select</span></th>
           <% columns.each do |column| %>
-            <th
-              data-column="<%= column.downcase %>"
-              data-sort="<%= %w{Created Updated}.include?(column) ? 'int' : 'string' %>"
-              class="sortable">
-              <%= column %>
-            </th>
+            <th><%= column %></th>
           <% end %>
           <th><span class="sr-only">Actions</span></th>
         </tr>
