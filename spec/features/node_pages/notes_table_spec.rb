@@ -16,7 +16,7 @@ describe 'node pages' do
 
     let(:columns) { ['Title', 'Created', 'Created by', 'Updated'] }
     let(:custom_columns) { ['Description', 'Extra'] }
-    let(:filter) { { keyword: 'Note1', number_of_rows: 1 } }
+    let(:filter) { { keyword: @note.title, number_of_rows: 1 } }
 
     it_behaves_like 'a DataTable'
   end
