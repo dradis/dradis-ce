@@ -21,7 +21,12 @@
   
     .dataTables_length {
       label {
+        font-weight: 300;
         margin: 0;
+        
+        .custom-select {
+          font-weight: 300;
+        }
       }
     }
   
@@ -72,6 +77,10 @@
         }
       }
     }
+  }
+
+  .table-wrapper {
+    overflow: auto;
   }
   
   tr:last-of-type {

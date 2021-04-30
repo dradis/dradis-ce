@@ -9,9 +9,9 @@ document.addEventListener('turbolinks:load', function() {
         header: true,
         headerOffset: $('[data-behavior~=navbar]').height() //FIXME: header is not fixed/sticky.
       },
-      scrollX: true
+      initComplete: function () {  
+        $('[data-behavior~=datatable]').wrap("<div class='table-wrapper'></div>");            
+      }
     })
-
-    //$(this).columns.adjust();
   });
 });
