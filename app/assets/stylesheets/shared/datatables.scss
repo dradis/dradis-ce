@@ -1,0 +1,31 @@
+.dataTables_wrapper {
+  .dataTable {
+    .hide-sort {
+      &:after,
+      &:before {
+        display: none;
+      }
+    }
+  }
+  .dataTables_length {
+    label {
+      margin-top: 0.75rem;
+    }
+  }
+
+  .dataTables_paginate {
+    .pagination {
+      border-top: none;
+
+      @media screen and (max-width: 992px) {
+        justify-content: center !important;
+      }
+    }
+  }
+  
+  tr:last-of-type {
+    td {
+      border-bottom: 1px solid darken($white, 10%);
+    }
+  }
+}
