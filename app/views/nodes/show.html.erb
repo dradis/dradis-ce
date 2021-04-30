@@ -49,7 +49,6 @@
       <h4 class="header-underline">Evidence</h4>
       <% if @sorted_evidence.any? %>
         <div data-destroy-url="<%= multiple_destroy_project_node_evidence_index_path(@node.project, @node) %>"
-            data-storage-key="<%= "project.ce.#{dom_id(@node)}.evidence_columns" %>"
             data-close-console-url="<%= project_node_path(@node.project, @node, tab: "evidence-tab") %>">
           <%= render 'nodes/items_table/table',
                     columns: @evidence_columns,
@@ -86,7 +85,6 @@
       <h4 class="header-underline">Notes</h4>
       <% if @sorted_notes.any? %>
         <div data-destroy-url="<%= multiple_destroy_project_node_notes_path(@node.project, @node) %>"
-            data-storage-key="<%= "project.ce.#{dom_id(@node)}.note_columns" %>"
             data-close-console-url="<%= project_node_path(@node.project, @node, tab: "notes-tab") %>">
           <%= render 'nodes/items_table/table',
                     columns: @note_columns,
