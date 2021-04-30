@@ -16,6 +16,14 @@ describe 'node pages' do
         issue: issue,
       )
       visit project_node_path(@project, node, tab: 'evidence-tab')
+
+      create(:evidence, node: node, issue: issue)
     end
+
+    let(:columns) { ['Title', 'Created', 'Created by', 'Updated'] }
+    let(:custom_columns) { ['Description', 'Extra'] }
+    let(:filter) { { keyword: 'Evidence1', number_of_rows: 1 } }
+
+    it_behaves_like 'a DataTable'
   end
 end
