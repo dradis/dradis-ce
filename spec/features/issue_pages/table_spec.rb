@@ -15,9 +15,5 @@ describe 'issue pages' do
       )
       visit project_issues_path(current_project)
     end
-
-    let(:columns) { ['Title', 'Created', 'Created by', 'Updated'] }
-    let(:custom_columns) { ['Description', 'Risk'] }
-    it_behaves_like 'an index table'
   end
 end

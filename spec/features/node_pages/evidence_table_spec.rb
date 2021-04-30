@@ -17,9 +17,5 @@ describe 'node pages' do
       )
       visit project_node_path(@project, node, tab: 'evidence-tab')
     end
-
-    let(:columns) { ['Title', 'Created', 'Created by', 'Updated'] }
-    let(:custom_columns) { ['Description', 'Extra'] }
-    it_behaves_like 'an index table'
   end
 end
