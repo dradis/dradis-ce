@@ -16,7 +16,8 @@ module Dradis::CE::API
 
     # Register a new Warden strategy for API authentication
     initializer 'dradis-api.warden' do
-      Warden::Strategies.add(:api_auth, Dradis::CE::API::WardenStrategy)
+      Warden::Strategies.add(:basic_auth, Dradis::CE::API::BasicAuthStrategy)
+      Warden::Strategies.add(:token_auth, Dradis::CE::API::ApiTokenStrategy)
     end
 
     initializer 'dradis-api.extend_models' do

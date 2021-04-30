@@ -28,7 +28,10 @@ module Dradis::CE::API
     # end
 
     def api_authentication_required
-      warden.authenticate!(:api_auth)
+      # Note: The order matters here since the token_auth will not "halt!" the
+      # flow if the token is not present, expecting a fallback strategy.
+      # Meanwhile, basic_auth will "halt!" if the authentication fails in any way.
+      warden.authenticate!(:token_auth, :basic_auth)
     end
 
     # Pretty-print JSON output
