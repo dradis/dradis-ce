@@ -2,6 +2,19 @@
   .dataTable {
     margin-top: 0 !important;
 
+    .column-actions {
+      text-align: right;
+      min-width: 8rem;
+  
+      a {
+        visibility: hidden;
+
+        &:first-of-type{
+          padding-right: 0.5rem;
+        }
+      }
+    }
+
     .hide-sort {
       pointer-events: none;
       &:after,
@@ -33,6 +46,14 @@
           &::before {
             left: 0.5rem;
           }
+        }
+      }
+    }
+
+    tr {
+      &:hover {
+        .column-actions a {
+          visibility: visible;
         }
       }
     }
