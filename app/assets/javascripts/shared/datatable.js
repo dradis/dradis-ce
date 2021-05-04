@@ -8,12 +8,12 @@ document.addEventListener('turbolinks:load', function() {
 
     $(this).find('thead th, thead td').each(function(index, element) {
       // Hide certain options in ColumnVisibility dropdown.
-      if (!excludeColvisColumns.includes(element.textContent)) {
+      if (excludeColvisColumns && !excludeColvisColumns.includes(element.textContent)) {
         colvisColumnsIndexes.push(index);
       }
 
       // Hide certain columns on load.
-      if (!defaultColumns.includes(element.textContent)) {
+      if (defaultColumns && !defaultColumns.includes(element.textContent)) {
         hiddenColumnsIndexes.push(index)
       }
     });

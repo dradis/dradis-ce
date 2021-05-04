@@ -4,7 +4,9 @@
   <% if @revisions.any? %>
     <% cache @revisions do %>
       <div class="table-wrapper">
-        <table class="table table-striped" data-behavior="datatable">
+        <table class="table table-striped"
+          data-behavior="datatable"
+          data-exclude-colvis-columns='["Actions"]'>
           <thead>
             <tr>
               <th>Item</th>
