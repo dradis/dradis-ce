@@ -1,6 +1,24 @@
 document.addEventListener('turbolinks:load', function() {
   $('[data-behavior~=datatable]').each(function() {
-    $(this).DataTable({
+    var defaultColumns = $(this).data('defaultColumns');
+    var hiddenColumnsIndexes = [];
+
+    var excludeColvisColumns = $(this).data('excludeColvisColumns');
+    var colvisColumnsIndexes = [];
+
+    $(this).find('thead th, thead td').each(function(index, element) {
+      // Hide certain options in ColumnVisibility dropdown.
+      if (!excludeColvisColumns.includes(element.textContent)) {
+        colvisColumnsIndexes.push(index);
+      }
+
+      // Hide certain columns on load.
+      if (!defaultColumns.includes(element.textContent)) {
+        hiddenColumnsIndexes.push(index)
+      }
+    });
+
+    var dataTable = $(this).DataTable({
       // https://datatables.net/reference/option/dom,
       // The 'dom' attribute defines the order of elements in a DataTable.
       dom: 'Bfrtip',
@@ -19,9 +37,16 @@ document.addEventListener('turbolinks:load', function() {
             text: '<i class="fa fa-columns"></i><i class="fa fa-caret-down"></i>',
             titleAttr: 'Choose columns to show',
             className: 'btn',
+            columns: colvisColumnsIndexes
           }
         ]
-      }
+      },
+      columnDefs: [
+        {
+          targets: hiddenColumnsIndexes,
+          visible: false
+        }
+      ]
     });
   });
 });
