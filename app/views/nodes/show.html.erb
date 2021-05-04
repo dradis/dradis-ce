@@ -52,7 +52,8 @@
             data-close-console-url="<%= project_node_path(@node.project, @node, tab: "evidence-tab") %>">
           <%= render 'nodes/items_table/table',
                     columns: @evidence_columns,
-                    items: @sorted_evidence %>
+                    items: @sorted_evidence,
+                    default_columns: ['Title', 'Created', 'Updated'] %>
         </div>
       <% else %>
         <%= render 'nodes/items_table/empty',
@@ -88,7 +89,8 @@
             data-close-console-url="<%= project_node_path(@node.project, @node, tab: "notes-tab") %>">
           <%= render 'nodes/items_table/table',
                     columns: @note_columns,
-                    items: @sorted_notes %>
+                    items: @sorted_notes,
+                    default_columns: ['Title', 'Created', 'Updated'] %>
         </div>
       <% else %>
         <%= render 'nodes/items_table/empty',
