@@ -12,6 +12,13 @@ document.addEventListener('turbolinks:load', function() {
       initComplete: function () {  
         $('[data-behavior~=datatable]').wrap("<div class='table-wrapper'></div>");            
       }
-    })
+    });
+  });
+});
+
+// Un-bind DataTable on page unload.
+document.addEventListener('turbolinks:before-cache', function() {
+  $('[data-behavior~=datatable]').each(function() {
+    $(this).DataTable().destroy();
   });
 });
