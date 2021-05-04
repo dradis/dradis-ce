@@ -1,18 +1,42 @@
-#  let(:columns) { ['Title', 'Created', ...] }
-#  let(:custom_columns) { ['Description', 'Extra', ...] }
+#  let(:default_columns) { ['Title', 'Created', ...] }
+#  let(:hidden_columns) { ['Description', 'Extra', ...] }
 #  let(:filter) { { keyword:'keyword', number_of_rows: 1 } }
 #
 #
 shared_examples "a DataTable" do |item_type|
-  it 'displays table columns', js: true do
-    within '[data-behavior~=datatable]' do
-      within 'thead tr' do
-        columns.each do |column|
-          expect(page).to have_text(column)
+  describe 'column visibility', js: true do
+    it 'displays default columns on load' do
+      within '[data-behavior~=datatable]' do
+        within 'thead tr' do
+          default_columns.each do |column|
+            expect(page).to have_text(column)
+          end
         end
+      end
+    end
 
-        custom_columns.each do |column|
-          expect(page).to have_text(column)
+    it 'does not show hidden columns on load' do
+      within '[data-behavior~=datatable]' do
+        within 'thead tr' do
+          hidden_columns.each do |column|
+            expect(page).to_not have_text(column)
+          end
+        end
+      end
+    end
+
+    it 'can toggle column visibility by clicking on colvis button' do
+      within '.dt-buttons.btn-group' do
+        page.find('.buttons-colvis').click
+
+        within '.dt-button-collection' do
+          click_link hidden_columns[0]
+        end
+      end
+
+      within '[data-behavior~=datatable]' do
+        within 'thead tr' do
+          expect(page).to have_text(hidden_columns[0])
         end
       end
     end

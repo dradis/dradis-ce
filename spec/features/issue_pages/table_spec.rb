@@ -18,8 +18,8 @@ describe 'issue pages' do
       visit project_issues_path(current_project)
     end
 
-    let(:columns) { ['Title', 'Created', 'Created by', 'Updated'] }
-    let(:custom_columns) { ['Description', 'Risk'] }
+    let(:default_columns) { ['Title', 'Created', 'Created by', 'Updated'] }
+    let(:hidden_columns) { ['Description', 'Risk'] }
     let(:filter) { { keyword: @issue.title, number_of_rows: 1 } }
 
     it_behaves_like 'a DataTable'
