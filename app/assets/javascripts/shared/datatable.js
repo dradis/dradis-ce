@@ -34,7 +34,7 @@ document.addEventListener('turbolinks:load', function() {
         buttons: [
           {
             extend: 'colvis',
-            text: '<i class="fa fa-columns"></i><i class="fa fa-caret-down"></i>',
+            text: '<i class="fa fa-columns mr-1"></i><i class="fa fa-caret-down"></i>',
             titleAttr: 'Choose columns to show',
             className: 'btn',
             columns: colvisColumnsIndexes

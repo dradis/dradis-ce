@@ -1,0 +1,46 @@
+.dataTables_wrapper {
+  .dt-button-collection  {
+    .dropdown-item {
+      background-color: $white;
+      color: $linkColor;
+      font-size: 0.9rem;
+      font-weight: 300;
+      padding-left: 2.25rem;
+      position: relative;
+      transition: color 0s;
+
+      &.active {
+        background-color: $white;
+        color: $linkColor;
+
+        &::before {
+          background-color: $checkboxFill;
+          background-image: image-url('check.svg');
+          border-color: $checkboxFill;
+        }
+      }
+
+      &::before{
+        --size: 13px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 130%;
+        border: 1px solid $defaultText;
+        border-radius: 2px;
+        content: '';
+        height: var(--size);
+        left: 1rem;
+        position: absolute;
+        top: calc(50% - (var(--size)/2));
+        width: var(--size);
+      }
+
+      &:focus,
+      &:hover {
+        color: $linkColorHover;
+        background-color: $dropdownLinkBackgroundHover;
+        outline: none;
+      }
+    }
+  }
+}
