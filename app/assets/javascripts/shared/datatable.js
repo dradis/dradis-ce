@@ -11,7 +11,8 @@ document.addEventListener('turbolinks:load', function() {
       },
       initComplete: function () {  
         $('[data-behavior~=datatable]').wrap("<div class='table-wrapper'></div>");            
-      }
+      },
+      pageLength: 25,
     });
   });
 });
