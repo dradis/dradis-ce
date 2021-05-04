@@ -1,11 +1,19 @@
 .dataTables_wrapper {
   .dataTable {
+    margin-top: 0 !important;
+
     .hide-sort {
       pointer-events: none;
       &:after,
       &:before {
         display: none;
       }
+    }
+
+    th {
+      background-color: $white;
+      position: sticky !important;
+      top: 0;
     }
   }
 
@@ -80,6 +88,7 @@
   }
 
   .table-wrapper {
+    max-height: calc(100vh - 60px - 14rem);
     overflow: auto;
   }
   

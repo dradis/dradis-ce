@@ -66,12 +66,13 @@
   font-size: 0.9rem;
 
   .content-container {
-    position: relative;
-    margin: $mainContentMargin;
-    padding: $mainContentPadding;
     background-color: $primaryBgColor;
     border: 1px solid $borderColor;
     border-radius: 5px;
+    margin: $mainContentMargin;
+    padding: $mainContentPadding;
+    overflow: hidden;
+    position: relative;
 
     .alert {
       margin: 1rem 0;
