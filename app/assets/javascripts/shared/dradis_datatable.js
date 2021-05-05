@@ -10,7 +10,7 @@ class DradisDatatable {
       autoWidth: false,
       dom: "<'row'<'col-lg-6'><'col-lg-6'f>>" +
       "<'row'<'col-lg-12'tr>>" +
-      "<'dataTables_footer_content'lip>",
+      "<'dataTables_footer_content'ip>",
       initComplete: function (settings) {
         settings.oInstance.wrap("<div class='table-wrapper'></div>");
       },

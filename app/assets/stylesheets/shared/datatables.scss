@@ -82,17 +82,6 @@
       padding: 0 !important;
     }
   
-    .dataTables_length {
-      label {
-        font-weight: 300;
-        margin: 0;
-        
-        .custom-select {
-          font-weight: 300;
-        }
-      }
-    }
-  
     .dataTables_paginate {
       .pagination {
         border-top: none;
@@ -129,8 +118,7 @@
       flex-direction: column;
       justify-content: center;
 
-      .dataTables_info,
-      .dataTables_length {
+      .dataTables_info {
         margin-top: 0.5rem;
       }
 
