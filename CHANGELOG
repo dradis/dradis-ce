@@ -2,7 +2,7 @@
   * [feature #1]
   * [feature #2]
   * [feature ...]
-  * Upgraded gems: capybara, rubocop
+  * Upgraded gems: capybara, rdoc, rubocop
   * Bugs fixed:
     - [bug fixed #1]
     - [bug fixed ...]
