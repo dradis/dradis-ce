@@ -20,7 +20,7 @@ describe 'issue pages' do
 
     let(:columns) { ['Title', 'Created', 'Created by', 'Updated'] }
     let(:custom_columns) { ['Description', 'Risk'] }
-    let(:filter) { { keyword: @issue.title, number_of_rows: 1 } }
+    let(:filter) { { keyword: @issue.title, filter_count: 1 } }
 
     it_behaves_like 'a DataTable'
   end

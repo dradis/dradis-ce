@@ -3,17 +3,15 @@
 #  let(:filter) { { keyword:'keyword', number_of_rows: 1 } }
 #
 #
-shared_examples "a DataTable" do |item_type|
+shared_examples 'a DataTable' do |item_type|
   it 'displays table columns', js: true do
-    within '[data-behavior~=datatable]' do
-      within 'thead tr' do
-        columns.each do |column|
-          expect(page).to have_text(column)
-        end
+    within '.dataTables_wrapper thead tr' do
+      columns.each do |column|
+        expect(page).to have_text(column)
+      end
 
-        custom_columns.each do |column|
-          expect(page).to have_text(column)
-        end
+      custom_columns.each do |column|
+        expect(page).to have_text(column)
       end
     end
   end
@@ -24,8 +22,8 @@ shared_examples "a DataTable" do |item_type|
       search_input.set(filter[:keyword])
     end
 
-    within '[data-behavior~=datatable]' do
-      expect(all('tbody tr').count).to eq(filter[:number_of_rows])
+    within '.dataTable' do
+      expect(all('tbody tr').count).to eq(filter[:filter_count])
     end
   end
 end

@@ -25,7 +25,7 @@
 //= require shared/charts
 //= require shared/comments
 //= require shared/console_updater
-//= require shared/datatable
+//= require shared/dradis_datatable
 //= require shared/editor_toolbar
 //= require shared/items_table
 //= require shared/mentions
@@ -58,6 +58,7 @@
 //= require tylium/pages/boards
 //= require tylium/pages/issues
 //= require tylium/pages/nodes/new_form
+//= require tylium/pages/nodes/tables
 //= require tylium/pages/projects/boards_summary
 //= require tylium/pages/projects/issues_chart
 //= require tylium/pages/projects/summary
