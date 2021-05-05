@@ -3,7 +3,7 @@
 #  let(:filter) { { keyword:'keyword', number_of_rows: 1 } }
 #
 #
-shared_examples "a DataTable" do |item_type|
+shared_examples 'a DataTable' do |item_type|
   describe 'column visibility', js: true do
     it 'displays default columns on load' do
       within '[data-behavior~=datatable]' do
@@ -48,8 +48,8 @@ shared_examples "a DataTable" do |item_type|
       search_input.set(filter[:keyword])
     end
 
-    within '[data-behavior~=datatable]' do
-      expect(all('tbody tr').count).to eq(filter[:number_of_rows])
+    within '.dataTable' do
+      expect(all('tbody tr').count).to eq(filter[:filter_count])
     end
   end
 end

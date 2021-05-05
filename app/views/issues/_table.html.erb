@@ -1,16 +1,15 @@
 <% cache ['issues-table', @columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last] do %>
   <div class="table-wrapper">
-    <table class="table table-striped mb-0"
-      data-behavior="datatable"
-      data-default-columns='["Select", "Title", "Tags", "Affected", "Created", "Created by", "Updated", "Actions"]'
-      data-exclude-colvis-columns='["Select", "Actions"]'>
+    <table class="table table-striped mb-0" data-behavior="issues-table">
       <thead>
         <tr>
-          <th><span class="sr-only">Select</span></th>
+          <th data-colvis="false"><span class="sr-only">Select</span></th>
           <% @columns.each do |column| %>
-          <th><%= column %></th>
+            <th data-visible="<%= ['Title', 'Created', 'Updated'].include?(column) %>" data-colvis="true">
+              <%= column %>
+            </th>
           <% end %>
-          <th><span class="sr-only">Actions</span></th>
+          <th data-colvis="false"><span class="sr-only">Actions</span></th>
         </tr>
       </thead>
       <tbody>

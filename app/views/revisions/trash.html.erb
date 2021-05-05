@@ -4,15 +4,13 @@
   <% if @revisions.any? %>
     <% cache @revisions do %>
       <div class="table-wrapper">
-        <table class="table table-striped"
-          data-behavior="datatable"
-          data-exclude-colvis-columns='["Actions"]'>
+        <table class="table table-striped" data-behavior="trash-table">
           <thead>
             <tr>
               <th>Item</th>
               <th>Removed by</th>
               <th>When</th>
-              <th><span class="sr-only">Actions</span></th>
+              <th data-colvis="false"><span class="sr-only">Actions</span></th>
             </tr>
           </thead>
           <tbody>

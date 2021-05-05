@@ -53,7 +53,7 @@
           <%= render 'nodes/items_table/table',
                     columns: @evidence_columns,
                     items: @sorted_evidence,
-                    default_columns: ['Title', 'Created', 'Updated'] %>
+                    table_selector: 'node-evidence-table' %>
         </div>
       <% else %>
         <%= render 'nodes/items_table/empty',
@@ -90,7 +90,7 @@
           <%= render 'nodes/items_table/table',
                     columns: @note_columns,
                     items: @sorted_notes,
-                    default_columns: ['Title', 'Created', 'Updated'] %>
+                    table_selector: 'node-notes-table' %>
         </div>
       <% else %>
         <%= render 'nodes/items_table/empty',

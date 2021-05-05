@@ -22,7 +22,7 @@ describe 'node pages' do
 
     let(:default_columns) { ['Title', 'Created', 'Updated'] }
     let(:hidden_columns) { ['Description', 'Extra'] }
-    let(:filter) { { keyword: @evidence.title, number_of_rows: 1 } }
+    let(:filter) { { keyword: @evidence.title, filter_count: 1 } }
 
     it_behaves_like 'a DataTable'
   end

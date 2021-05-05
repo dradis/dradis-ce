@@ -1,16 +1,15 @@
 <% cache ["#{dom_class(items.first).pluralize}-table", columns, items.map(&:id), items.map(&:updated_at).map(&:to_i).sort.last] do %>
   <div class="table-wrapper">
-    <table class="table table-striped"
-      data-behavior="datatable"
-      data-default-columns="<%= default_columns + ['Select', 'Actions'] %>"
-      data-exclude-colvis-columns='["Select", "Actions"]'>
+    <table class="table table-striped" data-behavior="<%= table_selector %>">
       <thead>
         <tr>
-          <th><span class="sr-only">Select</span></th>
+          <th data-colvis="false"><span class="sr-only">Select</span></th>
           <% columns.each do |column| %>
-            <th><%= column %></th>
+            <th data-visible="<%= ['Title', 'Created', 'Updated'].include?(column) %>" data-colvis="true">
+              <%= column %>
+            </th>
           <% end %>
-          <th><span class="sr-only">Actions</span></th>
+          <th data-colvis="false"><span class="sr-only">Actions</span></th>
         </tr>
       </thead>
       <tbody>
