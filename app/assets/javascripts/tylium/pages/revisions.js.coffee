@@ -14,4 +14,4 @@ document.addEventListener "turbolinks:load", ->
     $('.js-diff-body').html(newText)
 
   if $('body.revisions.trash')
-    new DradisDatatable('#trash-table')
+    new DradisDatatable('[data-behavior~=trash-table]')
