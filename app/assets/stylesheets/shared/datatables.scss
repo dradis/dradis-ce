@@ -45,6 +45,11 @@
           &::after,
           &::before{
             top: calc(50% - 0.55rem);
+
+            // Firefox //
+            @-moz-document url-prefix() {
+              top: calc(50% - 0.8rem);
+            }
           }
 
           &::after {
