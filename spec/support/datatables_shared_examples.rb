@@ -3,7 +3,7 @@
 #  let(:filter) { { keyword:'keyword', number_of_rows: 1 } }
 #
 #
-shared_examples "a DataTable" do |item_type|
+shared_examples 'a DataTable' do |item_type|
   it 'displays table columns', js: true do
     within '[data-behavior~=datatable]' do
       within 'thead tr' do
