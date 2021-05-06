@@ -26,6 +26,15 @@ class DradisDatatable {
       dom: 'Bfrtip',
       pageLength: 25,
       lengthChange: false,
+      columnDefs: [ {
+        orderable: false,
+        className: 'select-checkbox',
+        targets:   0
+      } ],
+      select: {
+        selector: 'td:first-child',
+        style: 'multi'
+      },
       buttons: {
         dom: {
           button: {
@@ -34,6 +43,14 @@ class DradisDatatable {
           }
         },
         buttons: [
+          {
+            extend: 'selectAll',
+            titleAttr: 'Select all'
+          },
+          {
+            extend: 'selectNone',
+            titleAttr: 'Select none'
+          },
           {
             extend: 'colvis',
             text: '<i class="fa fa-columns mr-1"></i><i class="fa fa-caret-down"></i>',
