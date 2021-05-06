@@ -6,17 +6,19 @@ class DradisDatatable {
   }
 
   init() {
-    var dataTable = this.$table.DataTable({
+    // Assign the instantiated DataTable as a DradisDatatable property
+    this.dataTable = this.$table.DataTable({
       pageLength: 25,
       lengthChange: false
-    });
-
-    // Assign the instantiated DataTable as a DradisDatatable property
-    this.dataTable = dataTable;
+    });;
     this.behaviors();
   }
 
   behaviors() {
+    this.unbindDataTable();
+  }
+
+  unbindDataTable() {
     var that = this;
 
     document.addEventListener('turbolinks:before-cache', function() {
