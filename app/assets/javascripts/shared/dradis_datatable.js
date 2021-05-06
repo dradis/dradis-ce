@@ -23,6 +23,10 @@ class DradisDatatable {
   }
 
   behaviors() {
+    this.unbindDataTable();
+  }
+
+  unbindDataTable() {
     var that = this;
 
     document.addEventListener('turbolinks:before-cache', function() {
