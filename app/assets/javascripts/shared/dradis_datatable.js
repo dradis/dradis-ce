@@ -14,7 +14,8 @@ class DradisDatatable {
       return indexes;
     }, []);
 
-    var dataTable = this.$table.DataTable({
+    // Assign the instantiated DataTable as a DradisDatatable property
+    this.dataTable = this.$table.DataTable({
       // https://datatables.net/reference/option/dom,
       // The 'dom' attribute defines the order of elements in a DataTable.
       dom: 'Bfrtip',
@@ -38,13 +39,14 @@ class DradisDatatable {
         ]
       }
     });
-
-    // Assign the instantiated DataTable as a DradisDatatable property
-    this.dataTable = dataTable;
     this.behaviors();
   }
 
   behaviors() {
+    this.unbindDataTable();
+  }
+
+  unbindDataTable() {
     var that = this;
 
     that.hideColumns();
