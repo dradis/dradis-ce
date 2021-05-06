@@ -30,10 +30,8 @@ shared_examples 'a DataTable' do |item_type|
         end
       end
 
-      within '[data-behavior~=datatable]' do
-        within 'thead tr' do
-          expect(page).to have_text(hidden_columns[0])
-        end
+      within '.dataTables_wrapper thead tr' do
+        expect(page).to have_text(hidden_columns[0])
       end
     end
   end
