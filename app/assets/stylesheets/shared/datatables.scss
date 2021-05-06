@@ -28,10 +28,11 @@
     thead {
       th {
         background-color: $white;
-        box-shadow: 3px 5px 10px 0px rgba(82, 63, 105, 0.08);
+        box-shadow: 8px 5px 10px 0px rgba(82, 63, 105, 0.08);
         position: sticky !important;
         top: 0;
         vertical-align: middle;
+        white-space: nowrap;
 
         &:last-of-type{
           clip-path: inset(0px 0px -20px -1px);
