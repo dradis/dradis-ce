@@ -6,21 +6,17 @@
 shared_examples 'a DataTable' do |item_type|
   describe 'column visibility', js: true do
     it 'displays default columns on load' do
-      within '[data-behavior~=datatable]' do
-        within 'thead tr' do
-          default_columns.each do |column|
-            expect(page).to have_text(column)
-          end
+      within '.dataTables_wrapper thead tr' do
+        default_columns.each do |column|
+          expect(page).to have_text(column)
         end
       end
     end
 
     it 'does not show hidden columns on load' do
-      within '[data-behavior~=datatable]' do
-        within 'thead tr' do
-          hidden_columns.each do |column|
-            expect(page).to_not have_text(column)
-          end
+      within '.dataTables_wrapper thead tr' do
+        hidden_columns.each do |column|
+          expect(page).to_not have_text(column)
         end
       end
     end
