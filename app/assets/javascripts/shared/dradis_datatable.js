@@ -9,6 +9,7 @@ class DradisDatatable {
     this.dataTable = null;
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th, thead td'));
     this.init();
+    this.setupListeners();
   }
 
   init() {
@@ -45,11 +46,8 @@ class DradisDatatable {
         buttons: [
           {
             extend: 'selectAll',
+            text: '<input type="checkbox" id="select-all" />',
             titleAttr: 'Select all'
-          },
-          {
-            extend: 'selectNone',
-            titleAttr: 'Select none'
           },
           {
             extend: 'colvis',
@@ -66,6 +64,20 @@ class DradisDatatable {
 
   behaviors() {
     this.unbindDataTable();
+  }
+
+  setupListeners() {
+    var that = this;
+
+    this.dataTable.on('select.dt', function(e, dt, type, indexes) {
+      if (that.dataTable.rows({selected:true}).count() == that.dataTable.rows().count()) {
+        $('#select-all').prop('checked', true);
+      }
+    });
+
+    this.dataTable.on('deselect.dt', function(e, dt, type, indexes) {
+      $('#select-all').prop('checked', false);
+    });
   }
 
   unbindDataTable() {
