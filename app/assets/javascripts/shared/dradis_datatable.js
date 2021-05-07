@@ -12,12 +12,13 @@ class DradisDatatable {
   }
 
   init() {
-    var colvisColumnIndexes = this.tableHeaders.reduce(function(indexes, column, index) {
+    // Remove dropdown option for <th> columns that has data-colvis="false" in colvis button
+    var colvisColumnIndexes = [];
+    this.tableHeaders.forEach(function(column, index) {
       if(column.dataset.colvis != 'false') {
-        indexes.push(index);
+        colvisColumnIndexes.push(index);
       }
-      return indexes;
-    }, []);
+    });
 
     // Assign the instantiated DataTable as a DradisDatatable property
     this.dataTable = this.$table.DataTable({
@@ -48,26 +49,26 @@ class DradisDatatable {
   }
 
   behaviors() {
+    this.hideColumns();
     this.unbindDataTable();
   }
 
-  unbindDataTable() {
-    var that = this;
-
-    that.hideColumns();
-
-    document.addEventListener('turbolinks:before-cache', function() {
-      that.dataTable.destroy();
-    });
-  }
-
   hideColumns() {
+    // Hide <th> columns that has data-visible="false"
     var that = this;
     that.tableHeaders.forEach(function(column, index) {
       if (column.dataset.visible == 'false') {
         var dataTableColumn = that.dataTable.column(index);
         dataTableColumn.visible(false);
       }
+    });
+  }
+
+  unbindDataTable() {
+    var that = this;
+
+    document.addEventListener('turbolinks:before-cache', function() {
+      that.dataTable.destroy();
     });
   }
 }
