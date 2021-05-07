@@ -40,7 +40,7 @@
                 [item.fields.fetch(column, ''), markup(item.fields.fetch(column, ''))]
               end
               %>
-              <td><%= display %></td>
+              <td data-sort="<%= sort %>"><%= display %></td>
             <% end %>
             <td class="column-actions">
               <%= link_to [:edit, @node.project, @node, item] do %>
