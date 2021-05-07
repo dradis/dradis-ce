@@ -52,6 +52,15 @@ class DradisDatatable {
             titleAttr: 'Select none'
           },
           {
+            text: 'Delete',
+            className: 'btn-danger d-none',
+            name: 'bulkDeleteBtn',
+            action: function (event, dataTable, node, config) {
+
+              alert( 'Button activated' );
+            }
+          },
+          {
             extend: 'colvis',
             text: '<i class="fa fa-columns mr-1"></i><i class="fa fa-caret-down"></i>',
             titleAttr: 'Choose columns to show',
@@ -61,11 +70,25 @@ class DradisDatatable {
         ]
       }
     });
+
     this.behaviors();
   }
 
   behaviors() {
     this.unbindDataTable();
+  }
+
+  bulkDeleteBtn() {
+    // https://datatables.net/reference/api/buttons()
+    return this.dataTable.buttons('bulkDeleteBtn:name')
+  }
+
+  showBulkDeleteBtn(boolean) {
+    if (boolean) {
+      this.bulkDeleteBtn()[0].node.classList.remove('d-none')
+    } else {
+      this.bulkDeleteBtn()[0].node.classList.add('d-none')
+    }
   }
 
   unbindDataTable() {
