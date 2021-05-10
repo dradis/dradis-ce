@@ -1,6 +1,6 @@
 class DradisDatatable {
-  constructor(selector) {
-    this.$table = $(selector);
+  constructor(tableElement) {
+    this.$table = $(tableElement);
     this.dataTable = null;
     this.init();
   }
