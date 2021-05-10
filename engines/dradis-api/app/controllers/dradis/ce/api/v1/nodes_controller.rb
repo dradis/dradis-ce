@@ -6,6 +6,7 @@ module Dradis::CE::API
 
       def index
         @nodes = current_project.nodes.user_nodes.includes(:evidence, :notes, evidence: [:issue]).order('updated_at desc')
+        @nodes = @nodes.page(params[:page].to_i) if params[:page]
       end
 
       def show
