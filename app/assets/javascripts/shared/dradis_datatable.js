@@ -9,6 +9,7 @@ class DradisDatatable {
     this.dataTable = null;
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th, thead td'));
     this.init();
+    this.setupListeners();
   }
 
   init() {
@@ -45,11 +46,8 @@ class DradisDatatable {
         buttons: [
           {
             extend: 'selectAll',
+            text: '<input type="checkbox" id="select-all" />',
             titleAttr: 'Select all'
-          },
-          {
-            extend: 'selectNone',
-            titleAttr: 'Select none'
           },
           {
             text: 'Delete',
@@ -79,16 +77,31 @@ class DradisDatatable {
   }
 
   bulkDeleteBtn() {
-    // https://datatables.net/reference/api/buttons()
-    return this.dataTable.buttons('bulkDeleteBtn:name')
+
   }
 
   showBulkDeleteBtn(boolean) {
+    // https://datatables.net/reference/api/buttons()
+    var bulkDeleteBtn = this.dataTable.buttons('bulkDeleteBtn:name');
     if (boolean) {
-      this.bulkDeleteBtn()[0].node.classList.remove('d-none')
+      bulkDeleteBtn[0].node.classList.remove('d-none');
     } else {
-      this.bulkDeleteBtn()[0].node.classList.add('d-none')
+      bulkDeleteBtn[0].node.classList.add('d-none');
     }
+  }
+
+  setupListeners() {
+    var that = this;
+
+    this.dataTable.on('select.dt', function(e, dt, type, indexes) {
+      if (that.dataTable.rows({selected:true}).count() == that.dataTable.rows().count()) {
+        $('#select-all').prop('checked', true);
+      }
+    });
+
+    this.dataTable.on('deselect.dt', function(e, dt, type, indexes) {
+      $('#select-all').prop('checked', false);
+    });
   }
 
   unbindDataTable() {
