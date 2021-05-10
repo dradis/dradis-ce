@@ -7,12 +7,15 @@ class DradisDatatable {
     }
 
     this.dataTable = null;
+    this.$paths = this.$table.closest('[data-behavior~=paths]');
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th, thead td'));
     this.init();
     this.setupListeners();
   }
 
   init() {
+    var that = this;
+
     var colvisColumnIndexes = this.tableHeaders.reduce(function(indexes, column, index) {
       if(column.dataset.colvis != 'false') {
         indexes.push(index);
@@ -54,8 +57,8 @@ class DradisDatatable {
             className: 'btn-danger d-none',
             name: 'bulkDeleteBtn',
             action: function (event, dataTable, node, config) {
-
-              alert( 'Button activated' );
+              var destroyUrl = that.$paths.data('destroy-url');
+              console.log(dataTable.rows({selected: true}).ids())
             }
           },
           {
@@ -97,10 +100,18 @@ class DradisDatatable {
       if (that.dataTable.rows({selected:true}).count() == that.dataTable.rows().count()) {
         $('#select-all').prop('checked', true);
       }
+
+      if (that.dataTable.rows({selected:true}).count()) {
+        that.showBulkDeleteBtn(true);
+      }
     });
 
     this.dataTable.on('deselect.dt', function(e, dt, type, indexes) {
       $('#select-all').prop('checked', false);
+
+      if (that.dataTable.rows({selected:true}).count() === 0) {
+        that.showBulkDeleteBtn(false);
+      }
     });
   }
 
