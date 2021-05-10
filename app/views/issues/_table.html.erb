@@ -1,6 +1,6 @@
 <% cache ['issues-table', @columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last] do %>
   <div class="table-wrapper">
-    <table class="table table-striped mb-0" data-behavior="issues-table">
+    <table class="table table-striped mb-0" data-behavior="dradis-datatable">
       <thead>
         <tr>
           <th><span class="sr-only">Select</span></th>
