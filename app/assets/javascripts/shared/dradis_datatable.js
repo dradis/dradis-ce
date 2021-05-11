@@ -57,7 +57,7 @@ class DradisDatatable {
             name: 'bulkDeleteBtn',
             action: function (event, dataTable, node, config) {
               var destroyUrl = that.$paths.data('destroy-url');
-              var selectedRows = dataTable.rows({ selected: true })
+              var selectedRows = dataTable.rows({ selected: true });
               var ids = selectedRows.ids().toArray();
               $.ajax({
                 url: destroyUrl,
@@ -68,6 +68,18 @@ class DradisDatatable {
                   // remove() will remove the row internally and draw() will
                   // update the table visually.
                   selectedRows.remove().draw();
+                  that.showBulkDeleteBtn(false);
+
+                  if (data.success) {
+                    if (data.jobId) {
+                      that.showConsole(data.jobId);
+                    }
+                  }
+                },
+                error: function() {
+                  selectedRows.nodes().toArray().forEach(function(tr) {
+                    tr.querySelectorAll('td')[2].innerHTML = '<span class="text-error">Please try again</span>';
+                  })
                 }
               })
             }
@@ -90,10 +102,6 @@ class DradisDatatable {
     this.unbindDataTable();
   }
 
-  bulkDeleteBtn() {
-
-  }
-
   showBulkDeleteBtn(boolean) {
     // https://datatables.net/reference/api/buttons()
     var bulkDeleteBtn = this.dataTable.buttons('bulkDeleteBtn:name');
@@ -102,6 +110,26 @@ class DradisDatatable {
     } else {
       bulkDeleteBtn[0].node.classList.add('d-none');
     }
+  }
+
+  showConsole(jobId) {
+    // the table may set the url to redirect to when closing the console
+    var closeUrl = this.$paths.data('close-console-url');
+
+    if (closeUrl) {
+      $('#result').data('close-url', closeUrl);
+    }
+
+    // show console
+    $('#modal-console').modal('show');
+    ConsoleUpdater.jobId = jobId;
+    $('#console').empty();
+    $('#result').data('id', ConsoleUpdater.jobId);
+    $('#result').show();
+
+    // start console
+    ConsoleUpdater.parsing = true;
+    setTimeout(ConsoleUpdater.updateConsole, 1000);
   }
 
   setupListeners() {
