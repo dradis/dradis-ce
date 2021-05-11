@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-describe "Evidence API" do
+describe 'Evidence API' do
 
-  include_context "project scoped API"
-  include_context "https"
+  include_context 'project scoped API'
+  include_context 'https'
 
   let(:node)  { create(:node, project: current_project) }
   let(:issue) { create(:issue, node: current_project.issue_library) }
 
-  context "as unauthenticated user" do
+  context 'as unauthenticated user' do
     [
       ['get', '/api/nodes/1/evidence/'],
       ['get', '/api/nodes/1/evidence/1'],
@@ -26,61 +26,74 @@ describe "Evidence API" do
     end
   end
 
-  context "as authorized user" do
-    include_context "authorized API user"
+  context 'as authorized user' do
+    include_context 'authorized API user'
 
     let(:category) { create(:category) }
 
-    describe "GET /api/nodes/:node_id/evidence" do
+    describe 'GET /api/nodes/:node_id/evidence' do
       before do
-        @issues = create_list(:issue, 3, node: current_project.issue_library)
+        @issues = create_list(:issue, 4, node: current_project.issue_library)
         @evidence = [
           Evidence.create!(node: node, content: "#[a]#\nA", issue: @issues[0]),
           Evidence.create!(node: node, content: "#[b]#\nB", issue: @issues[1]),
           Evidence.create!(node: node, content: "#[c]#\nC", issue: @issues[2]),
-        ]
+        ] << create_list(:evidence, 30, issue: @issues[3], node: node)
         @other_evidence = create(:evidence, issue: issue, node: current_project.issue_library)
-        get "/api/nodes/#{node.id}/evidence", env: @env
+        get "/api/nodes/#{node.id}/evidence?#{params}", env: @env
       end
 
       let(:retrieved_evidence) { JSON.parse(response.body) }
 
-      it "responds with HTTP code 200" do
-        expect(response.status).to eq(200)
+      context 'without params' do
+        let(:params) { '' }
+
+        it 'responds with HTTP code 200' do
+          expect(response.status).to eq(200)
+        end
+
+        it 'retrieves all the evidence for the given node' do
+          expect(retrieved_evidence.count).to eq 33
+          issue_titles = retrieved_evidence.map{ |json| json['issue']['title'] }.uniq
+          expect(issue_titles).to match_array @issues.map(&:title)
+        end
+
+        it 'returns JSON data about the evidence\'s fields and issue' do
+          ev_0 = retrieved_evidence.find { |n| n['issue']['id'] == @issues[0].id }
+          ev_1 = retrieved_evidence.find { |n| n['issue']['id'] == @issues[1].id }
+          ev_2 = retrieved_evidence.find { |n| n['issue']['id'] == @issues[2].id }
+
+          expect(ev_0['fields'].keys).to \
+            match_array (@evidence[0].local_fields.keys << 'a')
+          expect(ev_0['fields']['a']).to eq 'A'
+          expect(ev_0['issue']['title']).to eq @issues[0].title
+          expect(ev_1['fields'].keys).to \
+            match_array (@evidence[2].local_fields.keys << 'b')
+          expect(ev_1['fields']['b']).to eq 'B'
+          expect(ev_1['issue']['title']).to eq @issues[1].title
+          expect(ev_2['fields'].keys).to \
+            match_array (@evidence[2].local_fields.keys << 'c')
+          expect(ev_2['fields']['c']).to eq 'C'
+          expect(ev_2['issue']['title']).to eq @issues[2].title
+        end
+
+        it 'doesn\'t return evidence from other nodes' do
+          retrieved_ids = retrieved_evidence.map { |n| n['id'] }
+          expect(retrieved_ids).not_to include @other_evidence.id
+        end
       end
 
-      it "retrieves all the evidence for the given node" do
-        expect(retrieved_evidence.count).to eq 3
-        issue_titles = retrieved_evidence.map{ |json| json['issue']['title'] }
-        expect(issue_titles).to match_array @issues.map(&:title)
-      end
+      context 'with params' do
+        let(:params) { 'page=2' }
 
-      it "returns JSON data about the evidence's fields and issue" do
-        ev_0 = retrieved_evidence.find { |n| n["issue"]["id"] == @issues[0].id }
-        ev_1 = retrieved_evidence.find { |n| n["issue"]["id"] == @issues[1].id }
-        ev_2 = retrieved_evidence.find { |n| n["issue"]["id"] == @issues[2].id }
+        it 'returns the paginated evidence' do
+          expect(retrieved_evidence.count).to eq 8
 
-        expect(ev_0["fields"].keys).to \
-          match_array (@evidence[0].local_fields.keys << "a")
-        expect(ev_0["fields"]["a"]).to eq "A"
-        expect(ev_0["issue"]["title"]).to eq @issues[0].title
-        expect(ev_1["fields"].keys).to \
-          match_array (@evidence[2].local_fields.keys << "b")
-        expect(ev_1["fields"]["b"]).to eq "B"
-        expect(ev_1["issue"]["title"]).to eq @issues[1].title
-        expect(ev_2["fields"].keys).to \
-          match_array (@evidence[2].local_fields.keys << "c")
-        expect(ev_2["fields"]["c"]).to eq "C"
-        expect(ev_2["issue"]["title"]).to eq @issues[2].title
-      end
-
-      it "doesn't return evidence from other nodes" do
-        retrieved_ids = retrieved_evidence.map { |n| n["id"] }
-        expect(retrieved_ids).not_to include @other_evidence.id
+        end
       end
     end
 
-    describe "GET /api/nodes/:node_id/evidence/:id" do
+    describe 'GET /api/nodes/:node_id/evidence/:id' do
       before do
         @issue    = create(:issue, node: current_project.issue_library)
         @evidence = node.evidence.create!(
