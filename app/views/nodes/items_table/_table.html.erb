@@ -1,6 +1,6 @@
 <% cache ["#{dom_class(items.first).pluralize}-table", columns, items.map(&:id), items.map(&:updated_at).map(&:to_i).sort.last] do %>
   <div class="table-wrapper">
-    <table class="table table-striped" data-behavior="<%= table_selector %>">
+    <table class="table table-striped" data-behavior="dradis-datatable">
       <thead>
         <tr>
           <th class="hide-sort"><span class="sr-only">Select</span></th>
