@@ -72,8 +72,14 @@ class DradisDatatable {
 
                   if (data.success) {
                     if (data.jobId) {
+                      // background deletion
                       that.showConsole(data.jobId);
+                    } else {
+                      // inline deletion
+                      that.showAlert(data.msg, 'success');
                     }
+                  } else {
+                    that.showAlert(data.msg, 'error');
                   }
                 },
                 error: function() {
@@ -100,6 +106,17 @@ class DradisDatatable {
 
   behaviors() {
     this.unbindDataTable();
+  }
+
+  showAlert(msg, klass) {
+    this.$table.parent().find('.alert').remove();
+
+    this.$table.parent().prepend(`
+      <div class="alert alert-${klass}">
+        <a class="close" data-dismiss="alert" href="javascript:void(0)">x</a>
+        ${msg}
+      </div>
+    `);
   }
 
   showBulkDeleteBtn(boolean) {
