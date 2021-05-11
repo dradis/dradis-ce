@@ -3,6 +3,11 @@
     //Activate jQuery.Textile
     $('.textile').textile();
 
+    // Activate DataTables
+    $('[data-behavior~=dradis-datatable]').each(function() {
+      new DradisDatatable(this);
+    });
+
     // Activate Rich Toolbars for the editor
     $('[data-behavior~=rich-toolbar]').each(function() {
       new EditorToolbar($(this));

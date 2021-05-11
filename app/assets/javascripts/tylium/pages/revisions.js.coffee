@@ -12,6 +12,3 @@ document.addEventListener "turbolinks:load", ->
       replace(insRegex, '<ins class="differ">$1</ins>')
 
     $('.js-diff-body').html(newText)
-
-  if $('body.revisions.trash').length
-    new DradisDatatable('[data-behavior~=trash-table]')
