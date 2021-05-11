@@ -57,7 +57,19 @@ class DradisDatatable {
             name: 'bulkDeleteBtn',
             action: function (event, dataTable, node, config) {
               var destroyUrl = that.$paths.data('destroy-url');
-              console.log(dataTable.rows({selected: true}).ids())
+              var selectedRows = dataTable.rows({ selected: true })
+              var ids = selectedRows.ids().toArray();
+              $.ajax({
+                url: destroyUrl,
+                method: 'DELETE',
+                dataType: 'json',
+                data: { ids: ids },
+                success: function(data) {
+                  // remove() will remove the row internally and draw() will
+                  // update the table visually.
+                  selectedRows.remove().draw();
+                }
+              })
             }
           },
           {

@@ -15,7 +15,7 @@
       <tbody>
         <% issues.each do |issue| %>
         <% cache [issue, @columns, issue.affected_count, 'issues-table'] do%>
-        <tr data-id="<%= issue.id %>">
+        <tr id="<%= issue.id %>">
           <td></td>
           <% @columns.each do |column| %>
             <%
