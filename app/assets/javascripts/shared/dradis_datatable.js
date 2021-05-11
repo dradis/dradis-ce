@@ -66,33 +66,17 @@ class DradisDatatable {
               var destroyUrl = that.$paths.data('destroy-url');
               var selectedRows = dataTable.rows({ selected: true });
               var ids = selectedRows.ids().toArray();
+
               $.ajax({
                 url: destroyUrl,
                 method: 'DELETE',
                 dataType: 'json',
                 data: { ids: ids },
                 success: function(data) {
-                  // remove() will remove the row internally and draw() will
-                  // update the table visually.
-                  selectedRows.remove().draw();
-                  that.showBulkDeleteBtn(false);
-
-                  if (data.success) {
-                    if (data.jobId) {
-                      // background deletion
-                      that.showConsole(data.jobId);
-                    } else {
-                      // inline deletion
-                      that.showAlert(data.msg, 'success');
-                    }
-                  } else {
-                    that.showAlert(data.msg, 'error');
-                  }
+                  that.handleBulkDeleteSuccess(selectedRows, data);
                 },
                 error: function() {
-                  selectedRows.nodes().toArray().forEach(function(tr) {
-                    tr.querySelectorAll('td')[2].innerHTML = '<span class="text-error">Please try again</span>';
-                  })
+                  that.handleBulkDeleteError(selectedRows);
                 }
               })
             }
@@ -113,6 +97,31 @@ class DradisDatatable {
 
   behaviors() {
     this.unbindDataTable();
+  }
+
+  handleBulkDeleteSuccess(rows, data) {
+    // remove() will remove the row internally and draw() will
+    // update the table visually.
+    rows.remove().draw();
+    this.showBulkDeleteBtn(false);
+
+    if (data.success) {
+      if (data.jobId) {
+        // background deletion
+        this.showConsole(data.jobId);
+      } else {
+        // inline deletion
+        this.showAlert(data.msg, 'success');
+      }
+    } else {
+      this.showAlert(data.msg, 'error');
+    }
+  }
+
+  handleBulkDeleteError(rows) {
+    rows.nodes().toArray().forEach(function(tr) {
+      tr.querySelectorAll('td')[2].innerHTML = '<span class="text-error">Please try again</span>';
+    })
   }
 
   showAlert(msg, klass) {
