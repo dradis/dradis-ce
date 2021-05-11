@@ -10,12 +10,8 @@
   <div class="note-text-inner">
 
     <% if @issues.any? %>
-      <div id="issues-table"
-          data-behavior="issues-table"
-          data-destroy-url="<%= multiple_destroy_project_issues_path(current_project) %>"
-          data-storage-key="project.ce.issue_columns"
+      <div data-destroy-url="<%= multiple_destroy_project_issues_path(current_project) %>"
           data-close-console-url="<%= project_issues_path(current_project) %>">
-        <%= render 'toolbar' %>
         <%= render 'table', issues: @issues %>
       </div>
     <% else %>
