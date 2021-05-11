@@ -3,11 +3,11 @@
     <table class="table table-striped" data-behavior="dradis-datatable">
       <thead>
         <tr>
-          <th><span class="sr-only">Select</span></th>
+          <th class="hide-sort"><span class="sr-only">Select</span></th>
           <% columns.each do |column| %>
             <th><%= column %></th>
           <% end %>
-          <th><span class="sr-only">Actions</span></th>
+          <th class="hide-sort"><span class="sr-only">Actions</span></th>
         </tr>
       </thead>
       <tbody>
