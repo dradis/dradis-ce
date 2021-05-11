@@ -61,7 +61,12 @@ class DradisDatatable {
 
               var destroyUrl = that.$paths.data('destroy-url');
               var selectedRows = dataTable.rows({ selected: true });
-              var ids = selectedRows.ids().toArray();
+              var ids = selectedRows.ids().toArray().map(function(id) {
+                // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
+                // so we split it by the delimiter to get the id number.
+                var idArray = id.split('-');
+                return idArray[idArray.length - 1];
+              });
 
               $.ajax({
                 url: destroyUrl,
