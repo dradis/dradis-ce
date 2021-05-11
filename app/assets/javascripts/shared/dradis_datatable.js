@@ -56,6 +56,13 @@ class DradisDatatable {
             className: 'btn-danger d-none',
             name: 'bulkDeleteBtn',
             action: function (event, dataTable, node, config) {
+              var destroyConfirmation = that.$paths.data('destroy-confirmation') || 'Are you sure?';
+              var answer = confirm(destroyConfirmation);
+
+              if (!answer) {
+                return;
+              }
+
               var destroyUrl = that.$paths.data('destroy-url');
               var selectedRows = dataTable.rows({ selected: true });
               var ids = selectedRows.ids().toArray();
