@@ -1,4 +1,66 @@
 .dataTables_wrapper {
+  .dataTable {
+    tbody {
+      tr {
+        .select-checkbox {
+          &:after,
+          &:before {
+            --checkboxSize: 13px;
+            height: var(--checkboxSize);
+            left: 1.5rem;
+            top: 0.7rem;
+            width: var(--checkboxSize);
+
+          }
+          &:after {
+            background-position-y: center;
+            background-position-x: -2.4px;
+            background-repeat: no-repeat;
+            background-size: 130%;
+          }
+
+          &:before {
+            border-color: $defaultText;
+            border-radius: 2px;
+            margin: 0;
+          }
+        }
+
+        &.selected {
+          color: $defaultText;
+
+          a {
+            color: $linkColor;
+
+            &:hover {
+              color: $linkColorHover;
+            }
+          }
+
+          &:nth-last-of-type(even) {
+            background-color: $white;
+          }
+
+          &:nth-last-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0.05);
+          }
+
+          .select-checkbox {
+            &:after {
+              background-image: image-url('check.svg');
+              content: '';
+              margin: 0;
+            }
+
+            &:before {
+              background-color: $checkboxFill;
+              border-color: $checkboxFill;
+            }
+          }
+        }
+      }
+    }
+  }
   .dt-button-collection  {
     .dropdown-item {
       background-color: $white;
@@ -20,19 +82,19 @@
         }
       }
 
-      &::before{
-        --size: 13px;
+      &::before {
+        --checkboxSize: 13px;
         background-repeat: no-repeat;
         background-position: center;
         background-size: 130%;
         border: 1px solid $defaultText;
         border-radius: 2px;
         content: '';
-        height: var(--size);
+        height: var(--checkboxSize);
         left: 1rem;
         position: absolute;
-        top: calc(50% - (var(--size)/2));
-        width: var(--size);
+        top: calc(50% - (var(--checkboxSize)/2));
+        width: var(--checkboxSize);
       }
 
       &:focus,
