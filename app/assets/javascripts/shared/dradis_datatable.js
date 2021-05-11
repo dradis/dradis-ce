@@ -17,11 +17,7 @@ class DradisDatatable {
 
     // Assign the instantiated DataTable as a DradisDatatable property
     this.dataTable = this.$table.DataTable({
-      // https://datatables.net/reference/option/dom,
-      // The 'dom' attribute defines the order of elements in a DataTable.
-      dom: 'Bfrtip',
-      pageLength: 25,
-      lengthChange: false,
+      autoWidth: false,
       buttons: {
         dom: {
           button: {
@@ -38,8 +34,17 @@ class DradisDatatable {
             columns: colvisColumnIndexes
           }
         ]
-      }
+      },
+      dom: "<'row'<'col-lg-6'B><'col-lg-6'f>>" +
+        "<'row'<'col-lg-12'tr>>" +
+        "<'dataTables_footer_content'ip>",
+      initComplete: function (settings) {
+        settings.oInstance.wrap("<div class='table-wrapper'></div>");
+      },
+      lengthChange: false,
+      pageLength: 25
     });
+
     this.behaviors();
   }
 
