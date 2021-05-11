@@ -1,11 +1,6 @@
 class DradisDatatable {
-  constructor(selector) {
-    this.$table = $(selector);
-    if (!this.$table.length) {
-      console.warn('Table not found.');
-      return;
-    }
-
+  constructor(tableElement) {
+    this.$table = $(tableElement);
     this.dataTable = null;
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th, thead td'));
     this.init();
