@@ -48,7 +48,7 @@
     <div class="tab-pane <%= "active" if params[:tab] == "evidence-tab" %>" id="evidence-tab">
       <h4 class="header-underline">Evidence</h4>
       <% if @sorted_evidence.any? %>
-        <div data-behavior="paths"
+        <div data-behavior="datatable-paths"
             data-destroy-url="<%= multiple_destroy_project_node_evidence_index_path(@node.project, @node) %>"
             data-destroy-confirmation="Are you sure?&#10;&#10;Proceeding will delete the selected item(s) from the associated node."
             data-close-console-url="<%= project_node_path(@node.project, @node, tab: "evidence-tab") %>">
@@ -86,7 +86,7 @@
     <div class="tab-pane <%= "active" if params[:tab] == "notes-tab" %>" id="notes-tab">
       <h4 class="header-underline">Notes</h4>
       <% if @sorted_notes.any? %>
-        <div data-behavior="paths"
+        <div data-behavior="datatable-paths"
             data-destroy-url="<%= multiple_destroy_project_node_notes_path(@node.project, @node) %>"
             data-destroy-confirmation="Are you sure?&#10;&#10;Proceeding will delete the selected item(s) from the associated node."
             data-close-console-url="<%= project_node_path(@node.project, @node, tab: "notes-tab") %>">
