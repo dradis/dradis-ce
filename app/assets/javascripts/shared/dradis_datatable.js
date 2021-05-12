@@ -2,15 +2,13 @@ class DradisDatatable {
   constructor(tableElement) {
     this.$table = $(tableElement);
     this.dataTable = null;
-    this.$paths = this.$table.closest('[data-behavior~=datatable-paths]');
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th, thead td'));
+    this.$paths = this.$table.closest('[data-behavior~=datatable-paths]');
     this.init();
     this.setupListeners();
   }
 
   init() {
-    var that = this;
-
     // Remove dropdown option for <th> columns that has data-colvis="false" in colvis button
     var colvisColumnIndexes = [];
     this.tableHeaders.forEach(function(column, index) {
@@ -18,6 +16,8 @@ class DradisDatatable {
         colvisColumnIndexes.push(index);
       }
     });
+
+    var that = this;
 
     // Assign the instantiated DataTable as a DradisDatatable property
     this.dataTable = this.$table.DataTable({
