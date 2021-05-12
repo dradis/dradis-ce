@@ -4,6 +4,7 @@ class DradisDatatable {
     this.dataTable = null;
     this.$paths = this.$table.closest('[data-behavior~=paths]');
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th, thead td'));
+    this.mergeEnabled = this.$table.data('merge') || false;
     this.init();
     this.setupListeners();
   }
@@ -61,12 +62,7 @@ class DradisDatatable {
 
               var destroyUrl = that.$paths.data('destroy-url');
               var selectedRows = dataTable.rows({ selected: true });
-              var ids = selectedRows.ids().toArray().map(function(id) {
-                // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
-                // so we split it by the delimiter to get the id number.
-                var idArray = id.split('-');
-                return idArray[idArray.length - 1];
-              });
+              var ids = that.selectedIds();
 
               $.ajax({
                 url: destroyUrl,
@@ -83,15 +79,17 @@ class DradisDatatable {
             }
           },
           {
+            text: 'Merge',
+            name: 'mergeBtn',
+            className: 'd-none',
+            action: this.mergeSelected.bind(this)
+          },
+          {
             extend: 'colvis',
             text: '<i class="fa fa-columns mr-1"></i><i class="fa fa-caret-down"></i>',
             titleAttr: 'Choose columns to show',
             className: 'btn',
             columns: colvisColumnIndexes
-          },
-          {
-            text: 'Merge',
-            action: this._mergeSelected
           }
         ]
       }
@@ -173,6 +171,10 @@ class DradisDatatable {
   setupListeners() {
     var that = this;
 
+    this.dataTable.on('select.dt deselect.dt', function() {
+      that.toggleMergeBtn(that.dataTable.rows({selected:true}).count() > 1);
+    });
+
     this.dataTable.on('select.dt', function(e, dt, type, indexes) {
       if (that.dataTable.rows({selected:true}).count() == that.dataTable.rows().count()) {
         $('#select-all').prop('checked', true);
@@ -212,11 +214,34 @@ class DradisDatatable {
     });
   }
 
-  _mergeSelected() {
-    var url = this.$paths;
-    var issues_to_merge = [];
+  selectedIds() {
+    var selectedRows = this.dataTable.rows({ selected: true });
+    var ids = selectedRows.ids().toArray().map(function(id) {
+      // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
+      // so we split it by the delimiter to get the id number.
+      var idArray = id.split('-');
+      return idArray[1];
+    });
+
+    return ids;
+  }
 
 
-    location.href = url + "?ids=" + issues_to_merge
+  // -- Merge --------------------------------------------------------
+
+  toggleMergeBtn(isShown) {
+    var mergeBtn = this.dataTable.buttons('mergeBtn:name');
+    var mergeEnabled = this.$paths.data('merge-url') || false;
+
+    var shouldShowButton = this.mergeEnabled && isShown;
+    $(mergeBtn[0].node).toggleClass('d-none', !shouldShowButton);
+  }
+
+  mergeSelected() {
+    var url = this.$paths.data('merge-url');
+
+    if (url !== undefined) {
+      location.href = url + '?ids=' + this.selectedIds();
+    }
   }
 }

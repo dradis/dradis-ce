@@ -13,7 +13,8 @@
       <div data-behavior="paths"
           data-destroy-url="<%= multiple_destroy_project_issues_path(current_project) %>"
           data-destroy-confirmation="Are you sure?&#10;&#10;Proceeding will delete the selected issue(s) and any associated evidence."
-          data-close-console-url="<%= project_issues_path(current_project) %>">
+          data-close-console-url="<%= project_issues_path(current_project) %>"
+          data-merge-url="<%= new_project_merge_path(current_project) %>" >
         <%= render 'table', issues: @issues %>
       </div>
     <% else %>
