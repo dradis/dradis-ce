@@ -50,6 +50,10 @@ class DradisDatatable {
             titleAttr: 'Choose columns to show',
             className: 'btn',
             columns: colvisColumnIndexes
+          },
+          {
+            text: 'Merge',
+            action: this._mergeSelected
           }
         ]
       }
@@ -68,6 +72,10 @@ class DradisDatatable {
       if (that.dataTable.rows({selected:true}).count() == that.dataTable.rows().count()) {
         $('#select-all').prop('checked', true);
       }
+
+      that.dataTable.rows({selected: true}).every(function(index){
+        console.log(that.dataTable.row(index).id());
+      });
     });
 
     this.dataTable.on('deselect.dt', function(e, dt, type, indexes) {
@@ -93,5 +101,13 @@ class DradisDatatable {
         dataTableColumn.visible(false);
       }
     });
+  }
+
+  _mergeSelected() {
+    var url = this.$paths;
+    var issues_to_merge = [];
+
+
+    location.href = url + "?ids=" + issues_to_merge
   }
 }
