@@ -2,38 +2,26 @@ class DradisDatatable {
   constructor(tableElement) {
     this.$table = $(tableElement);
     this.dataTable = null;
-    this.$paths = this.$table.closest('[data-behavior~=paths]');
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th, thead td'));
+    this.$paths = this.$table.closest('[data-behavior~=datatable-paths]');
     this.init();
     this.setupListeners();
   }
 
   init() {
-    var that = this;
-
-    var colvisColumnIndexes = this.tableHeaders.reduce(function(indexes, column, index) {
+    // Remove dropdown option for <th> columns that has data-colvis="false" in colvis button
+    var colvisColumnIndexes = [];
+    this.tableHeaders.forEach(function(column, index) {
       if(column.dataset.colvis != 'false') {
-        indexes.push(index);
+        colvisColumnIndexes.push(index);
       }
-      return indexes;
-    }, []);
+    });
+
+    var that = this;
 
     // Assign the instantiated DataTable as a DradisDatatable property
     this.dataTable = this.$table.DataTable({
-      // https://datatables.net/reference/option/dom,
-      // The 'dom' attribute defines the order of elements in a DataTable.
-      dom: 'Bfrtip',
-      pageLength: 25,
-      lengthChange: false,
-      columnDefs: [ {
-        orderable: false,
-        className: 'select-checkbox',
-        targets:   0
-      } ],
-      select: {
-        selector: 'td:first-child',
-        style: 'multi'
-      },
+      autoWidth: false,
       buttons: {
         dom: {
           button: {
@@ -52,14 +40,14 @@ class DradisDatatable {
             className: 'btn-danger d-none',
             name: 'bulkDeleteBtn',
             action: function (event, dataTable, node, config) {
-              var destroyConfirmation = that.$paths.data('destroy-confirmation') || 'Are you sure?';
+              var destroyConfirmation = that.$paths.data('table-destroy-confirmation') || 'Are you sure?';
               var answer = confirm(destroyConfirmation);
 
               if (!answer) {
                 return;
               }
 
-              var destroyUrl = that.$paths.data('destroy-url');
+              var destroyUrl = that.$paths.data('table-destroy-url');
               var selectedRows = dataTable.rows({ selected: true });
               var ids = that.selectedIds();
 
@@ -91,6 +79,23 @@ class DradisDatatable {
             columns: colvisColumnIndexes
           }
         ]
+      },
+      columnDefs: [ {
+        orderable: false,
+        className: 'select-checkbox',
+        targets:   0
+      } ],
+      dom: "<'row'<'col-lg-6'B><'col-lg-6'f>>" +
+        "<'row'<'col-lg-12'tr>>" +
+        "<'dataTables_footer_content'ip>",
+      initComplete: function (settings) {
+        settings.oInstance.wrap("<div class='table-wrapper'></div>");
+      },
+      lengthChange: false,
+      pageLength: 25,
+      select: {
+        selector: 'td:first-child',
+        style: 'multi'
       }
     });
 
@@ -98,6 +103,7 @@ class DradisDatatable {
   }
 
   behaviors() {
+    this.hideColumns();
     this.unbindDataTable();
   }
 
@@ -149,7 +155,7 @@ class DradisDatatable {
 
   showConsole(jobId) {
     // the table may set the url to redirect to when closing the console
-    var closeUrl = this.$paths.data('close-console-url');
+    var closeUrl = this.$paths.data('table-close-console-url');
 
     if (closeUrl) {
       $('#result').data('close-url', closeUrl);
@@ -193,23 +199,22 @@ class DradisDatatable {
     });
   }
 
-  unbindDataTable() {
-    var that = this;
-
-    that.hideColumns();
-
-    document.addEventListener('turbolinks:before-cache', function() {
-      that.dataTable.destroy();
-    });
-  }
-
   hideColumns() {
+    // Hide <th> columns that has data-visible="false"
     var that = this;
     that.tableHeaders.forEach(function(column, index) {
       if (column.dataset.visible == 'false') {
         var dataTableColumn = that.dataTable.column(index);
         dataTableColumn.visible(false);
       }
+    });
+  }
+
+  unbindDataTable() {
+    var that = this;
+
+    document.addEventListener('turbolinks:before-cache', function() {
+      that.dataTable.destroy();
     });
   }
 
