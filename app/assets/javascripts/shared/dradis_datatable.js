@@ -4,7 +4,6 @@ class DradisDatatable {
     this.dataTable = null;
     this.$paths = this.$table.closest('[data-behavior~=paths]');
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th, thead td'));
-    this.mergeEnabled = this.$table.data('merge') || false;
     this.init();
     this.setupListeners();
   }
@@ -233,8 +232,7 @@ class DradisDatatable {
     var mergeBtn = this.dataTable.buttons('mergeBtn:name');
     var mergeEnabled = this.$paths.data('merge-url') || false;
 
-    var shouldShowButton = this.mergeEnabled && isShown;
-    $(mergeBtn[0].node).toggleClass('d-none', !shouldShowButton);
+    $(mergeBtn[0].node).toggleClass('d-none', !(mergeEnabled && isShown));
   }
 
   mergeSelected() {
