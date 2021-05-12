@@ -40,14 +40,14 @@ class DradisDatatable {
             className: 'btn-danger d-none',
             name: 'bulkDeleteBtn',
             action: function (event, dataTable, node, config) {
-              var destroyConfirmation = that.$paths.data('destroy-confirmation') || 'Are you sure?';
+              var destroyConfirmation = that.$paths.data('table-destroy-confirmation') || 'Are you sure?';
               var answer = confirm(destroyConfirmation);
 
               if (!answer) {
                 return;
               }
 
-              var destroyUrl = that.$paths.data('destroy-url');
+              var destroyUrl = that.$paths.data('table-destroy-url');
               var selectedRows = dataTable.rows({ selected: true });
               var ids = selectedRows.ids().toArray().map(function(id) {
                 // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
@@ -154,7 +154,7 @@ class DradisDatatable {
 
   showConsole(jobId) {
     // the table may set the url to redirect to when closing the console
-    var closeUrl = this.$paths.data('close-console-url');
+    var closeUrl = this.$paths.data('table-close-console-url');
 
     if (closeUrl) {
       $('#result').data('close-url', closeUrl);
