@@ -49,18 +49,12 @@ class DradisDatatable {
 
               var destroyUrl = that.$paths.data('table-destroy-url');
               var selectedRows = dataTable.rows({ selected: true });
-              var ids = selectedRows.ids().toArray().map(function(id) {
-                // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
-                // so we split it by the delimiter to get the id number.
-                var idArray = id.split('-');
-                return idArray[idArray.length - 1];
-              });
 
               $.ajax({
                 url: destroyUrl,
                 method: 'DELETE',
                 dataType: 'json',
-                data: { ids: ids },
+                data: { ids: that.selectedIds() },
                 success: function(data) {
                   that.handleBulkDeleteSuccess(selectedRows, data);
                 },
@@ -174,23 +168,32 @@ class DradisDatatable {
   setupListeners() {
     var that = this;
 
+    this.dataTable.on('select.dt deselect.dt', function() {
+      var selectedCount = that.dataTable.rows({selected:true}).count();
+      that.showBulkDeleteBtn(selectedCount !== 0);
+    });
+
     this.dataTable.on('select.dt', function(e, dt, type, indexes) {
       if (that.dataTable.rows({selected:true}).count() == that.dataTable.rows().count()) {
         $('#select-all').prop('checked', true);
-      }
-
-      if (that.dataTable.rows({selected:true}).count()) {
-        that.showBulkDeleteBtn(true);
       }
     });
 
     this.dataTable.on('deselect.dt', function(e, dt, type, indexes) {
       $('#select-all').prop('checked', false);
-
-      if (that.dataTable.rows({selected:true}).count() === 0) {
-        that.showBulkDeleteBtn(false);
-      }
     });
+  }
+
+  selectedIds() {
+    var selectedRows = this.dataTable.rows({ selected: true });
+    var ids = selectedRows.ids().toArray().map(function(id) {
+      // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
+      // so we split it by the delimiter to get the id number.
+      var idArray = id.split('-');
+      return idArray[1];
+    });
+
+    return ids;
   }
 
   hideColumns() {
