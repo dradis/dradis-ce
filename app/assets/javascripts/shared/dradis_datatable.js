@@ -235,13 +235,13 @@ class DradisDatatable {
 
   toggleMergeBtn(isShown) {
     var mergeBtn = this.dataTable.buttons('mergeBtn:name');
-    var mergeEnabled = this.$paths.data('merge-url') || false;
+    var mergeEnabled = this.$paths.data('table-merge-url') || false;
 
     $(mergeBtn[0].node).toggleClass('d-none', !(mergeEnabled && isShown));
   }
 
   mergeSelected() {
-    var url = this.$paths.data('merge-url');
+    var url = this.$paths.data('table-merge-url');
 
     if (url !== undefined) {
       location.href = url + '?ids=' + this.selectedIds();
