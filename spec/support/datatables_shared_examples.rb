@@ -36,6 +36,54 @@ shared_examples 'a DataTable' do |item_type|
     end
   end
 
+  describe 'delete button', js: true do
+    before do
+      if page.has_css?('[data-behavior~=destroy-url]')
+        # Skip this spec if table doesn't support bulk delete
+        skip
+      end
+    end
+
+    it 'is hidden by default' do
+      within '.dt-buttons.btn-group' do
+        expect(page).to_not have_button('Delete')
+      end
+    end
+
+    it 'is visible when row checkbox is selected' do
+      within '.dataTables_wrapper' do
+        page.find('td.select-checkbox', match: :first).click
+        expect(page).to have_button('Delete')
+      end
+    end
+
+    it 'is hidden again after a row checkbox is unselected' do
+      within '.dataTables_wrapper' do
+        page.find('td.select-checkbox', match: :first).click
+        page.find('td.select-checkbox', match: :first).click
+
+        expect(page).to_not have_button('Delete')
+      end
+    end
+
+    it 'can delete a selected item' do
+      within '.dataTables_wrapper' do
+        original_row_count = page.all('tbody tr').count
+        page.find('td.select-checkbox', match: :first).click
+
+        page.accept_confirm do
+          click_button('Delete')
+        end
+
+        # Wait for ajax
+        page.find('.alert')
+
+        expect(page.all('tbody tr').count).to eq(original_row_count - 1)
+        expect(page).to have_text(/deleted/)
+      end
+    end
+  end
+
   it 'can filter rows', js: true do
     within '.dataTables_filter' do
       search_input = page.find('input[type=search]')
