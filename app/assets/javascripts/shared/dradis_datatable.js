@@ -138,6 +138,10 @@ class DradisDatatable {
   }
 
   showBulkDeleteBtn(boolean) {
+    if (!this.$paths.data('table-destroy-url').length) {
+      return;
+    }
+
     // https://datatables.net/reference/api/buttons()
     var bulkDeleteBtn = this.dataTable.buttons('bulkDeleteBtn:name');
     if (boolean) {
