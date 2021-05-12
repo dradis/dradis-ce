@@ -41,11 +41,6 @@ class DradisDatatable {
           }
         ]
       },
-      columnDefs: [ {
-        orderable: false,
-        className: 'select-checkbox',
-        targets:   0
-      } ],
       dom: "<'row'<'col-lg-6'B><'col-lg-6'f>>" +
         "<'row'<'col-lg-12'tr>>" +
         "<'dataTables_footer_content'ip>",
