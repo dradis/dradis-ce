@@ -8,29 +8,17 @@ class DradisDatatable {
   }
 
   init() {
-    var colvisColumnIndexes = this.tableHeaders.reduce(function(indexes, column, index) {
+    // Remove dropdown option for <th> columns that has data-colvis="false" in colvis button
+    var colvisColumnIndexes = [];
+    this.tableHeaders.forEach(function(column, index) {
       if(column.dataset.colvis != 'false') {
-        indexes.push(index);
+        colvisColumnIndexes.push(index);
       }
-      return indexes;
-    }, []);
+    });
 
     // Assign the instantiated DataTable as a DradisDatatable property
     this.dataTable = this.$table.DataTable({
-      // https://datatables.net/reference/option/dom,
-      // The 'dom' attribute defines the order of elements in a DataTable.
-      dom: 'Bfrtip',
-      pageLength: 25,
-      lengthChange: false,
-      columnDefs: [ {
-        orderable: false,
-        className: 'select-checkbox',
-        targets:   0
-      } ],
-      select: {
-        selector: 'td:first-child',
-        style: 'multi'
-      },
+      autoWidth: false,
       buttons: {
         dom: {
           button: {
@@ -52,12 +40,31 @@ class DradisDatatable {
             columns: colvisColumnIndexes
           }
         ]
+      },
+      columnDefs: [ {
+        orderable: false,
+        className: 'select-checkbox',
+        targets:   0
+      } ],
+      dom: "<'row'<'col-lg-6'B><'col-lg-6'f>>" +
+        "<'row'<'col-lg-12'tr>>" +
+        "<'dataTables_footer_content'ip>",
+      initComplete: function (settings) {
+        settings.oInstance.wrap("<div class='table-wrapper'></div>");
+      },
+      lengthChange: false,
+      pageLength: 25,
+      select: {
+        selector: 'td:first-child',
+        style: 'multi'
       }
     });
+
     this.behaviors();
   }
 
   behaviors() {
+    this.hideColumns();
     this.unbindDataTable();
   }
 
@@ -75,23 +82,22 @@ class DradisDatatable {
     });
   }
 
-  unbindDataTable() {
-    var that = this;
-
-    that.hideColumns();
-
-    document.addEventListener('turbolinks:before-cache', function() {
-      that.dataTable.destroy();
-    });
-  }
-
   hideColumns() {
+    // Hide <th> columns that has data-visible="false"
     var that = this;
     that.tableHeaders.forEach(function(column, index) {
       if (column.dataset.visible == 'false') {
         var dataTableColumn = that.dataTable.column(index);
         dataTableColumn.visible(false);
       }
+    });
+  }
+
+  unbindDataTable() {
+    var that = this;
+
+    document.addEventListener('turbolinks:before-cache', function() {
+      that.dataTable.destroy();
     });
   }
 }
