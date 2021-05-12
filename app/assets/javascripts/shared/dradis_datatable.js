@@ -36,8 +36,8 @@ class DradisDatatable {
             titleAttr: 'Select all'
           },
           {
-            text: 'Delete',
-            className: 'btn-danger d-none',
+            text: '<i class="fa fa-trash fa-fw"></i>Delete',
+            className: 'text-danger d-none',
             name: 'bulkDeleteBtn',
             action: function (event, dataTable, node, config) {
               var destroyConfirmation = that.$paths.data('table-destroy-confirmation') || 'Are you sure?';
@@ -66,7 +66,7 @@ class DradisDatatable {
             }
           },
           {
-            text: 'Merge',
+            text: '<i class="fa fa-compress fa-fw"></i> Merge',
             name: 'mergeBtn',
             className: 'd-none',
             action: this.mergeSelected.bind(this)
