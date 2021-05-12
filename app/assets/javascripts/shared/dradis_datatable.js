@@ -49,13 +49,12 @@ class DradisDatatable {
 
               var destroyUrl = that.$paths.data('table-destroy-url');
               var selectedRows = dataTable.rows({ selected: true });
-              var ids = that.selectedIds();
 
               $.ajax({
                 url: destroyUrl,
                 method: 'DELETE',
                 dataType: 'json',
-                data: { ids: ids },
+                data: { ids: that.selectedIds() },
                 success: function(data) {
                   that.handleBulkDeleteSuccess(selectedRows, data);
                 },
@@ -80,11 +79,6 @@ class DradisDatatable {
           }
         ]
       },
-      columnDefs: [ {
-        orderable: false,
-        className: 'select-checkbox',
-        targets:   0
-      } ],
       dom: "<'row'<'col-lg-6'B><'col-lg-6'f>>" +
         "<'row'<'col-lg-12'tr>>" +
         "<'dataTables_footer_content'ip>",
@@ -144,6 +138,10 @@ class DradisDatatable {
   }
 
   showBulkDeleteBtn(boolean) {
+    if (!this.$paths.data('table-destroy-url').length) {
+      return;
+    }
+
     // https://datatables.net/reference/api/buttons()
     var bulkDeleteBtn = this.dataTable.buttons('bulkDeleteBtn:name');
     if (boolean) {
@@ -177,26 +175,33 @@ class DradisDatatable {
     var that = this;
 
     this.dataTable.on('select.dt deselect.dt', function() {
+      var selectedCount = that.dataTable.rows({selected:true}).count();
+
       that.toggleMergeBtn(that.dataTable.rows({selected:true}).count() > 1);
+      that.showBulkDeleteBtn(selectedCount !== 0);
     });
 
     this.dataTable.on('select.dt', function(e, dt, type, indexes) {
       if (that.dataTable.rows({selected:true}).count() == that.dataTable.rows().count()) {
         $('#select-all').prop('checked', true);
       }
-
-      if (that.dataTable.rows({selected:true}).count()) {
-        that.showBulkDeleteBtn(true);
-      }
     });
 
     this.dataTable.on('deselect.dt', function(e, dt, type, indexes) {
       $('#select-all').prop('checked', false);
-
-      if (that.dataTable.rows({selected:true}).count() === 0) {
-        that.showBulkDeleteBtn(false);
-      }
     });
+  }
+
+  selectedIds() {
+    var selectedRows = this.dataTable.rows({ selected: true });
+    var ids = selectedRows.ids().toArray().map(function(id) {
+      // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
+      // so we split it by the delimiter to get the id number.
+      var idArray = id.split('-');
+      return idArray[1];
+    });
+
+    return ids;
   }
 
   hideColumns() {

@@ -40,7 +40,7 @@ shared_examples 'a DataTable' do |item_type|
 
   describe 'delete button', js: true do
     before do
-      if page.has_css?('[data-behavior~=destroy-url]')
+      unless page.has_css?('[data-table-destroy-url]')
         # Skip this spec if table doesn't support bulk delete
         skip
       end

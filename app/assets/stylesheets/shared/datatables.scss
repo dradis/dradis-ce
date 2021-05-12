@@ -37,11 +37,11 @@
             }
           }
 
-          &:nth-last-of-type(even) {
+          &:nth-of-type(even) {
             background-color: $white;
           }
 
-          &:nth-last-of-type(odd) {
+          &:nth-of-type(odd) {
             background-color: rgba(0, 0, 0, 0.05);
           }
 

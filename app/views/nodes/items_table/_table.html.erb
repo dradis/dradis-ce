@@ -15,7 +15,7 @@
       <tbody>
         <% items.each do |item| %>
           <tr data="<%= item.class.name.underscore %>-<%= item.id %>">
-            <td></td>
+            <td class="select-checkbox"></td>
             <% columns.each do |column| %>
               <%
               sort, display =
