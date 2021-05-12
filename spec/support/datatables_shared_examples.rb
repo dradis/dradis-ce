@@ -22,16 +22,18 @@ shared_examples 'a DataTable' do |item_type|
     end
 
     it 'can toggle column visibility by clicking on colvis button' do
-      within '.dt-buttons.btn-group' do
-        page.find('.buttons-colvis').click
+      if hidden_columns.present?
+        within '.dt-buttons.btn-group' do
+          page.find('.buttons-colvis').click
 
-        within '.dt-button-collection' do
-          click_link hidden_columns[0]
+          within '.dt-button-collection' do
+            click_link hidden_columns[0]
+          end
         end
-      end
 
-      within '.dataTables_wrapper thead tr' do
-        expect(page).to have_text(hidden_columns[0])
+        within '.dataTables_wrapper thead tr' do
+          expect(page).to have_text(hidden_columns[0])
+        end
       end
     end
   end
