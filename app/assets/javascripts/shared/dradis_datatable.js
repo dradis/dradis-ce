@@ -177,7 +177,7 @@ class DradisDatatable {
     this.dataTable.on('select.dt deselect.dt', function() {
       var selectedCount = that.dataTable.rows({selected:true}).count();
 
-      that.toggleMergeBtn(that.dataTable.rows({selected:true}).count() > 1);
+      that.toggleMergeBtn(selectedCount > 1);
       that.showBulkDeleteBtn(selectedCount !== 0);
     });
 
@@ -236,13 +236,16 @@ class DradisDatatable {
   }
 
 
-  // -- Merge --------------------------------------------------------
+  ///////////////////// Merge /////////////////////
 
   toggleMergeBtn(isShown) {
-    var mergeBtn = this.dataTable.buttons('mergeBtn:name');
-    var mergeEnabled = this.$paths.data('table-merge-url') || false;
+    if (!this.$paths.data('table-merge-url').length) {
+      return;
+    }
 
-    $(mergeBtn[0].node).toggleClass('d-none', !(mergeEnabled && isShown));
+    var mergeBtn = this.dataTable.buttons('mergeBtn:name');
+
+    $(mergeBtn[0].node).toggleClass('d-none', !isShown);
   }
 
   mergeSelected() {
