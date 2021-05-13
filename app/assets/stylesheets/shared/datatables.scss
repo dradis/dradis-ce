@@ -219,7 +219,8 @@
       &::before {
         --checkboxSize: 13px;
         background-repeat: no-repeat;
-        background-position: center;
+        background-position-y: center;
+        background-position-x: -2.4px;
         background-size: 130%;
         border: 1px solid $defaultText;
         border-radius: 2px;
