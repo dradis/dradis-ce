@@ -7,6 +7,8 @@ class DradisDatatable {
   }
 
   init() {
+    var that = this;
+
     // Remove dropdown option for <th> columns that has data-colvis="false" in colvis button
     var colvisColumnIndexes = [];
     this.tableHeaders.forEach(function(column, index) {
@@ -27,9 +29,13 @@ class DradisDatatable {
         },
         buttons: [
           {
+            available: function(){
+              return that.$table.find('td.select-checkbox').length;
+            },
             attr: {
               id: 'select-all'
             },
+            name: 'selectAll',
             text: '<input type="checkbox" id="select-all-checkbox" />',
             titleAttr: 'Select all'
           },
@@ -90,15 +96,16 @@ class DradisDatatable {
   ///////////////////// Checkbox /////////////////////
 
   setupCheckboxListeners() {
-    var that = this;
+    var that = this,
+        $selectAllBtn = $(this.dataTable.buttons('#select-all').nodes()[0]);
 
     this.dataTable.on('select.dt deselect.dt', function() {
-      $('#select-all-checkbox').prop('checked', that.areAllSelected());
+      $selectAllBtn.find('#select-all-checkbox').prop('checked', that.areAllSelected());
     });
 
     // Remove default datatable button listener to make the checkbox "checking"
     // work, before adding our own click handler.
-    $('#select-all').off('click.dtb').click( function (){
+    $selectAllBtn.off('click.dtb').click( function (){
       if (that.areAllSelected()) {
         that.dataTable.rows().deselect();
       }
