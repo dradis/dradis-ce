@@ -101,6 +101,13 @@ class DradisDatatable {
 
     this.dataTable.on('select.dt deselect.dt', function() {
       $selectAllBtn.find('#select-all-checkbox').prop('checked', that.areAllSelected());
+
+      if (that.areAllSelected()){
+        $selectAllBtn.attr('title', 'Deselect all');
+      }
+      else {
+        $selectAllBtn.attr('title', 'Select all');
+      }
     });
 
     // Remove default datatable button listener to make the checkbox "checking"
