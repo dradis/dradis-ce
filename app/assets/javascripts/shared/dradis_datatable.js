@@ -4,7 +4,6 @@ class DradisDatatable {
     this.dataTable = null;
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th, thead td'));
     this.init();
-    this.setupListeners();
   }
 
   init() {
@@ -28,8 +27,10 @@ class DradisDatatable {
         },
         buttons: [
           {
-            extend: 'selectAll',
-            text: '<input type="checkbox" id="select-all" />',
+            attr: {
+              id: 'select-all'
+            },
+            text: '<input type="checkbox" id="select-all-checkbox" />',
             titleAttr: 'Select all'
           },
           {
@@ -60,21 +61,10 @@ class DradisDatatable {
 
   behaviors() {
     this.hideColumns();
+
+    this.setupCheckboxListeners();
+
     this.unbindDataTable();
-  }
-
-  setupListeners() {
-    var that = this;
-
-    this.dataTable.on('select.dt', function(e, dt, type, indexes) {
-      if (that.dataTable.rows({selected:true}).count() == that.dataTable.rows().count()) {
-        $('#select-all').prop('checked', true);
-      }
-    });
-
-    this.dataTable.on('deselect.dt', function(e, dt, type, indexes) {
-      $('#select-all').prop('checked', false);
-    });
   }
 
   hideColumns() {
@@ -94,5 +84,33 @@ class DradisDatatable {
     document.addEventListener('turbolinks:before-cache', function() {
       that.dataTable.destroy();
     });
+  }
+
+
+  ///////////////////// Checkbox /////////////////////
+
+  setupCheckboxListeners() {
+    var that = this;
+
+    this.dataTable.on('select.dt deselect.dt', function() {
+      $('#select-all-checkbox').prop('checked', that.areAllSelected());
+    });
+
+    // Remove default datatable button listener to make the checkbox "checking"
+    // work, before adding our own click handler.
+    $('#select-all').off('click.dtb').click( function (){
+      if (that.areAllSelected()) {
+        that.dataTable.rows().deselect();
+      }
+      else {
+        that.dataTable.rows().select();
+      }
+    });
+  }
+
+  areAllSelected() {
+    return(
+      this.dataTable.rows({selected:true}).count() == this.dataTable.rows().count()
+    );
   }
 }
