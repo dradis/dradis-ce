@@ -36,7 +36,7 @@ class DradisDatatable {
               id: 'select-all'
             },
             name: 'selectAll',
-            text: '<input type="checkbox" id="select-all-checkbox" />',
+            text: '<label for="select-all-checkbox" class="sr-only">Select all"</label><input type="checkbox" id="select-all-checkbox" />',
             titleAttr: 'Select all'
           },
           {
