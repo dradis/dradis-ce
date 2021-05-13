@@ -228,7 +228,7 @@ class DradisDatatable {
   ///////////////////// Merge /////////////////////
 
   toggleMergeBtn(isShown) {
-    if (!this.$paths.data('table-merge-url').length) {
+    if (this.$paths.data('table-merge-url') === undefined) {
       return;
     }
 
@@ -243,6 +243,7 @@ class DradisDatatable {
     if (url !== undefined) {
       location.href = url + '?ids=' + this.selectedIds();
     }
+  }
 
 
   ///////////////////// Checkbox /////////////////////
