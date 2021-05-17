@@ -93,6 +93,7 @@ class DradisDatatable {
 
     var destroyUrl = that.$paths.data('table-destroy-url');
     var selectedRows = that.dataTable.rows({ selected: true });
+    that.toggleBulkDeleteLoadingState(selectedRows, false);
 
     $.ajax({
       url: destroyUrl,
@@ -108,7 +109,19 @@ class DradisDatatable {
     })
   }
 
+  toggleBulkDeleteLoadingState(rows, isLoading) {
+    var bulkDeleteBtn = this.dataTable.buttons('bulkDeleteBtn:name');
+
+    $(bulkDeleteBtn[0].node).toggleClass('disabled', !isLoading);
+
+    rows.nodes().toArray().forEach(function(tr) {
+      $(tr).find('.select-checkbox').toggleClass('loading', !isLoading);
+    })
+  }
+
   handleBulkDeleteSuccess(rows, data) {
+    this.toggleBulkDeleteLoadingState(rows, true);
+
     // remove() will remove the row internally and draw() will
     // update the table visually.
     rows.remove().draw();
@@ -128,8 +141,10 @@ class DradisDatatable {
   }
 
   handleBulkDeleteError(rows) {
+    this.toggleBulkDeleteLoadingState(rows, true);
+
     rows.nodes().toArray().forEach(function(tr) {
-      tr.querySelectorAll('td')[2].innerHTML = '<span class="text-error">Please try again</span>';
+      $(tr).find('.select-checkbox').html('<span class="text-error">Please try again</span>');
     })
   }
 
