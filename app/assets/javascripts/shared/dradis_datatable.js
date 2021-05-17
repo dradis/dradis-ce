@@ -93,7 +93,7 @@ class DradisDatatable {
 
     var destroyUrl = that.$paths.data('table-destroy-url');
     var selectedRows = that.dataTable.rows({ selected: true });
-    that.toggleBulkDeleteLoadingState(selectedRows, false);
+    that.toggleBulkDeleteLoadingState(selectedRows, true);
 
     $.ajax({
       url: destroyUrl,
@@ -112,19 +112,20 @@ class DradisDatatable {
   toggleBulkDeleteLoadingState(rows, isLoading) {
     var bulkDeleteBtn = this.dataTable.buttons('bulkDeleteBtn:name');
 
-    $(bulkDeleteBtn[0].node).toggleClass('disabled', !isLoading);
+    $(bulkDeleteBtn[0].node).toggleClass('disabled', isLoading);
 
     rows.nodes().toArray().forEach(function(tr) {
-      if (!isLoading) {
+      if (isLoading) {
+        $(tr).find('[data-behavior~=error-loading]').remove();
         $(tr).find('[data-behavior~=select-checkbox]').append('<div class="spinner-border spinner-border-sm text-primary" data-behavior="spinner"><span class="sr-only">Loading</div>');
       } else {
-        $(tr).find('[data-behavior~=spinner]').remove()
+        $(tr).find('[data-behavior~=spinner]').remove();
       }
     })
   }
 
   handleBulkDeleteSuccess(rows, data) {
-    this.toggleBulkDeleteLoadingState(rows, true);
+    this.toggleBulkDeleteLoadingState(rows, false);
 
     // remove() will remove the row internally and draw() will
     // update the table visually.
@@ -145,10 +146,10 @@ class DradisDatatable {
   }
 
   handleBulkDeleteError(rows) {
-    this.toggleBulkDeleteLoadingState(rows, true);
+    this.toggleBulkDeleteLoadingState(rows, false);
 
     rows.nodes().toArray().forEach(function(tr) {
-      $(tr).find('[data-behavior~=select-checkbox]').html('<span class="text-error pl-5">Error. Try again</span>');
+      $(tr).find('[data-behavior~=select-checkbox]').html('<span class="text-error pl-5" data-behavior="error-loading">Error. Try again</span>');
     })
   }
 
