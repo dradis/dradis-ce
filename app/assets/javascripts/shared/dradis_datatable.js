@@ -127,9 +127,16 @@ class DradisDatatable {
   handleBulkDeleteSuccess(rows, data) {
     this.toggleBulkDeleteLoadingState(rows, false);
 
+    // Remove links from sidebar
+    rows.ids().toArray().forEach(function(id) {
+      var idArray = id.split('-');
+      $(`#${idArray[0]}_${idArray[1]}_link`).remove();
+    })
+
     // remove() will remove the row internally and draw() will
     // update the table visually.
     rows.remove().draw();
+
     this.toggleBulkDeleteBtn(false);
 
     if (data.success) {
