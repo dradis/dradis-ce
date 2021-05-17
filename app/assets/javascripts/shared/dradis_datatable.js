@@ -33,7 +33,7 @@ class DradisDatatable {
         buttons: [
           {
             available: function(){
-              return that.$table.find('td.select-checkbox').length;
+              return that.$table.find('[data-behavior~=select-checkbox]').length;
             },
             attr: {
               id: 'select-all'
@@ -115,7 +115,7 @@ class DradisDatatable {
     $(bulkDeleteBtn[0].node).toggleClass('disabled', !isLoading);
 
     rows.nodes().toArray().forEach(function(tr) {
-      $(tr).find('.select-checkbox').append('<div class="spinner-border spinner-border-sm text-primary"><span class="sr-only">Loading</div>');
+      $(tr).find('[data-behavior~=select-checkbox]').append('<div class="spinner-border spinner-border-sm text-primary"><span class="sr-only">Loading</div>');
     })
   }
 
@@ -144,7 +144,7 @@ class DradisDatatable {
     this.toggleBulkDeleteLoadingState(rows, true);
 
     rows.nodes().toArray().forEach(function(tr) {
-      $(tr).find('.select-checkbox').html('<span class="text-error">Please try again</span>');
+      $(tr).find('[data-behavior~=select-checkbox]').html('<span class="text-error">Please try again</span>');
     })
   }
 
