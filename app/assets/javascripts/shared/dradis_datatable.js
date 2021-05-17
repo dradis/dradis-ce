@@ -124,7 +124,11 @@ class DradisDatatable {
     $(button[0].node).toggleClass('disabled', !isLoading);
 
     rows.nodes().toArray().forEach(function(tr) {
-      $(tr).find('[data-behavior~=select-checkbox]').append('<div class="spinner-border spinner-border-sm text-primary"><span class="sr-only">Loading</div>');
+      if (!isLoading) {
+        $(tr).find('[data-behavior~=select-checkbox]').append('<div class="spinner-border spinner-border-sm text-primary" data-behavior="spinner"><span class="sr-only">Loading</div>');
+      } else {
+        $(tr).find('[data-behavior~=spinner]').remove()
+      }
     })
   }
 
