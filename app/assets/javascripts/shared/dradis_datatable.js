@@ -272,24 +272,24 @@ class DradisDatatable {
           method: 'PUT',
           data: { issue: { tag_list: tagFullName } },
           dataType: 'json',
+          beforeSend: function (){
+            that.toggleLoadingState(row, true, 'tagBtn');
+          },
           success: function(data){
             var tagColumn = that.dataTable.column($('th:contains(Tags)')),
               tagIndex = tagColumn.index('visible');
 
-            that.toggleLoadingState(row, true, 'tagBtn');
             row.deselect();
 
             // Replace the current tag with the new tag in the table
             var $newTagTD = $(data.tag_cell);
             if (!tagColumn.visible()) { $newTagTD.hide(); }
             $tr.find('td').eq(tagIndex).replaceWith($newTagTD);
+
+            that.toggleLoadingState(row, false, 'tagBtn');
           },
           error: function(){
-            that.toggleLoadingState(row, true, 'tagBtn');
-
             $tr.find('.select-checkbox').html('<span class="text-error">Please try again</span>');
-          },
-          always: function(){
             that.toggleLoadingState(row, false, 'tagBtn');
           }
         });
