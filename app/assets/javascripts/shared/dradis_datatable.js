@@ -18,8 +18,6 @@ class DradisDatatable {
       }
     });
 
-    var that = this;
-
     // Assign the instantiated DataTable as a DradisDatatable property
     this.dataTable = this.$table.DataTable({
       autoWidth: false,
@@ -47,6 +45,16 @@ class DradisDatatable {
             className: 'btn-danger d-none',
             name: 'bulkDeleteBtn',
             action: this.bulkDelete.bind(this)
+          },
+          {
+            available: function(){
+              return that.$table.data('tags') !== undefined;
+            },
+            className: 'd-none',
+            extend: 'collection',
+            name: 'tagBtn',
+            text: '<i class="fa fa-tags"></i>Tag<i class="fa fa-caret-down"></i>',
+            buttons: this.setupTagButtons()
           },
           {
             extend: 'colvis',
@@ -222,6 +230,65 @@ class DradisDatatable {
   }
 
 
+  ///////////////////// Tagging /////////////////////
+
+  setupTagButtons() {
+    if (this.$table.data('tags') === undefined){
+      return [];
+    }
+
+    // Setup tag button collection
+    var tags = this.$table.data('tags'),
+      tagButtons = [];
+
+    tags.forEach(function(tag){
+      var tagColor = tag[1],
+        tagName = tag[0],
+        $tagElement = $('<i>').addClass('fa fa-tag').css('color', tagColor).text(tagName);
+
+      tagButtons.push({
+        text: $tagElement[0],
+        action: this.tagIssue(tagName)
+      });
+    }.bind(this));
+
+    return tagButtons;
+  }
+
+  tagIssue(tagName) {
+    return function() {
+      var selectedRows = that.dataTable.rows({ selected: true });
+
+      selectedRows.nodes().toArray().forEach(function(tr) {
+        console.log(tr);
+        var url = tr.data('tag-url'),
+          data  = {};
+
+        data[that.itemName] = { tag_list: tagName }
+
+        $.ajax({
+          url: url,
+          method: 'PUT',
+          data: data,
+          dataType: 'json',
+          error: function(){
+          }
+        });
+      });
+    }
+  }
+
+  toggleTagBtn(isShown) {
+    if (this.$table.data('tags') === undefined){
+      return;
+    }
+
+    var tagBtn = this.dataTable.buttons('tagBtn:name');
+
+    $(tagBtn[0].node).toggleClass('d-none', !isShown);
+  }
+
+
   ///////////////////// Checkbox /////////////////////
 
   setupCheckboxListeners() {
@@ -240,6 +307,7 @@ class DradisDatatable {
 
       var selectedCount = that.dataTable.rows({selected:true}).count();
       that.toggleBulkDeleteBtn(selectedCount !== 0);
+      that.toggleTagBtn(selectedCount !== 0);
     });
 
     // Remove default datatable button listener to make the checkbox "checking"
