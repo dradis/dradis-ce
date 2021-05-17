@@ -20,8 +20,8 @@ describe 'node pages' do
       create(:evidence, node: node, issue: issue)
     end
 
-    let(:columns) { ['Title', 'Created', 'Created by', 'Updated'] }
-    let(:custom_columns) { ['Description', 'Extra'] }
+    let(:default_columns) { ['Title', 'Created', 'Updated'] }
+    let(:hidden_columns) { ['Description', 'Extra'] }
     let(:filter) { { keyword: @evidence.title, filter_count: 1 } }
 
     it_behaves_like 'a DataTable'
