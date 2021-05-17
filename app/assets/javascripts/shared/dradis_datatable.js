@@ -144,7 +144,7 @@ class DradisDatatable {
     this.toggleBulkDeleteLoadingState(rows, true);
 
     rows.nodes().toArray().forEach(function(tr) {
-      $(tr).find('[data-behavior~=select-checkbox]').html('<span class="text-error">Please try again</span>');
+      $(tr).find('[data-behavior~=select-checkbox]').html('<span class="text-error pl-5">Error. Try again</span>');
     })
   }
 
