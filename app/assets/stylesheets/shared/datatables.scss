@@ -29,6 +29,8 @@
     tbody {
       tr {
         .select-checkbox {
+          padding-left: 0.25rem;
+          
           &:after,
           &:before {
             --checkboxSize: 13px;
@@ -250,11 +252,5 @@
     td {
       border-bottom: 1px solid darken($white, 10%);
     }
-  }
-
-  td.loading {
-    background: image-url('loading.gif') no-repeat left center;
-    padding-left: 20px;
-    vertical-align: middle;
   }
 }
