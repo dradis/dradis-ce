@@ -115,7 +115,7 @@ class DradisDatatable {
     $(bulkDeleteBtn[0].node).toggleClass('disabled', !isLoading);
 
     rows.nodes().toArray().forEach(function(tr) {
-      $(tr).find('.select-checkbox').toggleClass('loading', !isLoading);
+      $(tr).find('.select-checkbox').append('<div class="spinner-border spinner-border-sm text-primary"><span class="sr-only">Loading</div>');
     })
   }
 
