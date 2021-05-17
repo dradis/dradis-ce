@@ -57,7 +57,7 @@ class DradisDatatable {
       lengthChange: false,
       pageLength: 25,
       select: {
-        selector: 'td:first-child',
+        selector: 'td.select-checkbox',
         style: 'multi'
       }
     });
