@@ -112,14 +112,14 @@ class DradisDatatable {
     // remove() will remove the row internally and draw() will
     // update the table visually.
     rows.remove().draw();
-    this.showBulkDeleteBtn(false);
+    this.toggleBulkDeleteBtn(false);
 
     if (data.success) {
       if (data.jobId) {
-        // background deletion
+        // Background deletion
         this.showConsole(data.jobId);
       } else {
-        // inline deletion
+        // Inline deletion
         this.showAlert(data.msg, 'success');
       }
     } else {
@@ -144,18 +144,15 @@ class DradisDatatable {
     `);
   }
 
-  showBulkDeleteBtn(boolean) {
-    if (!this.$paths.data('table-destroy-url').length) {
+  toggleBulkDeleteBtn(isShown) {
+    if (!this.$paths.data('table-destroy-url') === undefined) {
       return;
     }
 
     // https://datatables.net/reference/api/buttons()
     var bulkDeleteBtn = this.dataTable.buttons('bulkDeleteBtn:name');
-    if (boolean) {
-      bulkDeleteBtn[0].node.classList.remove('d-none');
-    } else {
-      bulkDeleteBtn[0].node.classList.add('d-none');
-    }
+
+    $(bulkDeleteBtn[0].node).toggleClass('d-none', !isShown);
   }
 
   showConsole(jobId) {
@@ -227,7 +224,7 @@ class DradisDatatable {
       }
 
       var selectedCount = that.dataTable.rows({selected:true}).count();
-      that.showBulkDeleteBtn(selectedCount !== 0);
+      that.toggleBulkDeleteBtn(selectedCount !== 0);
     });
 
     // Remove default datatable button listener to make the checkbox "checking"
