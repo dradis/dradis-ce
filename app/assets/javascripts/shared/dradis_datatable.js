@@ -2,16 +2,16 @@ class DradisDatatable {
   constructor(tableElement) {
     this.$table = $(tableElement);
     this.dataTable = null;
-    this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th, thead td'));
+    this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
     this.init();
   }
 
   init() {
-    // Remove dropdown option for <th> columns that has data-colvis="false" in colvis button
-    var colvisColumnIndexes = [];
+    // Disable ability to toggle column visibility that has data-column-visible="false"
+    var columnVisibleIndexes = [];
     this.tableHeaders.forEach(function(column, index) {
-      if(column.dataset.colvis != 'false') {
-        colvisColumnIndexes.push(index);
+      if(column.dataset.columnVisible != 'false') {
+        columnVisibleIndexes.push(index);
       }
     });
 
@@ -31,7 +31,7 @@ class DradisDatatable {
             text: '<i class="fa fa-columns mr-1"></i><i class="fa fa-caret-down"></i>',
             titleAttr: 'Choose columns to show',
             className: 'btn',
-            columns: colvisColumnIndexes
+            columns: columnVisibleIndexes
           }
         ]
       },
@@ -54,10 +54,10 @@ class DradisDatatable {
   }
 
   hideColumns() {
-    // Hide <th> columns that has data-visible="false"
+    // Hide columns that has data-hide-on-load="true" on page load
     var that = this;
     that.tableHeaders.forEach(function(column, index) {
-      if (column.dataset.visible == 'false') {
+      if (column.dataset.hideOnLoad == 'true') {
         var dataTableColumn = that.dataTable.column(index);
         dataTableColumn.visible(false);
       }

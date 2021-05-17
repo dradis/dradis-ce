@@ -3,13 +3,13 @@
     <table class="table table-striped" data-behavior="dradis-datatable">
       <thead>
         <tr>
-          <th class="hide-sort" data-colvis="false"><span class="sr-only">Select</span></th>
+          <th class="hide-sort" data-column-visible="false"><span class="sr-only">Select</span></th>
           <% columns.each do |column| %>
-            <th data-visible="<%= ['Title', 'Created', 'Updated'].include?(column) %>">
+            <th data-hide-on-load="<%= ['Title', 'Created', 'Updated'].exclude?(column) %>">
               <%= column %>
             </th>
           <% end %>
-          <th class="hide-sort" data-colvis="false"><span class="sr-only">Actions</span></th>
+          <th class="hide-sort" data-column-visible="false"><span class="sr-only">Actions</span></th>
         </tr>
       </thead>
       <tbody>
