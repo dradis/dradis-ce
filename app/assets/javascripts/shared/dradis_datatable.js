@@ -46,30 +46,7 @@ class DradisDatatable {
             text: 'Delete',
             className: 'btn-danger d-none',
             name: 'bulkDeleteBtn',
-            action: function (event, dataTable, node, config) {
-              var destroyConfirmation = that.$paths.data('table-destroy-confirmation') || 'Are you sure?';
-              var answer = confirm(destroyConfirmation);
-
-              if (!answer) {
-                return;
-              }
-
-              var destroyUrl = that.$paths.data('table-destroy-url');
-              var selectedRows = dataTable.rows({ selected: true });
-
-              $.ajax({
-                url: destroyUrl,
-                method: 'DELETE',
-                dataType: 'json',
-                data: { ids: that.selectedIds() },
-                success: function(data) {
-                  that.handleBulkDeleteSuccess(selectedRows, data);
-                },
-                error: function() {
-                  that.handleBulkDeleteError(selectedRows);
-                }
-              })
-            }
+            action: this.bulkDelete.bind(this)
           },
           {
             extend: 'colvis',
@@ -103,6 +80,32 @@ class DradisDatatable {
     this.setupCheckboxListeners();
 
     this.unbindDataTable();
+  }
+
+  bulkDelete() {
+    var that = this;
+    var destroyConfirmation = that.$paths.data('table-destroy-confirmation') || 'Are you sure?';
+    var answer = confirm(destroyConfirmation);
+
+    if (!answer) {
+      return;
+    }
+
+    var destroyUrl = that.$paths.data('table-destroy-url');
+    var selectedRows = that.dataTable.rows({ selected: true });
+
+    $.ajax({
+      url: destroyUrl,
+      method: 'DELETE',
+      dataType: 'json',
+      data: { ids: that.selectedIds() },
+      success: function(data) {
+        that.handleBulkDeleteSuccess(selectedRows, data);
+      },
+      error: function() {
+        that.handleBulkDeleteError(selectedRows);
+      }
+    })
   }
 
   handleBulkDeleteSuccess(rows, data) {
