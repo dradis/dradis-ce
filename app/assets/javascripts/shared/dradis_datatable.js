@@ -47,6 +47,7 @@ class DradisDatatable {
             action: this.bulkDelete.bind(this)
           },
           {
+            autoClose: true,
             available: function(){
               return that.$table.data('tags') !== undefined;
             },
@@ -101,7 +102,7 @@ class DradisDatatable {
 
     var destroyUrl = that.$paths.data('table-destroy-url');
     var selectedRows = that.dataTable.rows({ selected: true });
-    that.toggleBulkDeleteLoadingState(selectedRows, false);
+    that.toggleLoadingState(selectedRows, false, 'bulkDeleteBtn');
 
     $.ajax({
       url: destroyUrl,
@@ -117,10 +118,10 @@ class DradisDatatable {
     })
   }
 
-  toggleBulkDeleteLoadingState(rows, isLoading) {
-    var bulkDeleteBtn = this.dataTable.buttons('bulkDeleteBtn:name');
+  toggleLoadingState(rows, isLoading, buttonName) {
+    var button = this.dataTable.buttons(buttonName + ':name');
 
-    $(bulkDeleteBtn[0].node).toggleClass('disabled', !isLoading);
+    $(button[0].node).toggleClass('disabled', !isLoading);
 
     rows.nodes().toArray().forEach(function(tr) {
       $(tr).find('.select-checkbox').toggleClass('loading', !isLoading);
@@ -128,7 +129,7 @@ class DradisDatatable {
   }
 
   handleBulkDeleteSuccess(rows, data) {
-    this.toggleBulkDeleteLoadingState(rows, true);
+    this.toggleLoadingState(rows, true, 'bulkDeleteBtn');
 
     // remove() will remove the row internally and draw() will
     // update the table visually.
@@ -149,7 +150,7 @@ class DradisDatatable {
   }
 
   handleBulkDeleteError(rows) {
-    this.toggleBulkDeleteLoadingState(rows, true);
+    this.toggleLoadingState(rows, true, 'bulkDeleteBtn');
 
     rows.nodes().toArray().forEach(function(tr) {
       $(tr).find('.select-checkbox').html('<span class="text-error">Please try again</span>');
@@ -243,39 +244,57 @@ class DradisDatatable {
 
     tags.forEach(function(tag){
       var tagColor = tag[1],
+        tagFullName = tag[2],
         tagName = tag[0],
         $tagElement = $('<i>').addClass('fa fa-tag').css('color', tagColor).text(tagName);
 
       tagButtons.push({
         text: $tagElement[0],
-        action: this.tagIssue(tagName)
+        action: this.tagIssue(tagFullName)
       });
     }.bind(this));
 
     return tagButtons;
   }
 
-  tagIssue(tagName) {
+  tagIssue(tagFullName) {
     return function() {
-      var selectedRows = that.dataTable.rows({ selected: true });
+      var that = this;
+      var selectedRows = this.dataTable.rows({ selected: true });
 
-      selectedRows.nodes().toArray().forEach(function(tr) {
-        console.log(tr);
-        var url = tr.data('tag-url'),
-          data  = {};
-
-        data[that.itemName] = { tag_list: tagName }
+      selectedRows.every( function(index) {
+        var row = that.dataTable.row(index),
+          $tr = $(row.node()),
+          url = $tr.data('tag-url');
 
         $.ajax({
           url: url,
           method: 'PUT',
-          data: data,
+          data: { issue: { tag_list: tagFullName } },
           dataType: 'json',
+          success: function(data){
+            var tagColumn = that.dataTable.column($('th:contains(Tags)')),
+              tagIndex = tagColumn.index('visible');
+
+            that.toggleLoadingState(row, true, 'tagBtn');
+            row.deselect();
+
+            // Replace the current tag with the new tag in the table
+            var $newTagTD = $(data.tag_cell);
+            if (!tagColumn.visible()) { $newTagTD.hide(); }
+            $tr.find('td').eq(tagIndex).replaceWith($newTagTD);
+          },
           error: function(){
+            that.toggleLoadingState(row, true, 'tagBtn');
+
+            $tr.find('.select-checkbox').html('<span class="text-error">Please try again</span>');
+          },
+          always: function(){
+            that.toggleLoadingState(row, false, 'tagBtn');
           }
         });
       });
-    }
+    }.bind(this);
   }
 
   toggleTagBtn(isShown) {
@@ -284,7 +303,6 @@ class DradisDatatable {
     }
 
     var tagBtn = this.dataTable.buttons('tagBtn:name');
-
     $(tagBtn[0].node).toggleClass('d-none', !isShown);
   }
 
