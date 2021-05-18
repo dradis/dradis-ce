@@ -84,6 +84,15 @@ class DradisDatatable {
     });
   }
 
+  rowIds(rows) {
+    var ids = rows.ids().toArray().map(function(id) {
+      // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
+      // so we split it by the delimiter to get the id number.
+      return id.split('-')[1];
+    });
+    return ids;
+  }
+
   unbindDataTable() {
     var that = this;
 
