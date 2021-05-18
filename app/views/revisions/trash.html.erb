@@ -10,7 +10,7 @@
               <th>Item</th>
               <th>Removed by</th>
               <th>When</th>
-              <th class="hide-sort" data-colvis="false"><span class="sr-only">Actions</span></th>
+              <th class="hide-sort" data-column-visible="false"><span class="sr-only">Actions</span></th>
             </tr>
           </thead>
           <tbody>
@@ -20,7 +20,7 @@
                   <tr>
                     <td><%= recoverable_revision_presenter.info %></td>
                     <td><%= recoverable_revision_presenter.whodunnit %></td>
-                    <td><%= recoverable_revision_presenter.created_at_ago %></td>
+                    <td data-sort="<%= recoverable_revision.version.created_at.to_i %>"><%= recoverable_revision_presenter.created_at_ago %></td>
                     <td>
                       <%= link_to(
                         recover_project_revision_path(
