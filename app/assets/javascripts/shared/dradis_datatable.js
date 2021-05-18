@@ -4,6 +4,7 @@ class DradisDatatable {
     this.dataTable = null;
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th, thead td'));
     this.$paths = this.$table.closest('[data-behavior~=datatable-paths]');
+    this.itemName = this.$table.data('itemName');
     this.init();
   }
 
@@ -125,15 +126,12 @@ class DradisDatatable {
   }
 
   handleBulkDeleteSuccess(rows, data) {
+    var that = this;
     this.toggleBulkDeleteLoadingState(rows, false);
 
     // Remove links from sidebar
     rows.ids().toArray().forEach(function(id) {
-      var idArray = id.split('-');
-      var itemName = idArray[0];
-      var itemId = idArray[1];
-
-      $(`#${itemName}_${itemId}_link`).remove();
+      $(`#${that.itemName}_${id.split('-')[1]}_link`).remove();
     })
 
     // remove() will remove the row internally and draw() will
