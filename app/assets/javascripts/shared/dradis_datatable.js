@@ -130,7 +130,10 @@ class DradisDatatable {
     // Remove links from sidebar
     rows.ids().toArray().forEach(function(id) {
       var idArray = id.split('-');
-      $(`#${idArray[0]}_${idArray[1]}_link`).remove();
+      var itemName = idArray[0];
+      var itemId = idArray[1];
+
+      $(`#${itemName}_${itemId}_link`).remove();
     })
 
     // remove() will remove the row internally and draw() will
