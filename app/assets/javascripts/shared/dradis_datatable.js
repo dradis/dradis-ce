@@ -5,6 +5,8 @@ class DradisDatatable {
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
     this.$paths = this.$table.closest('[data-behavior~=datatable-paths]');
     this.itemName = this.$table.data('item-name');
+    this.localStorageKey = this.$table.data('local-storage-key');
+    this.initialPageLoad = false;
     this.init();
   }
 
@@ -65,24 +67,9 @@ class DradisDatatable {
       lengthChange: false,
       pageLength: 25,
       stateSave: true,
-      stateSaveCallback: function(settings, data) {
-        var dataTableDomId = settings.oInstance[0].id;
-        var localStorageKey = `Datatables_${dataTableDomId}_${window.location.pathname}`;
-
-        // Check if the table has been loaded before so that we can skip
-        // the manually hidden columns on page load.
-        var initialLoad = false;
-        if (localStorage.getItem(localStorageKey) === null) {
-          initialLoad = true;
-        }
-
-        data.initialLoad = initialLoad;
-        localStorage.setItem(localStorageKey, JSON.stringify(data));
-      },
+      stateSaveCallback: this.setupLocalStorage.bind(this),
       stateLoadCallback: function(settings) {
-        var dataTableDomId = settings.oInstance[0].id;
-        var localStorageKey = `Datatables_${dataTableDomId}_${window.location.pathname}`;
-        return JSON.parse(localStorage.getItem(localStorageKey));
+        return JSON.parse(localStorage.getItem(that.localStorageKey));
       },
       select: {
         selector: 'td.select-checkbox',
@@ -222,11 +209,7 @@ class DradisDatatable {
   }
 
   hideColumns() {
-    var dataTableDomId = this.$table.attr('id');
-    var localStorageKey = `Datatables_${dataTableDomId}_${window.location.pathname}`;
-    var data = JSON.parse(localStorage.getItem(localStorageKey));
-
-    if (data && data.initialLoad) {
+    if (this.initialPageLoad) {
       // Hide columns that has data-hide-on-load="true" on initial page load
       var that = this;
       that.tableHeaders.forEach(function(column, index) {
@@ -286,6 +269,14 @@ class DradisDatatable {
         that.dataTable.rows().select();
       }
     });
+  }
+
+  setupLocalStorage(settings, data) {
+    if (localStorage.getItem(this.localStorageKey) === null) {
+      this.initialPageLoad = true;
+    }
+
+    localStorage.setItem(this.localStorageKey, JSON.stringify(data));
   }
 
   areAllSelected() {
