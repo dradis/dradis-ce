@@ -5,7 +5,6 @@ class DradisDatatable {
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
     this.$paths = this.$table.closest('[data-behavior~=datatable-paths]');
     this.itemName = this.$table.data('item-name');
-    this.localStorageKey = `datatables_${this.itemName}_${window.location.pathname}`;
     this.init();
   }
 
@@ -66,9 +65,12 @@ class DradisDatatable {
       lengthChange: false,
       pageLength: 25,
       stateSave: true,
-      // Datatables currently only uses the table id and the path as the
-      // key for state saving and there is no option to configure that.
       stateSaveCallback: function(settings, data) {
+        var dataTableDomId = settings.oInstance[0].id;
+        var localStorageKey = `Datatables_${dataTableDomId}_${window.location.pathname}`;
+
+        // Check if the table has been loaded before so that we can skip
+        // the manually hidden columns on page load.
         var initialLoad = false;
         if (localStorage.getItem(that.localStorageKey) === null) {
           initialLoad = true;
@@ -218,9 +220,11 @@ class DradisDatatable {
   }
 
   hideColumns() {
-    var data = JSON.parse(localStorage.getItem(this.localStorageKey));
+    var dataTableDomId = this.$table.attr('id');
+    var localStorageKey = `Datatables_${dataTableDomId}_${window.location.pathname}`;
+    var data = JSON.parse(localStorage.getItem(localStorageKey));
 
-    if (data.initialLoad) {
+    if (data && data.initialLoad) {
       // Hide columns that has data-hide-on-load="true" on initial page load
       var that = this;
       that.tableHeaders.forEach(function(column, index) {
