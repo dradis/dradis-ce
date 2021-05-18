@@ -2,19 +2,20 @@ class DradisDatatable {
   constructor(tableElement) {
     this.$table = $(tableElement);
     this.dataTable = null;
-    this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th, thead td'));
+    this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
     this.$paths = this.$table.closest('[data-behavior~=datatable-paths]');
+    this.itemName = this.$table.data('itemName');
     this.init();
   }
 
   init() {
     var that = this;
 
-    // Remove dropdown option for <th> columns that has data-colvis="false" in colvis button
-    var colvisColumnIndexes = [];
+    // Disable ability to toggle column visibility that has data-column-visible="false"
+    var columnVisibleIndexes = [];
     this.tableHeaders.forEach(function(column, index) {
-      if(column.dataset.colvis != 'false') {
-        colvisColumnIndexes.push(index);
+      if(column.dataset.columnVisible != 'false') {
+        columnVisibleIndexes.push(index);
       }
     });
 
@@ -62,7 +63,7 @@ class DradisDatatable {
             text: '<i class="fa fa-columns mr-1"></i><i class="fa fa-caret-down"></i>',
             titleAttr: 'Choose columns to show',
             className: 'btn',
-            columns: colvisColumnIndexes
+            columns: columnVisibleIndexes
           }
         ]
       },
@@ -75,7 +76,7 @@ class DradisDatatable {
       lengthChange: false,
       pageLength: 25,
       select: {
-        selector: 'td:first-child',
+        selector: 'td.select-checkbox',
         style: 'multi'
       }
     });
@@ -108,7 +109,7 @@ class DradisDatatable {
       url: destroyUrl,
       method: 'DELETE',
       dataType: 'json',
-      data: { ids: that.selectedIds() },
+      data: { ids: that.rowIds(selectedRows) },
       success: function(data) {
         that.handleBulkDeleteSuccess(selectedRows, data);
       },
@@ -134,11 +135,18 @@ class DradisDatatable {
   }
 
   handleBulkDeleteSuccess(rows, data) {
+    var that = this;
     this.toggleLoadingState(rows, false, 'bulkDeleteBtn');
+
+    // Remove links from sidebar
+    that.rowIds(rows).forEach(function(id) {
+      $(`#${that.itemName}_${id}_link`).remove();
+    });
 
     // remove() will remove the row internally and draw() will
     // update the table visually.
     rows.remove().draw();
+
     this.toggleBulkDeleteBtn(false);
 
     if (data.success) {
@@ -204,27 +212,24 @@ class DradisDatatable {
     setTimeout(ConsoleUpdater.updateConsole, 1000);
   }
 
-  selectedIds() {
-    var selectedRows = this.dataTable.rows({ selected: true });
-    var ids = selectedRows.ids().toArray().map(function(id) {
-      // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
-      // so we split it by the delimiter to get the id number.
-      var idArray = id.split('-');
-      return idArray[1];
-    });
-
-    return ids;
-  }
-
   hideColumns() {
-    // Hide <th> columns that has data-visible="false"
+    // Hide columns that has data-hide-on-load="true" on page load
     var that = this;
     that.tableHeaders.forEach(function(column, index) {
-      if (column.dataset.visible == 'false') {
+      if (column.dataset.hideOnLoad == 'true') {
         var dataTableColumn = that.dataTable.column(index);
         dataTableColumn.visible(false);
       }
     });
+  }
+
+  rowIds(rows) {
+    var ids = rows.ids().toArray().map(function(id) {
+      // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
+      // so we split it by the delimiter to get the id number.
+      return id.split('-')[1];
+    });
+    return ids;
   }
 
   unbindDataTable() {
