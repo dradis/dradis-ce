@@ -130,9 +130,9 @@ class DradisDatatable {
     this.toggleBulkDeleteLoadingState(rows, false);
 
     // Remove links from sidebar
-    rows.ids().toArray().forEach(function(id) {
-      $(`#${that.itemName}_${id.split('-')[1]}_link`).remove();
-    })
+    that.rowIds(rows).forEach(function(id) {
+      $(`#${that.itemName}_${id}_link`).remove();
+    });
 
     // remove() will remove the row internally and draw() will
     // update the table visually.
