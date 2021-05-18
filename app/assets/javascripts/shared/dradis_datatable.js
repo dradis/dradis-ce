@@ -5,6 +5,7 @@ class DradisDatatable {
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
     this.$paths = this.$table.closest('[data-behavior~=datatable-paths]');
     this.itemName = this.$table.data('item-name');
+    this.localStorageKey = `datatables_${this.itemName}_${window.location.pathname}`;
     this.init();
   }
 
@@ -64,6 +65,21 @@ class DradisDatatable {
       },
       lengthChange: false,
       pageLength: 25,
+      stateSave: true,
+      // Datatables currently only uses the table id and the path as the
+      // key for state saving and there is no option to configure that.
+      stateSaveCallback: function(settings, data) {
+        var initialLoad = false;
+        if (localStorage.getItem(that.localStorageKey) === null) {
+          initialLoad = true;
+        }
+
+        data.initialLoad = initialLoad;
+        localStorage.setItem(that.localStorageKey, JSON.stringify(data));
+      },
+      stateLoadCallback: function(settings) {
+        return JSON.parse(localStorage.getItem(that.localStorageKey));
+      },
       select: {
         selector: 'td.select-checkbox',
         style: 'multi'
@@ -202,14 +218,18 @@ class DradisDatatable {
   }
 
   hideColumns() {
-    // Hide columns that has data-hide-on-load="true" on page load
-    var that = this;
-    that.tableHeaders.forEach(function(column, index) {
-      if (column.dataset.hideOnLoad == 'true') {
-        var dataTableColumn = that.dataTable.column(index);
-        dataTableColumn.visible(false);
-      }
-    });
+    var data = JSON.parse(localStorage.getItem(this.localStorageKey));
+
+    if (data.initialLoad) {
+      // Hide columns that has data-hide-on-load="true" on initial page load
+      var that = this;
+      that.tableHeaders.forEach(function(column, index) {
+        if (column.dataset.hideOnLoad == 'true') {
+          var dataTableColumn = that.dataTable.column(index);
+          dataTableColumn.visible(false);
+        }
+      });
+    }
   }
 
   rowIds(rows) {
