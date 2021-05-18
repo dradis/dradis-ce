@@ -4,7 +4,9 @@
   <% if @revisions.any? %>
     <% cache @revisions do %>
       <div class="table-wrapper">
-        <table class="table table-striped" data-behavior="dradis-datatable">
+        <table class="table table-striped"
+          data-behavior="dradis-datatable"
+          data-local-storage-key="datatables-<%= dom_id(current_project) %>-revisions">
           <thead>
             <tr>
               <th>Item</th>
