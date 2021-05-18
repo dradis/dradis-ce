@@ -55,7 +55,7 @@ class DradisDatatable {
             className: 'd-none',
             extend: 'collection',
             name: 'tagBtn',
-            text: '<i class="fa fa-tags"></i>Tag<i class="fa fa-caret-down"></i>',
+            text: '<i class="fa fa-tags fa-fw"></i>Tag<i class="fa fa-caret-down fa-fw"></i>',
             buttons: this.setupTagButtons()
           },
           {
@@ -256,10 +256,10 @@ class DradisDatatable {
       var tagColor = tag[1],
         tagFullName = tag[2],
         tagName = tag[0],
-        $tagElement = $('<i>').addClass('fa fa-tag').css('color', tagColor).text(tagName);
+        $tagElement = $(`<i class="fa fa-tag fa-fw"></i><span>${tagName}</span></span>`).css('color', tagColor);
 
       tagButtons.push({
-        text: $tagElement[0],
+        text: $tagElement,
         action: this.tagIssue(tagFullName)
       });
     }.bind(this));
@@ -302,7 +302,7 @@ class DradisDatatable {
             that.toggleLoadingState(row, false, 'tagBtn');
           },
           error: function(){
-            $tr.find('.select-checkbox').html('<span class="text-error">Please try again</span>');
+            $tr.find('[data-behavior~=select-checkbox]').html('<span class="text-error pl-5" data-behavior="error-loading">Error. Try again</span>');
             that.toggleLoadingState(row, false, 'tagBtn');
           }
         });
