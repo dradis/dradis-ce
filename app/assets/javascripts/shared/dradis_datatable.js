@@ -4,7 +4,7 @@ class DradisDatatable {
     this.dataTable = null;
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
     this.$paths = this.$table.closest('[data-behavior~=datatable-paths]');
-    this.itemName = this.$table.data('itemName');
+    this.itemName = this.$table.data('item-name');
     this.init();
   }
 
@@ -18,8 +18,6 @@ class DradisDatatable {
         columnVisibleIndexes.push(index);
       }
     });
-
-    var that = this;
 
     // Assign the instantiated DataTable as a DradisDatatable property
     this.dataTable = this.$table.DataTable({
