@@ -285,17 +285,20 @@ class DradisDatatable {
           beforeSend: function (){
             that.toggleLoadingState(row, true, 'tagBtn');
           },
-          success: function(data){
+          success: function (data){
             var tagColumn = that.dataTable.column($('th:contains(Tags)')),
               tagIndex = tagColumn.index('visible');
-
-            row.deselect();
 
             // Replace the current tag with the new tag in the table
             var $newTagTD = $(data.tag_cell);
             if (!tagColumn.visible()) { $newTagTD.hide(); }
             $tr.find('td').eq(tagIndex).replaceWith($newTagTD);
 
+            // Replace the tags in the sidebar
+            var itemId = $tr.attr('id').split('-')[1];
+            $('#issue_' + itemId + '_link').replaceWith(data['issue_link']);
+
+            row.deselect();
             that.toggleLoadingState(row, false, 'tagBtn');
           },
           error: function(){
