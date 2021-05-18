@@ -286,13 +286,8 @@ class DradisDatatable {
             that.toggleLoadingState(row, true, 'tagBtn');
           },
           success: function (data){
-            var tagColumn = that.dataTable.column($('th:contains(Tags)')),
-              tagIndex = tagColumn.index('visible');
-
             // Replace the current tag with the new tag in the table
-            var $newTagTD = $(data.tag_cell);
-            if (!tagColumn.visible()) { $newTagTD.hide(); }
-            $tr.find('td').eq(tagIndex).replaceWith($newTagTD);
+            $tr.find('td[data-behavior~=tag]').replaceWith($(data.tag_cell));
 
             // Replace the tags in the sidebar
             var itemId = $tr.attr('id').split('-')[1];

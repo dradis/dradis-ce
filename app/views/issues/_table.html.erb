@@ -40,7 +40,7 @@
                [issue.fields.fetch(column, ''), markup(issue.fields.fetch(column, ''))]
              end
             %>
-            <td data-sort="<%= sort %>"><%= display %></td>
+            <td data-sort="<%= sort %>" <%= 'data-behavior=tag' if column == 'Tags' %> ><%= display %></td>
           <% end  %>
           <td class="column-actions">
             <%= link_to edit_project_issue_path(current_project, issue), class: '' do %>
