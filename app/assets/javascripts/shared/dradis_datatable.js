@@ -72,15 +72,17 @@ class DradisDatatable {
         // Check if the table has been loaded before so that we can skip
         // the manually hidden columns on page load.
         var initialLoad = false;
-        if (localStorage.getItem(that.localStorageKey) === null) {
+        if (localStorage.getItem(localStorageKey) === null) {
           initialLoad = true;
         }
 
         data.initialLoad = initialLoad;
-        localStorage.setItem(that.localStorageKey, JSON.stringify(data));
+        localStorage.setItem(localStorageKey, JSON.stringify(data));
       },
       stateLoadCallback: function(settings) {
-        return JSON.parse(localStorage.getItem(that.localStorageKey));
+        var dataTableDomId = settings.oInstance[0].id;
+        var localStorageKey = `Datatables_${dataTableDomId}_${window.location.pathname}`;
+        return JSON.parse(localStorage.getItem(localStorageKey));
       },
       select: {
         selector: 'td.select-checkbox',
