@@ -6,6 +6,7 @@ class DradisDatatable {
     var defaultColumns = this.$table.data('default-columns') || [];
     this.defaultColumns = defaultColumns.concat(['Select', 'Actions']);
     this.itemName = this.$table.data('item-name');
+    this.localStorageKey = this.$table.data('local-storage-key');
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
     this.init();
   }
@@ -104,6 +105,13 @@ class DradisDatatable {
       },
       lengthChange: false,
       pageLength: 25,
+      stateSave: true,
+      stateSaveCallback: function(settings, data) {
+        localStorage.setItem(that.localStorageKey, JSON.stringify(data));
+      },
+      stateLoadCallback: function(settings) {
+        return JSON.parse(localStorage.getItem(that.localStorageKey));
+      },
       select: {
         selector: 'td.select-checkbox',
         style: 'multi'
