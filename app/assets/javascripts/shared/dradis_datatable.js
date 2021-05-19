@@ -3,10 +3,13 @@ class DradisDatatable {
     this.$table = $(tableElement);
     this.dataTable = null;
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
+    this.$paths = this.$table.closest('[data-behavior~=datatable-paths]');
     this.init();
   }
 
   init() {
+    var that = this;
+
     // Disable ability to toggle column visibility that has data-column-visible="false"
     var columnVisibleIndexes = [];
     this.tableHeaders.forEach(function(column, index) {
@@ -27,6 +30,17 @@ class DradisDatatable {
         },
         buttons: [
           {
+            available: function(){
+              return that.$table.find('td.select-checkbox').length;
+            },
+            attr: {
+              id: 'select-all'
+            },
+            name: 'selectAll',
+            text: '<label for="select-all-checkbox" class="sr-only">Select all"</label><input type="checkbox" id="select-all-checkbox" />',
+            titleAttr: 'Select all'
+          },
+          {
             extend: 'colvis',
             text: '<i class="fa fa-columns mr-1"></i><i class="fa fa-caret-down"></i>',
             titleAttr: 'Choose columns to show',
@@ -42,14 +56,23 @@ class DradisDatatable {
         settings.oInstance.wrap("<div class='table-wrapper'></div>");
       },
       lengthChange: false,
-      pageLength: 25
+      pageLength: 25,
+      select: {
+        selector: 'td.select-checkbox',
+        style: 'multi'
+      }
     });
+
+    this.validateRecords();
 
     this.behaviors();
   }
 
   behaviors() {
     this.hideColumns();
+
+    this.setupCheckboxListeners();
+
     this.unbindDataTable();
   }
 
@@ -64,11 +87,86 @@ class DradisDatatable {
     });
   }
 
+  rowIds(rows) {
+    var ids = rows.ids().toArray().map(function(id) {
+      // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
+      // so we split it by the delimiter to get the id number.
+      return id.split('-')[1];
+    });
+    return ids;
+  }
+
   unbindDataTable() {
     var that = this;
 
     document.addEventListener('turbolinks:before-cache', function() {
       that.dataTable.destroy();
     });
+  }
+
+  validateRecords() {
+    if (this.$paths.data('table-validate-url') === undefined) {
+      return;
+    }
+
+    var itemName = this.$table.data('item-validate-name');
+    var itemsToValidate = [];
+
+    if (itemName !== undefined) {
+      var capitalizedItemType = itemName[0].toUpperCase() + itemName.slice(1);
+
+      itemsToValidate = this.rowIds(this.dataTable.rows());
+
+      if (itemsToValidate.length > 0) {
+        $.ajax({
+          url: this.$paths.data('table-validate-url'),
+          method: 'POST',
+          dataType: 'script',
+          data: { ids: itemsToValidate, resource_type: capitalizedItemType },
+          beforeSend: function() {
+            $('[data-behavior~=validate-column]').addClass('loading');
+          },
+          success: function() {
+            $('[data-behavior~=validate-column]').removeClass('loading');
+          }
+        });
+      }
+    }
+  }
+
+
+  ///////////////////// Checkbox /////////////////////
+
+  setupCheckboxListeners() {
+    var that = this,
+        $selectAllBtn = $(this.dataTable.buttons('#select-all').nodes()[0]);
+
+    this.dataTable.on('select.dt deselect.dt', function() {
+      $selectAllBtn.find('#select-all-checkbox').prop('checked', that.areAllSelected());
+
+      if (that.areAllSelected()){
+        $selectAllBtn.attr('title', 'Deselect all');
+      }
+      else {
+        $selectAllBtn.attr('title', 'Select all');
+      }
+    });
+
+    // Remove default datatable button listener to make the checkbox "checking"
+    // work, before adding our own click handler.
+    $selectAllBtn.off('click.dtb').click( function (){
+      if (that.areAllSelected()) {
+        that.dataTable.rows().deselect();
+      }
+      else {
+        that.dataTable.rows().select();
+      }
+    });
+  }
+
+  areAllSelected() {
+    return(
+      this.dataTable.rows({selected:true}).count() == this.dataTable.rows().count()
+    );
   }
 }

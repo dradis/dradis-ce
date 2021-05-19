@@ -14,8 +14,8 @@
       </thead>
       <tbody>
         <% items.each do |item| %>
-          <tr data-id="<%= item.id %>">
-            <td class="column-checkbox"><%= check_box_tag dom_id(item, :checkbox), item.id, false, class: 'js-multicheck' %><%= label_tag dom_id(item, :checkbox), "Select #{item.title}", class: 'sr-only' %></td>
+          <tr id="<%= item.class.name.underscore %>-<%= item.id %>">
+            <td class="select-checkbox"></td>
             <% columns.each do |column| %>
               <%
               sort, display =
