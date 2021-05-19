@@ -2,23 +2,22 @@ class DradisDatatable {
   constructor(tableElement) {
     this.$table = $(tableElement);
     this.dataTable = null;
-    this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th, thead td'));
+    this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
     this.$paths = this.$table.closest('[data-behavior~=datatable-paths]');
+    this.itemName = this.$table.data('item-name');
     this.init();
   }
 
   init() {
     var that = this;
 
-    // Remove dropdown option for <th> columns that has data-colvis="false" in colvis button
-    var colvisColumnIndexes = [];
+    // Disable ability to toggle column visibility that has data-column-visible="false"
+    var columnVisibleIndexes = [];
     this.tableHeaders.forEach(function(column, index) {
-      if(column.dataset.colvis != 'false') {
-        colvisColumnIndexes.push(index);
+      if(column.dataset.columnVisible != 'false') {
+        columnVisibleIndexes.push(index);
       }
     });
-
-    var that = this;
 
     // Assign the instantiated DataTable as a DradisDatatable property
     this.dataTable = this.$table.DataTable({
@@ -33,7 +32,7 @@ class DradisDatatable {
         buttons: [
           {
             available: function(){
-              return that.$table.find('td.select-checkbox').length;
+              return that.$table.find('[data-behavior~=select-checkbox]').length;
             },
             attr: {
               id: 'select-all'
@@ -46,30 +45,7 @@ class DradisDatatable {
             text: '<i class="fa fa-trash fa-fw"></i>Delete',
             className: 'text-danger d-none',
             name: 'bulkDeleteBtn',
-            action: function (event, dataTable, node, config) {
-              var destroyConfirmation = that.$paths.data('table-destroy-confirmation') || 'Are you sure?';
-              var answer = confirm(destroyConfirmation);
-
-              if (!answer) {
-                return;
-              }
-
-              var destroyUrl = that.$paths.data('table-destroy-url');
-              var selectedRows = dataTable.rows({ selected: true });
-
-              $.ajax({
-                url: destroyUrl,
-                method: 'DELETE',
-                dataType: 'json',
-                data: { ids: that.selectedIds() },
-                success: function(data) {
-                  that.handleBulkDeleteSuccess(selectedRows, data);
-                },
-                error: function() {
-                  that.handleBulkDeleteError(selectedRows);
-                }
-              })
-            }
+            action: this.bulkDelete.bind(this)
           },
           {
             text: '<i class="fa fa-compress fa-fw"></i> Merge',
@@ -82,7 +58,7 @@ class DradisDatatable {
             text: '<i class="fa fa-columns mr-1"></i><i class="fa fa-caret-down"></i>',
             titleAttr: 'Choose columns to show',
             className: 'btn',
-            columns: colvisColumnIndexes
+            columns: columnVisibleIndexes
           }
         ]
       },
@@ -95,10 +71,12 @@ class DradisDatatable {
       lengthChange: false,
       pageLength: 25,
       select: {
-        selector: 'td:first-child',
+        selector: 'td.select-checkbox',
         style: 'multi'
       }
     });
+
+    this.validateRecords();
 
     this.behaviors();
   }
@@ -111,18 +89,69 @@ class DradisDatatable {
     this.unbindDataTable();
   }
 
+  bulkDelete() {
+    var that = this;
+    var destroyConfirmation = that.$paths.data('table-destroy-confirmation') || 'Are you sure?\n\nProceeding will delete the selected item(s).';
+    var answer = confirm(destroyConfirmation);
+
+    if (!answer) {
+      return;
+    }
+
+    var destroyUrl = that.$paths.data('table-destroy-url');
+    var selectedRows = that.dataTable.rows({ selected: true });
+    that.toggleBulkDeleteLoadingState(selectedRows, true);
+
+    $.ajax({
+      url: destroyUrl,
+      method: 'DELETE',
+      dataType: 'json',
+      data: { ids: that.rowIds(selectedRows) },
+      success: function(data) {
+        that.handleBulkDeleteSuccess(selectedRows, data);
+      },
+      error: function() {
+        that.handleBulkDeleteError(selectedRows);
+      }
+    })
+  }
+
+  toggleBulkDeleteLoadingState(rows, isLoading) {
+    var bulkDeleteBtn = this.dataTable.buttons('bulkDeleteBtn:name');
+
+    $(bulkDeleteBtn[0].node).toggleClass('disabled', isLoading);
+
+    rows.nodes().toArray().forEach(function(tr) {
+      if (isLoading) {
+        $(tr).find('[data-behavior~=error-loading]').remove();
+        $(tr).find('[data-behavior~=select-checkbox]').append('<div class="spinner-border spinner-border-sm text-primary" data-behavior="spinner"><span class="sr-only">Loading</div>');
+      } else {
+        $(tr).find('[data-behavior~=spinner]').remove();
+      }
+    })
+  }
+
   handleBulkDeleteSuccess(rows, data) {
+    var that = this;
+    this.toggleBulkDeleteLoadingState(rows, false);
+
+    // Remove links from sidebar
+    that.rowIds(rows).forEach(function(id) {
+      $(`#${that.itemName}_${id}_link`).remove();
+    });
+
     // remove() will remove the row internally and draw() will
     // update the table visually.
     rows.remove().draw();
-    this.showBulkDeleteBtn(false);
+
+    this.toggleBulkDeleteBtn(false);
 
     if (data.success) {
       if (data.jobId) {
-        // background deletion
+        // Background deletion
         this.showConsole(data.jobId);
       } else {
-        // inline deletion
+        // Inline deletion
         this.showAlert(data.msg, 'success');
       }
     } else {
@@ -131,8 +160,10 @@ class DradisDatatable {
   }
 
   handleBulkDeleteError(rows) {
+    this.toggleBulkDeleteLoadingState(rows, false);
+
     rows.nodes().toArray().forEach(function(tr) {
-      tr.querySelectorAll('td')[2].innerHTML = '<span class="text-error">Please try again</span>';
+      $(tr).find('[data-behavior~=select-checkbox]').html('<span class="text-error pl-5" data-behavior="error-loading">Error. Try again</span>');
     })
   }
 
@@ -147,18 +178,15 @@ class DradisDatatable {
     `);
   }
 
-  showBulkDeleteBtn(boolean) {
-    if (!this.$paths.data('table-destroy-url').length) {
+  toggleBulkDeleteBtn(isShown) {
+    if (this.$paths.data('table-destroy-url') === undefined) {
       return;
     }
 
     // https://datatables.net/reference/api/buttons()
     var bulkDeleteBtn = this.dataTable.buttons('bulkDeleteBtn:name');
-    if (boolean) {
-      bulkDeleteBtn[0].node.classList.remove('d-none');
-    } else {
-      bulkDeleteBtn[0].node.classList.add('d-none');
-    }
+
+    $(bulkDeleteBtn[0].node).toggleClass('d-none', !isShown);
   }
 
   showConsole(jobId) {
@@ -181,27 +209,24 @@ class DradisDatatable {
     setTimeout(ConsoleUpdater.updateConsole, 1000);
   }
 
-  selectedIds() {
-    var selectedRows = this.dataTable.rows({ selected: true });
-    var ids = selectedRows.ids().toArray().map(function(id) {
-      // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
-      // so we split it by the delimiter to get the id number.
-      var idArray = id.split('-');
-      return idArray[1];
-    });
-
-    return ids;
-  }
-
   hideColumns() {
-    // Hide <th> columns that has data-visible="false"
+    // Hide columns that has data-hide-on-load="true" on page load
     var that = this;
     that.tableHeaders.forEach(function(column, index) {
-      if (column.dataset.visible == 'false') {
+      if (column.dataset.hideOnLoad == 'true') {
         var dataTableColumn = that.dataTable.column(index);
         dataTableColumn.visible(false);
       }
     });
+  }
+
+  rowIds(rows) {
+    var ids = rows.ids().toArray().map(function(id) {
+      // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
+      // so we split it by the delimiter to get the id number.
+      return id.split('-')[1];
+    });
+    return ids;
   }
 
   unbindDataTable() {
@@ -212,16 +237,34 @@ class DradisDatatable {
     });
   }
 
-  selectedIds() {
-    var selectedRows = this.dataTable.rows({ selected: true });
-    var ids = selectedRows.ids().toArray().map(function(id) {
-      // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
-      // so we split it by the delimiter to get the id number.
-      var idArray = id.split('-');
-      return idArray[1];
-    });
+  validateRecords() {
+    if (this.$paths.data('table-validate-url') === undefined) {
+      return;
+    }
 
-    return ids;
+    var itemName = this.$table.data('item-validate-name');
+    var itemsToValidate = [];
+
+    if (itemName !== undefined) {
+      var capitalizedItemType = itemName[0].toUpperCase() + itemName.slice(1);
+
+      itemsToValidate = this.rowIds(this.dataTable.rows());
+
+      if (itemsToValidate.length > 0) {
+        $.ajax({
+          url: this.$paths.data('table-validate-url'),
+          method: 'POST',
+          dataType: 'script',
+          data: { ids: itemsToValidate, resource_type: capitalizedItemType },
+          beforeSend: function() {
+            $('[data-behavior~=validate-column]').addClass('loading');
+          },
+          success: function() {
+            $('[data-behavior~=validate-column]').removeClass('loading');
+          }
+        });
+      }
+    }
   }
 
 
@@ -233,7 +276,6 @@ class DradisDatatable {
     }
 
     var mergeBtn = this.dataTable.buttons('mergeBtn:name');
-
     $(mergeBtn[0].node).toggleClass('d-none', !isShown);
   }
 
@@ -241,7 +283,7 @@ class DradisDatatable {
     var url = this.$paths.data('table-merge-url');
 
     if (url !== undefined) {
-      location.href = url + '?ids=' + this.selectedIds();
+      location.href = url + '?ids=' + this.rowIds(this.dataTable.rows({selected: true}));
     }
   }
 
@@ -264,7 +306,7 @@ class DradisDatatable {
 
       var selectedCount = that.dataTable.rows({selected:true}).count();
       that.toggleMergeBtn(selectedCount > 1);
-      that.showBulkDeleteBtn(selectedCount !== 0);
+      that.toggleBulkDeleteBtn(selectedCount !== 0);
     });
 
     // Remove default datatable button listener to make the checkbox "checking"
