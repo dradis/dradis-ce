@@ -31,7 +31,7 @@ class DradisDatatable {
         },
         buttons: [
           {
-            available: function(){
+            available: function() {
               return that.$table.find('[data-behavior~=select-checkbox]').length;
             },
             attr: {
@@ -42,10 +42,19 @@ class DradisDatatable {
             titleAttr: 'Select all'
           },
           {
-            text: 'Delete',
-            className: 'btn-danger d-none',
+            text: '<i class="fa fa-trash fa-fw"></i>Delete',
+            className: 'text-danger d-none',
             name: 'bulkDeleteBtn',
             action: this.bulkDelete.bind(this)
+          },
+          {
+            available: function() {
+              return that.$paths.data('table-merge-url') !== undefined;
+            },
+            text: '<i class="fa fa-compress fa-fw"></i> Merge',
+            name: 'mergeBtn',
+            className: 'd-none',
+            action: this.mergeSelected.bind(this)
           },
           {
             autoClose: true,
@@ -90,6 +99,9 @@ class DradisDatatable {
     this.hideColumns();
 
     this.setupCheckboxListeners();
+    this.setupMergeButtonToggle();
+    this.setupTagButtonToggle();
+    this.setupBulkDeleteButtonToggle();
 
     this.unbindDataTable();
   }
@@ -183,14 +195,21 @@ class DradisDatatable {
     `);
   }
 
-  toggleBulkDeleteBtn(isShown) {
+  setupBulkDeleteButtonToggle() {
     if (this.$paths.data('table-destroy-url') === undefined) {
       return;
     }
 
+    this.dataTable.on('select.dt deselect.dt', function() {
+      var selectedCount = this.dataTable.rows({selected:true}).count();
+      this.toggleBulkDeleteBtn(selectedCount !== 0);
+    }.bind(this));
+
+  }
+
+  toggleBulkDeleteBtn(isShown) {
     // https://datatables.net/reference/api/buttons()
     var bulkDeleteBtn = this.dataTable.buttons('bulkDeleteBtn:name');
-
     $(bulkDeleteBtn[0].node).toggleClass('d-none', !isShown);
   }
 
@@ -273,6 +292,29 @@ class DradisDatatable {
   }
 
 
+  ///////////////////// Merge /////////////////////
+
+  setupMergeButtonToggle() {
+    if (this.$paths.data('table-merge-url') === undefined) {
+      return;
+    }
+
+    this.dataTable.on('select.dt deselect.dt', function() {
+      var isHidden = this.dataTable.rows({selected:true}).count() < 2;
+      var mergeBtn = this.dataTable.buttons('mergeBtn:name')[0].node;
+      $(mergeBtn).toggleClass('d-none', isHidden);
+    }.bind(this));
+  }
+
+  mergeSelected() {
+    var url = this.$paths.data('table-merge-url');
+
+    if (url !== undefined) {
+      location.href = url + '?ids=' + this.rowIds(this.dataTable.rows({selected: true}));
+    }
+  }
+
+
   ///////////////////// Tagging /////////////////////
 
   setupTagButtons() {
@@ -337,13 +379,16 @@ class DradisDatatable {
     }.bind(this);
   }
 
-  toggleTagBtn(isShown) {
-    if (this.$table.data('tags') === undefined){
+  setupTagButtonToggle() {
+    if (this.$table.data('tags') === undefined) {
       return;
     }
 
-    var tagBtn = this.dataTable.buttons('tagBtn:name');
-    $(tagBtn[0].node).toggleClass('d-none', !isShown);
+    this.dataTable.on('select.dt deselect.dt', function() {
+      var isHidden = this.dataTable.rows({selected:true}).count() < 1;
+      var tagBtn = this.dataTable.buttons('tagBtn:name');
+      $(tagBtn[0].node).toggleClass('d-none', isHidden);
+    }.bind(this));
   }
 
 
@@ -362,10 +407,6 @@ class DradisDatatable {
       else {
         $selectAllBtn.attr('title', 'Select all');
       }
-
-      var selectedCount = that.dataTable.rows({selected:true}).count();
-      that.toggleBulkDeleteBtn(selectedCount !== 0);
-      that.toggleTagBtn(selectedCount !== 0);
     });
 
     // Remove default datatable button listener to make the checkbox "checking"
