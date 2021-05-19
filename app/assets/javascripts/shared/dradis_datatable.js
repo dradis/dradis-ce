@@ -85,7 +85,7 @@ class DradisDatatable {
 
   bulkDelete() {
     var that = this;
-    var destroyConfirmation = that.$paths.data('table-destroy-confirmation') || 'Are you sure?';
+    var destroyConfirmation = that.$paths.data('table-destroy-confirmation') || 'Are you sure?\n\nProceeding will delete the selected item(s).';
     var answer = confirm(destroyConfirmation);
 
     if (!answer) {
