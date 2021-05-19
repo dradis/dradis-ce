@@ -1,6 +1,6 @@
 <% cache ["#{dom_class(items.first).pluralize}-table", columns, items.map(&:id), items.map(&:updated_at).map(&:to_i).sort.last] do %>
   <div class="table-wrapper">
-    <table class="table table-striped" data-behavior="dradis-datatable">
+    <table class="table table-striped" data-behavior="dradis-datatable" data-item-name="<%= items.first.class.name.underscore %>">
       <thead>
         <tr>
           <th class="hide-sort" data-column-visible="false"><span class="sr-only">Select</span></th>
@@ -15,7 +15,7 @@
       <tbody>
         <% items.each do |item| %>
           <tr id="<%= item.class.name.underscore %>-<%= item.id %>">
-            <td class="select-checkbox"></td>
+            <td class="select-checkbox" data-behavior="select-checkbox"></td>
             <% columns.each do |column| %>
               <%
               sort, display =

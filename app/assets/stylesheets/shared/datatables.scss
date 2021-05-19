@@ -29,6 +29,8 @@
     tbody {
       tr {
         .select-checkbox {
+          padding-left: 0.25rem;
+          
           &:after,
           &:before {
             --checkboxSize: 13px;
