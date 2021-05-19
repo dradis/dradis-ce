@@ -56,6 +56,7 @@ class DradisDatatable {
             className: 'd-none',
             action: this.mergeSelected.bind(this)
           },
+          {
             autoClose: true,
             available: function(){
               return that.$table.data('tags') !== undefined;
@@ -379,7 +380,7 @@ class DradisDatatable {
   }
 
   setupTagButtonToggle() {
-    if (that.$table.data('tags') === undefined) {
+    if (this.$table.data('tags') === undefined) {
       return;
     }
 
