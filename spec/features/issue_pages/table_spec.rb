@@ -15,6 +15,14 @@ describe 'issue pages' do
 
       create(:issue, node: current_project.issue_library)
 
+      @tags = Tag::DEFAULT_TAGS.map do |tag|
+        if defined?(Dradis::Pro)
+          create(:tag, name: tag, project: current_project)
+        else
+          create(:tag, name: tag)
+        end
+      end
+
       visit project_issues_path(current_project)
     end
 
