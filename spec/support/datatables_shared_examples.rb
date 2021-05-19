@@ -86,6 +86,52 @@ shared_examples 'a DataTable' do |item_type|
     end
   end
 
+  describe 'tagging', js: true do
+    before do
+      unless page.has_css?('[data-tags]')
+        # Skip this spec if table doesn't support tagging
+        skip
+      end
+    end
+
+    it 'shows the tag button when an item is selected' do
+      within '.dataTables_wrapper' do
+        page.find('td.select-checkbox', match: :first).click
+        expect(page).to have_button('Tag')
+      end
+    end
+
+    it 'shows the available tags' do
+      page.find('td.select-checkbox', match: :first).click
+
+      within '.dt-buttons.btn-group' do
+        click_button('Tag')
+
+        within '.dt-button-collection' do
+          @tags.each do |tag|
+            expect(page).to have_link(tag.display_name)
+          end
+        end
+      end
+    end
+
+    it 'tags the selected issue' do
+      page.find('td.select-checkbox', match: :first).click
+
+      within '.dt-buttons.btn-group' do
+        click_button('Tag')
+
+        within '.dt-button-collection' do
+          click_link(@tags.first.display_name)
+        end
+      end
+
+      # Wait for the spinner to disappear
+      expect(page).to_not have_css('[data-behavior=spinner]')
+      expect(@issue.reload.tags).to include(@tags.first)
+    end
+  end
+
   it 'can filter rows', js: true do
     within '.dataTables_filter' do
       search_input = page.find('input[type=search]')

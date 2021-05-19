@@ -4,10 +4,13 @@ class DradisDatatable {
     this.$paths = this.$table.closest('[data-behavior~=datatable-paths]');
     this.dataTable = null;
     this.defaultColumns = this.$table.data('default-columns') || [];
-    this.initialPageLoad = false;
     this.itemName = this.$table.data('item-name');
+<<<<<<< HEAD
     this.localStorageKey = this.$table.data('local-storage-key');
+    this.initialPageLoad = false;
+=======
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
+>>>>>>> datatables-default-columns
     this.init();
   }
 
@@ -211,6 +214,22 @@ class DradisDatatable {
     setTimeout(ConsoleUpdater.updateConsole, 1000);
   }
 
+<<<<<<< HEAD
+  hideColumns() {
+    if (this.initialPageLoad) {
+      // Hide columns that has data-hide-on-load="true" on initial page load
+      var that = this;
+      that.tableHeaders.forEach(function(column, index) {
+        if (column.dataset.hideOnLoad == 'true') {
+          var dataTableColumn = that.dataTable.column(index);
+          dataTableColumn.visible(false);
+        }
+      });
+    }
+  }
+
+=======
+>>>>>>> datatables-default-columns
   rowIds(rows) {
     var ids = rows.ids().toArray().map(function(id) {
       // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
@@ -259,8 +278,8 @@ class DradisDatatable {
   }
 
   setupDefaultColumns() {
-    // Skip setup if table has already been loaded
-    if (!this.initialPageLoad || this.defaultColumns.length === 0) {
+    // Show all columns if defaultColumns not provided
+    if (this.defaultColumns.length === 0) {
       return;
     }
 
