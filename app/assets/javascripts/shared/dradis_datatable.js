@@ -85,6 +85,8 @@ class DradisDatatable {
     this.hideColumns();
 
     this.setupCheckboxListeners();
+    this.setupMergeButtonToggle();
+    this.setupBulkDeleteButtonToggle();
 
     this.unbindDataTable();
   }
@@ -178,14 +180,21 @@ class DradisDatatable {
     `);
   }
 
-  toggleBulkDeleteBtn(isShown) {
+  setupBulkDeleteButtonToggle() {
     if (this.$paths.data('table-destroy-url') === undefined) {
       return;
     }
 
+    this.dataTable.on('select.dt deselect.dt', function() {
+      var selectedCount = this.dataTable.rows({selected:true}).count();
+      this.toggleBulkDeleteBtn(selectedCount !== 0);
+    }.bind(this));
+
+  }
+
+  toggleBulkDeleteBtn(isShown) {
     // https://datatables.net/reference/api/buttons()
     var bulkDeleteBtn = this.dataTable.buttons('bulkDeleteBtn:name');
-
     $(bulkDeleteBtn[0].node).toggleClass('d-none', !isShown);
   }
 
@@ -270,13 +279,16 @@ class DradisDatatable {
 
   ///////////////////// Merge /////////////////////
 
-  toggleMergeBtn(isShown) {
+  setupMergeButtonToggle() {
     if (this.$paths.data('table-merge-url') === undefined) {
       return;
     }
 
-    var mergeBtn = this.dataTable.buttons('mergeBtn:name');
-    $(mergeBtn[0].node).toggleClass('d-none', !isShown);
+    this.dataTable.on('select.dt deselect.dt', function() {
+      var isHidden = this.dataTable.rows({selected:true}).count() < 2;
+      var mergeBtn = this.dataTable.buttons('mergeBtn:name')[0].node;
+      $(mergeBtn).toggleClass('d-none', isHidden);
+    }.bind(this));
   }
 
   mergeSelected() {
@@ -303,10 +315,6 @@ class DradisDatatable {
       else {
         $selectAllBtn.attr('title', 'Select all');
       }
-
-      var selectedCount = that.dataTable.rows({selected:true}).count();
-      that.toggleMergeBtn(selectedCount > 1);
-      that.toggleBulkDeleteBtn(selectedCount !== 0);
     });
 
     // Remove default datatable button listener to make the checkbox "checking"
