@@ -14,7 +14,7 @@
       <tbody>
         <% issues.each do |issue| %>
         <% cache [issue, @columns, issue.affected_count, 'issues-table'] do%>
-        <tr>
+        <tr id="issue-<%= issue.id %>">
           <td class="select-checkbox"></td>
           <% @columns.each do |column| %>
             <%
