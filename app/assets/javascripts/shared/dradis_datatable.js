@@ -31,7 +31,7 @@ class DradisDatatable {
         },
         buttons: [
           {
-            available: function(){
+            available: function() {
               return that.$table.find('[data-behavior~=select-checkbox]').length;
             },
             attr: {
@@ -48,6 +48,9 @@ class DradisDatatable {
             action: this.bulkDelete.bind(this)
           },
           {
+            available: function() {
+              return that.$paths.data('table-merge-url') !== undefined;
+            },
             text: '<i class="fa fa-compress fa-fw"></i> Merge',
             name: 'mergeBtn',
             className: 'd-none',
