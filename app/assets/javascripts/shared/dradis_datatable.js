@@ -56,6 +56,16 @@ class DradisDatatable {
             className: 'd-none',
             action: this.mergeSelected.bind(this)
           },
+            autoClose: true,
+            available: function(){
+              return that.$table.data('tags') !== undefined;
+            },
+            className: 'd-none',
+            extend: 'collection',
+            name: 'tagBtn',
+            text: '<i class="fa fa-tags fa-fw"></i>Tag<i class="fa fa-caret-down fa-fw"></i>',
+            buttons: this.setupTagButtons()
+          },
           {
             extend: 'colvis',
             text: '<i class="fa fa-columns mr-1"></i><i class="fa fa-caret-down"></i>',
@@ -89,6 +99,7 @@ class DradisDatatable {
 
     this.setupCheckboxListeners();
     this.setupMergeButtonToggle();
+    this.setupTagButtonToggle();
     this.setupBulkDeleteButtonToggle();
 
     this.unbindDataTable();
@@ -105,7 +116,7 @@ class DradisDatatable {
 
     var destroyUrl = that.$paths.data('table-destroy-url');
     var selectedRows = that.dataTable.rows({ selected: true });
-    that.toggleBulkDeleteLoadingState(selectedRows, true);
+    that.toggleLoadingState(selectedRows, true, 'bulkDeleteBtn');
 
     $.ajax({
       url: destroyUrl,
@@ -121,10 +132,10 @@ class DradisDatatable {
     })
   }
 
-  toggleBulkDeleteLoadingState(rows, isLoading) {
-    var bulkDeleteBtn = this.dataTable.buttons('bulkDeleteBtn:name');
+  toggleLoadingState(rows, isLoading, buttonName) {
+    var button = this.dataTable.buttons(buttonName + ':name');
 
-    $(bulkDeleteBtn[0].node).toggleClass('disabled', isLoading);
+    $(button[0].node).toggleClass('disabled', isLoading);
 
     rows.nodes().toArray().forEach(function(tr) {
       if (isLoading) {
@@ -138,7 +149,7 @@ class DradisDatatable {
 
   handleBulkDeleteSuccess(rows, data) {
     var that = this;
-    this.toggleBulkDeleteLoadingState(rows, false);
+    this.toggleLoadingState(rows, false, 'bulkDeleteBtn');
 
     // Remove links from sidebar
     that.rowIds(rows).forEach(function(id) {
@@ -165,7 +176,7 @@ class DradisDatatable {
   }
 
   handleBulkDeleteError(rows) {
-    this.toggleBulkDeleteLoadingState(rows, false);
+    this.toggleLoadingState(rows, false, 'bulkDeleteBtn');
 
     rows.nodes().toArray().forEach(function(tr) {
       $(tr).find('[data-behavior~=select-checkbox]').html('<span class="text-error pl-5" data-behavior="error-loading">Error. Try again</span>');
@@ -300,6 +311,83 @@ class DradisDatatable {
     if (url !== undefined) {
       location.href = url + '?ids=' + this.rowIds(this.dataTable.rows({selected: true}));
     }
+  }
+
+
+  ///////////////////// Tagging /////////////////////
+
+  setupTagButtons() {
+    if (this.$table.data('tags') === undefined){
+      return [];
+    }
+
+    // Setup tag button collection
+    var tags = this.$table.data('tags'),
+      tagButtons = [];
+
+    tags.forEach(function(tag){
+      var tagColor = tag[1],
+        tagFullName = tag[2],
+        tagName = tag[0],
+        $tagElement = $(`<i class="fa fa-tag fa-fw"></i><span>${tagName}</span></span>`).css('color', tagColor);
+
+      tagButtons.push({
+        text: $tagElement,
+        action: this.tagIssue(tagFullName)
+      });
+    }.bind(this));
+
+    return tagButtons;
+  }
+
+  tagIssue(tagFullName) {
+    return function() {
+      var that = this;
+      var selectedRows = this.dataTable.rows({ selected: true });
+
+      selectedRows.every( function(index) {
+        var row = that.dataTable.row(index),
+          $tr = $(row.node()),
+          url = $tr.data('tag-url');
+
+        $.ajax({
+          url: url,
+          method: 'PUT',
+          data: { issue: { tag_list: tagFullName } },
+          dataType: 'json',
+          beforeSend: function (){
+            that.toggleLoadingState(row, true, 'tagBtn');
+          },
+          success: function (data){
+            // Replace the current tag with the new tag in the table
+            $tr.find('td[data-behavior~=tag]').replaceWith($(data.tag_cell));
+
+            // Replace the tags in the sidebar
+            var itemId = $tr.attr('id').split('-')[1];
+            $('#issue_' + itemId + '_link').replaceWith(data['issue_link']);
+
+            row.deselect();
+            that.toggleLoadingState(row, false, 'tagBtn');
+          },
+          error: function(){
+            $tr.find('[data-behavior~=select-checkbox]').html('<span class="text-error pl-5" data-behavior="error-loading">Error. Try again</span>');
+            that.toggleLoadingState(row, false, 'tagBtn');
+          }
+        });
+      });
+    }.bind(this);
+  }
+
+  setupTagButtonToggle() {
+    if (that.$table.data('tags') === undefined) {
+      return;
+    }
+
+    this.dataTable.on('select.dt deselect.dt', function() {
+      var isHidden = this.dataTable.rows({selected:true}).count() < 1;
+      var tagBtn = this.dataTable.buttons('tagBtn:name');
+      $(tagBtn[0].node).toggleClass('d-none', isHidden);
+    }.bind(this));
   }
 
 

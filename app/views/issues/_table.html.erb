@@ -1,5 +1,5 @@
 <% cache ['issues-table', @columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last] do %>
-    <table class="table table-striped mb-0" data-behavior="dradis-datatable" data-item-name="issue">
+    <table class="table table-striped mb-0" data-behavior="dradis-datatable" data-item-name="issue" data-tags=<%= @tags.map { |t| [t.display_name, t.color, t.name] }.to_json %>>
       <thead>
         <tr>
           <th class="hide-sort" data-column-visible="false"><span class="sr-only">Select</span></th>
@@ -13,8 +13,8 @@
       </thead>
       <tbody>
         <% issues.each do |issue| %>
-        <% cache [issue, @columns, issue.affected_count, 'issues-table'] do%>
-        <tr id="issue-<%= issue.id %>">
+        <% cache [issue, @columns, issue.affected_count, 'issues-table'] do %>
+        <tr id="issue-<%= issue.id %>" data-tag-url="<%= project_issue_path(current_project, issue) %>">
           <td class="select-checkbox" data-behavior="select-checkbox"></td>
           <% @columns.each do |column| %>
             <%
@@ -40,7 +40,7 @@
                [issue.fields.fetch(column, ''), markup(issue.fields.fetch(column, ''))]
              end
             %>
-            <td data-sort="<%= sort %>"><%= display %></td>
+            <td data-sort="<%= sort %>" <%= 'data-behavior=tag' if column == 'Tags' %> ><%= display %></td>
           <% end  %>
           <td class="column-actions">
             <%= link_to edit_project_issue_path(current_project, issue), class: '' do %>
