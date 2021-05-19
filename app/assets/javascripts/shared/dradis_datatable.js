@@ -3,14 +3,11 @@ class DradisDatatable {
     this.$table = $(tableElement);
     this.$paths = this.$table.closest('[data-behavior~=datatable-paths]');
     this.dataTable = null;
-    this.defaultColumns = this.$table.data('default-columns') || [];
+    var defaultColumns = this.$table.data('default-columns') || [];
+    this.defaultColumns = defaultColumns.concat(['Select', 'Actions']);
     this.itemName = this.$table.data('item-name');
-<<<<<<< HEAD
     this.localStorageKey = this.$table.data('local-storage-key');
-    this.initialPageLoad = false;
-=======
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
->>>>>>> datatables-default-columns
     this.init();
   }
 
@@ -24,6 +21,18 @@ class DradisDatatable {
         columnVisibleIndexes.push(index);
       }
     });
+
+    // Only show default columns on first load
+    var hiddenColumnIndexes = [];
+    if (localStorage.getItem(this.localStorageKey) === null) {
+      this.tableHeaders.forEach(function(column, index) {
+        var columnName = column.textContent.trim();
+
+        if (!that.defaultColumns.includes(columnName)) {
+          hiddenColumnIndexes.push(index);
+        }
+      });
+    }
 
     // Assign the instantiated DataTable as a DradisDatatable property
     this.dataTable = this.$table.DataTable({
@@ -62,6 +71,12 @@ class DradisDatatable {
           }
         ]
       },
+      columnDefs: [
+        {
+          targets: hiddenColumnIndexes,
+          visible: false
+        }
+      ],
       dom: "<'row'<'col-lg-6'B><'col-lg-6'f>>" +
         "<'row'<'col-lg-12'tr>>" +
         "<'dataTables_footer_content'ip>",
@@ -71,7 +86,9 @@ class DradisDatatable {
       lengthChange: false,
       pageLength: 25,
       stateSave: true,
-      stateSaveCallback: this.setupLocalStorage.bind(this),
+      stateSaveCallback: function(settings, data) {
+        localStorage.setItem(that.localStorageKey, JSON.stringify(data));
+      },
       stateLoadCallback: function(settings) {
         return JSON.parse(localStorage.getItem(that.localStorageKey));
       },
@@ -87,8 +104,6 @@ class DradisDatatable {
   }
 
   behaviors() {
-    this.setupDefaultColumns();
-
     this.setupCheckboxListeners();
 
     this.unbindDataTable();
@@ -214,22 +229,6 @@ class DradisDatatable {
     setTimeout(ConsoleUpdater.updateConsole, 1000);
   }
 
-<<<<<<< HEAD
-  hideColumns() {
-    if (this.initialPageLoad) {
-      // Hide columns that has data-hide-on-load="true" on initial page load
-      var that = this;
-      that.tableHeaders.forEach(function(column, index) {
-        if (column.dataset.hideOnLoad == 'true') {
-          var dataTableColumn = that.dataTable.column(index);
-          dataTableColumn.visible(false);
-        }
-      });
-    }
-  }
-
-=======
->>>>>>> datatables-default-columns
   rowIds(rows) {
     var ids = rows.ids().toArray().map(function(id) {
       // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
@@ -277,25 +276,6 @@ class DradisDatatable {
     }
   }
 
-  setupDefaultColumns() {
-    // Show all columns if defaultColumns not provided
-    if (this.defaultColumns.length === 0) {
-      return;
-    }
-
-    var defaultColumns = this.defaultColumns.concat(['Select', 'Actions']);
-    var that = this;
-
-    that.tableHeaders.forEach(function(column, index) {
-      var columnName = column.textContent.trim();
-
-      if (!defaultColumns.includes(columnName)) {
-        var dataTableColumn = that.dataTable.column(index);
-        dataTableColumn.visible(false);
-      }
-    });
-  }
-
   ///////////////////// Checkbox /////////////////////
 
   setupCheckboxListeners() {
@@ -326,14 +306,6 @@ class DradisDatatable {
         that.dataTable.rows().select();
       }
     });
-  }
-
-  setupLocalStorage(settings, data) {
-    if (localStorage.getItem(this.localStorageKey) === null) {
-      this.initialPageLoad = true;
-    }
-
-    localStorage.setItem(this.localStorageKey, JSON.stringify(data));
   }
 
   areAllSelected() {
