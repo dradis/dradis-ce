@@ -1,10 +1,11 @@
 class DradisDatatable {
   constructor(tableElement) {
     this.$table = $(tableElement);
-    this.dataTable = null;
-    this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
     this.$paths = this.$table.closest('[data-behavior~=datatable-paths]');
+    this.dataTable = null;
+    this.defaultColumns = this.$table.data('default-columns') || [];
     this.itemName = this.$table.data('item-name');
+    this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
     this.init();
   }
 
@@ -76,7 +77,7 @@ class DradisDatatable {
   }
 
   behaviors() {
-    this.hideColumns();
+    this.setupDefaultColumns();
 
     this.setupCheckboxListeners();
 
@@ -203,17 +204,6 @@ class DradisDatatable {
     setTimeout(ConsoleUpdater.updateConsole, 1000);
   }
 
-  hideColumns() {
-    // Hide columns that has data-hide-on-load="true" on page load
-    var that = this;
-    that.tableHeaders.forEach(function(column, index) {
-      if (column.dataset.hideOnLoad == 'true') {
-        var dataTableColumn = that.dataTable.column(index);
-        dataTableColumn.visible(false);
-      }
-    });
-  }
-
   rowIds(rows) {
     var ids = rows.ids().toArray().map(function(id) {
       // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
@@ -261,6 +251,24 @@ class DradisDatatable {
     }
   }
 
+  setupDefaultColumns() {
+    // Show all columns if defaultColumns not provided
+    if (this.defaultColumns.length === 0) {
+      return;
+    }
+
+    var defaultColumns = this.defaultColumns.concat(['Select', 'Actions']);
+    var that = this;
+
+    that.tableHeaders.forEach(function(column, index) {
+      var columnName = column.textContent.trim();
+
+      if (!defaultColumns.includes(columnName)) {
+        var dataTableColumn = that.dataTable.column(index);
+        dataTableColumn.visible(false);
+      }
+    });
+  }
 
   ///////////////////// Checkbox /////////////////////
 
