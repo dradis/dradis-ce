@@ -25,12 +25,16 @@
 //= require shared/charts
 //= require shared/comments
 //= require shared/console_updater
-//= require shared/dradis_datatable
 //= require shared/editor_toolbar
 //= require shared/items_table
 //= require shared/mentions
 //= require shared/notifications
 //= require shared/subscriptions
+
+//= require shared/datatable/main
+//= require shared/datatable/checkbox
+//= require shared/datatable/delete
+//= require shared/datatable/merge
 
 //= require tylium/plugins/jquery.breadcrumbs
 //= require tylium/plugins/jquery.treemodal
