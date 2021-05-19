@@ -260,12 +260,7 @@ class DradisDatatable {
 
   setupDefaultColumns() {
     // Skip setup if table has already been loaded
-    if (!this.initialPageLoad) {
-      return;
-    }
-
-    // Show all columns if defaultColumns not provided
-    if (this.defaultColumns.length === 0) {
+    if (!this.initialPageLoad || this.defaultColumns.length === 0) {
       return;
     }
 
