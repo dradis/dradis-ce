@@ -1,12 +1,13 @@
 class DradisDatatable {
   constructor(tableElement) {
     this.$table = $(tableElement);
-    this.dataTable = null;
-    this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
     this.$paths = this.$table.closest('[data-behavior~=datatable-paths]');
+    this.dataTable = null;
+    this.defaultColumns = this.$table.data('default-columns') || [];
+    this.initialPageLoad = false;
     this.itemName = this.$table.data('item-name');
     this.localStorageKey = this.$table.data('local-storage-key');
-    this.initialPageLoad = false;
+    this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
     this.init();
   }
 
@@ -77,11 +78,13 @@ class DradisDatatable {
       }
     });
 
+    this.validateRecords();
+
     this.behaviors();
   }
 
   behaviors() {
-    this.hideColumns();
+    this.setupDefaultColumns();
 
     this.setupCheckboxListeners();
 
@@ -90,7 +93,7 @@ class DradisDatatable {
 
   bulkDelete() {
     var that = this;
-    var destroyConfirmation = that.$paths.data('table-destroy-confirmation') || 'Are you sure?';
+    var destroyConfirmation = that.$paths.data('table-destroy-confirmation') || 'Are you sure?\n\nProceeding will delete the selected item(s).';
     var answer = confirm(destroyConfirmation);
 
     if (!answer) {
@@ -178,7 +181,7 @@ class DradisDatatable {
   }
 
   toggleBulkDeleteBtn(isShown) {
-    if (!this.$paths.data('table-destroy-url') === undefined) {
+    if (this.$paths.data('table-destroy-url') === undefined) {
       return;
     }
 
@@ -208,19 +211,6 @@ class DradisDatatable {
     setTimeout(ConsoleUpdater.updateConsole, 1000);
   }
 
-  hideColumns() {
-    if (this.initialPageLoad) {
-      // Hide columns that has data-hide-on-load="true" on initial page load
-      var that = this;
-      that.tableHeaders.forEach(function(column, index) {
-        if (column.dataset.hideOnLoad == 'true') {
-          var dataTableColumn = that.dataTable.column(index);
-          dataTableColumn.visible(false);
-        }
-      });
-    }
-  }
-
   rowIds(rows) {
     var ids = rows.ids().toArray().map(function(id) {
       // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
@@ -238,6 +228,59 @@ class DradisDatatable {
     });
   }
 
+  validateRecords() {
+    if (this.$paths.data('table-validate-url') === undefined) {
+      return;
+    }
+
+    var itemName = this.$table.data('item-validate-name');
+    var itemsToValidate = [];
+
+    if (itemName !== undefined) {
+      var capitalizedItemType = itemName[0].toUpperCase() + itemName.slice(1);
+
+      itemsToValidate = this.rowIds(this.dataTable.rows());
+
+      if (itemsToValidate.length > 0) {
+        $.ajax({
+          url: this.$paths.data('table-validate-url'),
+          method: 'POST',
+          dataType: 'script',
+          data: { ids: itemsToValidate, resource_type: capitalizedItemType },
+          beforeSend: function() {
+            $('[data-behavior~=validate-column]').addClass('loading');
+          },
+          success: function() {
+            $('[data-behavior~=validate-column]').removeClass('loading');
+          }
+        });
+      }
+    }
+  }
+
+  setupDefaultColumns() {
+    // Skip setup if table has already been loaded
+    if (!this.initialPageLoad) {
+      return;
+    }
+
+    // Show all columns if defaultColumns not provided
+    if (this.defaultColumns.length === 0) {
+      return;
+    }
+
+    var defaultColumns = this.defaultColumns.concat(['Select', 'Actions']);
+    var that = this;
+
+    that.tableHeaders.forEach(function(column, index) {
+      var columnName = column.textContent.trim();
+
+      if (!defaultColumns.includes(columnName)) {
+        var dataTableColumn = that.dataTable.column(index);
+        dataTableColumn.visible(false);
+      }
+    });
+  }
 
   ///////////////////// Checkbox /////////////////////
 
