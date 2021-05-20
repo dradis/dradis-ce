@@ -2,8 +2,9 @@
   <div class="table-wrapper">
     <table class="table table-striped"
       data-behavior="dradis-datatable"
+      data-default-columns='["Title", "Created", "Updated"]'
       data-item-name="<%= items.first.class.name.underscore %>"
-      data-default-columns='["Title", "Created", "Updated"]'>
+      data-local-storage-key="project.ce.<%= items.first.class.name.underscore.pluralize %>_datatable">
       <thead>
         <tr>
           <th class="hide-sort" data-column-visible="false"><span class="sr-only">Select</span></th>

@@ -3,8 +3,10 @@ class DradisDatatable {
     this.$table = $(tableElement);
     this.$paths = this.$table.closest('[data-behavior~=datatable-paths]');
     this.dataTable = null;
-    this.defaultColumns = this.$table.data('default-columns') || [];
+    var defaultColumns = this.$table.data('default-columns') || [];
+    this.defaultColumns = defaultColumns.concat(['Select', 'Actions']);
     this.itemName = this.$table.data('item-name');
+    this.localStorageKey = this.$table.data('local-storage-key');
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
     this.init();
   }
@@ -19,6 +21,18 @@ class DradisDatatable {
         columnVisibleIndexes.push(index);
       }
     });
+
+    // Only show default columns on first load
+    var hiddenColumnIndexes = [];
+    if (localStorage.getItem(this.localStorageKey) === null) {
+      this.tableHeaders.forEach(function(column, index) {
+        var columnName = column.textContent.trim();
+
+        if (!that.defaultColumns.includes(columnName)) {
+          hiddenColumnIndexes.push(index);
+        }
+      });
+    }
 
     // Assign the instantiated DataTable as a DradisDatatable property
     this.dataTable = this.$table.DataTable({
@@ -77,6 +91,12 @@ class DradisDatatable {
           }
         ]
       },
+      columnDefs: [
+        {
+          targets: hiddenColumnIndexes,
+          visible: false
+        }
+      ],
       dom: "<'row'<'col-lg-6'B><'col-lg-6'f>>" +
         "<'row'<'col-lg-12'tr>>" +
         "<'dataTables_footer_content'ip>",
@@ -85,6 +105,13 @@ class DradisDatatable {
       },
       lengthChange: false,
       pageLength: 25,
+      stateSave: true,
+      stateSaveCallback: function(settings, data) {
+        localStorage.setItem(that.localStorageKey, JSON.stringify(data));
+      },
+      stateLoadCallback: function(settings) {
+        return JSON.parse(localStorage.getItem(that.localStorageKey));
+      },
       select: {
         selector: 'td.select-checkbox',
         style: 'multi'
@@ -97,8 +124,6 @@ class DradisDatatable {
   }
 
   behaviors() {
-    this.setupDefaultColumns();
-
     this.setupCheckboxListeners();
     this.setupMergeButtonToggle();
     this.setupTagButtonToggle();
@@ -279,25 +304,6 @@ class DradisDatatable {
         });
       }
     }
-  }
-
-  setupDefaultColumns() {
-    // Show all columns if defaultColumns not provided
-    if (this.defaultColumns.length === 0) {
-      return;
-    }
-
-    var defaultColumns = this.defaultColumns.concat(['Select', 'Actions']);
-    var that = this;
-
-    that.tableHeaders.forEach(function(column, index) {
-      var columnName = column.textContent.trim();
-
-      if (!defaultColumns.includes(columnName)) {
-        var dataTableColumn = that.dataTable.column(index);
-        dataTableColumn.visible(false);
-      }
-    });
   }
 
   ///////////////////// Merge /////////////////////
