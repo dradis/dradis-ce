@@ -36,6 +36,7 @@
 //= require shared/datatable/delete
 //= require shared/datatable/merge
 //= require shared/datatable/tag
+//= require shared/datatable/validate
 
 //= require tylium/plugins/jquery.breadcrumbs
 //= require tylium/plugins/jquery.treemodal
