@@ -3,11 +3,11 @@
 module CommentsHelper
   def comment_formatter(comment)
     @comment_pipeline ||= HTML::Pipeline.new [
-      HTML::Pipeline::DradisTextileFilter,
+      HTML::Pipeline::Dradis::TextileFilter,
       HTML::Pipeline::SanitizationFilter,
       HTML::Pipeline::AutolinkFilter,
-      HTML::Pipeline::DradisMentionsFilter,
-      HTML::Pipeline::DradisCodeHighlightFilter
+      HTML::Pipeline::Dradis::MentionsFilter,
+      HTML::Pipeline::Dradis::CodeHighlightFilter
     ], {
       mentionable_users: @mentionable_users,
       no_inline_code: true,
