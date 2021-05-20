@@ -39,7 +39,7 @@ body.styles_tylium {
         .ct {
           color: #608b4e;
         }
-        
+
         .et {
           color: #569cd6;
         }
@@ -58,25 +58,13 @@ body.styles_tylium {
         resize: none;
       }
     }
-    
+
     .fw4 {
       font-weight: 400;
     }
 
     .fw6 {
       font-weight: 600;
-    }
-
-    .table-wrapper {
-      width: 500px;
-
-      .items-table {
-        white-space: nowrap;
-
-        th, td {
-          display: table-cell !important;
-        }
-      }
     }
 
     ul {
