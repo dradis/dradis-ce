@@ -67,6 +67,18 @@ body.styles_tylium {
       font-weight: 600;
     }
 
+    .table-wrapper {
+      width: 500px;
+
+      .items-table {
+        white-space: nowrap;
+
+        th, td {
+          display: table-cell !important;
+        }
+      }
+    }
+
     ul {
       list-style-type: disc;
     }
