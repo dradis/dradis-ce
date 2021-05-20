@@ -26,7 +26,6 @@
 //= require shared/comments
 //= require shared/console_updater
 //= require shared/editor_toolbar
-//= require shared/items_table
 //= require shared/mentions
 //= require shared/notifications
 //= require shared/subscriptions
@@ -68,4 +67,3 @@
 //= require tylium/pages/projects/issues_chart
 //= require tylium/pages/projects/summary
 //= require tylium/pages/revisions
-//= require tylium/pages/styles
