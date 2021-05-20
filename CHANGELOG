@@ -1,8 +1,8 @@
-[v#.#.#] ([MMM’YY])
+[v3.23.0] ([MMM’YY])
   * [feature #1]
   * [feature #2]
   * [feature ...]
-  * Upgraded gems: capybara, rails, rdoc, rubocop, nokogiri, puma
+  * Upgraded gems: capybara, rails, rdoc, rubocop, nokogiri, papertrail, puma,
   * Bugs fixed:
     - [bug fixed #1]
     - [bug fixed ...]
