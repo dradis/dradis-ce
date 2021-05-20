@@ -20,9 +20,11 @@
     .hide-sort {
       pointer-events: none;
 
-      &:after,
-      &:before {
-        display: none;
+      &.sorting {
+        &:after,
+        &:before {
+          display: none;
+        }
       }
     }
 
@@ -104,27 +106,32 @@
           clip-path: inset(0px 0px -20px -1px);
         }
 
-        &:not(.sorting_disabled) {
-          padding: 0.75rem 0.75rem 0.75rem 1.75rem;
-        }
+        &.sorting {
+          &::after {
+            content: '\f0dc';
+            display: inline-block;
+            font-family: 'FontAwesome';
+            margin-left: 0.5rem;
+            opacity: 0;
+            position: static;
+          }
 
-        &.sorting{
-          &::after,
-          &::before{
-            top: calc(50% - 0.55rem);
+          &:before {
+            display: none;
+          }
 
-            // Firefox //
-            @-moz-document url-prefix() {
-              top: calc(50% - 0.8rem);
+          &.sorting_asc {
+            &::after {
+              content: '\f0d8';
+              opacity: 1;
             }
           }
 
-          &::after {
-            left: 1rem;
-          }
-
-          &::before {
-            left: 0.5rem;
+          &.sorting_desc {
+            &::after {
+              content: '\f0d7';
+              opacity: 1;
+            }
           }
         }
       }
