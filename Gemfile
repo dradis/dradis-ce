@@ -52,6 +52,7 @@ gem 'differ', '~> 0.1.2'
 
 # HTML processing filters and utilities
 gem 'html-pipeline'
+gem 'liquid'
 
 gem 'kaminari', '~> 1.2.1'
 
