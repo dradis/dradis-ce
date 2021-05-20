@@ -172,7 +172,7 @@ class DradisDatatable {
       return;
     }
 
-    var itemName = this.$table.data('item-validate-name');
+    var itemName = this.itemName;
     var itemsToValidate = [];
 
     if (itemName !== undefined) {
