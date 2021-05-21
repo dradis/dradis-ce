@@ -1,6 +1,7 @@
 // Colors
 $asphalt: #34495e;
 $blue: #3498db;
+$checkboxFill: #0d6efd;
 $gray: #bdc3c7;
 $grayLight: lighten($gray, 20);
 $grayDark: darken($gray, 20);
@@ -34,6 +35,7 @@ $primaryBgColor: $white;
 $secondaryBgColor: #f8f8f8;
 $activeFillColor: #eceeef;
 $borderColor: #ddd;
+$checkboxFill: #0d6efd;
 $dropdownLinkBackgroundHover: #f8f9fa;
 $navbarBackground: $primaryBgColor;
 $sidebarBackground: darken($darkColor, 5%);

@@ -1,5 +1,5 @@
-[v3.23.0] ([MMM’YY])
-  * [feature #1]
+[v#.#.#] ([MMM’YY])
+  * Update the API to handle pagination
   * [feature #2]
   * [feature ...]
   * Upgraded gems: capybara, rails, rdoc, rubocop, nokogiri, papertrail, puma,

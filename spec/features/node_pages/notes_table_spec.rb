@@ -9,11 +9,15 @@ describe 'node pages' do
 
       node = create(:node, project: current_project)
       @note = create(:note, node: node, text: "#[Title]#\nNote1\n\n#[Description]#\nn/a\n#[Extra]#\nExtra field")
+      create(:note, node: node)
+
       visit project_node_path(current_project, node, tab: 'notes-tab')
     end
 
-    let(:columns) { ['Title', 'Created', 'Created by', 'Updated'] }
-    let(:custom_columns) { ['Description', 'Extra'] }
-    it_behaves_like 'an index table'
+    let(:default_columns) { ['Title', 'Created', 'Updated'] }
+    let(:hidden_columns) { ['Description', 'Extra'] }
+    let(:filter) { { keyword: @note.title, filter_count: 1 } }
+
+    it_behaves_like 'a DataTable'
   end
 end
