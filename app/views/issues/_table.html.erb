@@ -7,11 +7,11 @@
       data-tags=<%= @tags.map { |t| [t.display_name, t.color, t.name] }.to_json %>>
       <thead>
         <tr>
-          <th class="hide-sort" data-column-visible="false"><span class="sr-only">Select</span></th>
+          <th class="no-sort" data-column-visible="false"><span class="sr-only">Select</span></th>
           <% @columns.each do |column| %>
             <th><%= column %></th>
           <% end %>
-          <th class="hide-sort" data-column-visible="false"><span class="sr-only">Actions</span></th>
+          <th class="no-sort" data-column-visible="false"><span class="sr-only">Actions</span></th>
         </tr>
       </thead>
       <tbody>
