@@ -135,14 +135,6 @@ class DradisDatatable {
     this.unbindDataTable();
   }
 
-  hideButtons() {
-    var allBtns = this.dataTable.buttons('button');
-    
-    for (var i = 1; i < allBtns.length - 1; i++) {
-      $(allBtns[i].node).addClass('d-none');
-    }
-  }
-
   toggleLoadingState(rows, isLoading) {
     var buttons = this.dataTable.buttons('button');
 
