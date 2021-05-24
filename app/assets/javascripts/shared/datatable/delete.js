@@ -51,6 +51,8 @@ DradisDatatable.prototype.handleBulkDeleteSuccess = function(rows, data) {
   } else {
     this.showAlert(data.msg, 'error');
   }
+
+  this.hideButtons();
 }
 
 DradisDatatable.prototype.handleBulkDeleteError = function(rows) {
