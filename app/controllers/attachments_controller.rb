@@ -17,7 +17,7 @@ class AttachmentsController < AuthenticatedController
     uploaded_file = params.fetch(:attachment_file, params.fetch(:files, []).first)
 
     attachment_name = NamingService.name_file(
-      original_filename: uploaded_file.original_filename.squish,
+      original_filename: uploaded_file.original_filename,
       pathname: Attachment.pwd.join(@node.id.to_s)
     )
 

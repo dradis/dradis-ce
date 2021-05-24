@@ -5,6 +5,9 @@ class NamingService
   #   original_filename: the filename in String
   #   pathname: Pathname object
   def self.name_file(original_filename:, pathname:)
+    # Remove newlines and duplicate spaces
+    original_filename.squish!
+
     return original_filename unless File.exists?(pathname.join(original_filename))
 
     extension = File.extname(original_filename)
