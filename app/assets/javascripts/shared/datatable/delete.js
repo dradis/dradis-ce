@@ -9,7 +9,7 @@ DradisDatatable.prototype.bulkDelete = function() {
 
   var destroyUrl = that.$paths.data('table-destroy-url');
   var selectedRows = that.dataTable.rows({ selected: true });
-  that.toggleLoadingState(selectedRows, true, 'bulkDeleteBtn');
+  that.toggleLoadingState(selectedRows, true);
 
   $.ajax({
     url: destroyUrl,
@@ -27,7 +27,7 @@ DradisDatatable.prototype.bulkDelete = function() {
 
 DradisDatatable.prototype.handleBulkDeleteSuccess = function(rows, data) {
   var that = this;
-  this.toggleLoadingState(rows, false, 'bulkDeleteBtn');
+  this.toggleLoadingState(rows, false);
 
   // Remove links from sidebar
   that.rowIds(rows).forEach(function(id) {
@@ -56,7 +56,7 @@ DradisDatatable.prototype.handleBulkDeleteSuccess = function(rows, data) {
 }
 
 DradisDatatable.prototype.handleBulkDeleteError = function(rows) {
-  this.toggleLoadingState(rows, false, 'bulkDeleteBtn');
+  this.toggleLoadingState(rows, false);
 
   rows.nodes().toArray().forEach(function(tr) {
     $(tr).find('[data-behavior~=select-checkbox]').html('<span class="text-error pl-5" data-behavior="error-loading">Error. Try again</span>');

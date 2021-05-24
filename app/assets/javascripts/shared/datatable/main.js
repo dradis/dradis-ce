@@ -143,10 +143,12 @@ class DradisDatatable {
     }
   }
 
-  toggleLoadingState(rows, isLoading, buttonName) {
-    var button = this.dataTable.buttons(buttonName + ':name');
+  toggleLoadingState(rows, isLoading) {
+    var buttons = this.dataTable.buttons('button');
 
-    $(button[0].node).toggleClass('disabled', isLoading);
+    for (var i = 1; i < buttons.length - 1; i++) {
+      $(buttons[i].node).toggleClass('disabled', isLoading);
+    }
 
     rows.nodes().toArray().forEach(function(tr) {
       if (isLoading) {
