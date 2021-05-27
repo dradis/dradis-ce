@@ -38,7 +38,7 @@ DradisDatatable.prototype.tagIssue = function(tagFullName) {
         data: { issue: { tag_list: tagFullName } },
         dataType: 'json',
         beforeSend: function (){
-          that.toggleLoadingState(row, true, 'tagBtn');
+          that.toggleLoadingState(row, true);
         },
         success: function (data){
           // Replace the current tag with the new tag in the table
@@ -49,11 +49,11 @@ DradisDatatable.prototype.tagIssue = function(tagFullName) {
           $('#issue_' + itemId + '_link').replaceWith(data['issue_link']);
 
           row.deselect();
-          that.toggleLoadingState(row, false, 'tagBtn');
+          that.toggleLoadingState(row, false);
         },
         error: function(){
           $tr.find('[data-behavior~=select-checkbox]').html('<span class="text-error pl-5" data-behavior="error-loading">Error. Try again</span>');
-          that.toggleLoadingState(row, false, 'tagBtn');
+          that.toggleLoadingState(row, false);
         }
       });
     });
