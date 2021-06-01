@@ -15,7 +15,7 @@ module HTML
             strict_variables: true
           }
 
-          Liquid::Template.parse(@text).render(assigns, options)
+          @text = Liquid::Template.parse(@text).render(assigns, options)
 
           restore_code_highlight_syntax
         end
