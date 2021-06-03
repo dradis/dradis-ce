@@ -56,7 +56,7 @@ gem 'liquid'
 
 gem 'kaminari', '~> 1.2.1'
 
-gem 'paper_trail', git: 'git@github.com:paper-trail-gem/paper_trail.git', ref: '1e56afd'
+gem 'paper_trail', '~> 12.0.0'
 
 # gem 'rails_autolink', '~> 1.1'
 
@@ -81,7 +81,7 @@ gem 'bcrypt',   '3.1.12'
 gem 'json', '2.3.0'
 
 # XML manipulation
-gem 'nokogiri', '1.10.8'
+gem 'nokogiri', '1.11.4'
 
 # MySQL backend
 # gem 'mysql2', '~> 0.5.1'

@@ -15,11 +15,15 @@ describe 'node pages' do
         content: "#[Title]#\nEvidence1\n\n#[Description]#\nn/a\n#[Extra]#\nExtra field",
         issue: issue,
       )
+
+      create(:evidence, node: node, issue: issue)
       visit project_node_path(@project, node, tab: 'evidence-tab')
     end
 
-    let(:columns) { ['Title', 'Created', 'Created by', 'Updated'] }
-    let(:custom_columns) { ['Description', 'Extra'] }
-    it_behaves_like 'an index table'
+    let(:default_columns) { ['Title', 'Created', 'Updated'] }
+    let(:hidden_columns) { ['Description', 'Extra'] }
+    let(:filter) { { keyword: @evidence.title, filter_count: 1 } }
+
+    it_behaves_like 'a DataTable'
   end
 end

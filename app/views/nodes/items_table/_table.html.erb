@@ -1,23 +1,23 @@
 <% cache ["#{dom_class(items.first).pluralize}-table", columns, items.map(&:id), items.map(&:updated_at).map(&:to_i).sort.last] do %>
   <div class="table-wrapper">
-    <table class="table table-striped items-table">
+    <table class="table table-striped"
+      data-behavior="dradis-datatable"
+      data-default-columns='["Title", "Created", "Updated"]'
+      data-item-name="<%= items.first.class.name.underscore %>"
+      data-local-storage-key="project.ce.<%= items.first.class.name.underscore.pluralize %>_datatable">
       <thead>
         <tr>
-          <th><span class="sr-only">Select</span></th>
+          <th class="no-sort" data-column-visible="false"><span class="sr-only">Select</span></th>
           <% columns.each do |column| %>
-            <th
-              data-column="<%= column.downcase %>"
-              data-sort="<%= %w{Created Updated}.include?(column) ? 'int' : 'string' %>"
-              class="sortable">
-              <%= column %>
-            </th>
+            <th><%= column %></th>
           <% end %>
+          <th class="no-sort" data-column-visible="false"><span class="sr-only">Actions</span></th>
         </tr>
       </thead>
       <tbody>
         <% items.each do |item| %>
-          <tr data-id="<%= item.id %>">
-            <td class="column-checkbox"><%= check_box_tag dom_id(item, :checkbox), item.id, false, class: 'js-multicheck' %><%= label_tag dom_id(item, :checkbox), "Select #{item.title}", class: 'sr-only' %></td>
+          <tr id="<%= item.class.name.underscore %>-<%= item.id %>">
+            <td class="select-checkbox" data-behavior="select-checkbox"></td>
             <% columns.each do |column| %>
               <%
               sort, display =
@@ -44,7 +44,7 @@
                 [item.fields.fetch(column, ''), markup(item.fields.fetch(column, ''))]
               end
               %>
-              <td data-sort-value="<%= sort %>"><%= display %></td>
+              <td data-sort="<%= sort %>"><%= display %></td>
             <% end %>
             <td class="column-actions">
               <%= link_to [:edit, @node.project, @node, item] do %>

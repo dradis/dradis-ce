@@ -16,6 +16,7 @@
 //= require popper
 //= require bootstrap
 
+//= require vendor/datatables.min
 //= require vendor/stupidtable
 
 //= require cable
@@ -25,10 +26,16 @@
 //= require shared/comments
 //= require shared/console_updater
 //= require shared/editor_toolbar
-//= require shared/items_table
 //= require shared/mentions
 //= require shared/notifications
 //= require shared/subscriptions
+
+//= require shared/datatable/main
+//= require shared/datatable/checkbox
+//= require shared/datatable/delete
+//= require shared/datatable/merge
+//= require shared/datatable/tag
+//= require shared/datatable/validate
 
 //= require tylium/plugins/jquery.breadcrumbs
 //= require tylium/plugins/jquery.treemodal
@@ -56,9 +63,7 @@
 //= require tylium/pages/boards
 //= require tylium/pages/issues
 //= require tylium/pages/nodes/new_form
-//= require tylium/pages/nodes/tables
 //= require tylium/pages/projects/boards_summary
 //= require tylium/pages/projects/issues_chart
 //= require tylium/pages/projects/summary
 //= require tylium/pages/revisions
-//= require tylium/pages/styles

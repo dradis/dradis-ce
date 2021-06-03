@@ -12,10 +12,10 @@ describe 'issue pages' do
       visit project_issues_path(current_project)
 
       # click > 1 issue checkboxes
-      page.all('input.js-multicheck').each(&:click)
+      page.all('td.select-checkbox').each(&:click)
 
       # click the merge button
-      find('#merge-selected').click
+      find('span', text: 'Merge').click
     end
 
     it 'merges issues into an existing one' do
