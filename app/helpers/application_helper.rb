@@ -3,9 +3,7 @@ module ApplicationHelper # :nodoc:
     return unless text.present?
 
     context = {
-      liquid_assigns: {
-        'project' => current_project.name
-      }
+      liquid_assigns: liquid_assigns
     }
 
     pipeline_filters =

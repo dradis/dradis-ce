@@ -2,6 +2,7 @@ class IssuesController < AuthenticatedController
   include ActivityTracking
   include ContentFromTemplate
   include ConflictResolver
+  include LiquidEnabledResource
   include Mentioned
   include MultipleDestroy
   include NotificationsReader
@@ -120,6 +121,10 @@ class IssuesController < AuthenticatedController
   end
 
   private
+
+  def liquid_resource_assigns
+    { 'issue' => IssueDrop.new(@issue) }
+  end
 
   def set_issues
     # We need a transaction because multiple DELETE calls can be issued from
