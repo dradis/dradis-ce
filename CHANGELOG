@@ -2,7 +2,7 @@
   * Update the API to handle pagination
   * [feature #2]
   * [feature ...]
-  * Upgraded gems: capybara, rails, rdoc, rubocop, nokogiri, papertrail, puma,
+  * Upgraded gems: cancancan, capybara, rails, rdoc, rubocop, nokogiri, papertrail, puma,
   * Bugs fixed:
     - [bug fixed #1]
     - [bug fixed ...]

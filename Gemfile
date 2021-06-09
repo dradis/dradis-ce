@@ -105,7 +105,7 @@ gem 'sqlite3'#,  '1.4.2'
 
 # --------------------------------------------------------- Dradis Professional
 # Authorisation
-gem 'cancancan', '~> 1.10'
+gem 'cancancan', '~> 3.2.0'
 
 # Redis-based background worker
 gem 'resque', require: 'resque/status_server'
