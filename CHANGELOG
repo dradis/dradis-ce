@@ -4,7 +4,7 @@
   * [feature ...]
   * Upgraded gems: capybara, rails, rdoc, rubocop, nokogiri, papertrail, puma,
   * Bugs fixed:
-    - Fix uploading attachments with newlines
+    - Fix uploading of attachments with names that have newlines
   * New integrations:
     - [new integration #1]
     - [new integration ...]
