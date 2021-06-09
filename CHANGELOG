@@ -1,4 +1,5 @@
 [v#.#.#] ([MMM’YY])
+  * Replace jQuery-ujs with rails-ujs
   * Update the API to handle pagination
   * [feature #2]
   * [feature ...]
