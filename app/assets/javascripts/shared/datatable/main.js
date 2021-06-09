@@ -60,12 +60,18 @@ class DradisDatatable {
             titleAttr: 'Select all'
           },
           {
+            attr: {
+              'data-behavior': 'table-action'
+            },
             text: '<i class="fa fa-trash fa-fw"></i>Delete',
             className: 'text-danger d-none',
             name: 'bulkDeleteBtn',
             action: this.bulkDelete.bind(this)
           },
           {
+            attr: {
+              'data-behavior': 'table-action'
+            },
             available: function() {
               return that.$paths.data('table-merge-url') !== undefined;
             },
@@ -75,6 +81,9 @@ class DradisDatatable {
             action: this.mergeSelected.bind(this)
           },
           {
+            attr: {
+              'data-behavior': 'table-action'
+            },
             autoClose: true,
             available: function(){
               return that.$table.data('tags') !== undefined;
@@ -135,10 +144,10 @@ class DradisDatatable {
     this.unbindDataTable();
   }
 
-  toggleLoadingState(rows, isLoading, buttonName) {
-    var button = this.dataTable.buttons(buttonName + ':name');
+  toggleLoadingState(rows, isLoading) {
+    var buttons = this.dataTable.buttons('[data-behavior~=table-action]').nodes();
 
-    $(button[0].node).toggleClass('disabled', isLoading);
+    $(buttons).toggleClass('disabled', isLoading);
 
     rows.nodes().toArray().forEach(function(tr) {
       if (isLoading) {

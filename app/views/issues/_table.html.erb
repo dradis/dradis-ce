@@ -4,7 +4,7 @@
       data-default-columns='["Title", "Created", "Updated"]'
       data-item-name="issue"
       data-local-storage-key="project.ce.issues_datatable"
-      data-tags=<%= @tags.map { |t| [t.display_name, t.color, t.name] }.to_json %>>
+      data-tags='<%= @tags.map { |t| [t.display_name, t.color, t.name] }.to_json %>'>
       <thead>
         <tr>
           <th class="no-sort" data-column-visible="false"><span class="sr-only">Select</span></th>
