@@ -35,7 +35,7 @@ describe Attachment do
 
   describe '.copy_to' do
     after do
-      Attachment.all.each(&:delete)
+      FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
     end
 
     let(:source_node) { create(:node) }

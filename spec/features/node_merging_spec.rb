@@ -100,7 +100,7 @@ describe 'merging a node', js: true do
 
     expect(target_node.attachments.count).to eq 1
 
-    Attachment.all.each(&:delete)
+    FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
   end
 
   it 'destroys the source node' do

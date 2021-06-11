@@ -89,7 +89,8 @@ RSpec.configure do |config|
       FactoryBot.lint
     ensure
       DatabaseCleaner.clean_with(:truncation)
-      Attachment.all.each(&:delete)
+      FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
+      FileUtils.rm_rf(Rails.root.join('tmp/storage'))
     end
   end
 
