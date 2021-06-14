@@ -1,0 +1,13 @@
+<section class="summary-panel">
+  <% if @boards.any? %>
+    <h4 class="header-underline">Methodology progress</h4>
+    <div id='boards-summary' data-behavior='boards-summary' data-url='<%= project_boards_path(current_project) %>'></div>
+  <% else %>
+    <%= render 'shared/empty_state',
+      actions_partial: 'projects/boards/empty_state_actions',
+      name: 'methodology',
+      docs_link: 'https://dradisframework.com/support/guides/projects/methodologies.html',
+      text: 'Use methodologies to ensure consistency across all of your projects.'
+    %>
+  <% end %>
+</section>

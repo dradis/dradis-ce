@@ -19,7 +19,7 @@
 @import "tylium/modules/uploads";
 @import "tylium/modules/versions";
 
-[aria-label] {
+[aria-tooltip] {
   position: relative;
 
   &:after {
@@ -27,7 +27,7 @@
     border-radius: 5px;
     box-shadow: 1px 2px 6px rgba(0,0,0,0.5);
     color: $white;
-    content: attr(aria-label);
+    content: attr(aria-tooltip);
     font-size: .7em;
     line-height: 15px;
     opacity: 0;

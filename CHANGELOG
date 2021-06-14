@@ -1,12 +1,11 @@
 [v#.#.#] ([MMM’YY])
-  * [feature #1]
+  * Replace jQuery-ujs with rails-ujs
+  * Update the API to handle pagination
   * [feature #2]
   * [feature ...]
-  * Upgraded gems: [gem #1], [gem #2]
+  * Upgraded gems: capybara, rails, rdoc, rubocop, nokogiri, papertrail, puma,
   * Bugs fixed:
-    - [bug fixed #1]
-    - [bug fixed ...]
-    - Bug tracker items: #N, #M, #O, ...
+    - Fix uploading of attachments with names that have newlines
   * New integrations:
     - [new integration #1]
     - [new integration ...]

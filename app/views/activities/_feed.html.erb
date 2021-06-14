@@ -19,6 +19,11 @@
       <% end %>
     <% end %>
   <% else %>
-    <p class="mb-0">There has been no activity yet.</p>
+    <%= render 'shared/empty_state',
+      name: 'activity',
+      docs_link: 'https://dradisframework.com/support/guides/projects/activity.html',
+      docs_name: 'the activity feed',
+      text: 'If you have to step away from the project, check the feed to find out what\'s new.'
+    %>
   <% end %>
 </div>

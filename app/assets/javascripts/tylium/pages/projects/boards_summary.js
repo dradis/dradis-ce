@@ -1,5 +1,5 @@
 document.addEventListener('turbolinks:load', function(){
-  if ($('body.projects.show').length) {
+  if ($('[data-behavior~=boards-summary]').length) {
     var $boardsSummary = $('[data-behavior~=boards-summary]');
     var url = $boardsSummary.data('url');
 
@@ -33,11 +33,6 @@ document.addEventListener('turbolinks:load', function(){
             if ($(this).find('svg').length > 0) return;
             (new DonutChart('#' + $(chart).attr('id'))).draw();
           });
-        }
-        else {
-          var $boardsEmpty = $('#boards-empty');
-          $boardsEmpty.removeClass('d-none');
-          $boardsSummary.hide();
         }
       }).
       then(function() {

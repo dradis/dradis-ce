@@ -1,7 +1,6 @@
 <section class="summary-panel">
-  <h4 class="header-underline">Issues so far</h4>
-
   <% if @issues.any? %>
+    <h4 class="header-underline">Issues so far</h4>
     <div id="issue-chart"></div>
 
     <div id="issues-accordion" role="tablist">
@@ -50,12 +49,12 @@
     </div>
 
   <% else %>
-    <p>There are no issues in this project yet.</p>
-    <div>
-      <%= link_to project_issues_path(current_project), class: 'btn btn-primary' do %>
-        <i class="fa fa-plus"></i> Add new issue
-      <% end %> or <%= link_to project_upload_manager_path(current_project) do %><i class="fa fa-cloud-upload fa-lg"></i> Upload output from tool<% end %>
-    </div>
+    <%= render 'shared/empty_state',
+      actions_partial: 'projects/issues/empty_state_actions',
+      name: 'issue',
+      docs_link: project_issues_path(current_project),
+      text: 'Use issues to represent vulnerabilities or findings.'
+    %>
   <% end %>
 </section>
 
