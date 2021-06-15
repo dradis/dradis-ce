@@ -1,4 +1,5 @@
 class Issues::NodesController < AuthenticatedController
+  include LiquidEnabledResource
   include ProjectScoped
 
   def show
@@ -13,4 +14,7 @@ class Issues::NodesController < AuthenticatedController
 
     render layout: false
   end
+
+  private
+  def liquid_resource_assigns; {}; end
 end

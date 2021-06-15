@@ -1,4 +1,5 @@
 class MarkupController < AuthenticatedController
+  include LiquidEnabledResource
   layout false
 
   # Returns the markup cheatsheet that is used by the jQuery.Textile plugin Help
@@ -9,4 +10,7 @@ class MarkupController < AuthenticatedController
   def preview
     @text = params[:text]
   end
+
+  private
+  def liquid_resource_assigns; {}; end
 end

@@ -46,4 +46,6 @@ class Issues::MergeController < IssuesController
     end
   end
 
+  private
+  def liquid_resource_assigns; {}; end
 end

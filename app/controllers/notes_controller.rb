@@ -2,6 +2,7 @@
 # resource.
 class NotesController < NestedNodeResourceController
   include ConflictResolver
+  include LiquidEnabledResource
   include Mentioned
   include MultipleDestroy
   include NodesSidebar
@@ -80,6 +81,10 @@ class NotesController < NestedNodeResourceController
     else
       @note = @node.notes.new
     end
+  end
+
+  def liquid_resource_assigns
+    {}
   end
 
   def note_params

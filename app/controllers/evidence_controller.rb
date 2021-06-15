@@ -1,5 +1,6 @@
 class EvidenceController < NestedNodeResourceController
   include ConflictResolver
+  include LiquidEnabledResource
   include Mentioned
   include MultipleDestroy
   include NodesSidebar
@@ -138,6 +139,10 @@ class EvidenceController < NestedNodeResourceController
   end
 
   private
+
+  def liquid_resource_assigns
+    {}
+  end
 
   # Look for the Evidence we are going to be working with based on the :id
   # passed by the user.
