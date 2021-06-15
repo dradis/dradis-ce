@@ -45,63 +45,9 @@
 
 <div class="content-container mt-0">
   <div class="tab-content mt-0">
-    <div class="tab-pane <%= "active" if params[:tab] == "evidence-tab" %>" id="evidence-tab">
-      <h4 class="header-underline">Evidence</h4>
-      <% if @sorted_evidence.any? %>
-        <div data-behavior="datatable-paths"
-            data-table-destroy-url="<%= multiple_destroy_project_node_evidence_index_path(@node.project, @node) %>"
-            data-table-close-console-url="<%= project_node_path(@node.project, @node, tab: "evidence-tab") %>">
-          <%= render 'nodes/items_table/table',
-                    columns: @evidence_columns,
-                    items: @sorted_evidence %>
-        </div>
-      <% else %>
-        <%= render 'nodes/items_table/empty',
-                  name: 'evidence',
-                  new_link: new_project_node_evidence_path(@node.project, @node) %>
-      <% end %>
-    </div>
-
-    <div class="tab-pane <%= "active" if !params[:tab] || params[:tab] == 'properties-tab' %>" id="properties-tab">
-      <div class="node-content" id="<%= dom_id(@node) %>_content">
-        <h4 class="header-underline">Properties - <span class="actions">
-          <%= link_to edit_project_node_path(@node.project, @node) do %>
-            <i class="fa fa-pencil"></i> Edit
-          <% end %>
-          </span>
-        </h4>
-
-        <% if @node.has_any_property?  %>
-          <% @node.properties.sort.each do |key, value| %>
-            <% present [key, value], PropertyPresenter do |property_presenter| %>
-              <h4><%= property_presenter.name %></h4>
-              <%= property_presenter.value %>
-            <% end %>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-
-    <div class="tab-pane <%= "active" if params[:tab] == "notes-tab" %>" id="notes-tab">
-      <h4 class="header-underline">Notes</h4>
-      <% if @sorted_notes.any? %>
-        <div data-behavior="datatable-paths"
-            data-table-destroy-url="<%= multiple_destroy_project_node_notes_path(@node.project, @node) %>"
-            data-table-close-console-url="<%= project_node_path(@node.project, @node, tab: "notes-tab") %>">
-          <%= render 'nodes/items_table/table',
-                    columns: @note_columns,
-                    items: @sorted_notes %>
-        </div>
-      <% else %>
-        <%= render 'nodes/items_table/empty',
-                    name: 'note',
-                    new_link: new_project_node_note_path(@node.project, @node) %>
-      <% end %>
-    </div>
-
-    <div class="tab-pane <%= "active" if params[:tab] == "activity-tab" %>" id="activity-tab">
-      <%= render partial: 'activity' %>
-    </div>
-
+    <%= render 'nodes/show/activities' %>
+    <%= render 'nodes/show/evidence' %>
+    <%= render 'nodes/show/notes' %>
+    <%= render 'nodes/show/properties' %>
   </div>
 </div>

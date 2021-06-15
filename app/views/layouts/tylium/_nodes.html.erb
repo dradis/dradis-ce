@@ -11,7 +11,12 @@
   
   <div class="nodes-list restrict-height pb-4 px-3" data-behavior="restrict-height">
     <% if @nodes.empty? %>
-      <li class="no-nodes">No nodes defined yet</li>
+      <%= render 'shared/empty_state',
+        actions_partial: 'layouts/tylium/nodes/empty_state_actions',
+        docs_link: 'https://dradisframework.com/support/guides/projects/nodes.html',
+        name: 'node',
+        text: 'Use nodes to structure and organize your project.'
+      %>
     <% else %>
       <%= render partial: 'layouts/tylium/node', collection: @nodes %>
     <% end %>

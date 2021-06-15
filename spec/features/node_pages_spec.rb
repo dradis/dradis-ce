@@ -8,11 +8,11 @@ describe "node pages" do
   end
 
   describe "creating new nodes" do
-    context "when a project has no nodes defined yet" do
+    context "when a project doesn't have any nodes yet" do
       it "says so in the sidebar" do
         visit project_path(current_project)
         within ".main-sidebar" do
-          should have_selector ".no-nodes", text: "No nodes defined yet"
+          should have_selector ".empty-state", text: "You don't have any nodes yet"
         end
       end
     end

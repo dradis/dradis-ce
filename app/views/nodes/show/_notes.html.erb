@@ -1,0 +1,19 @@
+<div class="tab-pane <%= "active" if params[:tab] == "notes-tab" %>" id="notes-tab">
+  <% if @sorted_notes.any? %>
+    <h4 class="header-underline">Notes</h4>
+    <div data-behavior="datatable-paths"
+        data-table-destroy-url="<%= multiple_destroy_project_node_notes_path(@node.project, @node) %>"
+        data-table-close-console-url="<%= project_node_path(@node.project, @node, tab: "notes-tab") %>">
+      <%= render 'nodes/items_table/table',
+                columns: @note_columns,
+                items: @sorted_notes %>
+    </div>
+  <% else %>
+    <%= render 'shared/empty_state',
+      actions_partial: 'nodes/notes/empty_state_actions',
+      docs_link: 'https://dradisframework.com/support/guides/projects/notes.html',
+      name: 'note',
+      text: 'Use notes to store your thoughts, ideas, and other content that, while useful, probably isn\'t going to be exported into your final report.'
+    %>
+  <% end %>
+</div>

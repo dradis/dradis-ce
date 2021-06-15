@@ -33,9 +33,30 @@
     .nodes-list {
       display: none;
 
-      .no-nodes {
-        white-space: nowrap;
-        padding-left: 2.5rem;
+      .empty-state {
+        margin-top: 1rem;
+        padding-left: 0;
+
+        &-actions {
+          margin-top: 1.5rem;
+          text-align: center;
+        }
+
+        .container {
+          padding: 0;
+        }
+
+        &-icon {
+          img {
+            width: 6rem;
+          }
+        }
+
+        &-title {
+          font-size: 1.4rem;
+          margin: 1.5rem 0;
+          text-align: center;
+        }
       }
 
       .node {
