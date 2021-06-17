@@ -35,7 +35,7 @@ RSpec.describe KitImportJob do
 
   describe '#perform' do
     after(:all) do
-      Attachment.all.each(&:delete)
+      FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
       FileUtils.rm_rf(Rails.root.join("tmp", "rspec"))
     end
 

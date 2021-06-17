@@ -1,0 +1,27 @@
+<div class="tab-pane <%= "active" if !params[:tab] || params[:tab] == 'properties-tab' %>" id="properties-tab">
+  <div class="node-content" id="<%= dom_id(@node) %>_content">
+
+    <% if @node.has_any_property? %>
+      <h4 class="header-underline">Properties - <span class="actions">
+        <%= link_to edit_project_node_path(@node.project, @node) do %>
+          <i class="fa fa-pencil"></i> Edit
+        <% end %>
+        </span>
+      </h4>
+
+      <% @node.properties.sort.each do |key, value| %>
+        <% present [key, value], PropertyPresenter do |property_presenter| %>
+          <h4><%= property_presenter.name %></h4>
+          <%= property_presenter.value %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <%= render 'shared/empty_state',
+        actions_partial: 'nodes/empty_state_actions',
+        docs_link: 'https://dradisframework.com/support/guides/projects/node_properties.html',
+        name: 'node property',
+        text: 'Node properties are added after importing information from security scanners. Things like host names, open ports, and running services will all be stored as properties.'
+      %>
+    <% end %>
+  </div>
+</div>
