@@ -1,7 +1,7 @@
 class IssueDrop < BaseDrop
   delegate \
     :evidence,
-    :evidence_by_node,
+    :id,
     :text,
     :title,
     to: :@record

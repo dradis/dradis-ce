@@ -1,3 +1,3 @@
 class ProjectDrop < BaseDrop
-  delegate :name, to: :@record
+  delegate :id, :name, to: :@record
 end
