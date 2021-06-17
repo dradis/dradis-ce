@@ -31,6 +31,9 @@ Rails.application.configure do
   # Store uploaded files on the local file system in a temporary directory.
   config.active_storage.service = :local
 
+  # Disable active storage routes
+  config.active_storage.draw_routes = false
+
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
