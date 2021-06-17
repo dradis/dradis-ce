@@ -1,17 +1,3 @@
-class IssueDrop < Liquid::Drop
-  def initialize(issue)
-    @issue = issue
-  end
-
-  def title
-    @issue.title
-  end
-
-  def evidence
-    @issue.evidence
-  end
-
-  def text
-    @issue.text
-  end
+class IssueDrop < BaseDrop
+  delegate :title, :evidence, :text, to: :@record
 end
