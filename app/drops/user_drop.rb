@@ -1,3 +1,3 @@
-class UserDrop < Liquid::Drop
+class UserDrop < BaseDrop
   delegate :name, :email, to: :@record
 end

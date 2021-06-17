@@ -1,3 +1,3 @@
-class NoteDrop < Liquid::Drop
+class NoteDrop < BaseDrop
   delegate :title, :text, to: :@record
 end

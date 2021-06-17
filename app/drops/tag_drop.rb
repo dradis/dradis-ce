@@ -1,3 +1,3 @@
-class TagDrop < Liquid::Drop
-  delegate :name, to: :@record
+class TagDrop < BaseDrop
+  delegate :id, :name, to: :@record
 end
