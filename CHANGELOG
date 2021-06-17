@@ -1,7 +1,5 @@
 [v#.#.#] ([MMM’YY])
-  * Update the API to handle pagination
-  * [feature #2]
-  * [feature ...]
+  * Dynamic content across the app
   * Upgraded gems: capybara, rails, rdoc, rubocop, nokogiri, papertrail, puma,
   * Bugs fixed:
     - [bug fixed #1]
@@ -17,8 +15,7 @@
     - [reporting enhancement #1]
     - [reporting enhancement ...]
   * REST/JSON API enhancements:
-    - [API enhancement #1]
-    - [API enhancement ...]
+    - Add pagination support
   * Security Fixes:
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
