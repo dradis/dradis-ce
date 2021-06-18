@@ -4,14 +4,22 @@
     margin-top: 0 !important;
 
     .column-actions {
-      text-align: right;
-      min-width: 8rem;
+      min-width: 3rem;
 
       a {
-        visibility: hidden;
+        opacity: 0.2;
+        white-space: nowrap;
 
         &:first-of-type{
           padding-right: 0.5rem;
+        }
+      }
+
+      .dropdown {
+        display: inline-block;
+
+        &-menu.show {
+          visibility: hidden;
         }
       }
     }
@@ -138,8 +146,18 @@
 
     tr {
       &:hover {
-        .column-actions a {
-          visibility: visible;
+        .column-actions {
+          a {
+            opacity: 0.8;
+
+            &:hover {
+              opacity: 1;
+            }
+          }
+
+          .dropdown-menu {
+            visibility: visible;
+          }
         }
       }
     }
