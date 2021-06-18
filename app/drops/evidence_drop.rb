@@ -1,3 +1,3 @@
 class EvidenceDrop < BaseDrop
-  delegate :content, :id, to: :@record
+  delegate :content, to: :@record
 end

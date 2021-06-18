@@ -1,3 +1,3 @@
 class UserDrop < BaseDrop
-  delegate :id, :name, :email, to: :@record
+  delegate :name, :email, to: :@record
 end
