@@ -65,6 +65,7 @@
     <!-- All modals go here -->
     <%= render 'layouts/tylium/modals' %>
     <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
+    <%= render 'shared/vault' %>
 
     <% if controller_name == 'boards' %>
       <% if content_for?(:board_rename_modal) %>
