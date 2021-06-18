@@ -1,0 +1,28 @@
+.modal {
+  &.slideout {
+    background: rgba(0,0, 0, 0.5);
+    z-index: 1052;
+    
+    .modal-dialog {
+      margin: 0 0 0 auto;
+      max-width: 25%;
+      transform: translate(50px, 0);
+
+      .modal-content {
+        border-radius: 0;
+        height: 100vh;
+
+        .modal-header {
+          background: transparent;
+          padding: 0.5rem 1rem;
+        }
+      }
+    }
+
+    &.show {
+      .modal-dialog {
+        transform: translate(0, 0);
+      }
+    }
+  }
+}
