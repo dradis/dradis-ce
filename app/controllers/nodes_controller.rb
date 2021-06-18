@@ -1,7 +1,6 @@
 # This controller exposes the REST operations required to manage the Node
 # resource.
 class NodesController < NestedNodeResourceController
-  include LiquidEnabledResource
   include NodesSidebar
 
   skip_before_action :find_or_initialize_node, only: [ :sort, :create_multiple ]
@@ -115,10 +114,6 @@ class NodesController < NestedNodeResourceController
   end
 
   private
-  def liquid_resource_assigns
-    {}
-  end
-
   def node_params
     params.require(:node).permit(:label, :parent_id, :position, :raw_properties, :type_id)
   end

@@ -1,7 +1,6 @@
 class CardsController < AuthenticatedController
   include ActivityTracking
   include ContentFromTemplate
-  include LiquidEnabledResource
   include Mentioned
   include NotificationsReader
   include ProjectScoped
@@ -90,10 +89,6 @@ class CardsController < AuthenticatedController
 
   def initialize_sidebar
     @sorted_cards = @list.ordered_cards.select(&:persisted?)
-  end
-
-  def liquid_resource_assigns
-    {}
   end
 
   def set_or_initialize_card

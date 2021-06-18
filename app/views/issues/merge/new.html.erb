@@ -70,7 +70,7 @@
                     <li><a href="#textile_<%= issue.id %>" data-toggle="pill" class="nav-link">Source</a></li>
                   </ul>
                   <div id="normal_<%= issue.id %>" class="tab-pane active">
-                    <%= markup(issue.text) %>
+                    <%= markup(issue.text, liquid: true) %>
                   </div>
                   <div id="textile_<%= issue.id %>" class="tab-pane">
                     <pre><%= issue.text %></pre>
