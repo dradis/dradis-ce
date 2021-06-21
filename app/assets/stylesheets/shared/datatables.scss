@@ -9,10 +9,6 @@
       a {
         opacity: 0.2;
         white-space: nowrap;
-
-        &:first-of-type{
-          padding-right: 0.5rem;
-        }
       }
 
       .dropdown {
@@ -21,6 +17,10 @@
         &-menu.show {
           visibility: hidden;
         }
+      }
+
+      .dropdown-toggle {
+        margin-left: 0.5rem;
       }
     }
 
@@ -148,7 +148,7 @@
       &:hover {
         .column-actions {
           a {
-            opacity: 0.8;
+            opacity: 0.7;
 
             &:hover {
               opacity: 1;
@@ -218,6 +218,12 @@
           margin-top: 1.5rem;
         }
       }
+    }
+  }
+
+  .dropdown-toggle {
+    &:after {
+      display: none;
     }
   }
 
