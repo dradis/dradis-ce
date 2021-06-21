@@ -16,6 +16,10 @@
 
         &-menu.show {
           visibility: hidden;
+
+          a {
+            opacity: 1;
+          }
         }
       }
 
