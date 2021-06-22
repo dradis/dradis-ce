@@ -10,10 +10,10 @@
           data-local-storage-key="project.ce.revisions_datatable">
           <thead>
             <tr>
+              <th class="no-sort" data-column-visible="false"><span class="sr-only">Actions</span></th>
               <th>Item</th>
               <th>Removed by</th>
               <th>When</th>
-              <th class="no-sort" data-column-visible="false"><span class="sr-only">Actions</span></th>
             </tr>
           </thead>
           <tbody>
@@ -21,10 +21,7 @@
               <% cache recoverable_revision do %>
                 <% present recoverable_revision do |recoverable_revision_presenter| %>
                   <tr>
-                    <td><%= recoverable_revision_presenter.info %></td>
-                    <td><%= recoverable_revision_presenter.whodunnit %></td>
-                    <td data-sort="<%= recoverable_revision.version.created_at.to_i %>"><%= recoverable_revision_presenter.created_at_ago %></td>
-                    <td>
+                    <td class="column-actions">
                       <%= link_to(
                         recover_project_revision_path(
                           current_project,
@@ -36,6 +33,9 @@
                         <i class="fa fa-refresh"></i> Recover
                       <% end %>
                     </td>
+                    <td><%= recoverable_revision_presenter.info %></td>
+                    <td><%= recoverable_revision_presenter.whodunnit %></td>
+                    <td data-sort="<%= recoverable_revision.version.created_at.to_i %>"><%= recoverable_revision_presenter.created_at_ago %></td>
                   </tr>
                 <% end %>
               <% end %>
