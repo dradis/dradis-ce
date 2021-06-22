@@ -23,14 +23,9 @@
             <%= link_to edit_project_issue_path(current_project, issue), title: 'Edit' do %>
               <i class="fa fa-pencil"></i><span class="sr-only">Edit</span>
             <% end %>
-            <div class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i><span class="sr-only">Toggle column actions menu</span></a>
-              <div class="dropdown-menu">
-                <%= link_to [current_project, issue], method: :delete, data: { confirm: "Are you sure?\n\nProceeding will delete this issue and any associated evidence." }, class: 'text-error-hover dropdown-item' do %>
-                  <i class="fa fa-trash fa-fw"></i> Delete
-                <% end %>
-              </div>
-            </div>
+            <%= link_to [current_project, issue], method: :delete, data: { confirm: "Are you sure?\n\nProceeding will delete this issue and any associated evidence." }, class: 'text-error-hover ml-2', title: 'Delete' do %>
+              <i class="fa fa-trash fa-fw"></i><span class="sr-only">Delete</span>
+            <% end %>
           </td>
           <% @columns.each do |column| %>
             <%

@@ -22,15 +22,9 @@
               <%= link_to [:edit, @node.project, @node, item], title: 'Edit' do %>
                 <i class="fa fa-pencil"></i><span class="sr-only">Edit</span>
               <% end %>
-              <div class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i><span class="sr-only">Toggle column actions menu</span></a>
-              <div class="dropdown-menu">
-                <%= link_to [@node.project, @node, item], method: :delete, data: { confirm: "Are you sure?\n\nProceeding will delete this item from the associated node." }, class: 'text-error-hover dropdown-item' do %>
-                <i class="fa fa-trash fa-fw"></i> Delete
-              <% end %>
-              </div>
-            </div>
-              
+              <%= link_to [@node.project, @node, item], method: :delete, data: { confirm: "Are you sure?\n\nProceeding will delete this item from the associated node." }, class: 'text-error-hover ml-2', title: 'Delete' do %>
+              <i class="fa fa-trash fa-fw"></i><span class="sr-only">Delete</span>
+            <% end %>
             </td>
             <% columns.each do |column| %>
               <%
