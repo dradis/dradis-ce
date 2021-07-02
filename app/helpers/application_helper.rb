@@ -16,7 +16,7 @@ module ApplicationHelper # :nodoc:
       pipeline_filters.insert(1, HTML::Pipeline::Dradis::LiquidFilter)
     end
 
-    if options[:filters] && options[:filters].any?
+    if options[:filters].present?
       options[:filters].each do |index, filter|
         pipeline_filters.insert(index, filter)
       end
