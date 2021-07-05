@@ -27,6 +27,18 @@
           initBehaviors(item);
         });
     });
+
+    // Allow page anchors to work
+    $('[data-behavior~=deeplinks] >* a').click(function (e) {
+      history.pushState(null, null, $(e.target).attr('href'));
+    });
+
+    // Show the pane for a given anchor
+    $('[data-behavior~=deeplinks] >* a').each(function() {
+      if (window.location.hash == $(this).attr('href')) {
+        $(this).tab('show');
+      }
+    });
   }
 
   document.addEventListener('turbolinks:load', function() {
