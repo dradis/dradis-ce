@@ -140,10 +140,6 @@ class EvidenceController < NestedNodeResourceController
 
   private
 
-  def liquid_resource_assigns
-    {}
-  end
-
   # Look for the Evidence we are going to be working with based on the :id
   # passed by the user.
   def set_or_initialize_evidence

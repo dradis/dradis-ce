@@ -11,7 +11,7 @@ module LiquidEnabledResource
 
   # To be overwritten by each controller
   def liquid_resource_assigns
-    raise 'Controller included LiquidEnabledResource without defining a liquid_resource_assigns'
+    {}
   end
 
   private

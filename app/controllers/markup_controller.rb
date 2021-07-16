@@ -10,7 +10,4 @@ class MarkupController < AuthenticatedController
   def preview
     @text = params[:text]
   end
-
-  private
-  def liquid_resource_assigns; {}; end
 end

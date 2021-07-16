@@ -121,11 +121,6 @@ class IssuesController < AuthenticatedController
   end
 
   private
-
-  def liquid_resource_assigns
-    { 'issue' => IssueDrop.new(@issue) }
-  end
-
   def set_issues
     # We need a transaction because multiple DELETE calls can be issued from
     # index and a TOCTOR can appear between the Note read and the Issue.find
