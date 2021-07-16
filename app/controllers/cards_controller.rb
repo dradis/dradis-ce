@@ -1,9 +1,9 @@
 class CardsController < AuthenticatedController
   include ActivityTracking
   include ContentFromTemplate
-  include ProjectScoped
   include Mentioned
   include NotificationsReader
+  include ProjectScoped
 
   # Not sorted because we need the Board and List first!
   before_action :set_current_board_and_list

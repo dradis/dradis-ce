@@ -2,6 +2,7 @@ class IssuesController < AuthenticatedController
   include ActivityTracking
   include ContentFromTemplate
   include ConflictResolver
+  include LiquidEnabledResource
   include Mentioned
   include MultipleDestroy
   include NotificationsReader
@@ -120,7 +121,6 @@ class IssuesController < AuthenticatedController
   end
 
   private
-
   def set_issues
     # We need a transaction because multiple DELETE calls can be issued from
     # index and a TOCTOR can appear between the Note read and the Issue.find
