@@ -1,9 +1,11 @@
-class IssueDrop < Liquid::Drop
-  def initialize(issue)
-    @issue = issue
+class IssueDrop < BaseDrop
+  delegate :evidence, :text, :title, to: :@record
+
+  def affected
+    @affected ||= @record.affected.map { |node| NodeDrop.new(node) }
   end
 
-  def title
-    @issue.title
+  def tags
+    @tags ||= @record.tags.map { |tag| TagDrop.new(tag) }
   end
 end
