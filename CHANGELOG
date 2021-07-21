@@ -3,7 +3,7 @@
   * Update the API to handle pagination
   * [feature #2]
   * [feature ...]
-  * Upgraded gems: capybara, rails, rdoc, rubocop, nokogiri, papertrail, puma,
+  * Upgraded gems: capybara, jquery-rails, rails, rdoc, resque-status, rubocop, nokogiri, papertrail, puma,
   * Bugs fixed:
     - Fix uploading of attachments with names that have newlines
   * New integrations:
