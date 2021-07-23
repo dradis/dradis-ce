@@ -55,7 +55,7 @@
                 </span>
               </h4>
               <div class="content-textile">
-                <%= markup(@issue.text) %>
+                <%= markup(@issue.text, liquid: true) %>
               </div>
               <div class="author-info">
                 <span class="ml-auto">Author: <%= @issue.author || 'n/a' %></span>
