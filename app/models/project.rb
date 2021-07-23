@@ -13,7 +13,7 @@ class Project
   end
 
   def self.find(id)
-    new(id: id)
+    new(id: id.to_i)
   end
 
   # This tricks NamingService.name_project (used by KitImportJob)
