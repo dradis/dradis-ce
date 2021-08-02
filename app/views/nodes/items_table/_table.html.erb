@@ -4,7 +4,7 @@
       data-behavior="dradis-datatable"
       data-default-columns='["title", "created", "updated"]'
       data-item-name="<%= items.first.class.name.underscore %>"
-      data-local-storage-key="project.ce.<%= items.first.class.name.underscore.pluralize %>_datatable"
+      data-local-storage-key="project.ce.<%= dom_id(current_project) %>.<%= items.first.class.name.underscore.pluralize %>_datatable"
       data-legacy-storage-key="project.ce.<%= dom_id(@node) %>.<%= items.first.class.name.underscore %>_columns"
       >
       <thead>

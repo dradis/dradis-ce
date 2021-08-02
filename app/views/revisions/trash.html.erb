@@ -7,7 +7,7 @@
         <table class="table table-striped"
           data-behavior="dradis-datatable"
           data-default-columns='["item", "removed by", "when"]'
-          data-local-storage-key="project.ce.revisions_datatable">
+          data-local-storage-key="project.ce.<%= dom_id(current_project) %>.revisions_datatable">
           <thead>
             <tr>
               <th>Item</th>
