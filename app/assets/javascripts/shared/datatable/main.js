@@ -6,10 +6,16 @@ class DradisDatatable {
     this.dataTable = null;
     this.itemName = this.$table.data('item-name');
     this.localStorageKey = this.$table.data('local-storage-key');
+    this.legacyStorageKey = this.$table.data('legacy-storage-key');
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
 
-    var defaultColumns = this.$table.data('default-columns') || [];
-    this.defaultColumns = defaultColumns.concat(['Select', 'Actions']);
+    if (localStorage.getItem(this.legacyStorageKey) !== null) {
+      this.defaultColumns = localStorage.getItem(this.legacyStorageKey);
+    }
+    else {
+      var defaultColumns = this.$table.data('default-columns') || [];
+      this.defaultColumns = defaultColumns.concat(['select', 'actions']);
+    }
 
     this.init();
   }
@@ -31,7 +37,7 @@ class DradisDatatable {
       this.tableHeaders.forEach(function(column, index) {
         var columnName = column.textContent.trim();
 
-        if (!that.defaultColumns.includes(columnName)) {
+        if (!that.defaultColumns.includes(columnName.toLowerCase())) {
           hiddenColumnIndexes.push(index);
         }
       });
