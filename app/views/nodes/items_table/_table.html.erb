@@ -4,7 +4,7 @@
       data-behavior="dradis-datatable"
       data-default-columns='["Title", "Created", "Updated"]'
       data-item-name="<%= items.first.class.name.underscore %>"
-      data-local-storage-key="project.ce.<%= items.first.class.name.underscore.pluralize %>_datatable">
+      data-local-storage-key="project.ce.<%= dom_id(current_project) %>.<%= items.first.class.name.underscore.pluralize %>_datatable">
       <thead>
         <tr>
           <th class="no-sort" data-column-visible="false"><span class="sr-only">Select</span></th>
