@@ -10,7 +10,7 @@ class DradisDatatable {
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
 
     if (localStorage.getItem(this.legacyStorageKey) !== null) {
-      var defaultColumns = localStorage.getItem(this.legacyStorageKey);
+      var defaultColumns = JSON.parse(localStorage.getItem(this.legacyStorageKey));
     }
     else {
       var defaultColumns = this.$table.data('default-columns') || [];
