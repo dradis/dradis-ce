@@ -10,12 +10,12 @@ class DradisDatatable {
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
 
     if (localStorage.getItem(this.legacyStorageKey) !== null) {
-      this.defaultColumns = localStorage.getItem(this.legacyStorageKey);
+      var defaultColumns = localStorage.getItem(this.legacyStorageKey);
     }
     else {
       var defaultColumns = this.$table.data('default-columns') || [];
-      this.defaultColumns = defaultColumns.concat(['select', 'actions']);
     }
+    this.defaultColumns = defaultColumns.concat(['select', 'actions']);
 
     this.init();
   }
