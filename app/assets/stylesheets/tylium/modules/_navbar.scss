@@ -130,6 +130,7 @@
     border-radius: 50px;
     color: $linkColorHover;
     margin-right: 0.2rem;
+    position: relative;
     width: 40px;
 
     &[aria-label]::after {
