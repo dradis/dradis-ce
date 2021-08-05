@@ -27,115 +27,86 @@
   </nav>
 <% end %>
 
-<div class="row m-0">
-  <ul class="tabs-container nav nav-tabs main-tabs w-100">
-    <li class="nav-item">
-      <a href="#evidence-tab" data-toggle="tab" class="nav-link active">
-        <%= colored_icon_for_model(@evidence, 'fa-flag')%> Evidence
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="#info-tab" data-toggle="tab" class="nav-link">
-        <i class="fa fa-bug"></i> Information
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="#activity-tab" data-toggle="tab" class="nav-link"><i class="fa fa-rss"></i> Recent activity</a>
-    </li>
-  </ul>
-</div>
+<div class="d-flex flex-column flex-xxl-row">
+  <div class="flex-grow-1">
+    <ul class="tabs-container nav nav-tabs main-tabs w-100">
+      <li class="nav-item">
+        <a href="#evidence-tab" data-toggle="tab" class="nav-link active">
+          <%= colored_icon_for_model(@evidence, 'fa-flag')%> Evidence
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#info-tab" data-toggle="tab" class="nav-link">
+          <i class="fa fa-bug"></i> Information
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#activity-tab" data-toggle="tab" class="nav-link"><i class="fa fa-rss"></i> Recent activity</a>
+      </li>
+    </ul>
 
-<div class="row m-0">
-  <div class="col-12 col-xxl-7 p-0">
-    <div class="content-container mt-0 pb-3 mr-xxl-3">
-      <div class="tab-content mt-0">
-        <div class="tab-pane active" id="evidence-tab">
-          <% cache ['evidence-evidence-tab', @evidence] do %>
-            <div class="note-text-inner">
-              <h4 class="header-underline">Evidence for this instance</h4>
+    <div class="row m-0">
+      <div class="col-12 p-0">
+        <div class="content-container mt-0 pb-3">
+          <div class="tab-content mt-0">
+            <div class="tab-pane active" id="evidence-tab">
+              <% cache ['evidence-evidence-tab', @evidence] do %>
+                <div class="note-text-inner">
+                  <h4 class="header-underline">Evidence for this instance</h4>
 
-              <div class="content-textile">
-                <%= markup(@evidence.content) %>
-              </div>
-              <div class="author-info">
-                <span class="ml-auto">Author: <%= @evidence.author || 'n/a' %></span>
-              </div>
-            </div>
-          <% end %>
-        </div>
-
-        <% cache ['evidence-information-tab', @issue] do %>
-          <div class="tab-pane" id="info-tab">
-            <h4 class="header-underline">
-              Issue information -
-              <span class="actions">
-              <%= link_to project_issue_path(current_project, @issue) do %>
-                <i class="fa fa-external-link" aria-hidden="true"></i> Open
-              <% end %> -
-              <%= tag_and_name_for(@issue) %>
-              </span>
-            </h4>
-            <div id="<%= dom_id(@issue) %>_text" class="content-textile">
-              <%= markup(@issue.text) %>
-            </div>
-          </div>
-        <% end %>
-
-        <% cache ['evidence-activity-tab', @evidence, @activities] do %>
-          <div class="tab-pane" id="activity-tab">
-            <h4 class="header-underline">
-              Recent activity
-              <% if @evidence.has_revision_history? %>
-                -
-                <span class="actions">
-                  <%#
-                    # Some legacy content was created before paper_trail, so we need to
-                    # make sure that there is at least one revision associated to the
-                    # model.
-                    #%>
-                  <%= link_to(project_node_evidence_revisions_path(@node.project, @node, @evidence)) do %>
-                    <i class="fa fa-history"></i> Revision history
-                  <% end %>
-                </span>
+                  <div class="content-textile">
+                    <%= markup(@evidence.content) %>
+                  </div>
+                  <div class="author-info">
+                    <span class="ml-auto">Author: <%= @evidence.author || 'n/a' %></span>
+                  </div>
+                </div>
               <% end %>
-            </h4>
-            <%= render 'activities/feed', activities: @activities %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-  <div class="col-12 col-xxl-5 p-0">
-    <div class="sticky-top">
-      <div class="content-container ml-xxl-3 mt-0">
-        <%= content_tag :div,
-          spinner_tag,
-          data: {
-            behavior: 'fetch fetch-comments',
-            path: comments_path(
-              comment: {
-                commentable_type: @evidence.class,
-                commentable_id: @evidence.id
-              }
-            )
-          }
-        %>
-      </div>
+            </div>
 
-      <div class="content-container ml-xxl-3">
-        <%= content_tag :div,
-          spinner_tag,
-          data: {
-            behavior: 'fetch fetch-subscriptions',
-            path: subscriptions_path(
-              subscription: {
-                subscribable_type: @evidence.class,
-                subscribable_id: @evidence.id
-              }
-            )
-          }
-        %>
+            <% cache ['evidence-information-tab', @issue] do %>
+              <div class="tab-pane" id="info-tab">
+                <h4 class="header-underline">
+                  Issue information -
+                  <span class="actions">
+                  <%= link_to project_issue_path(current_project, @issue) do %>
+                    <i class="fa fa-external-link" aria-hidden="true"></i> Open
+                  <% end %> -
+                  <%= tag_and_name_for(@issue) %>
+                  </span>
+                </h4>
+                <div id="<%= dom_id(@issue) %>_text" class="content-textile">
+                  <%= markup(@issue.text) %>
+                </div>
+              </div>
+            <% end %>
+
+            <% cache ['evidence-activity-tab', @evidence, @activities] do %>
+              <div class="tab-pane" id="activity-tab">
+                <h4 class="header-underline">
+                  Recent activity
+                  <% if @evidence.has_revision_history? %>
+                    -
+                    <span class="actions">
+                      <%#
+                        # Some legacy content was created before paper_trail, so we need to
+                        # make sure that there is at least one revision associated to the
+                        # model.
+                        #%>
+                      <%= link_to(project_node_evidence_revisions_path(@node.project, @node, @evidence)) do %>
+                        <i class="fa fa-history"></i> Revision history
+                      <% end %>
+                    </span>
+                  <% end %>
+                </h4>
+                <%= render 'activities/feed', activities: @activities %>
+              </div>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
+  <%= render partial: 'shared/resource_sidebar', locals: { resource: @evidence, content: ['comments', 'subscriptions'] } %>
 </div>
