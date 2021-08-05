@@ -32,84 +32,54 @@
   </nav>
 <% end %>
 
-<!-- Main content -->
-<div class="row m-0">
-  <ul class="tabs-container nav nav-tabs main-tabs w-100">
-    <li class="nav-item"><a href="#info-tab" data-toggle="tab" class="nav-link active"><%= colored_icon_for_model(@issue, 'fa-bug') %> Information</a></li>
-    <li class="nav-item"><a href="#evidence-tab" class="nav-link" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge bg-primary text-white"><%= @issue.evidence.count %></span></a></li>
-    <li class="nav-item"><a href="#activity-tab" class="nav-link" data-toggle="tab"><i class="fa fa-rss"></i> Recent activity</a></li>
-    <%= render_view_hooks 'issues/show-tabs' %>
-  </ul>
-</div>
 
-<div class="row m-0">
-  <div class="col-12 col-xxl-7 p-0">
-    <div class="content-container mt-0 pb-3 mr-xxl-3">
-      <div class="tab-content mt-0">
-        <div class="tab-pane active" id="info-tab">
-          <% cache ['issue-information-tab', @issue] do %>
-            <div class="note-text-inner">
-              <h4 class="mb-4 header-underline">Issue information -
-                <span class="actions">
-                  <%= tag_and_name_for(@issue) %>
-                </span>
-              </h4>
-              <div class="content-textile">
-                <%= markup(@issue.text, liquid: true) %>
-              </div>
-              <div class="author-info">
-                <span class="ml-auto">Author: <%= @issue.author || 'n/a' %></span>
-              </div>
+<div class="d-flex flex-column flex-xxl-row">
+  <div class="flex-grow-1">
+    <ul class="tabs-container nav nav-tabs main-tabs w-100">
+      <li class="nav-item"><a href="#info-tab" data-toggle="tab" class="nav-link active"><%= colored_icon_for_model(@issue, 'fa-bug') %> Information</a></li>
+      <li class="nav-item"><a href="#evidence-tab" class="nav-link" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge bg-primary text-white"><%= @issue.evidence.count %></span></a></li>
+      <li class="nav-item"><a href="#activity-tab" class="nav-link" data-toggle="tab"><i class="fa fa-rss"></i> Recent activity</a></li>
+      <%= render_view_hooks 'issues/show-tabs' %>
+    </ul>
+
+    <div class="row m-0">
+      <div class="col-12 p-0">
+        <div class="content-container mt-0 pb-3">
+          <div class="tab-content mt-0">
+            <div class="tab-pane active" id="info-tab">
+              <% cache ['issue-information-tab', @issue] do %>
+                <div class="note-text-inner">
+                  <h4 class="mb-4 header-underline">Issue information -
+                    <span class="actions">
+                      <%= tag_and_name_for(@issue) %>
+                    </span>
+                  </h4>
+                  <div class="content-textile">
+                    <%= markup(@issue.text, liquid: true) %>
+                  </div>
+                  <div class="author-info">
+                    <span class="ml-auto">Author: <%= @issue.author || 'n/a' %></span>
+                  </div>
+                </div>
+              <% end %>
             </div>
-          <% end %>
-        </div>
 
-        <div class="tab-pane" id="evidence-tab">
-          <%= render partial: 'evidence' %>
-        </div>
+            <div class="tab-pane" id="evidence-tab">
+              <%= render partial: 'evidence' %>
+            </div>
 
-        <% cache ['issue-activity-tab', @issue, @activities] do %>
-          <div class="tab-pane" id="activity-tab">
-            <%= render partial: 'activity' %>
+            <% cache ['issue-activity-tab', @issue, @activities] do %>
+              <div class="tab-pane" id="activity-tab">
+                <%= render partial: 'activity' %>
+              </div>
+            <% end %>
+
+            <%= render_view_hooks 'issues/show-content' %>
           </div>
-        <% end %>
-
-        <%= render_view_hooks 'issues/show-content' %>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="col-12 col-xxl-5 p-0">
-    <div class="sticky-top">
-      <div class="content-container ml-xxl-3 mt-0">
-        <%= content_tag :div,
-          spinner_tag,
-          data: {
-            behavior: 'fetch fetch-comments',
-            path: comments_path(
-              comment: {
-                commentable_type: @issue.class,
-                commentable_id: @issue.id
-              }
-            )
-          }
-        %>
-      </div>
-
-      <div class="content-container ml-xxl-3">
-        <%= content_tag :div,
-          spinner_tag,
-          data: {
-            behavior: 'fetch fetch-subscriptions',
-            path: subscriptions_path(
-              subscription: {
-                subscribable_type: @issue.class,
-                subscribable_id: @issue.id
-              }
-            )
-          }
-        %>
-      </div>
-    </div>
-  </div>
+  <%= render partial: 'shared/resource_sidebar', locals: { resource: @issue, content: ['comments', 'subscriptions'] } %>
 </div>
