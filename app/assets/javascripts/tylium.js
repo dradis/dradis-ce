@@ -52,6 +52,7 @@
 //= require tylium/modules/fileupload
 //= require tylium/modules/issues
 //= require tylium/modules/nodes
+//= require tylium/modules/resource_sidebar
 //= require tylium/modules/search
 //= require tylium/modules/sidebar
 //= require tylium/modules/activities/poller
