@@ -32,103 +32,74 @@
     <%= render partial: 'breadcrumbs' %>
   </div>
 
-  <ul class="tabs-container nav nav-tabs main-tabs">
-    <li class="nav-item">
-      <a href="#info-tab" data-toggle="tab" class="nav-link active"><i class="fa fa-address-card-o"></i> Information</a>
-    </li>
-    <li class="nav-item">
-      <a href="#activity-tab" data-toggle="tab" class="nav-link"><i class="fa fa-rss"></i> Recent activity</a>
-    </li>
-  </ul>
+  <div class="d-flex flex-column flex-xxl-row">
+    <div class="flex-grow-1">
+      <ul class="tabs-container nav nav-tabs main-tabs">
+        <li class="nav-item">
+          <a href="#info-tab" data-toggle="tab" class="nav-link active"><i class="fa fa-address-card-o"></i> Information</a>
+        </li>
+        <li class="nav-item">
+          <a href="#activity-tab" data-toggle="tab" class="nav-link"><i class="fa fa-rss"></i> Recent activity</a>
+        </li>
+      </ul>
+    
+      <div class="row m-0">
+        <div class="col-12 p-0">
+          <div class="content-container mt-0">
+            <div class="tab-content mt-0">
+              <div class="tab-pane active" id="info-tab">
+                <% cache ['card-information-tab', @card] do %>
+                  <div class="note-text-inner">
+                    <h4 class="mb-4 header-underline"><%= @card.name %></h4>
 
-  <div class="row m-0">
-    <div class="col-12 col-xxl-7 p-0">
-      <div class="content-container mt-0 mr-xxl-3">
-        <div class="tab-content mt-0">
-          <div class="tab-pane active" id="info-tab">
-            <% cache ['card-information-tab', @card] do %>
-              <div class="note-text-inner">
-                <h4 class="mb-4 header-underline"><%= @card.name %></h4>
+                    <div class="card-description">
+                      <div class="content-textile">
+                        <%= markup(@card.description) %>
+                      </div>
+                    </div>
 
-                <div class="card-description">
-                  <div class="content-textile">
-                    <%= markup(@card.description) %>
-                  </div>
-                </div>
-
-                <% if @card.due_date %>
-                  <div class="card-due-date mt-4 pt-2">
-                    <h5>Due Date</h5>
-                    <%= @card.due_date %>
-                  </div>
-                <% end %>
-
-                <% if @card.assignees.any? %>
-                  <div class="card-assignees mt-4 pt-2 clearfix">
-                    <h5>Assignees</h5>
-                    <% @card.assignees.each do |user| %>
-                      <%= avatar_image(user, include_name: true, size: 30) %>
+                    <% if @card.due_date %>
+                      <div class="card-due-date mt-4 pt-2">
+                        <h5>Due Date</h5>
+                        <%= @card.due_date %>
+                      </div>
                     <% end %>
-                  </div>
-                <% end %>
-              <% end %>
 
+                    <% if @card.assignees.any? %>
+                      <div class="card-assignees mt-4 pt-2 clearfix">
+                        <h5>Assignees</h5>
+                        <% @card.assignees.each do |user| %>
+                          <%= avatar_image(user, include_name: true, size: 30) %>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  <% end %>
+
+                </div>
+              </div>
+
+              <% cache ['card-activity-tab', @card, @activities] do %>
+                <div class="tab-pane" id="activity-tab">
+                  <h4 class="header-underline">
+                    Recent activity
+                    <% if @card.has_revision_history? %>
+                      -
+                      <span class="actions">
+                        <%= link_to(project_board_list_card_revisions_path(current_project, @board, @list, @card)) do %>
+                          <i class="fa fa-history"></i> Revision history
+                        <% end %>
+                      </span>
+                    <% end %>
+                  </h4>
+                  <%= render 'activities/feed', activities: @activities %>
+                </div>
+              <% end %>
             </div>
           </div>
-
-          <% cache ['card-activity-tab', @card, @activities] do %>
-            <div class="tab-pane" id="activity-tab">
-              <h4 class="header-underline">
-                Recent activity
-                <% if @card.has_revision_history? %>
-                  -
-                  <span class="actions">
-                    <%= link_to(project_board_list_card_revisions_path(current_project, @board, @list, @card)) do %>
-                      <i class="fa fa-history"></i> Revision history
-                    <% end %>
-                  </span>
-                <% end %>
-              </h4>
-              <%= render 'activities/feed', activities: @activities %>
-            </div>
-          <% end %>
         </div>
       </div>
     </div>
 
-    <div class="col-12 col-xxl-5 p-0">
-      <div class="sticky-top">
-        <div class="content-container ml-xxl-3 mt-0">
-          <%= content_tag :div,
-            spinner_tag,
-            data: {
-              behavior: 'fetch fetch-comments',
-              path: comments_path(
-                comment: {
-                  commentable_type: @card.class,
-                  commentable_id: @card.id
-                }
-              )
-            }
-          %>
-        </div>
-
-        <div class="content-container ml-xxl-3">
-          <%= content_tag :div,
-            spinner_tag,
-            data: {
-              behavior: 'fetch fetch-subscriptions',
-              path: subscriptions_path(
-                subscription: {
-                  subscribable_type: @card.class,
-                  subscribable_id: @card.id
-                }
-              )
-            }
-          %>
-        </div>
-      </div>
-    </div>
-
+    <%= render partial: 'shared/resource_sidebar', locals: { resource: @card, content: ['comments', 'subscriptions'] } %>
   </div>
 </div>
