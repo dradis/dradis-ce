@@ -1,6 +1,6 @@
 <% if @commentable.respond_to?(:project) %>
 
-  <h4 class="d-flex header-underline">Comments <span class="badge bg-primary text-white ml-2" id="comment-count"><%= @comments.count %></span></h4>
+  <h4 class="d-flex header-underline">Comments <span class="badge bg-primary text-white mx-2" id="comment-count"><%= @comments.count %></span></h4>
   <%= render 'comments/feed' %>
 <% else %>
 
