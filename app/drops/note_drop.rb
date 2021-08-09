@@ -1,3 +1,3 @@
 class NoteDrop < BaseDrop
-  delegate :text, :title, to: :@record
+  delegate :fields, :text, :title, to: :@record
 end
