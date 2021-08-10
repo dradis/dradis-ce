@@ -3,7 +3,7 @@
   border-radius: 5px;
   display: flex;
   justify-content: center;
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   position: absolute;
   right: 1rem;
   top: -2.25rem;
@@ -14,10 +14,13 @@
     background-color: #e9ecef;
     bottom: -1rem;
     left: -1rem;
-    padding-bottom: calc(100% + 3.75rem);
-    padding-left: calc(100% - 1.65rem);
     right: 1rem;
-    top: -2.75rem;
+  }
+
+  i {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
   }
 }
 
@@ -76,15 +79,11 @@
     }
 
     .resource-sidebar-toggle {
-      right: 0.5rem;
+      right: 0rem;
 
       &:hover {
         bottom: -0.5rem;
         left: -0.5rem;
-        padding-bottom: calc(100% + 2.8rem);
-        padding-left: calc(100% - 2.15rem);
-        right: 0rem;
-        top: -2.75rem;
       }
     }
   }
