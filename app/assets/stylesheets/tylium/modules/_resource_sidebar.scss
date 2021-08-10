@@ -78,13 +78,13 @@
         }
       }
 
+      &:first-of-type {
+        border-top-left-radius: 5px;
+      }
+
       &:last-of-type {
         border-bottom-left-radius: 5px;
         border-bottom-width: 1px;
-      }
-
-      &:nth-of-type(2) {
-        border-top-left-radius: 5px;
       }
     }
 
