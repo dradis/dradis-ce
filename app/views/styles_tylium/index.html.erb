@@ -294,38 +294,46 @@
         <p>Tables in Dradis have a special structure in order to allow them to be scrollable and sortable. The below table is an example of a table exceeding the container boundaries but all data is still visisible thanks to a horizontally scrollable table wrapper.</p>
 
         <div class="d-flex justify-content-center mt-4">
-          <div class="table-wrapper" id="table-example">
-            <table class="table table-striped items-table">
+          <div class="table-wrapper">
+            <table class="table table-striped"
+              data-behavior="dradis-datatable"
+              data-default-columns='["Col 1 Header", "Col 2 Header", "Col 3 Header", "Col 4 Header", "Col 5 Header"]'
+              data-item-name="name_of_entity"
+              data-local-storage-key="project.ce.name_of_entities_datatable">
               <thead>
                 <tr>
-                  <th data-column="col-1" data-sort="string" class="sortable sorting-asc">Col 1 Header</th>
-                  <th data-column="col-2" data-sort="string" class="sortable">Col 2 Header</th>
-                  <th data-column="col-3" data-sort="string" class="sortable">Col 3 Header</th>
-                  <th data-column="col-4" data-sort="string" class="sortable">Col 4 Header</th>
-                  <th data-column="col-5" data-sort="string" class="sortable">Col 5 Header</th>
+                  <th class="no-sort" data-column-visible="false"><span class="sr-only">Select</span></th>
+                  <th>Col 1 Header</th>
+                  <th>Col 2 Header</th>
+                  <th>Col 3 Header</th>
+                  <th>Col 4 Header</th>
+                  <th>Col 5 Header</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td data-sort-value="Row 1 Col 1 Data">Row 1 Col 1 Data</td>
-                  <td data-sort-value="Row 1 Col 2 Data">Row 1 Col 2 Data</td>
-                  <td data-sort-value="Row 1 Col 3 Data">Row 1 Col 3 Data</td>
-                  <td data-sort-value="Row 1 Col 4 Data">Row 1 Col 4 Data</td>
-                  <td data-sort-value="Row 1 Col 4 Data">Row 1 Col 5 Data</td>
+                <tr id="name_of_entity-1">
+                  <td class="select-checkbox" data-behavior="select-checkbox"></td>
+                  <td data-sort="Row 1 Col 1 Data">Row 1 Col 1 Data</td>
+                  <td data-sort="Row 1 Col 2 Data">Row 1 Col 2 Data</td>
+                  <td data-sort="Row 1 Col 3 Data">Row 1 Col 3 Data</td>
+                  <td data-sort="Row 1 Col 4 Data">Row 1 Col 4 Data</td>
+                  <td data-sort="Row 1 Col 4 Data">Row 1 Col 5 Data</td>
                 </tr>
-                <tr>
-                  <td data-sort-value="Row 2 Col 1 Data">Row 2 Col 1 Data</td>
-                  <td data-sort-value="Row 2 Col 2 Data">Row 2 Col 2 Data</td>
-                  <td data-sort-value="Row 2 Col 3 Data">Row 2 Col 3 Data</td>
-                  <td data-sort-value="Row 2 Col 4 Data">Row 2 Col 4 Data</td>
-                  <td data-sort-value="Row 2 Col 4 Data">Row 2 Col 5 Data</td>
+                <tr id="name_of_entity-2">
+                  <td class="select-checkbox" data-behavior="select-checkbox"></td>
+                  <td data-sort="Row 2 Col 1 Data">Row 2 Col 1 Data</td>
+                  <td data-sort="Row 2 Col 2 Data">Row 2 Col 2 Data</td>
+                  <td data-sort="Row 2 Col 3 Data">Row 2 Col 3 Data</td>
+                  <td data-sort="Row 2 Col 4 Data">Row 2 Col 4 Data</td>
+                  <td data-sort="Row 2 Col 4 Data">Row 2 Col 5 Data</td>
                 </tr>
-                <tr>
-                  <td data-sort-value="Row 3 Col 1 Data">Row 3 Col 1 Data</td>
-                  <td data-sort-value="Row 3 Col 2 Data">Row 3 Col 2 Data</td>
-                  <td data-sort-value="Row 3 Col 3 Data">Row 3 Col 3 Data</td>
-                  <td data-sort-value="Row 3 Col 4 Data">Row 3 Col 4 Data</td>
-                  <td data-sort-value="Row 3 Col 4 Data">Row 3 Col 5 Data</td>
+                <tr id="name_of_entity-3">
+                  <td class="select-checkbox" data-behavior="select-checkbox"></td>
+                  <td data-sort="Row 3 Col 1 Data">Row 3 Col 1 Data</td>
+                  <td data-sort="Row 3 Col 2 Data">Row 3 Col 2 Data</td>
+                  <td data-sort="Row 3 Col 3 Data">Row 3 Col 3 Data</td>
+                  <td data-sort="Row 3 Col 4 Data">Row 3 Col 4 Data</td>
+                  <td data-sort="Row 3 Col 4 Data">Row 3 Col 5 Data</td>
                 </tr>
               </tbody>
             </table>
@@ -335,43 +343,47 @@
 
       <div class="style-code-wrapper collapse" id="tables-code">
         <pre class="style-code">
-<code><span class="ct">// To enable table sorting you must add this line to the view's js file:
-<span class="et">new </span><span class="an">ItemsTable</span><span style="color: white;">(</span><span class="av">'#table-wrapper-id'</span><span style="color: white;">, </span><span class="av">'item_name'</span><span style="color: white;">)</span>
-<span class="ct">// table-wrapper-id: id of an element wrapping the table and table toolbar
-// item_name: name of model (issue, evidence, etc)</span>
-
-<span class="et">&lt;div</span><span class="an"> id=</span><span class="av">"table-wrapper-id"</span><span class="an"> class=</span><span class="av">"table-wrapper"</span><span class="et">></span>
-  <span class="et">&lt;table</span><span class="an"> class=</span><span class="av">"table table-striped items-table"</span><span class="et">></span>
+<code><span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"table-wrapper"</span><span class="et">></span>
+  <span class="et">&lt;table</span>
+    <span class="an">class=</span><span class="av">"table table-striped"</span>
+    <span class="an">data-behavior=</span><span class="av">"dradis-datatable"</span>
+    <span class="an">data-default-columns=</span><span class="av">'["Col 1 Header", "Col 2 Header", "Col 3 Header", "Col 4 Header", "Col 5 Header"]'</span>
+    <span class="an">data-item-name=</span><span class="av">"name_of_entity"</span>
+    <span class="an">data-local-storage-key=</span><span class="av">"project.ce.name_of_entities_datatable"</span><span class="et">></span>
     <span class="et">&lt;thead></span>
       <span class="et">&lt;tr></span>
-        <span class="et">&lt;th</span><span class="an"> data-column=</span><span class="av">"col-1"</span><span class="an"> data-sort=</span><span class="av">"string"</span><span class="an"> class=</span><span class="av">"sortable sorting-asc"</span><span class="et">></span>Col 1 Header<span class="et">&lt;/th></span>
-        <span class="et">&lt;th</span><span class="an"> data-column=</span><span class="av">"col-2"</span><span class="an"> data-sort=</span><span class="av">"string"</span><span class="an"> class=</span><span class="av">"sortable"</span><span class="et">></span>Col 2 Header<span class="et">&lt;/th></span>
-        <span class="et">&lt;th</span><span class="an"> data-column=</span><span class="av">"col-3"</span><span class="an"> data-sort=</span><span class="av">"string"</span><span class="an"> class=</span><span class="av">"sortable"</span><span class="et">></span>Col 3 Header<span class="et">&lt;/th></span>
-        <span class="et">&lt;th</span><span class="an"> data-column=</span><span class="av">"col-4"</span><span class="an"> data-sort=</span><span class="av">"string"</span><span class="an"> class=</span><span class="av">"sortable"</span><span class="et">></span>Col 4 Header<span class="et">&lt;/th></span>
-        <span class="et">&lt;th</span><span class="an"> data-column=</span><span class="av">"col-5"</span><span class="an"> data-sort=</span><span class="av">"string"</span><span class="an"> class=</span><span class="av">"sortable"</span><span class="et">></span>Col 5 Header<span class="et">&lt;/th></span>
+        <span class="et">&lt;th</span><span class="an"> class=</span><span class="av">"no-sort"</span><span class="an"> data-column-visible=</span><span class="av">"false"</span><span class="et">></span><span class="et">&lt;span</span><span class="an"> class=</span><span class="av">"sr-only"</span><span class="et">></span>Select<span class="et">&lt;/span>&lt;/th></span>
+        <span class="et">&lt;th></span>Col 1 Header<span class="et">&lt;/th></span>
+        <span class="et">&lt;th></span>Col 2 Header<span class="et">&lt;/th></span>
+        <span class="et">&lt;th></span>Col 3 Header<span class="et">&lt;/th></span>
+        <span class="et">&lt;th></span>Col 4 Header<span class="et">&lt;/th></span>
+        <span class="et">&lt;th></span>Col 5 Header<span class="et">&lt;/th></span>
       <span class="et">&lt;/tr></span>
     <span class="et">&lt;/thead></span>
     <span class="et">&lt;tbody></span>
-      <span class="et">&lt;tr></span>
-        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 1 Col 1 Data"</span><span class="et">></span>Row 1 Col 1 Data<span class="et">&lt;/td></span>
-        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 1 Col 2 Data"</span><span class="et">></span>Row 1 Col 2 Data<span class="et">&lt;/td></span>
-        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 1 Col 3 Data"</span><span class="et">></span>Row 1 Col 3 Data<span class="et">&lt;/td></span>
-        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 1 Col 4 Data"</span><span class="et">></span>Row 1 Col 4 Data<span class="et">&lt;/td></span>
-        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 1 Col 5 Data"</span><span class="et">></span>Row 1 Col 5 Data<span class="et">&lt;/td></span>
+      <span class="et">&lt;tr</span><span class="an"> id=</span><span class="av">"name_of_entity-1"</span><span class="et">></span>
+        <span class="et">&lt;td</span><span class="an"> class=</span><span class="av">"select-checkbox"</span><span class="an"> data-behavior=</span><span class="av">"select-checkbox"</span><span class="et">></span><span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort=</span><span class="av">"Row 1 Col 1 Data"</span><span class="et">></span>Row 1 Col 1 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort=</span><span class="av">"Row 1 Col 2 Data"</span><span class="et">></span>Row 1 Col 2 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort=</span><span class="av">"Row 1 Col 3 Data"</span><span class="et">></span>Row 1 Col 3 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort=</span><span class="av">"Row 1 Col 4 Data"</span><span class="et">></span>Row 1 Col 4 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort=</span><span class="av">"Row 1 Col 5 Data"</span><span class="et">></span>Row 1 Col 5 Data<span class="et">&lt;/td></span>
       <span class="et">&lt;/tr></span>
-      <span class="et">&lt;tr></span>
-        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 2 Col 1 Data"</span><span class="et">></span>Row 2 Col 1 Data<span class="et">&lt;/td></span>
-        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 2 Col 2 Data"</span><span class="et">></span>Row 2 Col 2 Data<span class="et">&lt;/td></span>
-        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 2 Col 3 Data"</span><span class="et">></span>Row 2 Col 3 Data<span class="et">&lt;/td></span>
-        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 2 Col 4 Data"</span><span class="et">></span>Row 2 Col 4 Data<span class="et">&lt;/td></span>
-        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 2 Col 5 Data"</span><span class="et">></span>Row 2 Col 5 Data<span class="et">&lt;/td></span>
+      <span class="et">&lt;tr</span><span class="an"> id=</span><span class="av">"name_of_entity-2"</span><span class="et">></span>
+        <span class="et">&lt;td</span><span class="an"> class=</span><span class="av">"select-checkbox"</span><span class="an"> data-behavior=</span><span class="av">"select-checkbox"</span><span class="et">></span><span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort=</span><span class="av">"Row 2 Col 1 Data"</span><span class="et">></span>Row 2 Col 1 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort=</span><span class="av">"Row 2 Col 2 Data"</span><span class="et">></span>Row 2 Col 2 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort=</span><span class="av">"Row 2 Col 3 Data"</span><span class="et">></span>Row 2 Col 3 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort=</span><span class="av">"Row 2 Col 4 Data"</span><span class="et">></span>Row 2 Col 4 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort=</span><span class="av">"Row 2 Col 5 Data"</span><span class="et">></span>Row 2 Col 5 Data<span class="et">&lt;/td></span>
       <span class="et">&lt;/tr></span>
-      <span class="et">&lt;tr></span>
-        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 3 Col 1 Data"</span><span class="et">></span>Row 3 Col 1 Data<span class="et">&lt;/td></span>
-        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 3 Col 2 Data"</span><span class="et">></span>Row 3 Col 2 Data<span class="et">&lt;/td></span>
-        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 3 Col 3 Data"</span><span class="et">></span>Row 3 Col 3 Data<span class="et">&lt;/td></span>
-        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 3 Col 4 Data"</span><span class="et">></span>Row 3 Col 4 Data<span class="et">&lt;/td></span>
-        <span class="et">&lt;td</span><span class="an"> data-sort-value=</span><span class="av">"Row 3 Col 5 Data"</span><span class="et">></span>Row 3 Col 5 Data<span class="et">&lt;/td></span>
+      <span class="et">&lt;tr</span><span class="an"> id=</span><span class="av">"name_of_entity-3"</span><span class="et">></span>
+        <span class="et">&lt;td</span><span class="an"> class=</span><span class="av">"select-checkbox"</span><span class="an"> data-behavior=</span><span class="av">"select-checkbox"</span><span class="et">></span><span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort=</span><span class="av">"Row 3 Col 1 Data"</span><span class="et">></span>Row 3 Col 1 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort=</span><span class="av">"Row 3 Col 2 Data"</span><span class="et">></span>Row 3 Col 2 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort=</span><span class="av">"Row 3 Col 3 Data"</span><span class="et">></span>Row 3 Col 3 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort=</span><span class="av">"Row 3 Col 4 Data"</span><span class="et">></span>Row 3 Col 4 Data<span class="et">&lt;/td></span>
+        <span class="et">&lt;td</span><span class="an"> data-sort=</span><span class="av">"Row 3 Col 5 Data"</span><span class="et">></span>Row 3 Col 5 Data<span class="et">&lt;/td></span>
       <span class="et">&lt;/tr></span>
     <span class="et">&lt;/tbody></span>
   <span class="et">&lt;/table></span>
