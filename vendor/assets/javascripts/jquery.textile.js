@@ -216,7 +216,7 @@
           this._previewRendered = true;
         }.bind(this),
         error: function() {
-           window.location.replace(that.$element.data('paths').login_url);
+          window.location.replace(that.$element.data('paths').login_url);
         }
       });
     },
