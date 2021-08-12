@@ -1,27 +1,10 @@
-[v#.#.#] ([MMM’YY])
+v4.0.0 (July 2021)
   * Dynamic content across the app
-  * Replace jQuery-ujs with rails-ujs
-  * Update the API to handle pagination
-  * [feature #2]
-  * [feature ...]
   * Upgraded gems: capybara, jquery-rails, rails, rdoc, resque-status, rubocop, nokogiri, papertrail, puma,
   * Bugs fixed:
     - Fix uploading of attachments with names that have newlines
-  * New integrations:
-    - [new integration #1]
-    - [new integration ...]
-  * Integration enhancements:
-    - [integration enhancement #1]
-    - [integration enhancement ...]
-  * Reporting enhancements:
-    - [reporting enhancement #1]
-    - [reporting enhancement ...]
   * REST/JSON API enhancements:
     - Add pagination support
-  * Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v3.22.0 (April 2021)
   * Added the ability to import Configuration Kits
