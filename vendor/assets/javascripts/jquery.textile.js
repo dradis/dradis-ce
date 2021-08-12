@@ -200,6 +200,7 @@
     // Ajax preview
     _loadPreview: function(data) {
       this._previousContent = this.$element.val();
+      var that = this;
 
       $.post({
         url: this.$element.data('paths').preview_url,
@@ -213,7 +214,10 @@
           }
           this.options.$preview.children(':first').addClass('textile-preview');
           this._previewRendered = true;
-        }.bind(this)
+        }.bind(this),
+        error: function() {
+           window.location.replace(that.$element.data('paths').login_url);
+        }
       });
     },
     // Ajax write
