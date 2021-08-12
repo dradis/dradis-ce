@@ -3,8 +3,8 @@ document.addEventListener('turbolinks:load', function() {
   if ($('[data-behavior~=resource-sidebar]').length) {
     const $resourceSidebar = $('[data-behavior~=resource-sidebar]'),
           $resourceSidebarToggle = $('[data-behavior~=resource-sidebar-toggle]'),
-          localStorageKey = 'project.ce.resource-sidebar-collapsed',
-          savedState = localStorage.getItem(localStorageKey);
+          localStorageKey = $resourceSidebar.data('local-storage-key'),
+          resourceSidebarCollpased = localStorage.getItem(localStorageKey);
 
     function toggleResourceSidebar() {
       $resourceSidebar.toggleClass('collapsed');
@@ -13,7 +13,7 @@ document.addEventListener('turbolinks:load', function() {
       Turbolinks.clearCache();
     }
 
-    if (savedState == 'true') {
+    if (resourceSidebarCollpased == 'true') {
       toggleResourceSidebar();
     }
 
