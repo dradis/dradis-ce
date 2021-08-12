@@ -10,9 +10,9 @@
   border-radius: 5px;
   display: flex;
   justify-content: center;
+  left: 0;
   padding: 1rem;
   position: absolute;
-  right: 1rem;
   top: -2.25rem;
   transition: color 0s;
   z-index: -1;
@@ -22,12 +22,16 @@
     bottom: -1rem;
     left: -1rem;
     right: 1rem;
+
+    i {
+      left: 1rem;
+    }
   }
 
   i {
     position: absolute;
     top: 0.5rem;
-    right: 1rem;
+    left: 0;
   }
 }
 
@@ -94,6 +98,10 @@
       &:hover {
         bottom: -0.5rem;
         left: -0.5rem;
+
+        i {
+          left: 0.5rem;
+        }
       }
     }
   }
