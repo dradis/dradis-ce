@@ -48,7 +48,6 @@ body.styles_tylium {
   }
 
   .style-example {
-
     .editor-field {
       height: initial;
       width: 50%;
@@ -79,7 +78,7 @@ body.styles_tylium {
       }
     }
 
-    ul {
+    ul:not(.pagination) {
       list-style-type: disc;
     }
   }
