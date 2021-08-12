@@ -67,13 +67,21 @@
         padding: 0;
         text-transform: capitalize;
 
-        > *:not(.badge) {
+        > *:not(.badge, i) {
           display: none;
+        }
+
+        .badge,
+        i {
+          margin-bottom: 0.25rem;
         }
 
         .badge {
           font-size: 100%;
-          margin-bottom: 0.25rem;
+        }
+
+        i {
+          font-size: 150%;
         }
       }
 
