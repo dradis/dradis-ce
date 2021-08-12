@@ -1,42 +1,44 @@
-<div class="resource-sidebar" data-behavior="resource-sidebar" data-local-storage-key="project.ce.resource-sidebar-collapsed">
+<div>
   <div class="sticky-top">
-    <a href="javascript:void(0)" class="resource-sidebar-toggle" data-behavior="resource-sidebar-toggle">
-      <i class="fa fa-chevron-right mt-1"></i>
-      <span class="sr-only">Toggle resource sidebar</span>
-    </a>
+    <div class="resource-sidebar" data-behavior="resource-sidebar" data-local-storage-key="project.ce.resource-sidebar-collapsed">
+      <a href="javascript:void(0)" class="resource-sidebar-toggle" data-behavior="resource-sidebar-toggle">
+        <i class="fa fa-chevron-right mt-1"></i>
+        <span class="sr-only">Toggle resource sidebar</span>
+      </a>
 
-    <% if content.include?('comments') %>
-      <div class="content-container ml-xxl-0 mt-0">
-        <%= content_tag :div,
-          spinner_tag,
-          data: {
-            behavior: 'fetch fetch-comments',
-            path: comments_path(
-              comment: {
-                commentable_type: resource.class,
-                commentable_id: resource.id
-              }
-            )
-          }
-        %>
-      </div>
-    <% end %>
+      <% if content.include?('comments') %>
+        <div class="content-container">
+          <%= content_tag :div,
+            spinner_tag,
+            data: {
+              behavior: 'fetch fetch-comments',
+              path: comments_path(
+                comment: {
+                  commentable_type: resource.class,
+                  commentable_id: resource.id
+                }
+              )
+            }
+          %>
+        </div>
+      <% end %>
 
-    <% if content.include?('subscriptions') %>
-      <div class="content-container ml-xxl-0">
-        <%= content_tag :div,
-          spinner_tag,
-          data: {
-            behavior: 'fetch fetch-subscriptions',
-            path: subscriptions_path(
-              subscription: {
-                subscribable_type: resource.class,
-                subscribable_id: resource.id
-              }
-            )
-          }
-        %>
-      </div>
-    <% end %>
+      <% if content.include?('subscriptions') %>
+        <div class="content-container">
+          <%= content_tag :div,
+            spinner_tag,
+            data: {
+              behavior: 'fetch fetch-subscriptions',
+              path: subscriptions_path(
+                subscription: {
+                  subscribable_type: resource.class,
+                  subscribable_id: resource.id
+                }
+              )
+            }
+          %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
