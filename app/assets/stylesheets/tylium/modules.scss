@@ -122,12 +122,10 @@
 }
 
 .gravatar {
-  float: left;
   margin-right: 5px;
 
   &.gravatar-inline {
     margin: 0 0 -3px 0;
-    float: none;
     white-space: nowrap;
   }
 

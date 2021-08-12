@@ -1,6 +1,5 @@
 .comment-feed {
   .actions {
-    float: right;
     visibility: hidden;
   }
 
@@ -27,7 +26,6 @@
         padding-top: 3px;
         
         &:not(.gravatar-inline) {
-          float: left;
           margin-right: 0.5rem
         }
       }
@@ -41,12 +39,13 @@
       }
   
       .time {
-        color: #888;
+        display: flex;
         font-size: 12px;
       }
 
       .user {
         font-weight: 600;
+        margin-right: 0.5rem;
       }
     }
   }
@@ -62,12 +61,6 @@
   textarea {
     min-height: 7.5rem;
     resize: none;
-  }
-}
-
-.subscriptions-feed {
-  .gravatar {
-    float: initial;
   }
 }
 
