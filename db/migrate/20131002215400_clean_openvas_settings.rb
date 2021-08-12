@@ -1,4 +1,4 @@
-class CleanOpenvasSettings < ActiveRecord::Migration[5.1]
+class CleanOpenVASSettings < ActiveRecord::Migration[5.1]
   def up
     # This removes old settings that may exist in versions of Pro prior to v1.9
     %w{openvas:node_label}.each do |name|

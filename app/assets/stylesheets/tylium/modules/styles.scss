@@ -39,7 +39,7 @@ body.styles_tylium {
         .ct {
           color: #608b4e;
         }
-        
+
         .et {
           color: #569cd6;
         }
@@ -48,7 +48,6 @@ body.styles_tylium {
   }
 
   .style-example {
-
     .editor-field {
       height: initial;
       width: 50%;
@@ -58,7 +57,7 @@ body.styles_tylium {
         resize: none;
       }
     }
-    
+
     .fw4 {
       font-weight: 400;
     }
@@ -79,7 +78,7 @@ body.styles_tylium {
       }
     }
 
-    ul {
+    ul:not(.pagination) {
       list-style-type: disc;
     }
   }

@@ -24,7 +24,7 @@ class ListsController < AuthenticatedController
   def edit; end
 
   def update
-    if @list.update_attributes(list_params)
+    if @list.update(list_params)
       track_updated(@list)
       redirect_to [current_project, @board], notice: 'List renamed.'
     else

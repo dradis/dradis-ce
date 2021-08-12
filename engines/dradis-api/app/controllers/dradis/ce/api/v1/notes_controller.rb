@@ -7,7 +7,8 @@ module Dradis::CE::API
       before_action :set_node
 
       def index
-        @notes = @node.notes.all.order('updated_at desc')
+        @notes = @node.notes.order('updated_at desc')
+        @notes = @notes.page(params[:page].to_i) if params[:page]
       end
 
       def show
@@ -27,7 +28,7 @@ module Dradis::CE::API
 
       def update
         @note = @node.notes.find(params[:id])
-        if @note.update_attributes(note_params)
+        if @note.update(note_params)
           track_updated(@note)
           render note: @note
         else

@@ -57,8 +57,8 @@ There are two editions of Dradis Framework:
 ```
 $ git clone https://github.com/dradis/dradis-ce.git
 $ cd dradis-ce/
-$ ruby bin/setup
-$ bundle exec rails server
+$ ./bin/setup
+$ ./bin/rails server
 ```
 
 You can browse to the app at http://localhost:3000/
@@ -70,6 +70,7 @@ If you'd like to use dradis in Vagrant, you can use the included Vagrantfile.
 ```
 # Clone the repo
 git clone https://github.com/dradis/dradis-ce.git
+cd dradis-ce/
 
 # install/start the vagrant box
 vagrant up

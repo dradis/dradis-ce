@@ -1,8 +1,8 @@
 # This controller exposes the REST operations required to manage the Note
 # resource.
 class NotesController < NestedNodeResourceController
-  include Commented
   include ConflictResolver
+  include LiquidEnabledResource
   include Mentioned
   include MultipleDestroy
   include NodesSidebar
@@ -36,7 +36,6 @@ class NotesController < NestedNodeResourceController
   # Retrieve a Note given its :id
   def show
     @activities = @note.activities.latest
-    @subscription = @note.subscription_for(user: current_user)
     load_conflicting_revisions(@note)
   end
 
@@ -47,7 +46,7 @@ class NotesController < NestedNodeResourceController
   # Update the attributes of a Note
   def update
     updated_at_before_save = @note.updated_at.to_i
-    if @note.update_attributes(note_params)
+    if @note.update(note_params)
       track_updated(@note)
       check_for_edit_conflicts(@note, updated_at_before_save)
       # if the note has just been moved to another node, we must reload

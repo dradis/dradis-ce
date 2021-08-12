@@ -1,0 +1,7 @@
+<% if @subscriptions.any? %>
+  <% @subscriptions.each do |subscription| %>
+    <%= avatar_image(subscription.user, size: 40) %>
+  <% end %>
+<% else %>
+  There are no subscribers yet.
+<% end %>

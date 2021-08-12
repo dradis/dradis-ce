@@ -5,34 +5,34 @@
 #   $ bundle
 
 # ----------------------------------------------------------------- Calculators
-gem 'dradis-calculator_cvss',  github: 'dradis/dradis-calculator_cvss', branch: 'master'
-gem 'dradis-calculator_dread', '~> 3.19', github: 'dradis/dradis-calculator_dread'
+gem 'dradis-calculator_cvss', '~>3.22'
+gem 'dradis-calculator_dread', '~>3.22'
 
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv',         '~> 3.19', github: 'dradis/dradis-csv'
-# gem 'dradis-json',        '~> 3.19', github: 'dradis/dradis-json'
-gem 'dradis-html_export', '~> 3.19', github: 'dradis/dradis-html_export'
+gem 'dradis-csv', '~>3.22'
+# gem 'dradis-json', '~>3.22'
+gem 'dradis-html_export', '~>3.22'
 
 
 # ---------------------------------------------------------------------- Import
-# gem 'dradis-mediawiki', '~> 3.19', github: 'dradis/dradis-mediawiki'
-# gem 'dradis-vulndb',    '~> 3.19', github: 'dradis/dradis-vulndb'
+# gem 'dradis-mediawiki', '~>3.22'
+# gem 'dradis-vulndb', '~>3.22'
 
 # ---------------------------------------------------------------------- Upload
-gem 'dradis-acunetix',    '~> 3.19', github: 'dradis/dradis-acunetix'
-gem 'dradis-brakeman',    '~> 3.19', github: 'dradis/dradis-brakeman'
-gem 'dradis-burp',        '~> 3.19', github: 'dradis/dradis-burp'
-gem 'dradis-metasploit',  '~> 3.19', github: 'dradis/dradis-metasploit'
-gem 'dradis-nessus',      '~> 3.19', github: 'dradis/dradis-nessus'
-gem 'dradis-nexpose',     '~> 3.19', github: 'dradis/dradis-nexpose'
-gem 'dradis-netsparker',  '~> 3.19', github: 'dradis/dradis-netsparker'
-gem 'dradis-nikto',       '~> 3.19', github: 'dradis/dradis-nikto'
-gem 'dradis-nipper',      '~> 3.19', github: 'dradis/dradis-nipper'
-gem 'dradis-nmap',        '~> 3.19', github: 'dradis/dradis-nmap'
-gem 'dradis-ntospider',   '~> 3.19', github: 'dradis/dradis-ntospider'
-gem 'dradis-openvas',     '~> 3.19', github: 'dradis/dradis-openvas'
-gem 'dradis-qualys',      '~> 3.19', github: 'dradis/dradis-qualys'
-gem 'dradis-saint',       '~> 3.19', github: 'dradis/dradis-saint'
-gem 'dradis-wpscan',      '~> 3.19', github: 'dradis/dradis-wpscan'
-gem 'dradis-zap',         '~> 3.19', github: 'dradis/dradis-zap'
+gem 'dradis-acunetix', '~>3.22'
+gem 'dradis-brakeman', '~>3.22'
+gem 'dradis-burp', '~>3.22'
+gem 'dradis-metasploit', '~>3.22'
+gem 'dradis-nessus', '~>3.22'
+gem 'dradis-nexpose', '~>3.22'
+gem 'dradis-netsparker', '~>3.22'
+gem 'dradis-nikto', '~>3.22'
+gem 'dradis-nipper', '~>3.22'
+gem 'dradis-nmap', '~>3.22'
+gem 'dradis-ntospider', '~>3.22'
+gem 'dradis-openvas', '~>3.22'
+gem 'dradis-qualys', '~>3.22'
+gem 'dradis-saint', '~>3.22'
+gem 'dradis-wpscan', '~>3.22'
+gem 'dradis-zap', '~>3.22'

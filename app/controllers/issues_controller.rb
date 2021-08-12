@@ -1,8 +1,8 @@
 class IssuesController < AuthenticatedController
   include ActivityTracking
-  include Commented
   include ContentFromTemplate
   include ConflictResolver
+  include LiquidEnabledResource
   include Mentioned
   include MultipleDestroy
   include NotificationsReader
@@ -36,7 +36,6 @@ class IssuesController < AuthenticatedController
     @first_evidence  = Evidence.where(node: @first_node, issue: @issue)
 
     load_conflicting_revisions(@issue)
-    @subscription = @issue.subscription_for(user: current_user)
   end
 
   def new
@@ -56,7 +55,7 @@ class IssuesController < AuthenticatedController
           #
           # See #set_or_initialize_issue()
           #
-          @issue.update_attributes(issue_params)
+          @issue.update(issue_params)
 
 
         track_created(@issue)
@@ -83,7 +82,7 @@ class IssuesController < AuthenticatedController
     respond_to do |format|
       updated_at_before_save = @issue.updated_at.to_i
 
-      if @issue.update_attributes(issue_params)
+      if @issue.update(issue_params)
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
@@ -122,7 +121,6 @@ class IssuesController < AuthenticatedController
   end
 
   private
-
   def set_issues
     # We need a transaction because multiple DELETE calls can be issued from
     # index and a TOCTOR can appear between the Note read and the Issue.find

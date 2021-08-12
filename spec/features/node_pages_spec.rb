@@ -8,11 +8,11 @@ describe "node pages" do
   end
 
   describe "creating new nodes" do
-    context "when a project has no nodes defined yet" do
+    context "when a project doesn't have any nodes yet" do
       it "says so in the sidebar" do
         visit project_path(current_project)
         within ".main-sidebar" do
-          should have_selector ".no-nodes", text: "No nodes defined yet"
+          should have_selector ".empty-state", text: "You don't have any nodes yet"
         end
       end
     end
@@ -27,12 +27,12 @@ describe "node pages" do
       let(:submit_form) { click_button "Add" }
 
       it "shows a modal for adding a top-level node" do
-        expect(page).to have_field :node_label
+        expect(page).to have_field :branch_node_label
       end
 
       describe "submitting the 'new top-level node' form" do
         it "creates and shows the new node" do
-          fill_in :node_label, with: "My awesome node"
+          fill_in :branch_node_label, with: "My awesome node"
           expect{submit_form}.to change{Node.count}.by(1)
           expect(page).to have_content "Successfully created node."
           new_node = Node.last
@@ -44,11 +44,11 @@ describe "node pages" do
 
       example "adding multiple root nodes" do
         choose "Add multiple"
-        expect(page).to have_no_field :node_label
-        expect(page).to have_field :nodes_list
+        expect(page).to have_no_field :branch_node_label
+        expect(page).to have_field :branch_nodes_list
 
         # Include a blank line to make sure that no node gets created:
-        fill_in :nodes_list, with: <<-LIST.strip_heredoc
+        fill_in :branch_nodes_list, with: <<-LIST.strip_heredoc
             node 1
 
             node_2
@@ -64,17 +64,17 @@ describe "node pages" do
           ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h|
             h[:job]
           }.last(3)
-        ).to eq Array.new(3, ActivityTrackingJob)
+        ).to include *Array.new(3, ActivityTrackingJob)
         expect(
           ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
             h1[:args].map { |h2| h2['action'] }
           }.flatten.last(3)
-        ).to eq Array.new(3, 'create')
+        ).to include *Array.new(3, 'create')
         expect(
           ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
             h1[:args].map { |h2| h2['trackable_type'] }
           }.flatten.last(3)
-        ).to eq Array.new(3, 'Node')
+        ).to include *Array.new(3, 'Node')
 
         expect(current_project.nodes.last(3).map(&:label)).to match_array([
           "node 1",
@@ -89,8 +89,8 @@ describe "node pages" do
       example "adding multiple root host nodes" do
         choose "Add multiple"
 
-        fill_in :nodes_list, with: "foo\nbar"
-        select "Host", from: :nodes_type_id
+        fill_in :branch_nodes_list, with: "foo\nbar"
+        select "Host", from: :branch_nodes_icon
 
         expect do
           click_button "Add"
@@ -112,7 +112,7 @@ describe "node pages" do
       let(:node) { create(:node, project: current_project) }
 
       example "adding a single node" do
-        fill_in :node_label, with: "My new node"
+        fill_in "child_node_label", with: "My new node"
         expect do
           click_button 'Add'
         end.to change { node.children.count }.by(1)
@@ -130,11 +130,11 @@ describe "node pages" do
 
       example "adding multiple nodes" do
         choose "Add multiple"
-        expect(page).to have_no_field :node_label
-        expect(page).to have_field :nodes_list
+        expect(page).to have_no_field :child_node_label
+        expect(page).to have_field :child_nodes_list
 
         # Include a blank line to make sure that no node gets created:
-        fill_in :nodes_list, with: <<-LIST.strip_heredoc
+        fill_in :child_nodes_list, with: <<-LIST.strip_heredoc
             node 1
 
             node_2
@@ -174,7 +174,7 @@ describe "node pages" do
 
       example "adding multiple nodes - submitting a blank textarea" do
         choose "Add multiple"
-        fill_in :nodes_list, with: "   \n \n \n    \n "
+        fill_in :child_nodes_list, with: "   \n \n \n    \n "
         click_button "Add"
         expect(page).to have_content "Please add at least one node"
       end
@@ -194,11 +194,11 @@ describe "node pages" do
 
     it "shows a modal to rename the node" do
       should have_content /Rename My node node/i
-      should have_field :node_label
+      should have_field :node_new_label
     end
 
     describe "submitting a new name" do
-      before { fill_in :node_label, with: "new node name" }
+      before { fill_in :node_new_label, with: "new node name" }
 
       it "updates the node's name" do
         submit_form
@@ -217,7 +217,7 @@ describe "node pages" do
     end
 
     describe "submitting an invalid name" do
-      before { fill_in :node_label, with: "" }
+      before { fill_in :node_new_label, with: "" }
 
       it "doesn't update the node's name" do
         expect{ submit_form }.not_to change{ @node.reload.label }
@@ -303,7 +303,7 @@ describe "node pages" do
     end
 
     context "when the node has no recent activity" do
-      it { should have_content "no activity" }
+      it { should have_content "You don't have any activities yet" }
     end
 
     context "when the node has nested notes or evidence" do

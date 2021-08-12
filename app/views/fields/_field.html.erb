@@ -6,6 +6,7 @@
     <div class="inline-editable w-100" data-behavior="inline-editable">
       <div class="edit-hover">
         <i class="fa fa-pencil pt-1" data-behavior="edit-field" data-edit-field="#item_form_field_name_<%= index %>"></i>
+        <%= label_tag "item_form[field_name_#{index}]", 'Field Name', class: 'sr-only' %>
         <%= text_field_tag "item_form[field_name_#{index}]", field_name,
           class: 'form-control',
           onkeydown: 'return (event.keyCode!=13);',
@@ -24,6 +25,7 @@
       <% if @allow_dropdown && options.count > 1 %>
         <%= select :item_form, "field_value_#{index}", options, {}, { class: 'form-control', data: { behavior: 'preview-enabled' }, tabindex: index + 1 } %>
       <% else %>
+        <%= label_tag "item_form[field_value_#{index}]", 'Field Value', class: 'sr-only' %>
         <%= text_area_tag "item_form[field_value_#{index}]", value, rows: 1,
           class: 'form-control',
           data: {

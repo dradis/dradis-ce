@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title><%= content_for?(:title) ? yield(:title) : "Dradis Community Edition" %></title>
     <meta charset="utf-8">
@@ -13,6 +13,7 @@
         # the message appear and disappear in the next page load %>
       <meta name="turbolinks-cache-control" content="reload">
     <% end %>
+
     <%= render 'comments/mentionable_users' if @mentionable_users %>
 
     <%= favicon_link_tag 'favicon.ico',
@@ -34,10 +35,10 @@
     <div id="view-content" class="view-content" data-behavior="view-content">
       <div class="row m-0">
         <% if content_for?(:sidebar) %>
-          <div class="secondary-sidebar col-4 col-lg-3 col-xl-2">
+          <div class="secondary-sidebar col-4 col-lg-3 col-xxl-2">
             <%= yield :sidebar %>
           </div>
-          <div class="secondary-sidebar-content col-8 col-lg-9 col-xl-10 p-0 ml-auto">
+          <div class="secondary-sidebar-content col-8 col-lg-9 col-xxl-10 p-0 ml-auto">
             <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
             <%= render 'shared/noscript' %>
             <%= render "layouts/tylium/project_teaser" %>
@@ -66,7 +67,6 @@
     <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
 
     <% if controller_name == 'boards' %>
-      <%= render 'boards/modals/new_board_form' unless  request.xhr? %>
       <% if content_for?(:board_rename_modal) %>
         <%= yield(:board_rename_modal) %>
       <% end %>
@@ -78,7 +78,11 @@
       <% end %>
     <% end %>
 
-    <% if @node %>
+    <% if controller_name == 'boards' || controller_name == 'projects' %>
+      <%= render 'boards/modals/new_board_form' unless request.xhr? %>
+    <% end %>
+
+    <% if @node && @node.label != 'Methodologies' %>
       <%= render partial: 'nodes/modals/add_node', locals: { type: :child } %>
       <%= render partial: 'nodes/modals/delete' %>
       <%= render partial: 'nodes/modals/merge' %>
@@ -89,7 +93,7 @@
     <% if controller_name == 'notes'%>
       <%= render partial: 'notes/modals/move' %>
     <% end %>
-    
+
     <% if controller_name == 'styles_tylium' %>
       <%= render partial: 'styles_tylium/modal' %>
     <% end %>

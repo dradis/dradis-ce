@@ -1,5 +1,5 @@
 .dots-container {
-  background-color: darken($secondaryBgColor, 3%);
+  background-color: #e9ecef; // match BS4 breadcrumb bg color
   display: flex;
   justify-content: space-between;
   align-items: center;

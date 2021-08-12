@@ -4,7 +4,7 @@
 
 # Rails stuff
 /db/*.sqlite3
-/db/*.sqlite3-journal
+/db/*.sqlite3-*
 /config/database.yml
 /config/secrets.yml
 /config/smtp.yml
@@ -12,13 +12,12 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+!/tmp/pids/.keep
 
-# Ignore uploaded files in development
+# Ignore uploaded files in development.
 /storage/*
 !/storage/.keep
 
-/node_modules
-/yarn-error.log
 /public/assets
 .byebug_history
 
