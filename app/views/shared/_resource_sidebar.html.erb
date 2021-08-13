@@ -6,6 +6,12 @@
         <span class="sr-only">Toggle resource sidebar</span>
       </a>
 
+      <% if content.include?('validations') %>
+        <div class="content-container">
+          <%= render 'validations/feed', record: resource %>
+        </div>
+      <% end %>
+
       <% if content.include?('comments') %>
         <div class="content-container">
           <%= content_tag :div,
