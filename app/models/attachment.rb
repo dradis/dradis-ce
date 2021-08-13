@@ -80,6 +80,12 @@ class Attachment < File
     find(:all).count
   end
 
+  def self.exists?(filename:, node_id:)
+    find(filename, conditions: { node_id: node_id } )
+  rescue StandardError => e
+    false
+  end
+
   # Return the attachment instance(s) based on the find parameters
   def self.find(*args)
     options = args.extract_options!

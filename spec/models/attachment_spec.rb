@@ -3,16 +3,24 @@ require 'rails_helper'
 describe Attachment do
   fixtures :configurations
 
-  before(:each) do
+  let(:attachment) do
+    attachment = Attachment.new(Rails.root.join('public', 'images', 'rails.png'), node_id: node.id)
+    attachment.save
+    attachment
+  end
+
+  let(:node) { create(:node) }
+
+  before do
+    attachment
+  end
+
+  after do
+    FileUtils.rm_rf(Attachment.pwd.join(node.id.to_s))
   end
 
   it 'should copy the source file into the attachments folder' do
-    node = create(:node)
-    attachment = Attachment.new(Rails.root.join('public', 'images', 'rails.png'), node_id: node.id)
-    attachment.save
-    expect(File.exists?(Attachment.pwd + "#{node.id}/rails.png")).to be true
-
-    node.destroy
+    expect(File.exists?(Attachment.pwd + "#{node.id}/#{attachment.filename}")).to be true
   end
 
   it 'should be able to find attachments by filename'
@@ -20,16 +28,24 @@ describe Attachment do
   it 'should recognise Ruby file IO and in particular the <<() method'
   it 'should be re-nameble'
 
+  describe '.exists?' do
+    context 'if attachment exists in the file system' do
+      it 'returns the attachment object' do
+        expect(Attachment.exists?(filename: attachment.filename, node_id: node.id)).to be_a(Attachment)
+      end
+    end
+
+    context 'if attachment does not exist in the file system' do
+      it 'returns false' do
+        expect(Attachment.exists?(filename: 'invalid_attachment.png', node_id: node.id)).to be(false)
+      end
+    end
+  end
+
   describe '.fullpath' do
     it 'returns the full file system path to the attachment' do
-      node = create(:node)
-      attachment = Attachment.new(Rails.root.join('public', 'images', 'rails.png'), node_id: node.id)
-      attachment.save
-
       expect { attachment.fullpath }.not_to raise_error
-      expect(attachment.fullpath.to_s).to eq(File.join(Attachment.pwd, node.id.to_s, 'rails.png'))
-
-      node.destroy
+      expect(attachment.fullpath.to_s).to eq(File.join(Attachment.pwd, node.id.to_s, attachment.filename))
     end
   end
 
