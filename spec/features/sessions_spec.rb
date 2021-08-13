@@ -57,7 +57,7 @@ describe 'Sessions' do
     end
 
     describe 'return after timeout' do
-      let(:project) { Project.find(1) }
+      let(:project) { create(:project) }
 
       let(:submit_login_details) do
         fill_in 'login', with: @user.email
