@@ -4,8 +4,7 @@
   * [feature ...]
   * Upgraded gems: [gem #1], [gem #2]
   * Bugs fixed:
-    - [bug fixed #1]
-    - [bug fixed ...]
+    - Reference the 'shared' directory for the initial project template configuration
     - Bug tracker items: #N, #M, #O, ...
   * New integrations:
     - [new integration #1]
