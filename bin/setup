@@ -38,6 +38,9 @@ FileUtils.chdir APP_ROOT do
   end
 
   puts "\n== Preparing database =="
+  File.symlink '../../shared/templates', 'templates'
+
+  puts "\n== Preparing database =="
   system! 'bin/rails db:prepare'
 
   puts "\n== Loading some sample content =="
