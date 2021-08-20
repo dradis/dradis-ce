@@ -2,6 +2,8 @@
 # Each Configuration object has a :name and a :value. Some configuration
 # parameters can be accessed through the helper methods provided in this class.
 class Configuration < ApplicationRecord
+  TEMPLATES_DIR = Pathname.new File.readlink(Rails.root.join('templates'))
+
   # -- Relationships --------------------------------------------------------
 
   # -- Callbacks ------------------------------------------------------------
@@ -42,27 +44,27 @@ class Configuration < ApplicationRecord
 
   # --------------------------------------------------------------- admin:paths
   def self.paths_templates_methodologies
-    create_with(value: Rails.root.join('../../shared/templates/methodologies/').to_s)
+    create_with(value: TEMPLATES_DIR.join('methodologies').to_s)
       .find_or_create_by(name: 'admin:paths:templates:methodologies').value
   end
 
   def self.paths_templates_notes
-    create_with(value: Rails.root.join('../../shared/templates/notes/').to_s)
+    create_with(value: TEMPLATES_DIR.join('notes').to_s)
       .find_or_create_by(name: 'admin:paths:templates:notes').value
   end
 
   def self.paths_templates_plugins
-    create_with(value: Rails.root.join('templates', 'plugins').to_s)
+    create_with(value: TEMPLATES_DIR.join('plugins').to_s)
       .find_or_create_by(name: 'admin:paths:templates:plugins').value
   end
 
   def self.paths_templates_projects
-    create_with(value: Rails.root.join('../../shared/templates/projects/').to_s)
+    create_with(value: TEMPLATES_DIR.join('projects').to_s)
       .find_or_create_by(name: 'admin:paths:templates:projects').value
   end
 
   def self.paths_templates_reports
-    create_with(value: Rails.root.join('templates', 'reports'))
+    create_with(value: TEMPLATES_DIR.join('reports').to_s)
       .find_or_create_by(name: 'admin:paths:templates:reports').value
   end
 

@@ -3,7 +3,7 @@
 
 class SettingsAddProjectAndMethodologyPaths < ActiveRecord::Migration[5.1]
   def up
-    new_value = Rails.root.join('templates', 'projects').to_s
+    new_value = Configuration::TEMPLATES_DIR.join('project')
 
     # If there was an old setting, honor it.
     if (old_setting = Configuration.find_by_name('admin:paths:methodologies'))
