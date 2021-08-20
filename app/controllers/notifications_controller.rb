@@ -1,6 +1,9 @@
 class NotificationsController < AuthenticatedController
   include ProjectScoped
 
+  skip_before_action :set_project, if: -> { params[:project_id].blank? }
+  skip_before_action :set_nodes, if: -> { params[:project_id].blank? }
+
   def index
     notifications = current_user.notifications.newest.includes(
       :actor, notifiable: [:user, :commentable]
@@ -10,6 +13,7 @@ class NotificationsController < AuthenticatedController
         @notifications = notifications.page(params[:page])
       end
       format.js do
+        @project_id = params[:project_id]
         @notifications = notifications.limit(20)
         # NB the unread count is not the same as @notifications.count because
         # @notifications a) includes read notifs and b) is capped at 20
@@ -39,7 +43,17 @@ class NotificationsController < AuthenticatedController
         end
       end
 
-      f.html { redirect_to project_notifications_path(current_project) }
+      f.html { redirect_to notifications_path }
     end
+  end
+
+  protected
+
+  # ProjectScoped always call ProjectScoped#info_for_paper_trail with the current_project.
+  # We have to overwrite it here so that it doesn't return an error.
+  def info_for_paper_trail
+    return if params[:project_id].blank?
+
+    super
   end
 end

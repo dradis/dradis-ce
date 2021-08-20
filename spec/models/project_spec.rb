@@ -5,8 +5,8 @@ describe Project do
     expect(Project.new.id).to eq 1
   end
 
-  it 'has default name "Dradis CE"' do
-    expect(Project.new.name).to eq 'Dradis CE'
+  it 'has default name "Dradis Project"' do
+    expect(Project.new.name).to eq 'Dradis Project'
   end
 
   it 'allows id and name to be set on initialization' do

@@ -1,8 +1,8 @@
 class IssuesController < AuthenticatedController
   include ActivityTracking
-  include Commented
   include ContentFromTemplate
   include ConflictResolver
+  include LiquidEnabledResource
   include Mentioned
   include MultipleDestroy
   include NotificationsReader
@@ -13,6 +13,7 @@ class IssuesController < AuthenticatedController
 
   before_action :set_or_initialize_issue, except: [:import, :index]
   before_action :set_or_initialize_tags, except: [:destroy]
+  before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
 
   def index
     @columns = @issues.map(&:fields).map(&:keys).uniq.flatten | ['Title', 'Tags', 'Affected', 'Created', 'Created by', 'Updated']
@@ -35,7 +36,6 @@ class IssuesController < AuthenticatedController
     @first_evidence  = Evidence.where(node: @first_node, issue: @issue)
 
     load_conflicting_revisions(@issue)
-    @subscription = @issue.subscription_for(user: current_user)
   end
 
   def new
@@ -44,7 +44,7 @@ class IssuesController < AuthenticatedController
   end
 
   def create
-    @issue.author ||= current_user.email
+    @issue.author = current_user.email
 
     respond_to do |format|
       if @issue.save &&
@@ -55,7 +55,7 @@ class IssuesController < AuthenticatedController
           #
           # See #set_or_initialize_issue()
           #
-          @issue.update_attributes(issue_params)
+          @issue.update(issue_params)
 
 
         track_created(@issue)
@@ -66,7 +66,10 @@ class IssuesController < AuthenticatedController
 
         format.html { redirect_to [current_project, @issue], notice: 'Issue added.' }
       else
-        format.html { render 'new', alert: 'Issue couldn\'t be added.' }
+        format.html do
+          flash.now[:alert] = 'Issue couldn\'t be added.'
+          render :new
+        end
       end
       format.js
     end
@@ -79,13 +82,16 @@ class IssuesController < AuthenticatedController
     respond_to do |format|
       updated_at_before_save = @issue.updated_at.to_i
 
-      if @issue.update_attributes(issue_params)
+      if @issue.update(issue_params)
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
         format.html { redirect_to project_issue_path(current_project, @issue), notice: 'Issue updated' }
       else
-        format.html { render 'edit' }
+        format.html do
+          flash.now[:alert] = 'Issue couldn\'t be updated.'
+          render :edit
+        end
       end
       format.js
       format.json
@@ -115,7 +121,6 @@ class IssuesController < AuthenticatedController
   end
 
   private
-
   def set_issues
     # We need a transaction because multiple DELETE calls can be issued from
     # index and a TOCTOR can appear between the Note read and the Issue.find
@@ -152,4 +157,13 @@ class IssuesController < AuthenticatedController
     params.require(:issue).permit(:tag_list, :text)
   end
 
+  def set_auto_save_key
+    @auto_save_key =  if @issue&.persisted?
+                        "issue-#{@issue.id}"
+                      elsif params[:template]
+                        "project-#{current_project.id}-issue-#{params[:template]}"
+                      else
+                        "project-#{current_project.id}-issue"
+                      end
+  end
 end

@@ -2,30 +2,39 @@
   position: initial;
 
   .dropdown-menu {
+    border: 1px solid $borderColor;
+    box-shadow: 0 20px 30px 0 rgba(33,55,74,0.2);
+    font-size: 0.9rem;
     position: absolute;
     margin: 0;
-    border: 1px solid $borderColor;
-    z-index: 3;
     padding: .25rem 0;
-    font-size: 0.9rem;
-    box-shadow: 0 20px 30px 0 rgba(33,55,74,0.2);
-
-    .divider {
-      height: 0;
-      border-top: 1px solid $borderColor;
-      margin: .25rem 0;
-    }
+    z-index: 3;
 
     .dropdown-item {
+      align-items: center;
       color: $linkColor;
+      display: flex;
       transition: color 0s;
       font-weight: inherit;
 
       &:active,
       &:hover {
         color: $linkColorHover;
-        background-color: #f8f9fa;
+        background-color: $dropdownLinkBackgroundHover;
+      }
+
+      input[type=checkbox] {
+        margin-right: 0.5rem;
+      }
+
+      label {
+        margin-bottom: 0;
       }
     }
   }
+}
+
+.dropdown-menu {
+  max-height: calc(100vh - 15rem);
+  overflow-y: auto;
 }

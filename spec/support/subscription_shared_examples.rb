@@ -15,7 +15,12 @@ end
 #
 shared_examples 'a page with subscribe/unsubscribe links' do
   it 'subscribes and unsubscribes with the provided links' do
-    click_link 'Subscribe'
+
+    within('.dots-container') do
+      find('.dots-dropdown').click
+      click_link 'Subscribe'
+    end
+
     expect(page).to have_text 'Subscribed!'
     expect(
       Subscription.find_by(
@@ -25,7 +30,11 @@ shared_examples 'a page with subscribe/unsubscribe links' do
       )
     ).not_to be nil
 
-    click_link 'Unsubscribe'
+    within('.dots-container') do
+      find('.dots-dropdown').click
+      click_link 'Unsubscribe'
+    end
+
     expect(page).to have_text 'Unsubscribed!'
     expect(
       Subscription.find_by(

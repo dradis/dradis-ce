@@ -4,14 +4,9 @@ body.cards {
   .alert {
     margin-top: 1rem;
   }
-
-  .node-header {
-    display: none;
-  }
 }
 
 body.boards.index {
-
   .board-actions {
     visibility: hidden;
     float: right;
@@ -49,12 +44,13 @@ body.boards.index {
   }
 
   .board-tile {
-    background-color: lighten($primaryColor, 20%);
+    background-color: $primaryColor;
     border-radius: 3px;
     color: $white;
     display: block;
     line-height: 20px;
     padding: 0.5rem 0.75rem;
+    transition: background-color 0.2s ease-in-out;
 
     &.board-new {
       background-color: darken($secondaryBgColor, 5%);
@@ -73,7 +69,7 @@ body.boards.index {
     }
 
     &:hover {
-      background-color: lighten($primaryColor, 15%);
+      background-color: darken($primaryColor, 5%);
     }
 
     .board-tile-details {
@@ -87,6 +83,12 @@ body.boards.index {
       display: inline-block;
       max-height: 40px;
       overflow: hidden;
+    }
+  }
+
+  .empty-state {
+    &-docs-link {
+      margin-bottom: 0.5rem;
     }
   }
 }
@@ -187,7 +189,7 @@ body.boards.show {
   }
 
   .list-new {
-    background-color: lighten($primaryColor, 20%);
+    background-color: $primaryColor;
     border: none;
     border-radius: 3px;
     padding: 0.25rem;
@@ -198,7 +200,7 @@ body.boards.show {
     }
 
     &:hover {
-      background-color: lighten($primaryColor, 15%);
+      background-color: darken($primaryColor, 5%);
     }
   }
   

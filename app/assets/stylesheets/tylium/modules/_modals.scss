@@ -16,15 +16,13 @@
             color: #b94a48;
             margin-top: 10px;
           }
-
-          #nodes_list {
-            margin-top: 10px;
-            width: 100%;
-          }
         }
 
         #console {
           margin: 1.5rem 0 0 0;
+          height: 300px;
+          min-height: 300px;
+          max-height: 300px;
         }
       }
 

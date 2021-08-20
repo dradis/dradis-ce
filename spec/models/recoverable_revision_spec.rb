@@ -4,7 +4,7 @@ describe RecoverableRevision do
   before do
     @project = Project.new
     PaperTrail.enabled = true
-    PaperTrail.controller_info = { project_id: @project.id }
+    PaperTrail.request.controller_info = { project_id: @project.id }
   end
   after  { PaperTrail.enabled = false }
 

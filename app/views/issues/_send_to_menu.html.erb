@@ -1,29 +1,22 @@
-<span class="dropdown">
-  <a class="dropdown-toggle" data-name="issues" data-toggle="dropdown" href="javascript:void(0)">
-    <i class="fa fa-share-square-o"></i>
-     Send to...
-  </a>
-  <div class="dropdown-menu" role="menu">
-  <% sync_plugins = Dradis::Plugins::with_feature(:issue_sync) %>
+<span class="dropdown-item dots-dropdown-header" tabindex="-1">Send to...</span>
+<% sync_plugins = Dradis::Plugins::with_feature(:issue_sync) %>
+<% if sync_plugins.any? %>
+  <% sync_plugins.each do |plugin| %>
+    <%=
+      plugin_path = ActiveSupport::Inflector.underscore(ActiveSupport::Inflector.deconstantize(plugin.name))
+      render partial: "#{plugin_path}/issues/send_to_menu"
+    %>
+  <% end %>
+<% end %>
+<% unless defined?(Dradis::Pro) && defined?(Dradis::Pro::Issuelib) %>
   <% if sync_plugins.any? %>
-    <% sync_plugins.each do |plugin| %>
-      <%=
-        plugin_path = ActiveSupport::Inflector.underscore(ActiveSupport::Inflector.deconstantize(plugin.name))
-        render partial: "#{plugin_path}/issues/send_to_menu"
-      %>
-    <% end %>
+  <div class="divider"></div>
   <% end %>
-  <% unless defined?(Dradis::Pro) && defined?(Dradis::Pro::Issuelib) %>
-    <% if sync_plugins.any? %>
-    <div class="divider"></div>
-    <% end %>
-    <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="issuelib" data-url="https://dradisframework.com/pro/pages/issuelib.html"><i class="fa fa-book"></i> Built-in IssueLibrary</a>
+  <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="issuelib" data-url="https://dradisframework.com/pro/pages/issuelib.html"><i class="fa fa-book fa-fw"></i> Built-in IssueLibrary</a>
+<% end %>
+<% unless defined?(Dradis::Pro) && defined?(Dradis::Pro::Plugins::Remediationtracker) %>
+  <% if sync_plugins.any? %>
+  <div class="divider"></div>
   <% end %>
-  <% unless defined?(Dradis::Pro) && defined?(Dradis::Pro::Plugins::Remediationtracker) %>
-    <% if sync_plugins.any? %>
-    <div class="divider"></div>
-    <% end %>
-    <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="remediation" data-url="https://dradisframework.com/pro/add-ons/remediation.html"><i class="fa fa-tasks"></i> Built-in Remediation Tracker</a>
-  <% end %>
-  </div>
-</span> - 
+  <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="remediation" data-url="https://dradisframework.com/pro/add-ons/remediation.html"><i class="fa fa-tasks fa-fw"></i> Built-in Remediation Tracker</a>
+<% end %>

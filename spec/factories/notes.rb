@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :note do
-    text { "Note text at #{Time.now}" }
+    sequence(:text){ |n| "#[Title]#\nSample Note #{n}" }
     author { "factory-girl" }
     association :category
     association :node

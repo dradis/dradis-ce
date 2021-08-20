@@ -3,7 +3,7 @@
 #   create_comments : a block which creates the comments AND IS CALLED
 #                     BEFORE THE PAGE LOADS
 #   commentable: the model which the 'show' page is about
-shared_examples 'a page with a comments feed' do
+shared_examples 'a page with a comments feed' do |commentable_factory|
 
   include CommentMacros
 
@@ -12,11 +12,14 @@ shared_examples 'a page with a comments feed' do
       create(:comment, commentable: commentable, user: @logged_in_as),
       create(:comment, commentable: commentable)
     ]
-    other_instance = create(commentable.class.to_s.underscore)
+    other_instance = create(commentable_factory || commentable.class.to_s.underscore)
     @other_comment = create(:comment, commentable: other_instance)
   end
 
-  it 'lists them in the content feed' do
+  it 'lists them in the content feed', js: true do
+    # Wait for ajax
+    find('[data-behavior~=fetch-comments] .comment-feed')
+
     within comment_feed do
       should have_comment(@comments[0])
       should have_comment(@comments[1])
@@ -24,9 +27,18 @@ shared_examples 'a page with a comments feed' do
     end
   end
 
+  it 'display user\'s name in comment row', js: true do
+    # Wait for ajax
+    find('[data-behavior~=fetch-comments] .comment-feed')
+
+    within "div#comment_#{@comments[0].id}" do
+      expect(page).to have_selector('span.user', text: @logged_in_as.name)
+    end
+  end
+
   describe 'add comment', js: true do
     let(:submit_form) do
-      within 'form[data-behavior=add-comment]' do
+      within 'form[data-behavior~=add-comment]' do
         fill_in 'comment[content]', with: 'test comment'
         click_button 'Add comment'
       end
@@ -36,6 +48,35 @@ shared_examples 'a page with a comments feed' do
 
     it 'allows adding a comment' do
       submit_form
+    end
+
+    describe 'local caching', js: true do
+      let!(:original_page_with_comment_path) { page.current_path }
+
+      context 'when comment is not saved' do
+        it 'prefills textarea with cached value' do
+          within 'form[data-behavior~=local-auto-save]' do
+            fill_in 'comment[content]', with: 'test comment'
+            sleep 1 # Needed for debounce function in local_auto_save.js
+          end
+          page.driver.browser.navigate.refresh
+          content = page.find_field('comment[content]').value
+          expect(content).to eq 'test comment'
+        end
+      end
+
+      context 'when comment is saved' do
+        it 'clears cached value' do
+          within 'form[data-behavior~=local-auto-save]' do
+            fill_in 'comment[content]', with: 'test comment'
+            sleep 1 # Needed for debounce function in local_auto_save.js
+            click_button 'Add comment'
+          end
+          page.driver.browser.navigate.refresh
+          content = page.find_field('comment[content]').value
+          expect(content).to eq ''
+        end
+      end
     end
 
     include_examples 'creates an Activity', :create, Comment
@@ -66,6 +107,55 @@ shared_examples 'a page with a comments feed' do
       within "div#comment_#{id}" do
         expect(page).to have_link('Edit', visible: false)
         expect(page).not_to have_css "form#edit_comment_#{id}"
+      end
+    end
+
+    describe 'local caching', js: true do
+      let!(:original_page_with_comment_path) { page.current_path }
+
+      before do
+        find("div#comment_#{model.id}").hover
+        within "div#comment_#{model.id}" do
+          click_link 'Edit'
+          fill_in 'comment[content]', with: 'test comment edited'
+          sleep 1 # Needed for debounce function in local_auto_save.js
+        end
+      end
+
+      context 'when comment is not updated' do
+        it 'prefills textarea with cached value' do
+          page.driver.browser.navigate.refresh
+          find("div#comment_#{model.id}").hover
+          within "div#comment_#{model.id}" do
+            click_link 'Edit'
+            content = page.find_field('comment[content]').value
+            expect(content).to eq 'test comment edited'
+          end
+        end
+
+        it 'does not save unsaved changes in database' do
+          expect(model.content).not_to eq 'test comment edited'
+        end
+      end
+
+      context 'when cancel is clicked' do
+        it 'clears cached value' do
+          page.driver.browser.navigate.refresh
+          find("div#comment_#{model.id}").hover
+          within "div#comment_#{model.id}" do
+            click_link 'Edit'
+            click_link 'Cancel'
+          end
+
+          page.driver.browser.navigate.refresh
+          find("div#comment_#{model.id}").hover
+
+          within "div#comment_#{model.id}" do
+            click_link 'Edit'
+            content = page.find_field('comment[content]').value
+            expect(content).not_to eq 'test comment edited'
+          end
+        end
       end
     end
   end

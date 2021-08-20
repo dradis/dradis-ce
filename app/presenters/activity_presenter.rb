@@ -1,8 +1,16 @@
 class ActivityPresenter < BasePresenter
   presents :activity
 
+  def activity_day
+    h.local_date(activity.created_at.to_date, format: Activity::ACTIVITIES_STRFTIME_FORMAT, data: { behavior: 'activity-day-value' })
+  end
+
+  def activity_time
+    h.local_time(activity.created_at, format: '%l:%M%P')
+  end
+
   def avatar_with_link(size)
-    h.link_to(avatar_image(User.new(email: activity.user), size: size), 'javascript:void(0)')
+    h.link_to(avatar_image(activity.user, size: size), 'javascript:void(0)')
   end
 
   def comment_path(anchor: false)
@@ -86,16 +94,10 @@ class ActivityPresenter < BasePresenter
   def linked_email
     if activity.user
       # h.link_to(activity.user.email, 'javascript:void(0);')
-      h.content_tag :strong, activity.user
+      h.content_tag :strong, activity.user.email
     else
       'a user who has since been deleted'
     end
-  end
-
-  def render_partial
-    locals = { activity: activity, presenter: self }
-    locals[activity.trackable_type.underscore.to_sym] = activity.trackable
-    render partial_path, locals
   end
 
   def partial_path
@@ -105,11 +107,20 @@ class ActivityPresenter < BasePresenter
   end
 
   def partial_paths
-    [
-      "activities/#{activity.trackable_type.underscore}/#{activity.action}",
-      "activities/#{activity.trackable_type.underscore}",
-      'activities/activity'
-    ]
+    ["#{activity.trackable_type.underscore.downcase.pluralize}/activities/#{trackable_name}"]
+  end
+
+  def render_partial
+    locals = {activity: activity, presenter: self}
+    locals[trackable_name] = activity.trackable
+    render partial_path, locals
+  end
+
+  def trackable_name
+    # Models from plugins are namespaced, e.g. "Dradis::Plugins::ModelName"
+    # and activity.trackable_type.underscore will return "dradis/plugins/model_name".
+    # So we demodulize it first to return "model_name" before passing in as locals.
+    @trackable_name ||= activity.trackable_type.demodulize.underscore.to_sym
   end
 
   def trackable_title

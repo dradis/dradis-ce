@@ -10,6 +10,7 @@
 
   ) do %>
     <i class="fa fa-caret-right"></i>
+    <span class="sr-only">Toggle child nodes</span>
   <% end %>
 
   <%= link_to main_app.project_node_path(node.project, node), title: node.label, data: { behavior: 'sidebar-link' } do %>

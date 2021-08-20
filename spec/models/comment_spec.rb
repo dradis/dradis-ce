@@ -6,7 +6,6 @@ describe Comment do
 
   it { should validate_presence_of :commentable }
   it { should validate_presence_of :content }
-  it { should validate_presence_of :user }
 
   it 'subscribes the comment author to the commentable' do
     user  = create(:user)
@@ -41,7 +40,7 @@ describe Comment do
       comment = create(:comment, commentable: commentable)
 
       expect {
-        comment.notify('create')
+        comment.notify(action: 'create', actor: comment.user, recipients: [])
       }.to change { Notification.count }.by(2)
     end
 
@@ -57,7 +56,7 @@ describe Comment do
       )
 
       expect {
-        comment.notify('create')
+        comment.notify(action: 'create', actor: comment.user, recipients: [])
       }.to change { Notification.count }.by(3) \
       .and change { Subscription.count }.by(1)
 

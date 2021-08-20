@@ -1,13 +1,14 @@
-<div id="modal_move_note" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modal_move_note" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
   <%= simple_form_for [current_project, @node, @note], html: { class: 'form-horizontal modal-node-selection-form', data: { node_id: @node.id, hidden_field: '#note_node_id', allow_descendants: true } }  do |f| %>
     <%= f.hidden_field :node_id %>
     <%= f.hidden_field :original_updated_at, value: @note.updated_at.to_i %>
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Move note</h5>
+          <h5 class="modal-title" id="modal-title">Move note</h5>
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             <i class="fa fa-times"></i>
+            <span class="sr-only">Close modal</span>
           </button>
         </div>
         <div class='modal-body'>

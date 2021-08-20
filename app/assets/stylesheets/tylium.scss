@@ -4,16 +4,26 @@
 @import "tylium/custom_grid";
 @import "bootstrap";
 
-@import 'font-awesome-sprockets';
-@import "font-awesome";
+@import "font-awesome.min";
 @import "jquery.fileupload-ui";
+
+@import "vendor/datatables.min";
 
 // theme-level variables
 @import "tylium/variables";
 
 // shared styles
-@import "shared/items_table";
+@import "shared/activities";
+@import "shared/comments";
+@import "shared/datatables";
+@import "shared/editor_toolbar";
+@import "shared/empty_state.scss";
+@import "shared/inline_editable";
 @import "shared/mixins";
+@import "shared/noscript";
+@import "shared/notifications";
+@import "shared/pagination";
+@import "shared/textile.scss";
 
 // styles for base HTML elements like body, h1, etc.
 @import "tylium/base";

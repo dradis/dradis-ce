@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<board version="3">
+  <id>33</id>
+  <name>Methodology Template v3</name>
+  <node_id/>
+  <list>
+    <id>87</id>
+    <name>To Do</name>
+    <previous_id/>
+    <card>
+      <id>690</id>
+      <name>Card 1</name>
+      <description><![CDATA[Test Card]]></description>
+      <due_date>2020-03-27</due_date>
+      <previous_id/>
+      <assignees/>
+      <activities>
+        <activity>
+          <action>create</action>
+          <user_email>admin@securityroots.com</user_email>
+          <created_at>1585318112</created_at>
+        </activity>
+      </activities>
+      <comments/>
+    </card>
+</list>
+</board>

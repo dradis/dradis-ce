@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   get '/logout' => 'sessions#destroy'
   resource :session
 
+  resources :comments
+
   # ------------------------------------------------------------ Project routes
   concern :multiple_destroy do
     collection do
@@ -20,8 +22,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :notifications, only: [:index, :update]
+
   resources :projects, only: [:show] do
-    resources :activities, only: [] do
+    resources :activities, only: [:index] do
       collection do
         get :poll, constraints: { format: /js/ }
       end
@@ -36,8 +40,6 @@ Rails.application.routes.draw do
         end
       end
     end
-
-    resources :comments
 
     constraints id: %r{[(0-z)\/]+} do
       resources :configurations, only: [:index, :update]
@@ -94,8 +96,6 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
-    resources :subscriptions, only: [:create, :destroy]
-
     get 'search' => 'search#index'
     get 'trash' => 'revisions#trash'
 
@@ -119,10 +119,21 @@ Rails.application.routes.draw do
     collection { get :status }
   end
 
+  resource :fields, only: [] do
+    collection do
+      get :field
+      post :form
+      post :source
+    end
+  end
+
+  resources :subscriptions, only: [:index, :create, :destroy]
+
   # -------------------------------------------------------------- Static pages
-  # jQuery Textile URLs
-  get '/preview' => 'home#textilize',  as: :preview, defaults: { format: 'json' }
-  get '/markup-help' => 'home#markup_help', as: :markup
+  resource :markup, controller: :markup, only: [] do
+    get :help
+    post :preview
+  end
 
   root to: 'projects#index'
 

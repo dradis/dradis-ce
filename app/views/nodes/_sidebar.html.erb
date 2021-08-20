@@ -1,5 +1,4 @@
 <% content_for :sidebar do %>
-
   <div id="<%= dom_id(@node) %>_link" class="note-list">
     <%= content_tag :div, class: current_page?(main_app.project_node_path(@node.project, @node)) ? 'p-2 mb-2 active' : 'p-2 mb-2' do %>
       <%= link_to project_node_path(@node.project, @node), class: 'summary-link' do %>
@@ -14,21 +13,22 @@
 
   <!-- Notes -->
   <%= render 'shared/sidebar_collection',
-        name: 'Notes',
-        collection: @sorted_notes,
-        new_path: new_project_node_note_path(@node.project, @node),
-        category_id: Category.default.id,
-        index_path: project_node_path(@node.project, @node, tab: 'notes-tab') %>
+    category_id: Category.default.id,
+    collection: @sorted_notes,
+    index_path: project_node_path(current_project, @node, tab: 'notes-tab'),
+    name: 'Notes',
+    new_path: new_project_node_note_path(@node.project, @node)
+  %>
 
-  <!-- Issues -->
+  <!-- Evidence -->
   <%= render 'shared/sidebar_collection',
-        name: 'Evidence',
-        collection: @sorted_evidence,
-        new_path: new_project_node_evidence_path(@node.project, @node),
-        category_id: Category.issue.id,
-        index_path: project_node_path(@node.project, @node, tab: 'evidence-tab') %>
+    category_id: Category.issue.id,
+    collection: @sorted_evidence,
+    index_path: project_node_path(current_project, @node, tab: 'evidence-tab'),
+    name: 'Evidence',
+    new_path: new_project_node_evidence_path(@node.project, @node)
+  %>
 
   <!-- Attachments -->
-  <%= render 'attachments/attachment_box' %>
-
+  <%= render partial: 'attachments/attachment_box', locals: { attachments_node: @node } %>
 <% end %>

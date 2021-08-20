@@ -1,0 +1,32 @@
+<% activities_groups.each do |date, activities| %>
+  <div class="activities-group" data-behavior="activities-group">
+    <div class="activity-date-header">
+      <% present activities.first do |activity_presenter| %>
+        <%= activity_presenter.activity_day %>
+      <% end %>
+    </div>
+
+    <div class="activities" data-behavior="activities">
+      <% activities.each do |activity| %>
+        <% present activity do |activity_presenter| %>
+
+          <%= div_for(activity, data: { behavior: 'activity' }) do %>
+            <div class="details">
+              <%= activity_presenter.avatar_with_link(35) %>
+            </div>
+            <div class="body">
+              <div class="title">
+                <%= activity_presenter.render_title %>
+              </div>
+              <div class="activity-time">
+                <%= activity_presenter.activity_time %>
+              </div>
+            </div>
+
+            <%= activity_presenter.icon %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

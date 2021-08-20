@@ -5,7 +5,9 @@ module Dradis::CE::API
       include Dradis::CE::API::ProjectScoped
 
       def index
-        @issues  = current_project.issues.includes(:tags).sort
+        @issues  = current_project.issues.includes(:tags).order('updated_at desc')
+        @issues = @issues.page(params[:page].to_i) if params[:page]
+        @issues = @issues.sort
       end
 
       def show
@@ -29,7 +31,7 @@ module Dradis::CE::API
 
       def update
         @issue = current_project.issues.find(params[:id])
-        if @issue.update_attributes(issue_params)
+        if @issue.update(issue_params)
           track_updated(@issue)
           render node: @node
         else

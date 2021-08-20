@@ -37,11 +37,17 @@ class NotificationGroup
       if n.notifiable.is_a?(Comment)
         n.notifiable.commentable
       else
-        raise 'Unsupported class!'
+        n.notifiable
       end
     end
 
-    # Group each item using their projects
-    hash.group_by { |item, _| item.project }
+    # Group each item using their projects or notifiable class
+    hash.group_by do |item, _|
+      if item.respond_to?(:project)
+        item.project.name
+      else
+        item.class.name.demodulize.pluralize
+      end
+    end
   end
 end

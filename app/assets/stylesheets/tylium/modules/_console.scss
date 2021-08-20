@@ -2,6 +2,7 @@
 
 #console {
   @include ajax-console;
-
-  max-height: 200px;
+  height: auto;
+  min-height: 25rem;
+  max-height: 70vh;
 }

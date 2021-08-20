@@ -57,8 +57,8 @@ There are two editions of Dradis Framework:
 ```
 $ git clone https://github.com/dradis/dradis-ce.git
 $ cd dradis-ce/
-$ ruby bin/setup
-$ bundle exec rails server
+$ ./bin/setup
+$ ./bin/rails server
 ```
 
 You can browse to the app at http://localhost:3000/
@@ -70,6 +70,7 @@ If you'd like to use dradis in Vagrant, you can use the included Vagrantfile.
 ```
 # Clone the repo
 git clone https://github.com/dradis/dradis-ce.git
+cd dradis-ce/
 
 # install/start the vagrant box
 vagrant up
@@ -104,7 +105,7 @@ In https://dradisframework.com/ce/download.html you will find the latest package
 
 Please see CONTRIBUTING.md for details.
 
-Many thanks to all Dradis Framework [contributors](https://github.com/dradis/dradis-ce/graphs/contributors). Dradis has been around since 2007, and in 2016 we had to do some nasty Git gimnastics resulting in a lot of the previous SVN + Git history no longer being available in the current repo. We haven't deleted it though, and we're still very much grateful for the work of our former [contributors](https://github.com/dradis/dradis-legacy/graphs/contributors).
+Many thanks to all Dradis Framework [contributors](https://github.com/dradis/dradis-ce/graphs/contributors). Dradis has been around since 2007, and in 2016 we had to do some nasty Git gymnastics resulting in a lot of the previous SVN + Git history no longer being available in the current repo. We haven't deleted it though, and we're still very much grateful for the work of our former [contributors](https://github.com/dradis/dradis-legacy/graphs/contributors).
 
 
 ### Branching model

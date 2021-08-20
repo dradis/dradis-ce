@@ -1,8 +1,10 @@
 class Activity < ApplicationRecord
+  ACTIVITIES_STRFTIME_FORMAT = '%A, %B %-e %Y'.freeze
 
   # -- Relationships --------------------------------------------------------
 
   belongs_to :trackable, polymorphic: true, required: false
+  belongs_to :user
 
   def project=(new_project); end
 
@@ -22,7 +24,7 @@ class Activity < ApplicationRecord
   # -- Scopes ---------------------------------------------------------------
 
   scope :latest, -> do
-    includes(:trackable).order("`activities`.`created_at` DESC").limit(20)
+    includes(:trackable).order("activities.created_at DESC").limit(20)
   end
 
   # -- Callbacks ------------------------------------------------------------
@@ -45,5 +47,11 @@ class Activity < ApplicationRecord
     super
     self.trackable_type = "Issue" if new_trackable.is_a?(Issue)
     new_trackable
+  end
+
+  def to_xml(xml_builder, version: 3)
+    xml_builder.action(action)
+    xml_builder.user_email(user.email)
+    xml_builder.created_at(created_at.to_i)
   end
 end

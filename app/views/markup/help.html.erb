@@ -1,0 +1,155 @@
+<div class="textile-preview markup-help">
+
+  <h5 class="header-underline">Text styles</h5>
+  <div class="row">
+    <div class="col-6">
+  <pre>This is normal text
+
+*This text will be bold*
+_This will be italic_
+
+_You *can* combine them_
+</pre>
+  </div>
+    <div class="col-6 pt-2">
+      <p>This is normal text</p>
+      <p>
+        <strong>This text will be bold</strong><br/>
+        <em>This will be italic</em>
+      </p>
+      <p><em>You <strong>can</strong> combine them</em></p>
+    </div>
+  </div>
+
+
+  <h5 class="header-underline">Block Code (bc.)</h5>
+  <div class="row">
+    <div class="col-6">
+      <p>Single paragraph:</p>
+      <pre>We start with normal text.
+
+bc. This would extend
+until the first blank line.
+
+Back to normal</pre>
+    </div>
+    <div class="col-6 mt-2 pt-4">
+      <p>We start with normal text.</p>
+      <pre>This would extend
+until the first blank line.</pre>
+      <p>Back to normal</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <p>Multi paragraph:</p>
+      <pre>Before the code block, we have normal text.
+
+bc.. This will extend
+across blank lines until
+
+the next paragraph block
+
+p. Which you start with the 'p.' signature.</pre>
+    </div>
+    <div class="col-6 mt-2 pt-4">
+      <p>Before the code block, we have normal text.</p>
+      <pre>This will extend
+across blank lines until
+
+the next paragraph block
+</pre>
+      <p>Which you start with the 'p.' signature.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <p>Code highlights:</p>
+      <pre>bc.. &lt;H1&gt;Expectation Failed&lt;/H1&gt;
+The expectation given in the Expect request-header
+field could not be met by this server.<P>
+The client sent&lt;PRE&gt;
+$${{Expect: &lt;script&gt;alert(document.domain)&lt;/script&gt;}}$$
+&lt;/PRE&gt;
+but we only allow the 100-continue expectation.
+      </pre>
+    </div>
+    <div class="col-6 pt-4">
+      <pre>&lt;H1&gt;Expectation Failed&lt;/H1&gt;
+The expectation given in the Expect request-header
+field could not be met by this server.<P>
+The client sent&lt;PRE&gt;
+<mark>Expect: &lt;script&gt;alert(document.domain)&lt;/script&gt;</mark>
+&lt;/PRE&gt;
+but we only allow the 100-continue expectation.
+      </pre>
+    </div>
+  </div>
+
+  <h5 class="header-underline">Lists</h5>
+  <div class="row">
+    <div class="col-6">
+      <p>Unordered</p>
+      <pre>* an item
+* and another
+** nested
+      </pre>
+    </div>
+    <div class="col-6 mt-2 pt-4">
+      <ul>
+        <li>an item</li>
+        <li>and another
+        <ul>
+          <li>nested</li>
+        </ul></li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <p>Ordered</p>
+      <pre># one
+# two
+## nested
+      </pre>
+    </div>
+    <div class="col-6 mt-2 pt-4">
+      <ol>
+        <li>one</li>
+        <li>two
+        <ol>
+          <li>nested</li>
+        </ol></li>
+      </ol>
+    </div>
+  </div>
+
+  <h5 class="header-underline">Miscellaneous</h5>
+  <div class="row">
+    <div class="col-6">
+      <p>Images</p>
+      <pre>Format: !url(caption)!</pre>
+      <p>Example</p>
+      <pre>!/images/logo_small.png(Dradis logo)!</pre>
+    </div>
+    <div class="col-6 mt-2 pt-4">
+      <%= image_tag 'logo_small.png', title: 'Dradis logo', class: 'example-img' %>
+    </div>
+  </div>
+
+  <div class="row mt-3 pt-4">
+    <div class="col-6">
+      <p>Links</p>
+      <pre>"Our website":http://drad.is</pre>
+    </div>
+    <div class="col-6 mt-4 pt-4">
+      <p><a href="http://drad.is">Our website</a></p>
+    </div>
+  </div>
+
+
+  <h5 class="header-underline">Further help</h5>
+  <p>Check out our <a href="https://dradisframework.com/support/guides/word_reports/styles.html" target="_blank">support website</a> for more details on supported styles.</p>
+</div>

@@ -13,13 +13,13 @@
         </td>
       </tr>
     </table>
-  </tr>
-</td>
+  </td>
+</tr>
 
 <tr>
   <td>
     <table cellspacing="0" cellpadding="0">
-      <% @notifications.each do |project, project_notifications| %>
+      <% @notifications.each do |notifiable_group, grouped_notifications| %>
         <tr>
           <td colspan="12">
             <table cellspacing="0" cellpadding="0" align="center">
@@ -27,23 +27,25 @@
                 <td height="20px"></td>
               </tr>
               <tr>
-                <td width="20px"></td>
-                <td align="left" nowrap style="font-weight: 700; font-size: 1.1rem; line-height: 1.2rem;"><%= project.name %></td>
-                <td width="20px"></td>
+                <td width="20px">&nbsp;&nbsp;</td>
+                <td align="left" nowrap style="font-weight: 700; font-size: 1.1rem; line-height: 1.2rem;">
+                  <%= notifiable_group %>
+                </td>
+                <td width="20px">&nbsp;&nbsp;</td>
                 <td style="width: 590px">
                   <hr style="border-top: 0.5px solid #ddd; border-bottom: 0.5px solid #ddd; border-right: 0.5px solid transparent; border-left: 0.5px solid transparent;">
                 </td>
-                <td width="20px"></td>
+                <td width="20px">&nbsp;&nbsp;</td>
               </tr>
             </table>
           </td>
         </tr>
-        
-        <% project_notifications.each do |_, notifications| %>
+
+        <% grouped_notifications.each do |_, notifications| %>
         <tr>
           <td>
             <table cellspacing="0" cellpadding="20px">
-              <% presenter = DigestPresenter.new(notifications, project, self) %>
+              <% presenter = DigestPresenter.new(notifications, self) %>
               <%= render partial: 'notification_mailer/notification', locals: { presenter: presenter } %>
             </table>
           </td>
@@ -59,23 +61,27 @@
             </table>
           </td>
         </tr>
-        
+
         <% unless defined?(Dradis::Pro) %>
           <tr>
             <td colspan="12" align="center">
               <table cellspacing="0" cellpadding="0">
                 <tr>
+                  <td width="20px">&nbsp;</td>
                   <td width="590px">
                     <hr style="border-top: 0.5px solid #ddd; border-bottom: 0.5px solid #ddd; border-right: 0.5px solid transparent; border-left: 0.5px solid transparent;">
                   </td>
+                  <td width="20px">&nbsp;</td>
                 </tr>
                 <tr>
                   <td height="10px"></td>
                 </tr>
                 <tr>
+                  <td width="20px">&nbsp;</td>
                   <td align="center">
-                    <%= link_to 'See all notifications', project_notifications_url(project), class: 'button', style: 'display: inline-block; border-radius: 5px; padding: 8px 15px; color: #fff;background-color: #378137;' %> <%# background-color: #298DCC in pro %>
+                    <%= link_to 'See all notifications', project_notifications_url(Project.new), class: 'button', style: 'display: inline-block; border-radius: 5px; padding: 8px 15px; color: #fff;background-color: #378137;' %> <%# background-color: #298DCC in pro %>
                   </td>
+                  <td width="20px">&nbsp;</td>
                 </tr>
                 <tr>
                   <td height="20px"></td>
@@ -86,5 +92,5 @@
         <% end %>
       <% end %>
     </table>
-  </tr>
-</td>
+  </td>
+</tr>

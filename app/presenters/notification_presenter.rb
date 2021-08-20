@@ -49,9 +49,17 @@ class NotificationPresenter < BasePresenter
     end
   end
 
+  def notifiable_name
+    # Models from plugins are namespaced, e.g. "Dradis::Plugins::ModelName"
+    # and activity.trackable_type.underscore will return "dradis/plugins/model_name".
+    # So we demodulize it first to return "model_name" before passing in as locals.
+    @notifiable_name ||= notification.notifiable_type.demodulize.underscore.to_sym
+  end
+
   def render_partial
     locals = { presenter: self }
-    locals[notification.notifiable_type.underscore.to_sym] = notification.notifiable
+    locals[notifiable_name] = notification.notifiable
+    locals[:current_user] = notification.recipient
     render partial_path, locals
   end
 
@@ -62,7 +70,7 @@ class NotificationPresenter < BasePresenter
   end
 
   def partial_paths
-    ["notifications/#{notification.notifiable_type.underscore}"]
+    ["#{notification.notifiable_type.underscore.pluralize}/notifications/#{notifiable_name}"]
   end
 
   def path_to_comment
@@ -73,11 +81,12 @@ class NotificationPresenter < BasePresenter
     commentable     = comment.commentable
 
     if commentable.respond_to?(:node) && !commentable.is_a?(Issue)
-      [current_project, commentable.node, commentable]
+      [commentable.project, commentable.node, commentable]
     elsif commentable.is_a?(Card)
-      [current_project, commentable.board, commentable.list, commentable]
+      [commentable.project, commentable.board, commentable.list, commentable]
     else
-      [current_project, commentable]
+      [commentable.project, commentable]
     end
   end
+
 end

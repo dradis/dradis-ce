@@ -1,7 +1,5 @@
 body.projects {
-
   .summary-panel {
-
     #boards-summary {
       display: flex;
       flex-wrap: wrap;
@@ -12,6 +10,24 @@ body.projects {
   
       &.loading {
         background: image_url('loading.gif') no-repeat center;
+      }
+    }
+
+    .empty-state {
+      &-actions {
+        margin-top: 1.5rem;
+      }
+
+      &-icon {
+        padding: 0.75rem;
+
+        img {
+          width: 7rem;
+        }
+      }
+
+      &-title {
+        margin: 2rem 0 1rem;
       }
     }
 
@@ -39,6 +55,10 @@ body.projects {
 
             &:hover {
               background-color: darken($primaryBgColor, 3%);
+            }
+
+            li {
+              transition: color 0.2s ease-in-out;
             }
           }
         }

@@ -11,7 +11,7 @@
 #   http://daniel.fone.net.nz/blog/2013/05/20/a-better-way-to-manage-the-rails-secret-token/#comment-902714581
 secret_token_path = Rails.root.join('config', 'shared')
 secret_token_file = secret_token_path.join('secret_token')
-secret_token = (secret_token_file.exist? and secret_token_file.read.chomp) or (
+secret_token = (secret_token_file.exist? and secret_token_file.read.chomp) || (
   warn "The file #{secret_token_path} does not exists or is empty."
   warn "Generating a new secret token and writing to #{secret_token_path}; this will invalidate the previous Rails sessions."
 

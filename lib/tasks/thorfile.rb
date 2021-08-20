@@ -53,9 +53,7 @@ class DradisTasks < Thor
 
   desc 'version', 'displays the version of the dradis server'
   def version
-    require 'lib/core/version'
-    puts Core::VERSION::string
-    puts Core::Pro::VERSION::string
+    puts "Dradis CE: #{Dradis::CE::VERSION::STRING}"
   end
 
   class Import < Thor; end

@@ -1,0 +1,72 @@
+.textile-form-field:hover {
+
+  .inline-editable i.fa-pencil {
+    opacity: 0.2;
+  }
+}
+
+.inline-editable {
+  display: flex;
+
+  .edit-hover {
+    align-items: flex-start;
+    display: inline-flex;
+    position: relative;
+    width: 100%;
+
+    &:hover {
+      i.fa-pencil {
+        opacity: 1;
+      }  
+    }
+  }
+
+  i.fa-pencil {
+    left: 0.5rem;
+    opacity: 0;
+    position: absolute;
+    top: 0.65rem;
+    transition: opacity 0.2s ease-in-out;
+    z-index: 1;
+  }
+
+  input[type="text"],
+  textarea,
+  select {
+    border: 1px solid transparent;
+    border-radius: 0;
+
+    &:focus,
+    &:hover {
+      border-color: transparent;
+      border-bottom-color: $primaryColor;
+    }
+
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
+  }
+
+  input[type="text"] {
+    background-color: transparent;
+    font-weight: 600;
+    margin: 0 1.5rem 0.5rem 1.5rem;
+    padding: 0.5rem 0 0.25rem 0 !important;
+    width: 100%;
+
+    &:focus {
+      background-color: transparent;
+    }
+  }
+
+  textarea {
+    margin: 0;
+    padding: 0.5rem !important;
+  }
+
+  select {
+    background-color: $primaryBgColor;
+    margin: 0 1.5rem 2.25rem 1.5rem;
+  }
+}

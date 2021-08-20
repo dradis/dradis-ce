@@ -9,7 +9,7 @@ class ActivityTrackingJob < ApplicationJob
       action:    action.to_s,
       trackable_id: trackable_id,
       trackable_type: trackable_type,
-      user:      user.email
+      user:      user
     )
 
     ActiveSupport::Notifications.instrument(
@@ -18,18 +18,5 @@ class ActivityTrackingJob < ApplicationJob
       trackable: trackable,
       user: user.email
     )
-
-    if trackable.respond_to?(:notify)
-      trackable.notify(action)
-      broadcast_notifications(trackable)
-    end
-  end
-
-  private
-
-  def broadcast_notifications(trackable)
-    trackable.notifications.each do |notification|
-      NotificationsChannel.broadcast_to(notification.recipient, {})
-    end
   end
 end

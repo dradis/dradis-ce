@@ -43,7 +43,7 @@ class Methodology
   # 'admin:paths:templates:methodologies' setting
   def self.pwd
     @pwd ||= begin
-      conf = Configuration.create_with(value: Rails.root.join('../../shared/templates/methodologies/').to_s).
+      conf = Configuration.create_with(value: Rails.root.join('templates', 'methodologies').to_s).
         find_or_create_by(name: 'admin:paths:templates:methodologies')
       Pathname.new(conf.value)
     end
@@ -154,7 +154,7 @@ class Methodology
     if name_changed?
       doc.xpath('/*/name/text()')[0].replace(@name)
       @content = doc.to_s
-      @changed_attributes.clear
+      changes_applied
     end
     @content
   end
