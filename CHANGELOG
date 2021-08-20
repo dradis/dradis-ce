@@ -1,11 +1,11 @@
 [v#.#.#] ([month] [YYYY])
   - [entity]:
     - [future tense verb] [feature]
-  - Upgraded gems: 
+  - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Initial configuration
+      - Correctly reference the templates directory on initialization
     - Bug tracker items:
       - [item]
   - New integrations:
