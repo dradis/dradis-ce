@@ -3,11 +3,10 @@
 # parameters can be accessed through the helper methods provided in this class.
 class Configuration < ApplicationRecord
   TEMPLATES_DIR =
-    if File.exists?(Rails.root.join('templates'))
-      Pathname.new File.readlink(Rails.root.join('templates'))
-    else
-      ''
-    end
+    Pathname.new(
+      File.exists?(Rails.root.join('templates')) ?
+        File.readlink(Rails.root.join('templates')) : ''
+    )
 
   # -- Relationships --------------------------------------------------------
 
