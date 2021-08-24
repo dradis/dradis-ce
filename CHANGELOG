@@ -15,12 +15,10 @@
       - [future tense verb] [integration enhancement]
       - [integration bug fixes]:
         - [future tense verb] [integration bug fix]
+  - Reporting enhancements:
     - HTML
       - Bug fixes
-        - Prevent the conversion of quotes to curly quotes in html report exports
-  - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
+        - Prevent the conversion of single/double quotes to curly quotes
   - REST/JSON API enhancements:
     - [API entity]:
       - [future tense verb] [API enhancement]
