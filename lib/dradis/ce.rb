@@ -8,6 +8,8 @@ module Dradis
   end
 end
 
+require 'html/formatters/html'
+
 require 'html/no_inline_code_textile_formatter'
 
 require 'html/pipeline/dradis/code_highlight_filter'
