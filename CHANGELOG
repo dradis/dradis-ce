@@ -1,8 +1,8 @@
 [v#.#.#] ([month] [YYYY])
   - [entity]:
     - [future tense verb] [feature]
-  - Upgraded gems: 
-    - [gem]
+  - Upgraded gems:
+    - rails
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
