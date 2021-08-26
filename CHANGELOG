@@ -1,6 +1,6 @@
 [v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
+  - Editor:
+    - Limit the content height for easier access to the Create/Update button.
   - Upgraded gems:
     - rails
   - Bugs fixes:

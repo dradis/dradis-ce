@@ -162,8 +162,11 @@
   }
 
   .textile-inner {
-    padding: 0;
     background: transparent;
+    max-height: calc(100vh - 28rem);
+    overflow: auto;
+    padding: 0;
+    
 
     .textile-form {
 
