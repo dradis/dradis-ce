@@ -66,13 +66,17 @@ Vagrant.configure('2') do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision 'shell', inline: <<-SHELL
+    apt-add-repository -y ppa:rael-gc/rvm
     apt-get update
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
       mysql-server \
       mysql-client \
       libmysqlclient-dev \
       libfontconfig \
-      libfontconfig-dev
+      libfontconfig-dev \
+      software-properties-common \
+      rvm
+    usermod -a -G rvm ubuntu
     which phantomjs >/dev/null || ( cd /tmp && \
       wget -nv https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
       echo '86dd9a4bf4aee45f1a84c9f61cf1947c1d6dce9b9e8d2a907105da7852460d2f  phantomjs-2.1.1-linux-x86_64.tar.bz2' > phantomjs-2.1.1-linux-x86_64.tar.bz2.sha256 && \
@@ -82,7 +86,7 @@ Vagrant.configure('2') do |config|
       cp phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/bin/phantomjs && \
       rm -rf ./phantomjs-2.1.1-linux-x86_64.*
     )
-    su ubuntu -c 'type rvm >/dev/null 2>&1 || (( gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 ) && ( curl -sSL https://get.rvm.io | bash -s stable ))'
+    su ubuntu -c "echo 'export PATH=\"$PATH:/usr/share/rvm/bin\"' >> ~/.profile"
     su ubuntu -c 'cd /dradis/dradis-ce/ && source "$HOME/.profile" && rvm install "$(cat .ruby-version)"'
   SHELL
 end
