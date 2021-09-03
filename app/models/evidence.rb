@@ -14,7 +14,7 @@ class Evidence < ApplicationRecord
   delegate :project, to: :node
 
   # -- Callbacks ------------------------------------------------------------
-
+  before_validation :create_issue_for_evidence
 
   # -- Validations ----------------------------------------------------------
   validates :content, length: { maximum: DB_MAX_TEXT_LENGTH }
@@ -36,4 +36,17 @@ class Evidence < ApplicationRecord
     }
   end
 
+  private 
+
+  def create_issue_for_evidence
+    if self.issue_id.blank? && self.project.issues.blank?
+      issue = Issue.create(
+        text: "#[Title]#\nNew issue",
+        node: self.project.issue_library,
+        author: self.author
+      )
+  
+      self.issue_id = issue.id
+    end
+  end
 end

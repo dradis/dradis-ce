@@ -27,16 +27,6 @@ class EvidenceController < NestedNodeResourceController
   def create
     @evidence.author = current_user.email
 
-    unless evidence_params[:issue_id]
-      issue = Issue.create(
-        text: "#[Title]#\nNew issue",
-        node: current_project.issue_library,
-        author: current_user.email
-      )
-
-      @evidence.issue_id = issue.id
-    end
-
     respond_to do |format|
       if @evidence.save
         track_created(@evidence)
