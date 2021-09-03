@@ -1,6 +1,6 @@
 [v#.#.#] ([month] [YYYY])
   - Evidence:
-    - Create an issue for new evidence is no issues exist
+    - Create an issue for new evidence if no issues exist
   - Upgraded gems:
     - rails
   - Bugs fixes:
