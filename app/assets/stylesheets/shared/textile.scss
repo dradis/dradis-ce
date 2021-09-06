@@ -123,10 +123,14 @@
 
 .textile-wrap {
   background-color: #fff;
+  max-height: calc(100vh - 28rem);
+  overflow-x: hidden;
+  overflow-y: auto;
   word-break: break-word;
 
   &.textile-fullscreen {
     font-size: 0.9rem;
+    max-height: 100vh;
     padding-top: 0;
     overflow: auto;
 
@@ -163,8 +167,6 @@
 
   .textile-inner {
     background: transparent;
-    max-height: calc(100vh - 28rem);
-    overflow: auto;
     padding: 0;
     
 
