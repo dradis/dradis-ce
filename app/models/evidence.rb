@@ -39,6 +39,8 @@ class Evidence < ApplicationRecord
   private 
 
   def create_issue_for_evidence
+    return unless self.node
+
     if self.issue_id.blank? && self.project.issues.blank?
       issue = Issue.create(
         text: "#[Title]#\nNew issue",
