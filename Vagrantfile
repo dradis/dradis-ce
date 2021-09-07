@@ -74,9 +74,7 @@ Vagrant.configure('2') do |config|
       libmysqlclient-dev \
       libfontconfig \
       libfontconfig-dev \
-      software-properties-common \
-      rvm
-    usermod -a -G rvm ubuntu
+      software-properties-common
     which phantomjs >/dev/null || ( cd /tmp && \
       wget -nv https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
       echo '86dd9a4bf4aee45f1a84c9f61cf1947c1d6dce9b9e8d2a907105da7852460d2f  phantomjs-2.1.1-linux-x86_64.tar.bz2' > phantomjs-2.1.1-linux-x86_64.tar.bz2.sha256 && \
@@ -86,7 +84,9 @@ Vagrant.configure('2') do |config|
       cp phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/bin/phantomjs && \
       rm -rf ./phantomjs-2.1.1-linux-x86_64.*
     )
-    su ubuntu -c "echo 'export PATH=\"$PATH:/usr/share/rvm/bin\"' >> ~/.profile"
-    su ubuntu -c 'cd /dradis/dradis-ce/ && source "$HOME/.profile" && rvm install "$(cat .ruby-version)"'
+    su vagrant -l -c 'curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles'
+    su vagrant -l -c 'echo "source $HOME/.rvm/scripts/rvm" >> ~/.bash_profile'
+    su vagrant -l -c 'rvm install "$(cat /dradis/dradis-ce/.ruby-version)" && rvm --default use "$(cat /dradis/dradis-ce/.ruby-version)"'
+    su vagrant -l -c 'ruby /dradis/dradis-ce/bin/setup'
   SHELL
 end
