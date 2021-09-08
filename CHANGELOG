@@ -4,8 +4,8 @@
   - Upgraded gems:
     - rails
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Conflict resolver
+      - Apply the correct warning when a conflict happens on edit
     - Bug tracker items:
       - [item]
   - New integrations:
