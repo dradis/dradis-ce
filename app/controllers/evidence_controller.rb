@@ -154,17 +154,18 @@ class EvidenceController < NestedNodeResourceController
     end
   end
 
-  # If the user selects "Add new issue" in the Evidence editor, we create an empty skeleton
-  def create_issue
-    Issue.create do |issue|
-      issue.text = "#[Title]#\nNew issue auto-created for node [#{@node.label}]."
-      issue.node = current_project.issue_library
-      issue.author = current_user.email
-    end
-  end
-
   def evidence_params
-    params.require(:evidence).permit(:author, :content, :issue_id, :node_id)
+    evidence_params = params.require(:evidence).permit(:author, :content, :issue_id, :node_id)
+
+    if evidence_params[:issue_id].blank?
+      evidence_params[:issue_id] =  Issue.create(
+                                      text: "#[Title]#\nAuto-generated Issue - #{Time.now}",
+                                      node: current_project.issue_library,
+                                      author: current_user.email
+                                    ).id
+    end
+
+    evidence_params
   end
 
   def set_auto_save_key
