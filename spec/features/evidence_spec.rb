@@ -226,6 +226,10 @@ describe 'evidence' do
           fill_in :evidence_content, with: 'This is some evidence'
         end
 
+        it "creates a new issue" do
+          expect{submit_form}.to change{Issue.count}.by(1)
+        end
+
         it "creates a new piece of evidence" do
           expect{submit_form}.to change{Evidence.count}.by(1)
         end
