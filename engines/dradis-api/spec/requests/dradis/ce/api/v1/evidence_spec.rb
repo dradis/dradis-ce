@@ -148,24 +148,17 @@ describe 'Evidence API' do
           include_examples 'sets the whodunnit', :create, Evidence
         end
 
-        context "without existing issues" do
+        context "with params for an invalid evidence" do
           let(:params) { { evidence: { content: "New evidence" } } } # no issue
 
-          it "responds with HTTP code 201" do
+          it "responds with HTTP code 422" do
             post_evidence
-            expect(response.status).to eq 201
+            expect(response.status).to eq 422
           end
 
-          it "creates an evidence" do
-            expect{post_evidence}.to change{node.evidence.count}
-            new_evidence = node.evidence.last
-            expect(new_evidence.content).to eq "New evidence"
-            expect(new_evidence.issue.text).to eq "#[Title]#\nNew issue"
+          it "doesn't create an evidence" do
+            expect{post_evidence}.not_to change{Evidence.count}
           end
-
-          let(:submit_form) { post_evidence }
-          include_examples 'creates an Activity', :create, Evidence
-          include_examples 'sets the whodunnit', :create, Evidence
         end
 
         context "when no :evidence param is sent" do
