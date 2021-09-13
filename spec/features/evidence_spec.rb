@@ -222,7 +222,7 @@ describe 'evidence' do
           @issue_0.destroy
           @issue_1.destroy
           visit new_project_node_evidence_path(current_project, @node)
-          expect(page).to have_content 'this project doesn\'t have any issues yet.'
+          expect(page).to have_content 'Auto-generate a new issue'
           fill_in :evidence_content, with: 'This is some evidence'
         end
 
