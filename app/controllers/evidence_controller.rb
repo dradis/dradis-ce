@@ -26,6 +26,7 @@ class EvidenceController < NestedNodeResourceController
 
   def create
     @evidence.author = current_user.email
+    autogenerate_issue if evidence_params[:issue_id].blank?
 
     respond_to do |format|
       if @evidence.save
@@ -92,6 +93,13 @@ class EvidenceController < NestedNodeResourceController
   def update
     respond_to do |format|
       updated_at_before_save = @evidence.updated_at.to_i
+
+      if evidence_params[:issue_id].blank?
+        autogenerate_issue
+        # Remove blank issue_id from params so that the evidence doesn't get updated with it
+        params[:evidence].delete(:issue_id)
+      end
+
       if @evidence.update(evidence_params)
         track_updated(@evidence)
         check_for_edit_conflicts(@evidence, updated_at_before_save)
@@ -140,6 +148,11 @@ class EvidenceController < NestedNodeResourceController
 
   private
 
+  def autogenerate_issue
+    @evidence.issue = Issue.autogenerate_from(@evidence)
+    track_created(@evidence.issue)
+  end
+
   # Look for the Evidence we are going to be working with based on the :id
   # passed by the user.
   def set_or_initialize_evidence
@@ -155,16 +168,7 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def evidence_params
-    evidence_params = params.require(:evidence).permit(:author, :content, :issue_id, :node_id)
-
-    if evidence_params[:issue_id].blank?
-      evidence_params[:issue_id] =  Issue.autogenerate_from(
-                                      evidence_params: evidence_params,
-                                      project: current_project
-                                    ).id
-    end
-
-    evidence_params
+    params.require(:evidence).permit(:author, :content, :issue_id, :node_id)
   end
 
   def set_auto_save_key
