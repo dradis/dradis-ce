@@ -82,6 +82,13 @@ class Issue < Note
     Hash[issues_map]
   end
 
+  def self.autogenerate_from(evidence_params:, project:)
+    create(
+      text: "#[Title]#\nAuto-generated Issue - #{Time.now}",
+      node: project.issue_library,
+      author: evidence_params[:author]
+    )
+  end
 
   # -- Instance Methods -----------------------------------------------------
 

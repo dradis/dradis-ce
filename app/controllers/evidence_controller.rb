@@ -158,10 +158,9 @@ class EvidenceController < NestedNodeResourceController
     evidence_params = params.require(:evidence).permit(:author, :content, :issue_id, :node_id)
 
     if evidence_params[:issue_id].blank?
-      evidence_params[:issue_id] =  Issue.create(
-                                      text: "#[Title]#\nAuto-generated Issue - #{Time.now}",
-                                      node: current_project.issue_library,
-                                      author: current_user.email
+      evidence_params[:issue_id] =  Issue.autogenerate_from(
+                                      evidence_params: evidence_params,
+                                      project: current_project
                                     ).id
     end
 
