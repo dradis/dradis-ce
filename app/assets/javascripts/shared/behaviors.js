@@ -1,20 +1,20 @@
 (function($, window){
   function initBehaviors(parentElement) {
     //Activate jQuery.Textile
-    $('.textile').textile();
+    $(parentElement).find('.textile').textile();
 
     // Activate DataTables
-    $('[data-behavior~=dradis-datatable]').each(function() {
+    $(parentElement).find('[data-behavior~=dradis-datatable]').each(function() {
       new DradisDatatable(this);
     });
 
     // Activate Rich Toolbars for the editor
-    $('[data-behavior~=rich-toolbar]').each(function() {
+    $(parentElement).find('[data-behavior~=rich-toolbar]').each(function() {
       new EditorToolbar($(this));
     });
 
     // Activate local auto save
-    $('[data-behavior~=local-auto-save]').each(function() {
+    $(parentElement).find('[data-behavior~=local-auto-save]').each(function() {
       new LocalAutoSave(this);
     });
 
@@ -29,12 +29,12 @@
     });
 
     // Allow page anchors to work
-    $('[data-behavior~=deeplinks] >* a').click(function (e) {
+    $(parentElement).find('[data-behavior~=deeplinks] >* a').click(function (e) {
       history.pushState(null, null, $(e.target).attr('href'));
     });
 
     // Show the pane for a given anchor
-    $('[data-behavior~=deeplinks] >* a').each(function() {
+    $(parentElement).find('[data-behavior~=deeplinks] >* a').each(function() {
       if (window.location.hash == $(this).attr('href')) {
         $(this).tab('show');
       }
