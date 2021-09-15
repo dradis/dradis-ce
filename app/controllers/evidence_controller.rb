@@ -94,13 +94,10 @@ class EvidenceController < NestedNodeResourceController
     respond_to do |format|
       updated_at_before_save = @evidence.updated_at.to_i
 
-      if evidence_params[:issue_id].blank?
-        autogenerate_issue
-        # Remove blank issue_id from params so that the evidence doesn't get updated with it
-        params[:evidence].delete(:issue_id)
-      end
+      @evidence.assign_attributes(evidence_params)
+      autogenerate_issue if evidence_params[:issue_id].blank?
 
-      if @evidence.update(evidence_params)
+      if @evidence.save
         track_updated(@evidence)
         check_for_edit_conflicts(@evidence, updated_at_before_save)
         format.html do
