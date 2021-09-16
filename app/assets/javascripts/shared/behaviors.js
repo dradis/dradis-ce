@@ -18,13 +18,14 @@
       new LocalAutoSave(this);
     });
 
-    parentElement.querySelectorAll('[data-behavior~=fetch]').forEach(function(item) {
-      fetch(item.dataset.path, { credentials: 'include' })
-        .then(function(response) { return response.text(); })
+    $(parentElement).find('[data-behavior~=fetch]').each(function() {
+      var that = this;
+      $.ajax(that.dataset.path, { credentials: 'include' })
+        .then(function(response) { return response; })
         .then(function(html) {
-          item.innerHTML = html;
-          $(item).trigger('dradis:fetch');
-          initBehaviors(item);
+          $(that).html(html);
+          $(that).trigger('dradis:fetch');
+          initBehaviors(that);
         });
     });
 
