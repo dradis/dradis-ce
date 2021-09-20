@@ -15,7 +15,6 @@ class Evidence < ApplicationRecord
 
   # -- Callbacks ------------------------------------------------------------
 
-
   # -- Validations ----------------------------------------------------------
   validates :content, length: { maximum: DB_MAX_TEXT_LENGTH }
   validates :issue, presence: true, associated: true
@@ -35,5 +34,4 @@ class Evidence < ApplicationRecord
       'Title' => issue.try(:title)
     }
   end
-
 end
