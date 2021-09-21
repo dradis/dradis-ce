@@ -217,21 +217,28 @@ describe 'evidence' do
         end
       end
 
-      context 'submitting the form with invalid information' do
+      context 'submitting the form without an existing issue' do
         before do
-          # No issue selected
+          @issue_0.destroy
+          @issue_1.destroy
+          visit new_project_node_evidence_path(current_project, @node)
+          expect(page).to have_content 'Auto-generate a new issue'
           fill_in :evidence_content, with: 'This is some evidence'
         end
 
-        it "doesn't create a new piece of evidence" do
-          expect{submit_form}.not_to change{Evidence.count}
+        it "creates a new issue" do
+          expect{submit_form}.to change{Issue.count}.by(1)
         end
 
-        include_examples "doesn't create an Activity"
+        it "creates a new piece of evidence" do
+          expect{submit_form}.to change{Evidence.count}.by(1)
+        end
 
-        it 'shows the form again' do
+        include_examples 'creates an Activity', :create, Evidence
+
+        it 'shows the new evidence' do
           submit_form
-          expect(page).to have_field :evidence_issue_id
+          expect(page).to have_content 'This is some evidence'
         end
       end
     end
