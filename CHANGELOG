@@ -6,7 +6,7 @@
   - Upgraded gems:
     - rails
   - Bugs fixes:
-    - Methodologes:
+    - Methodologies:
       - Ensure boards don't nest when the instance has been inactive
     - Bug tracker items:
       - [item]
