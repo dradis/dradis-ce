@@ -177,6 +177,9 @@ class DradisDatatable {
     return ids;
   }
 
+  // The default data returned by DataTables doesn't contain any information to help us
+  // identify which column it originated from, so we modify it before saving
+  // in localStorage.
   saveHeadersInData(data) {
     this.tableHeaders.forEach(function(th, index) {
       data.columns[index].header = th.textContent;
@@ -193,6 +196,10 @@ class DradisDatatable {
     });
   }
 
+  // We treat tableHeaders as single source of truth because the data
+  // stored in localStorage doesn't know if columns are added or removed.
+  // If the table loaded on the page has 5 columns, and the columns stored in the data has
+  // 4 columns, DataTables will just show all columns because there is a mismatch.
   updateCallbackDataColumns(data) {
     var newColumns = [];
 
