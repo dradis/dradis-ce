@@ -8,6 +8,8 @@
   - Bugs fixes:
     - Methodologies:
       - Ensure boards don't nest when the instance has been inactive
+    - Tables
+      - Persist columns state when columns are added or removed
     - Bug tracker items:
       - [item]
   - New integrations:

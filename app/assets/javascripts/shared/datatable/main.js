@@ -119,10 +119,18 @@ class DradisDatatable {
       pageLength: 25,
       stateSave: true,
       stateSaveCallback: function(settings, data) {
+        var data = that.saveHeadersInData(data);
         localStorage.setItem(that.localStorageKey, JSON.stringify(data));
       },
       stateLoadCallback: function(settings) {
-        return JSON.parse(localStorage.getItem(that.localStorageKey));
+        if (localStorage.getItem(that.localStorageKey) === null) {
+          // We have to explicitly return null here because DataTables expects
+          // this function to return null or an object
+          return null;
+        }
+
+        var data = JSON.parse(localStorage.getItem(that.localStorageKey));
+        return that.updateCallbackDataColumns(data);
       },
       select: {
         selector: 'td.select-checkbox',
@@ -169,11 +177,49 @@ class DradisDatatable {
     return ids;
   }
 
+  saveHeadersInData(data) {
+    this.tableHeaders.forEach(function(th, index) {
+      data.columns[index].header = th.textContent;
+    })
+
+    return data;
+  }
+
   unbindDataTable() {
     var that = this;
 
     document.addEventListener('turbolinks:before-cache', function() {
       that.dataTable.destroy();
     });
+  }
+
+  updateCallbackDataColumns(data) {
+    var newColumns = [];
+
+    this.tableHeaders.forEach(function(th, index) {
+      var column = data.columns.find(function(column) {
+        return column.header == th.textContent;
+      })
+
+      if (column) {
+        newColumns.push(column);
+      } else {
+        var newColumn = {
+          visible: true,
+          search: {
+            search: "",
+            smart: true,
+            regex: false,
+            caseInsensitive: true
+          },
+          header: th.textContent
+        };
+
+        newColumns.push(newColumn);
+      }
+    })
+
+    data.columns = newColumns;
+    return data;
   }
 }
