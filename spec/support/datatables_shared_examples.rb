@@ -1,9 +1,7 @@
-#  let(:default_columns) { ['Title', 'Created', ...] }
-#  let(:hidden_columns) { ['Description', 'Extra', ...] }
-#  let(:filter) { { keyword:'keyword', number_of_rows: 1 } }
-#
-#
-shared_examples 'a DataTable' do |item_type|
+# let(:default_columns) { ['Title', 'Created', ...] }
+# let(:hidden_columns) { ['Description', 'Extra', ...] }
+# let(:filter) { { keyword:'keyword', number_of_rows: 1 } }
+shared_examples 'a DataTable' do
   describe 'column visibility', js: true do
     it 'displays default columns on load' do
       within '.dataTables_wrapper thead tr' do
@@ -140,6 +138,74 @@ shared_examples 'a DataTable' do |item_type|
 
     within '.dataTable' do
       expect(all('tbody tr').count).to eq(filter[:filter_count])
+    end
+  end
+end
+
+# let(:new_content) { "#[Title]#\nTitle\n\n#[New Field]#\nNew Field Value" }
+# let(:old_content) { "#[Title]#\nTitle" }
+# let(:resource) { Issue.take }
+# let(:resource_attribute) { 'text' }
+shared_examples 'a DataTable with Dynamic Columns' do
+  let(:hide_default_columns) do
+    within '.dt-buttons.btn-group' do
+      page.find('.buttons-colvis').click
+
+      within '.dt-button-collection' do
+        click_link 'Created'
+        click_link 'Updated'
+      end
+    end
+  end
+
+  let(:update_resource_with_new_content) do
+    attributes = Hash[resource_attribute, new_content]
+    resource.update(attributes)
+  end
+
+  let(:update_resource_with_old_content) do
+    attributes = Hash[resource_attribute, old_content]
+    resource.update(attributes)
+  end
+
+  context 'when new columns are added', js: true do
+    it 'persists column state' do
+      hide_default_columns
+      update_resource_with_new_content
+
+      # Refresh
+      visit current_url
+
+      within '.dataTables_wrapper thead tr' do
+        expect(page).to_not have_text('Created')
+        expect(page).to_not have_text('Updated')
+        expect(page).to have_text('New Field')
+      end
+    end
+  end
+
+  context 'when columns are removed', js: true do
+    it 'persists column state' do
+      hide_default_columns
+      update_resource_with_new_content
+
+      # Refresh
+      visit current_url
+
+      within '.dataTables_wrapper thead tr' do
+        expect(page).to have_text('New Field')
+      end
+
+      update_resource_with_old_content
+
+      # Refresh
+      visit current_url
+
+      within '.dataTables_wrapper thead tr' do
+        expect(page).to_not have_text('Created')
+        expect(page).to_not have_text('Updated')
+        expect(page).to_not have_text('New Field')
+      end
     end
   end
 end
