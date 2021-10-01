@@ -155,6 +155,9 @@ shared_examples 'a form with local auto save' do |klass, action|
 
       context 'when form is saved' do
         it 'does not prefill fields with cached data' do
+          # Fixed weird bug where submit button not in viewport for Card form
+          page.execute_script('$("#view-content").scrollTop(10000)')
+
           page.find('input[type="submit"]').click
           visit "#{model_path}?template=simple_note"
           click_link 'Source'
