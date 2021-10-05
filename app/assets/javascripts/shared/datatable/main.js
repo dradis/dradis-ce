@@ -211,18 +211,8 @@ class DradisDatatable {
       if (column) {
         newColumns.push(column);
       } else {
-        var newColumn = {
-          visible: true,
-          search: {
-            search: "",
-            smart: true,
-            regex: false,
-            caseInsensitive: true
-          },
-          header: th.textContent
-        };
-
-        newColumns.push(newColumn);
+        // Don't show new columns by default.
+        newColumns.push({ visible: false });
       }
     })
 

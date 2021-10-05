@@ -179,7 +179,7 @@ shared_examples 'a DataTable with Dynamic Columns' do
       within '.dataTables_wrapper thead tr' do
         expect(page).to_not have_text('Created')
         expect(page).to_not have_text('Updated')
-        expect(page).to have_text('New Field')
+        expect(page).to_not have_text('New Field')
       end
     end
   end
@@ -191,10 +191,6 @@ shared_examples 'a DataTable with Dynamic Columns' do
 
       # Refresh
       visit current_url
-
-      within '.dataTables_wrapper thead tr' do
-        expect(page).to have_text('New Field')
-      end
 
       update_resource_with_old_content
 
