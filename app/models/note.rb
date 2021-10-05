@@ -56,6 +56,8 @@ class Note < ApplicationRecord
     Subscription.where(subscribable_type: 'Issue', subscribable_id: id).destroy_all
   end
 
+  after_initialize :set_category
+
   # -- Validations ----------------------------------------------------------
   validates :category, presence: true
   validates :node, presence: true
@@ -73,5 +75,9 @@ class Note < ApplicationRecord
 
   def field_or_text(field_name)
     fields.fetch(field_name, text.truncate(20))
+  end
+
+  def set_category
+    self.category ||= Category.default
   end
 end

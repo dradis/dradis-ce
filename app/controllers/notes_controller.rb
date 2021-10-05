@@ -22,7 +22,6 @@ class NotesController < NestedNodeResourceController
   # Create a new Note for the associated Node.
   def create
     @note.author = current_user.email
-    @note.category ||= Category.default
 
     if @note.save
       track_created(@note)
