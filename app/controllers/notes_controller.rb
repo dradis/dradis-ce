@@ -13,7 +13,7 @@ class NotesController < NestedNodeResourceController
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
 
   def new
-    @note = @node.notes.new
+    @note = @node.notes.new(category: Category.default)
 
     # See ContentFromTemplate concern
     @note.text = template_content if params[:template]
@@ -40,6 +40,7 @@ class NotesController < NestedNodeResourceController
 
   def edit
     @versions_count = @note.versions.count
+    @note.category ||= Category.default
   end
 
   # Update the attributes of a Note

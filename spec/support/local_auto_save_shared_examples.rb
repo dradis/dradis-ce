@@ -95,7 +95,7 @@ shared_examples 'a form with local auto save' do |klass, action|
         elsif klass == Issue
           expect(page).to have_css('.dropdown-toggle span.tag', text: 'No tag')
         elsif klass == Note
-          expect(page).to have_select('note_category_id', selected: 'Assign note category')
+          expect(page).to have_select('note_category_id', selected: 'Default category')
         end
       end
 
