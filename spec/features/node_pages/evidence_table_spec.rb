@@ -29,7 +29,7 @@ describe 'node pages' do
     let(:new_content) { "#[Title]#\nEvidence1\n\n#[Description]#\nn/a\n#[Extra]#\nExtra field\n\n#[New Field]#\nNew Field Value" }
     let(:old_content) { "#[Title]#\nEvidence1\n\n#[Description]#\nn/a\n#[Extra]#\nExtra field" }
     let(:resource) { @evidence }
-    let(:resource_attribute) { 'content' }
+    let(:content_attribute) { :content }
 
     it_behaves_like 'a DataTable with Dynamic Columns'
   end

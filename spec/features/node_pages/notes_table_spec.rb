@@ -23,7 +23,7 @@ describe 'node pages' do
     let(:new_content) { "#[Title]#\nNote1\n\n#[Description]#\nn/a\n#[Extra]#\nExtra field\n\n#[New Field]#\nNew Field Value" }
     let(:old_content) { "#[Title]#\nNote1\n\n#[Description]#\nn/a\n#[Extra]#\nExtra field" }
     let(:resource) { @note }
-    let(:resource_attribute) { 'text' }
+    let(:content_attribute) { :text }
 
     it_behaves_like 'a DataTable with Dynamic Columns'
   end

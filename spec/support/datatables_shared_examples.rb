@@ -145,7 +145,7 @@ end
 # let(:new_content) { "#[Title]#\nTitle\n\n#[New Field]#\nNew Field Value" }
 # let(:old_content) { "#[Title]#\nTitle" }
 # let(:resource) { Issue.take }
-# let(:resource_attribute) { 'text' }
+# let(:update_attribute) { :text }
 shared_examples 'a DataTable with Dynamic Columns' do
   let(:hide_default_columns) do
     within '.dt-buttons.btn-group' do
@@ -159,13 +159,11 @@ shared_examples 'a DataTable with Dynamic Columns' do
   end
 
   let(:update_resource_with_new_content) do
-    attributes = Hash[resource_attribute, new_content]
-    resource.update(attributes)
+    resource.update_attribute(content_attribute, new_content)
   end
 
   let(:update_resource_with_old_content) do
-    attributes = Hash[resource_attribute, old_content]
-    resource.update(attributes)
+    resource.update_attribute(content_attribute, old_content)
   end
 
   context 'when new columns are added', js: true do
