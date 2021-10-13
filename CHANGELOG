@@ -4,7 +4,7 @@
   - Evidence:
     - Create a new issue (optionally) when creating new evidence
   - Upgraded gems:
-    - nokogiri, rails
+    - nokogiri, puma, rails
   - Bugs fixes:
     - Methodologies:
       - Ensure boards don't nest when the instance has been inactive
