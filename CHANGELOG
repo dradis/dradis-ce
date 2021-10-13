@@ -3,6 +3,8 @@
     - Limit the content height for easier access to the Create/Update button.
   - Evidence:
     - Create a new issue (optionally) when creating new evidence
+  - Tylium:
+    - Import CSS manifests from addon
   - Upgraded gems:
     - nokogiri, puma, rails
   - Bugs fixes:
