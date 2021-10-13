@@ -1,11 +1,15 @@
 [v#.#.#] ([month] [YYYY])
-  - Resource Sidebar:
+  - Editor:
+    - Limit the content height for easier access to the Create/Update button.
+  - Evidence:
+    - Create a new issue (optionally) when creating new evidence
+  - Right Sidebar:
     - Toggle comments, subscriptions, etc. between expanded and minimized versions
   - Upgraded gems:
-    - rails
+    - nokogiri, puma, rails
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Methodologies:
+      - Ensure boards don't nest when the instance has been inactive
     - Bug tracker items:
       - [item]
   - New integrations:
