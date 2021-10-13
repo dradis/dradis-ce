@@ -71,11 +71,9 @@ class EditorToolbar {
       }
     });
 
-    // Handler for setting the correct textarea height on keyboard input, when
-    // focus is lost, or when content is inserted programmatically
-    // Handler for setting the correct textarea height when focus is lost, or
-    // when content is inserted programmatically
-    this.$target.on('blur textchange input', this.setHeight);
+    // Handler for setting the correct textarea height on keyboard input, on focus,
+    // when focus is lost, or when content is inserted programmatically
+    this.$target.on('blur focus textchange input', this.setHeight);
 
     // Handler for setting the correct textarea heights on load (for current values)
     this.$target.each(this.setHeight);
@@ -115,12 +113,13 @@ class EditorToolbar {
       var $inputElement = $(this),
           $toolbarElement = $inputElement.parent().prev(),
           $parentElement = $inputElement.parents('[data-behavior~=editor-field]'),
+          $scrollLimitElement = $parentElement.parents('.textile-wrap').parent(),
           topOffset;
       
       $toolbarElement.css({'opacity': 1, 'visibility': 'visible'});
 
       // set offset to 0 if user is in fullscreen mode.
-      if ($inputElement.parents('.textile-fullscreen').length ? topOffset = 0 : topOffset = 106); // 106 = navbar height + breadcrumb height
+      if ($inputElement.parents('.textile-fullscreen').length ? topOffset = 0 : topOffset = $parentElement.find('.editor-toolbar').outerHeight());
 
       // this is needed incase user sets focus on textarea where toolbar would render off screen
       if ($inputElement.height() > 40 && $parentElement.offset().top < $(window).scrollTop() + topOffset) {
@@ -128,11 +127,11 @@ class EditorToolbar {
       }
 
       // adjust position on scroll to make toolbar always appear at the top of the textarea
-      document.querySelector('[data-behavior~=view-content], .textile-fullscreen').addEventListener('scroll', (function () {
+      document.querySelector('.textile-wrap, .textile-fullscreen').addEventListener('scroll', (function () {
         var parentOffsetTop = $parentElement.offset().top - topOffset;
 
         // keep toolbar at the top of text area when scrolling
-        if ($inputElement.height() > 40 && parentOffsetTop < $(window).scrollTop()) {
+        if ($inputElement.height() > 40 && parentOffsetTop < $scrollLimitElement.offset().top - 10) {
           $parentElement.addClass('sticky-toolbar');
         } else {
           // reset the toolbar to the default position and appearance

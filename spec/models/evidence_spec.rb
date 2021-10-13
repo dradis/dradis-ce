@@ -12,7 +12,8 @@ describe Evidence do
 
   describe 'on create' do
     let(:user) { create(:user) }
-    let(:subscribable) { build(:evidence, author: user.email) }
+    let(:issue) { create(:issue) }
+    let(:subscribable) { build(:evidence, issue: issue, author: user.email) }
 
     it_behaves_like 'a subscribable model'
   end

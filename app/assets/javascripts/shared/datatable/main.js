@@ -130,8 +130,6 @@ class DradisDatatable {
       }
     });
 
-    this.validateRecords();
-
     this.behaviors();
   }
 
@@ -140,6 +138,9 @@ class DradisDatatable {
     this.setupMergeButtonToggle();
     this.setupTagButtonToggle();
     this.setupBulkDeleteButtonToggle();
+    this.setupValidation();
+
+    this.$table.trigger('dradis:datatable:load');
 
     this.unbindDataTable();
   }

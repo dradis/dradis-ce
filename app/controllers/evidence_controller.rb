@@ -26,6 +26,7 @@ class EvidenceController < NestedNodeResourceController
 
   def create
     @evidence.author = current_user.email
+    autogenerate_issue if evidence_params[:issue_id].blank?
 
     respond_to do |format|
       if @evidence.save
@@ -92,7 +93,11 @@ class EvidenceController < NestedNodeResourceController
   def update
     respond_to do |format|
       updated_at_before_save = @evidence.updated_at.to_i
-      if @evidence.update(evidence_params)
+
+      @evidence.assign_attributes(evidence_params)
+      autogenerate_issue if evidence_params[:issue_id].blank?
+
+      if @evidence.save
         track_updated(@evidence)
         check_for_edit_conflicts(@evidence, updated_at_before_save)
         format.html do
@@ -140,6 +145,11 @@ class EvidenceController < NestedNodeResourceController
 
   private
 
+  def autogenerate_issue
+    @evidence.issue = Issue.autogenerate_from(@evidence)
+    track_created(@evidence.issue)
+  end
+
   # Look for the Evidence we are going to be working with based on the :id
   # passed by the user.
   def set_or_initialize_evidence
@@ -151,15 +161,6 @@ class EvidenceController < NestedNodeResourceController
       end
     else
       @evidence = Evidence.new(node: @node)
-    end
-  end
-
-  # If the user selects "Add new issue" in the Evidence editor, we create an empty skeleton
-  def create_issue
-    Issue.create do |issue|
-      issue.text = "#[Title]#\nNew issue auto-created for node [#{@node.label}]."
-      issue.node = current_project.issue_library
-      issue.author = current_user.email
     end
   end
 
