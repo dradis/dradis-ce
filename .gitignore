@@ -35,6 +35,7 @@
 
 # Vagrant
 .vagrant/
+*.log
 
 # Random
 .DS_Store

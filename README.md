@@ -54,39 +54,31 @@ There are two editions of Dradis Framework:
 
 ### Git release (recommended)
 
+```bash
+git clone https://github.com/dradis/dradis-ce.git
+cd dradis-ce/
+./bin/setup
+./bin/rails server
 ```
-$ git clone https://github.com/dradis/dradis-ce.git
-$ cd dradis-ce/
-$ ./bin/setup
-$ ./bin/rails server
-```
-
-You can browse to the app at http://localhost:3000/
 
 ### Using Vagrant
 
 If you'd like to use dradis in Vagrant, you can use the included Vagrantfile.
 
-```
-# Clone the repo
+```bash
+# Installation
 git clone https://github.com/dradis/dradis-ce.git
 cd dradis-ce/
-
-# install/start the vagrant box
 vagrant up
-# ssh into the box
+
+# Launch
 vagrant ssh
-
-# install ruby in the vagrant box
-cd /dradis/dradis-ce
-rvm install "$(cat .ruby-version)"
-
-
-# Then you can proceed with standard setup from within Vagrant
-ruby bin/setup
-# You'll need to tell the server to bind to 0.0.0.0 for port forwarding:
-bundle exec rails server -b 0.0.0.0
+cd /dradis/dradis-ce/ && bundle exec rails server -b 0.0.0.0
 ```
+
+### Dashboard URL
+
+You can browse to the app at http://localhost:3000/
 
 ### Stable release
 
