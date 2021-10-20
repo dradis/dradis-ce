@@ -111,11 +111,14 @@ class DradisDatatable {
       ],
       dom: "<'row'<'col-lg-6'B><'col-lg-6'f>>" +
         "<'row'<'col-lg-12'tr>>" +
-        "<'dataTables_footer_content'ip>",
+        "<'dataTables_footer_content'lip>",
       initComplete: function (settings) {
         settings.oInstance.wrap("<div class='table-wrapper'></div>");
       },
-      lengthChange: false,
+      lengthMenu: [
+        [ 25, 50, 100, -1 ],
+        [ '25', '50', '100', 'Show all' ]
+      ],
       pageLength: 25,
       stateSave: true,
       stateSaveCallback: function(settings, data) {
