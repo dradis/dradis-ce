@@ -5,7 +5,7 @@
     - Create a new issue (optionally) when creating new evidence
   - Tylium:
     - Remove height restriction from code blocks
-    - Import CSS manifests from addon
+    - Import CSS manifests from addons
   - Upgraded gems:
     - nokogiri, puma, rails
   - Bugs fixes:
