@@ -117,7 +117,7 @@ class DradisDatatable {
       },
       lengthMenu: [
         [ 25, 50, 100, -1 ],
-        [ '25', '50', '100', 'Show all' ]
+        [ '25', '50', '100', 'All' ]
       ],
       pageLength: 25,
       stateSave: true,
