@@ -8,6 +8,8 @@
   - Upgraded gems:
     - nokogiri, puma, rails
   - Bugs fixes:
+    - Comments:
+      - Show sticky toolbar when adding long comments
     - Methodologies:
       - Ensure boards don't nest when the instance has been inactive
     - Bug tracker items:
