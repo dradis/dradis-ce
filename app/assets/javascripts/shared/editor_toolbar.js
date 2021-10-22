@@ -1,4 +1,4 @@
-/* 
+/*
 
 To initialize:
 
@@ -92,7 +92,8 @@ class EditorToolbar {
 
     // keyboard shortcuts
     this.$target.keydown(function(e) {
-      var key = e.which || e.keyCode; // for cross-browser compatibility
+      var key = e.which || e.keyCode, // for cross-browser compatibility
+          selector;
 
       if (e.metaKey) {
         switch (key) {
@@ -113,13 +114,13 @@ class EditorToolbar {
       var $inputElement = $(this),
           $toolbarElement = $inputElement.parent().prev(),
           $parentElement = $inputElement.parents('[data-behavior~=editor-field]'),
-          $scrollLimitElement = $parentElement.parents('.textile-wrap').parent(),
-          topOffset;
-      
+          $scrollLimitElement = $('[data-behavior~=textile-wrap]').length ? $('[data-behavior~=textile-wrap]') : $('[data-behavior~=view-content]'),
+          topOffset = $('[data-behavior~=textile-wrap]').length ? $parentElement.find('.editor-toolbar').outerHeight() : 85;
+
       $toolbarElement.css({'opacity': 1, 'visibility': 'visible'});
 
       // set offset to 0 if user is in fullscreen mode.
-      if ($inputElement.parents('.textile-fullscreen').length ? topOffset = 0 : topOffset = $parentElement.find('.editor-toolbar').outerHeight());
+      if ($inputElement.parents('[data-behavior~=textile-fullscreen]').length) { topOffset = 40 };
 
       // this is needed incase user sets focus on textarea where toolbar would render off screen
       if ($inputElement.height() > 40 && $parentElement.offset().top < $(window).scrollTop() + topOffset) {
@@ -127,11 +128,11 @@ class EditorToolbar {
       }
 
       // adjust position on scroll to make toolbar always appear at the top of the textarea
-      document.querySelector('.textile-wrap, .textile-fullscreen').addEventListener('scroll', (function () {
+      $scrollLimitElement.on('scroll', (function () {
         var parentOffsetTop = $parentElement.offset().top - topOffset;
 
         // keep toolbar at the top of text area when scrolling
-        if ($inputElement.height() > 40 && parentOffsetTop < $scrollLimitElement.offset().top - 10) {
+        if ($inputElement.height() > 40 && parentOffsetTop < $scrollLimitElement.offset().top - 40) {
           $parentElement.addClass('sticky-toolbar');
         } else {
           // reset the toolbar to the default position and appearance
