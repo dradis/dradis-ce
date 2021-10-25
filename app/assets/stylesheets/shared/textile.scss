@@ -2,6 +2,7 @@
 
 .content-textile, .textile-preview {
   overflow-wrap: break-word;
+  position: relative;
 
   em {
     font-style: italic;
