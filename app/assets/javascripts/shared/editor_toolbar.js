@@ -173,7 +173,7 @@ class EditorToolbar {
               x = selectionPosition.x - parentPosition.x,
               y = selectionPosition.y - parentPosition.y;
 
-          $quoteBtn.removeClass('d-none').css({'top': y - 40, 'left': x - 15});
+          $quoteBtn.removeClass('d-none').css({'top': y - ($quoteBtn.outerHeight() + 8), 'left': x - 15});
         } else {
           $quoteBtn.addClass('d-none');
         }
