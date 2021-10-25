@@ -43,7 +43,7 @@ class EditorToolbar {
       $('[data-behavior~=selection-quote-button]').each(function() { $(this).remove(); })
       $('[data-behavior~=content-textile]').append('\
         <div class="selection-quote-button d-none" data-behavior="selection-quote-button" aria-label="quote text">\
-            <i class="fa fa-quote-left fa-fw"></i>\
+            <i class="fa fa-quote-left fa-fw mr-1"></i>\
             <span>Quote Text</span>\
         </div>')
     }
@@ -160,25 +160,22 @@ class EditorToolbar {
       var selectionObj, selectionText;
 
       $('[data-behavior~=content-textile]').on('mouseup', function(e) {
+        var $quoteBtn = $(this).find('[data-behavior~=selection-quote-button]');
 
         selectionObj = document.getSelection();
 
         if ($(selectionObj.focusNode).parents('[data-behavior~=content-textile]').length && selectionObj.toString().trim().length > 0) {
           selectionText = selectionObj.toString();
 
-          var $selectionElement = $(selectionObj.focusNode.parentElement)
+          var $selectionElement = $(selectionObj.focusNode.parentElement),
+              selectionPosition = selectionObj.getRangeAt(0).getBoundingClientRect(),
+              parentPosition = $selectionElement.parents('[data-behavior~=content-textile]')[0].getBoundingClientRect(),
+              x = selectionPosition.x - parentPosition.x,
+              y = selectionPosition.y - parentPosition.y;
 
-          var selectionPosition = selectionObj.getRangeAt(0).getBoundingClientRect();
-          var parentPosition = $selectionElement.parents('[data-behavior~=content-textile]')[0].getBoundingClientRect();
-
-          var x = selectionPosition.x - parentPosition.x;
-          var y = selectionPosition.y - parentPosition.y;
-
-          $('[data-behavior~=selection-quote-button]')
-            .removeClass('d-none')
-            .css({'top': y - 40, 'left': x - 15});
+          $quoteBtn.removeClass('d-none').css({'top': y - 40, 'left': x - 15});
         } else {
-          $('[data-behavior~=selection-quote-button]').addClass('d-none');
+          $quoteBtn.addClass('d-none');
         }
       })
 
@@ -187,10 +184,10 @@ class EditorToolbar {
           return;
         } else {
           $('[data-behavior~=selection-quote-button]').addClass('d-none');
-          if (window.getSelection().empty) {  // Chrome
-            window.getSelection().empty();
-          } else if (window.getSelection().removeAllRanges) {  // Firefox
-            window.getSelection().removeAllRanges();
+          if (document.getSelection().empty) {  // Chrome
+            document.getSelection().empty();
+          } else if (document.getSelection().removeAllRanges) {  // Firefox
+            document.getSelection().removeAllRanges();
           }
         }
       })
