@@ -331,6 +331,7 @@
       this.options.$help.hide();
       this.options.$preview.show();
       this.$source.show();
+      this.$source.find('textarea').focus();
     },
 
     // --------------------------------------------------- Other event handlers
