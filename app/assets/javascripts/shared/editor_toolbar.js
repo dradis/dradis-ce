@@ -39,6 +39,15 @@ class EditorToolbar {
       this.addUploader();
     }
 
+    if (this.opts.include.includes('quote') && $('[data-behavior~=mentionable]').length) {
+      $('[data-behavior~=selection-quote-button]').each(function() { $(this).remove(); })
+      $('[data-behavior~=content-textile]').append('\
+        <div class="selection-quote-button d-none" data-behavior="selection-quote-button" aria-label="quote text">\
+            <i class="fa fa-quote-left fa-fw"></i>\
+            <span>Quote Text</span>\
+        </div>')
+    }
+
     this.behaviors();
   }
 
@@ -116,7 +125,7 @@ class EditorToolbar {
           $parentElement = $inputElement.parents('[data-behavior~=editor-field]'),
           $scrollLimitElement = $parentElement.parents('.textile-wrap').parent(),
           topOffset;
-      
+
       $toolbarElement.css({'opacity': 1, 'visibility': 'visible'});
 
       // set offset to 0 if user is in fullscreen mode.
@@ -145,6 +154,54 @@ class EditorToolbar {
     this.$target.on('blur', function() {
       $(this).parent().prev().css({'opacity': 0, 'visibility': 'hidden'});
     });
+
+    // show a quote button when text is selected
+    if ($('[data-behavior~=selection-quote-button]').length) {
+      var selectionObj, selectionText;
+
+      $('[data-behavior~=content-textile]').on('mouseup', function(e) {
+
+        selectionObj = document.getSelection();
+
+        if ($(selectionObj.focusNode).parents('[data-behavior~=content-textile]').length && selectionObj.toString().trim().length > 0) {
+          selectionText = selectionObj.toString();
+
+          var $selectionElement = $(selectionObj.focusNode.parentElement)
+
+          var selectionPosition = selectionObj.getRangeAt(0).getBoundingClientRect();
+          var parentPosition = $selectionElement.parents('[data-behavior~=content-textile]')[0].getBoundingClientRect();
+
+          var x = selectionPosition.x - parentPosition.x;
+          var y = selectionPosition.y - parentPosition.y;
+
+          $('[data-behavior~=selection-quote-button]')
+            .removeClass('d-none')
+            .css({'top': y - 40, 'left': x - 15});
+        } else {
+          $('[data-behavior~=selection-quote-button]').addClass('d-none');
+        }
+      })
+
+      $('[data-behavior~=content-textile]').on('mousedown', function(e) {
+        if ($(e.target).parent().is('[data-behavior~=selection-quote-button]')) {
+          return;
+        } else {
+          $('[data-behavior~=selection-quote-button]').addClass('d-none');
+          if (window.getSelection().empty) {  // Chrome
+            window.getSelection().empty();
+          } else if (window.getSelection().removeAllRanges) {  // Firefox
+            window.getSelection().removeAllRanges();
+          }
+        }
+      })
+
+      $('[data-behavior~=selection-quote-button]').on('click', function() {
+        $('[data-behavior~=selection-quote-button]').addClass('d-none');
+        $('[data-behavior~=mentionable]').focus()
+        console.log('%cselection:', 'font-weight: bold; color:green', selectionText);
+
+      })
+    }
   }
 
   setHeight(e) {
