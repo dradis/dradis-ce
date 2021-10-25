@@ -80,10 +80,9 @@ class Attachment < File
     find(:all).count
   end
 
-  def self.exists?(filename:, node_id:)
+  def self.find_by(filename:, node_id:)
     find(filename, conditions: { node_id: node_id } )
-  rescue StandardError => e
-    false
+  rescue StandardError
   end
 
   # Return the attachment instance(s) based on the find parameters

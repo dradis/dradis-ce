@@ -31,13 +31,13 @@ describe Attachment do
   describe '.exists?' do
     context 'if attachment exists in the file system' do
       it 'returns the attachment object' do
-        expect(Attachment.exists?(filename: attachment.filename, node_id: node.id)).to be_a(Attachment)
+        expect(Attachment.find_by(filename: attachment.filename, node_id: node.id)).to be_a(Attachment)
       end
     end
 
     context 'if attachment does not exist in the file system' do
-      it 'returns false' do
-        expect(Attachment.exists?(filename: 'invalid_attachment.png', node_id: node.id)).to be(false)
+      it 'returns nil' do
+        expect(Attachment.find_by(filename: 'invalid_attachment.png', node_id: node.id)).to be(nil)
       end
     end
   end
