@@ -134,30 +134,31 @@
   cursor: pointer;
   display: flex;
   justify-content: center;
-  padding: 0.25rem;
+  padding: 0.25rem 0.5rem;
   position: absolute;
+  user-select: none;
   width: auto;
   z-index: 3;
   
-  // &:after {
-  //   border: 0.5rem solid;
-  //   border-color: $secondaryBgColor transparent transparent;
-  //   content: '';
-  //   height: 0;
-  //   left: 20%;
-  //   position: absolute;
-  //   top: 1.8rem;
-  //   width: 0;
-  // }
+  &:after {
+    border: 0.5rem solid;
+    border-color: $secondaryBgColor transparent transparent;
+    content: '';
+    height: 0;
+    left: 0.7rem;
+    position: absolute;
+    top: 1.75rem;
+    width: 0;
+  }
 
-  // &:before {
-  //   border: 0.5rem solid;
-  //   border-color: $borderColor transparent transparent;
-  //   content: '';
-  //   height: 0;
-  //   left: 20%;
-  //   position: absolute;
-  //   top: 1.9rem;
-  //   width: 0;
-  // }
+  &:before {
+    border: 0.5rem solid;
+    border-color: $borderColor transparent transparent;
+    content: '';
+    height: 0;
+    left: 0.7rem;
+    position: absolute;
+    top: 1.9rem;
+    width: 0;
+  }
 }
