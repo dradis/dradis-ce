@@ -1,4 +1,4 @@
-/*
+/* 
 
 To initialize:
 
@@ -101,8 +101,7 @@ class EditorToolbar {
 
     // keyboard shortcuts
     this.$target.keydown(function(e) {
-      var key = e.which || e.keyCode, // for cross-browser compatibility
-          selector;
+      var key = e.which || e.keyCode; // for cross-browser compatibility
 
       if (e.metaKey) {
         switch (key) {
@@ -280,7 +279,7 @@ class EditorToolbar {
       'link':               new Affix('"', 'Link text', '":https://'),
       'list-ol':            new Affix('# ', 'Ordered item'),
       'list-ul':            new Affix('* ', 'Unordered item'),
-      'quote':              new BlockAffix('bq. ', 'Quoted text'),
+      //'quote':       new BlockAffix('bq. ', 'Quoted text'),
       'table':              new Affix('', '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|')
     };
 
@@ -312,11 +311,6 @@ class EditorToolbar {
     if (include.includes('link')) str += '<div class="editor-btn" data-btn="link" aria-tooltip="link">\
       <i class="fa fa-link"></i>\
     </div>';
-
-    if (include.includes('quote')) str += '<div class="editor-btn" data-btn="quote" aria-tooltip="quote block">\
-      <i class="fa fa-quote-left"></i>\
-    </div>';
-
     if (include.includes('table')) str += '<div class="editor-btn" data-btn="table" aria-tooltip="table">\
       <i class="fa fa-table"></i>\
     </div>';
@@ -343,6 +337,9 @@ class EditorToolbar {
     </div>\
     <div class="editor-btn" data-btn="inline-code" aria-label="inline code">\
       <i class="fa fa-terminal"></i>\
+    </div>\ 
+    <div class="editor-btn" data-btn="quote" aria-label="quote block">\
+      <i class="fa fa-quote-left"></i>\
     </div>\
 
     */
