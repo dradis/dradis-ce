@@ -259,7 +259,7 @@ class EditorToolbar {
       <i class="fa fa-link"></i>\
     </div>';
 
-    if (include.includes('quote')) str += '<div class="editor-btn" data-btn="quote" aria-label="quote block">\
+    if (include.includes('quote')) str += '<div class="editor-btn" data-btn="quote" aria-tooltip="quote block">\
       <i class="fa fa-quote-left"></i>\
     </div>';
 
