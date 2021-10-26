@@ -39,7 +39,7 @@ class EditorToolbar {
       this.addUploader();
     }
 
-    if (this.opts.include.includes('quote') && $('[data-behavior~=mentionable]').length) {
+    if ($('[data-behavior~=mentionable]').length) {
       $('[data-behavior~=selection-quote-button]').each(function() { $(this).remove(); })
       $('[data-behavior~=content-textile]').append('\
         <div class="selection-quote-button d-none" data-behavior="selection-quote-button" aria-label="quote text">\
