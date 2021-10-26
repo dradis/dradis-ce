@@ -1,11 +1,12 @@
 [v#.#.#] ([month] [YYYY])
   - Editor:
     - Add functionality to quote text from comments
-    - Limit the content height for easier access to the Create/Update button.
+    - Limit the content height for easier access to the Create/Update button
   - Evidence:
     - Create a new issue (optionally) when creating new evidence
   - Tylium:
     - Import CSS manifests from addon
+    - Remove extra left padding from the first line of content in a code block
   - Upgraded gems:
     - nokogiri, puma, rails
   - Bugs fixes:
