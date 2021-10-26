@@ -128,7 +128,7 @@ class EditorToolbar {
       }
 
       // adjust position on scroll to make toolbar always appear at the top of the textarea
-      document.querySelector('.textile-wrap, .textile-fullscreen').addEventListener('scroll', (function () {
+      $('.textile-wrap, .textile-fullscreen').on('scroll', (function () {
         var parentOffsetTop = $parentElement.offset().top - topOffset;
 
         // keep toolbar at the top of text area when scrolling
