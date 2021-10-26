@@ -20,6 +20,7 @@
             method: :delete do %>
             <i class="fa fa-trash fa-fw"></i> Delete
           <% end %>
+          <a href="#modal_move_evidence" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-mail-forward fa-fw"></i> Move</a>
           <%= render partial: 'subscriptions/actions', locals: { subscribable: @evidence, dots_menu: true } %>
         </div>
       </li>
