@@ -28,7 +28,7 @@ describe Attachment do
   it 'should recognise Ruby file IO and in particular the <<() method'
   it 'should be re-nameble'
 
-  describe '.exists?' do
+  describe '.find_by' do
     context 'if attachment exists in the file system' do
       it 'returns the attachment object' do
         expect(Attachment.find_by(filename: attachment.filename, node_id: node.id)).to be_a(Attachment)
