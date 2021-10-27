@@ -3,9 +3,8 @@
 To initialize:
 
 new QuoteSelector(EditorToolbar);
-new EditorToolbar($target);
 
-Where `EditorToolbar` is an instance of an editor class
+Where `content` is an element of [data-behavior=content-textile]
 */
 
 class QuoteSelector {
