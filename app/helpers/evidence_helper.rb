@@ -3,7 +3,7 @@ module EvidenceHelper
     if return_to == 'issue'
       [current_project, @evidence.issue]
     elsif @evidence.persisted?
-      [current_project, @node, @evidence]
+      [current_project, @evidence.reload.node, @evidence]
     else
       [current_project, @node]
     end
