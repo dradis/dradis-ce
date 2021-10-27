@@ -36,9 +36,8 @@ class QuoteSelector {
   behaviors() {
     var that = this;
 
-    // Keep track of what editor box was last used, and where the cursor was so
-    // that we can inject the quote into the right editor, at the right
-    // location. Instances where multiple editors may be present is when someone
+    // Keep track of what editor box was last used
+    // Instances where multiple editors may be present is when someone
     // is editing a previous comment. There will be two comment editors.
     // Use the only editor we can find if there's only one.
     this.lastActiveEditor = $('[data-behavior~=rich-toolbar]').data('editorToolbar');
@@ -66,6 +65,7 @@ class QuoteSelector {
     $(document).on('mousedown', function(e) {
       if ($(e.target).parent().is('[data-behavior~=selection-quote-button]')) {
         // no-op;
+        // Was a click on the quote button itself
       } else {
         that.clear();
       }
