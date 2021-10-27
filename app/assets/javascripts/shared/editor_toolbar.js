@@ -219,7 +219,7 @@ class EditorToolbar {
 
   affixesLibrary(type, selection) {
     const library = {
-      'block-code':         new BlockAffix('bc.', 'Code markup'),
+      'block-code':         new BlockAffix('\nbc.', 'Code markup'),
       'bold':               new Affix('*', 'Bold text', '*'),
       'field':              new Affix('#[', 'Field', ']#\n'),
       //'highlight':          new Affix('$${{', 'Highlighted text', '}}$$'),
@@ -230,7 +230,7 @@ class EditorToolbar {
       'link':               new Affix('"', 'Link text', '":https://'),
       'list-ol':            new Affix('# ', 'Ordered item'),
       'list-ul':            new Affix('* ', 'Unordered item'),
-      'quote':              new BlockAffix('bq.', 'Quoted text'),
+      'quote':              new BlockAffix('\nbq.', 'Quoted text'),
       'table':              new Affix('', '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|')
     };
 
