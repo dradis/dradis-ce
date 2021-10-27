@@ -39,15 +39,6 @@ class EditorToolbar {
       this.addUploader();
     }
 
-    if (this.opts.include.includes('quote') && $('[data-behavior~=mentionable]').length) {
-      $('[data-behavior~=selection-quote-button]').each(function() { $(this).remove(); })
-      $('[data-behavior~=content-textile]').append('\
-        <div class="selection-quote-button d-none" data-behavior="selection-quote-button" aria-label="quote text">\
-            <i class="fa fa-quote-left fa-fw mr-1"></i>\
-            <span>Quote Text</span>\
-        </div>')
-    }
-
     this.behaviors();
   }
 
@@ -154,51 +145,6 @@ class EditorToolbar {
     this.$target.on('blur', function() {
       $(this).parent().prev().css({'opacity': 0, 'visibility': 'hidden'});
     });
-
-    // show a quote button when text is selected
-    if ($('[data-behavior~=selection-quote-button]').length) {
-      var selectionObj, selectionText;
-
-      $('[data-behavior~=content-textile]').on('mouseup', function(e) {
-        var $quoteBtn = $(this).find('[data-behavior~=selection-quote-button]');
-
-        selectionObj = document.getSelection();
-
-        if ($(selectionObj.focusNode).parents('[data-behavior~=content-textile]').length && selectionObj.toString().trim().length > 0) {
-          selectionText = selectionObj.toString();
-
-          var $selectionElement = $(selectionObj.focusNode.parentElement),
-              selectionPosition = selectionObj.getRangeAt(0).getBoundingClientRect(),
-              parentPosition = $selectionElement.parents('[data-behavior~=content-textile]')[0].getBoundingClientRect(),
-              x = selectionPosition.x - parentPosition.x,
-              y = selectionPosition.y - parentPosition.y;
-
-          $quoteBtn.removeClass('d-none').css({'top': y - ($quoteBtn.outerHeight() + 8), 'left': x - 15});
-        } else {
-          $quoteBtn.addClass('d-none');
-        }
-      })
-
-      $('[data-behavior~=content-textile]').on('mousedown', function(e) {
-        if ($(e.target).parent().is('[data-behavior~=selection-quote-button]')) {
-          return;
-        } else {
-          $('[data-behavior~=selection-quote-button]').addClass('d-none');
-          if (document.getSelection().empty) {  // Chrome
-            document.getSelection().empty();
-          } else if (document.getSelection().removeAllRanges) {  // Firefox
-            document.getSelection().removeAllRanges();
-          }
-        }
-      })
-
-      $('[data-behavior~=selection-quote-button]').on('click', function() {
-        $('[data-behavior~=selection-quote-button]').addClass('d-none');
-        $('[data-behavior~=mentionable]').focus()
-        console.log('%cselection:', 'font-weight: bold; color:green', selectionText);
-
-      })
-    }
   }
 
   setHeight(e) {

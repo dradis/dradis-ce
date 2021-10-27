@@ -25,6 +25,7 @@
 //= require shared/comments
 //= require shared/console_updater
 //= require shared/editor_toolbar
+//= require shared/quote_selector
 //= require shared/mentions
 //= require shared/notifications
 //= require shared/subscriptions
