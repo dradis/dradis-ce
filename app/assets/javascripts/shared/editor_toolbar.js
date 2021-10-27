@@ -159,6 +159,8 @@ class EditorToolbar {
     $(this).css({'height': this.scrollHeight + 2});
   }
 
+  // Splices the content where it needs to go in the textarea
+  // vs inject which takes an Affix and manages pre/post curso positioning
   insert(text) {
     var cursorInfo = this.$target.cursorInfo(),
         elementText = this.$target.val();
@@ -179,6 +181,9 @@ class EditorToolbar {
     }
   }
 
+  // Takes an affix. Uses the insert function to splice content. Highlights
+  // content or places cursor at the end of new content.
+  // Triggers the textchange event for rendering and local cache updating.
   injectSyntax(affix) {
     this.$target.focus(); // bring focus back to $target from the toolbar
     var cursorInfo = this.$target.cursorInfo(); // Save the original position
@@ -215,7 +220,7 @@ class EditorToolbar {
 
   affixesLibrary(type, selection) {
     const library = {
-      'block-code':         new BlockAffix('bc. ', 'Code markup'),
+      'block-code':         new BlockAffix('bc.', 'Code markup'),
       'bold':               new Affix('*', 'Bold text', '*'),
       'field':              new Affix('#[', 'Field', ']#\n'),
       //'highlight':          new Affix('$${{', 'Highlighted text', '}}$$'),
@@ -226,7 +231,7 @@ class EditorToolbar {
       'link':               new Affix('"', 'Link text', '":https://'),
       'list-ol':            new Affix('# ', 'Ordered item'),
       'list-ul':            new Affix('* ', 'Unordered item'),
-      'quote':              new BlockAffix('bq. ', 'Quoted text'),
+      'quote':              new BlockAffix('bq.', 'Quoted text'),
       'table':              new Affix('', '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|')
     };
 
@@ -354,7 +359,19 @@ class Affix {
 
 class BlockAffix extends Affix {
   withSelection() {
-    return this.prefix + this.selection;
+    return this.multiline() + this.selection;
+  }
+
+  asPlaceholder() {
+    return this.multiline() + this.placeholder;
+  }
+
+  multiline() {
+    if (this.selection.includes('\n')) {
+      return this.prefix + '. '
+    } else {
+      return this.prefix + ' '
+    }
   }
 }
 
