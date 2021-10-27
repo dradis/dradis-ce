@@ -1,4 +1,4 @@
-/*
+/* 
 
 To initialize:
 
@@ -92,8 +92,7 @@ class EditorToolbar {
 
     // keyboard shortcuts
     this.$target.keydown(function(e) {
-      var key = e.which || e.keyCode, // for cross-browser compatibility
-          selector;
+      var key = e.which || e.keyCode; // for cross-browser compatibility
 
       if (e.metaKey) {
         switch (key) {
@@ -263,11 +262,6 @@ class EditorToolbar {
     if (include.includes('link')) str += '<div class="editor-btn" data-btn="link" aria-tooltip="link">\
       <i class="fa fa-link"></i>\
     </div>';
-
-    if (include.includes('quote')) str += '<div class="editor-btn" data-btn="quote" aria-tooltip="quote block">\
-      <i class="fa fa-quote-left"></i>\
-    </div>';
-
     if (include.includes('table')) str += '<div class="editor-btn" data-btn="table" aria-tooltip="table">\
       <i class="fa fa-table"></i>\
     </div>';
@@ -294,6 +288,9 @@ class EditorToolbar {
     </div>\
     <div class="editor-btn" data-btn="inline-code" aria-label="inline code">\
       <i class="fa fa-terminal"></i>\
+    </div>\ 
+    <div class="editor-btn" data-btn="quote" aria-label="quote block">\
+      <i class="fa fa-quote-left"></i>\
     </div>\
 
     */
