@@ -46,18 +46,26 @@ class QuoteSelector {
     });
 
     // Get the selected text positions so we can place the quote box above it
-    this.$content.on('mouseup', function(e) {
+    $(document).on('mouseup', function(e) {
       var selectionObj = document.getSelection();
-
-      if (selectionObj.toString().trim().length > 0) {
+      // Only show the quote button if there is a selection and it starts and
+      // ends within a content-textile container
+      if (!(selectionObj.isCollapsed) &&
+        ($(selectionObj.anchorNode).parents("[data-behavior=content-textile]").length == 1) &&
+        ($(selectionObj.focusNode).parents("[data-behavior=content-textile]").length == 1)) {
         var selectionPosition = selectionObj.getRangeAt(0).getBoundingClientRect(),
             parentPosition = that.$content[0].getBoundingClientRect(),
-            x = selectionPosition.x - parentPosition.x,
-            y = selectionPosition.y - parentPosition.y;
+            boundingBoxX = selectionPosition.x - parentPosition.x,
+            boundingBoxY = selectionPosition.y - parentPosition.y,
+            chevronOffsetY = 8, // Psuedo element downward chevron under quote button
+            chevronOffsetX = 15; // Psuedo element downward chevron left offset from button left side
 
         that.$quoteBtn
           .removeClass('d-none')
-          .css({'top': y - (that.$quoteBtn.outerHeight() + 8), 'left': x - 15});
+          .css({
+            'top': boundingBoxY - (that.$quoteBtn.outerHeight() + chevronOffsetY),
+            'left': boundingBoxX - chevronOffsetX
+          });
       }
     })
 
