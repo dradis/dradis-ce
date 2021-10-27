@@ -47,12 +47,17 @@ class QuoteSelector {
 
     // Get the selected text positions so we can place the quote box above it
     $(document).on('mouseup', function(e) {
-      var selectionObj = document.getSelection();
-      // Only show the quote button if there is a selection and it starts and
-      // ends within a content-textile container
+      var selectionObj = document.getSelection(),
+          quoteableSelector = "[data-behavior~=content-textile]";
+
+      // Only show a quote button if:
+      //  - there is a selection
+      //  - the selection starts and ends within a content-textile container
+      //  - show the quote button for only the selection container
       if (!(selectionObj.isCollapsed) &&
-        ($(selectionObj.anchorNode).parents("[data-behavior=content-textile]").length == 1) &&
-        ($(selectionObj.focusNode).parents("[data-behavior=content-textile]").length == 1)) {
+        ($(selectionObj.anchorNode).parents(quoteableSelector).length == 1) &&
+        ($(selectionObj.focusNode).parents(quoteableSelector).length == 1) &&
+        ($(selectionObj.anchorNode).parents(quoteableSelector).is(that.$content))) {
         var selectionPosition = selectionObj.getRangeAt(0).getBoundingClientRect(),
             parentPosition = that.$content[0].getBoundingClientRect(),
             boundingBoxX = selectionPosition.x - parentPosition.x,
