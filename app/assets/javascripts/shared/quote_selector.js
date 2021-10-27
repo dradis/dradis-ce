@@ -58,13 +58,21 @@ class QuoteSelector {
             boundingBoxX = selectionPosition.x - parentPosition.x,
             boundingBoxY = selectionPosition.y - parentPosition.y,
             chevronOffsetY = 8, // Psuedo element downward chevron under quote button
-            chevronOffsetX = 15; // Psuedo element downward chevron left offset from button left side
+            chevronOffsetX = 15, // Psuedo element downward chevron left offset from button left side
+            clonedRange = selectionObj.getRangeAt(0).cloneRange();
+
+        // Clone the range and collapse it so we can take measurement of only
+        // the first line. We make a clone because calling `collapse` will
+        // unselect the content the user has highlighted if we call it on the
+        // original element.
+        clonedRange.collapse(true);
+        var firstLineOffset = clonedRange.getBoundingClientRect().x - parentPosition.x;
 
         that.$quoteBtn
           .removeClass('d-none')
           .css({
             'top': boundingBoxY - (that.$quoteBtn.outerHeight() + chevronOffsetY),
-            'left': boundingBoxX - chevronOffsetX
+            'left': firstLineOffset - chevronOffsetX
           });
       }
     })
