@@ -9,6 +9,6 @@ $('#<%= dom_id(@comment) %>').find('.actions').addClass('current_user')
 
 $('[data-notice~=no-comments]').hide()
 
-$('[data-behavior~=rich-toolbar]').each(function() {
-  new EditorToolbar($(this));
+$('[data-behavior~=content-textile]').each(function() {
+  new QuoteSelector(this);
 });
