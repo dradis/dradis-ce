@@ -64,13 +64,13 @@ class QuoteSelector {
         // unselect the content the user has highlighted if we call it on the
         // original element.
         clonedRange.collapse(true);
-        var firstLineOffset = clonedRange.getBoundingClientRect().x - parentPosition.x;
+        var boundingBoxX = clonedRange.getBoundingClientRect().x - parentPosition.x;
 
         that.$quoteBtn
           .removeClass('d-none')
           .css({
             'top': boundingBoxY - (that.$quoteBtn.outerHeight() + chevronOffsetY),
-            'left': firstLineOffset - chevronOffsetX
+            'left': boundingBoxX - chevronOffsetX
           });
       }
     })
