@@ -60,7 +60,6 @@ class QuoteSelector {
         ($(selectionObj.anchorNode).parents(quoteableSelector).is(that.$content))) {
         var selectionPosition = selectionObj.getRangeAt(0).getBoundingClientRect(),
             parentPosition = that.$content[0].getBoundingClientRect(),
-            boundingBoxX = selectionPosition.x - parentPosition.x,
             boundingBoxY = selectionPosition.y - parentPosition.y,
             chevronOffsetY = 8, // Psuedo element downward chevron under quote button
             chevronOffsetX = 15, // Psuedo element downward chevron left offset from button left side
