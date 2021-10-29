@@ -40,18 +40,11 @@ class QuoteSelector {
     window.lastActiveEditor = $('[data-behavior~=rich-toolbar]').data('editorToolbar');
 
     // Get the selected text positions so we can place the quote box above it
-    $(document).on('mouseup', function(e) {
+    $(document).on('mouseup', function() {
       var selectionObj = document.getSelection(),
-          quoteableSelector = "[data-behavior~=content-textile]";
+          quoteableSelector = '[data-behavior~=content-textile]';
 
-      // Only show a quote button if:
-      //  - there is a selection
-      //  - the selection starts and ends within a content-textile container
-      //  - show the quote button for only the selection container
-      if (!(selectionObj.isCollapsed) &&
-        ($(selectionObj.anchorNode).parents(quoteableSelector).length == 1) &&
-        ($(selectionObj.focusNode).parents(quoteableSelector).length == 1) &&
-        ($(selectionObj.anchorNode).parents(quoteableSelector).is(that.$content))) {
+      if (isValidSelection(selectionObj, quoteableSelector)) {
         var selectionPosition = selectionObj.getRangeAt(0).getBoundingClientRect(),
             parentPosition = that.$content[0].getBoundingClientRect(),
             boundingBoxY = selectionPosition.y - parentPosition.y,
@@ -73,14 +66,26 @@ class QuoteSelector {
             'left': boundingBoxX - chevronOffsetX
           });
       }
+
+      // Only show a quote button if:
+      //  - there is a selection
+      //  - the selection starts and ends within a content-textile container
+      //  - show the quote button for only the selection container
+      function isValidSelection(obj,selector) {
+        if (!(obj.isCollapsed) &&
+            ($(obj.anchorNode).parents(selector).length == 1) &&
+            ($(obj.focusNode).parents(selector).length == 1) &&
+            ($(obj.anchorNode).parents(selector).is(that.$content))) {
+              return true;
+            } else {
+              return false;
+            }
+      }
     })
 
     // Clear the quote box and selection
     $(document).on('mousedown', function(e) {
-      if ($(e.target).parent().is('[data-behavior~=selection-quote-button]')) {
-        // no-op;
-        // Was a click on the quote button itself
-      } else {
+      if (!$(e.target).parent().is('[data-behavior~=selection-quote-button]')) {
         that.clear();
       }
     })
