@@ -36,14 +36,8 @@ class QuoteSelector {
   behaviors() {
     var that = this;
 
-    // Keep track of what editor box was last used
-    // Instances where multiple editors may be present is when someone
-    // is editing a previous comment. There will be two comment editors.
     // Use the only editor we can find if there's only one.
-    this.lastActiveEditor = $('[data-behavior~=rich-toolbar]').data('editorToolbar');
-    $('[data-behavior~=rich-toolbar]').on('focus', function() {
-      that.lastActiveEditor = $(this).data('editorToolbar');
-    });
+    window.lastActiveEditor = $('[data-behavior~=rich-toolbar]').data('editorToolbar');
 
     // Get the selected text positions so we can place the quote box above it
     $(document).on('mouseup', function(e) {
@@ -92,7 +86,7 @@ class QuoteSelector {
     })
 
     this.$quoteBtn.on('click', function() {
-      var editor = that.lastActiveEditor,
+      var editor = window.lastActiveEditor,
           selectionText = document.getSelection().toString(),
           affix = editor.affixesLibrary('quote', selectionText);
 
