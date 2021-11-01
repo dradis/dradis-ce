@@ -11,9 +11,10 @@ describe Evidence do
   it { should validate_presence_of :node }
 
   describe 'on create' do
+    let(:issue) { create(:issue, project: node.project) }
+    let(:node) { create(:node) }
+    let(:subscribable) { build(:evidence, issue: issue, author: user.email, node: node) }
     let(:user) { create(:user) }
-    let(:issue) { create(:issue) }
-    let(:subscribable) { build(:evidence, issue: issue, author: user.email) }
 
     it_behaves_like 'a subscribable model'
   end
@@ -74,9 +75,8 @@ describe Evidence do
   end
 
   describe '#issue_cannot_be_on_another_project' do
+    let(:issue) { create(:issue, project: node.project.issue_library) }
     let(:node) { create(:node) }
-    let(:issue) { create(:issue) }
-
 
     context 'when node is not present' do
       it 'does not trigger validation' do
