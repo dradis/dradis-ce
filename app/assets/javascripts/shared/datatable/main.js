@@ -123,15 +123,15 @@ class DradisDatatable {
         localStorage.setItem(that.localStorageKey, JSON.stringify(data));
       },
       stateLoadCallback: function(settings) {
-        var data = JSON.parse(localStorage.getItem(that.localStorageKey));
+        var localStorageData = JSON.parse(localStorage.getItem(that.localStorageKey));
 
-        if (data === null) {
+        if (localStorageData !== null) {
+          return that.rebuildLocalStorageColumns(localStorageData);
+        } else {
           // We have to explicitly return null here because DataTables expects
           // this function to return null or an object
           return null;
         }
-
-        return that.updateCallbackDataColumns(data);
       },
       select: {
         selector: 'td.select-checkbox',
@@ -197,27 +197,28 @@ class DradisDatatable {
     });
   }
 
-  // We treat tableHeaders as single source of truth because the data
-  // stored in localStorage doesn't know if columns are added or removed.
-  // If the table loaded on the page has 5 columns, and the columns stored in the data has
-  // 4 columns, DataTables will just show all columns because there is a mismatch.
-  updateCallbackDataColumns(data) {
+  // This method remove old columns from the data stored in localStorage
+  // (indirectly, because we are iterating over table headers on the page)
+  // and add new columns to it
+  rebuildLocalStorageColumns(localStorageData) {
     var newColumns = [];
 
     this.tableHeaders.forEach(function(th, index) {
-      var column = data.columns.find(function(column) {
+      // Check if there's a key inside the column object with the same value as
+      // the table header text
+      var column = localStorageData.columns.find(function(column) {
         return column.header == th.textContent;
       })
 
       if (column) {
         newColumns.push(column);
       } else {
-        // Don't show new columns by default.
+        // Add new column with default visibility = false
         newColumns.push({ visible: false });
       }
     })
 
-    data.columns = newColumns;
-    return data;
+    localStorageData.columns = newColumns;
+    return localStorageData;
   }
 }
