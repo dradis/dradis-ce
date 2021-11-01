@@ -72,4 +72,48 @@ describe Evidence do
       expect(@fields['Label']).to eq('Node Label')
     end
   end
+
+  describe '#issue_cannot_be_on_another_project' do
+    let(:node) { create(:node) }
+    let(:issue) { create(:issue) }
+
+
+    context 'when node is not present' do
+      it 'does not trigger validation' do
+        evidence = Evidence.new(issue: issue)
+        evidence.valid?
+        expect(evidence.errors.full_messages).to_not include('Issue cannot be on another project')
+      end
+    end
+
+    context 'when issue is not present' do
+      it 'does not trigger validation' do
+        evidence = Evidence.new(node: node)
+        evidence.valid?
+        expect(evidence.errors.full_messages).to_not include('Issue cannot be on another project')
+      end
+    end
+
+    context 'when node and issue is in the same project' do
+      it 'is valid' do
+        evidence = Evidence.new(node: node, issue: issue)
+        expect(evidence.valid?).to eq(true)
+      end
+    end
+
+    context 'when node and issue is on a different project' do
+      let(:issue_on_another_project) { (create(:issue, node: node_on_another_project)) }
+      let(:node_on_another_project) do
+        node = create(:node)
+        allow(node).to receive(:project).and_return(Project.new(id: 2, name: 'Another Project'))
+        node
+      end
+
+      it 'is invalid' do
+        evidence = Evidence.new(node: node, issue: issue_on_another_project)
+        expect(evidence.valid?).to eq(false)
+        expect(evidence.errors.full_messages).to include('Issue cannot be on another project')
+      end
+    end
+  end
 end
