@@ -123,13 +123,14 @@ class DradisDatatable {
         localStorage.setItem(that.localStorageKey, JSON.stringify(data));
       },
       stateLoadCallback: function(settings) {
-        if (localStorage.getItem(that.localStorageKey) === null) {
+        var data = JSON.parse(localStorage.getItem(that.localStorageKey));
+
+        if (data === null) {
           // We have to explicitly return null here because DataTables expects
           // this function to return null or an object
           return null;
         }
 
-        var data = JSON.parse(localStorage.getItem(that.localStorageKey));
         return that.updateCallbackDataColumns(data);
       },
       select: {
