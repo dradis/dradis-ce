@@ -75,7 +75,7 @@ describe Evidence do
   end
 
   describe '#issue_cannot_be_on_another_project' do
-    let(:issue) { create(:issue, project: node.project.issue_library) }
+    let(:issue) { create(:issue, node: node.project.issue_library, project: node.project) }
     let(:node) { create(:node) }
 
     context 'when node is not present' do
