@@ -37,7 +37,7 @@ class QuoteSelector {
     var that = this;
 
     // Use the only editor we can find if there's only one.
-    window.lastActiveEditor = $('[data-behavior~=rich-toolbar]').data('editorToolbar');
+    window.lastActiveEditor = $('[data-behavior~=rich-toolbar]:visible').data('editorToolbar');
 
     // Get the selected text positions so we can place the quote box above it
     $(document).on('mouseup', function(e) {
@@ -86,11 +86,19 @@ class QuoteSelector {
     })
 
     this.$quoteBtn.on('click', function() {
-      var editor = window.lastActiveEditor,
-          selectionText = document.getSelection().toString(),
-          affix = editor.affixesLibrary('quote', selectionText);
+      var selectionText = document.getSelection().toString(),
+          affix,
+          editor;
 
+      if (window.lastActiveEditor.$editorField.is('visible')) {
+        editor = window.lastActiveEditor;
+      } else {
+        editor = $('[data-behavior~=rich-toolbar]:visible').data('editorToolbar');
+      }
+
+      affix = editor.affixesLibrary('quote', selectionText);
       editor.injectSyntax(affix);
+
       that.clear();
     })
   }
