@@ -3,6 +3,7 @@
     - Add functionality to quote text from comments and resource content (cards, evidence, issues, notes, etc)
     - Insert an appropriate single or multiline tag for blockquotes and codeblocks
     - Limit the content height for easier access to the Create/Update button
+    - Quote text from comments
   - Evidence:
     - Create a new issue (optionally) when creating new evidence
   - Tylium:
