@@ -160,7 +160,7 @@ class EditorToolbar {
   }
 
   // Splices the content where it needs to go in the textarea
-  // vs inject which takes an Affix and manages pre/post curso positioning
+  // vs injectSyntax() which takes an Affix and manages pre/post cursor positioning
   insert(text) {
     var cursorInfo = this.$target.cursorInfo(),
         elementText = this.$target.val();
