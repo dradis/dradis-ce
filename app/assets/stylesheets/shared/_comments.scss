@@ -59,9 +59,11 @@
     font-weight: bold;
   }
 
-  textarea {
-    min-height: 7.5rem;
-    resize: none;
+  .textarea-container {
+    textarea.form-control {
+      min-height: 8rem;
+      resize: none;
+    }
   }
 }
 
