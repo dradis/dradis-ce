@@ -1,8 +1,11 @@
 [v#.#.#] ([month] [YYYY])
   - Editor:
+    - Insert an appropriate single or multiline tag for blockquotes and codeblocks
     - Limit the content height for easier access to the Create/Update button
+    - Quote text from comments and resource content (cards, evidence, issues, notes, etc)
   - Evidence:
     - Create a new issue (optionally) when creating new evidence
+    - Move evidence across nodes
   - Tylium:
     - Import CSS manifests from addon
     - Remove extra left padding from the first line of content in a code block

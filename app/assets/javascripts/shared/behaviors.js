@@ -13,6 +13,11 @@
       new EditorToolbar($(this));
     });
 
+    // Activate QuoteSelector after Rich toolbars
+    $('[data-behavior~=content-textile]').each(function() {
+      new QuoteSelector(this);
+    });
+
     // Activate local auto save
     $('[data-behavior~=local-auto-save]').each(function() {
       new LocalAutoSave(this);

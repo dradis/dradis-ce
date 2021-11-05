@@ -3,7 +3,10 @@ module EvidenceHelper
     if return_to == 'issue'
       [current_project, @evidence.issue]
     elsif @evidence.persisted?
-      [current_project, @node, @evidence]
+      # @evidence.node_id might have changed (via Move) and can't
+      # use the [] notation without an additional query to reload
+      # the new Node.
+      project_node_evidence_path(project_id: current_project.id, node_id: @evidence.node_id, id: @evidence.id)
     else
       [current_project, @node]
     end

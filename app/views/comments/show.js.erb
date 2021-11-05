@@ -1,3 +1,8 @@
 document.querySelector('[data-behavior~=comment][data-id="<%= @comment.id %>"]').outerHTML = '<%= j render(@comment) %>';
-var actions = document.querySelector('[data-behavior~=comment][data-id="<%= @comment.id %>"]').querySelector('.actions');
+var comment = document.querySelector('[data-behavior~=comment][data-id="<%= @comment.id %>"]');
+var actions = comment.querySelector('.actions');
 actions.classList.add('current_user');
+
+$(comment).find('[data-behavior~=content-textile]').each(function() {
+  new QuoteSelector(this);
+});

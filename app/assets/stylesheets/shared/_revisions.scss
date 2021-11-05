@@ -1,0 +1,20 @@
+del {
+  background-color: #FCC;
+}
+
+ins {
+  background-color: #CFC;
+}
+
+.revisions-table {
+  tr {
+    &.active {
+      background-color: #FFE;
+    }
+
+    th {
+      border-top: none;
+      border-bottom: 1px solid $border-color;
+    }
+  }
+}
