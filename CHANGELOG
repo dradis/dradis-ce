@@ -9,6 +9,7 @@
   - Tylium:
     - Import CSS manifests from addon
     - Remove extra left padding from the first line of content in a code block
+    - Remove `Recent Activity` tabs and add `View History` link to the dots menu
   - Upgraded gems:
     - nokogiri, puma, rails
   - Bugs fixes:
