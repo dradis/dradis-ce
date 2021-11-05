@@ -127,6 +127,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :setup, only: [:index] do
+    resource :password, only: [:new, :create]
+  end
+
   resources :subscriptions, only: [:index, :create, :destroy]
 
   # -------------------------------------------------------------- Static pages
