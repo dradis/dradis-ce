@@ -287,16 +287,16 @@ class DradisDatatable {
     var newColumns = [];
 
     this.tableHeaders.forEach(function(th, _index) {
+      var columnData = { visible: false };
+
       var column = localStorageData.columns.find(function(column) {
-        return column.header == th.textContent;
+        if (column.header == th.textContent) {
+          columnData = column;
+          return true;
+        }
       })
 
-      if (column) {
-        newColumns.push(column);
-      } else {
-        // Add new column with default visibility = false
-        newColumns.push({ visible: false });
-      }
+      newColumns.push(columnData);
     })
 
     localStorageData.columns = newColumns;
