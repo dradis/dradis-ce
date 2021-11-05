@@ -126,7 +126,7 @@ class DradisDatatable {
         var localStorageData = JSON.parse(localStorage.getItem(that.localStorageKey));
 
         if (localStorageData !== null) {
-          return that.rebuildLocalStorageColumns(localStorageData);
+          return that.rebuildColumnsFromLocalStorage(localStorageData);
         } else {
           // We have to explicitly return null here because DataTables expects
           // this function to return null or an object
@@ -200,7 +200,7 @@ class DradisDatatable {
   // This method remove old columns from the data stored in localStorage
   // (indirectly, because we are iterating over table headers on the page)
   // and add new columns to it
-  rebuildLocalStorageColumns(localStorageData) {
+  rebuildColumnsFromLocalStorage(localStorageData) {
     var newColumns = [];
 
     this.tableHeaders.forEach(function(th, index) {
