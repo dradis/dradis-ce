@@ -22,6 +22,9 @@
           <% end %>
           <a href="#modal_move_evidence" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-mail-forward fa-fw"></i> Move</a>
           <%= render partial: 'subscriptions/actions', locals: { subscribable: @evidence, dots_menu: true } %>
+          <%= link_to(project_node_evidence_revisions_path(@node.project, @node, @evidence), class: 'dropdown-item') do %>
+            <i class="fa fa-history fa-fw"></i> View History
+          <% end %>
         </div>
       </li>
     </ul>
@@ -39,9 +42,6 @@
       <a href="#info-tab" data-toggle="tab" class="nav-link">
         <i class="fa fa-bug"></i> Information
       </a>
-    </li>
-    <li class="nav-item">
-      <a href="#activity-tab" data-toggle="tab" class="nav-link"><i class="fa fa-rss"></i> Recent activity</a>
     </li>
   </ul>
 </div>
@@ -79,28 +79,6 @@
             <div id="<%= dom_id(@issue) %>_text" class="content-textile" data-behavior="content-textile">
               <%= markup(@issue.text) %>
             </div>
-          </div>
-        <% end %>
-
-        <% cache ['evidence-activity-tab', @evidence, @activities] do %>
-          <div class="tab-pane" id="activity-tab">
-            <h4 class="header-underline">
-              Recent activity
-              <% if @evidence.has_revision_history? %>
-                -
-                <span class="actions">
-                  <%#
-                    # Some legacy content was created before paper_trail, so we need to
-                    # make sure that there is at least one revision associated to the
-                    # model.
-                    #%>
-                  <%= link_to(project_node_evidence_revisions_path(@node.project, @node, @evidence)) do %>
-                    <i class="fa fa-history"></i> Revision history
-                  <% end %>
-                </span>
-              <% end %>
-            </h4>
-            <%= render 'activities/feed', activities: @activities %>
           </div>
         <% end %>
       </div>
