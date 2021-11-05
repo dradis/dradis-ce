@@ -25,6 +25,9 @@
               <i class="fa fa-trash fa-fw"></i> Delete
           <% end %>
           <%= render partial: 'subscriptions/actions', locals: { subscribable: @issue, dots_menu: true } %>
+          <%= link_to(project_issue_revisions_path(current_project, @issue), class: 'dropdown-item') do %>
+            <i class="fa fa-history fa-fw"></i> View History
+          <% end %>
           <%= render partial: 'send_to_menu' %>
         </div>
       </li>
@@ -37,7 +40,6 @@
   <ul class="tabs-container nav nav-tabs main-tabs w-100">
     <li class="nav-item"><a href="#info-tab" data-toggle="tab" class="nav-link active"><%= colored_icon_for_model(@issue, 'fa-bug') %> Information</a></li>
     <li class="nav-item"><a href="#evidence-tab" class="nav-link" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge bg-primary text-white"><%= @issue.evidence.count %></span></a></li>
-    <li class="nav-item"><a href="#activity-tab" class="nav-link" data-toggle="tab"><i class="fa fa-rss"></i> Recent activity</a></li>
     <%= render_view_hooks 'issues/show-tabs' %>
   </ul>
 </div>
@@ -67,12 +69,6 @@
         <div class="tab-pane" id="evidence-tab">
           <%= render partial: 'evidence' %>
         </div>
-
-        <% cache ['issue-activity-tab', @issue, @activities] do %>
-          <div class="tab-pane" id="activity-tab">
-            <%= render partial: 'activity' %>
-          </div>
-        <% end %>
 
         <%= render_view_hooks 'issues/show-content' %>
       </div>
