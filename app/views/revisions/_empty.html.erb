@@ -1,0 +1,15 @@
+<div class="empty-state mt-3">
+  <div class="empty-state-icon">
+    <%= image_tag "icons/#{rand(9)}.svg" %>
+  </div>
+  <div class="empty-state-body">
+    <div class="container">
+      <h4 class="empty-state-title">This <%= @record.class.name %> doesn't have any revisions yet</h4>
+      <p class="empty-state-body-text">Once revisions are made, you'll have a line-by-line breakdown of all the differences between two revisions of this entry.</p>
+      <div class="empty-state-actions">
+        <a href="https://dradisframework.com/support/guides/projects/activity.html"
+        class="empty-state-docs-link" target="_blank">More about revision history</a>
+      </div>
+    </div>
+  </div>
+</div>
