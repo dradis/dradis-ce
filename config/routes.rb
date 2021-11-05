@@ -139,7 +139,7 @@ Rails.application.routes.draw do
     post :preview
   end
 
-  root to: 'projects#index'
+  root to: 'setup/passwords#new'
 
   mount ActionCable.server => '/cable'
 end
