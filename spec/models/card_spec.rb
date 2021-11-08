@@ -91,4 +91,16 @@ describe Card do
       ).to eq(0)
     end
   end
+
+  describe 'list field' do
+    it 'injects a list field for each card' do
+      @list1 = create(:list, name: 'TESTNAME')
+      @list2 = create(:list, name: 'Test List')
+      @list3 = create(:list, name: 'TestList')
+
+      expect(create(:card, list: @list1).fields['List']).to eq('TESTNAME')
+      expect(create(:card, list: @list2).fields['List']).to eq('TestList')
+      expect(create(:card, list: @list3).fields['List']).to eq('TestList')
+    end
+  end
 end
