@@ -6,7 +6,7 @@
       <li class="breadcrumb-item"><%= link_to @record.name, project_board_list_card_path(current_project, @record.board, @record.list, @record) %></li>
     <% elsif @record.class.name == 'Evidence' || @record.class.name == 'Note' %>
       <li class="breadcrumb-item"><a href="javascript:void(0)" data-behavior="sidebar-toggle">Nodes</a></li>
-      <li class="breadcrumb-item"><%= link_to @record.node.label, project_node_path(current_project, @record.node, tab: "#{@record_class}-tab") %></li>
+      <li class="breadcrumb-item"><%= link_to @record.node.label, project_node_path(current_project, @record.node, tab: "#{@record_class.pluralize(2)}-tab") %></li>
       <li class="breadcrumb-item"><%= link_to @record.title, record_resource_path(@record) %></li>
     <% elsif @record.class.name == 'Issue' %>
       <li class="breadcrumb-item"><%= link_to 'All issues', project_issues_path(current_project) %></li>
