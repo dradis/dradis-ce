@@ -42,7 +42,7 @@ class Evidence < ApplicationRecord
   def relations_scoped_to_project
     return unless node && issue
 
-    if node.project.id != issue.project.id
+    if project.id != issue.project.id
       errors.add(:issue, 'must be within the project')
     end
   end
