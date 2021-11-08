@@ -82,7 +82,7 @@ describe Evidence do
       it 'does not trigger validation' do
         evidence = Evidence.new(issue: issue)
         evidence.valid?
-        expect(evidence.errors.full_messages).to_not include('Issue cannot be on another project')
+        expect(evidence.errors.full_messages).to_not include('Issue must be within the project')
       end
     end
 
@@ -90,7 +90,7 @@ describe Evidence do
       it 'does not trigger validation' do
         evidence = Evidence.new(node: node)
         evidence.valid?
-        expect(evidence.errors.full_messages).to_not include('Issue cannot be on another project')
+        expect(evidence.errors.full_messages).to_not include('Issue must be within the project')
       end
     end
 
@@ -112,7 +112,7 @@ describe Evidence do
       it 'is invalid' do
         evidence = Evidence.new(node: node, issue: issue_on_another_project)
         expect(evidence.valid?).to eq(false)
-        expect(evidence.errors.full_messages).to include('Issue cannot be on another project')
+        expect(evidence.errors.full_messages).to include('Issue must be within the project')
       end
     end
   end
