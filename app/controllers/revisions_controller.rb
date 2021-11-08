@@ -11,13 +11,14 @@ class RevisionsController < AuthenticatedController
   end
 
   def show
+    @record_class = @record.class.name.downcase
     # Use `reorder`, not `order`, to override Paper Trail's default scope
     @revisions = @record.versions.includes(:item).reorder("created_at DESC")
     @revision  = @revisions.find(params[:id])
-    
+
     if @revision.event == 'update'
       @diffed_revision = DiffedRevision.new(@revision, @record)
-    end 
+    end
   end
 
   def trash
