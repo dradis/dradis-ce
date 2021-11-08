@@ -4,8 +4,18 @@
   <%= render partial: 'breadcrumbs' %>
 <% end %>
 
-<% if @node %>
-  <%= render "nodes/sidebar" %>
+<% content_for :sidebar do %>
+  <% if @issue %>
+    <%= render 'issues/sidebar' %>
+  <% end %>
+
+  <% if @list %>
+    <%= render 'cards/sidebar' %>
+  <% end %>
+
+  <% if @node %>
+    <%= render 'nodes/sidebar' %>
+  <% end %>
 <% end %>
 
 <div class="row m-0">

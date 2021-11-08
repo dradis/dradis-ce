@@ -40,6 +40,14 @@ class RevisionsController < AuthenticatedController
 
   private
 
+  def load_issues
+    @issue = Issue.find(params[:issue_id])
+    
+    Note.transaction do
+      @issues = Issue.where(node_id: current_project.issue_library.id).select('notes.id, notes.author, notes.text, count(evidence.id) as affected_count, notes.created_at, notes.updated_at').joins('LEFT OUTER JOIN evidence on notes.id = evidence.issue_id').group('notes.id').includes(:tags).sort
+    end
+  end
+
   def load_list
     @board        = current_project.boards.includes(:lists).find(params[:board_id])
     @list         = @board.lists.includes(:cards).find(params[:list_id])
@@ -61,7 +69,7 @@ class RevisionsController < AuthenticatedController
               elsif params[:evidence_id]
                 @node.evidence.find(params[:evidence_id])
               elsif params[:issue_id]
-                Issue.find(params[:issue_id])
+                @issue
               elsif params[:note_id]
                 @node.notes.find(params[:note_id])
               else
@@ -77,6 +85,8 @@ class RevisionsController < AuthenticatedController
       load_node
     elsif params[:card_id]
       load_list
+    elsif params[:issue_id]
+      load_issues
     end
   end
 end
