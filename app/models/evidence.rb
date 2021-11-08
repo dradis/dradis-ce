@@ -20,7 +20,7 @@ class Evidence < ApplicationRecord
   validates :issue, presence: true, associated: true
   validates :node, presence: true, associated: true
 
-  validate :issue_cannot_be_on_another_project
+  validate :relations_scoped_to_project
 
   # -- Scopes ---------------------------------------------------------------
 
@@ -39,11 +39,11 @@ class Evidence < ApplicationRecord
 
   private
 
-  def issue_cannot_be_on_another_project
+  def relations_scoped_to_project
     return unless node && issue
 
     if node.project.id != issue.project.id
-      errors.add(:issue, 'cannot be on another project')
+      errors.add(:issue, 'must be within the project')
     end
   end
 end
