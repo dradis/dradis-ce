@@ -1,11 +1,11 @@
 class EvidenceController < NestedNodeResourceController
   include ConflictResolver
+  include EvidenceHelper
   include LiquidEnabledResource
   include Mentioned
   include MultipleDestroy
   include NodesSidebar
   include NotificationsReader
-  include EvidenceHelper
 
   before_action :set_or_initialize_evidence, except: [ :index, :create_multiple ]
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]

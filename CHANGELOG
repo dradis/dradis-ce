@@ -14,6 +14,8 @@ v4.1.0 (November 2021)
   - Bugs fixes:
     - Methodologies:
       - Ensure boards don't nest when the instance has been inactive
+    - Tables
+      - Prevent columns state from resetting
 
 v4.0.0 (July 2021)
   * Dynamic content across the app
