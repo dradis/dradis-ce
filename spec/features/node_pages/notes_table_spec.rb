@@ -19,5 +19,12 @@ describe 'node pages' do
     let(:filter) { { keyword: @note.title, filter_count: 1 } }
 
     it_behaves_like 'a DataTable'
+
+    let(:new_content) { "#[Title]#\nNote1\n\n#[Description]#\nn/a\n#[Extra]#\nExtra field\n\n#[New Field]#\nNew Field Value" }
+    let(:old_content) { "#[Title]#\nNote1\n\n#[Description]#\nn/a\n#[Extra]#\nExtra field" }
+    let(:resource) { @note }
+    let(:content_attribute) { :text }
+
+    it_behaves_like 'a DataTable with Dynamic Columns'
   end
 end
