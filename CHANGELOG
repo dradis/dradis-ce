@@ -29,7 +29,7 @@
     - [API entity]:
       - [future tense verb] [API enhancement]
   - Security Fixes:
-    - High: Authenticated author creating an evidence with an issue outside of the project can read the issue's content
+    - High: Authenticated (author) broken access control in reading unauthorized issue content
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 

@@ -74,34 +74,18 @@ describe Evidence do
     end
   end
 
-  describe '#issue_cannot_be_on_another_project' do
+  describe '#validate_issue_project' do
     let(:issue) { create(:issue, node: node.project.issue_library, project: node.project) }
     let(:node) { create(:node) }
 
-    context 'when node is not present' do
-      it 'does not trigger validation' do
-        evidence = Evidence.new(issue: issue)
-        evidence.valid?
-        expect(evidence.errors.full_messages).to_not include('Issue must be within the project')
-      end
-    end
-
-    context 'when issue is not present' do
-      it 'does not trigger validation' do
-        evidence = Evidence.new(node: node)
-        evidence.valid?
-        expect(evidence.errors.full_messages).to_not include('Issue must be within the project')
-      end
-    end
-
-    context 'when node and issue is in the same project' do
+    context 'when issue is in the same project' do
       it 'is valid' do
         evidence = Evidence.new(node: node, issue: issue)
         expect(evidence.valid?).to eq(true)
       end
     end
 
-    context 'when node and issue is on a different project' do
+    context 'when issue is on a different project' do
       let(:issue_on_another_project) { (create(:issue, node: node_on_another_project)) }
       let(:node_on_another_project) do
         node = create(:node)
@@ -112,7 +96,6 @@ describe Evidence do
       it 'is invalid' do
         evidence = Evidence.new(node: node, issue: issue_on_another_project)
         expect(evidence.valid?).to eq(false)
-        expect(evidence.errors.full_messages).to include('Issue must be within the project')
       end
     end
   end
