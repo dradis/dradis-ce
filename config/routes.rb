@@ -4,10 +4,6 @@ end
 
 Rails.application.routes.draw do
   # ------------------------------------------------------------ Authentication
-  # These routes allow users to set the shared password
-  get  '/setup' => 'sessions#init'
-  post '/setup' => 'sessions#setup'
-
   # Sign in / sign out
   get '/login'  => 'sessions#new'
   get '/logout' => 'sessions#destroy'
@@ -128,7 +124,10 @@ Rails.application.routes.draw do
   end
 
   namespace :setup, only: [:index] do
-    resource :password, only: [:new, :create]
+    if defined?(Dradis::Pro)
+    else
+      resource :password, only: [:new, :create]
+    end
   end
 
   resources :subscriptions, only: [:index, :create, :destroy]
@@ -139,7 +138,10 @@ Rails.application.routes.draw do
     post :preview
   end
 
-  root to: 'setup/passwords#new'
+  if defined?(Dradis::Pro)
+  else
+    root to: 'setup/passwords#new'
+  end
 
   mount ActionCable.server => '/cable'
 end
