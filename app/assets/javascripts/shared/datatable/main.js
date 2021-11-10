@@ -1,4 +1,21 @@
 class DradisDatatable {
+  static get LocalStorageKeyVersion() {
+    // V2 was introduced as a result of a fix to persist user's DataTable state
+    // (see https://github.com/dradis/dradis-ce/pull/901).
+    //
+    // It adds table headers on the page to localStorage data so that
+    // when the page loads, it uses these table headers to identify if columns
+    // on the page are existing or new.
+    //
+    // But users with existing localStorage data will not have these table headers
+    // saved because it was only added in the same patch.
+    //
+    // So this is where versionedLocalStorageKey comes in. It indirectly resets
+    // the DataTable to use default columns and prevents the need for a localStorage
+    // migration.
+    return 'v2';
+  }
+
   constructor(tableElement) {
     this.$table = $(tableElement);
     this.$paths = this.$table.closest('[data-behavior~=datatable-paths]');
@@ -311,19 +328,6 @@ class DradisDatatable {
       return;
     }
 
-    // V2 was introduced as a result of a fix to persist user's DataTable state
-    // (see https://github.com/dradis/dradis-ce/pull/901).
-    //
-    // It adds table headers on the page to localStorage data so that
-    // when the page loads, it uses these table headers to identify if columns
-    // on the page are existing or new.
-    //
-    // But users with existing localStorage data will not have these table headers
-    // saved because it was only added in the same patch.
-    //
-    // So this is where versionedLocalStorageKey comes in. It indirectly resets
-    // the DataTable to use default columns and prevents the need for a localStorage
-    // migration.
-    return `${localStorageKey}.v2`;
+    return `${localStorageKey}.${DradisDatatable.LocalStorageKeyVersion}`;
   }
 }
