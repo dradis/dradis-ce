@@ -1,4 +1,4 @@
-[v#.#.#] ([month] [YYYY])
+v4.1.0 (November 2021)
   - Editor:
     - Insert an appropriate single or multiline tag for blockquotes and codeblocks
     - Limit the content height for easier access to the Create/Update button
@@ -21,25 +21,6 @@
       - Ensure boards don't nest when the instance has been inactive
     - Tables
       - Prevent columns state from resetting
-    - Bug tracker items:
-      - [item]
-  - New integrations:
-    - [integration]
-  - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
-  - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
-  - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
-  - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v4.0.0 (July 2021)
   * Dynamic content across the app
