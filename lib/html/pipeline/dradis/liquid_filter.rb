@@ -2,10 +2,8 @@ module HTML
   class Pipeline
     module Dradis
       class LiquidFilter < TextFilter
-        REGEX = /\$\$\[\[(.+?)\]\]\$\$/
-
         def call
-          hide_code_highlight_syntax
+          @text = HTML::IgnoreLiquidInTextileBlockCodes.call(@text)
 
           assigns = context.fetch(:liquid_assigns, {})
 
@@ -15,21 +13,8 @@ module HTML
             strict_variables: true
           }
 
-          @text = Liquid::Template.parse(@text).render(assigns, options)
-
-          restore_code_highlight_syntax
-        end
-
-        private
-        def hide_code_highlight_syntax
-          @text.gsub(CodeHighlightFilter::REGEX) do |match|
-            %|$$[[#{$1}]]$$|
-          end
-        end
-        def restore_code_highlight_syntax
-          @text.gsub(REGEX) do |match|
-            %|$${{#{$1}}}|
-          end
+          Liquid::Template.parse(@text).render(assigns, options)
+        rescue Liquid::SyntaxError
           @text
         end
       end

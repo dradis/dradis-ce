@@ -1,11 +1,26 @@
 [v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
+  - Editor:
+    - Insert an appropriate single or multiline tag for blockquotes and codeblocks
+    - Limit the content height for easier access to the Create/Update button
+    - Quote text from comments and resource content (cards, evidence, issues, notes, etc)
+  - Evidence:
+    - Create a new issue (optionally) when creating new evidence
+    - Move evidence across nodes
+  - Tables:
+    - Add selector to change the number of records displayed
+  - Tylium:
+    - Import CSS manifests from addons
+    - Remove extra left padding from the first line of content in a code block
+    - Remove height restriction from code blocks
   - Upgraded gems:
-    - rails
+    - nokogiri, puma, rails
   - Bugs fixes:
     - Conflict resolver
       - Apply the correct warning when a conflict happens on edit
+    - Methodologies:
+      - Ensure boards don't nest when the instance has been inactive
+    - Tables
+      - Prevent columns state from resetting
     - Bug tracker items:
       - [item]
   - New integrations:

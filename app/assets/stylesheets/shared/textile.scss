@@ -2,6 +2,7 @@
 
 .content-textile, .textile-preview {
   overflow-wrap: break-word;
+  position: relative;
 
   em {
     font-style: italic;
@@ -35,7 +36,6 @@
     margin: 0.75rem 0;
     padding: 10px;
     white-space: pre-wrap;
-    max-height: 200px;
     overflow-y: auto;
   }
 
@@ -123,10 +123,14 @@
 
 .textile-wrap {
   background-color: #fff;
+  max-height: calc(100vh - 28rem);
+  overflow-x: hidden;
+  overflow-y: auto;
   word-break: break-word;
 
   &.textile-fullscreen {
     font-size: 0.9rem;
+    max-height: 100vh;
     padding-top: 0;
     overflow: auto;
 
@@ -162,8 +166,9 @@
   }
 
   .textile-inner {
-    padding: 0;
     background: transparent;
+    padding: 0;
+    
 
     .textile-form {
 
