@@ -17,11 +17,11 @@ module Setup
 
       if setting.save
         flash[:notice] = 'All done. May the findings for this project be plentiful!'
+        redirect_to login_path
       else
         flash[:alert] = "Something went wrong: #{setting.errors.full_messages.join('; ')}"
+        render :new
       end
-
-      redirect_to action: :new
     end
 
     private
