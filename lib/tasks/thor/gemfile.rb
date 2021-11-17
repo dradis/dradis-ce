@@ -16,10 +16,5 @@ class DradisTasks < Thor
         DradisTasks::Gemfile.command_help(Thor::Base.shell.new, 'update')
       end
     end
-
-    private
-
-    def update_gemfile(file, options)
-    end
   end
 end
