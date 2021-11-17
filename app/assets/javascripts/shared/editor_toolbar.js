@@ -115,15 +115,14 @@ class EditorToolbar {
           $toolbarElement = $inputElement.parent().prev(),
           $parentElement = $inputElement.parents('[data-behavior~=editor-field]'),
           $scrollLimitElement = $('[data-behavior~=textile-wrap]').length ? $('[data-behavior~=textile-wrap]') : $('[data-behavior~=view-content]'),
-          topOffset = $('[data-behavior~=textile-wrap]').length ? $parentElement.find('.editor-toolbar').outerHeight() : 85;
+          inputMinHeightForStickyToolbar = 40,
+          toolbarHeight = $parentElement.find('[data-behavior~=editor-toolbar]').outerHeight(),
+          topOffset = $('[data-behavior~=textile-wrap]').length ? toolbarHeight : toolbarHeight * 2;
 
       $toolbarElement.css({'opacity': 1, 'visibility': 'visible'});
 
-      // set offset to 0 if user is in fullscreen mode.
-      if ($inputElement.parents('[data-behavior~=textile-fullscreen]').length) { topOffset = 40 };
-
       // this is needed incase user sets focus on textarea where toolbar would render off screen
-      if ($inputElement.height() > 40 && $parentElement.offset().top < $(window).scrollTop() + topOffset) {
+      if ($inputElement.height() > inputMinHeightForStickyToolbar && $parentElement.offset().top < $(window).scrollTop() + topOffset) {
         $parentElement.addClass('sticky-toolbar');
       }
 
@@ -132,7 +131,7 @@ class EditorToolbar {
         var parentOffsetTop = $parentElement.offset().top - topOffset;
 
         // keep toolbar at the top of text area when scrolling
-        if ($inputElement.height() > 40 && parentOffsetTop < $scrollLimitElement.offset().top - 40) {
+        if ($inputElement.height() > inputMinHeightForStickyToolbar && parentOffsetTop < ($scrollLimitElement.offset().top - inputMinHeightForStickyToolbar)) {
           $parentElement.addClass('sticky-toolbar');
         } else {
           // reset the toolbar to the default position and appearance
