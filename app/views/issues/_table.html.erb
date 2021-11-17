@@ -32,7 +32,7 @@
                ]
              when 'Affected'
                # this count is coming from the SQL finder in the controller
-               [issue.affected_count, issue.affected.pluck(:label).join(', ')]
+               [issue.affected_count, issue.affected.pluck(:label).join("\n")]
              when 'Created'
                [issue.created_at.to_i, local_time_ago(issue.created_at)]
              when 'Created by'
