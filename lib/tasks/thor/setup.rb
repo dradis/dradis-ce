@@ -92,9 +92,14 @@ class DradisTasks < Thor
       # ---------------------------------------------------------- Project data
       detect_and_set_project_scope
 
+      # Template users
+      %w{adama husker halo starbuck boomer apollo}.each do |callsign|
+        User.create!(email: "#{callsign}@dradisframework.com")
+      end
+
       task_options.merge!(
         plugin: Dradis::Plugins::Projects::Upload::Template,
-        default_user_id: User.create!(email: 'adama@dradisframework.com').id
+        default_user_id: User.first.id
       )
 
       importer = Dradis::Plugins::Projects::Upload::Template::Importer.new(task_options)

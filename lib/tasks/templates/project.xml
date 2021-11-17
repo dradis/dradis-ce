@@ -39,7 +39,7 @@ The core concepts you need to know about:
         </note>
         <note>
           <id>2</id>
-          <author>adama@dradisframework.com</author>
+          <author>helo@dradisframework.com</author>
           <category-id>2</category-id>
           <text><![CDATA[#[Title]#
 1.- Adding Issues
@@ -78,7 +78,7 @@ https://dradisframework.com/support/guides/projects/index.html
         </note>
         <note>
           <id>3</id>
-          <author>adama@dradisframework.com</author>
+          <author>helo@dradisframework.com</author>
           <category-id>2</category-id>
           <text><![CDATA[#[Title]#
 2.- Adding Evidence
@@ -97,7 +97,7 @@ You can also add "images/screenshots and captions":https://dradisframework.com/s
         </note>
         <note>
           <id>4</id>
-          <author>adama@dradisframework.com</author>
+          <author>starbuck@dradisframework.com</author>
           <category-id>2</category-id>
           <text><![CDATA[#[Title]#
 5.- Next steps
@@ -120,7 +120,7 @@ If you ever want to reload this sample project again:
         </note>
         <note>
           <id>18</id>
-          <author>adama@dradisframework.com</author>
+          <author>husker@dradisframework.com</author>
           <category-id>2</category-id>
           <text><![CDATA[#[Title]#
 3.- Adding Nodes
@@ -134,7 +134,7 @@ Once you have created a Node, you can add Notes or Evidence to that Node.  A Not
         </note>
         <note>
           <id>19</id>
-          <author>adama@dradisframework.com</author>
+          <author>apollo@dradisframework.com</author>
           <category-id>2</category-id>
           <text><![CDATA[#[Title]#
 4.- Working with Methodologies
@@ -334,7 +334,7 @@ n/a
       <activities>
         <activity>
           <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
+          <user_email>apollo@dradisframework.com</user_email>
           <created_at>1495866657</created_at>
         </activity>
       </activities>
@@ -385,7 +385,7 @@ phase=8.259, freq=-141.24, error=11.32]]></content>
           <activities>
             <activity>
               <action>update</action>
-              <user_email>adama@dradisframework.com</user_email>
+              <user_email>starbuck@dradisframework.com</user_email>
               <created_at>1495865942</created_at>
             </activity>
           </activities>
@@ -393,7 +393,7 @@ phase=8.259, freq=-141.24, error=11.32]]></content>
         </evidence>
         <evidence>
           <id>4</id>
-          <author>adama@dradisframework.com</author>
+          <author>boomer@dradisframework.com</author>
           <issue-id>9</issue-id>
           <content><![CDATA[#[Location]#
 /ui/warehouse/index.php
@@ -421,22 +421,22 @@ Tests performed:
           <activities>
             <activity>
               <action>create</action>
-              <user_email>adama@dradisframework.com</user_email>
+              <user_email>husker@dradisframework.com</user_email>
               <created_at>1495866591</created_at>
             </activity>
             <activity>
               <action>update</action>
-              <user_email>adama@dradisframework.com</user_email>
+              <user_email>helo@dradisframework.com</user_email>
               <created_at>1504150101</created_at>
             </activity>
             <activity>
               <action>update</action>
-              <user_email>adama@dradisframework.com</user_email>
+              <user_email>apollo@dradisframework.com</user_email>
               <created_at>1525869293</created_at>
             </activity>
             <activity>
               <action>update</action>
-              <user_email>adama@dradisframework.com</user_email>
+              <user_email>starbuck@dradisframework.com</user_email>
               <created_at>1531237536</created_at>
             </activity>
           </activities>
@@ -654,17 +654,17 @@ Scripting (Blind_Sql_Injection.script)/Blind SQL Injection
         </activity>
         <activity>
           <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
+          <user_email>starbuck@dradisframework.com</user_email>
           <created_at>1527084558</created_at>
         </activity>
         <activity>
           <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
+          <user_email>helo@dradisframework.com</user_email>
           <created_at>1530778108</created_at>
         </activity>
         <activity>
           <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
+          <user_email>boomer@dradisframework.com</user_email>
           <created_at>1531307150</created_at>
         </activity>
         <activity>
@@ -674,27 +674,27 @@ Scripting (Blind_Sql_Injection.script)/Blind SQL Injection
         </activity>
         <activity>
           <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
+          <user_email>apollo@dradisframework.com</user_email>
           <created_at>1531310233</created_at>
         </activity>
         <activity>
           <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
+          <user_email>apollo@dradisframework.com</user_email>
           <created_at>1534423619</created_at>
         </activity>
         <activity>
           <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
+          <user_email>starbuck@dradisframework.com</user_email>
           <created_at>1544632065</created_at>
         </activity>
         <activity>
           <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
+          <user_email>helo@dradisframework.com</user_email>
           <created_at>1544632294</created_at>
         </activity>
         <activity>
           <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
+          <user_email>starbuck@dradisframework.com</user_email>
           <created_at>1544632331</created_at>
         </activity>
       </activities>
@@ -735,12 +735,12 @@ nessus
       <activities>
         <activity>
           <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
+          <user_email>husker@dradisframework.com</user_email>
           <created_at>1495866298</created_at>
         </activity>
         <activity>
           <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
+          <user_email>apollo@dradisframework.com</user_email>
           <created_at>1495866319</created_at>
         </activity>
       </activities>
@@ -790,7 +790,7 @@ nessus
         </activity>
         <activity>
           <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
+          <user_email>husker@dradisframework.com</user_email>
           <created_at>1495866279</created_at>
         </activity>
       </activities>
@@ -841,7 +841,7 @@ ntp-clock-variables-disclosure
       <activities>
         <activity>
           <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
+          <user_email>starbuck@dradisframework.com</user_email>
           <created_at>1495866053</created_at>
         </activity>
       </activities>
@@ -880,17 +880,17 @@ qualys
       <activities>
         <activity>
           <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
+          <user_email>helo@dradisframework.com</user_email>
           <created_at>1495865750</created_at>
         </activity>
         <activity>
           <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
+          <user_email>boomer@dradisframework.com</user_email>
           <created_at>1495866234</created_at>
         </activity>
         <activity>
           <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
+          <user_email>husker@dradisframework.com</user_email>
           <created_at>1500144827</created_at>
         </activity>
       </activities>
@@ -965,7 +965,7 @@ qualys
       <activities>
         <activity>
           <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
+          <user_email>apollo@dradisframework.com</user_email>
           <created_at>1495866407</created_at>
         </activity>
       </activities>
@@ -1081,7 +1081,7 @@ qualys
       <activities>
         <activity>
           <action>update</action>
-          <user_email>adama@dradisframework.com</user_email>
+          <user_email>starbuck@dradisframework.com</user_email>
           <created_at>1495866203</created_at>
         </activity>
       </activities>
