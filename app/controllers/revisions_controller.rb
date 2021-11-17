@@ -42,10 +42,7 @@ class RevisionsController < AuthenticatedController
 
   def load_issues
     @issue = Issue.find(params[:issue_id])
-    
-    Note.transaction do
-      @issues = Issue.where(node_id: current_project.issue_library.id).select('notes.id, notes.author, notes.text, count(evidence.id) as affected_count, notes.created_at, notes.updated_at').joins('LEFT OUTER JOIN evidence on notes.id = evidence.issue_id').group('notes.id').includes(:tags).sort
-    end
+    @issues = Issue.where(node_id: current_project.issue_library.id)
   end
 
   def load_list
