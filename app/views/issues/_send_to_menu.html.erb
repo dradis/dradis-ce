@@ -8,15 +8,28 @@
     %>
   <% end %>
 <% end %>
-<% unless defined?(Dradis::Pro) && defined?(Dradis::Pro::Issuelib) %>
-  <% if sync_plugins.any? %>
-  <div class="divider"></div>
-  <% end %>
+
+<% if sync_plugins.any? %>
+<div class="divider"></div>
+<% end %>
+
+<% unless defined?(Dradis::Pro) && defined?(Dradis::Pro::Plugins::Issuelib) %>
   <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="issuelib" data-url="https://dradisframework.com/pro/pages/issuelib.html"><i class="fa fa-book fa-fw"></i> IssueLibrary for reuse</a>
 <% end %>
 <% unless defined?(Dradis::Pro) && defined?(Dradis::Pro::Plugins::Remediationtracker) %>
-  <% if sync_plugins.any? %>
-  <div class="divider"></div>
-  <% end %>
   <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="remediation" data-url="https://dradisframework.com/tools/remediation.html"><i class="fa fa-check-square-o fa-fw"></i> Built-in Remediation Tracker</a>
+<% end %>
+
+<% if defined?(Dradis::Pro)%>
+  <a href="https://dradisframework.com/integrations/?&plan=remediate" class="dropdown-item"><i class="fa fa-external-link fa-fw"></i> More ticketing integrations</a>
+<% else %>
+  <% unless defined?(Dradis::Pro) && defined?(Dradis::Plugins::Vsts) %>
+    <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="devops" data-url="https://dradisframework.com/pro/add-ons/azure-devops.html"><i class="fa fa-bolt fa-fw"></i> Ticketing: Azure DevOps</a>
+  <% end %>
+  <% unless defined?(Dradis::Pro) && defined?(Dradis::Plugins::Vsts) %>
+    <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="jira" data-url="https://dradisframework.com/pro/add-ons/jira.html"><i class="fa fa-bolt fa-fw"></i> Ticketing: JIRA</a>
+  <% end %>
+  <% unless defined?(Dradis::Pro) && defined?(Dradis::Plugins::Vsts) %>
+    <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="snow" data-url="https://dradisframework.com/integrations/servicenow.html"><i class="fa fa-bolt fa-fw"></i> Ticketing: ServiceNow</a>
+  <% end %>
 <% end %>
