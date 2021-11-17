@@ -3,6 +3,12 @@ class DradisTasks < Thor
     include Thor::Actions
     namespace 'dradis:gemfile'
 
+    # The regex matches the following types:
+    # gem 'dradis-zap', '~> 4.5.2'
+    # gem 'dradis-zap', github: 'dradis/dradis-zap', branch: 'release-4.5.2'
+    #
+    # but specifically ignores:
+    # gem 'dradispro-word',     path: 'engines/dradispro-word'
     desc 'update FILE', 'Updates the version or source of Dradis addons'
     method_option :version, aliases: '-v', desc: 'The version to assign to the addons ex. \'4.0.1\''
     method_option :branch, aliases: '-b', desc: 'The branch to assign to the addons ex. \'release-4.0.1\''
