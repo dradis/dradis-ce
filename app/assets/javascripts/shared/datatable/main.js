@@ -100,6 +100,15 @@ class DradisDatatable {
             titleAttr: 'Choose columns to show',
             className: 'btn',
             columns: columnVisibleIndexes
+          },
+          {
+            attr: {
+              'data-behavior': 'add-evidence'
+            },
+            available: function(){
+              return that.$table.data('item-type') == 'issue-evidence';
+            },
+            text: '<i class="fa fa-plus"></i> New Evidence'
           }
         ]
       },

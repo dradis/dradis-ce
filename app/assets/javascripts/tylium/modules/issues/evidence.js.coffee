@@ -16,15 +16,21 @@ document.addEventListener "turbolinks:load", ->
           .then (html) ->
             $("##{node}").html(html)
 
-    $('.js-add-evidence').click ->
-      $('#js-add-evidence-container').slideToggle()
+    $('[data-behavior~=add-evidence]').click ->
+      $('[data-behavior~=add-evidence-container]').slideToggle()
 
-    $('#js-add-evidence-container').on 'change', '#evidence_content', ->
+    $('[data-behavior~=add-evidence-container]').on 'change', '#evidence_content', ->
       $('#template-content').text($(this).val())
 
-    $('#js-add-evidence-container').on 'keyup', '#evidence_node', ->
+    $('[data-behavior~=add-evidence-container]').on 'keyup', '#evidence_node', ->
       rule = new RegExp($(this).val(), 'i')
       $('[data-behavior~=existing-node-wrapper]').hide();
       $('[data-behavior~=existing-node-wrapper]').filter ->
         rule.test($(this).find($('[data-behavior~=existing-node-label]')).text())
       .show()
+
+    if $('[data-behavior~=add-evidence]')
+      $container = $('[data-behavior~=add-evidence-container]')
+      $container.remove()
+
+      $('[data-behavior~=add-evidence]').parents(':eq(2)').append($container)
