@@ -43,7 +43,14 @@
                [issue.fields.fetch(column, ''), markup(issue.fields.fetch(column, ''))]
              end
             %>
-            <td data-sort="<%= sort %>" <%= 'data-behavior=tag' if column == 'Tags' %> ><%= display %></td>
+            <%= content_tag :td, 
+                display, 
+                class: class_names('text-break-spaces': column == 'Affected'),
+                data: {
+                  behavior: class_names(tag: column == 'Tags'),
+                  sort: sort
+                }
+            %>
           <% end  %>
           <td class="column-actions">
             <%= link_to edit_project_issue_path(current_project, issue), class: '' do %>
