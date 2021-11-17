@@ -82,6 +82,10 @@
       <%= render 'boards/modals/new_board_form' unless request.xhr? %>
     <% end %>
 
+    <% if controller_name == 'evidence'%>
+      <%= render partial: 'evidence/modals/move' %>
+    <% end %>
+
     <% if @node && @node.label != 'Methodologies' %>
       <%= render partial: 'nodes/modals/add_node', locals: { type: :child } %>
       <%= render partial: 'nodes/modals/delete' %>

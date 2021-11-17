@@ -60,12 +60,25 @@ class Comment < ApplicationRecord
         emails << login
       end
 
-      if commentable.respond_to?(:project)
-        project = commentable.project
-        project.testers_for_mentions.where(email: emails.uniq)
-      else
-        User.enabled.where(email: emails.uniq)
-      end
+      Comment.mentionable_users(commentable, User.where(email: emails.uniq))
+    end
+  end
+
+  def self.mentionable_users(resource, extra_scope = nil)
+    base_scope = User.enabled
+    scope = extra_scope ? base_scope.merge(extra_scope) : base_scope
+
+    if resource.is_a?(Project)
+      scope.merge(resource.testers_for_mentions)
+    elsif resource.respond_to?(:project)
+      scope.merge(resource.project.testers_for_mentions)
+    else
+      ids = scope.select { |user|
+        Ability.new(user).can?(:read, resource)
+      }.map(&:id)
+
+      # Ensure we return an ActiveRecord::Relation object
+      scope.where(id: ids)
     end
   end
 

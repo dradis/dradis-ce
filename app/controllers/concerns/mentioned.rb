@@ -11,7 +11,10 @@ module Mentioned
   protected
 
   def find_mentionable_users
-    @mentionable_users ||= project.testers_for_mentions
+    @mentionable_users ||= begin
+      resource = (project || instance_variable_get("@#{controller_name.singularize}") || commentable)
+      Comment.mentionable_users(resource)
+    end
   end
 
   def project
