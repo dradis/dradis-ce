@@ -25,7 +25,7 @@ class DradisTasks < Thor
         if options[:branch]
           "'#{gem_name}', github: 'dradis/#{gem_name}', branch: '#{options[:branch]}'"
         elsif options[:version]
-          "'#{gem_name}', '~>#{options[:version]}'"
+          "'#{gem_name}', '~> #{options[:version]}'"
         end
       end
 
