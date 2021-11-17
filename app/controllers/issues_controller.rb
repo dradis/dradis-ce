@@ -22,6 +22,8 @@ class IssuesController < AuthenticatedController
   def show
     @activities = @issue.commentable_activities.latest
 
+    @evidence_columns = ['Node'] | all_evidence_columns | ['Created by', 'Created',  'Updated']
+
     # We can't use the existing @nodes variable as it only contains root-level
     # nodes, and we need the auto-complete to have the full list.
     @nodes_for_add_evidence = current_project.nodes.user_nodes.order(:label)
@@ -121,6 +123,13 @@ class IssuesController < AuthenticatedController
   end
 
   private
+  def all_evidence_columns
+    @issue.evidence
+          .map { |evidence| evidence.fields.keys - ['Title', 'Label']  }
+          .flatten
+          .uniq
+  end 
+
   def set_issues
     # We need a transaction because multiple DELETE calls can be issued from
     # index and a TOCTOR can appear between the Note read and the Issue.find

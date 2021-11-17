@@ -336,9 +336,9 @@ describe 'Issues pages' do
           end
 
           it 'displays evidence form when add link clicked' do
-            expect(page).to have_selector('#js-add-evidence-container', visible: false)
+            expect(page).to have_selector('.add-evidence-container', visible: false)
             find('.js-add-evidence').click
-            expect(page).to have_selector('#js-add-evidence-container', visible: true)
+            expect(page).to have_selector('.add-evidence-container', visible: true)
           end
 
           it 'filters nodes' do
