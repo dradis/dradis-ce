@@ -2,7 +2,7 @@
 <% if @issue.affected.any? %>
   <%= render 'issues/add_evidence'%>
     <div data-behavior="datatable-paths"
-      data-table-destroy-url="<%= multiple_destroy_project_node_evidence_index_path(current_project, @issue.node) %>"
+      data-table-destroy-url="<%= multiple_destroy_project_issue_evidence_index_path(current_project, @issue) %>"
       data-table-destroy-confirmation="Are you sure?&#10;&#10;Proceeding will delete the selected evidence."
       data-table-close-console-url="<%= project_issue_path(current_project, @issue, tab: 'evidence-tab') %>">
     <%= render 'issues/evidence/table' %>
