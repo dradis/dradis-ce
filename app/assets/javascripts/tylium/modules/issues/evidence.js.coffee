@@ -16,9 +16,6 @@ document.addEventListener "turbolinks:load", ->
           .then (html) ->
             $("##{node}").html(html)
 
-    $('[data-behavior~=add-evidence]').click ->
-      $('[data-behavior~=add-evidence-container]').slideToggle()
-
     $('[data-behavior~=add-evidence-container]').on 'change', '#evidence_content', ->
       $('#template-content').text($(this).val())
 

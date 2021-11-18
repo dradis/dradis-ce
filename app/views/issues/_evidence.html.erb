@@ -4,7 +4,7 @@
   data-behavior="dradis-datatable"
   data-default-columns='["Node", "Created", "Updated"]'
   data-item-name=<%= "issue_#{@issue.id}_evidence" %>
-  data-item-type='issue-evidence'
+  data-evidence-templates="<%= @evidence_templates.map { |t| [t.id, t.name, t.content] }.to_json %>"
   data-local-storage-key="project.ce.<%= dom_id(current_project) %>.<%= "issue_#{@issue.id}_evidence_datatable" %>">
   <thead>
     <tr>

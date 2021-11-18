@@ -66,6 +66,11 @@ body.issues.index {
 }
 
 body.issues.show {
+  .add-evidence ~ .dt-button-collection {
+    .divider {
+      padding: 0;
+    }
+  }
 
   .evidence-content {
     padding-left: 2rem;
