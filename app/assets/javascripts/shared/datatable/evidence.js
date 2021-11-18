@@ -34,3 +34,11 @@ DradisDatatable.prototype.addEvidence = function(template_id) {
     console.log(template_id, 'was selected!')
   }.bind(this);
 }
+
+
+DradisDatatable.prototype.setupEvidenceCountListener = function() {
+  var that = this;
+  that.$table.on('dradis:datatable:draw', function() {
+    $('[data-behavior~=evidence-count]').text(that.dataTable.rows().count());
+  });
+}
