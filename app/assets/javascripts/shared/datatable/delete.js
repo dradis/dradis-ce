@@ -36,7 +36,7 @@ DradisDatatable.prototype.handleBulkDeleteSuccess = function(rows, data) {
 
   // remove() will remove the row internally and draw() will
   // update the table visually.
-  rows.remove().draw().deselect();
+  rows.deselect().remove().draw();
 
   this.toggleBulkDeleteBtn(false);
 
