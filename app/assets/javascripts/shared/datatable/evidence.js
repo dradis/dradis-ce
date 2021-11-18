@@ -12,7 +12,7 @@ DradisDatatable.prototype.setupEvidenceButtons = function() {
         },
         {
           tag: 'div',
-          className: 'divider'
+          className: 'divider p-0'
         }
       ];
 
