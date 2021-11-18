@@ -20,3 +20,7 @@ document.addEventListener "turbolinks:load", ->
       $('[data-behavior~=existing-node-wrapper]').filter ->
         rule.test($(this).find($('[data-behavior~=existing-node-label]')).text())
       .show()
+
+    $table = $('[data-behavior~=dradis-datatable]')
+    $table.on 'dradis:datatable:draw', ->
+      $('[data-behavior~=evidence-count]').text($table.DataTable().rows().count());
