@@ -6,6 +6,9 @@
   - Evidence:
     - Create a new issue (optionally) when creating new evidence
     - Move evidence across nodes
+  - Issues:
+    - Display evidence in a table
+    - Multi-delete evidence at the issue level
   - Tables:
     - Add selector to change the number of records displayed
   - Tylium:
