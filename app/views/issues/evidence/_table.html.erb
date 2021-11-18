@@ -15,7 +15,7 @@
   <tbody>
     <% @affected_nodes.each do |node| %>
       <% node.evidence.where(issue_id: @issue.id).each do |evidence| %>
-        <tr id="issue-<%= evidence.issue.id %>-evidence-<%= evidence.id %>">
+        <tr id="evidence-<%= evidence.id %>">
           <td class="select-checkbox" data-behavior="select-checkbox"></td>
           <% @evidence_columns.each do |column| %>
             <%
