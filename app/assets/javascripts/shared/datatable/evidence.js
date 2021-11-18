@@ -11,7 +11,6 @@ DradisDatatable.prototype.setupEvidenceButtons = function() {
           action: this.addEvidence('blank')
         },
         {
-          text: '',
           tag: 'div',
           className: 'divider'
         }
@@ -30,8 +29,8 @@ DradisDatatable.prototype.setupEvidenceButtons = function() {
   return templateButtons;
 }
 
-DradisDatatable.prototype.addEvidence = function(template_name) {
+DradisDatatable.prototype.addEvidence = function(template_id) {
   return function() {
-    console.log(template_name, 'was selected!')
+    console.log(template_id, 'was selected!')
   }.bind(this);
 }
