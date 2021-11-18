@@ -28,9 +28,3 @@ document.addEventListener "turbolinks:load", ->
       $('[data-behavior~=existing-node-wrapper]').filter ->
         rule.test($(this).find($('[data-behavior~=existing-node-label]')).text())
       .show()
-
-    if $('[data-behavior~=add-evidence]')
-      $container = $('[data-behavior~=add-evidence-container]')
-      $container.remove()
-
-      $('[data-behavior~=add-evidence]').parents(':eq(2)').append($container)
