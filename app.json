@@ -5,7 +5,7 @@
       "description": "Tell Dradis we're on Heroku",
       "value": "1"
     }
-  }
+  },
   "keywords": ["infosec", "pentest", "osint"],
   "logo": "https://dradisframework.com/images/logo_dradispro_letters.png",
   "name": "Dradis Framework - Community Edition",
