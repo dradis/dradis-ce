@@ -4,10 +4,13 @@ DradisDatatable.prototype.setupCheckboxListeners = function() {
 
   this.dataTable.on('select.dt deselect.dt', function() {
     if (that.areAllSelected()) {
-      $selectAllBtn.find('#select-all-checkbox').prop('checked', true);
+      $selectAllBtn.find('#select-all-checkbox').prop({'checked': true, 'indeterminate': false});
     }
     else if (that.dataTable.rows({selected:true}).count() > 0) {
       $selectAllBtn.find('#select-all-checkbox').prop('indeterminate', true);
+    }
+    else {
+      $selectAllBtn.find('#select-all-checkbox').prop({'checked': false, 'indeterminate': false});
     }
 
     that.updateSelectAllBtnState();
