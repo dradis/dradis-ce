@@ -7,6 +7,8 @@
 Dradis is an open-source collaboration framework, tailored to InfoSec teams.
 
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/dradis/dradis-ce/tree/deploy-to-heroku)
+
 ## Our goals
 
 * Share the information effectively.
