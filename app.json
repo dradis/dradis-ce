@@ -1,7 +1,17 @@
 {
-  "name": "Dradis Framework - Community Edition",
   "description": "The original open-source reporting and collaboration tool trusted by InfoSec professionals around the world.",
-  "repository": "https://github.com/dradis/dradis-ce/tree/deploy-to-heroku",
+  "env": {
+    "HEROKU": {
+      "description": "Tell Dradis we're on Heroku",
+      "value": "1"
+    }
+  }
+  "keywords": ["infosec", "pentest", "osint"],
   "logo": "https://dradisframework.com/images/logo_dradispro_letters.png",
-  "keywords": ["infosec", "pentest", "osint"]
+  "name": "Dradis Framework - Community Edition",
+  "repository": "https://github.com/dradis/dradis-ce/tree/deploy-to-heroku",
+  "scripts": {
+    "postdeploy": "cp config/database.yml.heroku config/database.yml"
+  },
+  "website": "http://drad.is"
 }
