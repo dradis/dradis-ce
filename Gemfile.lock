@@ -228,6 +228,7 @@ GEM
       ast (~> 2.4.1)
     parslet (1.6.2)
       blankslate (>= 2.0, <= 4.0)
+    pg (1.2.3)
     popper_js (1.16.0)
     pry (0.12.2)
       coderay (~> 1.1.0)
@@ -366,7 +367,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.2)
     thor (1.0.1)
     tilt (2.0.10)
     timecop (0.9.1)
@@ -446,6 +446,7 @@ DEPENDENCIES
   nokogiri (= 1.12.5)
   paper_trail (~> 12.0.0)
   parslet (~> 1.6.0)
+  pg
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.4.1)
@@ -465,7 +466,6 @@ DEPENDENCIES
   simple_form
   sinatra (= 2.0.2)
   spring
-  sqlite3
   thor (~> 1.0.1)
   timecop
   turbolinks (~> 5)
