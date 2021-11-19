@@ -4,6 +4,10 @@
     "HEROKU": {
       "description": "Tell Dradis we're on Heroku",
       "value": "1"
+    },
+    "RAILS_SERVE_STATIC_FILES": {
+      "description": "Ask Rails to serve static assets",
+      "value": "1"
     }
   },
   "keywords": ["infosec", "pentest", "osint"],
