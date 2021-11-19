@@ -100,20 +100,6 @@ class DradisDatatable {
             titleAttr: 'Choose columns to show',
             className: 'btn',
             columns: columnVisibleIndexes
-          },
-          {
-            attr: {
-              'data-behavior': 'table-action add-evidence'
-            },
-            autoClose: true,
-            available: function(){
-              return that.$table.data('evidence-templates') !== undefined;
-            },
-            buttons: this.setupEvidenceButtons(),
-            className: 'add-evidence',
-            extend: 'collection',
-            name: 'evidenceBtn',
-            text: '<i class="fa fa-plus"></i> New Evidence'
           }
         ]
       },
