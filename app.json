@@ -1,0 +1,7 @@
+{
+  "name": "Dradis Framework - Community Edition",
+  "description": "The original open-source reporting and collaboration tool trusted by InfoSec professionals around the world.",
+  "repository": "https://github.com/dradis/dradis-ce/tree/deploy-to-heroku",
+  "logo": "https://dradisframework.com/images/logo_dradispro_letters.png",
+  "keywords": ["infosec", "pentest", "osint"]
+}
