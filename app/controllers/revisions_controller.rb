@@ -41,8 +41,8 @@ class RevisionsController < AuthenticatedController
   private
 
   def load_issues
-    @issue = Issue.find(params[:issue_id])
     @issues = Issue.where(node_id: current_project.issue_library.id)
+    @issue = @issues.find(params[:issue_id])
   end
 
   def load_list

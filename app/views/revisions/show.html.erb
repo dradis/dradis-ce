@@ -7,13 +7,9 @@
 <% content_for :sidebar do %>
   <% if @issue %>
     <%= render 'issues/sidebar' %>
-  <% end %>
-
-  <% if @list %>
+  <% elsif @list %>
     <%= render 'cards/sidebar' %>
-  <% end %>
-
-  <% if @node %>
+  <% elsif @node %>
     <%= render 'nodes/sidebar' %>
   <% end %>
 <% end %>
