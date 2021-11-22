@@ -22,8 +22,18 @@ v4.1.0 (November 2021)
     - Tables
       - Prevent columns state from resetting
   - Integration enhancements:
-    - CVSS:
-      - Add toggle between CVSSv3.0 and CVSSv3.1
+    - CVSS Calculator:
+      - Settings: show/hide the calculator in the Issues view
+      - Toggle between CVSSv3.0 and CVSSv3.1
+    - Dread Calculator:
+      - Settings: show/hide the calculator in the Issues view
+    - Nessus:
+      - Add product_coverage & cvss3_impact_score as available Issue fields
+    - Nexpose
+      - Update HTML tag cleanup to better cover UnorderedList and URLLink tags in the solution field
+    - Qualys
+      - Add <dd>, <dt> support
+      - Remove orphaned <b> tags
 
 v4.0.0 (July 2021)
   * Dynamic content across the app
