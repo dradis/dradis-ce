@@ -21,6 +21,9 @@ v4.1.0 (November 2021)
       - Ensure boards don't nest when the instance has been inactive
     - Tables
       - Prevent columns state from resetting
+  - Integration enhancements:
+    - CVSS:
+      - Add toggle between CVSSv3.0 and CVSSv3.1
 
 v4.0.0 (July 2021)
   * Dynamic content across the app
