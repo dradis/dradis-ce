@@ -36,19 +36,6 @@ module RevisionsHelper
     end
   end
 
-  def record_resource_path(record)
-    case record
-    when Card
-      project_board_list_card_path(current_project, @board, @list, record)
-    when Issue
-      project_issue_path(current_project, record)
-    when Note
-      project_node_note_path(current_project, record.node, record)
-    when Evidence
-      project_node_evidence_path(current_project, record.node, record)
-    end
-  end
-
   def link_to_conflicting_revision(record, revision)
     time = revision.created_at.strftime(DATE_FORMAT)
     text =  if revision.whodunnit
