@@ -35,7 +35,7 @@ DradisDatatable.prototype.setupCheckboxListeners = function() {
 
 DradisDatatable.prototype.areAllSelected = function(filter = {}) {
   return(
-    this.dataTable.rows({selected: true}).count() == this.dataTable.rows(filter).count()
+    this.dataTable.rows({selected: true}).count() == this.dataTable.rows(filter).count();
   );
 }
 

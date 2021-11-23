@@ -19,7 +19,7 @@
       - Ensure boards don't nest when the instance has been inactive
     - Tables
       - Prevent columns state from resetting
-      - Prevent the select all button from selecting the filtered rows
+      - Prevent the select all button from selecting filtered out rows when a filter is been applied
     - Bug tracker items:
       - [item]
   - New integrations:
