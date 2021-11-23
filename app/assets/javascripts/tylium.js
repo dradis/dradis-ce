@@ -34,7 +34,6 @@
 //= require shared/datatable/main
 //= require shared/datatable/checkbox
 //= require shared/datatable/delete
-//= require shared/datatable/evidence
 //= require shared/datatable/merge
 //= require shared/datatable/tag
 //= require shared/datatable/validate
