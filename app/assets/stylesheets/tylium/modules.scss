@@ -141,6 +141,10 @@
   margin-top: -0.5rem;
   border-bottom: 1px solid $borderColor;
   width: 100%;
+
+  .actions {
+    display: inline-block;
+  }
 }
 
 .inset-button-wrapper {
