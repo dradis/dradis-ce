@@ -22,5 +22,5 @@ document.addEventListener "turbolinks:load", ->
       .show()
 
     $table = $('[data-behavior~=dradis-datatable]')
-    $table.on 'dradis:datatable:draw', ->
+    $table.on 'dradis:datatable:bulkDelete', ->
       $('[data-behavior~=evidence-count]').text($table.DataTable().rows().count());

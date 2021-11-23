@@ -18,7 +18,7 @@ DradisDatatable.prototype.bulkDelete = function() {
     data: { ids: that.rowIds(selectedRows) },
     success: function(data) {
       that.handleBulkDeleteSuccess(selectedRows, data);
-      that.$table.trigger('dradis:datatable:draw');
+      that.$table.trigger('dradis:datatable:bulkDelete');
     },
     error: function() {
       that.handleBulkDeleteError(selectedRows);
