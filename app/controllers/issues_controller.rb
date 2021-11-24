@@ -24,10 +24,6 @@ class IssuesController < AuthenticatedController
 
     @evidence_columns = ['Node'] | all_evidence_columns | ['Created by', 'Created',  'Updated']
 
-    # We can't use the existing @nodes variable as it only contains root-level
-    # nodes, and we need the auto-complete to have the full list.
-    @nodes_for_add_evidence = current_project.nodes.user_nodes.order(:label)
-
     @affected_nodes = Node.joins(:evidence)
                         .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')
                         .where('evidence.issue_id = ?', @issue.id)
@@ -36,6 +32,8 @@ class IssuesController < AuthenticatedController
 
     @first_node      = @affected_nodes.first
     @first_evidence  = Evidence.where(node: @first_node, issue: @issue)
+
+    @templates = NoteTemplate.all
 
     load_conflicting_revisions(@issue)
   end
@@ -128,7 +126,7 @@ class IssuesController < AuthenticatedController
           .map { |evidence| evidence.fields.keys - ['Title', 'Label']  }
           .flatten
           .uniq
-  end 
+  end
 
   def set_issues
     # We need a transaction because multiple DELETE calls can be issued from

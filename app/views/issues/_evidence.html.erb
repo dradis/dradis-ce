@@ -1,11 +1,29 @@
-<h4 class="header-underline">Evidence information</h4>
+<h4 class="header-underline">Evidence information -
+  <span class="actions">
+    <div class="dropdown">
+      <%= link_to 'javascript:void(0)', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do %>
+        <i class="fa fa-plus"></i> New Evidence
+      <% end %>
+
+      <div class="dropdown-menu">
+        <%= link_to 'Blank', new_project_issue_evidence_path(current_project, @issue), class: 'dropdown-item' %>
+        <% if @templates.any? %>
+          <div class="divider"></div>
+          <% @templates.each do |template| %>
+            <%= link_to template.name, new_project_issue_evidence_path(current_project, @issue, template: template.id), class: 'dropdown-item' %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </span>
+</h4>
+
 <% if @issue.affected.any? %>
   <% cache ['issue-evidence-tab', @issue, @issue.evidence] do %>
-    <%= render 'issues/add_evidence'%>
     <div data-behavior="datatable-paths"
-      data-table-destroy-url="<%= multiple_destroy_project_issue_evidence_index_path(current_project, @issue) %>"
+      data-table-close-console-url="<%= project_issue_path(current_project, @issue, tab: 'evidence-tab') %>"
       data-table-destroy-confirmation="Are you sure?&#10;&#10;Proceeding will delete the selected evidence."
-      data-table-close-console-url="<%= project_issue_path(current_project, @issue, tab: 'evidence-tab') %>">
+      data-table-destroy-url="<%= multiple_destroy_project_issue_evidence_index_path(current_project, @issue) %>">
       <%= render 'issues/evidence/table' %>
     </div>
   <% end %>
