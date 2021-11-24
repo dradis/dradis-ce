@@ -51,7 +51,7 @@
                 <%= f.text_field :node, class: 'form-control', placeholder: 'Type here to filter list...' %>
 
                 <div id="existing-node-list" class="form-check mt-3">
-                  <%= f.collection_check_boxes(:node_id, @nodes_for_add_evidence, :id, :label) do |b| %>
+                  <%= f.collection_check_boxes(:node_ids, @nodes_for_add_evidence, :id, :label) do |b| %>
                     <div data-behavior="existing-node-wrapper">
                       <%= b.check_box class: 'form-check-input' %>
                       <%= b.label class: 'form-check-label', data: { behavior: 'existing-node-label'} %>
