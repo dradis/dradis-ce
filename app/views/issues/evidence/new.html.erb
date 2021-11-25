@@ -33,6 +33,28 @@
         ) do |f| %>
           <% cache [@issue, @nodes_for_add_evidence ] do %>
             <div class="row">
+              <div class="col-12">
+                <%= f.hidden_field :issue_id, value: @issue.id %>
+                <%= f.hidden_field :node_id %>
+
+                <%= f.label :content, nil, class: 'sr-only' %>
+                <%=
+                  f.text_area :content,
+                  label: false,
+                  class: 'textile form-control',
+                  data: {
+                    allow_dropdown: true,
+                    behavior: 'auto-save rich-toolbar drop-zone',
+                    paths: editor_paths,
+                    'rich-toolbar': 'block-code bold field image italic link list-ol list-ul table',
+                    'rich-toolbar-uploader': '[data-behavior~=jquery-upload]',
+                  },
+                  rows: 20
+                %>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
               <div class="col-6">
                 <%= f.label 'Add to existing nodes', for: :evidence_node %>
                 <%= f.text_field :node, class: 'form-control', placeholder: 'Type here to filter list...' %>
@@ -67,27 +89,6 @@
                   { include_blank: 'The root of the tree' },
                   { :class => 'custom-select' }
                 ) %>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <%= f.hidden_field :issue_id, value: @issue.id %>
-                <%= f.hidden_field :node_id %>
-
-                <%= label_tag :evidence_content, nil, class: 'sr-only' %>
-                <%=
-                  f.text_area :content,
-                  label: false,
-                  class: 'textile',
-                  data: {
-                    allow_dropdown: true,
-                    behavior: 'auto-save rich-toolbar drop-zone',
-                    paths: editor_paths,
-                    'rich-toolbar': 'block-code bold field image italic link list-ol list-ul table',
-                    'rich-toolbar-uploader': '[data-behavior~=jquery-upload]',
-                  },
-                  rows: 20
-                %>
               </div>
             </div>
 
