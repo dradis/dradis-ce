@@ -1,5 +1,5 @@
 document.addEventListener "turbolinks:load", ->
-  if $('body.issues.show').length
+  if $('body.evidence.new').length
     $('#evidence-host-list a[data-toggle~=pill]').on 'click', (ev)->
       path   = $(this).data('path')
       node   = $(this).data('node')
@@ -11,9 +11,6 @@ document.addEventListener "turbolinks:load", ->
           .then (html) ->
             $("##{node}").html(html)
 
-    $('[data-behavior~=add-evidence-container]').on 'change', '#evidence_content', ->
-      $('#template-content').text($(this).val())
-
     $('[data-behavior~=add-evidence-container]').on 'keyup', '#evidence_node', ->
       rule = new RegExp($(this).val(), 'i')
       $('[data-behavior~=existing-node-wrapper]').hide();
@@ -21,6 +18,7 @@ document.addEventListener "turbolinks:load", ->
         rule.test($(this).find($('[data-behavior~=existing-node-label]')).text())
       .show()
 
+  if $('body.issues.show').length
     $table = $('[data-behavior~=dradis-datatable]')
     $table.on 'dradis:datatable:bulkDelete', ->
       $('[data-behavior~=evidence-count]').text($table.DataTable().rows().count());
