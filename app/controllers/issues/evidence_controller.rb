@@ -1,7 +1,4 @@
 class Issues::EvidenceController < IssuesController
-  include MultipleDestroy
-  include ProjectScoped
-
   def new
     @auto_save_key =  if params[:template]
                         "project-#{current_project.id}-issue-#{params[:issue_id]}-evidence-#{params[:template]}"
