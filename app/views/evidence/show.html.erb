@@ -20,6 +20,7 @@
             method: :delete do %>
             <i class="fa fa-trash fa-fw"></i> Delete
           <% end %>
+          <a href="#modal_move_evidence" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-mail-forward fa-fw"></i> Move</a>
           <%= render partial: 'subscriptions/actions', locals: { subscribable: @evidence, dots_menu: true } %>
         </div>
       </li>
@@ -54,7 +55,7 @@
                 <div class="note-text-inner">
                   <h4 class="header-underline">Evidence for this instance</h4>
 
-                  <div class="content-textile">
+                  <div class="content-textile" data-behavior="content-textile">
                     <%= markup(@evidence.content) %>
                   </div>
                   <div class="author-info">
@@ -75,7 +76,7 @@
                   <%= tag_and_name_for(@issue) %>
                   </span>
                 </h4>
-                <div id="<%= dom_id(@issue) %>_text" class="content-textile">
+                <div id="<%= dom_id(@issue) %>_text" class="content-textile" data-behavior="content-textile">
                   <%= markup(@issue.text) %>
                 </div>
               </div>

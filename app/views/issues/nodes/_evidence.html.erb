@@ -19,7 +19,7 @@
           </span>
         </h5>
       </div>
-      <div class="content-textile mt-4" id="node_<%= node.id %>_instance_<%= evidence.id %>">
+      <div class="content-textile mt-4" id="node_<%= node.id %>_instance_<%= evidence.id %>" data-behavior="content-textile">
         <%= markup(evidence.content) %>
       </div>
     <% else %>
@@ -49,7 +49,7 @@
                 </span>
               </h5>
             </div>
-            <div class="content-textile mt-4">
+            <div class="content-textile mt-4" data-behavior="content-textile">
               <%= markup(instance.content) %>
             </div>
           </div>
