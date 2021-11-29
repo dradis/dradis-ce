@@ -54,7 +54,7 @@ describe "note pages" do
     describe "clicking 'delete'", js: true do
       let(:submit_form) do
         page.accept_confirm do
-          within('.dots-container') do
+          within('.actions') do
             find('.dots-dropdown').click
             click_link 'Delete'
           end

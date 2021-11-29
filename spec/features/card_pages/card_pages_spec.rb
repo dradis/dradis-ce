@@ -241,7 +241,7 @@ describe 'Card pages:' do
         after  { PaperTrail.enabled = false }
 
         let(:submit_form) do
-          within('.dots-container') do
+          within('.actions') do
             find('.dots-dropdown').click
             click_link 'Delete'
           end
@@ -263,7 +263,7 @@ describe 'Card pages:' do
 
         let(:model) { @card }
         let(:submit_form) do
-          within('.dots-container') do
+          within('.actions') do
             find('.dots-dropdown').click
             click_link 'Delete'
           end

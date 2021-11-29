@@ -63,7 +63,7 @@ describe "moving a note", js: true do
   end
 
   def click_move_note
-    within('.dots-container') do
+    within('.actions') do
       find('.dots-dropdown').click
       find("a[href='#modal_move_note']").click
     end
