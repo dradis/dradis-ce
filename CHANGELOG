@@ -62,6 +62,8 @@ v4.1.0 (November 2021)
     - Qualys
       - Add <dd>, <dt> support
       - Remove orphaned <b> tags
+  - Security Fixes:
+    - High: Authenticated author broken access control: read access to issue content
 
 v4.0.0 (July 2021)
   * Dynamic content across the app
