@@ -1,55 +1,43 @@
-.dots-container {
-  background-color: #e9ecef; // match BS4 breadcrumb bg color
-  display: flex;
-  justify-content: space-between;
+.dots-dropdown {
+  border: 1px solid darken($borderColor, 2%);
+  border-radius: 50px;
+  height: 35px;
+  width: 35px;
+  display: inline-flex;
+  justify-content: center;
   align-items: center;
-  padding-right: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 
-  .breadcrumb {
-    width: calc(100% - 35px);
+  .dots-dropdown-header {
+    font-weight: 400 !important;
+    
+    &:hover {
+      color: $linkColor !important;
+      background-color: initial !important;
+    }
+
+    &:not(:first-child) {
+      border-top: 1px solid $borderColor;
+      margin-top: 0.3rem;
+      padding-top: 0.3rem;
+    }
   }
 
-  .dots-dropdown {
-    border: 1px solid darken($borderColor, 2%);
-    border-radius: 50px;
-    height: 35px;
-    width: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
+  .dropdown-menu {
+    cursor: default;
+  }
 
-    .dots-dropdown-header {
-      font-weight: 400 !important;
-      
-      &:hover {
-        color: $linkColor !important;
-        background-color: initial !important;
-      }
+  .dropdown-toggle {
+    padding: 0.6rem 0.7rem;
+  }
 
-      &:not(:first-child) {
-        border-top: 1px solid $borderColor;
-        margin-top: 0.3rem;
-        padding-top: 0.3rem;
-      }
-    }
-
-    .dropdown-menu {
-      cursor: default;
-    }
+  &:hover,
+  &.show {
+    background-color: $primaryBgColor;
 
     .dropdown-toggle {
-      padding: 0.6rem 0.7rem;
-    }
-
-    &:hover,
-    &.show {
-      background-color: $primaryBgColor;
-
-      .dropdown-toggle {
-        color: $linkColorHover;
-      }
+      color: $linkColorHover;
     }
   }
 }
