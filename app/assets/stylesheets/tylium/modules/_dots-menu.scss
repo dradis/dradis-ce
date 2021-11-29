@@ -1,13 +1,13 @@
 .dots-dropdown {
+  align-items: center;
   border: 1px solid darken($borderColor, 2%);
   border-radius: 50px;
-  height: 35px;
-  width: 35px;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
+  display: inline-flex;
+  height: 1.75rem;
+  justify-content: center;
   transition: all 0.2s ease-in-out;
+  width: 1.75rem;
 
   .dots-dropdown-header {
     font-weight: 400 !important;
@@ -30,6 +30,10 @@
 
   .dropdown-toggle {
     padding: 0.6rem 0.7rem;
+
+    .fa-lg {
+      font-size: 1.15rem;
+    }
   }
 
   &:hover,
