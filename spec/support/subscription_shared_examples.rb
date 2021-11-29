@@ -16,7 +16,7 @@ end
 shared_examples 'a page with subscribe/unsubscribe links' do
   it 'subscribes and unsubscribes with the provided links' do
 
-    within('.actions') do
+    within('.actions', match: :first) do
       find('.dots-dropdown').click
       click_link 'Subscribe'
     end
@@ -30,7 +30,7 @@ shared_examples 'a page with subscribe/unsubscribe links' do
       )
     ).not_to be nil
 
-    within('.actions') do
+    within('.actions', match: :first) do
       find('.dots-dropdown').click
       click_link 'Unsubscribe'
     end

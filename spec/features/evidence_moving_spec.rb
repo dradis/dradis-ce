@@ -62,7 +62,7 @@ describe 'moving an evidence', js: true do
   end
 
   def click_move_evidence
-    within('.actions') do
+    within('.actions', match: :first) do
       find('.dots-dropdown').click
       find('a[href="#modal_move_evidence"]').click
     end

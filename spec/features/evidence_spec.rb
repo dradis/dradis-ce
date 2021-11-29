@@ -57,7 +57,7 @@ describe 'evidence' do
     describe "clicking \'delete\'", js: true do
       let(:submit_form) do
         page.accept_confirm do
-          within('.actions') do
+          within('.actions', match: :first) do
             find('.dots-dropdown').click
             click_link 'Delete'
           end
