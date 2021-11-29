@@ -29,7 +29,8 @@
         <div class="tab-pane active" id="info-tab">
           <% cache ['issue-information-tab', @issue] do %>
             <div class="note-text-inner">
-              <h4 class="mb-4 header-underline">Issue information -
+              <h4 class="mb-4 header-underline">
+                <span class="text-truncate" title="Issue information">Issue information -</span>
                 <span class="actions">
                   <%= tag_and_name_for(@issue) %>
                   <div class="dropdown dots-dropdown">
