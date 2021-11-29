@@ -56,7 +56,7 @@
             <hr>
             <div class="row">
               <div class="col-6">
-                <%= f.label 'Add to existing nodes', for: :evidence_node %>
+                <%= f.label 'Add to existing nodes', for: :evidence_node, class: 'col-form-label' %>
                 <%= f.text_field :node, class: 'form-control', placeholder: 'Type here to filter list...' %>
 
                 <div id="existing-node-list" class="form-check mt-3">
@@ -69,7 +69,7 @@
                 </div>
               </div>
               <div class="col-6">
-                <label for="evidence_node_list">Paste list of nodes
+                <label for="evidence_node_list" class="col-form-label">Paste list of nodes
                   <i
                     class="fa fa-question-circle"
                     data-toggle="tooltip"
