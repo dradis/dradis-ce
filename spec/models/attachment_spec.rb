@@ -42,6 +42,20 @@ describe Attachment do
     end
   end
 
+  describe '.find' do
+    let(:attachment) do
+      attachment = Attachment.new(Rails.root.join('public', 'images', 'rails with space.png'), node_id: node.id)
+      attachment.save
+      attachment
+    end
+
+    context 'when passing in a filename that contains URL encoded chars' do
+      it 'returns the attachment object' do
+        expect(Attachment.find('rails%20with%20space.png', conditions: { node_id: node.id })).to be_a(Attachment)
+      end
+    end
+  end
+
   describe '.fullpath' do
     it 'returns the full file system path to the attachment' do
       expect { attachment.fullpath }.not_to raise_error

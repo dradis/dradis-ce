@@ -127,7 +127,7 @@ class Attachment < File
       end
     else
       # in this routine we find the attachment by file name and node id
-      filename = args.first
+      filename = CGI::unescape(args.first.to_s)
       attachments = []
       raise "You need to supply a node id in the condition parameter" unless options[:conditions] && options[:conditions][:node_id]
       node_id = options[:conditions][:node_id].to_s
