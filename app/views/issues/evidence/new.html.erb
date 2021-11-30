@@ -35,7 +35,7 @@
             <div class="row">
               <div class="col-12">
                 <%= f.hidden_field :issue_id, value: @issue.id %>
-                <%= f.hidden_field :node_id %>
+                <%= f.hidden_field :node_id, value: @issue.node_id %>
 
                 <%= f.label :content, nil, class: 'sr-only' %>
                 <%=
