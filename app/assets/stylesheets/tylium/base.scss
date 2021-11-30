@@ -152,8 +152,21 @@ pre code {
   color: $red;
 }
 
+select[multiple] {
+  padding-left: 0;
+  padding-right: 0;
+
+  option {
+    padding: 0 0.5rem;
+
+    &:checked {
+      background: linear-gradient(0deg, $lightColor 0%, $lightColor 100%);
+    }
+  }
+}
+
 // fixes ugly selects
-select {
+select:not(select[multiple]) {
   appearance: none !important;
   -moz-appearance: none !important;
   -webkit-appearance: none !important;

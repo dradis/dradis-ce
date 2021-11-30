@@ -11,12 +11,19 @@ document.addEventListener "turbolinks:load", ->
           .then (html) ->
             $("##{node}").html(html)
 
+    $nodeListOptions = $('[data-behavior~=existing-node-list] option')
+
     $('[data-behavior~=add-evidence-container]').on 'keyup', '#evidence_node', ->
       rule = new RegExp($(this).val(), 'i')
-      $('[data-behavior~=existing-node-wrapper]').hide();
-      $('[data-behavior~=existing-node-wrapper]').filter ->
-        rule.test($(this).find($('[data-behavior~=existing-node-label]')).text())
+      $nodeListOptions.hide();
+      $nodeListOptions.filter ->
+        rule.test($(this).text())
       .show()
+
+    $nodeListOptions.mousedown (e) ->
+      e.preventDefault()
+      $(this).prop 'selected', !$(this).prop('selected')
+      $(this).parent().focus()
 
   if $('body.issues.show').length
     $table = $('[data-behavior~=dradis-datatable]')
