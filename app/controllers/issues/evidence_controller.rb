@@ -9,5 +9,7 @@ class Issues::EvidenceController < IssuesController
     @issue = @issues.find(params[:issue_id])
 
     @nodes_for_add_evidence = current_project.nodes.user_nodes.order(:label)
+
+    @template_content = template_content if params[:template]
   end
 end
