@@ -5,16 +5,11 @@
         <%= link_to 'javascript:void(0)', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do %>
           <i class="fa fa-plus"></i> New Evidence
         <% end %>
-
-        <div class="dropdown-menu">
-          <%= link_to 'Blank', new_project_node_evidence_path(@node.project, @node), class: 'dropdown-item' %>
-          <% if @templates.any? %>
-            <div class="divider"></div>
-            <% @templates.each do |template| %>
-              <%= link_to template.name, new_project_node_evidence_path(@node.project, @node, template: template.id), class: 'dropdown-item' %>
-            <% end %>
-          <% end %>
-        </div>
+        <%= render 'shared/templates_dropdown',
+          name: 'Evidence',
+          new_path: new_project_node_evidence_path(@node.project, @node),
+          category_id: nil
+        %>
       </div>
     </span>
   </h4>
