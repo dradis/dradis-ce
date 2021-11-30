@@ -7,6 +7,7 @@
     - Create a new issue (optionally) when creating new evidence
     - Move evidence across nodes
   - Issues:
+    - Update evidence content while creating evidence records at the issue-level
     - Display evidence in a table
     - Multi-delete evidence at the issue level
   - Tables:
