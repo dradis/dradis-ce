@@ -33,8 +33,6 @@ class IssuesController < AuthenticatedController
     @first_node      = @affected_nodes.first
     @first_evidence  = Evidence.where(node: @first_node, issue: @issue)
 
-    @templates = NoteTemplate.all
-
     load_conflicting_revisions(@issue)
   end
 
