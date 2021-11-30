@@ -3,13 +3,8 @@ require 'rails_helper'
 describe 'Sessions' do
   subject { page }
 
-  before do
+  let(:user) do
     create(
-      :configuration,
-      name: 'admin:password',
-      value: ::BCrypt::Password.create('rspec_pass')
-    )
-    @user = create(
       :user,
       :author,
       password_hash: ::BCrypt::Password.create('rspec_pass')
@@ -20,7 +15,7 @@ describe 'Sessions' do
 
   let(:login) do
     visit login_path
-    fill_in 'login', with: @user.email
+    fill_in 'login', with: user.email
     fill_in 'password', with: password
     click_button 'Let me in!'
   end
@@ -61,7 +56,7 @@ describe 'Sessions' do
     it 'forces a logout' do
       login
 
-      @user.destroy
+      user.destroy
       visit project_path(Project.find(1))
 
       expect(current_path).to eq(login_path)
