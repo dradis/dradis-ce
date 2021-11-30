@@ -13,6 +13,8 @@ class NodesController < NestedNodeResourceController
                       | ['Title', 'Created', 'Created by', 'Updated']
     @evidence_columns = @sorted_evidence.map(&:fields).map(&:keys).uniq.flatten \
                       | ['Title', 'Created', 'Created by', 'Updated']
+
+    @templates = NoteTemplate.all
   end
 
   # GET /nodes/<id>/edit
