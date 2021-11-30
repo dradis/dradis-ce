@@ -3,6 +3,7 @@ require 'rails_helper'
 describe 'Sessions' do
   subject { page }
 
+  let(:password) { 'rspec_pass' }
   let(:user) do
     create(
       :user,
@@ -11,8 +12,8 @@ describe 'Sessions' do
     )
   end
 
-  let(:password) { 'rspec_pass' }
-
+  # This needs to be a helper and not a let() block, because let is memoized
+  # and reused.
   let(:login) do
     visit login_path
     fill_in 'login', with: user.email
@@ -57,7 +58,7 @@ describe 'Sessions' do
       login
 
       user.destroy
-      visit project_path(Project.find(1))
+      visit projects_path
 
       expect(current_path).to eq(login_path)
       expect(page).to have_content('Access denied')
