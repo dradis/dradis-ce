@@ -14,7 +14,7 @@ describe 'Sessions' do
 
   # This needs to be a helper and not a let() block, because let is memoized
   # and reused.
-  let(:login) do
+  def login
     visit login_path
     fill_in 'login', with: user.email
     fill_in 'password', with: password
