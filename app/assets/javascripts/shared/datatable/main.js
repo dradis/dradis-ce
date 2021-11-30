@@ -287,6 +287,16 @@ class DradisDatatable {
   // Old columns are automatically removed, because we are iterating the columns
   // on the page, and not columns inside the saved state object.
   rebuildSavedStateColumnsFromLocalStorage(localStorageData) {
+    var containsHeader = localStorageData.columns.some(function(column) {
+      return 'header' in column;
+    })
+
+    // Return localStorageData if none of the columns contain the header property,
+    // so that we don't show a page without columns.
+    if (!containsHeader) {
+      return localStorageData;
+    }
+
     var newColumns = [];
 
     this.tableHeaders.forEach(function(th, _index) {

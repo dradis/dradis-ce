@@ -1,25 +1,12 @@
 [v#.#.#] ([month] [YYYY])
   - Add Setup Wizard
-  - Editor:
-    - Insert an appropriate single or multiline tag for blockquotes and codeblocks
-    - Limit the content height for easier access to the Create/Update button
-    - Quote text from comments and resource content (cards, evidence, issues, notes, etc)
-  - Evidence:
-    - Create a new issue (optionally) when creating new evidence
-    - Move evidence across nodes
-  - Tables:
-    - Add selector to change the number of records displayed
-  - Tylium:
-    - Import CSS manifests from addons
-    - Remove extra left padding from the first line of content in a code block
-    - Remove height restriction from code blocks
+  - [entity]:
+    - [future tense verb] [feature]
   - Upgraded gems:
-    - nokogiri, puma, rails
+    - [gem]
   - Bugs fixes:
-    - Methodologies:
-      - Ensure boards don't nest when the instance has been inactive
-    - Tables
-      - Prevent columns state from resetting
+    - [entity]:
+      - [future tense verb] [bug fix]
     - Bug tracker items:
       - [item]
   - New integrations:
@@ -39,6 +26,45 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v4.1.0 (November 2021)
+  - Editor:
+    - Insert an appropriate single or multiline tag for blockquotes and codeblocks
+    - Limit the content height for easier access to the Create/Update button
+    - Quote text from comments and resource content (cards, evidence, issues, notes, etc)
+  - Evidence:
+    - Create a new issue (optionally) when creating new evidence
+    - Move evidence across nodes
+  - Tables:
+    - Add selector to change the number of records displayed
+  - Tylium:
+    - Import CSS manifests from addons
+    - Remove extra left padding from the first line of content in a code block
+    - Remove height restriction from code blocks
+  - Upgraded gems:
+    - nokogiri, puma, rails
+  - Bugs fixes:
+    - Conflict resolver
+      - Apply the correct warning when a conflict happens on edit
+    - Methodologies:
+      - Ensure boards don't nest when the instance has been inactive
+    - Tables
+      - Prevent columns state from resetting
+  - Integration enhancements:
+    - CVSS Calculator:
+      - Settings: show/hide the calculator in the Issues view
+      - Toggle between CVSSv3.0 and CVSSv3.1
+    - Dread Calculator:
+      - Settings: show/hide the calculator in the Issues view
+    - Nessus:
+      - Add product_coverage & cvss3_impact_score as available Issue fields
+    - Nexpose
+      - Update HTML tag cleanup to better cover UnorderedList and URLLink tags in the solution field
+    - Qualys
+      - Add <dd>, <dt> support
+      - Remove orphaned <b> tags
+  - Security Fixes:
+    - High: Authenticated author broken access control: read access to issue content
 
 v4.0.0 (July 2021)
   * Dynamic content across the app
