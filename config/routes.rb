@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
   resources :notifications, only: [:index, :update]
 
-  resources :projects, only: [:show] do
+  resources :projects, only: [:index, :show] do
     resources :activities, only: [:index] do
       collection do
         get :poll, constraints: { format: /js/ }
