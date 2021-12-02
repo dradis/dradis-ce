@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Add Setup Wizard
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
