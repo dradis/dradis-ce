@@ -127,7 +127,14 @@ class Attachment < File
       end
     else
       # in this routine we find the attachment by file name and node id
-      filename = CGI::unescape(args.first.to_s)
+
+      # When unescaping "+", it'll be converted to " ".
+      # To prevent that, we manually convert it to its URL encoded char (%2B) first.
+      # CGI::unescape('+') => " "
+      # CGI::unescape('%2B') => "+"
+
+      filename = args.first.to_s.gsub('+', '%2B')
+      filename = CGI::unescape(filename)
       attachments = []
       raise "You need to supply a node id in the condition parameter" unless options[:conditions] && options[:conditions][:node_id]
       node_id = options[:conditions][:node_id].to_s

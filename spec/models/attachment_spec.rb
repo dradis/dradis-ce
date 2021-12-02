@@ -54,6 +54,18 @@ describe Attachment do
         expect(Attachment.find('attachment%20with%20space.png', conditions: { node_id: node.id })).to be_a(Attachment)
       end
     end
+
+    context 'when passing in a filename that contains "+"' do
+      let(:attachment) do
+        attachment = Attachment.new(Rails.root.join('public', 'images', 'attachment_with_+.png'), node_id: node.id)
+        attachment.save
+        attachment
+      end
+
+      it 'returns the attachment object' do
+        expect(Attachment.find('attachment_with_+.png', conditions: { node_id: node.id })).to be_a(Attachment)
+      end
+    end
   end
 
   describe '.fullpath' do
