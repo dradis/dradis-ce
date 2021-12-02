@@ -44,14 +44,14 @@ describe Attachment do
 
   describe '.find' do
     let(:attachment) do
-      attachment = Attachment.new(Rails.root.join('public', 'images', 'rails with space.png'), node_id: node.id)
+      attachment = Attachment.new(Rails.root.join('public', 'images', 'attachment with space.png'), node_id: node.id)
       attachment.save
       attachment
     end
 
     context 'when passing in a filename that contains URL encoded chars' do
       it 'returns the attachment object' do
-        expect(Attachment.find('rails%20with%20space.png', conditions: { node_id: node.id })).to be_a(Attachment)
+        expect(Attachment.find('attachment with space.png', conditions: { node_id: node.id })).to be_a(Attachment)
       end
     end
   end
