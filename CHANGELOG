@@ -5,8 +5,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Comments: Show sticky toolbar when adding long comments
     - Bug tracker items:
       - [item]
   - New integrations:
