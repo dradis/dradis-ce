@@ -1,11 +1,11 @@
 [v#.#.#] ([month] [YYYY])
+  - Add Setup Wizard
   - Tylium:
     - Move '...' (more actions) menu closer to the content affected by the actions of the menu
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Comments: Show sticky toolbar when adding long comments
     - Bug tracker items:
       - [item]
   - New integrations:

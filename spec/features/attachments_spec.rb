@@ -2,7 +2,6 @@ require 'rails_helper'
 
 describe "Describe attachments" do
   it "should require authenticated users" do
-    Configuration.create(name: 'admin:password', value: 'rspec_pass')
     node = create(:node)
     visit project_node_attachments_path(node.project, node)
 

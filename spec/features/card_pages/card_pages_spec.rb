@@ -6,7 +6,6 @@ describe 'Card pages:' do
   it 'should require authenticated users' do
     project = create(:project)
     @board = create(:board, project: project, node: project.methodology_library)
-    Configuration.create(name: 'admin:password', value: 'rspec_pass')
     visit project_board_path(@board.project, @board)
     expect(current_path).to eq(login_path)
     expect(page).to have_content('Access denied.')
