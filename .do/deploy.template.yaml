@@ -9,4 +9,6 @@ spec:
     git:
       branch: main
       repo_clone_url: https://github.com/dradis/dradis-ce.git
+    instance_count: 1
+    instance_size_slug: basic-xxs
     name: web
