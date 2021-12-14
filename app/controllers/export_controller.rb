@@ -92,7 +92,10 @@ class ExportController < AuthenticatedController
       template_name  = params[:template]
       templates_dir  = templates_dir_for(plugin: @exporter)
       @template_file = File.expand_path(File.join(templates_dir, template_name))
-      @template_file.starts_with?(templates_dir) && File.exists?(@template_file)
+
+      unless @template_file.starts_with?(templates_dir) && File.exists?(@template_file)
+        redirect_to project_export_manager_path(current_project), alert: 'Something fishy is going on...'
+      end
     end
   end
 end
