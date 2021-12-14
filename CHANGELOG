@@ -1,3 +1,7 @@
+[v#.#.#] ([month] [YYYY])
+  - Security Fixes:
+    - High: Authenticated author path traversal vulnerability
+
 v4.1.0 (November 2021)
   - Editor:
     - Insert an appropriate single or multiline tag for blockquotes and codeblocks
