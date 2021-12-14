@@ -17,7 +17,7 @@ module Setup
 
       if setting.save
         flash[:notice] = 'All done. May the findings for this project be plentiful!'
-        redirect_to login_path
+        redirect_to new_setup_kit_path
       else
         flash[:alert] = "Something went wrong: #{setting.errors.full_messages.join('; ')}"
         render :new
