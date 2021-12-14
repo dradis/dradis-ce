@@ -7,11 +7,7 @@ spec:
     - key: RAILS_ENV
       value: production
       scope: RUN_TIME
-      key: PORT
-      value: 3000
-      scope: RUN_TIME
     git:
       branch: deploy-to-do
       repo_clone_url: https://github.com/dradis/dradis-ce.git
     name: web
-    run_command: rails server -p $PORT -e ${RAILS_ENV:-production}
