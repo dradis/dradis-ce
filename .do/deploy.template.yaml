@@ -1,7 +1,8 @@
 spec:
   name: dradis-ce
   services:
-  - environment_slug: ruby-on-rails
+  - build_command: npm install -g yarn
+    environment_slug: ruby-on-rails
     envs:
     - key: RAILS_ENV
       value: production
@@ -9,6 +10,4 @@ spec:
     git:
       branch: main
       repo_clone_url: https://github.com/dradis/dradis-ce.git
-    instance_count: 1
-    instance_size_slug: basic-xxs
     name: web
