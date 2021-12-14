@@ -1,5 +1,5 @@
 [v#.#.#] ([month] [YYYY])
-  - Add Setup Wizard
+  - Add Setup Wizard: set shared password and initial content.
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
