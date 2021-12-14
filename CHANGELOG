@@ -1,4 +1,32 @@
 [v#.#.#] ([month] [YYYY])
+  - Add Setup Wizard
+  - [entity]:
+    - [future tense verb] [feature]
+  - Upgraded gems:
+    - [gem]
+  - Bugs fixes:
+    - Comments: Show sticky toolbar when adding long comments
+    - Bug tracker items:
+      - [item]
+  - New integrations:
+    - [integration]
+  - Integration enhancements:
+    - [integration]:
+      - [future tense verb] [integration enhancement]
+      - [integration bug fixes]:
+        - [future tense verb] [integration bug fix]
+  - Reporting enhancements:
+    - [report type]:
+      - [future tense verb] [reporting enhancement]
+  - REST/JSON API enhancements:
+    - [API entity]:
+      - [future tense verb] [API enhancement]
+  - Security Fixes:
+    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v4.1.0 (November 2021)
   - Editor:
     - Insert an appropriate single or multiline tag for blockquotes and codeblocks
     - Limit the content height for easier access to the Create/Update button
@@ -15,25 +43,25 @@
   - Upgraded gems:
     - nokogiri, puma, rails
   - Bugs fixes:
+    - Conflict resolver
+      - Apply the correct warning when a conflict happens on edit
     - Methodologies:
       - Ensure boards don't nest when the instance has been inactive
     - Tables
       - Prevent columns state from resetting
-    - Bug tracker items:
-      - [item]
-  - New integrations:
-    - [integration]
   - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
-  - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
-  - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
+    - CVSS Calculator:
+      - Settings: show/hide the calculator in the Issues view
+      - Toggle between CVSSv3.0 and CVSSv3.1
+    - Dread Calculator:
+      - Settings: show/hide the calculator in the Issues view
+    - Nessus:
+      - Add product_coverage & cvss3_impact_score as available Issue fields
+    - Nexpose
+      - Update HTML tag cleanup to better cover UnorderedList and URLLink tags in the solution field
+    - Qualys
+      - Add <dd>, <dt> support
+      - Remove orphaned <b> tags
   - Security Fixes:
     - High: Authenticated author broken access control: read access to issue content
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
