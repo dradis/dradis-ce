@@ -7,7 +7,7 @@ spec:
     - key: RAILS_ENV
       value: production
       scope: RUN_TIME
-    - key: PORT
+      key: PORT
       value: 3000
       scope: RUN_TIME
     git:
