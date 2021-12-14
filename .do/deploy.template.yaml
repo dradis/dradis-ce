@@ -1,0 +1,8 @@
+spec:
+  name: dradis-ce
+  services:
+  - environment_slug: ruby-on-rails
+    git:
+      branch: main
+      repo_clone_url: https://github.com/dradis/dradis-ce.git
+    name: dradis-ce

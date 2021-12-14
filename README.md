@@ -52,6 +52,10 @@ There are two editions of Dradis Framework:
 
 ## Getting started: Community Edition
 
+### Deploy your own
+
+[![Deploy to Digital Ocean](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/dradis/dradis-ce/tree/main)
+
 ### Git release (recommended)
 
 ```
