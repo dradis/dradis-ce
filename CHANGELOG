@@ -3,7 +3,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - [gem]
+    - rails
   - Bugs fixes:
     - Comments: Show sticky toolbar when adding long comments
     - Bug tracker items:
