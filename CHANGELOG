@@ -1,6 +1,6 @@
 [v#.#.#] ([month] [YYYY])
   - Upgraded gems:
-    - mini_racer, rails
+    - rails
   - Security Fixes:
     - High: Authenticated author path traversal vulnerability
 
