@@ -39,7 +39,7 @@ module ConflictResolver
     if session[:update_conflicts_since]
       @conflicting_revisions = record.versions\
         .order('created_at ASC')\
-        .where("created_at > ?", session[:update_conflicts_since])
+        .where('created_at > ?', session[:update_conflicts_since])
       session.delete(:update_conflicts_since)
     end
   end
