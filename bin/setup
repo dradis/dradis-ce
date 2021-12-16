@@ -48,5 +48,5 @@ FileUtils.chdir APP_ROOT do
 
   puts "\n== Restarting application server =="
   # system! 'bin/rails restart'
-  system! 'bin/rails start -p 8080'
+  system! 'bin/rails server -p 8080'
 end
