@@ -6,7 +6,7 @@ class DigestSender
 
   # -- Class Methods --------------------------------------------------------
   def self.digest_users(type:)
-    User.includes(:notifications).where("preferences LIKE '%digest_frequency: ?%'", type)
+    User.includes(:notifications).where('preferences LIKE ?', "%digest_frequency: #{type}%")
   end
 
   def self.send_dailies
