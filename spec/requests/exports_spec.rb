@@ -9,7 +9,9 @@ describe 'export' do
   end
 
   let(:pro_login) do
-    login_to_project_as_user
+    @project = create(:project)
+    @user = create(:user, :admin)
+    post session_path, params: { login: @user.email, password: @user.password }
   end
 
   before { defined?(Dradis::Pro) ? pro_login : ce_login }
