@@ -1,4 +1,4 @@
-[v#.#.#] ([month] [YYYY])
+v4.1.2 (December 2021)
   - Upgraded gems:
     - rails
   - Security Fixes:
