@@ -1,3 +1,9 @@
+v4.1.2 (December 2021)
+  - Upgraded gems:
+    - rails
+  - Security Fixes:
+    - High: Authenticated author path traversal
+
 v4.1.0 (November 2021)
   - Editor:
     - Insert an appropriate single or multiline tag for blockquotes and codeblocks
