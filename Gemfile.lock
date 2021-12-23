@@ -1,7 +1,7 @@
 PATH
   remote: engines/dradis-api
   specs:
-    dradis-api (4.1.0)
+    dradis-api (4.1.2)
       jbuilder
 
 GEM
@@ -114,7 +114,7 @@ GEM
     diff-lcs (1.4.4)
     differ (0.1.2)
     dradis-plugins (4.1.0)
-    dradis-projects (4.1.1)
+    dradis-projects (4.1.2.1)
       dradis-plugins (~> 4.0)
       rubyzip
     erubi (1.10.0)
@@ -425,7 +425,7 @@ DEPENDENCIES
   differ (~> 0.1.2)
   dradis-api!
   dradis-plugins (~> 4.1.0)
-  dradis-projects (~> 4.1.1)
+  dradis-projects (~> 4.1.2.1)
   factory_bot_rails
   foreman
   guard-rspec
