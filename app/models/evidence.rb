@@ -20,6 +20,8 @@ class Evidence < ApplicationRecord
   validates :issue, presence: true, associated: true
   validates :node, presence: true, associated: true
 
+  validate :validate_issue_project
+
   # -- Scopes ---------------------------------------------------------------
 
 
@@ -33,5 +35,15 @@ class Evidence < ApplicationRecord
       'Label' => node.try(:label),
       'Title' => issue.try(:title)
     }
+  end
+
+  private
+
+  def validate_issue_project
+    return unless node && issue
+
+    if project.id != issue.project.id
+      errors.add(:issue, 'is invalid')
+    end
   end
 end
