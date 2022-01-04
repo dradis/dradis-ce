@@ -111,11 +111,14 @@ class DradisDatatable {
       ],
       dom: "<'row'<'col-lg-6'B><'col-lg-6'f>>" +
         "<'row'<'col-lg-12'tr>>" +
-        "<'dataTables_footer_content'ip>",
+        "<'dataTables_footer_content'lip>",
       initComplete: function (settings) {
         settings.oInstance.wrap("<div class='table-wrapper'></div>");
       },
-      lengthChange: false,
+      lengthMenu: [
+        [ 25, 50, 100, -1 ],
+        [ '25', '50', '100', 'All' ]
+      ],
       pageLength: 25,
       stateSave: true,
       // https://datatables.net/reference/option/stateSaveCallback
@@ -284,6 +287,16 @@ class DradisDatatable {
   // Old columns are automatically removed, because we are iterating the columns
   // on the page, and not columns inside the saved state object.
   rebuildSavedStateColumnsFromLocalStorage(localStorageData) {
+    var containsHeader = localStorageData.columns.some(function(column) {
+      return 'header' in column;
+    })
+
+    // Return localStorageData if none of the columns contain the header property,
+    // so that we don't show a page without columns.
+    if (!containsHeader) {
+      return localStorageData;
+    }
+
     var newColumns = [];
 
     this.tableHeaders.forEach(function(th, _index) {
