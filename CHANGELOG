@@ -6,6 +6,7 @@
     - rails
   - Bugs fixes:
     - Comments: Show sticky toolbar when adding long comments
+    - Tables: Prevent the select all button from selecting filtered out rows when a filter is been applied
     - Bug tracker items:
       - [item]
   - New integrations:
