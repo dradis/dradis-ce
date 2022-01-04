@@ -4,7 +4,7 @@
       <h5 class="m-0">Configure a shared password</h5>
     </div>
     <div class="card-body">
-      <%= form_tag( { action: 'setup' }, { class: 'form-horizontal' } ) do -%>
+      <%= form_tag( setup_password_path, { class: 'form-horizontal' } ) do -%>
 
         <%= flash_messages %>
 
