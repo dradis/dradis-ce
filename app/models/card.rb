@@ -87,7 +87,7 @@ class Card < ApplicationRecord
   private
   def local_fields
     {
-      'List'  => list.name.parameterize(preserve_case: true, separator: ''),
+      'List'  => list.name.parameterize(preserve_case: true, separator: '_'),
       'Title' => name
     }
   end

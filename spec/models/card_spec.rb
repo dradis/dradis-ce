@@ -99,7 +99,7 @@ describe Card do
       @list3 = create(:list, name: 'TestList')
 
       expect(create(:card, list: @list1).fields['List']).to eq('TESTNAME')
-      expect(create(:card, list: @list2).fields['List']).to eq('TestList')
+      expect(create(:card, list: @list2).fields['List']).to eq('Test_List')
       expect(create(:card, list: @list3).fields['List']).to eq('TestList')
     end
   end
