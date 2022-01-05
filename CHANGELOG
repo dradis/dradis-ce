@@ -1,5 +1,6 @@
 [v#.#.#] ([month] [YYYY])
   - Add Setup Wizard
+  - Editor: Support fields with the same name in the Fields View
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
