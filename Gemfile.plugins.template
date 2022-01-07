@@ -5,34 +5,34 @@
 #   $ bundle
 
 # ----------------------------------------------------------------- Calculators
-gem 'dradis-calculator_cvss', '~>4.0.0'
-gem 'dradis-calculator_dread', '~>4.0.0'
+gem 'dradis-calculator_cvss', '~> 4.1.0'
+gem 'dradis-calculator_dread', '~> 4.1.0'
 
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv', '~>4.0.0'
-# gem 'dradis-json', '~>4.0.0'
-gem 'dradis-html_export', '~>4.0.0'
+gem 'dradis-csv', '~> 4.1.0'
+# gem 'dradis-json', '~> 4.1.0'
+gem 'dradis-html_export', '~> 4.1.0'
 
 
 # ---------------------------------------------------------------------- Import
-# gem 'dradis-mediawiki', '~>4.0.0'
-# gem 'dradis-vulndb', '~>4.0.0'
+# gem 'dradis-mediawiki', '~> 4.1.0'
+# gem 'dradis-vulndb', '~> 4.1.0'
 
 # ---------------------------------------------------------------------- Upload
-gem 'dradis-acunetix', '~>4.0.0'
-gem 'dradis-brakeman', '~>4.0.0'
-gem 'dradis-burp', '~>4.0.0'
-gem 'dradis-metasploit', '~>4.0.0'
-gem 'dradis-nessus', '~>4.0.0'
-gem 'dradis-nexpose', '~>4.0.0'
-gem 'dradis-netsparker', '~>4.0.0'
-gem 'dradis-nikto', '~>4.0.0'
-gem 'dradis-nipper', '~>4.0.0'
-gem 'dradis-nmap', '~>4.0.0'
-gem 'dradis-ntospider', '~>4.0.0'
-gem 'dradis-openvas', '~>4.0.0'
-gem 'dradis-qualys', '~>4.0.0'
-gem 'dradis-saint', '~>4.0.0'
-gem 'dradis-wpscan', '~>4.0.0'
-gem 'dradis-zap', '~>4.0.0'
+gem 'dradis-acunetix', '~> 4.1.0'
+gem 'dradis-brakeman', '~> 4.1.0'
+gem 'dradis-burp', '~> 4.1.0'
+gem 'dradis-metasploit', '~> 4.1.0'
+gem 'dradis-nessus', '~> 4.1.0'
+gem 'dradis-nexpose', '~> 4.1.0'
+gem 'dradis-netsparker', '~> 4.1.0'
+gem 'dradis-nikto', '~> 4.1.0'
+gem 'dradis-nipper', '~> 4.1.0'
+gem 'dradis-nmap', '~> 4.1.0'
+gem 'dradis-ntospider', '~> 4.1.0'
+gem 'dradis-openvas', '~> 4.1.0'
+gem 'dradis-qualys', '~> 4.1.0'
+gem 'dradis-saint', '~> 4.1.0'
+gem 'dradis-wpscan', '~> 4.1.0'
+gem 'dradis-zap', '~> 4.1.0'
