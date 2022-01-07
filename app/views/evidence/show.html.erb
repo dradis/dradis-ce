@@ -34,25 +34,8 @@
           <% cache ['evidence-evidence-tab', @evidence] do %>
             <div class="note-text-inner">
               <h4 class="header-underline">
-                <span class="text-truncate" title="Evidence for this instance">Evidence for this instance -</span>
-                <div class="actions">
-                  <li class="dropdown dots-dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i><span class="sr-only">Toggle menu</span></a>
-                    <div class="dropdown-menu">
-                      <%= link_to edit_project_node_evidence_path(@node.project, @node, @evidence), class: 'dropdown-item' do %>
-                        <i class="fa fa-pencil fa-fw"></i> Edit
-                      <% end %>
-                      <%= link_to [current_project, @node, @evidence],
-                        class: 'dropdown-item text-error-hover',
-                        data: { confirm: "Are you sure?\n\nProceeding will delete this evidence from the associated node." },
-                        method: :delete do %>
-                        <i class="fa fa-trash fa-fw"></i> Delete
-                      <% end %>
-                      <a href="#modal_move_evidence" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-mail-forward fa-fw"></i> Move</a>
-                      <%= render partial: 'subscriptions/actions', locals: { subscribable: @evidence, dots_menu: true } %>
-                    </div>
-                  </li>
-                </div>              
+                <span class="text-truncate" title="Evidence for this instance">Evidence for this instance</span>
+                <%= render partial: 'actions' %>
               </h4>
 
               <div class="content-textile" data-behavior="content-textile">
