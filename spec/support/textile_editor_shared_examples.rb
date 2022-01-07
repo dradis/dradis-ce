@@ -98,6 +98,21 @@ shared_examples 'a textile form view' do |klass|
     expect(find('#item_form_field_value_1').value).to eq ('Test Value')
   end
 
+  it 'supports fields with duplicated field names' do
+    content_attribute = get_content_attribute(klass)
+    text = "#[Field]#\nValue 1\n\n#[Field]#\nValue 2"
+
+    click_link 'Source'
+    fill_in "#{klass.to_s.underscore}_#{content_attribute}", with: text
+
+    click_link 'Fields'
+
+    expect(find('#item_form_field_name_0').value).to eq ('Field')
+    expect(find('#item_form_field_value_0').value).to eq ('Value 1')
+    expect(find('#item_form_field_name_1').value).to eq ('Field')
+    expect(find('#item_form_field_value_1').value).to eq ('Value 2')
+  end
+
   def get_content_attribute(klass)
     if klass == Evidence
       content_attribute = :content
