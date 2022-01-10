@@ -1,7 +1,9 @@
 <h4 class="header-underline">Evidence information</h4>
 <% if @issue.affected.any? %>
-  <%= render 'issues/add_evidence'%>
-  <%= render 'issues/evidence/table' %>
+  <% cache ['issue-evidence-tab', @issue, @issue.evidence] do %>
+    <%= render 'issues/add_evidence'%>
+    <%= render 'issues/evidence/table' %>
+  <% end %>
 <% else %>
   <div class="empty-state mt-3">
     <div class="empty-state-icon">
