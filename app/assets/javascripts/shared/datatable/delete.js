@@ -18,7 +18,6 @@ DradisDatatable.prototype.bulkDelete = function() {
     data: { ids: that.rowIds(selectedRows) },
     success: function(data) {
       that.handleBulkDeleteSuccess(selectedRows, data);
-      that.$table.trigger('dradis:datatable:bulkDelete');
     },
     error: function() {
       that.handleBulkDeleteError(selectedRows);
@@ -37,7 +36,7 @@ DradisDatatable.prototype.handleBulkDeleteSuccess = function(rows, data) {
 
   // remove() will remove the row internally and draw() will
   // update the table visually.
-  rows.deselect().remove().draw();
+  rows.remove().draw().deselect();
 
   this.toggleBulkDeleteBtn(false);
 
