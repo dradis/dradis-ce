@@ -36,7 +36,7 @@
 <div class="row m-0">
   <ul class="tabs-container nav nav-tabs main-tabs w-100">
     <li class="nav-item"><a href="#info-tab" data-toggle="tab" class="nav-link <%= class_names(active: !params[:tab]) %>"><%= colored_icon_for_model(@issue, 'fa-bug') %> Information</a></li>
-    <li class="nav-item"><a href="#evidence-tab" class="nav-link <%= class_names(active: params[:tab] == 'evidence-tab') %>" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge bg-primary text-white" data-behavior="evidence-count"><%= @issue.evidence.count %></span></a></li>
+    <li class="nav-item"><a href="#evidence-tab" class="nav-link <%= class_names(active: params[:tab] == 'evidence-tab') %>" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge bg-primary text-white"><%= @issue.evidence.count %></span></a></li>
     <li class="nav-item"><a href="#activity-tab" class="nav-link" data-toggle="tab"><i class="fa fa-rss"></i> Recent activity</a></li>
     <%= render_view_hooks 'issues/show-tabs' %>
   </ul>
