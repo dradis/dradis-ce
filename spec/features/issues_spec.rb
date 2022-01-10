@@ -4,8 +4,7 @@ describe 'Issues pages' do
   subject { page }
 
   it 'should require authenticated users' do
-    Configuration.create(name: 'admin:password', value: 'rspec_pass')
-    visit project_issues_path(project_id: 1)
+    visit project_issues_path(create(:project))
     expect(current_path).to eq(login_path)
     expect(page).to have_content('Access denied.')
   end
@@ -303,7 +302,7 @@ describe 'Issues pages' do
 
           let(:submit_form) do
             page.accept_confirm do
-              within('.dots-container') do
+              within('.actions', match: :first) do
                 find('.dots-dropdown').click
                 click_link 'Delete'
               end

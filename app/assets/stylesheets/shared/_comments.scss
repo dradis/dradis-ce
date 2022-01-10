@@ -59,11 +59,8 @@
     font-weight: bold;
   }
 
-  .textarea-container {
-    textarea.form-control {
-      min-height: 8rem;
-      resize: none;
-    }
+  .sticky-toolbar > .editor-toolbar {
+    top: 2.9rem !important;
   }
 }
 

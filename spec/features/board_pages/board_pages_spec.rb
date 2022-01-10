@@ -4,7 +4,6 @@ describe 'Board pages:' do
   subject { page }
 
   it 'should require authenticated users' do
-    Configuration.create(name: 'admin:password', value: 'rspec_pass')
     visit project_boards_path(create(:project))
     expect(current_path).to eq(login_path)
     expect(page).to have_content('Access denied.')
