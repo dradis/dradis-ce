@@ -1,6 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Issues:
     - Display evidence in a table
+    - Multi-delete evidence at the issue level
   - Upgraded gems: 
     - [gem]
   - Bugs fixes:
