@@ -1,6 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Issues:
     - Display evidence in a table
+    - Update evidence content while creating evidence records at the issue-level
   - Upgraded gems: 
     - [gem]
   - Bugs fixes:
@@ -40,10 +41,6 @@ v4.1.0 (November 2021)
   - Evidence:
     - Create a new issue (optionally) when creating new evidence
     - Move evidence across nodes
-  - Issues:
-    - Display evidence in a table
-    - Multi-delete evidence at the issue level
-    - Update evidence content while creating evidence records at the issue-level
   - Tables:
     - Add selector to change the number of records displayed
   - Tylium:
