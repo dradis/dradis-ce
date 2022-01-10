@@ -203,6 +203,10 @@ body.boards.show {
       background-color: darken($primaryColor, 5%);
     }
   }
+
+  .page-title {
+    display: none;
+  }
   
   .sortable-placeholder {
     background-color: darken($secondaryBgColor, 10%);
