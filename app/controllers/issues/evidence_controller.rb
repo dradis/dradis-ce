@@ -1,4 +1,2 @@
-class Issues::EvidenceController < AuthenticatedController
-  include MultipleDestroy
-  include ProjectScoped
+class Issues::EvidenceController < IssuesController
 end
