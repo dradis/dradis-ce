@@ -1,0 +1,23 @@
+<h4 class="header-underline">Evidence information</h4>
+<% if @issue.affected.any? %>
+  <% cache ['issue-evidence-tab', @issue, @issue.evidence] do %>
+    <%= render 'issues/evidence/table' %>
+  <% end %>
+<% else %>
+  <div class="empty-state mt-3">
+    <div class="empty-state-icon">
+      <%= image_tag "icons/#{rand(9)}.svg" %>
+    </div>
+    <div class="empty-state-body">
+      <div class="container">
+        <h4 class="empty-state-title">This issue doesn't have any evidence yet</h4>
+        <p class="empty-state-body-text mb-1">Use evidence to document the details that change from one instance of the issue to the next.</p>
+        <p class="empty-state-body-text">Some examples include: port number, specific versions, output of tools (e.g. the list of SSL ciphers, etc.)</p>
+        <div class="empty-state-actions">
+          <a href="https://dradisframework.com/support/guides/projects/issues.html"
+          class="empty-state-docs-link" target="_blank">More about issues and evidence</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

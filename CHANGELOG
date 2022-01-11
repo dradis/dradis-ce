@@ -3,6 +3,7 @@
   - Editor: Support fields with the same name in the Fields View
   - Issues:
     - Display evidence in a table
+    - Load evidence tab content asynchronously
   - Tylium:
     - Move '...' (more actions) menu closer to the content affected by the actions of the menu
   - Upgraded gems:

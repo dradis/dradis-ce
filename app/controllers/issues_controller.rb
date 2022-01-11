@@ -14,6 +14,7 @@ class IssuesController < AuthenticatedController
   before_action :set_or_initialize_issue, except: [:import, :index]
   before_action :set_or_initialize_tags, except: [:destroy]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
+  before_action :set_affected_nodes, only: [:show]
 
   def index
     @columns = @issues.map(&:fields).map(&:keys).uniq.flatten | ['Title', 'Tags', 'Affected', 'Created', 'Created by', 'Updated']
@@ -21,12 +22,6 @@ class IssuesController < AuthenticatedController
 
   def show
     @activities = @issue.commentable_activities.latest
-
-    @evidence_columns = ['Node'] | all_evidence_columns | ['Created by', 'Created',  'Updated']
-
-    # We can't use the existing @nodes variable as it only contains root-level
-    # nodes, and we need the auto-complete to have the full list.
-    @nodes_for_add_evidence = current_project.nodes.user_nodes.order(:label)
 
     @affected_nodes = Node.joins(:evidence)
                         .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')
@@ -123,12 +118,13 @@ class IssuesController < AuthenticatedController
   end
 
   private
-  def all_evidence_columns
-    @issue.evidence
-          .map { |evidence| evidence.fields.keys }
-          .flatten
-          .uniq - ['Title', 'Label']
-  end 
+  def set_affected_nodes
+    @affected_nodes = Node.joins(:evidence)
+                          .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')
+                          .where('evidence.issue_id = ?', @issue.id)
+                          .group('nodes.id')
+                          .sort_by { |node, _| node.label }
+  end
 
   def set_issues
     # We need a transaction because multiple DELETE calls can be issued from
