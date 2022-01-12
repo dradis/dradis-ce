@@ -192,6 +192,10 @@ strong {
   padding: 0.4rem .75rem;
 }
 
+.text-break-spaces {
+  white-space: break-spaces !important;
+}
+
 .text-error {
   color: $errorText !important;
 }
