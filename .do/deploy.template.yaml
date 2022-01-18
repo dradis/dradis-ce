@@ -1,7 +1,8 @@
 spec:
   name: dradis-ce
   services:
-  - environment_slug: ruby-on-rails
+  - build_command: ./bin/setup
+    environment_slug: ruby-on-rails
     envs:
     - key: RAILS_ENV
       value: production
