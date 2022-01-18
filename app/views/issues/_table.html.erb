@@ -1,7 +1,7 @@
 <% cache ['issues-table', @columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last] do %>
     <table class="table table-striped mb-0"
       data-behavior="dradis-datatable"
-      data-default-columns='["Title", "Created", "Updated"]'
+      data-default-columns='["Title", "Tags", "Affected"]'
       data-item-name="issue"
       data-local-storage-key="project.ce.<%= dom_id(current_project) %>.issues_datatable"
       data-tags='<%= @tags.map { |t| [t.display_name, t.color, t.name] }.to_json %>'>
@@ -32,7 +32,7 @@
                ]
              when 'Affected'
                # this count is coming from the SQL finder in the controller
-               [issue.affected_count, issue.affected_count]
+               [issue.affected_count, issue.affected.pluck(:label).join("\n")]
              when 'Created'
                [issue.created_at.to_i, local_time_ago(issue.created_at)]
              when 'Created by'
@@ -43,7 +43,14 @@
                [issue.fields.fetch(column, ''), markup(issue.fields.fetch(column, ''))]
              end
             %>
-            <td data-sort="<%= sort %>" <%= 'data-behavior=tag' if column == 'Tags' %> ><%= display %></td>
+            <%= content_tag :td, 
+                display, 
+                class: class_names('text-break-spaces': column == 'Affected'),
+                data: {
+                  behavior: class_names(tag: column == 'Tags'),
+                  sort: sort
+                }
+            %>
           <% end  %>
           <td class="column-actions">
             <%= link_to edit_project_issue_path(current_project, issue), class: '' do %>

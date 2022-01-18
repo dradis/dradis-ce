@@ -1,7 +1,7 @@
 PATH
   remote: engines/dradis-api
   specs:
-    dradis-api (4.1.0)
+    dradis-api (4.1.2)
       jbuilder
 
 GEM
@@ -160,7 +160,7 @@ GEM
     dradis-openvas (4.1.0)
       dradis-plugins (~> 4.0)
     dradis-plugins (4.1.0)
-    dradis-projects (4.1.1)
+    dradis-projects (4.1.2.1)
       dradis-plugins (~> 4.0)
       rubyzip
     dradis-qualys (4.1.0)
