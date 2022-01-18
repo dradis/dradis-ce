@@ -40,6 +40,11 @@ FileUtils.chdir APP_ROOT do
     FileUtils.cp 'config/smtp.yml.template', 'config/smtp.yml'
   end
 
+  puts "\n== Preparing templates folder =="
+  unless Dir.exist?('templates')
+    FileUtils.mkdir 'templates'
+  end
+
   puts "\n== Preparing database =="
   system! 'bin/rails db:prepare'
 

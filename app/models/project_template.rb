@@ -10,7 +10,7 @@ class ProjectTemplate
 
   # Tell the FileBackedModel module where to find the files on disk
   set_extension :xml
-  set_pwd setting: 'admin:paths:templates:projects', default: Rails.root.join('../../shared/templates/projects/').to_s
+  set_pwd setting: 'admin:paths:templates:projects', default: Rails.root.join('templates/projects/').to_s
 
   def content
     self.doc.to_s

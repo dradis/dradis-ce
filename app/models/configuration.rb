@@ -42,12 +42,12 @@ class Configuration < ApplicationRecord
 
   # --------------------------------------------------------------- admin:paths
   def self.paths_templates_methodologies
-    create_with(value: Rails.root.join('../../shared/templates/methodologies/').to_s)
+    create_with(value: Rails.root.join('templates/methodologies/').to_s)
       .find_or_create_by(name: 'admin:paths:templates:methodologies').value
   end
 
   def self.paths_templates_notes
-    create_with(value: Rails.root.join('../../shared/templates/notes/').to_s)
+    create_with(value: Rails.root.join('templates/notes/').to_s)
       .find_or_create_by(name: 'admin:paths:templates:notes').value
   end
 
@@ -57,7 +57,7 @@ class Configuration < ApplicationRecord
   end
 
   def self.paths_templates_projects
-    create_with(value: Rails.root.join('../../shared/templates/projects/').to_s)
+    create_with(value: Rails.root.join('templates/projects/').to_s)
       .find_or_create_by(name: 'admin:paths:templates:projects').value
   end
 

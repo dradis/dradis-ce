@@ -1,10 +1,3 @@
-# FIXME: Core::Plugins::Upload::Base should provide a helper that could
-# be used to copy all default files across from the plugin's folder to
-# the app's folder.
-#
-# When such facility exists we can replace the content of this loop with a
-# simple call to (for instance) <plugin>.copy_templates
-
 # Rails 5.2 now loads the environment on all db rake tasks. Previously it did
 # not for setup or create. This means if the db doesn't exist this code will
 # fail. Technically we shouldn't communicate with AR during initializers so this
