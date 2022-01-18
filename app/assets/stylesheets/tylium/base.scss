@@ -152,6 +152,7 @@ mark {
 
 pre code {
   background-color: initial;
+  padding: 0;
 }
 
 .required-input {
@@ -208,6 +209,10 @@ strong {
       }
     }
   }
+}
+
+.text-break-spaces {
+  white-space: break-spaces !important;
 }
 
 .text-error {

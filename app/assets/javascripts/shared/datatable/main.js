@@ -111,18 +111,103 @@ class DradisDatatable {
       ],
       dom: "<'row'<'col-lg-6'B><'col-lg-6'f>>" +
         "<'row'<'col-lg-12'tr>>" +
-        "<'dataTables_footer_content'ip>",
+        "<'dataTables_footer_content'lip>",
       initComplete: function (settings) {
         settings.oInstance.wrap("<div class='table-wrapper'></div>");
       },
-      lengthChange: false,
+      lengthMenu: [
+        [ 25, 50, 100, -1 ],
+        [ '25', '50', '100', 'All' ]
+      ],
       pageLength: 25,
       stateSave: true,
-      stateSaveCallback: function(settings, data) {
-        localStorage.setItem(that.localStorageKey, JSON.stringify(data));
+      // https://datatables.net/reference/option/stateSaveCallback
+      // DataTables will call stateSaveCallback() whenever a state change event
+      // happens (paging, searching, sorting, showing/hiding columns, etc).
+      //
+      // This function stores the current state of the DataTable in localStorage.
+      //
+      // This function is also called immediately after stateLoadCallback() on
+      // page load.
+      //
+      // Example data:
+      // {
+      //   "time": 1636113289042,
+      //   "start": 0,
+      //   "length": 25,
+      //   "order": [
+      //     [
+      //       0,
+      //       "asc"
+      //     ]
+      //   ],
+      //   "search": {
+      //     "search": "sasd",
+      //     "smart": true,
+      //     "regex": false,
+      //     "caseInsensitive": true
+      //   },
+      //   "columns": [
+      //     // Column 1
+      //     {
+      //       "visible": false,
+      //       "search": {
+      //         "search": "",
+      //         "smart": true,
+      //         "regex": false,
+      //         "caseInsensitive": true
+      //       }
+      //     },
+      //     // Column 2
+      //     {
+      //       "visible": true,
+      //       "search": {
+      //         "search": "",
+      //         "smart": true,
+      //         "regex": false,
+      //         "caseInsensitive": true
+      //       }
+      //     }
+      //   ]
+      // }
+      stateSaveCallback: function(_settings, savedStateData) {
+        var newSavedStateData = that.addTableHeadersToSavedStateData(savedStateData);
+        localStorage.setItem(that.localStorageKey, JSON.stringify(newSavedStateData));
       },
-      stateLoadCallback: function(settings) {
-        return JSON.parse(localStorage.getItem(that.localStorageKey));
+      // https://datatables.net/reference/option/stateLoadCallback
+      // DataTables will call stateLoadCallback() on page load.
+      //
+      // It restores the DataTable's previously saved state (think sort state, paginated state,
+      // search term, column visibility state, etc) that is stored in localStorage as an object
+      // (see stateSaveCallback for example data).
+      //
+      // This function then returns the saved state object and DataTables will then use the it
+      // to display sort state, paginated state, search term, column visibility state, etc, accordingly.
+      //
+      // If there's no saved state, this function must return null.
+      //
+      // If the length of columns array (from the saved state, see above for example)
+      // doesn't match the number of columns that was initialized with DataTable (from the page),
+      // DataTable will reset it, causing the previously saved state to be gone.
+      //
+      // This scenario happens when columns are added or removed from the table but
+      // did not trigger stateSaveCallback().
+      //
+      // Example scenario:
+      // After a new field is added to an issue, the new field will show up as a column in issues#index.
+      // But this new column's state isn't present in the saved state object,
+      // causing it to reset everything.
+      //
+      // To prevent a reset from happening, we just have to ensure that the number of columns on the page
+      // matches the length of columns array in the saved state object.
+      stateLoadCallback: function(_settings) {
+        var localStorageData = JSON.parse(localStorage.getItem(that.localStorageKey));
+
+        if (localStorageData !== null) {
+          return that.rebuildSavedStateColumnsFromLocalStorage(localStorageData);
+        } else {
+          return null;
+        }
       },
       select: {
         selector: 'td.select-checkbox',
@@ -143,6 +228,18 @@ class DradisDatatable {
     this.$table.trigger('dradis:datatable:load');
 
     this.unbindDataTable();
+  }
+
+  // DataTable uses indexes in the columns array (from saved state) to figure out the state of the column.
+  // We cannot reliably know from the saved state object which index in the saved state's columns array
+  // came from which table column on the page, so we add the table's column header
+  // in the data before saving it in localStorage.
+  addTableHeadersToSavedStateData(data) {
+    this.tableHeaders.forEach(function(th, index) {
+      data.columns[index].header = th.textContent;
+    })
+
+    return data;
   }
 
   toggleLoadingState(rows, isLoading) {
@@ -175,5 +272,47 @@ class DradisDatatable {
     document.addEventListener('turbolinks:before-cache', function() {
       that.dataTable.destroy();
     });
+  }
+
+  // As we already added table headers in the saved state object before saving it in
+  // localStorage (see addTableHeadersToSavedStateData()), we can use it to
+  // identify if a column (on the page) is new, existing or removed.
+  //
+  // If a table column is a new column, its header will not be present in the saved state
+  // object, so we assign a blank state to the column state with default visibility = false.
+  //
+  // If a table column is an existing column, its header will be present in the saved state
+  // object, so we return the existing column state.
+
+  // Old columns are automatically removed, because we are iterating the columns
+  // on the page, and not columns inside the saved state object.
+  rebuildSavedStateColumnsFromLocalStorage(localStorageData) {
+    var containsHeader = localStorageData.columns.some(function(column) {
+      return 'header' in column;
+    })
+
+    // Return localStorageData if none of the columns contain the header property,
+    // so that we don't show a page without columns.
+    if (!containsHeader) {
+      return localStorageData;
+    }
+
+    var newColumns = [];
+
+    this.tableHeaders.forEach(function(th, _index) {
+      var columnData = { visible: false };
+
+      var column = localStorageData.columns.find(function(column) {
+        if (column.header == th.textContent) {
+          columnData = column;
+          return true;
+        }
+      })
+
+      newColumns.push(columnData);
+    })
+
+    localStorageData.columns = newColumns;
+    return localStorageData;
   }
 }
