@@ -508,7 +508,7 @@ DEPENDENCIES
   dradis-ntospider (~> 4.1.0)
   dradis-openvas (~> 4.1.0)
   dradis-plugins (~> 4.1.0)
-  dradis-projects (~> 4.1.1)
+  dradis-projects (~> 4.1.2.1)
   dradis-qualys (~> 4.1.0)
   dradis-saint (~> 4.1.0)
   dradis-wpscan (~> 4.1.0)
