@@ -1,9 +1,12 @@
 spec:
   name: dradis-ce
   services:
-  - build_command: ./bin/setup
+  - build_command: cp Gemfile.plugins.template Gemfile.plugins
     environment_slug: ruby-on-rails
     envs:
+    - key: BUNDLE_DEPLOYMENT
+      value: 0
+      scope: RUN_TIME
     - key: RAILS_ENV
       value: production
       scope: RUN_TIME
