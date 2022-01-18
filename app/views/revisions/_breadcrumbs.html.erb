@@ -1,10 +1,10 @@
 <nav>
   <ol class="breadcrumb">
     <% if @record_class == 'card' %>
-      <li class="breadcrumb-item"><%= link_to @record.board.node.label, project_boards_path(current_project, node_id: @record.board.node_id) %></li>
+      <li class="breadcrumb-item"><%= link_to 'Methodologies', project_boards_path(current_project) %></li>
       <li class="breadcrumb-item"><%= link_to "#{@record.board.name} - #{@record.list.name}", project_board_path(current_project, @record.board) %></li>
       <li class="breadcrumb-item"><%= link_to @record.name, project_board_list_card_path(current_project, @board, @list, @record) %></li>
-    <% elsif @record_class == 'evidence' || @record_class == 'note' %>
+    <% elsif @record_class == 'evidence' %>
       <li class="breadcrumb-item"><a href="javascript:void(0)" data-behavior="sidebar-toggle">Nodes</a></li>
       <li class="breadcrumb-item"><%= link_to @record.node.label, project_node_path(current_project, @record.node, tab: "#{@record_class.pluralize(2)}-tab") %></li>
       <li class="breadcrumb-item"><%= link_to @record.title, project_node_evidence_path(current_project, @record.node, @record) %></li>
