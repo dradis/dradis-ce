@@ -2,6 +2,7 @@
   - Add Setup Wizard
   - Editor: Support fields with the same name in the Fields View
   - Tylium:
+    - Add breadcrumbs to Revision History view
     - Import CSS manifests from addons
     - Move '...' (more actions) menu closer to the content affected by the actions of the menu
     - Remove extra left padding from the first line of content in a code block
