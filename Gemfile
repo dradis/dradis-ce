@@ -220,3 +220,36 @@ plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)
   eval(IO.read(plugins_file), binding)
 end
+
+# For now keep a hard-coded list of plugins until Gemfile.plugins becomes fully
+# effective.
+
+# ----------------------------------------------------------------- Calculators
+gem 'dradis-calculator_cvss', '~> 4.1.0'
+gem 'dradis-calculator_dread', '~> 4.1.0'
+
+# ---------------------------------------------------------------------- Export
+gem 'dradis-csv', '~> 4.1.0'
+gem 'dradis-html_export', '~> 4.1.1'
+
+
+# ---------------------------------------------------------------------- Import
+
+
+# ---------------------------------------------------------------------- Upload
+gem 'dradis-acunetix', '~> 4.1.0'
+gem 'dradis-brakeman', '~> 4.1.0'
+gem 'dradis-burp', '~> 4.1.0'
+gem 'dradis-metasploit', '~> 4.1.0'
+gem 'dradis-nessus', '~> 4.1.0'
+gem 'dradis-netsparker', '~> 4.1.0'
+gem 'dradis-nexpose', '~> 4.1.0'
+gem 'dradis-nikto', '~> 4.1.0'
+gem 'dradis-nipper', '~> 4.1.0'
+gem 'dradis-nmap', '~> 4.1.0'
+gem 'dradis-ntospider', '~> 4.1.0'
+gem 'dradis-openvas', '~> 4.1.0'
+gem 'dradis-qualys', '~> 4.1.0'
+gem 'dradis-saint', '~> 4.1.0'
+gem 'dradis-wpscan', '~> 4.1.0'
+gem 'dradis-zap', '~> 4.1.0'
