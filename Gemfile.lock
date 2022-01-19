@@ -497,7 +497,7 @@ DEPENDENCIES
   dradis-calculator_cvss (~> 4.1.0)
   dradis-calculator_dread (~> 4.1.0)
   dradis-csv (~> 4.1.0)
-  dradis-html_export (~> 4.1.0)
+  dradis-html_export (~> 4.1.1)
   dradis-metasploit (~> 4.1.0)
   dradis-nessus (~> 4.1.0)
   dradis-netsparker (~> 4.1.0)
