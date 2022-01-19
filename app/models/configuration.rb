@@ -41,28 +41,32 @@ class Configuration < ApplicationRecord
 
 
   # --------------------------------------------------------------- admin:paths
+  def self.paths_templates
+    @@paths_templates ||= defined?(Dradis::Pro) ? paths_templates_pro : paths_templates_ce
+  end
+
   def self.paths_templates_methodologies
-    create_with(value: Rails.root.join('templates/methodologies/').to_s)
+    create_with(value: paths_templates.join('methodologies').to_s)
       .find_or_create_by(name: 'admin:paths:templates:methodologies').value
   end
 
   def self.paths_templates_notes
-    create_with(value: Rails.root.join('templates/notes/').to_s)
+    create_with(value: paths_templates.join('notes').to_s)
       .find_or_create_by(name: 'admin:paths:templates:notes').value
   end
 
   def self.paths_templates_plugins
-    create_with(value: Rails.root.join('templates', 'plugins').to_s)
+    create_with(value: paths_templates.join('plugins').to_s)
       .find_or_create_by(name: 'admin:paths:templates:plugins').value
   end
 
   def self.paths_templates_projects
-    create_with(value: Rails.root.join('templates/projects/').to_s)
+    create_with(value: paths_templates.join('projects').to_s)
       .find_or_create_by(name: 'admin:paths:templates:projects').value
   end
 
   def self.paths_templates_reports
-    create_with(value: Rails.root.join('templates', 'reports'))
+    create_with(value: paths_templates.join('reports'))
       .find_or_create_by(name: 'admin:paths:templates:reports').value
   end
 
@@ -82,4 +86,15 @@ class Configuration < ApplicationRecord
   end
 
   # -- Instance Methods -----------------------------------------------------
+  private
+  # -- CE methods -------------------------------------------------------------
+  def self.paths_templates_ce
+    Rails.root.join('templates')
+  end
+
+  # -- Pro methods ------------------------------------------------------------
+  def self.paths_templates_pro
+    Pathname.new(File.readlink(Rails.root.join('templates')))
+  end
+
 end
