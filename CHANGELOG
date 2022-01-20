@@ -1,6 +1,8 @@
 [v#.#.#] ([month] [YYYY])
   - Add Setup Wizard
   - Editor: Support fields with the same name in the Fields View
+  - Inceased page loading performance on Issues, Evidence, and Notes for
+    projects with *a lot* of issues, evidence, or notes
   - Tylium:
     - Import CSS manifests from addons
     - Move '...' (more actions) menu closer to the content affected by the actions of the menu
