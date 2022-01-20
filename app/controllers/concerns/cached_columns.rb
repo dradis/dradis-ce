@@ -6,6 +6,9 @@ module CachedColumns
     last_updated_record = collection.order(updated_at: :desc).first
     last_updated = last_updated_record.updated_at.to_i
 
+    # DradisPro IssueLibrary support
+    current_project ||= OpenStruct.new(id: 'issuelib')
+
     key_opts = { project_id: current_project.id, record_type: last_updated_record.class.name }
 
     Rails.cache.fetch(CACHE_KEY % key_opts.merge(tail: last_updated)) do
