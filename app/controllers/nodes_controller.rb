@@ -1,20 +1,20 @@
 # This controller exposes the REST operations required to manage the Node
 # resource.
 class NodesController < NestedNodeResourceController
+  include DynamicFieldNamesCacher
   include NodesSidebar
 
   skip_before_action :find_or_initialize_node, only: [ :sort, :create_multiple ]
   before_action :initialize_nodes_sidebar, except: [ :sort, :create_multiple ]
   before_action :set_evidence_default_columns, only: :show
 
+  EXTRA_COLUMNS = ['Title', 'Created', 'Created by', 'Updated'].freeze
+
   # GET /nodes/<id>
   def show
     @activities       = @node.nested_activities.latest
-    @note_columns     = @sorted_notes.map(&:fields).map(&:keys).uniq.flatten \
-                      | ['Title', 'Created', 'Created by', 'Updated']
-    @evidence_columns = @sorted_evidence.map(&:fields).map(&:keys).uniq.flatten \
-                      | @rtp_default_evidence_fields \
-                      | ['Title', 'Created', 'Created by', 'Updated']
+    @note_columns     = collection_field_names(@node.notes) | EXTRA_COLUMNS
+    @evidence_columns = collection_field_names(@node.evidence) | @rtp_default_evidence_fields | EXTRA_COLUMNS
   end
 
   # GET /nodes/<id>/edit
