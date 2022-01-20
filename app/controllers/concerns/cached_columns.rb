@@ -4,6 +4,9 @@ module CachedColumns
   # Takes an ActiveRecord::Relation so we can make one more query off it
   def cached_collection_column_keys(collection, extra_columns)
     last_updated_record = collection.order(updated_at: :desc).first
+    # Exit early if the collection is empty.
+    return extra_columns unless last_updated_record
+
     last_updated = last_updated_record.updated_at.to_i
 
     # DradisPro IssueLibrary support
