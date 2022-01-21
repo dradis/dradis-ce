@@ -8,8 +8,8 @@ class DradisDatatable {
     this.localStorageKey = this.$table.data('local-storage-key');
     this.tableHeaders = Array.from(this.$table[0].querySelectorAll('thead th'));
 
-    var defaultColumns = this.$table.data('default-columns') || [];
-    this.defaultColumns = defaultColumns.concat(['Select', 'Actions']);
+    this.defaultColumns = this.$table.data('default-columns') || [];
+    this.rtpDefaultColumns = this.$table.data('rtp-defaults') || [];
 
     this.init();
   }
@@ -28,13 +28,12 @@ class DradisDatatable {
     // Only show default columns on first load
     var hiddenColumnIndexes = [];
     if (localStorage.getItem(this.localStorageKey) === null) {
-      this.tableHeaders.forEach(function(column, index) {
-        var columnName = column.textContent.trim();
-
-        if (!that.defaultColumns.includes(columnName)) {
-          hiddenColumnIndexes.push(index);
-        }
-      });
+      if (this.rtpDefaultColumns.length > 0) {
+        hiddenColumnIndexes = this.filterColumns(this.rtpDefaultColumns);
+      }
+      else {
+        hiddenColumnIndexes = this.filterColumns(this.defaultColumns);
+      }
     }
 
     // Assign the instantiated DataTable as a DradisDatatable property
@@ -240,6 +239,20 @@ class DradisDatatable {
     })
 
     return data;
+  }
+
+  filterColumns(filterArray) {
+    var that = this,
+        result = [];
+
+    filterArray = filterArray.concat(['Select', 'Actions']);
+
+    this.tableHeaders.forEach(function(column, index) {
+      var columnName = column.textContent.trim();
+      if (!filterArray.includes(columnName)) result.push(index);
+    });
+
+    return result;
   }
 
   toggleLoadingState(rows, isLoading) {
