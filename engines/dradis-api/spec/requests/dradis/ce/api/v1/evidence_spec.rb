@@ -229,7 +229,7 @@ describe 'Evidence API' do
         end
 
         context "with params for an invalid evidence" do
-          let(:params) { { evidence: { content: "a"*65536 } } } # too long
+          let(:params) { { evidence: { issue_id: '' } } }
 
           it "responds with HTTP code 422" do
             put_evidence
