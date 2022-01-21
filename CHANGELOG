@@ -1,6 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Add Setup Wizard
   - Editor: Support fields with the same name in the Fields View
+  - Evidence: Increase the content length size
   - Tylium:
     - Import CSS manifests from addons
     - Move '...' (more actions) menu closer to the content affected by the actions of the menu
