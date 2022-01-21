@@ -19,7 +19,7 @@ class IssuesController < AuthenticatedController
   EXTRA_COLUMNS = ['Title', 'Tags', 'Affected', 'Created', 'Created by', 'Updated'].freeze
 
   def index
-    @columns = cached_collection_column_keys(@unsorted_issues, EXTRA_COLUMNS)
+    @columns = cached_collection_column_keys(@unsorted_issues) | EXTRA_COLUMNS
   end
 
   def show
