@@ -2,7 +2,7 @@ module CachedColumns
   CACHE_KEY = "%{identifier}/%{record_type}/column-keys/%{tail}".freeze
 
   # Takes an ActiveRecord::Relation so we can make one more query off it
-  def cached_collection_column_keys(collection, extra_columns, identifier: @current_project.id)
+  def cached_collection_column_keys(collection, extra_columns, identifier = "projects-#{@current_project.id}")
     last_updated_record = collection.order(updated_at: :desc).first
     # Exit early if the collection is empty.
     return extra_columns unless last_updated_record
