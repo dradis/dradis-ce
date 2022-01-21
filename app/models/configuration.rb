@@ -41,8 +41,11 @@ class Configuration < ApplicationRecord
 
 
   # --------------------------------------------------------------- admin:paths
+  # In CE ./templates/ is always a folder (created by bin/setup) but in Pro
+  # it can be a symlink (if we're in Production). We use .realdirpath to
+  # ensure we're using the "shared" folder (that's the target of the link).
   def self.paths_templates
-    @@paths_templates ||= defined?(Dradis::Pro) ? paths_templates_pro : paths_templates_ce
+    @@paths_templates ||= Rails.root.join('templates').realdirpath
   end
 
   def self.paths_templates_methodologies
@@ -86,15 +89,4 @@ class Configuration < ApplicationRecord
   end
 
   # -- Instance Methods -----------------------------------------------------
-  private
-  # -- CE methods -------------------------------------------------------------
-  def self.paths_templates_ce
-    Rails.root.join('templates')
-  end
-
-  # -- Pro methods ------------------------------------------------------------
-  def self.paths_templates_pro
-    Pathname.new(File.readlink(Rails.root.join('templates')))
-  end
-
 end
