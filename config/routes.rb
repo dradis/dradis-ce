@@ -4,10 +4,6 @@ end
 
 Rails.application.routes.draw do
   # ------------------------------------------------------------ Authentication
-  # These routes allow users to set the shared password
-  get  '/setup' => 'sessions#init'
-  post '/setup' => 'sessions#setup'
-
   # Sign in / sign out
   get '/login'  => 'sessions#new'
   get '/logout' => 'sessions#destroy'
@@ -24,7 +20,7 @@ Rails.application.routes.draw do
 
   resources :notifications, only: [:index, :update]
 
-  resources :projects, only: [:show] do
+  resources :projects, only: [:index, :show] do
     resources :activities, only: [:index] do
       collection do
         get :poll, constraints: { format: /js/ }
@@ -128,6 +124,13 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :setup, only: [:index] do
+    if defined?(Dradis::Pro)
+    else
+      resource :password, only: [:new, :create]
+    end
+  end
+
   resources :subscriptions, only: [:index, :create, :destroy]
 
   # -------------------------------------------------------------- Static pages
@@ -136,7 +139,10 @@ Rails.application.routes.draw do
     post :preview
   end
 
-  root to: 'projects#index'
+  if defined?(Dradis::Pro)
+  else
+    root to: 'setup/passwords#new'
+  end
 
   mount ActionCable.server => '/cable'
 end

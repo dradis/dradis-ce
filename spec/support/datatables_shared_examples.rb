@@ -152,8 +152,9 @@ shared_examples 'a DataTable with Dynamic Columns' do
       page.find('.buttons-colvis').click
 
       within '.dt-button-collection' do
-        click_link 'Created'
-        click_link 'Updated'
+        default_columns.each do |column|
+          click_link column
+        end
       end
     end
   end
