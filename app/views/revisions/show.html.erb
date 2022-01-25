@@ -1,7 +1,18 @@
 <% content_for :title, "#{@record.class.model_name} ##{@record.id} - comparing revisions" %>
 
-<% if @node %>
-  <%= render "nodes/sidebar" %>
+<% content_for :sidebar do %>
+  <%= content_tag(
+    :div,
+    content_tag(
+      :div,
+      spinner_tag,
+      class: 'd-flex align-items-center justify-content-center h-100'
+    ),
+    data: {
+      behavior: 'fetch',
+      path: @path
+    }
+  ) %>
 <% end %>
 
 <div class="row m-0">

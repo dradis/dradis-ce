@@ -1,0 +1,7 @@
+<% if @issue %>
+  <%= render 'issues/sidebar' %>
+<% elsif @list %>
+  <%= render 'cards/sidebar' %>
+<% elsif @node %>
+  <%= render 'nodes/sidebar' %>
+<% end %>

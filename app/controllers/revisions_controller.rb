@@ -3,8 +3,7 @@ class RevisionsController < AuthenticatedController
   include NodesSidebar
   include ProjectScoped
 
-  before_action :load_sidebar, except: [ :trash, :recover ]
-  before_action :load_record, except: [ :trash, :recover ]
+  before_action :set_variables_from_params, except: [ :trash, :recover ]
 
   def index
     redirect_to action: :show, id: @record.versions.where(event: 'update').last.try(:id) || 0
@@ -31,11 +30,20 @@ class RevisionsController < AuthenticatedController
     else
       flash[:error] = "Can't recover #{revision.type}: #{revision.errors.full_messages.join(',')}"
     end
-    
+
     redirect_to project_trash_path(current_project)
   end
 
+  def sidebar
+    render 'revisions/sidebar', layout: false
+  end
+
   private
+
+  def load_issues
+    @issues = Issue.where(node_id: current_project.issue_library.id)
+    @issue = @issues.find(params[:issue_id])
+  end
 
   def load_list
     @board        = current_project.boards.includes(:lists).find(params[:board_id])
@@ -52,28 +60,29 @@ class RevisionsController < AuthenticatedController
     initialize_nodes_sidebar
   end
 
-  def load_record
-    @record = if params[:card_id]
-                @list.cards.find(params[:card_id])
-              elsif params[:evidence_id]
-                @node.evidence.find(params[:evidence_id])
-              elsif params[:issue_id]
-                Issue.find(params[:issue_id])
-              elsif params[:note_id]
-                @node.notes.find(params[:note_id])
-              else
-                raise 'Unable to identify record type'
-              end
+  def set_variables_from_params
+    if params[:card_id]
+      load_list
+      @path = sidebar_project_board_list_card_revisions_path
+      @record = @list.cards.find(params[:card_id])
+    elsif params[:evidence_id]
+      load_node
+      @path = sidebar_project_node_evidence_revisions_path
+      @record = @node.evidence.find(params[:evidence_id])
+    elsif params[:issue_id]
+      load_issues
+      @path = sidebar_project_issue_revisions_path
+      @record = @issue
+    elsif params[:note_id]
+      load_node
+      @path = sidebar_project_node_note_revisions_path
+      @record = @node.notes.find(params[:note_id])
+    else
+      raise 'Unable to identify record type'
+    end
+
   rescue ActiveRecord::RecordNotFound
     flash[:error] = 'Record not found'
     redirect_to :back
-  end
-
-  def load_sidebar
-    if params[:evidence_id] || params[:note_id]
-      load_node
-    elsif params[:card_id]
-      load_list
-    end
   end
 end

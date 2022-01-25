@@ -32,7 +32,11 @@ Rails.application.routes.draw do
         member { post :move }
         resources :cards, except: [:index] do
           member { post :move }
-          resources :revisions, only: [:index, :show]
+          resources :revisions, only: [:index, :show] do
+            collection do
+              get 'sidebar'
+            end
+          end
         end
       end
     end
@@ -50,7 +54,11 @@ Rails.application.routes.draw do
       end
 
       resources :nodes, only: [:show], controller: 'issues/nodes'
-      resources :revisions, only: [:index, :show]
+      resources :revisions, only: [:index, :show] do
+        collection do
+          get 'sidebar'
+        end
+      end
     end
 
     resources :methodologies do
@@ -74,11 +82,19 @@ Rails.application.routes.draw do
       resource :merge, only: [:create], controller: 'nodes/merge'
 
       resources :notes, concerns: :multiple_destroy do
-        resources :revisions, only: [:index, :show]
+        resources :revisions, only: [:index, :show] do
+          collection do
+            get 'sidebar'
+          end
+        end
       end
 
       resources :evidence, except: :index, concerns: :multiple_destroy do
-        resources :revisions, only: [:index, :show]
+        resources :revisions, only: [:index, :show] do
+          collection do
+            get 'sidebar'
+          end
+        end
       end
 
       constraints(filename: /.*/) do
