@@ -4,7 +4,13 @@
   - Issues:
     - Display evidence in a table
   - Tylium:
+    - Import CSS manifests from addons
     - Move '...' (more actions) menu closer to the content affected by the actions of the menu
+    - Remove extra left padding from the first line of content in a code block
+    - Remove height restriction from code blocks
+    - Simplify issues table columns
+    - Update focus state outline color
+  - Setup: store gem dependencies under ./vendor/bundle/
   - Upgraded gems:
     - rails
   - Bugs fixes:
