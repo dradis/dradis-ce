@@ -7,8 +7,8 @@
 Dradis is an open-source collaboration framework, tailored to InfoSec teams.
 
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/dradis/dradis-ce/tree/deploy-to-heroku)
-[![Deploy to Digital Ocean](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/dradis/dradis-ce/tree/main)
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/dradis/dradis-ce/tree/develop)
+[![Deploy to Digital Ocean](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/dradis/dradis-ce/tree/develop)
 
 To try Dradis Community, you can deploy your own instance (you will need accounts in the cloud providers to get started).
 
