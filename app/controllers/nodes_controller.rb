@@ -1,7 +1,7 @@
 # This controller exposes the REST operations required to manage the Node
 # resource.
 class NodesController < NestedNodeResourceController
-  include CachedColumns
+  include DynamicFieldNamesCacher
   include NodesSidebar
 
   skip_before_action :find_or_initialize_node, only: [ :sort, :create_multiple ]

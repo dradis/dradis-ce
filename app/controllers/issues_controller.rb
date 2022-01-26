@@ -1,8 +1,8 @@
 class IssuesController < AuthenticatedController
   include ActivityTracking
-  include CachedColumns
-  include ContentFromTemplate
   include ConflictResolver
+  include ContentFromTemplate
+  include DynamicFieldNamesCacher
   include LiquidEnabledResource
   include Mentioned
   include MultipleDestroy
