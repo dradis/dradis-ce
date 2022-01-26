@@ -11,11 +11,13 @@
     // Activate Rich Toolbars for the editor
     $(parentElement).find('[data-behavior~=rich-toolbar]').each(function() {
       new EditorToolbar($(this));
-    });
 
-    // Activate QuoteSelector after Rich toolbars
-    $('[data-behavior~=content-textile]').each(function() {
-      new QuoteSelector(this);
+      // Activate QuoteSelector after Rich toolbars
+      // This can be globally scoped because the QuoteSelector does not allow
+      // double binding
+      $('[data-behavior~=content-textile]').each(function() {
+        new QuoteSelector(this);
+      });
     });
 
     // Activate local auto save

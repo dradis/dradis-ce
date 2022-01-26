@@ -136,11 +136,21 @@
 }
 
 .header-underline {
+  align-items: center;
+  display: flex;
   margin-bottom: .5em;
   padding-bottom: 0.5em;
   margin-top: -0.5rem;
   border-bottom: 1px solid $borderColor;
   width: 100%;
+
+  .actions {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    margin-left: 0.5rem;
+  }
 }
 
 .inset-button-wrapper {
@@ -165,6 +175,7 @@
 
 .issue-severity {
   cursor: default;
+  margin-right: 0.5rem;
 }
 
 .nav-tabs {
