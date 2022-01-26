@@ -13,6 +13,9 @@
       <% end %>
       <a href="#modal_move_evidence" class="dropdown-item" tabindex="-1" data-toggle="modal"><i class="fa fa-mail-forward fa-fw"></i> Move</a>
       <%= render partial: 'subscriptions/actions', locals: { subscribable: @evidence, dots_menu: true } %>
+      <%= link_to(project_node_evidence_revisions_path(@node.project, @node, @evidence), class: 'dropdown-item') do %>
+        <i class="fa fa-history fa-fw"></i> View History
+      <% end %>
     </div>
   </li>
 </div>
