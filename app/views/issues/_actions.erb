@@ -13,6 +13,9 @@
           <i class="fa fa-trash fa-fw"></i> Delete
       <% end %>
       <%= render partial: 'subscriptions/actions', locals: { subscribable: @issue, dots_menu: true } %>
+      <%= link_to(project_issue_revisions_path(current_project, @issue), class: 'dropdown-item') do %>
+        <i class="fa fa-history fa-fw"></i> View History
+      <% end %>
       <%= render partial: 'send_to_menu' %>
     </div>
   </div>
