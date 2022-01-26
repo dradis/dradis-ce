@@ -102,8 +102,8 @@ gem 'rinku'
 gem 'sanitize', '5.2.1'
 
 # SQLite3 DB driver
-# gem 'sqlite3' unless ENV['HEROKU']
-gem 'pg' #if ENV['HEROKU']
+gem 'sqlite3' unless ENV['HEROKU']
+gem 'pg' if ENV['HEROKU']
 
 # --------------------------------------------------------- Dradis Professional
 # Authorisation
