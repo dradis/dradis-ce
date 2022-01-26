@@ -126,9 +126,9 @@ class IssuesController < AuthenticatedController
   private
   def all_evidence_columns
     @issue.evidence
-          .map { |evidence| evidence.fields.keys - ['Title', 'Label']  }
+          .map { |evidence| evidence.fields.keys }
           .flatten
-          .uniq
+          .uniq - ['Title', 'Label']
   end 
 
   def set_issues
