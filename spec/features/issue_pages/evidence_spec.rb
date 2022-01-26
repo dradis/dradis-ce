@@ -4,12 +4,13 @@ describe 'issue pages evidence tab' do
   describe '#index table', js: true do
     subject { page }
     let(:issue) { create(:issue, node: current_project.issue_library) }
+    let(:node) { create(:node, project: current_project) }
 
     before do
       login_to_project_as_user
 
       3.times do
-        create(:evidence, issue: issue)
+        create(:evidence, issue: issue, node: node)
       end
 
       @tags = Tag::DEFAULT_TAGS.map do |tag|
