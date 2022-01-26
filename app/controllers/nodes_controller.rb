@@ -13,8 +13,8 @@ class NodesController < NestedNodeResourceController
   def show
     @activities       = @node.nested_activities.latest
 
-    @note_columns     = cached_collection_column_keys(@node.notes) | EXTRA_COLUMNS
-    @evidence_columns = cached_collection_column_keys(@node.evidence) | EXTRA_COLUMNS
+    @note_columns     = collection_field_names(@node.notes) | EXTRA_COLUMNS
+    @evidence_columns = collection_field_names(@node.evidence) | EXTRA_COLUMNS
   end
 
   # GET /nodes/<id>/edit

@@ -2,7 +2,7 @@ module DynamicFieldTitlesCacher
   CACHE_KEY = "%{identifier}/%{record_type}/column-keys/%{tail}".freeze
 
   # Takes an ActiveRecord::Relation so we can make one more query off it
-  def cached_collection_column_keys(collection, identifier = "projects-#{@current_project.id}")
+  def collection_field_names(collection, identifier = "projects-#{@current_project.id}")
     last_updated_record = collection.order(updated_at: :desc).first
     # Exit early if the collection is empty.
     return [] unless last_updated_record
