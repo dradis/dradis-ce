@@ -69,7 +69,7 @@ class Configuration < ApplicationRecord
   end
 
   def self.paths_templates_reports
-    create_with(value: paths_templates.join('reports'))
+    create_with(value: paths_templates.join('reports').to_s)
       .find_or_create_by(name: 'admin:paths:templates:reports').value
   end
 
