@@ -56,7 +56,7 @@ There are two editions of Dradis Framework:
 
 To try Dradis Community, you can deploy your own instance (you will need accounts in the cloud providers to get started):
 
-[![Deploy to Digital Ocean](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/dradis/dradis-ce/tree/main)
+[![Deploy to Digital Ocean](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/dradis/dradis-ce/tree/develop)
 
 
 ### From Git (recommended)
