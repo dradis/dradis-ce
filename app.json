@@ -11,7 +11,7 @@
     }
   },
   "keywords": ["infosec", "pentest", "osint"],
-  "logo": "https://github.com/dradis/dradis-ce/raw/deploy-to-heroku/app/assets/images/logo_full_small.png",
+  "logo": "https://github.com/dradis/dradis-ce/raw/deploy-to-heroku/app/assets/images/logo_small.png",
   "name": "Dradis Framework - Community Edition",
   "repository": "https://github.com/dradis/dradis-ce/tree/deploy-to-heroku",
   "scripts": {
