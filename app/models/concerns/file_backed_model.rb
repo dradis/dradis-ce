@@ -48,8 +48,6 @@ module FileBackedModel
       })
     end
 
-    # Returns a Pathname to location configured in the database through the
-    # :setting_name setting
     def pwd
       @pwd ||= Pathname.new(@default_path)
     end
