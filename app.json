@@ -15,7 +15,8 @@
   "name": "Dradis Framework - Community Edition",
   "repository": "https://github.com/dradis/dradis-ce/tree/deploy-to-heroku",
   "scripts": {
-    "postdeploy": "cp config/database.yml.heroku config/database.yml"
+    "heroku-prebuild": "cp config/database.yml.heroku config/database.yml",
+    "postdeploy": "bundle exec rake db:migrate"
   },
   "website": "http://drad.is"
 }
