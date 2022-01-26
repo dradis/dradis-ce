@@ -6,6 +6,7 @@
     - Move '...' (more actions) menu closer to the content affected by the actions of the menu
     - Remove extra left padding from the first line of content in a code block
     - Remove height restriction from code blocks
+    - Remove `Recent Activity` tabs and add `View History` link to the dots menu
     - Simplify issues table columns
     - Update focus state outline color
   - Setup: store gem dependencies under ./vendor/bundle/
