@@ -3,10 +3,9 @@ module DynamicFieldNamesCacher
 
   # Takes an ActiveRecord::Relation so we can make one more query off it
   def collection_field_names(collection, identifier = nil)
-    last_updated_record = collection.order(updated_at: :desc).first
-    # Exit early if the collection is empty.
-    return [] unless last_updated_record
+    return [] unless collection.empty?
 
+    last_updated_record = collection.order(updated_at: :desc).first
     last_updated = last_updated_record.updated_at.to_i
 
     identifier ||= "projects-#{@current_project.id}"
