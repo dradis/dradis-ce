@@ -45,9 +45,6 @@ describe "note pages" do
     let(:trackable) { @note }
     it_behaves_like "a page with an activity feed"
 
-    let(:commentable) { @note }
-    it_behaves_like 'a page with a comments feed'
-
     let(:subscribable) { @note }
     it_behaves_like 'a page with subscribe/unsubscribe links'
 

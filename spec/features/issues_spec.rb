@@ -291,9 +291,6 @@ describe 'Issues pages' do
         let(:trackable) { @issue }
         it_behaves_like 'a page with an activity feed'
 
-        let(:commentable) { @issue }
-        it_behaves_like 'a page with a comments feed'
-
         let(:subscribable) { @issue }
         it_behaves_like 'a page with subscribe/unsubscribe links'
 

@@ -48,9 +48,6 @@ describe 'evidence' do
     let(:trackable) { @evidence }
     it_behaves_like 'a page with an activity feed'
 
-    let(:commentable) { @evidence }
-    it_behaves_like 'a page with a comments feed'
-
     let(:subscribable) { @evidence }
     it_behaves_like 'a page with subscribe/unsubscribe links'
 

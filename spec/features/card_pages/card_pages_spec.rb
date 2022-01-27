@@ -221,9 +221,6 @@ describe 'Card pages:' do
       let(:trackable) { @card }
       it_behaves_like 'a page with an activity feed'
 
-      let(:commentable) { @card }
-      it_behaves_like 'a page with a comments feed'
-
       let(:subscribable) { @card }
       it_behaves_like 'a page with subscribe/unsubscribe links'
 
