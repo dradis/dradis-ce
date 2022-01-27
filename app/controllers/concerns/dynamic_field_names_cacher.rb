@@ -2,13 +2,14 @@ module DynamicFieldNamesCacher
   CACHE_KEY = "%{identifier}/%{record_type}/column-keys/%{tail}".freeze
 
   # Takes an ActiveRecord::Relation so we can make one more query off it
-  def collection_field_names(collection, identifier = "projects-#{@current_project.id}")
+  def collection_field_names(collection, identifier = nil)
     last_updated_record = collection.order(updated_at: :desc).first
     # Exit early if the collection is empty.
     return [] unless last_updated_record
 
     last_updated = last_updated_record.updated_at.to_i
 
+    identifier ||= "projects-#{@current_project.id}"
     key_opts = { identifier: identifier, record_type: last_updated_record.class.name }
 
     Rails.cache.fetch(CACHE_KEY % key_opts.merge(tail: last_updated)) do
