@@ -1,10 +1,11 @@
 <% cache ['issues-table', @columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last] do %>
     <table class="table table-striped mb-0"
       data-behavior="dradis-datatable"
-      data-default-columns='["Title", "Tags", "Affected"]'
+      data-default-columns=<%= @default_columns.to_json %>
       data-item-name="issue"
       data-local-storage-key="project.ce.<%= dom_id(current_project) %>.issues_datatable"
-      data-tags='<%= @tags.map { |t| [t.display_name, t.color, t.name] }.to_json %>'>
+      data-tags='<%= @tags.map { |t| [t.display_name, t.color, t.name] }.to_json %>'
+      >
       <thead>
         <tr>
           <th class="no-sort" data-column-visible="false"><span class="sr-only">Select</span></th>

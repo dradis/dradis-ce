@@ -5,6 +5,7 @@ class NodesController < NestedNodeResourceController
 
   skip_before_action :find_or_initialize_node, only: [ :sort, :create_multiple ]
   before_action :initialize_nodes_sidebar, except: [ :sort, :create_multiple ]
+  before_action :set_evidence_default_columns, only: :show
 
   # GET /nodes/<id>
   def show
@@ -12,6 +13,7 @@ class NodesController < NestedNodeResourceController
     @note_columns     = @sorted_notes.map(&:fields).map(&:keys).uniq.flatten \
                       | ['Title', 'Created', 'Created by', 'Updated']
     @evidence_columns = @sorted_evidence.map(&:fields).map(&:keys).uniq.flatten \
+                      | @rtp_default_evidence_fields \
                       | ['Title', 'Created', 'Created by', 'Updated']
   end
 
@@ -114,6 +116,20 @@ class NodesController < NestedNodeResourceController
   end
 
   private
+
+  def set_evidence_default_columns
+    rtp = current_project.report_template_properties
+    @rtp_default_evidence_fields = rtp ? rtp.evidence_fields.default.field_names : []
+
+    @default_columns = {}
+    @default_columns[:evidence] =
+      if @rtp_default_evidence_fields.any?
+        @rtp_default_evidence_fields
+      else
+        ['Title', 'Created', 'Updated']
+      end
+  end
+
   def node_params
     params.require(:node).permit(:label, :parent_id, :position, :raw_properties, :type_id)
   end

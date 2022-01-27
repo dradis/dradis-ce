@@ -116,4 +116,8 @@ class Project
   def recovered
     @recovered ||= nodes.find_or_create_by(label: 'Recovered')
   end
+
+  def report_template_properties
+    nil
+  end
 end
