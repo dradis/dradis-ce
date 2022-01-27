@@ -1,4 +1,4 @@
-module DynamicFieldTitlesCacher
+module DynamicFieldNamesCacher
   CACHE_KEY = "%{identifier}/%{record_type}/column-keys/%{tail}".freeze
 
   # Takes an ActiveRecord::Relation so we can make one more query off it
