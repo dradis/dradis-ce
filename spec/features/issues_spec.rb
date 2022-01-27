@@ -246,10 +246,8 @@ describe 'Issues pages' do
 
         let(:extra_setup) do
           create_activities
-          create_comments
         end
         let(:create_activities) { nil }
-        let(:create_comments) { nil }
 
         context 'when there are host nodes with evidence' do
           let(:extra_setup) do

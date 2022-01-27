@@ -28,12 +28,10 @@ describe "note pages" do
       text = "#[Title]#\nMy note\n\n#[Description]#\nMy description"
       @note = create(:note, node: @node, text: text)
       create_activities
-      create_comments
       visit project_node_note_path(current_project, @node, @note)
     end
 
     let(:create_activities) { nil }
-    let(:create_comments) { nil }
 
     it "shows the note's contents" do
       should have_selector 'h5', text: 'Title'

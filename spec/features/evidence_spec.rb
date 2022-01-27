@@ -26,12 +26,10 @@ describe 'evidence' do
       @issue    = create(:issue,    node: @node, text: i_text)
       @evidence = create(:evidence, node: @node, issue: @issue, content: e_text)
       create_activities
-      create_comments
       visit project_node_evidence_path(current_project, @node, @evidence)
     end
 
     let(:create_activities) { nil }
-    let(:create_comments) { nil }
 
     it 'shows information about the Evidence' do
       should have_selector 'h5', text: 'Foobar'
