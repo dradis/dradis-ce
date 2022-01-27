@@ -1,5 +1,5 @@
 class Issues::EvidenceController < IssuesController
-  before_action :set_issues, only: [:index]
+  before_action :set_issue, only: [:index]
   before_action :set_affected_nodes, only: [:index]
 
   def index
@@ -17,8 +17,7 @@ class Issues::EvidenceController < IssuesController
           .uniq - ['Title', 'Label']
   end
 
-  def set_issues
-    @issues = Issue.where(node_id: current_project.issue_library.id)
-    @issue = @issues.find(params[:issue_id])
+  def set_issue
+    @issue = Issue.where(node_id: current_project.issue_library.id).find(params[:issue_id])
   end
 end
