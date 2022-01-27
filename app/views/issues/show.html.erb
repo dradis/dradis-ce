@@ -44,7 +44,14 @@
         </div>
 
         <div class="tab-pane <%= class_names(active: params[:tab] == 'evidence-tab') %>" id="evidence-tab">
-          <%= render partial: 'evidence' %>
+          <%= 
+            content_tag :div,
+            spinner_tag,
+            data: {
+              behavior: 'fetch',
+              path: project_issue_evidence_index_path(issue_id: @issue.id)
+            }
+          %>
         </div>
 
         <% cache ['issue-activity-tab', @issue, @activities] do %>
