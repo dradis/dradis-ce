@@ -6,7 +6,7 @@ class Issues::EvidenceController < IssuesController
   SKIP_COLUMNS = ['Title', 'Label'].freeze
 
   def index
-    @columns = ['Node'] | (collection_field_names(@issue.evidence) - SKIP_COLUMNS) | EXTRA_COLUMNS
+    @evidence_columns = ['Node'] | (collection_field_names(@issue.evidence) - SKIP_COLUMNS) | EXTRA_COLUMNS
 
     render layout: false
   end
