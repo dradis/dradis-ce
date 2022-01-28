@@ -5,12 +5,12 @@ describe Card do
   it { should have_and_belong_to_many(:assignees).class_name("User") }
   it { should have_many(:comments).dependent(:destroy) }
 
-  it { should validate_length_of(:description).is_at_most(DB_MAX_TEXT_LENGTH) }
+  it { should validate_length_of(:description).is_at_most(described_class::DB_MAX_TEXT_LENGTH) }
 
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:list) }
 
-  it { should validate_length_of(:name).is_at_most(DB_MAX_STRING_LENGTH) }
+  it { should validate_length_of(:name).is_at_most(described_class::DB_MAX_STRING_LENGTH) }
 
   before do
     @board = create(:board)

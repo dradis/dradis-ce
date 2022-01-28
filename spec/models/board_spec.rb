@@ -7,7 +7,7 @@ describe Board do
 
   it { should validate_presence_of(:name) }
 
-  it { should validate_length_of(:name).is_at_most(DB_MAX_STRING_LENGTH) }
+  it { should validate_length_of(:name).is_at_most(described_class::DB_MAX_STRING_LENGTH) }
 
   describe '#create' do
     before do

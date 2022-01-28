@@ -5,7 +5,7 @@ class CreateVersions < ActiveRecord::Migration[5.1]
       t.integer  :item_id,   :null => false
       t.string   :event,     :null => false
       t.string   :whodunnit
-      t.text     :object,    :limit => DB_REAL_MAX_LENGTH
+      t.text     :object,    :limit => DB_MAX_TEXT_LENGTH
       t.datetime :created_at
     end
     add_index :versions, [:item_type, :item_id]
