@@ -49,7 +49,7 @@ Rails.application.routes.draw do
         resources :merge, only: [:new, :create], controller: 'issues/merge'
       end
 
-      resources :evidence, concerns: :multiple_destroy, controller: 'issues/evidence', only: []
+      resources :evidence, concerns: :multiple_destroy, controller: 'issues/evidence', only: [:index]
       resources :nodes, only: [:show], controller: 'issues/nodes'
       resources :revisions, only: [:index, :show]
     end
