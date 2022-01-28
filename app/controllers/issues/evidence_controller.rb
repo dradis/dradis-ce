@@ -2,8 +2,11 @@ class Issues::EvidenceController < IssuesController
   before_action :set_issue, only: [:index, :new]
   before_action :set_affected_nodes, only: [:index]
 
+  EXTRA_COLUMNS = ['Created by', 'Created', 'Updated'].freeze
+  SKIP_COLUMNS = ['Title', 'Label'].freeze
+
   def index
-    @evidence_columns = ['Node'] | all_evidence_columns | ['Created by', 'Created',  'Updated']
+    @evidence_columns = ['Node'] | (collection_field_names(@issue.evidence) - SKIP_COLUMNS) | EXTRA_COLUMNS
 
     render layout: false
   end

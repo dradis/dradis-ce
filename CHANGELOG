@@ -1,4 +1,6 @@
 [v#.#.#] ([month] [YYYY])
+  - Increased table loading performance on Issues, Evidence, and Notes for
+    projects with *a lot* of issues, evidence, or notes
   - Editor: Support fields with the same name in the Fields View
   - Issues:
     - Display evidence in a table

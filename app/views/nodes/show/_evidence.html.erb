@@ -19,6 +19,7 @@
         data-table-destroy-url="<%= multiple_destroy_project_node_evidence_index_path(@node.project, @node) %>"
         data-table-close-console-url="<%= project_node_path(@node.project, @node, tab: "evidence-tab") %>">
       <%= render 'nodes/items_table/table',
+                class_name: 'evidence',
                 columns: @evidence_columns,
                 items: @sorted_evidence %>
     </div>
