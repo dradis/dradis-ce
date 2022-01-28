@@ -149,7 +149,7 @@ class IssuesController < AuthenticatedController
   # are going to be working with based on the :id passed by the user.
   def set_or_initialize_issue
     if params[:id]
-      @issue = Issue.find(params[:id])
+      @issue = current_project.issues.find(params[:id])
     elsif params[:issue]
       @issue = Issue.new(issue_params.except(:tag_list)) do |i|
         i.node = @issuelib

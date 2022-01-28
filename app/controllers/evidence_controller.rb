@@ -84,7 +84,7 @@ class EvidenceController < NestedNodeResourceController
         track_created(evidence)
       end
     end
-    redirect_to project_issue_path(current_project, evidence_params[:issue_id]), notice: 'Evidence added for selected nodes.'
+    redirect_to project_issue_path(current_project, evidence_params[:issue_id], tab: 'evidence-tab'), notice: 'Evidence added for selected nodes.'
   end
 
   def edit
