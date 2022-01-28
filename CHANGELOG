@@ -1,5 +1,4 @@
 [v#.#.#] ([month] [YYYY])
-  - Add Setup Wizard
   - Editor: Support fields with the same name in the Fields View
   - Tylium:
     - Import CSS manifests from addons
@@ -8,9 +7,12 @@
     - Remove height restriction from code blocks
     - Simplify issues table columns
     - Update focus state outline color
-  - Setup: store gem dependencies under ./vendor/bundle/
+  - Setup:
+    - Add Setup Wizard
+    - Avoid hard-coding "../../shared/"
+    - Store gem dependencies under ./vendor/bundle/
   - Upgraded gems:
-    - rails
+    - mini_racer, rails
   - Bugs fixes:
     - Comments: Show sticky toolbar when adding long comments
     - Tables: Prevent the select all button from selecting filtered out rows when a filter is been applied

@@ -71,7 +71,7 @@ blockquote {
   }
 }
 
-a:focus {
+a:focus-visible {
   box-shadow: $focusShadow;
   outline: none !important;
 }

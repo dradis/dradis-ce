@@ -7,7 +7,7 @@ describe FileBackedModel do
 
   class BasicFileBackedModel
     include FileBackedModel
-    set_pwd setting: 'admin:paths:rspec', default: Rails.root.join('tmp/templates/bfbm').to_s
+    set_pwd Rails.root.join('tmp/templates/bfbm').to_s
   end
 
   subject { ::BasicFileBackedModel.new }
