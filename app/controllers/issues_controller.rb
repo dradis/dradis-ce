@@ -8,6 +8,7 @@ class IssuesController < AuthenticatedController
   include NotificationsReader
   include ProjectScoped
 
+  before_action :set_default_columns, only: :index
   before_action :set_issuelib
   before_action :set_issues, except: [:destroy]
 
@@ -17,6 +18,7 @@ class IssuesController < AuthenticatedController
 
   def index
     @columns = @issues.map(&:fields).map(&:keys).uniq.flatten |
+      @rtp_default_fields |
       ['Title', 'Tags', 'Affected', 'Created', 'Created by', 'Updated']
   end
 
@@ -122,6 +124,19 @@ class IssuesController < AuthenticatedController
   end
 
   private
+
+  def set_default_columns
+    rtp = current_project.report_template_properties
+    @rtp_default_fields = rtp ? rtp.issue_fields.default.field_names : []
+
+    @default_columns =
+      if @rtp_default_fields.any?
+        @rtp_default_fields
+      else
+        ['Title', 'Tags', 'Affected']
+      end
+  end
+
   def set_issues
     # We need a transaction because multiple DELETE calls can be issued from
     # index and a TOCTOR can appear between the Note read and the Issue.find
