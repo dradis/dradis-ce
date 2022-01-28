@@ -1,6 +1,6 @@
 class ChangeMedTextToLongText < ActiveRecord::Migration[6.1]
   def up
-    change_column :active_storage_blobs, :metadata, :text
+    change_column :active_storage_blobs, :metadata, :text, limit: ApplicationRecord::DB_MAX_TEXT_LENGTH
     change_column :cards, :description, :text, limit: ApplicationRecord::DB_MAX_TEXT_LENGTH
     change_column :comments, :content, :text, limit: ApplicationRecord::DB_MAX_TEXT_LENGTH
     change_column :evidence, :content, :text, limit: ApplicationRecord::DB_MAX_TEXT_LENGTH
