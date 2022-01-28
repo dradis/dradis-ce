@@ -1,8 +1,6 @@
 module ControllerMacros
   extend ActiveSupport::Concern
 
-  included { fixtures :configurations }
-
   # Macro to emulate user login
   def login_as_user(user=create(:user))
     allow_any_instance_of(ApplicationController).to \
