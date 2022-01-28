@@ -3,7 +3,7 @@ module DynamicFieldNamesCacher
 
   # Takes an ActiveRecord::Relation so we can make one more query off it
   def collection_field_names(collection, identifier = nil)
-    return [] unless collection.empty?
+    return [] if collection.empty?
 
     last_updated_record = collection.order(updated_at: :desc).first
     last_updated = last_updated_record.updated_at.to_i
