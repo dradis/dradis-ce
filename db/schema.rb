@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 2022_01_21_163053) do
 
   create_table "cards", force: :cascade do |t|
     t.string "name"
-    t.text "description"
+    t.text "description", limit: 4294967295
     t.date "due_date"
     t.integer "list_id"
     t.integer "previous_id"
@@ -86,13 +86,13 @@ ActiveRecord::Schema.define(version: 2022_01_21_163053) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.text "content"
+    t.text "content", limit: 4294967295
     t.string "commentable_type"
     t.integer "commentable_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 2022_01_21_163053) do
 
   create_table "logs", force: :cascade do |t|
     t.integer "uid"
-    t.text "text"
+    t.text "text", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -147,7 +147,7 @@ ActiveRecord::Schema.define(version: 2022_01_21_163053) do
 
   create_table "notes", force: :cascade do |t|
     t.string "author"
-    t.text "text"
+    t.text "text", limit: 4294967295
     t.integer "node_id"
     t.integer "category_id"
     t.datetime "created_at", null: false
@@ -166,7 +166,7 @@ ActiveRecord::Schema.define(version: 2022_01_21_163053) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["actor_id"], name: "index_notifications_on_actor_id"
-    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable_type_and_notifiable_id"
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
     t.index ["recipient_id"], name: "index_notifications_on_recipient_id"
   end
 
@@ -177,7 +177,7 @@ ActiveRecord::Schema.define(version: 2022_01_21_163053) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["subscribable_id", "subscribable_type", "user_id"], name: "index_subscriptions_on_subscribablue_and_user", unique: true
-    t.index ["subscribable_type", "subscribable_id"], name: "index_subscriptions_on_subscribable_type_and_subscribable_id"
+    t.index ["subscribable_type", "subscribable_id"], name: "index_subscriptions_on_subscribable"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
@@ -189,7 +189,7 @@ ActiveRecord::Schema.define(version: 2022_01_21_163053) do
     t.datetime "updated_at", null: false
     t.index ["tag_id", "taggable_id", "taggable_type"], name: "index_taggings_on_tag_id_and_taggable_id_and_taggable_type", unique: true
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
-    t.index ["taggable_type", "taggable_id"], name: "index_taggings_on_taggable_type_and_taggable_id"
+    t.index ["taggable_type", "taggable_id"], name: "index_taggings_on_taggable"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -206,7 +206,7 @@ ActiveRecord::Schema.define(version: 2022_01_21_163053) do
     t.string "password_hash"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "preferences"
+    t.text "preferences", limit: 4294967295
   end
 
   create_table "versions", force: :cascade do |t|
@@ -214,7 +214,7 @@ ActiveRecord::Schema.define(version: 2022_01_21_163053) do
     t.integer "item_id", null: false
     t.string "event", null: false
     t.string "whodunnit"
-    t.text "object", limit: 1073741823
+    t.text "object", limit: 4294967295
     t.datetime "created_at"
     t.bigint "project_id"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
