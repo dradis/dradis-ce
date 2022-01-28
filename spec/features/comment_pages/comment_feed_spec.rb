@@ -5,7 +5,8 @@ describe 'Comment feed', js: true do
 
   include CommentMacros
 
-  let!(:issue) { create(:issue) }
+  let!(:issue) { create(:issue, node: current_project.issue_library) }
+
   let!(:comments) do
     [
       create(:comment, commentable: issue, user: @logged_in_as),
