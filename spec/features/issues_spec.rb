@@ -81,8 +81,7 @@ describe 'Issues pages' do
             visit new_project_issue_path(current_project)
             click_link 'Source'
 
-            # Manually update the textarea, otherwise we will get a timeout
-            execute_script("$('#issue_text').val('#{'a' * 65536}').trigger('textchange');")
+            Issue.any_instance.stub(:valid?).and_return(false)
           end
 
           it "doesn't create a new Issue" do
@@ -201,7 +200,7 @@ describe 'Issues pages' do
         context 'submitting the form with invalid information' do
           before do
             # Manually update the textarea, otherwise we will get a timeout
-            execute_script("$('#issue_text').val('#{'a' * 65536}').trigger('textchange');")
+            Issue.any_instance.stub(:valid?).and_return(false)
           end
 
           it "doesn't update the issue" do

@@ -135,7 +135,7 @@ describe 'evidence' do
     describe 'submitting the form with invalid data' do
       before do
         # Manually update the textarea, otherwise we will get a timeout
-        execute_script("$('#evidence_content').val('#{'a' * 65536}')")
+        Evidence.any_instance.stub(:valid?).and_return(false)
       end
 
       it "doesn't update the evidence" do

@@ -138,7 +138,7 @@ describe "note pages" do
     context "submitting the form with invalid information" do
       before do
         # Manually update the textarea, otherwise we will get a timeout
-        execute_script("$('#note_text').val('#{'a' * 65536}')")
+        Note.any_instance.stub(:valid?).and_return(false)
       end
 
       # TODO how to handle conflicting edits in this case?
@@ -220,7 +220,7 @@ describe "note pages" do
       describe "submitting the form with invalid information" do
         before do
           # Manually update the textarea, otherwise we will get a timeout
-          execute_script("$('#note_text').val('#{'a' * 65536}')")
+          Note.any_instance.stub(:valid?).and_return(false)
         end
 
         it "doesn't create a note" do
