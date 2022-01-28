@@ -71,9 +71,16 @@ blockquote {
   }
 }
 
-button:focus {
+a:focus {
+  box-shadow: $focusShadow;
   outline: none !important;
-  box-shadow: none !important;
+}
+
+.btn:focus,
+.custom-file-input:focus ~ .custom-file-label {
+  border-color: $darkColor;
+  box-shadow: $focusShadow;
+  outline: none !important;
 }
 
 code {
@@ -105,7 +112,7 @@ code {
 
   &:focus {
     border-color: $darkColor;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px $darkColor;
+    box-shadow: $focusShadow;
   }
 }
 
@@ -201,8 +208,24 @@ strong {
   font-weight: 600;
 }
 
-.table td {
-  padding: 0.4rem .75rem;
+.table {
+  td {
+    padding: 0.4rem .75rem;
+  }
+
+  th {
+    &:focus {
+      outline: none !important;
+
+      &:not(.no-sort) {
+        box-shadow: inset $focusShadow;
+      }
+    }
+  }
+}
+
+.text-break-spaces {
+  white-space: break-spaces !important;
 }
 
 .text-error {

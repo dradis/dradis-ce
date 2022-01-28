@@ -4,8 +4,7 @@ describe 'Issues pages' do
   subject { page }
 
   it 'should require authenticated users' do
-    Configuration.create(name: 'admin:password', value: 'rspec_pass')
-    visit project_issues_path(project_id: 1)
+    visit project_issues_path(create(:project))
     expect(current_path).to eq(login_path)
     expect(page).to have_content('Access denied.')
   end
@@ -272,13 +271,11 @@ describe 'Issues pages' do
             end
           end
 
-          it 'presents the list of hosts affected by a given issue'  do
+          it 'presents the table of hosts affected by a given issue', js: true do
+            click_link 'Evidence'
+            expect(page).to have_selector('[data-behavior~=dradis-datatable]')
             expect(find('.secondary-sidebar-content')).to have_content('10.0.0.1')
             expect(find('.secondary-sidebar-content')).to have_content('10.0.0.2', count: 3)
-          end
-
-          it 'presents the evidence of the first node' do
-            expect(page).to have_content('This apache is old!')
           end
 
           it 'presents the evidence of the other nodes on click', js: true do
@@ -303,7 +300,7 @@ describe 'Issues pages' do
 
           let(:submit_form) do
             page.accept_confirm do
-              within('.dots-container') do
+              within('.actions', match: :first) do
                 find('.dots-dropdown').click
                 click_link 'Delete'
               end

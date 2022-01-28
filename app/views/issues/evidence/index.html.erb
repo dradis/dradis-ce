@@ -15,7 +15,12 @@
 
 <% if @issue.affected.any? %>
   <% cache ['issue-evidence-tab', @issue, @issue.evidence] do %>
-    <%= render 'issues/evidence/table' %>
+    <div data-behavior="datatable-paths"
+      data-table-destroy-url="<%= multiple_destroy_project_issue_evidence_index_path(current_project, @issue) %>"
+      data-table-destroy-confirmation="Are you sure?&#10;&#10;Proceeding will delete the selected evidence."
+      data-table-close-console-url="<%= project_issue_path(current_project, @issue, tab: 'evidence-tab') %>">
+      <%= render 'issues/evidence/table' %>
+    </div>
   <% end %>
 <% else %>
   <div class="empty-state mt-3">
@@ -25,8 +30,7 @@
     <div class="empty-state-body">
       <div class="container">
         <h4 class="empty-state-title">This issue doesn't have any evidence yet</h4>
-        <p class="empty-state-body-text mb-1">Use evidence to document the details that change from one instance of the issue to the next.</p>
-        <p class="empty-state-body-text">Some examples include: port number, specific versions, output of tools (e.g. the list of SSL ciphers, etc.)</p>
+        <p class="empty-state-body-text">Use evidence to detail changes from one instance of the vulnerability to the next: port number, specific versions, banners grabbed by scanners, etc.</p>
         <div class="empty-state-actions">
           <a href="https://dradisframework.com/support/guides/projects/issues.html"
           class="empty-state-docs-link" target="_blank">More about issues and evidence</a>

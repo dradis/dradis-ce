@@ -14,15 +14,15 @@ class IssuesController < AuthenticatedController
   before_action :set_or_initialize_issue, except: [:import, :index]
   before_action :set_or_initialize_tags, except: [:destroy]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
+  before_action :set_affected_nodes, only: [:show]
 
   def index
-    @columns = @issues.map(&:fields).map(&:keys).uniq.flatten | ['Title', 'Tags', 'Affected', 'Created', 'Created by', 'Updated']
+    @columns = @issues.map(&:fields).map(&:keys).uniq.flatten |
+      ['Title', 'Tags', 'Affected', 'Created', 'Created by', 'Updated']
   end
 
   def show
     @activities = @issue.commentable_activities.latest
-
-    @evidence_columns = ['Node'] | all_evidence_columns | ['Created by', 'Created',  'Updated']
 
     @affected_nodes = Node.joins(:evidence)
                         .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')
@@ -119,18 +119,25 @@ class IssuesController < AuthenticatedController
   end
 
   private
-  def all_evidence_columns
-    @issue.evidence
-          .map { |evidence| evidence.fields.keys - ['Title', 'Label']  }
-          .flatten
-          .uniq
+  def set_affected_nodes
+    @affected_nodes = Node.joins(:evidence)
+                          .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')
+                          .where('evidence.issue_id = ?', @issue.id)
+                          .group('nodes.id')
+                          .sort_by { |node, _| node.label }
   end
 
   def set_issues
     # We need a transaction because multiple DELETE calls can be issued from
     # index and a TOCTOR can appear between the Note read and the Issue.find
     Note.transaction do
-      @issues = Issue.where(node_id: @issuelib.id).select('notes.id, notes.author, notes.text, count(evidence.id) as affected_count, notes.created_at, notes.updated_at').joins('LEFT OUTER JOIN evidence on notes.id = evidence.issue_id').group('notes.id').includes(:tags).sort
+      @issues = Issue.where(node_id: @issuelib.id).select(
+        'notes.id, notes.author, notes.text, '\
+        'count(evidence.id) as affected_count, notes.created_at, notes.updated_at'
+      ).
+      joins('LEFT OUTER JOIN evidence on notes.id = evidence.issue_id').
+      group('notes.id').
+      includes(:affected, :tags).sort
     end
   end
 

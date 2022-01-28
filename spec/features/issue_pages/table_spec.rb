@@ -26,7 +26,7 @@ describe 'issue pages' do
       visit project_issues_path(current_project)
     end
 
-    let(:default_columns) { ['Title', 'Created', 'Updated'] }
+    let(:default_columns) { ['Title', 'Tags', 'Affected'] }
     let(:hidden_columns) { ['Description', 'Risk'] }
     let(:filter) { { keyword: @issue.title, filter_count: 1 } }
 
