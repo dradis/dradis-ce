@@ -286,9 +286,6 @@ describe 'Issues pages' do
           end
         end
 
-        let(:commentable) { @issue }
-        it_behaves_like 'a page with comment feed'
-
         let(:trackable) { @issue }
         it_behaves_like 'a page with an activity feed'
 
