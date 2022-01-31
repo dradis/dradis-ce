@@ -1,9 +1,10 @@
 class Issues::EvidenceController < AuthenticatedController
+  include ContentFromTemplate
   include DynamicFieldNamesCacher
   include MultipleDestroy
   include ProjectScoped
 
-  before_action :set_issue, only: [:index, :new]
+  before_action :set_issues, only: [:index, :new]
   before_action :set_affected_nodes, only: [:index]
 
   EXTRA_COLUMNS = ['Created by', 'Created', 'Updated'].freeze
@@ -46,7 +47,8 @@ class Issues::EvidenceController < AuthenticatedController
     end
   end
 
-  def set_issue
-    @issue = current_project.issues.find(params[:issue_id])
+  def set_issues
+    @issues = current_project.issues
+    @issue = @issues.find(params[:issue_id])
   end
 end
