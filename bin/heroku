@@ -1,18 +1,24 @@
-#!/usr/bin/env bash
+#!/usr/bin/env ruby
+require 'fileutils'
 
-echo "\n== Copying sample files =="
-cp config/database.yml.template config/database.yml
-cp config/secrets.yml.template config/secrets.yml
-cp config/smtp.yml.template config/smtp.yml
+# path to your application root.
+APP_ROOT = File.expand_path('..', __dir__)
 
-echo "\n== Replacing DB adapter =="
-sed -i 's/adapter: sqlite3/adapter: postgresql/' config/database.yml
+FileUtils.chdir APP_ROOT do
+  puts "\n== Copying sample files =="
+  FileUtils.cp 'config/database.yml.template', 'config/database.yml'
+  FileUtils.cp 'config/secrets.yml.template', 'config/secrets.yml'
+  FileUtils.cp 'config/smtp.yml.template', 'config/smtp.yml'
 
-echo "\n== Preparing templates folder =="
-mkdir 'templates'
+  puts "\n== Replacing DB adapter =="
+  system! "sed -i 's/adapter: sqlite3/adapter: postgresql/' config/database.yml"
 
-echo "\n== Preparing database =="
-bin/rails db:prepare
+  puts "\n== Preparing templates folder =="
+  FileUtils.mkdir 'templates'
 
-echo "\n== Loading some sample content =="
-bundle exec thor dradis:setup:welcome
+  its "\n== Preparing database =="
+  system! 'bin/rails db:prepare'
+
+  puts "\n== Loading some sample content =="
+  system! 'bundle exec thor dradis:setup:welcome'
+end
