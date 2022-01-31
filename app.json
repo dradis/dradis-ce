@@ -26,7 +26,8 @@
   "name": "Dradis Framework - Community Edition",
   "repository": "https://github.com/dradis/dradis-ce/tree/deploy-to-heroku",
   "scripts": {
-    "heroku-postbuild": "bin/heroku"
+    "heroku-postbuild": "bundle exec rake db:prepare"
+    "postdeploy": "bin/heroku"
   },
   "website": "http://drad.is"
 }

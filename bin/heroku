@@ -21,7 +21,7 @@ FileUtils.chdir APP_ROOT do
   FileUtils.mkdir 'templates'
 
   puts "\n== Preparing database =="
-  system! 'bin/rails db:prepare'
+  # system! 'bin/rails db:prepare'
 
   puts "\n== Loading some sample content =="
   system! 'bundle exec thor dradis:setup:welcome'
