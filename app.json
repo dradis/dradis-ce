@@ -1,4 +1,9 @@
 {
+  "buildpacks": [
+    {
+      "url": "heroku-community/apt"
+    }
+  ],
   "description": "The original open-source reporting and collaboration tool trusted by InfoSec professionals around the world.",
   "env": {
     "HEROKU": {
@@ -15,7 +20,6 @@
   "name": "Dradis Framework - Community Edition",
   "repository": "https://github.com/dradis/dradis-ce/tree/deploy-to-heroku",
   "scripts": {
-    "heroku-prebuild": "sed -i 's/sqlite3//g' Gemfile.lock",
     "heroku-postbuild": "sed -i 's/adapter: sqlite3/adapter: postgresql/' config/database.yml.template",
     "postdeploy": "bin/setup"
   },
