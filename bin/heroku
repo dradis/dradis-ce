@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+echo "\n== Copying sample files =="
+cp config/database.yml.template config/database.yml
+cp config/secrets.yml.template config/secrets.yml
+cp config/smtp.yml.template config/smtp.yml
+
+echo "\n== Replacing DB adapter =="
+sed -i 's/adapter: sqlite3/adapter: postgresql/' config/database.yml
+
+echo "\n== Preparing templates folder =="
+mkdir 'templates'
+
+echo "\n== Preparing database =="
+bin/rails db:prepare
+
+echo "\n== Loading some sample content =="
+bundle exec thor dradis:setup:welcome
