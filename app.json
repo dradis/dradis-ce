@@ -2,6 +2,12 @@
   "buildpacks": [
     {
       "url": "heroku-community/apt"
+    },
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "heroku/ruby"
     }
   ],
   "description": "The original open-source reporting and collaboration tool trusted by InfoSec professionals around the world.",
