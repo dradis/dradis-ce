@@ -16,7 +16,7 @@ FileUtils.chdir APP_ROOT do
   puts "\n== Preparing templates folder =="
   FileUtils.mkdir 'templates'
 
-  its "\n== Preparing database =="
+  puts "\n== Preparing database =="
   system! 'bin/rails db:prepare'
 
   puts "\n== Loading some sample content =="
