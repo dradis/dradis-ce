@@ -16,7 +16,6 @@ class IssuesController < AuthenticatedController
   before_action :set_or_initialize_issue, except: [:import, :index]
   before_action :set_or_initialize_tags, except: [:destroy]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
-  before_action :set_affected_nodes, only: [:show]
 
   EXTRA_COLUMNS = ['Title', 'Tags', 'Affected', 'Created', 'Created by', 'Updated'].freeze
 
@@ -122,13 +121,6 @@ class IssuesController < AuthenticatedController
   end
 
   private
-  def set_affected_nodes
-    @affected_nodes = Node.joins(:evidence)
-                          .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')
-                          .where('evidence.issue_id = ?', @issue.id)
-                          .group('nodes.id')
-                          .sort_by { |node, _| node.label }
-  end
 
   def set_default_columns
     rtp = current_project.report_template_properties

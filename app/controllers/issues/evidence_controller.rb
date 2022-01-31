@@ -1,4 +1,8 @@
-class Issues::EvidenceController < IssuesController
+class Issues::EvidenceController < AuthenticatedController
+  include DynamicFieldNamesCacher
+  include MultipleDestroy
+  include ProjectScoped
+
   before_action :set_issue, only: [:index, :new]
   before_action :set_affected_nodes, only: [:index]
 
@@ -24,6 +28,14 @@ class Issues::EvidenceController < IssuesController
           .map { |evidence| evidence.fields.keys }
           .flatten
           .uniq - ['Title', 'Label']
+  end
+
+  def set_affected_nodes
+    @affected_nodes = Node.joins(:evidence)
+                          .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')
+                          .where('evidence.issue_id = ?', @issue.id)
+                          .group('nodes.id')
+                          .sort_by { |node, _| node.label }
   end
 
   def set_auto_save_key
