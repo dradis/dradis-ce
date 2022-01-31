@@ -26,8 +26,9 @@
   "name": "Dradis Framework - Community Edition",
   "repository": "https://github.com/dradis/dradis-ce/tree/deploy-to-heroku",
   "scripts": {
-    "heroku-postbuild": "sed -i 's/adapter: sqlite3/adapter: postgresql/' config/database.yml.template",
-    "postdeploy": "bin/setup"
+    "heroku-prebuild": "sed -i 's/adapter: sqlite3/adapter: postgresql/' config/database.yml.template",
+    "heroku-postbuild": "cp config/database.yml.template config/database.yml",
+    "postdeploy": "bundle exec rake db:prepare"
   },
   "website": "http://drad.is"
 }
