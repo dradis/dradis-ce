@@ -102,7 +102,7 @@ gem 'rinku'
 gem 'sanitize', '5.2.1'
 
 # SQLite3 DB driver
-gem 'sqlite3' unless env['HEROKU']
+gem 'sqlite3' unless ENV['HEROKU']
 gem 'pg'
 
 # --------------------------------------------------------- Dradis Professional
