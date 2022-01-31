@@ -1,0 +1,22 @@
+{
+  "description": "The original open-source reporting and collaboration tool trusted by InfoSec professionals around the world.",
+  "env": {
+    "HEROKU": {
+      "description": "Tell Dradis we're on Heroku",
+      "value": "1"
+    },
+    "RAILS_SERVE_STATIC_FILES": {
+      "description": "Ask Rails to serve static assets",
+      "value": "1"
+    }
+  },
+  "keywords": ["infosec", "pentest", "osint"],
+  "logo": "https://github.com/dradis/dradis-ce/raw/deploy-to-heroku/app/assets/images/logo_small.png",
+  "name": "Dradis Framework - Community Edition",
+  "repository": "https://github.com/dradis/dradis-ce/tree/deploy-to-heroku",
+  "scripts": {
+    "heroku-prebuild": "bin/heroku",
+    "postdeploy": "bundle exec thor dradis:setup:welcome"
+  },
+  "website": "http://drad.is"
+}

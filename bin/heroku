@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+require 'fileutils'
+
+# path to your application root.
+APP_ROOT = File.expand_path('..', __dir__)
+
+def system!(*args)
+  system(*args) || abort("\n== Command #{args} failed ==")
+end
+
+FileUtils.chdir APP_ROOT do
+  puts "\n== Copying sample files =="
+  unless File.exist?('config/database.yml')
+    FileUtils.cp 'config/database.yml.template', 'config/database.yml'
+  end
+
+  unless File.exist?('config/secrets.yml')
+    FileUtils.cp 'config/secrets.yml.template', 'config/secrets.yml'
+  end
+
+  unless File.exist?('config/smtp.yml')
+    FileUtils.cp 'config/smtp.yml.template', 'config/smtp.yml'
+  end
+
+  puts "\n== Replace sqlite3 for postgresql in database.yml =="
+  system("sed -i '/adapter: sqlite3/adapter: postgresql/' config/database.yml")
+
+  puts "\n== Replace sqlite3 for pg in Gemfile.lock =="
+  # to test in macOS replace -E with -r in the sed command
+  system("sed -r -i 's/sqlite3 \([0-9]+\.[0-9]+\.[0-9]+\)/pg (1.2.3)/' Gemfile.lock")
+  system("sed -i 's/sqlite3/pg/' Gemfile.lock")
+end
