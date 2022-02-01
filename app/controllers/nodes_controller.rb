@@ -116,7 +116,7 @@ class NodesController < NestedNodeResourceController
 
   def set_evidence_default_columns
     default_field_names = ['Title', 'Created', 'Updated'].freeze
-    extra_field_names = ['Title', 'Created', 'Created by', 'Updated'].freeze
+    extra_field_names = ['Affected', 'Created by'].freeze
 
     note_dynamic_fields = dynamic_field_names(@node.notes)
     evidence_dynamic_fields = dynamic_field_names(@node.notes)

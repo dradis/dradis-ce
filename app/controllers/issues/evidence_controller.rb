@@ -4,20 +4,11 @@ class Issues::EvidenceController < AuthenticatedController
   include MultipleDestroy
   include ProjectScoped
 
-  before_action :set_default_columns, only: :index
   before_action :set_issues, only: [:index, :new]
   before_action :set_affected_nodes, only: :index
-
-  EXTRA_COLUMNS = ['Created by', 'Created', 'Updated'].freeze
-  SKIP_COLUMNS = ['Title', 'Label'].freeze
+  before_action :set_columns, only: :index
 
   def index
-    @evidence_columns =
-      ['Affected'] |
-      (collection_field_names(@issue.evidence) - SKIP_COLUMNS) |
-      @rtp_default_fields |
-      EXTRA_COLUMNS
-
     render layout: false
   end
 
@@ -29,23 +20,17 @@ class Issues::EvidenceController < AuthenticatedController
 
   private
 
-  def all_evidence_columns
-    @issue.evidence
-          .map { |evidence| evidence.fields.keys }
-          .flatten
-          .uniq - ['Title', 'Label']
-  end
+  def set_columns
+    default_field_names = ['Title', 'Created', 'Updated'].freeze
+    extra_field_names = ['Affected', 'Created by'].freeze
 
-  def set_default_columns
+    dynamic_fields = dynamic_field_names(@issue.evidence)
+
     rtp = current_project.report_template_properties
-    @rtp_default_fields = rtp ? rtp.evidence_fields.default.field_names : []
+    rtp_default_fields = rtp ? rtp.issue_fields.default.field_names : []
 
-    @default_columns =
-      if @rtp_default_fields.any?
-        @rtp_default_fields
-      else
-        ['Node', 'Created by']
-      end
+    @default_columns = rtp_default_fields.presence || default_field_names
+    @evidence_columns = default_field_names | rtp_default_fields | dynamic_fields | extra_field_names
   end
 
   def set_affected_nodes
