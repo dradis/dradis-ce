@@ -4,7 +4,7 @@
   <div class="table-wrapper">
     <table class="table table-striped"
       data-behavior="dradis-datatable"
-      data-default-columns=<%= @default_columns[class_name.to_sym].to_json %>
+      data-default-columns="<%= @default_columns[class_name.to_sym].to_json %>"
       data-item-name="<%= class_name %>"
       data-local-storage-key="project.ce.<%= dom_id(current_project) %>.<%= class_name.pluralize %>_datatable"
       >
