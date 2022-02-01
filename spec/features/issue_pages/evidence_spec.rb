@@ -13,6 +13,8 @@ describe 'issue pages evidence tab' do
         create(:evidence, issue: issue, node: node)
       end
 
+      issue.evidence.first.update(content: "#[Title]#\nIssue1\n\n#[Risk]#\nHigh\n\n#[Description]#\nn/a")
+
       @tags = Tag::DEFAULT_TAGS.map do |tag|
         if defined?(Dradis::Pro)
           create(:tag, name: tag, project: current_project)
