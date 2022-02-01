@@ -119,7 +119,7 @@ class NodesController < NestedNodeResourceController
     extra_field_names = ['Affected', 'Created by'].freeze
 
     note_dynamic_fields = dynamic_field_names(@node.notes)
-    evidence_dynamic_fields = dynamic_field_names(@node.notes)
+    evidence_dynamic_fields = dynamic_field_names(@node.evidence)
 
     rtp = current_project.report_template_properties
     rtp_default_evidence_fields = rtp ? rtp.evidence_fields.default.field_names : []
@@ -128,7 +128,8 @@ class NodesController < NestedNodeResourceController
     @evidence_columns = default_field_names | rtp_default_evidence_fields | evidence_dynamic_fields | extra_field_names
 
     @default_columns = {
-      evidence: rtp_default_evidence_fields.presence || default_field_names
+      evidence: rtp_default_evidence_fields.presence || default_field_names,
+      note: default_field_names
     }
   end
 
