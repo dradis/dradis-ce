@@ -2,7 +2,7 @@ module DynamicFieldNamesCacher
   CACHE_KEY = "%{identifier}/%{record_type}/column-keys/%{tail}".freeze
 
   # Takes an ActiveRecord::Relation so we can make one more query off it
-  def collection_field_names(collection, identifier = nil)
+  def dynamic_field_names(collection, identifier = nil)
     return [] if collection.empty?
 
     last_updated_record = collection.order(updated_at: :desc).first
