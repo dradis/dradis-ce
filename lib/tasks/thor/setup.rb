@@ -42,24 +42,6 @@ class DradisTasks < Thor
       end
     end
 
-    desc 'migrate', 'ensures the database schema is up-to-date'
-    def migrate
-      require 'config/environment'
-
-      print '** Checking database migrations...                                    '
-      rake('db:migrate')
-      puts '[  DONE  ]'
-    end
-
-    desc 'seed', 'adds initial values to the database (i.e., categories and configurations)'
-    def seed
-      require 'config/environment'
-
-      print '** Seeding database...                                                '
-      require 'db/seeds'
-      puts '[  DONE  ]'
-    end
-
     desc 'kit', 'Import files and projects from a specified Kit configuration file'
     method_option :file, required: true, type: :string, desc: 'full path to the Kit file to use.'
     def kit
