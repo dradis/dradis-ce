@@ -11,8 +11,10 @@ describe Evidence do
   it { should validate_presence_of :node }
 
   describe 'on create' do
+    let(:issue) { create(:issue, project: node.project) }
+    let(:node) { create(:node) }
+    let(:subscribable) { build(:evidence, issue: issue, author: user.email, node: node) }
     let(:user) { create(:user) }
-    let(:subscribable) { build(:evidence, author: user.email) }
 
     it_behaves_like 'a subscribable model'
   end
@@ -69,6 +71,32 @@ describe Evidence do
 
     it 'provides access to the Node label\'s as a virtual field' do
       expect(@fields['Label']).to eq('Node Label')
+    end
+  end
+
+  describe '#validate_issue_project' do
+    let(:issue) { create(:issue, node: node.project.issue_library, project: node.project) }
+    let(:node) { create(:node) }
+
+    context 'when issue is in the same project' do
+      it 'is valid' do
+        evidence = Evidence.new(node: node, issue: issue)
+        expect(evidence.valid?).to eq(true)
+      end
+    end
+
+    context 'when issue is on a different project' do
+      let(:issue_on_another_project) { (create(:issue, node: node_on_another_project)) }
+      let(:node_on_another_project) do
+        node = create(:node)
+        allow(node).to receive(:project).and_return(Project.new(id: 2, name: 'Another Project'))
+        node
+      end
+
+      it 'is invalid' do
+        evidence = Evidence.new(node: node, issue: issue_on_another_project)
+        expect(evidence.valid?).to eq(false)
+      end
     end
   end
 end

@@ -37,6 +37,7 @@ RSpec.describe KitImportJob do
     after(:all) do
       FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
       FileUtils.rm_rf(Rails.root.join("tmp", "rspec"))
+      Configuration.delete_by('name LIKE ?', 'admin:paths:%')
     end
 
     it 'imports kit content' do

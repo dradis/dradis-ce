@@ -8,6 +8,7 @@ module Dradis
   end
 end
 
+require 'html/ignore_liquid_in_textile_block_codes'
 require 'html/no_inline_code_textile_formatter'
 
 require 'html/pipeline/dradis/code_highlight_filter'

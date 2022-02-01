@@ -51,7 +51,7 @@ describe Node do
 
     it 'returns unique issues even if node and issue are associated through multiple evidence' do
       node  = create(:node)
-      issue = create(:issue)
+      issue = create(:issue, node: node.project.issue_library)
 
       create(:evidence, node: node, issue: issue)
       create(:evidence, node: node, issue: issue)

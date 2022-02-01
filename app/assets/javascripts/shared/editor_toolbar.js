@@ -1,4 +1,4 @@
-/* 
+/*
 
 To initialize:
 
@@ -71,11 +71,9 @@ class EditorToolbar {
       }
     });
 
-    // Handler for setting the correct textarea height on keyboard input, when
-    // focus is lost, or when content is inserted programmatically
-    // Handler for setting the correct textarea height when focus is lost, or
-    // when content is inserted programmatically
-    this.$target.on('blur textchange input', this.setHeight);
+    // Handler for setting the correct textarea height on keyboard input, on focus,
+    // when focus is lost, or when content is inserted programmatically
+    this.$target.on('blur focus textchange input', this.setHeight);
 
     // Handler for setting the correct textarea heights on load (for current values)
     this.$target.each(this.setHeight);
@@ -94,7 +92,8 @@ class EditorToolbar {
 
     // keyboard shortcuts
     this.$target.keydown(function(e) {
-      var key = e.which || e.keyCode; // for cross-browser compatibility
+      var key = e.which || e.keyCode, // for cross-browser compatibility
+          selector;
 
       if (e.metaKey) {
         switch (key) {
@@ -115,24 +114,24 @@ class EditorToolbar {
       var $inputElement = $(this),
           $toolbarElement = $inputElement.parent().prev(),
           $parentElement = $inputElement.parents('[data-behavior~=editor-field]'),
-          topOffset;
-      
+          $scrollLimitElement = $('[data-behavior~=textile-wrap]').length ? $('[data-behavior~=textile-wrap]') : $('[data-behavior~=view-content]'),
+          inputMinHeightForStickyToolbar = 40,
+          toolbarHeight = $parentElement.find('[data-behavior~=editor-toolbar]').outerHeight(),
+          topOffset = $('[data-behavior~=textile-wrap]').length ? toolbarHeight : toolbarHeight * 2;
+
       $toolbarElement.css({'opacity': 1, 'visibility': 'visible'});
 
-      // set offset to 0 if user is in fullscreen mode.
-      if ($inputElement.parents('.textile-fullscreen').length ? topOffset = 0 : topOffset = 106); // 106 = navbar height + breadcrumb height
-
       // this is needed incase user sets focus on textarea where toolbar would render off screen
-      if ($inputElement.height() > 40 && $parentElement.offset().top < $(window).scrollTop() + topOffset) {
+      if ($inputElement.height() > inputMinHeightForStickyToolbar && $parentElement.offset().top < $(window).scrollTop() + topOffset) {
         $parentElement.addClass('sticky-toolbar');
       }
 
       // adjust position on scroll to make toolbar always appear at the top of the textarea
-      document.querySelector('[data-behavior~=view-content], .textile-fullscreen').addEventListener('scroll', (function () {
+      $scrollLimitElement.on('scroll', (function () {
         var parentOffsetTop = $parentElement.offset().top - topOffset;
 
         // keep toolbar at the top of text area when scrolling
-        if ($inputElement.height() > 40 && parentOffsetTop < $(window).scrollTop()) {
+        if ($inputElement.height() > inputMinHeightForStickyToolbar && parentOffsetTop < ($scrollLimitElement.offset().top - inputMinHeightForStickyToolbar)) {
           $parentElement.addClass('sticky-toolbar');
         } else {
           // reset the toolbar to the default position and appearance
@@ -159,6 +158,8 @@ class EditorToolbar {
     $(this).css({'height': this.scrollHeight + 2});
   }
 
+  // Splices the content where it needs to go in the textarea
+  // vs injectSyntax() which takes an Affix and manages pre/post cursor positioning
   insert(text) {
     var cursorInfo = this.$target.cursorInfo(),
         elementText = this.$target.val();
@@ -179,6 +180,9 @@ class EditorToolbar {
     }
   }
 
+  // Takes an affix. Uses the insert function to splice content. Highlights
+  // content or places cursor at the end of new content.
+  // Triggers the textchange event for rendering and local cache updating.
   injectSyntax(affix) {
     this.$target.focus(); // bring focus back to $target from the toolbar
     var cursorInfo = this.$target.cursorInfo(); // Save the original position
@@ -215,7 +219,7 @@ class EditorToolbar {
 
   affixesLibrary(type, selection) {
     const library = {
-      'block-code':         new BlockAffix('bc. ', 'Code markup'),
+      'block-code':         new BlockAffix('\nbc.', 'Code markup'),
       'bold':               new Affix('*', 'Bold text', '*'),
       'field':              new Affix('#[', 'Field', ']#\n'),
       //'highlight':          new Affix('$${{', 'Highlighted text', '}}$$'),
@@ -226,7 +230,7 @@ class EditorToolbar {
       'link':               new Affix('"', 'Link text', '":https://'),
       'list-ol':            new Affix('# ', 'Ordered item'),
       'list-ul':            new Affix('* ', 'Unordered item'),
-      //'quote':       new BlockAffix('bq. ', 'Quoted text'),
+      'quote':              new BlockAffix('\nbq.', 'Quoted text'),
       'table':              new Affix('', '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|')
     };
 
@@ -258,6 +262,11 @@ class EditorToolbar {
     if (include.includes('link')) str += '<div class="editor-btn" data-btn="link" aria-tooltip="link">\
       <i class="fa fa-link"></i>\
     </div>';
+
+    if (include.includes('quote')) str += '<div class="editor-btn" data-btn="quote" aria-tooltip="quote block">\
+      <i class="fa fa-quote-left"></i>\
+    </div>';
+
     if (include.includes('table')) str += '<div class="editor-btn" data-btn="table" aria-tooltip="table">\
       <i class="fa fa-table"></i>\
     </div>';
@@ -284,9 +293,6 @@ class EditorToolbar {
     </div>\
     <div class="editor-btn" data-btn="inline-code" aria-label="inline code">\
       <i class="fa fa-terminal"></i>\
-    </div>\ 
-    <div class="editor-btn" data-btn="quote" aria-label="quote block">\
-      <i class="fa fa-quote-left"></i>\
     </div>\
 
     */
@@ -352,7 +358,19 @@ class Affix {
 
 class BlockAffix extends Affix {
   withSelection() {
-    return this.prefix + this.selection;
+    return this.multiline() + this.selection;
+  }
+
+  asPlaceholder() {
+    return this.multiline() + this.placeholder;
+  }
+
+  multiline() {
+    if (this.selection.includes('\n')) {
+      return this.prefix + '. '
+    } else {
+      return this.prefix + ' '
+    }
   }
 }
 

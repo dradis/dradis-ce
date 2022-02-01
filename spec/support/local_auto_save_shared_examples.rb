@@ -91,7 +91,7 @@ shared_examples 'a form with local auto save' do |klass, action|
         if klass == Card
           expect(page.find("input#card_assignee_ids_#{@first_user.id}")).not_to be_checked
         elsif klass == Evidence
-          expect(page).to have_select('evidence_issue_id', selected: 'Choose an Issue')
+          expect(page).to have_select('evidence_issue_id', selected: 'Auto-generate a new issue')
         elsif klass == Issue
           expect(page).to have_css('.dropdown-toggle span.tag', text: 'No tag')
         elsif klass == Note
@@ -155,6 +155,9 @@ shared_examples 'a form with local auto save' do |klass, action|
 
       context 'when form is saved' do
         it 'does not prefill fields with cached data' do
+          # Fixed weird bug where submit button not in viewport for Card form
+          page.execute_script('$("#view-content").scrollTop(10000)')
+
           page.find('input[type="submit"]').click
           visit "#{model_path}?template=simple_note"
           click_link 'Source'

@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.3.1'
+gem 'rails', '~> 6.1.4.3'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -81,7 +81,7 @@ gem 'bcrypt',   '3.1.12'
 gem 'json', '2.3.0'
 
 # XML manipulation
-gem 'nokogiri', '1.11.4'
+gem 'nokogiri', '1.12.5'
 
 # MySQL backend
 # gem 'mysql2', '~> 0.5.1'
@@ -208,15 +208,48 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~>4.0.0'
+gem 'dradis-plugins', '~> 4.1.0'
 
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~>4.0.0'
+gem 'dradis-projects', '~> 4.1.2.1'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)
   eval(IO.read(plugins_file), binding)
 end
+
+# For now keep a hard-coded list of plugins until Gemfile.plugins becomes fully
+# effective.
+
+# ----------------------------------------------------------------- Calculators
+gem 'dradis-calculator_cvss', '~> 4.1.0'
+gem 'dradis-calculator_dread', '~> 4.1.0'
+
+# ---------------------------------------------------------------------- Export
+gem 'dradis-csv', '~> 4.1.0'
+gem 'dradis-html_export', '~> 4.1.1'
+
+
+# ---------------------------------------------------------------------- Import
+
+
+# ---------------------------------------------------------------------- Upload
+gem 'dradis-acunetix', '~> 4.1.0'
+gem 'dradis-brakeman', '~> 4.1.0'
+gem 'dradis-burp', '~> 4.1.0'
+gem 'dradis-metasploit', '~> 4.1.0'
+gem 'dradis-nessus', '~> 4.1.0'
+gem 'dradis-netsparker', '~> 4.1.0'
+gem 'dradis-nexpose', '~> 4.1.0'
+gem 'dradis-nikto', '~> 4.1.0'
+gem 'dradis-nipper', '~> 4.1.0'
+gem 'dradis-nmap', '~> 4.1.0'
+gem 'dradis-ntospider', '~> 4.1.0'
+gem 'dradis-openvas', '~> 4.1.0'
+gem 'dradis-qualys', '~> 4.1.0'
+gem 'dradis-saint', '~> 4.1.0'
+gem 'dradis-wpscan', '~> 4.1.0'
+gem 'dradis-zap', '~> 4.1.0'

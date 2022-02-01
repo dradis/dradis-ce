@@ -3,24 +3,20 @@ require 'rails_helper'
 describe 'Sessions' do
   subject { page }
 
-  before do
+  let(:password) { 'rspec_pass' }
+  let(:user) do
     create(
-      :configuration,
-      name: 'admin:password',
-      value: ::BCrypt::Password.create('rspec_pass')
-    )
-    @user = create(
       :user,
       :author,
       password_hash: ::BCrypt::Password.create('rspec_pass')
     )
   end
 
-  let(:password) { 'rspec_pass' }
-
-  let(:login) do
+  # This needs to be a helper and not a let() block, because let is memoized
+  # and reused.
+  def login
     visit login_path
-    fill_in 'login', with: @user.email
+    fill_in 'login', with: user.email
     fill_in 'password', with: password
     click_button 'Let me in!'
   end
@@ -108,8 +104,8 @@ describe 'Sessions' do
     it 'forces a logout' do
       login
 
-      @user.destroy
-      visit project_path(Project.find(1))
+      user.destroy
+      visit projects_path
 
       expect(current_path).to eq(login_path)
       expect(page).to have_content('Access denied')

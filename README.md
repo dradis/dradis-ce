@@ -52,16 +52,16 @@ There are two editions of Dradis Framework:
 
 ## Getting started: Community Edition
 
-### Git release (recommended)
+### Deploy your own
 
-```
-$ git clone https://github.com/dradis/dradis-ce.git
-$ cd dradis-ce/
-$ ./bin/setup
-$ ./bin/rails server
-```
+To try Dradis Community, you can deploy your own instance (you will need accounts in the cloud providers to get started):
 
-You can browse to the app at http://localhost:3000/
+[![Deploy to Digital Ocean](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/dradis/dradis-ce/tree/develop)
+
+
+### From Git (recommended)
+
+[Installing Dradis from Git](https://dradisframework.com/ce/documentation/install_git.html)
 
 ### Using Vagrant
 
@@ -87,10 +87,6 @@ ruby bin/setup
 # You'll need to tell the server to bind to 0.0.0.0 for port forwarding:
 bundle exec rails server -b 0.0.0.0
 ```
-
-### Stable release
-
-In https://dradisframework.com/ce/download.html you will find the latest packages.
 
 
 ## Getting help
