@@ -121,13 +121,11 @@ class NodesController < NestedNodeResourceController
     rtp = current_project.report_template_properties
     @rtp_default_evidence_fields = rtp ? rtp.evidence_fields.default.field_names : []
 
-    @default_columns = {}
-    @default_columns[:evidence] =
-      if @rtp_default_evidence_fields.any?
-        @rtp_default_evidence_fields
-      else
-        ['Title', 'Created', 'Updated']
-      end
+    @default_columns = Hash.new(['Title', 'Created', 'Updated'])
+
+    if @rtp_default_evidence_fields.any?
+      @default_columns[:evidence] = @rtp_default_evidence_fields
+    end
   end
 
   def node_params

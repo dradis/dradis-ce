@@ -1,8 +1,10 @@
+<% class_name = items.first.class.name.underscore %>
+
 <% cache ["#{dom_class(items.first).pluralize}-table", columns, items.map(&:id), items.map(&:updated_at).map(&:to_i).sort.last] do %>
   <div class="table-wrapper">
     <table class="table table-striped"
       data-behavior="dradis-datatable"
-      data-default-columns=<%= @default_columns.fetch(class_name.to_sym, ['Title', 'Created', 'Updated', 'Validation']).to_json %>
+      data-default-columns="<%= @default_columns[class_name.to_sym].to_json %>"
       data-item-name="<%= class_name %>"
       data-local-storage-key="project.ce.<%= dom_id(current_project) %>.<%= class_name.pluralize %>_datatable"
       >
