@@ -44,7 +44,7 @@ class Issues::EvidenceController < AuthenticatedController
       if @rtp_default_fields.any?
         @rtp_default_fields
       else
-        ['Node', 'Created by']
+        ['Affected', 'Created by']
       end
   end
 
