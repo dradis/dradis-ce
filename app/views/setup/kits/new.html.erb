@@ -1,0 +1,24 @@
+<div class="col-6 offset-3">
+  <div class="card">
+    <div class="card-header bg-custom">
+      <h5 class="m-0">Would you like some help?</h5>
+    </div>
+    <div class="card-body">
+      <p>
+        We can prefill the project with some sample data so it's easier to get
+        your head around how everything fits together.
+      </p>
+
+      <div class="row text-center">
+        <div class="col-6">
+          <%= link_to 'Yes, please', setup_kit_path(kit: :welcome), class: 'btn btn-primary', method: :post %>
+          <p>A sample project with Issues, Evidence, and Nodes will be loaded.</p>
+        </div>
+        <div class="col-6">
+          <%= link_to 'No thanks', setup_kit_path(kit: :none), method: :post %>
+          <p>Start with a blank slate.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

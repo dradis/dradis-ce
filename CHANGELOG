@@ -8,7 +8,7 @@
     - Simplify issues table columns
     - Update focus state outline color
   - Setup:
-    - Add Setup Wizard
+    - Add Setup Wizard: set shared password and initial content.
     - Avoid hard-coding "../../shared/"
     - Store gem dependencies under ./vendor/bundle/
   - Upgraded gems:
