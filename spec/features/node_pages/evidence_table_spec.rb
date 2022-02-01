@@ -20,8 +20,8 @@ describe 'node pages' do
       visit project_node_path(@project, @node, tab: 'evidence-tab')
     end
 
-    let(:default_columns) { ['Title', 'Created', 'Updated'] }
-    let(:hidden_columns) { ['Affected', 'Created by'] }
+    let(:default_columns) { ['Affected', 'Title', 'Created', 'Updated'] }
+    let(:hidden_columns) { ['Created by'] }
     let(:filter) { { keyword: @evidence.title, filter_count: 1 } }
 
     it_behaves_like 'a DataTable'

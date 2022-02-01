@@ -21,8 +21,8 @@ class Issues::EvidenceController < AuthenticatedController
   private
 
   def set_columns
-    default_field_names = ['Title', 'Created', 'Updated'].freeze
-    extra_field_names = ['Affected', 'Created by'].freeze
+    default_field_names = ['Affected', 'Title', 'Created', 'Updated'].freeze
+    extra_field_names = ['Created by'].freeze
 
     dynamic_fields = dynamic_field_names(@issue.evidence)
 
