@@ -25,7 +25,7 @@ describe 'issue pages evidence tab' do
       click_link("Evidence #{issue.evidence.count}")
     end
 
-    let(:default_columns) { ['Node', 'Created by'] }
+    let(:default_columns) { ['Affected', 'Created by'] }
     let(:hidden_columns) { ['Updated'] }
     let(:filter) { { keyword: issue.evidence.first.title, filter_count: 1 } }
 
