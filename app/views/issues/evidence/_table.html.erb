@@ -22,7 +22,7 @@
             <%
               sort, display =
               case column
-              when 'Node'
+              when 'Affected'
                 [evidence.node.label, link_to(evidence.node.label, [current_project, node, evidence])]
               when 'Created'
                 [evidence.created_at.to_i, local_time_ago(evidence.created_at)]

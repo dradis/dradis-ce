@@ -13,7 +13,7 @@ class Issues::EvidenceController < AuthenticatedController
 
   def index
     @evidence_columns =
-      ['Node'] |
+      ['Affected'] |
       (collection_field_names(@issue.evidence) - SKIP_COLUMNS) |
       @rtp_default_fields |
       EXTRA_COLUMNS
