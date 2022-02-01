@@ -1,8 +1,9 @@
 <table class="table table-striped mb-0"
   data-behavior="dradis-datatable"
-  data-default-columns='["Node", "Created by"]'
+  data-default-columns=<%= @default_columns.to_json %>
   data-item-name=<%= "issue_#{@issue.id}_evidence" %>
-  data-local-storage-key="project.ce.<%= dom_id(current_project) %>.<%= "issue_#{@issue.id}_evidence_datatable" %>">
+  data-local-storage-key="project.ce.<%= dom_id(current_project) %>.<%= "issue_#{@issue.id}_evidence_datatable" %>"
+  >
   <thead>
     <tr>
       <th class="no-sort" data-column-visible="false"><span class="sr-only">Select</span></th>

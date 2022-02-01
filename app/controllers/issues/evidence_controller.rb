@@ -4,14 +4,19 @@ class Issues::EvidenceController < AuthenticatedController
   include MultipleDestroy
   include ProjectScoped
 
+  before_action :set_default_columns, only: :index
   before_action :set_issues, only: [:index, :new]
-  before_action :set_affected_nodes, only: [:index]
+  before_action :set_affected_nodes, only: :index
 
   EXTRA_COLUMNS = ['Created by', 'Created', 'Updated'].freeze
   SKIP_COLUMNS = ['Title', 'Label'].freeze
 
   def index
-    @evidence_columns = ['Node'] | (collection_field_names(@issue.evidence) - SKIP_COLUMNS) | EXTRA_COLUMNS
+    @evidence_columns =
+      ['Node'] |
+      (collection_field_names(@issue.evidence) - SKIP_COLUMNS) |
+      @rtp_default_fields |
+      EXTRA_COLUMNS
 
     render layout: false
   end
@@ -29,6 +34,18 @@ class Issues::EvidenceController < AuthenticatedController
           .map { |evidence| evidence.fields.keys }
           .flatten
           .uniq - ['Title', 'Label']
+  end
+
+  def set_default_columns
+    rtp = current_project.report_template_properties
+    @rtp_default_fields = rtp ? rtp.evidence_fields.default.field_names : []
+
+    @default_columns =
+      if @rtp_default_fields.any?
+        @rtp_default_fields
+      else
+        ['Node', 'Created by']
+      end
   end
 
   def set_affected_nodes
