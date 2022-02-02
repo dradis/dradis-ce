@@ -11,9 +11,8 @@ class KitImportJob < ApplicationJob
     logger.info "An error ocurred: #{e.message}"
   end
 
-  def perform(file_or_folder:, logger:, user_id: nil)
+  def perform(file_or_folder, logger:, user_id: nil)
     @current_user = user_id ? User.find(user_id) : User.first
-    @file_or_folder = file_or_folder
     @logger = logger
     @project = nil
     @report_templates_dir = Configuration.paths_templates_reports
@@ -21,7 +20,7 @@ class KitImportJob < ApplicationJob
     @word_rtp = nil
 
     FileUtils.cp_r file_or_folder, temporary_dir
-    unzip if File.file?(file_or_folder)
+    unzip(file_or_folder) if File.file?(file_or_folder)
 
     import_methodology_templates
     import_note_templates
@@ -43,7 +42,7 @@ class KitImportJob < ApplicationJob
   end
 
   private
-  attr_reader :current_user, :file_or_folder, :logger, :report_templates_dir, :temporary_dir
+  attr_reader :current_user, :logger, :report_templates_dir, :temporary_dir
 
   def assign_project_rtp
     logger.info { 'Assigning RTP to project...' }
@@ -173,11 +172,11 @@ class KitImportJob < ApplicationJob
     )
   end
 
-  def unzip
+  def unzip(file)
     logger.info { 'Extracting zip file...' }
 
     Dir.chdir(temporary_dir) do
-      Zip::File.open(file_or_folder) do |zip_file|
+      Zip::File.open(file) do |zip_file|
         zip_file.each do |entry|
           logger.info "  - #{entry.name}"
           zip_file.extract(entry, nil)
