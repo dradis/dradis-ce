@@ -114,7 +114,7 @@ class NodesController < NestedNodeResourceController
 
   private
 
-  def set_evidence_default_columns
+  def set_columns
     default_field_names = ['Title', 'Created', 'Updated'].freeze
     extra_field_names = ['Created by'].freeze
 
