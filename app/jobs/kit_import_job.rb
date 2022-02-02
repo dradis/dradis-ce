@@ -38,7 +38,6 @@ class KitImportJob < ApplicationJob
   ensure
     logger.info('Worker process completed.')
     FileUtils.remove_entry temporary_dir
-    File.unlink(file) if File.exists?(file)
   end
 
   private

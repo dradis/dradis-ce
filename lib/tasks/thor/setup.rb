@@ -53,10 +53,11 @@ class DradisTasks < Thor
     desc 'welcome', 'adds initial content to the repo for demonstration purposes'
     def welcome
       kit_file = prepare_kit
-
       # Before we import the Kit we need at least 1 user
       User.create!(email: 'adama@dradisframework.com').id
       invoke 'dradis:setup:kit', [], file: kit_file.path
+    ensure
+      File.unlink(kit_file)
     end
 
     private
