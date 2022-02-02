@@ -8,11 +8,13 @@ module Setup
     def create
       case @kit
       when :none
-        ;
+        # weaksauce alert: this creates a Node which flags the Setup as done.
+        Project.new.issue_library
       when :welcome
-        kit_file = ''
-        logger = nil
+        kit_file = '/tmp/welcome.zip'
+        logger = Log.new.info('Loading Welcome kit...')
         KitImportJob.perform_later(file: kit_file, logger: logger)
+        # KitImportJob.perform_now(file: kit_file, logger: logger)
       end
 
       flash[:notice] = 'All done. May the findings for this project be plentiful!'
