@@ -41,7 +41,7 @@ RSpec.describe KitImportJob do
     end
 
     it 'imports kit content' do
-      described_class.new.perform(file: @tmp_file, logger: Log.new.write('Testing...'))
+      described_class.new.perform(file_or_folder: @tmp_file, logger: Log.new.write('Testing...'))
 
       # issue template
       expect(NoteTemplate.find('issue')).to_not be_nil
@@ -69,7 +69,7 @@ RSpec.describe KitImportJob do
 
     if defined?(Dradis::Pro)
       it 'imports Pro-only content too' do
-        described_class.new.perform(file: @tmp_file, logger: Log.new.write('Testing...'))
+        described_class.new.perform(file_or_folder: @tmp_file, logger: Log.new.write('Testing...'))
 
         # report template properties
         word_template_properties = ReportTemplateProperties.find_by(template_file: 'dradis_welcome_template.v0.5.docm')
@@ -103,7 +103,7 @@ RSpec.describe KitImportJob do
       it 'renames project if project with same name already exists' do
         create(:project, name: 'dradis-export-welcome')
 
-        described_class.new.perform(file: @tmp_file, logger: Log.new.write('Testing...'))
+        described_class.new.perform(file_or_folder: @tmp_file, logger: Log.new.write('Testing...'))
 
         expect(Project.last.name).to eq('dradis-export-welcome_copy-01')
       end
