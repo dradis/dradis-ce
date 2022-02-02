@@ -14,7 +14,7 @@ describe 'node pages' do
       visit project_node_path(current_project, node, tab: 'notes-tab')
     end
 
-    let(:default_columns) { ['Affected', 'Title', 'Created', 'Updated'] }
+    let(:default_columns) { ['Title', 'Created', 'Updated'] }
     let(:hidden_columns) { ['Created by'] }
     let(:filter) { { keyword: @note.title, filter_count: 1 } }
 
