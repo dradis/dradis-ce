@@ -17,7 +17,7 @@ describe 'Sessions' do
   # and reused.
   def login
     # This gets us past Setup: Step 2
-    project = Project.new
+    project = create(:project)
     project.issue_library
 
     visit login_path
