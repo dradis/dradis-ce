@@ -6,8 +6,7 @@ class NodesController < NestedNodeResourceController
 
   skip_before_action :find_or_initialize_node, only: [ :sort, :create_multiple ]
   before_action :initialize_nodes_sidebar, except: [ :sort, :create_multiple ]
-  before_action :set_evidence_default_columns, only: :show
-  before_action :set_columns, only: :index
+  before_action :set_columns, only: :show
 
   # GET /nodes/<id>
   def show
