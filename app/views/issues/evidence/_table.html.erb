@@ -7,7 +7,7 @@
   <thead>
     <tr>
       <th class="no-sort" data-column-visible="false"><span class="sr-only">Select</span></th>
-      <% @evidence_columns.each do |column| %>
+      <% @all_columns.each do |column| %>
         <th><%= column %></th>
       <% end %>
       <th class="no-sort" data-column-visible="false"><span class="sr-only">Actions</span></th>
@@ -18,7 +18,7 @@
       <% node.evidence.where(issue_id: @issue.id).each do |evidence| %>
         <tr id="evidence-<%= evidence.id %>">
           <td class="select-checkbox" data-behavior="select-checkbox"></td>
-          <% @evidence_columns.each do |column| %>
+          <% @all_columns.each do |column| %>
             <%
               sort, display =
               case column

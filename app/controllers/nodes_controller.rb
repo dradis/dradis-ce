@@ -114,8 +114,8 @@ class NodesController < NestedNodeResourceController
   private
 
   def set_columns
-    default_field_names = ['Title', 'Created', 'Updated'].freeze
-    extra_field_names = ['Created by'].freeze
+    default_field_names = ['Label', 'Title'].freeze
+    extra_field_names = ['Created', 'Created by', 'Updated'].freeze
 
     note_dynamic_fields = dynamic_field_names(@node.notes)
     evidence_dynamic_fields = dynamic_field_names(@node.evidence)
@@ -123,13 +123,11 @@ class NodesController < NestedNodeResourceController
     rtp = current_project.report_template_properties
     rtp_default_evidence_fields = rtp ? rtp.evidence_fields.default.field_names : []
 
-    @note_columns     = default_field_names | note_dynamic_fields | extra_field_names
-    @evidence_columns = default_field_names | rtp_default_evidence_fields | evidence_dynamic_fields | extra_field_names
+    @note_columns     = note_dynamic_fields | extra_field_names
+    @evidence_columns = rtp_default_evidence_fields | evidence_dynamic_fields | extra_field_names
 
-    @default_columns = {
-      evidence: rtp_default_evidence_fields.presence || default_field_names,
-      note: default_field_names
-    }
+    @default_note_columns = default_field_names
+    @default_evidence_columns = rtp_default_evidence_fields.presence || default_field_names
   end
 
   def node_params

@@ -21,8 +21,8 @@ class Issues::EvidenceController < AuthenticatedController
   private
 
   def set_columns
-    default_field_names = ['Affected', 'Title', 'Created', 'Updated'].freeze
-    extra_field_names = ['Created by'].freeze
+    default_field_names = ['Label', 'Title'].freeze
+    extra_field_names = ['Created', 'Created by', 'Updated'].freeze
 
     dynamic_fields = dynamic_field_names(@issue.evidence)
 
@@ -30,7 +30,7 @@ class Issues::EvidenceController < AuthenticatedController
     rtp_default_fields = rtp ? rtp.issue_fields.default.field_names : []
 
     @default_columns = rtp_default_fields.presence || default_field_names
-    @evidence_columns = default_field_names | rtp_default_fields | dynamic_fields | extra_field_names
+    @all_columns = rtp_default_fields | dynamic_fields | extra_field_names
   end
 
   def set_affected_nodes

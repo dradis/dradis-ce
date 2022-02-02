@@ -137,7 +137,7 @@ class IssuesController < AuthenticatedController
     rtp_default_fields = rtp ? rtp.issue_fields.default.field_names : []
 
     @default_columns = rtp_default_fields.presence || default_field_names
-    @all_columns = ['Title'] | default_field_names | rtp_default_fields | dynamic_fields | extra_field_names
+    @all_columns = ['Title'] | rtp_default_fields | dynamic_fields | extra_field_names
   end
 
   def set_issues
