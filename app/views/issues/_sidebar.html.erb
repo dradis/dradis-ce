@@ -14,7 +14,7 @@
   new_path: main_app.new_project_issue_path(current_project)
 %>
 
-<%= render 'import_box' %>
+<%= render 'issues/import_box' %>
 
 <!-- Attachments -->
 <%= render partial: 'attachments/attachment_box', locals: { attachments_node: current_project.plugin_uploads_node } %>
