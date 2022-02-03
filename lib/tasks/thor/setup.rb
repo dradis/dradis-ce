@@ -52,10 +52,12 @@ class DradisTasks < Thor
 
     desc 'welcome', 'adds initial content to the repo for demonstration purposes'
     def welcome
-      prepare_kit
+      tmp_project_zip = prepare_kit
       # Before we import the Kit we need at least 1 user
       User.create!(email: 'adama@dradisframework.com').id
       invoke 'dradis:setup:kit', [], file: File.join(self.class.source_root, 'welcome')
+    ensure
+      File.unlink tmp_project_zip
     end
 
     private
@@ -64,6 +66,7 @@ class DradisTasks < Thor
       FileUtils.unlink old_package if File.exist?(old_package)
       new_package = prepare_project_package
       FileUtils.cp new_package.path, old_package
+      old_package
     end
 
     def prepare_project_package
