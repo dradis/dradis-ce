@@ -52,55 +52,37 @@ class DradisTasks < Thor
 
     desc 'welcome', 'adds initial content to the repo for demonstration purposes'
     def welcome
-      kit_file = prepare_kit
+      prepare_kit
       # Before we import the Kit we need at least 1 user
       User.create!(email: 'adama@dradisframework.com').id
-      invoke 'dradis:setup:kit', [], file: kit_file.path
-    ensure
-      File.unlink(kit_file)
+      invoke 'dradis:setup:kit', [], file: File.join(self.class.source_root, 'welcome')
     end
 
     private
     def prepare_kit
-
-      puts "** Creating kit..."
-      welcome_kit = Tempfile.new(['welcome', '.zip'])
-      Zip::File.open(welcome_kit.path, create: true) do |zipfile|
-
-        zipfile.mkdir('kit')
-        zipfile.mkdir('kit/templates/')
-        zipfile.mkdir('kit/templates/methodologies/')
-        zipfile.mkdir('kit/templates/notes/')
-        zipfile.mkdir('kit/templates/projects/')
-
-        methodology_template = File.join(self.class.source_root, 'methodology.xml')
-        zipfile.add('kit/templates/methodologies/owasp2017.xml', methodology_template)
-
-        note_template = File.join(self.class.source_root, 'note.txt')
-        zipfile.add('kit/templates/notes/basic_fields.txt', note_template)
-
-        project_package = prepare_project_package
-        zipfile.add('kit/dradis-export-welcome.zip', project_package.path)
-      end
-      puts "[  DONE  ]"
-
-      welcome_kit
+      old_package = File.join(self.class.source_root, 'welcome/kit/dradis-export-welcome.zip')
+      FileUtils.unlink old_package if File.exist?(old_package)
+      new_package = prepare_project_package
+      FileUtils.cp new_package.path, old_package
     end
 
     def prepare_project_package
-      project_package = Tempfile.new(['project', '.zip'])
 
+      puts "** Creating project package..."
+      # Because it's a Temfile, it will be garbage-collected on thor exit
+      project_package = Tempfile.new(['project', '.zip'])
       Zip::File.open(project_package.path, create: true) do |zipfile|
-        project_template = File.join(self.class.source_root, 'project.xml')
+        project_template = File.join(self.class.source_root, 'welcome/project/dradis-repository.xml')
         zipfile.add('dradis-repository.xml', project_template)
 
         # dradis:reset:database truncates the tables and resets the :id column so
         # we know the right node ID we're going to get based on the project.xml
         # structure.
-        attachment_file = File.join(self.class.source_root, 'command-01.png')
+        attachment_file = File.join(self.class.source_root, 'welcome/project/5/command-01.png')
         zipfile.mkdir('5/')
         zipfile.add('5/command-01.png', attachment_file)
       end
+      puts "[  DONE  ]"
 
       project_package
     end
