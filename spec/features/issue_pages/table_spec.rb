@@ -26,8 +26,8 @@ describe 'issue pages' do
       visit project_issues_path(current_project)
     end
 
-    let(:default_columns) { ['Title', 'Tags', 'Affected'] }
-    let(:hidden_columns) { ['Description', 'Risk'] }
+    let(:default_columns) { ['Title'] }
+    let(:hidden_columns) { ['Description', 'Risk', 'Tags'] }
     let(:filter) { { keyword: @issue.title, filter_count: 1 } }
 
     it_behaves_like 'a DataTable'
