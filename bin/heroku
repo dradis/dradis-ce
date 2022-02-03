@@ -10,12 +10,8 @@ end
 
 FileUtils.chdir APP_ROOT do
   puts "\n== Copying sample files =="
-  # FileUtils.cp 'config/database.yml.template', 'config/database.yml'
   FileUtils.cp 'config/secrets.yml.template', 'config/secrets.yml'
   FileUtils.cp 'config/smtp.yml.template', 'config/smtp.yml'
-
-  puts "\n== Replacing DB adapter =="
-  # system! "sed -i 's/adapter: sqlite3/adapter: postgresql/' config/database.yml"
 
   puts "\n== Preparing templates folder =="
   FileUtils.mkdir 'templates'
