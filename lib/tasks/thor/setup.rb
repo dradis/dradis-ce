@@ -52,42 +52,9 @@ class DradisTasks < Thor
 
     desc 'welcome', 'adds initial content to the repo for demonstration purposes'
     def welcome
-      tmp_project_zip = prepare_kit
       # Before we import the Kit we need at least 1 user
       User.create!(email: 'adama@dradisframework.com').id
       invoke 'dradis:setup:kit', [], file: File.join(self.class.source_root, 'welcome')
-    ensure
-      File.unlink tmp_project_zip
-    end
-
-    private
-    def prepare_kit
-      old_package = File.join(self.class.source_root, 'welcome/kit/dradis-export-welcome.zip')
-      FileUtils.unlink old_package if File.exist?(old_package)
-      new_package = prepare_project_package
-      FileUtils.cp new_package.path, old_package
-      old_package
-    end
-
-    def prepare_project_package
-
-      puts "** Creating project package..."
-      # Because it's a Temfile, it will be garbage-collected on thor exit
-      project_package = Tempfile.new(['project', '.zip'])
-      Zip::File.open(project_package.path, create: true) do |zipfile|
-        project_template = File.join(self.class.source_root, 'welcome/project/dradis-repository.xml')
-        zipfile.add('dradis-repository.xml', project_template)
-
-        # dradis:reset:database truncates the tables and resets the :id column so
-        # we know the right node ID we're going to get based on the project.xml
-        # structure.
-        attachment_file = File.join(self.class.source_root, 'welcome/project/5/command-01.png')
-        zipfile.mkdir('5/')
-        zipfile.add('5/command-01.png', attachment_file)
-      end
-      puts "[  DONE  ]"
-
-      project_package
     end
   end
 end
