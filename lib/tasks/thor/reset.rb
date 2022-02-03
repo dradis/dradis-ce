@@ -19,18 +19,11 @@ class DradisTasks < Thor
       return if defined?(Dradis::Pro)
 
       require 'config/environment'
+
       puts '** Cleaning database...'
-
-      Rails.application.eager_load!
-
-      config = Configuration.all.map { |c| { name: c.name, value: c.value } }
-
       rake('db:drop')
       rake('db:prepare')
       rake('db:seed')
-
-      Configuration.create(config)
-
       puts '   [  DONE  ]'
     end
 
