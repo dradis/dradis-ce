@@ -50,7 +50,7 @@ class Issues::EvidenceController < AuthenticatedController
   end
 
   def set_issues
-    @issues = current_project.issues
+    @issues = current_project.issues.order(:text)
     @issue = @issues.find(params[:issue_id])
   end
 end
