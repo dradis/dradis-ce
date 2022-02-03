@@ -13,8 +13,11 @@ describe 'Revisions#show:' do
 
     before do
       login_to_project_as_user
-      record.text = 'updated text'
-      record.save
+
+      with_versioning do
+        record.text = 'updated text'
+        record.save
+      end
     end
     
     it 'the 2 revisions are listed in the history table' do
