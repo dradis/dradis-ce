@@ -12,9 +12,7 @@ describe 'Setup::Kits' do
       ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
 
       visit new_setup_kit_path
-      expect(page).to have_link('Yes, please', href: setup_kit_path(kit: :welcome)) do |link|
-        link['data-method'] == 'post'
-      end
+      expect(page).to have_selector("form[action='#{setup_kit_path(kit: :welcome)}']")
 
       expect do
         # We'd need JS to be able to click in the link and send a POST

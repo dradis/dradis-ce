@@ -93,7 +93,7 @@ describe 'Issues pages' do
 
           it 'shows the form again with an error message' do
             submit_form
-            should have_selector '.alert.alert-error'
+            should have_selector '.alert.alert-danger'
           end
         end
 
@@ -212,7 +212,7 @@ describe 'Issues pages' do
 
           it 'shows the form again with an error message' do
             submit_form
-            should have_selector '.alert.alert-error'
+            should have_selector '.alert.alert-danger'
           end
         end
 
