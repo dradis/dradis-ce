@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title><%= content_for?(:title) ? yield(:title) : "Dradis Community Edition" %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <%= stylesheet_link_tag 'setup/setup', media: 'all', 'data-turbolinks-track' => true %>
+    <%= favicon_link_tag %>
+    <%= csrf_meta_tag %>
+
+    <meta charset="utf-8">
+  </head>
+
+  <body class="<%= controller_name %> <%= action_name %>">
+    <%= render 'shared/noscript' %>
+    <div class="container narrow">
+      <div class="row h-100vh">
+        <div class="col-12 d-flex flex-column justify-content-between">
+          <div class="logo">
+            <%= image_tag 'logo_full_small.png', class: 'img-fluid' %>
+          </div>
+
+          <div class="container">
+            <%= yield %>
+          </div>
+
+          <p class="copyright">Dradis Community Edition - <a href="http://drad.is">http://drad.is</a></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
