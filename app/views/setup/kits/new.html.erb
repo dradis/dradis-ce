@@ -6,13 +6,13 @@
 
 <div class="row">
   <div class="col-8 offset-2 col-md-6 offset-md-0 mt-3">
-    <%= link_to setup_kit_path(kit: :welcome), class: 'btn btn-experience', method: :post do %>
+    <%= button_to setup_kit_path(kit: :welcome), class: 'btn btn-experience' do %>
       <p>No,<br>I'm a new user</p> 
       <span>We will populate the instance with some sample data to show you the way.<i class="fa fa-long-arrow-right"></i></span>
     <% end %>
   </div>
   <div class="col-8 offset-2 col-md-6 offset-md-0 mt-3">
-    <%= link_to setup_kit_path(kit: :none), class: 'btn btn-experience', method: :post do %>
+    <%= button_to setup_kit_path(kit: :none), class: 'btn btn-experience' do %>
       <p>Yes,<br>I got this!</p> 
       <span>Since you know what you are doing, we'll let you jump right into a fresh instance.<i class="fa fa-long-arrow-right"></i></span>
     <% end %>
