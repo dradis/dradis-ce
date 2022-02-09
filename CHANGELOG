@@ -1,4 +1,4 @@
-[v#.#.#] ([month] [YYYY])
+v4.2.0 (February 2022)
   - Increased table loading performance on Issues, Evidence, and Notes for
     projects with *a lot* of issues, evidence, or notes
   - Editor: Support fields with the same name in the Fields View
