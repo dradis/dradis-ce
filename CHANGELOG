@@ -25,13 +25,21 @@ v4.2.0 (February 2022)
     - Tables: Prevent the select all button from selecting filtered out rows when a filter is been applied
     - Bug tracker items:
       - [item]
-  - New integrations:
-    - [integration]
   - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
+    - Dradis Projects:
+      - Fixed missing parent nodes during template and package imports
+    - Nexpose:
+      - Added the Hostname Node property from the `name` rather than `site-name` tag
+    - Nipper:
+      - Added Nipperv1 fields to issues
+    - PDF Export:
+      - Added Thor task for console export
+      - Added view hook for Export#index
+    - Qualys:
+      - Added 'element.qualys_collection' as issue field
+      - Added Qualys Web Application Scanner (WAS) support
+    - VSTS:
+      - Format issue content when sending to VSTS
   - Reporting enhancements:
     - [report type]:
       - [future tense verb] [reporting enhancement]
