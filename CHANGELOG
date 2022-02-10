@@ -10,6 +10,7 @@ v4.2.0 (February 2022)
   - Tylium:
     - Import CSS manifests from addons
     - Move '...' (more actions) menu closer to the content affected by the actions of the menu
+    - Move the 'Edit' action out of the '...' (more actions) menu for issues, evidence, notes, etc.
     - Remove extra left padding from the first line of content in a code block
     - Remove height restriction from code blocks
     - Simplify issues table columns
@@ -23,6 +24,8 @@ v4.2.0 (February 2022)
   - Bugs fixes:
     - Comments: Show sticky toolbar when adding long comments
     - Tables: Prevent the select all button from selecting filtered out rows when a filter is been applied
+    - Subscriptions: Fixed a caching issue preventing users from subscribing or
+      unsubscribing after the first cache was stored
     - Bug tracker items:
       - [item]
   - Integration enhancements:
