@@ -14,33 +14,34 @@ v4.2.0 (February 2022)
     - Remove extra left padding from the first line of content in a code block
     - Remove height restriction from code blocks
     - Simplify issues table columns
-    - Update focus state outline color
+    - Updates focus state outline color
   - Setup:
     - Add Setup Wizard
-    - Avoid hard-coding "../../shared/"
+    - Avoids hard-coding "../../shared/"
     - Store gem dependencies under ./vendor/bundle/
   - Upgraded gems:
     - mini_racer, rails
   - Bugs fixes:
     - Comments: Show sticky toolbar when adding long comments
-    - Tables: Prevent the select all button from selecting filtered out rows when a filter is been applied
-    - Subscriptions: Fixed a caching issue preventing users from subscribing or
+    - Tables: Prevents the select all button from selecting filtered out rows when a filter is been applied
+    - Subscriptions: Fixes a caching issue preventing users from subscribing or
       unsubscribing after the first cache was stored
     - Bug tracker items:
       - [item]
   - Integration enhancements:
     - Dradis Projects:
-      - Fixed missing parent nodes during template and package imports
+      - Fixes missing parent nodes during template and package imports
+      - Fixes missing nodes for attachments during template and package imports
     - Nexpose:
-      - Added the Hostname Node property from the `name` rather than `site-name` tag
+      - Add the Hostname Node property from the `name` rather than `site-name` tag
     - Nipper:
-      - Added Nipperv1 fields to issues
+      - Add Nipperv1 fields to issues
     - PDF Export:
-      - Added Thor task for console export
-      - Added view hook for Export#index
+      - Add Thor task for console export
+      - Add view hook for Export#index
     - Qualys:
-      - Added 'element.qualys_collection' as issue field
-      - Added Qualys Web Application Scanner (WAS) support
+      - Add 'element.qualys_collection' as issue field
+      - Add Qualys Web Application Scanner (WAS) support
   - Reporting enhancements:
     - [report type]:
       - [future tense verb] [reporting enhancement]
