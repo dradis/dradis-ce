@@ -100,6 +100,14 @@ describe 'evidence' do
       expect(page).to have_field :evidence_issue_id
     end
 
+    context 'when editing the evidence from an issue' do
+      it 'should redirect back to issue show page' do
+        visit edit_project_node_evidence_path(current_project, @node, @evidence, return_to: 'issue')
+        submit_form
+        expect(page).to have_current_path(project_issue_path(current_project, @evidence.issue))
+      end
+    end
+
     it 'uses the full-screen editor plugin' # TODO
 
     it_behaves_like 'a form with a help button'
