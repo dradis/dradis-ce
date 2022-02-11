@@ -26,6 +26,7 @@ v4.2.0 (February 2022)
     - Tables: Prevents the select all button from selecting filtered out rows when a filter is been applied
     - Subscriptions: Fixes a caching issue preventing users from subscribing or
       unsubscribing after the first cache was stored
+    - Issues: Send To menu updates when new plugins are installed
   - Integration enhancements:
     - Dradis Projects:
       - Fixes missing parent nodes during template and package imports
