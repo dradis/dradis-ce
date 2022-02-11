@@ -1,12 +1,16 @@
 v4.2.0 (February 2022)
+  - Editor: Support fields with the same name in the Fields View
   - Increased table loading performance on Issues, Evidence, and Notes for
     projects with *a lot* of issues, evidence, or notes
-  - Editor: Support fields with the same name in the Fields View
   - Issues:
     - Display evidence in a table
     - Load evidence tab content asynchronously
     - Multi-delete evidence at the issue level
     - Update evidence content while creating evidence records at the issue-level
+  - Setup:
+    - Add Setup Wizard
+    - Avoids hard-coding "../../shared/"
+    - Store gem dependencies under ./vendor/bundle/
   - Tylium:
     - Import CSS manifests from addons
     - Move '...' (more actions) menu closer to the content affected by the actions of the menu
@@ -15,10 +19,6 @@ v4.2.0 (February 2022)
     - Remove height restriction from code blocks
     - Simplify issues table columns
     - Updates focus state outline color
-  - Setup:
-    - Add Setup Wizard
-    - Avoids hard-coding "../../shared/"
-    - Store gem dependencies under ./vendor/bundle/
   - Upgraded gems:
     - mini_racer, rails
   - Bugs fixes:
@@ -26,8 +26,6 @@ v4.2.0 (February 2022)
     - Tables: Prevents the select all button from selecting filtered out rows when a filter is been applied
     - Subscriptions: Fixes a caching issue preventing users from subscribing or
       unsubscribing after the first cache was stored
-    - Bug tracker items:
-      - [item]
   - Integration enhancements:
     - Dradis Projects:
       - Fixes missing parent nodes during template and package imports
@@ -42,16 +40,6 @@ v4.2.0 (February 2022)
     - Qualys:
       - Add 'element.qualys_collection' as issue field
       - Add Qualys Web Application Scanner (WAS) support
-  - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
-  - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
-  - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v4.1.2 (December 2021)
   - Upgraded gems:
