@@ -137,28 +137,27 @@
 }
 
 .header-underline {
-  align-items: center;
+  border-bottom: 1px solid $borderColor;
   display: flex;
   margin-bottom: .5em;
-  padding-bottom: 0.5em;
   margin-top: -0.5rem;
-  border-bottom: 1px solid $borderColor;
+  padding-bottom: 0.5em;
   width: 100%;
 
   .actions {
-    align-items: center;
-    display: flex;
-    flex: 1;
-    justify-content: space-between;
-    margin-left: 0.5rem;
+    margin-left: auto;
 
     .action {
-      &::before {
+      &:not(:first-child)::before {
         content: '-';
       }
 
+      &:first-child {
+        margin-left: auto;
+      }
+
       &:last-of-type {
-        margin-right: 1rem;
+        margin: 0 0.75rem;
       }
     }
   }
@@ -186,7 +185,7 @@
 
 .issue-severity {
   cursor: default;
-  margin-right: 0.5rem;
+  white-space: nowrap;
 }
 
 .nav-tabs {
