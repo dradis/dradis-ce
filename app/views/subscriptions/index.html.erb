@@ -7,7 +7,9 @@
           <%= @subscribable.subscriptions.count %>
         </span>
         <span class="actions pt-1">
-          - <%= render 'subscriptions/actions', subscribable: @subscribable %>
+          <div class="action">
+            <%= render 'subscriptions/actions', subscribable: @subscribable %>
+          </div>
         </span>
       </h4>
       <div class="subscriptions-feed">
