@@ -30,8 +30,8 @@
           <% cache ['issue-information-tab', @issue] do %>
             <div class="note-text-inner">
               <h4 class="mb-4 header-underline">
-                <span class="text-truncate" title="Issue information">Issue information</span>
-                  <%= render partial: 'actions' %>
+                <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
+                <%= render partial: 'actions' %>
               </h4>
               <div class="content-textile" data-behavior="content-textile">
                 <%= markup(@issue.text, liquid: true) %>
@@ -44,7 +44,7 @@
         </div>
 
         <div class="tab-pane <%= class_names(active: params[:tab] == 'evidence-tab') %>" id="evidence-tab">
-          <%= 
+          <%=
             content_tag :div,
             spinner_tag,
             data: {
