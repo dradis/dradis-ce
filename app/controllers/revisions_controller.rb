@@ -37,7 +37,7 @@ class RevisionsController < AuthenticatedController
   end
 
   def sidebar
-    render 'revisions/sidebar', layout: false
+    render layout: false
   end
 
   private
