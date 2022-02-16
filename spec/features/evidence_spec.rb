@@ -45,9 +45,6 @@ describe 'evidence' do
       should have_selector 'p',  text: 'Issue info'
     end
 
-    let(:trackable) { @evidence }
-    it_behaves_like 'a page with an activity feed'
-
     let(:commentable) { @evidence }
     it_behaves_like 'a page with a comments feed'
 
@@ -98,6 +95,14 @@ describe 'evidence' do
     it 'has a form to edit the evidence' do
       expect(page).to have_field :evidence_content
       expect(page).to have_field :evidence_issue_id
+    end
+
+    context 'when editing the evidence from an issue' do
+      it 'should redirect back to issue show page' do
+        visit edit_project_node_evidence_path(current_project, @node, @evidence, return_to: 'issue')
+        submit_form
+        expect(page).to have_current_path(project_issue_path(current_project, @evidence.issue))
+      end
     end
 
     it 'uses the full-screen editor plugin' # TODO
