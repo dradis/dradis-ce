@@ -62,26 +62,34 @@ class RevisionsController < AuthenticatedController
     initialize_nodes_sidebar
   end
 
+  def set_revision_params
+    @revision_params = { :"#{@record.class.name.downcase}_id" => @record.id }
+    @revision_params[:node_id] = @node.id if @node
+
+    if @list
+      @revision_params[:board_id] = @record.board.id
+      @revision_params[:list_id] = @record.list.id
+    end
+  end
+
   def set_variables_from_params
     if params[:card_id]
       load_list
-      @path = sidebar_project_board_list_card_revisions_path
       @record = @list.cards.find(params[:card_id])
     elsif params[:evidence_id]
       load_node
-      @path = sidebar_project_node_evidence_revisions_path
       @record = @node.evidence.find(params[:evidence_id])
     elsif params[:issue_id]
       load_issues
-      @path = sidebar_project_issue_revisions_path
       @record = @issue
     elsif params[:note_id]
       load_node
-      @path = sidebar_project_node_note_revisions_path
       @record = @node.notes.find(params[:note_id])
     else
       raise 'Unable to identify record type'
     end
+
+    set_revision_params
 
   rescue ActiveRecord::RecordNotFound
     flash[:error] = 'Record not found'

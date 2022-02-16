@@ -32,11 +32,7 @@ Rails.application.routes.draw do
         member { post :move }
         resources :cards, except: [:index] do
           member { post :move }
-          resources :revisions, only: [:index, :show] do
-            collection do
-              get 'sidebar'
-            end
-          end
+          resources :revisions, only: [:index, :show]
         end
       end
     end
@@ -55,11 +51,7 @@ Rails.application.routes.draw do
 
       resources :evidence, concerns: :multiple_destroy, controller: 'issues/evidence', only: [:index, :new]
       resources :nodes, only: [:show], controller: 'issues/nodes'
-      resources :revisions, only: [:index, :show] do
-        collection do
-          get 'sidebar'
-        end
-      end
+      resources :revisions, only: [:index, :show] 
     end
 
     resources :methodologies do
@@ -83,19 +75,11 @@ Rails.application.routes.draw do
       resource :merge, only: [:create], controller: 'nodes/merge'
 
       resources :notes, concerns: :multiple_destroy do
-        resources :revisions, only: [:index, :show] do
-          collection do
-            get 'sidebar'
-          end
-        end
+        resources :revisions, only: [:index, :show] 
       end
 
       resources :evidence, except: :index, concerns: :multiple_destroy do
-        resources :revisions, only: [:index, :show] do
-          collection do
-            get 'sidebar'
-          end
-        end
+        resources :revisions, only: [:index, :show] 
       end
 
       constraints(filename: /.*/) do
@@ -110,6 +94,7 @@ Rails.application.routes.draw do
     end
 
     get 'search' => 'search#index'
+    get 'revisions/sidebar' => 'revisions#sidebar'
     get 'trash' => 'revisions#trash'
 
     # ------------------------------------------------------- Export Manager
