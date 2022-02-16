@@ -4,7 +4,6 @@ describe 'Revisions#show:' do
   subject { page }
 
   describe 'when the record has 2 revisions' do
-
     let(:record) do
       with_versioning do
         create(:issue)
@@ -20,7 +19,7 @@ describe 'Revisions#show:' do
       end
     end
     
-    it 'the 2 revisions are listed in the history table' do
+    it 'lists the revisions in the history table' do
       visit project_issue_revisions_path(current_project, record)
 
       within '.revisions-table tbody' do
