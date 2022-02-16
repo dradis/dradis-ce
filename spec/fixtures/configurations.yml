@@ -2,7 +2,3 @@
 password:
   name: 'admin:password'
   value: $2a$10$KXgHWzfmtCULbUFYg8XRLOqQLitq6CL6xbXO2gszKbPwRUoRhy6CC
-
-plugin_templates:
-  name: 'admin:paths:plugin_templates'
-  value: ./tmp/templates/plugins/

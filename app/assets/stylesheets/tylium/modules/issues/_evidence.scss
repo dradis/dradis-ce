@@ -1,0 +1,38 @@
+body.evidence.new {
+  .existing-node-list {
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+
+    &-filter {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+
+      &:focus {
+        border-color: $borderColor;
+        box-shadow: none;
+      }
+    }
+
+    &:focus-within {
+      border-color: $darkColor;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px $darkColor;
+    }
+
+    select {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border-top-width: 0;
+      height: 7.85rem;
+
+      &:focus,
+      &:active {
+        border-color: $borderColor;
+        box-shadow: none;
+      }
+    }
+  }
+
+  .step-guide {
+    font-size: 1.5rem;
+  }
+}
