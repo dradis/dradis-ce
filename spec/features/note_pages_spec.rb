@@ -42,9 +42,6 @@ describe "note pages" do
       should have_selector 'p',  text: 'My description'
     end
 
-    let(:trackable) { @note }
-    it_behaves_like "a page with an activity feed"
-
     let(:commentable) { @note }
     it_behaves_like 'a page with a comments feed'
 
