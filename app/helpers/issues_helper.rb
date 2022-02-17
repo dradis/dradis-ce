@@ -61,17 +61,19 @@ module IssuesHelper
   # ----------------------------------------------------------- /Import plugins
   def tag_and_name_for(issue, prefix = false)
     content_tag :span, class: 'issue-severity' do
-      content = if tag = issue.tags.first
-                  [
-                    colored_icon_for_model(issue, 'fa-bug'),
-                    h(tag.display_name)
-                  ]
-                else
-                  [
-                    content_tag(:i, nil, class: 'fa fa-bug'),
-                    'Untagged'
-                  ]
-                end
+      tag = issue.tags.first
+      content =
+        if tag
+          [
+            colored_icon_for_model(issue, 'fa-bug'),
+            h(tag.display_name)
+          ]
+        else
+          [
+            content_tag(:i, nil, class: 'fa fa-bug'),
+            'Untagged'
+          ]
+        end
 
       if prefix == true
         content.insert(1, 'Issue')
