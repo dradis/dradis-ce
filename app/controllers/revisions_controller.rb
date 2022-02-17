@@ -63,7 +63,7 @@ class RevisionsController < AuthenticatedController
   end
 
   def set_revision_params
-    @revision_params = { :"#{@record.class.name.downcase}_id" => @record.id }
+    @revision_params = { "#{@record.class.name.downcase}_id" => @record.id }
     @revision_params[:node_id] = @node.id if @node
 
     if @list
