@@ -6,7 +6,7 @@ describe 'Revisions#show:' do
   describe 'when the record has 2 revisions' do
     let(:record) do
       with_versioning do
-        create(:issue)
+        create(:issue, node_id: current_project.issue_library.id)
       end
     end
 
