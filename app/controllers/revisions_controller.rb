@@ -90,9 +90,5 @@ class RevisionsController < AuthenticatedController
     end
 
     set_revision_params
-
-  rescue ActiveRecord::RecordNotFound
-    flash[:error] = 'Record not found'
-    redirect_to :back
   end
 end
