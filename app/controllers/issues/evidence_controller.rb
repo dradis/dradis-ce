@@ -27,7 +27,7 @@ class Issues::EvidenceController < AuthenticatedController
     dynamic_fields = dynamic_field_names(@issue.evidence)
 
     rtp = current_project.report_template_properties
-    rtp_default_fields = rtp ? rtp.issue_fields.default.field_names : []
+    rtp_default_fields = rtp ? rtp.evidence_fields.default.field_names : []
 
     @default_columns = rtp_default_fields.presence || default_field_names
     @all_columns = rtp_default_fields | dynamic_fields | extra_field_names

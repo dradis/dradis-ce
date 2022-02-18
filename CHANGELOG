@@ -1,3 +1,6 @@
+v4.2.1 (February 2022)
+  - Bug fixes: Fix issue default fields appearing in the evidence table
+
 v4.2.0 (February 2022)
   - Editor: Support fields with the same name in the Fields View
   - Increased table loading performance on Issues, Evidence, and Notes for
