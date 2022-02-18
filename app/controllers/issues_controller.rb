@@ -1,7 +1,8 @@
 class IssuesController < AuthenticatedController
   include ActivityTracking
-  include ContentFromTemplate
   include ConflictResolver
+  include ContentFromTemplate
+  include DynamicFieldNamesCacher
   include LiquidEnabledResource
   include Mentioned
   include MultipleDestroy
@@ -10,21 +11,18 @@ class IssuesController < AuthenticatedController
 
   before_action :set_issuelib
   before_action :set_issues, except: [:destroy]
+  before_action :set_columns, only: :index
 
   before_action :set_or_initialize_issue, except: [:import, :index]
   before_action :set_or_initialize_tags, except: [:destroy]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
+  before_action :set_affected_nodes, only: [:show]
 
   def index
-    @columns = @issues.map(&:fields).map(&:keys).uniq.flatten | ['Title', 'Tags', 'Affected', 'Created', 'Created by', 'Updated']
   end
 
   def show
     @activities = @issue.commentable_activities.latest
-
-    # We can't use the existing @nodes variable as it only contains root-level
-    # nodes, and we need the auto-complete to have the full list.
-    @nodes_for_add_evidence = current_project.nodes.user_nodes.order(:label)
 
     @affected_nodes = Node.joins(:evidence)
                         .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')
@@ -121,11 +119,40 @@ class IssuesController < AuthenticatedController
   end
 
   private
+  def set_affected_nodes
+    @affected_nodes = Node.joins(:evidence)
+                          .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')
+                          .where('evidence.issue_id = ?', @issue.id)
+                          .group('nodes.id')
+                          .sort_by { |node, _| node.label }
+  end
+
+  def set_columns
+    default_field_names = ['Title', 'Tags', 'Affected'].freeze
+    extra_field_names = ['Created', 'Created by', 'Updated'].freeze
+
+    dynamic_fields = dynamic_field_names(@unsorted_issues)
+
+    rtp = current_project.report_template_properties
+    rtp_default_fields = rtp ? rtp.issue_fields.default.field_names : []
+
+    @default_columns = rtp_default_fields.presence || default_field_names
+    @all_columns = default_field_names | rtp_default_fields | dynamic_fields | extra_field_names
+  end
+
   def set_issues
     # We need a transaction because multiple DELETE calls can be issued from
     # index and a TOCTOR can appear between the Note read and the Issue.find
     Note.transaction do
-      @issues = Issue.where(node_id: @issuelib.id).select('notes.id, notes.author, notes.text, count(evidence.id) as affected_count, notes.created_at, notes.updated_at').joins('LEFT OUTER JOIN evidence on notes.id = evidence.issue_id').group('notes.id').includes(:tags).sort
+      @unsorted_issues = Issue.where(node_id: @issuelib.id).select(
+        'notes.id, notes.author, notes.text, '\
+        'count(evidence.id) as affected_count, notes.created_at, notes.updated_at'
+      ).
+      joins('LEFT OUTER JOIN evidence on notes.id = evidence.issue_id').
+      group('notes.id').
+      includes(:affected, :tags)
+
+      @issues = @unsorted_issues.sort
     end
   end
 
@@ -137,7 +164,7 @@ class IssuesController < AuthenticatedController
   # are going to be working with based on the :id passed by the user.
   def set_or_initialize_issue
     if params[:id]
-      @issue = Issue.find(params[:id])
+      @issue = current_project.issues.find(params[:id])
     elsif params[:issue]
       @issue = Issue.new(issue_params.except(:tag_list)) do |i|
         i.node = @issuelib
