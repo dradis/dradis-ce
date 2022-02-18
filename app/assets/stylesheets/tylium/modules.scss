@@ -151,6 +151,16 @@
     flex: 1;
     justify-content: space-between;
     margin-left: 0.5rem;
+
+    .action {
+      &::before {
+        content: '-';
+      }
+
+      &:last-of-type {
+        margin-right: 1rem;
+      }
+    }
   }
 }
 
