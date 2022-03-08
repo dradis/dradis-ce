@@ -271,13 +271,11 @@ describe 'Issues pages' do
             end
           end
 
-          it 'presents the list of hosts affected by a given issue'  do
+          it 'presents the table of hosts affected by a given issue', js: true do
+            click_link 'Evidence'
+            expect(page).to have_selector('[data-behavior~=dradis-datatable]')
             expect(find('.secondary-sidebar-content')).to have_content('10.0.0.1')
-            expect(find('.secondary-sidebar-content')).to have_content('10.0.0.2 (3)')
-          end
-
-          it 'presents the evidence of the first node' do
-            expect(page).to have_content('This apache is old!')
+            expect(find('.secondary-sidebar-content')).to have_content('10.0.0.2', count: 3)
           end
 
           it 'presents the evidence of the other nodes on click', js: true do
@@ -321,112 +319,6 @@ describe 'Issues pages' do
 
           include_examples 'deleted item is listed in Trash', :issue
           include_examples 'recover deleted item', :issue
-        end
-
-        describe 'add evidence', js: true do
-          before do
-            @node = current_project.nodes.create!(label: '192.168.0.1')
-
-            template_path = Rails.root.join('spec/fixtures/files/note_templates/')
-            allow(NoteTemplate).to receive(:pwd).and_return(template_path)
-
-            visit project_issue_path(current_project, @issue)
-            click_link('Evidence')
-          end
-
-          it 'displays evidence form when add link clicked' do
-            expect(page).to have_selector('#js-add-evidence-container', visible: false)
-            find('.js-add-evidence').click
-            expect(page).to have_selector('#js-add-evidence-container', visible: true)
-          end
-
-          it 'filters nodes' do
-            find('.js-add-evidence').click
-            within('#existing-node-list') do
-              current_project.nodes.user_nodes.each do |n|
-                expect(page).to have_text n.label
-              end
-            end
-            expect(all('#existing-node-list label').count).to be current_project.nodes.user_nodes.count
-
-            # find('#evidence_node').native.send_key('192.')
-            fill_in 'evidence_node', with: '192\.'
-
-            expect(all('#existing-node-list label').count).to eq 1
-          end
-
-          it 'creates an evidence with the selected template for selected node' do
-            find('.js-add-evidence').click
-            check('192.168.0.1')
-            select('Simple Note', from: 'evidence_content')
-            expect { click_button('Save Evidence') }.to change { Evidence.count }.by(1)
-            evidence = Evidence.last
-            expect(evidence.content).to eq(NoteTemplate.find('simple_note').content.gsub("\n", "\r\n"))
-            expect(evidence.node.label).to eq '192.168.0.1'
-          end
-
-          it 'creates an evidence for new nodes and existing nodes too' do
-            find('.js-add-evidence').click
-            fill_in 'Paste list of nodes', with: "192.168.0.1\r\n192.168.0.2\r\n192.168.0.3"
-            expect do
-              click_button('Save Evidence')
-              expect(page).to have_text 'Evidence added for selected nodes.'
-            end.to change { Evidence.count }.by(3).and change { Node.count }.by(2)
-
-            # New nodes don't have a parent:
-            current_project.nodes.order('created_at ASC').last(2).each do |node|
-              expect(node.parent).to be_nil
-            end
-          end
-
-          it 'assigns new nodes to the right parent' do
-            find('.js-add-evidence').click
-            fill_in 'Paste list of nodes', with: "#{@node.label}\r\naaaa"
-            select @node.label, from: 'Create new nodes under'
-            expect do
-              click_button('Save Evidence')
-            end.to change { Evidence.count }.by(2).and change { Node.count }.by(1)
-
-            # bug fix: existing nodes don't have their parent changed
-            expect(@node.reload.parent).to be_nil # bug fix
-            new_node = current_project.nodes.find_by!(label: 'aaaa')
-            expect(new_node.parent).to eq @node
-          end
-
-          it 'tracks "create" activities for new evidence and nodes' do
-            find('.js-add-evidence').click
-            # one new node, one existing node:
-            fill_in 'Paste list of nodes', with: "#{@node.label}\r\naaaa"
-            expect do
-              click_button('Save Evidence')
-              expect(page).to have_text 'Evidence added for selected nodes.'
-            end.to change { enqueued_activity_tracking_jobs.size }.by(3)
-
-            jobs = enqueued_activity_tracking_jobs.last(3)
-            expect(enqueued_job_args(jobs, 'action')).to eq Array.new(3, 'create')
-            expect(enqueued_job_args(jobs, 'trackable_type')).to \
-              match_array(%w[Evidence Evidence Node])
-          end
-
-          it 'assigns the current user as the evidence author' do
-            find('.js-add-evidence').click
-            check('192.168.0.1')
-            select('Simple Note', from: 'evidence_content')
-            expect { click_button('Save Evidence') }.to change { Evidence.count }.by(1)
-            expect(@node.reload.evidence.last.author).to eq(@logged_in_as.email)
-          end
-
-          # we need to filter by job class because a NotificationsReaderJob
-          # will also be enqueued
-          def enqueued_activity_tracking_jobs
-            ActiveJob::Base.queue_adapter.enqueued_jobs.select do |hash|
-              hash[:job] == ActivityTrackingJob
-            end
-          end
-
-          def enqueued_job_args(job_hashes, key)
-            job_hashes.map { |h| h[:args].map { |h2| h2[key] } }.flatten
-          end
         end
       end
     end
