@@ -52,9 +52,8 @@ class KitImportJob < ApplicationJob
 
   def copy_kit_to_working_dir(source)
     if File.file?(source)
-      file = source
-      FileUtils.cp file, working_dir
-      unzip(file)
+      FileUtils.cp source, working_dir
+      unzip(source)
     else
       # We need the folder to end in /. so FileUtils.cp_r copies the contents
       # and not the container folder.
