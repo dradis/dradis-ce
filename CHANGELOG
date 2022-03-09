@@ -2,7 +2,7 @@ v4.3.0 ([month] 2022)
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - nokogiri
+    - nokogiri, rails
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
