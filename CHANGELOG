@@ -43,6 +43,7 @@ v4.2.0 (February 2022)
     - Avoids hard-coding "../../shared/"
     - Store gem dependencies under ./vendor/bundle/
   - Tylium:
+    - Add breadcrumbs to Revision History view
     - Import CSS manifests from addons
     - Move '...' (more actions) menu closer to the content affected by the actions of the menu
     - Move the 'Edit' action out of the '...' (more actions) menu for issues, evidence, notes, etc.
