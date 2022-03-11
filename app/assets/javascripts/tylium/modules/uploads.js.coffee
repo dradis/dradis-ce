@@ -5,7 +5,6 @@ document.addEventListener "turbolinks:load", ->
     $percent = $('.percent');
     $status = $('#status');
     $('form#new_upload').ajaxForm({
-      resetForm: true
       dataType: 'script'
       beforeSend: ->
           $status.empty();
