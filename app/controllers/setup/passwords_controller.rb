@@ -16,8 +16,7 @@ module Setup
       setting.value = ::BCrypt::Password.create(@password)
 
       if setting.save
-        flash[:notice] = 'All done. May the findings for this project be plentiful!'
-        redirect_to login_path
+        redirect_to new_setup_kit_path
       else
         flash[:alert] = "Something went wrong: #{setting.errors.full_messages.join('; ')}"
         render :new
@@ -26,7 +25,7 @@ module Setup
 
     private
     def ensure_pristine
-      redirect_to project_path(1) unless (::Configuration.shared_password == 'improvable_dradis')
+      redirect_to new_setup_kit_path unless (::Configuration.shared_password == 'improvable_dradis')
     end
 
     # Ensure that the user has provided a valid password, that the password

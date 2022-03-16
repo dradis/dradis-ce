@@ -1,4 +1,5 @@
 v4.3.0 ([month] 2022)
+  - Setup Wizard: initial content choice.
   - Uploads: do not reset form so you can keep uploading output files from the same scanner
   - Upgraded gems:
     - nokogiri, rails
