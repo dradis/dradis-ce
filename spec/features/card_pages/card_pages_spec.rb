@@ -216,9 +216,6 @@ describe 'Card pages:' do
 
       let(:create_activities) { nil }
 
-      let(:commentable) { @card }
-      it_behaves_like 'a page with comment feed'
-
       let(:trackable) { @card }
       it_behaves_like 'a page with an activity feed'
 

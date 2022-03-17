@@ -43,9 +43,6 @@ describe 'evidence' do
       should have_selector 'p',  text: 'Issue info'
     end
 
-    let(:commentable) { @evidence }
-    it_behaves_like 'a page with comment feed'
-
     let(:trackable) { @evidence }
     it_behaves_like 'a page with an activity feed'
 
