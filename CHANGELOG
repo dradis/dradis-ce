@@ -1,21 +1,11 @@
-[v#.#.#] ([month] [YYYY])
-  - Editor: Support fields with the same name in the Fields View
-  - Tylium:
-    - Import CSS manifests from addons
-    - Move '...' (more actions) menu closer to the content affected by the actions of the menu
-    - Remove extra left padding from the first line of content in a code block
-    - Remove height restriction from code blocks
-    - Simplify issues table columns
-    - Update focus state outline color
-  - Setup:
-    - Add Setup Wizard
-    - Avoid hard-coding "../../shared/"
-    - Store gem dependencies under ./vendor/bundle/
+v4.3.0 ([month] 2022)
+  - Setup Wizard: initial content choice.
+  - Uploads: do not reset form so you can keep uploading output files from the same scanner
   - Upgraded gems:
-    - mini_racer, rails
+    - nokogiri, rails
   - Bugs fixes:
-    - Comments: Show sticky toolbar when adding long comments
-    - Tables: Prevent the select all button from selecting filtered out rows when a filter is been applied
+    - [entity]:
+      - [future tense verb] [bug fix]
     - Bug tracker items:
       - [item]
   - New integrations:
@@ -35,6 +25,53 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v4.2.1 (February 2022)
+  - Bug fixes: Fix issue default fields appearing in the evidence table
+
+v4.2.0 (February 2022)
+  - Editor: Support fields with the same name in the Fields View
+  - Increased table loading performance on Issues, Evidence, and Notes for
+    projects with *a lot* of issues, evidence, or notes
+  - Issues:
+    - Display evidence in a table
+    - Load evidence tab content asynchronously
+    - Multi-delete evidence at the issue level
+    - Update evidence content while creating evidence records at the issue-level
+  - Setup:
+    - Add Setup Wizard
+    - Avoids hard-coding "../../shared/"
+    - Store gem dependencies under ./vendor/bundle/
+  - Tylium:
+    - Import CSS manifests from addons
+    - Move '...' (more actions) menu closer to the content affected by the actions of the menu
+    - Move the 'Edit' action out of the '...' (more actions) menu for issues, evidence, notes, etc.
+    - Remove extra left padding from the first line of content in a code block
+    - Remove height restriction from code blocks
+    - Simplify issues table columns
+    - Updates focus state outline color
+  - Upgraded gems:
+    - mini_racer, puma, rails
+  - Bugs fixes:
+    - Comments: Show sticky toolbar when adding long comments
+    - Tables: Prevents the select all button from selecting filtered out rows when a filter is been applied
+    - Subscriptions: Fixes a caching issue preventing users from subscribing or
+      unsubscribing after the first cache was stored
+    - Issues: Send To menu updates when new plugins are installed
+  - Integration enhancements:
+    - Dradis Projects:
+      - Fixes missing parent nodes during template and package imports
+      - Fixes missing nodes for attachments during template and package imports
+    - Nexpose:
+      - Add the Hostname Node property from the `name` rather than `site-name` tag
+    - Nipper:
+      - Add Nipperv1 fields to issues
+    - PDF Export:
+      - Add Thor task for console export
+      - Add view hook for Export#index
+    - Qualys:
+      - Add 'element.qualys_collection' as issue field
+      - Add Qualys Web Application Scanner (WAS) support
 
 v4.1.2 (December 2021)
   - Upgraded gems:

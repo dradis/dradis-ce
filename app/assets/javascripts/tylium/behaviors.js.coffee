@@ -193,3 +193,6 @@ document.addEventListener "turbolinks:load", ->
     history.pushState({}, '', this.href);
     $(this.hash)[0].scrollIntoView behavior: 'smooth'
     return
+
+  # Init Bootstrap tooltips
+  $('[data-toggle~=tooltip]').tooltip();

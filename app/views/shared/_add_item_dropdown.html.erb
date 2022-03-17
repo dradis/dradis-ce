@@ -9,26 +9,5 @@
     <i class="fa fa-chevron-up" data-behavior="toggle-chevron"></i><span class="sr-only">Toggle <%= name.downcase %> list</span>
   <% end %>
 
-  <div class="dropdown-menu <%= local_assigns.fetch(:menu_class, '') %>">
-    <%= link_to 'Blank',
-      new_path,
-      :tabindex => '-1',
-      :class => 'dropdown-item',
-      :data => {
-        :category_id => category_id,
-        :title       => "Add #{name.singularize}",
-      }
-    %>
-
-    <div class="divider"></div>
-
-    <% if NoteTemplate.all.any? %>
-      <% NoteTemplate.all.each do |template| %>
-        <%= link_to template.name, "#{new_path}?template=#{template.id}", tabindex: '-1', class: 'dropdown-item' %>
-      <% end %>
-    <% else %>
-      <a href="javascript:void(0)" class="dropdown-item disabled">(no templates defined)</a>
-    <% end -%>
-
-  </div>
+  <%= render 'shared/templates_dropdown', name: name, new_path: new_path, category_id: category_id, menu_class: menu_class %>
 </div>
