@@ -178,7 +178,7 @@ describe 'issue table', js: true do
       end
     end
 
-    context 'when fields are removed', js: true do
+    context 'when fields are removed' do
       it 'persists column state' do
         hide_default_columns
         issue.update_attribute(:text, "#[Title]#\nIssue1")
@@ -195,7 +195,7 @@ describe 'issue table', js: true do
     end
   end
 
-  it 'can filter rows', js: true do
+  it 'can filter rows' do
     within '.dataTables_filter' do
       search_input = page.find('input[type=search]')
       search_input.set(issue.title)
