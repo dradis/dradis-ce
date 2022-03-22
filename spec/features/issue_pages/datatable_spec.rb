@@ -27,7 +27,6 @@ describe 'issue table', js: true do
 
   before do
     login_to_project_as_user
-    issue
     issues
     tags
     visit project_issues_path(current_project)
@@ -147,7 +146,6 @@ describe 'issue table', js: true do
       expect(issue.reload.tags).to include(tags.first)
     end
   end
-
 
   describe 'dynamic columns' do
     let(:default_columns) { ['Title', 'Tags'] }
