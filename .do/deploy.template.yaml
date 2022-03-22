@@ -10,7 +10,7 @@ spec:
       value: enabled
       scope: RUN_TIME
     git:
-      branch: deploy-to-do
+      branch: develop
       repo_clone_url: https://github.com/dradis/dradis-ce.git
     name: web
     run_command: ./bin/setup

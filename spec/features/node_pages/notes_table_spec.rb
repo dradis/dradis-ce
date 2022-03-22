@@ -14,8 +14,8 @@ describe 'node pages' do
       visit project_node_path(current_project, node, tab: 'notes-tab')
     end
 
-    let(:default_columns) { ['Title', 'Created', 'Updated'] }
-    let(:hidden_columns) { ['Description', 'Extra'] }
+    let(:default_columns) { ['Title'] }
+    let(:hidden_columns) { ['Created', 'Created by', 'Updated'] }
     let(:filter) { { keyword: @note.title, filter_count: 1 } }
 
     it_behaves_like 'a DataTable'
