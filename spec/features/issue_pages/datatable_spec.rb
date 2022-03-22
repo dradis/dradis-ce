@@ -167,8 +167,7 @@ describe 'issue table', js: true do
         hide_default_columns
         issue.update_attribute(:text, "#[Title]#\nNew Title\n\n#[Risk]#\nHigh\n\n#[Description]#\nn/a\n\n#[New Field]#\nNew Field Value")
 
-        # Refresh
-        visit current_url
+        page.refresh
 
         within '.dataTables_wrapper thead tr' do
           expect(page).to_not have_text('Created')
@@ -183,8 +182,7 @@ describe 'issue table', js: true do
         hide_default_columns
         issue.update_attribute(:text, "#[Title]#\nIssue1")
 
-        # Refresh
-        visit current_url
+        page.refresh
 
         within '.dataTables_wrapper thead tr' do
           expect(page).to_not have_text('Created')
