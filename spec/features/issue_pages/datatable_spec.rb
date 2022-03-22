@@ -195,7 +195,6 @@ describe 'issue table', js: true do
         end
       end
     end
-
   end
 
   it 'can filter rows', js: true do
