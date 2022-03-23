@@ -14,6 +14,8 @@ describe 'Comment feed', js: true do
     ]
   end
 
+  let!(:evidence_comment) { create(:comment, commentable: create(:evidence)) }
+
   before do
     visit project_issue_path(current_project, issue)
 
@@ -26,22 +28,11 @@ describe 'Comment feed', js: true do
       within comment_feed do
         expect(page).to have_comment(comments[0])
         expect(page).to have_comment(comments[1])
+        expect(page).to_not have_comment(evidence_comment)
       end
-    end
 
-    it 'display user\'s name in comment row' do
       within "div##{dom_id(comments[0])}" do
         expect(page).to have_selector('span.user', text: @logged_in_as.name)
-      end
-    end
-
-    context 'other commentable comments' do
-      let!(:evidence_comment) { create(:comment, commentable: create(:evidence)) }
-
-      it 'does not show up in the list' do
-        within comment_feed do
-          expect(page).to_not have_comment(evidence_comment)
-        end
       end
     end
   end
@@ -67,33 +58,25 @@ describe 'Comment feed', js: true do
     include_examples 'creates an Activity', :create, Comment
 
     describe 'local caching' do
-      context 'when comment is not saved' do
-        it 'prefills textarea with cached value' do
-          within 'form[data-behavior~=local-auto-save]' do
-            fill_in 'comment[content]', with: 'test comment'
-            sleep 1 # Needed for debounce function in local_auto_save.js
-          end
-
-          page.refresh
-
-          content = page.find_field('comment[content]').value
-          expect(content).to eq 'test comment'
+      it 'prefills textarea with cached value and clears it when saved' do
+        within 'form[data-behavior~=local-auto-save]' do
+          fill_in 'comment[content]', with: 'test comment'
+          sleep 1 # Needed for debounce function in local_auto_save.js
         end
-      end
 
-      context 'when comment is saved' do
-        it 'clears cached value' do
-          within 'form[data-behavior~=local-auto-save]' do
-            fill_in 'comment[content]', with: 'test comment'
-            sleep 1 # Needed for debounce function in local_auto_save.js
-            click_button 'Add comment'
-          end
+        page.refresh
 
-          page.refresh
+        content = page.find_field('comment[content]').value
+        expect(content).to eq 'test comment'
 
-          content = page.find_field('comment[content]').value
-          expect(content).to eq ''
+        within 'form[data-behavior~=local-auto-save]' do
+          click_button 'Add comment'
         end
+
+        page.refresh
+
+        content = page.find_field('comment[content]').value
+        expect(content).to eq ''
       end
     end
   end
@@ -146,46 +129,33 @@ describe 'Comment feed', js: true do
           fill_in 'comment[content]', with: 'test comment edited'
           sleep 1 # Needed for debounce function in local_auto_save.js
         end
+
+        page.refresh
       end
 
-      context 'when comment is not updated' do
-        it 'prefills textarea with cached value' do
-          page.refresh
+      it 'prefills textarea with cached value and clears cached value when cancel is clicked' do
+        find("div#comment_#{model.id}").hover
 
-          find("div#comment_#{model.id}").hover
-
-          within "div#comment_#{model.id}" do
-            click_link 'Edit'
-            content = page.find_field('comment[content]').value
-            expect(content).to eq 'test comment edited'
-          end
+        within "div#comment_#{model.id}" do
+          click_link 'Edit'
+          content = page.find_field('comment[content]').value
+          expect(content).to eq 'test comment edited'
         end
 
-        it 'does not save unsaved changes in database' do
-          expect(model.reload.content).not_to eq 'test comment edited'
+        expect(model.reload.content).not_to eq 'test comment edited'
+
+        within "div#comment_#{model.id}" do
+          click_link 'Cancel'
         end
-      end
 
-      context 'when cancel is clicked' do
-        it 'clears cached value' do
-          page.refresh
+        page.refresh
 
-          find("div#comment_#{model.id}").hover
+        find("div#comment_#{model.id}").hover
 
-          within "div#comment_#{model.id}" do
-            click_link 'Edit'
-            click_link 'Cancel'
-          end
-
-          page.refresh
-
-          find("div#comment_#{model.id}").hover
-
-          within "div#comment_#{model.id}" do
-            click_link 'Edit'
-            content = page.find_field('comment[content]').value
-            expect(content).not_to eq 'test comment edited'
-          end
+        within "div#comment_#{model.id}" do
+          click_link 'Edit'
+          content = page.find_field('comment[content]').value
+          expect(content).not_to eq 'test comment edited'
         end
       end
     end
@@ -211,16 +181,13 @@ describe 'Comment feed', js: true do
         expect(page).not_to have_text(model.content)
         expect(Comment.find_by_id(model.id)).to be_nil
       end
-    end
 
-    include_examples 'creates an Activity', :destroy
-
-    it 'does not allow deleting a comment from another user' do
-      id = comments[1].id
-
-      within "div#comment_#{id}" do
+      other_user_comment_id = comments[1].id
+      within "div#comment_#{other_user_comment_id}" do
         expect(page).to have_link('Delete', visible: false)
       end
     end
+
+    include_examples 'creates an Activity', :destroy
   end
 end
