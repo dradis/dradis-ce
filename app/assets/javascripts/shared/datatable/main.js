@@ -200,14 +200,14 @@ class DradisDatatable {
       //
       // To prevent a reset from happening, we just have to ensure that the number of columns on the page
       // matches the length of columns array in the saved state object.
-      stateLoadCallback: function(_settings) {
+      stateLoadCallback: function(_settings, callback) {
         var localStorageData = JSON.parse(localStorage.getItem(that.localStorageKey));
 
-        if (localStorageData !== null) {
-          return that.rebuildSavedStateColumnsFromLocalStorage(localStorageData);
-        } else {
+        if (!localStorageData) {
           return null;
         }
+
+        callback(that.rebuildSavedStateColumnsFromLocalStorage(localStorageData));
       },
       select: {
         selector: 'td.select-checkbox',
