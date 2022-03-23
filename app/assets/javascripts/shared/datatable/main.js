@@ -121,6 +121,7 @@ class DradisDatatable {
       ],
       pageLength: 25,
       stateSave: true,
+      stateDuration: 0, // https://datatables.net/reference/option/stateDuration#Default
       // https://datatables.net/reference/option/stateSaveCallback
       // DataTables will call stateSaveCallback() whenever a state change event
       // happens (paging, searching, sorting, showing/hiding columns, etc).
@@ -200,14 +201,14 @@ class DradisDatatable {
       //
       // To prevent a reset from happening, we just have to ensure that the number of columns on the page
       // matches the length of columns array in the saved state object.
-      stateLoadCallback: function(_settings, callback) {
+      stateLoadCallback: function(_settings) {
         var localStorageData = JSON.parse(localStorage.getItem(that.localStorageKey));
 
-        if (!localStorageData) {
+        if (localStorageData !== null) {
+          return that.rebuildSavedStateColumnsFromLocalStorage(localStorageData);
+        } else {
           return null;
         }
-
-        callback(that.rebuildSavedStateColumnsFromLocalStorage(localStorageData));
       },
       select: {
         selector: 'td.select-checkbox',
