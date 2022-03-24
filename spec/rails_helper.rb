@@ -8,6 +8,7 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 require 'capybara/rspec'
+require 'webdrivers'
 require 'paper_trail/frameworks/rspec'
 require 'shoulda/matchers'
 
@@ -45,8 +46,10 @@ end
 
 Capybara.register_server :puma do |app, port, host|
   require 'rack/handler/puma'
-  Rack::Handler::Puma.run(app, pidfile: "pid#{ENV['TEST_ENV_NUMBER']}.pid", Host: host, Port: port, Threads: "0:4", Silent: true)
+  Rack::Handler::Puma.run(app, Host: host, Port: port, Threads: '0:4', Silent: true)
 end
+
+Webdrivers.install_dir = File.expand_path('~/.webdrivers/' + ENV['TEST_ENV_NUMBER'].to_s)
 
 Capybara.javascript_driver = :chrome
 
