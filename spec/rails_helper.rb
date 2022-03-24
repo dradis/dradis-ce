@@ -36,6 +36,7 @@ end
 ActiveRecord::Migration.maintain_test_schema!
 
 Capybara.server_port = "1337#{ENV['TEST_ENV_NUMBER']}"
+Webdrivers.install_dir = File.expand_path('~/.webdrivers/' + ENV['TEST_ENV_NUMBER'].to_s)
 
 Capybara.register_driver :chrome do |app|
   options = %w[headless disable-gpu window-size=1920,1080]
