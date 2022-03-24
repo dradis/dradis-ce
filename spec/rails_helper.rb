@@ -45,7 +45,7 @@ end
 
 Capybara.register_server :puma do |app, port, host|
   require 'rack/handler/puma'
-  Rack::Handler::Puma.run(app, Host: host, Port: port, Threads: "1:1", Silent: true)
+  Rack::Handler::Puma.run(app, pidfile: "pid#{ENV['TEST_ENV_NUMBER']}.pid", Host: host, Port: port, Threads: "0:4", Silent: true)
 end
 
 Capybara.javascript_driver = :chrome
