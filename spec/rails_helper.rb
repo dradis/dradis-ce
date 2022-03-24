@@ -36,6 +36,7 @@ end
 ActiveRecord::Migration.maintain_test_schema!
 
 Capybara.server_port = "1337#{ENV['TEST_ENV_NUMBER']}"
+Capybara.session_name = Capybara.server_port.to_s
 Webdrivers.install_dir = File.expand_path('~/.webdrivers/' + ENV['TEST_ENV_NUMBER'].to_s)
 
 Capybara.register_driver :chrome do |app|
@@ -49,8 +50,6 @@ Capybara.register_server :puma do |app, port, host|
   require 'rack/handler/puma'
   Rack::Handler::Puma.run(app, Host: host, Port: port, Threads: '0:4', Silent: true)
 end
-
-Webdrivers.install_dir = File.expand_path('~/.webdrivers/' + ENV['TEST_ENV_NUMBER'].to_s)
 
 Capybara.javascript_driver = :chrome
 
