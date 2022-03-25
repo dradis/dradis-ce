@@ -16,7 +16,7 @@ document.addEventListener('turbolinks:load', function() {
           $('[data-behavior~=mission-text]').text(randomString.substring(0, charCount));
           charCount += 1;
         }
-      }, 60);
+      }, 20);
     }, 500);
 
     $('[data-behavior~=logo-icons]').addClass('expand');
