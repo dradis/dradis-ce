@@ -1,0 +1,118 @@
+body.unauthenticated {
+  background: linear-gradient(165deg, lighten($primaryColor, 20) 0%, $primaryColor 50%, darken($primaryColor, 10) 100%);
+  height: 100vh;
+  overflow: hidden;
+
+  .alert {
+    padding: .75rem 1.25rem;
+    margin: 0 0 1rem 0;
+  }
+
+  .btn {
+    text-shadow: 0 0 0;
+
+    &.btn-primary {
+      @include button($linkColor);
+    }
+  }
+
+  footer {
+    margin-top: 3rem;
+
+    p {
+      font-size: 80%;
+      margin: 0;
+      text-align: center;
+    }
+  }
+
+  .form-container {
+    position: relative;
+
+    &-inner {
+      margin: 1rem 2rem;
+
+      h1 {
+        font-size: 1.75rem;
+        margin: 1rem 0;
+        text-align: center;
+        text-transform: capitalize;
+      }
+    }
+
+    .logo {
+      height: auto;
+      margin: 0 auto;
+      width: 10rem;
+    }
+
+    .logo-icons {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height: 200%;
+      width: 175%;
+      
+      transform: translate(-50%, -50%);
+
+      background-image: image-url('logo_pattern.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      transition: background-size 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      background-size: 0%;
+      z-index: -1;
+
+      &.expand {
+        background-size: 100%;
+      }
+
+      &.shrink {
+        background-size: 0%;
+      }
+    }
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    color: #555;
+
+    &:focus {
+      border-color: $linkColor;
+      outline: 0;
+      box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px $linkColor;
+    }
+  }
+
+  .mission-container {
+    padding-left: 8rem;
+
+    .mission-text-cursor {
+      animation: blink 0.8s infinite forwards;
+      display: inline-flex;
+      opacity: 0;
+      overflow: hidden;
+      width: 2rem;
+
+      @keyframes blink {
+        0% {
+          opacity: 0;
+        } 
+        49% {
+          opacity: 0;
+        } 
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+    }
+
+    span {
+      color: $white;
+      font-size: 3rem;
+      line-height: 4rem;
+    }
+  }
+}
