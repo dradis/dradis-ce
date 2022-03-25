@@ -1,7 +1,20 @@
 body.unauthenticated {
   background: linear-gradient(165deg, lighten($primaryColor, 20) 0%, $primaryColor 50%, darken($primaryColor, 10) 100%);
+  color: $defaultText;
+  font-family: 'OpenSans';
+  font-weight: 300;
   height: 100vh;
   overflow: hidden;
+
+  a {
+    color: $linkColor;
+    transition: color 0.2s ease-in-out;
+  
+    &:hover {
+      color: $linkColorHover;
+      text-decoration: none;
+    }
+  }
 
   .alert {
     margin: 0 0 1rem 0;
@@ -13,6 +26,7 @@ body.unauthenticated {
 
     &.btn-primary {
       @include button($linkColor);
+      font-weight: 300;
     }
   }
 
@@ -34,6 +48,7 @@ body.unauthenticated {
 
       h1 {
         font-size: 1.75rem;
+        font-weight: 300;
         margin: 1rem 0;
         text-align: center;
         text-transform: capitalize;
