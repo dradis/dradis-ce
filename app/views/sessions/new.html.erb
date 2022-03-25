@@ -2,7 +2,7 @@
 
 <h1>Login</h1>
 
-<%= form_tag session_path, class: 'form-horizontal' do -%>
+<%= form_tag session_path do %>
   <div class="form-group">
     <%= label_tag :login, 'Username', class: 'col-form-label' %>
     <%= text_field_tag :login, nil, placeholder: 'Choose any user name you want', class: 'form-control', autofocus: true %>
@@ -14,4 +14,4 @@
   <div class="form-group mb-0 pt-1">
     <%= submit_tag 'Log in', class: 'btn btn-block btn-primary mt-4', data: { behavior: 'login-btn' } %>
   </div>
-<% end -%>
+<% end %>
