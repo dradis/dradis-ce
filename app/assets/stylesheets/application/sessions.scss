@@ -16,6 +16,14 @@ body.unauthenticated {
     }
   }
 
+  .actions {
+    display: flex;
+    font-size: 80%;
+    font-weight: 300;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+  }
+
   .alert {
     margin: 0 0 1rem 0;
     padding: .75rem 1.25rem;
