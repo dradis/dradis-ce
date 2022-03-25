@@ -11,7 +11,7 @@ document.addEventListener('turbolinks:load', function() {
         randomString = strings[randomStringIndex];
 
     setTimeout(function() {
-      window.setInterval(function() {
+      setInterval(function() {
         if (charCount <= randomString.length) {
           $('[data-behavior~=mission-text]').text(randomString.substring(0, charCount));
           charCount += 1;
@@ -23,6 +23,9 @@ document.addEventListener('turbolinks:load', function() {
 
     $('[data-behavior~=animate-click]').on('click', function() {
       $('[data-behavior~=logo-icons]').removeClass('expand').addClass('shrink');
+      setTimeout(function() {
+        $('[data-behavior~=logo-icons]').removeClass('shrink').addClass('expand');
+      }, 250)
     });
   }
 });
