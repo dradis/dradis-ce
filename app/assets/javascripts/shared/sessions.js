@@ -21,7 +21,7 @@ document.addEventListener('turbolinks:load', function() {
 
     $('[data-behavior~=logo-icons]').addClass('expand');
 
-    $('[data-behavior~=login-btn]').on('click', function() {
+    $('[data-behavior~=animate-click]').on('click', function() {
       $('[data-behavior~=logo-icons]').removeClass('expand').addClass('shrink');
     });
   }
