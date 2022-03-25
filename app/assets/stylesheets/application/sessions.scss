@@ -4,8 +4,8 @@ body.unauthenticated {
   overflow: hidden;
 
   .alert {
-    padding: .75rem 1.25rem;
     margin: 0 0 1rem 0;
+    padding: .75rem 1.25rem;
   }
 
   .btn {
@@ -47,19 +47,17 @@ body.unauthenticated {
     }
 
     .logo-icons {
+      background-image: image-url('logo_pattern.png');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 0%;
+      height: 200%;
+      left: 50%;
       position: absolute;
       top: 50%;
-      left: 50%;
-      height: 200%;
-      width: 175%;
-      
       transform: translate(-50%, -50%);
-
-      background-image: image-url('logo_pattern.png');
-      background-repeat: no-repeat;
-      background-position: center;
       transition: background-size 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      background-size: 0%;
+      width: 175%;
       z-index: -1;
 
       &.expand {
@@ -72,14 +70,12 @@ body.unauthenticated {
     }
   }
 
-  input[type="text"],
-  input[type="password"] {
-    color: #555;
-
+  input[type="password"],
+  input[type="text"] {
     &:focus {
       border-color: $linkColor;
-      outline: 0;
       box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px $linkColor;
+      outline: 0;
     }
   }
 
@@ -96,10 +92,10 @@ body.unauthenticated {
       @keyframes blink {
         0% {
           opacity: 0;
-        } 
+        }
         49% {
           opacity: 0;
-        } 
+        }
         50% {
           opacity: 1;
         }
