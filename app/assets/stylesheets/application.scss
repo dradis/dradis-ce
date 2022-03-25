@@ -1,2 +1,6 @@
-@import './tylium';
+@import 'bootstrap';
+
+@import './tylium/variables';
+@import 'shared/mixins';
+
 @import 'application/sessions';
