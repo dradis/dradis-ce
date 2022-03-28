@@ -4,6 +4,7 @@ v4.3.0 ([month] 2022)
   - Upgraded gems:
     - nokogiri, rails
   - Bugs fixes:
+    - Tables: Prevent columns state from resetting after 2 hours
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
