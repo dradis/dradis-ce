@@ -1,193 +1,239 @@
 require 'rails_helper'
 
-describe 'Comment feed', js: true do
+describe 'Comment feed' do
   before { login_to_project_as_user }
 
-  include CommentMacros
+  context 'issue page', js: true do
 
-  let!(:issue) { create(:issue, node: current_project.issue_library) }
+    include CommentMacros
 
-  let!(:comments) do
-    [
-      create(:comment, commentable: issue, user: @logged_in_as),
-      create(:comment, commentable: issue)
-    ]
-  end
+    let!(:issue) { create(:issue, node: current_project.issue_library) }
 
-  let!(:evidence_comment) { create(:comment, commentable: create(:evidence)) }
-
-  before do
-    visit project_issue_path(current_project, issue)
-
-    # Wait for ajax
-    find('[data-behavior~=fetch-comments] .comment-feed')
-  end
-
-  describe 'list comments' do
-    it 'shows up in the list' do
-      within comment_feed do
-        expect(page).to have_comment(comments[0])
-        expect(page).to have_comment(comments[1])
-        expect(page).to_not have_comment(evidence_comment)
-      end
-
-      within "div##{dom_id(comments[0])}" do
-        expect(page).to have_selector('span.user', text: @logged_in_as.name)
-      end
-    end
-  end
-
-  describe 'add comment' do
-    let(:submit_form) do
-      within 'form[data-behavior~=add-comment]' do
-        fill_in 'comment[content]', with: 'test comment'
-        click_button 'Add comment'
-      end
-
-      expect(page).to have_text 'test comment' # forces waiting for ajax
+    let!(:comments) do
+      [
+        create(:comment, commentable: issue, user: @logged_in_as),
+        create(:comment, commentable: issue)
+      ]
     end
 
-    it 'allows adding a comment' do
-      submit_form
+    let!(:evidence_comment) { create(:comment, commentable: create(:evidence)) }
 
-      within comment_feed do
-        expect(Comment.last.content).to eq 'test comment'
-      end
+    before do
+      visit project_issue_path(current_project, issue)
+
+      # Wait for ajax
+      find('[data-behavior~=fetch-comments] .comment-feed')
     end
 
-    include_examples 'creates an Activity', :create, Comment
-
-    describe 'local caching' do
-      it 'prefills textarea with cached value and clears it when saved' do
-        within 'form[data-behavior~=local-auto-save]' do
-          fill_in 'comment[content]', with: 'test comment'
-          sleep 1 # Needed for debounce function in local_auto_save.js
+    describe 'list comments' do
+      it 'shows up in the list' do
+        within comment_feed do
+          expect(page).to have_comment(comments[0])
+          expect(page).to have_comment(comments[1])
+          expect(page).to_not have_comment(evidence_comment)
         end
 
-        page.refresh
+        within "div##{dom_id(comments[0])}" do
+          expect(page).to have_selector('span.user', text: @logged_in_as.name)
+        end
+      end
+    end
 
-        content = page.find_field('comment[content]').value
-        expect(content).to eq 'test comment'
-
-        within 'form[data-behavior~=local-auto-save]' do
+    describe 'add comment' do
+      let(:submit_form) do
+        within 'form[data-behavior~=add-comment]' do
+          fill_in 'comment[content]', with: 'test comment'
           click_button 'Add comment'
         end
 
-        page.refresh
-
-        content = page.find_field('comment[content]').value
-        expect(content).to eq ''
-      end
-    end
-  end
-
-  describe 'update comment' do
-    let(:model) { comments[0] }
-
-    let(:submit_form) do
-      find("div#comment_#{model.id}").hover
-
-      within "div#comment_#{model.id}" do
-        click_link 'Edit'
-        expect(page).to have_css('textarea')
-        fill_in 'comment[content]', with: 'test comment edited'
-        click_button 'Update comment'
+        expect(page).to have_text 'test comment' # forces waiting for ajax
       end
 
-      expect(page).to have_text 'test comment edited' # forces waiting for ajax
-    end
-
-    context 'own comments' do
-      it 'can be updated' do
+      it 'allows adding a comment' do
         submit_form
 
         within comment_feed do
-          expect(model.reload.content).to eq 'test comment edited'
+          expect(Comment.last.content).to eq 'test comment'
+        end
+      end
+
+      include_examples 'creates an Activity', :create, Comment
+
+      describe 'local caching' do
+        it 'prefills textarea with cached value and clears it when saved' do
+          within 'form[data-behavior~=local-auto-save]' do
+            fill_in 'comment[content]', with: 'test comment'
+            sleep 1 # Needed for debounce function in local_auto_save.js
+          end
+
+          page.refresh
+
+          content = page.find_field('comment[content]').value
+          expect(content).to eq 'test comment'
+
+          within 'form[data-behavior~=local-auto-save]' do
+            click_button 'Add comment'
+          end
+
+          page.refresh
+
+          content = page.find_field('comment[content]').value
+          expect(content).to eq ''
         end
       end
     end
 
-    include_examples 'creates an Activity', :update
+    describe 'update comment' do
+      let(:model) { comments[0] }
 
-    context 'other user comments' do
-      it 'does not show edit link' do
-        id = comments[1].id
-
-        within "div#comment_#{id}" do
-          expect(page).to have_link('Edit', visible: false)
-          expect(page).not_to have_css "form#edit_comment_#{id}"
-        end
-      end
-    end
-
-    describe 'local caching' do
-      before do
+      let(:submit_form) do
         find("div#comment_#{model.id}").hover
 
         within "div#comment_#{model.id}" do
           click_link 'Edit'
+          expect(page).to have_css('textarea')
           fill_in 'comment[content]', with: 'test comment edited'
-          sleep 1 # Needed for debounce function in local_auto_save.js
+          click_button 'Update comment'
         end
 
-        page.refresh
+        expect(page).to have_text 'test comment edited' # forces waiting for ajax
       end
 
-      it 'prefills textarea with cached value and clears cached value when cancel is clicked' do
+      context 'own comments' do
+        it 'can be updated' do
+          submit_form
+
+          within comment_feed do
+            expect(model.reload.content).to eq 'test comment edited'
+          end
+        end
+      end
+
+      include_examples 'creates an Activity', :update
+
+      context 'other user comments' do
+        it 'does not show edit link' do
+          id = comments[1].id
+
+          within "div#comment_#{id}" do
+            expect(page).to have_link('Edit', visible: false)
+            expect(page).not_to have_css "form#edit_comment_#{id}"
+          end
+        end
+      end
+
+      describe 'local caching' do
+        before do
+          find("div#comment_#{model.id}").hover
+
+          within "div#comment_#{model.id}" do
+            click_link 'Edit'
+            fill_in 'comment[content]', with: 'test comment edited'
+            sleep 1 # Needed for debounce function in local_auto_save.js
+          end
+
+          page.refresh
+        end
+
+        it 'prefills textarea with cached value and clears cached value when cancel is clicked' do
+          find("div#comment_#{model.id}").hover
+
+          within "div#comment_#{model.id}" do
+            click_link 'Edit'
+            content = page.find_field('comment[content]').value
+            expect(content).to eq 'test comment edited'
+          end
+
+          expect(model.reload.content).not_to eq 'test comment edited'
+
+          within "div#comment_#{model.id}" do
+            click_link 'Cancel'
+          end
+
+          page.refresh
+
+          find("div#comment_#{model.id}").hover
+
+          within "div#comment_#{model.id}" do
+            click_link 'Edit'
+            content = page.find_field('comment[content]').value
+            expect(content).not_to eq 'test comment edited'
+          end
+        end
+      end
+    end
+
+    describe 'delete comment' do
+      let(:model) { comments[0] }
+
+      let(:submit_form) do
         find("div#comment_#{model.id}").hover
 
         within "div#comment_#{model.id}" do
-          click_link 'Edit'
-          content = page.find_field('comment[content]').value
-          expect(content).to eq 'test comment edited'
+          accept_confirm { click_link 'Delete' }
         end
 
-        expect(model.reload.content).not_to eq 'test comment edited'
+        expect(page).not_to have_comment(model) # forces waiting for ajax
+      end
 
-        within "div#comment_#{model.id}" do
-          click_link 'Cancel'
+      it 'allows deleting a comment from the same user' do
+        submit_form
+
+        within comment_feed do
+          expect(page).not_to have_text(model.content)
+          expect(Comment.find_by_id(model.id)).to be_nil
         end
 
-        page.refresh
-
-        find("div#comment_#{model.id}").hover
-
-        within "div#comment_#{model.id}" do
-          click_link 'Edit'
-          content = page.find_field('comment[content]').value
-          expect(content).not_to eq 'test comment edited'
+        other_user_comment_id = comments[1].id
+        within "div#comment_#{other_user_comment_id}" do
+          expect(page).to have_link('Delete', visible: false)
         end
       end
+
+      include_examples 'creates an Activity', :destroy
     end
   end
 
-  describe 'delete comment' do
-    let(:model) { comments[0] }
-
-    let(:submit_form) do
-      find("div#comment_#{model.id}").hover
-
-      within "div#comment_#{model.id}" do
-        accept_confirm { click_link 'Delete' }
-      end
-
-      expect(page).not_to have_comment(model) # forces waiting for ajax
+  context 'other commentable pages' do
+    let(:commentable_params) do
+      {
+        comment: {
+          commentable_type: commentable.class,
+          commentable_id: commentable.id
+        }
+      }
     end
 
-    it 'allows deleting a comment from the same user' do
-      submit_form
+    context 'card show page' do
+      let(:board) { create(:board, project: current_project, node: current_project.methodology_library) }
+      let(:commentable) { create(:card, list: list) }
+      let(:list) { create(:list, board: board) }
 
-      within comment_feed do
-        expect(page).not_to have_text(model.content)
-        expect(Comment.find_by_id(model.id)).to be_nil
-      end
-
-      other_user_comment_id = comments[1].id
-      within "div#comment_#{other_user_comment_id}" do
-        expect(page).to have_link('Delete', visible: false)
+      it 'contains the fetch-comments element' do
+        visit project_board_list_card_path(current_project, board, list, commentable)
+        expect(page).to have_selector("[data-behavior='fetch fetch-comments'][data-path='#{comments_path(commentable_params)}']")
       end
     end
 
-    include_examples 'creates an Activity', :destroy
+    context 'evidence show page' do
+      let(:commentable) { create(:evidence, node: node, issue: issue) }
+      let(:issue) { create(:issue, node: current_project.issue_library) }
+      let(:node) { create(:node, project: current_project) }
+
+      it 'contains the fetch-comments element' do
+        visit project_node_evidence_path(current_project, node, commentable)
+        expect(page).to have_selector("[data-behavior='fetch fetch-comments'][data-path='#{comments_path(commentable_params)}']")
+      end
+    end
+
+    context 'note show page' do
+      let(:commentable) { create(:note, node: node) }
+      let(:node) { create(:node, project: current_project) }
+
+      it 'contains the fetch-comments element' do
+        visit project_node_note_path(current_project, node, commentable)
+        expect(page).to have_selector("[data-behavior='fetch fetch-comments'][data-path='#{comments_path(commentable_params)}']")
+      end
+    end
   end
 end
