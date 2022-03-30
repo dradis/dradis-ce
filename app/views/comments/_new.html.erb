@@ -26,13 +26,15 @@
   </div>
   <div class="btn-group">
     <%= f.submit "Add comment", class: "btn btn-primary mt-2" %>
-    <button type="button" class="btn btn-primary mt-2 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <span class="sr-only">Toggle comment type dropdown</span>
-    </button>
-    <div class="dropdown-menu">
-      <a class="dropdown-item d-flex flex-column align-items-start js-try-pro" data-term="gateway" data-url="https://dradisframework.com/pro/pages/gateway.html" href="javascript:void(0)">
-        <span><i class="fa fa-external-link mr-1"></i> Post comment to results portal</span> 
-      </a>
-    </div>
+    <% if @commentable.is_a?(Issue) %>
+      <button type="button" class="btn btn-primary mt-2 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="sr-only">Toggle comment type dropdown</span>
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item d-flex flex-column align-items-start js-try-pro" data-term="gateway" data-url="https://dradisframework.com/pro/pages/gateway.html" href="javascript:void(0)">
+          <span><i class="fa fa-external-link mr-1"></i> Post comment to results portal</span> 
+        </a>
+      </div>
+    <% end %>
   </div>
 <% end %>
