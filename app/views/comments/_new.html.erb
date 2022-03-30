@@ -9,20 +9,30 @@
     <%= f.label :content, "Add a comment" %>
   </div>
   <div class="row m-0 flex-nowrap">
-  <%= avatar_image(current_user, size: 30) %>
-  <%= f.text_area :content,
-                  placeholder: 'Write your comment...',
-                  rows: 5,
-                  required: 'required',
-                  class: 'form-control',
-                  data: {
-                    behavior: 'mentionable rich-toolbar drop-zone',
-                    'rich-toolbar': 'block-code bold image italic link list-ol list-ul quote table',
-                    'rich-toolbar-uploader': '[data-behavior~=jquery-upload]'
-                  } %>
+    <%= avatar_image(current_user, size: 30) %>
+    <%= f.text_area :content,
+                    placeholder: 'Write your comment...',
+                    rows: 5,
+                    required: 'required',
+                    class: 'form-control',
+                    data: {
+                      behavior: 'mentionable rich-toolbar drop-zone',
+                      'rich-toolbar': 'block-code bold image italic link list-ol list-ul quote table',
+                      'rich-toolbar-uploader': '[data-behavior~=jquery-upload]'
+                    } %>
 
-  <%= f.hidden_field :commentable_type %>
-  <%= f.hidden_field :commentable_id %>
+    <%= f.hidden_field :commentable_type %>
+    <%= f.hidden_field :commentable_id %>
   </div>
-  <%= f.submit "Add comment", class: "btn btn-primary mt-2" %>
+  <div class="btn-group">
+    <%= f.submit "Add comment", class: "btn btn-primary mt-2" %>
+    <button type="button" class="btn btn-primary mt-2 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="sr-only">Toggle comment type dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item d-flex flex-column align-items-start js-try-pro" data-term="gateway" data-url="https://dradisframework.com/pro/pages/gateway.html" href="javascript:void(0)">
+        <span><i class="fa fa-external-link mr-1"></i> Post comment to results portal</span> 
+      </a>
+    </div>
+  </div>
 <% end %>
