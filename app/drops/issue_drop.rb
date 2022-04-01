@@ -13,7 +13,5 @@ class IssueDrop < BaseDrop
     @tags ||= @record.tags.map { |tag| TagDrop.new(tag) }
   end
 
-  def comments
-    @comments ||= @record.comments.map { |comment| CommentDrop.new(comment) }
-  end
+  ActiveSupport.run_load_hooks(:issue_drop, self)
 end

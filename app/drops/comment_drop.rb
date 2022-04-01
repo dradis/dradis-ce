@@ -1,3 +1,3 @@
 class CommentDrop < BaseDrop
-  delegate :content, to: :@record
+  delegate :content, :created_at, :updated_at, :user, to: :@record
 end
