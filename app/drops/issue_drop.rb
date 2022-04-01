@@ -12,4 +12,8 @@ class IssueDrop < BaseDrop
   def tags
     @tags ||= @record.tags.map { |tag| TagDrop.new(tag) }
   end
+
+  def comments
+    @comments ||= @record.comments.map { |comment| CommentDrop.new(comment) }
+  end
 end
