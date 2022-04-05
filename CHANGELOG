@@ -2,7 +2,7 @@ v4.3.0 ([month] 2022)
   - Setup Wizard: initial content choice.
   - Uploads: do not reset form so you can keep uploading output files from the same scanner
   - Upgraded gems:
-    - nokogiri, rails
+    - nokogiri, puma, rails
   - Bugs fixes:
     - Tables: Prevent columns state from resetting after 2 hours
     - [entity]:
