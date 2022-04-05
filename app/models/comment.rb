@@ -39,6 +39,8 @@ class Comment < ApplicationRecord
   def notify(action:, actor:, recipients:)
     case action.to_s
     when 'create'
+      create_notifications(action: :mention, actor: actor, recipients: recipients)
+
       subscribe_mentioned()
       create_notifications(action: :mention, actor: actor,  recipients: mentions)
 
