@@ -39,17 +39,22 @@ class Comment < ApplicationRecord
   def notify(action:, actor:, recipients:)
     case action.to_s
     when 'create'
-      create_notifications(action: :mention, actor: actor, recipients: recipients)
+      if recipients
+        create_notifications(action: :mention, actor: actor, recipients: recipients)
+      end
 
       subscribe_mentioned()
-      create_notifications(action: :mention, actor: actor,  recipients: mentions)
+      create_notifications(action: :mention, actor: actor, recipients: mentions)
 
       # We're finding subscribers that have not been mention here
       # using ActiveRecord because create_notifications expect recipients
       # to be an ActiveRecord::Relation.
       subscribers = User.includes(:subscriptions).where(
-        subscriptions: { subscribable_id: commentable.id }
-      ).where.not(id: [user.id] + mentions.pluck(:id))
+        subscriptions: {
+          subscribable_id: commentable.id,
+          subscribable_type: commentable_type
+        }
+      ).where.not(id: [user.id] + mentions.pluck(:id) + recipients&.ids)
       create_notifications(action: :create, actor: actor, recipients: subscribers)
     end
   end
