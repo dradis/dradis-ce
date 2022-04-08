@@ -1,4 +1,10 @@
-<div class="comment-wrapper" data-behavior="comment" data-id="<%= comment.id %>">
+<% content_tag :div,
+  class: "comment-wrapper #{comment.commentable_type.parameterize}",
+  data: {
+    behavior: 'comment',
+    id: comment.id,
+    timestamp: comment.created_at.to_i
+  } do %>
   <%= div_for comment, data: { author_id: comment.user_id } do %>
     <div class="body">
       <%= avatar_image(comment.user, size: 35) %>
@@ -43,4 +49,4 @@
       </div>
     </div>
   <% end %>
-</div>
+<% end %>
