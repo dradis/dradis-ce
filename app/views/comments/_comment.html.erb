@@ -22,10 +22,10 @@
 
 
             <div class="actions pull-right">
-              <%= link_to edit_comment_path(comment), remote: true, data: { action: 'edit' } do %>
+              <%= link_to main_app.edit_comment_path(comment), remote: true, data: { action: 'edit' } do %>
                 <i class="fa fa-pencil"></i> Edit
               <% end %>
-              <%= link_to [comment],
+              <%= link_to main_app.comment_path(comment),
                           method: :delete,
                           data: { confirm: "Are you sure?\n\nProceeding will delete this comment, making it no longer visible to anyone." },
                           remote: true,
