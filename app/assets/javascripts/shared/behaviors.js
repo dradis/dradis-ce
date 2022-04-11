@@ -28,15 +28,11 @@
     $(parentElement).find('[data-behavior~=fetch]').each(function() {
       var that = this;
       $.ajax(that.dataset.path, { credentials: 'include' })
-        .then(function(response, _status, xhr) {
-          var contentType = xhr.getResponseHeader('Content-Type');
-
-          if (contentType.includes('text/html')) {
-            $(that).html(response);
-            $(that).trigger('dradis:fetch');
-            initBehaviors(that);
-          }
-        });
+        .then(function(response) { return response; })
+        .then(function(html) {
+          $(that).html(html);
+          $(that).trigger('dradis:fetch');
+          initBehaviors(that);
     });
 
     // Allow page anchors to work
