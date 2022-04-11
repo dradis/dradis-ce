@@ -33,6 +33,7 @@
           $(that).html(html);
           $(that).trigger('dradis:fetch');
           initBehaviors(that);
+        });
     });
 
     // Allow page anchors to work
