@@ -31,7 +31,11 @@
         <span class="sr-only">Toggle comment type dropdown</span>
       </button>
       <div class="dropdown-menu">
-        <%= render partial: 'comments/new_public_comment' %>
+        <% if defined?(Dradis::Pro) && defined?(Dradis::Pro::Plugins::Gateway) %>
+          <%= render_view_hooks 'comments/new_public_comment' %>
+        <% else %>
+          <%= render partial: 'comments/new_public_comment' %>
+        <% end %>
       </div>
     <% end %>
   </div>
