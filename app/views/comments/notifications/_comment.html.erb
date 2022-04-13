@@ -1,7 +1,7 @@
 <% commentable = comment.commentable %>
 <% if commentable.title? %>
   commented on the
-  <%= link_to commentable.title, presenter.comment_path(anchor: true) %>
+  <%= link_to commentable.title, presenter.comment_path(anchor: true), data: { turbolinks: false } %>
   <%= comment.commentable.class.commentable_display_name %>.
 <% else %>
   commented on

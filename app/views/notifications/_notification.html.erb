@@ -24,7 +24,7 @@
       <%= link_to notification_path(notification),
                   title: 'Mark as read',
                   class: 'notification-read',
-                  data: { behavior: 'notification-read', turbolinks: false },
+                  data: { behavior: 'notification-read' },
                   remote: true,
                   method: :put do %>
         <i class="fa fa-check-circle-o" aria-hidden="true"><span class="sr-only">Mark as read</span></i>
