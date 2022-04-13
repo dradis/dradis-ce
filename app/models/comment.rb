@@ -70,7 +70,7 @@ class Comment < ApplicationRecord
 
     if resource.is_a?(Project)
       scope.merge(resource.testers_for_mentions)
-    elsif resource.respond_to?(:project)
+    elsif resource.respond_to?(:project) && resource.project.is_a?(Project)
       scope.merge(resource.project.testers_for_mentions)
     else
       ids = scope.select { |user|

@@ -7,6 +7,10 @@ module Commentable
     Commentable.allowed_types << base.name
 
     has_many :comments, as: :commentable, dependent: :destroy
+
+    def self.commentable_display_name
+      name.demodulize
+    end
   end
 
   def commentable_activities

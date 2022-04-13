@@ -1,6 +1,6 @@
 <% commentable = comment.commentable %>
 <% if commentable.title? %>
-commented on the <%= "#{commentable.title} #{comment.commentable_type.demodulize}" %>.
+commented on the <%= "#{commentable.title} #{commentable.class.commentable_display_name}" %>.
 <% else %>
 commented on <%= "#{comment.commentable_type.demodulize} ##{commentable.id}" %>.
 <% end %>
