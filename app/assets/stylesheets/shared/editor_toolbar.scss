@@ -117,7 +117,7 @@
   }
 
   & > .textarea-container > textarea {
-    min-height: 100%;
+    min-height: clamp(100%, 28rem, 28rem);
   }
 
   .textarea-container {

@@ -12,6 +12,17 @@ body {
   position: relative;
 }
 
+a {
+  color: $linkColor;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: $linkColorHover;
+    text-decoration: none;
+  }
+}
+
+
 .btn {
   &:hover {
     i {
