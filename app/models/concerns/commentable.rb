@@ -19,6 +19,10 @@ module Commentable
   end
 
   def commentable_display_name
-    self.class.name.demodulize
+    if defined?(self.class::COMMENTABLE_DISPLAY_NAME)
+      self.class::COMMENTABLE_DISPLAY_NAME
+    else
+      self.class.name.demodulize
+    end
   end
 end
