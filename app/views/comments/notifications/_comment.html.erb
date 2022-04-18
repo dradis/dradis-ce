@@ -5,10 +5,10 @@
     presenter.comment_path(anchor: true),
     data: { turbolinks: false }
   %>
-  <%= comment.commentable.class.commentable_display_name %>.
+  <%= commentable.commentable_display_name %>.
 <% else %>
   commented on
-  <%= link_to "#{comment.commentable_type.demodulize} ##{commentable.id}",
+  <%= link_to "#{commentable.commentable_display_name} ##{commentable.id}",
     presenter.comment_path(anchor: true),
     data: { turbolinks: false }
   %>.
