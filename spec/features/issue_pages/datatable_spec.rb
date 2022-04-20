@@ -17,11 +17,7 @@ describe 'issue table', js: true do
 
   let(:tags) do
     Tag::DEFAULT_TAGS.map do |tag|
-      if defined?(Dradis::Pro)
-        create(:tag, name: tag, project: current_project)
-      else
-        create(:tag, name: tag)
-      end
+      create(:tag, name: tag, project: current_project)
     end
   end
 
