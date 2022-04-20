@@ -95,7 +95,7 @@ class EditorToolbar {
       var key = e.which || e.keyCode, // for cross-browser compatibility
           selector;
 
-      if (e.metaKey) {
+      if (e.metaKey || e.ctrlKey) {
         switch (key) {
           case 66: selector = '[data-btn~=bold]'; break; // 66 = b
           case 73: selector = '[data-btn~=italic]'; break; // 73 = i

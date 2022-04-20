@@ -148,18 +148,6 @@ describe "note pages" do
 
     let(:model) { @note }
     include_examples 'nodes pages breadcrumbs', :edit, Note
-
-    describe 'local caching' do
-      let(:add_categories) do
-        @category_1  = create(:category)
-        @category_2 = create(:category)
-      end
-
-      let(:model_path) { edit_project_node_note_path(current_project, @node, @note) }
-      let(:model_attributes) { [{ name: :text, value: 'Edit Note' }] }
-
-      include_examples 'a form with local auto save', Note, :edit
-    end
   end
 
 

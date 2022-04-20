@@ -12,11 +12,7 @@ describe 'issue form', js: true do
     before { find('form .btn-help').click }
 
     it 'displays Textile help' do
-      expect(page).to have_selector 'h5', text: /Text styles/i
-      expect(page).to have_selector 'h5', text: /Block Code \(bc.\)/i
-      expect(page).to have_selector 'h5', text: /Lists/i
-      expect(page).to have_selector 'h5', text: /Miscellaneous/i
-      expect(page).to have_selector 'h5', text: /Further help/i
+      expect(page).to have_selector '.textile-help'
     end
   end
 
@@ -65,8 +61,10 @@ describe 'issue form', js: true do
       fill_in('item_form[field_name_0]', with: 'Title')
       fill_in('item_form[field_value_0]', with: 'Test Item')
 
-      # Wait for the source view change buffer time
-      sleep 0.5
+      within '.textile-preview' do
+        find('h5')
+        find('p')
+      end
 
       within '.form-actions' do
         find('[type="submit"]').click
