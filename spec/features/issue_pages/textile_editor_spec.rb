@@ -61,6 +61,7 @@ describe 'issue form', js: true do
       fill_in('item_form[field_name_0]', with: 'Title')
       fill_in('item_form[field_value_0]', with: 'Test Item')
 
+      # Wait for ajax
       within '.textile-preview' do
         find('h5')
         find('p')
