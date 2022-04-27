@@ -5,6 +5,7 @@ v4.3.0 (April 2022)
     - nokogiri, puma, rails
   - Bugs fixes:
     - Editor: Add keyboard shortcut support for windows and linux
+    - Subscriptions: Show correct Subscribe/Unsubscribe link after a new comment is posted
     - Tables: Prevent columns state from resetting after 2 hours
   - Integration enhancements:
     - Openvas:
