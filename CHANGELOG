@@ -6,6 +6,9 @@ v4.3.0 (April 2022)
   - Bugs fixes:
     - Editor: Add keyboard shortcut support for windows and linux
     - Tables: Prevent columns state from resetting after 2 hours
+  - Integration enhancements:
+    - Openvas:
+      - Update Node label parsing. Include :hostname and :asset_id properties.
 
 v4.2.1 (February 2022)
   - Bug fixes: Fix issue default fields appearing in the evidence table
