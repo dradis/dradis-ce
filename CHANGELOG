@@ -4,7 +4,9 @@ v4.3.0 (April 2022)
   - Upgraded gems:
     - nokogiri, puma, rails
   - Bugs fixes:
-    - Editor: Add keyboard shortcut support for windows and linux
+    - Editor: 
+      - Add keyboard shortcut support for windows and linux
+      - Allow text selection expansion using shift-click
     - Subscriptions: Show correct Subscribe/Unsubscribe link after a new comment is posted
     - Tables: Prevent columns state from resetting after 2 hours
   - Integration enhancements:
