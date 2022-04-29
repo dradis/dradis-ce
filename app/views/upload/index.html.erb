@@ -8,22 +8,14 @@
 
       <div class="mt-4">
         <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, id: 'new_upload', data: { parse_url: project_upload_parse_path(current_project) } do %>
-          <div class="form-group mb-5 mt-4 pt-2">
-            <%= label_tag :uploader do %>
-              <h5>1. Choose a tool</h5>
-            <% end %>
-            <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { :class => 'form-control' } %>
-          </div>
           <div class="form-group mb-4">
-            <%= label_tag :file do %>
-              <h5>2. Choose a file</h5>
-            <% end %>
-            <div class="custom-file">
-              <%= file_field_tag 'file', class: 'custom-file-input' %>
-              <label class="custom-file-label" data-behavior="file-label">Choose file</label>
-              <%= hidden_field_tag 'item_id' %>
-              <%= hidden_field_tag 'format', 'js' %>
+            <div class="custom-file drag-area">
+              <div class="icon"><i class="fa fa-cloud-upload fa-lg mr-2"></i></div>
+              <span class="prompt">Drag & Drop</span>
+              <span class="prompt">or <span class="button upload-input">browse</span></span>
+              <%= file_field_tag 'file', hidden:true, class:'upload-file-input', accept:".xml, .json, .nessus", multiple: true  %>
             </div>
+            <div id="selected-files"></div>
           </div>
         <% end %>
             

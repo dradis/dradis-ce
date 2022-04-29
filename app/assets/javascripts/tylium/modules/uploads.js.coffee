@@ -24,15 +24,81 @@ document.addEventListener "turbolinks:load", ->
           $percent.html(percentVal);
     });
 
-    $(':file').change ->
-      ConsoleUpdater.jobId = ConsoleUpdater.jobId + 1
-      fileName = this.value.split('\\').pop()
-      $('#console').empty()
-      $('#filename').text(fileName)
-      $('#spinner').show()
-      $('#result').data('id', ConsoleUpdater.jobId)
-      $('#result').show()
-      $('#item_id').val(ConsoleUpdater.jobId)
-      $('[data-behavior~=file-label]').text(fileName)
+    dropArea = $('.drag-area')
+    dragText = $('.drag-area > .prompt')
+    button =  $('.upload-input')
+    input = $('.upload-file-input')
+    # select files on button click
+    button.on 'click', ->
+      input.click();
+    # add active class to drag area on drag enter
+    dropArea.on 'dragover', (e) ->
+      e.preventDefault()
+      dropArea.addClass('active')
+    # remove active class to drag area on drag leave
+    dropArea.on 'dragleave', (e) ->
+      e.preventDefault()
+      dropArea.removeClass('active')
+    # handle dropped files
+    dropArea.on 'drop', (e) ->
+      e.preventDefault()
+      files = e.originalEvent.dataTransfer.files
+      input.files = files
+      processFiles(files)
 
-      $(this).closest('form').submit()
+    # on file select
+    input.change (e) ->
+      ConsoleUpdater.jobId = ConsoleUpdater.jobId + 1
+      processFiles(e.target.files)
+
+# detect plugin to use
+processFiles = (files) ->
+  i = 0;
+  $('#selected-files').html('')
+  while f = files[i]
+    ((f, i) ->
+      reader = new FileReader();
+      reader.onloadend = (e) ->
+        plugin = parseFile(e.target.result)
+        status = if plugin == 'unknown' then 'Error' else 'Ready'
+        badge_class = if plugin == 'unknown' then 'badge-danger' else 'badge-success'
+        $('#selected-files').append("
+          <li class='list-group-item d-flex justify-content-between align-items-center'>
+          #{f.name}<code>#{plugin}</code> <span class='badge p-2 #{badge_class} '>#{status}</span> </li>
+          ")
+      reader.readAsText(f);
+    ) files[i], i
+    i++
+# parse and search files
+parseFile = (text) ->
+  search = [
+    {type: 'xml', keywords: [/Nessus/, /NessusClientData_v2/], plugin: 'Dradis::Plugins::Nessus'},
+    {type: 'json', keywords: [/WPScan/], plugin: 'Dradis::Plugins::Wpscan'},
+    {type: 'xml', keywords: [/nmap/], plugin: 'Dradis::Plugins::Nmap'}
+  ]
+  if validateData(text)
+    plugin = 'unknown'
+    for s in search
+      if s.keywords.some((r) -> r.test text)
+        plugin = s.plugin
+        break
+  else
+    consoel.log('invalid data')
+  return plugin
+
+# determine data type before parsing XML or JSON
+validateData = (data) ->
+  if data.match(/^\{/)
+    try
+      JSON.parse(data)
+      return 'json'
+    catch e
+      return false
+  else if data.match(/^\</)
+    try
+      $.parseXML(data)
+      return 'xml'
+    catch e
+      return false
+  else
+    return false

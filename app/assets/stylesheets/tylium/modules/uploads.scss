@@ -1,9 +1,8 @@
 body.upload {
-
   .progress-bar {
     position: relative;
 
-    .percent { 
+    .percent {
       position: absolute;
       display: inline-block;
       text-align: center;
@@ -13,4 +12,41 @@ body.upload {
       color: transparent;
     }
   }
+}
+
+.drag-area {
+  height: 200px;
+  border: 3px dashed #e0eafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 10px auto;
+}
+
+h3 {
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.drag-area .icon {
+  font-size: 30px;
+  color: #347934;
+}
+
+.drag-area .prompt {
+  font-size: 20px;
+  font-weight: 500;
+  color: #34495e;
+}
+
+.drag-area .button {
+  font-size: 16px;
+  font-weight: 500;
+  color: #347934;
+  cursor: pointer;
+}
+
+.drag-area.active {
+  border: 2px solid #347934;
 }
