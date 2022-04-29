@@ -1,0 +1,11 @@
+<% content_for :title, 'New Tag' %>
+<div class="content-container"  style="width: 500px;">
+  <div id="issues_editor">
+    <div class="note-text-inner">
+      <h4 class="header-underline">New Tag</h4>
+      <div class="autofocus" autofocus="true" tabindex="1"></div>
+      <!-- This div is needed to allow correct tabbing order in Chrome with page is loaded with turbolinks -->
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>

@@ -26,6 +26,7 @@ Rails.application.routes.draw do
         get :poll, constraints: { format: /js/ }
       end
     end
+    resources :tags
 
     resources :boards do
       resources :lists, except: [:index] do

@@ -1,0 +1,14 @@
+<%= simple_form_for [current_project, @tag] do |f| %>
+  <%= f.error_notification %>
+  <div class="form-inputs">
+    <%
+    tag_name = @tag.display_name rescue ""
+    color = @tag.color rescue ""
+    %>
+    <%= f.input :tag_name, input_html: {value: tag_name } %>
+    <%= f.input :color, as: :color, input_html: {value:  color}%>
+    <div class="form-actions">
+      <%= f.button :submit, nil, class: 'btn btn-primary' %> or
+      <%= link_to 'Cancel', project_tags_path(current_project) %>
+    </div>
+  <% end %>
