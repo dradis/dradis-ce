@@ -89,4 +89,12 @@
     top: 0;
     z-index: 1050;
   }
+
+  @include media-breakpoint-down(md) {
+    padding-bottom: 4.25rem;
+
+    .content-container {
+      margin: calc(#{$mainContentMargin} / 2);
+    }
+  }
 }
