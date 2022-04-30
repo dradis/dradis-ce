@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.4.6'
+gem 'rails', '~> 6.1.4.7'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -81,7 +81,7 @@ gem 'bcrypt',   '3.1.12'
 gem 'json', '2.3.0'
 
 # XML manipulation
-gem 'nokogiri', '1.12.5'
+gem 'nokogiri', '1.13.4'
 
 # MySQL backend
 # gem 'mysql2', '~> 0.5.1'

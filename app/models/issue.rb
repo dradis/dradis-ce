@@ -157,4 +157,6 @@ class Issue < Note
       self.save!
     end
   end
+
+  ActiveSupport.run_load_hooks(:issue_model, self)
 end
