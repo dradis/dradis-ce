@@ -146,4 +146,7 @@ Rails.application.routes.draw do
   end
 
   mount ActionCable.server => '/cable'
+
+  #routes for tags
+  resources :tags
 end
