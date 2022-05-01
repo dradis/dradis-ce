@@ -15,14 +15,23 @@ class Tag < ApplicationRecord
     !2ca02c_info
   ].freeze
 
+  # -- Virtual Attributes ----------------------------------------------------------
+  attr_accessor :tag_name, :tag_color
+
   # -- Relationships ----------------------------------------------------------
   has_many :taggings, dependent: :destroy
 
   # -- Callbacks --------------------------------------------------------------
   before_save :normalize_name
+  before_validation do
+    self.name = "!#{self.tag_color[1..-1]}_#{self.tag_name}" unless self.tag_name.blank? and self.tag_color.blank?
+  end
 
   # -- Validations ------------------------------------------------------------
-  validates :name, presence: true, uniqueness: { case_sensitive: false }
+  validates :name, presence: true, uniqueness: { case_sensitive: false }, format: { with: /\A!\h{6}_[[:word:]]+\z/ }
+  # todo - this is a hack to get the taggable to work with the taggable_by_* methods
+  validates :tag_name, presence: true
+  validates :tag_color, presence: true, format: { with: /\A#\h{6}\z/ }
 
   # -- Scopes -----------------------------------------------------------------
 

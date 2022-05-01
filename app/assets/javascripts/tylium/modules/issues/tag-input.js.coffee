@@ -19,7 +19,7 @@ document.addEventListener "turbolinks:load", ->
     url = $("#issue_tag_list").data("url")
     $.ajax
       url: url
-      data: { "tag[tag_name]": $(this).children('.badge').text(), "tag[color]": "#6c777f" }
+      data: { "tag[tag_name]": $(this).children('.badge').text(), "tag[tag_color]": "#6c777f" }
       type: 'POST'
       dataType: "json"
       success: (data) ->

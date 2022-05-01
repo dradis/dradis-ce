@@ -6,7 +6,7 @@ class Tagging < ApplicationRecord
   # -- Callbacks ------------------------------------------------------------
 
   # -- Validations ----------------------------------------------------------
-  validates :tag,      associated: true, presence: true
+  # validates :tag,      associated: true, presence: true
   validates :taggable, associated: true, presence: true
   validates_uniqueness_of :tag_id, scope: [:taggable_id, :taggable_type]
 
