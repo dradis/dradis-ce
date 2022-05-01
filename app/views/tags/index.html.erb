@@ -1,0 +1,15 @@
+<h1>tags</h1>
+
+<div class="table-responsive-sm">
+  <table class="table">
+    <tbody>
+    <% @tags.each do |tag| %>
+    <tr>
+        <td><%= tag.display_name %></td>
+        <td><%= link_to "Edit", edit_tag_path(tag), class: "btn btn-success" %></td>
+        <td><%= link_to "Delete", tag_path(tag), method: :delete, data: {confirm: "Are you sure you want to delete this tag?"}, class: "btn btn-danger" %></td>
+    </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

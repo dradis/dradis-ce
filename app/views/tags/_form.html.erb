@@ -1,0 +1,16 @@
+<%= simple_form_for [@tag],
+  html: {
+    data: {
+      behavior: 'local-auto-save',
+      auto_save_key: @auto_save_key
+    }
+  } do |f| %>
+
+  <%= f.error_notification %>
+
+  <%= f.input :name %>
+
+  <div class="form-actions">
+    <%= f.button :submit, nil, class: 'btn btn-primary' %> 
+  </div>
+<% end %>

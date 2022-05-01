@@ -27,6 +27,8 @@
           <%= h(tag.display_name) %>
         <% end %>
       <% end %>
+      <%= link_to '<i class="fa fa-plus" aria-hidden="true"></i> Add new tag'.html_safe, new_tag_path, class: 'js-taglink dropdown-item' %>
+      <%= link_to '<i class="fa fa-circle-thin" aria-hidden="true"></i> All tags'.html_safe, tags_path, class: 'js-taglink dropdown-item' %>
     </div>
   </div>
 </div>
