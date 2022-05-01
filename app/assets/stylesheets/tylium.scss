@@ -37,3 +37,7 @@
 
 // engines css
 @import "tylium/engines";
+
+.bootstrap-select.form-control {
+  border: 1px solid #ddd !important;
+}
