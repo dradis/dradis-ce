@@ -2,10 +2,12 @@ document.addEventListener('turbolinks:load', function() {
   if ($('body.unauthenticated').length) {
     var charCount = 0,
         strings = [
-          'Tame the output from multiple scan tools, email threads, and notes',
-          'Deliver quality security assessments at light speed',
-          'Focus less on tedious reporting tasks and more on testing',
-          'Ditch the overhead that drags down project delivery'
+          'Combine the output form your favorite security tools',
+          'Spend less time reporting and more time testing',
+          'Working better, together',
+          'Share a common view of the entire project',
+          'The same reports, in a fraction of the time',
+          'Deliver consistent results, every time'
         ],
         randomStringIndex = Math.floor(Math.random() * strings.length),
         randomString = strings[randomStringIndex];
