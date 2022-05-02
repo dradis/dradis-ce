@@ -40,27 +40,6 @@ blockquote {
   padding-left: 1rem;
 }
 
-.btn {
-  @include button(#e6e6e6);
-  text-shadow: 0 0 0;
-  font-weight: 300;
-  font-size: inherit;
-
-  &.btn-primary,
-  &.btn-primary:not(:disabled):not(.disabled).active {
-    @include button($primaryColor);
-  }
-  &.btn-danger {
-    @include button($red);
-  }
-  &.btn-success {
-    @include button($green);
-  }
-  &.btn-warning {
-    @include button($orange);
-  }
-}
-
 a:focus-visible {
   box-shadow: $focusShadow;
   outline: none !important;
@@ -88,7 +67,7 @@ code {
   color: $mutedText !important;
 }
 
-.dropdown-toggle::after {
+.dropdown-toggle:not(.dropdown-toggle-split)::after {
   display: none;
 }
 

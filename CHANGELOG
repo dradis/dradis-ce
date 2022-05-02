@@ -1,9 +1,7 @@
-v4.3.0 ([month] 2022)
+[v#.#.#] ([month] [YYYY])
   - Login View: Design update
-  - Setup Wizard: initial content choice.
-  - Uploads: do not reset form so you can keep uploading output files from the same scanner
   - Upgraded gems:
-    - nokogiri, rails
+    - [gem]
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
@@ -26,6 +24,19 @@ v4.3.0 ([month] 2022)
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v4.3.0 (April 2022)
+  - Setup Wizard: Add option to pre-populate sample data
+  - Uploads: Allow subsequent file uploads from the same scanner without needing to re-select the scanner
+  - Upgraded gems: nokogiri, puma, rails
+  - Bugs fixes:
+    - Editor:
+      - Add keyboard shortcut support for windows and linux
+      - Allow text selection expansion using shift-click
+    - Subscriptions: Show correct Subscribe/Unsubscribe link after a new comment is posted
+    - Tables: Prevent columns state from resetting after 2 hours
+  - Integration enhancements:
+    - Openvas: Update Node label parsing. Include :hostname and :asset_id properties
 
 v4.2.1 (February 2022)
   - Bug fixes: Fix issue default fields appearing in the evidence table
