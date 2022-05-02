@@ -90,7 +90,7 @@
   }
 
   @include media-breakpoint-down(md) {
-    padding-bottom: 4.25rem;
+    padding-bottom: 9rem;
 
     .content-container {
       margin: calc(#{$mainContentMargin} / 2);
