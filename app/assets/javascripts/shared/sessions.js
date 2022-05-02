@@ -2,7 +2,7 @@ document.addEventListener('turbolinks:load', function() {
   if ($('body.unauthenticated').length) {
     var charCount = 0,
         strings = [
-          'Combine the output form your favorite security tools',
+          'Combine the output from your favorite security tools',
           'Spend less time reporting and more time testing',
           'Working better, together',
           'Share a common view of the entire project',
