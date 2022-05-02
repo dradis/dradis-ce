@@ -14,7 +14,6 @@
           No tag
         </span>
       <% end %>
-      <i class="fa fa-caret-down"></i>
     </button>
     <div class="dropdown-menu">
       <%= link_to 'javascript:void(0)', class: 'js-taglink dropdown-item',  style: "color: #555", data: { tag: "" } do %>
@@ -27,8 +26,10 @@
           <%= h(tag.display_name) %>
         <% end %>
       <% end %>
+      <div class="divider"></div>
+      <%# links to add new tag and tags index %>
       <%= link_to '<i class="fa fa-plus" aria-hidden="true"></i> Add new tag'.html_safe, new_tag_path, class: 'js-taglink dropdown-item' %>
-      <%= link_to '<i class="fa fa-circle-thin" aria-hidden="true"></i> All tags'.html_safe, tags_path, class: 'js-taglink dropdown-item' %>
+      <%= link_to '<i class="fa fa-tag" aria-hidden="true"></i> All tags'.html_safe, tags_path, class: 'js-taglink dropdown-item' %>
     </div>
   </div>
 </div>

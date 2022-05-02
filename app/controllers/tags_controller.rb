@@ -2,7 +2,6 @@ class TagsController < ApplicationController
 
     before_action :set_tag, only: [:edit, :update, :show, :destroy]
 
-
     def index
         @tags = Tag.all
     end
@@ -17,7 +16,7 @@ class TagsController < ApplicationController
     def create
         @tag = Tag.create(tag_params)
         if @tag.save
-            redirect_to project_issues_path(current_project)
+            redirect_to new_project_issue_path(current_project)
         else
             render 'new'
         end
@@ -39,10 +38,7 @@ class TagsController < ApplicationController
         redirect_to tags_path
     end
 
-    def current_project
-        @current_project ||= Project.new
-      end
-
+    
     private
 
         def set_tag
@@ -51,6 +47,10 @@ class TagsController < ApplicationController
 
         def tag_params
             params.require(:tag).permit(:name)
+        end
+
+        def current_project
+            @current_project ||= Project.new
         end
 
 end
