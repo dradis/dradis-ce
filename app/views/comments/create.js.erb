@@ -12,3 +12,6 @@ $('[data-notice~=no-comments]').hide()
 $('[data-behavior~=content-textile]').each(function() {
   new QuoteSelector(this);
 });
+
+$('[data-behavior~=subscribe]').addClass('d-none');
+$('[data-behavior~=unsubscribe]').removeClass('d-none');
