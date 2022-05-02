@@ -41,6 +41,11 @@ body.boards.index {
     &:nth-child(5n) {
       padding-right: 0;
     }
+
+    @include media-breakpoint-down(md) {
+      padding-right: 0;
+      width: 100%;
+    }
   }
 
   .board-tile {
@@ -65,6 +70,10 @@ body.boards.index {
   
       &:hover {
         background-color: darken($secondaryBgColor, 10%);
+      }
+
+      @include media-breakpoint-down(md) {
+        display: block;
       }
     }
 
