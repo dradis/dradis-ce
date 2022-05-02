@@ -1,10 +1,12 @@
 body.unauthenticated {
+  align-items: center;
   background: linear-gradient(165deg, lighten($primaryColor, 20) 0%, $primaryColor 50%, darken($primaryColor, 10) 100%);
+  background-repeat: no-repeat;
   color: $defaultText;
+  display: flex;
   font-family: 'OpenSans';
   font-weight: 300;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
 
   a {
     color: $linkColor;
@@ -81,6 +83,8 @@ body.unauthenticated {
       background-size: 0%;
       height: 200%;
       left: 50%;
+      max-height: 100vh;
+      max-width: 100vw;
       position: absolute;
       top: 50%;
       transform: translate(-50%, -50%);
