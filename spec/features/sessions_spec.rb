@@ -23,7 +23,7 @@ describe 'Sessions' do
     visit login_path
     fill_in 'login', with: user.email
     fill_in 'password', with: password
-    click_button 'Let me in!'
+    click_button 'Log in'
   end
 
   context 'when using the correct password' do

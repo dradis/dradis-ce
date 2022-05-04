@@ -1,34 +1,17 @@
-<div class="col-lg-6 offset-lg-3">
-  <div class="card">
-    <div class="card-header bg-custom">
-      <h5 class="m-0">Dradis Community Edition</h5>
-    </div>
-    <div class="card-body">
-      <%= form_tag session_path, class: 'form-horizontal' do -%>
+<% content_for :title, 'Login' %>
 
-        <%= flash_messages %>
+<h1>Login</h1>
 
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label" for="login">Username</label>
-          <div class="col-sm-9">
-            <%= text_field_tag 'login', nil, placeholder: 'Choose any user name you want', class: 'form-control', autofocus: true %>
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label" for="password">Password</label>
-          <div class="col-sm-9">
-            <%= password_field_tag 'password', nil, class: 'form-control' %>
-          </div>
-        </div>
-
-        <div class="form-group mb-0 row">
-          <div class="col-sm-9 offset-sm-3">
-            <%= submit_tag 'Let me in!', class: 'btn btn-lg btn-primary' %>
-          </div>
-        </div>
-
-      <% end -%>
-    <div>
+<%= form_tag session_path do %>
+  <div class="form-group">
+    <%= label_tag :login, 'Username', class: 'col-form-label' %>
+    <%= text_field_tag :login, nil, placeholder: 'Choose any user name you want', class: 'form-control', autofocus: true %>
   </div>
-</div>
+  <div class="form-group">
+    <%= label_tag :password, nil, class: 'col-form-label' %>
+    <%= password_field_tag :password, nil, class: 'form-control' %>
+  </div>
+  <div class="form-group mb-0 pt-1">
+    <%= submit_tag 'Log in', class: 'btn btn-block btn-primary mt-4', data: { behavior: 'animate-click' } %>
+  </div>
+<% end %>
