@@ -1,4 +1,4 @@
-.dataTables_wrapper {
+div.dataTables_wrapper {
 
   .dataTable {
     margin-top: 0 !important;
@@ -263,6 +263,16 @@
   tr:last-of-type {
     td {
       border-bottom: 1px solid darken($white, 10%);
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    div.dataTables_filter {
+      text-align: right;
+    }
+
+    .dt-buttons > .btn {
+      flex: unset;
     }
   }
 }
