@@ -85,7 +85,7 @@ class QuoteSelector {
 
     // Clear the quote box and selection
     $(document).on('mousedown', function(e) {
-      if (!$(e.target).parent().is('[data-behavior~=selection-quote-button]')) {
+      if (!$(e.target).parent().is('[data-behavior~=selection-quote-button]') && !e.shiftKey) {
         that.clear();
       }
     })

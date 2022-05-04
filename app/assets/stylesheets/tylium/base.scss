@@ -77,7 +77,7 @@ code {
   color: $mutedText !important;
 }
 
-.dropdown-toggle:not(.btn)::after {
+.dropdown-toggle:not(.dropdown-toggle-split)::after {
   display: none;
 }
 
