@@ -1,5 +1,7 @@
 [v#.#.#] ([month] [YYYY])
-  - Tylium: show the resource title in the header when viewing a resource
+  - Tylium:
+    - Improve mobile experience
+    - Show the resource title in the header when viewing a resource
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
@@ -30,7 +32,7 @@ v4.3.0 (April 2022)
   - Uploads: Allow subsequent file uploads from the same scanner without needing to re-select the scanner
   - Upgraded gems: nokogiri, puma, rails
   - Bugs fixes:
-    - Editor: 
+    - Editor:
       - Add keyboard shortcut support for windows and linux
       - Allow text selection expansion using shift-click
     - Subscriptions: Show correct Subscribe/Unsubscribe link after a new comment is posted

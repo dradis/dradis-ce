@@ -1,5 +1,5 @@
 <ul class="nodes-nav tree-navigation">
-  <li class="tree-header sidebar-link m-0 <%= 'active' if @node %>" data-behavior="sidebar-toggle open-only">
+  <li class="tree-header sidebar-link m-0 <%= 'active' if controller_path.include?('nodes') %>" data-behavior="nodes-tree sidebar-toggle open-only">
     <i class="fa fa-sitemap sidebar-link-icon"></i>
     <div class="sidebar-link-label-container">
       <span class="sidebar-link-label">Nodes</span>
@@ -9,7 +9,7 @@
     </div>
   </li>
   
-  <div class="nodes-list restrict-height pb-4 px-3" data-behavior="restrict-height">
+  <div class="nodes-list restrict-height pb-lg-4 px-lg-3" data-behavior="restrict-height">
     <% if @nodes.empty? %>
       <%= render 'shared/empty_state',
         actions_partial: 'layouts/tylium/nodes/empty_state_actions',

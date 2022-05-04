@@ -18,7 +18,7 @@
     @include button($orange);
   }
 
-  &.dropdown-toggle {
+  &.dropdown-toggle-split {
     &::after {
       vertical-align: middle;
     }

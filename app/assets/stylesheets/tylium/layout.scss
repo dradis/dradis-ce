@@ -60,7 +60,6 @@
   background: $secondaryBgColor;
   position: fixed;
   height: calc(100vh - 60px);
-  min-width: 570px;
   top: $navbarHeight;
   overflow: auto;
   font-size: 0.9rem;
@@ -88,5 +87,13 @@
     position: sticky;
     top: 0;
     z-index: 1050;
+  }
+
+  @include media-breakpoint-down(md) {
+    padding-bottom: 9rem;
+
+    .content-container {
+      margin: calc(#{$mainContentMargin} / 2);
+    }
   }
 }
