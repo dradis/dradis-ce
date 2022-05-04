@@ -1,6 +1,5 @@
 .dots-dropdown {
   align-items: center;
-  border-radius: 50%;
   cursor: pointer;
   display: inline-flex;
   height: 1.75rem;
@@ -38,8 +37,6 @@
 
   &:hover,
   &.show {
-    background-color: $activeFillColor;
-
     .dropdown-toggle {
       color: $linkColorHover;
     }

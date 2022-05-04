@@ -1,6 +1,8 @@
 [v#.#.#] ([month] [YYYY])
   - Login View: Design update
-  - Tylium: Improve mobile experience
+  - Tylium:
+    - Improve mobile experience
+    - Show the resource title in the header when viewing a resource
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
