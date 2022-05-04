@@ -6,8 +6,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Nodes: Prevent evidence labels linking to external resources
     - Bug tracker items:
       - [item]
   - New integrations:
