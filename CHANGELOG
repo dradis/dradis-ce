@@ -4,7 +4,7 @@
     - Improve mobile experience
     - Show the resource title in the header when viewing a resource
   - Upgraded gems:
-    - [gem]
+    - sinatra
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
