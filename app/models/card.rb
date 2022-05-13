@@ -75,9 +75,11 @@ class Card < ApplicationRecord
       end
 
       if includes.include?(:comments)
-        card_builder.comments do |comment_builder|
-          comments.each do |comment|
-            comment.to_xml(comment_builder)
+        card_builder.comments do |comments_builder|
+          comments_builder.comment do |comment_builder|
+            comments.each do |comment|
+              comment.to_xml(comment_builder)
+            end
           end
         end
       end
