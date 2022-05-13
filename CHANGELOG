@@ -8,6 +8,7 @@
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
+    - Project export: Fix card comments not exported
     - Bug tracker items:
       - [item]
   - New integrations:
