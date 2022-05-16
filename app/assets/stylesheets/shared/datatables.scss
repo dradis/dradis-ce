@@ -205,18 +205,10 @@ div.dataTables_wrapper {
 
   .dt-button-collection {
     .dropdown-item {
-      background-color: $white;
-      color: $linkColor;
       font-size: 0.9rem;
       font-weight: 300;
-      
       position: relative;
       transition: color 0s;
-
-      &.active {
-        background-color: $white;
-        color: $linkColor;
-      }
 
       &.buttons-columnVisibility {
         padding-left: 2.25rem;
@@ -248,8 +240,6 @@ div.dataTables_wrapper {
 
       &:focus,
       &:hover {
-        color: $linkColorHover;
-        background-color: $dropdownLinkBackgroundHover;
         outline: none;
       }
     }
