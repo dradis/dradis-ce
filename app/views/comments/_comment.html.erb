@@ -1,5 +1,5 @@
 <%= content_tag :div,
-  class: "comment-wrapper #{comment.commentable_type.parameterize}",
+  class: "comment-wrapper #{defined?(comment_class) ? comment_class : nil}",
   data: {
     behavior: 'comment',
     id: comment.id,

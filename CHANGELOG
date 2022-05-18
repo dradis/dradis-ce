@@ -6,8 +6,8 @@
   - Upgraded gems:
     - sinatra
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Cards:
+      - Prevent adding 'card' class to card comments
     - Bug tracker items:
       - [item]
   - New integrations:
