@@ -4,7 +4,7 @@
     - Improve mobile experience
     - Show the resource title in the header when viewing a resource
   - Upgraded gems:
-    - sinatra
+    - nokogiri, sinatra
   - Bugs fixes:
     - Cards:
       - Prevent adding 'card' class to card comments
