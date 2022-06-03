@@ -36,3 +36,10 @@ document.addEventListener "turbolinks:load", ->
       $('[data-behavior~=file-label]').text(fileName)
 
       $(this).closest('form').submit()
+      # Can't use this, because Rails UJS doesn't kick in (missing CSRF)
+      # $(this).closest('form').trigger('submit.rails');
+
+    $uploader = $('#uploader')
+    $uploader.change ->
+      uploader = $(this).val()
+      new RTPValidation({ rtpId: $('[data-behavior~=rtp-validation]').data('rtp-id'), uploader: uploader })
