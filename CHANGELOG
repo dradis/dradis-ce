@@ -6,27 +6,7 @@ v4.4.0 (June 2022)
   - Upgraded gems:
     - nokogiri, rack, sinatra
   - Bugs fixes:
-    - Cards:
-      - Prevent adding 'card' class to card comments
-    - Bug tracker items:
-      - [item]
-  - New integrations:
-    - [integration]
-  - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
-  - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
-  - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
-  - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Cards: Prevent adding 'card' class to card comments
 
 v4.3.0 (April 2022)
   - Setup Wizard: Add option to pre-populate sample data
