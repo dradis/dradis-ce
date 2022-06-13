@@ -7,6 +7,8 @@ v4.4.0 (June 2022)
     - nokogiri, rack, sinatra
   - Bugs fixes:
     - Cards: Prevent adding 'card' class to card comments
+  - Integration enhancements:
+    - Nikto: Make references available as an issue field
 
 v4.3.0 (April 2022)
   - Setup Wizard: Add option to pre-populate sample data
