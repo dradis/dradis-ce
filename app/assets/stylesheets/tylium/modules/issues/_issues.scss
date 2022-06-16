@@ -1,14 +1,43 @@
 body.issues.edit, body.issues.new {
+  .tag-container {
+    border: 2px solid #ccc;
+    border-radius: 3px;
+    background: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    padding: 6px;
+    overflow-x: scroll;
+  }
 
-  .tag-input {
+  .tag-container .tag {
+    height: 30px;
+    margin: 5px;
+    padding: 5px 6px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background: #eee;
     display: flex;
     align-items: center;
-    margin-bottom: 1rem;
+    color: #333;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 1px 1px #fff;
+    cursor: default;
+  }
 
-    .btn {
-      background: $primaryBgColor;
-      color: $defaultText;
-    }
+  .tag i {
+    color: #aeaeae;
+    margin-left: 5px;
+  }
+
+  .tag-container textarea {
+    padding: 5px;
+    font-size: 16px;
+    border: 0;
+    outline: none;
+    color: #333;
+    flex: 1;
+    resize: none;
+    margin-top: 0.15rem;
   }
 }
 
@@ -62,7 +91,7 @@ body.issues.index {
 
   .tab-pane {
     padding: 1.5rem;
-  } 
+  }
 }
 
 body.issues.show {

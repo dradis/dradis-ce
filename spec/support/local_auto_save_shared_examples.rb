@@ -29,7 +29,6 @@ shared_examples 'a form with local auto save' do |klass, action|
 
   before do
     add_users if klass == Card
-    add_tags if klass == Issue
     add_categories if klass == Note
 
     visit model_path
@@ -40,9 +39,7 @@ shared_examples 'a form with local auto save' do |klass, action|
     elsif klass == Evidence
       select @issue_1.title, from: :evidence_issue_id
     elsif klass == Issue
-      dropdown_toggle = page.find('.dropdown-toggle span.tag')
-      dropdown_toggle.click
-      click_on @tag_1.display_name
+      fill_in :issue_tags_input, with: "#{tag}\n"
     elsif klass == Note
       select @category_1.name, from: :note_category_id
     end
@@ -65,7 +62,7 @@ shared_examples 'a form with local auto save' do |klass, action|
         elsif klass == Evidence
           expect(page).to have_select('evidence_issue_id', selected: @issue_1.title)
         elsif klass == Issue
-          expect(page).to have_button(@tag_1.display_name)
+          expect(page.find('.tag')).to have_content(tag)
         elsif klass == Note
           expect(page).to have_select('note_category_id', selected: @category_1.name)
         end
@@ -93,7 +90,7 @@ shared_examples 'a form with local auto save' do |klass, action|
         elsif klass == Evidence
           expect(page).to have_select('evidence_issue_id', selected: 'Auto-generate a new issue')
         elsif klass == Issue
-          expect(page).to have_css('.dropdown-toggle span.tag', text: 'No tag')
+          expect(page.all('.tag').count).to be(0)
         elsif klass == Note
           expect(page).to have_select('note_category_id', selected: 'Assign note category')
         end

@@ -126,7 +126,7 @@ describe 'Issues pages' do
             expect(issue.tag_list).to eq(tag_field)
           end
 
-          it 'tags the issue with the first tag if more than one are present' do
+          it 'tags the issue with the all tags if more than one are present' do
             tag_field = '!f89406_private, !468847_public'
             visit new_project_issue_path(current_project)
             click_link 'Source'
@@ -135,20 +135,80 @@ describe 'Issues pages' do
 
             expect { submit_form }.to change { current_project.issues.count }.by(1)
             issue = current_project.issues.last
+            expect(issue.tags.count).to eq(tag_field.split(',').size)
+            expect(issue.tag_list).to eq(tag_field)
+          end
+        end
+
+        context 'when tags are added to an issue' do
+          it 'adds a new tag to issue' do
+            tag = 'customer'
+
+            visit new_project_issue_path(current_project)
+            fill_in :issue_tags_input, with: "#{tag}\n"
+
+            expect(page).to have_css('.tag')
+            expect(find(:css, '.tag')).to have_text(tag)
+
+            expect { submit_form }.to change { current_project.issues.count }.by(1)
+              .and change { Tag.count }.by(1)
+              .and change { Tagging.count }.by(1)
+
+            issue = current_project.issues.last
             expect(issue.tags.count).to eq(1)
-            expect(issue.tag_list).to eq(tag_field.split(', ').first)
+            expect(issue.tag_list).to eq(tag)
+          end
+
+          it 'adds multiple tags if given' do
+            tags = ['customer', 'sample']
+
+            visit new_project_issue_path(current_project)
+            fill_in :issue_tags_input, with: "#{tags.first}\n#{tags.last}\n"
+
+            expect(all(:css, '.tag').count).to be(2)
+
+            submit_form
+
+            issue = current_project.issues.last
+            expect(issue.tags.count).to eq(2)
+            expect(issue.tag_list).to eq(tags.join(', '))
+          end
+
+          it 'allows to remove tags if given' do
+            tags = ['customer', 'sample']
+
+            visit new_project_issue_path(current_project)
+            fill_in :issue_tags_input, with: "#{tags.first}\n#{tags.last}\n"
+
+            expect {
+              find(:css, "[data-item=\"#{tags.first}\"]").click
+            }.to change { all(:css, '.tag').count }.by(-1)
+
+            submit_form
+
+            issue = current_project.issues.last
+            expect(issue.tags.count).to eq(1)
+            expect(issue.tag_list).to eq(tags.last)
+          end
+
+          it 'doesn\'t create a new tag if tag already present' do
+            tag = 'customer'
+            current_project.tags.create(name: tag)
+
+            visit new_project_issue_path(current_project)
+            click_link 'Source'
+            fill_in :issue_tags_input, with: "#{tag}\n"
+
+            expect { submit_form }.not_to change { Tag.count }
           end
         end
 
         describe 'local caching' do
-          let(:add_tags) do
-            @tag_1 = current_project.tags.create(name: '!9467bd_critical')
-            @tag_2 = current_project.tags.create(name: '!d62728_high')
-          end
+          let(:tag) { 'sample' }
 
           let(:model_path) { new_project_issue_path(current_project) }
-          let(:model_attributes) { [{ name: :text, value: 'New Issue' }] }
-          let(:model_attributes_for_template) { [{ name: :text, value: 'New Issue Template' }] }
+          let(:model_attributes) { [{ name: :text, value: 'New Issue' }, { name: :tags_input, value: 'customer' }] }
+          let(:model_attributes_for_template) { [{ name: :text, value: 'New Issue Template' }, { name: :tags_input, value: 'customer template' }] }
 
           include_examples 'a form with local auto save', Issue, :new
         end
@@ -217,13 +277,10 @@ describe 'Issues pages' do
         end
 
         describe 'local caching' do
-          let(:add_tags) do
-            @tag_1 = current_project.tags.create(name: '!9467bd_critical')
-            @tag_2 = current_project.tags.create(name: '!d62728_high')
-          end
+          let(:tag) { 'sample' }
 
           let(:model_path) { edit_project_issue_path(current_project, @issue) }
-          let(:model_attributes) { [{ name: :text, value: 'Edit Issue' }] }
+          let(:model_attributes) { [{ name: :text, value: 'Edit Issue' }, { name: :tags_input, value: 'customer' }] }
 
           include_examples 'a form with local auto save', Issue, :edit
         end

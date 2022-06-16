@@ -151,11 +151,8 @@ class Issue < Note
     return if tags.any?
     return unless fields['Tags'].present?
 
-    # For now we just care about the first tag
-    if (tag_name = fields['Tags'].split(',').first)
-      self.tag_list = tag_name
-      self.save!
-    end
+    self.tag_list = fields['Tags']
+    self.save!
   end
 
   ActiveSupport.run_load_hooks(:issue_model, self)
