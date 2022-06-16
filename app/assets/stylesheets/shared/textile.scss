@@ -253,6 +253,10 @@
           margin-bottom: 1.75rem;
         }
       }
+
+      @include media-breakpoint-down(md) {
+        margin-top: 2rem;
+      }
     }
   }
 

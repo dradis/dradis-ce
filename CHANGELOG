@@ -1,9 +1,21 @@
+v4.4.0 (June 2022)
+  - Login View: Design update
+  - Tylium:
+    - Improve mobile experience
+    - Show the resource title in the header when viewing a resource
+  - Upgraded gems:
+    - nokogiri, rack, sinatra
+  - Bugs fixes:
+    - Cards: Prevent adding 'card' class to card comments
+  - Integration enhancements:
+    - Nikto: Make references available as an issue field
+
 v4.3.0 (April 2022)
   - Setup Wizard: Add option to pre-populate sample data
   - Uploads: Allow subsequent file uploads from the same scanner without needing to re-select the scanner
   - Upgraded gems: nokogiri, puma, rails
   - Bugs fixes:
-    - Editor: 
+    - Editor:
       - Add keyboard shortcut support for windows and linux
       - Allow text selection expansion using shift-click
     - Subscriptions: Show correct Subscribe/Unsubscribe link after a new comment is posted

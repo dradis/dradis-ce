@@ -35,16 +35,6 @@ a {
   }
 }
 
-@mixin button($color) {
-  border: 0px none;
-  background: $color;
-
-  &:hover,
-  &:not(:disabled):not(.disabled):active {
-    background: darken($color, 10);
-  }
-}
-
 blockquote {
   border-left: 3px solid $primaryColor;
   padding-left: 1rem;
@@ -97,7 +87,6 @@ code {
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 300;
-  text-transform: uppercase;
 }
 
 mark {
