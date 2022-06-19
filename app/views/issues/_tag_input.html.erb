@@ -1,32 +1,20 @@
 <div class="tag-input">
-  <%= f.input :tag_list, as: :hidden %>
-  Tag:
-  <div class="dropdown">
-    <button class="btn dropdown-toggle" data-toggle="dropdown">
-      <% if @issue.tags.any? %>
-        <span class="tag" style="color: <%= @issue.tags.first.color %>">
-          <i class="icon fa fa-tag"></i>
-          <%= @issue.tags.first.display_name %>
-        </span>
-      <% else %>
-        <span class="tag" style="color: #555">
-          <i class='fa fa-tags'> </i>
-          No tag
-        </span>
-      <% end %>
-      <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown-menu">
-      <%= link_to 'javascript:void(0)', class: 'js-taglink dropdown-item',  style: "color: #555", data: { tag: "" } do %>
-        <i class="icon fa fa-tag"></i>
-        No tag
-      <% end %>
-      <% @tags.each do |tag| %>
-        <%= link_to 'javascript:void(0)', class: 'js-taglink dropdown-item',  style: "color: #{ tag.color }", data: { tag: h(tag.name) } do %>
-          <i class="icon fa fa-tag"></i>
-          <%= h(tag.display_name) %>
-        <% end %>
-      <% end %>
+  <%= f.input :tag_list, as: :hidden , value:@issue.tags.to_json %>
+<div class="wrapper">
+      <div class="tags-content">
+        <div class="dropdown">
+        <ul class="tags-ul"><input class="tags-input" type="text" spellcheck="false"></ul>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#" id='AAAA'>AAAA</a></li>
+                <li><a href="#">BBBB</a></li>
+                <li><a href="#">CCCC</a></li>
+            </ul>
+        </div>
+        <p>Press space or add a comma after each tag</p>
+      </div>
+      <div class="tags-details">
+        <p><span>5</span> tags are remaining</p>
+        <a class="tags-remove-btn">Remove All</a>
+      </div>
     </div>
-  </div>
 </div>
