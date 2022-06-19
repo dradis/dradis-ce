@@ -151,10 +151,10 @@ class Issue < Note
     return if tags.any?
     return unless fields['Tags'].present?
 
-    # For now we just care about the first tag
-    if (tag_name = fields['Tags'].split(',').first)
-      self.tag_list = tag_name
+    self.tag_list = fields['Tags']
+    self.transaction do
       self.save!
+      Tag.where(taggings_count:0).delete_all()
     end
   end
 
