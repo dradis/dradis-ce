@@ -15,7 +15,7 @@
 <!-- Main content -->
 <div class="row m-0">
   <ul class="tabs-container nav nav-tabs main-tabs w-100">
-    <li class="nav-item"><a href="#info-tab" data-toggle="tab" class="nav-link <%= class_names(active: !params[:tab]) %>"><%= tag_and_name_for(@issue, true) %></a></li>
+    <li class="nav-item"><a href="#info-tab" data-toggle="tab" class="nav-link <%= class_names(active: !params[:tab]) %>"><%= "Issue" %></a></li>
     <li class="nav-item"><a href="#evidence-tab" class="nav-link <%= class_names(active: params[:tab] == 'evidence-tab') %>" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge bg-primary text-white" data-behavior="evidence-count"><%= @issue.evidence.count %></span></a></li>
     <li class="nav-item"><a href="#activity-tab" class="nav-link" data-toggle="tab"><i class="fa fa-rss"></i> Recent activity</a></li>
     <%= render_view_hooks 'issues/show-tabs' %>
@@ -33,6 +33,12 @@
                 <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
                 <%= render partial: 'actions' %>
               </h4>
+                <%= @issue.tags.map {|tag| 
+                  content_tag(:span,
+                  tag.name,
+                  class: "badge badge-success mb-3"
+                  )
+                }.join(' ').html_safe %>
               <div class="content-textile" data-behavior="content-textile">
                 <%= markup(@issue.text, liquid: true) %>
               </div>

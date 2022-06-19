@@ -28,8 +28,13 @@
                [issue.title, link_to(issue.title, [current_project, issue])]
              when 'Tags'
                [
-                 issue.tags.any? ? issue.tags.first.display_name : '',
-                 tag_and_name_for(issue)
+                 issue.tags.any? ? issue.tags : '',
+                 issue.tags.map {|tag| 
+                  content_tag(:span,
+                  tag.name,
+                  class: "badge badge-success"
+                  )
+                }.join(' ').html_safe
                ]
              when 'Affected'
                # this count is coming from the SQL finder in the controller
