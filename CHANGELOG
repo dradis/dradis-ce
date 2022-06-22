@@ -4,8 +4,8 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Evidence:
+      - Set correct localStorage key to prevent pre-populating incorrect content at the issue level
     - Bug tracker items:
       - [item]
   - New integrations:
