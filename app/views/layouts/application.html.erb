@@ -1,8 +1,9 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title><%= content_for?(:title) ? yield(:title) : "Dradis Community Edition" %></title>
+    <title><%= [content_for(:title), 'Dradis Community Edition'].compact.join(' | ') %></title>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= favicon_link_tag %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -14,19 +15,28 @@
 
     <%= render 'shared/noscript' %>
 
-    <div class="page-header d-flex justify-content-center my-5">
-      <%= link_to image_tag('logo_small.png', height: 100, alt: 'Dradis CE logo'), 'http://dradisframework.org' %>
-    </div>
-
-    <div class="container">
-      <%= yield %>
-    </div>
-
-    <footer>
-      <div class="container mt-3">
-        <p><a href="http://dradisframework.org" target="_blank">http://dradisframework.org</a></p>
+    <div class="container h-100">
+      <div class="row h-100 align-items-center">
+        <div class="col-lg-5">
+          <div class="form-container card card-body">
+            <div class="logo-icons" data-behavior="logo-icons"></div>
+            <%= image_tag 'logo_full_small.png', alt: 'Dradis CE logo', class: 'logo' %>
+            <div class="form-container-inner">
+              <%= flash_messages %>
+              <%= yield %>
+            </div>
+            <footer>
+             <p>Dradis Community Edition - <a href="http://drad.is">http://drad.is</a></p>
+            </footer>
+          </div>
+        </div>
+        <div class="col-lg-7 d-none d-lg-block">
+          <div class="mission-container">
+            <span class="text-monospace" data-behavior="mission-text"></span>
+            <span class="mission-text-cursor" data-behavior="mission-text-cursor">&block;</span>
+          </div>
+        </div>
       </div>
-    </footer>
+    </div>
   </body>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </html>

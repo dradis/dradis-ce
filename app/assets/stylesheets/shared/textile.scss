@@ -132,6 +132,7 @@
     font-size: 0.9rem;
     max-height: 100vh;
     padding-top: 0;
+    position: fixed;
     overflow: auto;
 
     .textile-inner {
@@ -251,6 +252,10 @@
           color: $mutedText;
           margin-bottom: 1.75rem;
         }
+      }
+
+      @include media-breakpoint-down(md) {
+        margin-top: 2rem;
       }
     }
   }

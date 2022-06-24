@@ -51,6 +51,12 @@
     }
   }
 
+  .editor-field {
+    .textarea-container > textarea {
+      min-height: 8rem;
+    }
+  }
+
   input[type="submit"] {
     margin-left: 35px;
   }
@@ -59,11 +65,8 @@
     font-weight: bold;
   }
 
-  .textarea-container {
-    textarea.form-control {
-      min-height: 8rem;
-      resize: none;
-    }
+  .sticky-toolbar > .editor-toolbar {
+    top: 2.9rem !important;
   }
 }
 

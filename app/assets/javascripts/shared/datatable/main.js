@@ -121,6 +121,7 @@ class DradisDatatable {
       ],
       pageLength: 25,
       stateSave: true,
+      stateDuration: 0, // https://datatables.net/reference/option/stateDuration#Default
       // https://datatables.net/reference/option/stateSaveCallback
       // DataTables will call stateSaveCallback() whenever a state change event
       // happens (paging, searching, sorting, showing/hiding columns, etc).

@@ -3,26 +3,27 @@ require 'rails_helper'
 describe 'Sessions' do
   subject { page }
 
-  before do
+  # This matches fixtures/configurations.yml value.
+  let(:password) { 'rspec_pass' }
+  let(:user) do
     create(
-      :configuration,
-      name: 'admin:password',
-      value: ::BCrypt::Password.create('rspec_pass')
-    )
-    @user = create(
       :user,
       :author,
-      password_hash: ::BCrypt::Password.create('rspec_pass')
+      password_hash: ::BCrypt::Password.create(password)
     )
   end
 
-  let(:password) { 'rspec_pass' }
+  # This needs to be a helper and not a let() block, because let is memoized
+  # and reused.
+  def login
+    # This gets us past Setup: Step 2
+    project = create(:project)
+    project.issue_library
 
-  let(:login) do
     visit login_path
-    fill_in 'login', with: @user.email
+    fill_in 'login', with: user.email
     fill_in 'password', with: password
-    click_button 'Let me in!'
+    click_button 'Log in'
   end
 
   context 'when using the correct password' do
@@ -61,8 +62,8 @@ describe 'Sessions' do
     it 'forces a logout' do
       login
 
-      @user.destroy
-      visit project_path(Project.find(1))
+      user.destroy
+      visit projects_path
 
       expect(current_path).to eq(login_path)
       expect(page).to have_content('Access denied')
