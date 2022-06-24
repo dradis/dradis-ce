@@ -3,30 +3,49 @@ DradisDatatable.prototype.setupCheckboxListeners = function() {
       $selectAllBtn = $(this.dataTable.buttons('#select-all').nodes()[0]);
 
   this.dataTable.on('select.dt deselect.dt', function() {
-    $selectAllBtn.find('#select-all-checkbox').prop('checked', that.areAllSelected());
-
-    if (that.areAllSelected()){
-      $selectAllBtn.attr('title', 'Deselect all');
+    if (that.areAllSelected()) {
+      $selectAllBtn.find('#select-all-checkbox').prop({'checked': true, 'indeterminate': false});
+    }
+    else if (that.dataTable.rows({selected:true}).count() > 0) {
+      $selectAllBtn.find('#select-all-checkbox').prop('indeterminate', true);
     }
     else {
-      $selectAllBtn.attr('title', 'Select all');
+      $selectAllBtn.find('#select-all-checkbox').prop({'checked': false, 'indeterminate': false});
     }
+
+    that.updateSelectAllBtnState();
   });
 
   // Remove default datatable button listener to make the checkbox "checking"
   // work, before adding our own click handler.
   $selectAllBtn.off('click.dtb').click( function (){
-    if (that.areAllSelected()) {
+    if (that.areAllSelected() || that.areAllSelected({filter: 'applied'})) {
       that.dataTable.rows().deselect();
     }
     else {
-      that.dataTable.rows().select();
+      that.dataTable.rows({filter: 'applied'}).select();
     }
+  });
+
+  this.dataTable.on('search.dt', function (){
+    that.updateSelectAllBtnState();
   });
 }
 
-DradisDatatable.prototype.areAllSelected = function() {
+
+DradisDatatable.prototype.areAllSelected = function(filter = {}) {
   return(
-    this.dataTable.rows({selected:true}).count() == this.dataTable.rows().count()
+    this.dataTable.rows({selected: true}).count() == this.dataTable.rows(filter).count()
   );
+}
+
+DradisDatatable.prototype.updateSelectAllBtnState = function() {
+  var $selectAllBtn = $(this.dataTable.buttons('#select-all').nodes()[0]);
+
+  if (this.areAllSelected() || this.areAllSelected({filter: 'applied'})) {
+    $selectAllBtn.attr('title', 'Deselect all');
+  }
+  else {
+    $selectAllBtn.attr('title', 'Select all');
+  }
 }

@@ -1,28 +1,7 @@
 <% content_for :title, @card.name %>
 
 <% content_for :breadcrumbs do %>
-  <nav class="dots-container" data-behavior='breadcrumbs-nav'>
-    <%= render partial: 'breadcrumbs' %>
-    <ul class="nav">
-      <li class="dropdown dots-dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i><span class="sr-only">Toggle menu</span></a>
-        <div class="dropdown-menu">
-          <%= link_to edit_project_board_list_card_path(current_project, @board, @list, @card), class: 'dropdown-item' do %>
-            <i class="fa fa-pencil fa-fw"></i> Edit
-          <% end %>
-          <%= link_to(
-              project_board_list_card_path(current_project, @board, @list, @card),
-              class: 'dropdown-item text-error-hover',
-              data: { confirm: "Are you sure?\n\nProceeding will delete this card from the task list." },
-              method: :delete
-            ) do %>
-            <i class="fa fa-trash fa-fw"></i> Delete
-          <% end %>
-          <%= render partial: 'subscriptions/actions', locals: { subscribable: @card, dots_menu: true } %>
-        </div>
-      </li>
-    </ul>
-  </nav>
+  <%= render partial: 'breadcrumbs' %>
 <% end %>
 
 <%= render partial: 'poller_alerts' unless request.xhr? %>
@@ -34,7 +13,7 @@
 
   <ul class="tabs-container nav nav-tabs main-tabs">
     <li class="nav-item">
-      <a href="#info-tab" data-toggle="tab" class="nav-link active"><i class="fa fa-address-card-o"></i> Information</a>
+      <a href="#info-tab" data-toggle="tab" class="nav-link active"><i class="fa fa-address-card-o"></i> Card</a>
     </li>
     <li class="nav-item">
       <a href="#activity-tab" data-toggle="tab" class="nav-link"><i class="fa fa-rss"></i> Recent activity</a>
@@ -48,7 +27,10 @@
           <div class="tab-pane active" id="info-tab">
             <% cache ['card-information-tab', @card] do %>
               <div class="note-text-inner">
-                <h4 class="mb-4 header-underline"><%= @card.name %></h4>
+                <h4 class="mb-4 header-underline">
+                  <span class="text-truncate" title="<%= @card.name %>"><%= @card.name %></span>
+                  <%= render partial: 'actions' %>
+                </h4>
 
                 <div class="card-description">
                   <div class="content-textile" data-behavior="content-textile">

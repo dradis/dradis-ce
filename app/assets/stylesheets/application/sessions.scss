@@ -1,0 +1,152 @@
+body.unauthenticated {
+  align-items: center;
+  background: linear-gradient(165deg, lighten($primaryColor, 20) 0%, $primaryColor 50%, darken($primaryColor, 10) 100%);
+  background-repeat: no-repeat;
+  color: $defaultText;
+  display: flex;
+  font-family: 'OpenSans';
+  font-weight: 300;
+  min-height: 100vh;
+
+  a {
+    color: $linkColor;
+    transition: color 0.2s ease-in-out;
+  
+    &:hover {
+      color: $linkColorHover;
+      text-decoration: none;
+    }
+  }
+
+  .actions {
+    display: flex;
+    font-size: 80%;
+    font-weight: 300;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+  }
+
+  .alert {
+    margin: 0 0 1rem 0;
+    padding: .75rem 1.25rem;
+  }
+
+  .btn {
+    text-shadow: 0 0 0;
+
+    &.btn-primary {
+      @include button($linkColor);
+      font-weight: 300;
+    }
+  }
+
+  .error-text {
+    color: red;
+    font-size: 80%;
+  }
+
+  footer {
+    margin-top: 3rem;
+
+    p {
+      font-size: 80%;
+      margin: 0;
+      text-align: center;
+    }
+  }
+
+  .form-container {
+    position: relative;
+
+    &-inner {
+      margin: 1rem 2rem;
+
+      h1 {
+        font-size: 1.75rem;
+        font-weight: 300;
+        margin: 1rem 0;
+        text-align: center;
+        text-transform: capitalize;
+      }
+    }
+
+    .logo {
+      height: auto;
+      margin: 0 auto;
+      width: 10rem;
+    }
+
+    .logo-icons {
+      background-image: image-url('logo_pattern.png');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 0%;
+      height: 200%;
+      left: 50%;
+      max-height: 100vh;
+      max-width: 100vw;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      transition: background-size 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      width: 175%;
+      z-index: -1;
+
+      &.expand {
+        background-size: 100%;
+      }
+
+      &.shrink {
+        background-size: 0%;
+      }
+    }
+  }
+
+  input[type="password"],
+  input[type="text"] {
+    &:focus {
+      border-color: $linkColor;
+      box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px $linkColor;
+      outline: 0;
+    }
+  }
+
+  .hint {
+    font-size: 80%;
+    font-weight: 300;
+    margin: 0;
+  }
+
+  .mission-container {
+    padding-left: 8rem;
+
+    .mission-text-cursor {
+      animation: blink 0.8s infinite forwards;
+      display: inline-flex;
+      opacity: 0;
+      overflow: hidden;
+      width: 2rem;
+
+      @keyframes blink {
+        0% {
+          opacity: 0;
+        }
+        49% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+    }
+
+    span {
+      color: $white;
+      font-size: 3rem;
+      line-height: 4rem;
+    }
+  }
+}
