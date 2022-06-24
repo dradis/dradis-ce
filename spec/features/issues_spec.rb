@@ -322,5 +322,44 @@ describe 'Issues pages' do
         end
       end
     end
+
+    describe 'revision history' do
+      before { PaperTrail.enabled = true }
+      after { PaperTrail.enabled = false }
+
+      context 'issue belonging to current project' do
+        let(:issue) { create(:issue, node: current_project.issue_library, text: 'issue text') }
+
+        it 'can view issue revisions' do
+          issue.update(text: 'updated text')
+
+          visit project_issue_revisions_path(current_project, issue)
+
+          within '.revisions-table table tbody' do
+            expect(page.find_all('tr')[0].find('td', match: :first).text).to eq('Updated')
+            expect(page.find_all('tr')[1].find('td', match: :first).text).to eq('Created')
+          end
+        end
+      end
+
+      context 'issue belonging to another project' do
+        let(:issue) { create(:issue, node: other_issuelib_node, text: 'issue text') }
+        let(:other_issuelib_node) do
+          create(
+            :node,
+            label: 'Other project all issues',
+            type_id: Node::Types::ISSUELIB
+          )
+        end
+
+        it 'cannot view issue revisions' do
+          issue.update(text: 'updated text')
+
+          expect do
+            visit project_issue_revisions_path(current_project, issue)
+          end.to raise_error
+        end
+      end
+    end
   end
 end
