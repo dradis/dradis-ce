@@ -335,9 +335,9 @@ describe 'Issues pages' do
 
           visit project_issue_revisions_path(current_project, issue)
 
-          within '.revisions-table table tbody' do
-            expect(page.find_all('tr')[0].find('td', match: :first).text).to eq('Updated')
-            expect(page.find_all('tr')[1].find('td', match: :first).text).to eq('Created')
+          within '.js-diff-body' do
+            expect(page).to have_text('issue text')
+            expect(page).to have_text('updated text')
           end
         end
       end
@@ -353,8 +353,6 @@ describe 'Issues pages' do
         end
 
         it 'cannot view issue revisions' do
-          issue.update(text: 'updated text')
-
           expect do
             visit project_issue_revisions_path(current_project, issue)
           end.to raise_error
