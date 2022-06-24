@@ -324,11 +324,17 @@ describe 'Issues pages' do
     end
 
     describe 'revision history' do
+      let(:issue) do
+        issue = create(:issue, node: node, text: 'issue text')
+        issue.update(text: 'updated text')
+        issue
+      end
+
       before { PaperTrail.enabled = true }
       after { PaperTrail.enabled = false }
 
       context 'issue belonging to current project' do
-        let(:issue) { create(:issue, node: current_project.issue_library, text: 'issue text') }
+        let(:node) { current_project.issue_library }
 
         it 'can view issue revisions' do
           issue.update(text: 'updated text')
@@ -343,8 +349,7 @@ describe 'Issues pages' do
       end
 
       context 'issue belonging to another project' do
-        let(:issue) { create(:issue, node: other_issuelib_node, text: 'issue text') }
-        let(:other_issuelib_node) do
+        let(:node) do
           create(
             :node,
             label: 'Other project all issues',
@@ -353,9 +358,8 @@ describe 'Issues pages' do
         end
 
         it 'cannot view issue revisions' do
-          expect do
-            visit project_issue_revisions_path(current_project, issue)
-          end.to raise_error
+          visit project_issue_revisions_path(current_project, issue)
+          expect(page).to have_text('Record not found')
         end
       end
     end

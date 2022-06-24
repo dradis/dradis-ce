@@ -66,7 +66,7 @@ class RevisionsController < AuthenticatedController
               end
   rescue ActiveRecord::RecordNotFound
     flash[:error] = 'Record not found'
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
 
   def load_sidebar
