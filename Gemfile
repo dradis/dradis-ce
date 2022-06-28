@@ -64,7 +64,7 @@ gem 'record_tag_helper'
 
 gem 'rubyzip', '>= 1.2.2'
 
-gem 'thor', '~> 1.0.1'
+gem 'thor', '~> 1.2.1'
 
 
 # ------------------------------------------------------ With native extensions
@@ -134,6 +134,7 @@ gem 'net-smtp'
 gem 'net-pop'
 gem 'net-imap'
 
+gem 'matrix'
 
 # ------------------------------------------------------------------ Deployment
 # Use Capistrano for deployment

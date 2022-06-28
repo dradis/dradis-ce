@@ -39,7 +39,7 @@ class DiffedRevision
 
   def before
     # Version#object is the state of the object *before* the change was made.
-    @before ||= YAML.load(@revision.object)
+    @before ||= YAML.unsafe_load(@revision.object)
   end
 
   def after
@@ -48,7 +48,7 @@ class DiffedRevision
     # a version with event type 'update' or 'destroy'. If it doesn't, and
     # this method crashes, then bad data has snuck into your DB somehow.
     @after ||= if next_revision = @revision.next
-                 YAML.load(next_revision.object)
+                 YAML.unsafe_load(next_revision.object)
                else
                  @record.attributes
                end
