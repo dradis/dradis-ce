@@ -21,6 +21,8 @@ describe 'merging a node', js: true do
     click_link 'Merge'
   end
 
+  after { FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*')) }
+
   it 'redirects to the target node' do
     within_merge_node_modal do
       click_link(target_node.label)
@@ -91,16 +93,14 @@ describe 'merging a node', js: true do
   end
 
   it 'moves attachments to target node' do
-    create(:attachment, node: source_node)
+    attachment = create(:attachment, node: source_node)
 
     within_merge_node_modal do
       click_link(target_node.label)
       find_button('Merge').click
     end
 
-    expect(target_node.attachments.count).to eq 1
-
-    FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
+    expect(target_node.attachments.map(&:filename)).to include(attachment.filename)
   end
 
   it 'destroys the source node' do
