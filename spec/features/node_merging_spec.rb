@@ -21,8 +21,6 @@ describe 'merging a node', js: true do
     click_link 'Merge'
   end
 
-  after { FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*')) }
-
   it 'redirects to the target node' do
     within_merge_node_modal do
       click_link(target_node.label)
