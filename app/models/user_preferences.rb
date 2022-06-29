@@ -43,7 +43,7 @@ class UserPreferences
     return self.new if self != Object && yaml.nil?
     return yaml unless yaml.is_a?(String) && yaml =~ /^---/
 
-    obj = YAML.load(yaml)
+    obj = YAML.unsafe_load(yaml)
 
     unless obj.is_a?(self) || obj.nil?
       raise SerializationTypeMismatch,
