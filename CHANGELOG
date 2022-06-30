@@ -2,7 +2,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - [gem]
+    - rails-html-sanitizer
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
