@@ -62,4 +62,19 @@ describe UserPreferences do
         in_array(described_class::DIGEST_FREQUENCIES.map(&:to_sym))
     end
   end
+
+  context 'as user preferences' do
+    it 'saves the user preferences' do
+      time = Time.now
+      user = create(:user)
+      user.preferences.last_first_sign_in = time
+      user.preferences.last_projects_show = time
+      user.preferences.digest_frequency = :daily
+      user.save
+
+      expect(user.preferences.last_first_sign_in).to eq(time)
+      expect(user.preferences.last_projects_show).to eq(time)
+      expect(user.preferences.digest_frequency).to eq(:daily)
+    end
+  end
 end
