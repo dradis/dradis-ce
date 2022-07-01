@@ -4,7 +4,9 @@
   <div class="col-lg-6 col-xl-5 p-0">
     <div class="content-container mt-3 mr-lg-3" data-behavior="content-container">
       <h4 class="header-underline">Upload Output Files</h4>
-      <div id="uppy-dashboard-container" data-endpoint="<%= project_upload_manager_path(current_project) %>"></div>
+      <div id="uppy-dashboard-container" data-endpoint="<%= project_upload_manager_path(current_project) %>">
+        <%# Uppy dashboard will append inside this div %>
+      </div>
     </div>
   </div>
 
