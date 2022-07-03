@@ -1,0 +1,11 @@
+<%= simple_form_for @tag, url: url, method: method do |f| %>
+  <%= f.input :name %>
+  <div class="form-actions">
+    <%= f.button :submit, class: 'btn btn-primary' %> or
+    <%=
+      link_to 'Cancel',
+      url,
+      class: 'cancel-link'
+    %>
+  </div>
+<% end %>

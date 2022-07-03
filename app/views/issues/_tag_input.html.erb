@@ -27,6 +27,9 @@
           <%= h(tag.display_name) %>
         <% end %>
       <% end %>
+      <%= link_to project_tags_path(current_project), class: 'js-taglink dropdown-item',  style: "color: #555", data: { tag: "" } do %>
+        Manage tags
+      <% end %>
     </div>
   </div>
 </div>
