@@ -22,7 +22,13 @@ class Tag < ApplicationRecord
   before_save :normalize_name
 
   # -- Validations ------------------------------------------------------------
-  validates :name, presence: true, uniqueness: { case_sensitive: false }
+  NAME_REGEX = /!\h{6}\_[a-zA-Z]+/
+  validates :name, presence: true, 
+    uniqueness: { case_sensitive: false }, 
+    format: { 
+      with: NAME_REGEX,
+      message: 'Invalid format. eg !2ca02c_info'
+    }
 
   # -- Scopes -----------------------------------------------------------------
 
