@@ -37,5 +37,9 @@ describe Tag do
       Tag.create!(name: 'pancakes')
       expect(Tag.create(name: 'Pancakes').errors[:name].count).to eq(1)
     end
+
+    it "requires to match format" do
+      expect(Tag.create(name: '!ab_d').errors[:name].count).to eq(1)
+    end
   end
 end
