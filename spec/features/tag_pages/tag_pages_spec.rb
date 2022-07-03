@@ -8,40 +8,49 @@ describe 'Tag pages:' do
   end
 
   describe '#index', js: true do
-    let!(:tags) { create_list(:tag, 3) }
     before do
       visit project_tags_path(current_project)
     end
 
-    it 'renders new tag page when new tag button is clicked' do
-      click_link 'New Tag'
-      expect(current_path).to eq(new_project_tag_path(current_project))
-    end
-
-    it 'renders all tags' do
-      tags.each do |tag|
-        expect(page).to have_selector('tr', id: "tag-#{tag.id}")
+    context 'without exisiting tags' do
+      it 'renders empty state' do
+        expect(page).to have_content('There are no tags created yet.')
       end
     end
 
-    it 'renders actions' do
-      expect(page).to have_selector('td.column-actions')
-      expect(page).to have_selector('tr', text: 'Edit')
-      expect(page).to have_selector('tr', text: 'Delete')
-    end
+    context 'with exisiting tags' do
+      let!(:tags) { create_list(:tag, 3) }
 
-    it 'renders edit tag page when new tag button is clicked' do
-      page.find("tr#tag-#{tags.first.id}").click_link('Edit')
-      expect(current_path).to eq(edit_project_tag_path(current_project, tags.first))
-    end
-
-    it 'deletes tag when delete button is clicked' do
-      expect(Tag.count).to eq(3)
-      page.accept_confirm do
-        click_link(href: project_tag_path(current_project, tags.first))
+      it 'renders new tag page when new tag button is clicked' do
+        click_link 'New Tag'
+        expect(current_path).to eq(new_project_tag_path(current_project))
       end
-      expect(page).to have_content('Tag destroyed')
-      expect(Tag.count).to eq(2)
+  
+      it 'renders all tags' do
+        tags.each do |tag|
+          expect(page).to have_selector('tr', id: "tag-#{tag.id}")
+        end
+      end
+  
+      it 'renders actions' do
+        expect(page).to have_selector('td.column-actions')
+        expect(page).to have_selector('tr', text: 'Edit')
+        expect(page).to have_selector('tr', text: 'Delete')
+      end
+  
+      it 'renders edit tag page when new tag button is clicked' do
+        page.find("tr#tag-#{tags.first.id}").click_link('Edit')
+        expect(current_path).to eq(edit_project_tag_path(current_project, tags.first))
+      end
+  
+      it 'deletes tag when delete button is clicked' do
+        expect(Tag.count).to eq(3)
+        page.accept_confirm do
+          click_link(href: project_tag_path(current_project, tags.first))
+        end
+        expect(page).to have_content('Tag destroyed')
+        expect(Tag.count).to eq(2)
+      end
     end
   end
 
