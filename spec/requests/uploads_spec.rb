@@ -11,9 +11,9 @@ describe "upload requests" do
   after { FileUtils.rm_rf(Attachment.pwd.join(@uploads_node.id.to_s)) }
 
   describe "POST #parse" do
-    let(:uploader) { 'Dradis::Plugins::Projects::Upload::Template' }
+    let(:uploader) { 'Dradis::Plugins::Wpscan' }
     let(:send_request) do
-      post project_upload_parse_path(@project), params: { file: "temp", format: :js, uploader: uploader }
+      post project_upload_parse_path(@project), params: { files: [{ name: "temp", uploader: uploader }.to_json], format: :js }
     end
 
     it "creates issues from the uploaded XML" do

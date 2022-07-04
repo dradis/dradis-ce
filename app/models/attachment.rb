@@ -66,6 +66,13 @@ class Attachment < File
   AttachmentPwd = Rails.env.test? ? Rails.root.join('tmp', 'attachments') : Rails.root.join('attachments')
   FileUtils.mkdir_p(AttachmentPwd) unless File.exists?(AttachmentPwd)
 
+  # Supported Plugins
+  SUPPORTED_PLUGINS = {
+    ".nessus" => { name: "Dradis::Plugins::Nessus", description: "Processes Nessus XML v2 format (.nessus)", version: "4.4.0" },
+    ".json" => { name: "Dradis::Plugins::Wpscan", description: "Processes WPScan JSON output", version: "4.4.0" },
+    ".xml" => { name: "Dradis::Plugins::Nmap", description: "Processes Nmap output", version: "4.4.0" }
+  }.freeze
+
   # -- Class Methods  ---------------------------------------------------------
 
   def self.all(*args)

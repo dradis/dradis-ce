@@ -13,8 +13,8 @@ class UploadController < AuthenticatedController
   # UPGRADE
   # include Plugins::Upload
 
-  before_action :find_uploaders
-  before_action :validate_uploader, only: [:create, :parse]
+  before_action :load_uploaders
+  before_action :validate_files, only: [:create]
 
   def index
     @last_job = Log.new.uid
@@ -23,31 +23,47 @@ class UploadController < AuthenticatedController
   # TODO: this would overwrite an existing file with the same name.
   # See AttachmentsController#create
   def create
-    filename = CGI::escape params[:file].original_filename
-    # add the file as an attachment
-    @attachment = Attachment.new(filename, node_id: current_project.plugin_uploads_node.id)
-    @attachment << params[:file].read
-    @attachment.save
+    @files = []
+
+    params[:files].each do |file|
+      filename = CGI::escape file.original_filename
+      extension = File.extname(filename).downcase
+
+      # add the file as an attachment
+      attachment = Attachment.new(filename, node_id: current_project.plugin_uploads_node.id)
+      attachment << file.read
+      attachment.save
+
+      @files << { name: attachment.filename, uploader: @uploaders[extension][:name] }.to_json
+    end
 
     @success = true
     @item_id = params[:item_id].to_i
-    flash.now[:notice] = "Successfully uploaded #{ filename }"
   end
 
   def parse
-    attachment = Attachment.find(params[:file], conditions: { node_id: current_project.plugin_uploads_node.id })
+    params[:files].each do |file|
+      file = JSON.parse(file)
+      attachment = Attachment.find(file["name"], conditions: { node_id: current_project.plugin_uploads_node.id })
 
-    # Files smaller than 1Mb are processed inlined, others are
-    # processed in the background via a Redis worker.
-    #
-    # In Production, play it save and use the worker (the Rules Engine can
-    # cause the processing of a small file to time out).
-    #
-    # In Development and testing, if the file is small, process in line.
-    if Rails.env.production? || (File.size(attachment.fullpath) > 1024*1024)
-      process_upload_background(attachment: attachment)
-    else
-      process_upload_inline(attachment: attachment)
+      # Skip to next file if uploader doesn't match supported versions.
+      if @uploaders.values.pluck(:name).exclude?(file["uploader"])
+        job_logger.write "Invalid uploader provided: #{file["uploader"]}! Skipping to next file."
+        next
+      end
+
+      # Files smaller than 1Mb are processed inlined, others are
+      # processed in the background via a Redis worker.
+      #
+      # In Production, play it save and use the worker (the Rules Engine can
+      # cause the processing of a small file to time out).
+      #
+      # In Development and testing, if the file is small, process in line.
+      if Rails.env.production? || (File.size(attachment.fullpath) > 1024*1024)
+        process_upload_background(attachment: attachment, uploader: file["uploader"])
+      else
+        process_upload_inline(attachment: attachment, uploader: file["uploader"])
+      end
     end
 
     # Nothing to do, the client-side JS will poll ./status for updates
@@ -63,6 +79,7 @@ class UploadController < AuthenticatedController
 
   def process_upload_background(args={})
     attachment = args.fetch(:attachment)
+    uploader = args[:uploader]
 
     job_logger.write 'Enqueueing job to start in the background.'
 
@@ -72,7 +89,7 @@ class UploadController < AuthenticatedController
     UploadJob.perform_later(
       default_user_id: current_user.id,
       file: attachment.fullpath.to_s,
-      plugin_name: @uploader.to_s,
+      plugin_name: uploader,
       project_id: current_project.id,
       uid: params[:item_id].to_i
     )
@@ -80,13 +97,14 @@ class UploadController < AuthenticatedController
 
   def process_upload_inline(args={})
     attachment = args[:attachment]
+    uploader = args[:uploader].constantize
 
-    job_logger.write('Small attachment detected. Processing in line.')
+    job_logger.write("Small attachment detected. Processing file #{attachment.filename} in line.\n")
     begin
-      importer = @uploader::Importer.new(
+      importer = uploader::Importer.new(
         default_user_id: current_user.id,
         logger:     job_logger,
-        plugin:     @uploader,
+        plugin:     uploader,
         project_id: current_project.id
       )
 
@@ -103,26 +121,22 @@ class UploadController < AuthenticatedController
         end
       end
     end
-    job_logger.write('Worker process completed.')
+    job_logger.write("Worker process completed for #{attachment.filename}.\n")
   end
 
-  def find_uploaders
-    # :upload plugins can define multiple uploaders
-    @uploaders ||= Dradis::Plugins::with_feature(:upload).
-                     collect(&:uploaders).
-                     flatten.
-                     sort_by(&:name)
+  def load_uploaders
+    @uploaders ||= Attachment::SUPPORTED_PLUGINS
   end
 
   # Ensure that the requested :uploader is valid and has been included in the
   # Plugins::Upload mixin
-  def validate_uploader
-    valid_uploaders = @uploaders.collect(&:name)
+  def validate_files
+    params[:files].each do |file|
+      extension = File.extname(file.path).downcase
 
-    if (params.key?(:uploader) && valid_uploaders.include?(params[:uploader]))
-      @uploader = params[:uploader].constantize
-    else
-      redirect_to project_upload_manager_path(current_project), alert: 'Something fishy is going on...'
+      if @uploaders.keys.exclude?(extension)
+        redirect_to project_upload_manager_path(current_project), alert: 'Something fishy is going on...'
+      end
     end
   end
 end

@@ -242,8 +242,6 @@ GEM
     letter_opener (1.7.0)
       launchy (~> 2.2)
     libv8-node (16.10.0.0)
-    libv8-node (16.10.0.0-x86_64-darwin-19)
-    libv8-node (16.10.0.0-x86_64-linux)
     liquid (5.0.1)
     listen (3.4.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -535,6 +533,7 @@ DEPENDENCIES
   paper_trail (~> 12.0.0)
   parslet (~> 1.6.0)
   pg
+  pry
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.5.1)

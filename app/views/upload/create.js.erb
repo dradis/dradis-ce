@@ -1,13 +1,12 @@
 <% if @success -%>
-  $('#filesize').text('<%=j number_to_human_size( File.size(@attachment.fullpath) ) %>');
+  $('#filesize').text('<%=j params[:files].map { |file| number_to_human_size(file.size) }.join(', ') %>');
   $('#spinner').hide();
   ConsoleUpdater.parsing = true;
   url = $('#new_upload').data('parse-url');
   $.post(
     url, {
       item_id: <%= @item_id %>,
-      uploader: '<%= params[:uploader] %>',
-      file: '<%= @attachment.filename %>',
+      files: <%= raw @files %>,
     },
     null,
     'script'
