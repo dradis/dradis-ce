@@ -533,7 +533,6 @@ DEPENDENCIES
   paper_trail (~> 12.0.0)
   parslet (~> 1.6.0)
   pg
-  pry
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.5.1)

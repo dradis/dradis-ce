@@ -172,8 +172,6 @@ group :development do
   gem 'bundler-audit', require: false
 
   gem 'rubocop', require: false
-
-  gem 'pry'
 end
 
 group :development, :test do
