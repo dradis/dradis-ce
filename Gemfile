@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.2'
+ruby '3.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1.5.1'
@@ -33,7 +33,7 @@ gem 'jbuilder', '~> 2.7'
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.4.4', require: false
+gem 'bootsnap', '>= 1.12.0', require: false
 
 # ---------------------------------------------------- Dradis Community Edition
 gem 'bootstrap', '~> 4.3.1'
@@ -43,7 +43,7 @@ gem 'jquery-fileupload-rails', '~> 0.3.4'
 gem 'jquery-hotkeys-rails'
 
 # Organize Node tree
-gem 'acts_as_tree', '~> 2.7.1'
+gem 'acts_as_tree', '~> 2.9.1'
 
 gem 'builder'
 
@@ -56,7 +56,7 @@ gem 'liquid'
 
 gem 'kaminari', '~> 1.2.1'
 
-gem 'paper_trail', '~> 12.0.0'
+gem 'paper_trail', '~> 12.2.0'
 
 # gem 'rails_autolink', '~> 1.1'
 
@@ -64,7 +64,7 @@ gem 'record_tag_helper'
 
 gem 'rubyzip', '>= 1.2.2'
 
-gem 'thor', '~> 1.0.1'
+gem 'thor', '~> 1.2.1'
 
 
 # ------------------------------------------------------ With native extensions
@@ -130,7 +130,11 @@ gem 'warden', '~> 1.2.3'
 # Schedule cron jobs
 gem 'whenever', require: false
 
+gem 'net-smtp'
+gem 'net-pop'
+gem 'net-imap'
 
+gem 'matrix'
 
 # ------------------------------------------------------------------ Deployment
 # Use Capistrano for deployment
@@ -138,7 +142,7 @@ gem 'whenever', require: false
 
 group :production do
   # Use Unicorn as the web server
-  gem 'unicorn',  '5.4.1'
+  gem 'unicorn',  '6.1.0'
 end
 
 
