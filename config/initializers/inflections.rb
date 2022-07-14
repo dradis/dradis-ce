@@ -11,7 +11,6 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.uncountable %w( evidence )
   inflect.singular /^os+$/i, 'OS'
   inflect.plural /^os+$/i, 'OSs'
-  inflect.acronym 'CSV'
   inflect.acronym 'IP'
   inflect.acronym 'IPs'
   inflect.acronym 'OS'

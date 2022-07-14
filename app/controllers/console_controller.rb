@@ -4,9 +4,10 @@
 # for a specific job
 class ConsoleController < AuthenticatedController
   def status
+    @job_id = params[:item_id].to_i
     @logs = Log.where(
       'uid = ? and id > ?',
-      params[:item_id].to_i, params[:after].to_i
+      @job_id, params[:after].to_i
     )
     @working = @logs.last.text != 'Worker process completed.' if @logs.any?
   end
