@@ -1,6 +1,6 @@
 (function($, window){
   function initBehaviors(parentElement) {
-    //Activate jQuery.Textile
+    // Activate jQuery.Textile
     $(parentElement).find('.textile').textile();
 
     // Activate DataTables
@@ -25,6 +25,7 @@
       new LocalAutoSave(this);
     });
 
+    // Fetch content
     $(parentElement).find('[data-behavior~=fetch]').each(function() {
       var that = this;
       $.ajax(that.dataset.path, { credentials: 'include' })
@@ -47,6 +48,9 @@
         $(this).tab('show');
       }
     });
+
+    // Init Bootstrap tooltips
+    $('[data-toggle~=tooltip]').tooltip();
   }
 
   document.addEventListener('turbolinks:load', function() {
