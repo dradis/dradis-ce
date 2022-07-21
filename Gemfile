@@ -234,8 +234,8 @@ gem 'dradis-calculator_cvss', '~> 4.4.0'
 gem 'dradis-calculator_dread', '~> 4.4.0'
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv', '~> 4.4.0'
-gem 'dradis-html_export', '~> 4.4.0'
+gem 'dradis-csv_export', github: 'dradis/dradis-csv'
+gem 'dradis-html_export', github: 'dradis/dradis-html_export'
 
 
 # ---------------------------------------------------------------------- Import
