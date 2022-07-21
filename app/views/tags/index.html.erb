@@ -1,0 +1,8 @@
+<div>
+  
+  <% @tags.each do |tag|%>
+    <%= link_to project_tag_path(project_id: params[:project_id], id: tag.id) do %>
+      <h2 style="color:<%=tag.color%>;"><%= tag.display_name %></h2>
+    <% end %>
+  <% end %>
+</div>

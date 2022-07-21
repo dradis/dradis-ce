@@ -103,7 +103,7 @@ gem 'sanitize', '5.2.1'
 
 # SQLite3 DB driver
 gem 'sqlite3'
-gem 'pg'
+# gem 'pg'
 
 # --------------------------------------------------------- Dradis Professional
 # Authorisation

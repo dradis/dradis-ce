@@ -19,6 +19,15 @@ DradisDatatable.prototype.setupTagButtons = function() {
     });
   }.bind(this));
 
+  tagButtons.push({
+    text: $('<i class="fa fa-plus fa-fw"></i><span>Add new tag</span></span>').css('color', '00FF00'),
+    action: $.ajax({
+      url: '/tags',
+      method: 'GET',
+      data: { issue: { tag_list: 'newtag' } }
+    })
+  });
+
   return tagButtons;
 }
 
