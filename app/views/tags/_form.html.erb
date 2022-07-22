@@ -1,8 +1,14 @@
-<%= form_tag @tag do %>
+<%= form_for(model: Tag) do |f|%>
+    <h3><%= tag.display_name %></h3>
   <div class="form-group">
-    <%= label_tag :name, 'Name', class: 'col-form-label' %>
+    <%= f.label :type %>
+    <%= f.text_field :type %>
+    <%= f.label :color %>
+    <%= f.text_field :color, data: {value: tag.name} %>
+    <%= f.label :nickname %>
+    <%= f.text_field :nickname %>
   </div>
   <div class="form-group mb-0 pt-1">
-    <%= submit_tag 'Create', class: 'btn btn-block btn-primary mt-4', data: { behavior: 'animate-click' } %>
+    <%= submit_tag 'Create', class: 'btn btn-primary mt-4', data: { behavior: 'animate-click' } %>
   </div>
 <% end %>

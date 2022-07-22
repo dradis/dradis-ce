@@ -1,1 +1,26 @@
-<h1><%= @tag.display_name %></h1>
+<nav data-behavior="breadcrumbs-nav">
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to project_tags_path(@project) do %>
+        <i class="fa fa-arrow-left"></i>
+        All tags
+      <% end %>
+    </li>
+  </ul>
+</nav>
+<div class="card">
+  <div class="card-header">
+    <h3 style="color:<%=@tag.color%>;"><%= @tag.display_name %></h3>
+  </div>
+  <div class="card-body">
+    <%= link_to project_tag_path(id: @tag.id), method: :delete, class: "col" do %>
+      <i class="fa fa-trash fa-fw"></i>
+      Delete Tag
+    <% end %>
+
+    <%= link_to edit_project_tag_path(id: @tag.id), class: "col" do %>
+      <i class="fa fa-pencil fa-fw"></i>
+      Edit Tag
+    <% end %>
+  </div>
+</div>
