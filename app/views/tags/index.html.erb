@@ -1,33 +1,35 @@
-<div class="card">
-  <div class="card-header">
-    <h3>All Tags:</h3>
-  </div>
-  <div class="card-body">
-    <% @tags.each do |tag|%>
-      <div class="row">
-        <%= link_to project_tag_path(project_id: params[:project_id], id: tag.id) do %>
-          <h2 style="color:<%=tag.color%>;"><%= tag.display_name %></h2>
-        <% end %>
+<div class="mb-2">
+<% content_for :title, 'Project tags' %>
+</div>
 
-        <div class="dropdown dots-dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i><span class="sr-only">Toggle menu</span></a>
-          <div class="dropdown-menu">
-            <%= link_to edit_project_tag_path(id: tag.id), class: "col" do %>
-              <i class="fa fa-pencil fa-fw"></i>
-              Edit Tag
-            <% end %>
-            
-            <%= link_to(
-            project_tag_path(id: tag.id), 
-            class: "col",
-            data: { confirm: "Are you sure?\n\nProceeding will delete this tag." },
-            method: :delete
-            ) do %>
-              <i class="fa fa-trash fa-fw"></i> Delete
-            <% end %>
-          </div>
+<div class="card w-75 mx-5 mt-3 pt-3">
+<% if @tags.any? %>
+  <% @tags.each do |tag|%>
+  <div class="row px-5">
+    <div class="col-8">
+      <h6 style="color:<%=tag.color%>;"><i class="fa fa-tag fa-fw"></i><%= tag.display_name %></h6>
+    </div>
+    <div class="col-2">
+      <div class="dropdown dots-dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i><span class="sr-only">Toggle menu</span></a>
+        <div class="dropdown-menu">
+          <%= link_to edit_project_tag_path(id: tag.id) do %>
+            <i class="fa fa-pencil fa-fw px-2"></i>
+            Edit
+          <% end %>
+          
+          <%= link_to(
+          project_tag_path(id: tag.id), 
+          data: { confirm: "Are you sure?\n\nProceeding will delete this tag." },
+          method: :delete
+          ) do %>
+            <i class="fa fa-trash fa-fw"></i> Delete
+          <% end %>
         </div>
       </div>
-    <% end %>
+    </div>
   </div>
+  <hr>
+  <% end %>
+<% end %>
 </div>

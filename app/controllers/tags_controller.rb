@@ -8,30 +8,31 @@ class TagsController < ApplicationController
     @tags = Tag.all
   end
 
-  def show
-    # @tag = Tag.find(params[:id])
-  end
-
   def new
     @tag = Tag.new
   end
 
   def edit
-    # @tag = Tag.find(params[:id])
   end
 
   def create
     @tag = Tag.new(tag_params)
-
-    if @tag.save
-    redirect_to project_tag_path(id: @tag.id), notice: 'Tag created'
-    else
-      redirect_to project_tags_path, alert: 'Something went wrong'
+    respond_to do |format|
+      if @tag.save
+        format.html {redirect_to project_issues_path(current_project), notice: 'Tag created'}
+        format.js
+      else
+        format.html do
+          flash.now[:alert] = @tag.errors.full_messages.join('; ')
+          redirect_to project_issues_path(current_project),
+          alert: "Tag could not be created: #{@tag.errors.full_messages.join('; ')}"
+        end
+        format.js
+      end
     end
   end
 
   def update
-    # @tag = Tag.find(params[:id])
 
     if @tag.update(tag_params)
       redirect_to project_tag_path(id: @tag.id), notice: 'Tag updated'
@@ -41,7 +42,6 @@ class TagsController < ApplicationController
   end
 
   def destroy
-    # @tag = Tag.find(params[:id])
     respond_to do |format|
       if @tag.destroy
         format.html { redirect_to project_tags_path(current_project), notice: 'Tag deleted.' }

@@ -1,0 +1,6 @@
+<% if @tag.errors.any? %>
+  alert("<%= j @tag.errors.full_messages.join('; ') %>")
+  $('#modal-tag-new').show();
+<% else %>
+  $('#modal-tag-new').hide();
+<% end %>
