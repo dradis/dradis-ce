@@ -20,12 +20,12 @@ DradisDatatable.prototype.setupTagButtons = function() {
   }.bind(this));
 
   tagButtons.push({
-    text: $('<i class="fa fa-plus fa-fw"></i><span>Add new tag</span></span>').css('color', '00FF00'),
-    action: $.ajax({
-      url: '/tags',
-      method: 'GET',
-      data: { issue: { tag_list: 'newtag' } }
-    })
+    text: $('<i href="http://localhost:3000/projects/1/tags" id="clickme" class="fa fa-plus fa-fw"></i><span>Add new tag</span></span>').css('color', '00FF00'),
+    action: function(){
+      const btn = document.getElementById("clickme")
+      link = btn.getAttribute('href');
+      window.location.href = link
+    }.bind(this)
   });
 
   return tagButtons;
