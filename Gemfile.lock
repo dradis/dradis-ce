@@ -1,5 +1,5 @@
 GIT
-  remote: https://github.com/dradis/dradis-csv.git
+  remote: https://github.com/dradis/dradis-csv_export.git
   revision: 57a2fe6c14bf33fdb4612feddfc45fefeab1e853
   specs:
     dradis-csv_export (4.5.0)
