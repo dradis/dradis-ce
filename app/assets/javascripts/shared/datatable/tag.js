@@ -26,6 +26,14 @@ DradisDatatable.prototype.setupTagButtons = function() {
       link = btn.getAttribute('href');
       window.location.href = link
     }.bind(this)
+  }, 
+  {
+    text: $('<i href="http://localhost:3000/projects/1/tags" id="manageTags" class="fa fa-list fa-fw"></i><span>Manage Tags</span></span>').css('color', '00FF00'),
+    action: function(){
+      const btn = document.getElementById("manageTags")
+      link = btn.getAttribute('href');
+      window.location.href = link
+    }.bind(this)
   });
 
   return tagButtons;
