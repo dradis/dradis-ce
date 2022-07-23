@@ -5,31 +5,57 @@
 <div class="card w-75 mx-5 mt-3 pt-3">
 <% if @tags.any? %>
   <% @tags.each do |tag|%>
-  <div class="row px-5">
-    <div class="col-8">
-      <h6 style="color:<%=tag.color%>;"><i class="fa fa-tag fa-fw"></i><%= tag.display_name %></h6>
-    </div>
-    <div class="col-2">
-      <div class="dropdown dots-dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i><span class="sr-only">Toggle menu</span></a>
-        <div class="dropdown-menu">
-          <%= link_to edit_project_tag_path(id: tag.id) do %>
-            <i class="fa fa-pencil fa-fw px-2"></i>
-            Edit
-          <% end %>
-          
-          <%= link_to(
-          project_tag_path(id: tag.id), 
-          data: { confirm: "Are you sure?\n\nProceeding will delete this tag." },
-          method: :delete
-          ) do %>
-            <i class="fa fa-trash fa-fw"></i> Delete
-          <% end %>
+    <div class="row px-5">
+      <div class="col-8">
+        <h6 style="color:<%=tag.color%>;"><i class="fa fa-tag fa-fw"></i><%= tag.display_name %></h6>
+      </div>
+      <div class="col-2">
+        <div class="dropdown dots-dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i><span class="sr-only">Toggle menu</span></a>
+          <div class="dropdown-menu">
+            <%= link_to edit_project_tag_path(id: tag.id), remote: true do %>
+              <i class="fa fa-pencil fa-fw px-2"></i>
+              Edit
+            <% end %>
+            <%= link_to(
+            project_tag_path(id: tag.id), 
+            data: { confirm: "Are you sure?\n\nProceeding will delete this tag." },
+            method: :delete
+            ) do %>
+              <i class="fa fa-trash fa-fw"></i> Delete
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <hr>
+    <hr>
   <% end %>
 <% end %>
+</div>
+<div
+  id="modal-tag-edit"
+  class="modal fade boards-modal mt-5"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="modal-board-header"
+  aria-hidden="true"
+  data-backdrop="false"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-board-header">Edit tag</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <i class="fa fa-times"></i><span class="sr-only">Close modal</span>
+          </button>
+        </div>
+
+        <div id="edit-modal-body" class="modal-body">
+          
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+    </div>
+  </div>
 </div>

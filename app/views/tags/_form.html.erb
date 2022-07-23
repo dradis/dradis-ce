@@ -1,10 +1,11 @@
 <div
   id="modal-tag-new"
-  class="modal fade boards-modal"
+  class="modal fade boards-modal mt-5"
   tabindex="-1"
   role="dialog"
   aria-labelledby="modal-board-header"
   aria-hidden="true"
+  data-backdrop="false"
 >
   <div class="modal-dialog">
     <div class="modal-content">
@@ -19,7 +20,7 @@
           <%= form_for :tag, url: project_tags_path  do |f| %>
             <div class="form-group">
               <%= f.label :name %>
-              <%= f.text_field :name %>
+              <%= f.text_field :name  %>
             </div>
             <div class="form-group mb-0 pt-1">
               <%= submit_tag 'Create', class: 'btn btn-primary mt-4', data: { behavior: 'animate-click' } %>

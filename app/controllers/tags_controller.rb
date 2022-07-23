@@ -20,24 +20,25 @@ class TagsController < ApplicationController
     respond_to do |format|
       if @tag.save
         format.html {redirect_to project_issues_path(current_project), notice: 'Tag created'}
-        format.js
       else
         format.html do
-          flash.now[:alert] = @tag.errors.full_messages.join('; ')
           redirect_to project_issues_path(current_project),
           alert: "Tag could not be created: #{@tag.errors.full_messages.join('; ')}"
         end
-        format.js
       end
     end
   end
 
   def update
-
-    if @tag.update(tag_params)
-      redirect_to project_tag_path(id: @tag.id), notice: 'Tag updated'
-    else
-      redirect_to project_tags_path, alert: 'Something went wrong, tag could not be updated'
+    respond_to do |format|
+      if @tag.update(tag_params)
+        format.html {redirect_to project_issues_path(current_project), notice: 'Tag updated'}
+      else
+        format.html do
+          redirect_to project_tags_path(current_project),
+          alert: "Something went wrong, tag could not be updated: #{@tag.errors.full_messages.join('; ')}"
+        end
+      end
     end
   end
 
