@@ -1,5 +1,6 @@
 class TagsController < ApplicationController
   include ProjectScoped
+  include ActivityTracking
 
   before_action :set_project
   before_action :set_tag, except: [:index, :new, :create]
@@ -17,8 +18,11 @@ class TagsController < ApplicationController
 
   def create
     @tag = Tag.new(tag_params)
+    
     respond_to do |format|
       if @tag.save
+        track_created(@tag, project: @project)
+
         format.html {redirect_to project_issues_path(current_project), notice: 'Tag created'}
       else
         format.html do
@@ -32,6 +36,8 @@ class TagsController < ApplicationController
   def update
     respond_to do |format|
       if @tag.update(tag_params)
+        track_updated(@tag, project: @project)
+
         format.html {redirect_to project_tags_path(current_project), notice: 'Tag updated'}
         format.js
       else
@@ -46,6 +52,8 @@ class TagsController < ApplicationController
   def destroy
     respond_to do |format|
       if @tag.destroy
+        track_destroyed(@tag, project: @project)
+
         format.html { redirect_to project_tags_path(current_project), notice: 'Tag deleted.' }
       else
         format.html { redirect_to project_tag_path(project: current_project, id: @tag.id), notice: "Error while deleting tag: #{@tag.errors}" }
@@ -55,6 +63,10 @@ class TagsController < ApplicationController
 
   private
 
+  def tag_params
+    params.require(:tag).permit(:name, :type, :color, :nickname)
+  end
+
   def set_tag
     @tag = Tag.find(params[:id])
   end
@@ -63,7 +75,4 @@ class TagsController < ApplicationController
     @project = current_project
   end
 
-  def tag_params
-    params.require(:tag).permit(:name, :type, :color, :nickname)
-  end
 end
