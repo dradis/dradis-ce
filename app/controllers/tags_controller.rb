@@ -32,11 +32,12 @@ class TagsController < ApplicationController
   def update
     respond_to do |format|
       if @tag.update(tag_params)
-        format.html {redirect_to project_issues_path(current_project), notice: 'Tag updated'}
+        format.html {redirect_to project_tags_path(current_project), notice: 'Tag updated'}
+        format.js
       else
         format.html do
           redirect_to project_tags_path(current_project),
-          alert: "Something went wrong, tag could not be updated: #{@tag.errors.full_messages.join('; ')}"
+          alert: "Tag could not be updated: #{@tag.errors.full_messages.join('; ')}"
         end
       end
     end
