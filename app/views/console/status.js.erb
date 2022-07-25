@@ -28,6 +28,10 @@ if (anyLogs) {
     } else { // if .location == close_url, we need to do it this way:
       window.location.reload(true);
     };
+  } else if (!working && !close_url) {
+    // Throw custom job-done event
+    var customEvent = new CustomEvent('job-done', {detail: {job_id: <%= @job_id %>, state: 'end'}});
+    window.dispatchEvent(customEvent);
   }
 } else {
   setTimeout(ConsoleUpdater.updateConsole, 4000);
