@@ -12,21 +12,22 @@ DradisDatatable.prototype.setupTagButtons = function() {
       tagFullName = tag[2],
       tagName = tag[0],
       $tagElement = $(`<i class="fa fa-tag fa-fw"></i><span>${tagName}</span></span>`).css('color', tagColor);
-
+    console.log(tagColor)
     tagButtons.push({
       text: $tagElement,
       action: this.tagIssue(tagFullName)
     });
   }.bind(this));
-
+  
+  // push 'add new tag' and 'manage tags' options onto end of tagButtons list
   tagButtons.push({
-    text: $('<i href="#modal-tag-new" data-target="#modal-tag-new" data-toggle="modal" id="clickme" class="fa fa-plus fa-fw"></i><span>Add new tag</span></span>').css('color', '00FF00'),
+    text: $('<hr><i href="#modal-tag-new" data-target="#modal-tag-new" data-toggle="modal" class="fa fa-plus fa-fw"></i><span>Add new tag</span>').css('color', '##2CA02C'),
     action: function(){
       $("#modal-tag-new").appendTo("body").modal("show")
     }.bind(this)
   }, 
   {
-    text: $('<i href="http://localhost:3000/projects/1/tags" id="manageTags" class="fa fa-list fa-fw"></i><span>Manage Tags</span></span>').css('color', '00FF00'),
+    text: $('<i href="/projects/1/tags" id="manageTags" class="fa fa-list fa-fw"></i><span>Manage Tags</span>').css('color', '#000000'),
     action: function(){
       const btn = document.getElementById("manageTags")
       link = btn.getAttribute('href');
