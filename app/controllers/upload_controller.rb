@@ -18,7 +18,6 @@ class UploadController < AuthenticatedController
 
   def index
     @last_job = Log.new.uid
-    byebug
   end
 
   # TODO: this would overwrite an existing file with the same name.
