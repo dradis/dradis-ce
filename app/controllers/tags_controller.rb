@@ -14,6 +14,7 @@ class TagsController < ApplicationController
   end
 
   def edit
+    @color = @tag.color.split("#").last
   end
 
   def create
@@ -64,7 +65,13 @@ class TagsController < ApplicationController
   private
 
   def tag_params
-    params.require(:tag).permit(:name, :type, :color, :nickname)
+    tag_params = params.require(:tag).permit(:name, :color)
+    new_tag_params = tag_params.dup
+
+    new_tag_params[:name] = "!#{new_tag_params[:color]}_#{new_tag_params[:name]}"
+    new_tag_params.delete(:color)
+
+    new_tag_params
   end
 
   def set_tag
