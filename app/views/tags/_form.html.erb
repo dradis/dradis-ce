@@ -18,11 +18,15 @@
 
         <div class="modal-body">
           <%= form_for :tag, url: project_tags_path  do |f| %>
-            <div class="form-group">
-              <%= f.label :name %>
-              <%= f.text_field :name  %>
-              <%= f.label :color %>
-              <%= f.text_field :color %>
+            <div class="form-group row">
+              <div class="col-6">
+                <%= f.label :name %>
+                <%= f.text_field :name  %>
+              </div>
+              <div class="col-6">
+                <%= f.label :color %>
+                <%= f.text_field :color, placeholder: "6-digit hex code" %>
+              </div>
             </div>
             <div class="form-group mb-0 pt-1">
               <%= submit_tag 'Create', class: 'btn btn-primary mt-4', data: { behavior: 'animate-click' } %>
