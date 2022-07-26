@@ -77,7 +77,7 @@ class TagsController < ApplicationController
     tag_params = params.require(:tag).permit(:name, :color)
     new_tag_params = tag_params.dup
     # format tag name for db - makes form more user-friendly
-    new_tag_params[:name] = "!#{new_tag_params[:color]}_#{new_tag_params[:name]}"
+    new_tag_params[:name] = "!#{new_tag_params[:color].first(6)}_#{new_tag_params[:name]}"
     new_tag_params.delete(:color)
 
     new_tag_params
