@@ -3,8 +3,7 @@
   - Upgraded gems:
     - acts_as_tree, bootsnap, bundler-audit, factory_bot, paper_trail, rails, rails-html-sanitizer, timecop, thor, unicorn
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Nodes: Prevent evidence labels linking to external resources
     - Bug tracker items:
       - [item]
   - New integrations:
