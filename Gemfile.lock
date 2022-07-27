@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/dradis/dradis-csv.git
-  revision: 26539f162193a4a8e8e7ae59f2aca5a30fffafc7
+  revision: b5228193ff50f83aed5911ad3e9746c4ea36c31e
   specs:
     dradis-csv (4.5.0)
       dradis-plugins (~> 4.0)
