@@ -30,7 +30,7 @@ if (anyLogs) {
     };
   } else if (!working && !close_url) {
     // Throw custom job-done event
-    var customEvent = new CustomEvent('job-done', {detail: {job_id: <%= @job_id %>, state: 'end'}});
+    var customEvent = new CustomEvent('job-done', {detail: {state: 'end'}});
     window.dispatchEvent(customEvent);
   }
 } else {
