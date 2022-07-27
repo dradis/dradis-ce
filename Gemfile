@@ -239,6 +239,7 @@ gem 'dradis-html_export', github: 'dradis/dradis-html_export'
 
 
 # ---------------------------------------------------------------------- Import
+gem 'dradis-csv', github: 'dradis/dradis-csv'
 
 
 # ---------------------------------------------------------------------- Upload
