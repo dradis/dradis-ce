@@ -19,10 +19,6 @@ div.dataTables_wrapper {
     .no-sort {
       pointer-events: none;
 
-      > i {
-        pointer-events: initial;
-      }
-
       &.sorting {
         &:after,
         &:before {
