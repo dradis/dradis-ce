@@ -137,6 +137,8 @@ gem 'net-imap'
 gem 'matrix'
 
 
+gem 'puma', '~> 5.0'
+
 # ------------------------------------------------------------------ Deployment
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -184,8 +186,6 @@ group :development, :test do
   gem 'byebug', platform: :mri
 
   gem 'rspec-rails', '~> 4.0.2'
-
-  gem 'puma', '~> 5.0'
 end
 
 group :test do
