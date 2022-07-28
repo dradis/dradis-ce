@@ -136,6 +136,8 @@ gem 'net-imap'
 
 gem 'matrix'
 
+gem 'webrick'
+
 # ------------------------------------------------------------------ Deployment
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
