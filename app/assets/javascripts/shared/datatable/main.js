@@ -96,7 +96,7 @@ class DradisDatatable {
           },
           {
             extend: 'colvis',
-            text: '<i class="fa fa-columns mr-1"></i><i class="fa fa-caret-down"></i>',
+            text: '<i class="fa fa-columns mr-1 fa-fw"></i>Columns<i class="fa fa-caret-down fa-fw"></i>',
             titleAttr: 'Choose columns to show',
             className: 'btn',
             columns: columnVisibleIndexes
@@ -109,7 +109,8 @@ class DradisDatatable {
           visible: false
         }
       ],
-      dom: "<'row'<'col-lg-6'B><'col-lg-6'f>>" +
+      dom: "<'row'<'col-sm-6 col-md-7 col-lg-6 col-xl-7 col-xxl-9'B>\
+        <'col-sm-6 col-md-5 col-lg-6 col-xl-5 col-xxl-3'f>>" +
         "<'row'<'col-lg-12'tr>>" +
         "<'dataTables_footer_content'lip>",
       initComplete: function (settings) {
