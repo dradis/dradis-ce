@@ -116,6 +116,9 @@ class IssuesController < AuthenticatedController
     @plugin = importer.plugin
     @filter = importer.filter
     @query = params[:query]
+
+    @default_columns = ['Title', 'Tags']
+    @all_columns = @default_columns
   end
 
   private

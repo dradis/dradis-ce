@@ -23,6 +23,65 @@
             <p class="mb-0">This query yielded no results.</p>
           <% end %>
         </div>
+
+        <table class="table table-striped mb-0"
+          data-behavior="dradis-datatable"
+          data-default-columns="<%= @default_columns.to_json %>"
+          data-item-name="issue"
+          data-local-storage-key="project.ce.<%= dom_id(current_project) %>.issues_import_datatable"
+        >
+          <thead>
+            <tr>
+              <!-- <th class="no-sort" data-column-visible="false"><span class="sr-only">Select</span></th> -->
+              <% @all_columns.each do |column| %>
+                <th><%= column %></th>
+              <% end %>
+              <th class="no-sort" data-column-visible="false"><span class="sr-only">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @results.any? %>
+              <% issues_from_import_records(@results).each do |issue| %>
+              <tr id="issue-<%= issue.id %>">
+                <!-- <td class="select-checkbox" data-behavior="select-checkbox"></td> -->
+                <% @all_columns.each do |column| %>
+                  <%
+                   sort, display =
+                   case column
+                   when 'Title'
+                     # [result.title, link_to(issue.title, [current_project, issue])]
+                     [issue.title, issue.title]
+                   when 'Tags'
+                     [issue_tags(issue), issue_tags(issue)]
+                   else
+                     [issue.fields.fetch(column, ''), markup(issue.fields.fetch(column, ''))]
+                   end
+                  %>
+                  <%= content_tag :td,
+                      display,
+                      class: class_names('text-break-spaces': column == 'Affected'),
+                      data: {
+                        behavior: class_names(tag: column == 'Tags'),
+                        sort: sort
+                      }
+                  %>
+                <% end  %>
+                <td class="column-actions">
+                  <%= link_to project_issues_path(current_project, format: :js), class: 'add-issue', data: { text: issue.text } do %>
+                    <i class="fa fa-plus"></i> Add this issue
+                  <% end %>
+                </td>
+              </tr>
+              <% end %>
+            <% else %>
+              <tr>
+                <td>This query yielded no results</td>
+                <td></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
       </div>
     </div>
   </div>
