@@ -14,6 +14,12 @@
   <%= render 'issues/sidebar', issues: @issues %>
 <% end %>
 
+<div data-behavior="validation-messages">
+  <div class="alert alert-danger d-none" data-behavior="missing-node-message">
+    A node must be selected.
+  </div>
+</div>
+
 <%= form_for(
   :evidence,
   url: project_create_multiple_evidence_path(current_project),
