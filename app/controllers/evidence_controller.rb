@@ -49,6 +49,11 @@ class EvidenceController < NestedNodeResourceController
     # validate Issue
     issue = current_project.issues.find(evidence_params[:issue_id])
 
+    if node_params_empty?
+      redirect_to project_issue_path(current_project, evidence_params[:issue_id], tab: 'evidence-tab'), alert: 'Evidence cannot be created.'
+      return
+    end
+
     if params[:evidence][:node_ids]
       params[:evidence][:node_ids].reject(&:blank?).each do |node_id|
         node = current_project.nodes.find(node_id)
@@ -166,6 +171,11 @@ class EvidenceController < NestedNodeResourceController
 
   def evidence_params
     params.require(:evidence).permit(:author, :content, :issue_id, :node_id)
+  end
+
+  def node_params_empty?
+    params[:evidence][:node_list].blank? &&
+      (params[:evidence][:node_ids].reject(&:empty?).empty?)
   end
 
   def set_auto_save_key
