@@ -32,6 +32,8 @@ document.addEventListener "turbolinks:load", ->
         $('[data-behavior~=view-content]').animate
           scrollTop: $('[data-behavior~=validation-messages]').scrollTop()
 
+        $(this).find('input[type="submit"]').attr('disabled', false).val('Create Evidence')
+
         return false
 
   if $('body.issues.show').length
