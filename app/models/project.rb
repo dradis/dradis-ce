@@ -9,7 +9,7 @@ class Project
 
   # -- Class Methods --------------------------------------------------------
   def self.create(args={})
-    new(args.merge(id: 1))
+    new(**args.merge(id: 1))
   end
 
   def self.find(id)
@@ -115,5 +115,9 @@ class Project
   # node:
   def recovered
     @recovered ||= nodes.find_or_create_by(label: 'Recovered')
+  end
+
+  def report_template_properties
+    nil
   end
 end

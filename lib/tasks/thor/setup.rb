@@ -42,69 +42,19 @@ class DradisTasks < Thor
       end
     end
 
-    desc 'migrate', 'ensures the database schema is up-to-date'
-    def migrate
-      require 'config/environment'
-
-      print '** Checking database migrations...                                    '
-      rake('db:migrate')
-      puts '[  DONE  ]'
-    end
-
-    desc 'seed', 'adds initial values to the database (i.e., categories and configurations)'
-    def seed
-      require 'config/environment'
-
-      print '** Seeding database...                                                '
-      require 'db/seeds'
-      puts '[  DONE  ]'
-    end
-
     desc 'kit', 'Import files and projects from a specified Kit configuration file'
     method_option :file, required: true, type: :string, desc: 'full path to the Kit file to use.'
     def kit
       puts "** Importing kit..."
-      KitImportJob.perform_now(file: options[:file], logger: default_logger)
+      KitImportJob.perform_now(options[:file], logger: default_logger)
       puts "[  DONE  ]"
     end
 
     desc 'welcome', 'adds initial content to the repo for demonstration purposes'
     def welcome
-      # TODO: once dradis:setup:kit is available, replace this entire task with
-      # two steps:
-      #   1. prepare Welcome kit from template files
-      #   2. invoke 'dradis:setup:kit', [], [welcome_kit.path]
-
-      # --------------------------------------------------------- Note template
-      if NoteTemplate.pwd.exist?
-        say 'Note templates folder already exists. Skipping.'
-      else
-        template 'note.txt', NoteTemplate.pwd.join('basic_fields.txt')
-      end
-
-      # ----------------------------------------------------------- Methodology
-      if Methodology.pwd.exist?
-        say 'Methodology templates folder already exists. Skipping.'
-      else
-        template 'methodology.xml', Methodology.pwd.join('owasp2017.xml')
-      end
-
-      # ---------------------------------------------------------- Project data
-      detect_and_set_project_scope
-
-      task_options.merge!(
-        plugin: Dradis::Plugins::Projects::Upload::Template,
-        default_user_id: User.create!(email: 'adama@dradisframework.com').id
-      )
-
-      importer = Dradis::Plugins::Projects::Upload::Template::Importer.new(task_options)
-      importer.import(file: File.join(self.class.source_root, 'project.xml'))
-
-      # dradis:reset:database truncates the tables and resets the :id column so
-      # we know the right node ID we're going to get based on the project.xml
-      # structure.
-      FileUtils.mkdir_p(Attachment.pwd.join('5'))
-      template 'command-01.png', Attachment.pwd.join('5/command-01.png')
+      # Before we import the Kit we need at least 1 user
+      User.create!(email: 'adama@dradisframework.com').id
+      invoke 'dradis:setup:kit', [], file: File.join(self.class.source_root, 'welcome')
     end
   end
 end

@@ -36,6 +36,7 @@ $secondaryBgColor: #f8f8f8;
 $activeFillColor: #eceeef;
 $borderColor: #ddd;
 $checkboxFill: #0d6efd;
+$focusShadow: 0 0 0 0.2rem unquote(#{$primaryColor}80) !important;
 $dropdownLinkBackgroundHover: #f8f9fa;
 $navbarBackground: $primaryBgColor;
 $sidebarBackground: darken($darkColor, 5%);

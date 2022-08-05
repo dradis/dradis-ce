@@ -1,10 +1,5 @@
 document.addEventListener "turbolinks:load", ->
-  if $('body.issues.show').length
-    $('[data-behavior~=evidence-link]').first().addClass('active')
-    $('[data-behavior~=evidence-tab-pane]').first().addClass('active show')
-
-    $('i[data-toggle="tooltip"]').tooltip()
-
+  if $('body.evidence.new').length
     $('#evidence-host-list a[data-toggle~=pill]').on 'click', (ev)->
       path   = $(this).data('path')
       node   = $(this).data('node')
@@ -16,15 +11,21 @@ document.addEventListener "turbolinks:load", ->
           .then (html) ->
             $("##{node}").html(html)
 
-    $('.js-add-evidence').click ->
-      $('#js-add-evidence-container').slideToggle()
+    $nodeListOptions = $('[data-behavior~=existing-node-list] option')
 
-    $('#js-add-evidence-container').on 'change', '#evidence_content', ->
-      $('#template-content').text($(this).val())
-
-    $('#js-add-evidence-container').on 'keyup', '#evidence_node', ->
+    $('[data-behavior~=add-evidence-container]').on 'keyup', '#evidence_node', ->
       rule = new RegExp($(this).val(), 'i')
-      $('[data-behavior~=existing-node-wrapper]').hide();
-      $('[data-behavior~=existing-node-wrapper]').filter ->
-        rule.test($(this).find($('[data-behavior~=existing-node-label]')).text())
+      $nodeListOptions.hide();
+      $nodeListOptions.filter ->
+        rule.test($(this).text())
       .show()
+
+    $nodeListOptions.mousedown (e) ->
+      e.preventDefault()
+      $(this).prop 'selected', !$(this).prop('selected')
+      $(this).parent().focus()
+
+  if $('body.issues.show').length
+    $table = $('[data-behavior~=dradis-datatable]')
+    $table.on 'dradis:datatable:bulkDelete', ->
+      $('[data-behavior~=evidence-count]').text($table.DataTable().rows().count());

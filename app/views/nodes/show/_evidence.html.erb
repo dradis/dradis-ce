@@ -1,6 +1,22 @@
 <div class="tab-pane <%= "active" if params[:tab] == "evidence-tab" %>" id="evidence-tab">
+  <h4 class="header-underline">Evidence
+    <span class="actions pt-1">
+      <div class="action">
+        <div class="dropdown">
+          <%= link_to 'javascript:void(0)', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do %>
+            <i class="fa fa-plus"></i> New Evidence
+          <% end %>
+          <%= render 'shared/templates_dropdown',
+            name: 'Evidence',
+            new_path: new_project_node_evidence_path(@node.project, @node),
+            category_id: nil
+          %>
+        </div>
+      </div>
+    </span>
+  </h4>
+
   <% if @sorted_evidence.any? %>
-    <h4 class="header-underline">Evidence</h4>
     <div data-behavior="datatable-paths"
         data-table-destroy-url="<%= multiple_destroy_project_node_evidence_index_path(@node.project, @node) %>"
         data-table-close-console-url="<%= project_node_path(@node.project, @node, tab: "evidence-tab") %>">

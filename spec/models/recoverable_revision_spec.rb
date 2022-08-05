@@ -44,7 +44,7 @@ describe RecoverableRevision do
     describe "recovering an Evidence whose Issue has been deleted" do
       it "recovers the Issue as well" do
         issue    = create(:issue, node: @project.issue_library)
-        evidence = create(:evidence, issue: issue)
+        evidence = create(:evidence, issue: issue, node: create(:node, project: @project))
 
         evidence.destroy
         issue.destroy

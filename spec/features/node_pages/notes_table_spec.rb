@@ -14,10 +14,17 @@ describe 'node pages' do
       visit project_node_path(current_project, node, tab: 'notes-tab')
     end
 
-    let(:default_columns) { ['Title', 'Created', 'Updated'] }
-    let(:hidden_columns) { ['Description', 'Extra'] }
+    let(:default_columns) { ['Title'] }
+    let(:hidden_columns) { ['Created', 'Created by', 'Updated'] }
     let(:filter) { { keyword: @note.title, filter_count: 1 } }
 
     it_behaves_like 'a DataTable'
+
+    let(:new_content) { "#[Title]#\nNote1\n\n#[Description]#\nn/a\n#[Extra]#\nExtra field\n\n#[New Field]#\nNew Field Value" }
+    let(:old_content) { "#[Title]#\nNote1\n\n#[Description]#\nn/a\n#[Extra]#\nExtra field" }
+    let(:resource) { @note }
+    let(:content_attribute) { :text }
+
+    it_behaves_like 'a DataTable with Dynamic Columns'
   end
 end

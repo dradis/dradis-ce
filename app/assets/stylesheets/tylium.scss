@@ -23,7 +23,9 @@
 @import "shared/noscript";
 @import "shared/notifications";
 @import "shared/pagination";
+@import "shared/revisions";
 @import "shared/textile.scss";
+@import "shared/validations";
 
 // styles for base HTML elements like body, h1, etc.
 @import "tylium/base";
@@ -33,3 +35,6 @@
 
 // specific styles for the different views
 @import "tylium/modules";
+
+// engines css
+@import "tylium/engines";

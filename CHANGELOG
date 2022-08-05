@@ -1,18 +1,15 @@
 [v#.#.#] ([month] [YYYY])
-  - Editor:
-    - Limit the content height for easier access to the Create/Update button.
-  - Evidence:
-    - Create a new issue (optionally) when creating new evidence
   - Notes:
     - Remove category selection from form UI.
+  - Ruby: Upgraded to 3.1.2
   - Upgraded gems:
-    - nokogiri, rails
+    - acts_as_tree, bootsnap, bundler-audit, factory_bot, paper_trail, rails, rails-html-sanitizer, timecop, thor, unicorn
   - Bugs fixes:
-    - Methodologies:
-      - Ensure boards don't nest when the instance has been inactive
+    - Nodes: Prevent evidence labels linking to external resources
     - Bug tracker items:
       - [item]
   - New integrations:
+    - CSV Importer
     - [integration]
   - Integration enhancements:
     - [integration]:
@@ -29,6 +26,123 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v4.4.0 (June 2022)
+  - Login View: Design update
+  - Tylium:
+    - Improve mobile experience
+    - Show the resource title in the header when viewing a resource
+  - Upgraded gems:
+    - nokogiri, rack, sinatra
+  - Bugs fixes:
+    - Cards: Prevent adding 'card' class to card comments
+  - Integration enhancements:
+    - Nikto: Make references available as an issue field
+
+v4.3.0 (April 2022)
+  - Setup Wizard: Add option to pre-populate sample data
+  - Uploads: Allow subsequent file uploads from the same scanner without needing to re-select the scanner
+  - Upgraded gems: nokogiri, puma, rails
+  - Bugs fixes:
+    - Editor:
+      - Add keyboard shortcut support for windows and linux
+      - Allow text selection expansion using shift-click
+    - Subscriptions: Show correct Subscribe/Unsubscribe link after a new comment is posted
+    - Tables: Prevent columns state from resetting after 2 hours
+  - Integration enhancements:
+    - Openvas: Update Node label parsing. Include :hostname and :asset_id properties
+
+v4.2.1 (February 2022)
+  - Bug fixes: Fix issue default fields appearing in the evidence table
+
+v4.2.0 (February 2022)
+  - Editor: Support fields with the same name in the Fields View
+  - Increased table loading performance on Issues, Evidence, and Notes for
+    projects with *a lot* of issues, evidence, or notes
+  - Issues:
+    - Display evidence in a table
+    - Load evidence tab content asynchronously
+    - Multi-delete evidence at the issue level
+    - Update evidence content while creating evidence records at the issue-level
+  - Setup:
+    - Add Setup Wizard
+    - Avoids hard-coding "../../shared/"
+    - Store gem dependencies under ./vendor/bundle/
+  - Tylium:
+    - Import CSS manifests from addons
+    - Move '...' (more actions) menu closer to the content affected by the actions of the menu
+    - Move the 'Edit' action out of the '...' (more actions) menu for issues, evidence, notes, etc.
+    - Remove extra left padding from the first line of content in a code block
+    - Remove height restriction from code blocks
+    - Simplify issues table columns
+    - Updates focus state outline color
+  - Upgraded gems:
+    - mini_racer, puma, rails
+  - Bugs fixes:
+    - Comments: Show sticky toolbar when adding long comments
+    - Tables: Prevents the select all button from selecting filtered out rows when a filter is been applied
+    - Subscriptions: Fixes a caching issue preventing users from subscribing or
+      unsubscribing after the first cache was stored
+    - Issues: Send To menu updates when new plugins are installed
+  - Integration enhancements:
+    - Dradis Projects:
+      - Fixes missing parent nodes during template and package imports
+      - Fixes missing nodes for attachments during template and package imports
+    - Nexpose:
+      - Add the Hostname Node property from the `name` rather than `site-name` tag
+    - Nipper:
+      - Add Nipperv1 fields to issues
+    - PDF Export:
+      - Add Thor task for console export
+      - Add view hook for Export#index
+    - Qualys:
+      - Add 'element.qualys_collection' as issue field
+      - Add Qualys Web Application Scanner (WAS) support
+
+v4.1.2 (December 2021)
+  - Upgraded gems:
+    - rails
+  - Security Fixes:
+    - High: Authenticated author path traversal
+
+v4.1.0 (November 2021)
+  - Editor:
+    - Insert an appropriate single or multiline tag for blockquotes and codeblocks
+    - Limit the content height for easier access to the Create/Update button
+    - Quote text from comments and resource content (cards, evidence, issues, notes, etc)
+  - Evidence:
+    - Create a new issue (optionally) when creating new evidence
+    - Move evidence across nodes
+  - Tables:
+    - Add selector to change the number of records displayed
+  - Tylium:
+    - Import CSS manifests from addons
+    - Remove extra left padding from the first line of content in a code block
+    - Remove height restriction from code blocks
+  - Upgraded gems:
+    - nokogiri, puma, rails
+  - Bugs fixes:
+    - Conflict resolver
+      - Apply the correct warning when a conflict happens on edit
+    - Methodologies:
+      - Ensure boards don't nest when the instance has been inactive
+    - Tables
+      - Prevent columns state from resetting
+  - Integration enhancements:
+    - CVSS Calculator:
+      - Settings: show/hide the calculator in the Issues view
+      - Toggle between CVSSv3.0 and CVSSv3.1
+    - Dread Calculator:
+      - Settings: show/hide the calculator in the Issues view
+    - Nessus:
+      - Add product_coverage & cvss3_impact_score as available Issue fields
+    - Nexpose
+      - Update HTML tag cleanup to better cover UnorderedList and URLLink tags in the solution field
+    - Qualys
+      - Add <dd>, <dt> support
+      - Remove orphaned <b> tags
+  - Security Fixes:
+    - High: Authenticated author broken access control: read access to issue content
 
 v4.0.0 (July 2021)
   * Dynamic content across the app

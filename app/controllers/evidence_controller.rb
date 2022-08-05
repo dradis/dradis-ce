@@ -1,11 +1,11 @@
 class EvidenceController < NestedNodeResourceController
   include ConflictResolver
+  include EvidenceHelper
   include LiquidEnabledResource
   include Mentioned
   include MultipleDestroy
   include NodesSidebar
   include NotificationsReader
-  include EvidenceHelper
 
   before_action :set_or_initialize_evidence, except: [ :index, :create_multiple ]
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
@@ -84,7 +84,7 @@ class EvidenceController < NestedNodeResourceController
         track_created(evidence)
       end
     end
-    redirect_to project_issue_path(current_project, evidence_params[:issue_id]), notice: 'Evidence added for selected nodes.'
+    redirect_to project_issue_path(current_project, evidence_params[:issue_id], tab: 'evidence-tab'), notice: 'Evidence added for selected nodes.'
   end
 
   def edit

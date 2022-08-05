@@ -11,4 +11,8 @@
   $('[data-behavior~=local-auto-save]', '#<%= dom_id(@comment) %>').each(function() {
     new LocalAutoSave(this);
   });
+
+  $('[data-behavior~=rich-toolbar]').on('focus', function() {
+    window.lastActiveEditor = $(this).data('editorToolbar');
+  });
 <% end %>

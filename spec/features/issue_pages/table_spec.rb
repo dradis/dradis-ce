@@ -26,10 +26,17 @@ describe 'issue pages' do
       visit project_issues_path(current_project)
     end
 
-    let(:default_columns) { ['Title', 'Created', 'Updated'] }
+    let(:default_columns) { ['Title', 'Tags'] }
     let(:hidden_columns) { ['Description', 'Risk'] }
     let(:filter) { { keyword: @issue.title, filter_count: 1 } }
 
     it_behaves_like 'a DataTable'
+
+    let(:new_content) { "#[Title]#\nNew Title\n\n#[Risk]#\nHigh\n\n#[Description]#\nn/a\n\n#[New Field]#\nNew Field Value" }
+    let(:old_content) { "#[Title]#\nIssue1\n\n#[Risk]#\nHigh\n\n#[Description]#\nn/a" }
+    let(:resource) { @issue }
+    let(:content_attribute) { :text }
+
+    it_behaves_like 'a DataTable with Dynamic Columns'
   end
 end

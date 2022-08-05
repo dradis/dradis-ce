@@ -20,10 +20,17 @@ describe 'node pages' do
       visit project_node_path(@project, @node, tab: 'evidence-tab')
     end
 
-    let(:default_columns) { ['Title', 'Created', 'Updated'] }
-    let(:hidden_columns) { ['Description', 'Extra'] }
+    let(:default_columns) { ['Title', 'Label'] }
+    let(:hidden_columns) { ['Created', 'Created by', 'Updated'] }
     let(:filter) { { keyword: @evidence.title, filter_count: 1 } }
 
     it_behaves_like 'a DataTable'
+
+    let(:new_content) { "#[Title]#\nEvidence1\n\n#[Description]#\nn/a\n#[Extra]#\nExtra field\n\n#[New Field]#\nNew Field Value" }
+    let(:old_content) { "#[Title]#\nEvidence1\n\n#[Description]#\nn/a\n#[Extra]#\nExtra field" }
+    let(:resource) { @evidence }
+    let(:content_attribute) { :content }
+
+    it_behaves_like 'a DataTable with Dynamic Columns'
   end
 end

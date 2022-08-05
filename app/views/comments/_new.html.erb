@@ -9,20 +9,34 @@
     <%= f.label :content, "Add a comment" %>
   </div>
   <div class="row m-0 flex-nowrap">
-  <%= avatar_image(current_user, size: 30) %>
-  <%= f.text_area :content,
-                  placeholder: 'Write your comment...',
-                  rows: 5,
-                  required: 'required',
-                  class: 'form-control',
-                  data: {
-                    behavior: 'mentionable rich-toolbar drop-zone',
-                    'rich-toolbar': 'block-code bold image italic link list-ol list-ul table',
-                    'rich-toolbar-uploader': '[data-behavior~=jquery-upload]'
-                  } %>
+    <%= avatar_image(current_user, size: 30) %>
+    <%= f.text_area :content,
+                    placeholder: 'Write your comment...',
+                    rows: 5,
+                    required: 'required',
+                    class: 'form-control',
+                    data: {
+                      behavior: 'mentionable rich-toolbar drop-zone',
+                      'rich-toolbar': 'block-code bold image italic link list-ol list-ul quote table',
+                      'rich-toolbar-uploader': '[data-behavior~=jquery-upload]'
+                    } %>
 
-  <%= f.hidden_field :commentable_type %>
-  <%= f.hidden_field :commentable_id %>
+    <%= f.hidden_field :commentable_type %>
+    <%= f.hidden_field :commentable_id %>
   </div>
-  <%= f.submit "Add comment", class: "btn btn-primary mt-2" %>
+  <div class="btn-group">
+    <%= f.submit "Add comment", class: "btn btn-primary mt-2" %>
+    <% if @commentable.is_a?(Issue) %>
+      <button type="button" class="btn btn-primary mt-2 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="sr-only">Toggle comment type dropdown</span>
+      </button>
+      <div class="dropdown-menu">
+        <% if defined?(Dradis::Pro) && defined?(Dradis::Pro::Plugins::Gateway) %>
+          <%= render_view_hooks 'comments/new_public_comment' %>
+        <% else %>
+          <%= render partial: 'comments/new_public_comment' %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 <% end %>
