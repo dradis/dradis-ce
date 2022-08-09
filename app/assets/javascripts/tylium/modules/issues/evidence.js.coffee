@@ -25,17 +25,6 @@ document.addEventListener "turbolinks:load", ->
       $(this).prop 'selected', !$(this).prop('selected')
       $(this).parent().focus()
 
-    $('#add-evidences').submit ->
-      # If no nodes are selected/specified
-      if $('#evidence_node_ids').val().length == 0 && $('#evidence_node_list').val().length == 0
-        $('[data-behavior=missing-node-message]').removeClass('d-none')
-        $('[data-behavior~=view-content]').animate
-          scrollTop: $('[data-behavior~=validation-messages]').scrollTop()
-
-        $(this).find('input[type="submit"]').attr('disabled', false).val('Create Evidence')
-
-        return false
-
   if $('body.issues.show').length
     $table = $('[data-behavior~=dradis-datatable]')
     $table.on 'dradis:datatable:bulkDelete', ->

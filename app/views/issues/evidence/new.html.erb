@@ -14,12 +14,6 @@
   <%= render 'issues/sidebar', issues: @issues %>
 <% end %>
 
-<div data-behavior="validation-messages">
-  <div class="alert alert-danger d-none" data-behavior="missing-node-message">
-    A node must be selected.
-  </div>
-</div>
-
 <%= form_for(
   :evidence,
   url: project_create_multiple_evidence_path(current_project),
@@ -90,7 +84,7 @@
         <div class="row">
           <div class="col-12">
             <h5>Evidence Content</h5>
-            <% cache [@issue, @nodes_for_add_evidence ] do %>
+            <% cache [@content, @issue, @nodes_for_add_evidence] do %>
               <%= f.hidden_field :issue_id, value: @issue.id %>
               <%= f.hidden_field :node_id, value: @issue.node_id %>
 
@@ -107,7 +101,7 @@
                   'rich-toolbar-uploader': '[data-behavior~=jquery-upload]',
                 },
                 rows: 20,
-                value: @template_content
+                value: (@template_content || @content)
               %>
             <% end %>
           </div>
