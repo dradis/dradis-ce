@@ -109,8 +109,8 @@ class DradisDatatable {
           visible: false
         }
       ],
-      dom: "<'row'<'col-sm-6 col-md-7 col-lg-6 col-xl-7 col-xxl-9'B>\
-        <'col-sm-6 col-md-5 col-lg-6 col-xl-5 col-xxl-3'f>>" +
+      dom: "<'row'<'col-sm-6'B>\
+        <'col-sm-6'f>>" +
         "<'row'<'col-lg-12'tr>>" +
         "<'dataTables_footer_content'lip>",
       initComplete: function (settings) {
