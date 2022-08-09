@@ -50,7 +50,7 @@ class EvidenceController < NestedNodeResourceController
     issue = current_project.issues.find(evidence_params[:issue_id])
 
     if node_params_empty?
-      redirect_to project_issue_path(current_project, evidence_params[:issue_id], tab: 'evidence-tab'), alert: 'Evidence cannot be created.'
+      redirect_to project_issue_path(current_project, evidence_params[:issue_id], tab: 'evidence-tab'), alert: 'No node was selected.'
       return
     end
 
