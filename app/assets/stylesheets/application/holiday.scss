@@ -5,14 +5,25 @@ body.unauthenticated.holiday {
   --primaryColorDark: #{darken($holidayColor, 10)};
   --primaryColorLight: #{lighten($holidayColor, 20)};
 
+  &::after,
+  &::before {
+    content: '';
+    inset: 0;
+    position: fixed;
+    z-index: -1;
+  }
+
+  &::after {
+    background-image: image-url('holiday/lights.png');
+    background-position: fixed;
+    background-repeat-y: no-repeat;
+    background-size: 30rem;
+  }
+
   &::before {
     background-image: image-url('holiday/snow.svg');
     background-position: bottom;
     background-repeat: no-repeat;
-    background-size: 100% 20vh;
-    content: '';
-    inset: 0;
-    position: fixed;
-    top: 80vh;
+    background-size: 100% 16rem;
   }
 }
