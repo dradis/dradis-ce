@@ -1,0 +1,7 @@
+body.unauthenticated.holiday {
+  $holidayColor: #C30F16;
+
+  --primaryColor: #{$holidayColor};
+  --primaryColorDark: #{darken($holidayColor, 10)};
+  --primaryColorLight: #{lighten($holidayColor, 20)};
+}
