@@ -28,46 +28,47 @@ class Issues::EvidenceController < AuthenticatedController
       @nodes_for_add_evidence = current_project.nodes.user_nodes.order(:label)
 
       flash.now[:alert] = 'A node must be selected.'
-      render :new
-    else
-      if params[:evidence][:node_ids]
-        params[:evidence][:node_ids].reject(&:blank?).each do |node_id|
-          node = current_project.nodes.find(node_id)
-          evidence = Evidence.create!(
-            author: current_user.email,
-            content: evidence_params[:content],
-            issue_id: @issue.id,
-            node_id: node.id
-          )
-          track_created(evidence)
-        end
-      end
-      if params[:evidence][:node_list]
-        if params[:evidence][:node_list_parent_id].present?
-          parent = current_project.nodes.find(params[:evidence][:node_list_parent_id])
-        end
-        params[:evidence][:node_list].lines.map(&:strip).reject(&:blank?).each do |label|
-          unless (node = current_project.nodes.find_by(label: label))
-            node = current_project.nodes.create!(
-              type_id: Node::Types::HOST,
-              label: label,
-              parent: parent,
-            )
-            track_created(node)
-          end
-
-          evidence = Evidence.create!(
-            author: current_user.email,
-            content: evidence_params[:content],
-            issue_id: @issue.id,
-            node_id: node.id
-          )
-          track_created(evidence)
-        end
-      end
-
-      redirect_to project_issue_path(current_project, evidence_params[:issue_id], tab: 'evidence-tab'), notice: 'Evidence added for selected nodes.'
+      return render :new
     end
+
+    if params[:evidence][:node_ids]
+      params[:evidence][:node_ids].reject(&:blank?).each do |node_id|
+        node = current_project.nodes.find(node_id)
+        evidence = Evidence.create!(
+          author: current_user.email,
+          content: evidence_params[:content],
+          issue_id: @issue.id,
+          node_id: node.id
+        )
+        track_created(evidence)
+      end
+    end
+
+    if params[:evidence][:node_list]
+      if params[:evidence][:node_list_parent_id].present?
+        parent = current_project.nodes.find(params[:evidence][:node_list_parent_id])
+      end
+      params[:evidence][:node_list].lines.map(&:strip).reject(&:blank?).each do |label|
+        unless (node = current_project.nodes.find_by(label: label))
+          node = current_project.nodes.create!(
+            type_id: Node::Types::HOST,
+            label: label,
+            parent: parent,
+          )
+          track_created(node)
+        end
+
+        evidence = Evidence.create!(
+          author: current_user.email,
+          content: evidence_params[:content],
+          issue_id: @issue.id,
+          node_id: node.id
+        )
+        track_created(evidence)
+      end
+    end
+
+    redirect_to project_issue_path(current_project, evidence_params[:issue_id], tab: 'evidence-tab'), notice: 'Evidence added for selected nodes.'
   end
 
   private
