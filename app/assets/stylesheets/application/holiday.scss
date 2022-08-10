@@ -6,7 +6,7 @@ body.unauthenticated.holiday {
   --primaryColorLight: #{lighten($holidayColor, 20)};
 
   &::before {
-    background-image: image-url('snow.svg');
+    background-image: image-url('holiday/snow.svg');
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: 100% 20vh;
