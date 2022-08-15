@@ -3,6 +3,7 @@
   - Upgraded gems:
     - acts_as_tree, bootsnap, bundler-audit, factory_bot, paper_trail, rails, rails-html-sanitizer, timecop, thor, unicorn
   - Bugs fixes:
+    - Evidence: Add validation for creating evidences in the issue view
     - Nodes: Prevent evidence labels linking to external resources
     - Bug tracker items:
       - [item]
