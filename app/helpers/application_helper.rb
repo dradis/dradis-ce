@@ -1,4 +1,8 @@
 module ApplicationHelper # :nodoc:
+  def december?
+    Date.today.month == 12
+  end
+
   def markup(text, options={})
     return unless text.present?
 
