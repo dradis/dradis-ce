@@ -15,9 +15,9 @@ body.unauthenticated.holiday {
 
   &::after {
     background-image: image-url('holiday/lights.png');
-    background-position: fixed;
-    background-repeat-y: no-repeat;
+    background-position: top;
     background-size: 30rem;
+    height: 5.25rem;
   }
 
   &::before {
