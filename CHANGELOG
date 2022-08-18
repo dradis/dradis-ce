@@ -22,6 +22,7 @@
     - [API entity]:
       - [future tense verb] [API enhancement]
   - Security Fixes:
+    - Medium: Authenticated author broken access control: read access to issue content
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
