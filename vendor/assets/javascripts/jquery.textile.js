@@ -185,6 +185,12 @@
         data: {source: data, allow_dropdown: allowDropdown},
         beforeSend: function(){
           this.options.$fields.addClass('loading-indicator').text('Loading...');
+        }.bind(this),
+        success: function(result) {
+          this.options.$fields.removeClass('loading-indicator')
+            .html(result);
+          this.bindFieldGroup(this.options.$fields);
+          this.options.$fields.trigger('textile:formLoaded');
         }.bind(this)
       });
     },

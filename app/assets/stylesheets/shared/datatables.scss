@@ -203,6 +203,20 @@ div.dataTables_wrapper {
     }
   }
 
+  div.dataTables_filter {
+    text-align: left;
+  }
+
+  @include media-breakpoint-up(sm) {
+    div.dataTables_filter {
+      text-align: right;
+    }
+  }
+
+  .dt-buttons > .btn {
+    flex: unset;
+  }
+
   .dt-button-collection {
     .dropdown-item {
       font-size: 0.9rem;
@@ -253,16 +267,6 @@ div.dataTables_wrapper {
   tr:last-of-type {
     td {
       border-bottom: 1px solid darken($white, 10%);
-    }
-  }
-
-  @include media-breakpoint-down(md) {
-    div.dataTables_filter {
-      text-align: right;
-    }
-
-    .dt-buttons > .btn {
-      flex: unset;
     }
   }
 }

@@ -9,7 +9,7 @@ class Project
 
   # -- Class Methods --------------------------------------------------------
   def self.create(args={})
-    new(args.merge(id: 1))
+    new(**args.merge(id: 1))
   end
 
   def self.find(id)

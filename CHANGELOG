@@ -1,26 +1,19 @@
 [v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
-  - Upgraded gems:
-    - [gem]
+  - Upgraded Dradis to run on ruby 3.1.2
+  - Upgraded gems: acts_as_tree, bootsnap, bundler-audit, factory_bot, paper_trail, rails, rails-html-sanitizer, timecop, thor, unicorn
   - Bugs fixes:
+    - Attachments: Fix attachments not showing or being validated correctly
     - Evidence:
+      - Add validation for creating evidences in the issue view
       - Set correct localStorage key to prevent pre-populating incorrect content at the issue level
-    - Bug tracker items:
-      - [item]
+    - Nodes: Prevent evidence labels linking to external resources
   - New integrations:
-    - [integration]
+    - CSV Importer
   - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
+    - Qualys: Wrap ciphers in code blocks for the Vuln Importer
   - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
-  - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
+    - CSV Export: Rename integration to dradis-csv_export
+    - HTML Export: Add :rtp plugins feature
   - Security Fixes:
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]

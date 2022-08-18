@@ -1,6 +1,6 @@
 (function($, window){
   function initBehaviors(parentElement) {
-    //Activate jQuery.Textile
+    // Activate jQuery.Textile
     $(parentElement).find('.textile').textile();
 
     // Activate DataTables
@@ -25,6 +25,7 @@
       new LocalAutoSave(this);
     });
 
+    // Fetch content
     $(parentElement).find('[data-behavior~=fetch]').each(function() {
       var that = this;
       $.ajax(that.dataset.path, { credentials: 'include' })
@@ -47,9 +48,25 @@
         $(this).tab('show');
       }
     });
+
+    // Init Bootstrap tooltips
+    $('[data-toggle~=tooltip]').tooltip();
   }
 
   document.addEventListener('turbolinks:load', function() {
     initBehaviors(document.querySelector('body'));
+
+    // Because this is an event and not a data-driven behavior, we can leave it
+    // out of initBehaviors and attach the listener to document directly.
+    //
+    // In particular we're after jquery.textile forms that get rendered post page
+    // load via ajax.
+    $(document).on('textile:formLoaded', '.textile-form', function(event){
+      // We trigger a single formLoaded event for the containing form, but we
+      // have to attach EditorToolbar to individual textareas within it.
+      $(event.target).find('[data-behavior~=rich-toolbar]').each(function() {
+        new EditorToolbar($(this));
+      });
+    });
   });
 })($, window);

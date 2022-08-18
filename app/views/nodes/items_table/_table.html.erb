@@ -26,6 +26,8 @@
               <%
               sort, display =
               case column
+              when 'Label'
+                [item.node.label, link_to(item.node.label, [current_project, @node, item])]
               when 'Title'
                 [
                   item.title,
