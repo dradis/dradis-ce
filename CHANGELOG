@@ -1,4 +1,4 @@
-[v#.#.#] ([month] [YYYY])
+v4.5.0 (August 2022)
   - Upgraded Dradis to run on ruby 3.1.2
   - Upgraded gems: acts_as_tree, bootsnap, bundler-audit, factory_bot, paper_trail, rails, rails-html-sanitizer, timecop, thor, unicorn
   - Bugs fixes:
