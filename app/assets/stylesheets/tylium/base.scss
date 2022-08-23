@@ -35,40 +35,9 @@ a {
   }
 }
 
-@mixin button($color) {
-  border: 0px none;
-  background: $color;
-
-  &:hover,
-  &:not(:disabled):not(.disabled):active {
-    background: darken($color, 10);
-  }
-}
-
 blockquote {
   border-left: 3px solid $primaryColor;
   padding-left: 1rem;
-}
-
-.btn {
-  @include button(#e6e6e6);
-  text-shadow: 0 0 0;
-  font-weight: 300;
-  font-size: inherit;
-
-  &.btn-primary,
-  &.btn-primary:not(:disabled):not(.disabled).active {
-    @include button($primaryColor);
-  }
-  &.btn-danger {
-    @include button($red);
-  }
-  &.btn-success {
-    @include button($green);
-  }
-  &.btn-warning {
-    @include button($orange);
-  }
 }
 
 a:focus-visible {
@@ -98,7 +67,7 @@ code {
   color: $mutedText !important;
 }
 
-.dropdown-toggle::after {
+.dropdown-toggle:not(.dropdown-toggle-split)::after {
   display: none;
 }
 
@@ -118,7 +87,6 @@ code {
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 300;
-  text-transform: uppercase;
 }
 
 mark {
@@ -159,8 +127,21 @@ pre code {
   color: $red;
 }
 
+select[multiple] {
+  padding-left: 0;
+  padding-right: 0;
+
+  option {
+    padding: 0 0.5rem;
+
+    &:checked {
+      background: linear-gradient(0deg, $lightColor 0%, $lightColor 100%);
+    }
+  }
+}
+
 // fixes ugly selects
-select {
+select:not(select[multiple]) {
   appearance: none !important;
   -moz-appearance: none !important;
   -webkit-appearance: none !important;

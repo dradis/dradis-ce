@@ -15,8 +15,8 @@
 <!-- Main content -->
 <div class="row m-0">
   <ul class="tabs-container nav nav-tabs main-tabs w-100">
-    <li class="nav-item"><a href="#info-tab" data-toggle="tab" class="nav-link active"><%= colored_icon_for_model(@issue, 'fa-bug') %> Information</a></li>
-    <li class="nav-item"><a href="#evidence-tab" class="nav-link" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge bg-primary text-white"><%= @issue.evidence.count %></span></a></li>
+    <li class="nav-item"><a href="#info-tab" data-toggle="tab" class="nav-link <%= class_names(active: !params[:tab]) %>"><%= tag_and_name_for(@issue, true) %></a></li>
+    <li class="nav-item"><a href="#evidence-tab" class="nav-link <%= class_names(active: params[:tab] == 'evidence-tab') %>" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge bg-primary text-white" data-behavior="evidence-count"><%= @issue.evidence.count %></span></a></li>
     <li class="nav-item"><a href="#activity-tab" class="nav-link" data-toggle="tab"><i class="fa fa-rss"></i> Recent activity</a></li>
     <%= render_view_hooks 'issues/show-tabs' %>
   </ul>
@@ -26,12 +26,12 @@
   <div class="col-12 col-xxl-7 p-0">
     <div class="content-container mt-0 pb-3 mr-xxl-3">
       <div class="tab-content mt-0">
-        <div class="tab-pane active" id="info-tab">
+        <div class="tab-pane <%= class_names(active: !params[:tab]) %>" id="info-tab">
           <% cache ['issue-information-tab', @issue] do %>
             <div class="note-text-inner">
               <h4 class="mb-4 header-underline">
-                <span class="text-truncate" title="Issue information">Issue information -</span>
-                  <%= render partial: 'actions' %>
+                <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
+                <%= render partial: 'actions' %>
               </h4>
               <div class="content-textile" data-behavior="content-textile">
                 <%= markup(@issue.text, liquid: true) %>
@@ -43,8 +43,15 @@
           <% end %>
         </div>
 
-        <div class="tab-pane" id="evidence-tab">
-          <%= render partial: 'evidence' %>
+        <div class="tab-pane <%= class_names(active: params[:tab] == 'evidence-tab') %>" id="evidence-tab">
+          <%=
+            content_tag :div,
+            spinner_tag,
+            data: {
+              behavior: 'fetch',
+              path: project_issue_evidence_index_path(issue_id: @issue.id)
+            }
+          %>
         </div>
 
         <% cache ['issue-activity-tab', @issue, @activities] do %>
@@ -73,6 +80,8 @@
             )
           }
         %>
+
+        <%= render_view_hooks('issues/comments') %>
       </div>
 
       <div class="content-container ml-xxl-3">

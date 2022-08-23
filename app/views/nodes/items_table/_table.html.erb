@@ -1,10 +1,14 @@
+<% class_name = items.first.class.name.underscore %>
+<% default_columns = instance_variable_get("@default_#{class_name}_columns") %>
+
 <% cache ["#{dom_class(items.first).pluralize}-table", columns, items.map(&:id), items.map(&:updated_at).map(&:to_i).sort.last] do %>
   <div class="table-wrapper">
     <table class="table table-striped"
       data-behavior="dradis-datatable"
-      data-default-columns='["Title", "Created", "Updated"]'
-      data-item-name="<%= items.first.class.name.underscore %>"
-      data-local-storage-key="project.ce.<%= dom_id(current_project) %>.<%= items.first.class.name.underscore.pluralize %>_datatable">
+      data-default-columns="<%= default_columns.to_json %>"
+      data-item-name="<%= class_name %>"
+      data-local-storage-key="project.ce.<%= dom_id(current_project) %>.<%= class_name.pluralize %>_datatable"
+      >
       <thead>
         <tr>
           <th class="no-sort" data-column-visible="false"><span class="sr-only">Select</span></th>
@@ -16,12 +20,14 @@
       </thead>
       <tbody>
         <% items.each do |item| %>
-          <tr id="<%= item.class.name.underscore %>-<%= item.id %>">
+          <tr id="<%= class_name %>-<%= item.id %>">
             <td class="select-checkbox" data-behavior="select-checkbox"></td>
             <% columns.each do |column| %>
               <%
               sort, display =
               case column
+              when 'Label'
+                [item.node.label, link_to(item.node.label, [current_project, @node, item])]
               when 'Title'
                 [
                   item.title,

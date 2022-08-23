@@ -12,4 +12,6 @@ class IssueDrop < BaseDrop
   def tags
     @tags ||= @record.tags.map { |tag| TagDrop.new(tag) }
   end
+
+  ActiveSupport.run_load_hooks(:issue_drop, self)
 end

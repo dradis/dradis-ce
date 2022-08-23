@@ -10,7 +10,7 @@
 
 <div class="row m-0">
   <ul class="tabs-container nav nav-tabs main-tabs w-100">
-    <li class="nav-item"><a class="nav-link active" href="#info-tab" data-toggle="tab"><i class="fa fa-file-text"></i> Information</a></li>
+    <li class="nav-item"><a class="nav-link active" href="#info-tab" data-toggle="tab"><i class="fa fa-file-text"></i> Note</a></li>
     <li class="nav-item"><a class="nav-link" href="#activity-tab" data-toggle="tab"><i class="fa fa-rss"></i> Recent activity</a></li>
   </ul>
 </div>
@@ -23,7 +23,7 @@
           <% cache ['note-information-tab', @note] do %>
             <div id="<%= dom_id(@note) %>" class="note-text-inner">
               <h4 class="header-underline">
-                <span class="text-truncate" title="Content for this note">Content for this note</span>
+                <span class="text-truncate" title="<%= @note.title %>"><%= @note.title %></span>
                 <%= render partial: 'actions' %>
               </h4>
               <div class="content-textile" data-behavior="content-textile">

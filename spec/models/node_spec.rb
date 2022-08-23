@@ -82,8 +82,10 @@ describe Node do
     end
 
     it 'creates the node as a child of the parent node' do
-      parent_node = create(:node, project: node.project)
+      project = create(:project)
+      parent_node = create(:node, project: project)
       node.parent_id = parent_node.id
+      node.project = project
       node.save!
       expect(node.parent).to eq(parent_node)
     end

@@ -56,7 +56,7 @@
                     <td rowspan="2" align="right" class="copy-link">
                       <button
                         class="btn btn-copy btn-transparent js-attachment-url-copy"
-                        data-clipboard-text="!<%= main_app.project_node_attachment_path(node.project, node, attachment.filename) %>!"
+                        data-clipboard-text="!<%= main_app.project_node_attachment_path(node.project, node, '') + attachment.url_encoded_filename %>!"
                       >
                         <i class="fa fa-link"></i>
                       </button>

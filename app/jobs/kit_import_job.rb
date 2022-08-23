@@ -9,25 +9,26 @@ class KitImportJob < ApplicationJob
 
   rescue_from(StandardError) do |e|
     logger.info "An error ocurred: #{e.message}"
+    logger.debug e.backtrace.join("\n")
   end
 
-  def perform(file:, logger:, user_id: nil)
+  def perform(file_or_folder, logger:, user_id: nil)
     @current_user = user_id ? User.find(user_id) : User.first
-    @file = file
     @logger = logger
     @project = nil
     @report_templates_dir = Configuration.paths_templates_reports
-    @temporary_dir = Dir.mktmpdir
+    @working_dir = Dir.mktmpdir
     @word_rtp = nil
 
-    FileUtils.cp file, temporary_dir
-    unzip
+    copy_kit_to_working_dir(file_or_folder)
+
     import_methodology_templates
     import_note_templates
     import_plugin_templates
     import_project_package
     import_project_templates
     import_report_template_files
+
     if defined?(Dradis::Pro)
       import_report_template_properties
       import_rules
@@ -37,17 +38,28 @@ class KitImportJob < ApplicationJob
 
   ensure
     logger.info('Worker process completed.')
-    FileUtils.remove_entry temporary_dir
-    File.unlink(file) if File.exists?(file)
+    FileUtils.remove_entry working_dir
   end
 
   private
-  attr_reader :current_user, :file, :logger, :report_templates_dir, :temporary_dir
+  attr_reader :current_user, :logger, :report_templates_dir, :working_dir
 
   def assign_project_rtp
     logger.info { 'Assigning RTP to project...' }
 
     @project.update_attribute :report_template_properties_id, @word_rtp.id if @word_rtp
+  end
+
+  def copy_kit_to_working_dir(source)
+    if File.file?(source)
+      FileUtils.cp source, working_dir
+      unzip(source)
+    else
+      # We need the folder to end in /. so FileUtils.cp_r copies the contents
+      # and not the container folder.
+      folder = File.join(source, '.')
+      FileUtils.cp_r folder, working_dir
+    end
   end
 
   def import_methodology_templates
@@ -63,7 +75,7 @@ class KitImportJob < ApplicationJob
   def import_project_package
     logger.info { 'Importing project package...' }
 
-    project_package = Dir.glob("#{temporary_dir}/kit/*.zip").first
+    project_package = Dir.glob("#{working_dir}/kit/*.zip").first
 
     unless project_package
       logger.info { '  - Project package not found...' }
@@ -95,7 +107,7 @@ class KitImportJob < ApplicationJob
   end
 
   def import_plugin_templates
-    return unless File.directory?("#{temporary_dir}/kit/templates/plugins/")
+    return unless File.directory?("#{working_dir}/kit/templates/plugins/")
 
     logger.info { 'Copying Plugin Manager templates...' }
     import_templates('plugins')
@@ -116,7 +128,7 @@ class KitImportJob < ApplicationJob
       word
     }.each do |plugin|
       dest = "#{report_templates_dir}/#{plugin}/"
-      temp_plugin_path = "#{temporary_dir}/kit/templates/reports/#{plugin}/*"
+      temp_plugin_path = "#{working_dir}/kit/templates/reports/#{plugin}/*"
 
       # Only allow certain file extensions
       files = Dir[temp_plugin_path].select do |f|
@@ -131,13 +143,10 @@ class KitImportJob < ApplicationJob
   def import_report_template_properties
     logger.info { 'Adding properties to report template files...' }
 
-    (Dradis::Plugins.with_feature(:export) - [
-      Dradis::Plugins::CSV::Engine,
-      Dradis::Plugins::Projects::Engine,
-    ]).each do |plugin|
+    Dradis::Plugins.with_feature(:rtp).each do |plugin|
       Dir.glob(File.join(report_templates_dir, plugin.plugin_name.to_s, '*')) do |template|
         basename = File.basename(template, '.*')
-        reports_dir = "#{temporary_dir}/kit/templates/reports"
+        reports_dir = "#{working_dir}/kit/templates/reports"
         default_properties = "#{reports_dir}/#{plugin.plugin_name}/#{basename}.rb"
 
         if File.exist?(default_properties)
@@ -161,21 +170,21 @@ class KitImportJob < ApplicationJob
 
   def import_rules
     logger.info { 'Adding Rules Engine rules...' }
-    rules_seed = "#{temporary_dir}/kit/rules_seed.rb"
+    rules_seed = "#{working_dir}/kit/rules_seed.rb"
     load rules_seed if File.exist?(rules_seed)
   end
 
   def import_templates(template_type)
     FileUtils.cp_r(
-      "#{temporary_dir}/kit/templates/#{template_type}/.",
+      "#{working_dir}/kit/templates/#{template_type}/.",
       Configuration.send("paths_templates_#{template_type}")
     )
   end
 
-  def unzip
+  def unzip(file)
     logger.info { 'Extracting zip file...' }
 
-    Dir.chdir(temporary_dir) do
+    Dir.chdir(working_dir) do
       Zip::File.open(file) do |zip_file|
         zip_file.each do |entry|
           logger.info "  - #{entry.name}"

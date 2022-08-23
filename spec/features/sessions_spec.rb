@@ -3,22 +3,27 @@ require 'rails_helper'
 describe 'Sessions' do
   subject { page }
 
+  # This matches fixtures/configurations.yml value.
   let(:password) { 'rspec_pass' }
   let(:user) do
     create(
       :user,
       :author,
-      password_hash: ::BCrypt::Password.create('rspec_pass')
+      password_hash: ::BCrypt::Password.create(password)
     )
   end
 
   # This needs to be a helper and not a let() block, because let is memoized
   # and reused.
   def login
+    # This gets us past Setup: Step 2
+    project = create(:project)
+    project.issue_library
+
     visit login_path
     fill_in 'login', with: user.email
     fill_in 'password', with: password
-    click_button 'Let me in!'
+    click_button 'Log in'
   end
 
   context 'when using the correct password' do

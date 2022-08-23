@@ -1,4 +1,4 @@
-.dataTables_wrapper {
+div.dataTables_wrapper {
 
   .dataTable {
     margin-top: 0 !important;
@@ -187,7 +187,7 @@
       }
     }
 
-    @media screen and (max-width: 1290px) {
+    @media screen and (max-width: 1199px) {
       flex-direction: column;
       justify-content: center;
 
@@ -203,20 +203,26 @@
     }
   }
 
+  div.dataTables_filter {
+    text-align: left;
+  }
+
+  @include media-breakpoint-up(sm) {
+    div.dataTables_filter {
+      text-align: right;
+    }
+  }
+
+  .dt-buttons > .btn {
+    flex: unset;
+  }
+
   .dt-button-collection {
     .dropdown-item {
-      background-color: $white;
-      color: $linkColor;
       font-size: 0.9rem;
       font-weight: 300;
-      
       position: relative;
       transition: color 0s;
-
-      &.active {
-        background-color: $white;
-        color: $linkColor;
-      }
 
       &.buttons-columnVisibility {
         padding-left: 2.25rem;
@@ -248,8 +254,6 @@
 
       &:focus,
       &:hover {
-        color: $linkColorHover;
-        background-color: $dropdownLinkBackgroundHover;
         outline: none;
       }
     }

@@ -1,14 +1,15 @@
-<% cache ['issues-table', @columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last] do %>
+<% cache ['issues-table', @all_columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last] do %>
     <table class="table table-striped mb-0"
       data-behavior="dradis-datatable"
-      data-default-columns='["Title", "Tags", "Affected"]'
+      data-default-columns="<%= @default_columns.to_json %>"
       data-item-name="issue"
       data-local-storage-key="project.ce.<%= dom_id(current_project) %>.issues_datatable"
-      data-tags='<%= @tags.map { |t| [t.display_name, t.color, t.name] }.to_json %>'>
+      data-tags='<%= @tags.map { |t| [t.display_name, t.color, t.name] }.to_json %>'
+      >
       <thead>
         <tr>
           <th class="no-sort" data-column-visible="false"><span class="sr-only">Select</span></th>
-          <% @columns.each do |column| %>
+          <% @all_columns.each do |column| %>
             <th><%= column %></th>
           <% end %>
           <th class="no-sort" data-column-visible="false"><span class="sr-only">Actions</span></th>
@@ -16,10 +17,10 @@
       </thead>
       <tbody>
         <% issues.each do |issue| %>
-        <% cache [issue, @columns, issue.affected_count, 'issues-table'] do %>
+        <% cache [issue, @all_columns, issue.affected_count, 'issues-table'] do %>
         <tr id="issue-<%= issue.id %>" data-tag-url="<%= project_issue_path(current_project, issue) %>">
           <td class="select-checkbox" data-behavior="select-checkbox"></td>
-          <% @columns.each do |column| %>
+          <% @all_columns.each do |column| %>
             <%
              sort, display =
              case column
@@ -32,7 +33,10 @@
                ]
              when 'Affected'
                # this count is coming from the SQL finder in the controller
-               [issue.affected_count, issue.affected.pluck(:label).join("\n")]
+               [
+                 issue.affected_count,
+                 issue.affected.map { |node| link_to(node.label, [current_project, node]) }.join("\n").html_safe
+               ]
              when 'Created'
                [issue.created_at.to_i, local_time_ago(issue.created_at)]
              when 'Created by'
@@ -43,7 +47,7 @@
                [issue.fields.fetch(column, ''), markup(issue.fields.fetch(column, ''))]
              end
             %>
-            <%= content_tag :td, 
+            <%= content_tag :td,
                 display, 
                 class: class_names('text-break-spaces': column == 'Affected'),
                 data: {

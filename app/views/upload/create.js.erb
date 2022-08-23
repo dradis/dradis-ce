@@ -13,6 +13,7 @@
     'script'
   );
 
+  $('#attachment').val('<%= @attachment.filename %>');
   setTimeout(ConsoleUpdater.updateConsole, 1000);
 <% else -%>
   $("#<%= @item_id  %>").find('span').html('(<%=h flash.now[:error] %>)');

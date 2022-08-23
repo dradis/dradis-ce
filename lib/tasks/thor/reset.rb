@@ -2,6 +2,9 @@
 
 class DradisTasks < Thor
   class Reset < Thor
+    include Thor::Actions
+    include Rails::Generators::Actions
+
     namespace 'dradis:reset'
 
     desc 'attachments', 'removes all attachments'
@@ -16,15 +19,12 @@ class DradisTasks < Thor
       return if defined?(Dradis::Pro)
 
       require 'config/environment'
-      print '** Cleaning database...                                               '
 
-      Rails.application.eager_load!
-      (ApplicationRecord.descendants - [Configuration]).each do |model|
-        ActiveRecord::Base.connection.execute("DELETE FROM #{model.table_name}")
-        ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='#{model.table_name}'")
-      end
-
-      puts '[  DONE  ]'
+      puts '** Cleaning database...'
+      rake('db:drop')
+      rake('db:prepare')
+      rake('db:seed')
+      puts '   [  DONE  ]'
     end
 
     desc 'logs', 'removes all log files'
