@@ -222,7 +222,11 @@
           this._previewRendered = true;
         }.bind(this),
         error: function() {
-          window.location.replace(that.$element.data('paths').login_url);
+          that.options.$preview.parent().find('.alert').remove();
+          that.options.$preview.prepend('<p class="alert alert-danger">Your session has expired!. Login again to continue.</p>');
+          $('[data-behavior~=textile-wrap]').animate({
+            scrollTop: that.options.$preview.scrollTop()
+          });
         }
       });
     },
