@@ -27,4 +27,14 @@ class SessionsController < ApplicationController
       format.js { head :not_found }
     end
   end
+
+  private
+
+  def return_to
+    if request.get?
+      warden_options[:attempted_path]
+    else
+      request.env['HTTP_REFERER']
+    end
+  end
 end
