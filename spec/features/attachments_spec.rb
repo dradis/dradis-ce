@@ -46,6 +46,24 @@ describe "Describe attachments" do
 
       expect(Dir["#{node_attachments}/*"].count).to eq(2)
     end
+
+    it 'builds a URL encoded link for attachments' do
+      FileUtils.mkdir_p( Attachment.pwd.join(@node.id.to_s) )
+
+      filenames = ['attachment with space.png', 'attachmentwith&.png', 'attachmentwith+.png']
+
+      filenames.each do |filename|
+        attachment = Attachment.pwd.join(@node.id.to_s, filename)
+        FileUtils.cp(Rails.root.join('spec/fixtures/files/rails.png'), attachment)
+      end
+
+      visit project_node_path(current_project, @node)
+
+      filenames.each do |filename|
+        url_encoded_filename = ERB::Util.url_encode(filename)
+        expect(page).to have_css("button[data-clipboard-text='!/projects/#{current_project.id}/nodes/#{@node.id}/attachments/#{url_encoded_filename}!']")
+      end
+    end
   end
 end
 #

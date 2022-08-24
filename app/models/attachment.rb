@@ -234,4 +234,8 @@ class Attachment < File
       created_at: self.ctime
     }.to_json(options)
   end
+
+  def url_encoded_filename
+    ERB::Util.url_encode(@filename)
+  end
 end

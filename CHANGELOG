@@ -1,3 +1,24 @@
+v4.5.0 (August 2022)
+  - Upgraded Dradis to run on ruby 3.1.2
+  - Upgraded gems: acts_as_tree, bootsnap, bundler-audit, factory_bot, paper_trail, rails, rails-html-sanitizer, timecop, thor, unicorn
+  - Bugs fixes:
+    - Attachments: Fix attachments not showing or being validated correctly
+    - Evidence:
+      - Add validation for creating evidences in the issue view
+      - Set correct localStorage key to prevent pre-populating incorrect content at the issue level
+    - Nodes: Prevent evidence labels linking to external resources
+  - New integrations:
+    - CSV Importer
+  - Integration enhancements:
+    - Qualys: Wrap ciphers in code blocks for the Vuln Importer
+  - Reporting enhancements:
+    - CSV Export: Rename integration to dradis-csv_export
+    - HTML Export: Add :rtp plugins feature
+  - Security Fixes:
+    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
 v4.4.0 (June 2022)
   - Login View: Design update
   - Tylium:

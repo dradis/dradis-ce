@@ -86,11 +86,10 @@ describe Evidence do
     end
 
     context 'when issue is on a different project' do
-      let(:issue_on_another_project) { (create(:issue, node: node_on_another_project)) }
-      let(:node_on_another_project) do
-        node = create(:node)
-        allow(node).to receive(:project).and_return(Project.new(id: 2, name: 'Another Project'))
-        node
+      let(:issue_on_another_project) do
+        new_node = create(:node)
+        allow(new_node).to receive(:project).and_return(Project.new(id: node.project.id + 1, name: 'Another Project'))
+        create(:issue, node: new_node)
       end
 
       it 'is invalid' do
