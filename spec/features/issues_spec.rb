@@ -322,5 +322,46 @@ describe 'Issues pages' do
         end
       end
     end
+
+    describe 'revision history' do
+      let(:issue) do
+        issue = create(:issue, node: node, text: 'issue text')
+        issue.update(text: 'updated text')
+        issue
+      end
+
+      before { PaperTrail.enabled = true }
+      after { PaperTrail.enabled = false }
+
+      context 'issue belonging to current project' do
+        let(:node) { current_project.issue_library }
+
+        it 'can view issue revisions' do
+          issue.update(text: 'updated text')
+
+          visit project_issue_revisions_path(current_project, issue)
+
+          within '.js-diff-body' do
+            expect(page).to have_text('issue text')
+            expect(page).to have_text('updated text')
+          end
+        end
+      end
+
+      context 'issue belonging to another project' do
+        let(:node) do
+          create(
+            :node,
+            label: 'Other project all issues',
+            type_id: Node::Types::ISSUELIB
+          )
+        end
+
+        it 'cannot view issue revisions' do
+          visit project_issue_revisions_path(current_project, issue)
+          expect(page).to have_text('Record not found')
+        end
+      end
+    end
   end
 end
