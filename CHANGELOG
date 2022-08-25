@@ -1,3 +1,31 @@
+[v#.#.#] ([month] [YYYY])
+  - [entity]:
+    - [future tense verb] [feature]
+  - Upgraded gems:
+    - [gem]
+  - Bugs fixes:
+    - [entity]:
+      - [future tense verb] [bug fix]
+    - Bug tracker items:
+      - [item]
+  - New integrations:
+    - [integration]
+  - Integration enhancements:
+    - [integration]:
+      - [future tense verb] [integration enhancement]
+      - [integration bug fixes]:
+        - [future tense verb] [integration bug fix]
+  - Reporting enhancements:
+    - [report type]:
+      - [future tense verb] [reporting enhancement]
+  - REST/JSON API enhancements:
+    - [API entity]:
+      - [future tense verb] [API enhancement]
+  - Security Fixes:
+    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
 v4.5.0 (August 2022)
   - Upgraded Dradis to run on ruby 3.1.2
   - Upgraded gems: acts_as_tree, bootsnap, bundler-audit, factory_bot, paper_trail, rails, rails-html-sanitizer, timecop, thor, unicorn
@@ -16,9 +44,6 @@ v4.5.0 (August 2022)
     - HTML Export: Add :rtp plugins feature
   - Security Fixes:
     - Medium: Authenticated author broken access control: read access to issue content
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v4.4.0 (June 2022)
   - Login View: Design update
