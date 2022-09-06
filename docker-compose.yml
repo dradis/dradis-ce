@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+      - '3000:3000'
+    volumes:
+      - db:/app/db
+volumes:
+  db:
