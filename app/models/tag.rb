@@ -22,7 +22,7 @@ class Tag < ApplicationRecord
   before_save :normalize_name
 
   # -- Validations ------------------------------------------------------------
-  validates :name, presence: true, uniqueness: { case_sensitive: false }
+  validates :name, presence: true, uniqueness: {case_sensitive: false}
 
   # -- Scopes -----------------------------------------------------------------
 
