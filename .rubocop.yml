@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 3.0
   # Opt-in to new cops by default
   NewCops: enable
   Exclude:
