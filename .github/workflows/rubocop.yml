@@ -21,7 +21,7 @@ jobs:
           ruby-version: ${{ matrix.ruby-version }}
 
       - name: Run Rubocop
-        run: ./.github/scripts/rubocop_diff.sh
+        run: git diff-tree -r --no-commit-id --name-only head origin/develop | xargs rubocop --format simple | grep "offenses detected\|offense detected" | cut -d " " -f4
         shell: bash
       # run: git diff-tree -r --no-commit-id --name-only head origin/develop | xargs rubocop
 
