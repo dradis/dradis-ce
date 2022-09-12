@@ -8,10 +8,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v1
+        with:
+          fetch-depth: 0
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@0a29871fe2b0200a17a4497bae54fe5df0d973aa # v1.115.3
         with:
           bundler-cache: true
-          fetch-depth: 0
       - name: run rubocop on changed files only
         run: bin/rubocop-ci
