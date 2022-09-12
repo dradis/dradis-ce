@@ -5,3 +5,5 @@ AllCops:
   Exclude:
     - '**/templates/**/*'
     - '**/vendor/**/*'
+Layout/BlockAlignment:
+  Enabled: false
