@@ -7,7 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Ruby
       # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
       # change this to (see https://github.com/ruby/setup-ruby#versioning):
       - uses: ruby/setup-ruby@v1
@@ -15,7 +14,6 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Run Rubocop
         run: bin/rubocop-ci
       # run: git diff-tree -r --no-commit-id --name-only head origin/develop | xargs rubocop
 
