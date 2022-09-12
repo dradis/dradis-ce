@@ -3,8 +3,8 @@
 set -e
 
 ALLOWED_WARNINGS=0
-warning_count=`git diff-tree -r --no-commit-id --name-only origin/develop..HEAD | xargs bundle exec rubocop --format simple | grep "offenses detected\|offense detected" | cut -d " " -f4`
-files_inspected=`git diff-tree -r --no-commit-id --name-only origin/develop..HEAD | xargs bundle exec rubocop --format simple | grep "files inspected" | cut -d " " -f1`
+warning_count=`git diff-tree -r --no-commit-id --name-only origin/develop...HEAD | xargs bundle exec rubocop --format simple | grep "offenses detected\|offense detected" | cut -d " " -f4`
+files_inspected=`git diff-tree -r --no-commit-id --name-only origin/develop...HEAD | xargs bundle exec rubocop --format simple | grep "files inspected" | cut -d " " -f1`
 
 if [ $warning_count -gt 0 ]
 then
