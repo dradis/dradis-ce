@@ -93,6 +93,8 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
+    resources :tags, except: [:show]
+
     get 'search' => 'search#index'
     get 'trash' => 'revisions#trash'
 
