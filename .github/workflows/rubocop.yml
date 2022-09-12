@@ -8,14 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: ['2.6', '2.7', '3.0']
+        ruby-version: '3.0'
 
     steps:
       - uses: actions/checkout@v3
-
-      - name: Make executable
-        run: git update-index --chmod=+x ./.github/scripts/rubocop_diff.sh
-        shell: bash
   
     # - name: Set up Ruby
     # # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
@@ -25,7 +21,8 @@ jobs:
     #   with:
     #     ruby-version: ${{ matrix.ruby-version }}
       - name: Run Rubocop
-        run: ./.github/scripts/rubocop_diff.sh
+        # run: ./.github/scripts/rubocop_diff.sh
+        run: echo $PATH
         shell: bash
       # run: git diff-tree -r --no-commit-id --name-only head origin/develop | xargs rubocop
 
