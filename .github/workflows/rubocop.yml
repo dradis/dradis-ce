@@ -1,14 +1,13 @@
 name: Rubocop
 
 on: 
-  push: 
   pull_request:
 jobs:
   lint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: '3.0'
+        ruby-version: ['3.0']
 
     steps:
       - uses: actions/checkout@v3
@@ -22,7 +21,7 @@ jobs:
     #     ruby-version: ${{ matrix.ruby-version }}
       - name: Run Rubocop
         # run: ./.github/scripts/rubocop_diff.sh
-        run: echo $PATH
+        run: echo
         shell: bash
       # run: git diff-tree -r --no-commit-id --name-only head origin/develop | xargs rubocop
 
