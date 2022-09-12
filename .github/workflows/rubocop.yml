@@ -20,7 +20,7 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby-version }}
     - name: Run Rubocop
-        run: ./bin/rubocop-ci
+        run: ./.github/scripts/rubocop_diff.sh
         shell: bash
       # run: git diff-tree -r --no-commit-id --name-only head origin/develop | xargs rubocop
 
