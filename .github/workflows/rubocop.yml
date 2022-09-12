@@ -19,7 +19,7 @@ jobs:
     #   uses: ruby/setup-ruby@0a29871fe2b0200a17a4497bae54fe5df0d973aa # v1.115.3
     #   with:
     #     ruby-version: ${{ matrix.ruby-version }}
-    - name: Run Rubocop
+      - name: Run Rubocop
         run: ./.github/scripts/rubocop_diff.sh
         shell: bash
       # run: git diff-tree -r --no-commit-id --name-only head origin/develop | xargs rubocop
