@@ -1,0 +1,9 @@
+<div class="content-container">
+  <h4 class="header-underline"> 
+    Add Tag 
+  </h4>
+  <%= render "form", 
+    url: project_tags_path(current_project),
+    method: :post
+  %>
+</div>

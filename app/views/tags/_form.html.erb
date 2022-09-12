@@ -1,0 +1,13 @@
+<%= simple_form_for @tag, url: url, method: method do |f| %>
+  <%= f.input :display_name %>
+  <%= f.label :color %>
+  <%= f.color_field :color %> 
+  <div class="form-actions">
+    <%= f.button :submit, class: 'btn btn-primary' %> or
+    <%=
+      link_to 'Cancel',
+      project_tags_path(current_project),
+      class: 'cancel-link'
+    %>
+  </div>
+<% end %>

@@ -1,0 +1,57 @@
+<div class="content-container">
+  <h4 class="header-underline"> Tags Management
+    <span class="actions pt-1">
+      <div class="action">
+        <%= link_to new_project_tag_path(current_project) do %>
+            <i class="fa fa-plus"></i> New Tag
+        <% end %>
+      </div>
+    </span>
+  </h4>
+  <% if @tags.any? %>
+  <table class="table table-striped mb-0">
+    <thead>
+      <th> Name </th>
+      <th> Color </th>
+    </thead>
+    <tbody>
+      <% @tags.each do |tag| %>
+      <tr id="tag-<%= tag.id %>">
+        <td>
+          <%= h(tag.display_name) %>
+        </td>
+        <td >
+          <span style=<%="color:#{tag.color}" %>>
+            <%= h(tag.color) %>
+          </span>
+        </td>
+        <td class="column-actions">
+          <%= link_to edit_project_tag_path(current_project, tag), class: '' do %>
+            <i class="fa fa-pencil"></i> Edit
+          <% end %>
+          <%= link_to project_tag_path(current_project, tag), method: :delete, data: { confirm: "Are you sure?\n\nProceeding will delete this tag and any associated tagging." }, class: 'text-error-hover' do %>
+            <i class="fa fa-trash"></i> Delete
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% else %>
+  <div class="empty-state mt-3">
+    <div class="empty-state-icon">
+      <%= image_tag "icons/#{rand(9)}.svg" %>
+    </div>
+    <div class="empty-state-body">
+      <div class="container">
+        <h4 class="empty-state-title">There are no tags created yet.</h4>
+        <p class="empty-state-body-text">Create and use tags to manage your issues.</p>
+        <div class="empty-state-actions">
+          <a href="https://dradisframework.com/support/guides/projects/tags.html"
+          class="empty-state-docs-link" target="_blank">More about tags</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>

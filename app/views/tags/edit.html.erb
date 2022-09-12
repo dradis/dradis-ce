@@ -1,0 +1,9 @@
+<div class="content-container">
+  <h4 class="header-underline"> 
+    Edit <%= @tag.display_name %>
+  </h4>
+  <%= render "form", 
+    url: project_tag_path(current_project, @tag),
+    method: :patch
+  %>
+</div>
