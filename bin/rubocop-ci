@@ -2,18 +2,16 @@
 
 set -e
 
-ALLOWED_WARNINGS=0
-warning_count=`git diff-tree -r --no-commit-id --name-only origin/develop...HEAD | xargs bundle exec rubocop --format simple | grep "offenses detected\|offense detected" | cut -d " " -f4`
-files_inspected=`git diff-tree -r --no-commit-id --name-only origin/develop...HEAD | xargs bundle exec rubocop --format simple | grep "files inspected" | cut -d " " -f1`
+result_info="bundle exec rubocop $(git diff-tree -r --no-commit-id --name-only origin/develop..HEAD)"
+files_inspected=`$result_info | grep "files inspected\|file inspected" | cut -d " " -f1`
+warning_count=`$result_info | grep "offenses detected\|offense detected" | cut -d " " -f4`
 
-if [ $warning_count -gt 0 ]
+if [ $warning_count != 'no' ]
 then
-  echo -e "❌ $files_inspected file(s) inspected"
-  echo -e "❌ $warning_count outstanding rubocop warning(s)"
-  echo -e "❓Try running 'git diff-tree -r --no-commit-id --name-only head origin/develop | xargs rubocop -a' to autocorrect any auto-correctable errors"
+  echo -e "❌ Inspected $files_inspected files and detected $warning_count offenses"
+  echo -e "🛠 Try running 'bundle exec rubocop \$(git diff-tree -r --no-commit-id --name-only HEAD origin/develop) -A' to autocorrect any auto-correctable offenses"
   exit 1
 else
-  echo "✅Clean code! No outstanding rubocop warnings introduced in changed files"
-  echo "✅Great job ಠ.ಠ"
+  echo "✅ Clean code! No rubocop offenses detected in $files_inspected changed files. Great job ಠ_ಠ"
   exit 0
 fi

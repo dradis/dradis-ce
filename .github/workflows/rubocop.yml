@@ -1,18 +1,23 @@
-name: Rubocop
+name: Lint
 
-on: 
+on:
   pull_request:
+    branches:
+      - '*'
+  push:
+    branches:
+      - '*'
+
 jobs:
-  lint:
+  rubocop:
+    name: RuboCop
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v1
-        with:
-          fetch-depth: 0
       - name: Install Ruby and gems
-        uses: ruby/setup-ruby@0a29871fe2b0200a17a4497bae54fe5df0d973aa # v1.115.3
+        uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      - name: run rubocop on changed files only
+      - name: Lint changed files
         run: bin/rubocop-ci
