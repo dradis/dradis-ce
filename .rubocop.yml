@@ -2,8 +2,16 @@ AllCops:
   TargetRubyVersion: 3.0
   # Opt-in to new cops by default
   NewCops: enable
+  SuggestExtensions: false
   Exclude:
     - '**/templates/**/*'
     - '**/vendor/**/*'
+
 Layout/BlockAlignment:
+  Enabled: false
+
+Layout/LineLength:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
   Enabled: false
