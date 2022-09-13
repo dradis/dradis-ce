@@ -12,7 +12,7 @@ class TagsController < AuthenticatedController
       track_created(@tag, project: @project)
       redirect_to project_tags_path(current_project), notice: 'Tag created'
     else
-      render :new
+      redirect_to project_tags_path(current_project), alert: @tag.errors.full_messages.join('; ')
     end
   end
 
@@ -23,7 +23,7 @@ class TagsController < AuthenticatedController
       track_updated(@tag, project: @project)
       redirect_to project_tags_path(current_project), notice: 'Tag updated'
     else
-      render :edit
+      redirect_to project_tags_path(current_project), alert: @tag.errors.full_messages.join('; ')
     end
   end
 
@@ -36,8 +36,6 @@ class TagsController < AuthenticatedController
   private
 
   def tag_params
-    modified_params = params.require(:tag).permit(:display_name, :color)
-    modified_params[:name] = "#{modified_params[:color].gsub('#', '!')}_#{modified_params[:display_name]}"
-    modified_params.except(:color, :display_name)
+    modified_params = params.require(:tag).permit(:name, :color)
   end
 end

@@ -1,11 +1,9 @@
 <div class="content-container">
   <h4 class="header-underline"> Tags Management
     <span class="actions pt-1">
-      <div class="action">
-        <%= link_to new_project_tag_path(current_project) do %>
-            <i class="fa fa-plus"></i> New Tag
-        <% end %>
-      </div>
+      <%= link_to new_project_tag_path(current_project), remote: true, class: 'btn btn-primary' do %>
+      <i class="fa fa-plus"></i> New Tag
+    <% end %>
     </span>
   </h4>
   <% if @tags.any? %>
@@ -26,7 +24,7 @@
           </span>
         </td>
         <td class="column-actions">
-          <%= link_to edit_project_tag_path(current_project, tag), class: '' do %>
+          <%= link_to edit_project_tag_path(current_project, tag), remote: true do %>
             <i class="fa fa-pencil"></i> Edit
           <% end %>
           <%= link_to project_tag_path(current_project, tag), method: :delete, data: { confirm: "Are you sure?\n\nProceeding will delete this tag and any associated tagging." }, class: 'text-error-hover' do %>

@@ -1,0 +1,2 @@
+$('#modal-tag-form').modal('show');
+$('#modal-tag-content').html("<%= j (render partial: 'form', locals: { header: 'Edit tag', url: project_tag_path(current_project, @tag),  method: :patch }) %>");
