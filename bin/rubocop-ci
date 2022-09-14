@@ -9,7 +9,7 @@ warning_count=`$result_info | grep "offenses detected\|offense detected" | cut -
 if [ $warning_count != 'no' ]
 then
   echo -e "❌ Inspected $files_inspected file(s) and detected $warning_count offense(s)"
-  bundle exec rubocop --format github $(git diff-tree -r --no-commit-id --name-only origin/develop..HEAD)
+  $result_info
   exit 1
 else
   echo "✅ Clean code! No rubocop offenses detected in $files_inspected changed files. Great job ಠ_ಠ"
