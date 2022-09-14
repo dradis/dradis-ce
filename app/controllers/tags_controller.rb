@@ -1,7 +1,10 @@
 class TagsController < AuthenticatedController
-  load_and_authorize_resource
   include ProjectScoped
   include ActivityTracking
+  include MultipleDestroy
+
+  before_action :set_columns, only: :index
+  load_and_authorize_resource
 
   def index; end
 
@@ -37,5 +40,13 @@ class TagsController < AuthenticatedController
 
   def tag_params
     modified_params = params.require(:tag).permit(:name, :color)
+  end
+
+  def set_columns
+    default_field_names = ['Tag'].freeze
+    extra_field_names = ['Created', 'Updated'].freeze
+
+    @default_columns = default_field_names
+    @all_columns = default_field_names | extra_field_names
   end
 end

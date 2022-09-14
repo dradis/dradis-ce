@@ -5,6 +5,7 @@
       data-item-name="issue"
       data-local-storage-key="project.ce.<%= dom_id(current_project) %>.issues_datatable"
       data-tags='<%= @tags.map { |t| [t.display_name, t.color, t.name] }.to_json %>'
+      data-tags-path="<%= project_tags_path(current_project) %>"
       >
       <thead>
         <tr>

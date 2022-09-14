@@ -19,6 +19,13 @@ DradisDatatable.prototype.setupTagButtons = function() {
     });
   }.bind(this));
 
+  tagButtons.push({
+    text: $('<span>Manage Tags</span>').css('color', '#000000'),
+    action: function(){
+      window.location.href = this.$table.data('tags-path')
+    }.bind(this)
+  });
+
   return tagButtons;
 }
 
