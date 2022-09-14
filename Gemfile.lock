@@ -244,7 +244,8 @@ GEM
       addressable (~> 2.3)
     letter_opener (1.7.0)
       launchy (~> 2.2)
-    libv8-node (16.10.0.0-x86_64-darwin)
+    libv8-node (16.10.0.0)
+    libv8-node (16.10.0.0-x86_64-darwin-19)
     libv8-node (16.10.0.0-x86_64-linux)
     liquid (5.0.1)
     listen (3.4.1)
@@ -262,7 +263,7 @@ GEM
     method_source (0.9.2)
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
-    mini_racer (0.6.3)
+    mini_racer (0.6.2)
       libv8-node (~> 16.10.0.0)
     minitest (5.16.2)
     mono_logger (1.1.1)
@@ -492,7 +493,7 @@ GEM
 
 PLATFORMS
   ruby
-  x86_64-darwin
+  x86_64-darwin-19
   x86_64-linux
 
 DEPENDENCIES
