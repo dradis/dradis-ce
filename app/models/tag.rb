@@ -14,7 +14,6 @@ class Tag < ApplicationRecord
     !6baed6_low
     !2ca02c_info
   ].freeze
-  NAME_REGEX = /\A(!\h{6})_[[:word:]]+?\z/
 
   # -- Relationships ----------------------------------------------------------
   has_many :taggings, dependent: :destroy
@@ -23,7 +22,7 @@ class Tag < ApplicationRecord
   before_save :normalize_name
 
   # -- Validations ------------------------------------------------------------
-  validates :name, presence: true, uniqueness: { case_sensitive: false } , format: { with: NAME_REGEX }
+  validates :name, presence: true, uniqueness: { case_sensitive: false } , format: { with: /\A(!\h{6})_[a-zA-Z]+?\z/ }
 
   # -- Scopes -----------------------------------------------------------------
 
@@ -56,7 +55,7 @@ class Tag < ApplicationRecord
   def color()
     return '' if self.name.nil?
 
-    name[NAME_REGEX, 1].try(:gsub, "!", "#") || "#555"
+    name[/\A(!\h{6})_[[:word:]]+?\z/,1].try(:gsub, "!", "#") || "#555"
   end
 
   private
