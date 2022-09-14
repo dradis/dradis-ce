@@ -24,7 +24,7 @@
               case column
               when 'Tag'
                 [
-                  tag.name, 
+                  tag.display_name, 
                   content_tag(:span, class: 'tag', style: "color: #{tag.color}") do
                     content_tag(:i, nil, class: 'icon fa fa-tag') + tag.display_name
                   end

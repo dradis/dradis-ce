@@ -6,7 +6,7 @@
 </div>
 <%= simple_form_for @tag, url: url, method: method do |f| %>
   <div class="modal-body">
-    <%= f.input :name, required: true %>
+    <%= f.input :display_name, required: true, label: 'Name' %>
     <%= label_tag do %>
         Color
         <span class="required-input">*</span>
