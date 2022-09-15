@@ -17,17 +17,25 @@ DradisDatatable.prototype.setupTagButtons = function() {
       text: $tagElement,
       action: this.tagIssue(tagFullName)
     });
-  }.bind(this));
-
-  tagButtons.push({
-    text: $('<span>Manage Tags</span>').css('color', '#000000'),
-    action: function(){
-      window.location.href = this.$table.data('tags-path')
     }.bind(this)
-  });
+  );
+  tagButtons.push(
+    {
+      text: $(`<span><i class="fa fa-plus"></i> Add new tag</span>`),
+      action: function () {
+        $.ajax({ url: this.$table.data("new-tag-path") });
+      }.bind(this),
+    },
+    {
+      text: $("<span>Manage Tags</span>").css("color", "#000000"),
+      action: function () {
+        window.location.href = this.$table.data("tags-path");
+      }.bind(this),
+    }
+  );
 
   return tagButtons;
-}
+};
 
 DradisDatatable.prototype.tagIssue = function(tagFullName) {
   return function() {

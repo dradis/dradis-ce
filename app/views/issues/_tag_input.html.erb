@@ -27,7 +27,11 @@
           <%= h(tag.display_name) %>
         <% end %>
       <% end %>
-      <%= link_to 'Manage Tags', project_tags_path(current_project), style: "color: #000000", class: 'js-taglink dropdown-item' %>
+      <%= link_to new_project_tag_path(current_project), remote: true, class: 'dropdown-item' do %>
+        <i class="fa fa-plus"></i>
+        Add new tag
+      <% end %>
+      <%= link_to 'Manage Tags', project_tags_path(current_project), style: "color: #000000", class: 'dropdown-item' %>
     </div>
   </div>
 </div>

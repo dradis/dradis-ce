@@ -2,9 +2,10 @@
 <div class="content-container">
   <h4 class="header-underline"> Tags Management
     <span class="actions pt-1">
-      <%= link_to new_project_tag_path(current_project), class: 'btn btn-primary', remote: true do %>
-      <i class="fa fa-plus"></i> New Tag
-    <% end %>
+      <%= link_to new_project_tag_path(current_project), remote: true do %>
+        <i class="fa fa-plus"></i>
+        Add new tag
+      <% end %>
     </span>
   </h4>
   <% if @tags.any? %>

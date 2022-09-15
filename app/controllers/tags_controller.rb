@@ -13,9 +13,9 @@ class TagsController < AuthenticatedController
   def create
     if @tag.save
       track_created(@tag, project: @project)
-      redirect_to project_tags_path(current_project), notice: 'Tag created'
+      redirect_to request.referer, notice: 'Tag created'
     else
-      redirect_to project_tags_path(current_project), alert: @tag.errors.full_messages.join('; ')
+      redirect_to request.referer, alert: @tag.errors.full_messages.join('; ')
     end
   end
 
