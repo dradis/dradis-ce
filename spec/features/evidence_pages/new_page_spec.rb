@@ -83,6 +83,13 @@ describe 'Evidence new page' do
       expect(@node.reload.evidence.last.author).to eq(@logged_in_as.email)
     end
 
+    context 'invalid form', js: true do
+      it 'displays an error when no nodes are selected' do
+        click_button 'Create Evidence'
+        expect(page).to have_text('A node must be selected.')
+      end
+    end
+
     # we need to filter by job class because a NotificationsReaderJob
     # will also be enqueued
     def enqueued_activity_tracking_jobs
