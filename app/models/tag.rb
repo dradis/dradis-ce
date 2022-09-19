@@ -26,9 +26,7 @@ class Tag < ApplicationRecord
 
   # -- Scopes -----------------------------------------------------------------
 
-
   # -- Class Methods ----------------------------------------------------------
-
 
   # -- Instance Methods -------------------------------------------------------
 
@@ -55,7 +53,7 @@ class Tag < ApplicationRecord
   def color()
     return '' if self.name.nil?
 
-    name[/\A(!\h{6})_[[:word:]]+?\z/,1].try(:gsub, "!", "#") || "#555"
+    name[/\A(!\h{6})_[[:word:]]+?\z/, 1].try(:gsub, '!', '#') || '#555'
   end
 
   private

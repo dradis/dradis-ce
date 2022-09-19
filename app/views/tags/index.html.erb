@@ -1,20 +1,7 @@
-<!-- Main content -->
+<% content_for :title, 'Tags' %>
 <div class="content-container">
-  <h4 class="header-underline"> Tags Management
-    <span class="actions pt-1">
-      <%= link_to new_project_tag_path(current_project), remote: true do %>
-        <i class="fa fa-plus"></i>
-        Add new tag
-      <% end %>
-    </span>
-  </h4>
   <% if @tags.any? %>
-    <div data-behavior="datatable-paths"
-         data-table-destroy-url="<%= multiple_destroy_project_tags_path(current_project) %>"
-         data-table-destroy-confirmation="Are you sure?&#10;&#10;Proceeding will delete the selected tag(s) and any associated tagging."
-         data-table-close-console-url="<%= project_tags_path(current_project) %>" >
-      <%= render 'table' %>
-    </div>
+    <%= render 'table' %>
   <% else %>
   <div class="empty-state mt-3">
     <div class="empty-state-icon">
