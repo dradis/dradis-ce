@@ -175,6 +175,8 @@ GEM
       nokogiri
       rake (~> 13.0)
       rspec-rails
+    dradis-veracode (4.5.0)
+      dradis-plugins (~> 4.0)
     dradis-wpscan (4.5.0)
       dradis-plugins (~> 4.0)
       multi_json
@@ -533,6 +535,7 @@ DEPENDENCIES
   dradis-projects (~> 4.5.0)
   dradis-qualys (~> 4.5.0)
   dradis-saint (~> 4.5.0)
+  dradis-veracode (~> 4.5.0)
   dradis-wpscan (~> 4.5.0)
   dradis-zap (~> 4.5.0)
   factory_bot_rails
