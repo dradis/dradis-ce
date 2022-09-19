@@ -206,7 +206,6 @@
     // Ajax preview
     _loadPreview: function(data) {
       this._previousContent = this.$element.val();
-      var that = this;
 
       $.post({
         url: this.$element.data('paths').preview_url,
@@ -222,12 +221,8 @@
           this._previewRendered = true;
         }.bind(this),
         error: function() {
-          that.options.$preview.parent().find('.alert').remove();
-          that.options.$preview.prepend('<p class="alert alert-danger">Your session has expired!. Login again to continue.</p>');
-          $('[data-behavior~=textile-wrap]').animate({
-            scrollTop: that.options.$preview.scrollTop()
-          });
-        }
+          this._showTimeoutMessage();
+        }.bind(this)
       });
     },
     // Ajax write
@@ -238,6 +233,9 @@
         contentType: 'application/json',
         success: function(result){
           this.$element.val(result);
+        }.bind(this),
+        error: function() {
+          this._showTimeoutMessage();
         }.bind(this)
       });
     },
@@ -346,6 +344,15 @@
       if (localStorage.getItem(this.options.defaultViewKey) == 'source' || !this._contentHasFields) {
         this._onBtnSource();
       }
+    },
+
+    _showTimeoutMessage: function() {
+      var that = this;
+      that.options.$preview.parent().find('.alert').remove();
+      that.options.$preview.prepend('<p class="alert alert-danger">Your session has expired!. Login again to continue.</p>');
+      $('[data-behavior~=textile-wrap]').animate({
+        scrollTop: that.options.$preview.scrollTop()
+      });
     }
   };
 

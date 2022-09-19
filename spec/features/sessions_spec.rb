@@ -76,7 +76,7 @@ describe 'Sessions' do
         expect(current_path).to eq(new_project_issue_path(project))
       end
 
-      context 'when editing while timed out' do
+      context 'when editing in Source view while timed out' do
         it 'shows an alert on the page', js: true do
           visit new_project_issue_path(project)
           click_link 'Source'
@@ -84,6 +84,21 @@ describe 'Sessions' do
           travel_to(Time.now + 1.hour)
 
           fill_in :issue_text, with: 'some text'
+          expect(page).to have_text('Your session has expired!. Login again to continue.')
+        end
+      end
+
+      context 'when editing in Fields view while timed out' do
+        it 'shows an alert on the page', js: true do
+          visit new_project_issue_path(project)
+          click_link 'Fields'
+
+          # Wait for ajax
+          find('.textile-form-field')
+
+          travel_to(Time.now + 1.hour)
+
+          fill_in 'item_form_field_name_0', with: 'some text'
           expect(page).to have_text('Your session has expired!. Login again to continue.')
         end
       end
