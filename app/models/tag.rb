@@ -58,4 +58,10 @@ class Tag < ApplicationRecord
   def normalize_name
     self[:name] = self.name.downcase
   end
+
+  def my_tag
+    "string"
+  end
 end
+
+
