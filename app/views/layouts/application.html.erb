@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
 
-  <body class="unauthenticated <%= controller_name %>">
+  <body class="unauthenticated <%= controller_name %> <%= class_names(holiday: Date.today.month == 12) %>">
 
     <%= render 'shared/noscript' %>
 
@@ -20,7 +20,7 @@
         <div class="col-lg-5">
           <div class="form-container card card-body">
             <div class="logo-icons" data-behavior="logo-icons"></div>
-            <%= image_tag 'logo_full_small.png', alt: 'Dradis CE logo', class: 'logo' %>
+            <%= image_tag Date.today.month == 12 ? 'holiday/logo_full_small' : 'logo_full_small', alt: 'Dradis CE logo', class: 'logo' %>
             <div class="form-container-inner">
               <%= flash_messages %>
               <%= yield %>

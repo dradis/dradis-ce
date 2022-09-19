@@ -33,7 +33,7 @@ class SessionsController < ApplicationController
   def return_to
     if request.get?
       warden_options[:attempted_path]
-    else
+    elsif request.post?
       request.env['HTTP_REFERER']
     end
   end

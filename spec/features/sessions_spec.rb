@@ -49,12 +49,11 @@ describe 'Sessions' do
     it 'redirect to login with a message' do
       login
 
-      Timecop.freeze(Time.now + 1.hour) do
-        visit project_path(Project.find(1))
+      travel_to(Time.now + 1.hour)
+      visit project_path(Project.find(1))
 
-        expect(current_path).to eq(login_path)
-        expect(page).to have_content('Session timed out!')
-      end
+      expect(current_path).to eq(login_path)
+      expect(page).to have_content('Session timed out!')
     end
 
     describe 'return after timeout' do
@@ -71,11 +70,10 @@ describe 'Sessions' do
       end
 
       it 'redirects to previous page' do
-        Timecop.freeze(Time.now + 1.hour) do
-          visit new_project_issue_path(project)
-          submit_login_details
-          expect(current_path).to eq(new_project_issue_path(project))
-        end
+        travel_to(Time.now + 1.hour)
+        visit new_project_issue_path(project)
+        submit_login_details
+        expect(current_path).to eq(new_project_issue_path(project))
       end
 
       context 'when editing while timed out' do
@@ -83,10 +81,10 @@ describe 'Sessions' do
           visit new_project_issue_path(project)
           click_link 'Source'
 
-          Timecop.freeze(Time.now + 1.hour) do
-            fill_in :issue_text, with: 'some text'
-            expect(page).to have_text('Your session has expired!. Login again to continue.')
-          end
+          travel_to(Time.now + 1.hour)
+
+          fill_in :issue_text, with: 'some text'
+          expect(page).to have_text('Your session has expired!. Login again to continue.')
         end
       end
     end

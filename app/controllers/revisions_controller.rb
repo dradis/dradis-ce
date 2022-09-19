@@ -58,7 +58,7 @@ class RevisionsController < AuthenticatedController
               elsif params[:evidence_id]
                 @node.evidence.find(params[:evidence_id])
               elsif params[:issue_id]
-                Issue.find(params[:issue_id])
+                current_project.issues.find(params[:issue_id])
               elsif params[:note_id]
                 @node.notes.find(params[:note_id])
               else
@@ -66,7 +66,7 @@ class RevisionsController < AuthenticatedController
               end
   rescue ActiveRecord::RecordNotFound
     flash[:error] = 'Record not found'
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
 
   def load_sidebar

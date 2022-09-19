@@ -7,6 +7,7 @@ class Issues::EvidenceController < AuthenticatedController
 
   before_action :set_issues, only: [:create_multiple, :index, :new]
   before_action :set_affected_nodes, only: :index
+  before_action :set_auto_save_key, only: :new
   before_action :set_columns, only: :index
 
   def index
@@ -105,9 +106,11 @@ class Issues::EvidenceController < AuthenticatedController
 
   def set_auto_save_key
     @auto_save_key =  if params[:template]
-      "project-#{current_project.id}-issue-#{params[:issue_id]}-evidence-#{params[:template]}"
+      "issue-#{params[:issue_id]}-evidence-#{params[:template]}"
+    elsif params[:from_rtp]
+      "issue-#{params[:issue_id]}-rtp-evidence"
     else
-      "project-#{current_project.id}-issue-#{params[:issue_id]}-evidence"
+      "issue-#{params[:issue_id]}-evidence"
     end
   end
 
