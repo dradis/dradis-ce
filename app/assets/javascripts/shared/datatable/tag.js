@@ -27,7 +27,7 @@ DradisDatatable.prototype.setupTagButtons = function() {
       }.bind(this),
     },
     {
-      text: $("<span>Manage Tags</span>").css("color", "#000000"),
+      text: $("<span>Manage Tags</span>"),
       action: function () {
         window.location.href = this.$table.data("tags-path");
       }.bind(this),
