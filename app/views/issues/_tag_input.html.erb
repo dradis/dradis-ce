@@ -10,7 +10,7 @@
         </span>
       <% else %>
         <span class="tag" style="color: #555">
-          <i class='fa fa-tags'> </i>
+          <i class='fa fa-tag'> </i>
           No tag
         </span>
       <% end %>
@@ -18,17 +18,17 @@
     </button>
     <div class="dropdown-menu">
       <%= link_to 'javascript:void(0)', class: 'js-taglink dropdown-item',  style: "color: #555", data: { tag: "" } do %>
-        <i class="icon fa fa-tag"></i>
+        <i class="icon fa fa-tag fa-fw"></i>
         No tag
       <% end %>
       <% @tags.each do |tag| %>
         <%= link_to 'javascript:void(0)', class: 'js-taglink dropdown-item',  style: "color: #{ tag.color }", data: { tag: h(tag.name) } do %>
-          <i class="icon fa fa-tag"></i>
+          <i class="icon fa fa-tag fa-fw"></i>
           <%= h(tag.display_name) %>
         <% end %>
       <% end %>
       <%= link_to new_project_tag_path(current_project), remote: true, class: 'dropdown-item' do %>
-        <i class="fa fa-plus"></i>
+        <i class="fa fa-plus fa-fw"></i>
         Add new tag
       <% end %>
       <%= link_to 'Manage Tags', project_tags_path(current_project), class: 'dropdown-item' %>
