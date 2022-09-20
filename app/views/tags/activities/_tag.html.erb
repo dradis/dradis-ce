@@ -1,6 +1,6 @@
 <% if tag %>
   <%= presenter.verb %> the
-  <%= link_to tag.name, edit_project_tag_path(current_project, tag) %> tag.
+  <%= link_to tag.display_name, edit_project_tag_path(current_project, tag) %> tag.
 <% else %>
   <% if activity.action == 'destroy' %>
     deleted a tag.
