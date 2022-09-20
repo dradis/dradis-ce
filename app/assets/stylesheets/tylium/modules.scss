@@ -86,6 +86,14 @@
   white-space: nowrap;
 }
 
+.color-picker {
+  padding: 0;
+
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+}
+
 .content {
   padding: 1em;
 
