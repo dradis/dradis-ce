@@ -11,7 +11,7 @@ DradisDatatable.prototype.setupTagButtons = function() {
     var tagColor = tag[1],
       tagFullName = tag[2],
       tagName = tag[0],
-      $tagElement = $(`<i class="fa fa-tag fa-fw"></i><span>${tagName}</span></span>`).css('color', tagColor);
+      $tagElement = $(`<i class="fa fa-tag fa-fw"></i><span>${tagName}</span>`).css('color', tagColor);
 
     tagButtons.push({
       text: $tagElement,
