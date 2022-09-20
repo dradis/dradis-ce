@@ -27,6 +27,7 @@
           <%= h(tag.display_name) %>
         <% end %>
       <% end %>
+      <div class="divider"></div>
       <%= link_to new_project_tag_path(current_project), remote: true, class: 'dropdown-item' do %>
         <i class="fa fa-plus fa-fw"></i>
         Add new tag
