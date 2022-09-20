@@ -29,10 +29,11 @@
       <% end %>
       <div class="divider"></div>
       <%= link_to new_project_tag_path(current_project), remote: true, class: 'dropdown-item' do %>
-        <i class="fa fa-plus fa-fw"></i>
-        Add new tag
+        <i class="fa fa-plus fa-fw"></i> Add new tag
       <% end %>
-      <%= link_to 'Manage Tags', project_tags_path(current_project), class: 'dropdown-item' %>
+      <%= link_to project_tags_path(current_project), class: 'dropdown-item' do %>
+        <i class="fa fa-tags fa-fw"></i> Manage tags
+      <% end %>
     </div>
   </div>
 </div>

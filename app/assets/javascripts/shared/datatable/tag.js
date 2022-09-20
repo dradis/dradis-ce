@@ -21,13 +21,13 @@ DradisDatatable.prototype.setupTagButtons = function() {
   );
   tagButtons.push(
     {
-      text: $(`<span><i class="fa fa-plus"></i> Add new tag</span>`),
+      text: $(`<span><i class="fa fa-plus fa-fw"></i> Add new tag</span>`),
       action: function () {
         $.ajax({ url: this.$table.data("new-tag-path") });
       }.bind(this),
     },
     {
-      text: $("<span>Manage Tags</span>"),
+      text: $(`<span><i class="fa fa-tags fa-fw"></i> Manage Tags</span>`),
       action: function () {
         window.location.href = this.$table.data("tags-path");
       }.bind(this),
