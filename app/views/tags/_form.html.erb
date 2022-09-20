@@ -4,18 +4,29 @@
     <i class="fa fa-times"></i><span class="sr-only">Close modal</span>
   </button>
 </div>
-<%= simple_form_for @tag, url: url, method: method do |f| %>
+<%= form_for @tag, url: url, method: method do |f| %>
   <div class="modal-body">
-    <%= f.input :display_name, required: true, label: 'Name' %>
-    <%= label_tag do %>
-        Color
-        <span class="required-input">*</span>
-      <% end %>
-      <br/>
-      <%= f.color_field :color %>
+    <div class="row">
+      <div class="col-10">
+        <div class="form-group">
+          <%= f.label :display_name, class: 'col-form-label' do %>
+            Name <span class="required-input">*</span>
+          <% end %>
+          <%= f.text_field :display_name, required: true, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="form-group">
+          <%= f.label :color, class: 'col-form-label d-block' do %>
+            Color <span class="required-input">*</span>
+          <% end %>
+          <%= f.color_field :color, required: true, class: 'form-control color-picker' %>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="modal-footer">
-    <%= f.button :submit, class: 'btn btn-primary' %>
+    <%= f.submit class: 'btn btn-primary' %>
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
   </div>
 <% end %>
