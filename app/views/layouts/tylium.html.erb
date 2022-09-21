@@ -102,7 +102,7 @@
       <%= render partial: 'styles_tylium/modal' %>
     <% end %>
 
-    <% if controller_name == 'tags' || controller_name == 'issues' %>
+    <% if %w[tags issues].include?(controller_name) %>
       <%= render partial: 'tags/modals/form' %>
     <% end %>
 

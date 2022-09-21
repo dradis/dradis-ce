@@ -26,7 +26,7 @@ class Tag < ApplicationRecord
   presence: true,
   uniqueness: { case_sensitive: false } ,
   format: {
-    with: /\A(!\h{6})_[a-zA-Z]+?\z/, message: 'is invalid: Special character and number are not permitted'
+    with: /\A(!\h{6})_[a-zA-Z]+?\z/, message: 'is invalid: Numbers and special characters are not permitted.'
   }
 
   # -- Scopes -----------------------------------------------------------------
