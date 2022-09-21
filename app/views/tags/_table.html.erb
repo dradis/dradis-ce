@@ -27,6 +27,8 @@
                     content_tag(:i, nil, class: 'fa fa-tag fa-fw mr-1') + tag.display_name
                   end
                 ]
+              when 'Color code'
+                [tag.color, content_tag(:span, tag.color, style:  "color: #{tag.color}")]
               when 'Created'
                 [tag.created_at.to_i, local_time_ago(tag.created_at)]
               when 'Updated'
