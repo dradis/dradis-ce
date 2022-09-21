@@ -13,20 +13,20 @@
   <% if @tags.any? %>
     <%= render 'table' %>
   <% else %>
-  <div class="empty-state mt-3">
-    <div class="empty-state-icon">
-      <%= image_tag "icons/#{rand(9)}.svg" %>
-    </div>
-    <div class="empty-state-body">
-      <div class="container">
-        <h4 class="empty-state-title">There are no tags created yet.</h4>
-        <p class="empty-state-body-text">Create and use tags to manage your issues.</p>
-        <div class="empty-state-actions">
-          <a href="https://dradisframework.com/support/guides/projects/tags.html"
-          class="empty-state-docs-link" target="_blank">More about tags</a>
+    <div class="empty-state mt-3">
+      <div class="empty-state-icon">
+        <%= image_tag "icons/#{rand(9)}.svg" %>
+      </div>
+      <div class="empty-state-body">
+        <div class="container">
+          <h4 class="empty-state-title">There are no tags created yet.</h4>
+          <p class="empty-state-body-text">Use tags to flag and/or organize your issues.</p>
+          <div class="empty-state-actions">
+            <a href="https://dradisframework.com/support/guides/projects/tags.html"
+            class="empty-state-docs-link" target="_blank">More about tags</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   <% end %>
 </div>
