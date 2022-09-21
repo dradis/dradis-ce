@@ -13,7 +13,7 @@ describe 'Tag pages:' do
       visit project_tags_path(current_project)
     end
     let(:default_columns) { ['Tag'] }
-    let(:hidden_columns) { ['Created', 'Updated'] }
+    let(:hidden_columns) { ['Color code', 'Created', 'Updated'] }
     let(:filter) { { keyword: tag.name, filter_count: 1 } }
 
     it_behaves_like 'a DataTable'
