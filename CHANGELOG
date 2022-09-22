@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Kit Import: allow to import kit with no templates
   - Notes: remove category selection from form UI.
   - [entity]:
     - [future tense verb] [feature]
