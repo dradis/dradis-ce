@@ -3,7 +3,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - [gem]
+    - nokogiri
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
