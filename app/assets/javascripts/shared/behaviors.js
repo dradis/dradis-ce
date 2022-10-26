@@ -51,6 +51,13 @@
 
     // Init Bootstrap tooltips
     $('[data-toggle~=tooltip]').tooltip();
+
+    // Navigate to tab
+    let searchParams = new URLSearchParams(window.location.search)
+    if (searchParams.has('tab')) {
+      let tab = searchParams.get('tab')
+      $($(`[data-toggle~=tab][href="#${tab}"]`)).tab('show');
+    }
   }
 
   document.addEventListener('turbolinks:load', function() {
