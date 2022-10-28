@@ -1,6 +1,10 @@
 body.unauthenticated {
+  --primaryColor: #{$primaryColor};
+  --primaryColorDark: #{darken($primaryColor, 10)};
+  --primaryColorLight: #{lighten($primaryColor, 20)};
+
   align-items: center;
-  background: linear-gradient(165deg, lighten($primaryColor, 20) 0%, $primaryColor 50%, darken($primaryColor, 10) 100%);
+  background: linear-gradient(165deg, var(--primaryColorLight) 0%, var(--primaryColor) 50%, var(--primaryColorDark) 100%);
   background-repeat: no-repeat;
   color: $defaultText;
   display: flex;
@@ -9,11 +13,11 @@ body.unauthenticated {
   min-height: 100vh;
 
   a {
-    color: $linkColor;
+    color: var(--primaryColor);
     transition: color 0.2s ease-in-out;
   
     &:hover {
-      color: $linkColorHover;
+      color: var(--primaryColorDark);
       text-decoration: none;
     }
   }
@@ -35,8 +39,15 @@ body.unauthenticated {
     text-shadow: 0 0 0;
 
     &.btn-primary {
-      @include button($linkColor);
+      border: 0px none;
+      background: var(--primaryColor);
       font-weight: 300;
+
+      &:hover,
+      &:not(:disabled):not(.disabled):active {
+        background: var(--primaryColorDark)
+      }
+      
     }
   }
 
@@ -105,8 +116,8 @@ body.unauthenticated {
   input[type="password"],
   input[type="text"] {
     &:focus {
-      border-color: $linkColor;
-      box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px $linkColor;
+      border-color: var(--primaryColor);
+      box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px var(--primaryColor);
       outline: 0;
     }
   }
