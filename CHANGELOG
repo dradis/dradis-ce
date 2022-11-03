@@ -1,5 +1,6 @@
 [v#.#.#] ([month] [YYYY])
   - Notes: remove category selection from form UI.
+  - Tags: implemented CRUD to manage
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
