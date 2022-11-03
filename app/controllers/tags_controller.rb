@@ -5,7 +5,9 @@ class TagsController < AuthenticatedController
   before_action :set_columns, only: :index
   load_and_authorize_resource
 
-  def index; end
+  def index
+    @tags = current_project.tags
+  end
 
   def new; end
 
