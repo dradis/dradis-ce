@@ -10,8 +10,9 @@ class TagsController < AuthenticatedController
   def new; end
 
   def create
+    @tag.project = current_project
     if @tag.save
-      track_created(@tag, project: @project)
+      track_created(@tag)
       redirect_to request.referer, notice: 'Tag created.'
     else
       redirect_to request.referer, alert: @tag.errors.full_messages.join('; ')
@@ -22,7 +23,7 @@ class TagsController < AuthenticatedController
 
   def update
     if @tag.update(tag_params)
-      track_updated(@tag, project: @project)
+      track_updated(@tag)
       redirect_to project_tags_path(current_project), notice: 'Tag updated.'
     else
       redirect_to project_tags_path(current_project), alert: @tag.errors.full_messages.join('; ')
