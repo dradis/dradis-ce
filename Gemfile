@@ -22,7 +22,6 @@ gem 'coffee-rails', '~> 5.0'
 # Cache-friendly, client-side local time
 gem 'local_time', '>= 2.0.0'
 
-
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 
@@ -49,7 +48,6 @@ gem 'builder'
 
 gem 'differ', '~> 0.1.2'
 
-
 # HTML processing filters and utilities
 gem 'html-pipeline'
 gem 'liquid'
@@ -65,7 +63,6 @@ gem 'record_tag_helper'
 gem 'rubyzip', '>= 1.2.2'
 
 gem 'thor', '~> 1.2.1'
-
 
 # ------------------------------------------------------ With native extensions
 # These require native extensions.
@@ -145,7 +142,6 @@ group :production do
   gem 'unicorn',  '6.1.0'
 end
 
-
 # ----------------------------------------------------- Development and Testing
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
@@ -215,7 +211,6 @@ end
 # Base framework classes required by other plugins
 gem 'dradis-plugins', '~> 4.5.0'
 
-
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
@@ -237,10 +232,8 @@ gem 'dradis-calculator_dread', '~> 4.5.0'
 gem 'dradis-csv_export', '~> 4.5.0'
 gem 'dradis-html_export', '~> 4.5.0'
 
-
 # ---------------------------------------------------------------------- Import
 gem 'dradis-csv', '~> 4.5.0'
-
 
 # ---------------------------------------------------------------------- Upload
 gem 'dradis-acunetix', '~> 4.5.0'
