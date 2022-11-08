@@ -6,7 +6,7 @@
     }
   } do |f| %>
 
-  <%= f.association :category, collection: Category.all, label_method: :name, prompt: 'Assign note category' %>
+  <%= f.hidden_field :category, value: Category.default.id %>
 
   <%= f.label :text, 'Note source input', class: 'sr-only' %>
   <%=

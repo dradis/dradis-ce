@@ -1,15 +1,17 @@
 [v#.#.#] ([month] [YYYY])
+  - Notes: remove category selection from form UI.
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - [gem]
+    - nokogiri
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
       - [item]
   - New integrations:
-    - [integration]
+    - Core Impact
+    - Veracode
   - Integration enhancements:
     - [integration]:
       - [future tense verb] [integration enhancement]
