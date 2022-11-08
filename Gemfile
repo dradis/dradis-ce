@@ -175,7 +175,7 @@ group :development do
   gem 'brakeman', require: false
   gem 'bundler-audit', require: false
 
-  gem 'rubocop', require: false
+  gem 'rubocop', '~> 1.38.0', require: false
 end
 
 group :development, :test do
