@@ -249,6 +249,7 @@ GEM
     letter_opener (1.7.0)
       launchy (~> 2.2)
     libv8-node (16.10.0.0)
+    libv8-node (16.10.0.0-arm64-darwin)
     libv8-node (16.10.0.0-x86_64-darwin-19)
     libv8-node (16.10.0.0-x86_64-linux)
     liquid (5.0.1)
@@ -293,6 +294,8 @@ GEM
     nio4r (2.5.8)
     nokogiri (1.13.9)
       mini_portile2 (~> 2.8.0)
+      racc (~> 1.4)
+    nokogiri (1.13.9-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.13.9-x86_64-darwin)
       racc (~> 1.4)
@@ -497,6 +500,7 @@ GEM
     zeitwerk (2.6.0)
 
 PLATFORMS
+  arm64-darwin
   ruby
   x86_64-darwin-19
   x86_64-linux
@@ -577,7 +581,7 @@ DEPENDENCIES
   resque-status
   rinku
   rspec-rails (~> 4.0.2)
-  rubocop (~> 1.38)
+  rubocop (>= 1.38)
   rubyzip (>= 1.2.2)
   sanitize (= 5.2.1)
   sass-rails (~> 6.0)
