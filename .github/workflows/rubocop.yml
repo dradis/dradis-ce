@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v1
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
+        # with:
+        #   bundler-cache: true
       - name: Lint changed files
         run: bin/rubocop-ci
