@@ -250,7 +250,7 @@ GEM
       launchy (~> 2.2)
     libv8-node (16.10.0.0)
     libv8-node (16.10.0.0-arm64-darwin)
-    libv8-node (16.10.0.0-x86_64-darwin-19)
+    libv8-node (16.10.0.0-x86_64-darwin)
     libv8-node (16.10.0.0-x86_64-linux)
     liquid (5.0.1)
     listen (3.4.1)
@@ -502,7 +502,7 @@ GEM
 PLATFORMS
   arm64-darwin
   ruby
-  x86_64-darwin-19
+  x86_64-darwin-21
   x86_64-linux
 
 DEPENDENCIES
