@@ -2,7 +2,7 @@
 
 set -e
 
-result_info="bundle exec rubocop --format simple $(git diff-tree -r --no-commit-id --name-only origin/develop..HEAD)"
+result_info="bundle exec rubocop --force-exclusion --format simple $(git diff-tree -r --no-commit-id --name-only origin/develop..HEAD)"
 files_inspected=`$result_info | grep "files inspected\|file inspected" | cut -d " " -f1`
 warning_count=`$result_info | grep "offenses detected\|offense detected" | cut -d " " -f4`
 

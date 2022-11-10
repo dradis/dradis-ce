@@ -581,7 +581,7 @@ DEPENDENCIES
   resque-status
   rinku
   rspec-rails (~> 4.0.2)
-  rubocop (>= 1.38)
+  rubocop
   rubyzip (>= 1.2.2)
   sanitize (= 5.2.1)
   sass-rails (~> 6.0)
