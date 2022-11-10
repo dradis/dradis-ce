@@ -6,12 +6,16 @@ result_info="bundle exec rubocop --format simple $(git diff-tree -r --no-commit-
 files_inspected=`$result_info | grep "files inspected\|file inspected" | cut -d " " -f1`
 warning_count=`$result_info | grep "offenses detected\|offense detected" | cut -d " " -f4`
 
-if [ $warning_count != 'no' ]
+if [ $warning_count == 'no' ]
+then
+  echo "✅ Clean code! No rubocop offenses detected in $files_inspected changed files. Great job ಠ_ಠ"
+  exit 0
+elif [ $warning_count -ge '1' ]
 then
   echo -e "❌ Inspected $files_inspected file(s) and detected $warning_count offense(s)"
   $result_info
   exit 1
 else
-  echo "✅ Clean code! No rubocop offenses detected in $files_inspected changed files. Great job ಠ_ಠ"
-  exit 0
+  echo -e "❌ Something went wrong"
+  exit 1
 fi
