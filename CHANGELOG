@@ -1,8 +1,6 @@
 [v#.#.#] ([month] [YYYY])
   - Notes: remove category selection from form UI.
   - Rubocop: lint changed files since previous commit
-  - [entity]:
-    - [future tense verb] [feature]
   - Upgraded gems:
     - nokogiri
   - Bugs fixes:
