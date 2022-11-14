@@ -8,6 +8,9 @@ on:
     branches:
       - '*'
 
+env:
+  TARGET_BRANCH: ${{ github.base_ref }}
+
 jobs:
   rubocop:
     name: RuboCop
@@ -20,4 +23,4 @@ jobs:
         with:
           bundler-cache: true
       - name: Lint changed files
-        run: bin/rubocop-ci ${{ github.base_ref }}
+        run: bin/rubocop-ci ${{ env.TARGET_BRANCH }}
