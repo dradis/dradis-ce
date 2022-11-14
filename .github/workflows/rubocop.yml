@@ -20,4 +20,4 @@ jobs:
         with:
           bundler-cache: true
       - name: Lint changed files
-        run: bin/rubocop-ci
+        run: bin/rubocop-ci ${{ github.base_ref }}

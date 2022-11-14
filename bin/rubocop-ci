@@ -2,6 +2,7 @@
 
 set -e
 
+target_branch=$1
 result_info="bundle exec rubocop --force-exclusion --format simple $(git diff-tree -r --no-commit-id --name-only origin/develop..HEAD)"
 files_inspected=`$result_info | grep "files inspected\|file inspected" | cut -d " " -f1`
 warning_count=`$result_info | grep "offenses detected\|offense detected" | cut -d " " -f4`
@@ -9,6 +10,7 @@ warning_count=`$result_info | grep "offenses detected\|offense detected" | cut -
 if [ $warning_count == 'no' ]
 then
   echo "✅ Clean code! No rubocop offenses detected in $files_inspected changed files. Great job ಠ_ಠ"
+  echo " Message: $1 "
   exit 0
 elif [ $warning_count -ge '1' ]
 then
