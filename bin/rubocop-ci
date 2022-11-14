@@ -15,8 +15,7 @@ warning_count=`$result_info | grep "offenses detected\|offense detected" | cut -
 
 if [ $warning_count == 'no' ]
 then
-  echo "✅ Clean code! No rubocop offenses detected in $files_inspected changed file(s). Compared to $target_branch branch"
-  echo "Great job ಠ_ಠ"
+  echo "✅ Clean code! No rubocop offenses detected in $files_inspected changed file(s). Compared to $target_branch branch. Great job ಠ_ಠ"
   exit 0
 elif [ $warning_count -ge '1' ]
 then
