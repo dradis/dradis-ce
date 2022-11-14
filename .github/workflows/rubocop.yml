@@ -4,9 +4,6 @@ on:
   pull_request:
     branches:
       - '*'
-  push:
-    branches:
-      - '*'
 
 env:
   TARGET_BRANCH: ${{ github.base_ref }}
