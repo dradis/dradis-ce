@@ -74,7 +74,6 @@ RSpec.describe KitImportJob do
 
       described_class.new.perform(tmp_file, logger: Log.new.write('Testing...'))
       expect(ProjectTemplate.find_template('dradis-template-no-methodologies')).to_not be_nil
-      expect(Methodology.all).to_not be_empty
     end
 
     if defined?(Dradis::Pro)
