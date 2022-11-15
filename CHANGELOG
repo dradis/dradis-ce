@@ -1,4 +1,5 @@
 v4.6.0 (November 2022)
+  - Kit Import: allow import of kit with no templates
   - Notes: remove category selection from form UI.
   - Upgraded gems:
     - nokogiri
