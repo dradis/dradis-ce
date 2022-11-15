@@ -130,6 +130,8 @@ GEM
       dradis-plugins (~> 4.0)
     dradis-calculator_dread (4.5.0)
       dradis-plugins (~> 4.0)
+    dradis-coreimpact (4.5.0)
+      dradis-plugins (~> 4.0)
     dradis-csv (4.5.0)
       dradis-plugins (~> 4.0)
     dradis-csv_export (4.5.0)
@@ -289,12 +291,12 @@ GEM
       net-protocol
       timeout
     nio4r (2.5.8)
-    nokogiri (1.13.6)
+    nokogiri (1.13.9)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
-    nokogiri (1.13.6-x86_64-darwin)
+    nokogiri (1.13.9-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.13.6-x86_64-linux)
+    nokogiri (1.13.9-x86_64-linux)
       racc (~> 1.4)
     nokogumbo (2.0.5)
       nokogiri (~> 1.8, >= 1.8.4)
@@ -519,6 +521,7 @@ DEPENDENCIES
   dradis-burp (~> 4.5.0)
   dradis-calculator_cvss (~> 4.5.0)
   dradis-calculator_dread (~> 4.5.0)
+  dradis-coreimpact (~> 4.5.0)
   dradis-csv (~> 4.5.0)
   dradis-csv_export (~> 4.5.0)
   dradis-html_export (~> 4.5.0)
@@ -559,7 +562,7 @@ DEPENDENCIES
   net-imap
   net-pop
   net-smtp
-  nokogiri (= 1.13.6)
+  nokogiri (= 1.13.9)
   paper_trail (~> 12.2.0)
   parslet (~> 1.6.0)
   pg

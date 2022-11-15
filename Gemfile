@@ -81,7 +81,7 @@ gem 'bcrypt',   '3.1.12'
 gem 'json', '2.3.0'
 
 # XML manipulation
-gem 'nokogiri', '1.13.6'
+gem 'nokogiri', '1.13.9'
 
 # MySQL backend
 # gem 'mysql2', '~> 0.5.1'
@@ -246,6 +246,7 @@ gem 'dradis-csv', '~> 4.5.0'
 gem 'dradis-acunetix', '~> 4.5.0'
 gem 'dradis-brakeman', '~> 4.5.0'
 gem 'dradis-burp', '~> 4.5.0'
+gem 'dradis-coreimpact', '~> 4.5.0'
 gem 'dradis-metasploit', '~> 4.5.0'
 gem 'dradis-nessus', '~> 4.5.0'
 gem 'dradis-netsparker', '~> 4.5.0'
