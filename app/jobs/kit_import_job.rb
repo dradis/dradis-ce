@@ -175,8 +175,11 @@ class KitImportJob < ApplicationJob
   end
 
   def import_templates(template_type)
+    template_directory = "#{working_dir}/kit/templates/#{template_type}"
+    return unless Dir.exist?(template_directory)
+
     FileUtils.cp_r(
-      "#{working_dir}/kit/templates/#{template_type}/.",
+      "#{template_directory}/.",
       Configuration.send("paths_templates_#{template_type}")
     )
   end
