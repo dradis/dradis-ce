@@ -43,14 +43,14 @@ class TagsController < AuthenticatedController
   private
 
   def tag_params
-    modified_params = params.require(:tag).permit(:display_name, :color)
-    modified_params[:name] = "#{modified_params[:color].gsub('#', '!')}_#{modified_params[:display_name]}"
-    modified_params.except(:color, :display_name)
+    modified_params = params.require(:tag).permit(:name, :color)
+    modified_params[:name] = "#{modified_params[:color].gsub('#', '!')}_#{modified_params[:name]}"
+    modified_params.except(:color)
   end
 
   def set_columns
-    default_field_names = ['Tag'].freeze
-    extra_field_names = ['Color code', 'Created', 'Updated'].freeze
+    default_field_names = ['Name'].freeze
+    extra_field_names = ['Color', 'Created', 'Updated'].freeze
 
     @default_columns = default_field_names
     @all_columns = default_field_names | extra_field_names

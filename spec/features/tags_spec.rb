@@ -12,8 +12,8 @@ describe 'Tag pages:' do
     before do
       visit project_tags_path(current_project)
     end
-    let(:default_columns) { ['Tag'] }
-    let(:hidden_columns) { ['Color code', 'Created', 'Updated'] }
+    let(:default_columns) { ['Name'] }
+    let(:hidden_columns) { ['Color', 'Created', 'Updated'] }
     let(:filter) { { keyword: tag.name, filter_count: 1 } }
 
     it_behaves_like 'a DataTable'
@@ -33,7 +33,7 @@ describe 'Tag pages:' do
       it 'updates the Tag' do
         page.find("tr#tag-#{tag.id}").hover
         click_link('Edit')
-        fill_in :tag_display_name, with: 'test'
+        fill_in :tag_name, with: 'test'
         fill_in :tag_color, with: '#000000'
         expect do
           click_button 'Update Tag'
@@ -52,7 +52,7 @@ describe 'Tag pages:' do
 
       it 'creates a tag' do
         click_link 'Add new tag'
-        fill_in :tag_display_name, with: 'test'
+        fill_in :tag_name, with: 'test'
         fill_in :tag_color, with: '#000000'
         expect do
           click_button 'Create Tag'
@@ -79,7 +79,7 @@ describe 'Tag pages:' do
 
       it 'creates a tag' do
         click_link 'Add new tag'
-        fill_in :tag_display_name, with: 'ultra'
+        fill_in :tag_name, with: 'ultra'
         fill_in :tag_color, with: '#555555'
         expect do
           click_button 'Create Tag'

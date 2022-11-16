@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :tag do
-    name { "!#{Random.bytes(3).unpack1('H*')}_tag" }
+    sequence(:name) { |n| "!#{"%06d" % n}_tag" }
   end
 end

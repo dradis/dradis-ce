@@ -39,8 +39,6 @@ class Tag < ApplicationRecord
   #  * If the tag name contains color details, they are stripped
   #  * The result is titleized
   def display_name()
-    return '' if self.name.nil?
-
     if self.name =~ /\A!(\h{6})(_([[:word:]]+))?\z/
       if $3
         out = $3
@@ -56,8 +54,6 @@ class Tag < ApplicationRecord
   # Strips the tag's name and returns the color details if present
   # if no color information is found, returns a default value of #ccc
   def color()
-    return '' if self.name.nil?
-
     name[/\A(!\h{6})_[[:word:]]+?\z/, 1].try(:gsub, '!', '#') || '#555'
   end
 

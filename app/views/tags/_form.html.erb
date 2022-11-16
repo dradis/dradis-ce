@@ -9,10 +9,10 @@
     <div class="row">
       <div class="col-10">
         <div class="form-group">
-          <%= f.label :display_name, class: 'col-form-label' do %>
+          <%= f.label :name, class: 'col-form-label' do %>
             Name <span class="required-input">*</span>
           <% end %>
-          <%= f.text_field :display_name, required: true, class: 'form-control' %>
+          <%= f.text_field :name, value: @tag.new_record? ? '' : @tag.display_name, required: true, class: 'form-control' %>
           <span class="small text-muted mt-1">A-Z only. No special characters or numbers.</span>
         </div>
       </div>
@@ -21,7 +21,7 @@
           <%= f.label :color, class: 'col-form-label d-block' do %>
             Color <span class="required-input">*</span>
           <% end %>
-          <%= f.color_field :color, required: true, class: 'form-control color-picker' %>
+          <%= f.color_field :color, value: @tag.new_record? ? '' : @tag.color, required: true, class: 'form-control color-picker' %>
         </div>
       </div>
     </div>
