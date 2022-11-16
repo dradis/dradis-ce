@@ -1,6 +1,7 @@
 v4.6.0 (November 2022)
   - Kit Import: allow import of kit with no templates
   - Notes: remove category selection from form UI.
+  - Rubocop: lint changed files since previous commit
   - Upgraded gems:
     - nokogiri
   - New integrations:
