@@ -4,6 +4,8 @@ v4.6.0 (November 2022)
   - Rubocop: lint changed files since previous commit
   - Upgraded gems:
     - nokogiri
+  - Bugs fixes:
+    - Comments: Align comment header content in Safari
   - New integrations:
     - Core Impact
     - Veracode
