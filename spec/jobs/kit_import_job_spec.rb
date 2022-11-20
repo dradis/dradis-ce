@@ -6,7 +6,7 @@ RSpec.describe KitImportJob do
   before do
     @user    = create(:user)
 
-    file     = File.new(Rails.root.join('spec', 'fixtures', 'files', 'templates', 'kit.zip'))
+    file = File.new(Rails.root.join('spec', 'fixtures', 'files', 'templates', 'kit.zip'))
     @tmp_dir  = Rails.root.join('tmp', 'rspec')
     FileUtils.mkdir_p @tmp_dir
 
@@ -36,7 +36,7 @@ RSpec.describe KitImportJob do
   describe '#perform' do
     after(:all) do
       FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
-      FileUtils.rm_rf(Rails.root.join("tmp", "rspec"))
+      FileUtils.rm_rf(Rails.root.join('tmp', 'rspec'))
       Configuration.delete_by('name LIKE ?', 'admin:paths:%')
     end
 

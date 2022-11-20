@@ -1,8 +1,11 @@
 v4.6.0 (November 2022)
   - Kit Import: allow import of kit with no templates
   - Notes: remove category selection from form UI.
+  - Rubocop: lint changed files since previous commit
   - Upgraded gems:
     - nokogiri
+  - Bugs fixes:
+    - Comments: Align comment header content in Safari
   - New integrations:
     - Core Impact
     - Veracode
