@@ -229,7 +229,7 @@ gem 'dradis-calculator_cvss', '~> 4.6.0'
 gem 'dradis-calculator_dread', '~> 4.6.0'
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv_export', github: 'dradis/dradis-csv_export', tag: 'v4.6.0'
+gem 'dradis-csv_export', '~> 4.6.0'
 gem 'dradis-html_export', '~> 4.6.0'
 
 # ---------------------------------------------------------------------- Import

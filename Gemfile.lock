@@ -1,11 +1,3 @@
-GIT
-  remote: https://github.com/dradis/dradis-csv_export.git
-  revision: df9fe6e92650c5e433adab756e9b3d2f8649332c
-  tag: v4.6.0
-  specs:
-    dradis-csv_export (4.6.0)
-      dradis-plugins (~> 4.0)
-
 PATH
   remote: engines/dradis-api
   specs:
@@ -141,6 +133,8 @@ GEM
     dradis-coreimpact (4.6.0)
       dradis-plugins (~> 4.0)
     dradis-csv (4.6.0)
+      dradis-plugins (~> 4.0)
+    dradis-csv_export (4.6.0)
       dradis-plugins (~> 4.0)
     dradis-html_export (4.6.0)
       RedCloth (~> 4.3.2)
@@ -534,7 +528,7 @@ DEPENDENCIES
   dradis-calculator_dread (~> 4.6.0)
   dradis-coreimpact (~> 4.6.0)
   dradis-csv (~> 4.6.0)
-  dradis-csv_export!
+  dradis-csv_export (~> 4.6.0)
   dradis-html_export (~> 4.6.0)
   dradis-metasploit (~> 4.6.0)
   dradis-nessus (~> 4.6.0)
