@@ -12,6 +12,7 @@ class TagsController < AuthenticatedController
   def new; end
 
   def create
+    @tag.project = current_project
     if @tag.save
       track_created(@tag)
       redirect_to request.referer, notice: 'Tag created.'

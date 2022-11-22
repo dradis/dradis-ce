@@ -18,6 +18,14 @@ class Tag < ApplicationRecord
   # -- Relationships ----------------------------------------------------------
   has_many :taggings, dependent: :destroy
 
+  def project
+    # dummy project; this makes Tags's interface more similar to how it is
+    # in Pro and makes it easier to deal with tag in URL helpers
+    @project ||= Project.new
+  end
+
+  def project=(new_project); end
+
   # -- Callbacks --------------------------------------------------------------
   before_save :normalize_name
 
