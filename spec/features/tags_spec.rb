@@ -8,7 +8,7 @@ describe 'Tag pages:' do
   end
 
   describe 'tags#index', js: true do
-    let!(:tag) { create(:tag, name: '!9467bd_critical') }
+    let!(:tag) { create(:tag, name: '!9467bd_critical' , project: current_project) }
     before do
       visit project_tags_path(current_project)
     end
@@ -69,7 +69,7 @@ describe 'Tag pages:' do
     end
 
     describe 'issues index', js: true do
-      let!(:issue) { create(:issue) }
+      let!(:issue) { create(:issue, node: current_project.issue_library) }
 
       before do
         visit project_issues_path(current_project)
