@@ -87,9 +87,9 @@ class KitImportJob < ApplicationJob
     )
 
     if @project.errors.any?
-      logger.info { '  - Project errors: '}
+      logger.info { '  - Project errors: ' }
       @project.errors.full_messages.each do |error|
-        logger.info { "    - #{error}"}
+        logger.info { "    - #{error}" }
       end
       return
     end
