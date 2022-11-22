@@ -6,17 +6,17 @@ RSpec.describe KitImportJob do
   before do
     @user    = create(:user)
 
-    file     = File.new(Rails.root.join('spec', 'fixtures', 'files', 'templates', 'kit.zip'))
-    tmp_dir  = Rails.root.join('tmp', 'rspec')
-    FileUtils.mkdir_p tmp_dir
+    file = File.new(Rails.root.join('spec', 'fixtures', 'files', 'templates', 'kit.zip'))
+    @tmp_dir  = Rails.root.join('tmp', 'rspec')
+    FileUtils.mkdir_p @tmp_dir
 
     # Use a temporary file for the job instead of the original fixture
-    FileUtils.cp file.path, tmp_dir
-    @tmp_file = File.new(tmp_dir.join('kit.zip'))
+    FileUtils.cp file.path, @tmp_dir
+    @tmp_file = File.new(@tmp_dir.join('kit.zip'))
 
     ['methodologies', 'notes', 'plugins', 'projects', 'reports'].each do |item|
       conf = Configuration.find_or_initialize_by(name: "admin:paths:templates:#{item}")
-      folder = tmp_dir.join(item)
+      folder = @tmp_dir.join(item)
       conf.value = folder
       conf.save!
       FileUtils.mkdir_p folder
@@ -36,7 +36,7 @@ RSpec.describe KitImportJob do
   describe '#perform' do
     after(:all) do
       FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
-      FileUtils.rm_rf(Rails.root.join("tmp", "rspec"))
+      FileUtils.rm_rf(Rails.root.join('tmp', 'rspec'))
       Configuration.delete_by('name LIKE ?', 'admin:paths:%')
     end
 
@@ -65,6 +65,15 @@ RSpec.describe KitImportJob do
 
       # Check that no ruby file was copied
       expect(File.exists?(Rails.root.join('tmp', 'rspec', 'reports', 'word', 'dradis_welcome_template.v0.5.rb'))).to eq false
+    end
+
+    it 'can import kit without methodologies folder' do
+      file = File.new(Rails.root.join('spec', 'fixtures', 'files', 'templates', 'kit_no_methodologies.zip'))
+      FileUtils.cp file.path, @tmp_dir
+      tmp_file = File.new(@tmp_dir.join('kit_no_methodologies.zip'))
+
+      described_class.new.perform(tmp_file, logger: Log.new.write('Testing...'))
+      expect(ProjectTemplate.find_template('dradis-template-no-methodologies')).to_not be_nil
     end
 
     if defined?(Dradis::Pro)
