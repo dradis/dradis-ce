@@ -1,3 +1,15 @@
+v4.6.0 (November 2022)
+  - Kit Import: allow import of kit with no templates
+  - Notes: remove category selection from form UI.
+  - Rubocop: lint changed files since previous commit
+  - Upgraded gems:
+    - nokogiri
+  - Bugs fixes:
+    - Comments: Align comment header content in Safari
+  - New integrations:
+    - Core Impact
+    - Veracode
+
 v4.5.0 (August 2022)
   - Upgraded Dradis to run on ruby 3.1.2
   - Upgraded gems: acts_as_tree, bootsnap, bundler-audit, factory_bot, paper_trail, rails, rails-html-sanitizer, timecop, thor, unicorn
@@ -15,9 +27,7 @@ v4.5.0 (August 2022)
     - CSV Export: Rename integration to dradis-csv_export
     - HTML Export: Add :rtp plugins feature
   - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: Authenticated author broken access control: read access to issue content
 
 v4.4.0 (June 2022)
   - Login View: Design update
