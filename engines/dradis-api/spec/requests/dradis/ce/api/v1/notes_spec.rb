@@ -104,6 +104,7 @@ describe 'Notes API' do
         expect(retrieved_note['id']).to eq @note.id
         expect(retrieved_note['title']).to eq 'My note'
         expect(retrieved_note['category_id']).to eq category.id
+        expect(retrieved_note['author']).to eq @note.author
         expect(retrieved_note['fields'].keys).to match_array(
           %w[foo fizz Title]
         )

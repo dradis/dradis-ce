@@ -110,6 +110,7 @@ describe 'Evidence API' do
       it "returns JSON information about the evidence" do
         retrieved_evidence = JSON.parse(response.body)
         expect(retrieved_evidence["id"]).to eq @evidence.id
+        expect(retrieved_evidence['author']).to eq @evidence.author
         expect(retrieved_evidence["fields"].keys).to match_array(
           @evidence.local_fields.keys + %w(fizz foo)
         )

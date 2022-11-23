@@ -92,6 +92,10 @@ describe 'Issues API' do
         tag = @issue.tags.first
         expect(@retrieved_issue['tags']).to eq [{'color' => tag.color, 'display_name' => tag.display_name}]
       end
+
+      it 'includes the author' do
+        expect(@retrieved_issue['author']).to eq @issue.author
+      end
     end
 
     describe 'POST /api/issues' do
