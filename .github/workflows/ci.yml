@@ -6,13 +6,12 @@ on:
   push:
     branches: [develop, main]
 
-env:
-  TARGET_BRANCH: ${{ github.base_ref }}
-
 jobs:
   rubocop:
     name: RuboCop
     runs-on: ubuntu-latest
+    env:
+      TARGET_BRANCH: ${{ github.base_ref }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v1
