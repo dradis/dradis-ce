@@ -21,3 +21,24 @@ jobs:
           bundler-cache: true
       - name: Lint changed files
         run: bin/rubocop-ci ${{ env.TARGET_BRANCH }}
+  rspec:
+    name: RSpec
+    needs: [rubocop]
+    runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Create database.yml
+        run: cp config/database.yml.template config/database.yml
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Load database schema
+        run: bundle exec rails db:schema:load
+      - name: Precompile assets
+        run: bundle exec rails assets:precompile
+      - name: Run tests
+        run: bundle exec rspec spec engines -p
