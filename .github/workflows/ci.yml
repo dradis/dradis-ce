@@ -2,8 +2,9 @@ name: CI
 
 on:
   pull_request:
-    branches:
-      - '*'
+    branches: ['*']
+  push:
+    branches: [develop, main]
 
 env:
   TARGET_BRANCH: ${{ github.base_ref }}
