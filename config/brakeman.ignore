@@ -21,7 +21,7 @@
       "cwe_id": [
         22
       ],
-      "note": ""
+      "note": "False positive: Methodology.pwd is set by the admin to specify the directory for the methodologies"
     },
     {
       "warning_type": "File Access",
@@ -44,7 +44,7 @@
       "cwe_id": [
         22
       ],
-      "note": ""
+      "note": "False positive: The destination filename is prepended by the Attachments directory and validated as such to prevent being moved to the other directories"
     },
     {
       "warning_type": "File Access",
@@ -67,7 +67,7 @@
       "cwe_id": [
         22
       ],
-      "note": ""
+      "note": "False positive: Attachment.pwd is set by the admin to specify the directory for the attachments"
     },
     {
       "warning_type": "File Access",
@@ -90,7 +90,7 @@
       "cwe_id": [
         22
       ],
-      "note": ""
+      "note": "False positive: The destination filename is prepended by the Attachments directory and validated as such to prevent being moved to the other directories"
     },
     {
       "warning_type": "File Access",
@@ -113,7 +113,7 @@
       "cwe_id": [
         22
       ],
-      "note": ""
+      "note": "False positive: Attachment.pwd is set by the admin to specify the directory for the attachments"
     },
     {
       "warning_type": "Denial of Service",
@@ -137,7 +137,7 @@
         20,
         185
       ],
-      "note": ""
+      "note": "False positive: Attachment.pwd is set by the admin to specify the directory for the attachments"
     },
     {
       "warning_type": "Dangerous Send",
@@ -160,7 +160,7 @@
       "cwe_id": [
         77
       ],
-      "note": ""
+      "note": "False positive: There are no routes in engines with \"_path\" that is destructive"
     },
     {
       "warning_type": "File Access",
@@ -183,7 +183,7 @@
       "cwe_id": [
         22
       ],
-      "note": ""
+      "note": "False positive: Methodology.pwd is set by the admin to specify the directory for the methodologies"
     },
     {
       "warning_type": "Denial of Service",
@@ -207,7 +207,7 @@
         20,
         185
       ],
-      "note": ""
+      "note": "False positive: Attachment.pwd is set by the admin to specify the directory for the attachments"
     },
     {
       "warning_type": "Dangerous Eval",
@@ -231,7 +231,7 @@
         913,
         95
       ],
-      "note": ""
+      "note": "False positive: params[:plugin] here is being validated in the controller"
     },
     {
       "warning_type": "Remote Code Execution",
@@ -254,7 +254,7 @@
       "cwe_id": [
         470
       ],
-      "note": ""
+      "note": "False positive: params[:uploader] here is being validated in the controller"
     },
     {
       "warning_type": "Remote Code Execution",
@@ -277,7 +277,7 @@
       "cwe_id": [
         470
       ],
-      "note": ""
+      "note": "False positive: params[:id] here is being validated in the controller"
     },
     {
       "warning_type": "Dynamic Render Path",
@@ -311,7 +311,7 @@
       "cwe_id": [
         22
       ],
-      "note": ""
+      "note": "False positive: The params is used to fetch the boards and cannot be manipulated by user input"
     }
   ],
   "updated": "2022-11-24 15:12:55 +0100",
