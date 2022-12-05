@@ -87,9 +87,9 @@ class KitImportJob < ApplicationJob
     )
 
     if @project.errors.any?
-      logger.info { '  - Project errors: '}
+      logger.info { '  - Project errors: ' }
       @project.errors.full_messages.each do |error|
-        logger.info { "    - #{error}"}
+        logger.info { "    - #{error}" }
       end
       return
     end
@@ -143,10 +143,7 @@ class KitImportJob < ApplicationJob
   def import_report_template_properties
     logger.info { 'Adding properties to report template files...' }
 
-    (Dradis::Plugins.with_feature(:export) - [
-      Dradis::Plugins::CSV::Engine,
-      Dradis::Plugins::Projects::Engine,
-    ]).each do |plugin|
+    Dradis::Plugins.with_feature(:rtp).each do |plugin|
       Dir.glob(File.join(report_templates_dir, plugin.plugin_name.to_s, '*')) do |template|
         basename = File.basename(template, '.*')
         reports_dir = "#{working_dir}/kit/templates/reports"
@@ -178,8 +175,11 @@ class KitImportJob < ApplicationJob
   end
 
   def import_templates(template_type)
+    template_directory = "#{working_dir}/kit/templates/#{template_type}"
+    return unless Dir.exist?(template_directory)
+
     FileUtils.cp_r(
-      "#{working_dir}/kit/templates/#{template_type}/.",
+      "#{template_directory}/.",
       Configuration.send("paths_templates_#{template_type}")
     )
   end
