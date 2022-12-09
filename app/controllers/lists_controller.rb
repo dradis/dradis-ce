@@ -1,6 +1,7 @@
 class ListsController < AuthenticatedController
   include ActivityTracking
   include ProjectScoped
+  include ValidateMove
 
   before_action :set_current_board
   before_action :set_list, only: [:show, :edit, :update, :destroy, :move]
