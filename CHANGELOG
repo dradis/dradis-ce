@@ -6,6 +6,8 @@
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
+    - Methodologies:
+      - Ensure previous ID is validated when moving list/card
     - Bug tracker items:
       - [item]
   - New integrations:
