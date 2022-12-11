@@ -1,7 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Issues: Display the results from importers in a datatable
   - Upgraded gems:
-    - [gem]
+    - nokogiri
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
