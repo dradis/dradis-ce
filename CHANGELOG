@@ -1,6 +1,8 @@
 [v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
+  - Tylium:
+    - Add breadcrumbs to Revision History view
+    - Remove `Recent Activity` tabs and add `View History` link to the dots menu
+
   - Upgraded gems:
     - nokogiri
   - Bugs fixes:
@@ -99,13 +101,11 @@ v4.2.0 (February 2022)
     - Avoids hard-coding "../../shared/"
     - Store gem dependencies under ./vendor/bundle/
   - Tylium:
-    - Add breadcrumbs to Revision History view
     - Import CSS manifests from addons
     - Move '...' (more actions) menu closer to the content affected by the actions of the menu
     - Move the 'Edit' action out of the '...' (more actions) menu for issues, evidence, notes, etc.
     - Remove extra left padding from the first line of content in a code block
     - Remove height restriction from code blocks
-    - Remove `Recent Activity` tabs and add `View History` link to the dots menu
     - Simplify issues table columns
     - Updates focus state outline color
   - Upgraded gems:
