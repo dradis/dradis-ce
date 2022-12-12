@@ -3,6 +3,7 @@ class FieldsController < AuthenticatedController
   def form
     @form_data = FieldParser.source_to_fields_array(params[:source])
     @allow_dropdown = params[:allow_dropdown] == 'true'
+    render layout: false
   end
 
   # Returns a single field for the form view

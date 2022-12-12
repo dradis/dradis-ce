@@ -29,6 +29,7 @@
 //= require shared/mentions
 //= require shared/notifications
 //= require shared/revisions
+//= require shared/rtp_validation
 //= require shared/subscriptions
 
 //= require shared/datatable/main

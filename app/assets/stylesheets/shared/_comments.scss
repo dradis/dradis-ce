@@ -1,6 +1,5 @@
 .comment-feed {
   .actions {
-    float: right;
     visibility: hidden;
   }
 
@@ -13,7 +12,7 @@
       padding: 15px;
       border-radius: 5px;
       background-color: $primaryBgColor;
-  
+
       .content {
         margin-left: 2.5rem;
         padding: 1em 1em 0;
@@ -25,21 +24,21 @@
 
       .gravatar {
         padding-top: 3px;
-        
+
         &:not(.gravatar-inline) {
-          float: left;
-          margin-right: 0.5rem
+          float: none;
+          margin-right: 0.5rem;
         }
       }
-  
+
       &:hover {
         background-color: $secondaryBgColor;
-  
+
         .actions.current_user {
           visibility: visible;
         }
       }
-  
+
       .time {
         color: #888;
         font-size: 12px;
@@ -51,7 +50,13 @@
     }
   }
 
-  input[type="submit"] {
+  .editor-field {
+    .textarea-container > textarea {
+      min-height: 8rem;
+    }
+  }
+
+  input[type='submit'] {
     margin-left: 35px;
   }
 
@@ -66,7 +71,7 @@
 
 .subscriptions-feed {
   .gravatar {
-    float: initial;
+    float: none;
   }
 }
 
@@ -81,7 +86,7 @@
   overflow: auto;
   display: block;
   z-index: 999999;
-  
+
   img {
     border-radius: 50%;
   }
@@ -100,7 +105,7 @@
       padding: 5px 5px;
       cursor: pointer;
 
-      &.highlight, 
+      &.highlight,
       &:hover {
         background: #ddd;
       }

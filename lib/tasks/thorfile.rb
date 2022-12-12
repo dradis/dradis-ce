@@ -22,13 +22,11 @@ class DradisTasks < Thor
   method_option   :no_backup, type: :boolean, desc: 'do not create a backup of the current repository'
   def reset
     invoke 'dradis:setup:configure', [], []
-    invoke 'dradis:setup:migrate', [], []
 
     invoke 'dradis:backup', [], options            unless options.no_backup
 
     invoke 'dradis:reset:attachments', [], []
     invoke 'dradis:reset:database', [], []
-    invoke 'dradis:setup:seed', [], []
     invoke 'dradis:reset:logs', [], []
   end
 

@@ -39,7 +39,7 @@ module ApplicationHelper # :nodoc:
   end
 
   def spinner_tag(spinner_class: 'text-primary')
-    content_tag :div, class: 'd-flex align-items-center justify-content-center' do
+    content_tag :div, class: 'd-flex align-items-center justify-content-center spinner-container' do
       content_tag :div, nil, class: "spinner-border #{spinner_class}"
     end
   end

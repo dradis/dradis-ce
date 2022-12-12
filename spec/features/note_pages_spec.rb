@@ -90,7 +90,6 @@ describe "note pages" do
 
     it "has a form to edit the note" do
       should have_field :note_text
-      should have_field :note_category_id
     end
 
     it "uses the full-screen editor plugin" # TODO
@@ -158,11 +157,6 @@ describe "note pages" do
     include_examples 'nodes pages breadcrumbs', :edit, Note
 
     describe 'local caching' do
-      let(:add_categories) do
-        @category_1  = create(:category)
-        @category_2 = create(:category)
-      end
-
       let(:model_path) { edit_project_node_note_path(current_project, @node, @note) }
       let(:model_attributes) { [{ name: :text, value: 'Edit Note' }] }
 
@@ -254,11 +248,6 @@ describe "note pages" do
     end
 
     describe 'local caching' do
-      let(:add_categories) do
-        @category_1  = create(:category)
-        @category_2 = create(:category)
-      end
-
       let(:model_path) { new_project_node_note_path(current_project, @node) }
       let(:model_attributes) { [{ name: :text, value: 'New Note' }] }
       let(:model_attributes_for_template) { [{ name: :text, value: 'New Note Template' }] }

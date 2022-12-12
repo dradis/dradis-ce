@@ -5,8 +5,6 @@
 # call as we can inspect the attributes and add additional logic without
 # bloating the User model.
 #
-# The Class methods deal with ActiveRecord dump() and load(), and the Instance
-# methods deal with user preferences.
 #
 # See:
 #   http://viget.com/extend/how-i-used-activerecord-serialize-with-a-custom-data-type
@@ -27,34 +25,6 @@ class UserPreferences
     }
 
   # -- Class Methods ----------------------------------------------------------
-  # Used for `serialize` method in ActiveRecord
-  def self.dump(obj)
-    return if obj.nil?
-
-    unless obj.is_a?(self)
-      raise ::ActiveRecord::SerializationTypeMismatch,
-        "Attribute was supposed to be a #{self}, but was a #{obj.class}. -- #{obj.inspect}"
-    end
-
-    YAML.dump(obj)
-  end
-
-  def self.load(yaml)
-    return self.new if self != Object && yaml.nil?
-    return yaml unless yaml.is_a?(String) && yaml =~ /^---/
-
-    obj = YAML.load(yaml)
-
-    unless obj.is_a?(self) || obj.nil?
-      raise SerializationTypeMismatch,
-        "Attribute was supposed to be a #{self}, but was a #{obj.class}"
-    end
-
-    obj ||= self.new if self != Object
-
-    # self.new(obj)
-    obj
-  end
 
   # -- Instance Methods -------------------------------------------------------
 

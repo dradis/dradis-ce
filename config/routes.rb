@@ -41,7 +41,7 @@ Rails.application.routes.draw do
       resources :configurations, only: [:index, :update]
     end
 
-    post :create_multiple_evidence, to: 'evidence#create_multiple'
+    post :create_multiple_evidence, to: 'issues/evidence#create_multiple'
 
     resources :issues, concerns: :multiple_destroy do
       collection do
@@ -127,6 +127,7 @@ Rails.application.routes.draw do
   namespace :setup, only: [:index] do
     if defined?(Dradis::Pro)
     else
+      resource :kit, only: [:new, :create]
       resource :password, only: [:new, :create]
     end
   end
