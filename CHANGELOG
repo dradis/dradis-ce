@@ -4,7 +4,7 @@
     - Remove `Recent Activity` tabs and add `View History` link to the dots menu
 
   - Upgraded gems:
-    - nokogiri
+    - nokogiri, sinatra
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
