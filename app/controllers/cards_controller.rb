@@ -32,7 +32,7 @@ class CardsController < AuthenticatedController
       redirect_to [current_project, @board, @list, @card], notice: 'Task added.'
     else
       initialize_sidebar
-      render "new"
+      render 'new'
     end
   end
 
@@ -45,7 +45,7 @@ class CardsController < AuthenticatedController
       redirect_to [current_project, @board, @list, @card], notice: 'Task updated.'
     else
       initialize_sidebar
-      render "edit"
+      render 'edit'
     end
   end
 
@@ -105,12 +105,12 @@ class CardsController < AuthenticatedController
   end
 
   def set_auto_save_key
-    @auto_save_key =  if @card&.persisted?
-                        "card-#{@card.id}"
-                      elsif params[:template]
-                        "#{@list.id}-card-#{params[:template]}"
-                      else
-                        "#{@list.id}-card"
-                      end
+    @auto_save_key = if @card&.persisted?
+      "card-#{@card.id}"
+    elsif params[:template]
+      "#{@list.id}-card-#{params[:template]}"
+    else
+      "#{@list.id}-card"
+    end
   end
 end

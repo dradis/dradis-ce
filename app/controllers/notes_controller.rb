@@ -87,12 +87,12 @@ class NotesController < NestedNodeResourceController
   end
 
   def set_auto_save_key
-    @auto_save_key =  if @note&.persisted?
-                        "note-#{@note.id}"
-                      elsif params[:template]
-                        "node-#{@node.id}-note-#{params[:template]}"
-                      else
-                        "node-#{@node.id}-note"
-                      end
+    @auto_save_key = if @note&.persisted?
+      "note-#{@note.id}"
+    elsif params[:template]
+      "node-#{@node.id}-note-#{params[:template]}"
+    else
+      "node-#{@node.id}-note"
+    end
   end
 end

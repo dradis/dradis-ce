@@ -53,7 +53,6 @@ class IssuesController < AuthenticatedController
           #
           @issue.update(issue_params)
 
-
         track_created(@issue)
 
         # Only after we save the issue, we can create valid taggings (w/ valid
@@ -183,12 +182,12 @@ class IssuesController < AuthenticatedController
   end
 
   def set_auto_save_key
-    @auto_save_key =  if @issue&.persisted?
-                        "issue-#{@issue.id}"
-                      elsif params[:template]
-                        "project-#{current_project.id}-issue-#{params[:template]}"
-                      else
-                        "project-#{current_project.id}-issue"
-                      end
+    @auto_save_key = if @issue&.persisted?
+      "issue-#{@issue.id}"
+    elsif params[:template]
+      "project-#{current_project.id}-issue-#{params[:template]}"
+    else
+      "project-#{current_project.id}-issue"
+    end
   end
 end
