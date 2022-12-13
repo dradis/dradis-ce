@@ -24,7 +24,6 @@
         >
           <thead>
             <tr>
-              <!-- <th class="no-sort" data-column-visible="false"><span class="sr-only">Select</span></th> -->
               <% @all_columns.each do |column| %>
                 <th><%= column %></th>
               <% end %>
@@ -35,13 +34,11 @@
             <% if @issues.any? %>
               <% @issues.each do |issue| %>
               <tr id="issue-<%= issue.id %>">
-                <!-- <td class="select-checkbox" data-behavior="select-checkbox"></td> -->
                 <% @all_columns.each do |column| %>
                   <%
                    sort, display =
                    case column
                    when 'Title'
-                     # [result.title, link_to(issue.title, [current_project, issue])]
                      [issue.title, issue.title]
                    when 'Tags'
                      [issue_tags(issue), issue_tags(issue)]

@@ -111,7 +111,7 @@ class IssuesController < AuthenticatedController
 
   def import
     importer = IssueImporter.new(params)
-    results = importer.query()
+    results = importer.query
     @issues = issues_from_import_records(results)
 
     @plugin = importer.plugin
