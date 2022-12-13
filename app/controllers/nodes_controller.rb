@@ -9,7 +9,9 @@ class NodesController < NestedNodeResourceController
   before_action :set_columns, only: :show
 
   # GET /nodes/<id>
-  def show; end
+  def show
+    @activities       = @node.nested_activities.latest
+  end
 
   # GET /nodes/<id>/edit
   def edit
@@ -63,7 +65,7 @@ class NodesController < NestedNodeResourceController
   # POST /nodes/sort
   def sort
     params[:nodes].each_with_index do |id, index|
-      current_project.nodes.update_all({ position: index + 1 }, { id: })
+      current_project.nodes.update_all({position: index+1}, {id: id})
     end
     head :ok
   end

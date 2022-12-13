@@ -14,6 +14,7 @@ class CardsController < AuthenticatedController
   layout 'cards'
 
   def show
+    @activities   = @card.activities.latest
     render layout: !request.xhr?
   end
 
