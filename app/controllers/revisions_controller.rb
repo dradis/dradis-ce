@@ -57,14 +57,14 @@ class RevisionsController < AuthenticatedController
   def load_record
     @record = if params[:card_id]
       @list.cards.find(params[:card_id])
-              elsif params[:evidence_id]
-                @node.evidence.find(params[:evidence_id])
-              elsif params[:issue_id]
-                current_project.issues.find(params[:issue_id])
-              elsif params[:note_id]
-                @node.notes.find(params[:note_id])
-              else
-                raise 'Unable to identify record type'
+    elsif params[:evidence_id]
+      @node.evidence.find(params[:evidence_id])
+    elsif params[:issue_id]
+      current_project.issues.find(params[:issue_id])
+    elsif params[:note_id]
+      @node.notes.find(params[:note_id])
+    else
+      raise 'Unable to identify record type'
     end
   rescue ActiveRecord::RecordNotFound
     flash[:error] = 'Record not found'
