@@ -16,14 +16,6 @@
           </div>
         </div>
 
-        <div id="results-accordion" class="accordion">
-          <% if @results.any? %>
-            <%= render partial: 'issue_result', collection: issues_from_import_records(@results), as: :issue %>
-          <% else %>
-            <p class="mb-0">This query yielded no results.</p>
-          <% end %>
-        </div>
-
         <table class="table table-striped mb-0"
           data-behavior="dradis-datatable"
           data-default-columns="<%= @default_columns.to_json %>"
@@ -40,8 +32,8 @@
             </tr>
           </thead>
           <tbody>
-            <% if @results.any? %>
-              <% issues_from_import_records(@results).each do |issue| %>
+            <% if @issues.any? %>
+              <% @issues.each do |issue| %>
               <tr id="issue-<%= issue.id %>">
                 <!-- <td class="select-checkbox" data-behavior="select-checkbox"></td> -->
                 <% @all_columns.each do |column| %>
