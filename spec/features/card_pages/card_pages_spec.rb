@@ -5,7 +5,7 @@ describe 'Card pages:' do
 
   it 'should require authenticated users' do
     project = create(:project)
-    @board = create(:board, project: project, node: project.methodology_library)
+    @board = create(:board, project:, node: project.methodology_library)
     visit project_board_path(@board.project, @board)
     expect(current_path).to eq(login_path)
     expect(page).to have_content('Access denied.')
@@ -42,7 +42,7 @@ describe 'Card pages:' do
         end
 
         it 'creates a new card in this list' do
-          expect{submit_form}.to change{Card.count}.by(1)
+          expect { submit_form }.to change { Card.count }.by(1)
           expect(page).to have_text('Task added.')
           expect(current_path).to eq(project_board_list_card_path(current_project, @board, @list, Card.last))
         end
@@ -58,7 +58,7 @@ describe 'Card pages:' do
         end
 
         it 'doesn\'t create a new card' do
-          expect{submit_form}.not_to(change{Card.count})
+          expect { submit_form }.not_to(change { Card.count })
         end
 
         it 'shows the form again with an error message' do
@@ -139,7 +139,7 @@ describe 'Card pages:' do
             expect(page).to have_text('Edited Card')
             expect(page).to have_text('Edited Card Description')
             expect(current_path).to eq(project_board_list_card_path(current_project, @board, @list, @card))
-          end.not_to(change{ Card.count })
+          end.not_to(change { Card.count })
         end
 
         let(:model) { @card }
@@ -154,7 +154,7 @@ describe 'Card pages:' do
         end
 
         it "doesn't update the card" do
-          expect{submit_form}.not_to(change{ @card.reload.name })
+          expect { submit_form }.not_to(change { @card.reload.name })
         end
 
         it 'shows the form again with an error message' do

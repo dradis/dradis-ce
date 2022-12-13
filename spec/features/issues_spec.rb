@@ -302,7 +302,7 @@ describe 'Issues pages' do
                 click_link 'Delete'
               end
             end
-            expect(page).to have_text "Issue deleted." # forces waiting
+            expect(page).to have_text 'Issue deleted.' # forces waiting
           end
 
           it 'deletes the issue' do
@@ -322,7 +322,7 @@ describe 'Issues pages' do
 
     describe 'revision history' do
       let(:issue) do
-        issue = create(:issue, node: node, text: 'issue text')
+        issue = create(:issue, node:, text: 'issue text')
         issue.update(text: 'updated text')
         issue
       end

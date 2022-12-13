@@ -25,7 +25,7 @@ shared_examples 'nodes pages breadcrumbs' do |action, klass|
   end
 
   if action == :new
-    let(:params) { { } }
+    let(:params) { {} }
 
     it 'shows correct active breadcrumb' do
       expect(page).to have_selector('.breadcrumb li.active', text: "New #{klass.to_s}")

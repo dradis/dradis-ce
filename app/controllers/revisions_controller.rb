@@ -12,12 +12,12 @@ class RevisionsController < AuthenticatedController
 
   def show
     # Use `reorder`, not `order`, to override Paper Trail's default scope
-    @revisions = @record.versions.includes(:item).reorder("created_at DESC")
+    @revisions = @record.versions.includes(:item).reorder('created_at DESC')
     @revision  = @revisions.find(params[:id])
 
     if @revision.event == 'update'
       @diffed_revision = DiffedRevision.new(@revision, @record)
-    end 
+    end
   end
 
   def trash
@@ -33,7 +33,7 @@ class RevisionsController < AuthenticatedController
     else
       flash[:error] = "Can't recover #{revision.type}: #{revision.errors.full_messages.join(',')}"
     end
-    
+
     redirect_to project_trash_path(current_project)
   end
 
@@ -56,7 +56,7 @@ class RevisionsController < AuthenticatedController
 
   def load_record
     @record = if params[:card_id]
-                @list.cards.find(params[:card_id])
+      @list.cards.find(params[:card_id])
               elsif params[:evidence_id]
                 @node.evidence.find(params[:evidence_id])
               elsif params[:issue_id]
@@ -65,7 +65,7 @@ class RevisionsController < AuthenticatedController
                 @node.notes.find(params[:note_id])
               else
                 raise 'Unable to identify record type'
-              end
+    end
   rescue ActiveRecord::RecordNotFound
     flash[:error] = 'Record not found'
     redirect_back(fallback_location: root_path)
