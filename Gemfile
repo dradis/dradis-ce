@@ -87,7 +87,7 @@ gem 'nokogiri', '1.13.10'
 # before 1.0.4, so make sure we're using 1.0.4+:
 # see https://github.com/rails/rails-html-sanitizer/commit/f3ba1a839a
 # and https://github.com/flavorjones/loofah/issues/144
-gem 'rails-html-sanitizer', '~> 1.4.3'
+gem 'rails-html-sanitizer', '~> 1.4.4'
 
 # Textile markup
 gem 'RedCloth', '~> 4.3.2', require: 'redcloth'
