@@ -2,7 +2,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - nokogiri, sinatra
+    - nokogiri, rails-html-sanitizer, sinatra
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
