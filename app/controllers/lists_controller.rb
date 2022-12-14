@@ -36,8 +36,8 @@ class ListsController < AuthenticatedController
   def move
     Board.move(
       @list,
-      prev_item: @board.lists.find_by(id: params[:prev_id]),
-      next_item: @board.lists.find_by(id: params[:next_id])
+      prev_item: @board.lists.find_by(id: move_params[:prev_id]),
+      next_item: @board.lists.find_by(id: move_params[:next_id])
     )
 
     track_updated(@list)
@@ -58,6 +58,11 @@ class ListsController < AuthenticatedController
 
   def list_params
     params.require(:list).permit(:name)
+  end
+
+  def move_params
+    params.
+      permit(:id, :project_id, :board_id, :next_id, :prev_id)
   end
 
   def set_current_board

@@ -7,7 +7,7 @@ describe 'move position' do
       expect(response).to have_http_status(:unprocessable_entity)
     end
     it 'moves position with empty prev id and next id' do
-      params.merge!(next_id:)
+      params.merge!(next_id:).compact!
       subject
       expect(response).to have_http_status(:success)
     end
