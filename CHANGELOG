@@ -2,7 +2,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Rubocop CI:
-    - remove Style/HashSyntax cop
+    - disable EnforcedShorthandSyntax rule under Style/HashSyntax cop
   - Upgraded gems:
     - nokogiri, rails-html-sanitizer, sinatra
   - Bugs fixes:
