@@ -6,7 +6,7 @@ describe 'Revisions#show:' do
   describe 'when the record has 2 revisions' do
     let(:record) do
       with_versioning do
-        create(:issue)
+        create(:issue, node: current_project.issue_library)
       end
     end
 
@@ -27,7 +27,6 @@ describe 'Revisions#show:' do
         record.versions.each do |version|
           should have_content("#{version.event}d".capitalize)
           should have_selector("time[datetime='#{version.created_at.strftime('%FT%TZ')}']")
-          should have_content(version.whodunnit)
         end
       end
     end
