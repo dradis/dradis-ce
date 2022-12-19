@@ -3,6 +3,7 @@
     - [future tense verb] [feature]
   - Rubocop CI:
     - disable EnforcedShorthandSyntax rule under Style/HashSyntax cop
+  - Issues: Display the results from importers in a datatable
   - Upgraded gems:
     - nokogiri, rails-html-sanitizer, sinatra
   - Bugs fixes:
