@@ -1,7 +1,5 @@
 module ValidateMove
   extend ActiveSupport::Concern
-  PERMITTED_MOVE_PARAMS = %w(prev_id next_id new_list_id)
-
   included do
     before_action :validate_move_params, only: :move
   end
@@ -10,17 +8,30 @@ module ValidateMove
 
   def validate_move_params
     head :unprocessable_entity unless valid_move_params?
-
-    if move_params.has_key?(:prev_id)
-      head :unprocessable_entity unless valid_prev_id?
-    end
   end
 
   def valid_move_params?
-    (PERMITTED_MOVE_PARAMS & move_params.keys).any?
-  end
-
-  def valid_prev_id?
-    controller_name.classify.constantize.exists?(move_params[:prev_id])
+    if move_params[:prev_id] == nil
+      if parent.items.empty?
+        move_params[:next_id] == nil
+      else
+        if parent.first_item
+          @next_item == parent.first_item
+        else
+          move_params[:next_id] == nil
+        end
+      end
+    else
+      if @prev_item.present?
+        next_item_of_new_prev_item = @prev_item.send("next_#{controller_name.classify.downcase}")
+        if next_item_of_new_prev_item
+          @next_item == next_item_of_new_prev_item
+        else
+          move_params[:next_id] == nil
+        end
+      else
+        false
+      end
+    end
   end
 end
