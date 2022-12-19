@@ -11,7 +11,6 @@
 <div class="row m-0">
   <ul class="tabs-container nav nav-tabs main-tabs w-100">
     <li class="nav-item"><a class="nav-link active" href="#info-tab" data-toggle="tab"><i class="fa fa-file-text"></i> Note</a></li>
-    <li class="nav-item"><a class="nav-link" href="#activity-tab" data-toggle="tab"><i class="fa fa-rss"></i> Recent activity</a></li>
   </ul>
 </div>
 
@@ -35,28 +34,6 @@
             </div>
           <% end %>
         </div>
-
-        <% cache ['note-activity-tab', @note, @activities] do %>
-          <div class="tab-pane" id="activity-tab">
-            <h4 class="header-underline">
-              Recent activity
-              <% if @note.has_revision_history? %>
-                -
-                <span class="actions">
-                  <%#
-                    # Some legacy content was created before paper_trail, so we need to
-                    # make sure that there is at least one revision associated to the
-                    # model.
-                    #%>
-                  <%= link_to(project_node_note_revisions_path(@node.project, @node, @note)) do %>
-                    <i class="fa fa-history"></i> Revision history
-                  <% end %>
-                </span>
-              <% end %>
-            </h4>
-            <%= render 'activities/feed', activities: @activities %>
-          </div>
-        <% end %>
       </div>
     </div>
   </div>

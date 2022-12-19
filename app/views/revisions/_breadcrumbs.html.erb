@@ -1,0 +1,22 @@
+<nav>
+  <ol class="breadcrumb">
+    <% case @record %>
+    <% when Card %>
+      <li class="breadcrumb-item"><%= link_to 'Methodologies', project_boards_path(current_project) %></li>
+      <li class="breadcrumb-item"><%= link_to "#{@record.board.name} - #{@record.list.name}", project_board_path(current_project, @record.board) %></li>
+      <li class="breadcrumb-item"><%= link_to @record.name, project_board_list_card_path(current_project, @board, @list, @record) %></li>
+    <% when Evidence %>
+      <li class="breadcrumb-item"><a href="javascript:void(0)" data-behavior="sidebar-toggle">Nodes</a></li>
+      <li class="breadcrumb-item"><%= link_to @record.node.label, project_node_path(current_project, @record.node, tab: 'evidence-tab') %></li>
+      <li class="breadcrumb-item"><%= link_to @record.title, project_node_evidence_path(current_project, @record.node, @record) %></li>
+    <% when Issue %>
+      <li class="breadcrumb-item"><%= link_to 'All issues', project_issues_path(current_project) %></li>
+      <li class="breadcrumb-item"><%= link_to @record.title, project_issue_path(current_project, @record) %></li>
+    <% when Note %>
+      <li class="breadcrumb-item"><a href="javascript:void(0)" data-behavior="sidebar-toggle">Nodes</a></li>
+      <li class="breadcrumb-item"><%= link_to @record.node.label, project_node_path(current_project, @record.node, tab: 'notes-tab') %></li>
+      <li class="breadcrumb-item"><%= link_to @record.title, project_node_note_path(current_project, @record.node, @record) %></li>
+    <% end %>
+    <li class="breadcrumb-item active">History</li>
+  </ol>
+</nav>

@@ -23,8 +23,6 @@ class IssuesController < AuthenticatedController
   end
 
   def show
-    @activities = @issue.commentable_activities.latest
-
     @affected_nodes = Node.joins(:evidence)
                         .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')
                         .where('evidence.issue_id = ?', @issue.id)
