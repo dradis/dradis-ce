@@ -1,8 +1,8 @@
 [v#.#.#] ([month] [YYYY])
+  - Issues: Display the results from importers in a datatable
   - Tylium:
     - Add breadcrumbs to Revision History view
     - Remove `Recent Activity` tabs and add `View History` link to the dots menu
-
   - Upgraded gems:
     - nokogiri, rails-html-sanitizer, sinatra
   - Bugs fixes:

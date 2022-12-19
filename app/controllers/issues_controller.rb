@@ -3,6 +3,7 @@ class IssuesController < AuthenticatedController
   include ConflictResolver
   include ContentFromTemplate
   include DynamicFieldNamesCacher
+  include IssuesHelper
   include LiquidEnabledResource
   include Mentioned
   include MultipleDestroy
@@ -108,11 +109,15 @@ class IssuesController < AuthenticatedController
 
   def import
     importer = IssueImporter.new(params)
-    @results = importer.query()
+    results = importer.query
+    @issues = issues_from_import_records(results)
 
     @plugin = importer.plugin
     @filter = importer.filter
     @query = params[:query]
+
+    @default_columns = ['Title', 'Tags']
+    @all_columns = @default_columns | (@issues.map(&:fields).map(&:keys).uniq.flatten - ['AddonTags'])
   end
 
   private
