@@ -54,32 +54,3 @@ shared_examples "doesn't create an Activity" do
     expect { submit_form }.not_to have_enqueued_job(ActivityTrackingJob)
   end
 end
-
-# Define the following let variables before using these examples:
-#
-#   create_activities : a block which creates the activities AND IS CALLED
-#                       BEFORE THE PAGE LOADS
-#   trackable: the model which the 'show' page is about
-shared_examples 'a page with an activity feed' do
-
-  describe 'when the model has activities' do
-    include ActivityMacros
-
-    let(:create_activities) do
-      @activities = [
-        create(:update_activity, trackable: trackable),
-        create(:create_activity, trackable: trackable)
-      ]
-      other_instance = create(trackable.class.to_s.underscore)
-      @other_activity = create(:activity, trackable: other_instance)
-    end
-
-    it 'lists them in the activity feed' do
-      within activity_feed do
-        should have_activity(@activities[0])
-        should have_activity(@activities[1])
-        should_not have_activity(@other_activity)
-      end
-    end
-  end
-end

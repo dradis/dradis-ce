@@ -18,7 +18,6 @@ class CardsController < AuthenticatedController
   layout 'cards'
 
   def show
-    @activities   = @card.activities.latest
     render layout: !request.xhr?
   end
 
@@ -114,10 +113,10 @@ class CardsController < AuthenticatedController
   def set_auto_save_key
     @auto_save_key = if @card&.persisted?
       "card-#{@card.id}"
-                      elsif params[:template]
-                        "#{@list.id}-card-#{params[:template]}"
-                      else
-                        "#{@list.id}-card"
+    elsif params[:template]
+      "#{@list.id}-card-#{params[:template]}"
+    else
+      "#{@list.id}-card"
     end
   end
 
