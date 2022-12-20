@@ -4,13 +4,16 @@ class CardsController < AuthenticatedController
   include Mentioned
   include NotificationsReader
   include ProjectScoped
-  include ValidateMove
 
   # Not sorted because we need the Board and List first!
   before_action :set_current_board_and_list
   before_action :set_or_initialize_card
   before_action :initialize_sidebar, only: [:show, :new, :edit]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
+  before_action :set_next_item_and_prev_item, only: :move
+  before_action :set_parent, only: :move
+  # Not at top because we need prev item and next item set first
+  include ValidateMove
 
   layout 'cards'
 
@@ -52,12 +55,7 @@ class CardsController < AuthenticatedController
   end
 
   def move
-    List.move(
-      @card,
-      prev_item: @board.cards.find_by(id: move_params[:prev_id]),
-      next_item: @board.cards.find_by(id: move_params[:next_id])
-    )
-
+    List.move(@card, prev_item: @prev_item, next_item: @next_item)
     if move_params[:new_list_id]
       @card.list = @board.lists.find(move_params[:new_list_id])
       @card.save
@@ -121,5 +119,14 @@ class CardsController < AuthenticatedController
                       else
                         "#{@list.id}-card"
     end
+  end
+
+  def set_next_item_and_prev_item
+    @prev_item = @board.cards.find_by(id: move_params[:prev_id])
+    @next_item = @board.cards.find_by(id: move_params[:next_id])
+  end
+
+  def set_parent
+    @parent = @board.lists.find(move_params[:new_list_id])
   end
 end

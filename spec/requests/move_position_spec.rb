@@ -1,15 +1,25 @@
 require 'rails_helper'
 
 describe 'move position' do
-  shared_examples 'validates previous id' do
+  shared_examples 'validates move params' do
     it 'prevents request with empty prev id' do
       subject
       expect(response).to have_http_status(:unprocessable_entity)
     end
-    it 'moves position with empty prev id and next id' do
-      params.merge!(next_id:).compact!
+    it 'moves position with empty prev id and valid next id' do
+      params.merge!(next_id:)
       subject
       expect(response).to have_http_status(:success)
+    end
+    it 'prevents request with invalid prev id' do
+      params.merge!(prev_id: invalid_prev_id)
+      subject
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+    it 'prevents request with invalid next id' do
+      params.merge!(prev_id: invalid_next_id)
+      subject
+      expect(response).to have_http_status(:unprocessable_entity)
     end
   end
 
@@ -24,26 +34,39 @@ describe 'move position' do
   end
   let(:list_1) { create(:list, board:) }
   let(:list_2) { create(:list, board:, previous_id: list_1.id) }
+  let(:another_board) do
+    create(
+      :board,
+      node: current_project.methodology_library,
+      project: current_project
+    )
+  end
+  let(:another_list) { create(:list, board: another_board) }
 
   context 'lists' do
     let(:params) { { prev_id: nil } }
-    let(:next_id) { list_2.id }
+    let(:next_id) { list_1.id }
+    let(:invalid_prev_id) { another_list.id }
+    let(:invalid_next_id) { another_list.id }
     subject do
-      post move_project_board_list_path(current_project, board, list_1), params:
+      post move_project_board_list_path(current_project, board, list_2), params:
     end
 
-    include_examples 'validates previous id'
+    include_examples 'validates move params'
   end
 
   context 'cards' do
     let(:card_1) { create(:card, list_id: list_1.id) }
     let(:card_2) { create(:card, list_id: list_1.id) }
+    let(:another_card) { create(:card, list_id: another_list.id) }
     let(:params) { { prev_id: nil } }
     let(:next_id) { card_2.id }
+    let(:invalid_prev_id) { another_card.id }
+    let(:invalid_next_id) { another_card.id }
     subject do
       post move_project_board_list_card_path(current_project, board, list_1, card_1), params:
     end
 
-    include_examples 'validates previous id'
+    include_examples 'validates move params'
   end
 end

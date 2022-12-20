@@ -12,17 +12,17 @@ module ValidateMove
 
   def valid_move_params?
     if move_params[:prev_id] == nil
-      if parent.items.empty?
+      if @parent.items.empty?
         move_params[:next_id] == nil
       else
-        if parent.first_item
-          @next_item == parent.first_item
+        if @parent.first_item
+          @next_item == @parent.first_item
         else
           move_params[:next_id] == nil
         end
       end
     else
-      if @prev_item.present?
+      if @parent.items.exists? move_params[:prev_id]
         next_item_of_new_prev_item = @prev_item.send("next_#{controller_name.classify.downcase}")
         if next_item_of_new_prev_item
           @next_item == next_item_of_new_prev_item
