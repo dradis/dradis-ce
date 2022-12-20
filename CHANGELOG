@@ -12,8 +12,7 @@
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
-    - Methodologies:
-      - Ensure params are validated when moving list/card
+    - Methodologies: Ensure params are validated when moving list/card
     - Bug tracker items:
       - [item]
   - New integrations:
