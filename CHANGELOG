@@ -1,8 +1,14 @@
 [v#.#.#] ([month] [YYYY])
   - [entity]:
     - [future tense verb] [feature]
+  - Rubocop CI:
+    - disable EnforcedShorthandSyntax rule under Style/HashSyntax cop
+  - Issues: Display the results from importers in a datatable
+  - Tylium:
+    - Add breadcrumbs to Revision History view
+    - Remove `Recent Activity` tabs and add `View History` link to the dots menu
   - Upgraded gems:
-    - nokogiri, sinatra
+    - nokogiri, rails-html-sanitizer, sinatra
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
