@@ -126,6 +126,10 @@ class CardsController < AuthenticatedController
   end
 
   def set_parent
-    @parent = @board.lists.find(move_params[:new_list_id])
+    @parent = if move_params[:new_list_id]
+                @board.lists.find(move_params[:new_list_id])
+              else
+                @list
+              end
   end
 end
