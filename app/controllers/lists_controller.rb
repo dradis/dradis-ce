@@ -6,6 +6,7 @@ class ListsController < AuthenticatedController
   before_action :set_list, only: [:show, :edit, :update, :destroy, :move]
   before_action :set_next_item_and_prev_item, only: :move
   before_action :set_parent, only: :move
+
   # Not at top because we need prev item and next item set first
   include ValidateMove
 

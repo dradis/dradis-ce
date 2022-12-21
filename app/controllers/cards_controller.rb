@@ -12,6 +12,7 @@ class CardsController < AuthenticatedController
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
   before_action :set_next_item_and_prev_item, only: :move
   before_action :set_parent, only: :move
+
   # Not at top because we need prev item and next item set first
   include ValidateMove
 
@@ -55,6 +56,7 @@ class CardsController < AuthenticatedController
 
   def move
     List.move(@card, prev_item: @prev_item, next_item: @next_item)
+
     if new_list?
       @card.list = @board.lists.find(move_params[:new_list_id])
       @card.save
