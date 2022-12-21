@@ -159,10 +159,10 @@
 
   @media (min-width: 992px) {
     &.sidebar-collapsed {
-      $collapsed-width: 1.25rem;
+      $collapsed-width: 1.75rem;
 
       max-width: $collapsed-width;
-      padding: 1rem 0.25rem;
+      padding: 0.75rem 0.5rem;
       z-index: 1051;
 
       .inner-content,
