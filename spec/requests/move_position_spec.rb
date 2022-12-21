@@ -7,7 +7,7 @@ describe 'move position' do
       expect(response).to have_http_status(:unprocessable_entity)
     end
     it 'moves position with empty prev id and valid next id' do
-      params.merge!(next_id:)
+      params.merge!(next_id: next_id)
       subject
       expect(response).to have_http_status(:success)
     end
@@ -32,8 +32,8 @@ describe 'move position' do
       project: current_project
     )
   end
-  let(:list_1) { create(:list, board:) }
-  let(:list_2) { create(:list, board:, previous_id: list_1.id) }
+  let(:list_1) { create(:list, board: board) }
+  let(:list_2) { create(:list, board: board, previous_id: list_1.id) }
   let(:another_board) do
     create(
       :board,
@@ -49,7 +49,7 @@ describe 'move position' do
     let(:invalid_prev_id) { another_list.id }
     let(:invalid_next_id) { another_list.id }
     subject do
-      post move_project_board_list_path(current_project, board, list_2), params:
+      post move_project_board_list_path(current_project, board, list_2), params: params
     end
 
     include_examples 'validates move params'
@@ -64,7 +64,7 @@ describe 'move position' do
     let(:invalid_prev_id) { another_card.id }
     let(:invalid_next_id) { another_card.id }
     subject do
-      post move_project_board_list_card_path(current_project, board, list_1, card_1), params:
+      post move_project_board_list_card_path(current_project, board, list_1, card_1), params: params
     end
 
     include_examples 'validates move params'

@@ -55,7 +55,7 @@ class CardsController < AuthenticatedController
 
   def move
     List.move(@card, prev_item: @prev_item, next_item: @next_item)
-    if move_params[:new_list_id]
+    if new_list?
       @card.list = @board.lists.find(move_params[:new_list_id])
       @card.save
     end
@@ -126,10 +126,11 @@ class CardsController < AuthenticatedController
   end
 
   def set_parent
-    @parent = if move_params[:new_list_id]
-                @board.lists.find(move_params[:new_list_id])
-              else
-                @list
-              end
+    @parent = new_list? ? @board.lists.find(move_params[:new_list_id]) : @list
+  end
+
+  def new_list?
+    new_list_id = move_params[:new_list_id]
+    new_list_id.present? && new_list_id != @card.list_id
   end
 end
