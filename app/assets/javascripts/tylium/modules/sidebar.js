@@ -6,6 +6,7 @@
       .siblings('[data-behavior~=navbar]')
       .find('[data-behavior~=navbar-brand]');
     this.storageKey = $sidebar.data('storage-key');
+    this.$toggleLink = $sidebar.find($('[data-behavior~=sidebar-toggle]'));
     this.$viewContent = $sidebar.siblings('[data-behavior~=view-content]');
 
     this.init();
@@ -17,7 +18,7 @@
 
       var that = this;
 
-      $('[data-behavior~=sidebar-toggle]').on('click', function (e) {
+      this.$toggleLink.on('click', function (e) {
         if ($(this).is('[data-behavior~=nodes-tree]')) {
           if (window.innerWidth < that.minBreakpoint) {
             $(this).attr('data-behavior', 'nodes-tree sidebar-toggle');
