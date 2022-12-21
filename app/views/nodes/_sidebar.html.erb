@@ -1,18 +1,26 @@
 <% content_for :sidebar do %>
   <div id="<%= dom_id(@node) %>_link" class="note-list">
-    <%= content_tag :div, class: current_page?(main_app.project_node_path(@node.project, @node)) ? 'p-2 mb-2 active' : 'p-2 mb-2' do %>
-      <%= link_to project_node_path(@node.project, @node), class: 'summary-link' do %>
-        <% if @node.type_id == Node::Types::HOST %>
-          <i class="fa fa-laptop"></i> Host summary
-        <% else%>
-          <i class="fa fa-cogs"></i> Node summary
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <%= content_tag :div, class:  class_names(active: current_page?(main_app.project_node_path(@node.project, @node))) do %>
+        <%= link_to project_node_path(@node.project, @node), class: 'summary-link' do %>
+          <% if @node.type_id == Node::Types::HOST %>
+            <i class="fa fa-laptop"></i> Host summary
+          <% else%>
+            <i class="fa fa-cogs"></i> Node summary
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
+
+      <a href="javascript:void(0)" class="sidebar-toggle-link" data-behavior="sidebar-toggle">
+        <i class="fa fa-chevron-left sidebar-toggle-icon"></i>
+        <span class="sr-only">Toggle secondary sidebar</span>
+      </a>
+    </div>
   </div>
 
-  <!-- Notes -->
-  <%= render 'shared/sidebar_collection',
+  <div class="inner-content">
+    <!-- Notes -->
+    <%= render 'shared/sidebar_collection',
     category_id: Category.default.id,
     collection: @sorted_notes,
     index_path: project_node_path(current_project, @node, tab: 'notes-tab'),
@@ -20,8 +28,8 @@
     new_path: new_project_node_note_path(@node.project, @node)
   %>
 
-  <!-- Evidence -->
-  <%= render 'shared/sidebar_collection',
+    <!-- Evidence -->
+    <%= render 'shared/sidebar_collection',
     category_id: Category.issue.id,
     collection: @sorted_evidence,
     index_path: project_node_path(current_project, @node, tab: 'evidence-tab'),
@@ -29,6 +37,7 @@
     new_path: new_project_node_evidence_path(@node.project, @node)
   %>
 
-  <!-- Attachments -->
-  <%= render partial: 'attachments/attachment_box', locals: { attachments_node: @node } %>
+    <!-- Attachments -->
+    <%= render partial: 'attachments/attachment_box', locals: { attachments_node: @node } %>
+  </div>
 <% end %>
