@@ -48,14 +48,17 @@
       Turbolinks.clearCache();
     },
     close: function () {
-      this.$navbarBrand.css('padding-left', 0);
       this.$sidebar
         .removeClass('sidebar-expanded')
         .addClass('sidebar-collapsed');
-      this.$viewContent.css({
-        left: this.$sidebar.css('width'),
-        width: 'calc(100vw - ' + this.$sidebar.css('width') + ')',
-      });
+
+      if (this.$sidebar.is($('[data-behavior~=main-sidebar]'))) {
+        this.$navbarBrand.css('padding-left', 0);
+        this.$viewContent.css({
+          left: this.$sidebar.css('width'),
+          width: 'calc(100vw - ' + this.$sidebar.css('width') + ')',
+        });
+      }
 
       this.changeState(false);
     },
@@ -66,16 +69,19 @@
       this.$sidebar
         .removeClass('sidebar-collapsed')
         .addClass('sidebar-expanded');
-      this.$viewContent.css({
-        left: this.$sidebar.css('width'),
-        width: 'calc(100vw - ' + this.$sidebar.css('width') + ')',
-      });
 
-      if (window.innerWidth > this.minBreakpoint) {
-        var navbarBrandOffset =
-          parseFloat(this.$navbarBrand.css('padding-left').slice(0, -2)) +
-          parseFloat(this.$sidebar.css('width').slice(0, -2) / 1.65);
-        this.$navbarBrand.css('padding-left', navbarBrandOffset);
+      if (this.$sidebar.is($('[data-behavior~=main-sidebar]'))) {
+        this.$viewContent.css({
+          left: this.$sidebar.css('width'),
+          width: 'calc(100vw - ' + this.$sidebar.css('width') + ')',
+        });
+
+        if (window.innerWidth > this.minBreakpoint) {
+          var navbarBrandOffset =
+            parseFloat(this.$navbarBrand.css('padding-left').slice(0, -2)) +
+            parseFloat(this.$sidebar.css('width').slice(0, -2) / 1.65);
+          this.$navbarBrand.css('padding-left', navbarBrandOffset);
+        }
       }
 
       this.changeState(true);
