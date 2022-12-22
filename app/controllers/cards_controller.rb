@@ -10,8 +10,6 @@ class CardsController < AuthenticatedController
   before_action :set_or_initialize_card
   before_action :initialize_sidebar, only: [:show, :new, :edit]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
-  before_action :set_next_item_and_prev_item, only: :move
-  before_action :set_parent, only: :move
 
   layout 'cards'
 
@@ -52,12 +50,18 @@ class CardsController < AuthenticatedController
   end
 
   def move
-    unless List.move(@card, @parent, prev_item: @prev_item, next_item: @next_item)
+    parent = new_list || @list
+    unless List.move(
+            @card,
+            parent,
+            prev_item: @board.cards.find_by(id: move_params[:prev_id]),
+            next_item: @board.cards.find_by(id: move_params[:next_id])
+          )
       return head :unprocessable_entity
     end
 
-    if new_list?
-      @card.list = @board.lists.find(move_params[:new_list_id])
+    if new_list
+      @card.list = new_list
       @card.save
     end
 
@@ -126,12 +130,7 @@ class CardsController < AuthenticatedController
     @next_item = @board.cards.find_by(id: move_params[:next_id])
   end
 
-  def set_parent
-    @parent = new_list? ? @board.lists.find(move_params[:new_list_id]) : @list
-  end
-
-  def new_list?
-    new_list_id = move_params[:new_list_id]
-    new_list_id.present? && new_list_id != @card.list_id
+  def new_list
+    @board.lists.find(move_params[:new_list_id]) if move_params[:new_list_id]
   end
 end

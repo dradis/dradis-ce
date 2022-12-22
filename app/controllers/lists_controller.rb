@@ -4,8 +4,6 @@ class ListsController < AuthenticatedController
 
   before_action :set_current_board
   before_action :set_list, only: [:show, :edit, :update, :destroy, :move]
-  before_action :set_next_item_and_prev_item, only: :move
-  before_action :set_parent, only: :move
 
   def new
     @list = @board.lists.new
@@ -35,7 +33,12 @@ class ListsController < AuthenticatedController
   end
 
   def move
-    unless Board.move(@list, @parent, prev_item: @prev_item, next_item: @next_item)
+    unless Board.move(
+            @list, 
+            @board, 
+            prev_item: @board.lists.find_by(id: params[:prev_id]),
+            next_item: @board.lists.find_by(id: params[:next_id])
+          )
       return head :unprocessable_entity
     end
 
@@ -70,14 +73,5 @@ class ListsController < AuthenticatedController
 
   def set_list
     @list = @board.lists.find(params[:id])
-  end
-
-  def set_next_item_and_prev_item
-    @prev_item = @board.lists.find_by(id: move_params[:prev_id])
-    @next_item = @board.lists.find_by(id: move_params[:next_id])
-  end
-
-  def set_parent
-    @parent = @board
   end
 end
