@@ -50,8 +50,8 @@ module ActsAsLinkedList
         new_next = new_position[:next_item]
 
         # Validates new position
-        is_valid_new_position = if new_previous.present?
-                                  next_item_of_new_previous = new_previous.send("next_#{item.class.name.downcase}")
+        is_new_position_valid = if new_previous.present?
+                                  next_item_of_new_previous = new_previous.send("next_#{new_previous.class.name.downcase}")
                                   if next_item_of_new_previous
                                     new_next == next_item_of_new_previous
                                   else
@@ -68,7 +68,7 @@ module ActsAsLinkedList
                                     end
                                   end
                                 end
-        return false unless is_valid_new_position
+        return false unless is_new_position_valid
 
         # Update previous position
         next_item.update_attribute(:previous_id, item.previous_id) if next_item

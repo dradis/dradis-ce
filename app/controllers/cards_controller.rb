@@ -125,11 +125,6 @@ class CardsController < AuthenticatedController
     end
   end
 
-  def set_next_item_and_prev_item
-    @prev_item = @board.cards.find_by(id: move_params[:prev_id])
-    @next_item = @board.cards.find_by(id: move_params[:next_id])
-  end
-
   def new_list
     @board.lists.find(move_params[:new_list_id]) if move_params[:new_list_id]
   end
