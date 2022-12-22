@@ -63,7 +63,11 @@
       this.changeState(false);
     },
     isSidebarOpen: function () {
-      return JSON.parse(localStorage.getItem(this.storageKey));
+      if (JSON.parse(localStorage.getItem(this.storageKey)) === null) {
+        return true;
+      } else {
+        return JSON.parse(localStorage.getItem(this.storageKey));
+      }
     },
     open: function () {
       this.$sidebar
