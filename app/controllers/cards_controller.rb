@@ -13,9 +13,6 @@ class CardsController < AuthenticatedController
   before_action :set_next_item_and_prev_item, only: :move
   before_action :set_parent, only: :move
 
-  # Not at top because we need prev item and next item set first
-  include ValidateMove
-
   layout 'cards'
 
   def show
@@ -55,7 +52,9 @@ class CardsController < AuthenticatedController
   end
 
   def move
-    List.move(@card, prev_item: @prev_item, next_item: @next_item)
+    unless List.move(@card, @parent, prev_item: @prev_item, next_item: @next_item)
+      return head :unprocessable_entity
+    end
 
     if new_list?
       @card.list = @board.lists.find(move_params[:new_list_id])

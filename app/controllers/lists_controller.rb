@@ -7,9 +7,6 @@ class ListsController < AuthenticatedController
   before_action :set_next_item_and_prev_item, only: :move
   before_action :set_parent, only: :move
 
-  # Not at top because we need prev item and next item set first
-  include ValidateMove
-
   def new
     @list = @board.lists.new
   end
@@ -38,7 +35,9 @@ class ListsController < AuthenticatedController
   end
 
   def move
-    Board.move(@list, prev_item: @prev_item, next_item: @next_item)
+    unless Board.move(@list, @parent, prev_item: @prev_item, next_item: @next_item)
+      return head :unprocessable_entity
+    end
 
     track_updated(@list)
 

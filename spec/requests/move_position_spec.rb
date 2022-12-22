@@ -6,10 +6,10 @@ describe 'move position' do
       subject
       expect(response).to have_http_status(:unprocessable_entity)
     end
-    it 'moves position with empty prev id and valid next id' do
-      params.merge!(next_id: next_id)
+    it 'prevents request with empty prev id' do
+      params.merge!(next_id: nil)
       subject
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(:unprocessable_entity)
     end
     it 'prevents request with invalid prev id' do
       params.merge!(prev_id: invalid_prev_id)
@@ -45,7 +45,6 @@ describe 'move position' do
 
   context 'lists' do
     let(:params) { { prev_id: nil } }
-    let(:next_id) { list_1.id }
     let(:invalid_prev_id) { another_list.id }
     let(:invalid_next_id) { another_list.id }
     subject do
@@ -60,7 +59,6 @@ describe 'move position' do
     let(:card_2) { create(:card, list_id: list_1.id) }
     let(:another_card) { create(:card, list_id: another_list.id) }
     let(:params) { { prev_id: nil } }
-    let(:next_id) { card_2.id }
     let(:invalid_prev_id) { another_card.id }
     let(:invalid_next_id) { another_card.id }
     subject do

@@ -2,21 +2,25 @@
 # Required instance variables:
 #   - parent - the linked list model instance of the item
 #   - list_item - the item to be moved
-shared_examples "moving the item" do
+shared_examples 'moving the item' do
   before do
     item_class = @list_item.class.name.downcase.to_sym
     parent_id_sym = "#{@parent.class.name.downcase}_id".to_sym
-    @new_previous_item = create(item_class, {parent_id_sym => @parent.id})
+    @new_previous_item = create(
+      item_class,
+      { parent_id_sym => @parent.id, previous_id: @list_item.id }
+    )
     @new_next_item = create(
       item_class,
-      {parent_id_sym => @parent.id, previous_id: @new_previous_item.id}
+      { parent_id_sym => @parent.id, previous_id: @new_previous_item.id }
     )
   end
 
-  describe "when moving an item between two items" do
-    it "successfully moves an item between two items" do
+  describe 'when moving an item between two items' do
+    it 'successfully moves an item between two items' do
       @parent.class.move(
         @list_item,
+        @parent,
         prev_item: @new_previous_item,
         next_item: @new_next_item
       )
@@ -26,12 +30,12 @@ shared_examples "moving the item" do
     end
   end
 
-  describe "when moving an item as the first item of the list" do
-    it "successfully sets the item as the first item" do
-      @parent.class.move @list_item, next_item: @new_next_item
-
+  describe 'when moving an item as the first item of the list' do
+    it 'successfully sets the item as the first item' do
       expect(@list_item.previous_id).to be_nil
-      expect(@new_next_item.previous_id).to eq(@list_item.id)
+      @parent.class.move @new_next_item, @parent, next_item: @list_item
+      expect(@new_next_item.previous_id).to be_nil
+      expect(@list_item.previous_id).to eq(@new_next_item.id)
     end
   end
 end

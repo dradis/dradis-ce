@@ -36,28 +36,51 @@ module ActsAsLinkedList
     #   the new next items.
     #
     # item - The item to be moved.
+    # parent - The item's parent
     # new_position - The hash that contains the new previous and/or new next
     #   item using the keys :prev_item and :next_item, respectively.
     #
-    # Returns true.
-    def move(item, new_position = {})
+    # Returns true when item is moved successfully to the new position.
+    # Returns false when the new position is invalid.
+    def move(item, parent, new_position = {})
       item.class.transaction do
         previous_item = item.send("previous_#{item.class.name.downcase}")
         next_item = item.send("next_#{item.class.name.downcase}")
+        new_previous = new_position[:prev_item]
+        new_next = new_position[:next_item]
+
+        # Validates new position
+        is_valid_new_position = if new_previous.present?
+                                  next_item_of_new_previous = new_previous.send("next_#{item.class.name.downcase}")
+                                  if next_item_of_new_previous
+                                    new_next == next_item_of_new_previous
+                                  else
+                                    new_next.nil?
+                                  end
+                                else
+                                  if parent.items.empty?
+                                    new_next.nil?
+                                  else
+                                    if parent.first_item
+                                      new_next == parent.first_item
+                                    else
+                                      new_next.nil?
+                                    end
+                                  end
+                                end
+        return false unless is_valid_new_position
 
         # Update previous position
         next_item.update_attribute(:previous_id, item.previous_id) if next_item
 
         # Update new position
-        new_previous = new_position[:prev_item]
-        new_next = new_position[:next_item]
+        new_next.update_attribute(:previous_id, item.id) if new_next
+
         if new_previous
           item.update_attribute(:previous_id, new_previous.id)
         else
           item.update_attribute(:previous_id, nil)
         end
-
-        new_next.update_attribute(:previous_id, item.id) if new_next
       end
     end
   end
