@@ -38,7 +38,7 @@ class ListsController < AuthenticatedController
             @board, 
             prev_item: @board.lists.find_by(id: params[:prev_id]),
             next_item: @board.lists.find_by(id: params[:next_id])
-          )
+           )
       return head :unprocessable_entity
     end
 

@@ -61,11 +61,7 @@ module ActsAsLinkedList
                                   if parent.items.empty?
                                     new_next.nil?
                                   else
-                                    if parent.first_item
-                                      new_next == parent.first_item
-                                    else
-                                      new_next.nil?
-                                    end
+                                    new_next == parent.first_item
                                   end
                                 end
         return false unless is_new_position_valid

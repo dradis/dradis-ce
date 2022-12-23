@@ -56,7 +56,7 @@ class CardsController < AuthenticatedController
             parent,
             prev_item: @board.cards.find_by(id: move_params[:prev_id]),
             next_item: @board.cards.find_by(id: move_params[:next_id])
-          )
+           )
       return head :unprocessable_entity
     end
 
