@@ -18,7 +18,7 @@
 
       var that = this;
 
-      this.$toggleLink.on('click', function (e) {
+      this.$toggleLink.on('click', function () {
         if ($(this).is('[data-behavior~=nodes-tree]')) {
           if (window.innerWidth < that.minBreakpoint) {
             $(this).attr('data-behavior', 'nodes-tree sidebar-toggle');
@@ -64,7 +64,7 @@
         this.$navbarBrand.css('padding-left', 0);
         this.$viewContent.css({
           left: this.$sidebar.css('width'),
-          width: 'calc(100vw - ' + this.$sidebar.css('width') + ')',
+          width: `calc(100vw - ${this.$sidebar.css('width')})`,
         });
       }
 
@@ -85,7 +85,7 @@
       if (this.$sidebar.is($('[data-behavior~=main-sidebar]'))) {
         this.$viewContent.css({
           left: this.$sidebar.css('width'),
-          width: 'calc(100vw - ' + this.$sidebar.css('width') + ')',
+          width: `calc(100vw - ${this.$sidebar.css('width')})`,
         });
 
         if (window.innerWidth > this.minBreakpoint) {
@@ -99,11 +99,7 @@
       this.changeState(true);
     },
     toggle: function (openSidebar) {
-      if (openSidebar) {
-        this.open();
-      } else {
-        this.close();
-      }
+      openSidebar ? this.open() : this.close();
     },
   };
 
