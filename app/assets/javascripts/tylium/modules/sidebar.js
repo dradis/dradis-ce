@@ -42,6 +42,14 @@
           that.close();
         });
       }
+
+      $(window).on('resize', function () {
+        if (window.innerWidth < that.minBreakpoint) {
+          that.$navbarBrand.css('padding-left', 0);
+        }
+
+        that.isSidebarOpen() ? that.open() : that.close();
+      });
     },
     changeState: function (state) {
       localStorage.setItem(this.storageKey, state);
@@ -81,9 +89,9 @@
         });
 
         if (window.innerWidth > this.minBreakpoint) {
-          var navbarBrandOffset =
-            parseFloat(this.$navbarBrand.css('padding-left').slice(0, -2)) +
-            parseFloat(this.$sidebar.css('width').slice(0, -2) / 1.65);
+          var navbarBrandOffset = parseFloat(
+            this.$sidebar.css('width').slice(0, -2) / 1.65
+          );
           this.$navbarBrand.css('padding-left', navbarBrandOffset);
         }
       }
