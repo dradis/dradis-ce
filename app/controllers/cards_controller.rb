@@ -11,6 +11,9 @@ class CardsController < AuthenticatedController
   before_action :initialize_sidebar, only: [:show, :new, :edit]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
 
+  # Not at top because we need board and list set first
+  include ValidateMove
+
   layout 'cards'
 
   def show
@@ -50,14 +53,10 @@ class CardsController < AuthenticatedController
   end
 
   def move
-    List.move(
-      @card,
-      prev_item: @board.cards.find_by(id: params[:prev_id]),
-      next_item: @board.cards.find_by(id: params[:next_id])
-    )
+    List.move(@card, prev_item: @prev_item, next_item: @next_item)
 
-    if params[:new_list_id]
-      @card.list = @board.lists.find(params[:new_list_id])
+    if new_list
+      @card.list = new_list
       @card.save
     end
 
@@ -86,6 +85,13 @@ class CardsController < AuthenticatedController
     params.require(:card).permit(:name, :description, :due_date, assignee_ids: [])
   end
 
+  def move_params
+    params.
+      permit(:id, :project_id, :board_id, :list_id,
+        :next_id, :prev_id, :new_list_id
+      )
+  end
+
   def initialize_sidebar
     @sorted_cards = @list.ordered_cards.select(&:persisted?)
   end
@@ -112,5 +118,9 @@ class CardsController < AuthenticatedController
     else
       "#{@list.id}-card"
     end
+  end
+
+  def new_list
+    @board.lists.find(move_params[:new_list_id]) if move_params[:new_list_id]
   end
 end
