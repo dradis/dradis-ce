@@ -7,7 +7,7 @@ on:
     branches: [develop, main]
 
 env:
-  TARGET_BRANCH: ${{ github.base_ref }}
+  TARGET_BRANCH: develop
 
 jobs:
   audits:
