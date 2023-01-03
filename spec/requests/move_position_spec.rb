@@ -4,22 +4,26 @@ describe 'move position' do
   shared_examples 'validates move params' do
     it 'prevents request with empty prev id' do
       subject
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to redirect_to(project_board_path(current_project, board))
+      expect(flash[:alert]).to eq('Something fishy is going on...')
     end
     it 'prevents request with empty prev id' do
       params.merge!(next_id: nil)
       subject
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to redirect_to(project_board_path(current_project, board))
+      expect(flash[:alert]).to eq('Something fishy is going on...')
     end
     it 'prevents request with invalid prev id' do
       params.merge!(prev_id: invalid_prev_id)
       subject
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to redirect_to(project_board_path(current_project, board))
+      expect(flash[:alert]).to eq('Something fishy is going on...')
     end
     it 'prevents request with invalid next id' do
       params.merge!(prev_id: invalid_next_id)
       subject
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to redirect_to(project_board_path(current_project, board))
+      expect(flash[:alert]).to eq('Something fishy is going on...')
     end
   end
 

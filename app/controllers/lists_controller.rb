@@ -4,10 +4,8 @@ class ListsController < AuthenticatedController
 
   before_action :set_current_board
   before_action :set_list, only: [:show, :edit, :update, :destroy, :move]
-  before_action :set_next_item_and_prev_item, only: :move
-  before_action :set_parent, only: :move
 
-  # Not at top because we need prev item and next item set first
+  # Not at top because we need board set first
   include ValidateMove
 
   def new
@@ -71,14 +69,5 @@ class ListsController < AuthenticatedController
 
   def set_list
     @list = @board.lists.find(params[:id])
-  end
-
-  def set_next_item_and_prev_item
-    @prev_item = @board.lists.find_by(id: move_params[:prev_id])
-    @next_item = @board.lists.find_by(id: move_params[:next_id])
-  end
-
-  def set_parent
-    @parent = @board
   end
 end

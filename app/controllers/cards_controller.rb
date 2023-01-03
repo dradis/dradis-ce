@@ -10,10 +10,8 @@ class CardsController < AuthenticatedController
   before_action :set_or_initialize_card
   before_action :initialize_sidebar, only: [:show, :new, :edit]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
-  before_action :set_next_item_and_prev_item, only: :move
-  before_action :set_parent, only: :move
 
-  # Not at top because we need prev item and next item set first
+  # Not at top because we need board and list set first
   include ValidateMove
 
   layout 'cards'
@@ -120,15 +118,6 @@ class CardsController < AuthenticatedController
     else
       "#{@list.id}-card"
     end
-  end
-
-  def set_next_item_and_prev_item
-    @prev_item = @board.cards.find_by(id: move_params[:prev_id])
-    @next_item = @board.cards.find_by(id: move_params[:next_id])
-  end
-
-  def set_parent
-    @parent = new_list || @list
   end
 
   def new_list
