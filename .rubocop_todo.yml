@@ -960,7 +960,6 @@ Style/RegexpLiteral:
     - 'app/controllers/attachments_controller.rb'
     - 'app/models/concerns/file_backed_model.rb'
     - 'app/models/methodology.rb'
-    - 'bin/create_codeship_gemfile.rb'
     - 'engines/dradis-api/lib/dradis/ce/api/warden_strategy.rb'
 
 # Offense count: 2

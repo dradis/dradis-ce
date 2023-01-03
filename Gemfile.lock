@@ -83,7 +83,7 @@ GEM
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 1.14.3, < 2)
       sassc-rails (>= 2.0.0)
-    brakeman (4.7.2)
+    brakeman (5.4.0)
     builder (3.2.4)
     bundler-audit (0.9.1)
       bundler (>= 1.2.0, < 3)
@@ -423,6 +423,8 @@ GEM
       rprogram (~> 0.3)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
+    ruby_audit (2.1.0)
+      bundler-audit (~> 0.9.0)
     rubyzip (2.2.0)
     sanitize (5.2.1)
       crass (~> 1.0.2)
@@ -582,6 +584,7 @@ DEPENDENCIES
   rinku
   rspec-rails (~> 4.0.2)
   rubocop
+  ruby_audit
   rubyzip (>= 1.2.2)
   sanitize (= 5.2.1)
   sass-rails (~> 6.0)
