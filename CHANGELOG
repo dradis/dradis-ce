@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - test
   - [entity]:
     - [future tense verb] [feature]
   - Rubocop CI:
