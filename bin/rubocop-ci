@@ -1,25 +1,18 @@
 #!/bin/bash
 
 set -e
-
-if [ $1 ]
-then
-  target_branch=$1
-else
-  target_branch="develop"
-fi
-
-result_info="bundle exec rubocop --force-exclusion --format simple $(git diff-tree -r --no-commit-id --name-only origin/$target_branch..HEAD)"
+target=$1
+result_info="bundle exec rubocop --force-exclusion --format simple $(git diff-tree -r --no-commit-id --name-only $target..HEAD)"
 files_inspected=`$result_info | grep "files inspected\|file inspected" | cut -d " " -f1`
 warning_count=`$result_info | grep "offenses detected\|offense detected" | cut -d " " -f4`
 
 if [ $warning_count == 'no' ]
 then
-  echo "✅ Clean code! No rubocop offenses detected in $files_inspected changed file(s). Compared to $target_branch branch. Great job ಠ_ಠ"
+  echo "✅ Clean code! No rubocop offenses detected in $files_inspected changed file(s). Compared to $target. Great job ಠ_ಠ"
   exit 0
 elif [ $warning_count -ge '1' ]
 then
-  echo -e "❌ Inspected $files_inspected file(s) and detected $warning_count offense(s). Compared to $target_branch branch"
+  echo -e "❌ Inspected $files_inspected file(s) and detected $warning_count offense(s). Compared to $target"
   $result_info
   exit 1
 else

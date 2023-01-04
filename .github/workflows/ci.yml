@@ -27,8 +27,6 @@ jobs:
     name: RuboCop
     needs: [audits]
     runs-on: ubuntu-latest
-    env:
-      TARGET_BRANCH: ${{ github.base_ref }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v1
@@ -36,8 +34,12 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      - name: Lint changed files
-        run: bin/rubocop-ci ${{ env.TARGET_BRANCH }}
+      - name: Lint changed files (for Merge)
+        if: ${{ !github.base_ref }}
+        run: bin/rubocop-ci ${{ github.event.before }}
+      - name: Lint changed files (for PR)
+        if: ${{ github.base_ref }}
+        run: bin/rubocop-ci origin/${{ github.base_ref }}
   rspec:
     name: RSpec
     needs: [audits, rubocop]
