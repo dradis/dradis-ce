@@ -13,8 +13,7 @@ class EvidenceController < NestedNodeResourceController
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
 
   def show
-    @activities   = @evidence.activities.latest
-    @issue        = @evidence.issue
+    @issue = @evidence.issue
 
     load_conflicting_revisions(@evidence)
   end
@@ -38,7 +37,7 @@ class EvidenceController < NestedNodeResourceController
       else
         format.html {
           initialize_nodes_sidebar
-          render "new"
+          render 'new'
         }
       end
       format.js
@@ -65,7 +64,7 @@ class EvidenceController < NestedNodeResourceController
       else
         format.html {
           initialize_nodes_sidebar
-          render "edit"
+          render 'edit'
         }
       end
       format.js
@@ -87,7 +86,7 @@ class EvidenceController < NestedNodeResourceController
           if request.headers['Referer'] == project_node_evidence_url(current_project, @node, @evidence)
             redirect_to project_node_path(current_project, @node), notice: notice
           else
-            redirect_back fallback_location: project_node_path(current_project, @node), notice: notice
+            redirect_back fallback_location: project_node_path(current_project, @node), notice:
           end
         }
         format.js
@@ -128,11 +127,11 @@ class EvidenceController < NestedNodeResourceController
 
   def set_auto_save_key
     @auto_save_key =  if @evidence&.persisted?
-                        "evidence-#{@evidence.id}"
-                      elsif params[:template]
-                        "node-#{@node.id}-evidence-#{params[:template]}"
-                      else
-                        "node-#{@node.id}-evidence"
-                      end
+      "evidence-#{@evidence.id}"
+    elsif params[:template]
+      "node-#{@node.id}-evidence-#{params[:template]}"
+    else
+      "node-#{@node.id}-evidence"
+    end
   end
 end

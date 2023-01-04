@@ -16,23 +16,70 @@
           </div>
         </div>
 
-        <div id="results-accordion" class="accordion">
-          <% if @results.any? %>
-            <%= render partial: 'issue_result', collection: issues_from_import_records(@results), as: :issue %>
-          <% else %>
-            <p class="mb-0">This query yielded no results.</p>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
+        <% if @issues.any? %>
+          <table class="table table-striped mb-0"
+            data-behavior="dradis-datatable"
+            data-default-columns="<%= @default_columns.to_json %>"
+            data-item-name="issue"
+            data-local-storage-key="project.ce.<%= dom_id(current_project) %>.issues_import_datatable"
+          >
+            <thead>
+              <tr>
+                <% @all_columns.each do |column| %>
+                  <th><%= column %></th>
+                <% end %>
+                <th class="no-sort" data-column-visible="false"><span class="sr-only">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @issues.each do |issue| %>
+                <tr id="issue-<%= issue.id %>">
+                  <% @all_columns.each do |column| %>
+                    <%
+                    sort, display =
+                    case column
+                    when 'Title'
+                      [issue.title, issue.title]
+                    when 'Tags'
+                      [issue_tags(issue), issue_tags(issue)]
+                    else
+                      [issue.fields.fetch(column, ''), markup(issue.fields.fetch(column, ''))]
+                    end
+                    %>
+                    <%= content_tag :td,
+                        display,
+                        class: class_names('text-break-spaces': column == 'Affected'),
+                        data: {
+                          behavior: class_names(tag: column == 'Tags'),
+                          sort: sort
+                        }
+                    %>
+                  <% end  %>
+                  <td class="column-actions">
+                    <%= link_to project_issues_path(current_project, format: :js), class: 'add-issue', data: { text: issue.text } do %>
+                      <i class="fa fa-plus"></i> Add this issue
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
 
-  <div id="import_results_content" class="results collapse">
-    <div class="page page-none">
-      <div class="header">
-        <div class="header-inner">
-          <h4>Results</h4>
-        </div>
+          <div class="empty-state mt-3">
+            <div class="empty-state-icon">
+              <%= image_tag "icons/#{rand(9)}.svg" %>
+            </div>
+            <div class="empty-state-body">
+              <div class="container">
+                <h4 class="empty-state-title">This query yielded no results</h4>
+                <div class="empty-state-actions">
+                  <a href="https://dradisframework.com/support/guides/issuelibrary/add_to_project.html" class="empty-state-docs-link" target="_blank">More about importing issues</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
