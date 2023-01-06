@@ -83,7 +83,7 @@ GEM
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 1.14.3, < 2)
       sassc-rails (>= 2.0.0)
-    brakeman (4.7.2)
+    brakeman (5.4.0)
     builder (3.2.4)
     bundler-audit (0.9.1)
       bundler (>= 1.2.0, < 3)
@@ -257,7 +257,7 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     local_time (2.1.0)
-    loofah (2.18.0)
+    loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.2.4)
@@ -274,7 +274,7 @@ GEM
     mono_logger (1.1.1)
     msgpack (1.5.2)
     multi_json (1.15.0)
-    mustermann (1.1.1)
+    mustermann (2.0.2)
       ruby2_keywords (~> 0.0.1)
     nenv (0.3.0)
     net-imap (0.2.3)
@@ -292,14 +292,14 @@ GEM
       net-protocol
       timeout
     nio4r (2.5.8)
-    nokogiri (1.13.9)
+    nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
-    nokogiri (1.13.9-arm64-darwin)
+    nokogiri (1.13.10-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.13.9-x86_64-darwin)
+    nokogiri (1.13.10-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.13.9-x86_64-linux)
+    nokogiri (1.13.10-x86_64-linux)
       racc (~> 1.4)
     nokogumbo (2.0.5)
       nokogiri (~> 1.8, >= 1.8.4)
@@ -314,7 +314,7 @@ GEM
       ast (~> 2.4.1)
     parslet (1.6.2)
       blankslate (>= 2.0, <= 4.0)
-    pg (1.2.3)
+    pg (1.4.5)
     popper_js (1.16.0)
     pry (0.12.2)
       coderay (~> 1.1.0)
@@ -322,11 +322,11 @@ GEM
     public_suffix (4.0.6)
     puma (5.6.4)
       nio4r (~> 2.0)
-    racc (1.6.0)
+    racc (1.6.1)
     rack (2.2.4)
     rack-mini-profiler (2.3.0)
       rack (>= 1.2.0)
-    rack-protection (2.2.0)
+    rack-protection (2.2.3)
       rack
     rack-test (2.0.2)
       rack (>= 1.3)
@@ -348,8 +348,8 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.4.3)
-      loofah (~> 2.3)
+    rails-html-sanitizer (1.4.4)
+      loofah (~> 2.19, >= 2.19.1)
     rails_autolink (1.1.7)
       rails (> 3.1)
     railties (6.1.6.1)
@@ -423,6 +423,8 @@ GEM
       rprogram (~> 0.3)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
+    ruby_audit (2.1.0)
+      bundler-audit (~> 0.9.0)
     rubyzip (2.2.0)
     sanitize (5.2.1)
       crass (~> 1.0.2)
@@ -447,10 +449,10 @@ GEM
     simple_form (5.0.2)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
-    sinatra (2.2.0)
-      mustermann (~> 1.0)
+    sinatra (2.2.3)
+      mustermann (~> 2.0)
       rack (~> 2.2)
-      rack-protection (= 2.2.0)
+      rack-protection (= 2.2.3)
       tilt (~> 2.0)
     spring (2.1.0)
     sprockets (4.1.1)
@@ -463,7 +465,7 @@ GEM
     sqlite3 (1.4.2)
     strscan (3.0.3)
     thor (1.2.1)
-    tilt (2.0.10)
+    tilt (2.0.11)
     timecop (0.9.5)
     timeout (0.2.0)
     turbolinks (5.2.1)
@@ -567,14 +569,14 @@ DEPENDENCIES
   net-imap
   net-pop
   net-smtp
-  nokogiri (= 1.13.9)
+  nokogiri (= 1.13.10)
   paper_trail (~> 12.2.0)
   parslet (~> 1.6.0)
   pg
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.6.1)
-  rails-html-sanitizer (~> 1.4.3)
+  rails-html-sanitizer (~> 1.4.4)
   record_tag_helper
   rerun
   resque
@@ -582,13 +584,14 @@ DEPENDENCIES
   rinku
   rspec-rails (~> 4.0.2)
   rubocop
+  ruby_audit
   rubyzip (>= 1.2.2)
   sanitize (= 5.2.1)
   sass-rails (~> 6.0)
   selenium-webdriver
   shoulda-matchers (~> 3.1)
   simple_form
-  sinatra (= 2.2.0)
+  sinatra (~> 2.2.3)
   spring
   sqlite3
   thor (~> 1.2.1)
