@@ -1,1 +1,1 @@
-web: bundle exec unicorn -p $PORT
+web: bundle exec unicorn -p 5432
