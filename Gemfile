@@ -64,6 +64,8 @@ gem 'rubyzip', '>= 1.2.2'
 
 gem 'thor', '~> 1.2.1'
 
+gem 'ahoy_matey'
+
 # ------------------------------------------------------ With native extensions
 # These require native extensions.
 # Ensure Traveling Ruby provides an appropriate version before bumping.

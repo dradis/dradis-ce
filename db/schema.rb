@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_16_202870) do
+ActiveRecord::Schema.define(version: 2023_01_17_181242) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2021_03_16_202870) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
+    t.integer "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -47,9 +47,26 @@ ActiveRecord::Schema.define(version: 2021_03_16_202870) do
     t.string "action", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "properties"
     t.index ["created_at"], name: "index_activities_on_created_at"
     t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
     t.index ["user_id"], name: "index_activities_on_user_id"
+  end
+
+  create_table "ahoy_events", force: :cascade do |t|
+    t.integer "visit_id"
+    t.string "name"
+    t.text "properties"
+    t.datetime "time"
+    t.index ["name", "time"], name: "index_ahoy_events_on_name_and_time"
+    t.index ["visit_id"], name: "index_ahoy_events_on_visit_id"
+  end
+
+  create_table "ahoy_visits", force: :cascade do |t|
+    t.string "visit_token"
+    t.string "visitor_token"
+    t.datetime "started_at"
+    t.index ["visit_token"], name: "index_ahoy_visits_on_visit_token", unique: true
   end
 
   create_table "boards", force: :cascade do |t|
@@ -139,7 +156,7 @@ ActiveRecord::Schema.define(version: 2021_03_16_202870) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "position"
-    t.text "properties", limit: 4294967295
+    t.text "properties", limit: 1073741823
     t.integer "children_count", default: 0, null: false
     t.index ["parent_id"], name: "index_nodes_on_parent_id"
     t.index ["type_id"], name: "index_nodes_on_type_id"
@@ -216,7 +233,7 @@ ActiveRecord::Schema.define(version: 2021_03_16_202870) do
     t.string "whodunnit"
     t.text "object", limit: 1073741823
     t.datetime "created_at"
-    t.bigint "project_id"
+    t.integer "project_id"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
     t.index ["project_id"], name: "index_versions_on_project_id"
   end
