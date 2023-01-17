@@ -16,6 +16,7 @@ module Setup
       setting.value = ::BCrypt::Password.create(@password)
 
       if setting.save
+        AhoyTrackingJob.perform_later(event_name: "Setup Completed")
         redirect_to new_setup_kit_path
       else
         flash[:alert] = "Something went wrong: #{setting.errors.full_messages.join('; ')}"
