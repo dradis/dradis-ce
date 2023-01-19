@@ -17,7 +17,7 @@ module Setup
         User.create!(email: 'adama@dradisframework.com')
         KitImportJob.perform_later(kit_folder, logger: logger)
       end
-
+      AhoyTrackingJob.perform_later(event_name: "Setup Completed")
       flash[:notice] = 'All done. May the findings for this project be plentiful!'
       redirect_to login_path
     end
