@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_16_202870) do
+ActiveRecord::Schema.define(version: 2023_01_19_140709) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2021_03_16_202870) do
     t.string "action", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "properties"
     t.index ["created_at"], name: "index_activities_on_created_at"
     t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
     t.index ["user_id"], name: "index_activities_on_user_id"
