@@ -19,8 +19,15 @@
           <li class="nav-item">
             <%= link_to 'javascript:void(0)', class: 'js-try-pro nav-link', data: { term: 'projects', url: 'https://dradisframework.com/pro/pages/projects.html'}, title: 'Change Project'  do %><i class="fa fa-random fa-lg"></i> Change Project<% end %>
           </li>
-          <li class="nav-item">
-            <%= link_to main_app.project_configurations_path(current_project), class: 'nav-link', title: 'Configuration' do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %>
+          <li class="nav-item dropdown">
+            <%= link_to '#', class: 'nav-link', data: { toggle: 'dropdown', behavior: 'close-collapse' }, title: 'Settings' do %>
+              <i class="fa fa-cog fa-lg"></i> Settings
+            <% end %>
+            <div class="dropdown-menu dropdown-menu-right">
+              <%= link_to 'Analytics', main_app.project_event_tracking_index_path(current_project), class: 'dropdown-item', title: 'Analytics' %>
+              <%= link_to 'Integrations and Tools', main_app.project_configurations_path(current_project), class: 'dropdown-item', title: 'Integrations and Tools' %>
+            </div>
+
           </li>
           <li class="nav-item notifications dropdown">
             <%= link_to main_app.project_notifications_path(current_project), class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown',  behavior: 'notifications-dropdown close-collapse', project_id: current_project.id }, role: 'button', title: 'Notifications' do %>
