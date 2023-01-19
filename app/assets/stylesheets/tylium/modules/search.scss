@@ -54,11 +54,8 @@
       position: absolute;
       right: 0;
       top: 0;
-      transition: 
-        opacity 0.4s ease-in-out,
-        width 0.4s ease-in-out, 
-        right 0.4s ease-in-out, 
-        border-bottom 0.4s 0.25s ease-in-out;
+      transition: opacity 0.4s ease-in-out, width 0.4s ease-in-out,
+        right 0.4s ease-in-out, border-bottom 0.4s 0.25s ease-in-out;
       width: 0;
     }
   }
@@ -87,7 +84,7 @@
           opacity: 1;
           padding: 0 0.5rem 0 2rem;
           position: initial;
-          width: 160px;
+          width: calc(100% - 1rem);
         }
       }
     }
@@ -95,7 +92,6 @@
 }
 
 body.search.index {
-
   .inset-button-wrapper {
     max-width: 300px;
   }
@@ -107,7 +103,7 @@ body.search.index {
   }
 
   tr:first-child td {
-      border-top: none;
+    border-top: none;
   }
 
   .result-details {
