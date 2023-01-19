@@ -11,13 +11,13 @@ module Setup
         # weaksauce alert: this creates a Node which flags the Setup as done.
         Project.new.issue_library
       when :welcome
-        kit_folder = Rails.root.join('lib','tasks', 'templates','welcome').to_s
+        kit_folder = Rails.root.join('lib', 'tasks', 'templates', 'welcome').to_s
         logger = Log.new.info('Loading Welcome kit...')
         # Before we import the Kit we need at least 1 user
         User.create!(email: 'adama@dradisframework.com')
         KitImportJob.perform_later(kit_folder, logger: logger)
       end
-      EventTrackingJob.perform_later(event_name: "Setup Completed")
+      EventTrackingJob.perform_later(event_name: 'Setup Completed')
       flash[:notice] = 'All done. May the findings for this project be plentiful!'
       redirect_to login_path
     end
