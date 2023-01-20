@@ -4,6 +4,7 @@ class SessionsController < ApplicationController
 
   def create
     warden.authenticate!
+    EventTrackingJob.perform_later(visit: current_visit, event_name: 'User login')
     redirect_to_target_or_default root_url
   end
 
