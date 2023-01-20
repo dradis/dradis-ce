@@ -11,7 +11,7 @@ module Setup
         # weaksauce alert: this creates a Node which flags the Setup as done.
         Project.new.issue_library
       when :welcome
-        kit_folder = Rails.root.join('lib','tasks','templates','welcome').to_s
+        kit_folder = Rails.root.join('lib','tasks', 'templates','welcome').to_s
         logger = Log.new.info('Loading Welcome kit...')
         # Before we import the Kit we need at least 1 user
         User.create!(email: 'adama@dradisframework.com')
