@@ -118,8 +118,6 @@ Rails.application.routes.draw do
     collection { get :status }
   end
 
-  resources :event_tracking, only: [:index] if defined?(Dradis::Pro)
-
   resource :fields, only: [] do
     collection do
       get :field
