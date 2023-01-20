@@ -93,7 +93,7 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
-    resources :event_tracking, only: [:index]
+    resources :event_tracking, only: [:index] unless defined?(Dradis::Pro)
 
     get 'search' => 'search#index'
     get 'trash' => 'revisions#trash'
@@ -117,6 +117,8 @@ Rails.application.routes.draw do
   resources :console, only: [] do
     collection { get :status }
   end
+
+  resources :event_tracking, only: [:index] if defined?(Dradis::Pro)
 
   resource :fields, only: [] do
     collection do

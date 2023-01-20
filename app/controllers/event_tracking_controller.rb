@@ -1,7 +1,5 @@
 class EventTrackingController < AuthenticatedController
   include ProjectScoped
 
-  def index
-    render layout: 'tylium'
-  end
+  def index; end
 end

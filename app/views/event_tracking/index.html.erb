@@ -1,11 +1,11 @@
 <% content_for :title, 'Analytics Settings' %>
 
 <div class="content-container mt-3">
-  <%= render partial: 'setting' %>
+  <%= render partial: 'shared/event_tracking/setting' %>
 </div>
 
 <div class="content-container">
   <%#if ahoy_events.any? %>
-  <%= render partial: 'log'  %>
+  <%= render partial: 'shared/event_tracking/log'  %>
   <%# end %>
 </div>
