@@ -39,7 +39,7 @@ module ApplicationHelper # :nodoc:
   end
 
   def srfc_meta_tag
-    # tag('meta', name: 'srfc-token', content: Dradis::Pro::Licensing::Manager::guid)
+    tag('meta', name: 'srfc-token', content: SecureRandom.uuid)
   end
 
   def spinner_tag(spinner_class: 'text-primary')
