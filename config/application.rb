@@ -35,6 +35,12 @@ module Dradis
     config.assets.configure do |env|
       env.export_concurrent = false
     end
+
+    config.active_record.yaml_column_permitted_classes = [
+      'ActiveModel::Errors',
+      'Symbol',
+      'UserPreferences'
+    ]
   end
 end
 
