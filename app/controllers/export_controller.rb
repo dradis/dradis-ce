@@ -20,6 +20,7 @@ class ExportController < AuthenticatedController
     # FIXME: check the Routing guide to find a better way.
     action_path = "#{params[:route]}_path"
     redirect_to eval(@exporter::Engine::engine_name).send(action_path)
+    EventTrackingJob.perform_later(visit: current_visit, event_name: 'Project Exported', properties: { exporter: @exporter.to_s,  issue_count: current_project.issues.count, evidence_count: current_project.evidence.count, node_count: current_project.nodes.count })
   end
 
   # Runs a pre-export validation of the contents of the project
@@ -41,7 +42,7 @@ class ExportController < AuthenticatedController
   def validation_status
     @log_uid = params[:log_uid].to_i
     @job_id  = params[:job_id]
-    @logs    = Log.where("uid = ? and id > ?", @log_uid, params[:after].to_i)
+    @logs    = Log.where('uid = ? and id > ?', @log_uid, params[:after].to_i)
 
     status = Resque::Plugins::Status::Hash.get(@job_id)
     render json: status.reverse_merge({
@@ -57,8 +58,8 @@ class ExportController < AuthenticatedController
   def find_plugins
     @plugins = Dradis::Plugins::with_feature(:export).collect do |plugin|
       path = plugin.to_s
-      path[0..path.rindex('::')-1].constantize
-    end.sort{|a,b| a.name <=> b.name }
+      path[0..path.rindex('::') - 1].constantize
+    end.sort { |a, b| a.name <=> b.name }
   end
 
   # In case something goes wrong with the export, fail graciously instead of
@@ -68,7 +69,7 @@ class ExportController < AuthenticatedController
     redirect_to project_upload_manager_path(current_project)
   end
 
-  def templates_dir_for(args={})
+  def templates_dir_for(args = {})
     plugin = args[:plugin]
     File.join(::Configuration::paths_templates_reports, plugin::Engine.plugin_name.to_s)
   end
