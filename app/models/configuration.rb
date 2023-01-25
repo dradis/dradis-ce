@@ -9,6 +9,7 @@ class Configuration < ApplicationRecord
   # -- Validations ----------------------------------------------------------
   validates_presence_of :name, :value
   validates_uniqueness_of :name
+  validate :analytics_value
 
   # -- Scopes ---------------------------------------------------------------
 
@@ -89,4 +90,8 @@ class Configuration < ApplicationRecord
   end
 
   # -- Instance Methods -----------------------------------------------------
+  def analytics_value
+    return unless self.name == "analytics"
+    errors.add(:value, 'must be true or false') unless ["true", "false"].include? self.value
+  end
 end
