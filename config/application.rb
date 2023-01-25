@@ -35,7 +35,7 @@ module Dradis
     config.assets.configure do |env|
       env.export_concurrent = false
     end
-
+    config.action_view.form_with_generates_remote_forms = true
     config.active_record.yaml_column_permitted_classes = [
       'ActiveModel::Errors',
       'Symbol',
