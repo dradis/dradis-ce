@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.6.1'
+gem 'rails', '~> 6.1.7.2'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -63,6 +63,8 @@ gem 'record_tag_helper'
 gem 'rubyzip', '>= 1.2.2'
 
 gem 'thor', '~> 1.2.1'
+
+gem 'ahoy_matey'
 
 # ------------------------------------------------------ With native extensions
 # These require native extensions.
