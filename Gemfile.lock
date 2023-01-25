@@ -115,9 +115,9 @@ GEM
     concurrent-ruby (1.2.0)
     crass (1.0.6)
     database_cleaner (1.8.2)
+    date (3.3.3)
     diff-lcs (1.5.0)
     differ (0.1.2)
-    digest (3.1.0)
     dradis-acunetix (4.6.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
@@ -280,20 +280,15 @@ GEM
     mustermann (2.0.2)
       ruby2_keywords (~> 0.0.1)
     nenv (0.3.0)
-    net-imap (0.2.3)
-      digest
+    net-imap (0.3.4)
+      date
       net-protocol
-      strscan
-    net-pop (0.1.1)
-      digest
+    net-pop (0.1.2)
       net-protocol
+    net-protocol (0.2.1)
       timeout
-    net-protocol (0.1.3)
-      timeout
-    net-smtp (0.3.1)
-      digest
+    net-smtp (0.3.3)
       net-protocol
-      timeout
     nio4r (2.5.8)
     nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
@@ -466,11 +461,10 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     sqlite3 (1.4.2)
-    strscan (3.0.3)
     thor (1.2.1)
     tilt (2.0.11)
     timecop (0.9.5)
-    timeout (0.2.0)
+    timeout (0.3.1)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -578,7 +572,7 @@ DEPENDENCIES
   pg
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)
-  rails (~> 6.1.7.1)
+  rails (~> 6.1.7.2)
   rails-html-sanitizer (~> 1.4.4)
   record_tag_helper
   rerun
