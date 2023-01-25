@@ -8,7 +8,7 @@
     - Add breadcrumbs to Revision History view
     - Remove `Recent Activity` tabs and add `View History` link to the dots menu
   - Upgraded gems:
-    - nokogiri, pg, rails-html-sanitizer, sinatra
+    - nokogiri, pg, rails, rails-html-sanitizer, sinatra
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
