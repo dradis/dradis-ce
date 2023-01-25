@@ -108,7 +108,7 @@ Rails.application.routes.draw do
     post '/upload/parse'  => 'upload#parse'
 
     if Rails.env.development?
-      get '/styles'          => 'styles_tylium#index'
+      get '/styles' => 'styles_tylium#index'
     end
   end
 
@@ -127,6 +127,7 @@ Rails.application.routes.draw do
   namespace :setup, only: [:index] do
     if defined?(Dradis::Pro)
     else
+      resource :analytics, only: [:new, :create]
       resource :kit, only: [:new, :create]
       resource :password, only: [:new, :create]
     end
