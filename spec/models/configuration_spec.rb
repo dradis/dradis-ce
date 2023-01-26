@@ -11,5 +11,4 @@ describe Configuration do
       create(:configuration, name: 'admin:analytics', value: 'lorem')
     end.to raise_error(ActiveRecord::RecordInvalid)
   end
-
 end
