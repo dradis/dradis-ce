@@ -23,20 +23,19 @@ module Setup
           }
         end
       end
-      
     end
 
     private
     def ensure_pristine
-      #redirect_to project_path(1) unless anyalyics are neither opted in nor out
+      redirect_to project_path(1) if ::Configuration.find_by(name: 'analytics').present?
     end
 
     def find_or_initialize_analytics
-      @analytics_config = ::Configuration.find_or_initialize_by(name: "analytics")
+      @analytics_config = ::Configuration.find_or_initialize_by(name: 'analytics')
     end
 
     def validate_analytics_params
-      raise 'Invalid opt_in selection' unless ["true", "false"].include? params[:opt_in]
+      raise 'Invalid opt_in selection' unless ['true', 'false'].include? params[:opt_in]
     end
   end
 end
