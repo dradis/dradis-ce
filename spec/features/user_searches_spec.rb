@@ -9,6 +9,8 @@ describe "User searches", type: :feature do
   end
 
   before do
+    # allows us to bypass setup/analytics
+    create(:configuration, :analytics_config)
     login_to_project_as_user
     visit root_path
   end
@@ -44,7 +46,7 @@ describe "User searches", type: :feature do
       end
     end
 
-    it "dosen't see results that are not matched" do
+    it "doesn't see results that are not matched" do
       setup_test_data
       ghost = create(:node, label: "Node ghost")
       term = "search"
