@@ -16,9 +16,10 @@ describe 'Sessions' do
   # This needs to be a helper and not a let() block, because let is memoized
   # and reused.
   def login
-    # This gets us past Setup: Step 2
+    # This gets us past Setup: Step 2 & 3
     project = create(:project)
     project.issue_library
+    configuration = create(:configuration, :analytics_config)
 
     visit login_path
     fill_in 'login', with: user.email
