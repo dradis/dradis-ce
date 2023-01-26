@@ -6,7 +6,7 @@ module Setup
     end
 
     def create
-      @analytics_config.value = params[:opt_in]
+      @analytics_config.value = params[:analytics]
 
       if @analytics_config.save
         redirect_to login_path, notice: 'All done. May the findings for this project be plentiful!'
@@ -19,11 +19,11 @@ module Setup
     private
 
     def ensure_pristine
-      redirect_to project_path(1) if ::Configuration.find_by(name: 'analytics').present?
+      redirect_to project_path(1) if ::Configuration.find_by(name: 'admin:analytics').present?
     end
 
     def find_or_initialize_analytics
-      @analytics_config = ::Configuration.find_or_initialize_by(name: 'analytics')
+      @analytics_config = ::Configuration.find_or_initialize_by(name: 'admin:analytics')
     end
   end
 end

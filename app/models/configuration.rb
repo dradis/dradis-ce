@@ -89,7 +89,7 @@ class Configuration < ApplicationRecord
 
   # -- Instance Methods -----------------------------------------------------
   def analytics_value
-    return unless self.name == 'analytics'
+    return unless self.name == 'admin:analytics'
     errors.add(:value, 'is invalid, try again.') unless ['true', 'false'].include? self.value
   end
 end
