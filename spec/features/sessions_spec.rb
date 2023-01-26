@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe 'Sessions' do
+  include ConfigurationMacros
   subject { page }
 
   # This matches fixtures/configurations.yml value.
@@ -27,8 +28,7 @@ describe 'Sessions' do
   end
 
   before do
-    # allows us to bypass setup/analytics
-    configuration = create(:configuration, :analytics_config)
+    create_configuration('admin:analytics', 'true')
   end
 
   context 'when using the correct password' do

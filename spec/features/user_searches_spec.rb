@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe 'User searches', type: :feature do
+  include ConfigurationMacros
   def setup_test_data
     issue = create(:issue, text: 'Issue search', node: current_project.issue_library)
     node = create(:node, label: 'Node search', project: current_project)
@@ -9,8 +10,7 @@ describe 'User searches', type: :feature do
   end
 
   before do
-    # allows us to bypass setup/analytics
-    create(:configuration, :analytics_config)
+    create_configuration('admin:analytics', 'true')
     login_to_project_as_user
     visit root_path
   end

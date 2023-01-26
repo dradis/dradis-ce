@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe 'Setup::Analytics' do
+  include ConfigurationMacros
 
   context 'when analytics configuration has not been set' do
     before do
@@ -25,7 +26,7 @@ describe 'Setup::Analytics' do
   context 'when analytics configuration has already been set' do
     it 'redirects to the user\'s project' do
       login_to_project_as_user
-      configuration = create(:configuration, name: 'admin:analytics', value: 'true')
+      create_configuration('admin:analytics', 'true')
       visit new_setup_analytics_path
       expect(current_path).to eq(project_path(1))
     end
