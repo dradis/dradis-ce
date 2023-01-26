@@ -8,12 +8,16 @@ describe 'Setup::Analytics' do
     end
 
     it 'creates a configuration entry with value true when a user opts-in' do
-      click_button('Share statistics with us!')
+      expect do
+        click_button('Share statistics with us!')
+      end.to change { Configuration.count }.by(1)
       expect(Configuration.last).to have_attributes(name: 'admin:analytics', value: 'true')
     end
 
     it 'creates a configuration entry with value of false when a user does not opt-in' do
-      click_button('No thanks')
+      expect do
+        click_button('No thanks')
+      end.to change { Configuration.count }.by(1)
       expect(Configuration.last).to have_attributes(name: 'admin:analytics', value: 'false')
     end
   end
