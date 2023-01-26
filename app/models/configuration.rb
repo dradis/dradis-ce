@@ -40,7 +40,6 @@ class Configuration < ApplicationRecord
       .find_or_create_by(name: 'admin:signups_enabled').value.to_i == 1
   end
 
-
   # --------------------------------------------------------------- admin:paths
   # In CE ./templates/ is always a folder (created by bin/setup) but in Pro
   # it can be a symlink (if we're in Production). We use .realdirpath to
@@ -74,7 +73,6 @@ class Configuration < ApplicationRecord
       .find_or_create_by(name: 'admin:paths:templates:reports').value
   end
 
-
   # ------------------------------------------------------------- admin:plugins
 
   # This setting is used by the plugins as the root of all the content the add.
@@ -91,7 +89,7 @@ class Configuration < ApplicationRecord
 
   # -- Instance Methods -----------------------------------------------------
   def analytics_value
-    return unless self.name == "analytics"
-    errors.add(:value, 'must be true or false') unless ["true", "false"].include? self.value
+    return unless self.name == 'analytics'
+    errors.add(:value, 'is invalid, try again.') unless ['true', 'false'].include? self.value
   end
 end
