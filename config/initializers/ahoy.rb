@@ -10,4 +10,5 @@ Ahoy.geocode = false
 
 Ahoy.mask_ips = true
 Ahoy.cookies = false
+Ahoy.server_side_visits = :when_needed
 Ahoy.visit_duration = 24.hours
