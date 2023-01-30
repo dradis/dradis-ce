@@ -132,6 +132,7 @@ Rails.application.routes.draw do
       resource :kit, only: [:new, :create]
       resource :password, only: [:new, :create]
     end
+    resource :analytics, only: [:new, :create]
   end
 
   resources :subscriptions, only: [:index, :create, :destroy]

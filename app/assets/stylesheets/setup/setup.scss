@@ -12,7 +12,8 @@ body {
   position: relative;
 }
 
-a {
+a,
+.btn-link {
   color: $linkColor;
   transition: color 0.2s ease-in-out;
 
@@ -21,7 +22,6 @@ a {
     text-decoration: none;
   }
 }
-
 
 .btn {
   &:hover {
@@ -39,13 +39,13 @@ a {
 .btn-experience {
   border: 1.5px solid $primaryColor;
   border-radius: 5px;
-  box-shadow: 0px 0px 0px 0px rgba(62,66,66,0.1);
+  box-shadow: 0px 0px 0px 0px rgba(62, 66, 66, 0.1);
   height: 100%;
   padding: 1.375rem 1.85rem;
   transition: box-shadow 0.2s ease-in-out;
 
   &:hover {
-    box-shadow: 0px 0px 50px 0px rgba(62,66,66,0.1);
+    box-shadow: 0px 0px 50px 0px rgba(62, 66, 66, 0.1);
   }
 
   p {
@@ -60,13 +60,16 @@ a {
     text-align: left;
 
     i {
-      bottom: 0;
       color: $primaryColor;
       font-size: 1rem;
-      position: absolute;
-      right: 0;
+      vertical-align: middle;
     }
   }
+}
+
+.btn-link {
+  display: block;
+  margin: 0 auto;
 }
 
 .btn-primary {
@@ -81,7 +84,7 @@ a {
     border-color: darken($primaryColor, 10);
   }
 
-  &[type=submit] {
+  &[type='submit'] {
     display: block;
     margin: 2rem auto;
   }
@@ -89,7 +92,7 @@ a {
 
 .container {
   &.narrow {
-    max-width: 500px;
+    max-width: 550px;
   }
 }
 
@@ -105,8 +108,12 @@ a {
 
 h1 {
   text-align: center;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   margin: 3rem 0 2rem;
+}
+
+.header-underline {
+  font-size: 1.25rem;
 }
 
 label {
@@ -116,6 +123,18 @@ label {
 .logo {
   margin: 2rem auto -2rem;
   max-width: 150px;
+}
+
+pre {
+  padding: 1rem;
+  font-size: 0.9rem;
+  line-height: 20px;
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  background-color: $secondaryBgColor;
+  border: 1px solid $borderColor;
+  border-radius: 5px;
 }
 
 .setup-progress {

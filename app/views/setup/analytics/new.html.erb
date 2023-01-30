@@ -1,0 +1,13 @@
+<%= flash_messages %>
+
+<%= render partial: 'setup/progress' %>
+
+<h1>Let's make Dradis better, together!</h1>
+
+<%= render partial: 'shared/event_tracking/copy' %>
+
+<%= button_to setup_analytics_path(analytics: true), class: 'btn btn-primary mb-0' do %>
+  Share statistics with us! <i class="fa fa-long-arrow-right"></i>
+<% end %>
+
+<%= button_to 'No thanks', setup_analytics_path(analytics: false), class: 'btn btn-link' %>
