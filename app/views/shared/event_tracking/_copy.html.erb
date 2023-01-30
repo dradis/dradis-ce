@@ -2,13 +2,13 @@
 <p> Sharing a few data points with us helps us understand how we can make Dradis better for you.</p>
 <p><strong>We <em>do not</em> collect any content from your projects, reports, etc.</strong> The data we collect is kept private and strictly used to improve Dradis.</p>
 <p>Everything we collect will always be available for you to view or download, and you may opt-out at any time.</p>
-<%# unless ahoy_events.any? %>
-<p>Here is an example of what you'd be sharing:</p>
-<pre class="mt-0">
+<% unless Ahoy::Event.any? %>
+  <p>Here is an example of what you'd be sharing:</p>
+  <pre class="mt-0">
 <code>"html_report_exported": {
   "evidence": 7,
   "issues:" 15,
   "nodes": 5
 }</code>
 </pre>
-<%# end %>
+<% end %>
