@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'Sessions' do
-  include ConfigurationMacros
   subject { page }
 
   # This matches fixtures/configurations.yml value.
@@ -25,10 +24,6 @@ describe 'Sessions' do
     fill_in 'login', with: user.email
     fill_in 'password', with: password
     click_button 'Log in'
-  end
-
-  before do
-    create_configuration('admin:analytics', 'true')
   end
 
   context 'when using the correct password' do

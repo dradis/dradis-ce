@@ -82,7 +82,8 @@ RSpec.configure do |config|
   # config.include SupportHelper,    type: :request
   config.include FactoryBot::Syntax::Methods
   # config.include WaitForAjax, type: :feature
-
+  config.include ConfigurationMacros, type: :feature
+  
   config.example_status_persistence_file_path = Rails.root.join("spec", ".examples.txt")
 
   config.before(:suite) do
