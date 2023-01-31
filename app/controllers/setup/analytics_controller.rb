@@ -1,9 +1,8 @@
 module Setup
   class AnalyticsController < BaseController
-    before_action :find_or_initialize_analytics
+    include Analytic
 
-    def new
-    end
+    def new; end
 
     def create
       @analytics_config.value = params[:analytics]
@@ -20,10 +19,6 @@ module Setup
 
     def ensure_pristine
       redirect_to project_path(1) if ::Configuration.find_by(name: 'admin:analytics').present?
-    end
-
-    def find_or_initialize_analytics
-      @analytics_config = ::Configuration.find_or_initialize_by(name: 'admin:analytics')
     end
   end
 end

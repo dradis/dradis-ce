@@ -1,8 +1,12 @@
-<%# if ahoy_events.any? %>
-<button class="btn btn-primary">Download all data</button>
-
-<%# if opted_in %>
-<button class="btn btn-default">Disable data collection</button>
-<%# else 
-  <button class="btn btn-primary">Share statistics with us!</button> 
-%>
+<% if Ahoy::Event.any? %>
+  <button class="btn btn-primary">Download all data</button>
+<% end %>
+<% if @analytics_config.value == 'true' %>
+  <%= button_to toggle_project_event_tracking_index_path(current_project), method: :put, params: { analytics: false }, class: 'btn btn-link' do %>
+    Disable data collection
+  <% end %>
+<% else %>
+  <%= button_to toggle_project_event_tracking_index_path(current_project), method: :put, params: { analytics: true }, class: 'btn btn-primary mb-0' do %>
+    Share statistics with us!
+  <% end %>
+<% end %>

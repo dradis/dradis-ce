@@ -1,0 +1,13 @@
+<% content_for :title, 'Analytics Settings' %>
+
+<div class="content-container mt-3">
+  <%= render partial: 'shared/event_tracking/copy'%>
+  <hr>
+  <%= render partial: 'shared/event_tracking/buttons' %>
+</div>
+
+<div class="content-container">
+  <%if @events.any? %>
+  <%= render partial: 'shared/event_tracking/log'  %>
+  <% end %>
+</div>

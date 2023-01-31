@@ -93,7 +93,11 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
-    resources :event_tracking, only: [:index] unless defined?(Dradis::Pro)
+    unless defined?(Dradis::Pro)
+      resources :event_tracking, only: [:index] do
+        collection { put :toggle }
+      end
+    end
 
     get 'search' => 'search#index'
     get 'trash' => 'revisions#trash'
@@ -132,7 +136,9 @@ Rails.application.routes.draw do
       resource :kit, only: [:new, :create]
       resource :password, only: [:new, :create]
     end
-    resource :analytics, only: [:new, :create]
+    resource :analytics, only: [:new, :create] do
+      collection { put :toggle }
+    end
   end
 
   resources :subscriptions, only: [:index, :create, :destroy]
