@@ -41,7 +41,7 @@ describe 'Issues API' do
 
         it 'retrieves all the issues' do
           titles = @issues.map(&:title)
-          retrieved_titles = @retrieved_issues.map{ |json| json['title'] }
+          retrieved_titles = @retrieved_issues.map { |json| json['title'] }
 
           expect(@retrieved_issues.count).to eq(@issues.count)
           expect(retrieved_titles).to match_array(titles)
@@ -90,7 +90,7 @@ describe 'Issues API' do
 
       it 'includes tags' do
         tag = @issue.tags.first
-        expect(@retrieved_issue['tags']).to eq [{'color' => tag.color, 'display_name' => tag.display_name}]
+        expect(@retrieved_issue['tags']).to eq [{ 'color' => tag.color, 'display_name' => tag.display_name }]
       end
 
       it 'includes the author' do
@@ -105,7 +105,7 @@ describe 'Issues API' do
       end
 
       it 'creates a new issue' do
-        expect{valid_post}.to change{ current_project.issues.count }.by(1)
+        expect { valid_post }.to change { current_project.issues.count }.by(1)
         expect(response.status).to eq(201)
         retrieved_issue = JSON.parse(response.body)
         expect(retrieved_issue['text']).to eq valid_params[:issue][:text]
@@ -115,7 +115,7 @@ describe 'Issues API' do
         tag_name = '!2ca02c_info'
         valid_params[:issue][:text] << "#[Tags]#\n\n#{tag_name}\n\n"
 
-        expect { valid_post }.to change{ current_project.issues.count }.by(1)
+        expect { valid_post }.to change { current_project.issues.count }.by(1)
         expect(response.status).to eq(201)
 
         retrieved_issue = JSON.parse(response.body)
@@ -135,7 +135,7 @@ describe 'Issues API' do
       end
 
       it 'throws 422 if issue is invalid' do
-        params = { issue: { text: 'A'*(65535+1) } }
+        params = { issue: { text: 'A' * (65535 + 1) } }
         expect {
           post '/api/issues', params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
         }.not_to change { current_project.issues.count }
@@ -172,7 +172,7 @@ describe 'Issues API' do
       end
 
       it 'throws 422 if issue is invalid' do
-        params = { issue: { text: 'B'*(65535+1) } }
+        params = { issue: { text: 'B' * (65535 + 1) } }
         put "/api/issues/#{ issue.id }", params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
         expect(response.status).to eq(422)
       end
