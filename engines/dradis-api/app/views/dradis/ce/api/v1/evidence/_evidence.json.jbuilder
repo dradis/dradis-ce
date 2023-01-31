@@ -1,4 +1,4 @@
-json.(evidence, :id, :content, :fields, :author)
+json.(evidence, :id, :author, :content, :fields)
 json.issue do |json|
   json.id evidence.issue_id
   json.title evidence.issue.title
