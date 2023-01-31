@@ -39,6 +39,7 @@ class Configuration < ApplicationRecord
       .find_or_create_by(name: 'admin:signups_enabled').value.to_i == 1
   end
 
+
   # --------------------------------------------------------------- admin:paths
   # In CE ./templates/ is always a folder (created by bin/setup) but in Pro
   # it can be a symlink (if we're in Production). We use .realdirpath to
@@ -71,6 +72,7 @@ class Configuration < ApplicationRecord
     create_with(value: paths_templates.join('reports').to_s)
       .find_or_create_by(name: 'admin:paths:templates:reports').value
   end
+
 
   # ------------------------------------------------------------- admin:plugins
 
