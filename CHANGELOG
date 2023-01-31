@@ -6,9 +6,10 @@
   - Issues: Display the results from importers in a datatable
   - Tylium:
     - Add breadcrumbs to Revision History view
+    - Add secondary sidebar toggling functionality
     - Remove `Recent Activity` tabs and add `View History` link to the dots menu
   - Upgraded gems:
-    - nokogiri, pg, rails-html-sanitizer, sinatra
+    - nokogiri, pg, rails, rails-html-sanitizer, sinatra
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
