@@ -1,5 +1,6 @@
 class EventTrackingController < AuthenticatedController
   include ProjectScoped
   include Analytic
-  include EventTracking
+
+  def index; end
 end

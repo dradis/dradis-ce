@@ -11,21 +11,21 @@ describe 'Event Tracking pages:' do
   describe 'event_tracking#index' do
     describe 'can toggle event tracking' do
       it 'enables event tracking' do
-        @analytics_config.value = 'false'
+        @analytics_config.value = '0'
         @analytics_config.save
         visit project_event_tracking_index_path(current_project)
         expect do
           click_button 'Share statistics with us!'
-        end.to change { @analytics_config.reload.value }.from('false').to('true')
+        end.to change { @analytics_config.reload.value }.from('0').to('1')
         expect(page).to have_text('Event tracking successfully enabled!')
       end
       it 'disables event tracking' do
-        @analytics_config.value = 'true'
+        @analytics_config.value = '1'
         @analytics_config.save
         visit project_event_tracking_index_path(current_project)
         expect do
           click_button 'Disable data collection'
-        end.to change { @analytics_config.reload.value }.from('true').to('false')
+        end.to change { @analytics_config.reload.value }.from('1').to('0')
         expect(page).to have_text('Event tracking successfully disabled!')
       end
     end

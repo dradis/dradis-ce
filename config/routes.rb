@@ -93,11 +93,7 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
-    unless defined?(Dradis::Pro)
-      resources :event_tracking, only: [:index] do
-        collection { put :toggle }
-      end
-    end
+    resources :event_tracking, only: [:index] unless defined?(Dradis::Pro)
 
     get 'search' => 'search#index'
     get 'trash' => 'revisions#trash'
