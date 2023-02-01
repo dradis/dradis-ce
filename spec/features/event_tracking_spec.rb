@@ -8,9 +8,9 @@ describe 'Event Tracking pages:' do
   end
 
   describe 'event_tracking#index' do
+    let!(:analytics_config) { create(:configuration, name: 'admin:analytics', value: 'false') }
     describe 'can toggle event tracking' do
       it 'enables event tracking' do
-        analytics_config = create(:configuration, name: 'admin:analytics', value: 'false')
         visit project_event_tracking_index_path(current_project)
         expect do
           click_button 'Share statistics with us!'
@@ -18,7 +18,8 @@ describe 'Event Tracking pages:' do
         expect(page).to have_text('Event tracking successfully enabled!')
       end
       it 'disables event tracking' do
-        analytics_config =  create(:configuration, name: 'admin:analytics', value: 'true')
+        analytics_config.value =  'true'
+        analytics_config.save
         visit project_event_tracking_index_path(current_project)
         expect do
           click_button 'Disable data collection'
