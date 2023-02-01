@@ -2,6 +2,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Add Ahoy gem
+  - Add event tracking toggling functionality
   - Rubocop CI:
     - disable EnforcedShorthandSyntax rule under Style/HashSyntax cop
   - Issues: Display the results from importers in a datatable
