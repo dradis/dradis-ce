@@ -28,8 +28,7 @@
     - [report type]:
       - [future tense verb] [reporting enhancement]
   - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
+    - Author: Add author field for notes, issues, and evidence
   - Security Fixes:
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
