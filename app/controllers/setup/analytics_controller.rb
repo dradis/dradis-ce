@@ -5,7 +5,7 @@ module Setup
     def new; end
 
     def create
-      @analytics_config.value = params[:analytics]
+      @analytics_config.value = ActiveModel::Type::Boolean.new.cast(params[:analytics]) ? 1 : 0
 
       if @analytics_config.save
         redirect_to login_path, notice: 'All done. May the findings for this project be plentiful!'

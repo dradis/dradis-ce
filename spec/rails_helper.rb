@@ -2,7 +2,7 @@
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'spec_helper'
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -10,7 +10,6 @@ require 'rspec/rails'
 require 'capybara/rspec'
 require 'paper_trail/frameworks/rspec'
 require 'shoulda/matchers'
-
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -26,7 +25,7 @@ require 'shoulda/matchers'
 # require only the support files necessary.
 #
 # Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
-["", "engines/**/"].each do |dir|
+['', 'engines/**/'].each do |dir|
   Dir[Rails.root.join("#{dir}spec/support/**/*.rb")].each { |f| require f }
 end
 
@@ -82,8 +81,9 @@ RSpec.configure do |config|
   # config.include SupportHelper,    type: :request
   config.include FactoryBot::Syntax::Methods
   # config.include WaitForAjax, type: :feature
+  config.include ConfigurationMacros, type: :feature
 
-  config.example_status_persistence_file_path = Rails.root.join("spec", ".examples.txt")
+  config.example_status_persistence_file_path = Rails.root.join('spec', '.examples.txt')
 
   config.before(:suite) do
     begin

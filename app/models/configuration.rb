@@ -9,7 +9,6 @@ class Configuration < ApplicationRecord
   # -- Validations ----------------------------------------------------------
   validates_presence_of :name, :value
   validates_uniqueness_of :name
-  validate :analytics_value
 
   # -- Scopes ---------------------------------------------------------------
 
@@ -39,6 +38,7 @@ class Configuration < ApplicationRecord
     create_with(value: 0)
       .find_or_create_by(name: 'admin:signups_enabled').value.to_i == 1
   end
+
 
   # --------------------------------------------------------------- admin:paths
   # In CE ./templates/ is always a folder (created by bin/setup) but in Pro
@@ -73,6 +73,7 @@ class Configuration < ApplicationRecord
       .find_or_create_by(name: 'admin:paths:templates:reports').value
   end
 
+
   # ------------------------------------------------------------- admin:plugins
 
   # This setting is used by the plugins as the root of all the content the add.
@@ -88,8 +89,4 @@ class Configuration < ApplicationRecord
   end
 
   # -- Instance Methods -----------------------------------------------------
-  def analytics_value
-    return unless self.name == 'admin:analytics'
-    errors.add(:value, 'is invalid, try again.') unless ['true', 'false'].include? self.value
-  end
 end

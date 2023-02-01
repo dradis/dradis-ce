@@ -1,10 +1,12 @@
 module ConfigurationMacros
   extend ActiveSupport::Concern
 
-  def create_configuration(name, value)
-    ::Configuration.create(
-      name: name,
-      value: value
-    )
+  def self.included(base)
+    base.before(:each) do
+      ::Configuration.create(
+        name: 'admin:analytics',
+        value: 'true'
+      )
+    end
   end
 end
