@@ -28,7 +28,8 @@
     <%= srfc_meta_tag%>
   </head>
 
-  <body class="<%= controller_name %> <%= action_name %>">
+  <body class="<%= controller_name %> <%= action_name %>" 
+    <%= 'data-env="development"'.html_safe if Rails.env.development? %>>
 
     <%= render 'layouts/tylium/navbar' %>
     <%= render 'layouts/tylium/sidebar' %>
