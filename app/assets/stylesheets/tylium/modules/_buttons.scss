@@ -18,6 +18,11 @@
     @include button($orange);
   }
 
+  &.btn-outline-primary,
+  &.btn-outline-primary:not(:disabled):not(.disabled).active {
+    @include outline-button($primaryColor);
+  }
+
   &.dropdown-toggle-split {
     &::after {
       vertical-align: middle;
