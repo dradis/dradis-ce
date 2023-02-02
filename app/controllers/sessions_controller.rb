@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
 
   def create
     warden.authenticate!
-    ahoy.track 'user login'
+    ahoy.track 'tester.login'
     redirect_to_target_or_default root_url
   end
 
