@@ -49,11 +49,6 @@ document.addEventListener('turbolinks:load', function() {
     });
   }
   $('[data-behavior="send"]').on('click', function() {
-      payload = {name: 'tester.login'}
-      $.ajax({
-        url: '/setup/analytics/create',
-        method: 'get',
-        data: payload,
-      })
+      ahoy.track('tester.login')
   });
 });
