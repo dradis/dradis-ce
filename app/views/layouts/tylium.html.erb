@@ -36,7 +36,9 @@
     <div id="view-content" class="view-content" data-behavior="view-content">
       <div class="row m-0">
         <% if content_for?(:sidebar) %>
-          <div class="secondary-sidebar col-lg-3 col-xxl-2">
+          <div class="secondary-sidebar col-lg-3 col-xxl-2" 
+            data-behavior="secondary-sidebar expandable-sidebar" 
+            data-storage-key="secondary-sidebar-expanded">
             <%= yield :sidebar %>
           </div>
           <div class="secondary-sidebar-content col-12 col-lg-9 col-xxl-10 p-0 ml-auto">
