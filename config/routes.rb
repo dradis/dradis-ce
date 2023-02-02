@@ -131,6 +131,7 @@ Rails.application.routes.draw do
       resource :password, only: [:new, :create]
     end
   end
+  get '/setup/analytics/create' => 'setup/analytics#save_event'
 
   resources :subscriptions, only: [:index, :create, :destroy]
 

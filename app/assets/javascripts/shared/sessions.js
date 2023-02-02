@@ -48,4 +48,12 @@ document.addEventListener('turbolinks:load', function() {
       }, 250)
     });
   }
+  $('[data-behavior="send"]').on('click', function() {
+      payload = {name: 'tester.login'}
+      $.ajax({
+        url: '/setup/analytics/create',
+        method: 'get',
+        data: payload,
+      })
+  });
 });
