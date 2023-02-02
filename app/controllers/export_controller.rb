@@ -20,7 +20,6 @@ class ExportController < AuthenticatedController
     # FIXME: check the Routing guide to find a better way.
     action_path = "#{params[:route]}_path"
     redirect_to eval(@exporter::Engine::engine_name).send(action_path)
-    AhoyTrackingJob.perform_later(event_name: "Project Exported", properties: { exporter: @exporter.to_s })
   end
 
   # Runs a pre-export validation of the contents of the project
