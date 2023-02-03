@@ -124,7 +124,7 @@ Rails.application.routes.draw do
     end
   end
 
-namespace :setup, only: [:index] do
+  namespace :setup, only: [:index] do
     if defined?(Dradis::Pro)
     else
       resource :kit, only: [:new, :create]
