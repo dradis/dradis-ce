@@ -69,4 +69,4 @@
 //= require tylium/pages/projects/issues_chart
 //= require tylium/pages/projects/summary
 
-//= require srfc/client
+//= require shared/srfc
