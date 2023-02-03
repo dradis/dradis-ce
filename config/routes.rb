@@ -108,7 +108,7 @@ Rails.application.routes.draw do
     post '/upload/parse'  => 'upload#parse'
 
     if Rails.env.development?
-      get '/styles'          => 'styles_tylium#index'
+      get '/styles'       => 'styles_tylium#index'
     end
   end
 
@@ -131,6 +131,7 @@ Rails.application.routes.draw do
       resource :password, only: [:new, :create]
     end
   end
+
   get '/setup/analytics/create' => 'setup/analytics#save_event'
 
   resources :subscriptions, only: [:index, :create, :destroy]

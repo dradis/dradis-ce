@@ -1,6 +1,5 @@
 module Setup
   class AnalyticsController < BaseController
-
     def save_event
       case params[:name]
       when 'report.exported'
