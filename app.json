@@ -18,6 +18,9 @@
     "RAILS_SERVE_STATIC_FILES": {
       "description": "Ask Rails to serve static assets",
       "value": "1"
+    },
+    "HEROKU_DEBUG_RAILS_RUNNER": {
+      "value": "1"
     }
   },
   "keywords": ["infosec", "pentest", "osint"],
