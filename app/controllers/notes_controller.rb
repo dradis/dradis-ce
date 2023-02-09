@@ -35,7 +35,6 @@ class NotesController < NestedNodeResourceController
 
   # Retrieve a Note given its :id
   def show
-    @activities = @note.activities.latest
     load_conflicting_revisions(@note)
   end
 
@@ -88,12 +87,12 @@ class NotesController < NestedNodeResourceController
   end
 
   def set_auto_save_key
-    @auto_save_key =  if @note&.persisted?
-                        "note-#{@note.id}"
-                      elsif params[:template]
-                        "node-#{@node.id}-note-#{params[:template]}"
-                      else
-                        "node-#{@node.id}-note"
-                      end
+    @auto_save_key = if @note&.persisted?
+      "note-#{@note.id}"
+    elsif params[:template]
+      "node-#{@node.id}-note-#{params[:template]}"
+    else
+      "node-#{@node.id}-note"
+    end
   end
 end

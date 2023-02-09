@@ -5,6 +5,9 @@ class ListsController < AuthenticatedController
   before_action :set_current_board
   before_action :set_list, only: [:show, :edit, :update, :destroy, :move]
 
+  # Not at top because we need board set first
+  include ValidateMove
+
   def new
     @list = @board.lists.new
   end
@@ -33,11 +36,7 @@ class ListsController < AuthenticatedController
   end
 
   def move
-    Board.move(
-      @list,
-      prev_item: @board.lists.find_by(id: params[:prev_id]),
-      next_item: @board.lists.find_by(id: params[:next_id])
-    )
+    Board.move(@list, prev_item: @prev_item, next_item: @next_item)
 
     track_updated(@list)
 
@@ -57,6 +56,11 @@ class ListsController < AuthenticatedController
 
   def list_params
     params.require(:list).permit(:name)
+  end
+
+  def move_params
+    params.
+      permit(:id, :project_id, :board_id, :next_id, :prev_id)
   end
 
   def set_current_board

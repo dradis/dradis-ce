@@ -13,6 +13,10 @@ body.revisions.show {
   .page-title {
     display: none;
   }
+
+  .secondary-sidebar-content .sticky-top {
+    top: 4.95rem;
+  }
 }
 
 body.revisions.trash {

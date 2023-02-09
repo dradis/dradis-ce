@@ -51,9 +51,36 @@
 
     // Init Bootstrap tooltips
     $('[data-toggle~=tooltip]').tooltip();
+
+    // Navigate to tab
+    let searchParams = new URLSearchParams(window.location.search)
+    if (searchParams.has('tab')) {
+      let tab = searchParams.get('tab')
+      $($(`[data-toggle~=tab][href="#${tab}"]`)).tab('show');
+    }
+
+    // Update address bar with current tab param
+    $('[data-toggle~=tab]').on('shown.bs.tab', function (e) {
+      let currentTab = $(e.target).attr('href').substring(1);
+      searchParams.set('tab', currentTab);
+      history.pushState(null, null, `?${searchParams.toString()}`);
+    })
   }
 
   document.addEventListener('turbolinks:load', function() {
     initBehaviors(document.querySelector('body'));
+  });
+
+  // Because this is an event and not a data-driven behavior, we can leave it
+  // out of initBehaviors and attach the listener to document directly.
+  //
+  // In particular we're after jquery.textile forms that get rendered post page
+  // load via ajax.
+  $(document).on('textile:formLoaded', '.textile-form', function(event){
+    // We trigger a single formLoaded event for the containing form, but we
+    // have to attach EditorToolbar to individual textareas within it.
+    $(event.target).find('[data-behavior~=rich-toolbar]').each(function() {
+      new EditorToolbar($(this));
+    });
   });
 })($, window);

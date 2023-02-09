@@ -286,9 +286,6 @@ describe 'Issues pages' do
           end
         end
 
-        let(:trackable) { @issue }
-        it_behaves_like 'a page with an activity feed'
-
         let(:commentable) { @issue }
         it_behaves_like 'a page with a comments feed'
 
@@ -305,7 +302,7 @@ describe 'Issues pages' do
                 click_link 'Delete'
               end
             end
-            expect(page).to have_text "Issue deleted." # forces waiting
+            expect(page).to have_text 'Issue deleted.' # forces waiting
           end
 
           it 'deletes the issue' do
@@ -319,6 +316,47 @@ describe 'Issues pages' do
 
           include_examples 'deleted item is listed in Trash', :issue
           include_examples 'recover deleted item', :issue
+        end
+      end
+    end
+
+    describe 'revision history' do
+      let(:issue) do
+        issue = create(:issue, node:, text: 'issue text')
+        issue.update(text: 'updated text')
+        issue
+      end
+
+      before { PaperTrail.enabled = true }
+      after { PaperTrail.enabled = false }
+
+      context 'issue belonging to current project' do
+        let(:node) { current_project.issue_library }
+
+        it 'can view issue revisions' do
+          issue.update(text: 'updated text')
+
+          visit project_issue_revisions_path(current_project, issue)
+
+          within '.js-diff-body' do
+            expect(page).to have_text('issue text')
+            expect(page).to have_text('updated text')
+          end
+        end
+      end
+
+      context 'issue belonging to another project' do
+        let(:node) do
+          create(
+            :node,
+            label: 'Other project all issues',
+            type_id: Node::Types::ISSUELIB
+          )
+        end
+
+        it 'cannot view issue revisions' do
+          visit project_issue_revisions_path(current_project, issue)
+          expect(page).to have_text('Record not found')
         end
       end
     end

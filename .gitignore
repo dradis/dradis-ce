@@ -32,7 +32,6 @@
 /templates/
 /sample_files/
 /Gemfile.plugins
-/Gemfile.codeship
 
 # Vagrant
 .vagrant/

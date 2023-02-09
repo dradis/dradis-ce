@@ -13,8 +13,7 @@ class EvidenceController < NestedNodeResourceController
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
 
   def show
-    @activities   = @evidence.activities.latest
-    @issue        = @evidence.issue
+    @issue = @evidence.issue
 
     load_conflicting_revisions(@evidence)
   end
@@ -38,53 +37,11 @@ class EvidenceController < NestedNodeResourceController
       else
         format.html {
           initialize_nodes_sidebar
-          render "new"
+          render 'new'
         }
       end
       format.js
     end
-  end
-
-  def create_multiple
-    # validate Issue
-    issue = current_project.issues.find(evidence_params[:issue_id])
-
-    if params[:evidence][:node_ids]
-      params[:evidence][:node_ids].reject(&:blank?).each do |node_id|
-        node = current_project.nodes.find(node_id)
-        evidence = Evidence.create!(
-          author: current_user.email,
-          content: evidence_params[:content],
-          issue_id: issue.id,
-          node_id: node.id
-        )
-        track_created(evidence)
-      end
-    end
-    if params[:evidence][:node_list]
-      if params[:evidence][:node_list_parent_id].present?
-        parent = current_project.nodes.find(params[:evidence][:node_list_parent_id])
-      end
-      params[:evidence][:node_list].lines.map(&:strip).reject(&:blank?).each do |label|
-        unless (node = current_project.nodes.find_by(label: label))
-          node = current_project.nodes.create!(
-            type_id: Node::Types::HOST,
-            label: label,
-            parent: parent,
-          )
-          track_created(node)
-        end
-
-        evidence = Evidence.create!(
-          author: current_user.email,
-          content: evidence_params[:content],
-          issue_id: issue.id,
-          node_id: node.id
-        )
-        track_created(evidence)
-      end
-    end
-    redirect_to project_issue_path(current_project, evidence_params[:issue_id], tab: 'evidence-tab'), notice: 'Evidence added for selected nodes.'
   end
 
   def edit
@@ -107,7 +64,7 @@ class EvidenceController < NestedNodeResourceController
       else
         format.html {
           initialize_nodes_sidebar
-          render "edit"
+          render 'edit'
         }
       end
       format.js
@@ -129,7 +86,7 @@ class EvidenceController < NestedNodeResourceController
           if request.headers['Referer'] == project_node_evidence_url(current_project, @node, @evidence)
             redirect_to project_node_path(current_project, @node), notice: notice
           else
-            redirect_back fallback_location: project_node_path(current_project, @node), notice: notice
+            redirect_back fallback_location: project_node_path(current_project, @node), notice:
           end
         }
         format.js
@@ -170,11 +127,11 @@ class EvidenceController < NestedNodeResourceController
 
   def set_auto_save_key
     @auto_save_key =  if @evidence&.persisted?
-                        "evidence-#{@evidence.id}"
-                      elsif params[:template]
-                        "node-#{@node.id}-evidence-#{params[:template]}"
-                      else
-                        "node-#{@node.id}-evidence"
-                      end
+      "evidence-#{@evidence.id}"
+    elsif params[:template]
+      "node-#{@node.id}-evidence-#{params[:template]}"
+    else
+      "node-#{@node.id}-evidence"
+    end
   end
 end

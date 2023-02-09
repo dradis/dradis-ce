@@ -1,4 +1,4 @@
-<div class="tab-pane <%= "active" if !params[:tab] || params[:tab] == 'properties-tab' %>" id="properties-tab">
+<div class="tab-pane active" id="properties-tab">
   <div class="node-content" id="<%= dom_id(@node) %>_content">
 
     <% if @node.has_any_property? %>
