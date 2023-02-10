@@ -2,9 +2,9 @@
   <% node    = note.node %>
   <% project = node.project %>
   <% if note.title? %>
-    <%= presenter.verb %> the <%= link_to note.title, [project, node, note] %> note at <%= link_to node.label, [project, node] %>.
+    <%= presenter.verb %> the <%= link_to note.title, project_node_note_path(project, node, note) %> note at <%= link_to node.label, [project, node] %>.
   <% else %>
-    <%= presenter.verb %> <%= link_to "Note ##{note.id}", [project, node, note] %> at <%= link_to node.label, [project, node] %>.
+    <%= presenter.verb %> <%= link_to "Note ##{note.id}", project_node_note_path(project, node, note) %> at <%= link_to node.label, [project, node] %>.
   <% end %>
 <% else %>
   <% if activity.action == 'destroy' %>
