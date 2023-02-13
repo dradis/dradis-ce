@@ -104,6 +104,10 @@
       <%= render partial: 'styles_tylium/modal' %>
     <% end %>
 
+    <% if %w[tags issues].include?(controller_name) %>
+      <%= render partial: 'tags/modals/form' %>
+    <% end %>
+
     <%= render 'console/console' %>
     <!-- End of modals -->
 
