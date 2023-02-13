@@ -6,6 +6,7 @@ AllCops:
   Exclude:
     - '**/templates/**/*'
     - '**/vendor/**/*'
+    - 'db/schema.rb'
 
 # Prefer &&/|| over and/or.
 Style/AndOr:
@@ -49,6 +50,7 @@ Layout/FirstArgumentIndentation:
 # Use Ruby >= 1.9 syntax for hashes. Prefer { a: :b } over { :a => :b }.
 Style/HashSyntax:
   Enabled: true
+  EnforcedShorthandSyntax: never
 
 # Method definitions after `private` or `protected` isolated calls need one
 # extra level of indentation.

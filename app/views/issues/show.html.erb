@@ -17,7 +17,6 @@
   <ul class="tabs-container nav nav-tabs main-tabs w-100">
     <li class="nav-item"><a href="#info-tab" data-toggle="tab" class="nav-link active"><%= tag_and_name_for(@issue, true) %></a></li>
     <li class="nav-item"><a href="#evidence-tab" class="nav-link" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge bg-primary text-white" data-behavior="evidence-count"><%= @issue.evidence.count %></span></a></li>
-    <li class="nav-item"><a href="#activity-tab" class="nav-link" data-toggle="tab"><i class="fa fa-rss"></i> Recent activity</a></li>
     <%= render_view_hooks 'issues/show-tabs' %>
   </ul>
 </div>
@@ -53,12 +52,6 @@
             }
           %>
         </div>
-
-        <% cache ['issue-activity-tab', @issue, @activities] do %>
-          <div class="tab-pane" id="activity-tab">
-            <%= render partial: 'activity' %>
-          </div>
-        <% end %>
 
         <%= render_view_hooks 'issues/show-content' %>
       </div>
