@@ -131,8 +131,6 @@ gem 'net-smtp'
 gem 'net-pop'
 gem 'net-imap'
 
-gem 'matrix'
-
 # ------------------------------------------------------------------ Deployment
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -193,6 +191,9 @@ group :test do
   gem 'shoulda-matchers', '~> 3.1'
   gem 'timecop'
   gem 'webdrivers'
+
+  # Required by capybara
+  gem 'matrix'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
