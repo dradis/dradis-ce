@@ -10,27 +10,9 @@ v4.7.0 (February 2023)
   - Upgraded gems:
     - nokogiri, pg, rails, rails-html-sanitizer, sanitize, sinatra
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
     - Methodologies: Ensure params are validated when moving list/card
-    - Bug tracker items:
-      - [item]
-  - New integrations:
-    - [integration]
-  - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
-  - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
   - REST/JSON API enhancements:
     - Author: Add author field for notes, issues, and evidence
-  - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v4.6.0 (November 2022)
   - Kit Import: allow import of kit with no templates
