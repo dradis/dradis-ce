@@ -1,4 +1,4 @@
-[v#.#.#] ([month] [YYYY])
+v4.7.0 (February 2023)
   - Rubocop CI:
     - disable EnforcedShorthandSyntax rule under Style/HashSyntax cop
   - Issues: Display the results from importers in a datatable
