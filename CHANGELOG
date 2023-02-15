@@ -10,7 +10,7 @@ v4.7.0 (February 2023)
   - Integration enhancements:
     - Burp: Add support for large base64 response
     - Nessus: Clean up code tags in description fields
-    - Netsparker: Add support for large base64 response
+    - Netsparker: Add issue.classification_owasp2021 as a new avaiable field
   - Upgraded gems:
     - nokogiri, pg, rails, rails-html-sanitizer, sanitize, sinatra
   - Bugs fixes:
