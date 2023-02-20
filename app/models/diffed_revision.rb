@@ -1,7 +1,6 @@
 # Wraps around an instance of `PaperTrail::Version` (where event==update) and
 # lets us show a diff
 class DiffedRevision
-
   def initialize(revision, record)
     raise 'undiffable revision' unless revision.event == 'update'
     @revision = revision
@@ -66,5 +65,4 @@ class DiffedRevision
     when Evidence; 'content'
     end
   end
-
 end
