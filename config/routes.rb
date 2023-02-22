@@ -93,6 +93,8 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
+    resources :tags, except: [:show]
+
     get 'search' => 'search#index'
     get 'trash' => 'revisions#trash'
 
@@ -108,7 +110,7 @@ Rails.application.routes.draw do
     post '/upload/parse'  => 'upload#parse'
 
     if Rails.env.development?
-      get '/styles'          => 'styles_tylium#index'
+      get '/styles' => 'styles_tylium#index'
     end
   end
 

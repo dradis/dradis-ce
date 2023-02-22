@@ -11,16 +11,31 @@ DradisDatatable.prototype.setupTagButtons = function() {
     var tagColor = tag[1],
       tagFullName = tag[2],
       tagName = tag[0],
-      $tagElement = $(`<i class="fa fa-tag fa-fw"></i><span>${tagName}</span></span>`).css('color', tagColor);
+      $tagElement = $(`<i class="fa fa-tag fa-fw"></i><span>${tagName}</span>`).css('color', tagColor);
 
     tagButtons.push({
       text: $tagElement,
       action: this.tagIssue(tagFullName)
     });
-  }.bind(this));
+    }.bind(this)
+  );
+  tagButtons.push(
+    {
+      text: $(`<span><i class="fa fa-plus fa-fw"></i> Add new tag</span>`),
+      action: function () {
+        $.ajax({ url: this.$table.data("new-tag-path") });
+      }.bind(this),
+    },
+    {
+      text: $(`<span><i class="fa fa-tags fa-fw"></i> Manage Tags</span>`),
+      action: function () {
+        window.location.href = this.$table.data("tags-path");
+      }.bind(this),
+    }
+  );
 
   return tagButtons;
-}
+};
 
 DradisDatatable.prototype.tagIssue = function(tagFullName) {
   return function() {

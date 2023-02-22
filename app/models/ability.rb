@@ -7,5 +7,6 @@ class Ability
     can [:read, :use, :update], Project, authors: { id: [user.id] }
     can [:create, :read], Comment
     can [:update, :destroy], Comment, user_id: user.id
+    can :manage, Tag
   end
 end

@@ -1,10 +1,12 @@
-<% cache ['issues-table', @all_columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last] do %>
+<% cache ['issues-table', @all_columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last, @tags] do %>
     <table class="table table-striped mb-0"
       data-behavior="dradis-datatable"
       data-default-columns="<%= @default_columns.to_json %>"
       data-item-name="issue"
       data-local-storage-key="project.ce.<%= dom_id(current_project) %>.issues_datatable"
       data-tags='<%= @tags.map { |t| [t.display_name, t.color, t.name] }.to_json %>'
+      data-tags-path="<%= project_tags_path(current_project) %>"
+      data-new-tag-path="<%= new_project_tag_path(current_project) %>"
       >
       <thead>
         <tr>
@@ -48,7 +50,7 @@
              end
             %>
             <%= content_tag :td,
-                display, 
+                display,
                 class: class_names('text-break-spaces': column == 'Affected'),
                 data: {
                   behavior: class_names(tag: column == 'Tags'),
