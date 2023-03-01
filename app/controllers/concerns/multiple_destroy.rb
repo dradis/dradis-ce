@@ -11,18 +11,18 @@ module MultipleDestroy
       job_params = {
         author_email: current_user.email,
         ids: params[:ids],
-        klass: params[:controller].singularize.capitalize,
+        klass: controller_name.singularize.capitalize,
         project_id: current_project.id,
         uid: @job_logger.uid
       }
 
       if @count > @max_deleted_inline
         @job_logger.write 'Enqueueing multiple delete job to start in the background.'
-        job = MultiDestroyJob.perform_later(job_params)
+        job = MultiDestroyJob.perform_later(**job_params)
         @job_logger.write "Job id is #{job.job_id}."
       elsif @count > 0
         @job_logger.write 'Performing multiple delete job inline.'
-        MultiDestroyJob.perform_now(job_params)
+        MultiDestroyJob.perform_now(**job_params)
       end
     end
   end

@@ -1,13 +1,9 @@
 class FieldsController < AuthenticatedController
   # Returns the form view given a source text
   def form
-    @form_data = FieldParser.source_to_fields(params[:source])
-
-    if fieldless_string.present?
-      @form_data = { '': fieldless_string }.merge(@form_data)
-    end
-
+    @form_data = FieldParser.source_to_fields_array(params[:source])
     @allow_dropdown = params[:allow_dropdown] == 'true'
+    render layout: false
   end
 
   # Returns a single field for the form view
@@ -18,11 +14,5 @@ class FieldsController < AuthenticatedController
   # Returns the source text given a form data
   def source
     render plain: FieldParser.fields_to_source(params[:form])
-  end
-
-  private
-
-  def fieldless_string
-    @fieldless_string ||= FieldParser.parse_fieldless_string(params[:source])
   end
 end

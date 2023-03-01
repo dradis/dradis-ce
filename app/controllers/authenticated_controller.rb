@@ -6,7 +6,7 @@
 #
 # Any third-party code (e.g. plugins) should inherit from this class instead of
 # calling the authentication filters directly
-class AuthenticatedController < ApplicationController
+class AuthenticatedController < SetupRequiredController
   # We are using 'prepend_' here so this is executed before
   # ApplicationController#protect_from_forgery. If not, when the user session
   # expires we see an 'Invalid csrf token' exception for requests that require

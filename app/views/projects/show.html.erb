@@ -3,30 +3,32 @@
 <div class="row m-0">
   <div class="col-12 col-lg-6 col-xxl-4 p-0">
     <div class="content-container mt-3 mr-lg-3">
-      <%= render partial: 'projects/issue_summary' %>
+      <%= render partial: 'projects/issues/summary' %>
     </div>
-
-    <div class="content-container mr-lg-3">
-      <h4 class="header-underline">Useful articles</h4>
-      <ul class="fa-ul">
-        <li><i class="fa fa-li fa-check"></i><a href="https://dradisframework.com/pro/support/guides/projects/index.html?utm_source=ce&utm_medium=app" target="_blank">Projects 101</a>: learn the basics.</li>
-        <li><i class="fa fa-li fa-check"></i><a href="https://dradisframework.com/pro/support/guides/troubleshooting/index.html?utm_source=ce&utm_medium=app" target="_blank">Troubleshooting Cheatsheet</a>: if you have issues uploading/exporting.</li>
-      </ul>
-    </div>  
   </div>
 
   <div class="col-12 col-lg-6 col-xxl-8 p-0">
     <div class="row m-0">
       <div class="col-xxl-6 p-0">
         <div class="content-container mt-0 mt-lg-3 ml-lg-3 mx-xxl-3">
-          <%= render partial: 'projects/methodology_summary' %>
+          <%= render partial: 'projects/boards/summary' %>
         </div>
       </div>
 
       <div class="col-xxl-6 p-0">
         <div class="content-container ml-lg-3 mt-0 mt-xxl-3 restrict-height full-height" data-behavior="restrict-height">
           <section class="summary-panel">
-            <h4 class="header-underline">Recent activity</h4>
+            <% if @activities.any? %> 
+              <h4 class="header-underline">Recent activity
+                <span class="actions pt-1">
+                  <div class="action">
+                    <%= link_to project_activities_path(current_project) do %>
+                      <i class="fa fa-rss"></i> All activity
+                    <% end %>
+                  </div>
+                </span>
+              </h4>
+            <% end %>
             <%= render 'activities/feed', activities: @activities %>
           </section>
         </div>

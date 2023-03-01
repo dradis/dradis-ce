@@ -43,7 +43,7 @@ shared_examples 'managing lists' do
     describe 'submitting the form with valid information' do
       before do
         within '#modal-list-new' do
-          fill_in :list_name, with: 'New List'
+          fill_in :new_list_name, with: 'New List'
         end
       end
 
@@ -61,7 +61,7 @@ shared_examples 'managing lists' do
     describe 'submitting the form with invalid information' do
       before do
         within '#modal-list-new' do
-          fill_in :list_name, with: ''
+          fill_in :new_list_name, with: ''
         end
       end
 
@@ -90,7 +90,7 @@ shared_examples 'managing lists' do
     describe 'submitting the form with valid information' do
       before do
         within modal_selector do
-          fill_in :list_name, with: 'New List Name'
+          fill_in "new_list_#{@list.id}_name", with: 'New List Name'
         end
       end
 
@@ -109,7 +109,7 @@ shared_examples 'managing lists' do
     describe 'submitting the form with invalid information' do
       before do
         within modal_selector do
-          fill_in :list_name, with: ''
+          fill_in "new_list_#{@list.id}_name", with: ''
         end
       end
 

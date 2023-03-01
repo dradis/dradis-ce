@@ -4,14 +4,12 @@ end
 
 Rails.application.routes.draw do
   # ------------------------------------------------------------ Authentication
-  # These routes allow users to set the shared password
-  get  '/setup' => 'sessions#init'
-  post '/setup' => 'sessions#setup'
-
   # Sign in / sign out
   get '/login'  => 'sessions#new'
   get '/logout' => 'sessions#destroy'
   resource :session
+
+  resources :comments
 
   # ------------------------------------------------------------ Project routes
   concern :multiple_destroy do
@@ -20,8 +18,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :projects, only: [:show] do
-    resources :activities, only: [] do
+  resources :notifications, only: [:index, :update]
+
+  resources :projects, only: [:index, :show] do
+    resources :activities, only: [:index] do
       collection do
         get :poll, constraints: { format: /js/ }
       end
@@ -37,13 +37,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :comments
-
     constraints id: %r{[(0-z)\/]+} do
       resources :configurations, only: [:index, :update]
     end
 
-    post :create_multiple_evidence, to: 'evidence#create_multiple'
+    post :create_multiple_evidence, to: 'issues/evidence#create_multiple'
 
     resources :issues, concerns: :multiple_destroy do
       collection do
@@ -51,6 +49,7 @@ Rails.application.routes.draw do
         resources :merge, only: [:new, :create], controller: 'issues/merge'
       end
 
+      resources :evidence, concerns: :multiple_destroy, controller: 'issues/evidence', only: [:index, :new]
       resources :nodes, only: [:show], controller: 'issues/nodes'
       resources :revisions, only: [:index, :show]
     end
@@ -94,7 +93,7 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
-    resources :subscriptions, only: [:create, :destroy]
+    resources :tags, except: [:show]
 
     get 'search' => 'search#index'
     get 'trash' => 'revisions#trash'
@@ -111,7 +110,7 @@ Rails.application.routes.draw do
     post '/upload/parse'  => 'upload#parse'
 
     if Rails.env.development?
-      get '/styles'          => 'styles_tylium#index'
+      get '/styles' => 'styles_tylium#index'
     end
   end
 
@@ -127,13 +126,26 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :setup, only: [:index] do
+    if defined?(Dradis::Pro)
+    else
+      resource :kit, only: [:new, :create]
+      resource :password, only: [:new, :create]
+    end
+  end
+
+  resources :subscriptions, only: [:index, :create, :destroy]
+
   # -------------------------------------------------------------- Static pages
   resource :markup, controller: :markup, only: [] do
     get :help
     post :preview
   end
 
-  root to: 'projects#index'
+  if defined?(Dradis::Pro)
+  else
+    root to: 'setup/passwords#new'
+  end
 
   mount ActionCable.server => '/cable'
 end

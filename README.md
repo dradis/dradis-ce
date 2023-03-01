@@ -1,11 +1,15 @@
 # Welcome to the Dradis Framework
 
-[ ![Build Status](https://codeship.com/projects/f06cef90-a1ae-0133-d7a5-465166e508dd/status?branch=master)](https://codeship.com/projects/128584)
+[ ![CI](https://github.com/dradis/dradis-ce/actions/workflows/ci.yml/badge.svg)](https://github.com/dradis/dradis-ce/actions/workflows/ci.yml)
 [ ![Code quality](https://codeclimate.com/github/dradis/dradis-ce/badges/gpa.svg)](https://codeclimate.com/github/dradis/dradis-ce)
 [ ![Black Hat Arsenal](https://www.toolswatch.org/badges/arsenal/2016.svg)](https://www.blackhat.com/us-16/arsenal.html#dradis-framework)
 
 Dradis is an open-source collaboration framework, tailored to InfoSec teams.
 
+<a href="https://heroku.com/deploy?template=https://github.com/dradis/dradis-ce/tree/develop" target="_blank"><img src="https://www.herokucdn.com/deploy/button.svg" height="40"></a>
+<a href="https://cloud.digitalocean.com/apps/new?repo=https://github.com/dradis/dradis-ce/tree/develop" target="_blank"><img src="https://www.deploytodo.com/do-btn-blue.svg" height="40"></a>
+
+To try Dradis Community, you can deploy your own instance (you will need accounts in the cloud providers to get started).
 
 ## Our goals
 
@@ -52,16 +56,9 @@ There are two editions of Dradis Framework:
 
 ## Getting started: Community Edition
 
-### Git release (recommended)
+### From Git (recommended)
 
-```
-$ git clone https://github.com/dradis/dradis-ce.git
-$ cd dradis-ce/
-$ ruby bin/setup
-$ bundle exec rails server
-```
-
-You can browse to the app at http://localhost:3000/
+[Installing Dradis from Git](https://dradisframework.com/ce/documentation/install_git.html)
 
 ### Using Vagrant
 
@@ -70,6 +67,7 @@ If you'd like to use dradis in Vagrant, you can use the included Vagrantfile.
 ```
 # Clone the repo
 git clone https://github.com/dradis/dradis-ce.git
+cd dradis-ce/
 
 # install/start the vagrant box
 vagrant up
@@ -87,10 +85,6 @@ ruby bin/setup
 bundle exec rails server -b 0.0.0.0
 ```
 
-### Stable release
-
-In https://dradisframework.com/ce/download.html you will find the latest packages.
-
 
 ## Getting help
 
@@ -104,7 +98,7 @@ In https://dradisframework.com/ce/download.html you will find the latest package
 
 Please see CONTRIBUTING.md for details.
 
-Many thanks to all Dradis Framework [contributors](https://github.com/dradis/dradis-ce/graphs/contributors). Dradis has been around since 2007, and in 2016 we had to do some nasty Git gimnastics resulting in a lot of the previous SVN + Git history no longer being available in the current repo. We haven't deleted it though, and we're still very much grateful for the work of our former [contributors](https://github.com/dradis/dradis-legacy/graphs/contributors).
+Many thanks to all Dradis Framework [contributors](https://github.com/dradis/dradis-ce/graphs/contributors). Dradis has been around since 2007, and in 2016 we had to do some nasty Git gymnastics resulting in a lot of the previous SVN + Git history no longer being available in the current repo. We haven't deleted it though, and we're still very much grateful for the work of our former [contributors](https://github.com/dradis/dradis-legacy/graphs/contributors).
 
 
 ### Branching model

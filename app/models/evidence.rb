@@ -15,11 +15,12 @@ class Evidence < ApplicationRecord
 
   # -- Callbacks ------------------------------------------------------------
 
-
   # -- Validations ----------------------------------------------------------
   validates :content, length: { maximum: DB_MAX_TEXT_LENGTH }
   validates :issue, presence: true, associated: true
   validates :node, presence: true, associated: true
+
+  validate :validate_issue_project
 
   # -- Scopes ---------------------------------------------------------------
 
@@ -36,4 +37,13 @@ class Evidence < ApplicationRecord
     }
   end
 
+  private
+
+  def validate_issue_project
+    return unless node && issue
+
+    if project.id != issue.project.id
+      errors.add(:issue, 'is invalid')
+    end
+  end
 end

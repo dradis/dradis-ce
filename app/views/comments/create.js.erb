@@ -1,4 +1,4 @@
-$(".comment-list").append("<%= j render(@comment) %>")
+$('[data-behavior~=comment-list]').append("<%= j render 'comments/comment', comment: @comment %>")
 
 $('[data-behavior~=add-comment] textarea').val('')
 
@@ -8,3 +8,10 @@ submit.attr('disabled', false).val(submit.data('disable-with'))
 $('#<%= dom_id(@comment) %>').find('.actions').addClass('current_user')
 
 $('[data-notice~=no-comments]').hide()
+
+$('[data-behavior~=content-textile]').each(function() {
+  new QuoteSelector(this);
+});
+
+$('[data-behavior~=subscribe]').addClass('d-none');
+$('[data-behavior~=unsubscribe]').removeClass('d-none');

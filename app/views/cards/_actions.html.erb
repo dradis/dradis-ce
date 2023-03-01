@@ -1,0 +1,24 @@
+<div class="actions">
+  <span class="action">
+    <%= link_to edit_project_board_list_card_path(current_project, @board, @list, @card) do %>
+      <i class="fa fa-pencil fa-fw"></i> Edit
+    <% end %>
+  </span>
+  <div class="dropdown dots-dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i><span class="sr-only">Toggle menu</span></a>
+    <div class="dropdown-menu">
+      <%= link_to(
+          project_board_list_card_path(current_project, @board, @list, @card),
+          class: 'dropdown-item text-error-hover',
+          data: { confirm: "Are you sure?\n\nProceeding will delete this card from the task list." },
+          method: :delete
+        ) do %>
+        <i class="fa fa-trash fa-fw"></i> Delete
+      <% end %>
+      <%= render partial: 'subscriptions/actions', locals: { subscribable: @card, dots_menu: true } %>
+      <%= link_to(project_board_list_card_revisions_path(current_project, @board, @list, @card), class: 'dropdown-item') do %>
+        <i class="fa fa-history fa-fw"></i> View History
+      <% end %>
+    </div>
+  </div>
+</div>

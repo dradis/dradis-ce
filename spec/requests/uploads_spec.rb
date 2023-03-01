@@ -3,11 +3,7 @@ require 'rails_helper'
 describe "upload requests" do
 
   before do
-    @project = Project.new
-    # login as admin
-    Configuration.create(name: 'admin:password', value: ::BCrypt::Password.create('rspec_pass'))
-    @user = create(:user, :admin)
-    post session_path, params: { login: @user.email, password: 'rspec_pass' }
+    login_to_project_as_user
 
     @uploads_node = @project.plugin_uploads_node
   end
@@ -50,7 +46,7 @@ describe "upload requests" do
         allow(importer).to receive(:import)
 
         expect(importer_class).to receive(:new).with(
-          hash_including(default_user_id: User.first.id)
+          hash_including(default_user_id: @logged_in_as.id)
         )
         expect(importer).to receive(:import)
 

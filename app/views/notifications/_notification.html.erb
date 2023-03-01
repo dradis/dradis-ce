@@ -2,13 +2,13 @@
 <%# and on notifications#index                                   %>
 <% present notification do |presenter| %>
   <li class="notification <%= notification.read? ? '' : 'unread' %>" data-notification-id="<%= notification.id %>">
-    
+
     <div class="details">
       <%= presenter.avatar_with_link(40) %>
     </div>
 
     <div class="body">
-      
+
       <div class="title">
         <%= presenter.render_title %>
       </div>
@@ -21,13 +21,13 @@
     <%= presenter.icon %>
 
     <% if !notification.read? %>
-      <%= link_to project_notification_path(current_project, notification),
+      <%= link_to notification_path(notification),
                   title: 'Mark as read',
                   class: 'notification-read',
                   data: { behavior: 'notification-read' },
                   remote: true,
                   method: :put do %>
-        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+        <i class="fa fa-check-circle-o" aria-hidden="true"><span class="sr-only">Mark as read</span></i>
       <% end %>
     <% end %>
   </li>

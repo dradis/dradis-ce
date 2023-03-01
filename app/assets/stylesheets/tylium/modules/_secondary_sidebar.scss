@@ -25,14 +25,19 @@
     width: 31.8%;
   }
 
+  @include media-breakpoint-down(md) {
+    display: none;
+  }
+
   .header-inner {
     position: relative;
     padding-top: 0.5rem;
 
     .header-name {
-      margin-top: 0.5rem;
       cursor: default;
-    
+      margin-top: 0.5rem;
+      padding-right: 2.5rem;
+
       a {
         color: $lightColor;
       }
@@ -47,13 +52,12 @@
     }
 
     .options {
-
       a {
         color: $lightColor;
-        
+
         &:hover {
           color: $white;
-        } 
+        }
       }
 
       .dropdown {
@@ -67,7 +71,7 @@
           max-width: 180px;
           overflow: hidden;
           text-overflow: ellipsis;
-    
+
           &:active,
           &:hover {
             color: $linkColorHover;
@@ -78,7 +82,6 @@
   }
 
   .note-list {
-
     .active > a {
       color: $white !important;
     }
@@ -88,7 +91,7 @@
       padding: 0.5rem;
       border-radius: 3px;
       transition: all 0.2s ease-in-out;
-      
+
       a {
         color: $lightColor;
       }
@@ -96,13 +99,13 @@
       &.active a {
         color: $white;
       }
-  
+
       .list-item-actions {
         padding-top: 0.3rem;
         text-align: right;
         visibility: hidden;
         transition: visibility 0.1s ease-in-out;
-  
+
         a {
           padding: 0 4px;
         }
@@ -116,24 +119,24 @@
           border-radius: 5px;
           transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
         }
-  
+
         .list-item-action-delete:hover {
           color: $white;
           background-color: $red;
         }
-  
+
         .list-item-action-edit:hover {
           color: $white;
           background-color: $green;
         }
       }
-  
+
       &:hover {
         background-color: lighten($sidebarActiveColor, 3%);
-  
+
         a {
           color: $lightColor;
-  
+
           &:hover {
             color: $white;
           }
@@ -144,7 +147,7 @@
         }
       }
     }
-  
+
     .summary-link {
       color: $lightColor;
 
@@ -152,5 +155,32 @@
         color: $white;
       }
     }
+  }
+
+  @media (min-width: 992px) {
+    &.sidebar-collapsed {
+      $collapsed-width: 1.75rem;
+
+      max-width: $collapsed-width;
+      padding: 0.75rem 0.5rem;
+
+      .inner-content,
+      .summary-link {
+        display: none;
+      }
+
+      & + .secondary-sidebar-content {
+        max-width: calc(100% - #{$collapsed-width});
+        flex: 0 0 100%;
+      }
+
+      .sidebar-toggle-icon {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .sidebar-toggle-link {
+    color: $lightColor;
   }
 }

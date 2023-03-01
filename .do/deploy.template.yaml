@@ -1,0 +1,16 @@
+spec:
+  name: dradis-ce
+  services:
+  - environment_slug: ruby-on-rails
+    envs:
+    - key: RAILS_ENV
+      value: production
+      scope: RUN_TIME
+    - key: RAILS_SERVE_STATIC_FILES
+      value: enabled
+      scope: RUN_TIME
+    git:
+      branch: develop
+      repo_clone_url: https://github.com/dradis/dradis-ce.git
+    name: web
+    run_command: ./bin/setup

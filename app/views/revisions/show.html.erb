@@ -1,23 +1,26 @@
 <% content_for :title, "#{@record.class.model_name} ##{@record.id} - comparing revisions" %>
 
+<% content_for :breadcrumbs do %>
+  <%= render partial: 'breadcrumbs' %>
+<% end %>
+
 <% if @node %>
   <%= render "nodes/sidebar" %>
 <% end %>
 
 <div class="row m-0">
-  <div class="col-12 col-xl-8 col-xxl-9 p-0">
-    <div class="content-container pb-3 mr-xl-3">
-      <div id="diff">
-        <h4 class="header-underline">
-          <%= @record.class.model_name %>
-          #<%= @record.id %> <span class="text-capitalize"> - view changes at <%= @diffed_revision.updated_at %></span>
-        </h4>
-        <pre class='js-diff-body'><%= @diffed_revision.diff.format_as(:color) %></pre>
+  <div class="col-12 p-0 <%= 'col-xl-8 col-xxl-9' if @diffed_revision %>">
+    <% if @diffed_revision %>
+      <div class="content-container pb-3 mr-xl-3">
+        <div class="diff">
+          <h4 class="header-underline">Viewing changes from <%= @diffed_revision.updated_at %></h4>
+          <pre class='js-diff-body'><%= @diffed_revision.diff.format_as(:color) %></pre>
+        </div>
       </div>
-    </div>
+    <% end %>
 
-    <div id="<%= dom_id(@record) %>_revisions" class="content-container mr-xl-3 revisions-table note-text-inner">
-      <h4 class="header-underline">Revision History</h4>
+    <div id="<%= dom_id(@record) %>_revisions" class="content-container revisions-table note-text-inner <%= 'mr-xl-3' if @diffed_revision %>">
+      <h4 class="header-underline"><%= @record.class.name %> History</h4>
 
       <table class="table mb-0">
         <thead>
@@ -52,33 +55,33 @@
     </div>
   </div>
 
-  <div class="col-12 col-xl-4 col-xxl-3 p-0">
-    <div class="sticky-top">
-
-      <div class="content-container mt-0 mt-xl-3 ml-xl-3">
-        <h4 class="header-underline">Previous revision</h4>
-        <ul>
-          <li><strong>Author:</strong> <%= @diffed_revision.previous_author %></li>
-          <li><strong>Action:</strong> <%= @diffed_revision.previous_action.capitalize %></li>
-          <li><strong>When:</strong> <%= @diffed_revision.last_updated_at %></li>
-        </ul>
+  <% if @diffed_revision %>
+    <div class="col-12 col-xl-4 col-xxl-3 p-0">
+      <div class="sticky-top">
+        <div class="content-container mt-0 mt-xl-3 ml-xl-3">
+          <h4 class="header-underline">Legend</h4>
+          <p><del>removed text</del></p>
+          <p><ins>added text</ins></p>
+        </div>
+        <% if @revision.previous %>
+          <div class="content-container ml-xl-3">
+            <h4 class="header-underline">Previous revision</h4>
+            <ul>
+              <li><strong>Author:</strong> <%= @diffed_revision.previous_author %></li>
+              <li><strong>Action:</strong> <%= @diffed_revision.previous_action.capitalize %></li>
+              <li><strong>When:</strong> <%= @diffed_revision.last_updated_at %></li>
+            </ul>
+          </div>
+        <% end %>
+        <div class="content-container ml-xl-3">
+          <h4 class="header-underline">This revision</h4>
+          <ul>
+            <li><strong>Author:</strong> <%= @diffed_revision.this_author %></li>
+            <li><strong>Action:</strong> Update</li>
+            <li><strong>When:</strong> <%= @diffed_revision.updated_at %></li>
+          </ul>
+        </div>
       </div>
-
-      <div class="content-container ml-xl-3">
-        <h4 class="header-underline">This revision</h4>
-        <ul>
-          <li><strong>Author:</strong> <%= @diffed_revision.this_author %></li>
-          <li><strong>Action:</strong> Update</li>
-          <li><strong>When:</strong> <%= @diffed_revision.updated_at %></li>
-        </ul>
-      </div>
-
-      <div class="content-container d-none d-xl-block ml-xl-3">
-         <h4 class="header-underline">Legend</h4>
-        <p><del>removed text</del></p>
-        <p><ins>added text</ins></p>
-      </div>
-
     </div>
-  </div>
+  <% end %>
 </div>

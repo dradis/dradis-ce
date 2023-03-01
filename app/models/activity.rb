@@ -1,4 +1,5 @@
 class Activity < ApplicationRecord
+  ACTIVITIES_STRFTIME_FORMAT = '%A, %B %-e %Y'.freeze
 
   # -- Relationships --------------------------------------------------------
 
@@ -46,5 +47,11 @@ class Activity < ApplicationRecord
     super
     self.trackable_type = "Issue" if new_trackable.is_a?(Issue)
     new_trackable
+  end
+
+  def to_xml(xml_builder, version: 3)
+    xml_builder.action(action)
+    xml_builder.user_email(user.email)
+    xml_builder.created_at(created_at.to_i)
   end
 end

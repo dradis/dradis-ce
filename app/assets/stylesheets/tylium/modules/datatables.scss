@@ -1,0 +1,24 @@
+div.dataTables_wrapper {
+  .dt-button-collection {
+    .dropdown-item,
+    .dropdown-item.active {
+      background-color: $white;
+      color: $linkColor;
+
+      &:focus,
+      &:hover {
+        color: $linkColorHover;
+        background-color: $dropdownLinkBackgroundHover;
+      }
+    }
+  }
+
+  .tag-btn ~ .dt-button-collection {
+    .dropdown-item {
+
+      &:nth-last-child(2) {
+        border-top: 1px solid $borderColor;
+      }
+    }
+  }
+}

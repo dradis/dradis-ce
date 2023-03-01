@@ -1,19 +1,26 @@
-  <div class="note-list">
-    <%= content_tag :div, id: 'issue_summary_link', class: current_page?(main_app.project_board_path(current_project, @board)) ? 'p-2 mb-2 active' : 'p-2 mb-2' do %>
+<div class="note-list">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <%= content_tag :div, class: class_names(active: current_page?(main_app.project_board_path(current_project, @board))) do %>
       <%= link_to project_board_path(current_project, @board), class: 'summary-link' do %>
-        <i class="fa fa-arrow-left"></i> Back to board view
+        <i class="fa fa-trello"></i> Board Summary
       <% end %>
     <% end %>
-  </div>
 
-  <!-- Cards -->
-  <%=
-    render 'shared/sidebar_collection',
-      name: 'Tasks',
-      collection: @sorted_cards,
-      new_path: new_project_board_list_card_path(current_project, @board, @list, @card),
-      category_id: nil do
+    <a href="javascript:void(0)" class="sidebar-toggle-link" data-behavior="sidebar-toggle">
+      <i class="fa fa-chevron-left sidebar-toggle-icon"></i>
+      <span class="sr-only">Toggle secondary sidebar</span>
+    </a>
+  </div>
+</div>
+
+<div class="inner-content">
+  <%= render 'shared/sidebar_collection',
+    category_id: nil,
+    collection: @sorted_cards,
+    name: 'Tasks',
+    new_path: new_project_board_list_card_path(current_project, @board, @list, @card)
   %>
-    <%#-- We pass an empty block here or else "yield" in the rendered partial %>
-    <%#-- will return the whole view. %>
-  <% end %>
+
+  <!-- Attachments -->
+  <%= render partial: 'attachments/attachment_box', locals: { attachments_node: current_project.plugin_uploads_node } %>
+</div>

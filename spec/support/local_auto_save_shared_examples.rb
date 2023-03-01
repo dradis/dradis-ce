@@ -30,7 +30,6 @@ shared_examples 'a form with local auto save' do |klass, action|
   before do
     add_users if klass == Card
     add_tags if klass == Issue
-    add_categories if klass == Note
 
     visit model_path
     click_link 'Source'
@@ -43,8 +42,6 @@ shared_examples 'a form with local auto save' do |klass, action|
       dropdown_toggle = page.find('.dropdown-toggle span.tag')
       dropdown_toggle.click
       click_on @tag_1.display_name
-    elsif klass == Note
-      select @category_1.name, from: :note_category_id
     end
 
     model_attributes.each do |model_attribute|
@@ -66,8 +63,6 @@ shared_examples 'a form with local auto save' do |klass, action|
           expect(page).to have_select('evidence_issue_id', selected: @issue_1.title)
         elsif klass == Issue
           expect(page).to have_button(@tag_1.display_name)
-        elsif klass == Note
-          expect(page).to have_select('note_category_id', selected: @category_1.name)
         end
       end
 
@@ -91,11 +86,9 @@ shared_examples 'a form with local auto save' do |klass, action|
         if klass == Card
           expect(page.find("input#card_assignee_ids_#{@first_user.id}")).not_to be_checked
         elsif klass == Evidence
-          expect(page).to have_select('evidence_issue_id', selected: 'Choose an Issue')
+          expect(page).to have_select('evidence_issue_id', selected: 'Auto-generate a new issue')
         elsif klass == Issue
           expect(page).to have_css('.dropdown-toggle span.tag', text: 'No tag')
-        elsif klass == Note
-          expect(page).to have_select('note_category_id', selected: 'Assign note category')
         end
       end
 
@@ -107,6 +100,9 @@ shared_examples 'a form with local auto save' do |klass, action|
 
   context 'when Cancel is clicked' do
     it 'clears cached data' do
+      within('.view-content') do
+        scroll_to(:bottom)
+      end
       click_link 'Cancel'
       visit model_path
       click_link 'Source'
@@ -152,6 +148,9 @@ shared_examples 'a form with local auto save' do |klass, action|
 
       context 'when form is saved' do
         it 'does not prefill fields with cached data' do
+          # Fixed weird bug where submit button not in viewport for Card form
+          page.execute_script('$("#view-content").scrollTop(10000)')
+
           page.find('input[type="submit"]').click
           visit "#{model_path}?template=simple_note"
           click_link 'Source'

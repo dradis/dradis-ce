@@ -1,16 +1,16 @@
-@import "tylium/modules/activities";
 @import "tylium/modules/alerts";
 @import "tylium/modules/attachments";
+@import "tylium/modules/buttons";
 @import "tylium/modules/boards";
-@import "tylium/modules/comments";
 @import "tylium/modules/console";
+@import "tylium/modules/datatables";
 @import "tylium/modules/dots-menu";
 @import "tylium/modules/dropdown";
+@import "tylium/modules/issues/evidence";
 @import "tylium/modules/issues/issues";
 @import "tylium/modules/issues/merge";
 @import "tylium/modules/modals";
 @import "tylium/modules/navbar";
-@import "tylium/modules/notifications";
 @import "tylium/modules/nodes";
 @import "tylium/modules/projects";
 @import "tylium/modules/restrict_height";
@@ -22,15 +22,15 @@
 @import "tylium/modules/uploads";
 @import "tylium/modules/versions";
 
-[aria-label] {
+[aria-tooltip] {
   position: relative;
-  
+
   &:after {
     background-color: $darkColor;
     border-radius: 5px;
     box-shadow: 1px 2px 6px rgba(0,0,0,0.5);
     color: $white;
-    content: attr(aria-label);
+    content: attr(aria-tooltip);
     font-size: .7em;
     line-height: 15px;
     opacity: 0;
@@ -44,7 +44,7 @@
     white-space: nowrap;
     z-index: 1051;
   }
-  
+
   &:hover:after {
     opacity: 0.9;
     transition: all 0.3s 0.3s ease-in-out;
@@ -55,7 +55,7 @@
   margin-bottom: 5px;
   border: 1px solid $borderColor;
   border-radius: 5px;
-  
+
   .accordion-heading {
     border-bottom: 0;
 
@@ -84,6 +84,14 @@
 
 .column-actions a {
   white-space: nowrap;
+}
+
+.color-picker {
+  padding: 0;
+
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
 }
 
 .content {
@@ -119,6 +127,10 @@
   margin-top: 1rem;
 }
 
+.fa-li {
+  top: 0.25rem;
+}
+
 .gravatar {
   float: left;
   margin-right: 5px;
@@ -135,11 +147,30 @@
 }
 
 .header-underline {
-  margin-bottom: .5em;
-  padding-bottom: 0.5em;
-  margin-top: -0.5rem;
   border-bottom: 1px solid $borderColor;
+  display: flex;
+  margin-bottom: .5em;
+  margin-top: -0.5rem;
+  padding-bottom: 0.5em;
   width: 100%;
+
+  .actions {
+    margin-left: auto;
+
+    .action {
+      &:not(:first-child)::before {
+        content: '-';
+      }
+
+      &:first-child {
+        margin-left: auto;
+      }
+
+      &:last-of-type {
+        margin: 0 0.75rem;
+      }
+    }
+  }
 }
 
 .inset-button-wrapper {
@@ -164,32 +195,13 @@
 
 .issue-severity {
   cursor: default;
+  white-space: nowrap;
 }
 
 .nav-tabs {
 
   .nav-link:hover:not(.active) {
     border-color: transparent;
-  }
-}
-
-.pagination {
-  padding-top: 0.75rem;
-  margin-bottom: .75rem;
-  border-top: 1px solid $borderColor;
-
-  > * {
-    padding-right: 5px;
-  }
-}
-
-.page {
-  &.page-mini {
-    padding: 10px;
-  }
-  &.page-none {
-    margin: 0 0;
-    padding: 0px;
   }
 }
 
@@ -228,19 +240,19 @@ table {
         padding-right: 20px;
         width: 80%;
 
-        &.editing { 
+        &.editing {
           background-image: image-url('silk/pencil.png');
         }
 
-        &.failed { 
+        &.failed {
           background-image: image-url('silk/stop.png');
         }
 
-        &.saved { 
+        &.saved {
           background-image: image-url('silk/accept.png');
         }
 
-        &.saving { 
+        &.saving {
           background-image: image-url('loading.gif');
         }
       }
@@ -262,7 +274,7 @@ time {
 }
 
 .tooltip-inner {
-    
+
   ul {
     list-style: disc;
     text-align: left;
@@ -270,7 +282,7 @@ time {
     padding-top: 0.5rem;
 
     li {
-      margin-bottom: .25rem; 
+      margin-bottom: .25rem;
     }
   }
 }

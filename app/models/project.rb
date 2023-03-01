@@ -3,12 +3,22 @@
 class Project
   include ActiveModel::Conversion
   extend ActiveModel::Naming
+  include ActiveModel::Validations
 
   attr_reader :id, :name
 
   # -- Class Methods --------------------------------------------------------
+  def self.create(args={})
+    new(**args.merge(id: 1))
+  end
+
   def self.find(id)
-    new(id: id)
+    new(id: id.to_i)
+  end
+
+  # This tricks NamingService.name_project (used by KitImportJob)
+  def self.exists?(args={})
+    false
   end
 
   # -- Instance Methods -----------------------------------------------------
@@ -28,6 +38,9 @@ class Project
 
   def authors
     User.all
+  end
+
+  def assign_owner(user)
   end
 
   def initialize(id: 1, name: 'Dradis Project', **_attrs)
@@ -102,5 +115,9 @@ class Project
   # node:
   def recovered
     @recovered ||= nodes.find_or_create_by(label: 'Recovered')
+  end
+
+  def report_template_properties
+    nil
   end
 end

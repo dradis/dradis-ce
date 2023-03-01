@@ -1,18 +1,16 @@
 # This controller exposes the REST operations required to manage the Node
 # resource.
 class NodesController < NestedNodeResourceController
+  include DynamicFieldNamesCacher
   include NodesSidebar
 
   skip_before_action :find_or_initialize_node, only: [ :sort, :create_multiple ]
   before_action :initialize_nodes_sidebar, except: [ :sort, :create_multiple ]
+  before_action :set_columns, only: :show
 
   # GET /nodes/<id>
   def show
     @activities       = @node.nested_activities.latest
-    @note_columns     = @sorted_notes.map(&:fields).map(&:keys).uniq.flatten \
-                      | ['Title', 'Created', 'Created by', 'Updated']
-    @evidence_columns = @sorted_evidence.map(&:fields).map(&:keys).uniq.flatten \
-                      | ['Title', 'Created', 'Created by', 'Updated']
   end
 
   # GET /nodes/<id>/edit
@@ -75,7 +73,7 @@ class NodesController < NestedNodeResourceController
   # PUT /node/<id>
   def update
     respond_to do |format|
-      if @node.update_attributes(node_params)
+      if @node.update(node_params)
         track_updated(@node)
         format.html { redirect_to project_node_path(current_project, @node), notice: 'Node updated.' }
         format.json { render json: { success: true }.to_json }
@@ -114,6 +112,24 @@ class NodesController < NestedNodeResourceController
   end
 
   private
+
+  def set_columns
+    default_field_names = ['Label', 'Title'].freeze
+    extra_field_names = ['Created', 'Created by', 'Updated'].freeze
+
+    note_dynamic_fields = dynamic_field_names(@node.notes)
+    evidence_dynamic_fields = dynamic_field_names(@node.evidence)
+
+    rtp = current_project.report_template_properties
+    rtp_default_evidence_fields = rtp ? rtp.evidence_fields.default.field_names : []
+
+    @note_columns     = note_dynamic_fields | extra_field_names
+    @evidence_columns = rtp_default_evidence_fields | evidence_dynamic_fields | extra_field_names
+
+    @default_note_columns = default_field_names
+    @default_evidence_columns = rtp_default_evidence_fields.presence || default_field_names
+  end
+
   def node_params
     params.require(:node).permit(:label, :parent_id, :position, :raw_properties, :type_id)
   end

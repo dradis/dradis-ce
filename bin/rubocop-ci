@@ -2,17 +2,27 @@
 
 set -e
 
-ALLOWED_WARNINGS=2460
-warnings=`bundle exec rubocop --format simple | grep "offenses detected" | cut -d " " -f4`
-
-if [ $warnings -gt $ALLOWED_WARNINGS ]
+if [[ $2 = true ]]
 then
-  echo -e "allowed warnings $ALLOWED_WARNINGS"
-  echo -e "actual warnings $warnings"
-  echo -e "Too many rubocop warnings"
-  echo -e "Try running 'bin/check_rubocop_against_master'"
+  target=$1
+else
+  target="origin/$1"
+fi
+
+result_info="bundle exec rubocop --force-exclusion --format simple $(git diff-tree -r --no-commit-id --name-only $target..HEAD)"
+files_inspected=`$result_info | grep "files inspected\|file inspected" | cut -d " " -f1`
+warning_count=`$result_info | grep "offenses detected\|offense detected" | cut -d " " -f4`
+
+if [ $warning_count == 'no' ]
+then
+  echo "✅ Clean code! No rubocop offenses detected in $files_inspected changed file(s). Compared to $target. Great job ಠ_ಠ"
+  exit 0
+elif [ $warning_count -ge '1' ]
+then
+  echo -e "❌ Inspected $files_inspected file(s) and detected $warning_count offense(s). Compared to $target"
+  $result_info
   exit 1
 else
-  echo $warnings/$ALLOWED_WARNINGS is close enough ಠ_ಠ
-  exit 0
+  echo -e "❌ Something went wrong"
+  exit 1
 fi

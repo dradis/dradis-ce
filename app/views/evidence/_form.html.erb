@@ -9,16 +9,20 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :issue, collection: current_project.issues.sort, label_method: :title, prompt: 'Choose an Issue' %>
+    <%= f.association :issue, collection: current_project.issues.sort, label_method: :title, include_blank: 'Auto-generate a new issue' %>
+
+    <%= label_tag :evidence_content, 'Evidence content', class: 'sr-only' %>
     <%=
       f.input :content,
+      label: false,
       input_html: {
-        class: 'textile h-100',
+        class: 'textile',
         data: {
           allow_dropdown: @evidence.new_record?,
-          behavior: 'rich-toolbar',
+          behavior: 'auto-save rich-toolbar drop-zone',
           paths: editor_paths,
-          'rich-toolbar': 'block-code bold field italic link list-ol list-ul table'
+          'rich-toolbar': 'block-code bold field image italic link list-ol list-ul table',
+          'rich-toolbar-uploader': '[data-behavior~=jquery-upload]',
         },
         rows: 20
       }
@@ -30,11 +34,11 @@
   <% end %>
 
   <div class="form-actions">
-    <%= hidden_field_tag :back_to, :issue if params[:back_to] == 'issue' %>
+    <%= hidden_field_tag :return_to, :issue if params[:return_to] == 'issue' %>
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
     <%=
       link_to 'Cancel',
-      project_node_path(@node.project, @node),
+      evidence_redirect_path(params[:return_to]),
       data: {
         behavior: 'clear-local-auto-save'
       }

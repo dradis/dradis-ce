@@ -1,4 +1,4 @@
-class CleanOpenvasSettings < ActiveRecord::Migration[5.1]
+class CleanLegacyConfig < ActiveRecord::Migration[5.1]
   def up
     # This removes old settings that may exist in versions of Pro prior to v1.9
     %w{openvas:node_label}.each do |name|
@@ -10,3 +10,6 @@ class CleanOpenvasSettings < ActiveRecord::Migration[5.1]
     # we can't un-delete legacy settings
   end
 end
+
+klass_name = defined?(Dradis::Plugins::OpenVAS) ? 'CleanOpenVASSettings' : 'CleanOpenvasSettings'
+Object.const_set(klass_name, CleanLegacyConfig)

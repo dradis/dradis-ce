@@ -28,10 +28,10 @@
         resize: true,
         // HTML templates
         tpl: {
-          fields: '<div class="textile-form h-100 col-6 col-sm-6"></div>',
-          wrap: '<div class="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row"></div></div>',
-          preview: '<div class="col-6 col-sm-6"><div class="textile-preview loading-indicator">Loading...</div></div>',
-          help: '<div class="textile-help col-12 col-sm-12 loading-indicator">Loading...</div>'
+          fields: '<div class="textile-form h-100 col-12 col-lg-6"></div>',
+          wrap: '<div class="textile-wrap" data-behavior="textile-wrap"><ul class="textile-toolbar"></ul><div class="textile-inner row"></div></div>',
+          preview: '<div class="col-12 col-lg-6"><div class="textile-preview loading-indicator">Loading...</div></div>',
+          help: '<div class="textile-help col-12 loading-indicator">Loading...</div>'
         }
       };
 
@@ -71,7 +71,7 @@
       this.$element.parent().append( this.options.$wrap );
 
       // move textarea to container
-      this.$source = this.$element.wrap('<div class="col-6 col-sm-6"></div>').parent();
+      this.$source = this.$element.wrap('<div class="col-12 col-lg-6"></div>').parent();
       $('.textile-inner', this.options.$wrap).append(this.$source);
       this.$source.hide();
 
@@ -156,12 +156,12 @@
 
       // Full screen
       // button = $('<a class="btn btn-fullscreen" href="javascript:void(null);"><span>&nbsp;</span></a>');
-      button = $('<a class="btn-fullscreen fa fa-expand" href="javascript:void(null);"><span>&nbsp;</span></a>');
+      button = $('<a class="btn-fullscreen fa fa-expand" href="javascript:void(null);"><span>&nbsp;</span><span class="sr-only">Toggle Fullscreen</span></a>');
       button.click( $.proxy( function(evt) { this._onBtnFullScreen(evt); }, this));
       $('.textile-toolbar', this.options.$wrap).append( $('<li class="right">').append(button) );
 
       // Help
-      button = $('<a class="btn-help fa fa-question" href="javascript:void(null);"><span>&nbsp;</span></a>');
+      button = $('<a class="btn-help fa fa-question" href="javascript:void(null);"><span>&nbsp;</span><span class="sr-only">Toggle Help</span></a>');
       button.click( $.proxy( function(evt) { this._onBtnHelp(evt); }, this));
       $('.textile-toolbar', this.options.$wrap).append( $('<li class="right">').append(button) );
     },
@@ -185,6 +185,12 @@
         data: {source: data, allow_dropdown: allowDropdown},
         beforeSend: function(){
           this.options.$fields.addClass('loading-indicator').text('Loading...');
+        }.bind(this),
+        success: function(result) {
+          this.options.$fields.removeClass('loading-indicator')
+            .html(result);
+          this.bindFieldGroup(this.options.$fields);
+          this.options.$fields.trigger('textile:formLoaded');
         }.bind(this)
       });
     },
@@ -264,19 +270,10 @@
       if (this.options.fullscreen === false ) {
         this.options.fullscreen = true;
 
-        this.options.height = this.$element.css('height');
-        this.options.width  = this.options.$wrap.css('width');
+        this.options.$wrap.addClass('textile-fullscreen');
+        this.options.$wrap.attr('data-behavior', 'textile-wrap textile-fullscreen');
 
-        this.options.tmpspan = $('<span></span>');
-        this.options.$wrap.addClass('textile-fullscreen').after(this.options.tmpspan);
-
-        $(document.body).prepend(this.options.$wrap).css('overflow', 'hidden');
-
-        // fit to window
-        this._onFullScreenResize();
-
-        // refit whenever the window resizes
-        $(window).resize($.proxy(this._onFullScreenResize, this));
+        $('[data-behavior~=view-content]').css('z-index', 5);
 
         // update button icon
         $btnFS.removeClass('fa-expand').addClass('fa-compress');
@@ -288,13 +285,9 @@
       {
         this.options.fullscreen = false;
 
-        // stop listening to resize events
-        $(window).unbind('resize', $.proxy(this._onFullScreenResize, this));
-        $(document.body).css('overflow', 'visible');
+        this.options.$wrap.removeClass('textile-fullscreen').attr('data-behavior', 'textile-wrap');
 
-        this.options.$wrap.removeClass('textile-fullscreen');
-        this.options.$wrap.css('width', 'auto');
-        this.options.tmpspan.after(this.options.$wrap).remove();
+        $('[data-behavior~=view-content]').css('z-index', 'auto');
 
         // update button icon
         $btnFS.removeClass('fa-compress').addClass('fa-expand');
@@ -331,19 +324,10 @@
       this.options.$help.hide();
       this.options.$preview.show();
       this.$source.show();
+      this.$source.find('textarea').focus();
     },
 
     // --------------------------------------------------- Other event handlers
-
-    // Triggered by window resize events
-    _onFullScreenResize: function(){
-      if (this.options.fullscreen === false) return;
-
-      var hfix = 65;
-      var height = $(window).height() - hfix;
-
-      this.options.$wrap.width($(window).width()-20);
-    },
 
     _serializedFormData: function() {
       return $('[name^=item_form]', this.options.$fields).serializeArray();

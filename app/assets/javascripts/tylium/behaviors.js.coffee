@@ -63,7 +63,7 @@ document.addEventListener "turbolinks:load", ->
   $('.modal').on 'shown.bs.modal', ->
     $(this).find('input:text:visible:first').focus()
 
-  $('.js-try-pro').on 'click', ->
+  $('body').on 'click', '.js-try-pro', ->
     $this   = $(this)
     term    = $this.data('term')
     $modal  = $('#try-pro')
@@ -77,6 +77,7 @@ document.addEventListener "turbolinks:load", ->
         when 'boards' then '<span>[Dradis Pro feature]</span> Advanced boards and task assignment'
         when 'contact-support' then '<span>[Dradis Pro feature]</span> Dedicated Support team'
         when 'issuelib' then '<span>[Dradis Pro feature]</span> Integrated library of vulnerability descriptions'
+        when 'gateway' then '<span>[Dradis Pro feature]</span> A Dynamic and Interactive Assessment Results Portal'
         when 'projects' then '<span>[Dradis Pro feature]</span> Work with multiple projects'
         when 'remediation' then '<span>[Dradis Pro feature]</span> Integrated remediation tracker'
         when 'word-reports' then '<span>[Dradis Pro feature]</span> Custom Word reports'
@@ -110,7 +111,7 @@ document.addEventListener "turbolinks:load", ->
 
   # Search form
   $('[data-behavior~=form-search]').hover ->
-    $('[data-behavior~=search-query]').val('').focus()
+    $('[data-behavior~=search-query]').focus()
 
   submitSearch = ->
     if $('[data-behavior~=search-query]').val() != ''
@@ -140,11 +141,6 @@ document.addEventListener "turbolinks:load", ->
 
       if $this.is('[data-behavior~=import-box]') && $($this.data('target')).innerHeight() == 0
         $($this.data('target')).find("input[type='text']:first").focus()
-
-  # Close nav collapse menu when nav dropdown menu is opened
-  $('[data-behavior~=close-collapse]').on 'click', ->
-    $('[data-behavior~=navbar-collapse]').collapse 'hide'
-    return
 
   # Scroll for more indicator functionality
   if $('[data-behavior~=restrict-height]').length
@@ -198,6 +194,3 @@ document.addEventListener "turbolinks:load", ->
     history.pushState({}, '', this.href);
     $(this.hash)[0].scrollIntoView behavior: 'smooth'
     return
-
-  $('[data-behavior~=local-auto-save]').each ->
-    new LocalAutoSave(this)

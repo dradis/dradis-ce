@@ -10,8 +10,8 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = '>= 1.9.3'
   gem.license       = 'GPL-2'
 
-  gem.authors       = ['Daniel Martin']
-  gem.email         = ['etd@nomejortu.com.com>']
+  gem.authors       = ['Dradis Team']
+  gem.email         = ['>moc.stoorytiruces@liame<'.reverse]
   gem.description   = 'REST HTTP API for Dradis Framework'
   gem.summary       = 'Dradis HTTP API'
   gem.homepage      = 'http://dradisframework.org'

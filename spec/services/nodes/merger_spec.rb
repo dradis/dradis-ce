@@ -70,14 +70,14 @@ RSpec.describe Nodes::Merger do
 
       expect(target_attachment).to be_an Attachment
 
-      Attachment.all.each(&:delete)
+      FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
     end
 
     it 'increases the target node attachment count' do
       create(:attachment, node: source_node)
       expect { merge_nodes }.to change { target_node.attachments.count }.by 1
 
-      Attachment.all.each(&:delete)
+      FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
     end
 
     describe 'property merges' do
@@ -214,14 +214,14 @@ RSpec.describe Nodes::Merger do
         create(:attachment, node: source_node)
         expect { merge_nodes }.not_to change { target_node.attachments.count }
 
-        Attachment.all.each(&:delete)
+        FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
       end
 
       it 'does not change source node attachments count' do
         create(:attachment, node: source_node)
         expect { merge_nodes }.not_to change { source_node.attachments.count }
 
-        Attachment.all.each(&:delete)
+        FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
       end
     end
   end

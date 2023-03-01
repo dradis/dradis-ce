@@ -2,10 +2,10 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.4.1'
+ruby '3.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.4', '>= 5.2.4.3'
+gem 'rails', '~> 6.1.7.2'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -17,26 +17,24 @@ gem 'uglifier', '>= 1.3.0'
 gem 'mini_racer', platforms: :ruby
 
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2'
+gem 'coffee-rails', '~> 5.0'
 
 # Cache-friendly, client-side local time
 gem 'local_time', '>= 2.0.0'
-
 
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
+gem 'jbuilder', '~> 2.7'
 
-# Use ActiveStorage variant
-# gem 'mini_magick', '~> 4.8'
+# Use Active Storage variant
+# gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bootsnap', '>= 1.12.0', require: false
 
 # ---------------------------------------------------- Dradis Community Edition
-gem 'font-awesome-sass', '~> 4.7.0'
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
@@ -44,19 +42,19 @@ gem 'jquery-fileupload-rails', '~> 0.3.4'
 gem 'jquery-hotkeys-rails'
 
 # Organize Node tree
-gem 'acts_as_tree', '~> 2.7.1'
+gem 'acts_as_tree', '~> 2.9.1'
 
 gem 'builder'
 
 gem 'differ', '~> 0.1.2'
 
-
 # HTML processing filters and utilities
 gem 'html-pipeline'
+gem 'liquid'
 
 gem 'kaminari', '~> 1.2.1'
 
-gem 'paper_trail', '~> 10.3'
+gem 'paper_trail', '~> 12.2.0'
 
 # gem 'rails_autolink', '~> 1.1'
 
@@ -64,8 +62,7 @@ gem 'record_tag_helper'
 
 gem 'rubyzip', '>= 1.2.2'
 
-gem 'thor', '~> 0.18'
-
+gem 'thor', '~> 1.2.1'
 
 # ------------------------------------------------------ With native extensions
 # These require native extensions.
@@ -73,15 +70,15 @@ gem 'thor', '~> 0.18'
 # See:
 #   http://traveling-ruby.s3-us-west-2.amazonaws.com/list.html
 
-# Use ActiveModel has_secure_password
+# Use Active Model has_secure_password
 # Password digests
-gem 'bcrypt',   '3.1.12'
+gem 'bcrypt', '3.1.12'
 
 # Required by Rails (uglifier and activesupport)
 gem 'json', '2.3.0'
 
 # XML manipulation
-gem 'nokogiri', '1.10.8'
+gem 'nokogiri', '1.13.10'
 
 # MySQL backend
 # gem 'mysql2', '~> 0.5.1'
@@ -90,7 +87,7 @@ gem 'nokogiri', '1.10.8'
 # before 1.0.4, so make sure we're using 1.0.4+:
 # see https://github.com/rails/rails-html-sanitizer/commit/f3ba1a839a
 # and https://github.com/flavorjones/loofah/issues/144
-gem 'rails-html-sanitizer', '~> 1.3.0'
+gem 'rails-html-sanitizer', '~> 1.4.4'
 
 # Textile markup
 gem 'RedCloth', '~> 4.3.2', require: 'redcloth'
@@ -99,10 +96,11 @@ gem 'RedCloth', '~> 4.3.2', require: 'redcloth'
 gem 'rinku'
 
 # html-pipeline dependency for html sanitization
-gem 'sanitize', '5.2.1'
+gem 'sanitize', '6.0.1'
 
 # SQLite3 DB driver
-gem 'sqlite3'#,  '1.3.10'
+gem 'sqlite3'
+gem 'pg'
 
 # --------------------------------------------------------- Dradis Professional
 # Authorisation
@@ -112,7 +110,7 @@ gem 'cancancan', '~> 1.10'
 gem 'resque', require: 'resque/status_server'
 gem 'resque-status'
 # See https://github.com/sinatra/sinatra/issues/1055
-gem 'sinatra', '2.0.2'
+gem 'sinatra', '~> 2.2.3'
 
 # Forms that integrate with Twitter's Bootstrap
 gem 'simple_form'
@@ -129,7 +127,11 @@ gem 'warden', '~> 1.2.3'
 # Schedule cron jobs
 gem 'whenever', require: false
 
+gem 'net-smtp'
+gem 'net-pop'
+gem 'net-imap'
 
+gem 'matrix'
 
 # ------------------------------------------------------------------ Deployment
 # Use Capistrano for deployment
@@ -137,22 +139,23 @@ gem 'whenever', require: false
 
 group :production do
   # Use Unicorn as the web server
-  gem 'unicorn',  '5.4.1'
+  gem 'unicorn',  '6.1.0'
 end
-
 
 # ----------------------------------------------------- Development and Testing
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'web-console', '>= 4.1.0'
+  # Display performance information such as SQL time and flame graphs for each request in your browser.
+  # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
+  gem 'rack-mini-profiler', '~> 2.0'
+  gem 'listen', '~> 3.3'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
 
   # Alert on n+1 queries
-  gem 'bullet'
+  #gem 'bullet'
 
   # Cleanup logs from asset entries
   # gem 'quiet_assets'
@@ -167,6 +170,7 @@ group :development do
   # security
   gem 'brakeman', require: false
   gem 'bundler-audit', require: false
+  gem 'ruby_audit', require: false
 
   gem 'rubocop', require: false
 end
@@ -175,15 +179,15 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
 
-  gem 'rspec-rails', '~> 3.1'
+  gem 'rspec-rails', '~> 4.0.2'
 
-  gem 'puma'
+  gem 'puma', '~> 5.0'
 end
 
 group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
-  gem 'capybara', '>= 2.15'
+  gem 'capybara', '>= 3.26'
   gem 'guard-rspec', require: false
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 3.1'
@@ -206,15 +210,48 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 3.15'
-
+gem 'dradis-plugins', '~> 4.6.1'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 3.15'
+gem 'dradis-projects', '~> 4.6.0'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)
   eval(IO.read(plugins_file), binding)
 end
+
+# For now keep a hard-coded list of plugins until Gemfile.plugins becomes fully
+# effective.
+
+# ----------------------------------------------------------------- Calculators
+gem 'dradis-calculator_cvss', '~> 4.6.0'
+gem 'dradis-calculator_dread', '~> 4.6.0'
+
+# ---------------------------------------------------------------------- Export
+gem 'dradis-csv_export', '~> 4.6.0'
+gem 'dradis-html_export', '~> 4.6.0'
+
+# ---------------------------------------------------------------------- Import
+gem 'dradis-csv', '~> 4.6.0'
+
+# ---------------------------------------------------------------------- Upload
+gem 'dradis-acunetix', '~> 4.6.0'
+gem 'dradis-brakeman', '~> 4.6.0'
+gem 'dradis-burp', '~> 4.6.0'
+gem 'dradis-coreimpact', '~> 4.6.0'
+gem 'dradis-metasploit', '~> 4.6.0'
+gem 'dradis-nessus', '~> 4.6.0'
+gem 'dradis-netsparker', '~> 4.6.0'
+gem 'dradis-nexpose', '~> 4.6.0'
+gem 'dradis-nikto', '~> 4.6.0'
+gem 'dradis-nipper', '~> 4.6.0'
+gem 'dradis-nmap', '~> 4.6.0'
+gem 'dradis-ntospider', '~> 4.6.0'
+gem 'dradis-openvas', '~> 4.6.0'
+gem 'dradis-qualys', '~> 4.6.0'
+gem 'dradis-saint', '~> 4.6.0'
+gem 'dradis-veracode', '~> 4.6.0'
+gem 'dradis-wpscan', '~> 4.6.0'
+gem 'dradis-zap', '~> 4.6.0'

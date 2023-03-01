@@ -13,7 +13,7 @@ describe NotificationGroup do
   describe '#new' do
     it 'creates a grouped hash of notifications' do
       expected_hash = {
-        @project => [ [@issue, [@notification]] ]
+        @project.name => [ [@issue, [@notification]] ]
       }
       group = NotificationGroup.new(@user_notifications)
       expect(group.to_h).to eq(expected_hash)

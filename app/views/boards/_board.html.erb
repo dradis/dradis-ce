@@ -1,16 +1,5 @@
-<% content_for :list_new_modal do %>
-  <%= render 'boards/modals/new_list_form' unless request.xhr? %>
-<% end %>
-
-<% board.ordered_lists.each do |list| %>
-  <% content_for :list_rename_modal do %>
-    <%= render partial: 'boards/modals/list_rename_form', locals: { board: board, list: list } %>
-  <% end %>
-<% end %>
-
 <% cache ['board-view', board] do %>
-
-  <div class="content-container mt-3">
+  <% if board.ordered_lists.any? %>
     <ul class="board js-sortable-lists" data-board-id="<%= board.id %>">
       <% board.ordered_lists.each do |list| %>
         <% cache ['board-list', list] do %>
@@ -90,6 +79,12 @@
         </a>
       </li>
     </ul>
-  </div>
-
+  <% else %>
+    <%= render 'shared/empty_state',
+      actions_partial: 'boards/board/empty_state_actions',
+      name: 'list',
+      docs_link: 'https://dradisframework.com/support/guides/projects/methodologies.html#list',
+      text: 'Use lists to organize tasks in the methodology board.'
+    %>
+  <% end %>
 <% end %><%# /board-view cache %>

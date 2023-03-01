@@ -1,6 +1,7 @@
 class EvidenceController < NestedNodeResourceController
-  include Commented
   include ConflictResolver
+  include EvidenceHelper
+  include LiquidEnabledResource
   include Mentioned
   include MultipleDestroy
   include NodesSidebar
@@ -12,9 +13,7 @@ class EvidenceController < NestedNodeResourceController
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
 
   def show
-    @activities   = @evidence.activities.latest
-    @issue        = @evidence.issue
-    @subscription = @evidence.subscription_for(user: current_user)
+    @issue = @evidence.issue
 
     load_conflicting_revisions(@evidence)
   end
@@ -26,6 +25,7 @@ class EvidenceController < NestedNodeResourceController
 
   def create
     @evidence.author = current_user.email
+    autogenerate_issue if evidence_params[:issue_id].blank?
 
     respond_to do |format|
       if @evidence.save
@@ -37,53 +37,11 @@ class EvidenceController < NestedNodeResourceController
       else
         format.html {
           initialize_nodes_sidebar
-          render "new"
+          render 'new'
         }
       end
       format.js
     end
-  end
-
-  def create_multiple
-    # validate Issue
-    issue = current_project.issues.find(evidence_params[:issue_id])
-
-    if params[:evidence][:node_ids]
-      params[:evidence][:node_ids].reject(&:blank?).each do |node_id|
-        node = current_project.nodes.find(node_id)
-        evidence = Evidence.create!(
-          author: current_user.email,
-          content: evidence_params[:content],
-          issue_id: issue.id,
-          node_id: node.id
-        )
-        track_created(evidence)
-      end
-    end
-    if params[:evidence][:node_list]
-      if params[:evidence][:node_list_parent_id].present?
-        parent = current_project.nodes.find(params[:evidence][:node_list_parent_id])
-      end
-      params[:evidence][:node_list].lines.map(&:strip).reject(&:blank?).each do |label|
-        unless (node = current_project.nodes.find_by(label: label))
-          node = current_project.nodes.create!(
-            type_id: Node::Types::HOST,
-            label: label,
-            parent: parent,
-          )
-          track_created(node)
-        end
-
-        evidence = Evidence.create!(
-          author: current_user.email,
-          content: evidence_params[:content],
-          issue_id: issue.id,
-          node_id: node.id
-        )
-        track_created(evidence)
-      end
-    end
-    redirect_to project_issue_path(current_project, evidence_params[:issue_id]), notice: 'Evidence added for selected nodes.'
   end
 
   def edit
@@ -92,22 +50,21 @@ class EvidenceController < NestedNodeResourceController
   def update
     respond_to do |format|
       updated_at_before_save = @evidence.updated_at.to_i
-      if @evidence.update_attributes(evidence_params)
+
+      @evidence.assign_attributes(evidence_params)
+      autogenerate_issue if evidence_params[:issue_id].blank?
+
+      if @evidence.save
         track_updated(@evidence)
         check_for_edit_conflicts(@evidence, updated_at_before_save)
         format.html do
-          path = if params[:back_to] == 'issue'
-                   [current_project, @evidence.issue]
-                 else
-                   [current_project, @node, @evidence]
-                 end
-          redirect_to path, notice: 'Evidence updated.'
+          redirect_to evidence_redirect_path(params[:return_to]), notice: 'Evidence updated.'
         end
 
       else
         format.html {
           initialize_nodes_sidebar
-          render "edit"
+          render 'edit'
         }
       end
       format.js
@@ -129,7 +86,7 @@ class EvidenceController < NestedNodeResourceController
           if request.headers['Referer'] == project_node_evidence_url(current_project, @node, @evidence)
             redirect_to project_node_path(current_project, @node), notice: notice
           else
-            redirect_back fallback_location: project_node_path(current_project, @node), notice: notice
+            redirect_back fallback_location: project_node_path(current_project, @node), notice:
           end
         }
         format.js
@@ -145,6 +102,11 @@ class EvidenceController < NestedNodeResourceController
 
   private
 
+  def autogenerate_issue
+    @evidence.issue = Issue.autogenerate_from(@evidence)
+    track_created(@evidence.issue)
+  end
+
   # Look for the Evidence we are going to be working with based on the :id
   # passed by the user.
   def set_or_initialize_evidence
@@ -159,26 +121,17 @@ class EvidenceController < NestedNodeResourceController
     end
   end
 
-  # If the user selects "Add new issue" in the Evidence editor, we create an empty skeleton
-  def create_issue
-    Issue.create do |issue|
-      issue.text = "#[Title]#\nNew issue auto-created for node [#{@node.label}]."
-      issue.node = current_project.issue_library
-      issue.author = current_user.email
-    end
-  end
-
   def evidence_params
     params.require(:evidence).permit(:author, :content, :issue_id, :node_id)
   end
 
   def set_auto_save_key
     @auto_save_key =  if @evidence&.persisted?
-                        "evidence-#{@evidence.id}"
-                      elsif params[:template]
-                        "node-#{@node.id}-evidence-#{params[:template]}"
-                      else
-                        "node-#{@node.id}-evidence"
-                      end
+      "evidence-#{@evidence.id}"
+    elsif params[:template]
+      "node-#{@node.id}-evidence-#{params[:template]}"
+    else
+      "node-#{@node.id}-evidence"
+    end
   end
 end

@@ -1,0 +1,120 @@
+<% content_for :title, "Add new evidence for #{@issue.title}" %>
+
+<% content_for :breadcrumbs do %>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to 'All issues', project_issues_path(current_project) %></li>
+      <li class="breadcrumb-item"><%= link_to @issue.title, project_issue_path(current_project, @issue, tab: 'evidence-tab') %></li>
+      <li class="breadcrumb-item active">New Evidence</li>
+    </ol>
+  </nav>
+<% end %>
+
+<% content_for :sidebar do %>
+  <%= render 'issues/sidebar', issues: @issues %>
+<% end %>
+
+<%= form_for(
+  :evidence,
+  url: project_create_multiple_evidence_path(current_project),
+  html: {
+    id: 'add-evidences',
+    data: {
+      behavior: 'local-auto-save',
+      auto_save_key: @auto_save_key
+    }
+  }
+) do |f| %>
+  <div class="content-container">
+    <div id="issues_editor">
+      <div class="note-text-inner">
+        <h4 class="header-underline">Add new evidence</h4>
+        <p class="mb-4 pb-3">Add evidence of <em><%= @issue.title ? @issue.title : "Issue ##{@issue.id}" %></em> by selecting or adding nodes below.</p>
+        <div class="row">
+
+          <div class="col-xl-4">
+            <h5>Select existing nodes</h5>
+            <% if @nodes.any? %>
+              <div class="existing-node-list mb-3" data-behavior="add-evidence-container">
+                <%= f.label :node, class: 'sr-only' %>
+                <%= f.text_field :node, class: 'form-control existing-node-list-filter', placeholder: 'Type here to filter list...' %>
+                <%= f.label :node_ids, class: 'sr-only' %>
+                <%= f.collection_select :node_ids, @nodes_for_add_evidence, :id, :label, {}, { class: 'form-control custom-select', data: { behavior: 'existing-node-list'}, multiple: 'multiple' } %>
+              </div>
+            <% else %>
+              <p>There are no existing nodes yet. <a href="#modal_add_branch_node" data-toggle="modal" tabindex="-1">Create one</a>.</p>
+            <% end %>
+          </div>
+
+          <div class="col-xl-4">
+            <h5>
+              Input new or existing nodes
+              <span class="small">
+                <i
+                  class="fa fa-question-circle"
+                  data-toggle="tooltip"
+                  data-html="true"
+                  data-placement="right"
+                  role="tooltip"
+                  title="<ul><li>If a node in this list already exists in the project, evidence will be added to it.</li><li>If a node doesn't exist, it will be created and then evidence will be added.</li></ul>">
+                </i>
+              </span>
+            </h5>
+
+            <%= f.label :node_list, class: 'sr-only' %>
+            <%= f.text_area :node_list, rows: 7, placeholder: 'One node per line...', class: 'form-control mb-3' %>
+          </div>
+
+          <div class="col-xl-4">
+            <h5>Create new nodes under</h5>
+            <%= f.label :node_list_parent_id, class: 'sr-only' %>
+            <%= f.collection_select(
+              :node_list_parent_id,
+              @nodes_for_add_evidence,
+              :id,
+              :label,
+              { include_blank: 'The root of the tree' },
+              { class: 'form-control custom-select' }
+            ) %>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-12">
+            <h5>Evidence Content</h5>
+            <% cache [@content, @issue, @nodes_for_add_evidence] do %>
+              <%= f.hidden_field :issue_id, value: @issue.id %>
+              <%= f.hidden_field :node_id, value: @issue.node_id %>
+
+              <%= f.label :content, nil, class: 'sr-only' %>
+              <%=
+                f.text_area :content,
+                label: false,
+                class: 'textile form-control',
+                data: {
+                  allow_dropdown: true,
+                  behavior: 'auto-save rich-toolbar drop-zone',
+                  paths: editor_paths,
+                  'rich-toolbar': 'block-code bold field image italic link list-ol list-ul table',
+                  'rich-toolbar-uploader': '[data-behavior~=jquery-upload]',
+                },
+                rows: 20,
+                value: (@template_content || @content)
+              %>
+            <% end %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-actions">
+              <%= f.submit 'Create Evidence', class: 'btn btn-primary' %> or
+              <%= link_to 'Cancel', project_issue_path(current_project, @issue, tab: 'evidence-tab'), class: 'cancel-link', data: { behavior: 'clear-local-auto-save' } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,30 +1,261 @@
-v3.#.# (MMM’YY)
-  * [feature #1]
-  * [feature #2]
-  * [feature ...]
-  * Upgraded gems: rack, sanitize
+[v#.#.#] ([month] [YYYY])
+  - Rubocop CI:
+    - disable EnforcedShorthandSyntax rule under Style/HashSyntax cop
+  - Issues: Display the results from importers in a datatable
+  - Tylium:
+    - Add breadcrumbs to Revision History view
+    - Add secondary sidebar toggling functionality
+    - Remove `Recent Activity` tabs and add `View History` link to the dots menu
+    - Tags: Add tag management
+  - Upgraded gems:
+    - nokogiri, pg, rails, rails-html-sanitizer, sanitize, sinatra
+  - Bugs fixes:
+    - [entity]:
+      - [future tense verb] [bug fix]
+    - Methodologies: Ensure params are validated when moving list/card
+    - Bug tracker items:
+      - [item]
+  - New integrations:
+    - [integration]
+  - Integration enhancements:
+    - [integration]:
+      - [future tense verb] [integration enhancement]
+      - [integration bug fixes]:
+        - [future tense verb] [integration bug fix]
+  - Reporting enhancements:
+    - [report type]:
+      - [future tense verb] [reporting enhancement]
+  - REST/JSON API enhancements:
+    - Author: Add author field for notes, issues, and evidence
+  - Security Fixes:
+    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v4.6.0 (November 2022)
+  - Kit Import: allow import of kit with no templates
+  - Notes: remove category selection from form UI.
+  - Rubocop: lint changed files since previous commit
+  - Upgraded gems:
+    - nokogiri
+  - Bugs fixes:
+    - Comments: Align comment header content in Safari
+  - New integrations:
+    - Core Impact
+    - Veracode
+
+v4.5.0 (August 2022)
+  - Upgraded Dradis to run on ruby 3.1.2
+  - Upgraded gems: acts_as_tree, bootsnap, bundler-audit, factory_bot, paper_trail, rails, rails-html-sanitizer, timecop, thor, unicorn
+  - Bugs fixes:
+    - Attachments: Fix attachments not showing or being validated correctly
+    - Evidence:
+      - Add validation for creating evidences in the issue view
+      - Set correct localStorage key to prevent pre-populating incorrect content at the issue level
+    - Nodes: Prevent evidence labels linking to external resources
+  - New integrations:
+    - CSV Importer
+  - Integration enhancements:
+    - Qualys: Wrap ciphers in code blocks for the Vuln Importer
+  - Reporting enhancements:
+    - CSV Export: Rename integration to dradis-csv_export
+    - HTML Export: Add :rtp plugins feature
+  - Security Fixes:
+    - Medium: Authenticated author broken access control: read access to issue content
+
+v4.4.0 (June 2022)
+  - Login View: Design update
+  - Tylium:
+    - Improve mobile experience
+    - Show the resource title in the header when viewing a resource
+  - Upgraded gems:
+    - nokogiri, rack, sinatra
+  - Bugs fixes:
+    - Cards: Prevent adding 'card' class to card comments
+  - Integration enhancements:
+    - Nikto: Make references available as an issue field
+
+v4.3.0 (April 2022)
+  - Setup Wizard: Add option to pre-populate sample data
+  - Uploads: Allow subsequent file uploads from the same scanner without needing to re-select the scanner
+  - Upgraded gems: nokogiri, puma, rails
+  - Bugs fixes:
+    - Editor:
+      - Add keyboard shortcut support for windows and linux
+      - Allow text selection expansion using shift-click
+    - Subscriptions: Show correct Subscribe/Unsubscribe link after a new comment is posted
+    - Tables: Prevent columns state from resetting after 2 hours
+  - Integration enhancements:
+    - Openvas: Update Node label parsing. Include :hostname and :asset_id properties
+
+v4.2.1 (February 2022)
+  - Bug fixes: Fix issue default fields appearing in the evidence table
+
+v4.2.0 (February 2022)
+  - Editor: Support fields with the same name in the Fields View
+  - Increased table loading performance on Issues, Evidence, and Notes for
+    projects with *a lot* of issues, evidence, or notes
+  - Issues:
+    - Display evidence in a table
+    - Load evidence tab content asynchronously
+    - Multi-delete evidence at the issue level
+    - Update evidence content while creating evidence records at the issue-level
+  - Setup:
+    - Add Setup Wizard
+    - Avoids hard-coding "../../shared/"
+    - Store gem dependencies under ./vendor/bundle/
+  - Tylium:
+    - Import CSS manifests from addons
+    - Move '...' (more actions) menu closer to the content affected by the actions of the menu
+    - Move the 'Edit' action out of the '...' (more actions) menu for issues, evidence, notes, etc.
+    - Remove extra left padding from the first line of content in a code block
+    - Remove height restriction from code blocks
+    - Simplify issues table columns
+    - Updates focus state outline color
+  - Upgraded gems:
+    - mini_racer, puma, rails
+  - Bugs fixes:
+    - Comments: Show sticky toolbar when adding long comments
+    - Tables: Prevents the select all button from selecting filtered out rows when a filter is been applied
+    - Subscriptions: Fixes a caching issue preventing users from subscribing or
+      unsubscribing after the first cache was stored
+    - Issues: Send To menu updates when new plugins are installed
+  - Integration enhancements:
+    - Dradis Projects:
+      - Fixes missing parent nodes during template and package imports
+      - Fixes missing nodes for attachments during template and package imports
+    - Nexpose:
+      - Add the Hostname Node property from the `name` rather than `site-name` tag
+    - Nipper:
+      - Add Nipperv1 fields to issues
+    - PDF Export:
+      - Add Thor task for console export
+      - Add view hook for Export#index
+    - Qualys:
+      - Add 'element.qualys_collection' as issue field
+      - Add Qualys Web Application Scanner (WAS) support
+
+v4.1.2 (December 2021)
+  - Upgraded gems:
+    - rails
+  - Security Fixes:
+    - High: Authenticated author path traversal
+
+v4.1.0 (November 2021)
+  - Editor:
+    - Insert an appropriate single or multiline tag for blockquotes and codeblocks
+    - Limit the content height for easier access to the Create/Update button
+    - Quote text from comments and resource content (cards, evidence, issues, notes, etc)
+  - Evidence:
+    - Create a new issue (optionally) when creating new evidence
+    - Move evidence across nodes
+  - Tables:
+    - Add selector to change the number of records displayed
+  - Tylium:
+    - Import CSS manifests from addons
+    - Remove extra left padding from the first line of content in a code block
+    - Remove height restriction from code blocks
+  - Upgraded gems:
+    - nokogiri, puma, rails
+  - Bugs fixes:
+    - Conflict resolver
+      - Apply the correct warning when a conflict happens on edit
+    - Methodologies:
+      - Ensure boards don't nest when the instance has been inactive
+    - Tables
+      - Prevent columns state from resetting
+  - Integration enhancements:
+    - CVSS Calculator:
+      - Settings: show/hide the calculator in the Issues view
+      - Toggle between CVSSv3.0 and CVSSv3.1
+    - Dread Calculator:
+      - Settings: show/hide the calculator in the Issues view
+    - Nessus:
+      - Add product_coverage & cvss3_impact_score as available Issue fields
+    - Nexpose
+      - Update HTML tag cleanup to better cover UnorderedList and URLLink tags in the solution field
+    - Qualys
+      - Add <dd>, <dt> support
+      - Remove orphaned <b> tags
+  - Security Fixes:
+    - High: Authenticated author broken access control: read access to issue content
+
+v4.0.0 (July 2021)
+  * Dynamic content across the app
+  * Upgraded gems: capybara, jquery-rails, rails, rdoc, resque-status, rubocop, nokogiri, papertrail, puma,
+  * Bugs fixed:
+    - Fix uploading of attachments with names that have newlines
+  * REST/JSON API enhancements:
+    - Add pagination support
+
+v3.22.0 (April 2021)
+  * Added the ability to import Configuration Kits
+  * Comments
+    - Load feed asynchronously
+  * Improve accessibility:
+    - Add alt text to any linked images
+    - Add screen reader only text to forms
+    - Adjustments to font and element contrast to meet at minimum Level AA WCAG 2.0 standards.
+    - Fix any broken Aria references
+    - Update element label association & add missing labels
+  * Kit upload CLI command update
+  * Replace deprecated font-awesome-sass gem with vendor asset files
+  * Subscriptions
+    - Load feed asynchronously
+  * Truncate long hostnames when viewing evidence in an issue
+  * Upgraded gems: Rails
+  * Bugs fixed:
+    - Placeholder gravatars appear if gravatar is not available
+
+v3.21.0 (February 2021)
+  * Upgraded DradisPro to run on Ruby 2.7.2 and Rails 6.1.1
+  * Add view hooks for the export view
+  * Increase secondary sidebar width for medium viewports
+  * Upgraded gems: bundler, papertrail, rails
+  * Bugs fixed:
+    - Add a default user during Welcome setup
+    - Correct position of sticky editor toolbar in fullscreen source view
+
+v3.20.0 (January 2021)
+  * Main sidebar improvements:
+    - Labels added under icons
+    - Nodes can be added in collapsed state
+    - Removed animations and transitions while expanding and collapsing
+  * Update logo assets
+  * Navbar dropdown menu's are no longer locked to the right side of the browser
+  * Upgraded gems: rails
+  * Bugs fixed:
+    - Editor drag and drop, and copy paste inserts attachments at the cursor
+      position instead of at the end of the textarea.
+    - Fixed redirect when canceling editing evidence from the issue level
+  * New integrations:
+    - Nipper
+
+v3.19.0 (September 2020)
+  * Auto upload attachments and screenshots without requiring the use of the staging area
+  * Cards, Evidence, Issues, and Notes now have their own attachment support
+  * Displays a notification badge in the browser tab when there are unread notifications
+  * Editor: Allow drag & drop, copy & paste, and direct image uploading
+  * Increase the node properties column size by changing it to LONGTEXT
+  * Layout: Breadcrumbs have a fixed position
+  * Link to our support site on the styles help page
+  * Long dropdown menus are vertically scrollable
+  * Bugs fixed:
+    - Use absolute send times in notification emails instead of relative
+
+v3.18.0 (July 2020)
+  * Add all activity view
+  * Render markup inside table columns
+  * Update top navigation link styles and collapsed menu
+  * Upgraded gems: rack, sanitize, sassc
   * Bugs fixed:
     - Prevent HTML exports from rendering with the wrong template when multiple tabs are open
     - Comments:
       - Fix `edit` link available while editing
       - Fix comment borders remaining after deleting comments
-    - Bug tracker items: #N, #M, #O, ...
-  * New integrations:
-    - [new integration #1]
-    - [new integration ...]
-  * Integration enhancements:
-    - [integration enhancement #1]
-    - [integration enhancement ...]
-  * Reporting enhancements:
-    - [reporting enhancement #1]
-    - [reporting enhancement ...]
-  * REST/JSON API enhancements:
-    - [API enhancement #1]
-    - [API enhancement ...]
-  * Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Long unbroken table cell text in textile elements overflows
+    - Secondary-sidebar long header names over-lapping icons
+    - Select element text overflowing on to select arrows
 
 v3.17.1 (Jun 2020)
   * Upgraded gems: websocket-extensions

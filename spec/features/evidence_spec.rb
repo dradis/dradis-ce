@@ -12,7 +12,7 @@ describe 'evidence' do
 
   example 'show page with wrong Node ID in URL' do
     node     = create(:node)
-    evidence = create(:evidence, node: node)
+    evidence = create(:evidence, node:)
     wrong_node = create(:node)
     expect do
       visit project_node_evidence_path(current_project, wrong_node, evidence)
@@ -45,9 +45,6 @@ describe 'evidence' do
       should have_selector 'p',  text: 'Issue info'
     end
 
-    let(:trackable) { @evidence }
-    it_behaves_like 'a page with an activity feed'
-
     let(:commentable) { @evidence }
     it_behaves_like 'a page with a comments feed'
 
@@ -57,7 +54,7 @@ describe 'evidence' do
     describe "clicking \'delete\'", js: true do
       let(:submit_form) do
         page.accept_confirm do
-          within('.dots-container') do
+          within('.actions', match: :first) do
             find('.dots-dropdown').click
             click_link 'Delete'
           end
@@ -84,13 +81,12 @@ describe 'evidence' do
     include_examples 'nodes pages breadcrumbs', :show, Evidence
   end
 
-
   describe 'edit page', js: true do
     let(:submit_form) { click_button 'Update Evidence' }
 
     before do
       issue = create(:issue, node: issue_lib)
-      @evidence = create(:evidence, issue: issue, node: @node, updated_at: 2.seconds.ago)
+      @evidence = create(:evidence, issue:, node: @node, updated_at: 2.seconds.ago)
       visit edit_project_node_evidence_path(current_project, @node, @evidence)
       click_link 'Source'
     end
@@ -98,6 +94,14 @@ describe 'evidence' do
     it 'has a form to edit the evidence' do
       expect(page).to have_field :evidence_content
       expect(page).to have_field :evidence_issue_id
+    end
+
+    context 'when editing the evidence from an issue' do
+      it 'should redirect back to issue show page' do
+        visit edit_project_node_evidence_path(current_project, @node, @evidence, return_to: 'issue')
+        submit_form
+        expect(page).to have_current_path(project_issue_path(current_project, @evidence.issue))
+      end
     end
 
     it 'uses the full-screen editor plugin' # TODO
@@ -139,7 +143,7 @@ describe 'evidence' do
       end
 
       it "doesn't update the evidence" do
-        expect{submit_form}.not_to change{@evidence.reload.content}
+        expect { submit_form }.not_to change { @evidence.reload.content }
       end
 
       include_examples "doesn't create an Activity"
@@ -159,7 +163,6 @@ describe 'evidence' do
       include_examples 'a form with local auto save', Evidence, :edit
     end
   end
-
 
   describe 'new page', js: true do
     let(:tmp_path) { Rails.root.join('spec/fixtures/files/templates/') }
@@ -203,7 +206,7 @@ describe 'evidence' do
         let(:new_evidence) { @node.evidence.order('created_at ASC').last }
 
         it 'creates a new piece of evidence authored by the current user' do
-          expect{submit_form}.to change{@node.evidence.count}.by(1)
+          expect { submit_form }.to change { @node.evidence.count }.by(1)
           expect(new_evidence.author).to eq @logged_in_as.email
           expect(new_evidence.issue).to eq @issue_1
         end
@@ -217,21 +220,28 @@ describe 'evidence' do
         end
       end
 
-      context 'submitting the form with invalid information' do
+      context 'submitting the form without an existing issue' do
         before do
-          # No issue selected
+          @issue_0.destroy
+          @issue_1.destroy
+          visit new_project_node_evidence_path(current_project, @node)
+          expect(page).to have_content 'Auto-generate a new issue'
           fill_in :evidence_content, with: 'This is some evidence'
         end
 
-        it "doesn't create a new piece of evidence" do
-          expect{submit_form}.not_to change{Evidence.count}
+        it 'creates a new issue' do
+          expect { submit_form }.to change { Issue.count }.by(1)
         end
 
-        include_examples "doesn't create an Activity"
+        it 'creates a new piece of evidence' do
+          expect { submit_form }.to change { Evidence.count }.by(1)
+        end
 
-        it 'shows the form again' do
+        include_examples 'creates an Activity', :create, Evidence
+
+        it 'shows the new evidence' do
           submit_form
-          expect(page).to have_field :evidence_issue_id
+          expect(page).to have_content 'This is some evidence'
         end
       end
     end

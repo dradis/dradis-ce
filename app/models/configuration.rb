@@ -14,14 +14,9 @@ class Configuration < ApplicationRecord
 
   # -- Class Methods --------------------------------------------------------
   # --------------------------------------------------------------- Misc admin:
-  def self.shared_password
-    create_with(value: 'improvable_dradis')
-      .find_or_create_by(name: 'admin:password').value
-  end
-
-  def self.session_timeout
-    create_with(value: 15)
-      .find_or_create_by(name: 'admin:session_timeout').value.to_i
+  def self.mail_host
+    create_with(value: 'dradis-framework.dev')
+      .find_or_create_by(name: 'admin:mail_host').value
   end
 
   def self.max_deleted_inline
@@ -29,14 +24,52 @@ class Configuration < ApplicationRecord
       .find_or_create_by(name: 'admin:max_deleted_inline').value.to_i
   end
 
+  def self.session_timeout
+    create_with(value: 15)
+      .find_or_create_by(name: 'admin:session_timeout').value.to_i
+  end
+
+  def self.shared_password
+    create_with(value: 'improvable_dradis')
+      .find_or_create_by(name: 'admin:password').value
+  end
+
+  def self.signups_enabled?
+    create_with(value: 0)
+      .find_or_create_by(name: 'admin:signups_enabled').value.to_i == 1
+  end
+
+
   # --------------------------------------------------------------- admin:paths
+  # In CE ./templates/ is always a folder (created by bin/setup) but in Pro
+  # it can be a symlink (if we're in Production). We use .realdirpath to
+  # ensure we're using the "shared" folder (that's the target of the link).
+  def self.paths_templates
+    @@paths_templates ||= Rails.root.join('templates').realdirpath
+  end
+
+  def self.paths_templates_methodologies
+    create_with(value: paths_templates.join('methodologies').to_s)
+      .find_or_create_by(name: 'admin:paths:templates:methodologies').value
+  end
+
+  def self.paths_templates_notes
+    create_with(value: paths_templates.join('notes').to_s)
+      .find_or_create_by(name: 'admin:paths:templates:notes').value
+  end
+
   def self.paths_templates_plugins
-    create_with(value: Rails.root.join('templates', 'plugins').to_s)
+    create_with(value: paths_templates.join('plugins').to_s)
       .find_or_create_by(name: 'admin:paths:templates:plugins').value
   end
 
+  def self.paths_templates_projects
+    create_with(value: paths_templates.join('projects').to_s)
+      .find_or_create_by(name: 'admin:paths:templates:projects').value
+  end
+
   def self.paths_templates_reports
-    create_with(value: Rails.root.join('templates', 'reports'))
+    create_with(value: paths_templates.join('reports').to_s)
       .find_or_create_by(name: 'admin:paths:templates:reports').value
   end
 

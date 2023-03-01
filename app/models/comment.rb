@@ -5,7 +5,7 @@ class Comment < ApplicationRecord
 
   # -- Relationships --------------------------------------------------------
   belongs_to :commentable, polymorphic: true
-  belongs_to :user
+  belongs_to :user, optional: true
 
   # -- Callbacks ------------------------------------------------------------
   after_create :create_subscription
@@ -13,7 +13,6 @@ class Comment < ApplicationRecord
   # -- Validations ----------------------------------------------------------
   validates :content, presence: true, length: { maximum: DB_MAX_TEXT_LENGTH }
   validates :commentable, presence: true, associated: true
-  validates :user, presence: true, associated: true
 
   # -- Scopes ---------------------------------------------------------------
 
@@ -34,17 +33,22 @@ class Comment < ApplicationRecord
   end
 
   def create_subscription
-    Subscription.subscribe(user: user, to: commentable)
+    Subscription.subscribe(user: user, to: commentable) if user
   end
 
-  def notify(action)
+  def notify(action:, actor:, recipients:)
     case action.to_s
     when 'create'
       subscribe_mentioned()
-      create_notifications(action: :mention, recipients: mentions)
+      create_notifications(action: :mention, actor: actor,  recipients: mentions)
 
-      subscribers = commentable.subscriptions.where.not(user: user).map(&:user)
-      create_notifications(action: :create, recipients: subscribers - mentions)
+      # We're finding subscribers that have not been mention here
+      # using ActiveRecord because create_notifications expect recipients
+      # to be an ActiveRecord::Relation.
+      subscribers = User.includes(:subscriptions).where(
+        subscriptions: { subscribable_id: commentable.id }
+      ).where.not(id: [user.id] + mentions.pluck(:id))
+      create_notifications(action: :create, actor: actor, recipients: subscribers)
     end
   end
 
@@ -56,9 +60,34 @@ class Comment < ApplicationRecord
         emails << login
       end
 
-      project = commentable.project
-      project.testers_for_mentions.where(email: emails.uniq)
+      Comment.mentionable_users(commentable, User.where(email: emails.uniq))
     end
+  end
+
+  def self.mentionable_users(resource, extra_scope = nil)
+    base_scope = User.enabled
+    scope = extra_scope ? base_scope.merge(extra_scope) : base_scope
+
+    if resource.is_a?(Project)
+      scope.merge(resource.testers_for_mentions)
+    elsif resource.respond_to?(:project)
+      scope.merge(resource.project.testers_for_mentions)
+    else
+      ids = scope.select { |user|
+        Ability.new(user).can?(:read, resource)
+      }.map(&:id)
+
+      # Ensure we return an ActiveRecord::Relation object
+      scope.where(id: ids)
+    end
+  end
+
+  def to_xml(xml_builder, version: 3)
+    xml_builder.content do
+      xml_builder.cdata!(content)
+    end
+    xml_builder.author(user.email)
+    xml_builder.created_at(created_at.to_i)
   end
 
   private

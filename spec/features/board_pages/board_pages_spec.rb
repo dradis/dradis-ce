@@ -4,7 +4,6 @@ describe 'Board pages:' do
   subject { page }
 
   it 'should require authenticated users' do
-    Configuration.create(name: 'admin:password', value: 'rspec_pass')
     visit project_boards_path(create(:project))
     expect(current_path).to eq(login_path)
     expect(page).to have_content('Access denied.')
@@ -51,7 +50,7 @@ describe 'Board pages:' do
             click_link 'Create new methodology...'
 
             find('#modal-board-new', visible: true)
-            find('#template').find(:option, 'Methodology Template v3').select_option
+            find('#board_new_board_template').find(:option, 'Methodology Template v3').select_option
 
             click_button 'Add methodology'
           }.to change { Board.count }.by(1)

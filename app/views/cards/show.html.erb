@@ -1,28 +1,7 @@
 <% content_for :title, @card.name %>
 
 <% content_for :breadcrumbs do %>
-  <nav class="dots-container" data-behavior='breadcrumbs-nav'>
-    <%= render partial: 'breadcrumbs' %>
-    <ul class="nav">
-      <li class="dropdown dots-dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-lg"></i></a>
-        <div class="dropdown-menu">
-          <%= link_to edit_project_board_list_card_path(current_project, @board, @list, @card), class: 'dropdown-item' do %>
-            <i class="fa fa-pencil fa-fw"></i> Edit
-          <% end %>
-          <%= link_to(
-              project_board_list_card_path(current_project, @board, @list, @card),
-              class: 'dropdown-item text-error-hover',
-              data: { confirm: "Are you sure?\n\nProceeding will delete this card from the task list." },
-              method: :delete
-            ) do %>
-            <i class="fa fa-trash fa-fw"></i> Delete
-          <% end %>
-          <%= render partial: 'subscriptions/actions', locals: { subscribable: @card, dots_menu: true } %>
-        </div>
-      </li>
-    </ul>
-  </nav>
+  <%= render partial: 'breadcrumbs' %>
 <% end %>
 
 <%= render partial: 'poller_alerts' unless request.xhr? %>
@@ -34,10 +13,7 @@
 
   <ul class="tabs-container nav nav-tabs main-tabs">
     <li class="nav-item">
-      <a href="#info-tab" data-toggle="tab" class="nav-link active"><i class="fa fa-address-card-o"></i> Information</a>
-    </li>
-    <li class="nav-item">
-      <a href="#activity-tab" data-toggle="tab" class="nav-link"><i class="fa fa-refresh"></i> Recent activity</a>
+      <a href="#info-tab" data-toggle="tab" class="nav-link active"><i class="fa fa-address-card-o"></i> Card</a>
     </li>
   </ul>
 
@@ -45,13 +21,16 @@
     <div class="col-12 col-xxl-7 p-0">
       <div class="content-container mt-0 mr-xxl-3">
         <div class="tab-content mt-0">
-          <div class="tab-pane active" id="info-tab" data-behavior="subscription-actions" data-subscribed="<%= !@subscription.nil? %>">
+          <div class="tab-pane active" id="info-tab">
             <% cache ['card-information-tab', @card] do %>
               <div class="note-text-inner">
-                <h4 class="mb-4 header-underline"><%= @card.name %></h4>
+                <h4 class="mb-4 header-underline">
+                  <span class="text-truncate" title="<%= @card.name %>"><%= @card.name %></span>
+                  <%= render partial: 'actions' %>
+                </h4>
 
                 <div class="card-description">
-                  <div class="content-textile">
+                  <div class="content-textile" data-behavior="content-textile">
                     <%= markup(@card.description) %>
                   </div>
                 </div>
@@ -73,25 +52,8 @@
                 <% end %>
               <% end %>
 
-            </div>         
-          </div>
-
-          <% cache ['card-activity-tab', @card, @activities] do %>
-            <div class="tab-pane" id="activity-tab">
-              <h4 class="header-underline">
-                Recent activity
-                <% if @card.has_revision_history? %>
-                  - 
-                  <span class="actions">
-                    <%= link_to(project_board_list_card_revisions_path(current_project, @board, @list, @card)) do %>
-                      <i class="fa fa-history"></i> Revision history
-                    <% end %>
-                  </span>
-                <% end %>
-              </h4>
-              <%= render 'activities/feed', activities: @activities %>
             </div>
-          <% end %>
+          </div>
         </div>
       </div>
     </div>
@@ -99,14 +61,35 @@
     <div class="col-12 col-xxl-5 p-0">
       <div class="sticky-top">
         <div class="content-container ml-xxl-3 mt-0">
-          <%= render 'comments/feed' %>
+          <%= content_tag :div,
+            spinner_tag,
+            data: {
+              behavior: 'fetch fetch-comments',
+              path: comments_path(
+                comment: {
+                  commentable_type: @card.class,
+                  commentable_id: @card.id
+                }
+              )
+            }
+          %>
         </div>
 
         <div class="content-container ml-xxl-3">
-          <%= render 'subscriptions/feed', subscribable: @card %>
+          <%= content_tag :div,
+            spinner_tag,
+            data: {
+              behavior: 'fetch fetch-subscriptions',
+              path: subscriptions_path(
+                subscription: {
+                  subscribable_type: @card.class,
+                  subscribable_id: @card.id
+                }
+              )
+            }
+          %>
         </div>
       </div>
     </div>
-    
   </div>
 </div>

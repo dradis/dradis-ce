@@ -2,10 +2,10 @@ require 'rails_helper'
 
 describe Tagging do
   describe '#valid?' do
-    let(:tag)      { Tag.create!(name: 'pancakes') }
+    let(:tag)      { Tag.create!(name: '!9467bd_critical') }
     let(:taggable) { create(:node) }
 
-    it "ensures tags are unique for any given taggable" do
+    it 'ensures tags are unique for any given taggable' do
       tagging = Tagging.new
       tagging.tag      = tag
       tagging.taggable = taggable

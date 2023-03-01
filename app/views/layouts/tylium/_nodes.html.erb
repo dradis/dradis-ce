@@ -1,15 +1,22 @@
 <ul class="nodes-nav tree-navigation">
-  <li class="tree-header m-0 <%= 'active' if %w[nodes notes evidence].include?(controller_name) %>" data-behavior="sidebar-toggle open-only">
+  <li class="tree-header sidebar-link m-0 <%= 'active' if controller_path.include?('nodes') %>" data-behavior="nodes-tree sidebar-toggle open-only">
     <i class="fa fa-sitemap sidebar-link-icon"></i>
-    <span class="sidebar-link-label">Nodes</span>
-    <div class="add-subnode">
-      <a href="#modal_add_branch_node" data-toggle="modal" tabindex="-1"><i class="fa fa-plus"></i></a>
+    <div class="sidebar-link-label-container">
+      <span class="sidebar-link-label">Nodes</span>
+      <div class="add-node">
+        <a href="#modal_add_branch_node" data-toggle="modal" tabindex="-1"><i class="fa fa-plus" data-behavior="add-node"></i><span class="sr-only">Add node</span></a>
+      </div>
     </div>
   </li>
   
-  <div class="nodes-list restrict-height pb-4 px-3" data-behavior="restrict-height">
+  <div class="nodes-list restrict-height pb-lg-4 px-lg-3" data-behavior="restrict-height">
     <% if @nodes.empty? %>
-      <li class="no-nodes">No nodes defined yet</li>
+      <%= render 'shared/empty_state',
+        actions_partial: 'layouts/tylium/nodes/empty_state_actions',
+        docs_link: 'https://dradisframework.com/support/guides/projects/nodes.html',
+        name: 'node',
+        text: 'Use nodes to structure and organize your project.'
+      %>
     <% else %>
       <%= render partial: 'layouts/tylium/node', collection: @nodes %>
     <% end %>

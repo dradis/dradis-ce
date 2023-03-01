@@ -7,7 +7,8 @@ module Dradis::CE::API
       before_action :set_node
 
       def index
-        @evidence = @node.evidence.all.order('updated_at desc')
+        @evidence = @node.evidence.order('updated_at desc')
+        @evidence = @evidence.page(params[:page].to_i) if params[:page]
       end
 
       def show
@@ -26,7 +27,7 @@ module Dradis::CE::API
 
       def update
         @evidence = @node.evidence.find(params[:id])
-        if @evidence.update_attributes(evidence_params)
+        if @evidence.update(evidence_params)
           track_updated(@evidence)
           render evidence: @evidence
         else

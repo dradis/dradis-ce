@@ -35,4 +35,6 @@ class Subscription < ApplicationRecord
     self.subscribable_type = 'Issue' if new_subscribable.is_a?(Issue)
     new_subscribable
   end
+
+  ActiveSupport.run_load_hooks(:subscription_model, self)
 end
