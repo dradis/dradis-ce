@@ -1,4 +1,4 @@
-<% cache ['tags-table', @all_columns] do %>
+<% cache ['tags-table', @all_columns, @tags] do %>
   <table class="table table-striped mb-0"
          data-behavior="dradis-datatable"
          data-default-columns="<%= @default_columns.to_json %>"
@@ -22,7 +22,7 @@
               case column
               when 'Name'
                 [
-                  tag.display_name, 
+                  tag.display_name,
                   content_tag(:span, class: 'tag', style: "color: #{tag.color}") do
                     content_tag(:i, nil, class: 'fa fa-tag fa-fw mr-1') + tag.display_name
                   end
@@ -36,7 +36,7 @@
               end
               %>
               <%= content_tag :td,
-                display, 
+                display,
                 data: {
                   sort: sort
                 }

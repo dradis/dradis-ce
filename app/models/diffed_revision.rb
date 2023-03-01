@@ -39,7 +39,7 @@ class DiffedRevision
 
   def before
     # Version#object is the state of the object *before* the change was made.
-    @before ||= YAML.load(@revision.object, permitted_classes: [ActiveSupport::TimeWithZone, Time, ActiveSupport::TimeZone], aliases: true)
+    @before ||= YAML.load(@revision.object, permitted_classes: [ActiveSupport::TimeWithZone, ActiveSupport::TimeZone, Date, Time], aliases: true)
   end
 
   def after
@@ -49,7 +49,7 @@ class DiffedRevision
     # this method crashes, then bad data has snuck into your DB somehow.
     @after ||=
       if next_revision = @revision.next
-        YAML.load(next_revision.object, permitted_classes: [ActiveSupport::TimeWithZone, Time, ActiveSupport::TimeZone], aliases: true)
+        YAML.load(next_revision.object, permitted_classes: [ActiveSupport::TimeWithZone, ActiveSupport::TimeZone, Date, Time], aliases: true)
       else
         @record.attributes
       end

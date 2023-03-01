@@ -1,4 +1,4 @@
-<% cache ['issues-table', @all_columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last] do %>
+<% cache ['issues-table', @all_columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last, @tags] do %>
     <table class="table table-striped mb-0"
       data-behavior="dradis-datatable"
       data-default-columns="<%= @default_columns.to_json %>"
