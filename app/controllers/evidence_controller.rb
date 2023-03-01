@@ -86,7 +86,7 @@ class EvidenceController < NestedNodeResourceController
           if request.headers['Referer'] == project_node_evidence_url(current_project, @node, @evidence)
             redirect_to project_node_path(current_project, @node), notice: notice
           else
-            redirect_back fallback_location: project_node_path(current_project, @node), notice:
+            redirect_back fallback_location: project_node_path(current_project, @node), notice: notice
           end
         }
         format.js

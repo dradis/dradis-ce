@@ -45,7 +45,7 @@ class ExportController < AuthenticatedController
   def validation_status
     @log_uid = params[:log_uid].to_i
     @job_id  = params[:job_id]
-    @logs    = Log.where("uid = ? and id > ?", @log_uid, params[:after].to_i)
+    @logs    = Log.where('uid = ? and id > ?', @log_uid, params[:after].to_i)
 
     status = Resque::Plugins::Status::Hash.get(@job_id)
     render json: status.reverse_merge({
@@ -61,8 +61,8 @@ class ExportController < AuthenticatedController
   def find_plugins
     @plugins = Dradis::Plugins::with_feature(:export).collect do |plugin|
       path = plugin.to_s
-      path[0..path.rindex('::')-1].constantize
-    end.sort{|a,b| a.name <=> b.name }
+      path[0..path.rindex('::') - 1].constantize
+    end.sort { |a, b| a.name <=> b.name }
   end
 
   # In case something goes wrong with the export, fail graciously instead of
@@ -72,7 +72,7 @@ class ExportController < AuthenticatedController
     redirect_to project_upload_manager_path(current_project)
   end
 
-  def templates_dir_for(args={})
+  def templates_dir_for(args = {})
     plugin = args[:plugin]
     File.join(::Configuration::paths_templates_reports, plugin::Engine.plugin_name.to_s)
   end
