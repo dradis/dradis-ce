@@ -147,7 +147,7 @@ class IssuesController < AuthenticatedController
     # index and a TOCTOR can appear between the Note read and the Issue.find
     Note.transaction do
       @unsorted_issues = Issue.where(node_id: @issuelib.id).select(
-        'notes.id, notes.author, notes.text, '\
+        'notes.id, notes.author, notes.text, notes.state, '\
         'count(evidence.id) as affected_count, notes.created_at, notes.updated_at'
       ).
       joins('LEFT OUTER JOIN evidence on notes.id = evidence.issue_id').
