@@ -130,7 +130,7 @@ class IssuesController < AuthenticatedController
   end
 
   def set_columns
-    default_field_names = ['Title', 'Tags', 'Affected'].freeze
+    default_field_names = ['Title', 'Tags', 'Affected', 'State'].freeze
     extra_field_names = ['Created', 'Created by', 'Updated'].freeze
 
     dynamic_fields = dynamic_field_names(@unsorted_issues)
