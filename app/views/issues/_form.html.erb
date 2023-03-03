@@ -31,6 +31,8 @@
 
   <%= render 'tag_input', f: f %>
 
+  <%= f.select :state, Issue.states.map { |s, id| [s.humanize, s] } %>
+
   <div class="form-actions">
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
     <%=
