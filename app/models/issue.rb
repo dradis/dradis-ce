@@ -10,6 +10,8 @@ class Issue < Note
 
   include Taggable
 
+  enum state: [:draft, :ready_for_review, :published]
+
   # -- Relationships --------------------------------------------------------
   has_many :evidence, dependent: :destroy
   has_many :affected, through: :evidence, source: :node
