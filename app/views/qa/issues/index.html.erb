@@ -1,0 +1,17 @@
+<% content_for :title, 'Quality Assurance' %>
+
+<!-- Main content -->
+<div class="content-container" id="qa-viewer">
+  <div class="note-text-inner">
+    <% if @issues.any? %>
+      <%= render partial: 'issues/table', locals: { issues: @issues, local_storage_key: "project.ce.#{dom_id(current_project)}.qa_issues_datatable" } %>
+    <% else %>
+      <%= render 'shared/empty_state',
+        actions_partial: 'issues/empty_state_actions',
+        name: 'issue',
+        docs_link: 'https://dradisframework.com/support/guides/projects/issues.html',
+        text: 'Use issues to represent vulnerabilities or findings. Issues contain general information, such as: Title, Description, Recommendation, CVE\'s, etc. Issues are the findings you\'ll end up including in your report.'
+      %>
+    <% end %>
+  </div>
+</div>

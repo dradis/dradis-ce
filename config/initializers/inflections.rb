@@ -15,4 +15,5 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'IPs'
   inflect.acronym 'OS'
   inflect.acronym 'OSs'
+  inflect.acronym 'QA'
 end

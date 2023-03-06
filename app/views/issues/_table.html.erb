@@ -1,13 +1,14 @@
 <% cache ['issues-table', @all_columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last, @tags] do %>
-    <table class="table table-striped mb-0"
-      data-behavior="dradis-datatable"
-      data-default-columns="<%= @default_columns.to_json %>"
-      data-item-name="issue"
-      data-local-storage-key="project.ce.<%= dom_id(current_project) %>.issues_datatable"
-      data-tags='<%= @tags.map { |t| [t.display_name, t.color, t.name] }.to_json %>'
-      data-tags-path="<%= project_tags_path(current_project) %>"
-      data-new-tag-path="<%= new_project_tag_path(current_project) %>"
-      >
+  <% table_attributes = {
+    behavior: 'dradis-datatable',
+    'default-columns': @default_columns.to_json,
+    'item-name': 'issue',
+    'local-storage-key': local_storage_key,
+    'tags-path': project_tags_path(current_project),
+    'new-tag-path': new_project_tag_path(current_project)
+  }%>
+  <% table_attributes.merge!(tags: @tags.map { |t| [t.display_name, t.color, t.name] }.to_json) if local_assigns[:tags] %>
+  <%= tag.table class: 'table table-striped mb-0', data: table_attributes do %>
       <thead>
         <tr>
           <th class="no-sort" data-column-visible="false"><span class="sr-only">Select</span></th>
@@ -19,7 +20,7 @@
       </thead>
       <tbody>
         <% issues.each do |issue| %>
-        <% cache [issue, @all_columns, issue.affected_count, 'issues-table'] do %>
+        <% cache [issue, @all_columns, issue.try(:affected_count), 'issues-table'] do %>
         <tr id="issue-<%= issue.id %>" data-tag-url="<%= project_issue_path(current_project, issue) %>">
           <td class="select-checkbox" data-behavior="select-checkbox"></td>
           <% @all_columns.each do |column| %>
@@ -70,5 +71,5 @@
         <% end %>
       <% end %>
     </tbody>
-  </table>
+  <% end %>
 <% end %>
