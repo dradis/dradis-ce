@@ -387,7 +387,7 @@ describe 'Issues pages' do
 
     describe 'revision history' do
       let(:issue) do
-        issue = create(:issue, node:, text: 'issue text')
+        issue = create(:issue, node: node, text: 'issue text')
         issue.update(text: 'updated text')
         issue
       end
