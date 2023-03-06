@@ -1,6 +1,11 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-light" data-behavior="navbar">
   <div class="d-flex justify-content-between w-100">
-    <%= link_to current_project.name, main_app.project_path(current_project), class: 'navbar-brand', data: { behavior: 'navbar-brand' } %>
+    <div class="navbar-brand" data-behavior="navbar-brand">
+      <%= link_to current_project.name, main_app.project_path(current_project), class: 'project-title' %>
+      <%= link_to 'javascript:void(0)', class: 'js-try-pro change-project-link', data: { term: 'projects', url: 'https://dradisframework.com/pro/pages/projects.html'}, title: 'Change Project' do %>
+        <i class="fa fa-random fa-fw"></i> Change Project
+      <% end %>
+    </div>
     <div class="d-inline-flex">
       <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"><i class="fa fa-bars"></i></span>
@@ -15,9 +20,6 @@
           </li>
           <li class="nav-item">
             <%= link_to main_app.project_export_manager_path(current_project), class: 'nav-link', title: 'Export' do %><i class="fa fa-file-text-o fa-lg"></i> Export<% end %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'javascript:void(0)', class: 'js-try-pro nav-link', data: { term: 'projects', url: 'https://dradisframework.com/pro/pages/projects.html'}, title: 'Change Project'  do %><i class="fa fa-random fa-lg"></i> Change Project<% end %>
           </li>
           <li class="nav-item">
             <%= link_to main_app.project_configurations_path(current_project), class: 'nav-link', title: 'Configuration' do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %>
