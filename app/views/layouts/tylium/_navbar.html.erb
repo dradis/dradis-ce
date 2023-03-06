@@ -22,6 +22,11 @@
             <%= link_to main_app.project_export_manager_path(current_project), class: 'nav-link', title: 'Export' do %><i class="fa fa-file-text-o fa-lg"></i> Export<% end %>
           </li>
           <li class="nav-item">
+            <%= link_to main_app.project_qa_issues_path(current_project), class: 'nav-link', title: 'QA' do %>
+              <i class="fa fa-handshake-o fa-lg"></i> QA
+            <% end %>
+          </li>
+          <li class="nav-item">
             <%= link_to main_app.project_configurations_path(current_project), class: 'nav-link', title: 'Configuration' do %><i class="fa fa-cog fa-lg"></i> Configuration<% end %>
           </li>
           <li class="nav-item notifications dropdown">
