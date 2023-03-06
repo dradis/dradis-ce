@@ -8,12 +8,12 @@
   .navbar-brand {
     align-items: center;
     display: flex;
-    gap: 0.5rem;
     margin-left: 6.4rem;
+    overflow: hidden;
 
     .change-project-link {
-      font-size: 75%;
-      padding-top: 0.15rem;
+      font-size: 0.75rem;
+      margin-left: 0.5rem;
     }
 
     .project-title {
