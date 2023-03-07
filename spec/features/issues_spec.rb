@@ -84,7 +84,7 @@ describe 'Issues pages' do
             it 'creates a new ready for review Issue' do
               within '.btn-states' do
                 click_button 'Toggle Dropdown'
-                find('p[data-behavior="state-label"]', text: 'Create Issue (Ready for review)').click
+                find('p[data-behavior="state-label"]', text: 'Ready for review').click
               end
               expect { submit_form }.to change { current_project.issues.count }.by(1)
               issue = current_project.issues.last
@@ -94,7 +94,7 @@ describe 'Issues pages' do
             it 'creates a new published Issue' do
               within '.btn-states' do
                 click_button 'Toggle Dropdown'
-                find('p[data-behavior="state-label"]', text: 'Create Issue (Published)').click
+                find('p[data-behavior="state-label"]', text: 'Published').click
               end
               expect { submit_form }.to change { current_project.issues.count }.by(1)
               issue = current_project.issues.last
@@ -224,7 +224,7 @@ describe 'Issues pages' do
             it 'updates the issue\'s state to draft' do
               within '.btn-states' do
                 click_button 'Toggle Dropdown'
-                find('p[data-behavior="state-label"]', text: 'Update Issue (Draft)').click
+                find('p[data-behavior="state-label"]', text: 'Draft').click
               end
               submit_form
               expect(@issue.reload.state).to eq('draft')
@@ -233,7 +233,7 @@ describe 'Issues pages' do
             it 'updates the issue\'s state to ready for review' do
               within '.btn-states' do
                 click_button 'Toggle Dropdown'
-                find('p[data-behavior="state-label"]', text: 'Update Issue (Ready for review)').click
+                find('p[data-behavior="state-label"]', text: 'Ready for review').click
               end
               submit_form
               expect(@issue.reload.state).to eq('ready_for_review')
@@ -245,7 +245,7 @@ describe 'Issues pages' do
 
               within '.btn-states' do
                 click_button 'Toggle Dropdown'
-                find('p[data-behavior="state-label"]', text: 'Update Issue (Published)').click
+                find('p[data-behavior="state-label"]', text: 'Published').click
               end
               submit_form
               expect(@issue.reload.state).to eq('published')
