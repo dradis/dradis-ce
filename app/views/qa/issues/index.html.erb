@@ -2,30 +2,30 @@
 
 <div class="row m-0">
   <ul class="tabs-container nav nav-tabs main-tabs w-100">
-    <li class="nav-item"><a href="#issue-tab" data-toggle="tab" class="nav-link active"><i class="fa fa-bug"></i> Issues</a></li>
+    <li class="nav-item">
+      <%= link_to project_qa_issues_path(current_project), class: 'nav-link active' do %>
+        <i class="fa fa-bug"></i> Issues
+      <% end %>
+    </li>
   </ul>
 </div>
 
 <div class="row m-0">
   <div class="col-12 p-0">
     <div class="content-container mt-0 pb-3" id="qa-viewer">
-      <div class="tab-content mt-0">
-        <div class="tab-pane active" id="info-tab">
-          <% if @issues.any? %>
-            <%= render partial: 'issues/table', locals: { issues: @issues, local_storage_key: "project.ce.#{dom_id(current_project)}.qa_issues_datatable" } %>
-          <% else %>
-            <div class="empty-state mt-3">
-              <div class="empty-state-icon">
-                <%= image_tag "icons/#{rand(9)}.svg" %>
-              </div>
-              <div class="empty-state-body">
-                <div class="container">
-                  <h4 class="empty-state-title">You don't have any issues to review yet.</h4>
-                  <p class="empty-state-body-text">Ensure the accuracy and completeness of your data by QA-ing issues. Once there are issues marked as 'ready for review' you'll be able to go through each one here, make any necessary changes, leave comments, publish, etc.</p>
-                  <div class="empty-state-actions">
-                    <a href="https://dradisframework.com/support/guides/qa" class="empty-state-docs-link" target="_blank">More about QA</a>
-                  </div>
-                </div>
+      <% if @issues.any? %>
+        <%= render partial: 'issues/table', locals: { issues: @issues, local_storage_key: "project.ce.#{dom_id(current_project)}.qa_issues_datatable" } %>
+      <% else %>
+        <div class="empty-state mt-3">
+          <div class="empty-state-icon">
+            <%= image_tag "icons/#{rand(9)}.svg" %>
+          </div>
+          <div class="empty-state-body">
+            <div class="container">
+              <h4 class="empty-state-title">You don't have any issues to review yet.</h4>
+              <p class="empty-state-body-text">Ensure the accuracy and completeness of your data by QA-ing issues. Once there are issues marked as 'ready for review' you'll be able to go through each one here, make any necessary changes, leave comments, publish, etc.</p>
+              <div class="empty-state-actions">
+                <a href="https://dradisframework.com/support/guides/qa" class="empty-state-docs-link" target="_blank">More about QA</a>
               </div>
             </div>
           <% end %>
