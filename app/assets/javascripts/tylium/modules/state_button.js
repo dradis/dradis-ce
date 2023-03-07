@@ -4,7 +4,7 @@ document.addEventListener('turbolinks:load', function () {
       selectedState = $selectedRadio
         .parent()
         .find('[data-behavior~=state-label]');
-      $('[data-behavior~=state-button]').val(selectedState.text());
+      $('[data-behavior~=state-button]').text(selectedState.text());
     }
 
     updateBtnText($('[data-behavior~=state-radio]:checked'));
