@@ -3,7 +3,7 @@ class QA::IssuesController < AuthenticatedController
 
   def index
     @issues = Issue.ready_for_review
-    @all_columns = ['Title']
+    @all_columns = @default_columns = ['Title']
   end
 
   def multiple_update
