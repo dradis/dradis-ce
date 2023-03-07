@@ -33,10 +33,17 @@ DradisDatatable.prototype.updateIssueState = function(newState) {
       },
       success: function(){
         that.toggleLoadingState(selectedRows, false);
+        that.toggleStateBtn(false);
 
         selectedRows.deselect().remove().draw();
 
-        that.toggleStateBtn(false);
+        $('[data-behavior="qa-alert"]').remove();
+        $('.page-title').after(`
+          <div class="alert alert-success" data-behavior="qa-alert">
+            <a class="close" data-dismiss="alert" href="javascript:void(0)">x</a>
+            Successfully set the issues as ${newState}!
+          </div>
+        `);
       },
       error: function(){
         that.toggleLoadingState(selectedRows, false);
