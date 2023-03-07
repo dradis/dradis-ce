@@ -95,6 +95,20 @@ class DradisDatatable {
             buttons: this.setupTagButtons()
           },
           {
+            attr: {
+              'data-behavior': 'table-action'
+            },
+            autoClose: true,
+            available: function(){
+              return that.$paths.data('state-url') !== undefined;
+            },
+            className: 'd-none',
+            extend: 'collection',
+            name: 'stateBtn',
+            text: 'Update State<i class="fa fa-caret-down fa-fw"></i>',
+            buttons: this.setupStateButtons()
+          },
+          {
             extend: 'colvis',
             text: '<i class="fa fa-columns mr-1 fa-fw"></i>Columns<i class="fa fa-caret-down fa-fw"></i>',
             titleAttr: 'Choose columns to show',
@@ -225,6 +239,7 @@ class DradisDatatable {
     this.setupMergeButtonToggle();
     this.setupTagButtonToggle();
     this.setupBulkDeleteButtonToggle();
+    this.setupStateButtonToggle();
     this.setupValidation();
 
     this.$table.trigger('dradis:datatable:load');

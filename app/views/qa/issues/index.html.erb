@@ -4,6 +4,8 @@
 <div class="content-container" id="qa-viewer">
   <div class="note-text-inner">
     <% if @issues.any? %>
+      <div data-behavior="datatable-paths"
+           data-state-url="<%= multiple_update_project_qa_issues_path(current_project) %>" >
       <%= render partial: 'issues/table', locals: { issues: @issues, local_storage_key: "project.ce.#{dom_id(current_project)}.qa_issues_datatable" } %>
     <% else %>
       <%= render 'shared/empty_state',
