@@ -1,4 +1,5 @@
 class QA::IssuesController < AuthenticatedController
+  include LiquidEnabledResource
   include ProjectScoped
 
   def index
