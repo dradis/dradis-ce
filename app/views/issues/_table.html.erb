@@ -20,7 +20,7 @@
     </thead>
     <tbody>
       <% issues.each do |issue| %>
-        <% cache [issue, @all_columns, issue.try(:affected_count), 'issues-table'] do %>
+        <% cache [issue, @all_columns, issue.try(:affected_count), 'issues-table', @tags] do %>
           <tr id="issue-<%= issue.id %>" data-tag-url="<%= project_issue_path(current_project, issue) %>">
             <td class="select-checkbox" data-behavior="select-checkbox"></td>
             <% @all_columns.each do |column| %>
@@ -59,7 +59,7 @@
                     sort: sort
                   }
               %>
-            <% end  %>
+            <% end %>
             <td class="column-actions">
               <%= link_to edit_project_issue_path(current_project, issue), class: '' do %>
                 <i class="fa fa-pencil"></i> Edit
