@@ -96,7 +96,7 @@ Rails.application.routes.draw do
     resources :tags, except: [:show]
 
     namespace :qa do
-      resources :issues, only: [:index, :show, :edit]
+      resources :issues, only: [:index, :show]
     end
 
     get 'search' => 'search#index'
