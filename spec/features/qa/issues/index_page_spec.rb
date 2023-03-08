@@ -12,6 +12,10 @@ describe 'Issues pages' do
   context 'as authenticated user' do
     before { login_to_project_as_user }
 
+    let!(:records) do
+      create_list(:issue, 10, state: :ready_for_review, node: current_project.issue_library)
+    end
+
     include_examples 'qa pages', :issue
   end
 end
