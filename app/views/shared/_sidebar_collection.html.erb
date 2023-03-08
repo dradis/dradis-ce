@@ -3,8 +3,8 @@
     <div class="options">
       <%= render 'shared/add_item_dropdown',
         name: name,
-        new_path: new_path,
-        category_id: category_id,
+        new_path: local_assigns[:new_path] ? new_path : nil,
+        category_id: local_assigns[:category_id] ? category_id : nil,
         menu_class: 'pull-right'
       %>
     </div>
