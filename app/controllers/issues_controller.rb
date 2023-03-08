@@ -130,7 +130,7 @@ class IssuesController < AuthenticatedController
   end
 
   def set_columns
-    default_field_names = ['Title', 'Tags', 'Affected'].freeze
+    default_field_names = ['Title', 'Tags', 'Affected', 'State'].freeze
     extra_field_names = ['Created', 'Created by', 'Updated'].freeze
 
     dynamic_fields = dynamic_field_names(@unsorted_issues)
@@ -147,7 +147,7 @@ class IssuesController < AuthenticatedController
     # index and a TOCTOR can appear between the Note read and the Issue.find
     Note.transaction do
       @unsorted_issues = Issue.where(node_id: @issuelib.id).select(
-        'notes.id, notes.author, notes.text, '\
+        'notes.id, notes.author, notes.text, notes.state, '\
         'count(evidence.id) as affected_count, notes.created_at, notes.updated_at'
       ).
       joins('LEFT OUTER JOIN evidence on notes.id = evidence.issue_id').
@@ -183,7 +183,7 @@ class IssuesController < AuthenticatedController
   end
 
   def issue_params
-    params.require(:issue).permit(:tag_list, :text)
+    params.require(:issue).permit(:state, :tag_list, :text)
   end
 
   def set_auto_save_key
