@@ -1,0 +1,8 @@
+<div class="content-container ml-xxl-3">
+  <h4 class="header-underline">QA</h4>
+  <p class="font-weight-bold mb-2">Update State</p>
+  <div class="btn-group p-static">
+    <%= button_to 'Draft', update_state_project_qa_issue_path(current_project, @issue, state: 'draft'), method: :patch, class: 'btn btn-secondary text-dark rounded-left' %>
+    <%= button_to 'Published', update_state_project_qa_issue_path(current_project, @issue, state: 'published'), method: :patch, class: 'btn btn-primary rounded-right' %>
+  </div>
+</div>
