@@ -78,7 +78,9 @@ shared_examples 'a form with local auto save' do |klass, action|
 
   context 'when form is saved' do
     it 'clears cached data' do
-      page.find('input[type="submit"]').click
+      within '.content-container' do
+        page.find('[type="submit"]').click
+      end
       visit model_path
       click_link 'Source'
 
@@ -151,7 +153,9 @@ shared_examples 'a form with local auto save' do |klass, action|
           # Fixed weird bug where submit button not in viewport for Card form
           page.execute_script('$("#view-content").scrollTop(10000)')
 
-          page.find('input[type="submit"]').click
+          within '.content-container' do
+            page.find('[type="submit"]').click
+          end
           visit "#{model_path}?template=simple_note"
           click_link 'Source'
 
