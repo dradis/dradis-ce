@@ -1,12 +1,7 @@
 <% content_for :title, 'Quality Assurance' %>
 
 <% content_for :breadcrumbs do %>
-  <nav>
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><%= link_to 'QA', project_qa_issues_path(current_project) %></li>
-      <li class="breadcrumb-item active"><%= (@issue.title? ? @issue.title : "Issue ##{@issue.id}")%></li>
-    </ol>
-  </nav>
+  <%= render 'breadcrumb' %>
 <% end %>
 
 <div class="row m-0">
