@@ -14,7 +14,13 @@
   <div class="col-12 p-0">
     <div class="content-container mt-0 pb-3" id="qa-viewer">
       <% if @issues.any? %>
-        <%= render partial: 'issues/table', locals: { issues: @issues, local_storage_key: "project.ce.#{dom_id(current_project)}.qa_issues_datatable" } %>
+        <%=
+          render partial: 'issues/table', locals: {
+            hide_delete: true,
+            issues: @issues,
+            local_storage_key: "project.ce.#{dom_id(current_project)}.qa_issues_datatable"
+          }
+        %>
       <% else %>
         <div class="empty-state mt-3">
           <div class="empty-state-icon">
