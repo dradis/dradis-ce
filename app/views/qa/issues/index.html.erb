@@ -16,7 +16,13 @@
       <% if @issues.any? %>
         <div data-behavior="datatable-paths"
              data-state-url="<%= multiple_update_project_qa_issues_path(current_project) %>" >
-        <%= render partial: 'issues/table', locals: { issues: @issues, local_storage_key: "project.ce.#{dom_id(current_project)}.qa_issues_datatable" } %>
+        <%=
+          render partial: 'issues/table', locals: {
+            hide_delete: true,
+            issues: @issues,
+            local_storage_key: "project.ce.#{dom_id(current_project)}.qa_issues_datatable"
+          }
+        %>
       <% else %>
         <div class="empty-state mt-3">
           <div class="empty-state-icon">
