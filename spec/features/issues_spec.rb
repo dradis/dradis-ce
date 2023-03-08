@@ -74,6 +74,33 @@ describe 'Issues pages' do
 
           include_examples 'creates an Activity', :create, Issue
 
+          context 'with states' do
+            it 'creates a new draft Issue' do
+              expect { submit_form }.to change { current_project.issues.count }.by(1)
+              issue = current_project.issues.last
+              expect(issue.state).to eq('draft')
+            end
+
+            it 'creates a new ready for review Issue' do
+              within '.btn-states' do
+                click_button 'Toggle Dropdown'
+                find('p[data-behavior="state-label"]', text: 'Ready for review').click
+              end
+              expect { submit_form }.to change { current_project.issues.count }.by(1)
+              issue = current_project.issues.last
+              expect(issue.state).to eq('ready_for_review')
+            end
+
+            it 'creates a new published Issue' do
+              within '.btn-states' do
+                click_button 'Toggle Dropdown'
+                find('p[data-behavior="state-label"]', text: 'Published').click
+              end
+              expect { submit_form }.to change { current_project.issues.count }.by(1)
+              issue = current_project.issues.last
+              expect(issue.state).to eq('published')
+            end
+          end
         end
 
         context 'submitting the form with invalid information' do
@@ -190,6 +217,38 @@ describe 'Issues pages' do
             with_versioning do
               submit_form
               expect(@issue.reload.versions.last.whodunnit).to eq @logged_in_as.email
+            end
+          end
+
+          context 'with states' do
+            it 'updates the issue\'s state to draft' do
+              within '.btn-states' do
+                click_button 'Toggle Dropdown'
+                find('p[data-behavior="state-label"]', text: 'Draft').click
+              end
+              submit_form
+              expect(@issue.reload.state).to eq('draft')
+            end
+
+            it 'updates the issue\'s state to ready for review' do
+              within '.btn-states' do
+                click_button 'Toggle Dropdown'
+                find('p[data-behavior="state-label"]', text: 'Ready for review').click
+              end
+              submit_form
+              expect(@issue.reload.state).to eq('ready_for_review')
+            end
+
+            it 'updates the issue\'s state to published' do
+              @issue = create(:issue, node: issuelib, updated_at: 2.seconds.ago, state: 'draft')
+              visit edit_project_issue_path(current_project, @issue)
+
+              within '.btn-states' do
+                click_button 'Toggle Dropdown'
+                find('p[data-behavior="state-label"]', text: 'Published').click
+              end
+              submit_form
+              expect(@issue.reload.state).to eq('published')
             end
           end
 
@@ -317,12 +376,18 @@ describe 'Issues pages' do
           include_examples 'deleted item is listed in Trash', :issue
           include_examples 'recover deleted item', :issue
         end
+
+        context 'with states' do
+          it 'shows the issue states in the view' do
+            expect(page).to have_text "(#{@issue.state.humanize})"
+          end
+        end
       end
     end
 
     describe 'revision history' do
       let(:issue) do
-        issue = create(:issue, node:, text: 'issue text')
+        issue = create(:issue, node: node, text: 'issue text')
         issue.update(text: 'updated text')
         issue
       end
