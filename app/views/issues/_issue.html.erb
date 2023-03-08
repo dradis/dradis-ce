@@ -15,11 +15,13 @@
       <i class="fa fa-pencil"></i> Edit
     <% end %>
 
-    <%= link_to main_app.project_issue_path(current_project, issue),
+    <% unless local_assigns[:qa] %>
+      <%= link_to main_app.project_issue_path(current_project, issue),
           method: :delete,
           data: { confirm: "Are you sure?\n\nProceeding will delete this issue and any associated evidence." },
           class: 'list-item-action-delete' do %>
-      <i class="fa fa-trash"></i> Delete
+        <i class="fa fa-trash"></i> Delete
+      <% end %>
     <% end %>
   </div>
 
