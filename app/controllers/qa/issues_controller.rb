@@ -6,7 +6,8 @@ class QA::IssuesController < AuthenticatedController
   before_action :set_issue, only: [:show, :update_state]
 
   def index
-    @all_columns = ['Title']
+    @issues = current_project.issues.ready_for_review
+    @all_columns = @default_columns = ['Title']
   end
 
   def show; end
