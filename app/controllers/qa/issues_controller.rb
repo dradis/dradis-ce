@@ -3,6 +3,6 @@ class QA::IssuesController < AuthenticatedController
 
   def index
     @issues = current_project.issues.ready_for_review
-    @all_columns = ['Title']
+    @all_columns = @default_columns = ['Title']
   end
 end
