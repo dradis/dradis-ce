@@ -15,7 +15,7 @@
     <div class="content-container mt-0 pb-3" id="qa-viewer">
       <% if @issues.any? %>
         <div data-behavior="datatable-paths"
-             data-state-url="<%= multiple_update_project_qa_issues_path(current_project) %>" >
+             data-table-state-url="<%= multiple_update_project_qa_issues_path(current_project) %>" >
         <%=
           render partial: 'issues/table', locals: {
             hide_delete: true,

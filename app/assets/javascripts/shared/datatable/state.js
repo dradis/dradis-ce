@@ -1,5 +1,5 @@
 DradisDatatable.prototype.setupStateButtons = function() {
-  if (this.$paths.data('state-url') === undefined){
+  if (this.$paths.data('table-state-url') === undefined){
     return [];
   }
 
@@ -25,7 +25,7 @@ DradisDatatable.prototype.updateIssueState = function(newState) {
     var selectedRows = this.dataTable.rows({ selected: true });
 
     $.ajax({
-      url: this.$paths.data('state-url'),
+      url: this.$paths.data('table-state-url'),
       method: 'PUT',
       data: { ids: that.rowIds(selectedRows), state: newState },
       beforeSend: function (){
@@ -56,7 +56,7 @@ DradisDatatable.prototype.updateIssueState = function(newState) {
 }
 
 DradisDatatable.prototype.setupStateButtonToggle = function() {
-  if (this.$paths.data('state-url') === undefined) {
+  if (this.$paths.data('table-state-url') === undefined) {
     return;
   }
 

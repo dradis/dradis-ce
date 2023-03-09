@@ -100,12 +100,12 @@ class DradisDatatable {
             },
             autoClose: true,
             available: function(){
-              return that.$paths.data('state-url') !== undefined;
+              return that.$paths.data('table-state-url') !== undefined;
             },
             className: 'd-none',
             extend: 'collection',
             name: 'stateBtn',
-            text: 'Update State<i class="fa fa-caret-down fa-fw"></i>',
+            text: 'State<i class="fa fa-caret-down fa-fw"></i>',
             buttons: this.setupStateButtons()
           },
           {
