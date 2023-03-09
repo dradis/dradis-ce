@@ -14,14 +14,14 @@ shared_examples 'qa pages' do |item_type|
     context 'bulk update' do
       it 'is hidden by default' do
         within '.dt-buttons.btn-group' do
-          expect(page).to_not have_button('Update State')
+          expect(page).to_not have_button('State')
         end
       end
 
       it 'is visible when row checkbox is selected' do
         within '.dataTables_wrapper' do
           page.find('td.select-checkbox', match: :first).click
-          expect(page).to have_button('Update State')
+          expect(page).to have_button('State')
         end
       end
 
@@ -30,7 +30,7 @@ shared_examples 'qa pages' do |item_type|
           page.find('td.select-checkbox', match: :first).click
           page.find('td.select-checkbox', match: :first).click
 
-          expect(page).to_not have_button('Update State')
+          expect(page).to_not have_button('State')
         end
       end
 
@@ -39,7 +39,7 @@ shared_examples 'qa pages' do |item_type|
           @original_row_count = page.all('tbody tr').count
           page.find('td.select-checkbox', match: :first).click
 
-          click_button('Update State')
+          click_button('State')
           click_link('Published')
         end
 
