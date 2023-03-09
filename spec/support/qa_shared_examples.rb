@@ -17,10 +17,10 @@ shared_examples 'qa pages' do |item_type|
 
       expect(current_path).to eq polymorphic_path([:edit, current_project, records.first])
 
-      click_button "Update #{item_type.to_s.humanize}"
+      click_button "Update #{item_type.to_s.titleize}"
 
       expect(current_path).to eq polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
-      expect(page).to have_selector('.alert-success', text: 'Issue updated.')
+      expect(page).to have_selector('.alert-success', text: "#{item_type.to_s.humanize} updated.")
     end
   end
 
@@ -40,10 +40,10 @@ shared_examples 'qa pages' do |item_type|
 
       expect(current_path).to eq polymorphic_path([:edit, current_project, records.first])
 
-      click_button "Update #{item_type.to_s.humanize}"
+      click_button "Update #{item_type.to_s.titleize}"
 
       expect(current_path).to eq polymorphic_path([current_project, :qa, records.first])
-      expect(page).to have_selector('.alert-success', text: 'Issue updated.')
+      expect(page).to have_selector('.alert-success', text: "#{item_type.to_s.humanize} updated.")
     end
 
     it 'updates the state to draft' do
