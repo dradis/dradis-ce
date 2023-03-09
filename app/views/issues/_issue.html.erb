@@ -12,7 +12,7 @@
   <% end %>
 
   <div class="list-item-actions">
-    <%= link_to main_app.edit_project_issue_path(current_project, issue), class:'list-item-action-edit' do %>
+    <%= link_to main_app.edit_project_issue_path(current_project, issue, redirect_to: local_assigns[:qa] ? project_qa_issue_path(current_project, issue) : nil), class:'list-item-action-edit' do %>
       <i class="fa fa-pencil"></i> Edit
     <% end %>
 

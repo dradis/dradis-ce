@@ -32,6 +32,9 @@
   <%= render 'tag_input', f: f %>
 
   <div class="form-actions">
+    <% if params[:redirect_to] %>
+      <%= hidden_field :issue, :redirect_to, value: params[:redirect_to] %>
+    <% end %>
     <% verb = @issue.persisted? ? 'Update' : 'Create' %>
     <div class="btn-group btn-states">
       <%= button_tag :submit, class: 'btn btn-primary' do %>
@@ -63,7 +66,7 @@
   or
   <%=
     link_to 'Cancel',
-    @issue.new_record? ? project_issues_path(current_project) : [current_project, @issue],
+    @form_cancel_path,
     class: 'cancel-link',
     data: {
       behavior: 'clear-local-auto-save'

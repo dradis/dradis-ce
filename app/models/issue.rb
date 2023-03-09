@@ -12,6 +12,8 @@ class Issue < Note
 
   enum state: [:draft, :ready_for_review, :published]
 
+  attr_accessor :redirect_to
+
   # -- Relationships --------------------------------------------------------
   has_many :evidence, dependent: :destroy
   has_many :affected, through: :evidence, source: :node

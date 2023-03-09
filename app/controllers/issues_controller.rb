@@ -18,6 +18,7 @@ class IssuesController < AuthenticatedController
   before_action :set_or_initialize_tags, except: [:destroy]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
   before_action :set_affected_nodes, only: [:show]
+  before_action :set_form_cancel_path, only: [:new, :edit]
 
   def index
   end
@@ -82,7 +83,10 @@ class IssuesController < AuthenticatedController
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
-        format.html { redirect_to project_issue_path(current_project, @issue), notice: 'Issue updated' }
+        format.html do
+          redirect_path = issue_params[:redirect_to] ? issue_params[:redirect_to] : project_issue_path(current_project, @issue)
+          redirect_to redirect_path, notice: 'Issue updated.'
+        end
       else
         format.html do
           flash.now[:alert] = 'Issue couldn\'t be updated.'
@@ -127,6 +131,14 @@ class IssuesController < AuthenticatedController
                           .where('evidence.issue_id = ?', @issue.id)
                           .group('nodes.id')
                           .sort_by { |node, _| node.label }
+  end
+
+  def set_form_cancel_path
+    @form_cancel_path, = if params[:redirect_to]
+      params[:redirect_to]
+    else
+      @issue.new_record? ? project_issues_path(current_project) : project_issue_path(current_project, @issue)
+    end
   end
 
   def set_columns
@@ -183,7 +195,7 @@ class IssuesController < AuthenticatedController
   end
 
   def issue_params
-    params.require(:issue).permit(:state, :tag_list, :text)
+    params.require(:issue).permit(:state, :tag_list, :text, :redirect_to)
   end
 
   def set_auto_save_key
