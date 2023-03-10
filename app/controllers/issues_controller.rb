@@ -84,7 +84,11 @@ class IssuesController < AuthenticatedController
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
         format.html do
-          redirect_path = issue_params[:redirect_to] ? issue_params[:redirect_to] : project_issue_path(current_project, @issue)
+          redirect_path = if issue_params[:redirect_to] && URI.parse(issue_params[:redirect_to]).relative?
+            issue_params[:redirect_to]
+          else
+            project_issue_path(current_project, @issue)
+          end
           redirect_to redirect_path, notice: 'Issue updated.'
         end
       else
@@ -134,7 +138,7 @@ class IssuesController < AuthenticatedController
   end
 
   def set_form_cancel_path
-    @form_cancel_path, = if params[:redirect_to]
+    @form_cancel_path, = if params[:redirect_to] && URI.parse(params[:redirect_to]).relative?
       params[:redirect_to]
     else
       @issue.new_record? ? project_issues_path(current_project) : project_issue_path(current_project, @issue)
