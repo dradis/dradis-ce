@@ -29,10 +29,8 @@ a {
   font-size: 0.9rem;
 }
 
-.badge {
-  &.bg-primary {
-    background-color: $primaryColor !important;
-  }
+.bg-primary {
+  background-color: $primaryColor !important;
 }
 
 blockquote {
