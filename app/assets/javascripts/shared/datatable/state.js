@@ -3,15 +3,13 @@ DradisDatatable.prototype.setupStateButtons = function() {
     return [];
   }
 
-  var states = ['Draft', 'Published'],
+  var states = [['Draft', 'fa-pencil-square-o'], ['Published', 'fa-rocket']],
     stateButtons = [];
 
   states.forEach(function(state){
-    var $stateElement = $(`<span>${state}</span>`);
-
     stateButtons.push({
-      text: $stateElement,
-      action: this.updateIssueState(state)
+      text: $(`<i class="fa ${state[1]} fa-fw"></i><span>${state[0]}</span>`),
+      action: this.updateIssueState(state[0])
     });
     }.bind(this)
   );

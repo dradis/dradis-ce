@@ -105,7 +105,7 @@ class DradisDatatable {
             className: 'd-none',
             extend: 'collection',
             name: 'stateBtn',
-            text: 'State<i class="fa fa-caret-down fa-fw"></i>',
+            text: '<i class="fa fa-adjust fa-fw"></i>State<i class="fa fa-caret-down fa-fw"></i>',
             buttons: this.setupStateButtons()
           },
           {
