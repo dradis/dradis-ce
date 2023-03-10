@@ -84,8 +84,8 @@ class IssuesController < AuthenticatedController
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
         format.html do
-          redirect_path = if issue_params[:redirect_to] && URI.parse(issue_params[:redirect_to]).relative?
-            issue_params[:redirect_to]
+          redirect_path = if params[:redirect_to] && URI.parse(params[:redirect_to]).relative?
+            params[:redirect_to]
           else
             project_issue_path(current_project, @issue)
           end
@@ -199,7 +199,7 @@ class IssuesController < AuthenticatedController
   end
 
   def issue_params
-    params.require(:issue).permit(:state, :tag_list, :text, :redirect_to)
+    params.require(:issue).permit(:state, :tag_list, :text)
   end
 
   def set_auto_save_key
