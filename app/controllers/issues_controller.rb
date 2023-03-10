@@ -138,10 +138,12 @@ class IssuesController < AuthenticatedController
   end
 
   def set_form_cancel_path
-    @form_cancel_path, = if params[:redirect_to] && URI.parse(params[:redirect_to]).relative?
+    path = @issue.new_record? ? project_issues_path(current_project) : project_issue_path(current_project, @issue)
+
+    @form_cancel_path = if params[:redirect_to] && URI.parse(params[:redirect_to]).relative?
       params[:redirect_to]
     else
-      @issue.new_record? ? project_issues_path(current_project) : project_issue_path(current_project, @issue)
+      path
     end
   end
 
