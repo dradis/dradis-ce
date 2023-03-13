@@ -3,7 +3,7 @@ class QA::IssuesController < AuthenticatedController
   include ProjectScoped
 
   before_action :set_issues
-  before_action :set_issue, only: [:show, :update]
+  before_action :set_issue, only: [:edit, :show, :update]
 
   def index
     @issues = current_project.issues.ready_for_review
@@ -11,6 +11,10 @@ class QA::IssuesController < AuthenticatedController
   end
 
   def show; end
+
+  def edit
+    @tags = current_project.tags.where('name like ?', '!%')
+  end
 
   def update
     if @issue.update(issue_params)
