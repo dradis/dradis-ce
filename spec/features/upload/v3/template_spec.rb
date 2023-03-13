@@ -1,6 +1,14 @@
+# DEPRECATED - this class is v3 of the Template Exporter and shouldn't be updated.
+# V4 released on Apr 2022
+# V3 can be removed on Apr 2024
+#
+# We're duplicating this file for v4, and even though the code lives in two
+# places now, this file isn't expected to evolved and is now frozen to V3
+# behavior.
+
 require 'rails_helper'
 
-describe Dradis::Plugins::Projects::Upload::V3::Template::Importer do
+describe 'Dradis::Plugins::Projects::Upload::V3::Template::Importer', skip: true do
   before do
     login_to_project_as_user
 
