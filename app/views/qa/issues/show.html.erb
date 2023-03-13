@@ -17,7 +17,7 @@
             <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
             <span class="actions">
               <span class="action">
-                <%= link_to edit_project_issue_path(current_project, @issue, redirect_to: project_qa_issue_path(current_project, @issue)) do %>
+                <%= link_to edit_project_qa_issue_path(current_project, @issue, redirect_to: project_qa_issue_path(current_project, @issue), qa: true) do %>
                   <i class="fa fa-pencil fa-fw"></i> Edit
                 <% end %>
               </span>

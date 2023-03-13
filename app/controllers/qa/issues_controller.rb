@@ -13,6 +13,12 @@ class QA::IssuesController < AuthenticatedController
   def show; end
 
   def edit
+    @form_cancel_path = if params[:redirect_to] && URI.parse(params[:redirect_to]).relative?
+      params[:redirect_to]
+    else
+      project_issue_path(current_project, @issue)
+    end
+
     @tags = current_project.tags.where('name like ?', '!%')
   end
 
