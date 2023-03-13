@@ -116,50 +116,6 @@
       "note": "False positive: The destination filename is prepended by the Attachments directory and validated as such to prevent being moved to the other directories"
     },
     {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 4,
-      "fingerprint": "490ebc148f627a48a30c7e05f117415ba40fbb0badd515e97d18449ae555ceb0",
-      "check_name": "LinkToHref",
-      "message": "Unsafe parameter value in `link_to` href",
-      "file": "app/views/issues/_form.html.erb",
-      "line": 69,
-      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
-      "code": "link_to(\"Cancel\", (params[:redirect_to] or (project_issues_path(current_project) or project_issue_path(current_project, (current_project.issues.find(params[:id]) or (Issue.new(issue_params.except(:tag_list)) do\n i.node = current_project.issue_library\n end or Issue.new(:node => current_project.issue_library)))))), :class => \"cancel-link\", :data => ({ :behavior => \"clear-local-auto-save\" }))",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "IssuesController",
-          "method": "new",
-          "line": 42,
-          "file": "app/controllers/issues_controller.rb",
-          "rendered": {
-            "name": "issues/new",
-            "file": "app/views/issues/new.html.erb"
-          }
-        },
-        {
-          "type": "template",
-          "name": "issues/new",
-          "line": 20,
-          "file": "app/views/issues/new.html.erb",
-          "rendered": {
-            "name": "issues/_form",
-            "file": "app/views/issues/_form.html.erb"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "issues/_form"
-      },
-      "user_input": "params[:redirect_to]",
-      "confidence": "High",
-      "cwe_id": [
-        79
-      ],
-      "note": "False positive: param is being validated in the controller"
-    },
-    {
       "warning_type": "File Access",
       "warning_code": 16,
       "fingerprint": "51bb95cc23cea69032946d5957961b9aa86d45f8ef8f1c6af4df696fd12efd06",
@@ -181,6 +137,50 @@
         22
       ],
       "note": "False positive: Attachment.pwd is set by the admin to specify the directory for the attachments"
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 4,
+      "fingerprint": "531dd7184df2591fcb9731bdb7cde0a052cdf0be877a018f336a25e58486caf0",
+      "check_name": "LinkToHref",
+      "message": "Unsafe parameter value in `link_to` href",
+      "file": "app/views/issues/_form.html.erb",
+      "line": 69,
+      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to(\"Cancel\", (params[:redirect_to] or project_issue_path(current_project, current_project.issues.find(params[:id]))), :class => \"cancel-link\", :data => ({ :behavior => \"clear-local-auto-save\" }))",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "QA::IssuesController",
+          "method": "edit",
+          "line": 23,
+          "file": "app/controllers/qa/issues_controller.rb",
+          "rendered": {
+            "name": "qa/issues/edit",
+            "file": "app/views/qa/issues/edit.html.erb"
+          }
+        },
+        {
+          "type": "template",
+          "name": "qa/issues/edit",
+          "line": 18,
+          "file": "app/views/qa/issues/edit.html.erb",
+          "rendered": {
+            "name": "issues/_form",
+            "file": "app/views/issues/_form.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "issues/_form"
+      },
+      "user_input": "params[:redirect_to]",
+      "confidence": "High",
+      "cwe_id": [
+        79
+      ],
+      "note": "False positive: param is being validated in the controller"
     },
     {
       "warning_type": "Denial of Service",
@@ -381,6 +381,6 @@
       "note": "False positive: The params is used to fetch the boards and cannot be manipulated by user input"
     }
   ],
-  "updated": "2023-03-10 14:39:39 +0100",
+  "updated": "2023-03-13 12:30:25 +0100",
   "brakeman_version": "5.4.1"
 }
