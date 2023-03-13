@@ -15,7 +15,7 @@ shared_examples 'qa pages' do |item_type|
     it 'redirects the user back after updating the record' do
       click_link 'Edit', match: :first
 
-      expect(current_path).to eq polymorphic_path([:edit, current_project, records.first])
+      expect(current_path).to eq polymorphic_path([:edit, current_project, :qa, records.first])
 
       click_button "Update #{item_type.to_s.titleize}"
 
@@ -38,7 +38,7 @@ shared_examples 'qa pages' do |item_type|
         click_link 'Edit'
       end
 
-      expect(current_path).to eq polymorphic_path([:edit, current_project, records.first])
+      expect(current_path).to eq polymorphic_path([:edit, current_project, :qa, records.first])
 
       click_button "Update #{item_type.to_s.titleize}"
 
