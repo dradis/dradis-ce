@@ -4,15 +4,13 @@
 %>
 
 <%= content_tag :div, id: "#{dom_id(issue)}_link", class: item_css.join do %>
-
-  <% issue_path = local_assigns[:qa] ? main_app.project_qa_issue_path(current_project, issue) : main_app.project_issue_path(current_project, issue) %>
-  <%= link_to issue_path, class: 'view-toggle-off', data: { target: "##{dom_id(issue)}_content" } do %>
+  <%= link_to  main_app.project_issue_path(current_project, issue), class: 'view-toggle-off', data: { target: "##{dom_id(issue)}_content" } do %>
     <%= colored_icon_for_model(issue, 'fa-bug', 'list-item-icon') %>
     <%= issue.title %>
   <% end %>
 
   <div class="list-item-actions">
-    <%= link_to main_app.edit_project_issue_path(current_project, issue, redirect_to: local_assigns[:qa] ? project_qa_issue_path(current_project, issue) : nil), class:'list-item-action-edit' do %>
+    <%= link_to main_app.edit_project_issue_path(current_project, issue), class:'list-item-action-edit' do %>
       <i class="fa fa-pencil"></i> Edit
     <% end %>
 
