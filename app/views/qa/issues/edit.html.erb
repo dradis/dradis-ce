@@ -1,7 +1,13 @@
 <% content_for :title, 'Edit issue' %>
 
 <% content_for :sidebar do %>
-  <%= render 'sidebar' %>
+  <%= render partial: 'qa/sidebar', locals: 
+    { 
+      index_path: project_qa_issues_path(current_project),
+      name: 'issues_for_review',
+      records: @issues
+    }
+  %>
 <% end %>
 
 <% content_for :breadcrumbs do %>
