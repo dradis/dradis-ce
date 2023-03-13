@@ -32,11 +32,11 @@ describe 'exporting comments', skip: true do
       exporter =
         Dradis::Plugins::Projects::Export::V2::Template.new(export_options)
 
-      comment_xml = "<comment>"\
-        "<content><![CDATA[Sample comment]]></content>"\
+      comment_xml = '<comment>'\
+        '<content><![CDATA[Sample comment]]></content>'\
         "<author>#{@logged_in_as.email}</author>"\
         "<created_at>#{@comment.created_at.to_i}</created_at>"\
-        "</comment>"
+        '</comment>'
       expect(exporter.export).to include(comment_xml)
     end
   end
