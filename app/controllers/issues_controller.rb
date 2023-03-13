@@ -85,7 +85,7 @@ class IssuesController < AuthenticatedController
         track_updated(@issue)
         format.html do
           redirect_path = if params[:redirect_to] && URI.parse(params[:redirect_to]).relative?
-            params[:redirect_to]
+            @issue.ready_for_review? ? params[:redirect_to] : project_qa_issues_path(current_project)
           else
             project_issue_path(current_project, @issue)
           end
