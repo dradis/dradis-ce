@@ -14,6 +14,7 @@ class UploadController < AuthenticatedController
   # include Plugins::Upload
 
   before_action :find_uploaders
+  before_action :validate_state, only: [:create, :parse]
   before_action :validate_uploader, only: [:create, :parse]
 
   def index
@@ -74,6 +75,7 @@ class UploadController < AuthenticatedController
       file: attachment.fullpath.to_s,
       plugin_name: @uploader.to_s,
       project_id: current_project.id,
+      state: @state,
       uid: params[:item_id].to_i
     )
   end
@@ -87,7 +89,8 @@ class UploadController < AuthenticatedController
         default_user_id: current_user.id,
         logger:     job_logger,
         plugin:     @uploader,
-        project_id: current_project.id
+        project_id: current_project.id,
+        state: @state,
       )
 
       importer.import(file: attachment.fullpath)
@@ -112,6 +115,14 @@ class UploadController < AuthenticatedController
                      collect(&:uploaders).
                      flatten.
                      sort_by(&:name)
+  end
+
+  def validate_state
+    if Issue.states.keys.include?(params[:state])
+      @state = params[:state]
+    else
+      redirect_to project_upload_manager_path(current_project), alert: 'Something fishy is going on...'
+    end
   end
 
   # Ensure that the requested :uploader is valid and has been included in the
