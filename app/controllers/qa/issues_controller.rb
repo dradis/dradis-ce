@@ -4,6 +4,7 @@ class QA::IssuesController < AuthenticatedController
 
   before_action :set_issues
   before_action :set_issue, only: [:show, :update]
+  before_action :validate_state, only: :update
 
   def index
     @issues = current_project.issues.ready_for_review
@@ -32,5 +33,9 @@ class QA::IssuesController < AuthenticatedController
 
   def set_issues
     @issues = current_project.issues.ready_for_review
+  end
+
+  def validate_state
+    redirect_to project_qa_issue_path(current_project, @issue), alert: 'Something fishy is going on...' unless Issue.states.keys.include?(params[:state])
   end
 end
