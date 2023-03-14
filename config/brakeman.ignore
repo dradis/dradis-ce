@@ -70,29 +70,6 @@
       "note": "False positive: Attachment.pwd is set by the admin to specify the directory for the attachments"
     },
     {
-      "warning_type": "Redirect",
-      "warning_code": 18,
-      "fingerprint": "15d020a056fb983063344d6758af039fe47637a4e1d9f951284c05d09a52bdab",
-      "check_name": "Redirect",
-      "message": "Possible unprotected redirect",
-      "file": "app/controllers/issues_controller.rb",
-      "line": 92,
-      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
-      "code": "redirect_to((params[:redirect_to] or project_issue_path(current_project, (current_project.issues.find(params[:id]) or (Issue.new(issue_params.except(:tag_list)) do\n i.node = current_project.issue_library\n end or Issue.new(:node => current_project.issue_library))))), :notice => \"Issue updated.\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "IssuesController",
-        "method": "update"
-      },
-      "user_input": "params[:redirect_to]",
-      "confidence": "High",
-      "cwe_id": [
-        601
-      ],
-      "note": "False positive: param is being validated in the controller"
-    },
-    {
       "warning_type": "File Access",
       "warning_code": 16,
       "fingerprint": "304438305b6566ea4f5a6ab8019a50149221c5e61b9f8a6dffb4775186ed0642",
@@ -137,50 +114,6 @@
         22
       ],
       "note": "False positive: Attachment.pwd is set by the admin to specify the directory for the attachments"
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 4,
-      "fingerprint": "531dd7184df2591fcb9731bdb7cde0a052cdf0be877a018f336a25e58486caf0",
-      "check_name": "LinkToHref",
-      "message": "Unsafe parameter value in `link_to` href",
-      "file": "app/views/issues/_form.html.erb",
-      "line": 69,
-      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
-      "code": "link_to(\"Cancel\", (params[:redirect_to] or project_issue_path(current_project, current_project.issues.find(params[:id]))), :class => \"cancel-link\", :data => ({ :behavior => \"clear-local-auto-save\" }))",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "QA::IssuesController",
-          "method": "edit",
-          "line": 23,
-          "file": "app/controllers/qa/issues_controller.rb",
-          "rendered": {
-            "name": "qa/issues/edit",
-            "file": "app/views/qa/issues/edit.html.erb"
-          }
-        },
-        {
-          "type": "template",
-          "name": "qa/issues/edit",
-          "line": 18,
-          "file": "app/views/qa/issues/edit.html.erb",
-          "rendered": {
-            "name": "issues/_form",
-            "file": "app/views/issues/_form.html.erb"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "issues/_form"
-      },
-      "user_input": "params[:redirect_to]",
-      "confidence": "High",
-      "cwe_id": [
-        79
-      ],
-      "note": "False positive: param is being validated in the controller"
     },
     {
       "warning_type": "Denial of Service",
@@ -381,6 +314,6 @@
       "note": "False positive: The params is used to fetch the boards and cannot be manipulated by user input"
     }
   ],
-  "updated": "2023-03-13 12:30:25 +0100",
+  "updated": "2023-03-14 12:53:01 +0100",
   "brakeman_version": "5.4.1"
 }
