@@ -45,7 +45,7 @@ class UploadController < AuthenticatedController
     # cause the processing of a small file to time out).
     #
     # In Development and testing, if the file is small, process in line.
-    if Rails.env.production? || (File.size(attachment.fullpath) > 1024*1024)
+    if Rails.env.production? || (File.size(attachment.fullpath) > 1024 * 1024)
       process_upload_background(attachment: attachment)
     else
       process_upload_inline(attachment: attachment)
@@ -62,7 +62,7 @@ class UploadController < AuthenticatedController
     @job_logger ||= Log.new(uid: params[:item_id].to_i)
   end
 
-  def process_upload_background(args={})
+  def process_upload_background(args = {})
     attachment = args.fetch(:attachment)
 
     job_logger.write 'Enqueueing job to start in the background.'
@@ -80,7 +80,7 @@ class UploadController < AuthenticatedController
     )
   end
 
-  def process_upload_inline(args={})
+  def process_upload_inline(args = {})
     attachment = args[:attachment]
 
     job_logger.write('Small attachment detected. Processing in line.')
@@ -101,7 +101,7 @@ class UploadController < AuthenticatedController
       job_logger.write(e.message)
       if Rails.env.development?
         e.backtrace[0..10].each do |trace|
-          job_logger.debug{ trace }
+          job_logger.debug { trace }
           sleep(0.2)
         end
       end
