@@ -14,8 +14,8 @@ class UploadController < AuthenticatedController
   # include Plugins::Upload
 
   before_action :find_uploaders
-  before_action :validate_state, only: [:create, :parse]
   before_action :validate_uploader, only: [:create, :parse]
+  before_action :validate_state, only: [:create, :parse]
 
   def index
     @last_job = Log.new.uid
@@ -118,7 +118,7 @@ class UploadController < AuthenticatedController
   end
 
   def validate_state
-    if Issue.states.keys.include?(params[:state])
+    if Issue.states.keys.include?(params[:state]) || @uploader.to_s.include?('::Projects')
       @state = params[:state]
     else
       redirect_to project_upload_manager_path(current_project), alert: 'Something fishy is going on...'
