@@ -13,16 +13,14 @@ document.addEventListener('turbolinks:load', function () {
           .find('option:selected')
           .text('Imported from file');
       } else {
-        let $option = $('[data-behavior~=state-select]').find(
-          'option:selected'
-        );
+        let $option = $('[data-behavior~=state-select]').find('option:selected');
+        let state = $option.val().replaceAll('_', ' ');
 
         $('[data-behavior~=state-select]')
           .attr('disabled', false)
-          .css('textTransform', 'capitalize')
           .removeClass('disabled');
 
-        $option.text($option.val().replaceAll('_', ' '));
+        $option.text(state.charAt(0).toUpperCase() + state.slice(1));
       }
     });
   }

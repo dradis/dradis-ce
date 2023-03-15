@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/dradis/dradis-plugins.git
+  revision: b461ed634a6803db1f1a6387b9a325af4304c58d
+  branch: qa-upload
+  specs:
+    dradis-plugins (4.7.0)
+
 PATH
   remote: engines/dradis-api
   specs:
@@ -164,7 +171,6 @@ GEM
       dradis-plugins (~> 4.0)
     dradis-openvas (4.7.0)
       dradis-plugins (~> 4.0)
-    dradis-plugins (4.7.0)
     dradis-projects (4.7.0)
       dradis-plugins (~> 4.0)
       rubyzip
@@ -537,7 +543,7 @@ DEPENDENCIES
   dradis-nmap (~> 4.7.0)
   dradis-ntospider (~> 4.7.0)
   dradis-openvas (~> 4.7.0)
-  dradis-plugins (~> 4.7.0)
+  dradis-plugins!
   dradis-projects (~> 4.7.0)
   dradis-qualys (~> 4.7.0)
   dradis-saint (~> 4.7.0)
