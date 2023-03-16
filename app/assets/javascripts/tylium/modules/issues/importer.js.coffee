@@ -28,7 +28,7 @@ document.addEventListener "turbolinks:load", ->
         $(this).closest('.control-group').addClass('error')
 
     # Clicking on 'add-issue' triggers a call to Issues#create
-    $('.results').on 'click', 'a.add-issue', (e) ->
+    $('.results').on 'click', '[data-behavior~=add-issue]', (e) ->
       e.preventDefault()
       IssueImporter.submit $(this).attr('href'), $(this).data('text'), $(this).data('state')
       $(this).parents('tr').remove()
