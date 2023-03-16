@@ -4,8 +4,13 @@
 # the results and adding them to the library.
 
 @IssueImporter =
-  submit: (path, issue_text) ->
-    $.post path, {issue:{text: issue_text}}
+  submit: (path, issue_text, state) ->
+    $.post path, { 
+      issue: {
+        text: issue_text, 
+        state: state
+      }
+    }
 
 document.addEventListener "turbolinks:load", ->
   if $('#issues').length
@@ -25,5 +30,5 @@ document.addEventListener "turbolinks:load", ->
     # Clicking on 'add-issue' triggers a call to Issues#create
     $('.results').on 'click', 'a.add-issue', (e) ->
       e.preventDefault()
-      IssueImporter.submit $(this).attr('href'), $(this).data('text')
+      IssueImporter.submit $(this).attr('href'), $(this).data('text'), $(this).data('state')
       $(this).parents('tr').remove()
