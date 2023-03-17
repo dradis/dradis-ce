@@ -35,14 +35,14 @@ DradisDatatable.prototype.setupStateButtons = function() {
   states.forEach(function(state){
     stateButtons.push({
       text: $(`<i class="fa ${state[1]} fa-fw"></i><span>${state[0]}</span>`),
-      action: DradisDatatable.prototype.updateIssueState.call(api, state[0].toLowerCase())
+      action: DradisDatatable.prototype.updateRecordState.call(api, state[0].toLowerCase())
     });
   });
 
   return stateButtons;
 };
 
-DradisDatatable.prototype.updateIssueState = function(newState) {
+DradisDatatable.prototype.updateRecordState = function(newState) {
   var api = this;
 
   return function() {
@@ -62,12 +62,12 @@ DradisDatatable.prototype.updateIssueState = function(newState) {
         $('.page-title').after(`
           <div class="alert alert-success" data-behavior="qa-alert">
             <a class="close" data-dismiss="alert" href="javascript:void(0)">x</a>
-            Successfully set the issues as ${newState}!
+            Successfully set the records as ${newState}!
           </div>
         `);
       },
-      error: function(e){
-        console.log('Update state error: ' + e);
+      error: function(xhr, status, msg){
+        console.log('Update state error: ' + msg);
       }
     });
 
