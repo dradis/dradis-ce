@@ -3,7 +3,7 @@
 # V2 can be removed on Apr 2024
 #
 # We're duplicating this file for v4, and even though the code lives in two
-# places now, this file isn't expected to evolved and is now frozen to V2
+# places now, this file isn't expected to evolve and is now frozen to V2
 # behavior.
 
 require 'rails_helper'
