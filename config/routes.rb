@@ -97,7 +97,7 @@ Rails.application.routes.draw do
 
     namespace :qa do
       resources :issues, only: [:index, :show, :edit] do
-        collection { put :multiple_update }
+        collection { put :update }
       end
     end
 
