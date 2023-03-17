@@ -15,7 +15,7 @@
            data-table-destroy-confirmation="Are you sure?&#10;&#10;Proceeding will delete the selected issue(s) and any associated evidence."
            data-table-close-console-url="<%= project_issues_path(current_project) %>"
            data-table-merge-url="<%= new_project_merge_path(current_project) %>" >
-        <%= render 'table', issues: @issues %>
+        <%= render partial: 'table', locals: { issues: @issues, local_storage_key: "project.ce.#{dom_id(current_project)}.issues_datatable", tags: @tags } %>
       </div>
     <% else %>
       <%= render 'shared/empty_state',
