@@ -1,6 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - [entity]:
     - [future tense verb] [feature]
+  - Sessions: Store :secret_key_base in encrypted configuration file
   - Upgraded gems:
     - rack, rails
   - Bugs fixes:
@@ -27,10 +28,9 @@
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v4.7.0 (February 2023)
-  - CI:
-    - Rubocop: disable EnforcedShorthandSyntax rule under Style/HashSyntax cop
+  - Rubocop CI:
+    - disable EnforcedShorthandSyntax rule under Style/HashSyntax cop
   - Issues: Display the results from importers in a datatable
-  - Sessions: Store :secret_key_base in encrypted configuration file
   - Tylium:
     - Add breadcrumbs to Revision History view
     - Add secondary sidebar toggling functionality
