@@ -314,6 +314,6 @@
       "note": "False positive: The params is used to fetch the boards and cannot be manipulated by user input"
     }
   ],
-  "updated": "2023-03-20 14:19:55 +0100",
-  "brakeman_version": "5.4.1"
+  "updated": "2022-11-24 15:12:55 +0100",
+  "brakeman_version": "5.4.0"
 }
