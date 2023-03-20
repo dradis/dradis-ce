@@ -59,7 +59,7 @@ shared_examples 'qa pages' do |item_type|
         page.find('.alert')
 
         expect(page.all('tbody tr').count).to eq(@original_row_count - 1)
-        expect(page).to have_text(/Successfully/)
+        expect(page).to have_selector('.alert-success', text: 'State updated successfully.')
       end
     end
   end
