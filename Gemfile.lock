@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/dradis/dradis-plugins.git
-  revision: 6d3f0c7699475709dfb5d43b5a63dfb2f9822fe1
+  revision: 3e7677d309fff8044e3a3c154f80dd91d56b3b5b
   branch: qa-feature
   specs:
     dradis-plugins (4.7.0)
