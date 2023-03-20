@@ -1,14 +1,14 @@
 GIT
   remote: https://github.com/dradis/dradis-plugins.git
-  revision: 061213704a59ab4b8680335b78765d22791ee8fe
-  branch: qa-import-export-projects
+  revision: 6d3f0c7699475709dfb5d43b5a63dfb2f9822fe1
+  branch: qa-feature
   specs:
     dradis-plugins (4.7.0)
 
 GIT
   remote: https://github.com/dradis/dradis-projects.git
-  revision: 8dfa06801616554d7ff38c4e72becf10a2f9ef1a
-  branch: qa-import-export-projects
+  revision: 718f0d4787aa28637da9a3e31c778e85fa307abb
+  branch: qa-feature
   specs:
     dradis-projects (4.7.0)
       dradis-plugins (~> 4.0)
