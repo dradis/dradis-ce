@@ -4,7 +4,6 @@ if secret_token_path.exist?
   secret_token_path.unlink
 end
 
-
 # 2. Create an internal encrypted credentials file if none exists
 config_path = Rails.root.join('config', 'shared', 'credentials.yml.enc')
 key_path = config_path.dirname.join('master.key')
@@ -34,7 +33,7 @@ if !config_path.exist? | config_path.zero?
   enc_conf.write(contents)
 end
 
-# 2. Load the custom internal credentials file.
+# 3. Load the custom internal credentials file.
 #
 # From ./bin/rails credentials:help
 #
