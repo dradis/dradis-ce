@@ -84,12 +84,7 @@ class IssuesController < AuthenticatedController
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
         format.html do
-          redirect_path = if params[:redirect_to] && URI.parse(params[:redirect_to]).relative?
-            params[:redirect_to]
-          else
-            project_issue_path(current_project, @issue)
-          end
-          redirect_to redirect_path, notice: 'Issue updated.'
+          redirect_to_target_or_default project_issue_path(current_project, @issue), notice: 'Issue updated.'
         end
       else
         format.html do

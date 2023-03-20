@@ -4,6 +4,7 @@ class QA::IssuesController < AuthenticatedController
 
   before_action :set_issues
   before_action :set_issue, only: [:show, :update]
+  before_action :store_location, only: [:index, :show, :update]
   before_action :validate_state, only: :update
 
   def index

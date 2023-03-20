@@ -32,9 +32,6 @@
   <%= render 'tag_input', f: f %>
 
   <div class="form-actions">
-    <% if params[:redirect_to] %>
-      <%= hidden_field nil, :redirect_to, value: params[:redirect_to] %>
-    <% end %>
     <% verb = @issue.persisted? ? 'Update' : 'Create' %>
     <div class="btn-group btn-states">
       <%= button_tag :submit, class: 'btn btn-primary' do %>
