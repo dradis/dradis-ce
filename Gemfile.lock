@@ -1,13 +1,13 @@
 GIT
   remote: https://github.com/dradis/dradis-plugins.git
-  revision: d6f32633faaf7c412971f9fdc08aa252b9dd84ad
+  revision: 061213704a59ab4b8680335b78765d22791ee8fe
   branch: qa-import-export-projects
   specs:
     dradis-plugins (4.7.0)
 
 GIT
   remote: https://github.com/dradis/dradis-projects.git
-  revision: 5cf9d0c4dd898b2c22705e78c86da03ef26cbf3d
+  revision: 8dfa06801616554d7ff38c4e72becf10a2f9ef1a
   branch: qa-import-export-projects
   specs:
     dradis-projects (4.7.0)
@@ -435,7 +435,7 @@ GEM
     ruby2_keywords (0.0.5)
     ruby_audit (2.1.0)
       bundler-audit (~> 0.9.0)
-    rubyzip (2.2.0)
+    rubyzip (2.3.2)
     sanitize (6.0.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
