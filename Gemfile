@@ -211,12 +211,12 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 4.7.0'
+gem 'dradis-plugins', github: 'dradis/dradis-plugins', branch: 'qa-import-export-projects'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 4.7.0'
+gem 'dradis-projects', github: 'dradis/dradis-projects', branch: 'qa-import-export-projects'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)
