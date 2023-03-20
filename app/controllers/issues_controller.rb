@@ -110,14 +110,14 @@ class IssuesController < AuthenticatedController
   def import
     importer = IssueImporter.new(params)
     results = importer.query
-    @issues = issues_from_import_records(results)
+    @import_issues = issues_from_import_records(results)
 
     @plugin = importer.plugin
     @filter = importer.filter
     @query = params[:query]
 
     @default_columns = ['Title', 'Tags']
-    @all_columns = @default_columns | (@issues.map(&:fields).map(&:keys).uniq.flatten - ['AddonTags'])
+    @all_columns = @default_columns | (@import_issues.map(&:fields).map(&:keys).uniq.flatten - ['AddonTags'])
   end
 
   private

@@ -16,7 +16,7 @@
           </div>
         </div>
 
-        <% if @issues.any? %>
+        <% if @import_issues.any? %>
           <table class="table table-striped mb-0"
             data-behavior="dradis-datatable"
             data-default-columns="<%= @default_columns.to_json %>"
@@ -32,7 +32,7 @@
               </tr>
             </thead>
             <tbody>
-              <% @issues.each do |issue| %>
+              <% @import_issues.each do |issue| %>
                 <tr id="issue-<%= issue.id %>">
                   <% @all_columns.each do |column| %>
                     <%
