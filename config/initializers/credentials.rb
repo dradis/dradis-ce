@@ -34,7 +34,6 @@ if !config_path.exist? | config_path.zero?
   enc_conf.write(contents)
 end
 
-
 # 2. Load the custom internal credentials file.
 #
 # From ./bin/rails credentials:help
@@ -42,5 +41,5 @@ end
 # In addition to that, the default credentials lookup paths can be overridden through
 # `config.credentials.content_path` and `config.credentials.key_path`.
 #   encrypted_settings.yml.enc
-Rails.application.credentials.content_path = config_path
-Rails.application.credentials.key_path = key_path
+Rails.application.config.credentials.content_path = config_path
+Rails.application.config.credentials.key_path = key_path
