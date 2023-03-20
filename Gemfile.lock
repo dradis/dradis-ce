@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/dradis/dradis-plugins.git
-  revision: b461ed634a6803db1f1a6387b9a325af4304c58d
+  revision: e39b2dc00301c4af5e184bb322801db049fd7fa1
   branch: qa-upload
   specs:
     dradis-plugins (4.7.0)
@@ -180,9 +180,6 @@ GEM
       dradis-plugins (~> 4.0)
     dradis-openvas (4.7.0)
       dradis-plugins (~> 4.0)
-    dradis-projects (4.7.0)
-      dradis-plugins (~> 4.0)
-      rubyzip
     dradis-qualys (4.7.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
