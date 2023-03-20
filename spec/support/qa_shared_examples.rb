@@ -13,7 +13,8 @@ shared_examples 'qa pages' do |item_type|
     end
 
     it 'redirects the user back after updating the record' do
-      click_link 'Edit', match: :first
+      find('.dataTable tbody tr:first-of-type').hover
+      click_link 'Edit'
 
       expect(current_path).to eq polymorphic_path([:edit, current_project, records.first])
 
