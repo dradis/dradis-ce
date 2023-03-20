@@ -5,6 +5,15 @@ GIT
   specs:
     dradis-plugins (4.7.0)
 
+GIT
+  remote: https://github.com/dradis/dradis-projects.git
+  revision: 718f0d4787aa28637da9a3e31c778e85fa307abb
+  branch: qa-feature
+  specs:
+    dradis-projects (4.7.0)
+      dradis-plugins (~> 4.0)
+      rubyzip
+
 PATH
   remote: engines/dradis-api
   specs:
@@ -429,7 +438,7 @@ GEM
     ruby2_keywords (0.0.5)
     ruby_audit (2.1.0)
       bundler-audit (~> 0.9.0)
-    rubyzip (2.2.0)
+    rubyzip (2.3.2)
     sanitize (6.0.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -544,7 +553,7 @@ DEPENDENCIES
   dradis-ntospider (~> 4.7.0)
   dradis-openvas (~> 4.7.0)
   dradis-plugins!
-  dradis-projects (~> 4.7.0)
+  dradis-projects!
   dradis-qualys (~> 4.7.0)
   dradis-saint (~> 4.7.0)
   dradis-veracode (~> 4.7.0)

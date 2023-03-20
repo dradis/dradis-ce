@@ -216,7 +216,7 @@ gem 'dradis-plugins', github: 'dradis/dradis-plugins', branch: 'qa-upload'
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 4.7.0'
+gem 'dradis-projects', github: 'dradis/dradis-projects', branch: 'qa-feature'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)
