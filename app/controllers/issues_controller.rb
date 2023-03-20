@@ -19,6 +19,7 @@ class IssuesController < AuthenticatedController
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
   before_action :set_affected_nodes, only: [:show]
   before_action :set_form_cancel_path, only: [:new, :edit]
+  before_action :store_location, only: [:index, :show]
 
   def index
   end
@@ -135,11 +136,7 @@ class IssuesController < AuthenticatedController
   def set_form_cancel_path
     path = @issue.new_record? ? project_issues_path(current_project) : project_issue_path(current_project, @issue)
 
-    @form_cancel_path = if params[:redirect_to] && URI.parse(params[:redirect_to]).relative?
-      params[:redirect_to]
-    else
-      path
-    end
+    @form_cancel_path = session[:return_to] ? session[:return_to] : path
   end
 
   def set_columns
