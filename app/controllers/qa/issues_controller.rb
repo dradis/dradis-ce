@@ -28,7 +28,7 @@ class QA::IssuesController < AuthenticatedController
   end
 
   def set_issue
-    @issue = current_project.issues.find(params[:id])
+    @issue = @issues.find(params[:id])
   end
 
   def set_issues
