@@ -63,7 +63,7 @@
   or
   <%=
     link_to 'Cancel',
-    @issue.new_record? ? project_issues_path(current_project) : [current_project, @issue],
+    @form_cancel_path,
     class: 'cancel-link',
     data: {
       behavior: 'clear-local-auto-save'

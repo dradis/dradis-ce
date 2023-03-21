@@ -49,6 +49,17 @@
   }
 }
 
+.btn-placeholder {
+  align-items: center;
+  background-color: $primaryColor;
+  border-radius: 0.25rem;
+  color: $white;
+  cursor: default;
+  display: flex;
+  padding: 0.375rem 0.5rem;
+  z-index: 1;
+}
+
 .btn-states {
   span:not(:last-child) {
     .state {

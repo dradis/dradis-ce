@@ -18,6 +18,8 @@ class IssuesController < AuthenticatedController
   before_action :set_or_initialize_tags, except: [:destroy]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
   before_action :set_affected_nodes, only: [:show]
+  before_action :set_form_cancel_path, only: [:new, :edit]
+  before_action :store_location, only: [:index, :show]
 
   def index
   end
@@ -82,7 +84,9 @@ class IssuesController < AuthenticatedController
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
-        format.html { redirect_to project_issue_path(current_project, @issue), notice: 'Issue updated' }
+        format.html do
+          redirect_to_target_or_default project_issue_path(current_project, @issue), notice: 'Issue updated.'
+        end
       else
         format.html do
           flash.now[:alert] = 'Issue couldn\'t be updated.'
@@ -127,6 +131,12 @@ class IssuesController < AuthenticatedController
                           .where('evidence.issue_id = ?', @issue.id)
                           .group('nodes.id')
                           .sort_by { |node, _| node.label }
+  end
+
+  def set_form_cancel_path
+    path = @issue.new_record? ? project_issues_path(current_project) : project_issue_path(current_project, @issue)
+
+    @form_cancel_path = session[:return_to] ? session[:return_to] : path
   end
 
   def set_columns
