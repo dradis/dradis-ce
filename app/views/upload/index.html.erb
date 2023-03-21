@@ -10,13 +10,19 @@
         <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, id: 'new_upload', data: { parse_url: project_upload_parse_path(current_project) } do %>
           <div class="form-group mb-5 mt-4 pt-2">
             <%= label_tag :uploader do %>
-              <h5>1. Choose a tool</h5>
+              <h5>1. Tool are you uploading output from</h5>
             <% end %>
-            <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { :class => 'form-control' } %>
+            <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { class: 'form-control', data: { behavior: 'tool-select' } } %>
+          </div>
+          <div class="form-group mb-5">
+            <%= label_tag :state do %>
+              <h5>2. State for uploaded records</h5>
+            <% end %>
+            <%= select_tag 'state', options_for_select(Issue.states.map { |s, id| [s.humanize, s] }), { class: 'form-control state-select', data: { behavior: 'state-select' } } %>
           </div>
           <div class="form-group mb-4">
             <%= label_tag :file do %>
-              <h5>2. Choose a file</h5>
+              <h5>3. Upload output file</h5>
             <% end %>
             <div class="custom-file">
               <%= file_field_tag 'file', class: 'custom-file-input' %>
@@ -27,7 +33,7 @@
             </div>
           </div>
         <% end %>
-            
+
         <p>Upload progress:</p>
         <div class="progress mb-2">
           <div class="progress-bar progress-bar-striped">
@@ -44,24 +50,24 @@
       <h4 class="header-underline">Available plugins</h4>
 
       <div id="plugin-list">
-      <table class="table table-striped mb-0">
-        <thead>
-          <tr>
-            <th>Plugin</th>
-            <th>Description</th>
-            <th>Version</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @uploaders.each do |uploader| %>
+        <table class="table table-striped mb-0">
+          <thead>
             <tr>
-              <td><code><%= uploader.name %></code></td>
-              <td><%= uploader.meta[:description] %></td>
-              <td><%= uploader.meta[:version] %></td>
+              <th>Plugin</th>
+              <th>Description</th>
+              <th>Version</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% @uploaders.each do |uploader| %>
+              <tr>
+                <td><code><%= uploader.name %></code></td>
+                <td><%= uploader.meta[:description] %></td>
+                <td><%= uploader.meta[:version] %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

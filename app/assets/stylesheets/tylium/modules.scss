@@ -218,6 +218,12 @@ pre {
   border-radius: 5px;
 }
 
+.rounded-left,
+.rounded-right {
+  // Bootstrap rounds the desired corners, but doesn't square up the rest
+  border-radius: 0;
+}
+
 .tabs-container {
   margin: 1rem $mainContentMargin -1px $mainContentMargin;
   padding-left: 0.25rem;
