@@ -61,8 +61,7 @@
               %>
             <% end %>
             <td class="column-actions">
-              <% redirect_path = local_assigns[:qa] ? project_qa_issues_path(current_project) : nil %>
-              <%= link_to local_assigns[:qa] ? edit_project_qa_issue_path(current_project, issue, redirect_to: redirect_path) : edit_project_issue_path(current_project, issue) do %>
+              <%= link_to local_assigns[:qa] ? edit_project_qa_issue_path(current_project, issue) : edit_project_issue_path(current_project, issue) do %>
                 <i class="fa fa-pencil"></i> Edit
               <% end %>
               <% unless local_assigns[:qa] %>

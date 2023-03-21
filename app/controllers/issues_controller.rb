@@ -19,6 +19,7 @@ class IssuesController < AuthenticatedController
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
   before_action :set_affected_nodes, only: [:show]
   before_action :set_form_cancel_path, only: [:new, :edit]
+  before_action :store_location, only: [:index, :show]
 
   def index
   end
@@ -84,12 +85,7 @@ class IssuesController < AuthenticatedController
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
         format.html do
-          redirect_path = if params[:redirect_to] && URI.parse(params[:redirect_to]).relative?
-            @issue.ready_for_review? ? params[:redirect_to] : project_qa_issues_path(current_project)
-          else
-            project_issue_path(current_project, @issue)
-          end
-          redirect_to redirect_path, notice: 'Issue updated.'
+          redirect_to_target_or_default project_issue_path(current_project, @issue), notice: 'Issue updated.'
         end
       else
         format.html do
@@ -118,14 +114,14 @@ class IssuesController < AuthenticatedController
   def import
     importer = IssueImporter.new(params)
     results = importer.query
-    @issues = issues_from_import_records(results)
+    @import_issues = issues_from_import_records(results)
 
     @plugin = importer.plugin
     @filter = importer.filter
     @query = params[:query]
 
     @default_columns = ['Title', 'Tags']
-    @all_columns = @default_columns | (@issues.map(&:fields).map(&:keys).uniq.flatten - ['AddonTags'])
+    @all_columns = @default_columns | (@import_issues.map(&:fields).map(&:keys).uniq.flatten - ['AddonTags'])
   end
 
   private
@@ -138,7 +134,9 @@ class IssuesController < AuthenticatedController
   end
 
   def set_form_cancel_path
-    @form_cancel_path = @issue.new_record? ? project_issues_path(current_project) : project_issue_path(current_project, @issue)
+    path = @issue.new_record? ? project_issues_path(current_project) : project_issue_path(current_project, @issue)
+
+    @form_cancel_path = session[:return_to] ? session[:return_to] : path
   end
 
   def set_columns

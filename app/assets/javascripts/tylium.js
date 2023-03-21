@@ -36,6 +36,7 @@
 //= require shared/datatable/checkbox
 //= require shared/datatable/delete
 //= require shared/datatable/merge
+//= require shared/datatable/state
 //= require shared/datatable/tag
 //= require shared/datatable/validate
 
@@ -68,3 +69,4 @@
 //= require tylium/pages/projects/boards_summary
 //= require tylium/pages/projects/issues_chart
 //= require tylium/pages/projects/summary
+//= require tylium/pages/upload

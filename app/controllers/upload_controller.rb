@@ -15,6 +15,7 @@ class UploadController < AuthenticatedController
 
   before_action :find_uploaders
   before_action :validate_uploader, only: [:create, :parse]
+  before_action :validate_state, only: [:create, :parse]
 
   def index
     @last_job = Log.new.uid
@@ -44,7 +45,7 @@ class UploadController < AuthenticatedController
     # cause the processing of a small file to time out).
     #
     # In Development and testing, if the file is small, process in line.
-    if Rails.env.production? || (File.size(attachment.fullpath) > 1024*1024)
+    if Rails.env.production? || (File.size(attachment.fullpath) > 1024 * 1024)
       process_upload_background(attachment: attachment)
     else
       process_upload_inline(attachment: attachment)
@@ -61,7 +62,7 @@ class UploadController < AuthenticatedController
     @job_logger ||= Log.new(uid: params[:item_id].to_i)
   end
 
-  def process_upload_background(args={})
+  def process_upload_background(args = {})
     attachment = args.fetch(:attachment)
 
     job_logger.write 'Enqueueing job to start in the background.'
@@ -74,11 +75,12 @@ class UploadController < AuthenticatedController
       file: attachment.fullpath.to_s,
       plugin_name: @uploader.to_s,
       project_id: current_project.id,
+      state: @state,
       uid: params[:item_id].to_i
     )
   end
 
-  def process_upload_inline(args={})
+  def process_upload_inline(args = {})
     attachment = args[:attachment]
 
     job_logger.write('Small attachment detected. Processing in line.')
@@ -87,7 +89,8 @@ class UploadController < AuthenticatedController
         default_user_id: current_user.id,
         logger:     job_logger,
         plugin:     @uploader,
-        project_id: current_project.id
+        project_id: current_project.id,
+        state: @state,
       )
 
       importer.import(file: attachment.fullpath)
@@ -98,7 +101,7 @@ class UploadController < AuthenticatedController
       job_logger.write(e.message)
       if Rails.env.development?
         e.backtrace[0..10].each do |trace|
-          job_logger.debug{ trace }
+          job_logger.debug { trace }
           sleep(0.2)
         end
       end
@@ -112,6 +115,16 @@ class UploadController < AuthenticatedController
                      collect(&:uploaders).
                      flatten.
                      sort_by(&:name)
+  end
+
+  def validate_state
+    if Issue.states.keys.include?(params[:state]) ||
+        (@uploader.to_s.include?('::Projects') && params[:state].nil?)
+
+      @state = params[:state]
+    else
+      redirect_to project_upload_manager_path(current_project), alert: 'Something fishy is going on...'
+    end
   end
 
   # Ensure that the requested :uploader is valid and has been included in the

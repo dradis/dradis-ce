@@ -3,7 +3,8 @@ class QA::IssuesController < AuthenticatedController
   include ProjectScoped
 
   before_action :set_issues
-  before_action :set_issue, only: [:edit, :show, :update]
+  before_action :set_issue, only: [:edit, :show]
+  before_action :store_location, only: [:index, :show]
   before_action :validate_state, only: :update
 
   def index
@@ -19,10 +20,16 @@ class QA::IssuesController < AuthenticatedController
   end
 
   def update
-    if @issue.update(issue_params)
-      redirect_to project_qa_issues_path(current_project), notice: 'State updated successfully.'
-    else
-      render :show, alert: @issue.errors.full_messages.join('; ')
+    @issues = current_project.issues.ready_for_review.where(id: params[:ids])
+
+    respond_to do |format|
+      if @issues.update_all(state: @state, updated_at: Time.now)
+        format.html { redirect_to project_qa_issues_path(current_project), notice: 'State updated successfully.' }
+        format.json { head :ok }
+      else
+        format.html { render :show, alert: @issue.errors.full_messages.join('; ') }
+        format.json { head :not_found }
+      end
     end
   end
 
@@ -33,7 +40,7 @@ class QA::IssuesController < AuthenticatedController
   end
 
   def set_issue
-    @issue = current_project.issues.find(params[:id])
+    @issue = @issues.find(params[:id])
   end
 
   def set_issues
@@ -41,6 +48,10 @@ class QA::IssuesController < AuthenticatedController
   end
 
   def validate_state
-    redirect_to project_qa_issue_path(current_project, @issue), alert: 'Something fishy is going on...' unless Issue.states.keys.include?(params[:state])
+    if Issue.states.keys.include?(params[:state])
+      @state = params[:state]
+    else
+      redirect_to project_qa_issues_path(current_project), alert: 'Something fishy is going on...'
+    end
   end
 end

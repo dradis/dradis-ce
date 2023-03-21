@@ -1,6 +1,6 @@
 shared_examples 'qa pages' do |item_type|
 
-  describe 'index page' do
+  describe 'index page', js: true do
     before do
       visit polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
     end
@@ -13,7 +13,8 @@ shared_examples 'qa pages' do |item_type|
     end
 
     it 'redirects the user back after updating the record' do
-      click_link 'Edit', match: :first
+      find('.dataTable tbody tr:first-of-type').hover
+      click_link 'Edit'
 
       expect(current_path).to eq polymorphic_path([:edit, current_project, :qa, records.first])
 
@@ -21,6 +22,45 @@ shared_examples 'qa pages' do |item_type|
 
       expect(current_path).to eq polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
       expect(page).to have_selector('.alert-success', text: "#{item_type.to_s.humanize} updated.")
+    end
+
+    context 'bulk update' do
+      it 'is hidden by default' do
+        within '.dt-buttons.btn-group' do
+          expect(page).to_not have_button('State')
+        end
+      end
+
+      it 'is visible when row checkbox is selected' do
+        within '.dataTables_wrapper' do
+          page.find('td.select-checkbox', match: :first).click
+          expect(page).to have_button('State')
+        end
+      end
+
+      it 'is hidden again after a row checkbox is unselected' do
+        within '.dataTables_wrapper' do
+          page.find('td.select-checkbox', match: :first).click
+          page.find('td.select-checkbox', match: :first).click
+
+          expect(page).to_not have_button('State')
+        end
+      end
+
+      it 'updates the list of records with the state' do
+        within '.dataTables_wrapper' do
+          @original_row_count = page.all('tbody tr').count
+          page.find('td.select-checkbox', match: :first).click
+
+          click_button('State')
+          click_link('Published')
+        end
+
+        page.find('.alert')
+
+        expect(page.all('tbody tr').count).to eq(@original_row_count - 1)
+        expect(page).to have_selector('.alert-success', text: 'State updated successfully.')
+      end
     end
   end
 
