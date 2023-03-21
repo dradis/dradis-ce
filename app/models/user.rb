@@ -4,7 +4,7 @@ class User < ApplicationRecord
   serialize :preferences, UserPreferences
   validates_associated :preferences
 
-  # -- Relationships --------------------------------------------------------
+  # -- Relationships ------------------------------------------------------------
   has_many :access_tokens, dependent: :destroy
   has_many :activities
   has_many :comments, dependent: :nullify
@@ -12,16 +12,16 @@ class User < ApplicationRecord
   has_many :subscriptions, dependent: :destroy
 
 
-  # -- Callbacks ------------------------------------------------------------
-  # -- Validations ----------------------------------------------------------
+  # -- Callbacks --------------------------------------------------------------
+  # -- Validations ------------------------------------------------------------
   validates :email,
     length: { maximum: DB_MAX_STRING_LENGTH },
     uniqueness: { allow_blank: false },
     presence: true
 
-  # -- Scopes ---------------------------------------------------------------
+  # -- Scopes -----------------------------------------------------------------
   scope :enabled, -> { all }
 
-  # -- Class Methods --------------------------------------------------------
-  # -- Instance Methods -----------------------------------------------------
+  # -- Class Methods ----------------------------------------------------------
+  # -- Instance Methods -------------------------------------------------------
 end
