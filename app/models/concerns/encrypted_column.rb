@@ -23,7 +23,7 @@ module EncryptedColumn
 
       define_method "get_#{name}".to_sym do
         value = send(name)
-        decrypt(value.with_indifferent_access ) unless value.nil?
+        decrypt(value.with_indifferent_access) unless value.nil?
       end
 
       define_method "set_#{name}".to_sym do |value|
@@ -91,8 +91,8 @@ module EncryptedColumn
   end
 
   def validate_keys!
-    raise Errors::Configuration, ":deterministic_key is missing" unless Rails.application.credentials.dig(:active_record_encryption, :deterministic_key).present?
-    raise Errors::Configuration, ":key_derivation_salt is missing" unless Rails.application.credentials.dig(:active_record_encryption, :key_derivation_salt).present?
-    raise Errors::Configuration, ":primary_key is missing" unless Rails.application.credentials.dig(:active_record_encryption, :primary_key).present?
+    raise Errors::Configuration, ':deterministic_key is missing' unless Rails.application.credentials.dig(:active_record_encryption, :deterministic_key).present?
+    raise Errors::Configuration, ':key_derivation_salt is missing' unless Rails.application.credentials.dig(:active_record_encryption, :key_derivation_salt).present?
+    raise Errors::Configuration, ':primary_key is missing' unless Rails.application.credentials.dig(:active_record_encryption, :primary_key).present?
   end
 end
