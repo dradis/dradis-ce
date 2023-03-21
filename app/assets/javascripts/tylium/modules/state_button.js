@@ -5,9 +5,7 @@ document.addEventListener('turbolinks:load', function () {
         .parent()
         .find('[data-behavior~=state-label]');
 
-      var $stateBtn = $selectedRadio
-        .closest('[data-behavior~=btn-states]')
-        .find('[data-behavior~=state-button]');
+      var $stateBtn = $('[data-behavior~=state-button]');
 
       $stateBtn.text(selectedState.text());
       $stateBtn.parent().attr('data-state', $selectedRadio.val());
