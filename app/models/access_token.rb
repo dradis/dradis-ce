@@ -1,7 +1,12 @@
 class AccessToken < ApplicationRecord
-  serialize :token, JSON
-  # Rails 7
+  include EncryptedColumn
+
+  # FIXME: Rails 7 can take care of serialization, for now we do this manually
+  # serialize :token, JSON
+
+  # FIXME: Rails 7
   # encrypts :token
+  encrypted_column :token
 
   # -- Relationships --------------------------------------------------------
   belongs_to :user
