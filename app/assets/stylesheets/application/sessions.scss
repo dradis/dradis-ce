@@ -3,7 +3,6 @@ body.unauthenticated {
   --primaryColorDark: #{darken($primaryColor, 10)};
   --primaryColorLight: #{lighten($primaryColor, 20)};
 
-  align-items: center;
   background: linear-gradient(
     165deg,
     var(--primaryColorLight) 0%,
@@ -12,7 +11,6 @@ body.unauthenticated {
   );
   background-repeat: no-repeat;
   color: $defaultText;
-  display: flex;
   font-family: 'OpenSans';
   font-weight: 300;
   min-height: 100vh;
@@ -131,10 +129,6 @@ body.unauthenticated {
     font-size: 80%;
     font-weight: 300;
     margin: 0;
-  }
-
-  noscript .alert {
-    text-align: left;
   }
 
   .mission-container {

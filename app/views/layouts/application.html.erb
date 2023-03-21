@@ -12,7 +12,7 @@
   </head>
 
   <body class="unauthenticated <%= controller_name %> <%= class_names(holiday: Date.today.month == 12) %>">
-
+    <%= render 'shared/noscript' %>
     <div class="container h-100">
       <div class="row h-100 align-items-center">
         <div class="col-lg-5">
@@ -20,7 +20,6 @@
             <div class="logo-icons" data-behavior="logo-icons"></div>
             <%= image_tag Date.today.month == 12 ? 'holiday/logo_full_small.png' : 'logo_full_small.png', alt: 'Dradis CE logo', class: 'logo' %>
             <div class="form-container-inner">
-              <%= render 'shared/noscript' %>
               <%= flash_messages %>
               <%= yield %>
             </div>
