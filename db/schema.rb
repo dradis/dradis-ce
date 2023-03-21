@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_16_202870) do
+ActiveRecord::Schema.define(version: 2023_03_21_085555) do
+
+  create_table "access_tokens", force: :cascade do |t|
+    t.string "name"
+    t.text "token"
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_access_tokens_on_user_id"
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -221,6 +230,7 @@ ActiveRecord::Schema.define(version: 2021_03_16_202870) do
     t.index ["project_id"], name: "index_versions_on_project_id"
   end
 
+  add_foreign_key "access_tokens", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "boards", "nodes", on_delete: :cascade
