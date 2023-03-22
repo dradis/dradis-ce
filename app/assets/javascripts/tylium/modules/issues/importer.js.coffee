@@ -21,6 +21,14 @@ document.addEventListener "turbolinks:load", ->
 
     # Clicking on 'add-issue' triggers a call to Issues#create
     $('.results').on 'click', '[data-behavior~=add-issue]', (e) ->
+      issueTitle = $(this).parents('tr').find('td:first-child').text()
+
       e.preventDefault()
       IssueImporter.submit $(this).attr('href'), $(this).data('text'), $(this).data('state')
       $(this).parents('tr').remove()
+
+      # Show confirmation
+      $('[data-behavior~=success-alert]').remove()
+      $("
+      <div class='alert alert-success' data-behavior='success-alert'>#{issueTitle} issue added.</div>
+      ").insertAfter($('[data-behavior~=project-teaser]'));
