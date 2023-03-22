@@ -18,14 +18,6 @@ document.addEventListener "turbolinks:load", ->
     if $('.results').length
       $('.import-toggle').click();
       $('.import-box').find("input:text[value!='']").focus();
-      $('.import-box').find('.control-group').removeClass('error');
-
-    # Style as error if input has not length
-    $('input.search-query').on 'blur', ->
-      if $(this).val().length > 0
-        $(this).closest('.control-group').removeClass('error')
-      else
-        $(this).closest('.control-group').addClass('error')
 
     # Clicking on 'add-issue' triggers a call to Issues#create
     $('.results').on 'click', '[data-behavior~=add-issue]', (e) ->
