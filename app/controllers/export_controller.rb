@@ -4,6 +4,7 @@ class ExportController < AuthenticatedController
   before_action :find_plugins, except: [:index, :validation_status]
   before_action :validate_exporter, except: [:index, :validation_status]
   before_action :validate_template, except: [:index, :validation_status]
+  before_action :validate_scope, only: [:create]
 
   def index
   end
@@ -19,7 +20,7 @@ class ExportController < AuthenticatedController
 
     # FIXME: check the Routing guide to find a better way.
     action_path = "#{params[:route]}_path"
-    redirect_to eval(@exporter::Engine::engine_name).send(action_path)
+    redirect_to eval(@exporter::Engine::engine_name).send(action_path, scope: @scope)
   end
 
   # Runs a pre-export validation of the contents of the project
@@ -96,6 +97,16 @@ class ExportController < AuthenticatedController
       unless @template_file.starts_with?(templates_dir) && File.exists?(@template_file)
         redirect_to project_export_manager_path(current_project), alert: 'Something fishy is going on...'
       end
+    end
+  end
+
+  def validate_scope
+    return if @exporter.to_s.include?('::Projects')
+
+    if params[:scope] == 'all' || params[:scope] == 'published'
+      @scope = params[:scope]
+    else
+      redirect_to project_export_manager_path(current_project), alert: 'Something fishy is going on...'
     end
   end
 end
