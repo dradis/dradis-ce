@@ -20,11 +20,11 @@ class QA::IssuesController < AuthenticatedController
   end
 
   def update
-    @issues = current_project.issues.ready_for_review.where(id: params[:ids])
+    @issues = current_project.issues.where(id: params[:ids])
 
     respond_to do |format|
       if @issues.update_all(state: @state, updated_at: Time.now)
-        format.html { redirect_to project_qa_issues_path(current_project), notice: 'State updated successfully.' }
+        format.html { redirect_to_target_or_default project_qa_issues_path(current_project), notice: 'State updated successfully.' }
         format.json { head :ok }
       else
         format.html { render :show, alert: @issue.errors.full_messages.join('; ') }
