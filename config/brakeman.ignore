@@ -140,29 +140,6 @@
       "note": "False positive: Attachment.pwd is set by the admin to specify the directory for the attachments"
     },
     {
-      "warning_type": "Dangerous Send",
-      "warning_code": 23,
-      "fingerprint": "71724a8ebcbb13ab74d4e57240838b3d42c19cf55743cd5d2b6cfdefef1a3dc9",
-      "check_name": "Send",
-      "message": "User controlled method execution",
-      "file": "app/controllers/export_controller.rb",
-      "line": 22,
-      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_send/",
-      "code": "eval(valid_exporters[params[:plugin]]::Engine.engine_name).send(\"#{params[:route]}_path\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "ExportController",
-        "method": "create"
-      },
-      "user_input": "params[:route]",
-      "confidence": "High",
-      "cwe_id": [
-        77
-      ],
-      "note": "False positive: There are no routes in engines with \"_path\" that is destructive"
-    },
-    {
       "warning_type": "File Access",
       "warning_code": 16,
       "fingerprint": "7ada3bdeb90b2dc5426fa0256610c44d5c3ac233e029fa4af5c705fb5741d14d",
@@ -216,7 +193,7 @@
       "check_name": "Evaluation",
       "message": "User input in eval",
       "file": "app/controllers/export_controller.rb",
-      "line": 22,
+      "line": 23,
       "link": "https://brakemanscanner.org/docs/warning_types/dangerous_eval/",
       "code": "eval(valid_exporters[params[:plugin]]::Engine.engine_name)",
       "render_path": null,
@@ -240,7 +217,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on parameter value",
       "file": "app/controllers/upload_controller.rb",
-      "line": 123,
+      "line": 136,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "params[:uploader].constantize",
       "render_path": null,
@@ -255,6 +232,29 @@
         470
       ],
       "note": "False positive: params[:uploader] here is being validated in the controller"
+    },
+    {
+      "warning_type": "Dangerous Send",
+      "warning_code": 23,
+      "fingerprint": "d5ae0d28647fcb3472e4f29674fdd3379b9668dbdb4a4af15ffecfdb846c3b85",
+      "check_name": "Send",
+      "message": "User controlled method execution",
+      "file": "app/controllers/export_controller.rb",
+      "line": 23,
+      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_send/",
+      "code": "eval(valid_exporters[params[:plugin]]::Engine.engine_name).send(\"#{params[:route]}_path\", :scope => params[:scope])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ExportController",
+        "method": "create"
+      },
+      "user_input": "params[:route]",
+      "confidence": "High",
+      "cwe_id": [
+        77
+      ],
+      "note": "False positive: There are no routes in engines with \\\"_path\\\" that is destructive"
     },
     {
       "warning_type": "Remote Code Execution",
@@ -314,6 +314,6 @@
       "note": "False positive: The params is used to fetch the boards and cannot be manipulated by user input"
     }
   ],
-  "updated": "2022-11-24 15:12:55 +0100",
+  "updated": "2023-03-23 16:07:28 +0800",
   "brakeman_version": "5.4.0"
 }
