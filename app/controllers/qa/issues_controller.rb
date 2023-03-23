@@ -24,7 +24,12 @@ class QA::IssuesController < AuthenticatedController
 
     respond_to do |format|
       if @issues.update_all(state: @state, updated_at: Time.now)
-        format.html { redirect_to_target_or_default project_qa_issues_path(current_project), notice: 'State updated successfully.' }
+        format.html do
+          # prevent attempting to redirect the user back to the show view when the QA widget is used. Record will not exist as it'll no longer be ready for review.
+          session[:return_to] = nil if session[:return_to] == project_qa_issue_url(current_project, current_project.issues.find(params[:ids]))
+
+          redirect_to_target_or_default project_qa_issues_path(current_project), notice: 'State updated successfully.'
+        end
         format.json { head :ok }
       else
         format.html { render :show, alert: @issue.errors.full_messages.join('; ') }
