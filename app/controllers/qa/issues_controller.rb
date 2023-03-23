@@ -16,7 +16,7 @@ class QA::IssuesController < AuthenticatedController
 
   def edit
     @form_cancel_path = project_qa_issue_path(current_project, @issue)
-    @tags = current_project.tags.where('name like ?', '!%')
+    @tags = current_project.tags
   end
 
   def update
