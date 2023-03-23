@@ -27,7 +27,7 @@
               <% sort, display =
                 case column
                 when 'Title'
-                  [issue.title, link_to(issue.title, local_assigns[:qa] ? project_qa_issue_path(current_project, issue) : [current_project, issue])]
+                  [issue.title, (link_to(issue.title, [current_project, issue]) + link_to(issue.title, project_qa_issue_path(current_project, issue), class: 'd-none', data: { qa_visible: true }))]
                 when 'Tags'
                   [
                     issue.tags.any? ? issue.tags.first.display_name : '',
@@ -61,13 +61,14 @@
               %>
             <% end %>
             <td class="column-actions">
-              <%= link_to local_assigns[:qa] ? edit_project_qa_issue_path(current_project, issue) : edit_project_issue_path(current_project, issue) do %>
+              <%= link_to  edit_project_issue_path(current_project, issue) do %>
                 <i class="fa fa-pencil"></i> Edit
               <% end %>
-              <% unless local_assigns[:qa] %>
-                <%= link_to [current_project, issue], method: :delete, data: { confirm: "Are you sure?\n\nProceeding will delete this issue and any associated evidence." }, class: 'text-error-hover' do %>
-                  <i class="fa fa-trash"></i> Delete
-                <% end %>
+              <%= link_to edit_project_qa_issue_path(current_project, issue), class: 'd-none', data: { qa_visible: true } do %>
+                <i class="fa fa-pencil"></i> Edit
+              <% end %>
+              <%= link_to [current_project, issue], method: :delete, data: { confirm: "Are you sure?\n\nProceeding will delete this issue and any associated evidence.", qa_visible: false }, class: 'text-error-hover' do %>
+                <i class="fa fa-trash"></i> Delete
               <% end %>
             </td>
           </tr>
