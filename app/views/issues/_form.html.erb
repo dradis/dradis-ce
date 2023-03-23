@@ -33,9 +33,9 @@
 
   <div class="form-actions">
     <% verb = @issue.persisted? ? 'Update' : 'Create' %>
-    <div class="btn-group btn-states">
+    <div class="btn-group btn-states" data-behavior="btn-states">
       <%= button_tag :submit, class: 'btn btn-primary' do %>
-        <%= "#{verb} Issue" %> (<span data-behavior="state-button"></span>)
+        <%= "#{verb} Issue" %> (<span data-behavior="state-button"><%= @issue.state.humanize %></span>)
       <% end %>
       <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="sr-only">Toggle Dropdown</span>

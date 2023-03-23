@@ -1,16 +1,14 @@
 div.dataTables_wrapper {
-
   .dataTable {
     margin-top: 0 !important;
 
     .column-actions {
-      text-align: right;
       min-width: 8rem;
 
       a {
         visibility: hidden;
 
-        &:first-of-type{
+        &:first-of-type {
           padding-right: 0.5rem;
         }
       }
@@ -31,7 +29,7 @@ div.dataTables_wrapper {
       tr {
         .select-checkbox {
           padding-left: 0.25rem;
-          
+
           &:after,
           &:before {
             --checkboxSize: 13px;
@@ -39,7 +37,6 @@ div.dataTables_wrapper {
             left: 1.5rem;
             top: 0.7rem;
             width: var(--checkboxSize);
-
           }
 
           &:after {
@@ -101,7 +98,7 @@ div.dataTables_wrapper {
         white-space: nowrap;
         z-index: 1;
 
-        &:last-of-type{
+        &:last-of-type {
           clip-path: inset(0px 0px -20px -1px);
         }
 
@@ -137,6 +134,7 @@ div.dataTables_wrapper {
     }
 
     tr {
+      &:focus-within,
       &:hover {
         .column-actions a {
           visibility: visible;
@@ -171,7 +169,7 @@ div.dataTables_wrapper {
           }
 
           &.disabled {
-            .page-link{
+            .page-link {
               color: $mutedText;
             }
           }
@@ -180,7 +178,8 @@ div.dataTables_wrapper {
             color: $linkColor;
 
             &:focus {
-              box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 1px $darkColor;
+              box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+                0 0 1px $darkColor;
             }
           }
         }
@@ -226,7 +225,7 @@ div.dataTables_wrapper {
 
       &.buttons-columnVisibility {
         padding-left: 2.25rem;
-        
+
         &.active {
           &::before {
             background-color: $checkboxFill;
@@ -247,7 +246,7 @@ div.dataTables_wrapper {
           height: var(--checkboxSize);
           left: 1rem;
           position: absolute;
-          top: calc(50% - (var(--checkboxSize)/2));
+          top: calc(50% - (var(--checkboxSize) / 2));
           width: var(--checkboxSize);
         }
       }
