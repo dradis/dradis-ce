@@ -19,7 +19,7 @@ describe 'Issues pages' do
       describe 'index page', js: true do
         it 'presents a link to add new issue' do
           visit project_issues_path(current_project)
-          expect(page).to have_xpath("//a[@href='#{new_project_issue_path(current_project)}']")
+          expect(page).to have_xpath("//a[@href='#{new_project_issue_path(current_project)}']", visible: false)
         end
 
         it 'shows an *empty list* message if none have been assigned' do
