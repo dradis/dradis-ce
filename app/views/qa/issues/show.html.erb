@@ -1,11 +1,17 @@
 <% content_for :title, 'Quality Assurance' %>
 
 <% content_for :breadcrumbs do %>
-  <%= render 'breadcrumb' %>
+  <%= render 'breadcrumbs' %>
 <% end %>
 
 <% content_for :sidebar do %>
-  <%= render 'sidebar' %>
+  <%= render partial: 'qa/sidebar', locals: 
+    { 
+      index_path: project_qa_issues_path(current_project),
+      name: 'issues_for_review',
+      records: @issues
+    }
+  %>
 <% end %>
 
 <div class="row m-0">
@@ -17,7 +23,7 @@
             <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
             <span class="actions">
               <span class="action">
-                <%= link_to edit_project_issue_path(current_project, @issue) do %>
+                <%= link_to edit_project_qa_issue_path(current_project, @issue) do %>
                   <i class="fa fa-pencil fa-fw"></i> Edit
                 <% end %>
               </span>

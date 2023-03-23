@@ -14,7 +14,7 @@
 
 <div id="<%= name.downcase %>" class="note-list collapse show">
   <% if collection.any? %>
-    <%= render partial: collection.first.to_partial_path, collection: collection, locals: { qa: local_assigns[:qa] } %>
+    <%= render partial: collection.first.to_partial_path, collection: collection %>
   <% end %>
   <div class="note placeholder <%= 'd-none' if collection.any? %>">(nothing yet)</div>
 </div>

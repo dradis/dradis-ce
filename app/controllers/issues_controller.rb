@@ -15,10 +15,10 @@ class IssuesController < AuthenticatedController
   before_action :set_columns, only: :index
 
   before_action :set_or_initialize_issue, except: [:import, :index]
-  before_action :set_or_initialize_tags, except: [:destroy]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
   before_action :set_affected_nodes, only: [:show]
   before_action :set_form_cancel_path, only: [:new, :edit]
+  before_action :set_tags, except: [:destroy]
   before_action :store_location, only: [:index, :show]
 
   def index
@@ -186,10 +186,8 @@ class IssuesController < AuthenticatedController
     end
   end
 
-  # Load all the colour tags in the project (those that start with !). If none
-  # exist, initialize a set of tags.
-  def set_or_initialize_tags
-    @tags = current_project.tags.where('name like ?', '!%')
+  def set_tags
+    @tags = current_project.tags
   end
 
   def issue_params

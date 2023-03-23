@@ -29,7 +29,7 @@
     <%= hidden_field :issue, :original_updated_at, value: @issue.updated_at.to_i %>
   <% end %>
 
-  <%= render 'tag_input', f: f %>
+  <%= render 'issues/tag_input', f: f %>
 
   <div class="form-actions">
     <% verb = @issue.persisted? ? 'Update' : 'Create' %>

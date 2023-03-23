@@ -3,7 +3,7 @@ class QA::IssuesController < AuthenticatedController
   include ProjectScoped
 
   before_action :set_issues
-  before_action :set_issue, only: [:show]
+  before_action :set_issue, only: [:edit, :show]
   before_action :store_location, only: [:index, :show]
   before_action :validate_state, only: :update
 
@@ -13,6 +13,11 @@ class QA::IssuesController < AuthenticatedController
   end
 
   def show; end
+
+  def edit
+    @form_cancel_path = project_qa_issue_path(current_project, @issue)
+    @tags = current_project.tags
+  end
 
   def update
     @issues = current_project.issues.ready_for_review.where(id: params[:ids])
