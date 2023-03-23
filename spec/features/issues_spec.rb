@@ -16,7 +16,7 @@ describe 'Issues pages' do
     context 'with an Issue library' do
       let(:issuelib) { current_project.issue_library }
 
-      describe 'index page' do
+      describe 'index page', js: true do
         it 'presents a link to add new issue' do
           visit project_issues_path(current_project)
           expect(page).to have_xpath("//a[@href='#{new_project_issue_path(current_project)}']")
@@ -45,6 +45,26 @@ describe 'Issues pages' do
           end
         end
 
+        context 'bulk state update' do
+          it 'updates the list of records with the state' do
+            issue = create(:issue, node: current_project.issue_library)
+            new_state = 'Ready for review'
+
+            visit project_issues_path(current_project)
+
+            within '.dataTables_wrapper' do
+              page.find('td.select-checkbox', match: :first).click
+              click_button('State')
+              click_link(new_state)
+            end
+
+            expect(page).to have_selector('.alert-success', text: 'State updated successfully.')
+            expect(issue.reload.state).to eq new_state.downcase.gsub(' ', '_')
+            within 'tbody tr', match: :first do
+              expect(page).to have_content(new_state)
+            end
+          end
+        end
       end
 
       describe 'new page', js: true do
