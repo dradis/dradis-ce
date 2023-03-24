@@ -1,4 +1,5 @@
 class QA::IssuesController < AuthenticatedController
+  include ActivityTracking
   include LiquidEnabledResource
   include ProjectScoped
 
@@ -20,10 +21,13 @@ class QA::IssuesController < AuthenticatedController
   end
 
   def update
-    @issues = current_project.issues.ready_for_review.where(id: params[:ids])
+    @issues = current_project.issues.where(id: params[:ids])
 
     respond_to do |format|
       if @issues.update_all(state: @state, updated_at: Time.now)
+        @issues.each do |issue|
+          track_updated_state(issue)
+        end
         format.html { redirect_to project_qa_issues_path(current_project), notice: 'State updated successfully.' }
         format.json { head :ok }
       else
