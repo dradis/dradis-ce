@@ -1,6 +1,9 @@
 shared_examples 'qa pages' do |item_type|
 
   describe 'index page', js: true do
+    MODEL = item_type.to_s.classify.constantize
+    STATES = ['Draft', 'Published']
+
     before do
       visit polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
     end
@@ -48,45 +51,56 @@ shared_examples 'qa pages' do |item_type|
       end
 
       it 'updates the list of records with the state' do
-        within '.dataTables_wrapper' do
-          @original_row_count = page.all('tbody tr').count
-          page.find('td.select-checkbox', match: :first).click
+        STATES.each do |state|
+          record = MODEL.where(state: 'ready_for_review').first
+          visit polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
 
-          click_button('State')
-          click_link('Published')
+          within '.dataTables_wrapper' do
+            @original_row_count = page.all('tbody tr').count
+            page.find('td.select-checkbox', match: :first).click
+
+            click_button('State')
+            expect { click_link state }.to have_enqueued_job(ActivityTrackingJob).with(
+              action: 'update_state',
+              project_id: current_project.id,
+              trackable_id: record.id,
+              trackable_type: record.class.to_s,
+              user_id: @logged_in_as.id
+            )
+
+            expect(current_path).to eq polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
+            expect(page.all('tbody tr').count).to eq(@original_row_count - 1)
+            expect(page).to have_selector('.alert-success', text: 'State updated successfully.')
+            expect(record.reload.state).to eq state.downcase.gsub(' ', '_')
+          end
         end
-
-        page.find('.alert')
-
-        expect(page.all('tbody tr').count).to eq(@original_row_count - 1)
-        expect(page).to have_selector('.alert-success', text: 'State updated successfully.')
       end
     end
   end
 
   describe 'show page' do
-    before do
-      visit polymorphic_path([current_project, :qa, records.first])
-    end
-
     it 'shows the record\'s content' do
+      visit polymorphic_path([current_project, :qa, records.first])
       expect(page).to have_content(records.first.title)
     end
 
-    it 'updates the state to draft' do
-      click_button 'Draft'
+    it 'updates the state' do
+      STATES.each do |state|
+        record = MODEL.where(state: 'ready_for_review').first
+        visit polymorphic_path([current_project, :qa, record])
 
-      expect(current_path).to eq polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
-      expect(page).to have_selector('.alert-success', text: 'State updated successfully.')
-      expect(records.first.reload.draft?).to eq true
-    end
+        expect { click_button state }.to have_enqueued_job(ActivityTrackingJob).with(
+          action: 'update_state',
+          project_id: current_project.id,
+          trackable_id: record.id,
+          trackable_type: record.class.to_s,
+          user_id: @logged_in_as.id
+        )
 
-    it 'updates the state to published' do
-      click_button 'Published'
-
-      expect(current_path).to eq polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
-      expect(page).to have_selector('.alert-success', text: 'State updated successfully.')
-      expect(records.first.reload.published?).to eq true
+        expect(current_path).to eq polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
+        expect(page).to have_selector('.alert-success', text: 'State updated successfully.')
+        expect(record.reload.state).to eq state.downcase.gsub(' ', '_')
+      end
     end
   end
 
