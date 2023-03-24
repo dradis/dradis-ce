@@ -116,6 +116,29 @@
       "note": "False positive: Attachment.pwd is set by the admin to specify the directory for the attachments"
     },
     {
+      "warning_type": "Dangerous Send",
+      "warning_code": 23,
+      "fingerprint": "5b341c9edb2f75700ba8102f481ac63faae79d3b13cdf0cb1ecdfe230fd46cb7",
+      "check_name": "Send",
+      "message": "User controlled method execution",
+      "file": "app/controllers/export_controller.rb",
+      "line": 23,
+      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_send/",
+      "code": "eval(valid_exporters[params[:plugin]]::Engine.engine_name).send(\"#{params[:route]}_path\", :scope => params[valid_exporters[params[:plugin]]::Engine.plugin_name.to_s][:scope])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ExportController",
+        "method": "create"
+      },
+      "user_input": "params[:route]",
+      "confidence": "High",
+      "cwe_id": [
+        77
+      ],
+      "note": "False positive: There are no routes in engines with _path that is destructive"
+    },
+    {
       "warning_type": "Denial of Service",
       "warning_code": 76,
       "fingerprint": "6f64eb88c9651a86dbf00fca38c6c78c4be01606919636ff1e1b2f8043fc360a",
@@ -234,29 +257,6 @@
       "note": "False positive: params[:uploader] here is being validated in the controller"
     },
     {
-      "warning_type": "Dangerous Send",
-      "warning_code": 23,
-      "fingerprint": "d5ae0d28647fcb3472e4f29674fdd3379b9668dbdb4a4af15ffecfdb846c3b85",
-      "check_name": "Send",
-      "message": "User controlled method execution",
-      "file": "app/controllers/export_controller.rb",
-      "line": 23,
-      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_send/",
-      "code": "eval(valid_exporters[params[:plugin]]::Engine.engine_name).send(\"#{params[:route]}_path\", :scope => params[:scope])",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "ExportController",
-        "method": "create"
-      },
-      "user_input": "params[:route]",
-      "confidence": "High",
-      "cwe_id": [
-        77
-      ],
-      "note": "False positive: There are no routes in engines with \\\"_path\\\" that is destructive"
-    },
-    {
       "warning_type": "Remote Code Execution",
       "warning_code": 24,
       "fingerprint": "d770dd85f99cd870dfc8bdd9723722b31d84135f55133cf2907dff47b854c98d",
@@ -314,6 +314,6 @@
       "note": "False positive: The params is used to fetch the boards and cannot be manipulated by user input"
     }
   ],
-  "updated": "2023-03-23 16:07:28 +0800",
+  "updated": "2023-03-24 20:01:55 +0800",
   "brakeman_version": "5.4.0"
 }
