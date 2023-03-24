@@ -79,8 +79,11 @@ class ActivityPresenter < BasePresenter
   # but this may change if we add activities whose action is an irregular
   # verb.
   def verb
-    if activity.action == 'destroy'
+    case activity.action
+    when 'destroy'
       'deleted'
+    when 'update_state'
+      'updated'
     else
       activity.action.sub(/e?\z/, 'ed')
     end
@@ -111,7 +114,7 @@ class ActivityPresenter < BasePresenter
   end
 
   def render_partial
-    locals = {activity: activity, presenter: self}
+    locals = { activity: activity, presenter: self }
     locals[trackable_name] = activity.trackable
     render partial_path, locals
   end
