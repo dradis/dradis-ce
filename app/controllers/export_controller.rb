@@ -103,9 +103,9 @@ class ExportController < AuthenticatedController
   def validate_scope
     return if @exporter.to_s.include?('::Projects')
 
-    if params[:scope] == 'all' || params[:scope] == 'published'
-      @scope = params[:scope]
-    else
+    @scope = params[@exporter::Engine::plugin_name.to_s][:scope]
+
+    unless @scope == 'all' || @scope == 'published'
       redirect_to project_export_manager_path(current_project), alert: 'Something fishy is going on...'
     end
   end

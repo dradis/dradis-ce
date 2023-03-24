@@ -211,7 +211,7 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', github: 'dradis/dradis-plugins', branch: 'qa-feature'
+gem 'dradis-plugins', github: 'dradis/dradis-plugins', branch: 'qa-export-all'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
