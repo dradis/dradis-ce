@@ -41,22 +41,23 @@ class ActivityPresenter < BasePresenter
 
   def icon
     icon_css = %w{activity-icon fa}
-    icon_css << case activity.trackable_type
-                when 'Board', 'List', 'Card'
-                  'fa-trello'
-                when 'Comment'
-                  'fa-comment'
-                when 'Evidence'
-                  'fa-flag'
-                when 'Issue'
-                  'fa-bug'
-                when 'Node'
-                  'fa-folder-o'
-                when 'Note'
-                  'fa-file-text-o'
-                else
-                  ''
-                end
+    icon_css <<
+      case activity.trackable_type
+      when 'Board', 'List', 'Card'
+        'fa-trello'
+      when 'Comment'
+        'fa-comment'
+      when 'Evidence'
+        'fa-flag'
+      when 'Issue'
+        'fa-bug'
+      when 'Node'
+        'fa-folder-o'
+      when 'Note'
+        'fa-file-text-o'
+      else
+        ''
+      end
     h.content_tag :span, nil, class: icon_css
   end
 
@@ -128,9 +129,9 @@ class ActivityPresenter < BasePresenter
 
   def trackable_title
     @title ||= if activity.trackable.respond_to?(:title) && activity.trackable.title?
-                 activity.trackable.title
-               elsif activity.trackable.respond_to?(:label) && activity.trackable.label?
-                 activity.trackable.label
-               end
+      activity.trackable.title
+    elsif activity.trackable.respond_to?(:label) && activity.trackable.label?
+      activity.trackable.label
+    end
   end
 end
