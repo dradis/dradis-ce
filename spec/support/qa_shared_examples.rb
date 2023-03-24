@@ -55,24 +55,26 @@ shared_examples 'qa pages' do |item_type|
           record = MODEL.where(state: 'ready_for_review').first
           visit polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
 
-          within '.dataTables_wrapper' do
-            @original_row_count = page.all('tbody tr').count
-            page.find('td.select-checkbox', match: :first).click
+          @original_row_count = page.all('tbody tr').count
+          page.find('td.select-checkbox', match: :first).click
 
-            click_button('State')
-            expect { click_link state }.to have_enqueued_job(ActivityTrackingJob).with(
-              action: 'update_state',
-              project_id: current_project.id,
-              trackable_id: record.id,
-              trackable_type: record.class.to_s,
-              user_id: @logged_in_as.id
-            )
+          click_button('State')
+          expect do
+            click_link state
+            # Wait for action to complete
+            page.find('.alert')
+          end.to have_enqueued_job(ActivityTrackingJob).with(
+            action: 'update_state',
+            project_id: current_project.id,
+            trackable_id: record.id,
+            trackable_type: record.class.to_s,
+            user_id: @logged_in_as.id
+          )
 
-            expect(current_path).to eq polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
-            expect(page.all('tbody tr').count).to eq(@original_row_count - 1)
-            expect(page).to have_selector('.alert-success', text: 'State updated successfully.')
-            expect(record.reload.state).to eq state.downcase.gsub(' ', '_')
-          end
+          expect(current_path).to eq polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
+          expect(page.all('tbody tr').count).to eq(@original_row_count - 1)
+          expect(page).to have_selector('.alert-success', text: 'State updated successfully.')
+          expect(record.reload.state).to eq state.downcase.gsub(' ', '_')
         end
       end
     end
