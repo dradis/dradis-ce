@@ -96,10 +96,16 @@ describe 'Issues API' do
       it 'includes the author' do
         expect(@retrieved_issue['author']).to eq @issue.author
       end
+
+      it 'includes the state' do
+        expect(@retrieved_issue['state']).to eq @issue.state
+      end
     end
 
     describe 'POST /api/issues' do
-      let(:valid_params) { { issue: { text: "#[Title]#\nRspec issue\n\n#[c]#\nd\n\n#[e]#\nf\n\n" } } }
+      let(:valid_params) do
+        { issue: { text: "#[Title]#\nRspec issue\n\n#[c]#\nd\n\n#[e]#\nf\n\n", state: 'ready_for_review' } }
+      end
       let(:valid_post) do
         post '/api/issues', params: valid_params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
       end
@@ -124,6 +130,14 @@ describe 'Issues API' do
         expect(database_issue.tag_list).to eq(tag_name)
       end
 
+      it 'sets the issue state' do
+        expect { valid_post }.to change { current_project.issues.count }.by(1)
+        expect(response.status).to eq(201)
+
+        retrieved_issue = JSON.parse(response.body)
+        expect(retrieved_issue['state']).to eq('ready_for_review')
+      end
+
       let(:submit_form) { valid_post }
       include_examples 'creates an Activity', :create, Issue
       include_examples 'sets the whodunnit', :create, Issue
@@ -145,7 +159,7 @@ describe 'Issues API' do
 
     describe 'PUT /api/issues/:id' do
       let(:issue) { create(:issue, node: current_project.issue_library, text: 'Existing Issue') }
-      let(:valid_params) { { issue: { text: 'Updated Issue' } } }
+      let(:valid_params) { { issue: { text: 'Updated Issue', state: 'ready_for_review' } } }
       let(:valid_put) do
         put "/api/issues/#{issue.id}", params: valid_params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
       end
@@ -158,6 +172,7 @@ describe 'Issues API' do
 
         retrieved_issue = JSON.parse(response.body)
         expect(retrieved_issue['text']).to eq valid_params[:issue][:text]
+        expect(retrieved_issue['state']).to eq valid_params[:issue][:state]
       end
 
       let(:submit_form) { valid_put }
