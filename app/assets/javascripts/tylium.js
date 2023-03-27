@@ -55,7 +55,6 @@
 //= require tylium/modules/fileupload
 //= require tylium/modules/issues
 //= require tylium/modules/nodes
-//= require tylium/modules/qa_visibility
 //= require tylium/modules/search
 //= require tylium/modules/sidebar
 //= require tylium/modules/state_button
@@ -70,4 +69,5 @@
 //= require tylium/pages/projects/boards_summary
 //= require tylium/pages/projects/issues_chart
 //= require tylium/pages/projects/summary
+//= require tylium/pages/qa
 //= require tylium/pages/upload
