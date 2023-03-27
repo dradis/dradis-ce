@@ -27,7 +27,7 @@
               <% sort, display =
                 case column
                 when 'Title'
-                  [issue.title, (link_to(issue.title, [current_project, issue]) + link_to(issue.title, project_qa_issue_path(current_project, issue), class: 'd-none', data: { qa_visible: true }))]
+                  [issue.title, (link_to(issue.title, [current_project, issue], data: { qa_visible: false } ) + link_to(issue.title, project_qa_issue_path(current_project, issue), class: 'd-none', data: { qa_visible: true }))]
                 when 'Tags'
                   [
                     issue.tags.any? ? issue.tags.first.display_name : '',
@@ -61,7 +61,7 @@
               %>
             <% end %>
             <td class="column-actions">
-              <%= link_to edit_project_issue_path(current_project, issue) do %>
+              <%= link_to edit_project_issue_path(current_project, issue), data: { qa_visible: false } do %>
                 <i class="fa fa-pencil"></i> Edit
               <% end %>
               <%= link_to edit_project_qa_issue_path(current_project, issue), class: 'd-none', data: { qa_visible: true } do %>
