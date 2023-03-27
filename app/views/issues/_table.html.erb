@@ -61,7 +61,7 @@
               %>
             <% end %>
             <td class="column-actions">
-              <%= link_to  edit_project_issue_path(current_project, issue) do %>
+              <%= link_to edit_project_issue_path(current_project, issue) do %>
                 <i class="fa fa-pencil"></i> Edit
               <% end %>
               <%= link_to edit_project_qa_issue_path(current_project, issue), class: 'd-none', data: { qa_visible: true } do %>
