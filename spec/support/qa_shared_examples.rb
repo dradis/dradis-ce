@@ -1,4 +1,14 @@
 shared_examples 'qa pages' do |item_type|
+  def job_params(record)
+    {
+      action: 'update_state',
+      project_id: current_project.id,
+      trackable_id: record.id,
+      trackable_type: record.class.to_s,
+      user_id: @logged_in_as.id
+    }
+  end
+
   let(:model) { item_type.to_s.classify.constantize }
   let(:states) { ['Draft', 'Published'] }
 
@@ -62,13 +72,7 @@ shared_examples 'qa pages' do |item_type|
             click_link state
             # Wait for action to complete
             page.find('.alert')
-          end.to have_enqueued_job(ActivityTrackingJob).with(
-            action: 'update_state',
-            project_id: current_project.id,
-            trackable_id: record.id,
-            trackable_type: record.class.to_s,
-            user_id: @logged_in_as.id
-          )
+          end.to have_enqueued_job(ActivityTrackingJob).with(job_params(record))
 
           expect(current_path).to eq polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
           expect(page.all('tbody tr').count).to eq(@original_row_count - 1)
@@ -90,13 +94,7 @@ shared_examples 'qa pages' do |item_type|
         record = model.where(state: 'ready_for_review').first
         visit polymorphic_path([current_project, :qa, record])
 
-        expect { click_button state }.to have_enqueued_job(ActivityTrackingJob).with(
-          action: 'update_state',
-          project_id: current_project.id,
-          trackable_id: record.id,
-          trackable_type: record.class.to_s,
-          user_id: @logged_in_as.id
-        )
+        expect { click_button state }.to have_enqueued_job(ActivityTrackingJob).with(job_params(record))
 
         expect(current_path).to eq polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
         expect(page).to have_selector('.alert-success', text: 'State updated successfully.')
