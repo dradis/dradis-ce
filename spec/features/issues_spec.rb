@@ -16,10 +16,10 @@ describe 'Issues pages' do
     context 'with an Issue library' do
       let(:issuelib) { current_project.issue_library }
 
-      describe 'index page', js: true do
+      describe 'index page' do
         it 'presents a link to add new issue' do
           visit project_issues_path(current_project)
-          expect(page).to have_xpath("//a[@href='#{new_project_issue_path(current_project)}']", visible: false)
+          expect(page).to have_xpath("//a[@href='#{new_project_issue_path(current_project)}']")
         end
 
         it 'shows an *empty list* message if none have been assigned' do
@@ -45,7 +45,7 @@ describe 'Issues pages' do
           end
         end
 
-        context 'bulk state update' do
+        context 'bulk state update', js: true do
           it 'updates the list of records with the state' do
             issue = create(:issue, node: current_project.issue_library)
             new_state = 'Ready for review'
