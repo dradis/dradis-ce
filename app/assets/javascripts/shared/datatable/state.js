@@ -4,8 +4,7 @@ $(document).on('preInit.dt', 'body.issues.index', function (e, settings) {
     return;
   }
 
-  var api = new $.fn.dataTable.Api(settings),
-    isQA = $('[data-behavior~=qa-viewer]').length > 0;
+  var api = new $.fn.dataTable.Api(settings);
 
   api.button().add(1, {
     attr: {
@@ -16,7 +15,7 @@ $(document).on('preInit.dt', 'body.issues.index', function (e, settings) {
     extend: 'collection',
     name: 'stateBtn',
     text: '<i class="fa fa-adjust fa-fw"></i>State<i class="fa fa-caret-down fa-fw"></i>',
-    buttons: DradisDatatable.prototype.setupStateButtons.call(api, isQA),
+    buttons: DradisDatatable.prototype.setupStateButtons.call(api),
   });
 });
 
@@ -36,7 +35,7 @@ $(document).on('init.dt', 'body.issues.index', function (e, settings) {
   );
 });
 
-DradisDatatable.prototype.setupStateButtons = function (isQA) {
+DradisDatatable.prototype.setupStateButtons = function () {
   var states = [
       ['Draft', 'fa-pencil-square-o'],
       ['Ready for review', 'fa-eye'],
@@ -45,7 +44,7 @@ DradisDatatable.prototype.setupStateButtons = function (isQA) {
     stateButtons = [],
     api = this;
 
-  if (isQA) {
+  if ($('[data-behavior~=qa-viewer]').length > 0) {
     states.splice(1, 1);
   }
 
