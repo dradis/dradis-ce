@@ -1,9 +1,8 @@
 shared_examples 'qa pages' do |item_type|
+  let(:model) { item_type.to_s.classify.constantize }
+  let(:states) { ['Draft', 'Published'] }
 
   describe 'index page', js: true do
-    MODEL = item_type.to_s.classify.constantize
-    STATES = ['Draft', 'Published']
-
     before do
       visit polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
     end
@@ -51,8 +50,8 @@ shared_examples 'qa pages' do |item_type|
       end
 
       it 'updates the list of records with the state' do
-        STATES.each do |state|
-          record = MODEL.where(state: 'ready_for_review').first
+        states.each do |state|
+          record = model.where(state: 'ready_for_review').first
           visit polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
 
           @original_row_count = page.all('tbody tr').count
@@ -87,8 +86,8 @@ shared_examples 'qa pages' do |item_type|
     end
 
     it 'updates the state' do
-      STATES.each do |state|
-        record = MODEL.where(state: 'ready_for_review').first
+      states.each do |state|
+        record = model.where(state: 'ready_for_review').first
         visit polymorphic_path([current_project, :qa, record])
 
         expect { click_button state }.to have_enqueued_job(ActivityTrackingJob).with(
