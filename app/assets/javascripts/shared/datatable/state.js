@@ -36,11 +36,7 @@ $(document).on('init.dt', 'body.issues.index', function (e, settings) {
 });
 
 DradisDatatable.prototype.setupStateButtons = function () {
-  var states = [
-      ['Draft', 'fa-pencil-square-o'],
-      ['Ready for review', 'fa-eye'],
-      ['Published', 'fa-rocket'],
-    ],
+  var states = $('[data-behavior~=dradis-datatable]').data('state-icons'),
     stateButtons = [],
     api = this;
 

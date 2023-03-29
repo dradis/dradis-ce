@@ -4,8 +4,9 @@
     'default-columns': @default_columns.to_json,
     'item-name': 'issue',
     'local-storage-key': local_storage_key,
-    'tags-path': project_tags_path(current_project),
-    'new-tag-path': new_project_tag_path(current_project)
+    'new-tag-path': new_project_tag_path(current_project),
+    'state-icons': Issue.state_icons,
+    'tags-path': project_tags_path(current_project)
   }%>
   <% table_attributes.merge!(tags: @tags.map { |t| [t.display_name, t.color, t.name] }.to_json) if local_assigns[:tags] %>
   <%= tag.table class: 'table table-striped mb-0', data: table_attributes do %>
