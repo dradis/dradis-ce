@@ -96,8 +96,8 @@ Rails.application.routes.draw do
     resources :tags, except: [:show]
 
     namespace :qa do
-      resources :issues, only: [:edit, :index, :show] do
-        collection { put :update }
+      resources :issues, only: [:edit, :index, :show, :update] do
+        collection { put :bulk_update }
       end
     end
 
