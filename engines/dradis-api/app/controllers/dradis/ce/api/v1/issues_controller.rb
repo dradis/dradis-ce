@@ -4,6 +4,8 @@ module Dradis::CE::API
       include ActivityTracking
       include Dradis::CE::API::ProjectScoped
 
+      before_action :validate_state, only: [:create, :update]
+
       def index
         @issues = current_project.issues.includes(:tags).order('updated_at desc')
         @issues = @issues.page(params[:page].to_i) if params[:page]
@@ -49,6 +51,16 @@ module Dradis::CE::API
       private
       def issue_params
         params.require(:issue).permit(:state, :text)
+      end
+
+      def validate_state
+        return if issue_params[:state].nil?
+
+        unless Issue.states.keys.include? issue_params[:state]
+          issue = Issue.new
+          issue.errors.add(:state, 'invalid value.')
+          render_validation_errors(issue)
+        end
       end
     end
   end

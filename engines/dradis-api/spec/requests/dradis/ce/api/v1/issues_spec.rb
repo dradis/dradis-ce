@@ -155,6 +155,14 @@ describe 'Issues API' do
         }.not_to change { current_project.issues.count }
         expect(response.status).to eq(422)
       end
+
+      it 'throws 422 if state is invalid' do
+        params = { issue: { text: "#[Title]#\nIssue test\n", state: 'fakestate' } }
+        expect {
+          post '/api/issues', params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
+        }.not_to change { current_project.issues.count }
+        expect(response.status).to eq(422)
+      end
     end
 
     describe 'PUT /api/issues/:id' do
