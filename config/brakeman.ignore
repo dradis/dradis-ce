@@ -116,29 +116,6 @@
       "note": "False positive: Attachment.pwd is set by the admin to specify the directory for the attachments"
     },
     {
-      "warning_type": "Dangerous Send",
-      "warning_code": 23,
-      "fingerprint": "5b341c9edb2f75700ba8102f481ac63faae79d3b13cdf0cb1ecdfe230fd46cb7",
-      "check_name": "Send",
-      "message": "User controlled method execution",
-      "file": "app/controllers/export_controller.rb",
-      "line": 23,
-      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_send/",
-      "code": "eval(valid_exporters[params[:plugin]]::Engine.engine_name).send(\"#{params[:route]}_path\", :scope => params[valid_exporters[params[:plugin]]::Engine.plugin_name.to_s][:scope])",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "ExportController",
-        "method": "create"
-      },
-      "user_input": "params[:route]",
-      "confidence": "High",
-      "cwe_id": [
-        77
-      ],
-      "note": "False positive: There are no routes in engines with _path that is destructive"
-    },
-    {
       "warning_type": "Denial of Service",
       "warning_code": 76,
       "fingerprint": "6f64eb88c9651a86dbf00fca38c6c78c4be01606919636ff1e1b2f8043fc360a",
@@ -210,13 +187,36 @@
       "note": "False positive: Attachment.pwd is set by the admin to specify the directory for the attachments"
     },
     {
+      "warning_type": "Dangerous Send",
+      "warning_code": 23,
+      "fingerprint": "bbacf533907f89d7f15f542afc395a5939369037c2d80e3bd57d3dbddda0c387",
+      "check_name": "Send",
+      "message": "User controlled method execution",
+      "file": "app/controllers/export_controller.rb",
+      "line": 16,
+      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_send/",
+      "code": "eval(valid_exporters[params[:plugin]]::Engine.engine_name).send(\"#{params[:route]}_path\", :project_id => current_project.id, :scope => params[valid_exporters[params[:plugin]]::Engine.plugin_name.to_s][:scope], :template => File.expand_path(File.join(templates_dir_for(:plugin => valid_exporters[params[:plugin]]), params[:template])))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ExportController",
+        "method": "create"
+      },
+      "user_input": "params[:route]",
+      "confidence": "High",
+      "cwe_id": [
+        77
+      ],
+      "note": "False positive: There are no routes in engines with _path that is destructive"
+    },
+    {
       "warning_type": "Dangerous Eval",
       "warning_code": 13,
       "fingerprint": "bfab1d02061750dba3cb5c11af62323693ca1670dd58f0a0583845134c1eca78",
       "check_name": "Evaluation",
       "message": "User input in eval",
       "file": "app/controllers/export_controller.rb",
-      "line": 23,
+      "line": 15,
       "link": "https://brakemanscanner.org/docs/warning_types/dangerous_eval/",
       "code": "eval(valid_exporters[params[:plugin]]::Engine.engine_name)",
       "render_path": null,
@@ -314,6 +314,6 @@
       "note": "False positive: The params is used to fetch the boards and cannot be manipulated by user input"
     }
   ],
-  "updated": "2023-03-24 20:01:55 +0800",
+  "updated": "2023-03-29 17:30:02 +0800",
   "brakeman_version": "5.4.0"
 }
