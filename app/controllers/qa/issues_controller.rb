@@ -3,7 +3,7 @@ class QA::IssuesController < AuthenticatedController
   include ProjectScoped
 
   before_action :set_issues
-  before_action :set_issue, only: [:edit, :show]
+  before_action :set_issue, only: [:edit, :show, :update]
   before_action :store_location, only: [:index, :show]
   before_action :validate_state, only: [:bulk_update, :update]
 
@@ -36,9 +36,7 @@ class QA::IssuesController < AuthenticatedController
   end
 
   def update
-    issue = current_project.issues.find(params[:id])
-
-    if issue.update(state: @state, updated_at: Time.now)
+    if @issue.update(state: @state, updated_at: Time.now)
       redirect_to project_qa_issues_path(current_project), notice: 'State updated successfully.'
     else
       format.html { render :show, alert: @issue.errors.full_messages.join('; ') }
