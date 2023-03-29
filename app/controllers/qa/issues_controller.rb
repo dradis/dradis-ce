@@ -24,12 +24,10 @@ class QA::IssuesController < AuthenticatedController
 
     respond_to do |format|
       if @issues.update_all(state: @state, updated_at: Time.now)
-        format.html do
-          redirect_to_target_or_default project_qa_issues_path(current_project), notice: 'State updated successfully.'
-        end
+        format.html { redirect_to_target_or_default project_qa_issues_path(current_project), notice: 'State updated successfully.' }
         format.json { head :ok }
       else
-        format.html { render :show, alert: @issue.errors.full_messages.join('; ') }
+        format.html { render :show, alert: @issues.errors.full_messages.join('; ') }
         format.json { head :not_found }
       end
     end
@@ -39,7 +37,7 @@ class QA::IssuesController < AuthenticatedController
     if @issue.update(state: @state, updated_at: Time.now)
       redirect_to project_qa_issues_path(current_project), notice: 'State updated successfully.'
     else
-      format.html { render :show, alert: @issue.errors.full_messages.join('; ') }
+      render :show, alert: @issue.errors.full_messages.join('; ')
     end
   end
 
