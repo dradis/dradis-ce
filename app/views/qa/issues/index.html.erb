@@ -19,8 +19,7 @@
           <%=
           render partial: 'issues/table', locals: {
             issues: @issues,
-            local_storage_key: "project.ce.#{dom_id(current_project)}.qa_issues_datatable",
-            qa: true
+            local_storage_key: "project.ce.#{dom_id(current_project)}.qa_issues_datatable"
           }
         %>
         </div>
