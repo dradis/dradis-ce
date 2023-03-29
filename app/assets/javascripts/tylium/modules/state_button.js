@@ -1,6 +1,6 @@
 document.addEventListener('turbolinks:load', function () {
   if ($('[data-behavior~=state-radio]').length) {
-    function updateBtnText($selectedRadio) {
+    function updateBtn($selectedRadio) {
       var selectedState = $selectedRadio
         .parent()
         .find('[data-behavior~=state-label]');
@@ -14,7 +14,7 @@ document.addEventListener('turbolinks:load', function () {
     }
 
     $('[data-behavior~=state-radio]').on('change', function () {
-      updateBtnText($(this));
+      updateBtn($(this));
     });
   }
 });
