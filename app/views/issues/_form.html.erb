@@ -32,33 +32,7 @@
   <%= render 'issues/tag_input', f: f %>
 
   <div class="form-actions">
-    <% verb = @issue.persisted? ? 'Update' : 'Create' %>
-    <div class="btn-group btn-states" data-behavior="btn-states">
-      <%= button_tag :submit, class: 'btn btn-primary' do %>
-        <%= "#{verb} Issue" %> (<span data-behavior="state-button"><%= @issue.state.humanize %></span>)
-      <% end %>
-      <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="sr-only">Toggle Dropdown</span>
-      </button>
-      <div class="dropdown-menu">
-        <%= f.collection_radio_buttons(:state, Issue.states, :first, :first) do |b| %>
-          <%= b.label class: 'state' do %>
-            <%= b.radio_button class: 'd-none', data: { behavior: 'state-radio'} %>
-            <i class="fa fa-check fa-fw"></i>
-            <div class="state-label">
-              <p data-behavior="state-label"><%= b.text.humanize %></p>
-              <% case b.value %>
-              <% when 'draft' %>
-              <span>Still not ready for review or the report.</span>
-              <% when 'ready_for_review' %>
-              <span>All done on this one, ready for QA.</span>
-              <% when 'published' %>
-              <span>Content is final, ready for the report.</span>
-            <% end %>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
+    <%= render partial: 'qa/state_button', locals: { f: f, record: @issue } %>
   </div>
   or
   <%=
