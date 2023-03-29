@@ -10,17 +10,14 @@ class ExportController < AuthenticatedController
   end
 
   def create
-    # We need to pass some params to the plugin's controller. But we're
-    # redirecting, so we'll put them in the session.
-    # *Warning* can't store too much data here.
-    session[:export_manager] = {
-      project_id: current_project.id,
-      template: @template_file
-    }
-
     # FIXME: check the Routing guide to find a better way.
     action_path = "#{params[:route]}_path"
-    redirect_to eval(@exporter::Engine::engine_name).send(action_path, scope: @scope)
+    redirect_to eval(@exporter::Engine::engine_name).send(
+      action_path,
+      project_id: current_project.id,
+      scope: @scope,
+      template: @template_file
+    )
   end
 
   # Runs a pre-export validation of the contents of the project
@@ -105,7 +102,7 @@ class ExportController < AuthenticatedController
 
     @scope = params[@exporter::Engine::plugin_name.to_s][:scope]
 
-    unless @scope == 'all' || @scope == 'published'
+    unless Dradis::Plugins::ContentService::Base::VALID_SCOPES.include?(@scope)
       redirect_to project_export_manager_path(current_project), alert: 'Something fishy is going on...'
     end
   end
