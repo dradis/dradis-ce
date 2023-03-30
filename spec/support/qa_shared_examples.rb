@@ -1,14 +1,4 @@
 shared_examples 'qa pages' do |item_type|
-  def job_params(record)
-    {
-      action: 'update_state',
-      project_id: current_project.id,
-      trackable_id: record.id,
-      trackable_type: record.class.to_s,
-      user_id: @logged_in_as.id
-    }
-  end
-
   let(:model) { item_type.to_s.classify.constantize }
   let(:states) { ['Draft', 'Published'] }
 
@@ -128,5 +118,15 @@ shared_examples 'qa pages' do |item_type|
 
       expect(current_path).to eq polymorphic_path([current_project, :qa, records.first])
     end
+  end
+
+  def job_params(record)
+    {
+      action: 'update_state',
+      project_id: current_project.id,
+      trackable_id: record.id,
+      trackable_type: record.class.to_s,
+      user_id: @logged_in_as.id
+    }
   end
 end
