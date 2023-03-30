@@ -118,9 +118,9 @@ class UploadController < AuthenticatedController
   end
 
   def validate_state
-    if Issue.states.keys.include?(params[:state]) ||
-        (@uploader.to_s.include?('::Projects') && params[:state].nil?)
+    return if @uploader.to_s.include?('::Projects')
 
+    if Issue.states.keys.include?(params[:state])
       @state = params[:state]
     else
       redirect_to project_upload_manager_path(current_project), alert: 'Something fishy is going on...'
