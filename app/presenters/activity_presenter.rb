@@ -128,7 +128,8 @@ class ActivityPresenter < BasePresenter
   end
 
   def trackable_title
-    @title ||= if activity.trackable.respond_to?(:title) && activity.trackable.title?
+    @title ||=
+    if activity.trackable.respond_to?(:title) && activity.trackable.title?
       activity.trackable.title
     elsif activity.trackable.respond_to?(:label) && activity.trackable.label?
       activity.trackable.label
