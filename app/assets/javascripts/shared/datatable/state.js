@@ -68,7 +68,7 @@ DradisDatatable.prototype.updateRecordState = function (newState) {
 
     $.ajax({
       url: $paths.data('table-state-url'),
-      method: 'PUT',
+      method: 'PATCH',
       data: {
         ids: DradisDatatable.prototype.rowIds(selectedRows),
         state: newState,

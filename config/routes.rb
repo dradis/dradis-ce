@@ -18,6 +18,12 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :multiple_update do
+    collection do
+      patch :multiple_update
+    end
+  end
+
   resources :notifications, only: [:index, :update]
 
   resources :projects, only: [:index, :show] do
@@ -96,9 +102,7 @@ Rails.application.routes.draw do
     resources :tags, except: [:show]
 
     namespace :qa do
-      resources :issues, only: [:edit, :index, :show, :update] do
-        collection { put :bulk_update }
-      end
+      resources :issues, only: [:edit, :index, :show, :update], concerns: :multiple_update
     end
 
     get 'search' => 'search#index'

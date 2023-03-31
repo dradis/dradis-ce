@@ -5,7 +5,7 @@ class QA::IssuesController < AuthenticatedController
   before_action :set_issues
   before_action :set_issue, only: [:edit, :show, :update]
   before_action :store_location, only: [:index, :show]
-  before_action :validate_state, only: [:bulk_update, :update]
+  before_action :validate_state, only: [:multiple_update, :update]
 
   def index
     @issues = current_project.issues.ready_for_review
@@ -19,7 +19,15 @@ class QA::IssuesController < AuthenticatedController
     @tags = current_project.tags
   end
 
-  def bulk_update
+  def update
+    if @issue.update(state: @state, updated_at: Time.now)
+      redirect_to project_qa_issues_path(current_project), notice: 'State updated successfully.'
+    else
+      render :show, alert: @issue.errors.full_messages.join('; ')
+    end
+  end
+
+  def multiple_update
     @issues = current_project.issues.where(id: params[:ids])
 
     respond_to do |format|
@@ -30,14 +38,6 @@ class QA::IssuesController < AuthenticatedController
         format.html { render :show, alert: @issues.errors.full_messages.join('; ') }
         format.json { head :not_found }
       end
-    end
-  end
-
-  def update
-    if @issue.update(state: @state, updated_at: Time.now)
-      redirect_to project_qa_issues_path(current_project), notice: 'State updated successfully.'
-    else
-      render :show, alert: @issue.errors.full_messages.join('; ')
     end
   end
 

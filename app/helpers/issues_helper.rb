@@ -83,4 +83,20 @@ module IssuesHelper
       content.join(' ').html_safe
     end
   end
+
+  def state_icons
+    state_icons = []
+    Issue.states.keys.each do |state|
+      case state
+      when 'draft'
+        state_icons << ['Draft', 'fa-pencil-square-o']
+      when 'ready_for_review'
+        state_icons << ['Ready for review', 'fa-eye']
+      when 'published'
+        state_icons << ['Published', 'fa-rocket']
+      end
+    end
+    return state_icons
+  end
+
 end
