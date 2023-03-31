@@ -3,9 +3,9 @@ class QA::IssuesController < AuthenticatedController
   include ProjectScoped
 
   before_action :set_issues
-  before_action :set_issue, only: [:edit, :show]
+  before_action :set_issue, only: [:edit, :show, :update]
   before_action :store_location, only: [:index, :show]
-  before_action :validate_state, only: :update
+  before_action :validate_state, only: [:multiple_update, :update]
 
   def index
     @issues = current_project.issues.ready_for_review
@@ -20,14 +20,22 @@ class QA::IssuesController < AuthenticatedController
   end
 
   def update
-    @issues = current_project.issues.ready_for_review.where(id: params[:ids])
+    if @issue.update(state: @state, updated_at: Time.now)
+      redirect_to project_qa_issues_path(current_project), notice: 'State updated successfully.'
+    else
+      render :show, alert: @issue.errors.full_messages.join('; ')
+    end
+  end
+
+  def multiple_update
+    @issues = current_project.issues.where(id: params[:ids])
 
     respond_to do |format|
       if @issues.update_all(state: @state, updated_at: Time.now)
-        format.html { redirect_to project_qa_issues_path(current_project), notice: 'State updated successfully.' }
+        format.html { redirect_to_target_or_default project_qa_issues_path(current_project), notice: 'State updated successfully.' }
         format.json { head :ok }
       else
-        format.html { render :show, alert: @issue.errors.full_messages.join('; ') }
+        format.html { render :show, alert: @issues.errors.full_messages.join('; ') }
         format.json { head :not_found }
       end
     end

@@ -45,6 +45,26 @@ describe 'Issues pages' do
           end
         end
 
+        context 'bulk state update', js: true do
+          it 'updates the list of records with the state' do
+            issue = create(:issue, node: current_project.issue_library)
+            new_state = 'Ready for review'
+
+            visit project_issues_path(current_project)
+
+            within '.dataTables_wrapper' do
+              page.find('td.select-checkbox', match: :first).click
+              click_button('State')
+              click_link(new_state)
+            end
+
+            expect(page).to have_selector('.alert-success', text: 'State updated successfully.')
+            expect(issue.reload.state).to eq new_state.downcase.gsub(' ', '_')
+            within 'tbody tr' do
+              expect(page).to have_content(new_state)
+            end
+          end
+        end
       end
 
       describe 'new page', js: true do
