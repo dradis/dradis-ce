@@ -5,7 +5,7 @@ module IssuesHelper
   # each element.
   def issues_from_import_records(records)
     issues = []
-    records.each_with_index do |record,index|
+    records.each_with_index do |record, index|
       issue = Issue.new do |issue|
         issue.id = index
         if record.is_a?(Dradis::Plugins::Import::Result)
@@ -98,5 +98,4 @@ module IssuesHelper
     end
     return state_icons
   end
-
 end
