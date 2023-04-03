@@ -1,9 +1,5 @@
 v4.8.0 (April 2023)
-  - Quality Assurance:
-    - Add states to Issues and Content Blocks
-    - Add a QA view for reviewing records
-    - Allow exporting for all or only published records
-    - Add states to the API
+  - Quality Assurance: Review/approve Issues and Content Blocks before including them in reports
   - Upgraded gems:
     - rack, rails
 
