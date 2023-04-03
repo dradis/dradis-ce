@@ -1,30 +1,11 @@
-[v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
+v4.8.0 (April 2023)
+  - Quality Assurance:
+    - Add states to Issues and Content Blocks
+    - Add a QA view for reviewing records
+    - Allow exporting for all or only published records
+    - Add states to the API
   - Upgraded gems:
     - rack, rails
-  - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
-    - Bug tracker items:
-      - [item]
-  - New integrations:
-    - [integration]
-  - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
-  - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
-  - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
-  - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v4.7.0 (February 2023)
   - Rubocop CI:
