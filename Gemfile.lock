@@ -58,20 +58,20 @@ GIT
 
 GIT
   remote: https://github.com/dradis/dradis-csv_export.git
-  revision: 786738557bbbb810700ff3581ec1e96d39ba76d3
+  revision: a6a82edcd324d1e4bf780c6812d43b9387ef494e
   branch: release-4.8.0
   specs:
     dradis-csv_export (4.8.0)
-      dradis-plugins (~> 4.0)
+      dradis-plugins (>= 4.8.0)
 
 GIT
   remote: https://github.com/dradis/dradis-html_export.git
-  revision: 27e0edb106300cf3b3f4762a02e1ab5e550b791c
+  revision: 9ac2fec1a8c841916d51152624382df79af1bdd2
   branch: release-4.8.0
   specs:
     dradis-html_export (4.8.0)
       RedCloth (~> 4.3.2)
-      dradis-plugins (~> 4.0)
+      dradis-plugins (>= 4.8.0)
       rails_autolink (~> 1.1)
 
 GIT
@@ -154,18 +154,18 @@ GIT
 
 GIT
   remote: https://github.com/dradis/dradis-plugins.git
-  revision: 8b39422a7b275952e7bdeb7d171726ae0e50c405
-  branch: qa-feature
+  revision: 1268fa4ca92da9551f92029a94b1e0faa356201a
+  branch: release-4.8.0
   specs:
-    dradis-plugins (4.7.0)
+    dradis-plugins (4.8.0)
 
 GIT
   remote: https://github.com/dradis/dradis-projects.git
-  revision: d8c7e94fe405210dfd8737fb1d8004c6e93ce101
-  branch: qa-feature
+  revision: 6b0efa1884104eecda974bbffd4e8166dfbb917b
+  branch: release-4.8.0
   specs:
-    dradis-projects (4.7.0)
-      dradis-plugins (~> 4.0)
+    dradis-projects (4.8.0)
+      dradis-plugins (>= 4.8.0)
       rubyzip
 
 GIT
@@ -407,7 +407,7 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     local_time (2.1.0)
-    loofah (2.19.1)
+    loofah (2.20.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.2.4)
