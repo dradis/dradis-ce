@@ -1,0 +1,34 @@
+<div class="note-list">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <%= link_to index_path, class: 'summary-link' do %>
+      <i class="fa fa-handshake-o"></i>
+      QA Summary
+    <% end %>
+
+    <a href="javascript:void(0)" class="sidebar-toggle-link" data-behavior="sidebar-toggle">
+      <i class="fa fa-chevron-left sidebar-toggle-icon"></i>
+      <span class="sr-only">Toggle secondary sidebar</span>
+    </a>
+  </div>
+</div>
+
+<div class="inner-content">
+  <div class="header">
+    <div class="header-inner">
+      <div class="options">
+        <div class="dropdown">
+          <%= link_to 'javascript:void(0)', data: { toggle: 'collapse', target: "##{name.downcase}", behavior: 'collapse-collection' } do %>
+            <i class="fa fa-chevron-up" data-behavior="toggle-chevron"></i><span class="sr-only">Toggle <%= name.downcase %> list</span>
+          <% end %>
+        </div>
+      </div>
+      <h5 class="header-underline header-name"><%= name.humanize %></h5>
+    </div>
+  </div>
+
+  <div id="<%= name.downcase %>" class="note-list collapse show">
+    <% records.each do |record| %>
+      <%= render partial: 'sidebar_item', locals: { record: record } %>
+    <% end %>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "upload requests" do
+describe 'upload requests' do
 
   before do
     login_to_project_as_user
@@ -10,18 +10,24 @@ describe "upload requests" do
 
   after { FileUtils.rm_rf(Attachment.pwd.join(@uploads_node.id.to_s)) }
 
-  describe "POST #parse" do
+  describe 'POST #parse' do
     let(:uploader) { 'Dradis::Plugins::Projects::Upload::Template' }
+    let(:state) { nil }
     let(:send_request) do
-      post project_upload_parse_path(@project), params: { file: "temp", format: :js, uploader: uploader }
+      post project_upload_parse_path(@project), params: {
+        file: 'temp',
+        format: :js,
+        state: state,
+        uploader: uploader
+      }
     end
 
-    it "creates issues from the uploaded XML" do
+    it 'creates issues from the uploaded XML' do
       skip 'this is not the right place to test the Upload parser itself'
-      expect{send_request}.to change{Issue.count}.by(35)
+      expect { send_request }.to change { Issue.count }.by(35)
     end
 
-    context "small file size (< 1Mb)" do
+    context 'small file size (< 1Mb)' do
       let(:importer_class) { "#{uploader}::Importer".constantize }
       let(:importer) { instance_double(importer_class) }
       let(:small_file) { Rails.root.join('tmp/small.file') }
@@ -46,7 +52,10 @@ describe "upload requests" do
         allow(importer).to receive(:import)
 
         expect(importer_class).to receive(:new).with(
-          hash_including(default_user_id: @logged_in_as.id)
+          hash_including(
+            default_user_id: @logged_in_as.id,
+            state: state
+          )
         )
         expect(importer).to receive(:import)
 
@@ -54,19 +63,19 @@ describe "upload requests" do
       end
     end
 
-    context "big file size (> 1Mb)" do
+    context 'big file size (> 1Mb)' do
       let(:big_file) { Rails.root.join('tmp/big.file') }
 
       before do
         File.open(big_file, 'w') do |f|
-          f << "*" * (1+1024)*1024
+          f << '*' * (1 + 1024) * 1024
         end
       end
       after do
         FileUtils.rm(big_file)
       end
 
-      it "enqueues a background job with the right parameters" do
+      it 'enqueues a background job with the right parameters' do
         attachments_path = Attachment.pwd.join(@uploads_node.id.to_s)
         attachment_file  = attachments_path.join('temp').to_s
 
@@ -81,7 +90,8 @@ describe "upload requests" do
         expect(UploadJob).to receive(:perform_later).with(
           hash_including(
             file: attachment_file,
-            plugin_name: uploader
+            plugin_name: uploader,
+            state: state
           )
         ).once
 

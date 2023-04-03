@@ -36,6 +36,7 @@
 //= require shared/datatable/checkbox
 //= require shared/datatable/delete
 //= require shared/datatable/merge
+//= require shared/datatable/state
 //= require shared/datatable/tag
 //= require shared/datatable/validate
 
@@ -49,7 +50,6 @@
 //= require tylium/engines
 //= require tylium/keyboard_shortcuts
 
-
 //= require tylium/modules/configurations
 //= require tylium/modules/export
 //= require tylium/modules/fileupload
@@ -57,6 +57,7 @@
 //= require tylium/modules/nodes
 //= require tylium/modules/search
 //= require tylium/modules/sidebar
+//= require tylium/modules/state_button
 //= require tylium/modules/activities/poller
 // require tylium/modules/tour
 //= require tylium/modules/uploads
@@ -68,3 +69,5 @@
 //= require tylium/pages/projects/boards_summary
 //= require tylium/pages/projects/issues_chart
 //= require tylium/pages/projects/summary
+//= require tylium/pages/qa
+//= require tylium/pages/upload

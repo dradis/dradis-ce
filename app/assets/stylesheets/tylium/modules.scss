@@ -1,26 +1,27 @@
-@import "tylium/modules/alerts";
-@import "tylium/modules/attachments";
-@import "tylium/modules/buttons";
-@import "tylium/modules/boards";
-@import "tylium/modules/console";
-@import "tylium/modules/datatables";
-@import "tylium/modules/dots-menu";
-@import "tylium/modules/dropdown";
-@import "tylium/modules/issues/evidence";
-@import "tylium/modules/issues/issues";
-@import "tylium/modules/issues/merge";
-@import "tylium/modules/modals";
-@import "tylium/modules/navbar";
-@import "tylium/modules/nodes";
-@import "tylium/modules/projects";
-@import "tylium/modules/restrict_height";
-@import "tylium/modules/search";
-@import "tylium/modules/secondary_sidebar";
-@import "tylium/modules/sidebar";
-@import "tylium/modules/styles";
-@import "tylium/modules/tour";
-@import "tylium/modules/uploads";
-@import "tylium/modules/versions";
+@import 'tylium/modules/alerts';
+@import 'tylium/modules/attachments';
+@import 'tylium/modules/buttons';
+@import 'tylium/modules/boards';
+@import 'tylium/modules/console';
+@import 'tylium/modules/datatables';
+@import 'tylium/modules/dots-menu';
+@import 'tylium/modules/dropdown';
+@import 'tylium/modules/issues/evidence';
+@import 'tylium/modules/issues/import';
+@import 'tylium/modules/issues/issues';
+@import 'tylium/modules/issues/merge';
+@import 'tylium/modules/modals';
+@import 'tylium/modules/navbar';
+@import 'tylium/modules/nodes';
+@import 'tylium/modules/projects';
+@import 'tylium/modules/restrict_height';
+@import 'tylium/modules/search';
+@import 'tylium/modules/secondary_sidebar';
+@import 'tylium/modules/sidebar';
+@import 'tylium/modules/styles';
+@import 'tylium/modules/tour';
+@import 'tylium/modules/uploads';
+@import 'tylium/modules/versions';
 
 [aria-tooltip] {
   position: relative;
@@ -28,10 +29,10 @@
   &:after {
     background-color: $darkColor;
     border-radius: 5px;
-    box-shadow: 1px 2px 6px rgba(0,0,0,0.5);
+    box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
     color: $white;
     content: attr(aria-tooltip);
-    font-size: .7em;
+    font-size: 0.7em;
     line-height: 15px;
     opacity: 0;
     padding: 0.3rem 0.5rem;
@@ -113,7 +114,7 @@
 .divider {
   border-top: 1px solid $borderColor;
   height: 0;
-  margin: .25rem 0;
+  margin: 0.25rem 0;
 }
 
 .divider-vertical {
@@ -149,7 +150,7 @@
 .header-underline {
   border-bottom: 1px solid $borderColor;
   display: flex;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
   margin-top: -0.5rem;
   padding-bottom: 0.5em;
   width: 100%;
@@ -178,7 +179,7 @@
   width: 100%;
   height: 2.5rem;
 
-  .btn{
+  .btn {
     position: absolute;
     right: 0;
     font-size: 0.8rem;
@@ -199,7 +200,6 @@
 }
 
 .nav-tabs {
-
   .nav-link:hover:not(.active) {
     border-color: transparent;
   }
@@ -218,6 +218,12 @@ pre {
   border-radius: 5px;
 }
 
+.rounded-left,
+.rounded-right {
+  // Bootstrap rounds the desired corners, but doesn't square up the rest
+  border-radius: 0;
+}
+
 .tabs-container {
   margin: 1rem $mainContentMargin -1px $mainContentMargin;
   padding-left: 0.25rem;
@@ -229,11 +235,8 @@ pre {
 }
 
 table {
-
   &.table-ajax-inputs {
-
     td {
-
       &.value input {
         background-position: right center;
         background-repeat: no-repeat;
@@ -260,7 +263,6 @@ table {
   }
 
   &.table-striped {
-
     th {
       border: none;
     }
@@ -274,7 +276,6 @@ time {
 }
 
 .tooltip-inner {
-
   ul {
     list-style: disc;
     text-align: left;
@@ -282,7 +283,7 @@ time {
     padding-top: 0.5rem;
 
     li {
-      margin-bottom: .25rem;
+      margin-bottom: 0.25rem;
     }
   }
 }

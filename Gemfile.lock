@@ -1,3 +1,19 @@
+GIT
+  remote: https://github.com/dradis/dradis-plugins.git
+  revision: 8b39422a7b275952e7bdeb7d171726ae0e50c405
+  branch: qa-feature
+  specs:
+    dradis-plugins (4.7.0)
+
+GIT
+  remote: https://github.com/dradis/dradis-projects.git
+  revision: d8c7e94fe405210dfd8737fb1d8004c6e93ce101
+  branch: qa-feature
+  specs:
+    dradis-projects (4.7.0)
+      dradis-plugins (~> 4.0)
+      rubyzip
+
 PATH
   remote: engines/dradis-api
   specs:
@@ -164,10 +180,6 @@ GEM
       dradis-plugins (~> 4.0)
     dradis-openvas (4.7.0)
       dradis-plugins (~> 4.0)
-    dradis-plugins (4.7.0)
-    dradis-projects (4.7.0)
-      dradis-plugins (~> 4.0)
-      rubyzip
     dradis-qualys (4.7.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
@@ -423,7 +435,7 @@ GEM
     ruby2_keywords (0.0.5)
     ruby_audit (2.1.0)
       bundler-audit (~> 0.9.0)
-    rubyzip (2.2.0)
+    rubyzip (2.3.2)
     sanitize (6.0.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -537,8 +549,8 @@ DEPENDENCIES
   dradis-nmap (~> 4.7.0)
   dradis-ntospider (~> 4.7.0)
   dradis-openvas (~> 4.7.0)
-  dradis-plugins (~> 4.7.0)
-  dradis-projects (~> 4.7.0)
+  dradis-plugins!
+  dradis-projects!
   dradis-qualys (~> 4.7.0)
   dradis-saint (~> 4.7.0)
   dradis-veracode (~> 4.7.0)
