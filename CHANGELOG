@@ -25,6 +25,7 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Upgraded gems: time (CVE-2023-28756)
 
 v4.7.0 (February 2023)
   - Rubocop CI:

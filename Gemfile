@@ -64,6 +64,8 @@ gem 'rubyzip', '>= 1.2.2'
 
 gem 'thor', '~> 1.2.1'
 
+gem 'time', '>= 0.2.2'
+
 # ------------------------------------------------------ With native extensions
 # These require native extensions.
 # Ensure Traveling Ruby provides an appropriate version before bumping.
