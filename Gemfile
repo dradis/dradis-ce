@@ -64,6 +64,7 @@ gem 'rubyzip', '>= 1.2.2'
 
 gem 'thor', '~> 1.2.1'
 
+# Ruby dependency, version specified here due to CVE-2023-28756
 gem 'time', '>= 0.2.2'
 
 # ------------------------------------------------------ With native extensions
