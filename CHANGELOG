@@ -1,7 +1,7 @@
 v4.8.0 (April 2023)
   - Quality Assurance: Review/approve Issues and Content Blocks before including them in reports
   - Upgraded gems:
-    - rack, rails
+    - rack, rails, time
 
 v4.7.0 (February 2023)
   - Rubocop CI:
