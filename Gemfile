@@ -214,12 +214,12 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 4.7.0'
+gem 'dradis-plugins', github: 'dradis/dradis-plugins', branch: 'release-4.8.0'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 4.7.0'
+gem 'dradis-projects', github: 'dradis/dradis-projects', branch: 'release-4.8.0'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)
@@ -230,32 +230,32 @@ end
 # effective.
 
 # ----------------------------------------------------------------- Calculators
-gem 'dradis-calculator_cvss', '~> 4.7.0'
-gem 'dradis-calculator_dread', '~> 4.7.0'
+gem 'dradis-calculator_cvss', github: 'dradis/dradis-calculator_cvss', branch: 'release-4.8.0'
+gem 'dradis-calculator_dread', github: 'dradis/dradis-calculator_dread', branch: 'release-4.8.0'
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv_export', '~> 4.7.0'
-gem 'dradis-html_export', '~> 4.7.0'
+gem 'dradis-csv_export', github: 'dradis/dradis-csv_export', branch: 'release-4.8.0'
+gem 'dradis-html_export', github: 'dradis/dradis-html_export', branch: 'release-4.8.0'
 
 # ---------------------------------------------------------------------- Import
-gem 'dradis-csv', '~> 4.7.0'
+gem 'dradis-csv', github: 'dradis/dradis-csv', branch: 'release-4.8.0'
 
 # ---------------------------------------------------------------------- Upload
-gem 'dradis-acunetix', '~> 4.7.0'
-gem 'dradis-brakeman', '~> 4.7.0'
-gem 'dradis-burp', '~> 4.7.0'
-gem 'dradis-coreimpact', '~> 4.7.0'
-gem 'dradis-metasploit', '~> 4.7.0'
-gem 'dradis-nessus', '~> 4.7.0'
-gem 'dradis-netsparker', '~> 4.7.0'
-gem 'dradis-nexpose', '~> 4.7.0'
-gem 'dradis-nikto', '~> 4.7.0'
-gem 'dradis-nipper', '~> 4.7.0'
-gem 'dradis-nmap', '~> 4.7.0'
-gem 'dradis-ntospider', '~> 4.7.0'
-gem 'dradis-openvas', '~> 4.7.0'
-gem 'dradis-qualys', '~> 4.7.0'
-gem 'dradis-saint', '~> 4.7.0'
-gem 'dradis-veracode', '~> 4.7.0'
-gem 'dradis-wpscan', '~> 4.7.0'
-gem 'dradis-zap', '~> 4.7.0'
+gem 'dradis-acunetix', github: 'dradis/dradis-acunetix', branch: 'release-4.8.0'
+gem 'dradis-brakeman', github: 'dradis/dradis-brakeman', branch: 'release-4.8.0'
+gem 'dradis-burp', github: 'dradis/dradis-burp', branch: 'release-4.8.0'
+gem 'dradis-coreimpact', github: 'dradis/dradis-coreimpact', branch: 'release-4.8.0'
+gem 'dradis-metasploit', github: 'dradis/dradis-metasploit', branch: 'release-4.8.0'
+gem 'dradis-nessus', github: 'dradis/dradis-nessus', branch: 'release-4.8.0'
+gem 'dradis-netsparker', github: 'dradis/dradis-netsparker', branch: 'release-4.8.0'
+gem 'dradis-nexpose', github: 'dradis/dradis-nexpose', branch: 'release-4.8.0'
+gem 'dradis-nikto', github: 'dradis/dradis-nikto', branch: 'release-4.8.0'
+gem 'dradis-nipper', github: 'dradis/dradis-nipper', branch: 'release-4.8.0'
+gem 'dradis-nmap', github: 'dradis/dradis-nmap', branch: 'release-4.8.0'
+gem 'dradis-ntospider', github: 'dradis/dradis-ntospider', branch: 'release-4.8.0'
+gem 'dradis-openvas', github: 'dradis/dradis-openvas', branch: 'release-4.8.0'
+gem 'dradis-qualys', github: 'dradis/dradis-qualys', branch: 'release-4.8.0'
+gem 'dradis-saint', github: 'dradis/dradis-saint', branch: 'release-4.8.0'
+gem 'dradis-veracode', github: 'dradis/dradis-veracode', branch: 'release-4.8.0'
+gem 'dradis-wpscan', github: 'dradis/dradis-wpscan', branch: 'release-4.8.0'
+gem 'dradis-zap', github: 'dradis/dradis-zap', branch: 'release-4.8.0'

@@ -1,30 +1,7 @@
-[v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
+v4.8.0 (April 2023)
+  - Quality Assurance: Review/approve Issues and Content Blocks before including them in reports
   - Upgraded gems:
-    - rack, rails, time
-  - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
-    - Bug tracker items:
-      - [item]
-  - New integrations:
-    - [integration]
-  - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
-  - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
-  - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
-  - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - rack, rails
 
 v4.7.0 (February 2023)
   - Rubocop CI:

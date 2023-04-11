@@ -15,9 +15,11 @@ class IssuesController < AuthenticatedController
   before_action :set_columns, only: :index
 
   before_action :set_or_initialize_issue, except: [:import, :index]
-  before_action :set_or_initialize_tags, except: [:destroy]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
   before_action :set_affected_nodes, only: [:show]
+  before_action :set_form_cancel_path, only: [:new, :edit]
+  before_action :set_tags, except: [:destroy]
+  before_action :store_location, only: [:index, :show]
 
   def index
   end
@@ -82,7 +84,9 @@ class IssuesController < AuthenticatedController
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
-        format.html { redirect_to project_issue_path(current_project, @issue), notice: 'Issue updated' }
+        format.html do
+          redirect_to_target_or_default project_issue_path(current_project, @issue), notice: 'Issue updated.'
+        end
       else
         format.html do
           flash.now[:alert] = 'Issue couldn\'t be updated.'
@@ -129,8 +133,14 @@ class IssuesController < AuthenticatedController
                           .sort_by { |node, _| node.label }
   end
 
+  def set_form_cancel_path
+    path = @issue.new_record? ? project_issues_path(current_project) : project_issue_path(current_project, @issue)
+
+    @form_cancel_path = session[:return_to] ? session[:return_to] : path
+  end
+
   def set_columns
-    default_field_names = ['Title', 'Tags', 'Affected'].freeze
+    default_field_names = ['Title', 'Tags', 'Affected', 'State'].freeze
     extra_field_names = ['Created', 'Created by', 'Updated'].freeze
 
     dynamic_fields = dynamic_field_names(@unsorted_issues)
@@ -147,7 +157,7 @@ class IssuesController < AuthenticatedController
     # index and a TOCTOR can appear between the Note read and the Issue.find
     Note.transaction do
       @unsorted_issues = Issue.where(node_id: @issuelib.id).select(
-        'notes.id, notes.author, notes.text, '\
+        'notes.id, notes.author, notes.text, notes.state, '\
         'count(evidence.id) as affected_count, notes.created_at, notes.updated_at'
       ).
       joins('LEFT OUTER JOIN evidence on notes.id = evidence.issue_id').
@@ -176,14 +186,12 @@ class IssuesController < AuthenticatedController
     end
   end
 
-  # Load all the colour tags in the project (those that start with !). If none
-  # exist, initialize a set of tags.
-  def set_or_initialize_tags
-    @tags = current_project.tags.where('name like ?', '!%')
+  def set_tags
+    @tags = current_project.tags
   end
 
   def issue_params
-    params.require(:issue).permit(:tag_list, :text)
+    params.require(:issue).permit(:state, :tag_list, :text)
   end
 
   def set_auto_save_key
