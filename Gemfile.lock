@@ -1,11 +1,3 @@
-GIT
-  remote: https://github.com/dradis/dradis-coreimpact.git
-  revision: 793583a335943a1dfe0ea6ce1f9ac75d33c337ae
-  branch: release-4.8.0
-  specs:
-    dradis-coreimpact (4.8.0)
-      dradis-plugins (~> 4.0)
-
 PATH
   remote: engines/dradis-api
   specs:
@@ -137,6 +129,8 @@ GEM
     dradis-calculator_cvss (4.8.0)
       dradis-plugins (~> 4.0)
     dradis-calculator_dread (4.8.0)
+      dradis-plugins (~> 4.0)
+    dradis-coreimpact (4.8.0)
       dradis-plugins (~> 4.0)
     dradis-csv (4.8.0)
       dradis-plugins (~> 4.0)
@@ -532,7 +526,7 @@ DEPENDENCIES
   dradis-burp (~> 4.8.0)
   dradis-calculator_cvss (~> 4.8.0)
   dradis-calculator_dread (~> 4.8.0)
-  dradis-coreimpact!
+  dradis-coreimpact (~> 4.8.0)
   dradis-csv (~> 4.8.0)
   dradis-csv_export (~> 4.8.0)
   dradis-html_export (~> 4.8.0)
