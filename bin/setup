@@ -32,10 +32,6 @@ FileUtils.chdir APP_ROOT do
     FileUtils.cp 'config/database.yml.template', 'config/database.yml'
   end
 
-  unless File.exist?('config/secrets.yml')
-    FileUtils.cp 'config/secrets.yml.template', 'config/secrets.yml'
-  end
-
   unless File.exist?('config/smtp.yml')
     FileUtils.cp 'config/smtp.yml.template', 'config/smtp.yml'
   end
