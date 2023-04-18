@@ -1,0 +1,80 @@
+<% content_for :title, 'Quality Assurance' %>
+
+<% content_for :breadcrumbs do %>
+  <%= render 'breadcrumbs' %>
+<% end %>
+
+<% content_for :sidebar do %>
+  <%= render partial: 'qa/sidebar', locals: 
+    { 
+      index_path: project_qa_issues_path(current_project),
+      name: 'issues_for_review',
+      records: @issues
+    }
+  %>
+<% end %>
+
+<div class="row m-0">
+  <div class="col-12 col-xxl-7 p-0">
+    <div class="content-container pb-3 mr-xxl-3">
+      <% cache ['issue-content', @issue] do %>
+        <div class="note-text-inner">
+          <h4 class="mb-4 header-underline align-items-center">
+            <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
+            <span class="actions">
+              <span class="action">
+                <%= link_to edit_project_qa_issue_path(current_project, @issue) do %>
+                  <i class="fa fa-pencil fa-fw"></i> Edit
+                <% end %>
+              </span>
+            </span>
+          </h4>
+          <div class="content-textile" data-behavior="content-textile">
+            <%= markup(@issue.text, liquid: true) %>
+          </div>
+          <div class="author-info">
+            <span class="ml-auto">Author: <%= @issue.author || 'n/a' %></span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-12 col-xxl-5 p-0">
+    <div class="sticky-top top-5">
+      <%= render partial: 'widget' %>
+
+      <div class="content-container ml-xxl-3">
+        <%= content_tag :div,
+          spinner_tag,
+          data: {
+            behavior: 'fetch fetch-comments',
+            path: comments_path(
+              comment: {
+                commentable_type: @issue.class,
+                commentable_id: @issue.id
+              }
+            )
+          }
+        %>
+
+        <%= render_view_hooks('issues/comments') %>
+      </div>
+
+      <div class="content-container ml-xxl-3">
+        <%= content_tag :div,
+          spinner_tag,
+          data: {
+            behavior: 'fetch fetch-subscriptions',
+            path: subscriptions_path(
+              subscription: {
+                subscribable_type: @issue.class,
+                subscribable_id: @issue.id
+              }
+            )
+          }
+        %>
+      </div>
+    </div>
+  </div>
+</div>
