@@ -18,6 +18,12 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :multiple_update do
+    collection do
+      patch :multiple_update
+    end
+  end
+
   resources :notifications, only: [:index, :update]
 
   resources :projects, only: [:index, :show] do
@@ -93,6 +99,12 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
+    resources :tags, except: [:show]
+
+    namespace :qa do
+      resources :issues, only: [:edit, :index, :show, :update], concerns: :multiple_update
+    end
+
     get 'search' => 'search#index'
     get 'trash' => 'revisions#trash'
 
@@ -108,7 +120,7 @@ Rails.application.routes.draw do
     post '/upload/parse'  => 'upload#parse'
 
     if Rails.env.development?
-      get '/styles'          => 'styles_tylium#index'
+      get '/styles' => 'styles_tylium#index'
     end
   end
 

@@ -33,14 +33,16 @@
     <%= render 'layouts/tylium/sidebar' %>
 
     <div id="view-content" class="view-content" data-behavior="view-content">
+      <%= render 'shared/noscript' %>
       <div class="row m-0">
         <% if content_for?(:sidebar) %>
-          <div class="secondary-sidebar col-lg-3 col-xxl-2">
+          <div class="secondary-sidebar col-lg-3 col-xxl-2" 
+            data-behavior="secondary-sidebar expandable-sidebar" 
+            data-storage-key="secondary-sidebar-expanded">
             <%= yield :sidebar %>
           </div>
           <div class="secondary-sidebar-content col-12 col-lg-9 col-xxl-10 p-0 ml-auto">
             <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
-            <%= render 'shared/noscript' %>
             <%= render "layouts/tylium/project_teaser" %>
             <%= flash_messages %>
             <%= content_for?(:content) ? yield(:content) : yield %>
@@ -48,7 +50,6 @@
         <% else %>
           <div class="col-12 p-0">
             <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
-            <%= render 'shared/noscript' %>
             <%= render "layouts/tylium/project_teaser" %>
             <% if content_for?(:title) %>
               <h3 class="page-title"><%= yield(:title) %></h3>
@@ -100,6 +101,10 @@
 
     <% if controller_name == 'styles_tylium' %>
       <%= render partial: 'styles_tylium/modal' %>
+    <% end %>
+
+    <% if %w[tags issues].include?(controller_name) %>
+      <%= render partial: 'tags/modals/form' %>
     <% end %>
 
     <%= render 'console/console' %>

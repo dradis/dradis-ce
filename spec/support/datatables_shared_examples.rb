@@ -1,6 +1,6 @@
 # let(:default_columns) { ['Title', 'Created', ...] }
 # let(:hidden_columns) { ['Description', 'Extra', ...] }
-# let(:filter) { { keyword:'keyword', number_of_rows: 1 } }
+# let(:filter) { { keyword:'keyword', filter_count: 1 } }
 shared_examples 'a DataTable' do
   describe 'column visibility', js: true do
     it 'displays default columns on load' do

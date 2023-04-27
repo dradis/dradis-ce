@@ -88,7 +88,7 @@ class DradisDatatable {
             available: function(){
               return that.$table.data('tags') !== undefined;
             },
-            className: 'd-none',
+            className: 'd-none tag-btn',
             extend: 'collection',
             name: 'tagBtn',
             text: '<i class="fa fa-tags fa-fw"></i>Tag<i class="fa fa-caret-down fa-fw"></i>',
