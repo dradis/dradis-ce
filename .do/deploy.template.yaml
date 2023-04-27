@@ -9,6 +9,8 @@ spec:
     - key: RAILS_SERVE_STATIC_FILES
       value: enabled
       scope: RUN_TIME
+    - key: HEROKU_DEBUG_RAILS_RUNNER
+      value: '1'
     git:
       branch: fix-heroku-1-click
       repo_clone_url: https://github.com/dradis/dradis-ce.git
