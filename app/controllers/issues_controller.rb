@@ -134,7 +134,7 @@ class IssuesController < AuthenticatedController
   end
 
   def set_form_cancel_path
-    path = @issue.new_record? ? project_issues_path(current_project) : project_issue_path(current_project, @issue)
+    path = @issue.new_record? ? project_issues_path(current_project) : [current_project, @issue]
 
     @form_cancel_path = session[:return_to] ? session[:return_to] : path
   end

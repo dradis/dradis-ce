@@ -12,7 +12,7 @@ describe 'upload requests' do
 
   describe 'POST #parse' do
     let(:uploader) { 'Dradis::Plugins::Projects::Upload::Template' }
-    let(:state) { 'published' }
+    let(:state) { nil }
     let(:send_request) do
       post project_upload_parse_path(@project), params: {
         file: 'temp',

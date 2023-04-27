@@ -69,4 +69,5 @@
 //= require tylium/pages/projects/boards_summary
 //= require tylium/pages/projects/issues_chart
 //= require tylium/pages/projects/summary
+//= require tylium/pages/qa
 //= require tylium/pages/upload

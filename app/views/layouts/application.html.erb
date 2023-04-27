@@ -12,9 +12,7 @@
   </head>
 
   <body class="unauthenticated <%= controller_name %> <%= class_names(holiday: Date.today.month == 12) %>">
-
     <%= render 'shared/noscript' %>
-
     <div class="container h-100">
       <div class="row h-100 align-items-center">
         <div class="col-lg-5">
@@ -26,7 +24,7 @@
               <%= yield %>
             </div>
             <footer>
-             <p>Dradis Community Edition - <a href="http://drad.is">http://drad.is</a></p>
+              <p>Dradis Community Edition - <a href="http://drad.is">http://drad.is</a></p>
             </footer>
           </div>
         </div>

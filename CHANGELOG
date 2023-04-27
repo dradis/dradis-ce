@@ -2,7 +2,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - rack, rails
+    - [gem]
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
@@ -25,6 +25,12 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v4.8.0 (April 2023)
+  - Sessions: Store :secret_key_base in encrypted configuration file
+  - Quality Assurance: Review/approve Issues and Content Blocks before including them in reports
+  - Upgraded gems:
+    - nokogiri, rack, rails, time
 
 v4.7.0 (February 2023)
   - Rubocop CI:
