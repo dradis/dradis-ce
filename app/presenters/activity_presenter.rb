@@ -83,7 +83,7 @@ class ActivityPresenter < BasePresenter
     case activity.action
     when 'destroy'
       'deleted'
-    when 'update_state'
+    when 'state_change'
       'updated'
     else
       activity.action.sub(/e?\z/, 'ed')

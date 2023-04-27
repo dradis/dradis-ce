@@ -122,7 +122,7 @@ shared_examples 'qa pages' do |item_type|
 
   def job_params(record)
     {
-      action: 'update_state',
+      action: 'state_change',
       project_id: current_project.id,
       trackable_id: record.id,
       trackable_type: record.class.to_s,

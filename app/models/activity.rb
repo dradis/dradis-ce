@@ -17,7 +17,7 @@ class Activity < ApplicationRecord
 
   validates_presence_of :action, :trackable_id, :trackable_type, :user
 
-  VALID_ACTIONS = %w[create destroy recover update update_state]
+  VALID_ACTIONS = %w[create destroy recover state_change update]
 
   validates_inclusion_of :action, in: VALID_ACTIONS
 
