@@ -12,8 +12,10 @@
 //= require local-time
 //= require clipboard
 //= require tribute
-//= require popper
-//= require bootstrap
+// require popper
+// require bootstrap
+
+//= require vendor/bootstrap.bundle.min
 
 //= require vendor/datatables.min
 //= require vendor/stupidtable
