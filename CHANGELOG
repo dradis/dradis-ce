@@ -4,8 +4,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Digital Ocean: Fix one click deploy button
     - Bug tracker items:
       - [item]
   - New integrations:
