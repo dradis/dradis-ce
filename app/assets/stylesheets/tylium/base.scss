@@ -16,10 +16,10 @@ body {
 a {
   color: $linkColor;
   transition: color 0.2s ease-in-out;
+  text-decoration: none;
 
   &:hover {
     color: $linkColorHover;
-    text-decoration: none;
   }
 }
 
