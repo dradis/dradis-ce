@@ -50,6 +50,10 @@
   cursor: default;
 }
 
+.row > *[class*='col-'] {
+  position: relative;
+}
+
 .secondary-sidebar-content {
   .sticky-top {
     top: calc(#{$mainContentMargin} + 4.35rem);
