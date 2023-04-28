@@ -1,6 +1,5 @@
 body.boards,
 body.cards {
-
   .alert {
     margin-top: 1rem;
   }
@@ -32,7 +31,6 @@ body.boards.index {
     width: 20%;
 
     &:hover {
-
       .board-actions {
         visibility: visible;
       }
@@ -42,7 +40,7 @@ body.boards.index {
       padding-right: 0;
     }
 
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-down(lg) {
       padding-right: 0;
       width: 100%;
     }
@@ -67,12 +65,12 @@ body.boards.index {
       vertical-align: middle;
       width: inherit;
       transition: all 0.2s ease-in-out;
-  
+
       &:hover {
         background-color: darken($secondaryBgColor, 10%);
       }
 
-      @include media-breakpoint-down(md) {
+      @include media-breakpoint-down(lg) {
         display: block;
       }
     }
@@ -103,7 +101,6 @@ body.boards.index {
 }
 
 body.boards.show {
-
   .board {
     background-color: lighten($primaryBgColor, 20%);
     display: flex;
@@ -181,7 +178,6 @@ body.boards.show {
       padding: 0.5rem 0.7rem;
 
       &:hover {
-
         .list-actions {
           visibility: visible;
         }
@@ -216,7 +212,7 @@ body.boards.show {
   .page-title {
     display: none;
   }
-  
+
   .sortable-placeholder {
     background-color: darken($secondaryBgColor, 10%);
     border-radius: 3px;
@@ -224,7 +220,7 @@ body.boards.show {
   }
 
   .ui-sortable-helper {
-    box-shadow: 0 20px 30px 0 rgba(33,55,74,0.2);
+    box-shadow: 0 20px 30px 0 rgba(33, 55, 74, 0.2);
     cursor: grabbing;
 
     a {
@@ -234,9 +230,7 @@ body.boards.show {
 }
 
 body.cards.show {
-
   .card-assignees {
-
     .gravatar {
       margin-bottom: 0.5rem;
     }

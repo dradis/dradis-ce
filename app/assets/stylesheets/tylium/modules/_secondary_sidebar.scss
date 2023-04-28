@@ -25,7 +25,7 @@
     width: 31.8%;
   }
 
-  @include media-breakpoint-down(md) {
+  @include media-breakpoint-down(lg) {
     display: none;
   }
 
