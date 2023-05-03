@@ -12,7 +12,7 @@ module ApplicationHelper # :nodoc:
     ]
 
     if options[:liquid]
-      context[:liquid_assigns] = liquid_assigns
+      context[:liquid_assigns] = options[:liquid_assigns] || liquid_assigns
       pipeline_filters.insert(1, HTML::Pipeline::Dradis::LiquidFilter)
     end
 
