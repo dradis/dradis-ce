@@ -7,8 +7,8 @@
       <% for tag in @tags do %>
         <% if @issues_by_tag[tag.name].any? %>
           <div class="card" style="border-color: <%= tag.color %>">
-            <a data-toggle="collapse" href="#collape<%= tag.display_name %>" class="card-header" style="background: <%= tag.color %>" data-behavior="card-header">
-              <h5><%= tag.display_name %><span class="float-right"><i class="fa fa-caret-up" data-behavior="caret-icon"></i></span></h5>
+            <a data-bs-toggle="collapse" href="#collape<%= tag.display_name %>" class="card-header" style="background: <%= tag.color %>" data-behavior="card-header">
+              <h5><%= tag.display_name %><span class="float-end"><i class="fa fa-caret-up" data-behavior="caret-icon"></i></span></h5>
             </a>
 
             <div id="collape<%= tag.display_name %>" class="collapse show">
@@ -16,7 +16,7 @@
                 <ul class="list-group">
                   <% @issues_by_tag[tag.name].each do |issue| %>
                     <%= link_to [current_project, issue], class: 'list-group-item'  do %>
-                      <li><i class="fa fa-bug mr-2" style="color: <%= tag.color %>"></i><%= issue.title %></li>
+                      <li><i class="fa fa-bug me-2" style="color: <%= tag.color %>"></i><%= issue.title %></li>
                     <% end %>
                   <% end %>
                 </ul>
@@ -29,8 +29,8 @@
       <%# unassigned %>
       <% if @issues_by_tag[:unassigned].any? %>
         <div class="card untagged">
-          <a data-toggle="collapse" href="#collapeUnassigned" class="card-header" data-behavior="card-header">
-            <h5>Unassigned<span class="float-right"><i class="fa fa-caret-up" data-behavior="caret-icon"></i></span></h5>
+          <a data-bs-toggle="collapse" href="#collapeUnassigned" class="card-header" data-behavior="card-header">
+            <h5>Unassigned<span class="float-end"><i class="fa fa-caret-up" data-behavior="caret-icon"></i></span></h5>
           </a>
 
           <div id="collapeUnassigned" class="collapse show">
@@ -38,7 +38,7 @@
               <ul class="list-group">
                 <% @issues_by_tag[:unassigned].each do |issue| %>
                   <%= link_to [current_project, issue], class: 'list-group-item'  do %>
-                    <li><i class="fa fa-bug mr-2"></i><%= issue.title %></li>
+                    <li><i class="fa fa-bug me-2"></i><%= issue.title %></li>
                   <% end %>
                 <% end %>
               </ul>
