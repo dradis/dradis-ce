@@ -15,8 +15,7 @@
         <% else %>
           <h5 class="modal-title" id="modal-title">Add a child to the <strong><%= @node.label %></strong> node</h5>
         <% end %>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-          <i class="fa fa-times"></i>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">
           <span class="sr-only">Close modal</span>
         </button>
       </div>
@@ -76,7 +75,7 @@
 
           <%= hidden_field_tag "nodes[parent_id]", @node.id if type == :child %>
           <%= label_tag "#{type}_nodes_list", 'To create multiple nodes, add one node name per line:' %>
-          <%= text_area_tag "nodes[list]", "", rows: 3, class: 'form-control mb-3 nodes_list', id: "#{type}_nodes_list", data: { behavior: 'nodes-list' } %>
+          <%= text_area_tag "nodes[list]", "", rows: 3, class: 'mb-3 nodes_list', id: "#{type}_nodes_list", data: { behavior: 'nodes-list' } %>
           <%= label_tag "#{type}_nodes_icon", 'Icon' %>
           <%= select_tag(
             "nodes[type_id]",
@@ -93,7 +92,7 @@
 
       <div class="modal-footer">
         <input type="submit" value="Add" class="modal_add_node_submit_btn btn btn-primary" />
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn" data-bs-dismiss="modal" aria-hidden="true">Close</button>
       </div>
     </div>
   </div>

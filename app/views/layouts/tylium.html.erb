@@ -41,7 +41,7 @@
             data-storage-key="secondary-sidebar-expanded">
             <%= yield :sidebar %>
           </div>
-          <div class="secondary-sidebar-content col-12 col-lg-9 col-xxl-10 p-0 ml-auto">
+          <div class="secondary-sidebar-content col-12 col-lg-9 col-xxl-10 p-0 ms-auto">
             <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
             <%= render "layouts/tylium/project_teaser" %>
             <%= flash_messages %>
