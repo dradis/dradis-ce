@@ -43,7 +43,6 @@ SimpleForm.setup do |config|
   config.input_field_error_class = 'is-invalid'
   config.input_field_valid_class = 'is-valid'
 
-
   # vertical forms
   #
   # vertical default_wrapper
@@ -74,13 +73,13 @@ SimpleForm.setup do |config|
   end
 
   # vertical input for radio buttons and check boxes
-  config.wrappers :vertical_collection, item_wrapper_class: 'form-check', item_label_class: 'form-check-label', tag: 'fieldset', class: 'mb-3' do |b|
+  config.wrappers :vertical_collection, item_wrapper_class: 'form-check ps-0', item_label_class: 'form-check-label ms-2', tag: 'fieldset', class: 'mb-3' do |b|
     b.use :html5
     b.optional :readonly
     b.wrapper :legend_tag, tag: 'legend', class: 'col-form-label pt-0' do |ba|
       ba.use :label_text
     end
-    b.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: 'is-valid'
+    b.use :input, class: 'form-check-input ms-0', error_class: 'is-invalid', valid_class: 'is-valid'
     b.use :full_error, wrap_with: { class: 'invalid-feedback d-block' }
     b.use :hint, wrap_with: { class: 'form-text' }
   end
@@ -143,7 +142,6 @@ SimpleForm.setup do |config|
     b.use :full_error, wrap_with: { class: 'invalid-feedback' }
     b.use :hint, wrap_with: { class: 'form-text' }
   end
-
 
   # horizontal forms
   #
@@ -257,7 +255,6 @@ SimpleForm.setup do |config|
     end
   end
 
-
   # inline forms
   #
   # inline default_wrapper
@@ -288,7 +285,6 @@ SimpleForm.setup do |config|
     end
   end
 
-
   # bootstrap custom forms
   #
   # custom input switch for boolean
@@ -302,7 +298,6 @@ SimpleForm.setup do |config|
       bb.use :hint, wrap_with: { class: 'form-text' }
     end
   end
-
 
   # Input Group - custom component
   # see example app and config at https://github.com/heartcombo/simple_form-bootstrap
@@ -323,7 +318,6 @@ SimpleForm.setup do |config|
     end
     b.use :hint, wrap_with: { class: 'form-text' }
   end
-
 
   # Floating Labels form
   #
@@ -351,7 +345,6 @@ SimpleForm.setup do |config|
     b.use :full_error, wrap_with: { class: 'invalid-feedback' }
     b.use :hint, wrap_with: { class: 'form-text' }
   end
-
 
   # The default wrapper to be used by the FormBuilder.
   config.default_wrapper = :vertical_form
