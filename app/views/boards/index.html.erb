@@ -18,21 +18,10 @@
           <% end %>
 
           <div class="board-actions">
-            <%=
-              link_to(
-                "#modal-board-edit-#{board.id}",
-                data: { behavior: 'board-modal' }
-              ) do
-            %>
+            <%= link_to("#modal-board-edit-#{board.id}", data: { bs_toggle: 'modal' }) do %>
               <i class="fa fa-pencil"></i> Edit
             <% end %>
-            <%=
-              link_to(
-                [current_project, board],
-                class: 'text-error-hover',
-                data: { confirm: "Are you sure?\n\nProceeding will delete this methodology from the project, as well as with any associated lists and tasks." },
-                method: 'delete'
-              ) do %>
+            <%= link_to([current_project, board], class: 'text-error-hover', data: { confirm: "Are you sure?\n\nProceeding will delete this methodology from the project, as well as with any associated lists and tasks." }, method: 'delete') do %>
               <i class="fa fa-trash"></i> Delete
             <% end %>
           </div>
@@ -40,12 +29,7 @@
       <% end %>
 
       <li class="board-list-item">
-        <a
-          class="board-tile board-new"
-          data-behavior="board-modal"
-          data-toggle="modal"
-          href="#modal-board-new"
-        >
+        <a class="board-tile board-new" data-bs-toggle="modal" href="#modal-board-new">
           Create new methodology...
         </a>
       </li>
