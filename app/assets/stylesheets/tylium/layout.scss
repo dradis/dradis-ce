@@ -20,9 +20,10 @@
 }
 
 .breadcrumb {
+  background-color: $gray-200;
   flex-wrap: nowrap;
   margin-bottom: 0;
-  padding-left: $mainContentPadding;
+  padding: 0.75rem 1rem 0.75rem $mainContentPadding;
   white-space: nowrap;
   width: 100%;
 
