@@ -31,7 +31,6 @@ SimpleForm.setup do |config|
   config.input_field_error_class = 'is-invalid'
   # config.input_field_valid_class = 'is-valid'
 
-
   # vertical forms
   #
   # vertical default_wrapper
@@ -43,10 +42,12 @@ SimpleForm.setup do |config|
     b.optional :pattern
     b.optional :min_max
     b.optional :readonly
-    b.use :label
-    b.use :input, class: 'form-control', error_class: 'is-invalid'
-    b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
-    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.wrapper :form_group, tag: 'div', class: 'mb-3' do |bb|
+      bb.use :label, class: 'form-label'
+      bb.use :input, class: 'form-control', error_class: 'is-invalid'
+      bb.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
+      bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    end
   end
 
   # vertical input for boolean
@@ -92,7 +93,7 @@ SimpleForm.setup do |config|
     b.optional :maxlength
     b.optional :minlength
     b.optional :readonly
-    b.use :label
+    b.use :label, class: 'form-label'
     b.use :input, class: 'form-control-file', error_class: 'is-invalid'
     b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
@@ -102,7 +103,7 @@ SimpleForm.setup do |config|
   config.wrappers :vertical_multi_select, tag: 'div', class: 'form-group', error_class: 'form-group-invalid' do |b|
     b.use :html5
     b.optional :readonly
-    b.use :label
+    b.use :label, class: 'form-label'
     b.wrapper tag: 'div', class: 'd-flex flex-row justify-content-between align-items-center' do |ba|
       ba.use :input, class: 'form-control mx-1', error_class: 'is-invalid'
     end
@@ -116,17 +117,16 @@ SimpleForm.setup do |config|
     b.use :placeholder
     b.optional :readonly
     b.optional :step
-    b.use :label
+    b.use :label, class: 'form-label'
     b.use :input, class: 'form-control-range', error_class: 'is-invalid'
     b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   end
 
-
   # horizontal forms
   #
   # horizontal default_wrapper
-  config.wrappers :horizontal_form, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid' do |b|
+  config.wrappers :horizontal_form, tag: 'div', class: 'mb-3 row', error_class: 'form-group-invalid' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
@@ -134,7 +134,7 @@ SimpleForm.setup do |config|
     b.optional :pattern
     b.optional :min_max
     b.optional :readonly
-    b.use :label, class: 'col-sm-3 col-form-label'
+    b.use :label, class: 'col-sm-3 form-label'
     b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |ba|
       ba.use :input, class: 'form-control', error_class: 'is-invalid'
       ba.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
@@ -143,7 +143,7 @@ SimpleForm.setup do |config|
   end
 
   # horizontal input for boolean
-  config.wrappers :horizontal_boolean, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid' do |b|
+  config.wrappers :horizontal_boolean, tag: 'div', class: 'mb-3 row', error_class: 'form-group-invalid' do |b|
     b.use :html5
     b.optional :readonly
     b.wrapper tag: 'label', class: 'col-sm-3' do |ba|
@@ -160,7 +160,7 @@ SimpleForm.setup do |config|
   end
 
   # horizontal input for radio buttons and check boxes
-  config.wrappers :horizontal_collection, item_wrapper_class: 'form-check', item_label_class: 'form-check-label', tag: 'div', class: 'form-group row', error_class: 'form-group-invalid' do |b|
+  config.wrappers :horizontal_collection, item_wrapper_class: 'form-check', item_label_class: 'form-check-label', tag: 'div', class: 'mb-3 row', error_class: 'form-group-invalid' do |b|
     b.use :html5
     b.optional :readonly
     b.use :label, class: 'col-sm-3 col-form-label pt-0'
@@ -172,7 +172,7 @@ SimpleForm.setup do |config|
   end
 
   # horizontal input for inline radio buttons and check boxes
-  config.wrappers :horizontal_collection_inline, item_wrapper_class: 'form-check form-check-inline', item_label_class: 'form-check-label', tag: 'div', class: 'form-group row', error_class: 'form-group-invalid' do |b|
+  config.wrappers :horizontal_collection_inline, item_wrapper_class: 'form-check form-check-inline', item_label_class: 'form-check-label', tag: 'div', class: 'mb-3 row', error_class: 'form-group-invalid' do |b|
     b.use :html5
     b.optional :readonly
     b.use :label, class: 'col-sm-3 col-form-label pt-0'
@@ -184,7 +184,7 @@ SimpleForm.setup do |config|
   end
 
   # horizontal file input
-  config.wrappers :horizontal_file, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid' do |b|
+  config.wrappers :horizontal_file, tag: 'div', class: 'mb-3 row', error_class: 'form-group-invalid' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
@@ -199,7 +199,7 @@ SimpleForm.setup do |config|
   end
 
   # horizontal multi select
-  config.wrappers :horizontal_multi_select, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid' do |b|
+  config.wrappers :horizontal_multi_select, tag: 'div', class: 'mb-3 row', error_class: 'form-group-invalid' do |b|
     b.use :html5
     b.optional :readonly
     b.use :label, class: 'col-sm-3 col-form-label'
@@ -213,7 +213,7 @@ SimpleForm.setup do |config|
   end
 
   # horizontal range input
-  config.wrappers :horizontal_range, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid' do |b|
+  config.wrappers :horizontal_range, tag: 'div', class: 'mb-3 row', error_class: 'form-group-invalid' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :readonly
@@ -225,7 +225,6 @@ SimpleForm.setup do |config|
       ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
     end
   end
-
 
   # inline forms
   #
@@ -254,7 +253,6 @@ SimpleForm.setup do |config|
     b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
     b.optional :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   end
-
 
   # bootstrap custom forms
   #
@@ -372,7 +370,6 @@ SimpleForm.setup do |config|
     b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   end
-
 
   # The default wrapper to be used by the FormBuilder.
   config.default_wrapper = :vertical_form
