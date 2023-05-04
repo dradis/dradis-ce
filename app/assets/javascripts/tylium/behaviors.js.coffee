@@ -93,7 +93,7 @@ document.addEventListener "turbolinks:load", ->
     url = url + '?utm_source=ce&utm_medium=app&utm_campaign=try-pro&utm_term=' + term
 
     $iframe.attr('src', url)
-    $('#try-pro').modal()
+    new bootstrap.Modal('#try-pro').show()
 
   # If project id is changed in project path
   if !(/^\/projects\/1(\/|$)/.test(window.location.pathname))
