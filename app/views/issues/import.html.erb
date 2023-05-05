@@ -28,7 +28,7 @@
                 <% @all_columns.each do |column| %>
                   <th><%= column %></th>
                 <% end %>
-                <th class="no-sort" data-column-visible="false"><span class="sr-only">Actions</span></th>
+                <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Actions</span></th>
               </tr>
             </thead>
             <tbody>
@@ -60,8 +60,8 @@
                       <%= link_to project_issues_path(current_project, format: :js), class: 'btn btn-primary', data: { text: issue.text, state: 'draft', behavior: 'add-issue' } do %>
                         <i class="fa fa-plus"></i> Add issue (<span data-behavior="state-button">Draft</span>)
                       <% end %>
-                      <a href="#" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="sr-only">Toggle Dropdown</span>
+                      <a href="#" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="visually-hidden">Toggle Dropdown</span>
                       </a>
                       <div class="dropdown-menu">
                         <%= collection_radio_buttons(issue, :state, Issue.states, :first, :first) do |b| %>
@@ -78,35 +78,35 @@
                                 <span>All done on this one, ready for QA.</span>
                                 <% when 'published' %>
                                 <span>Content is final, ready for the report.</span>
-                                <% end %>
-                              </div>
-                            <% end %>
-                          </span>
-                        <% end %>
-                      </div>
+                              <% end %>
+                            </div>
+                          <% end %>
+                        </span>
+                      <% end %>
                     </div>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        <% else %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
 
-          <div class="empty-state mt-3">
-            <div class="empty-state-icon">
-              <%= image_tag "icons/#{rand(9)}.svg" %>
-            </div>
-            <div class="empty-state-body">
-              <div class="container">
-                <h4 class="empty-state-title">This query yielded no results</h4>
-                <div class="empty-state-actions">
-                  <a href="https://dradisframework.com/support/guides/issuelibrary/add_to_project.html" class="empty-state-docs-link" target="_blank">More about importing issues</a>
-                </div>
+        <div class="empty-state mt-3">
+          <div class="empty-state-icon">
+            <%= image_tag "icons/#{rand(9)}.svg" %>
+          </div>
+          <div class="empty-state-body">
+            <div class="container">
+              <h4 class="empty-state-title">This query yielded no results</h4>
+              <div class="empty-state-actions">
+                <a href="https://dradisframework.com/support/guides/issuelibrary/add_to_project.html" class="empty-state-docs-link" target="_blank">More about importing issues</a>
               </div>
             </div>
           </div>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     </div>
   </div>
+</div>
 </div>

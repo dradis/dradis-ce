@@ -3,8 +3,8 @@
   <%= button_tag :submit, class: 'btn btn-primary' do %>
     <%= "#{verb} #{record.model_name.human.titleize}" %> (<span data-behavior="state-button"><%= record.state.humanize %></span>)
   <% end %>
-  <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <span class="sr-only">Toggle Dropdown</span>
+  <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="visually-hidden">Toggle Dropdown</span>
   </button>
   <div class="dropdown-menu">
     <%= f.collection_radio_buttons(:state, record.class.states, :first, :first) do |b| %>

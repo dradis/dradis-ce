@@ -2,7 +2,7 @@
   <%= f.input :tag_list, as: :hidden %>
   Tag:
   <div class="dropdown">
-    <button class="btn dropdown-toggle" data-toggle="dropdown">
+    <button class="btn dropdown-toggle" data-bs-toggle="dropdown" type="button">
       <% if @issue.tags.any? %>
         <span class="tag" style="color: <%= @issue.tags.first.color %>">
           <i class="fa fa-tag fa-fw"></i>
@@ -18,21 +18,21 @@
     </button>
     <div class="dropdown-menu">
       <%= link_to 'javascript:void(0)', class: 'js-taglink dropdown-item',  style: "color: #555", data: { tag: "" } do %>
-        <i class="fa fa-tag fa-fw mr-1"></i>
+        <i class="fa fa-tag fa-fw me-1"></i>
         No tag
       <% end %>
       <% @tags.each do |tag| %>
         <%= link_to 'javascript:void(0)', class: 'js-taglink dropdown-item',  style: "color: #{ tag.color }", data: { tag: h(tag.name) } do %>
-          <i class="fa fa-tag fa-fw mr-1"></i>
+          <i class="fa fa-tag fa-fw me-1"></i>
           <%= h(tag.display_name) %>
         <% end %>
       <% end %>
       <div class="divider"></div>
       <%= link_to new_project_tag_path(current_project), remote: true, class: 'dropdown-item' do %>
-        <i class="fa fa-plus fa-fw mr-1"></i> Add new tag
+        <i class="fa fa-plus fa-fw me-1"></i> Add new tag
       <% end %>
       <%= link_to project_tags_path(current_project), class: 'dropdown-item' do %>
-        <i class="fa fa-tags fa-fw mr-1"></i> Manage tags
+        <i class="fa fa-tags fa-fw me-1"></i> Manage tags
       <% end %>
     </div>
   </div>

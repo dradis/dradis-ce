@@ -16,19 +16,19 @@
 <div class="row m-0">
   <ul class="tabs-container nav nav-tabs main-tabs w-100">
     <li class="nav-item">
-      <a href="#info-tab" data-toggle="tab" class="nav-link active">
+      <a href="#info-tab" data-bs-toggle="tab" class="nav-link active">
         <%= tag_and_name_for(@issue) %>
         <%= "(#{@issue.state.humanize})" %>
       </a>
     </li>
-    <li class="nav-item"><a href="#evidence-tab" class="nav-link" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge bg-primary text-white" data-behavior="evidence-count"><%= @issue.evidence.count %></span></a></li>
+    <li class="nav-item"><a href="#evidence-tab" class="nav-link" data-bs-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge bg-primary text-white" data-behavior="evidence-count"><%= @issue.evidence.count %></span></a></li>
     <%= render_view_hooks 'issues/show-tabs' %>
   </ul>
 </div>
 
 <div class="row m-0">
   <div class="col-12 col-xxl-7 p-0">
-    <div class="content-container mt-0 pb-3 mr-xxl-3">
+    <div class="content-container mt-0 pb-3 me-xxl-3">
       <div class="tab-content mt-0">
         <div class="tab-pane active" id="info-tab">
           <% cache ['issue-information-tab', @issue] do %>
@@ -65,7 +65,7 @@
 
   <div class="col-12 col-xxl-5 p-0">
     <div class="sticky-top">
-      <div class="content-container ml-xxl-3 mt-0">
+      <div class="content-container ms-xxl-3 mt-0">
         <%= content_tag :div,
           spinner_tag,
           data: {
@@ -82,7 +82,7 @@
         <%= render_view_hooks('issues/comments') %>
       </div>
 
-      <div class="content-container ml-xxl-3">
+      <div class="content-container ms-xxl-3">
         <%= content_tag :div,
           spinner_tag,
           data: {

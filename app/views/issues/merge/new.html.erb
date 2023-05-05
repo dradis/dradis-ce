@@ -30,7 +30,7 @@
 
         <p>
           <a href="https://dradisframework.com/pro/support/guides/projects/merge_issues.html">Learn
-          more about merging issues</a>.
+            more about merging issues</a>.
         </p>
 
         <div class="accordion">
@@ -41,11 +41,11 @@
                 <%= label_tag nil, :class => 'w-100' do %>
                   <%= radio_button_tag "new", nil, false, id: "new" %>
                   Merge into a new issue
-                  <%= link_to raw('<i class="fa fa-chevron-down"></i>'), 'javascript:void(0)', class: 'issue-toggle pull-right', data: {toggle: 'collapse', target: "#preview_issue_new"} %>
+                  <%= link_to raw('<i class="fa fa-chevron-down"></i>'), '#preview_issue_new', class: 'issue-toggle pull-right', data: { bs_toggle: 'collapse' } %>
                 <% end %>
               </div>
             </div>
-            <div id="<%= "preview_issue_new" %>" class="accordion-body collapse">
+            <div id="<%= "preview_issue_new" %>" class="accordion-body p-1 collapse">
               <div id="new_issue">
                 <%= text_area_tag "issue[text]", nil, class: 'textile form-control', data: { paths: editor_paths } %>
               </div>
@@ -59,15 +59,15 @@
                   <%= label_tag nil, :class => 'w-100' do %>
                     <%= radio_button_tag "id", issue.id, i == 0 %>
                     Merge into <%= issue.title %>
-                    <%= link_to raw('<i class="fa fa-chevron-down"></i>'), 'javascript:void(0)', class: 'issue-toggle pull-right', data: {toggle: 'collapse', target: "#preview_issue_#{issue.id}"} %>
+                    <%= link_to raw('<i class="fa fa-chevron-down"></i>'), "#preview_issue_#{issue.id}", class: 'issue-toggle pull-right', data: { bs_toggle: 'collapse' } %>
                   <% end %>
                 </div>
               </div>
-              <div id="<%= "preview_issue_#{issue.id}" %>" class="accordion-body collapse">
+              <div id="<%= "preview_issue_#{issue.id}" %>" class="accordion-body p-0 collapse">
                 <div class="tab-content">
                   <ul class="nav nav-pills pull-right">
-                    <li class="nav-item"><a href="#normal_<%= issue.id %>" data-toggle="pill" class="nav-link active">Preview</a></li>
-                    <li><a href="#textile_<%= issue.id %>" data-toggle="pill" class="nav-link">Source</a></li>
+                    <li class="nav-item"><a href="#normal_<%= issue.id %>" data-bs-toggle="pill" class="nav-link active">Preview</a></li>
+                    <li><a href="#textile_<%= issue.id %>" data-bs-toggle="pill" class="nav-link">Source</a></li>
                   </ul>
                   <div id="normal_<%= issue.id %>" class="tab-pane active">
                     <%= markup(issue.text) %>
