@@ -199,6 +199,18 @@
   white-space: nowrap;
 }
 
+.nav-link {
+  color: $linkColor;
+  display: block;
+  padding: 0.5rem 1rem;
+  transition: color 0.2s ease-in-out;
+  text-decoration: none;
+
+  &:hover {
+    color: $linkColorHover;
+  }
+}
+
 .nav-tabs {
   .nav-link:hover:not(.active) {
     border-color: transparent;
