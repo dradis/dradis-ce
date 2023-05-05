@@ -65,6 +65,13 @@ code {
   color: $mutedText !important;
 }
 
+.dradis-placeholder {
+  font-style: italic;
+  margin-left: 1rem;
+  cursor: default;
+  height: 3rem;
+}
+
 .dropdown-toggle:not(.dropdown-toggle-split)::after {
   display: none;
 }
@@ -111,13 +118,6 @@ mark {
       color: $linkColorHover;
     }
   }
-}
-
-.placeholder {
-  font-style: italic;
-  margin-left: 1rem;
-  cursor: default;
-  height: 3rem;
 }
 
 pre code {
