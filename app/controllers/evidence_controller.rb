@@ -107,6 +107,13 @@ class EvidenceController < NestedNodeResourceController
     track_created(@evidence.issue)
   end
 
+  def liquid_resource_assigns
+    {
+      'evidence' => EvidenceDrop.new(@evidence),
+      'node' => NodeDrop.new(@evidence.node)
+    }
+  end
+
   # Look for the Evidence we are going to be working with based on the :id
   # passed by the user.
   def set_or_initialize_evidence

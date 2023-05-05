@@ -125,6 +125,11 @@ class IssuesController < AuthenticatedController
   end
 
   private
+
+  def liquid_resource_assigns
+    { 'issue' => IssueDrop.new(@issue) }
+  end
+
   def set_affected_nodes
     @affected_nodes = Node.joins(:evidence)
                           .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')

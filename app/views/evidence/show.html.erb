@@ -36,7 +36,7 @@
               </h4>
 
               <div class="content-textile" data-behavior="content-textile">
-                <%= markup(@evidence.content) %>
+                <%= markup(@evidence.content, liquid: true) %>
               </div>
               <div class="author-info">
                 <span class="ml-auto">Author: <%= @evidence.author || 'n/a' %></span>
