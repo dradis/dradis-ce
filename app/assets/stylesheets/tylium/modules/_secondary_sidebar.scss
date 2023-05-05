@@ -5,7 +5,7 @@
   height: calc(100vh - 60px);
   overflow: auto;
   padding: 1rem;
-  position: sticky;
+  position: sticky !important;
   top: 0;
   z-index: 2;
 
