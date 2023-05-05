@@ -8,7 +8,7 @@
 
   <%= f.hidden_field :category, value: Category.default.id %>
 
-  <%= f.label :text, 'Note source input', class: 'sr-only' %>
+  <%= f.label :text, 'Note source input', class: 'visually-hidden' %>
   <%=
     f.input :text,
       label: false,
