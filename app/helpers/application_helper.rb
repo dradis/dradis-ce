@@ -1,5 +1,5 @@
 module ApplicationHelper # :nodoc:
-  def markup(text, options={})
+  def markup(text, options = {})
     return unless text.present?
 
     context = {}
