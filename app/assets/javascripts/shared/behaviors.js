@@ -75,11 +75,11 @@
     let searchParams = new URLSearchParams(window.location.search);
     if (searchParams.has('tab')) {
       let tab = searchParams.get('tab');
-      $($(`[data-toggle~=tab][href="#${tab}"]`)).tab('show');
+      $($(`[data-bs-toggle~=tab][href="#${tab}"]`)).tab('show');
     }
 
     // Update address bar with current tab param
-    $('[data-toggle~=tab]').on('shown.bs.tab', function (e) {
+    $('[data-bs-toggle~=tab]').on('shown.bs.tab', function (e) {
       let currentTab = $(e.target).attr('href').substring(1);
       searchParams.set('tab', currentTab);
       history.pushState(null, null, `?${searchParams.toString()}`);
