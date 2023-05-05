@@ -8,9 +8,9 @@ document.addEventListener "turbolinks:load", ->
       false
 
     $(document).bind 'keydown', 'Meta+o', ->
-      $(".dropdown-toggle[data-name='notes']").click()
+      new bootstrap.Dropdown($(".dropdown-toggle[data-name='notes']")).show();
       false
 
-    $(document).bind 'keydown', 'Meta+i', ->
-      $(".dropdown-toggle[data-name='issues']").click()
+    $(document).bind 'keydown', 'Meta+e', ->
+      new bootstrap.Dropdown($(".dropdown-toggle[data-name='evidence']")).show();
       false
