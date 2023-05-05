@@ -82,13 +82,6 @@ class NotesController < NestedNodeResourceController
     end
   end
 
-  def liquid_resource_assigns
-    {
-      'note' => NoteDrop.new(@note),
-      'node' => NodeDrop.new(@note.node)
-    }
-  end
-
   def note_params
     params.require(:note).permit(:category_id, :text, :node_id)
   end
