@@ -313,7 +313,7 @@ describe 'Issues pages' do
           @issue = issuelib.notes.create(
             category: Category.issue,
             author: 'rspec',
-            text: "#[Title]#\nMultiple Apache bugs\n\n",
+            text: "#[Title]#\nMultiple Apache bugs\n\n#[Description]#\nLiquid: {{issue.title}}",
             node: create(:node, :with_project)
           )
           # @issue is currently loaded as a Note, not an Issue. Make sure it
@@ -400,6 +400,13 @@ describe 'Issues pages' do
         context 'with states' do
           it 'shows the issue states in the view' do
             expect(page).to have_text "(#{@issue.state.humanize})"
+          end
+        end
+
+        context 'with liquid dynamic content' do
+          it 'dynamically renders issue properties' do
+            expect(find('.note-text-inner')).to have_content("Liquid: #{@issue.title}")
+            expect(find('.note-text-inner')).not_to have_content('Liquid: {{issue.title}}')
           end
         end
       end
