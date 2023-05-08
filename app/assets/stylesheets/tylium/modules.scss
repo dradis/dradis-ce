@@ -230,8 +230,8 @@ pre {
   border-radius: 5px;
 }
 
-.rounded-left,
-.rounded-right {
+.rounded-start,
+.rounded-end {
   // Bootstrap rounds the desired corners, but doesn't square up the rest
   border-radius: 0;
 }
