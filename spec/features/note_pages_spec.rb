@@ -16,7 +16,7 @@ describe 'note pages' do
 
   example 'show page with wrong Node ID in URL' do
     node       = create(:node, project: current_project)
-    note       = create(:note, node:)
+    note       = create(:note, node: node)
     wrong_node = create(:node, project: current_project)
     expect do
       visit project_node_note_path(current_project, wrong_node, note)
@@ -26,7 +26,7 @@ describe 'note pages' do
   describe 'show page' do
     before do
       text = "#[Title]#\nMy note\n\n#[Description]#\nMy description\n Liquid: {{ project.name }}"
-      @note = create(:note, node: @node, text:)
+      @note = create(:note, node: @node, text: text)
       create_activities
       create_comments
       visit project_node_note_path(current_project, @node, @note)

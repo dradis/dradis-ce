@@ -12,7 +12,7 @@ describe 'evidence' do
 
   example 'show page with wrong Node ID in URL' do
     node     = create(:node)
-    evidence = create(:evidence, node:)
+    evidence = create(:evidence, node: node)
     wrong_node = create(:node)
     expect do
       visit project_node_evidence_path(current_project, wrong_node, evidence)
@@ -93,7 +93,7 @@ describe 'evidence' do
 
     before do
       issue = create(:issue, node: issue_lib)
-      @evidence = create(:evidence, issue:, node: @node, updated_at: 2.seconds.ago)
+      @evidence = create(:evidence, issue: issue, node: @node, updated_at: 2.seconds.ago)
       visit edit_project_node_evidence_path(current_project, @node, @evidence)
       click_link 'Source'
     end
