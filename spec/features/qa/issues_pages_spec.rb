@@ -15,7 +15,7 @@ describe 'Issues pages' do
     end
 
     context 'with liquid dynamic content' do
-      let(:issue) { create(:issue, state: :ready_for_review, text: "#[Title]#\nIssue Title\n\n#[Description]#\nLiquid: {{issue.title}}") }
+      let(:issue) { create(:issue, state: :ready_for_review, node: current_project.issue_library, text: "#[Title]#\nIssue Title\n\n#[Description]#\nLiquid: {{issue.title}}") }
 
       it 'dynamically renders issue properties' do
         visit project_qa_issue_path(current_project, issue)
