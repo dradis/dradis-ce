@@ -2,7 +2,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - [gem]
+    - bootstrap, popper_js, simple_form
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
