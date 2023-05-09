@@ -48,16 +48,19 @@ describe 'moving an evidence', js: true do
     end
   end
 
-  describe 'moving a evidence to a similar node' do
+  describe 'moving a evidence to a similar node', js: true do
     before do
       within('#modal_move_evidence') do
         click_link @node_5.label
-        click_submit
       end
     end
 
     it 'should update the node as an invalid selection' do
       expect(find('.invalid-selection').text).to eq(@node_5.label)
+    end
+
+    it 'should prevent the submit button from being clicked' do
+      expect(page).to have_selector '.btn-primary[disabled]'
     end
   end
 
