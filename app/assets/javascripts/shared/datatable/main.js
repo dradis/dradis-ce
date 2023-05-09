@@ -57,7 +57,7 @@ class DradisDatatable {
               id: 'select-all',
             },
             name: 'selectAll',
-            text: '<label for="select-all-checkbox" class="sr-only">Select all"</label><input type="checkbox" id="select-all-checkbox" />',
+            text: '<label for="select-all-checkbox" class="visually-hidden">Select all"</label><input type="checkbox" id="select-all-checkbox" />',
             titleAttr: 'Select all',
           },
           {
@@ -270,7 +270,7 @@ class DradisDatatable {
           $(tr)
             .find('[data-behavior~=select-checkbox]')
             .append(
-              '<div class="spinner-border spinner-border-sm text-primary" data-behavior="spinner"><span class="sr-only">Loading</div>'
+              '<div class="spinner-border spinner-border-sm text-primary" data-behavior="spinner"><span class="visually-hidden">Loading</div>'
             );
         } else {
           $(tr).find('[data-behavior~=spinner]').remove();
