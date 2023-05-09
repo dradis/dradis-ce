@@ -1,6 +1,6 @@
 document.addEventListener "turbolinks:load", ->
   if $('body.evidence.new').length
-    $('#evidence-host-list a[data-toggle~=pill]').on 'click', (ev)->
+    $('#evidence-host-list a[data-bs-toggle~=pill]').on 'click', (ev)->
       path   = $(this).data('path')
       node   = $(this).data('node')
       fetch(path, {credentials: 'include'}).then (response) ->
