@@ -39,7 +39,7 @@
                 <%= f.label :node, class: 'visually-hidden' %>
                 <%= f.text_field :node, class: 'form-control existing-node-list-filter', placeholder: 'Type here to filter list...' %>
                 <%= f.label :node_ids, class: 'visually-hidden' %>
-                <%= f.collection_select :node_ids, @nodes_for_add_evidence, :id, :label, {}, { class: 'form-control custom-select', data: { behavior: 'existing-node-list'}, multiple: 'multiple' } %>
+                <%= f.collection_select :node_ids, @nodes_for_add_evidence, :id, :label, {}, { class: 'form-select', data: { behavior: 'existing-node-list'}, multiple: 'multiple' } %>
               </div>
             <% else %>
               <p>There are no existing nodes yet. <a href="#modal_add_branch_node" data-bs-toggle="modal" tabindex="-1">Create one</a>.</p>

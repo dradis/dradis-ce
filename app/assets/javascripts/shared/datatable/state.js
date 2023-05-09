@@ -47,7 +47,7 @@ DradisDatatable.prototype.setupStateButtons = function () {
   states.forEach(function (state) {
     stateButtons.push({
       text: $(
-        `<i class="fa ${state[1]} fa-fw mr-1"></i><span>${state[0]}</span>`
+        `<i class="fa ${state[1]} fa-fw me-1"></i><span>${state[0]}</span>`
       ),
       action: DradisDatatable.prototype.updateRecordState.call(
         api,

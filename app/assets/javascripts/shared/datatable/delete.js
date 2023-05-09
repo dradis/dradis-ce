@@ -1,6 +1,8 @@
-DradisDatatable.prototype.bulkDelete = function() {
+DradisDatatable.prototype.bulkDelete = function () {
   var that = this;
-  var destroyConfirmation = that.$paths.data('table-destroy-confirmation') || 'Are you sure?\n\nProceeding will delete the selected item(s).';
+  var destroyConfirmation =
+    that.$paths.data('table-destroy-confirmation') ||
+    'Are you sure?\n\nProceeding will delete the selected item(s).';
   var answer = confirm(destroyConfirmation);
 
   if (!answer) {
@@ -16,22 +18,22 @@ DradisDatatable.prototype.bulkDelete = function() {
     method: 'DELETE',
     dataType: 'json',
     data: { ids: that.rowIds(selectedRows) },
-    success: function(data) {
+    success: function (data) {
       that.handleBulkDeleteSuccess(selectedRows, data);
       that.$table.trigger('dradis:datatable:bulkDelete');
     },
-    error: function() {
+    error: function () {
       that.handleBulkDeleteError(selectedRows);
-    }
-  })
-}
+    },
+  });
+};
 
-DradisDatatable.prototype.handleBulkDeleteSuccess = function(rows, data) {
+DradisDatatable.prototype.handleBulkDeleteSuccess = function (rows, data) {
   var that = this;
   this.toggleLoadingState(rows, false);
 
   // Remove links from sidebar
-  that.rowIds(rows).forEach(function(id) {
+  that.rowIds(rows).forEach(function (id) {
     $(`#${that.itemName}_${id}_link`).remove();
   });
 
@@ -52,17 +54,24 @@ DradisDatatable.prototype.handleBulkDeleteSuccess = function(rows, data) {
   } else {
     this.showAlert(data.msg, 'error');
   }
-}
+};
 
-DradisDatatable.prototype.handleBulkDeleteError = function(rows) {
+DradisDatatable.prototype.handleBulkDeleteError = function (rows) {
   this.toggleLoadingState(rows, false);
 
-  rows.nodes().toArray().forEach(function(tr) {
-    $(tr).find('[data-behavior~=select-checkbox]').html('<span class="text-error pl-5" data-behavior="error-loading">Error. Try again</span>');
-  })
-}
+  rows
+    .nodes()
+    .toArray()
+    .forEach(function (tr) {
+      $(tr)
+        .find('[data-behavior~=select-checkbox]')
+        .html(
+          '<span class="text-error ps-5" data-behavior="error-loading">Error. Try again</span>'
+        );
+    });
+};
 
-DradisDatatable.prototype.showAlert = function(msg, klass) {
+DradisDatatable.prototype.showAlert = function (msg, klass) {
   this.$table.parent().find('.alert').remove();
 
   this.$table.parent().prepend(`
@@ -71,27 +80,29 @@ DradisDatatable.prototype.showAlert = function(msg, klass) {
       ${msg}
     </div>
   `);
-}
+};
 
-DradisDatatable.prototype.setupBulkDeleteButtonToggle = function() {
+DradisDatatable.prototype.setupBulkDeleteButtonToggle = function () {
   if (this.$paths.data('table-destroy-url') === undefined) {
     return;
   }
 
-  this.dataTable.on('select.dt deselect.dt', function() {
-    var selectedCount = this.dataTable.rows({selected:true}).count();
-    this.toggleBulkDeleteBtn(selectedCount !== 0);
-  }.bind(this));
+  this.dataTable.on(
+    'select.dt deselect.dt',
+    function () {
+      var selectedCount = this.dataTable.rows({ selected: true }).count();
+      this.toggleBulkDeleteBtn(selectedCount !== 0);
+    }.bind(this)
+  );
+};
 
-}
-
-DradisDatatable.prototype.toggleBulkDeleteBtn = function(isShown) {
+DradisDatatable.prototype.toggleBulkDeleteBtn = function (isShown) {
   // https://datatables.net/reference/api/buttons()
   var bulkDeleteBtn = this.dataTable.buttons('bulkDeleteBtn:name');
   $(bulkDeleteBtn[0].node).toggleClass('d-none', !isShown);
-}
+};
 
-DradisDatatable.prototype.showConsole = function(jobId) {
+DradisDatatable.prototype.showConsole = function (jobId) {
   // the table may set the url to redirect to when closing the console
   var closeUrl = this.$paths.data('table-close-console-url');
 
@@ -109,4 +120,4 @@ DradisDatatable.prototype.showConsole = function(jobId) {
   // start console
   ConsoleUpdater.parsing = true;
   setTimeout(ConsoleUpdater.updateConsole, 1000);
-}
+};

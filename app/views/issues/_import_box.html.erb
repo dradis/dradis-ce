@@ -34,7 +34,7 @@
           <% Dradis::Plugins::Import::Filters[plugin.plugin_name].each do |label, klass| %>
             <% next if label == :find_one_by_field %>
 
-            <%= form_tag main_app.import_project_issues_path, class: 'form-inline mb-4' do %>
+            <%= form_tag main_app.import_project_issues_path, class: 'mb-4' do %>
               <%= hidden_field_tag :scope, plugin.plugin_name, id: "scope_#{plugin.plugin_name}" %>
               <%= hidden_field_tag :filter, label, id: "filter_#{plugin.plugin_name}" %>
               <% query = @query if (@plugin == plugin.plugin_name) && (@filter == klass) %>
