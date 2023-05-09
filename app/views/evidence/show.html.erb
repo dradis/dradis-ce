@@ -39,7 +39,7 @@
                 <%= markup(@evidence.content) %>
               </div>
               <div class="author-info">
-                <span class="ml-auto">Author: <%= @evidence.author || 'n/a' %></span>
+                <span class="ms-auto">Author: <%= @evidence.author || 'n/a' %></span>
               </div>
             </div>
           <% end %>
@@ -66,7 +66,7 @@
   </div>
   <div class="col-12 col-xxl-5 p-0">
     <div class="sticky-top">
-      <div class="content-container ml-xxl-3 mt-0">
+      <div class="content-container ms-xxl-3 mt-0">
         <%= content_tag :div,
           spinner_tag,
           data: {
@@ -81,7 +81,7 @@
         %>
       </div>
 
-      <div class="content-container ml-xxl-3">
+      <div class="content-container ms-xxl-3">
         <%= content_tag :div,
           spinner_tag,
           data: {
