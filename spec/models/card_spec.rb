@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Card do
   it { should belong_to(:list).touch(true) }
-  it { should have_and_belong_to_many(:assignees).class_name("User") }
+  it { should have_and_belong_to_many(:assignees).class_name('User') }
   it { should have_many(:comments).dependent(:destroy) }
 
   it { should validate_length_of(:description).is_at_most(DB_MAX_TEXT_LENGTH) }
