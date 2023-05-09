@@ -81,7 +81,7 @@ DradisDatatable.prototype.updateRecordState = function (newState) {
         $('[data-behavior="qa-alert"]').remove();
         $('.page-title').after(`
           <div class="alert alert-success" data-behavior="qa-alert">
-            <a class="close" data-dismiss="alert" href="javascript:void(0)">x</a>
+            <a class="btn-close" data-bs-dismiss="alert" href="javascript:void(0)">x</a>
             Successfully set the records as ${newState}!
           </div>
         `);
