@@ -20,7 +20,7 @@ describe Card do
 
   describe 'on create' do
     it 'subscribes new assignees' do
-      new_card = build(:card, assignee_ids: create_list(:user, 2).map(&:id))
+      new_card = build(:card, assignee_ids: create_list(:user, 2).map(&:id), list: @parent)
       expect { new_card.save }.to change {
         Subscription.count
       }.by(2)
