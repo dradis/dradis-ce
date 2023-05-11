@@ -13,16 +13,7 @@ describe 'Issues pages' do
     let!(:records) do
       create_list(:issue, 10, state: :ready_for_review, node: current_project.issue_library)
     end
-
-    context 'with liquid dynamic content' do
-      let(:issue) { create(:issue, state: :ready_for_review, node: current_project.issue_library, text: "#[Title]#\nIssue Title\n\n#[Description]#\nLiquid: {{issue.title}}") }
-
-      it 'dynamically renders issue properties' do
-        visit project_qa_issue_path(current_project, issue)
-        expect(find('.note-text-inner')).to have_content("Liquid: #{issue.title}")
-        expect(find('.note-text-inner')).not_to have_content('Liquid: {{issue.title}}')
-      end
-    end
+    let(:record) { create(:issue, state: :ready_for_review, content: "#[Title]#\nTitle\n\n#[Description]#\nLiquid: {{issue.fields['Title']}}") }
 
     include_examples 'qa pages', :issue
   end

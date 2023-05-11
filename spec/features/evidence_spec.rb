@@ -21,7 +21,7 @@ describe 'evidence' do
 
   describe 'show page' do
     before(:each) do
-      e_text    = "#[Foobar]#\nBarfoo\n\n#[Fizzbuzz]#\nBuzzfizz\n Liquid: {{evidence.title}}"
+      e_text    = "#[Foobar]#\nBarfoo\n\n#[Fizzbuzz]#\nBuzzfizz"
       i_text    = "#[Issue Title]#\nIssue info"
       @issue    = create(:issue,    node: @node, text: i_text)
       @evidence = create(:evidence, node: @node, issue: @issue, content: e_text)
@@ -43,13 +43,6 @@ describe 'evidence' do
     it "shows information about the evidence's Issue" do
       should have_selector 'h5', text: 'Issue Title'
       should have_selector 'p',  text: 'Issue info'
-    end
-
-    context 'with liquid dynamic content' do
-      it 'dynamically renders evidence properties' do
-        expect(find('.note-text-inner')).to have_content("Liquid: #{@evidence.title}")
-        expect(find('.note-text-inner')).not_to have_content('Liquid: {{evidence.title}}')
-      end
     end
 
     let(:commentable) { @evidence }
@@ -86,6 +79,7 @@ describe 'evidence' do
 
     let(:model) { @evidence }
     include_examples 'nodes pages breadcrumbs', :show, Evidence
+    include_examples 'liquid dynamic content', :evidence, true
   end
 
   describe 'edit page', js: true do

@@ -25,7 +25,7 @@ describe 'note pages' do
 
   describe 'show page' do
     before do
-      text = "#[Title]#\nMy note\n\n#[Description]#\nMy description\n Liquid: {{ project.name }}"
+      text = "#[Title]#\nMy note\n\n#[Description]#\nMy description"
       @note = create(:note, node: @node, text: text)
       create_activities
       create_comments
@@ -40,13 +40,6 @@ describe 'note pages' do
       should have_selector 'p',  text: 'My note'
       should have_selector 'h5', text: 'Description'
       should have_selector 'p',  text: 'My description'
-    end
-
-    context 'with liquid dynamic content' do
-      it 'dynamically renders project properites' do
-        expect(find('.note-text-inner')).to have_content("Liquid: #{current_project.name}")
-        expect(find('.note-text-inner')).not_to have_content('Liquid: {{project.name}}')
-      end
     end
 
     let(:commentable) { @note }
@@ -83,6 +76,7 @@ describe 'note pages' do
 
     let(:model) { @note }
     include_examples 'nodes pages breadcrumbs', :show, Note
+    include_examples 'liquid dynamic content', :note, true
   end
 
   describe 'edit page', js: true do
