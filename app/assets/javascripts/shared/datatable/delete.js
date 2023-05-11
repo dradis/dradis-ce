@@ -75,8 +75,8 @@ DradisDatatable.prototype.showAlert = function (msg, klass) {
   this.$table.parent().find('.alert').remove();
 
   this.$table.parent().prepend(`
-    <div class="alert alert-${klass}">
-      <a class="btn-close" data-bs-dismiss="alert" href="javascript:void(0)">x</a>
+    <div class="alert alert-${klass} alert-dismissible">
+      <a class="btn-close" data-bs-dismiss="alert" href="javascript:void(0)"><span class="visually-hidden">Close alert</span></a>
       ${msg}
     </div>
   `);
