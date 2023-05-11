@@ -1,4 +1,5 @@
 class QA::IssuesController < AuthenticatedController
+  include ActivityTracking
   include LiquidEnabledResource
   include ProjectScoped
 
@@ -21,6 +22,7 @@ class QA::IssuesController < AuthenticatedController
 
   def update
     if @issue.update(state: @state, updated_at: Time.now)
+      track_state_change(@issue)
       redirect_to project_qa_issues_path(current_project), notice: 'State updated successfully.'
     else
       render :show, alert: @issue.errors.full_messages.join('; ')
@@ -32,6 +34,11 @@ class QA::IssuesController < AuthenticatedController
 
     respond_to do |format|
       if @issues.update_all(state: @state, updated_at: Time.now)
+
+        @issues.each do |issue|
+          track_state_change(issue)
+        end
+
         format.html { redirect_to_target_or_default project_qa_issues_path(current_project), notice: 'State updated successfully.' }
         format.json { head :ok }
       else

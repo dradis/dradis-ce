@@ -1,6 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Tylium:
-    - Add support for Liquid Dynamic Content
+    - Extend support for Liquid Dynamic Content
+  - QA: Show state changes in activity feed
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
