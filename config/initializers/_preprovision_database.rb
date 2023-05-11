@@ -1,4 +1,4 @@
-# In Heroku, assets:precompile is run before the DB is provisioned causing a
+# In App Platforms, assets:precompile is run before the DB is provisioned causing a
 #   ActiveRecord::ConnectionNotEstablished: connection to server at "127.0.0.1",
 #   port 5432 failed: Connection refused
 #
@@ -10,7 +10,7 @@
 #
 
 Rails.application.reloader.to_prepare do
-  # only Heroku sets this
+  # This is set by the App Platforms
   if ENV['DATABASE_URL']
     # DB isn't ready yet
     if !(ActiveRecord::Base.connection rescue false)
