@@ -103,7 +103,7 @@ shared_examples 'qa pages' do |item_type|
 
   describe 'edit page' do
     before do
-      visit polymorphic_path([current_project, :qa, record])
+      visit polymorphic_path([current_project, :qa, records.first])
 
       within '.note-text-inner' do
         click_link 'Edit'
@@ -111,20 +111,20 @@ shared_examples 'qa pages' do |item_type|
     end
 
     it 'redirects the user back after updating the record' do
-      expect(current_path).to eq polymorphic_path([:edit, current_project, :qa, record])
+      expect(current_path).to eq polymorphic_path([:edit, current_project, :qa, records.first])
 
       click_button "Update #{item_type.to_s.titleize}"
 
-      expect(current_path).to eq polymorphic_path([current_project, :qa, record])
+      expect(current_path).to eq polymorphic_path([current_project, :qa, records.first])
       expect(page).to have_selector('.alert-success', text: "#{item_type.to_s.humanize} updated.")
     end
 
     it 'redirects the user back after cancelling' do
-      expect(current_path).to eq polymorphic_path([:edit, current_project, :qa, record])
+      expect(current_path).to eq polymorphic_path([:edit, current_project, :qa, records.first])
 
       click_link 'Cancel'
 
-      expect(current_path).to eq polymorphic_path([current_project, :qa, record])
+      expect(current_path).to eq polymorphic_path([current_project, :qa, records.first])
     end
   end
 
