@@ -41,6 +41,11 @@ body.unauthenticated {
   .btn {
     text-shadow: 0 0 0;
 
+    &.btn-block {
+      display: block;
+      width: 100%;
+    }
+
     &.btn-primary {
       border: 0px none;
       background: var(--primaryColor);
