@@ -3,7 +3,7 @@ class QA::IssuesController < AuthenticatedController
   include ProjectScoped
 
   before_action :set_issues
-  before_action :set_issue, only: [:edit, :update]
+  before_action :set_issue, only: [:edit, :show, :update]
   before_action :store_location, only: [:index, :show]
   before_action :validate_state, only: [:multiple_update, :update]
 
@@ -11,11 +11,7 @@ class QA::IssuesController < AuthenticatedController
     @all_columns = @default_columns = ['Title']
   end
 
-  def show
-    @issue = current_project.issues.find(params[:id])
-
-    redirect_to project_qa_issues_path(current_project) unless @issue.ready_for_review?
-  end
+  def show; end
 
   def edit
     @form_cancel_path = project_qa_issue_path(current_project, @issue)

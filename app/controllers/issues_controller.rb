@@ -85,7 +85,12 @@ class IssuesController < AuthenticatedController
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
         format.html do
-          redirect_to_target_or_default project_issue_path(current_project, @issue), notice: 'Issue updated.'
+          default_path = project_issue_path(current_project, @issue)
+          if session[:return_to] == project_qa_issue_url(current_project, @issue) && !@issue.ready_for_review?
+            default_path = project_qa_issues_path(current_project)
+            session[:return_to] = nil
+          end
+          redirect_to_target_or_default default_path, notice: 'Issue updated.'
         end
       else
         format.html do
