@@ -403,7 +403,13 @@ describe 'Issues pages' do
           end
         end
 
-        include_examples 'liquid dynamic content', :issue, false
+        context 'with liquid dynamic content' do
+          before do
+            issuelib = current_project.issue_library
+            @record = create(:issue, node: issuelib, updated_at: 2.seconds.ago, text: "#[Title]#\nTitle\n\n#[Description]#\nLiquid: {{issue.fields['Title']}}")
+          end
+          include_examples 'liquid dynamic content', :issue, false
+        end
       end
     end
 

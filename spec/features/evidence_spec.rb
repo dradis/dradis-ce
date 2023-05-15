@@ -79,7 +79,11 @@ describe 'evidence' do
 
     let(:model) { @evidence }
     include_examples 'nodes pages breadcrumbs', :show, Evidence
-    include_examples 'liquid dynamic content', :evidence, true
+
+    context 'with liquid dynamic content' do
+      before { @record = create(:evidence, content: "#[Title]#\nTitle\n\n#[Description]#\nLiquid: {{evidence.fields['Title']}}") }
+      include_examples 'liquid dynamic content', :issue, true
+    end
   end
 
   describe 'edit page', js: true do
