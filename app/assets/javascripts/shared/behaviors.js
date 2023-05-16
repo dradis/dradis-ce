@@ -63,13 +63,15 @@
         }
       });
 
-    // Init Bootstrap tooltips
-    const tooltipTriggerList = document.querySelectorAll(
-      '[data-bs-toggle="tooltip"]'
-    );
-    [...tooltipTriggerList].map(
-      (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
-    );
+    // Init Bootstrap tooltips with 1ms delay for tooltips within <script type='text/x-tmpl'>
+    setTimeout(function () {
+      const tooltipTriggerList = document.querySelectorAll(
+        '[data-bs-toggle="tooltip"]'
+      );
+      [...tooltipTriggerList].map(
+        (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+      );
+    }, 1);
 
     // Navigate to tab
     let searchParams = new URLSearchParams(window.location.search);
