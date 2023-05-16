@@ -9,7 +9,6 @@ class QA::IssuesController < AuthenticatedController
   before_action :validate_state, only: [:multiple_update, :update]
 
   def index
-    @issues = current_project.issues.ready_for_review
     @all_columns = @default_columns = ['Title']
   end
 

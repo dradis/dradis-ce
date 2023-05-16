@@ -14,7 +14,7 @@ shared_examples 'qa pages' do |item_type|
       end
     end
 
-    it 'redirects the user back after updating the record' do
+    it 'redirects the user back to #index after updating the record' do
       find('.dataTable tbody tr:first-of-type').hover
       click_link 'Edit'
 
@@ -102,7 +102,7 @@ shared_examples 'qa pages' do |item_type|
       end
     end
 
-    it 'redirects the user back after updating the record' do
+    it 'redirects the user back to #show after updating the record' do
       expect(current_path).to eq polymorphic_path([:edit, current_project, :qa, records.first])
 
       click_button "Update #{item_type.to_s.titleize}"
@@ -111,12 +111,24 @@ shared_examples 'qa pages' do |item_type|
       expect(page).to have_selector('.alert-success', text: "#{item_type.to_s.humanize} updated.")
     end
 
-    it 'redirects the user back after cancelling' do
+    it 'redirects the user back to #show after cancelling' do
       expect(current_path).to eq polymorphic_path([:edit, current_project, :qa, records.first])
 
       click_link 'Cancel'
 
       expect(current_path).to eq polymorphic_path([current_project, :qa, records.first])
+    end
+
+    it 'redirects the user to #index after a state change' do
+      expect(current_path).to eq polymorphic_path([:edit, current_project, :qa, records.first])
+
+      click_button 'Toggle Dropdown'
+      choose "#{item_type}_state_published"
+
+      click_button "Update #{item_type.to_s.titleize}"
+
+      expect(current_path).to eq polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
+      expect(page).to have_selector('.alert-success', text: "#{item_type.to_s.humanize} updated.")
     end
   end
 
