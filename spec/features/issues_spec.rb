@@ -402,6 +402,9 @@ describe 'Issues pages' do
             expect(page).to have_text "(#{@issue.state.humanize})"
           end
         end
+
+        let(:record) { create(:issue, node: issuelib, updated_at: 2.seconds.ago, text: "#[Title]#\nTitle\n\n#[Description]#\nLiquid: {{issue.fields['Title']}}") }
+        include_examples 'liquid dynamic content', :issue, false
       end
     end
 

@@ -53,6 +53,10 @@ class QA::IssuesController < AuthenticatedController
     params.permit(:state)
   end
 
+  def liquid_resource_assigns
+    { 'issue' => IssueDrop.new(@issue) }
+  end
+
   def set_issue
     @issue = @issues.find(params[:id])
   end
