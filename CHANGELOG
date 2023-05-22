@@ -3,7 +3,7 @@
     - Extend support for Liquid Dynamic Content
   - QA: Show state changes in activity feed
   - Upgraded gems:
-    - [gem]
+    - bootstrap, popper_js, simple_form
   - Bugs fixes:
     - QA: Redirect to correct view when changing states on QA edit views
     - Bug tracker items:

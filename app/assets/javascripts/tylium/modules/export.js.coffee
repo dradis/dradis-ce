@@ -11,6 +11,3 @@ document.addEventListener "turbolinks:load", ->
       $form.attr('action', $action.val())
       # $action.remove()
       $form.submit()
-
-    # Show the default tab
-    $( "#plugin-chooser a[data-target='#plugin-html_export']" ).tab('show')

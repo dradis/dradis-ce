@@ -60,7 +60,7 @@ describe 'Issues pages' do
 
             expect(page).to have_selector('.alert-success', text: 'State updated successfully.')
             expect(issue.reload.state).to eq new_state.downcase.gsub(' ', '_')
-            within 'tbody tr' do
+            within 'tbody tr', match: :first do
               expect(page).to have_content(new_state)
             end
           end

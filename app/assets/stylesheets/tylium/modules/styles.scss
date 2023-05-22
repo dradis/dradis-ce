@@ -1,6 +1,5 @@
 body.styles_tylium {
-
-  button[data-behavior~=smooth-scroll] {
+  button[data-behavior~='smooth-scroll'] {
     margin-bottom: 0.25rem;
   }
 
@@ -25,15 +24,15 @@ body.styles_tylium {
 
       code {
         background-color: transparent;
-        color: #FFF;
+        color: #fff;
         padding: 0;
 
         .an {
-          color: #9CDCFE;
+          color: #9cdcfe;
         }
 
         .av {
-          color: #CE9178;
+          color: #ce9178;
         }
 
         .ct {
@@ -67,12 +66,13 @@ body.styles_tylium {
     }
 
     .table-wrapper {
-      width: 500px;
+      width: 550px;
 
       .items-table {
         white-space: nowrap;
 
-        th, td {
+        th,
+        td {
           display: table-cell !important;
         }
       }

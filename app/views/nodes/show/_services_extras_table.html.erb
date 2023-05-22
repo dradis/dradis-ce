@@ -1,10 +1,10 @@
 <div class="row mt-4">
-  <div class="col-4 col-lg-3 col-xl-2 pr-0">
+  <div class="col-4 col-lg-3 col-xl-2 pe-0">
     <ul class="nav nav-pills flex-column" id="scripts-tabs">
       <%# each key is in the format "proto/port" e.g. "tcp/22" %>
       <% extras.keys.each do |key| %>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="pill" data-behavior="services-extras-link" href="#<%= key.gsub('/', '-') %>-tab">
+          <a class="nav-link" data-bs-toggle="pill" data-behavior="services-extras-link" href="#<%= key.gsub('/', '-') %>-tab">
             <%= key %>
           </a>
         </li>
@@ -15,7 +15,7 @@
   <div class="col-8 col-lg-9 col-xl-10">
     <div class="tab-content">
       <% extras.each do |port_and_proto, data| %>
-        <div id="<%= port_and_proto.gsub('/', '-') %>-tab" class="tab-pane ml-2 pl-4" data-behavior="services-extras-tab-pane">
+        <div id="<%= port_and_proto.gsub('/', '-') %>-tab" class="tab-pane ms-2 ps-4" data-behavior="services-extras-tab-pane">
           <div class="table-wrapper">
             <table class="table table-sm">
               <thead>

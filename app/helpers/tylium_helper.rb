@@ -23,12 +23,12 @@ module TyliumHelper
     }
 
     flash.select { |key, _| alert_types.keys.include?(key) }.collect do |name, msg|
-      flash_css = "alert #{alert_types.fetch(name)}"
+      flash_css = "alert #{alert_types.fetch(name)} alert-dismissible"
 
       content_tag :div, class: flash_css do
         [
-          link_to('javascript:void(0)', class: 'close', data: { dismiss: 'alert' }) do 
-            '<i class="fa fa-close"></i>'.html_safe
+          button_tag(class: 'btn-close', data: { bs_dismiss: 'alert' }) do
+            '<span class="visually-hidden">Close alert</span>'.html_safe
           end,
           h(msg)
         ].join("\n").html_safe
@@ -43,9 +43,7 @@ module TyliumHelper
     presenter
   end
 
-
   def colored_icon_for_model(model, icon_class, extra_class = nil)
-
     css =  ['fa']
     css << icon_class
     css << extra_class if extra_class
@@ -63,7 +61,7 @@ module TyliumHelper
     if tag
       options[:style] = "color: #{tag.color}"
     else
-      options[:style] = "color: #222"
+      options[:style] = 'color: #222'
     end
 
     content_tag :i, nil, options
