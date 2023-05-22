@@ -35,11 +35,15 @@ body.unauthenticated {
 
   .alert {
     margin: 1rem 0;
-    padding: 0.75rem 1.25rem;
   }
 
   .btn {
     text-shadow: 0 0 0;
+
+    &.btn-block {
+      display: block;
+      width: 100%;
+    }
 
     &.btn-primary {
       border: 0px none;
