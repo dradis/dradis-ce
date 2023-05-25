@@ -1,6 +1,5 @@
 v4.9.0 (May 2023)
-  - Tylium:
-    - Extend support for Liquid Dynamic Content
+  - Tylium: Extend support for Liquid Dynamic Content
   - QA: Show state changes in activity feed
   - Upgraded gems:
     - bootstrap, popper_js, simple_form
