@@ -1,4 +1,4 @@
-[v#.#.#] ([month] [YYYY])
+v4.9.0 (May 2023)
   - Tylium:
     - Extend support for Liquid Dynamic Content
   - QA: Show state changes in activity feed
@@ -6,25 +6,6 @@
     - bootstrap, popper_js, simple_form
   - Bugs fixes:
     - QA: Redirect to correct view when changing states on QA edit views
-    - Bug tracker items:
-      - [item]
-  - New integrations:
-    - [integration]
-  - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
-  - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
-  - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
-  - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v4.8.0 (April 2023)
   - Sessions: Store :secret_key_base in encrypted configuration file
