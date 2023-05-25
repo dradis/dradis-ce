@@ -6,6 +6,17 @@ v4.9.0 (May 2023)
     - bootstrap, popper_js, simple_form
   - Bugs fixes:
     - QA: Redirect to correct view when changing states on QA edit views
+  - Integration enhancements:
+    - Acunetix: Parse inline code, not just code blocks
+    - Burp: Adds strong and code tags parsing
+    - CSV: Fix CSV Upload for files with special characters
+    - Nessus:
+      - Parse code tags as inline code
+      - Add plugin_type as an available Issue field
+    - Nexpose:
+      - Parse inline code, not just code blocks
+      - Wrap ciphers in the `ssl-weak-message-authentication-code-algorithms` finding
+    - Qualys: Adds Request/Response Evidence fields for Web Application Scans (WAS)
 
 v4.8.0 (April 2023)
   - Sessions: Store :secret_key_base in encrypted configuration file
