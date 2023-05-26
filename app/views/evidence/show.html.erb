@@ -8,20 +8,18 @@
   <%= render partial: 'breadcrumbs' %>
 <% end %>
 
-<div class="row m-0">
-  <ul class="tabs-container nav nav-tabs main-tabs w-100">
-    <li class="nav-item">
-      <a href="#evidence-tab" data-bs-toggle="tab" class="nav-link active">
-        <%= colored_icon_for_model(@evidence, 'fa-flag')%> Evidence
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="#info-tab" data-bs-toggle="tab" class="nav-link">
-        <i class="fa fa-bug"></i> Information
-      </a>
-    </li>
-  </ul>
-</div>
+<ul class="tabs-container nav nav-tabs main-tabs">
+  <li class="nav-item">
+    <a href="#evidence-tab" data-bs-toggle="tab" class="nav-link active">
+      <%= colored_icon_for_model(@evidence, 'fa-flag')%> Evidence
+    </a>
+  </li>
+  <li class="nav-item">
+    <a href="#info-tab" data-bs-toggle="tab" class="nav-link">
+      <i class="fa fa-bug"></i> Information
+    </a>
+  </li>
+</ul>
 
 <div class="row m-0">
   <div class="col-12 col-xxl-7 p-0">
