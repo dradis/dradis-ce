@@ -10,8 +10,8 @@ gem 'rails', '~> 6.1.7.3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
 
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+# Use ruby-terser as compressor for JavaScript assets
+gem 'terser', '~> 1.1'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'mini_racer', platforms: :ruby
