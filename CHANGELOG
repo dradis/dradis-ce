@@ -5,7 +5,9 @@
   - Upgraded gems:
     - bootstrap, popper_js, simple_form
   - Bugs fixes:
-    - QA: Redirect to correct view when changing states on QA edit views
+    - QA:
+      - Enable @mentions and formatting toolbar for comments in QA show views 
+      - Redirect to correct view when changing states on QA edit views
     - Bug tracker items:
       - [item]
   - New integrations:
