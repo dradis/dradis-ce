@@ -1,6 +1,7 @@
 class QA::IssuesController < AuthenticatedController
   include ActivityTracking
   include LiquidEnabledResource
+  include Mentioned
   include ProjectScoped
 
   before_action :set_issues
