@@ -4,6 +4,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
+    - Export: Show first tab if no other tabs are shown on page load
     - QA: Enable @mentions and formatting toolbar for comments in QA show views
     - [entity]:
       - [future tense verb] [bug fix]
