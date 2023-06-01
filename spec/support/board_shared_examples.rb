@@ -271,7 +271,7 @@ shared_examples 'a board page with poller' do
     end
 
     it 'adds the list' do
-      expect(page).to have_selector 'h4', text: /#{@new_list.name}\n0/i
+      expect(page).to have_selector 'h4', text: "#{@new_list.name} 0"
     end
   end
 
