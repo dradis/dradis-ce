@@ -2,7 +2,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - [gem]
+    - font-awesome-sass
   - Bugs fixes:
     - QA: Enable @mentions and formatting toolbar for comments in QA show views
     - [entity]:
