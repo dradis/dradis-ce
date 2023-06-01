@@ -232,9 +232,8 @@ end
 # effective.
 
 # ----------------------------------------------------------------- Calculators
-gem 'dradis-calculator_cvss', '~> 4.9.0'
-gem 'dradis-calculator_dread', '~> 4.9.0'
-
+gem 'dradis-calculator_cvss', github: 'dradis/dradis-calculator_cvss', branch: 'fa6'
+gem 'dradis-calculator_dread', github: 'dradis/dradis-calculator_dread', branch: 'fa6'
 # ---------------------------------------------------------------------- Export
 gem 'dradis-csv_export', '~> 4.9.0'
 gem 'dradis-html_export', '~> 4.9.0'
