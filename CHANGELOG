@@ -1,13 +1,14 @@
 [v#.#.#] ([month] [YYYY])
-  - Tylium:
-    - Extend support for Liquid Dynamic Content
-  - QA: Show state changes in activity feed
+  - [entity]:
+    - [future tense verb] [feature]
   - Upgraded gems:
-    - bootstrap, popper_js, simple_form
+    - [gem]
   - Bugs fixes:
     - QA:
       - Enable @mentions and formatting toolbar for comments in QA show views 
       - Redirect to correct view when changing states on QA edit views
+    - [entity]:
+      - [future tense verb] [bug fix]
     - Bug tracker items:
       - [item]
   - New integrations:
@@ -27,6 +28,25 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v4.9.0 (June 2023)
+  - Tylium: Extend support for Liquid Dynamic Content
+  - QA: Show state changes in activity feed
+  - Upgraded gems:
+    - bootstrap, popper_js, simple_form
+  - Bugs fixes:
+    - QA: Redirect to correct view when changing states on QA edit views
+  - Integration enhancements:
+    - Acunetix: Parse inline code, not just code blocks
+    - Burp: Adds strong and code tags parsing
+    - CSV: Fix CSV Upload for files with special characters
+    - Nessus:
+      - Parse code tags as inline code
+      - Add plugin_type as an available Issue field
+    - Nexpose:
+      - Parse inline code, not just code blocks
+      - Wrap ciphers in the `ssl-weak-message-authentication-code-algorithms` finding
+    - Qualys: Adds Request/Response Evidence fields for Web Application Scans (WAS)
 
 v4.8.0 (April 2023)
   - Sessions: Store :secret_key_base in encrypted configuration file
