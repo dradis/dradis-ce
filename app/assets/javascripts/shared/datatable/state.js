@@ -14,7 +14,7 @@ $(document).on('preInit.dt', 'body.issues.index', function (e, settings) {
     className: 'd-none',
     extend: 'collection',
     name: 'stateBtn',
-    text: '<i class="fa fa-adjust fa-fw"></i>State<i class="fa fa-caret-down fa-fw"></i>',
+    text: '<i class="fa-solid fa-adjust fa-fw"></i>State<i class="fa-solid fa-caret-down fa-fw"></i>',
     buttons: DradisDatatable.prototype.setupStateButtons.call(api),
   });
 });
@@ -47,7 +47,7 @@ DradisDatatable.prototype.setupStateButtons = function () {
   states.forEach(function (state) {
     stateButtons.push({
       text: $(
-        `<i class="fa ${state[1]} fa-fw me-1"></i><span>${state[0]}</span>`
+        `<i class="fa-solid ${state[1]} fa-fw me-1"></i><span>${state[0]}</span>`
       ),
       action: DradisDatatable.prototype.updateRecordState.call(
         api,

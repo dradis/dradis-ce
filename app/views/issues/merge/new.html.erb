@@ -41,7 +41,7 @@
                 <%= label_tag nil, :class => 'w-100' do %>
                   <%= radio_button_tag "new", nil, false, id: "new" %>
                   Merge into a new issue
-                  <%= link_to raw('<i class="fa fa-chevron-down"></i>'), '#preview_issue_new', class: 'issue-toggle pull-right', data: { bs_toggle: 'collapse' } %>
+                  <%= link_to raw('<i class="fa-solid fa-chevron-down"></i>'), '#preview_issue_new', class: 'issue-toggle pull-right', data: { bs_toggle: 'collapse' } %>
                 <% end %>
               </div>
             </div>
@@ -59,7 +59,7 @@
                   <%= label_tag nil, :class => 'w-100' do %>
                     <%= radio_button_tag "id", issue.id, i == 0 %>
                     Merge into <%= issue.title %>
-                    <%= link_to raw('<i class="fa fa-chevron-down"></i>'), "#preview_issue_#{issue.id}", class: 'issue-toggle pull-right', data: { bs_toggle: 'collapse' } %>
+                    <%= link_to raw('<i class="fa-solid fa-chevron-down"></i>'), "#preview_issue_#{issue.id}", class: 'issue-toggle pull-right', data: { bs_toggle: 'collapse' } %>
                   <% end %>
                 </div>
               </div>

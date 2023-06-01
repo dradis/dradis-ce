@@ -4,7 +4,7 @@ module MethodologiesHelper
       content_tag(:h3, section.name) +
       content_tag(:ul, class: 'fa-ul') do
         section.tasks.map do |task|
-          content_tag :li, content_tag(:i, nil, class: 'fa fa-check') + ' ' + task.name
+          content_tag :li, content_tag(:i, nil, class: 'fa-solid fa-check') + ' ' + task.name
         end.join().html_safe
       end
     end.join().html_safe

@@ -6,7 +6,7 @@
         <%= link_to '#import-box', 
           class: 'import-toggle', 
           data: { bs_toggle: 'collapse', behavior: 'collapse-collection import-box' } do %>
-          <i class="fa fa-chevron-down" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle import box</span>
+          <i class="fa-solid fa-chevron-down" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle import box</span>
         <% end %>
       </div>
     </div>
@@ -22,8 +22,8 @@
     </p>
     <p class="mb-2">Libraries:</p>
     <ul class="fa-ul">
-      <li><i class="fa fa-li fa-chevron-right"></i><a href="https://dradisframework.com/ce/addons/mediawiki.html?utm_source=ce&utm_medium=app" target="_blank">MediaWiki</a></li>
-      <li><i class="fa fa-li fa-chevron-right"></i><a href="javascript:void(0)" class="js-try-pro" data-term="issuelib" data-url="https://dradisframework.com/pro/pages/issuelib.html"><i class="fa fa-book"></i> Built-in Issue Library</a></li>
+      <li><i class="fa-solid fa-li fa-chevron-right"></i><a href="https://dradisframework.com/ce/addons/mediawiki.html?utm_source=ce&utm_medium=app" target="_blank">MediaWiki</a></li>
+      <li><i class="fa-solid fa-li fa-chevron-right"></i><a href="javascript:void(0)" class="js-try-pro" data-term="issuelib" data-url="https://dradisframework.com/pro/pages/issuelib.html"><i class="fa-solid fa-book"></i> Built-in Issue Library</a></li>
     </ul>
   <% else %>
     <% Dradis::Plugins::with_feature(:import).each do |plugin| %>
