@@ -12,11 +12,11 @@
   <%= tag.table class: 'table table-striped mb-0', data: table_attributes do %>
     <thead>
       <tr>
-        <th class="no-sort" data-column-visible="false"><span class="sr-only">Select</span></th>
+        <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Select</span></th>
         <% @all_columns.each do |column| %>
           <th><%= column %></th>
         <% end %>
-        <th class="no-sort" data-column-visible="false"><span class="sr-only">Actions</span></th>
+        <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Actions</span></th>
       </tr>
     </thead>
     <tbody>

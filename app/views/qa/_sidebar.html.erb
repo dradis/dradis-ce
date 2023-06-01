@@ -7,7 +7,7 @@
 
     <a href="javascript:void(0)" class="sidebar-toggle-link" data-behavior="sidebar-toggle">
       <i class="fa fa-chevron-left sidebar-toggle-icon"></i>
-      <span class="sr-only">Toggle secondary sidebar</span>
+      <span class="visually-hidden">Toggle secondary sidebar</span>
     </a>
   </div>
 </div>
@@ -17,8 +17,8 @@
     <div class="header-inner">
       <div class="options">
         <div class="dropdown">
-          <%= link_to 'javascript:void(0)', data: { toggle: 'collapse', target: "##{name.downcase}", behavior: 'collapse-collection' } do %>
-            <i class="fa fa-chevron-up" data-behavior="toggle-chevron"></i><span class="sr-only">Toggle <%= name.downcase %> list</span>
+          <%= link_to "##{name.downcase}", data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+            <i class="fa fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle <%= name.downcase %> list</span>
           <% end %>
         </div>
       </div>

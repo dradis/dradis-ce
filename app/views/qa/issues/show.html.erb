@@ -16,7 +16,7 @@
 
 <div class="row m-0">
   <div class="col-12 col-xxl-7 p-0">
-    <div class="content-container pb-3 mr-xxl-3">
+    <div class="content-container pb-3 me-xxl-3">
       <% cache ['issue-content', @issue] do %>
         <div class="note-text-inner">
           <h4 class="mb-4 header-underline align-items-center">
@@ -33,7 +33,7 @@
             <%= markup(@issue.text, liquid: true) %>
           </div>
           <div class="author-info">
-            <span class="ml-auto">Author: <%= @issue.author || 'n/a' %></span>
+            <span class="ms-auto">Author: <%= @issue.author || 'n/a' %></span>
           </div>
         </div>
       <% end %>
@@ -44,7 +44,7 @@
     <div class="sticky-top top-5">
       <%= render partial: 'widget' %>
 
-      <div class="content-container ml-xxl-3">
+      <div class="content-container ms-xxl-3">
         <%= content_tag :div,
           spinner_tag,
           data: {
@@ -61,7 +61,7 @@
         <%= render_view_hooks('issues/comments') %>
       </div>
 
-      <div class="content-container ml-xxl-3">
+      <div class="content-container ms-xxl-3">
         <%= content_tag :div,
           spinner_tag,
           data: {

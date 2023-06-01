@@ -8,24 +8,22 @@
   <%= render partial: 'breadcrumbs' %>
 <% end %>
 
-<div class="row m-0">
-  <ul class="tabs-container nav nav-tabs main-tabs w-100">
-    <li class="nav-item">
-      <a href="#evidence-tab" data-toggle="tab" class="nav-link active">
-        <%= colored_icon_for_model(@evidence, 'fa-flag')%> Evidence
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="#info-tab" data-toggle="tab" class="nav-link">
-        <i class="fa fa-bug"></i> Information
-      </a>
-    </li>
-  </ul>
-</div>
+<ul class="tabs-container nav nav-tabs main-tabs">
+  <li class="nav-item">
+    <a href="#evidence-tab" data-bs-toggle="tab" class="nav-link active">
+      <%= colored_icon_for_model(@evidence, 'fa-flag')%> Evidence
+    </a>
+  </li>
+  <li class="nav-item">
+    <a href="#info-tab" data-bs-toggle="tab" class="nav-link">
+      <i class="fa fa-bug"></i> Information
+    </a>
+  </li>
+</ul>
 
 <div class="row m-0">
   <div class="col-12 col-xxl-7 p-0">
-    <div class="content-container mt-0 pb-3 mr-xxl-3">
+    <div class="content-container mt-0 pb-3 me-xxl-3">
       <div class="tab-content mt-0">
         <div class="tab-pane active" id="evidence-tab">
           <% cache ['evidence-evidence-tab', @evidence] do %>
@@ -36,10 +34,10 @@
               </h4>
 
               <div class="content-textile" data-behavior="content-textile">
-                <%= markup(@evidence.content) %>
+                <%= markup(@evidence.content, liquid: true) %>
               </div>
               <div class="author-info">
-                <span class="ml-auto">Author: <%= @evidence.author || 'n/a' %></span>
+                <span class="ms-auto">Author: <%= @evidence.author || 'n/a' %></span>
               </div>
             </div>
           <% end %>
@@ -47,13 +45,13 @@
 
         <% cache ['evidence-information-tab', @issue] do %>
           <div class="tab-pane" id="info-tab">
-            <h4 class="header-underline">
-              Issue information -
+            <h4 class="header-underline align-items-center">
+              Issue information
               <span class="actions">
-              <%= link_to project_issue_path(current_project, @issue) do %>
-                <i class="fa fa-external-link" aria-hidden="true"></i> Open
-              <% end %> -
-              <%= tag_and_name_for(@issue) %>
+                <%= link_to project_issue_path(current_project, @issue) do %>
+                  <i class="fa fa-external-link" aria-hidden="true"></i> Open
+                <% end %> -
+                <%= tag_and_name_for(@issue) %>
               </span>
             </h4>
             <div id="<%= dom_id(@issue) %>_text" class="content-textile" data-behavior="content-textile">
@@ -66,7 +64,7 @@
   </div>
   <div class="col-12 col-xxl-5 p-0">
     <div class="sticky-top">
-      <div class="content-container ml-xxl-3 mt-0">
+      <div class="content-container ms-xxl-3 mt-0">
         <%= content_tag :div,
           spinner_tag,
           data: {
@@ -81,7 +79,7 @@
         %>
       </div>
 
-      <div class="content-container ml-xxl-3">
+      <div class="content-container ms-xxl-3">
         <%= content_tag :div,
           spinner_tag,
           data: {

@@ -16,10 +16,10 @@ body {
 a {
   color: $linkColor;
   transition: color 0.2s ease-in-out;
+  text-decoration: none;
 
   &:hover {
     color: $linkColorHover;
-    text-decoration: none;
   }
 }
 
@@ -63,6 +63,13 @@ code {
 
 .disabled {
   color: $mutedText !important;
+}
+
+.dradis-placeholder {
+  font-style: italic;
+  margin-left: 1rem;
+  cursor: default;
+  height: 3rem;
 }
 
 .dropdown-toggle:not(.dropdown-toggle-split)::after {
@@ -111,13 +118,6 @@ mark {
       color: $linkColorHover;
     }
   }
-}
-
-.placeholder {
-  font-style: italic;
-  margin-left: 1rem;
-  cursor: default;
-  height: 3rem;
 }
 
 pre code {

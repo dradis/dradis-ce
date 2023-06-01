@@ -36,13 +36,13 @@
             <h5>Select existing nodes</h5>
             <% if @nodes.any? %>
               <div class="existing-node-list mb-3" data-behavior="add-evidence-container">
-                <%= f.label :node, class: 'sr-only' %>
+                <%= f.label :node, class: 'visually-hidden' %>
                 <%= f.text_field :node, class: 'form-control existing-node-list-filter', placeholder: 'Type here to filter list...' %>
-                <%= f.label :node_ids, class: 'sr-only' %>
-                <%= f.collection_select :node_ids, @nodes_for_add_evidence, :id, :label, {}, { class: 'form-control custom-select', data: { behavior: 'existing-node-list'}, multiple: 'multiple' } %>
+                <%= f.label :node_ids, class: 'visually-hidden' %>
+                <%= f.collection_select :node_ids, @nodes_for_add_evidence, :id, :label, {}, { class: 'form-select', data: { behavior: 'existing-node-list'}, multiple: 'multiple' } %>
               </div>
             <% else %>
-              <p>There are no existing nodes yet. <a href="#modal_add_branch_node" data-toggle="modal" tabindex="-1">Create one</a>.</p>
+              <p>There are no existing nodes yet. <a href="#modal_add_branch_node" data-bs-toggle="modal" tabindex="-1">Create one</a>.</p>
             <% end %>
           </div>
 
@@ -52,45 +52,49 @@
               <span class="small">
                 <i
                   class="fa fa-question-circle"
-                  data-toggle="tooltip"
-                  data-html="true"
-                  data-placement="right"
+                  data-bs-toggle="tooltip"
+                  data-bs-html="true"
+                  data-bs-placement="right"
                   role="tooltip"
-                  title="<ul><li>If a node in this list already exists in the project, evidence will be added to it.</li><li>If a node doesn't exist, it will be created and then evidence will be added.</li></ul>">
-                </i>
-              </span>
-            </h5>
+                  title="<ul>
+                  <li>If a node in this list already exists in the project, evidence will be added to it.</li>
+                  <li>If a node doesn't exist, it will be created and then evidence will be added.</li>
+                </ul>
+                "
+                >
+              </i>
+            </span>
+          </h5>
 
-            <%= f.label :node_list, class: 'sr-only' %>
-            <%= f.text_area :node_list, rows: 7, placeholder: 'One node per line...', class: 'form-control mb-3' %>
-          </div>
-
-          <div class="col-xl-4">
-            <h5>Create new nodes under</h5>
-            <%= f.label :node_list_parent_id, class: 'sr-only' %>
-            <%= f.collection_select(
-              :node_list_parent_id,
-              @nodes_for_add_evidence,
-              :id,
-              :label,
-              { include_blank: 'The root of the tree' },
-              { class: 'form-control custom-select' }
-            ) %>
-          </div>
+          <%= f.label :node_list, class: 'visually-hidden' %>
+          <%= f.text_area :node_list, rows: 7, placeholder: 'One node per line...', class: 'form-control mb-3' %>
         </div>
 
-        <hr>
+        <div class="col-xl-4">
+          <h5>Create new nodes under</h5>
+          <%= f.label :node_list_parent_id, class: 'visually-hidden' %>
+          <%= f.collection_select(
+                  :node_list_parent_id,
+                  @nodes_for_add_evidence,
+                  :id,
+                  :label,
+                  { include_blank: 'The root of the tree' },
+                  { class: 'form-select' }
+                ) %>
+        </div>
+      </div>
 
-        <div class="row">
-          <div class="col-12">
-            <h5>Evidence Content</h5>
-            <% cache [@content, @issue, @nodes_for_add_evidence] do %>
-              <%= f.hidden_field :issue_id, value: @issue.id %>
-              <%= f.hidden_field :node_id, value: @issue.node_id %>
+      <hr>
 
-              <%= f.label :content, nil, class: 'sr-only' %>
-              <%=
-                f.text_area :content,
+      <div class="row">
+        <div class="col-12">
+          <h5>Evidence Content</h5>
+          <% cache [@content, @issue, @nodes_for_add_evidence] do %>
+            <%= f.hidden_field :issue_id, value: @issue.id %>
+            <%= f.hidden_field :node_id, value: @issue.node_id %>
+
+            <%= f.label :content, nil, class: 'visually-hidden' %>
+            <%= f.text_area :content,
                 label: false,
                 class: 'textile form-control',
                 data: {
@@ -103,18 +107,18 @@
                 rows: 20,
                 value: (@template_content || @content)
               %>
-            <% end %>
-          </div>
+          <% end %>
         </div>
-        <div class="row">
-          <div class="col-12">
-            <div class="form-actions">
-              <%= f.submit 'Create Evidence', class: 'btn btn-primary' %> or
-              <%= link_to 'Cancel', project_issue_path(current_project, @issue, tab: 'evidence-tab'), class: 'cancel-link', data: { behavior: 'clear-local-auto-save' } %>
-            </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-actions">
+            <%= f.submit 'Create Evidence', class: 'btn btn-primary' %> or
+            <%= link_to 'Cancel', project_issue_path(current_project, @issue, tab: 'evidence-tab'), class: 'cancel-link', data: { behavior: 'clear-local-auto-save' } %>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 <% end %>

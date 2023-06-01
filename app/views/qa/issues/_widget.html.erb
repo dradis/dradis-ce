@@ -1,9 +1,9 @@
-<div class="content-container ml-xxl-3">
+<div class="content-container ms-xxl-3">
   <h4 class="header-underline">QA</h4>
-  <p class="font-weight-bold mb-2">Update State</p>
+  <p class="fw-bold mb-2">Update State</p>
   <div class="btn-group">
-    <%= button_to 'Draft', project_qa_issue_path(current_project, id: @issue, state: 'draft'), method: :put, class: 'btn btn-secondary text-dark rounded-left' %>
+    <%= button_to 'Draft', project_qa_issue_path(current_project, id: @issue, state: 'draft'), method: :put, class: 'btn btn-secondary text-dark rounded-start' %>
     <div class="btn-placeholder rounded-0">Ready for review</div>
-    <%= button_to 'Published', project_qa_issue_path(current_project, id: @issue, state: 'published'), method: :put, class: 'btn btn-secondary text-dark rounded-right' %>
+    <%= button_to 'Published', project_qa_issue_path(current_project, id: @issue, state: 'published'), method: :put, class: 'btn btn-secondary text-dark rounded-end' %>
   </div>
 </div>

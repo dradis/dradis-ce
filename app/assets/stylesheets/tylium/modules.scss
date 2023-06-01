@@ -88,6 +88,7 @@
 }
 
 .color-picker {
+  height: 2.15rem;
   padding: 0;
 
   &::-webkit-color-swatch-wrapper {
@@ -199,6 +200,18 @@
   white-space: nowrap;
 }
 
+.nav-link {
+  color: $linkColor;
+  display: block;
+  padding: 0.5rem 1rem;
+  transition: color 0.2s ease-in-out;
+  text-decoration: none;
+
+  &:hover {
+    color: $linkColorHover;
+  }
+}
+
 .nav-tabs {
   .nav-link:hover:not(.active) {
     border-color: transparent;
@@ -218,8 +231,8 @@ pre {
   border-radius: 5px;
 }
 
-.rounded-left,
-.rounded-right {
+.rounded-start,
+.rounded-end {
   // Bootstrap rounds the desired corners, but doesn't square up the rest
   border-radius: 0;
 }

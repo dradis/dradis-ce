@@ -13,13 +13,13 @@
 
   <ul class="tabs-container nav nav-tabs main-tabs">
     <li class="nav-item">
-      <a href="#info-tab" data-toggle="tab" class="nav-link active"><i class="fa fa-address-card-o"></i> Card</a>
+      <a href="#info-tab" data-bs-toggle="tab" class="nav-link active"><i class="fa fa-address-card-o"></i> Card</a>
     </li>
   </ul>
 
   <div class="row m-0">
     <div class="col-12 col-xxl-7 p-0">
-      <div class="content-container mt-0 mr-xxl-3">
+      <div class="content-container mt-0 me-xxl-3">
         <div class="tab-content mt-0">
           <div class="tab-pane active" id="info-tab">
             <% cache ['card-information-tab', @card] do %>
@@ -60,7 +60,7 @@
 
     <div class="col-12 col-xxl-5 p-0">
       <div class="sticky-top">
-        <div class="content-container ml-xxl-3 mt-0">
+        <div class="content-container ms-xxl-3 mt-0">
           <%= content_tag :div,
             spinner_tag,
             data: {
@@ -75,7 +75,7 @@
           %>
         </div>
 
-        <div class="content-container ml-xxl-3">
+        <div class="content-container ms-xxl-3">
           <%= content_tag :div,
             spinner_tag,
             data: {

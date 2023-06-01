@@ -22,7 +22,6 @@ a {
   }
 }
 
-
 .btn {
   &:hover {
     i {
@@ -39,13 +38,14 @@ a {
 .btn-experience {
   border: 1.5px solid $primaryColor;
   border-radius: 5px;
-  box-shadow: 0px 0px 0px 0px rgba(62,66,66,0.1);
+  box-shadow: 0px 0px 0px 0px rgba(62, 66, 66, 0.1);
   height: 100%;
   padding: 1.375rem 1.85rem;
   transition: box-shadow 0.2s ease-in-out;
 
   &:hover {
-    box-shadow: 0px 0px 50px 0px rgba(62,66,66,0.1);
+    border-color: $primaryColor;
+    box-shadow: 0px 0px 50px 0px rgba(62, 66, 66, 0.1);
   }
 
   p {
@@ -81,7 +81,7 @@ a {
     border-color: darken($primaryColor, 10);
   }
 
-  &[type=submit] {
+  &[type='submit'] {
     display: block;
     margin: 2rem auto;
   }

@@ -47,7 +47,7 @@ DradisDatatable.prototype.setupStateButtons = function () {
   states.forEach(function (state) {
     stateButtons.push({
       text: $(
-        `<i class="fa ${state[1]} fa-fw mr-1"></i><span>${state[0]}</span>`
+        `<i class="fa ${state[1]} fa-fw me-1"></i><span>${state[0]}</span>`
       ),
       action: DradisDatatable.prototype.updateRecordState.call(
         api,
@@ -80,8 +80,8 @@ DradisDatatable.prototype.updateRecordState = function (newState) {
 
         $('[data-behavior="qa-alert"]').remove();
         $('.page-title').after(`
-          <div class="alert alert-success" data-behavior="qa-alert">
-            <a class="close" data-dismiss="alert" href="javascript:void(0)">x</a>
+          <div class="alert alert-success alert-dismissible" data-behavior="qa-alert">
+            <a class="btn-close" data-bs-dismiss="alert" href="javascript:void(0)"><span class="visually-hidden">Close alert</span></a>
             Successfully set the records as ${newState}!
           </div>
         `);

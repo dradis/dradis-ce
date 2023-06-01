@@ -1,14 +1,12 @@
 <% content_for :title, 'Quality Assurance' %>
 
-<div class="row m-0">
-  <ul class="tabs-container nav nav-tabs main-tabs w-100">
-    <li class="nav-item">
-      <%= link_to project_qa_issues_path(current_project), class: 'nav-link active' do %>
-        <i class="fa fa-bug"></i> Issues
-      <% end %>
-    </li>
-  </ul>
-</div>
+<ul class="tabs-container nav nav-tabs main-tabs">
+  <li class="nav-item">
+    <%= link_to project_qa_issues_path(current_project), class: 'nav-link active' do %>
+      <i class="fa fa-bug"></i> Issues
+    <% end %>
+  </li>
+</ul>
 
 <div class="row m-0">
   <div class="col-12 p-0">

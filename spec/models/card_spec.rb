@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Card do
   it { should belong_to(:list).touch(true) }
-  it { should have_and_belong_to_many(:assignees).class_name("User") }
+  it { should have_and_belong_to_many(:assignees).class_name('User') }
   it { should have_many(:comments).dependent(:destroy) }
 
   it { should validate_length_of(:description).is_at_most(DB_MAX_TEXT_LENGTH) }
@@ -20,7 +20,7 @@ describe Card do
 
   describe 'on create' do
     it 'subscribes new assignees' do
-      new_card = build(:card, assignee_ids: create_list(:user, 2).map(&:id))
+      new_card = build(:card, assignee_ids: create_list(:user, 2).map(&:id), list: @parent)
       expect { new_card.save }.to change {
         Subscription.count
       }.by(2)
