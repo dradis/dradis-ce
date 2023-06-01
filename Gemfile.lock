@@ -193,6 +193,8 @@ GEM
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
     ffi (1.14.2)
+    font-awesome-sass (6.4.0)
+      sassc (~> 2.0)
     foreman (0.87.0)
     formatador (0.2.5)
     globalid (1.1.0)
@@ -547,6 +549,7 @@ DEPENDENCIES
   dradis-wpscan (~> 4.9.0)
   dradis-zap (~> 4.9.0)
   factory_bot_rails
+  font-awesome-sass (~> 6.4.0)
   foreman
   guard-rspec
   html-pipeline

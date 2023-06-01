@@ -67,6 +67,8 @@ gem 'thor', '~> 1.2.1'
 # Ruby dependency, version specified here due to CVE-2023-28756
 gem 'time', '>= 0.2.2'
 
+gem 'font-awesome-sass', '~> 6.4.0'
+
 # ------------------------------------------------------ With native extensions
 # These require native extensions.
 # Ensure Traveling Ruby provides an appropriate version before bumping.
