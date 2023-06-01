@@ -4,9 +4,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - QA:
-      - Enable @mentions and formatting toolbar for comments in QA show views 
-      - Redirect to correct view when changing states on QA edit views
+    - QA: Enable @mentions and formatting toolbar for comments in QA show views
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
