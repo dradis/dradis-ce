@@ -235,7 +235,7 @@ gem 'dradis-calculator_dread', '~> 4.9.0'
 
 # ---------------------------------------------------------------------- Export
 gem 'dradis-csv_export', '~> 4.9.0'
-gem 'dradis-html_export', '~> 4.9'
+gem 'dradis-html_export', '~> 4.9.1'
 
 # ---------------------------------------------------------------------- Import
 gem 'dradis-csv', '~> 4.9.0'
