@@ -11,8 +11,3 @@ document.addEventListener "turbolinks:load", ->
       $form.attr('action', $action.val())
       # $action.remove()
       $form.submit()
-
-  if !$('[data-bs-toggle~=tab].active').length
-    firstTab = $('[data-bs-toggle~=tab]:first')[0]
-    new (bootstrap.Tab)(firstTab)
-    bootstrap.Tab.getInstance(firstTab).show()
