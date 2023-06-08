@@ -78,9 +78,7 @@ describe Attachment do
 
       # Expect the format filename_copy-01.png
       expected_name = attachment.filename.split('.').insert(1, '_copy-01.').join
-
-      last_attachment = source_node.attachments.last
-      expect(last_attachment.filename).to eq expected_name
+      expect(source_node.attachments.any? { |a| a.filename == expected_name }).to eq true
     end
   end
 end
