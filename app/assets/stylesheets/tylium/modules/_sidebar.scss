@@ -158,11 +158,18 @@
     }
   }
 
+  .scrollable-content {
+    display: flex;
+    height: calc(100vh - #{$navbarHeight});
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
   .sidebar-header {
     height: $navbarHeight;
     display: flex;
     align-items: center;
-    padding: 0 1.5rem;
+    padding: 0 1rem;
     width: 100%;
 
     .team-logo {
@@ -200,7 +207,7 @@
     position: relative;
     width: 100%;
     align-items: center;
-    padding: 0.6rem 1.5rem;
+    padding: 0.6rem 1rem;
     transition: all 0.2s ease-in-out;
 
     &:hover {
@@ -267,19 +274,12 @@
     }
   }
 
-  .version-wrapper {
-    display: flex;
-    justify-content: center;
-    background: $sidebarBackground;
-
-    .version {
-      position: fixed;
-      bottom: 0;
-      text-align: center;
-      padding: 0.2em 0;
-      font-size: 10px;
-      cursor: default;
-    }
+  .version {
+    cursor: default;
+    font-size: 0.625rem;
+    margin-top: auto;
+    padding: 0.2em 0;
+    text-align: center;
   }
 }
 
@@ -308,7 +308,7 @@
       }
     }
 
-    .mobile-scroll {
+    .scrollable-content {
       display: flex;
       overflow-x: auto;
     }
@@ -371,7 +371,7 @@
       display: none;
     }
 
-    .version-wrapper {
+    .version {
       display: none;
     }
   }
