@@ -38,13 +38,13 @@
           <% end  %>
           <td class="column-actions">
             <%= link_to edit_project_node_evidence_path(current_project, node, evidence, return_to: :issue) do %>
-              <i class="fa fa-pencil"></i> Edit
+              <i class="fa-solid fa-pencil"></i> Edit
             <% end %>
             <%= link_to [current_project, node, evidence],
                   class: 'text-error-hover',
                   data: { confirm: "Are you sure?\n\nProceeding will delete this evidence from the associated node." },
                   method: :delete do %>
-              <i class="fa fa-trash"></i> Delete
+              <i class="fa-solid fa-trash"></i> Delete
             <% end %>
           </td>
         </tr>

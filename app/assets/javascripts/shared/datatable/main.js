@@ -64,7 +64,7 @@ class DradisDatatable {
             attr: {
               'data-behavior': 'table-action',
             },
-            text: '<i class="fa fa-trash fa-fw"></i>Delete',
+            text: '<i class="fa-solid fa-trash fa-fw"></i>Delete',
             className: 'text-danger d-none',
             name: 'bulkDeleteBtn',
             action: this.bulkDelete.bind(this),
@@ -76,7 +76,7 @@ class DradisDatatable {
             available: function () {
               return that.$paths.data('table-merge-url') !== undefined;
             },
-            text: '<i class="fa fa-compress fa-fw"></i> Merge',
+            text: '<i class="fa-solid fa-compress fa-fw"></i> Merge',
             name: 'mergeBtn',
             className: 'd-none',
             action: this.mergeSelected.bind(this),
@@ -92,12 +92,12 @@ class DradisDatatable {
             className: 'd-none tag-btn',
             extend: 'collection',
             name: 'tagBtn',
-            text: '<i class="fa fa-tags fa-fw"></i>Tag<i class="fa fa-caret-down fa-fw"></i>',
+            text: '<i class="fa-solid fa-tags fa-fw"></i>Tag<i class="fa-solid fa-caret-down fa-fw"></i>',
             buttons: this.setupTagButtons(),
           },
           {
             extend: 'colvis',
-            text: '<i class="fa fa-columns me-1 fa-fw"></i>Columns<i class="fa fa-caret-down fa-fw"></i>',
+            text: '<i class="fa-solid fa-columns me-1 fa-fw"></i>Columns<i class="fa-solid fa-caret-down fa-fw"></i>',
             titleAttr: 'Choose columns to show',
             className: 'btn',
             columns: columnVisibleIndexes,

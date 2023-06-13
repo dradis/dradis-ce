@@ -4,15 +4,15 @@
       <%= content_tag :div, class:  class_names(active: current_page?(main_app.project_node_path(@node.project, @node))) do %>
         <%= link_to project_node_path(@node.project, @node), class: 'summary-link' do %>
           <% if @node.type_id == Node::Types::HOST %>
-            <i class="fa fa-laptop"></i> Host Summary
+            <i class="fa-solid fa-laptop"></i> Host Summary
           <% else%>
-            <i class="fa fa-sitemap"></i> Node Summary
+            <i class="fa-solid fa-sitemap"></i> Node Summary
           <% end %>
         <% end %>
       <% end %>
 
       <a href="javascript:void(0)" class="sidebar-toggle-link" data-behavior="sidebar-toggle">
-        <i class="fa fa-chevron-left sidebar-toggle-icon"></i>
+        <i class="fa-solid fa-chevron-left sidebar-toggle-icon"></i>
         <span class="visually-hidden">Toggle secondary sidebar</span>
       </a>
     </div>
