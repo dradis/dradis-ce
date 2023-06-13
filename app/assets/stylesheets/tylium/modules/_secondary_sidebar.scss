@@ -136,6 +136,8 @@
 
     .summary-link {
       color: $lightColor;
+      display: block;
+      max-width: 13.5rem;
 
       &:hover {
         color: $white;
