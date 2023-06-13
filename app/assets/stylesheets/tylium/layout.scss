@@ -55,12 +55,6 @@
   position: relative;
 }
 
-.secondary-sidebar-content {
-  .sticky-top {
-    top: calc(#{$mainContentMargin} + 4.35rem);
-  }
-}
-
 .view-content {
   background: $secondaryBgColor;
   position: fixed;
