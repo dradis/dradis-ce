@@ -27,6 +27,12 @@
     </ul>
 
     <%= render 'layouts/tylium/nodes' %>
+
+    <% if content_for?(:sidebar) %>
+      <div class="secondary-sidebar">
+        <%= yield :sidebar %>
+      </div>
+    <% end %>
   </div>
 
   <div class="version-wrapper">
