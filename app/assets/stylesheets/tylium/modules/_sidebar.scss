@@ -229,6 +229,10 @@
   &.sidebar-collapsed {
     width: $sidebarCollapsed;
 
+    .secondary-sidebar {
+      display: none;
+    }
+
     .sidebar-link {
       flex-direction: column;
 
