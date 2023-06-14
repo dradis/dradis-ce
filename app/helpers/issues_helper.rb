@@ -70,7 +70,7 @@ module IssuesHelper
           ]
         else
           [
-            content_tag(:i, nil, class: 'fa fa-bug'),
+            content_tag(:i, nil, class: 'fa-solid fa-bug'),
             'Untagged'
           ]
         end
@@ -89,7 +89,7 @@ module IssuesHelper
     Issue.states.keys.each do |state|
       case state
       when 'draft'
-        state_icons << ['Draft', 'fa-pencil-square-o']
+        state_icons << ['Draft', 'fa-pencil-square']
       when 'ready_for_review'
         state_icons << ['Ready for review', 'fa-eye']
       when 'published'

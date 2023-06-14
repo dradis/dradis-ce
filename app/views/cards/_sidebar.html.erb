@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-between align-items-center mb-2">
     <%= content_tag :div, class: class_names(active: current_page?(main_app.project_board_path(current_project, @board))) do %>
       <%= link_to project_board_path(current_project, @board), class: 'summary-link text-truncate' do %>
-        <i class="fa fa-trello"></i> <%= @board.name %>
+        <i class="fa-brands fa-trello"></i> <%= @board.name %>
       <% end %>
     <% end %>
   </div>

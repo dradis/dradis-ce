@@ -1,3 +1,17 @@
+GIT
+  remote: https://github.com/dradis/dradis-calculator_cvss.git
+  revision: 8d2ffb5047b03b1ef015c450597a4828f80209b5
+  specs:
+    dradis-calculator_cvss (4.9.0)
+      dradis-plugins (~> 4.0)
+
+GIT
+  remote: https://github.com/dradis/dradis-calculator_dread.git
+  revision: 241855179610221f021d065427515e4df7057f22
+  specs:
+    dradis-calculator_dread (4.9.0)
+      dradis-plugins (~> 4.0)
+
 PATH
   remote: engines/dradis-api
   specs:
@@ -126,17 +140,13 @@ GEM
     dradis-burp (4.9.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
-    dradis-calculator_cvss (4.9.0)
-      dradis-plugins (~> 4.0)
-    dradis-calculator_dread (4.9.0)
-      dradis-plugins (~> 4.0)
     dradis-coreimpact (4.9.0)
       dradis-plugins (~> 4.0)
     dradis-csv (4.9.0)
       dradis-plugins (~> 4.0)
     dradis-csv_export (4.9.0)
       dradis-plugins (>= 4.8.0)
-    dradis-html_export (4.9.0)
+    dradis-html_export (4.9.1)
       RedCloth (~> 4.3.2)
       dradis-plugins (>= 4.8.0)
       rails_autolink (~> 1.1)
@@ -193,6 +203,8 @@ GEM
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
     ffi (1.14.2)
+    font-awesome-sass (6.4.0)
+      sassc (~> 2.0)
     foreman (0.87.0)
     formatador (0.2.5)
     globalid (1.1.0)
@@ -524,12 +536,12 @@ DEPENDENCIES
   dradis-api!
   dradis-brakeman (~> 4.9.0)
   dradis-burp (~> 4.9.0)
-  dradis-calculator_cvss (~> 4.9.0)
-  dradis-calculator_dread (~> 4.9.0)
+  dradis-calculator_cvss!
+  dradis-calculator_dread!
   dradis-coreimpact (~> 4.9.0)
   dradis-csv (~> 4.9.0)
   dradis-csv_export (~> 4.9.0)
-  dradis-html_export (~> 4.9.0)
+  dradis-html_export (~> 4.9.1)
   dradis-metasploit (~> 4.9.0)
   dradis-nessus (~> 4.9.0)
   dradis-netsparker (~> 4.9.0)
@@ -547,6 +559,7 @@ DEPENDENCIES
   dradis-wpscan (~> 4.9.0)
   dradis-zap (~> 4.9.0)
   factory_bot_rails
+  font-awesome-sass (~> 6.4.0)
   foreman
   guard-rspec
   html-pipeline

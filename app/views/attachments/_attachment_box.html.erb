@@ -10,7 +10,7 @@
           <%= form_tag main_app.project_node_attachments_path(node.project, node, format: :json), id: 'fileupload', multipart: true do %>
             <div class="fileupload-buttonbar">
               <span class="fileinput-button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add...">
-                <i class="fa fa-plus"></i>
+                <i class="fa-solid fa-plus"></i>
                 <input type="file" name="files[]" multiple>
               </span>
             </div>
@@ -20,7 +20,7 @@
           <% end %>
           <%= link_to '#attachment-box', 
             data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
-            <i class="fa fa-chevron-up" data-behavior="toggle-chevron"></i>
+            <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i>
             <span class="visually-hidden">Toggle attachments list</span>
           <% end %>
         </div>
@@ -41,7 +41,7 @@
                   <tr>
                     <td class="name">
                       <%= link_to main_app.project_node_attachment_path(node.project, node, attachment.filename), download: attachment.filename, title: attachment.filename, class: 'filename' do %>
-                        <i class="fa fa-paperclip"></i> <%= short_filename(attachment.filename) %>
+                        <i class="fa-solid fa-paperclip"></i> <%= short_filename(attachment.filename) %>
                       <% end %>
                     </td>
                     <td rowspan="2" align="right" class="delete">
@@ -50,7 +50,7 @@
                         data-type="DELETE"
                         data-url="<%= main_app.project_node_attachment_path(node.project, node, attachment.filename) %>"
                       >
-                        <i class="fa fa-trash"></i>
+                        <i class="fa-solid fa-trash"></i>
                       </button>
                     </td>
                     <td rowspan="2" align="right" class="copy-link">
@@ -58,7 +58,7 @@
                         class="btn btn-copy btn-transparent js-attachment-url-copy"
                         data-clipboard-text="!<%= main_app.project_node_attachment_path(node.project, node, '') + attachment.url_encoded_filename %>!"
                       >
-                        <i class="fa fa-link"></i>
+                        <i class="fa-solid fa-link"></i>
                       </button>
                     </td>
                   </tr>
@@ -94,7 +94,7 @@
               {% } %}
               <td rowspan="2" align="right" class="cancel">{% if (!i) { %}
                 <button class="btn btn-warning">
-                    <i class="fa fa-ban fa-inverse"></i>
+                    <i class="fa-solid fa-ban fa-inverse"></i>
                     <span>{%locale.fileupload.cancel%}</span>
                 </button>
               {% } %}</td>
@@ -126,7 +126,7 @@
                 <td class="error w-100"><span>{%=locale.fileupload.error%}:</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
                 <td rowpan="2" class="delete">
                     <button class="btn btn-trash btn-transparent" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}">
-                        <i class="fa fa-trash"></i>
+                        <i class="fa-solid fa-trash"></i>
                         <span>{%locale.fileupload.destroy%}</span>
                     </button>
                     <input type="checkbox" name="delete" value="1">
@@ -135,7 +135,7 @@
               {% } else { %}
                 <td class="name">
                   <a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}" class="filename">
-                    <i class="fa fa-paperclip"></i>
+                    <i class="fa-solid fa-paperclip"></i>
                     {%= file.name %}
                   </a>
                 </td>
@@ -146,7 +146,7 @@
                     data-type="{%=file.delete_type%}"
                     data-url="{%=file.delete_url%}"
                   >
-                    <i class="fa fa-trash"></i>
+                    <i class="fa-solid fa-trash"></i>
                   </button>
                 </td>
                 <td rowspan="2" align="right" class="copy-link">
@@ -154,7 +154,7 @@
                     class="btn btn-copy btn-transparent js-attachment-url-copy"
                     data-clipboard-text="!{%= file.url %}!"
                   >
-                    <i class="fa fa-link"></i>
+                    <i class="fa-solid fa-link"></i>
                   </button>
                 </td>
               {% } %}

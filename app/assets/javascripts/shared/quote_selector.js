@@ -28,7 +28,7 @@ class QuoteSelector {
     this.$quoteBtn = $(
       '\
       <div class="selection-quote-button d-none" data-behavior="selection-quote-button" aria-label="quote text">\
-          <i class="fa fa-quote-left fa-fw me-1"></i>\
+          <i class="fa-solid fa-quote-left fa-fw me-1"></i>\
           <span>Quote Text</span>\
       </div>'
     );

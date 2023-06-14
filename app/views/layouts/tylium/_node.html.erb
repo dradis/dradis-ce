@@ -8,13 +8,13 @@
     style: ('visibility: hidden' if node.children_count == 0)
 
   ) do %>
-    <i class="fa fa-caret-right"></i>
+    <i class="fa-solid fa-caret-right"></i>
     <span class="visually-hidden">Toggle child nodes</span>
   <% end %>
 
   <%= link_to main_app.project_node_path(node.project, node), title: node.label, data: { behavior: 'sidebar-link sidebar-node-link' } do %>
     <% if node.type_id == Node::Types::HOST %>
-      <i class="fa fa-laptop"></i>
+      <i class="fa-solid fa-laptop"></i>
     <% end %>
     <%= node.label %>
   <% end %>

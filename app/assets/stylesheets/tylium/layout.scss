@@ -35,8 +35,9 @@
     }
 
     & + .breadcrumb-item::before {
-      font-family: 'fontawesome';
       content: '\f105';
+      font-family: var(--fa-style-family, 'Font Awesome 6 Free');
+      font-weight: 600;
     }
 
     &:last-of-type {
