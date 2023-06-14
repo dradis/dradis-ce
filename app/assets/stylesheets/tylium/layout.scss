@@ -56,6 +56,17 @@
   position: relative;
 }
 
+.sticky-top {
+  position: sticky !important;
+  top: 5rem;
+  margin-bottom: $mainContentMargin;
+  z-index: 2;
+
+  &.sticky-top-with-title {
+    top: 2rem;
+  }
+}
+
 .view-content {
   background: $secondaryBgColor;
   position: fixed;
