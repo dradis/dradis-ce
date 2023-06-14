@@ -1,11 +1,11 @@
 <% content_for :sidebar do %>
   <div id="<%= dom_id(@node) %>_link" class="note-list">
     <div class="d-flex justify-content-between align-items-center mb-2">
-      <%= content_tag :div, class:  class_names(active: current_page?(main_app.project_node_path(@node.project, @node))) do %>
+      <div>
         <%= link_to project_node_path(@node.project, @node), class: 'summary-link' do %>
           <i class="fa-solid <%= class_names('fa-laptop': @node.type_id == Node::Types::HOST, 'fa-sitemap': @node.type_id != Node::Types::HOST) %>"></i> <%= @node.label %>
         <% end %>
-      <% end %>
+      </div>
     </div>
   </div>
 
