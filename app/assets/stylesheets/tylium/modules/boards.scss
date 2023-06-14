@@ -5,6 +5,12 @@ body.cards {
   }
 }
 
+body.cards {
+  .page-title {
+    display: none;
+  }
+}
+
 body.boards.index {
   .board-actions {
     visibility: hidden;
