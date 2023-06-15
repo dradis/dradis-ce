@@ -7,16 +7,16 @@
         <div class="add-node">
           <a href="#modal_add_branch_node" data-bs-toggle="modal" tabindex="-1"><i class="fa-solid fa-plus" data-behavior="add-node"></i><span class="visually-hidden">Add node</span></a>
         </div>
-        <div class="dropdown">
-          <%= link_to "#node-tree", data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
-            <i class="fa-solid fa-chevron-down fs-6" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle node tree</span>
+        <div class="dropdown node-tree-dropdown">
+          <%= link_to "#node-tree", data: { bs_toggle: 'collapse', behavior: 'collapse-collection toggle-node-tree' } do %>
+            <i class="fa-solid fs-6" data-behavior="toggle-icon"></i><span class="visually-hidden">Toggle node tree</span>
           <% end %>
         </div>
       </div>
     </div>
   </li>
 
-  <div id="node-tree" class="note-list collapse">
+  <div id="node-tree" class="note-list collapse" data-behavior="node-tree-content">
     <div class="nodes-list restrict-height px-lg-3" data-behavior="restrict-height">
       <% if @nodes.empty? %>
         <%= render 'shared/empty_state',
