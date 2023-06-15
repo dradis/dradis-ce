@@ -9,25 +9,26 @@
     </div>
   </div>
 
-  <!-- Notes -->
-  <%= render 'shared/sidebar_collection',
-    category_id: Category.default.id,
-    collection: @sorted_notes,
-    index_path: project_node_path(current_project, @node, tab: 'notes-tab'),
-    name: 'Notes',
-    new_path: new_project_node_note_path(@node.project, @node)
-  %>
+  <div class="inner-content">
+    <!-- Notes -->
+    <%= render 'shared/sidebar_collection',
+      category_id: Category.default.id,
+      collection: @sorted_notes,
+      index_path: project_node_path(current_project, @node, tab: 'notes-tab'),
+      name: 'Notes',
+      new_path: new_project_node_note_path(@node.project, @node)
+    %>
 
-  <!-- Evidence -->
-  <%= render 'shared/sidebar_collection',
-    category_id: Category.issue.id,
-    collection: @sorted_evidence,
-    index_path: project_node_path(current_project, @node, tab: 'evidence-tab'),
-    name: 'Evidence',
-    new_path: new_project_node_evidence_path(@node.project, @node)
-  %>
+    <!-- Evidence -->
+    <%= render 'shared/sidebar_collection',
+      category_id: Category.issue.id,
+      collection: @sorted_evidence,
+      index_path: project_node_path(current_project, @node, tab: 'evidence-tab'),
+      name: 'Evidence',
+      new_path: new_project_node_evidence_path(@node.project, @node)
+    %>
 
-  <!-- Attachments -->
-  <%= render partial: 'attachments/attachment_box', locals: { attachments_node: @node } %>
-</div>
+    <!-- Attachments -->
+    <%= render partial: 'attachments/attachment_box', locals: { attachments_node: @node } %>
+  </div>
 <% end %>
