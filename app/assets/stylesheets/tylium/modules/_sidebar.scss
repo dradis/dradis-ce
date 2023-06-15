@@ -252,7 +252,8 @@
       .sidebar-link-label-container {
         justify-content: center;
 
-        .add-node {
+        .add-node,
+        .node-tree-dropdown {
           display: none;
         }
       }
@@ -348,7 +349,8 @@
           .sidebar-link-label-container {
             justify-content: center;
 
-            .add-node {
+            .add-node,
+            .node-tree-dropdown {
               display: none;
             }
           }
