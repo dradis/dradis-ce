@@ -32,6 +32,7 @@
               'data-behavior',
               'nodes-tree sidebar-toggle open-only'
             );
+            that.nodeTreeOpen();
           }
         }
 
@@ -42,7 +43,8 @@
         }
       });
 
-      this.$nodeTreeToggle.on('click', function () {
+      this.$nodeTreeToggle.on('click', function (e) {
+        e.stopPropagation();
         that.toggleNodeTree(!that.isNodeTreeOpen());
       });
 
