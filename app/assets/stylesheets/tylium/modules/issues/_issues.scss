@@ -1,11 +1,5 @@
-body.issues {
-  .page-title {
-    display: none;
-  }
-}
+body.issues.edit, body.issues.new {
 
-body.issues.edit,
-body.issues.new {
   .tag-input {
     display: flex;
     align-items: center;
@@ -68,7 +62,7 @@ body.issues.index {
 
   .tab-pane {
     padding: 1.5rem;
-  }
+  } 
 }
 
 body.issues.show {

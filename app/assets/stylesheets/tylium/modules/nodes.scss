@@ -1,4 +1,5 @@
 body.nodes {
+
   &.edit {
     textarea.json {
       font-family: monospace;
@@ -7,20 +8,13 @@ body.nodes {
   }
 
   &.show {
-    .node-content h4:not(.header-underline) {
-      margin-top: 30px;
+
+    .node-content h4:not(.header-underline) { 
+      margin-top: 30px; 
     }
   }
 }
 
 td.services-extras-datum-output {
   word-break: break-all;
-}
-
-body.nodes,
-body.notes,
-body.evidence {
-  .page-title {
-    display: none;
-  }
 }
