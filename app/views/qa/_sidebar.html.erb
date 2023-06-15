@@ -8,7 +8,11 @@
           <% end %>
         </div>
       </div>
-      <h5 class="header-underline header-name"><%= name.humanize %></h5>
+      <h5 class="header-underline header-name">
+        <%= link_to index_path do %>
+          <%= name.humanize %>
+        <% end %>
+      </h5>
     </div>
   </div>
 
