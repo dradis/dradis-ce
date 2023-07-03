@@ -286,6 +286,19 @@ class EditorToolbar {
 
     this.setCursor(affix, cursorInfo);
     this.$target.trigger('textchange');
+
+    var $form = this.$target.parents('form');
+    if (
+      data.result[0].blob_id &&
+      $form.find('[data-behavior~=new-blobs]').length
+    ) {
+      var $blobs = $form.find('[data-behavior~=new-blobs]'),
+        blobsArray = $blobs.val().length ? JSON.parse($blobs.val()) : [],
+        blob_id = data.result[0].blob_id;
+
+      blobsArray.push(blob_id);
+      $blobs.val(JSON.stringify(blobsArray));
+    }
   }
 
   affixesLibrary(type, selection) {

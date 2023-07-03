@@ -25,6 +25,7 @@
 //= require shared/comments
 //= require shared/console_updater
 //= require shared/editor_toolbar
+//= require shared/fileupload
 //= require shared/quote_selector
 //= require shared/mentions
 //= require shared/notifications
@@ -52,7 +53,6 @@
 
 //= require tylium/modules/configurations
 //= require tylium/modules/export
-//= require tylium/modules/fileupload
 //= require tylium/modules/issues
 //= require tylium/modules/nodes
 //= require tylium/modules/search
