@@ -18,7 +18,10 @@
   }
 
   .main-menu {
-    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    margin: 0.75rem 0 1.75rem;
+    padding: 0 1.125rem;
 
     li {
       @include active-nav;
@@ -121,8 +124,10 @@
     }
 
     .tree-header {
-      cursor: default;
       @include active-nav;
+      cursor: default;
+      flex-direction: row;
+      padding: 0 1rem;
 
       &.active {
         color: $white;
@@ -143,6 +148,11 @@
           i {
             font-size: 1rem;
           }
+        }
+
+        .sidebar-link-label {
+          font-size: 1rem;
+          padding-left: 1rem;
         }
       }
 
@@ -202,16 +212,12 @@
   }
 
   .sidebar-link {
+    align-items: center;
     display: flex;
+    flex-direction: column;
+    padding-top: 0.6rem;
     position: relative;
     width: 100%;
-    align-items: center;
-    padding: 0.6rem 1rem;
-    transition: all 0.2s ease-in-out;
-
-    &:hover {
-      background-color: $sidebarActiveColor;
-    }
 
     .sidebar-link-icon {
       font-size: 1.6rem;
@@ -219,14 +225,20 @@
     }
 
     .sidebar-link-label {
-      margin-left: 1rem;
-      white-space: nowrap;
+      font-size: 0.75rem;
+      margin: 0.25rem 0 0;
       transition: transform 0.5s ease-in-out;
+      white-space: nowrap;
     }
   }
 
   &.sidebar-collapsed {
     width: $sidebarCollapsed;
+
+    .main-menu {
+      display: block;
+      padding: 0;
+    }
 
     .secondary-sidebar {
       display: none;
@@ -234,8 +246,10 @@
 
     .sidebar-link {
       flex-direction: column;
+      padding-bottom: 0.6rem;
 
       .sidebar-link-label {
+        display: block;
         font-size: 0.75rem;
         margin: 0.25rem 0 0;
       }
@@ -247,7 +261,7 @@
 
     .tree-header {
       cursor: pointer;
-      transition: all 0.2s ease-in-out;
+      flex-direction: column;
 
       .sidebar-link-label-container {
         justify-content: center;
@@ -256,10 +270,14 @@
         .node-tree-dropdown {
           display: none;
         }
+
+        .sidebar-link-label {
+          font-size: 0.75rem;
+          padding-left: 0;
+        }
       }
 
       &:hover {
-        background-color: $sidebarActiveColor;
         color: $white;
       }
     }
@@ -357,7 +375,6 @@
           }
 
           &:hover {
-            background-color: $sidebarActiveColor;
             color: $white;
           }
         }

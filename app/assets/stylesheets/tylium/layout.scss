@@ -2,16 +2,6 @@
   &.active {
     position: relative;
     overflow: visible;
-    background-color: $sidebarActiveColor;
-
-    &:after {
-      position: absolute;
-      content: '';
-      height: 100%;
-      left: 0;
-      top: 0;
-      border-left: 3px solid $white;
-    }
 
     .sidebar-link {
       color: $white;

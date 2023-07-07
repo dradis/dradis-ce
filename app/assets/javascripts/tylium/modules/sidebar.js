@@ -72,7 +72,7 @@
         .addClass('sidebar-collapsed');
 
       if (this.$sidebar.is($('[data-behavior~=main-sidebar]'))) {
-        this.$navbarBrand.css('padding-left', 0);
+        this.positionNavbarBrand();
         this.$viewContent.css({
           left: this.$sidebar.css('width'),
           width: `calc(100vw - ${this.$sidebar.css('width')})`,
@@ -106,12 +106,7 @@
           width: `calc(100vw - ${this.$sidebar.css('width')})`,
         });
 
-        if (window.innerWidth > this.minBreakpoint) {
-          var navbarBrandOffset = parseFloat(
-            this.$sidebar.css('width').slice(0, -2) / 1.65
-          );
-          this.$navbarBrand.css('padding-left', navbarBrandOffset);
-        }
+        this.positionNavbarBrand();
       }
 
       this.changeState(this.storageKey, true);
@@ -137,6 +132,11 @@
         'shown.bs.collapse',
         this.changeState('node-tree-expanded', true)
       );
+    },
+    positionNavbarBrand: function () {
+      if (window.innerWidth > this.minBreakpoint) {
+        this.$navbarBrand.css('padding-left', this.$sidebar.css('width'));
+      }
     },
     toggleNodeTree: function (openNodeTree) {
       openNodeTree ? this.nodeTreeOpen() : this.nodeTreeClose();
