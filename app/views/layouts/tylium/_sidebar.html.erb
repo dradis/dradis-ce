@@ -29,8 +29,7 @@
     <%= render 'layouts/tylium/nodes' %>
 
     <% if content_for?(:sidebar) %>
-      <hr class="mx-3 mt-4">
-      <div class="secondary-sidebar">
+      <div class="secondary-sidebar mt-4 h-100">
         <%= yield :sidebar %>
       </div>
     <% end %>

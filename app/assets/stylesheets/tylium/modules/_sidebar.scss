@@ -172,6 +172,12 @@
     height: calc(100vh - #{$navbarHeight});
     flex-direction: column;
     overflow-y: auto;
+
+    &:has(.secondary-sidebar) {
+      .version {
+        background-color: $sidebarActiveColor;
+      }
+    }
   }
 
   .sidebar-header {
