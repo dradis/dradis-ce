@@ -40,11 +40,11 @@ class ActivityPresenter < BasePresenter
   end
 
   def icon
-    icon_css = %w{activity-icon fa}
+    icon_css = %w{activity-icon fa-solid}
     icon_css <<
       case activity.trackable_type
       when 'Board', 'List', 'Card'
-        'fa-trello'
+        'fa-brands fa-trello'
       when 'Comment'
         'fa-comment'
       when 'Evidence'
