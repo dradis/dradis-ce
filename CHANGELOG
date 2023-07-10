@@ -2,7 +2,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - font-awesome-sass, rails, sanitize
+    - font-awesome-sass, nokogiri, rails, sanitize
   - Bugs fixes:
     - QA: Enable @mentions and formatting toolbar for comments in QA show views
     - [entity]:
