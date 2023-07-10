@@ -111,8 +111,6 @@ Rails.application.routes.draw do
     # ------------------------------------------------------- Export Manager
     get  '/export'                   => 'export#index',             as: :export_manager
     post '/export'                   => 'export#create'
-    get  '/export/validate'          => 'export#validate',          as: :validate_export
-    get  '/export/validation_status' => 'export#validation_status', as: :validation_status
 
     # ------------------------------------------------------- Upload Manager
     get  '/upload'        => 'upload#index',  as: :upload_manager
