@@ -2,7 +2,7 @@
 
   <%= render 'layouts/tylium/sidebar_header' %>
 
-  <div class="mobile-scroll">
+  <div class="scrollable-content">
     <ul id="main-menu" class="main-menu">
       <%= content_tag :li, :class => controller_path == 'projects' ? 'active' : '' do %>
         <%= link_to main_app.project_path(current_project), class: 'sidebar-link', data: { behavior: 'sidebar-link' } do %>
@@ -27,9 +27,13 @@
     </ul>
 
     <%= render 'layouts/tylium/nodes' %>
-  </div>
 
-  <div class="version-wrapper">
+    <% if content_for?(:sidebar) %>
+      <div class="secondary-sidebar mt-4 h-100">
+        <%= yield :sidebar %>
+      </div>
+    <% end %>
+
     <div class="version">
       <span>v<%= Dradis::CE.version %></span>
     </div>

@@ -5,6 +5,10 @@
     this.$navbarBrand = $sidebar
       .siblings('[data-behavior~=navbar]')
       .find('[data-behavior~=navbar-brand]');
+    this.$nodeTree = $sidebar.find($('[data-behavior~=node-tree-content]'));
+    this.$nodeTreeToggle = $sidebar.find(
+      $('[data-behavior~=toggle-node-tree]')
+    );
     this.storageKey = $sidebar.data('storage-key');
     this.$toggleLink = $sidebar.find($('[data-behavior~=sidebar-toggle]'));
     this.$viewContent = $sidebar.siblings('[data-behavior~=view-content]');
@@ -15,6 +19,7 @@
   Sidebar.prototype = {
     init: function () {
       this.toggle(this.isSidebarOpen());
+      this.toggleNodeTree(this.isNodeTreeOpen());
 
       var that = this;
 
@@ -27,6 +32,7 @@
               'data-behavior',
               'nodes-tree sidebar-toggle open-only'
             );
+            that.nodeTreeOpen();
           }
         }
 
@@ -35,6 +41,11 @@
         ) {
           that.toggle(!that.isSidebarOpen());
         }
+      });
+
+      this.$nodeTreeToggle.on('click', function (e) {
+        e.stopPropagation();
+        that.toggleNodeTree(!that.isNodeTreeOpen());
       });
 
       if (window.innerWidth < that.minBreakpoint) {
@@ -51,8 +62,8 @@
         that.isSidebarOpen() ? that.open() : that.close();
       });
     },
-    changeState: function (state) {
-      localStorage.setItem(this.storageKey, state);
+    changeState: function (key, state) {
+      localStorage.setItem(key, state);
       Turbolinks.clearCache();
     },
     close: function () {
@@ -68,7 +79,14 @@
         });
       }
 
-      this.changeState(false);
+      this.changeState(this.storageKey, false);
+    },
+    isNodeTreeOpen: function () {
+      if (JSON.parse(localStorage.getItem('node-tree-expanded')) === null) {
+        return true;
+      } else {
+        return JSON.parse(localStorage.getItem('node-tree-expanded'));
+      }
     },
     isSidebarOpen: function () {
       if (JSON.parse(localStorage.getItem(this.storageKey)) === null) {
@@ -96,7 +114,32 @@
         }
       }
 
-      this.changeState(true);
+      this.changeState(this.storageKey, true);
+    },
+    nodeTreeClose: function () {
+      this.$nodeTree.removeClass('show');
+      this.$nodeTreeToggle
+        .find($('[data-behavior~=toggle-icon]'))
+        .removeClass('fa-chevron-up')
+        .addClass('fa-chevron-down');
+      this.$nodeTree.on(
+        'hidden.bs.collapse',
+        this.changeState('node-tree-expanded', false)
+      );
+    },
+    nodeTreeOpen: function () {
+      this.$nodeTree.addClass('show');
+      this.$nodeTreeToggle
+        .find($('[data-behavior~=toggle-icon]'))
+        .removeClass('fa-chevron-down')
+        .addClass('fa-chevron-up');
+      this.$nodeTree.on(
+        'shown.bs.collapse',
+        this.changeState('node-tree-expanded', true)
+      );
+    },
+    toggleNodeTree: function (openNodeTree) {
+      openNodeTree ? this.nodeTreeOpen() : this.nodeTreeClose();
     },
     toggle: function (openSidebar) {
       openSidebar ? this.open() : this.close();
