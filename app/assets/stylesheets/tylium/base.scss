@@ -169,13 +169,6 @@ select:not(select[multiple]) {
   font-weight: 300;
 }
 
-.sticky-top {
-  position: sticky !important;
-  top: $mainContentMargin;
-  margin-bottom: $mainContentMargin;
-  z-index: 2;
-}
-
 strong {
   font-weight: 600;
 }
@@ -218,10 +211,6 @@ strong {
 
 .text-primary {
   color: $primaryColor !important;
-}
-
-.top-5 {
-  top: 5rem !important;
 }
 
 ul {

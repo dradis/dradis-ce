@@ -56,9 +56,14 @@
   position: relative;
 }
 
-.secondary-sidebar-content {
-  .sticky-top {
-    top: calc(#{$mainContentMargin} + 4.35rem);
+.sticky-top {
+  position: sticky !important;
+  top: 5rem;
+  margin-bottom: $mainContentMargin;
+  z-index: 2;
+
+  &.sticky-top-with-title {
+    top: 2rem;
   }
 }
 
