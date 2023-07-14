@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.7.3'
+gem 'rails', '~> 6.1.7.4'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -67,6 +67,8 @@ gem 'thor', '~> 1.2.1'
 # Ruby dependency, version specified here due to CVE-2023-28756
 gem 'time', '>= 0.2.2'
 
+gem 'font-awesome-sass', '~> 6.4.0'
+
 # ------------------------------------------------------ With native extensions
 # These require native extensions.
 # Ensure Traveling Ruby provides an appropriate version before bumping.
@@ -99,7 +101,7 @@ gem 'RedCloth', '~> 4.3.2', require: 'redcloth'
 gem 'rinku'
 
 # html-pipeline dependency for html sanitization
-gem 'sanitize', '6.0.1'
+gem 'sanitize', '6.0.2'
 
 # SQLite3 DB driver
 gem 'sqlite3'
@@ -230,8 +232,10 @@ end
 # effective.
 
 # ----------------------------------------------------------------- Calculators
-gem 'dradis-calculator_cvss', '~> 4.9.0'
-gem 'dradis-calculator_dread', '~> 4.9.0'
+
+# Update these to v4.10.0 before release
+gem 'dradis-calculator_cvss', github: 'dradis/dradis-calculator_cvss'
+gem 'dradis-calculator_dread', github: 'dradis/dradis-calculator_dread'
 
 # ---------------------------------------------------------------------- Export
 gem 'dradis-csv_export', '~> 4.9.0'

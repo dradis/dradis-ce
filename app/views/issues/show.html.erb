@@ -20,7 +20,7 @@
       <%= "(#{@issue.state.humanize})" %>
     </a>
   </li>
-  <li class="nav-item"><a href="#evidence-tab" class="nav-link" data-bs-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge bg-primary text-white" data-behavior="evidence-count"><%= @issue.evidence.count %></span></a></li>
+  <li class="nav-item"><a href="#evidence-tab" class="nav-link" data-bs-toggle="tab"><i class="fa-solid fa-laptop"></i> Evidence <span class="badge bg-primary text-white" data-behavior="evidence-count"><%= @issue.evidence.count %></span></a></li>
   <%= render_view_hooks 'issues/show-tabs' %>
 </ul>
 

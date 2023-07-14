@@ -19,10 +19,10 @@
 
           <div class="board-actions">
             <%= link_to("#modal-board-edit-#{board.id}", data: { bs_toggle: 'modal' }) do %>
-              <i class="fa fa-pencil"></i> Edit
+              <i class="fa-solid fa-pencil"></i> Edit
             <% end %>
             <%= link_to([current_project, board], class: 'text-error-hover', data: { confirm: "Are you sure?\n\nProceeding will delete this methodology from the project, as well as with any associated lists and tasks." }, method: 'delete') do %>
-              <i class="fa fa-trash"></i> Delete
+              <i class="fa-solid fa-trash"></i> Delete
             <% end %>
           </div>
         </li>

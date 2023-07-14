@@ -76,7 +76,9 @@
               padding: 0.25rem 1rem;
               transition: color 0s;
 
-              .fa {
+              .fa-brands,
+              .fa-regular,
+              .fa-solid {
                 width: 1.2em;
               }
 

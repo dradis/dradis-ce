@@ -13,7 +13,7 @@ DradisDatatable.prototype.setupTagButtons = function () {
         tagFullName = tag[2],
         tagName = tag[0],
         $tagElement = $(
-          `<i class="fa fa-tag fa-fw"></i><span>${tagName}</span>`
+          `<i class="fa-solid fa-tag fa-fw"></i><span>${tagName}</span>`
         ).css('color', tagColor);
 
       tagButtons.push({
@@ -24,13 +24,17 @@ DradisDatatable.prototype.setupTagButtons = function () {
   );
   tagButtons.push(
     {
-      text: $(`<span><i class="fa fa-plus fa-fw"></i> Add new tag</span>`),
+      text: $(
+        `<span><i class="fa-solid fa-plus fa-fw"></i> Add new tag</span>`
+      ),
       action: function () {
         $.ajax({ url: this.$table.data('new-tag-path') });
       }.bind(this),
     },
     {
-      text: $(`<span><i class="fa fa-tags fa-fw"></i> Manage Tags</span>`),
+      text: $(
+        `<span><i class="fa-solid fa-tags fa-fw"></i> Manage Tags</span>`
+      ),
       action: function () {
         window.location.href = this.$table.data('tags-path');
       }.bind(this),

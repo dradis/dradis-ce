@@ -353,8 +353,8 @@ describe 'Issues pages' do
           it 'presents the table of hosts affected by a given issue', js: true do
             click_link 'Evidence'
             expect(page).to have_selector('[data-behavior~=dradis-datatable]')
-            expect(find('.secondary-sidebar-content')).to have_content('10.0.0.1')
-            expect(find('.secondary-sidebar-content')).to have_content('10.0.0.2', count: 3)
+            expect(find('#evidence-tab')).to have_content('10.0.0.1')
+            expect(find('#evidence-tab')).to have_content('10.0.0.2', count: 3)
           end
 
           it 'presents the evidence of the other nodes on click', js: true do

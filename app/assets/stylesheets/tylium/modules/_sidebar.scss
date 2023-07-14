@@ -26,9 +26,8 @@
   }
 
   .nodes-nav {
-    margin: 2rem 0 0 0;
+    margin: 0;
     padding: 0;
-    width: 100%;
 
     .nodes-list {
       display: none;
@@ -158,11 +157,24 @@
     }
   }
 
+  .scrollable-content {
+    display: flex;
+    height: calc(100vh - #{$navbarHeight});
+    flex-direction: column;
+    overflow-y: auto;
+
+    &:has(.secondary-sidebar) {
+      .version {
+        background-color: $sidebarActiveColor;
+      }
+    }
+  }
+
   .sidebar-header {
     height: $navbarHeight;
     display: flex;
     align-items: center;
-    padding: 0 1.5rem;
+    padding: 0 1rem;
     width: 100%;
 
     .team-logo {
@@ -200,7 +212,7 @@
     position: relative;
     width: 100%;
     align-items: center;
-    padding: 0.6rem 1.5rem;
+    padding: 0.6rem 1rem;
     transition: all 0.2s ease-in-out;
 
     &:hover {
@@ -222,6 +234,10 @@
   &.sidebar-collapsed {
     width: $sidebarCollapsed;
 
+    .secondary-sidebar {
+      display: none;
+    }
+
     .sidebar-link {
       flex-direction: column;
 
@@ -242,7 +258,8 @@
       .sidebar-link-label-container {
         justify-content: center;
 
-        .add-node {
+        .add-node,
+        .node-tree-dropdown {
           display: none;
         }
       }
@@ -267,19 +284,12 @@
     }
   }
 
-  .version-wrapper {
-    display: flex;
-    justify-content: center;
-    background: $sidebarBackground;
-
-    .version {
-      position: fixed;
-      bottom: 0;
-      text-align: center;
-      padding: 0.2em 0;
-      font-size: 10px;
-      cursor: default;
-    }
+  .version {
+    cursor: default;
+    font-size: 0.625rem;
+    margin-top: auto;
+    padding: 0.2em 0;
+    text-align: center;
   }
 }
 
@@ -308,8 +318,9 @@
       }
     }
 
-    .mobile-scroll {
+    .scrollable-content {
       display: flex;
+      flex-direction: row;
       overflow-x: auto;
     }
 
@@ -345,7 +356,8 @@
           .sidebar-link-label-container {
             justify-content: center;
 
-            .add-node {
+            .add-node,
+            .node-tree-dropdown {
               display: none;
             }
           }
@@ -371,7 +383,7 @@
       display: none;
     }
 
-    .version-wrapper {
+    .version {
       display: none;
     }
   }

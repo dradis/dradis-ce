@@ -4,11 +4,11 @@
     <span class="visually-hidden">Toggle Dropdown</span>
   </button>
   <div class="dropdown-menu">
-    <%= collection_radio_buttons(plugin_name, :scope, [['published', 'published'], ['all', 'all']], :first, :first) do |b| %>
+    <%= collection_radio_buttons(nil, :scope, [['published', 'published'], ['all', 'all']], :first, :first) do |b| %>
       <span>
-        <%= b.label class: 'state' do %>
-          <%= b.radio_button class: 'd-none', data: { behavior: 'state-radio'}, checked: b.value == 'published' %>
-          <i class="fa fa-check fa-fw"></i>
+        <%= b.label class: 'state', for: "#{plugin_name}_scope_#{b.value}" do %>
+          <%= b.radio_button id: "#{plugin_name}_scope_#{b.value}", class: 'd-none', data: { behavior: 'state-radio'}, checked: b.value == 'published' %>
+          <i class="fa-solid fa-check fa-fw"></i>
           <div class="state-label">
             <p data-behavior="state-label"><%= b.text.humanize %></p>
             <% case b.value %>

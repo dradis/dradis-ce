@@ -6,22 +6,22 @@
   </li>
   <li class="nav-item">
     <%= link_to search_filter_path(scope: :nodes), id: 'nodes', :class => @scope == :nodes ? 'nav-link active' : 'nav-link' do %>
-      <i class="fa fa-sitemap"></i> Nodes (<%= search.nodes_count %>)
+      <i class="fa-solid fa-sitemap"></i> Nodes (<%= search.nodes_count %>)
     <% end %>
   </li>
   <li class="nav-item">
     <%= link_to search_filter_path(scope: :notes), id: 'notes', :class => @scope == :notes ? 'nav-link active' : 'nav-link' do %>
-      <i class="fa fa-file-text-o"></i> Notes (<%= search.notes_count %>)
+      <i class="fa-regular fa-file-text"></i> Notes (<%= search.notes_count %>)
     <% end %>
   </li>
   <li class="nav-item">
     <%= link_to search_filter_path(scope: :evidence), id: 'evidences', :class => @scope == :evidence ? 'nav-link active' : 'nav-link' do %>
-      <i class="fa fa-flag-o"></i> Evidence (<%= search.evidence_count %>)
+      <i class="fa-regular fa-flag"></i> Evidence (<%= search.evidence_count %>)
     <% end %>
   </li>
   <li class="nav-item">
     <%= link_to search_filter_path(scope: :issues), id: 'issues', :class => @scope == :issues ? 'nav-link active' : 'nav-link' do %>
-      <i class="fa fa-bug"></i> Issues (<%= search.issues_count %>)
+      <i class="fa-solid fa-bug"></i> Issues (<%= search.issues_count %>)
     <% end %>
   </li>
 </ul>
