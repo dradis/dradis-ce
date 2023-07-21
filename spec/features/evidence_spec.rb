@@ -57,7 +57,7 @@ describe 'evidence' do
     describe "clicking \'delete\'", js: true do
       let(:submit_form) do
         page.accept_confirm do
-          within('.dots-container') do
+          within('.actions', match: :first) do
             find('.dots-dropdown').click
             click_link 'Delete'
           end
@@ -98,6 +98,14 @@ describe 'evidence' do
     it 'has a form to edit the evidence' do
       expect(page).to have_field :evidence_content
       expect(page).to have_field :evidence_issue_id
+    end
+
+    context 'when editing the evidence from an issue' do
+      it 'should redirect back to issue show page' do
+        visit edit_project_node_evidence_path(current_project, @node, @evidence, return_to: 'issue')
+        submit_form
+        expect(page).to have_current_path(project_issue_path(current_project, @evidence.issue))
+      end
     end
 
     it 'uses the full-screen editor plugin' # TODO

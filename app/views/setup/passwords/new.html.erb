@@ -1,33 +1,22 @@
-<div class="col-6 offset-3">
-  <div class="card">
-    <div class="card-header bg-custom">
-      <h5 class="m-0">Configure a shared password</h5>
-    </div>
-    <div class="card-body">
-      <%= form_tag( setup_password_path, { class: 'form-horizontal' } ) do -%>
+<%= flash_messages %>
 
-        <%= flash_messages %>
+<%= render partial: 'setup/progress' %>
 
-        <p>Please create a shared password which will be used by every user accessing this Dradis server.</p>
+<%= form_tag( setup_password_path, { class: 'form-horizontal' } ) do -%>
+  <h1>Let's start with setting your shared password</h1>
+  <p class="small">This shared password will be used by every user accessing this Dradis server.</p>
 
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label" for="password">Password</label>
-          <div class="col-sm-8">
-            <%= password_field_tag :password, nil, class: 'form-control', autofocus: true %>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label" for="password_confirmation">Confirm Password</label>
-          <div class="col-sm-8">
-            <%= password_field_tag :password_confirmation, nil, class: 'form-control' %>
-          </div>
-        </div>
-        <div class="form-group row mb-0">
-          <div class="col-sm-8 offset-sm-4">
-            <button type="submit" class="btn btn-lg btn-primary">Continue</button>
-          </div>
-        </div>
-      <% end -%>
-    <div>
+  <div class="form-group">
+    <%= label_tag :password, nil, class: 'col-form-label' %>
+    <%= password_field_tag :password, nil, class: 'form-control', autofocus: true, autocomplete: 'off' %>
   </div>
-</div>
+
+  <div class="form-group">
+    <%= label_tag :password_confirmation, nil, class: 'col-form-label' %>
+    <%= password_field_tag :password_confirmation, nil, class: 'form-control', autocomplete: 'off' %>
+  </div>
+
+  <%= button_tag :submit, class: 'btn btn-primary' do %>
+    Next <i class="fa fa-long-arrow-right"></i>
+  <% end %>
+<% end %>

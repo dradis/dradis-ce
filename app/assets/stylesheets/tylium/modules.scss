@@ -1,9 +1,12 @@
 @import "tylium/modules/alerts";
 @import "tylium/modules/attachments";
+@import "tylium/modules/buttons";
 @import "tylium/modules/boards";
 @import "tylium/modules/console";
+@import "tylium/modules/datatables";
 @import "tylium/modules/dots-menu";
 @import "tylium/modules/dropdown";
+@import "tylium/modules/issues/evidence";
 @import "tylium/modules/issues/issues";
 @import "tylium/modules/issues/merge";
 @import "tylium/modules/modals";
@@ -136,11 +139,30 @@
 }
 
 .header-underline {
-  margin-bottom: .5em;
-  padding-bottom: 0.5em;
-  margin-top: -0.5rem;
   border-bottom: 1px solid $borderColor;
+  display: flex;
+  margin-bottom: .5em;
+  margin-top: -0.5rem;
+  padding-bottom: 0.5em;
   width: 100%;
+
+  .actions {
+    margin-left: auto;
+
+    .action {
+      &:not(:first-child)::before {
+        content: '-';
+      }
+
+      &:first-child {
+        margin-left: auto;
+      }
+
+      &:last-of-type {
+        margin: 0 0.75rem;
+      }
+    }
+  }
 }
 
 .inset-button-wrapper {
@@ -165,6 +187,7 @@
 
 .issue-severity {
   cursor: default;
+  white-space: nowrap;
 }
 
 .nav-tabs {

@@ -1,6 +1,7 @@
 # Bundler files
 /.bundle
 /vendor/bundle/
+/vendor/cache/*darwin*
 
 # Rails stuff
 /db/*.sqlite3

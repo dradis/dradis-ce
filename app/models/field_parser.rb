@@ -29,6 +29,40 @@ class FieldParser
     Hash[ *string.scan(FIELDS_REGEX).flatten.map(&:strip) ]
   end
 
+  # Parse the contents of the field and split it to return an array of field
+  # name/value pairs. Field / values are defined using this syntax:
+  #
+  #   #[Title]#
+  #   This is the value of the Title field
+  #
+  #   #[Description]#
+  #   Lorem ipsum...
+  #
+  # If the string contains a fieldless string, it will be prepended to
+  # the result. E.g.
+  #
+  #   Line 1
+  #   Line 2
+  #
+  #   #[Title]#
+  #   This is the value of the Title field
+  #
+  #   => [["", "Line 1\nLine2"], "Title", "This is the value of the Title field"]
+  #
+  def self.source_to_fields_array(string)
+    array = string.scan(FIELDS_REGEX).map do |field|
+      field.map(&:strip)
+    end
+
+    fieldless_string = parse_fieldless_string(string)
+
+    if fieldless_string.present?
+      array.prepend(['', fieldless_string])
+    end
+
+    array
+  end
+
   # Field-less strings are strings that do not have a field header (#[Field]#).
   # This parses all characters before a field header or end of string.
   def self.parse_fieldless_string(source)

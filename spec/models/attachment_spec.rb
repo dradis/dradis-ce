@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 describe Attachment do
-  fixtures :configurations
-
   let(:attachment) do
     attachment = Attachment.new(Rails.root.join('public', 'images', 'rails.png'), node_id: node.id)
     attachment.save

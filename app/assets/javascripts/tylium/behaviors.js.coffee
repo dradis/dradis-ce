@@ -63,7 +63,7 @@ document.addEventListener "turbolinks:load", ->
   $('.modal').on 'shown.bs.modal', ->
     $(this).find('input:text:visible:first').focus()
 
-  $('.js-try-pro').on 'click', ->
+  $('body').on 'click', '.js-try-pro', ->
     $this   = $(this)
     term    = $this.data('term')
     $modal  = $('#try-pro')
@@ -77,6 +77,7 @@ document.addEventListener "turbolinks:load", ->
         when 'boards' then '<span>[Dradis Pro feature]</span> Advanced boards and task assignment'
         when 'contact-support' then '<span>[Dradis Pro feature]</span> Dedicated Support team'
         when 'issuelib' then '<span>[Dradis Pro feature]</span> Integrated library of vulnerability descriptions'
+        when 'gateway' then '<span>[Dradis Pro feature]</span> A Dynamic and Interactive Assessment Results Portal'
         when 'projects' then '<span>[Dradis Pro feature]</span> Work with multiple projects'
         when 'remediation' then '<span>[Dradis Pro feature]</span> Integrated remediation tracker'
         when 'word-reports' then '<span>[Dradis Pro feature]</span> Custom Word reports'
@@ -193,3 +194,6 @@ document.addEventListener "turbolinks:load", ->
     history.pushState({}, '', this.href);
     $(this.hash)[0].scrollIntoView behavior: 'smooth'
     return
+
+  # Init Bootstrap tooltips
+  $('[data-toggle~=tooltip]').tooltip();
