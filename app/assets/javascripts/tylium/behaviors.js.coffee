@@ -93,7 +93,7 @@ document.addEventListener "turbolinks:load", ->
     url = url + '?utm_source=ce&utm_medium=app&utm_campaign=try-pro&utm_term=' + term
 
     $iframe.attr('src', url)
-    $('#try-pro').modal()
+    new bootstrap.Modal('#try-pro').show()
 
   # If project id is changed in project path
   if !(/^\/projects\/1(\/|$)/.test(window.location.pathname))
@@ -194,6 +194,3 @@ document.addEventListener "turbolinks:load", ->
     history.pushState({}, '', this.href);
     $(this.hash)[0].scrollIntoView behavior: 'smooth'
     return
-
-  # Init Bootstrap tooltips
-  $('[data-toggle~=tooltip]').tooltip();

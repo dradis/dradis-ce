@@ -5,10 +5,9 @@
     auto_save_key: "comment-#{dom_id(@commentable)}"
   } do |f| %>
 
-  <div class="row m-0">
-    <%= f.label :content, "Add a comment" %>
-  </div>
-  <div class="row m-0 flex-nowrap">
+  <%= f.label :content, "Add a comment", class: 'form-label' %>
+
+  <div class="d-flex flex-nowrap">
     <%= avatar_image(current_user, size: 30) %>
     <%= f.text_area :content,
                     placeholder: 'Write your comment...',
@@ -27,8 +26,8 @@
   <div class="btn-group">
     <%= f.submit "Add comment", class: "btn btn-primary mt-2" %>
     <% if @commentable.is_a?(Issue) %>
-      <button type="button" class="btn btn-primary mt-2 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="sr-only">Toggle comment type dropdown</span>
+      <button type="button" class="btn btn-primary mt-2 dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="visually-hidden">Toggle comment type dropdown</span>
       </button>
       <div class="dropdown-menu">
         <% if defined?(Dradis::Pro) && defined?(Dradis::Pro::Plugins::Gateway) %>

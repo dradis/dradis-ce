@@ -1,4 +1,4 @@
-<div class="tab-pane <%= "active" if !params[:tab] || params[:tab] == 'properties-tab' %>" id="properties-tab">
+<div class="tab-pane active" id="properties-tab">
   <div class="node-content" id="<%= dom_id(@node) %>_content">
 
     <% if @node.has_any_property? %>
@@ -6,7 +6,7 @@
         <span class="actions pt-1">
           <div class="action">
             <%= link_to edit_project_node_path(@node.project, @node) do %>
-              <i class="fa fa-pencil"></i> Edit
+              <i class="fa-solid fa-pencil"></i> Edit
             <% end %>
           </div>
         </span>

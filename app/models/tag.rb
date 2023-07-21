@@ -18,17 +18,28 @@ class Tag < ApplicationRecord
   # -- Relationships ----------------------------------------------------------
   has_many :taggings, dependent: :destroy
 
+  def project
+    # dummy project; this makes Tags's interface more similar to how it is
+    # in Pro and makes it easier to deal with tag in URL helpers
+    @project ||= Project.new
+  end
+
+  def project=(new_project); end
+
   # -- Callbacks --------------------------------------------------------------
   before_save :normalize_name
 
   # -- Validations ------------------------------------------------------------
-  validates :name, presence: true, uniqueness: { case_sensitive: false }
+  validates :name,
+  presence: true,
+  uniqueness: { case_sensitive: false } ,
+  format: {
+    with: /\A(!\h{6})_[a-zA-Z]+?\z/, message: 'is invalid: Numbers and special characters are not permitted.'
+  }
 
   # -- Scopes -----------------------------------------------------------------
 
-
   # -- Class Methods ----------------------------------------------------------
-
 
   # -- Instance Methods -------------------------------------------------------
 
@@ -51,7 +62,7 @@ class Tag < ApplicationRecord
   # Strips the tag's name and returns the color details if present
   # if no color information is found, returns a default value of #ccc
   def color()
-    name[/\A(!\h{6})_[[:word:]]+?\z/,1].try(:gsub, "!", "#") || "#555"
+    name[/\A(!\h{6})_[[:word:]]+?\z/, 1].try(:gsub, '!', '#') || '#555'
   end
 
   private

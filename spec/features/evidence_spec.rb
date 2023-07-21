@@ -45,9 +45,6 @@ describe 'evidence' do
       should have_selector 'p',  text: 'Issue info'
     end
 
-    let(:trackable) { @evidence }
-    it_behaves_like 'a page with an activity feed'
-
     let(:commentable) { @evidence }
     it_behaves_like 'a page with a comments feed'
 
@@ -82,8 +79,10 @@ describe 'evidence' do
 
     let(:model) { @evidence }
     include_examples 'nodes pages breadcrumbs', :show, Evidence
-  end
 
+    let(:record) { create(:evidence, issue: @issue, node: @node, content: "#[Title]#\nTitle\n\n#[Description]#\nLiquid: {{evidence.fields['Title']}}") }
+    include_examples 'liquid dynamic content', :evidence, true
+  end
 
   describe 'edit page', js: true do
     let(:submit_form) { click_button 'Update Evidence' }
@@ -147,7 +146,7 @@ describe 'evidence' do
       end
 
       it "doesn't update the evidence" do
-        expect{submit_form}.not_to change{@evidence.reload.content}
+        expect { submit_form }.not_to change { @evidence.reload.content }
       end
 
       include_examples "doesn't create an Activity"
@@ -167,7 +166,6 @@ describe 'evidence' do
       include_examples 'a form with local auto save', Evidence, :edit
     end
   end
-
 
   describe 'new page', js: true do
     let(:tmp_path) { Rails.root.join('spec/fixtures/files/templates/') }
@@ -211,7 +209,7 @@ describe 'evidence' do
         let(:new_evidence) { @node.evidence.order('created_at ASC').last }
 
         it 'creates a new piece of evidence authored by the current user' do
-          expect{submit_form}.to change{@node.evidence.count}.by(1)
+          expect { submit_form }.to change { @node.evidence.count }.by(1)
           expect(new_evidence.author).to eq @logged_in_as.email
           expect(new_evidence.issue).to eq @issue_1
         end
@@ -234,12 +232,12 @@ describe 'evidence' do
           fill_in :evidence_content, with: 'This is some evidence'
         end
 
-        it "creates a new issue" do
-          expect{submit_form}.to change{Issue.count}.by(1)
+        it 'creates a new issue' do
+          expect { submit_form }.to change { Issue.count }.by(1)
         end
 
-        it "creates a new piece of evidence" do
-          expect{submit_form}.to change{Evidence.count}.by(1)
+        it 'creates a new piece of evidence' do
+          expect { submit_form }.to change { Evidence.count }.by(1)
         end
 
         include_examples 'creates an Activity', :create, Evidence

@@ -35,7 +35,6 @@ class NotesController < NestedNodeResourceController
 
   # Retrieve a Note given its :id
   def show
-    @activities = @note.activities.latest
     load_conflicting_revisions(@note)
   end
 
@@ -83,17 +82,21 @@ class NotesController < NestedNodeResourceController
     end
   end
 
+  def liquid_resource_assigns
+    { 'note' => NoteDrop.new(@note) }
+  end
+
   def note_params
     params.require(:note).permit(:category_id, :text, :node_id)
   end
 
   def set_auto_save_key
-    @auto_save_key =  if @note&.persisted?
-                        "note-#{@note.id}"
-                      elsif params[:template]
-                        "node-#{@node.id}-note-#{params[:template]}"
-                      else
-                        "node-#{@node.id}-note"
-                      end
+    @auto_save_key = if @note&.persisted?
+      "note-#{@note.id}"
+    elsif params[:template]
+      "node-#{@node.id}-note-#{params[:template]}"
+    else
+      "node-#{@node.id}-note"
+    end
   end
 end

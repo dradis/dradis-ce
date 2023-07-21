@@ -7,7 +7,6 @@
 /db/*.sqlite3
 /db/*.sqlite3-*
 /config/database.yml
-/config/secrets.yml
 /config/smtp.yml
 /log/*
 /tmp/*
@@ -32,7 +31,6 @@
 /templates/
 /sample_files/
 /Gemfile.plugins
-/Gemfile.codeship
 
 # Vagrant
 .vagrant/

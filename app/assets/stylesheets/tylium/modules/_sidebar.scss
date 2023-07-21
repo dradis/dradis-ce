@@ -26,9 +26,8 @@
   }
 
   .nodes-nav {
-    margin: 2rem 0 0 0;
+    margin: 0;
     padding: 0;
-    width: 100%;
 
     .nodes-list {
       display: none;
@@ -68,7 +67,7 @@
         max-width: 230px;
         display: block;
         overflow: hidden;
-        
+
         &.active > a {
           color: $white;
         }
@@ -78,11 +77,16 @@
         max-height: calc(100vh - 330px - 1.5rem);
 
         .gradient {
-          background: linear-gradient(180deg, rgba($sidebarBackground, 0) 0%, rgba($sidebarBackground, 0.75) 50%, rgba($sidebarBackground, 1) 100%);
+          background: linear-gradient(
+            180deg,
+            rgba($sidebarBackground, 0) 0%,
+            rgba($sidebarBackground, 0.75) 50%,
+            rgba($sidebarBackground, 1) 100%
+          );
         }
 
         li {
-          padding-left: .5rem
+          padding-left: 0.5rem;
         }
 
         .line {
@@ -109,7 +113,7 @@
         .error {
           display: none;
         }
-  
+
         .node {
           padding-left: 0.5rem;
         }
@@ -135,7 +139,7 @@
 
         .add-node {
           margin-left: auto;
-  
+
           i {
             font-size: 1rem;
           }
@@ -153,11 +157,24 @@
     }
   }
 
+  .scrollable-content {
+    display: flex;
+    height: calc(100vh - #{$navbarHeight});
+    flex-direction: column;
+    overflow-y: auto;
+
+    &:has(.secondary-sidebar) {
+      .version {
+        background-color: $sidebarActiveColor;
+      }
+    }
+  }
+
   .sidebar-header {
     height: $navbarHeight;
     display: flex;
     align-items: center;
-    padding: 0 1.5rem;
+    padding: 0 1rem;
     width: 100%;
 
     .team-logo {
@@ -195,13 +212,13 @@
     position: relative;
     width: 100%;
     align-items: center;
-    padding: 0.6rem 1.5rem;
+    padding: 0.6rem 1rem;
     transition: all 0.2s ease-in-out;
-    
+
     &:hover {
-      background-color: $sidebarActiveColor;       
+      background-color: $sidebarActiveColor;
     }
-    
+
     .sidebar-link-icon {
       font-size: 1.6rem;
       transition: transform 0.5s ease-in-out;
@@ -217,6 +234,10 @@
   &.sidebar-collapsed {
     width: $sidebarCollapsed;
 
+    .secondary-sidebar {
+      display: none;
+    }
+
     .sidebar-link {
       flex-direction: column;
 
@@ -229,15 +250,16 @@
     .sidebar-toggle-link {
       padding-left: 0.8rem;
     }
-    
+
     .tree-header {
       cursor: pointer;
       transition: all 0.2s ease-in-out;
-      
+
       .sidebar-link-label-container {
         justify-content: center;
-        
-        .add-node {
+
+        .add-node,
+        .node-tree-dropdown {
           display: none;
         }
       }
@@ -262,23 +284,16 @@
     }
   }
 
-  .version-wrapper {
-    display: flex;
-    justify-content: center;
-    background: $sidebarBackground;
-
-    .version {
-      position: fixed;
-      bottom: 0;
-      text-align: center;
-      padding: 0.2em 0;
-      font-size: 10px;
-      cursor: default;
-    }
+  .version {
+    cursor: default;
+    font-size: 0.625rem;
+    margin-top: auto;
+    padding: 0.2em 0;
+    text-align: center;
   }
 }
 
-@include media-breakpoint-down(md) { 
+@include media-breakpoint-down(lg) {
   .main-sidebar {
     bottom: 0;
     display: flex;
@@ -303,8 +318,9 @@
       }
     }
 
-    .mobile-scroll {
+    .scrollable-content {
       display: flex;
+      flex-direction: row;
       overflow-x: auto;
     }
 
@@ -339,12 +355,13 @@
         .tree-header {
           .sidebar-link-label-container {
             justify-content: center;
-            
-            .add-node {
+
+            .add-node,
+            .node-tree-dropdown {
               display: none;
             }
           }
-    
+
           &:hover {
             background-color: $sidebarActiveColor;
             color: $white;
@@ -354,7 +371,7 @@
 
       .sidebar-link {
         flex-direction: column;
-  
+
         .sidebar-link-label {
           font-size: 0.75rem;
           margin: 0.25rem 0 0;
@@ -366,10 +383,10 @@
       display: none;
     }
 
-    .version-wrapper {
+    .version {
       display: none;
     }
-  }  
+  }
 
   .view-content {
     left: 0 !important;

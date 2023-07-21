@@ -30,7 +30,6 @@ shared_examples 'a form with local auto save' do |klass, action|
   before do
     add_users if klass == Card
     add_tags if klass == Issue
-    add_categories if klass == Note
 
     visit model_path
     click_link 'Source'
@@ -43,8 +42,6 @@ shared_examples 'a form with local auto save' do |klass, action|
       dropdown_toggle = page.find('.dropdown-toggle span.tag')
       dropdown_toggle.click
       click_on @tag_1.display_name
-    elsif klass == Note
-      select @category_1.name, from: :note_category_id
     end
 
     model_attributes.each do |model_attribute|
@@ -66,8 +63,6 @@ shared_examples 'a form with local auto save' do |klass, action|
           expect(page).to have_select('evidence_issue_id', selected: @issue_1.title)
         elsif klass == Issue
           expect(page).to have_button(@tag_1.display_name)
-        elsif klass == Note
-          expect(page).to have_select('note_category_id', selected: @category_1.name)
         end
       end
 
@@ -83,7 +78,9 @@ shared_examples 'a form with local auto save' do |klass, action|
 
   context 'when form is saved' do
     it 'clears cached data' do
-      page.find('input[type="submit"]').click
+      within '.content-container' do
+        page.find('[type="submit"]').click
+      end
       visit model_path
       click_link 'Source'
 
@@ -94,8 +91,6 @@ shared_examples 'a form with local auto save' do |klass, action|
           expect(page).to have_select('evidence_issue_id', selected: 'Auto-generate a new issue')
         elsif klass == Issue
           expect(page).to have_css('.dropdown-toggle span.tag', text: 'No tag')
-        elsif klass == Note
-          expect(page).to have_select('note_category_id', selected: 'Assign note category')
         end
       end
 
@@ -158,7 +153,9 @@ shared_examples 'a form with local auto save' do |klass, action|
           # Fixed weird bug where submit button not in viewport for Card form
           page.execute_script('$("#view-content").scrollTop(10000)')
 
-          page.find('input[type="submit"]').click
+          within '.content-container' do
+            page.find('[type="submit"]').click
+          end
           visit "#{model_path}?template=simple_note"
           click_link 'Source'
 

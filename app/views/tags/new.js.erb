@@ -1,0 +1,2 @@
+$('[data-behavior~=modal-tag-form]').modal('show');
+$('[data-behavior~=modal-tag-content]').html("<%= j (render partial: 'form', locals: { header: 'Add new tag', url: project_tags_path(current_project),  method: :post }) %>");

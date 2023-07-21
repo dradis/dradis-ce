@@ -7,11 +7,10 @@
   } do %>
   <%= div_for comment, data: { author_id: comment.user_id } do %>
     <div class="body">
-      <%= avatar_image(comment.user, size: 35) %>
-
-      <div>
-        <div class="row">
-          <div class="col-12 p-0">
+      <div class="d-flex">
+        <%= avatar_image(comment.user, size: 35) %>
+        <div class="w-100">
+          <div class="d-flex justify-content-between">
             <span class="user">
               <% if comment.user %>
                 <%= comment.user.name %>
@@ -19,31 +18,24 @@
                 Missing User
               <% end %>
             </span>
-
-
-            <div class="actions pull-right">
+            <div class="actions">
               <%= link_to main_app.edit_comment_path(comment), remote: true, data: { action: 'edit' } do %>
-                <i class="fa fa-pencil"></i> Edit
+                <i class="fa-solid fa-pencil"></i> Edit
               <% end %>
               <%= link_to main_app.comment_path(comment),
                           method: :delete,
                           data: { confirm: "Are you sure?\n\nProceeding will delete this comment, making it no longer visible to anyone." },
                           remote: true,
                           class: 'text-error' do %>
-                <i class="fa fa-trash"></i> Delete
+                <i class="fa-solid fa-trash"></i> Delete
               <% end %>
             </div>
           </div>
-        </div>
-
-        <div class="row">
           <span class="time">
             <%= link_to local_time_ago(comment.created_at), "##{dom_id(comment)}", data: { turbolinks: false } %>
           </span>
         </div>
-
       </div>
-
       <div class="content content-textile" data-behavior="content-textile">
         <%= comment_formatter(comment.content) %>
       </div>

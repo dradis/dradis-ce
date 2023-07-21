@@ -1,0 +1,33 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="modal-board-header"><%= header %></h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">
+    <span class="visually-hidden">Close modal</span>
+  </button>
+</div>
+<%= form_for @tag, url: url, method: method do |f| %>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-10">
+        <div class="mb-3">
+          <%= f.label :name, class: 'form-label' do %>
+            Name <span class="required-input">*</span>
+          <% end %>
+          <%= f.text_field :name, value: @tag.new_record? ? '' : @tag.display_name, required: true, class: 'form-control' %>
+          <span class="small text-muted mt-1">A-Z only. No special characters or numbers.</span>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="mb-3">
+          <%= f.label :color, class: 'form-label d-block' do %>
+            Color <span class="required-input">*</span>
+          <% end %>
+          <%= f.color_field :color, value: @tag.new_record? ? '' : @tag.color, required: true, class: 'form-control color-picker' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <%= f.submit class: 'btn btn-primary' %>
+    <button class="btn" type="button" data-bs-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+<% end %>

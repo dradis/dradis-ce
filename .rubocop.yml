@@ -1,11 +1,12 @@
 AllCops:
-  TargetRubyVersion: 2.4
   # RuboCop has a bunch of cops enabled by default. This setting tells RuboCop
   # to ignore them, so only the ones explicitly set in this file are enabled.
   DisabledByDefault: true
+  SuggestExtensions: false
   Exclude:
     - '**/templates/**/*'
     - '**/vendor/**/*'
+    - 'db/schema.rb'
 
 # Prefer &&/|| over and/or.
 Style/AndOr:
@@ -13,7 +14,7 @@ Style/AndOr:
 
 # Do not use braces for hash literals when they are the last argument of a
 # method call.
-Style/BracesAroundHashParameters:
+Style/HashAsLastArrayItem:
   Enabled: true
 
 # Align `when` with `case`.
@@ -43,12 +44,13 @@ Layout/EmptyLinesAroundMethodBody:
 Layout/EmptyLinesAroundModuleBody:
   Enabled: true
 
-Layout/IndentFirstArgument:
+Layout/FirstArgumentIndentation:
   Enabled: true
 
 # Use Ruby >= 1.9 syntax for hashes. Prefer { a: :b } over { :a => :b }.
 Style/HashSyntax:
   Enabled: true
+  EnforcedShorthandSyntax: never
 
 # Method definitions after `private` or `protected` isolated calls need one
 # extra level of indentation.
@@ -82,10 +84,6 @@ Layout/SpaceBeforeFirstArg:
 Style/MethodDefParentheses:
   Enabled: true
 
-Style/FrozenStringLiteralComment:
-  Enabled: true
-  EnforcedStyle: always
-
 # Use `foo {}` not `foo{}`.
 Layout/SpaceBeforeBlockBraces:
   Enabled: true
@@ -107,11 +105,11 @@ Style/StringLiterals:
   EnforcedStyle: single_quotes
 
 # Detect hard tabs, no hard tabs.
-Layout/Tab:
+Layout/IndentationStyle:
   Enabled: true
 
 # Blank lines should not have any spaces.
-Layout/TrailingBlankLines:
+Layout/TrailingEmptyLines:
   Enabled: true
 
 # No trailing whitespace.
@@ -119,7 +117,7 @@ Layout/TrailingWhitespace:
   Enabled: true
 
 # Use quotes for string literals when they are enough.
-Style/UnneededPercentQ:
+Style/RedundantPercentQ:
   Enabled: true
 
 # Align `end` with the matching keyword or starting expression except for
@@ -131,4 +129,3 @@ Layout/EndAlignment:
 # Use my_method(my_arg) not my_method( my_arg ) or my_method my_arg.
 Lint/RequireParentheses:
   Enabled: true
-

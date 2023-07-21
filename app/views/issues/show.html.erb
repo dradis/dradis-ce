@@ -13,20 +13,22 @@
 <% end %>
 
 <!-- Main content -->
-<div class="row m-0">
-  <ul class="tabs-container nav nav-tabs main-tabs w-100">
-    <li class="nav-item"><a href="#info-tab" data-toggle="tab" class="nav-link <%= class_names(active: !params[:tab]) %>"><%= tag_and_name_for(@issue, true) %></a></li>
-    <li class="nav-item"><a href="#evidence-tab" class="nav-link <%= class_names(active: params[:tab] == 'evidence-tab') %>" data-toggle="tab"><i class="fa fa-laptop"></i> Evidence <span class="badge bg-primary text-white" data-behavior="evidence-count"><%= @issue.evidence.count %></span></a></li>
-    <li class="nav-item"><a href="#activity-tab" class="nav-link" data-toggle="tab"><i class="fa fa-rss"></i> Recent activity</a></li>
-    <%= render_view_hooks 'issues/show-tabs' %>
-  </ul>
-</div>
+<ul class="tabs-container nav nav-tabs main-tabs">
+  <li class="nav-item">
+    <a href="#info-tab" data-bs-toggle="tab" class="nav-link active">
+      <%= tag_and_name_for(@issue) %>
+      <%= "(#{@issue.state.humanize})" %>
+    </a>
+  </li>
+  <li class="nav-item"><a href="#evidence-tab" class="nav-link" data-bs-toggle="tab"><i class="fa-solid fa-laptop"></i> Evidence <span class="badge bg-primary text-white" data-behavior="evidence-count"><%= @issue.evidence.count %></span></a></li>
+  <%= render_view_hooks 'issues/show-tabs' %>
+</ul>
 
 <div class="row m-0">
   <div class="col-12 col-xxl-7 p-0">
-    <div class="content-container mt-0 pb-3 mr-xxl-3">
+    <div class="content-container mt-0 pb-3 me-xxl-3">
       <div class="tab-content mt-0">
-        <div class="tab-pane <%= class_names(active: !params[:tab]) %>" id="info-tab">
+        <div class="tab-pane active" id="info-tab">
           <% cache ['issue-information-tab', @issue] do %>
             <div class="note-text-inner">
               <h4 class="mb-4 header-underline">
@@ -37,13 +39,13 @@
                 <%= markup(@issue.text, liquid: true) %>
               </div>
               <div class="author-info">
-                <span class="ml-auto">Author: <%= @issue.author || 'n/a' %></span>
+                <span class="ms-auto">Author: <%= @issue.author || 'n/a' %></span>
               </div>
             </div>
           <% end %>
         </div>
 
-        <div class="tab-pane <%= class_names(active: params[:tab] == 'evidence-tab') %>" id="evidence-tab">
+        <div class="tab-pane" id="evidence-tab">
           <%=
             content_tag :div,
             spinner_tag,
@@ -54,12 +56,6 @@
           %>
         </div>
 
-        <% cache ['issue-activity-tab', @issue, @activities] do %>
-          <div class="tab-pane" id="activity-tab">
-            <%= render partial: 'activity' %>
-          </div>
-        <% end %>
-
         <%= render_view_hooks 'issues/show-content' %>
       </div>
     </div>
@@ -67,7 +63,7 @@
 
   <div class="col-12 col-xxl-5 p-0">
     <div class="sticky-top">
-      <div class="content-container ml-xxl-3 mt-0">
+      <div class="content-container ms-xxl-3 mt-0">
         <%= content_tag :div,
           spinner_tag,
           data: {
@@ -84,7 +80,7 @@
         <%= render_view_hooks('issues/comments') %>
       </div>
 
-      <div class="content-container ml-xxl-3">
+      <div class="content-container ms-xxl-3">
         <%= content_tag :div,
           spinner_tag,
           data: {

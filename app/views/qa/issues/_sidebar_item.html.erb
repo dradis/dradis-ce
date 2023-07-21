@@ -1,0 +1,12 @@
+<%= content_tag :div, id: "#{dom_id(record)}_link", class: class_names('list-item', active: params[:id].to_i == record.id) do %>
+  <%= link_to project_qa_issue_path(current_project, record) do %>
+    <%= colored_icon_for_model(record, 'fa-bug', 'list-item-icon') %>
+    <%= record.title %>
+  <% end %>
+
+  <div class="list-item-actions">
+    <%= link_to edit_project_qa_issue_path(current_project, record), class:'list-item-action-edit' do %>
+      <i class="fa-solid fa-pencil"></i> Edit
+    <% end %>
+  </div>
+<% end %>

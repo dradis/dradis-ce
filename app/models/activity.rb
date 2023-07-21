@@ -17,14 +17,14 @@ class Activity < ApplicationRecord
 
   validates_presence_of :action, :trackable_id, :trackable_type, :user
 
-  VALID_ACTIONS = %w[create update destroy recover]
+  VALID_ACTIONS = %w[create destroy recover state_change update]
 
   validates_inclusion_of :action, in: VALID_ACTIONS
 
   # -- Scopes ---------------------------------------------------------------
 
   scope :latest, -> do
-    includes(:trackable).order("activities.created_at DESC").limit(20)
+    includes(:trackable).order('activities.created_at DESC').limit(20)
   end
 
   # -- Callbacks ------------------------------------------------------------
@@ -45,7 +45,7 @@ class Activity < ApplicationRecord
   # FIXME - ISSUE/NOTE INHERITANCE
   def trackable=(new_trackable)
     super
-    self.trackable_type = "Issue" if new_trackable.is_a?(Issue)
+    self.trackable_type = 'Issue' if new_trackable.is_a?(Issue)
     new_trackable
   end
 

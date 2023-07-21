@@ -45,6 +45,26 @@ describe 'Issues pages' do
           end
         end
 
+        context 'bulk state update', js: true do
+          it 'updates the list of records with the state' do
+            issue = create(:issue, node: current_project.issue_library)
+            new_state = 'Ready for review'
+
+            visit project_issues_path(current_project)
+
+            within '.dataTables_wrapper' do
+              page.find('td.select-checkbox', match: :first).click
+              click_button('State')
+              click_link(new_state)
+            end
+
+            expect(page).to have_selector('.alert-success', text: 'State updated successfully.')
+            expect(issue.reload.state).to eq new_state.downcase.gsub(' ', '_')
+            within 'tbody tr', match: :first do
+              expect(page).to have_content(new_state)
+            end
+          end
+        end
       end
 
       describe 'new page', js: true do
@@ -74,6 +94,33 @@ describe 'Issues pages' do
 
           include_examples 'creates an Activity', :create, Issue
 
+          context 'with states' do
+            it 'creates a new draft Issue' do
+              expect { submit_form }.to change { current_project.issues.count }.by(1)
+              issue = current_project.issues.last
+              expect(issue.state).to eq('draft')
+            end
+
+            it 'creates a new ready for review Issue' do
+              within '.btn-states' do
+                click_button 'Toggle Dropdown'
+                find('p[data-behavior="state-label"]', text: 'Ready for review').click
+              end
+              expect { submit_form }.to change { current_project.issues.count }.by(1)
+              issue = current_project.issues.last
+              expect(issue.state).to eq('ready_for_review')
+            end
+
+            it 'creates a new published Issue' do
+              within '.btn-states' do
+                click_button 'Toggle Dropdown'
+                find('p[data-behavior="state-label"]', text: 'Published').click
+              end
+              expect { submit_form }.to change { current_project.issues.count }.by(1)
+              issue = current_project.issues.last
+              expect(issue.state).to eq('published')
+            end
+          end
         end
 
         context 'submitting the form with invalid information' do
@@ -193,6 +240,38 @@ describe 'Issues pages' do
             end
           end
 
+          context 'with states' do
+            it 'updates the issue\'s state to draft' do
+              within '.btn-states' do
+                click_button 'Toggle Dropdown'
+                find('p[data-behavior="state-label"]', text: 'Draft').click
+              end
+              submit_form
+              expect(@issue.reload.state).to eq('draft')
+            end
+
+            it 'updates the issue\'s state to ready for review' do
+              within '.btn-states' do
+                click_button 'Toggle Dropdown'
+                find('p[data-behavior="state-label"]', text: 'Ready for review').click
+              end
+              submit_form
+              expect(@issue.reload.state).to eq('ready_for_review')
+            end
+
+            it 'updates the issue\'s state to published' do
+              @issue = create(:issue, node: issuelib, updated_at: 2.seconds.ago, state: 'draft')
+              visit edit_project_issue_path(current_project, @issue)
+
+              within '.btn-states' do
+                click_button 'Toggle Dropdown'
+                find('p[data-behavior="state-label"]', text: 'Published').click
+              end
+              submit_form
+              expect(@issue.reload.state).to eq('published')
+            end
+          end
+
           let(:column) { :text }
           let(:record) { @issue }
           it_behaves_like 'a page which handles edit conflicts'
@@ -274,8 +353,8 @@ describe 'Issues pages' do
           it 'presents the table of hosts affected by a given issue', js: true do
             click_link 'Evidence'
             expect(page).to have_selector('[data-behavior~=dradis-datatable]')
-            expect(find('.secondary-sidebar-content')).to have_content('10.0.0.1')
-            expect(find('.secondary-sidebar-content')).to have_content('10.0.0.2', count: 3)
+            expect(find('#evidence-tab')).to have_content('10.0.0.1')
+            expect(find('#evidence-tab')).to have_content('10.0.0.2', count: 3)
           end
 
           it 'presents the evidence of the other nodes on click', js: true do
@@ -285,9 +364,6 @@ describe 'Issues pages' do
             expect(page).to have_content('This apache is old (0)!')
           end
         end
-
-        let(:trackable) { @issue }
-        it_behaves_like 'a page with an activity feed'
 
         let(:commentable) { @issue }
         it_behaves_like 'a page with a comments feed'
@@ -305,7 +381,7 @@ describe 'Issues pages' do
                 click_link 'Delete'
               end
             end
-            expect(page).to have_text "Issue deleted." # forces waiting
+            expect(page).to have_text 'Issue deleted.' # forces waiting
           end
 
           it 'deletes the issue' do
@@ -320,6 +396,15 @@ describe 'Issues pages' do
           include_examples 'deleted item is listed in Trash', :issue
           include_examples 'recover deleted item', :issue
         end
+
+        context 'with states' do
+          it 'shows the issue states in the view' do
+            expect(page).to have_text "(#{@issue.state.humanize})"
+          end
+        end
+
+        let(:record) { create(:issue, node: issuelib, updated_at: 2.seconds.ago, text: "#[Title]#\nTitle\n\n#[Description]#\nLiquid: {{issue.fields['Title']}}") }
+        include_examples 'liquid dynamic content', :issue, false
       end
     end
 

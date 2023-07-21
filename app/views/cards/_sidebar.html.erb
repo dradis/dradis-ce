@@ -1,19 +1,21 @@
 <div class="note-list">
-  <%= content_tag :div, id: 'issue_summary_link', class: current_page?(main_app.project_board_path(current_project, @board)) ? 'p-2 mb-2 active' : 'p-2 mb-2' do %>
-    <%= link_to project_board_path(current_project, @board), class: 'summary-link' do %>
-      <i class="fa fa-arrow-left"></i> Back to board view
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <%= content_tag :div, class: class_names(active: current_page?(main_app.project_board_path(current_project, @board))) do %>
+      <%= link_to project_board_path(current_project, @board), class: 'summary-link text-truncate' do %>
+        <i class="fa-brands fa-trello"></i> <%= @board.name %>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 </div>
 
-<!-- Cards -->
-<%=
-  render 'shared/sidebar_collection',
+<div class="inner-content">
+  <%= render 'shared/sidebar_collection',
     category_id: nil,
     collection: @sorted_cards,
     name: 'Tasks',
     new_path: new_project_board_list_card_path(current_project, @board, @list, @card)
-%>
+  %>
 
-<!-- Attachments -->
-<%= render partial: 'attachments/attachment_box', locals: { attachments_node: current_project.plugin_uploads_node } %>
+  <!-- Attachments -->
+  <%= render partial: 'attachments/attachment_box', locals: { attachments_node: current_project.plugin_uploads_node } %>
+</div>

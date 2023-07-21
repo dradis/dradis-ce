@@ -11,10 +11,12 @@ class CardsController < AuthenticatedController
   before_action :initialize_sidebar, only: [:show, :new, :edit]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
 
+  # Not at top because we need board and list set first
+  include ValidateMove
+
   layout 'cards'
 
   def show
-    @activities   = @card.activities.latest
     render layout: !request.xhr?
   end
 
@@ -33,7 +35,7 @@ class CardsController < AuthenticatedController
       redirect_to [current_project, @board, @list, @card], notice: 'Task added.'
     else
       initialize_sidebar
-      render "new"
+      render 'new'
     end
   end
 
@@ -46,19 +48,15 @@ class CardsController < AuthenticatedController
       redirect_to [current_project, @board, @list, @card], notice: 'Task updated.'
     else
       initialize_sidebar
-      render "edit"
+      render 'edit'
     end
   end
 
   def move
-    List.move(
-      @card,
-      prev_item: @board.cards.find_by(id: params[:prev_id]),
-      next_item: @board.cards.find_by(id: params[:next_id])
-    )
+    List.move(@card, prev_item: @prev_item, next_item: @next_item)
 
-    if params[:new_list_id]
-      @card.list = @board.lists.find(params[:new_list_id])
+    if new_list
+      @card.list = new_list
       @card.save
     end
 
@@ -87,6 +85,13 @@ class CardsController < AuthenticatedController
     params.require(:card).permit(:name, :description, :due_date, assignee_ids: [])
   end
 
+  def move_params
+    params.
+      permit(:id, :project_id, :board_id, :list_id,
+        :next_id, :prev_id, :new_list_id
+      )
+  end
+
   def initialize_sidebar
     @sorted_cards = @list.ordered_cards.select(&:persisted?)
   end
@@ -106,12 +111,16 @@ class CardsController < AuthenticatedController
   end
 
   def set_auto_save_key
-    @auto_save_key =  if @card&.persisted?
-                        "card-#{@card.id}"
-                      elsif params[:template]
-                        "#{@list.id}-card-#{params[:template]}"
-                      else
-                        "#{@list.id}-card"
-                      end
+    @auto_save_key = if @card&.persisted?
+      "card-#{@card.id}"
+    elsif params[:template]
+      "#{@list.id}-card-#{params[:template]}"
+    else
+      "#{@list.id}-card"
+    end
+  end
+
+  def new_list
+    @board.lists.find(move_params[:new_list_id]) if move_params[:new_list_id]
   end
 end

@@ -18,6 +18,12 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :multiple_update do
+    collection do
+      patch :multiple_update
+    end
+  end
+
   resources :notifications, only: [:index, :update]
 
   resources :projects, only: [:index, :show] do
@@ -41,7 +47,7 @@ Rails.application.routes.draw do
       resources :configurations, only: [:index, :update]
     end
 
-    post :create_multiple_evidence, to: 'evidence#create_multiple'
+    post :create_multiple_evidence, to: 'issues/evidence#create_multiple'
 
     resources :issues, concerns: :multiple_destroy do
       collection do
@@ -93,14 +99,17 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
+    resources :tags, except: [:show]
+
+    namespace :qa do
+      resources :issues, only: [:edit, :index, :show, :update], concerns: :multiple_update
+    end
+
     get 'search' => 'search#index'
     get 'trash' => 'revisions#trash'
 
     # ------------------------------------------------------- Export Manager
-    get  '/export'                   => 'export#index',             as: :export_manager
-    post '/export'                   => 'export#create'
-    get  '/export/validate'          => 'export#validate',          as: :validate_export
-    get  '/export/validation_status' => 'export#validation_status', as: :validation_status
+    get  '/export' => 'export#index', as: :export_manager
 
     # ------------------------------------------------------- Upload Manager
     get  '/upload'        => 'upload#index',  as: :upload_manager
@@ -108,7 +117,7 @@ Rails.application.routes.draw do
     post '/upload/parse'  => 'upload#parse'
 
     if Rails.env.development?
-      get '/styles'          => 'styles_tylium#index'
+      get '/styles' => 'styles_tylium#index'
     end
   end
 
