@@ -22,7 +22,7 @@
     - [API entity]:
       - [future tense verb] [API enhancement]
   - Security Fixes:
-    - High: Authenticated (author) broken access control: read access to system files
+    - Medium: Authenticated (author) broken access control: read access to system files
 
 v4.9.0 (June 2023)
   - Tylium: Extend support for Liquid Dynamic Content
