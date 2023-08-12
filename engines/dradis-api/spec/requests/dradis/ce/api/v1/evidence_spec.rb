@@ -5,6 +5,7 @@ describe 'Evidence API' do
   include_context 'project scoped API'
   include_context 'https'
 
+  let(:api_version) { 1 }
   let(:node)  { create(:node, project: current_project) }
   let(:issue) { create(:issue, node: current_project.issue_library) }
 
