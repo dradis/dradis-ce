@@ -7,16 +7,18 @@ module Dradis::CE::API
       before_action :set_board
 
       def index
-        @lists = @board.lists.order('updated_at desc')
+        @lists = @board.lists.includes(:cards, cards: :assignees).order('updated_at desc')
         @lists = @lists.page(params[:page].to_i) if params[:page]
       end
 
       def show
-        @list = @board.lists.find(params[:id])
+        @list = @board.lists.includes(:cards, cards: :assignees).find(params[:id])
       end
 
       def create
         @list = @board.lists.build(list_params)
+        @list.previous_id = @board.last_list.try(:id)
+
         if @list.save
           track_created(@list)
           render status: 201, location: board_list_path(@board, @list)
@@ -45,7 +47,7 @@ module Dradis::CE::API
       private
 
       def set_board
-        @board = current_project.boards.find(params[:board_id])
+        @board = current_project.boards.includes(:lists).find(params[:board_id])
       end
 
       def list_params
