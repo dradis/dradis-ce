@@ -19,7 +19,8 @@ comments in the v1 controllers/ files for guidance on what to include in the
 deprecated files.
 - You'll also need to duplicate the routes block, and update the :default route
 constraint to point to the new version.
-- You'll need to duplicate the request specs too.
+- You'll need to duplicate the request specs too. Update the previous specs w/
+a `let(:api_version)` block.
 - Update the engine's CHANGELOG w/ a list of the breaking changes.
 
 
