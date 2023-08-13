@@ -27,7 +27,7 @@ module Dradis::CE::API
       def update
         @board = current_project.boards.find(params[:id])
         if @board.update(board_params)
-          track_updated(@nboard)
+          track_updated(@board)
           render board: @board
         else
           render_validation_errors(@board)
@@ -37,7 +37,7 @@ module Dradis::CE::API
       def destroy
         board = current_project.boards.find(params[:id])
         board.destroy
-        track_destroyed(destroy)
+        track_destroyed(board)
         render_successful_destroy_message
       end
 
