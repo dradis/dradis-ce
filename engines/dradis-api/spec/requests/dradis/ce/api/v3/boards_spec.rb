@@ -69,62 +69,59 @@ describe 'Boards API' do
       end
     end
 
-    describe 'POST /api/boards', skip: true do
-      let!(:parent_node_id) { Project.new.plugin_parent_node.id }
+    describe 'POST /api/boards' do
       let(:valid_post) do
-        post '/api/nodes', params: valid_params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
+        post '/api/boards', params: valid_params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
       end
       let(:valid_params) do
         {
-          node: {
-            label:     'New Node',
-            type_id:   Node::Types::HOST,
-            parent_id: parent_node_id,
-            position:  3
+          board: {
+            name: 'New Board',
+            node_id: current_project.methodology_library.id
           }
         }
       end
 
-      it 'creates a new node' do
-        expect{valid_post}.to change{Node.count}.by(1)
+      it 'creates a new board' do
+        expect{valid_post}.to change{Board.count}.by(1)
         expect(response.status).to eq(201)
 
-        retrieved_node = JSON.parse(response.body)
+        retrieved_board = JSON.parse(response.body)
 
-        expect(response.location).to eq(dradis_api.node_url(retrieved_node['id']))
+        expect(response.location).to eq(dradis_api.board_url(retrieved_board['id']))
 
-        valid_params[:node].each do |attr, value|
-          expect(retrieved_node[attr.to_s]).to eq value
+        valid_params[:board].each do |attr, value|
+          expect(retrieved_board[attr.to_s]).to eq value
         end
       end
 
       # Activity shared example was originally written for feature requests and
       # expects a 'submit_form' let variable to be defined:
       let(:submit_form) { valid_post }
-      include_examples 'creates an Activity', :create, Node
+      include_examples 'creates an Activity', :create, Board
 
       it 'throws 415 unless JSON is sent' do
-        params = { node: { } }
+        params = { board: { } }
         post '/api/boards', params: params, env: @env
         expect(response.status).to eq(415)
       end
 
-      it 'throws 422 if node is invalid' do
-        params = { node: { label: '' } }
-        post '/api/nodes', params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
+      it 'throws 422 if board is invalid' do
+        params = { board: { name: '' } }
+        post '/api/boards', params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
         expect(response.status).to eq(422)
       end
 
-      it 'throws 422 if no :node param is sent' do
+      it 'throws 422 if no :board param is sent' do
         params = { }
-        post '/api/nodes', params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
+        post '/api/boards', params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
         expect(response.status).to eq(422)
       end
 
       it 'throws 400 if invalid JSON is sent' do
         invalid_tokens = ', , '
-        json_payload = %Q|{"node":{"label":"A malformed label"#{ invalid_tokens }}}|
-        post '/api/nodes', params: json_payload, env: @env.merge('CONTENT_TYPE' => 'application/json')
+        json_payload = %Q|{"board":{"name":"A malformed name"#{ invalid_tokens }}}|
+        post '/api/boards', params: json_payload, env: @env.merge('CONTENT_TYPE' => 'application/json')
         expect(response.status).to eq(400)
       end
     end
