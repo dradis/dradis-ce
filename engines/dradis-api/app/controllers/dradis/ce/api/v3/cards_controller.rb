@@ -17,7 +17,7 @@ module Dradis::CE::API
       end
 
       def create
-        @card = @list.build(card_params)
+        @card = @list.cards.build(card_params)
         # Set the new card as the last card of the list
         @card.previous_id = @list.last_card.try(:id)
 
@@ -30,7 +30,7 @@ module Dradis::CE::API
       end
 
       def update
-        @card = @list.find(params[:id])
+        @card = @list.cards.find(params[:id])
         if @card.update(card_params)
           track_updated(@card)
           render list: @card
@@ -40,7 +40,7 @@ module Dradis::CE::API
       end
 
       def destroy
-        @card = @list.find(params[:id])
+        @card = @list.cards.find(params[:id])
         @card.destroy
         track_destroyed(@card)
         render_successful_destroy_message
