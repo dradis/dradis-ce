@@ -29,19 +29,18 @@ describe 'Cards API' do
   context 'as authorized user' do
     include_context 'authorized API user'
 
-    describe 'GET /api/boards/:node_id/evidence', pending: true do
+    describe 'GET /api/boards/:board_id/lists/:list_id/cards' do
       before do
-        @issues = create_list(:issue, 4, node: current_project.issue_library)
-        @evidence = [
-          Evidence.create!(node: node, content: "#[a]#\nA", issue: @issues[0]),
-          Evidence.create!(node: node, content: "#[b]#\nB", issue: @issues[1]),
-          Evidence.create!(node: node, content: "#[c]#\nC", issue: @issues[2]),
-        ] << create_list(:evidence, 30, issue: @issues[3], node: node)
-        @other_evidence = create(:evidence, issue: issue, node: current_project.issue_library)
-        get "/api/nodes/#{node.id}/evidence?#{params}", env: @env
+        @cards = [
+          Card.create!(list: list, description: "#[a]#\nA", name: 'Card A'),
+          Card.create!(list: list, description: "#[b]#\nB", name: 'Card B'),
+          Card.create!(list: list, description: "#[c]#\nC", name: 'Card C'),
+        ] + create_list(:card, 30, list: list)
+        @other_card = create(:card, list: create(:list, board: board))
+        get "/api/boards/#{board.id}/lists/#{list.id}/cards?#{params}", env: @env
       end
 
-      let(:retrieved_evidence) { JSON.parse(response.body) }
+      let(:retrieved_cards) { JSON.parse(response.body) }
 
       context 'without params' do
         let(:params) { '' }
@@ -50,34 +49,33 @@ describe 'Cards API' do
           expect(response.status).to eq(200)
         end
 
-        it 'retrieves all the evidence for the given node' do
-          expect(retrieved_evidence.count).to eq 33
-          issue_titles = retrieved_evidence.map { |json| json['issue']['title'] }.uniq
-          expect(issue_titles).to match_array @issues.map(&:title)
+        it 'retrieves all the cards for the given list' do
+          expect(retrieved_cards.count).to eq 33
+          card_names = retrieved_cards.map { |json| json['name'] }
+          expect(card_names).to match_array @cards.map(&:name)
         end
 
-        it 'returns JSON data about the evidence\'s fields and issue' do
-          ev_0 = retrieved_evidence.find { |n| n['issue']['id'] == @issues[0].id }
-          ev_1 = retrieved_evidence.find { |n| n['issue']['id'] == @issues[1].id }
-          ev_2 = retrieved_evidence.find { |n| n['issue']['id'] == @issues[2].id }
+        it 'returns JSON data about the cards\'s fields' do
+          ev_0 = retrieved_cards.find { |n| n['id'] == @cards[0].id }
+          ev_1 = retrieved_cards.find { |n| n['id'] == @cards[1].id }
+          ev_2 = retrieved_cards.find { |n| n['id'] == @cards[2].id }
 
           expect(ev_0['fields'].keys).to \
-            match_array (@evidence[0].local_fields.keys << 'a')
+            match_array (@cards[0].local_fields.keys << 'a')
           expect(ev_0['fields']['a']).to eq 'A'
-          expect(ev_0['issue']['title']).to eq @issues[0].title
+
           expect(ev_1['fields'].keys).to \
-            match_array (@evidence[2].local_fields.keys << 'b')
+            match_array (@cards[2].local_fields.keys << 'b')
           expect(ev_1['fields']['b']).to eq 'B'
-          expect(ev_1['issue']['title']).to eq @issues[1].title
+
           expect(ev_2['fields'].keys).to \
-            match_array (@evidence[2].local_fields.keys << 'c')
+            match_array (@cards[2].local_fields.keys << 'c')
           expect(ev_2['fields']['c']).to eq 'C'
-          expect(ev_2['issue']['title']).to eq @issues[2].title
         end
 
-        it 'doesn\'t return evidence from other nodes' do
-          retrieved_ids = retrieved_evidence.map { |n| n['id'] }
-          expect(retrieved_ids).not_to include @other_evidence.id
+        it 'doesn\'t return cards from other lists' do
+          retrieved_ids = retrieved_cards.map { |n| n['id'] }
+          expect(retrieved_ids).not_to include @other_card.id
         end
       end
 
@@ -85,7 +83,7 @@ describe 'Cards API' do
         let(:params) { 'page=2' }
 
         it 'returns the paginated evidence' do
-          expect(retrieved_evidence.count).to eq 8
+          expect(retrieved_cards.count).to eq 8
 
         end
       end

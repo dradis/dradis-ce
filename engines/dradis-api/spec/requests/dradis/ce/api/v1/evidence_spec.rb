@@ -39,7 +39,7 @@ describe 'Evidence API' do
           Evidence.create!(node: node, content: "#[a]#\nA", issue: @issues[0]),
           Evidence.create!(node: node, content: "#[b]#\nB", issue: @issues[1]),
           Evidence.create!(node: node, content: "#[c]#\nC", issue: @issues[2]),
-        ] << create_list(:evidence, 30, issue: @issues[3], node: node)
+        ] + create_list(:evidence, 30, issue: @issues[3], node: node)
         @other_evidence = create(:evidence, issue: issue, node: current_project.issue_library)
         get "/api/nodes/#{node.id}/evidence?#{params}", env: @env
       end
