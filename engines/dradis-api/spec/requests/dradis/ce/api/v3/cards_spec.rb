@@ -82,7 +82,7 @@ describe 'Cards API' do
       context 'with params' do
         let(:params) { 'page=2' }
 
-        it 'returns the paginated evidence' do
+        it 'returns the paginated card' do
           expect(retrieved_cards.count).to eq 8
 
         end
@@ -121,7 +121,7 @@ describe 'Cards API' do
       context 'when content_type header = application/json' do
         include_context 'content_type: application/json'
 
-        context 'with params for a valid evidence' do
+        context 'with params for a valid card' do
           let(:params) { { card: { description: 'New description', name: 'New name' } } }
 
           it 'responds with HTTP code 201' do
@@ -141,7 +141,7 @@ describe 'Cards API' do
           include_examples 'sets the whodunnit', :create, Card
         end
 
-        context 'with params for an invalid evidence' do
+        context 'with params for an invalid card' do
           let(:params) { { card: { description: 'New card' } } } # no name or list
 
           it 'responds with HTTP code 422' do
@@ -157,7 +157,7 @@ describe 'Cards API' do
         context 'when no :card param is sent' do
           let(:params) { {} }
 
-          it "doesn't create an evidence" do
+          it "doesn't create an card" do
             expect { post_card }.not_to change { Card.count }
           end
 
@@ -204,12 +204,12 @@ describe 'Cards API' do
             expect(response.status).to eq 200
           end
 
-          it 'updates the evidence' do
+          it 'updates the card' do
             put_card
             expect(card.reload.description).to eq 'New description'
           end
 
-          it 'returns the attributes of the updated evidence as JSON' do
+          it 'returns the attributes of the updated card as JSON' do
             put_card
             retrieved_card = JSON.parse(response.body)
             expect(retrieved_card['description']).to eq 'New description'
@@ -229,7 +229,7 @@ describe 'Cards API' do
             expect(response.status).to eq 422
           end
 
-          it "doesn't update the evidence" do
+          it "doesn't update the card" do
             expect { put_card }.not_to change { card.reload.attributes }
           end
         end

@@ -112,62 +112,60 @@ describe 'Lists API' do
       end
     end
 
-    describe 'POST /api/boards/:board_id/lists/:list_id/cards', pending: true do
-      let(:url) { "/api/boards/#{board.id}/lists/#{list.id}/cards" }
-      let(:post_card) { post url, params: params.to_json, env: @env }
+    describe 'POST /api/boards/:board_id/lists' do
+      let(:url) { "/api/boards/#{board.id}/lists" }
+      let(:post_list) { post url, params: params.to_json, env: @env }
 
       context 'when content_type header = application/json' do
         include_context 'content_type: application/json'
 
-        context 'with params for a valid evidence' do
-          let(:params) { { card: { description: 'New description', name: 'New name' } } }
+        context 'with params for a valid list' do
+          let(:params) { { list: { name: 'New name' } } }
 
           it 'responds with HTTP code 201' do
-            post_card
+            post_list
             expect(response.status).to eq 201
           end
 
-          it 'creates an card' do
-            expect { post_card }.to change { list.cards.count }
-            new_card = list.cards.last
-            expect(new_card.description).to eq 'New description'
-            expect(new_card.name).to eq 'New name'
+          it 'creates an list' do
+            expect { post_list }.to change { board.lists.count }
+            new_list = board.lists.last
+            expect(new_list.name).to eq 'New name'
           end
 
-          let(:submit_form) { post_card }
-          include_examples 'creates an Activity', :create, Card
-          include_examples 'sets the whodunnit', :create, Card
+          let(:submit_form) { post_list }
+          include_examples 'creates an Activity', :create, List
         end
 
-        context 'with params for an invalid evidence' do
-          let(:params) { { card: { description: 'New card' } } } # no name or list
+        context 'with params for an invalid list' do
+          let(:params) { { list: { } } } # no name
 
           it 'responds with HTTP code 422' do
-            post_card
+            post_list
             expect(response.status).to eq 422
           end
 
-          it "doesn't create a card" do
-            expect { post_card }.not_to change { Card.count }
+          it "doesn't create a list" do
+            expect { post_list }.not_to change { List.count }
           end
         end
 
-        context 'when no :card param is sent' do
+        context 'when no :list param is sent' do
           let(:params) { {} }
 
-          it "doesn't create an evidence" do
-            expect { post_card }.not_to change { Card.count }
+          it "doesn't create an list" do
+            expect { post_list }.not_to change { List.count }
           end
 
           it 'responds with HTTP code 422' do
-            post_card
+            post_list
             expect(response.status).to eq(422)
           end
         end
 
         context 'when invalid JSON is sent' do
           it 'responds with HTTP code 400' do
-            json_payload = '{"card":{"name":"A malformed name", , }}'
+            json_payload = '{"list":{"name":"A malformed name", , }}'
             post url, params: json_payload, env: @env
             expect(response.status).to eq(400)
           end
@@ -176,78 +174,74 @@ describe 'Lists API' do
 
       context 'when JSON is not sent' do
         it 'responds with HTTP code 415' do
-          params = { card: {} }
+          params = { list: {} }
           post url, params: params, env: @env
           expect(response.status).to eq(415)
         end
       end
     end
 
-    describe 'PUT /api/boards/:board_id/lists/:list_id/cards/:id', pending: true do
-      let(:card) do
-        create(:card, list: list, description: 'My description')
-      end
-
-      let(:url) { "/api/boards/#{board.id}/lists/#{list.id}/cards/#{card.id}" }
-      let(:put_card) { put url, params: params.to_json, env: @env }
+    describe 'PUT /api/boards/:board_id/lists/:id' do
+      let(:list) { create(:list, board: board) }
+      let(:url) { "/api/boards/#{board.id}/lists/#{list.id}" }
+      let(:put_list) { put url, params: params.to_json, env: @env }
 
       context 'when content_type header = application/json' do
         include_context 'content_type: application/json'
 
-        context 'with params for a valid card' do
-          let(:params) { { card: { description: 'New description' } } }
+        context 'with params for a valid list' do
+          let(:params) { { list: { name: 'New name' } } }
 
           it 'responds with HTTP code 200' do
-            put_card
+            put_list
             expect(response.status).to eq 200
           end
 
-          it 'updates the evidence' do
-            put_card
-            expect(card.reload.description).to eq 'New description'
+          it 'updates the list' do
+            put_list
+            expect(list.reload.name).to eq 'New name'
           end
 
-          it 'returns the attributes of the updated evidence as JSON' do
-            put_card
-            retrieved_card = JSON.parse(response.body)
-            expect(retrieved_card['description']).to eq 'New description'
+          it 'returns the attributes of the updated list as JSON' do
+            put_list
+            retrieved_list = JSON.parse(response.body)
+            expect(retrieved_list['name']).to eq 'New name'
           end
 
-          let(:submit_form) { put_card }
-          let(:model) { card }
+          let(:submit_form) { put_list }
+          let(:model) { list }
           include_examples 'creates an Activity', :update
-          include_examples 'sets the whodunnit', :update
         end
 
-        context 'with params for an invalid card' do
-          let(:params) { { card: { description: 'a' * 65536 } } } # too long
+        context 'with params for an invalid list' do
+          let(:params) { { list: { name: 'a' * 65536 } } } # too long
 
           it 'responds with HTTP code 422' do
-            put_card
+            put_list
             expect(response.status).to eq 422
           end
 
-          it "doesn't update the evidence" do
-            expect { put_card }.not_to change { card.reload.attributes }
+          it "doesn't update the list" do
+            expect { put_list }.not_to change { list.reload.attributes }
           end
         end
 
-        context 'when no :card param is sent' do
+        context 'when no :list param is sent' do
           let(:params) { {} }
 
-          it "doesn't update the card" do
-            expect { put_card }.not_to change { card.reload.attributes }
+          it "doesn't update the list" do
+            expect { put_list }.not_to change { list.reload.attributes }
           end
 
           it 'responds with HTTP code 422' do
-            put_card
+            put_list
             expect(response.status).to eq 422
           end
         end
 
         context 'when invalid JSON is sent' do
           it 'responds with HTTP code 400' do
-            json_payload = '{"card":{"name":"A malformed name", , }}'
+            json_payload = '{"list":{"name":"A malformed name", , }}'
             put url, params: json_payload, env: @env
             expect(response.status).to eq(400)
           end
@@ -255,10 +249,10 @@ describe 'Lists API' do
       end
 
       context 'when JSON is not sent' do
-        let(:params) { { card: { description: 'New Card' } } }
+        let(:params) { { list: { name: 'New List' } } }
 
         it 'responds with HTTP code 415' do
-          expect { put url, params: params, env: @env }.not_to change { card.reload.attributes }
+          expect { put url, params: params, env: @env }.not_to change { list.reload.attributes }
           expect(response.status).to eq 415
         end
       end

@@ -28,7 +28,7 @@ module Dradis::CE::API
       end
 
       def update
-        @list = @node.lists.find(params[:id])
+        @list = @board.lists.find(params[:id])
         if @list.update(list_params)
           track_updated(@list)
           render list: @list
