@@ -28,18 +28,14 @@ describe 'Lists API' do
   context 'as authorized user' do
     include_context 'authorized API user'
 
-    describe 'GET /api/boards/:board_id/lists/:list_id/cards', pending: true do
+    describe 'GET /api/boards/:board_id/lists' do
       before do
-        @cards = [
-          Card.create!(list: list, description: "#[a]#\nA", name: 'Card A'),
-          Card.create!(list: list, description: "#[b]#\nB", name: 'Card B'),
-          Card.create!(list: list, description: "#[c]#\nC", name: 'Card C'),
-        ] + create_list(:card, 30, list: list)
-        @other_card = create(:card, list: create(:list, board: board))
-        get "/api/boards/#{board.id}/lists/#{list.id}/cards?#{params}", env: @env
+        @lists = create_list(:list, 30, board: board)
+        @other_list = create(:list, board: create(:board, project: current_project))
+        get "/api/boards/#{board.id}/lists?#{params}", env: @env
       end
 
-      let(:retrieved_cards) { JSON.parse(response.body) }
+      let(:retrieved_lists) { JSON.parse(response.body) }
 
       context 'without params' do
         let(:params) { '' }
@@ -48,33 +44,25 @@ describe 'Lists API' do
           expect(response.status).to eq(200)
         end
 
-        it 'retrieves all the cards for the given list' do
-          expect(retrieved_cards.count).to eq 33
-          card_names = retrieved_cards.map { |json| json['name'] }
-          expect(card_names).to match_array @cards.map(&:name)
+        it 'retrieves all the lists for the given board' do
+          expect(retrieved_lists.count).to eq 30
+          list_names = retrieved_lists.map { |json| json['name'] }
+          expect(list_names).to match_array @lists.map(&:name)
         end
 
-        it 'returns JSON data about the cards\'s fields' do
-          ev_0 = retrieved_cards.find { |n| n['id'] == @cards[0].id }
-          ev_1 = retrieved_cards.find { |n| n['id'] == @cards[1].id }
-          ev_2 = retrieved_cards.find { |n| n['id'] == @cards[2].id }
+        it 'returns JSON data about the lists' do
+          li_0 = retrieved_lists.find { |n| n['id'] == @lists[0].id }
+          li_1 = retrieved_lists.find { |n| n['id'] == @lists[1].id }
+          li_2 = retrieved_lists.find { |n| n['id'] == @lists[2].id }
 
-          expect(ev_0['fields'].keys).to \
-            match_array (@cards[0].local_fields.keys << 'a')
-          expect(ev_0['fields']['a']).to eq 'A'
-
-          expect(ev_1['fields'].keys).to \
-            match_array (@cards[2].local_fields.keys << 'b')
-          expect(ev_1['fields']['b']).to eq 'B'
-
-          expect(ev_2['fields'].keys).to \
-            match_array (@cards[2].local_fields.keys << 'c')
-          expect(ev_2['fields']['c']).to eq 'C'
+          expect(li_0['name']).to eq(@lists[0].name)
+          expect(li_1['name']).to eq(@lists[1].name)
+          expect(li_2['name']).to eq(@lists[2].name)
         end
 
-        it 'doesn\'t return cards from other lists' do
-          retrieved_ids = retrieved_cards.map { |n| n['id'] }
-          expect(retrieved_ids).not_to include @other_card.id
+        it 'doesn\'t return lists from other boards' do
+          retrieved_ids = retrieved_lists.map { |n| n['id'] }
+          expect(retrieved_ids).not_to include @other_list.id
         end
       end
 
@@ -82,33 +70,25 @@ describe 'Lists API' do
         let(:params) { 'page=2' }
 
         it 'returns the paginated evidence' do
-          expect(retrieved_lists.count).to eq 8
+          expect(retrieved_lists.count).to eq 5
         end
       end
     end
 
-    describe 'GET /api/boards/:board_id/lists/:list_id/cards/:id', pending: true do
+    describe 'GET /api/boards/:board_id/lists/:list_id' do
       before do
-        @card = list.cards.create!(
-          description: "#[foo]#\nbar\n#[fizz]#\nbuzz",
-          name: 'My rspec card',
-        )
-        get "/api/boards/#{board.id}/lists/#{list.id}/cards/#{@card.id}", env: @env
+        @list = create(:list, board: board)
+        get "/api/boards/#{board.id}/lists/#{@list.id}", env: @env
       end
 
       it 'responds with HTTP code 200' do
         expect(response.status).to eq 200
       end
 
-      it 'returns JSON information about the card' do
-        retrieved_card = JSON.parse(response.body)
-        expect(retrieved_card['id']).to eq @card.id
-        expect(retrieved_card['name']).to eq @card.name
-        expect(retrieved_card['fields'].keys).to match_array(
-          @card.local_fields.keys + %w(fizz foo)
-        )
-        expect(retrieved_card['fields']['foo']).to eq 'bar'
-        expect(retrieved_card['fields']['fizz']).to eq 'buzz'
+      it 'returns JSON information about the list' do
+        retrieved_list = JSON.parse(response.body)
+        expect(retrieved_list['id']).to eq @list.id
+        expect(retrieved_list['name']).to eq @list.name
       end
     end
 
