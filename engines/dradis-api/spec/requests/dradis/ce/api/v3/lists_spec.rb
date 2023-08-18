@@ -118,7 +118,7 @@ describe 'Lists API' do
         end
 
         context 'with params for an invalid list' do
-          let(:params) { { list: { } } } # no name
+          let(:params) { { list: {} } } # no name
 
           it 'responds with HTTP code 422' do
             post_list

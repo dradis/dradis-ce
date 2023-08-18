@@ -59,7 +59,6 @@ module Dradis::CE::API
       def card_params
         params.require(:card).permit(:name, :description, :due_date, assignee_ids: [])
       end
-
     end
   end
 end

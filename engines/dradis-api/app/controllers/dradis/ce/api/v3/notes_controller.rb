@@ -52,7 +52,6 @@ module Dradis::CE::API
       def note_params
         params.require(:note).permit(:category_id, :text)
       end
-
     end
   end
 end

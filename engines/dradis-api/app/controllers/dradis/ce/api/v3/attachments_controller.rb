@@ -6,7 +6,7 @@ module Dradis::CE::API
 
       before_action :set_node
 
-      skip_before_action :json_required, :only => [:create]
+      skip_before_action :json_required, only: [:create]
 
       def index
         @attachments = @node.attachments.each(&:close)
@@ -14,7 +14,7 @@ module Dradis::CE::API
 
       def show
         begin
-          @attachment = Attachment.find(params[:filename], conditions: { node_id: @node.id } )
+          @attachment = Attachment.find(params[:filename], conditions: { node_id: @node.id })
         rescue
           raise ActiveRecord::RecordNotFound, "Couldn't find attachment with filename '#{params[:filename]}'"
         end
@@ -45,7 +45,7 @@ module Dradis::CE::API
       end
 
       def update
-        attachment  = Attachment.find(params[:filename], conditions: { node_id: @node.id } )
+        attachment  = Attachment.find(params[:filename], conditions: { node_id: @node.id })
         attachment.close
 
         begin
@@ -54,9 +54,9 @@ module Dradis::CE::API
 
           if !File.exist?(destination) && !destination.match(/^#{Attachment.pwd}/).nil?
             File.rename attachment.fullpath, destination
-            @attachment = Attachment.find(new_name, conditions: { node_id: @node.id } )
+            @attachment = Attachment.find(new_name, conditions: { node_id: @node.id })
           else
-            raise "Destination file already exists"
+            raise 'Destination file already exists'
           end
         rescue
           @attachment = attachment
@@ -65,7 +65,7 @@ module Dradis::CE::API
       end
 
       def destroy
-        @attachment = Attachment.find(params[:filename], conditions: { node_id: @node.id} )
+        @attachment = Attachment.find(params[:filename], conditions: { node_id: @node.id })
         @attachment.delete
 
         render_successful_destroy_message

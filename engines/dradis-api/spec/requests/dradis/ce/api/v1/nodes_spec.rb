@@ -44,7 +44,7 @@ describe 'Nodes API' do
         let(:params) { '' }
 
         it 'retrieves all the nodes' do
-          retrieved_node_labels = @retrieved_nodes.map{ |p| p['label'] }
+          retrieved_node_labels = @retrieved_nodes.map { |p| p['label'] }
 
           expect(@retrieved_nodes.count).to eq(@nodes.count)
           expect(retrieved_node_labels).to match_array(@node_labels)
@@ -89,7 +89,7 @@ describe 'Nodes API' do
       end
 
       it 'creates a new node' do
-        expect{valid_post}.to change{Node.count}.by(1)
+        expect { valid_post }.to change { Node.count }.by(1)
         expect(response.status).to eq(201)
 
         retrieved_node = JSON.parse(response.body)
@@ -107,7 +107,7 @@ describe 'Nodes API' do
       include_examples 'creates an Activity', :create, Node
 
       it 'throws 415 unless JSON is sent' do
-        params = { node: { } }
+        params = { node: {} }
         post '/api/nodes', params: params, env: @env
         expect(response.status).to eq(415)
       end
@@ -119,7 +119,7 @@ describe 'Nodes API' do
       end
 
       it 'throws 422 if no :node param is sent' do
-        params = { }
+        params = {}
         post '/api/nodes', params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
         expect(response.status).to eq(422)
       end
@@ -173,7 +173,7 @@ describe 'Nodes API' do
       end
 
       it 'throws 422 if no :node param is sent' do
-        params = { }
+        params = {}
         put "/api/nodes/#{ node.id }", params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
         expect(response.status).to eq(422)
       end

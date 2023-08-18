@@ -41,7 +41,7 @@ describe 'Boards API' do
         let(:params) { '' }
 
         it 'retrieves all the boards' do
-          retrieved_board_names = @retrieved_boards.map{ |p| p['name'] }
+          retrieved_board_names = @retrieved_boards.map { |p| p['name'] }
 
           expect(@retrieved_boards.count).to eq(@boards.count)
           expect(retrieved_board_names).to match_array(@board_names)
@@ -83,7 +83,7 @@ describe 'Boards API' do
       end
 
       it 'creates a new board' do
-        expect{valid_post}.to change{Board.count}.by(1)
+        expect { valid_post }.to change { Board.count }.by(1)
         expect(response.status).to eq(201)
 
         retrieved_board = JSON.parse(response.body)
@@ -101,7 +101,7 @@ describe 'Boards API' do
       include_examples 'creates an Activity', :create, Board
 
       it 'throws 415 unless JSON is sent' do
-        params = { board: { } }
+        params = { board: {} }
         post '/api/boards', params: params, env: @env
         expect(response.status).to eq(415)
       end
@@ -113,7 +113,7 @@ describe 'Boards API' do
       end
 
       it 'throws 422 if no :board param is sent' do
-        params = { }
+        params = {}
         post '/api/boards', params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
         expect(response.status).to eq(422)
       end
@@ -160,7 +160,7 @@ describe 'Boards API' do
       end
 
       it 'throws 422 if no :board param is sent' do
-        params = { }
+        params = {}
         put "/api/boards/#{ board.id }", params: params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
         expect(response.status).to eq(422)
       end
