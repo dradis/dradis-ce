@@ -1,30 +1,9 @@
-[v#.#.#] ([month] [YYYY])
+v4.10.0 (Aug 2023)
   - Tylium: Consolidate sidebars
   - Upgraded gems:
     - font-awesome-sass, nokogiri, rails, sanitize
   - Bugs fixes:
     - QA: Enable @mentions and formatting toolbar for comments in QA show views
-    - [entity]:
-      - [future tense verb] [bug fix]
-    - Bug tracker items:
-      - [item]
-  - New integrations:
-    - [integration]
-  - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
-  - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
-  - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
-  - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v4.9.0 (June 2023)
   - Tylium: Extend support for Liquid Dynamic Content
