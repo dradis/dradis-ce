@@ -15,6 +15,8 @@ module Dradis::CE::API
 
       def create
         @board = current_project.boards.new(board_params)
+        # we are mimicking the hidden_field used in the UI to set the node_id in CE
+        @board.node_id = current_project.methodology_library.id if !params[:node_id]
 
         if @board.save
           track_created(@board)

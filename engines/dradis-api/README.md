@@ -20,7 +20,7 @@ deprecated files.
 - You'll also need to duplicate the routes block, and update the :default route
 constraint to point to the new version.
 - You'll need to duplicate the request specs too. Update the previous specs w/
-a `let(:api_version)` block.
+a `let(:api_version)` block and `include_context 'versioned API'`
 - Update the engine's CHANGELOG w/ a list of the breaking changes.
 
 

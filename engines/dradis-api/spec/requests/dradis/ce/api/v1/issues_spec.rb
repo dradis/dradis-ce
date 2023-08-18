@@ -4,6 +4,7 @@ describe 'Issues API' do
 
   include_context 'project scoped API'
   include_context 'https'
+  include_context 'versioned API'
 
   let(:api_version) { 1 }
 

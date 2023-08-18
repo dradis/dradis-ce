@@ -3,6 +3,7 @@ require 'rails_helper'
 describe "Attachments API" do
   include_context "project scoped API"
   include_context "https"
+  include_context 'versioned API'
 
   let(:api_version) { 1 }
   let(:node) { create(:node, project: current_project) }
