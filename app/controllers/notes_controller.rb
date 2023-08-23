@@ -12,11 +12,11 @@ class NotesController < NestedNodeResourceController
   before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
-  before_action :set_form_preview_path, only: [:new, :edit]
+  before_action :set_form_preview_path, only: [:edit]
 
   def new
     @note = @node.notes.new
-
+    set_form_preview_path
     # See ContentFromTemplate concern
     @note.text = template_content if params[:template]
   end
@@ -103,6 +103,6 @@ class NotesController < NestedNodeResourceController
   end
 
   def set_form_preview_path
-    @form_preview_path = { preview_url: preview_project_node_note_path }
+    @form_preview_path = @note.new_record? ? {} : { preview_url: preview_project_node_note_path }
   end
 end

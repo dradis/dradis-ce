@@ -117,7 +117,7 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def set_form_preview_path
-    @form_preview_path = { preview_url: preview_project_node_evidence_path }
+    @form_preview_path = @evidence.new_record? ? {} : { preview_url: preview_project_node_evidence_path }
   end
 
   # Look for the Evidence we are going to be working with based on the :id
