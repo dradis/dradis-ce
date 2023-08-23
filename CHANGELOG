@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Show liquid content in editor preview
   - Tylium: Consolidate sidebars
   - Upgraded gems:
     - font-awesome-sass, nokogiri, rails, sanitize
