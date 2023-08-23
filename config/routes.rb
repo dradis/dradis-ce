@@ -24,6 +24,12 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :previewable do
+    member do
+      post :preview
+    end
+  end
+
   resources :notifications, only: [:index, :update]
 
   resources :projects, only: [:index, :show] do
@@ -84,7 +90,7 @@ Rails.application.routes.draw do
         resources :revisions, only: [:index, :show]
       end
 
-      resources :evidence, except: :index, concerns: :multiple_destroy do
+      resources :evidence, except: :index, concerns: [:multiple_destroy, :previewable] do
         resources :revisions, only: [:index, :show]
       end
 
