@@ -1,6 +1,7 @@
 [v#.#.#] ([month] [YYYY])
-  - Show liquid content in editor preview
-  - Tylium: Consolidate sidebars
+  - Tylium: 
+    - Consolidate sidebars
+    - Show liquid content in editor preview
   - Upgraded gems:
     - font-awesome-sass, nokogiri, rails, sanitize
   - Bugs fixes:
