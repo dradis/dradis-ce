@@ -108,7 +108,7 @@ Rails.application.routes.draw do
     resources :tags, except: [:show]
 
     namespace :qa do
-      resources :issues, only: [:edit, :index, :show, :update], concerns: :multiple_update
+      resources :issues, only: [:edit, :index, :show, :update], concerns: [:multiple_update, :previewable]
     end
 
     get 'search' => 'search#index'

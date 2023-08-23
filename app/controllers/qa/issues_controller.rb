@@ -2,10 +2,11 @@ class QA::IssuesController < AuthenticatedController
   include ActivityTracking
   include LiquidEnabledResource
   include Mentioned
+  include Previewable
   include ProjectScoped
 
   before_action :set_issues
-  before_action :set_issue, only: [:edit, :show, :update]
+  before_action :set_issue, only: [:edit, :show, :update, :preview]
   before_action :store_location, only: [:index, :show]
   before_action :validate_state, only: [:multiple_update, :update]
 
@@ -17,6 +18,7 @@ class QA::IssuesController < AuthenticatedController
 
   def edit
     @form_cancel_path = project_qa_issue_path(current_project, @issue)
+    @form_preview_path = { preview_url: preview_project_qa_issue_path }
     @tags = current_project.tags
   end
 
