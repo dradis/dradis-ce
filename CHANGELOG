@@ -1,7 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Tylium: Consolidate sidebars
   - Upgraded gems:
-    - font-awesome-sass, nokogiri, rails, sanitize
+    - font-awesome-sass, nokogiri, rails, sanitize, webdrivers
   - Bugs fixes:
     - QA: Enable @mentions and formatting toolbar for comments in QA show views
     - [entity]:
