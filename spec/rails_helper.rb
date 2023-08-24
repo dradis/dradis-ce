@@ -43,7 +43,7 @@ end
 Capybara.server = :puma, { Silent: true }
 Capybara.javascript_driver = :chrome
 
-Webdrivers::Chromedriver.required_version = '114.0.5735.90'
+# Webdrivers::Chromedriver.required_version = '114.0.5735.90'
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

@@ -195,7 +195,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'timecop'
-  gem 'webdrivers'
+  gem 'webdrivers', '~> 5.3.1'
 
   # Required by capybara
   gem 'matrix'
