@@ -3,9 +3,7 @@ require 'rails_helper'
 describe 'Attachments API' do
   include_context 'project scoped API'
   include_context 'https'
-  include_context 'versioned API'
 
-  let(:api_version) { 1 }
   let(:node) { create(:node, project: current_project) }
 
   context 'as unauthenticated user' do
@@ -188,7 +186,7 @@ describe 'Attachments API' do
             expect(response.status).to eq 200
           end
 
-          it 'responds with HTTP code 404 if attachment doesn\'t exist' do
+          it 'responds with HTTP code 404 if attachemnt doesn\'t exist' do
             bad_url = "/api/nodes/#{node.id}/attachments/image_ko.png"
             put bad_url, params: params, env: @env
             expect(response.status).to eq(400)

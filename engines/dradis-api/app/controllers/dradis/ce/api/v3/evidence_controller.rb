@@ -1,5 +1,5 @@
 module Dradis::CE::API
-  module V1
+  module V3
     class EvidenceController < Dradis::CE::API::APIController
       include ActivityTracking
       include Dradis::CE::API::ProjectScoped
