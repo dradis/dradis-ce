@@ -4,6 +4,7 @@
     - font-awesome-sass, nokogiri, puma, rails, sanitize, selenium-webdriver
   - Bugs fixes:
     - QA: Enable @mentions and formatting toolbar for comments in QA show views
+    - QA: Fixed link to QA guide
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
