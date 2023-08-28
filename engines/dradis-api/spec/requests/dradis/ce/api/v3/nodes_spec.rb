@@ -70,7 +70,7 @@ describe 'Nodes API' do
     end
 
     describe 'POST /api/nodes' do
-      let!(:parent_node_id) { Project.new.plugin_parent_node.id }
+      let!(:parent_node_id) { current_project.plugin_parent_node.id }
       let(:valid_post) do
         post '/api/nodes', params: valid_params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
       end
