@@ -1,9 +1,11 @@
 v4.10.0 (Aug 2023)
   - Tylium: Consolidate sidebars
   - Upgraded gems:
-    - font-awesome-sass, nokogiri, rails, sanitize
+    - font-awesome-sass, nokogiri, puma, rails, sanitize, selenium-webdriver
   - Bugs fixes:
     - QA: Enable @mentions and formatting toolbar for comments in QA show views
+  - REST/JSON API enhancements:
+    - Boards, Lists, Cards: add initial implementation
 
 v4.9.0 (June 2023)
   - Tylium: Extend support for Liquid Dynamic Content
