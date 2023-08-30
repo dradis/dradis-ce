@@ -1,4 +1,4 @@
-v4.10.0 (Aug 2023)
+v4.10.0 (September 2023)
   - Tylium: Consolidate sidebars
   - Upgraded gems:
     - font-awesome-sass, nokogiri, puma, rails, sanitize, selenium-webdriver
