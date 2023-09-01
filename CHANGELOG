@@ -1,5 +1,7 @@
 v4.10.0 (September 2023)
-  - Tylium: Consolidate sidebars
+  - Tylium: 
+    - Consolidate sidebars
+    - Add issue.author to liquid issue drop
   - Upgraded gems:
     - font-awesome-sass, nokogiri, puma, rails, sanitize, selenium-webdriver
   - Bugs fixes:
