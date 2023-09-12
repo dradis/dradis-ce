@@ -1,5 +1,5 @@
 class IssueDrop < BaseDrop
-  delegate :fields, :text, :title, to: :@record
+  delegate :author, :fields, :text, :title, to: :@record
 
   def affected
     @affected ||= @record.affected.map { |node| NodeDrop.new(node) }
