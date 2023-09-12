@@ -44,7 +44,7 @@ module TyliumHelper
   end
 
   def colored_icon_for_model(model, icon_class, extra_class = nil)
-    css =  ['fa']
+    css =  ['fa-solid']
     css << icon_class
     css << extra_class if extra_class
 

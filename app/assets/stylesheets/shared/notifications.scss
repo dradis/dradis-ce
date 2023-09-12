@@ -63,7 +63,7 @@
         height: 12px;
         position: absolute;
         right: calc(50% - 0.75rem);
-        top: -0.5rem;
+        top: -1rem;
         width: 12px;
       }
     }
@@ -75,7 +75,6 @@
     }
 
     .dropdown-menu {
-
       .notification-container {
         width: 420px;
         max-height: 500px;
@@ -86,11 +85,11 @@
 
         li.notification {
           @include notification-list-item;
-          
+
           .body {
             white-space: initial;
           }
-          
+
           &:last-child {
             border-bottom: none;
           }
@@ -99,7 +98,6 @@
         li.no-content {
           padding: 0.5rem;
         }
-
       }
 
       .notification-header {
@@ -120,13 +118,10 @@
       }
     }
   }
-
- 
 }
 
 /* Notifications on the main body of /projects/X/notifications */
 body.notifications {
-
   .page-title {
     display: none;
   }
@@ -143,8 +138,12 @@ body.notifications {
       display: none;
     }
   }
-  
+
   ul {
     list-style-type: none;
   }
+}
+
+.pull-right {
+    float: right
 }

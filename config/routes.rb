@@ -109,10 +109,7 @@ Rails.application.routes.draw do
     get 'trash' => 'revisions#trash'
 
     # ------------------------------------------------------- Export Manager
-    get  '/export'                   => 'export#index',             as: :export_manager
-    post '/export'                   => 'export#create'
-    get  '/export/validate'          => 'export#validate',          as: :validate_export
-    get  '/export/validation_status' => 'export#validation_status', as: :validation_status
+    get  '/export' => 'export#index', as: :export_manager
 
     # ------------------------------------------------------- Upload Manager
     get  '/upload'        => 'upload#index',  as: :upload_manager

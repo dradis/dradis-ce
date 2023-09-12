@@ -18,7 +18,7 @@
                   data: { bs_toggle: 'modal' }
                 ) do
               %>
-                <i class="fa fa-pencil"></i> Edit
+                <i class="fa-solid fa-pencil"></i> Edit
               <% end %>
               <%=
                 link_to(
@@ -27,7 +27,7 @@
                   data: { confirm: "Are you sure?\n\nProceeding will delete this list from the methodology, along with any associated tasks." },
                   method: 'delete'
                 ) do %>
-                <i class="fa fa-trash"></i> Delete
+                <i class="fa-solid fa-trash"></i> Delete
               <% end %>
             </div>
           </div>
@@ -49,7 +49,7 @@
                             <% else %>
                               <div class="badge-due-date badge bg-success">
                               <% end %>
-                              <span><i class="fa fa-clock-o"></i></span>
+                              <span><i class="fa-regular fa-clock"></i></span>
                               <span><%= card.due_date.strftime('%b %-d') %></span>
                             </div>
                           <% end %>

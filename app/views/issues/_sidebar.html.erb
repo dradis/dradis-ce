@@ -1,19 +1,3 @@
-<div class="note-list">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <%= content_tag :div, class: class_names(active: current_page?(main_app.project_issues_path(current_project))) do %>
-      <%= link_to main_app.project_issues_path(current_project), class: 'summary-link' do %>
-        <i class="fa fa-bug"></i>
-        Issues Summary
-      <% end %>
-    <% end %>
-
-    <a href="javascript:void(0)" class="sidebar-toggle-link" data-behavior="sidebar-toggle">
-      <i class="fa fa-chevron-left sidebar-toggle-icon"></i>
-      <span class="visually-hidden">Toggle secondary sidebar</span>
-    </a>
-  </div>
-</div>
-
 <div class="inner-content">
   <%= render 'shared/sidebar_collection',
     category_id: nil,

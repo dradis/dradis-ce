@@ -35,8 +35,9 @@
     }
 
     & + .breadcrumb-item::before {
-      font-family: 'fontawesome';
       content: '\f105';
+      font-family: var(--fa-style-family, 'Font Awesome 6 Free');
+      font-weight: 600;
     }
 
     &:last-of-type {
@@ -55,9 +56,14 @@
   position: relative;
 }
 
-.secondary-sidebar-content {
-  .sticky-top {
-    top: calc(#{$mainContentMargin} + 4.35rem);
+.sticky-top {
+  position: sticky !important;
+  top: 5rem;
+  margin-bottom: $mainContentMargin;
+  z-index: 2;
+
+  &.sticky-top-with-title {
+    top: 2rem;
   }
 }
 
