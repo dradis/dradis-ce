@@ -83,19 +83,7 @@ class IssuesController < AuthenticatedController
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
-        format.html do
-          if params[:return_to] == 'qa'
-            return_to =
-              if @issue.ready_for_review?
-                project_qa_issue_path(current_project, @issue)
-              else
-                project_qa_issues_path(current_project)
-              end
-            redirect_to_target_or_default return_to, notice: 'Issue updated.'
-          else
-            redirect_to_target_or_default project_issue_path(current_project, @issue), notice: 'Issue updated.'
-          end
-        end
+        format.html { redirect_to_main_or_qa }
       else
         format.html do
           flash.now[:alert] = 'Issue couldn\'t be updated.'
@@ -137,6 +125,20 @@ class IssuesController < AuthenticatedController
 
   def liquid_resource_assigns
     { 'issue' => IssueDrop.new(@issue) }
+  end
+
+  def redirect_to_main_or_qa
+    notice = 'Issue updated.'
+
+    if params[:return_to] == 'qa'
+      if @issue.ready_for_review?
+        redirect_to_target_or_default project_qa_issue_path(current_project, @issue), notice: notice
+      else
+        redirect_to_target_or_default project_qa_issues_path(current_project), notice: notice
+      end
+    else
+      redirect_to_target_or_default project_issue_path(current_project, @issue), notice: notice
+    end
   end
 
   def set_affected_nodes
