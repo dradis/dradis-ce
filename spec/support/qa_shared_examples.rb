@@ -22,7 +22,7 @@ shared_examples 'qa pages' do |item_type|
 
       click_button "Update #{item_type.to_s.titleize}"
 
-      expect(current_path).to eq polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
+      expect(current_path).to eq polymorphic_path([current_project, :qa, records.first])
       expect(page).to have_selector('.alert-success', text: "#{item_type.to_s.humanize} updated.")
     end
 

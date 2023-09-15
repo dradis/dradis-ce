@@ -85,7 +85,13 @@ class IssuesController < AuthenticatedController
         track_updated(@issue)
         format.html do
           if params[:return_to] == 'qa'
-            redirect_to_target_or_default project_qa_issues_path(current_project), notice: 'Issue updated.'
+            return_to =
+              if @issue.ready_for_review?
+                project_qa_issue_path(current_project, @issue)
+              else
+                project_qa_issues_path(current_project)
+              end
+            redirect_to_target_or_default return_to, notice: 'Issue updated.'
           else
             redirect_to_target_or_default project_issue_path(current_project, @issue), notice: 'Issue updated.'
           end
