@@ -19,7 +19,6 @@ class IssuesController < AuthenticatedController
   before_action :set_affected_nodes, only: [:show]
   before_action :set_form_cancel_path, only: [:new, :edit]
   before_action :set_tags, except: [:destroy]
-  before_action :store_location, only: [:index, :show]
 
   def index
   end
@@ -85,12 +84,11 @@ class IssuesController < AuthenticatedController
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
         format.html do
-          if session[:return_to] == project_qa_issue_url(current_project, @issue)
-            # State changed. No longer needs QA
-            session[:return_to] = project_qa_issues_path(current_project) unless @issue.ready_for_review?
+          if params[:return_to] == 'qa'
+            redirect_to_target_or_default project_qa_issues_path(current_project), notice: 'Issue updated.'
+          else
+            redirect_to_target_or_default project_issue_path(current_project, @issue), notice: 'Issue updated.'
           end
-
-          redirect_to_target_or_default project_issue_path(current_project, @issue), notice: 'Issue updated.'
         end
       else
         format.html do

@@ -29,6 +29,10 @@
     <%= hidden_field :issue, :original_updated_at, value: @issue.updated_at.to_i %>
   <% end %>
 
+  <% if local_assigns.has_key?(:qa) && qa %>
+    <%= hidden_field nil, :return_to, value: :qa %>
+  <% end %>
+
   <%= render 'issues/tag_input', f: f %>
 
   <div class="form-actions">
