@@ -14,7 +14,7 @@ shared_examples 'qa pages' do |item_type|
       end
     end
 
-    it 'redirects the user back to #index after updating the record' do
+    it 'redirects the user back to #show after updating the record' do
       find('.dataTable tbody tr:first-of-type').hover
       click_link 'Edit'
 
