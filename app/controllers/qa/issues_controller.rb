@@ -38,7 +38,14 @@ class QA::IssuesController < AuthenticatedController
           track_state_change(issue)
         end
 
-        format.html { redirect_to_target_or_default project_qa_issues_path(current_project), notice: 'State updated successfully.' }
+        format.html do
+          if params[:return_to] == 'qa'
+            redirect_to project_qa_issues_path(current_project), notice: 'State updated successfully.'
+          else
+            redirect_to project_issues_path(current_project), notice: 'State updated successfully.'
+          end
+        end
+
         format.json { head :ok }
       else
         format.html { render :show, alert: @issues.errors.full_messages.join('; ') }
