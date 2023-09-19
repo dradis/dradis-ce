@@ -4,8 +4,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Sidebar: Prevent version number from overlapping listed records
     - Bug tracker items:
       - [item]
   - New integrations:
