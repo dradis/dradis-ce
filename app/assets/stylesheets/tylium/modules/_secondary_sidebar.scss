@@ -1,6 +1,8 @@
 .secondary-sidebar {
   background-color: $sidebarActiveColor;
   color: $lightColor;
+  display: flex;
+  flex-grow: 1;
   font-size: 0.9rem;
   padding: 0.6rem 1rem;
 
