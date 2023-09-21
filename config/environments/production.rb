@@ -1,5 +1,7 @@
+require "active_support/core_ext/integer/time"
+
 Rails.application.configure do
-  # Settings specified here will take precedence over those in config/applicaiton.rb.
+  # Settings specified here will take precedence over those in config/application.rb.
 
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests.
@@ -27,7 +29,7 @@ Rails.application.configure do
   config.assets.js_compressor = :terser
   # config.assets.css_compressor = :sass
 
-  # Do not fallback to assets pipeline if a precompiled asset is missed
+  # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
@@ -83,6 +85,9 @@ Rails.application.configure do
 
   # Tell Active Support which deprecation messages to disallow.
   config.active_support.disallowed_deprecation_warnings = []
+
+  # Don't log any deprecations.
+  config.active_support.report_deprecations = false
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
