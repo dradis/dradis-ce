@@ -237,7 +237,7 @@ gem 'dradis-calculator_dread', '~> 4.10.0'
 
 # ---------------------------------------------------------------------- Export
 gem 'dradis-csv_export', '~> 4.10.0'
-gem 'dradis-html_export', github: 'dradis/dradis-html_export', branch: 'rails-7-compatibility'
+gem 'dradis-html_export', '4.10.1'
 
 # ---------------------------------------------------------------------- Import
 gem 'dradis-csv', '~> 4.10.0'
