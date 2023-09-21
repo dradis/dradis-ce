@@ -138,7 +138,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_144728) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.integer "position"
-    t.text "properties", limit: 1073741823
+    t.text "properties", limit: 4294967295
     t.integer "children_count", default: 0, null: false
     t.index ["parent_id"], name: "index_nodes_on_parent_id"
     t.index ["type_id"], name: "index_nodes_on_type_id"
