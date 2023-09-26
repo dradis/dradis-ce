@@ -1,5 +1,7 @@
-PATH
-  remote: ../dradis-html_export
+GIT
+  remote: https://github.com/dradis/dradis-html_export.git
+  revision: 308f8d4ba9009b2180ea7fb7466db1453b16a5a5
+  branch: rails-7-compatibility
   specs:
     dradis-html_export (4.10.1)
       RedCloth (~> 4.3.2)
@@ -606,6 +608,7 @@ DEPENDENCIES
   simple_form
   sinatra (~> 2.2.3)
   spring
+  sprockets-rails (>= 3.0.0)
   sqlite3
   terser (~> 1.1)
   thor (~> 1.2.1)

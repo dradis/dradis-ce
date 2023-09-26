@@ -71,6 +71,8 @@ gem 'font-awesome-sass', '~> 6.4.0'
 
 gem 'importmap-rails', '~> 1.2'
 
+gem 'sprockets-rails', '>= 3.0.0'
+
 # ------------------------------------------------------ With native extensions
 # These require native extensions.
 # Ensure Traveling Ruby provides an appropriate version before bumping.
@@ -239,7 +241,7 @@ gem 'dradis-calculator_dread', '~> 4.10.0'
 
 # ---------------------------------------------------------------------- Export
 gem 'dradis-csv_export', '~> 4.10.0'
-gem 'dradis-html_export', path: '../dradis-html_export'
+gem 'dradis-html_export', github: 'dradis/dradis-html_export', branch: 'rails-7-compatibility'
 
 # ---------------------------------------------------------------------- Import
 gem 'dradis-csv', '~> 4.10.0'
