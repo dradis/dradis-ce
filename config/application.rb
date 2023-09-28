@@ -1,5 +1,6 @@
 require_relative 'boot'
 
+require 'rails'
 # Pick the frameworks you want:
 require 'active_model/railtie'
 require 'active_job/railtie'
@@ -41,6 +42,9 @@ module Dradis
       'Symbol',
       'UserPreferences'
     ]
+
+    # Don't generate system test files.
+    config.generators.system_tests = nil
   end
 end
 
