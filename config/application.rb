@@ -43,8 +43,9 @@ module Dradis
       'UserPreferences'
     ]
 
-    # can be removed when we change config.load_defaults to 7.0
+    # the following 2 lines can be removed when we change config.load_defaults to 7.0
     config.active_support.disable_to_s_conversion = true
+    config.active_support.cache_format_version = 7.0 # see new_framework_defaults_7_0.rb#L97
 
     # Don't generate system test files.
     config.generators.system_tests = nil
