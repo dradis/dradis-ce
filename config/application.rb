@@ -43,6 +43,9 @@ module Dradis
       'UserPreferences'
     ]
 
+    # can be removed when we change config.load_defaults to 7.0
+    config.active_support.disable_to_s_conversion = true
+
     # Don't generate system test files.
     config.generators.system_tests = nil
   end
