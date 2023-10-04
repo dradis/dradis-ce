@@ -136,14 +136,11 @@ gem 'net-smtp'
 gem 'net-pop'
 gem 'net-imap'
 
+gem 'puma', '6.4.0'
+
 # ------------------------------------------------------------------ Deployment
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
-group :production do
-  # Use Unicorn as the web server
-  gem 'unicorn',  '6.1.0'
-end
 
 # ----------------------------------------------------- Development and Testing
 group :development do
@@ -183,8 +180,6 @@ group :development, :test do
   gem 'byebug', platform: :mri
 
   gem 'rspec-rails', '~> 4.0.2'
-
-  gem 'puma', '~> 5.6.7'
 end
 
 group :test do

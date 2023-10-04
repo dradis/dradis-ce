@@ -1,6 +1,5 @@
 [v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
+  - Replace unicorn with puma in production
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
