@@ -1,7 +1,7 @@
-//= require turbolinks
-//= require jquery3
-//= require popper
 //= require rails-ujs
+//= require jquery
+//= require turbo
+//= require popper
 //= require bootstrap
 
 //= require shared/notifications
