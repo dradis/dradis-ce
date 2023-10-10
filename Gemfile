@@ -27,7 +27,7 @@ gem 'importmap-rails', '~> 1.2'
 gem 'turbo-rails', '~> 1.4'
 
 # Use Redis for Action Cable
-gem "redis", "~> 4.0"
+# gem "redis", "~> 4.0"
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'

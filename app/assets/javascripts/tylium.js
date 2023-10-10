@@ -12,7 +12,6 @@
 //= require clipboard
 //= require tribute
 //= require popper
-//= require turbo
 //= require bootstrap
 
 //= require cable

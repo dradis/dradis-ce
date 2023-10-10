@@ -1,6 +1,5 @@
 //= require rails-ujs
 //= require jquery
-//= require turbo
 //= require popper
 //= require bootstrap
 

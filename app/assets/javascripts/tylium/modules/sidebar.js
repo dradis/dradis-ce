@@ -64,7 +64,7 @@
     },
     changeState: function (key, state) {
       localStorage.setItem(key, state);
-      Turbo.clearCache();
+      Turbo.cache.clear();
     },
     close: function () {
       this.$sidebar
