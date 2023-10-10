@@ -8,3 +8,4 @@ import "@hotwired/turbo-rails"
 import 'datatables'
 import 'stupidtable'
 
+Turbo.setFormMode("optin")
