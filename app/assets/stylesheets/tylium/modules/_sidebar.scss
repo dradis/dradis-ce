@@ -159,9 +159,9 @@
 
   .scrollable-content {
     display: flex;
+    flex-direction: column;
     // height of nav bar + project area + footer
     height: calc(100vh - #{$navbarHeight + 260px});
-    flex-direction: column;
     overflow-y: auto;
 
     &:has(.secondary-sidebar) {
@@ -216,9 +216,9 @@
     padding: 0 1rem;
 
     &-inner {
-      padding: 1.5rem 0;
       border-top: solid 1px rgba(140, 206, 140, .2);
       border-bottom: solid 1px rgba(140, 206, 140, .2);
+      padding: 1.5rem 0;
 
       .project-title {
         color: $white;
@@ -233,13 +233,13 @@
       }
 
       .project-emblem {
-        height: 35px;
-        min-width: 35px;
+        background: $lightColor;
         border: 1px solid rgba(255, 255, 255, .2);
         border-radius: 5px;
-        background: $lightColor;
-        font-weight: 600;
         color: $linkColor;
+        font-weight: 600;
+        height: 35px;
+        min-width: 35px;
 
         &:hover {
           color: $linkColorHover;
@@ -273,22 +273,22 @@
   }
 
   .footer {
-    position: fixed;
-    bottom: 0;
     background-color: $sidebarBackground;
-    width: $sidebarExpanded;
+    bottom: 0;
     padding-top: .8rem;
+    position: fixed;
+    width: $sidebarExpanded;
 
     ul {
-      padding: 0;
       margin: 0;
+      padding: 0;
 
       li {
         @include active-nav;
 
         i {
-          width: 24px;
           text-align: center;
+          width: 24px;
         }
       }
     }
@@ -297,10 +297,9 @@
   .dropdown-menu {
     border: none;
     border-bottom: 1px solid $borderColor;
-    border-radius: 0;
+    border-radius: 0.5rem;
     margin-top: 0;
     position: initial;
-    border-radius: 0.5rem;
 
     .dropdown-item {
       padding-right: 1rem;
@@ -337,8 +336,8 @@
         }
 
         .project-emblem {
-          @extend .d-flex;
           @extend .align-items-center;
+          @extend .d-flex;
           @extend .justify-content-center;
         }
 

@@ -1,13 +1,13 @@
 .navbar {
   .form-search {
-    font-size: .75em;
     @extend .d-flex;
     @extend .flex-row-reverse;
+    font-size: .75em;
 
     .search-query {
       border: 0;
-      outline: 0;
       color: $defaultText;
+      outline: 0;
     }
 
     .btn {
