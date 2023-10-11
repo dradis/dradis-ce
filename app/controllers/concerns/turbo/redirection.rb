@@ -1,7 +1,10 @@
 module Turbo
   module Redirection
     extend ActiveSupport::Concern
-
+    # in order to have Turbo work with the old-style XMLHttpRequests issued by UJS, 
+    # you'll need to shim the old Turbolinks behavior that made those requests compatible with 302s 
+    # (by invoking Turbolinks, now Turbo, directly)
+    # See https://github.com/hotwired/turbo-rails/blob/main/UPGRADING.md#2-replace-the-turbolinks-gem-in-gemfile-with-turbo-rails
     def redirect_to(url = {}, options = {})
       turbo = options.delete(:turbo)
 
@@ -18,12 +21,8 @@ module Turbo
         action: action.to_s == 'advance' ? action : 'replace'
       }
 
-      script = []
-      script << 'Turbo.cache.clear()'
-      script << "Turbo.visit(#{location.to_json}, #{visit_options.to_json})"
-
       self.status = 200
-      self.response_body = script.join('\n')
+      self.response_body = "Turbo.visit(#{location.to_json}, #{visit_options.to_json})"
       response.content_type = 'text/javascript'
       response.headers['X-Xhr-Redirect'] = location
     end
