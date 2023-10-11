@@ -207,6 +207,43 @@
     }
   }
 
+  .project {
+    padding: 0 1rem;
+    margin-bottom: 1.5rem;
+
+    &-inner {
+      padding: 1.5rem 0;
+      border-top: solid 1px rgba(140, 206, 140, .2);
+      border-bottom: solid 1px rgba(140, 206, 140, .2);
+
+      .project-title {
+        color: $white;
+      }
+
+      .change-project-link {
+        font-size: 0.9rem;
+      }
+
+      .change-project-link {
+        margin-top: .5rem;
+      }
+
+      .project-emblem {
+        height: 35px;
+        min-width: 35px;
+        border: 1px solid $borderColor;
+        border-radius: 50%;
+        background: #fff;
+        font-weight: 600;
+        color: $linkColor;
+
+        &:hover {
+          color: $linkColorHover;
+        }
+      }
+    }
+  }
+
   .sidebar-link {
     display: flex;
     position: relative;
@@ -251,6 +288,31 @@
       padding-left: 0.8rem;
     }
 
+    .project {
+
+      &-inner {
+        align-items: center;
+
+        .project-title {
+          display: none;
+        }
+
+        .project-emblem {
+          @extend .d-flex;
+          @extend .align-items-center;
+          @extend .justify-content-center;
+        }
+
+        .change-project-link {
+          font-size: .75rem;
+
+          span {
+            display: none;
+          }
+        }
+      }
+    }
+
     .tree-header {
       cursor: pointer;
       transition: all 0.2s ease-in-out;
@@ -281,6 +343,10 @@
     .team-name,
     .nodes-list {
       display: block;
+    }
+
+    .project-emblem {
+      display: none;
     }
   }
 
@@ -316,6 +382,10 @@
         top: unset;
         width: 100%;
       }
+    }
+
+    .project {
+      display: none;
     }
 
     .scrollable-content {
