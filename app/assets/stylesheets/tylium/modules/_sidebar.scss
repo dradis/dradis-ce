@@ -235,9 +235,9 @@
       .project-emblem {
         height: 35px;
         min-width: 35px;
-        border: 1px solid $borderColor;
-        border-radius: 50%;
-        background: #fff;
+        border: 1px solid rgba(255, 255, 255, .2);
+        border-radius: 5px;
+        background: $lightColor;
         font-weight: 600;
         color: $linkColor;
 
@@ -414,6 +414,7 @@
     .main-menu {
       display: inline-flex;
       margin-bottom: 0;
+      padding: 0;
 
       li.active::after {
         border-bottom: 3px solid $white;
