@@ -125,6 +125,10 @@
           color: $linkColorHover;
           outline: none;
         }
+
+        i {
+          margin-right: .25rem;
+        }
       }
 
       &:hover:not(.search),
