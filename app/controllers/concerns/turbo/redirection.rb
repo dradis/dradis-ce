@@ -1,8 +1,8 @@
 module Turbo
   module Redirection
     extend ActiveSupport::Concern
-    # in order to have Turbo work with the old-style XMLHttpRequests issued by UJS, 
-    # you'll need to shim the old Turbolinks behavior that made those requests compatible with 302s 
+    # in order to have Turbo work with the old-style XMLHttpRequests issued by UJS,
+    # you'll need to shim the old Turbolinks behavior that made those requests compatible with 302s
     # (by invoking Turbolinks, now Turbo, directly)
     # See https://github.com/hotwired/turbo-rails/blob/main/UPGRADING.md#2-replace-the-turbolinks-gem-in-gemfile-with-turbo-rails
     def redirect_to(url = {}, options = {})
