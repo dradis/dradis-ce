@@ -45,7 +45,7 @@
     <% end %>
   </div>
 
-  <div class="footer">
+  <div class="footer d-none d-lg-block">
     <ul>
       <%= content_tag :li, :class => controller_path == 'configurations' ? 'active' : '' do %>
         <%= link_to main_app.project_configurations_path(current_project), class: 'sidebar-link', data: { behavior: 'sidebar-link' } do %>
