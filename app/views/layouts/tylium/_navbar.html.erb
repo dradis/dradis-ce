@@ -2,10 +2,15 @@
   <div class="container-fluid">
     <div class="d-flex justify-content-between w-100">
       <div class="navbar-brand" data-behavior="navbar-brand">
-        <%= link_to current_project.name, main_app.project_path(current_project), class: 'project-title' %>
-        <%= link_to 'javascript:void(0)', class: 'js-try-pro change-project-link', data: { term: 'projects', url: 'https://dradisframework.com/pro/pages/projects.html'}, title: 'Change Project' do %>
-          <i class="fa-solid fa-random fa-fw"></i> Change Project
-        <% end %>
+        <div class="d-lg-none">
+          <%= link_to current_project.name, main_app.project_path(current_project), class: 'project-title' %>
+          <%= link_to 'javascript:void(0)', class: 'js-try-pro change-project-link', data: { term: 'projects', url: 'https://dradisframework.com/pro/pages/projects.html'}, title: 'Change Project' do %>
+            <i class="fa-solid fa-random fa-fw"></i> Change Project
+          <% end %>
+        </div>
+        <div class="search d-none d-lg-inline-block">
+          <%= render "layouts/tylium/search" %>
+        </div>
       </div>
       <div class="d-inline-flex">
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation" data-behavior="navbar-toggler">
@@ -13,9 +18,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbar">
           <ul class="navbar-nav ms-auto mt-lg-0">
-            <li class="nav-item search">
-              <%= render "layouts/tylium/search" %>
-            </li>
             <li class="nav-item">
               <%= link_to main_app.project_upload_manager_path(current_project), class: 'nav-link', title: 'Upload' do %><i class="fa-solid fa-cloud-upload fa-lg"></i> Upload<% end %>
             </li>
