@@ -19,14 +19,14 @@
         <div class="collapse navbar-collapse" id="navbar">
           <ul class="navbar-nav ms-auto mt-lg-0">
             <li class="nav-item">
-              <%= link_to main_app.project_upload_manager_path(current_project), class: 'nav-link', title: 'Upload' do %><i class="fa-solid fa-cloud-upload fa-lg"></i> Upload<% end %>
+              <%= link_to main_app.project_upload_manager_path(current_project), class: 'nav-link', title: 'Upload' do %><i class="fa-solid fa-cloud-upload fa-lg"></i> <span>Upload</span><% end %>
             </li>
             <li class="nav-item mx-lg-1">
-              <%= link_to main_app.project_export_manager_path(current_project), class: 'nav-link', title: 'Export' do %><i class="fa-regular fa-file-text fa-lg"></i> Export<% end %>
+              <%= link_to main_app.project_export_manager_path(current_project), class: 'nav-link', title: 'Export' do %><i class="fa-regular fa-file-text fa-lg"></i> <span>Export</span><% end %>
             </li>
             <li class="nav-item">
               <%= link_to main_app.project_qa_issues_path(current_project), class: 'nav-link', title: 'QA' do %>
-                <i class="fa-regular fa-handshake fa-lg"></i> QA
+                <i class="fa-regular fa-handshake fa-lg"></i> <span>QA</span>
               <% end %>
             </li>
             <li class="nav-item d-lg-none">
