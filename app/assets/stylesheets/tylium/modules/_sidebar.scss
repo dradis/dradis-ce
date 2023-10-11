@@ -18,7 +18,7 @@
   }
 
   .main-menu {
-    padding: 0;
+    padding: 1rem 0 0 0;
 
     li {
       @include active-nav;
@@ -159,15 +159,19 @@
 
   .scrollable-content {
     display: flex;
-    height: calc(100vh - #{$navbarHeight});
+    // height of nav bar + project area + footer
+    height: calc(100vh - #{$navbarHeight + 260px});
     flex-direction: column;
     overflow-y: auto;
-    padding-bottom: 360px;
 
     &:has(.secondary-sidebar) {
       .version {
         background-color: $sidebarActiveColor;
       }
+    }
+
+    .inner-content {
+      padding-bottom: 0.25rem;
     }
   }
 
@@ -210,7 +214,6 @@
 
   .project {
     padding: 0 1rem;
-    margin-bottom: 1.5rem;
 
     &-inner {
       padding: 1.5rem 0;
