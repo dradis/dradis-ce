@@ -185,7 +185,7 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
-  gem 'capybara', '~> 3.35.1'
+  gem 'capybara', '~> 3.39'
   gem 'guard-rspec', require: false
   gem 'selenium-webdriver', '~> 4.11'
   gem 'shoulda-matchers', '~> 3.1'
