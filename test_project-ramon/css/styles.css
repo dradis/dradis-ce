@@ -48,7 +48,7 @@ p {
 
 button {
   background: var(--primary-500);
-  border-radius: var(--space-2);
+  border-radius: var(--space-3);
   padding: var(--space-4) var(--space-6);
   border: none;
   font-size: var(--font-size-5);
