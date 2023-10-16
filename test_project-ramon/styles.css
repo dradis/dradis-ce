@@ -35,3 +35,25 @@ p {
 .sm-text {
   font-size: var(--font-size-5);
 }
+
+.container {
+  display: flex;
+  gap: 20px;
+  height: 100%;
+}
+
+.box {
+  border: 1px solid var(--primary-600);
+  height: 100%;
+  border-radius: var(--space-4);
+  padding: var(--space-6);
+  box-sizing: border-box;
+}
+
+#upload-view {
+  width: 300px;
+}
+
+#available-plugins {
+  flex: 1;
+}
