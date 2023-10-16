@@ -36,6 +36,8 @@ p {
   font-size: var(--font-size-5);
 }
 
+/* Containers */
+
 .container {
   display: flex;
   gap: 20px;
@@ -50,8 +52,27 @@ p {
   box-sizing: border-box;
 }
 
+/* Upload View Component */
+
 #upload-view {
   width: 300px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#upload-view .header,
+#upload-view .footer {
+  flex-shrink: 0;
+  padding: var(--space-6);
+}
+#upload-view #drag-drop-zone {
+}
+
+#upload-view #upload-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: var(--space-4) 0;
 }
 
 #available-plugins {
