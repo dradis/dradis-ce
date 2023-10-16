@@ -150,18 +150,39 @@ button.primary:hover {
 
 /* Upload View > Upload List */
 
-#upload-view #upload-list {
+#upload-list {
   flex-grow: 1;
   overflow-y: auto;
   padding: var(--space-4) 0;
 }
 
-#upload-view #upload-list > .title {
+#upload-list > .title {
   display: flex;
   align-items: center;
   gap: var(--space-3);
   color: var(--gray-700);
 }
+
+/* Upload View > Upload List */
+
+#upload-list .upload-card {
+  border: 1px solid var(--primary-400);
+  padding: var(--space-4);
+  border-radius: var(--space-3);
+  box-shadow: 0 4px 2px var(--primary-200);
+}
+
+#upload-list .upload-card .card-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.loading-spinner {
+  width: 50px;
+}
+
+/* Upload View > Footer */
 
 #upload-view footer {
   display: flex;
