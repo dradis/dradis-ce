@@ -27,6 +27,9 @@ h2 {
 h3 {
   font-size: var(--font-size-3);
 }
+h4 {
+  font-size: var(--font-size-4);
+}
 
 p {
   font-size: var(--font-size-4);
@@ -34,6 +37,13 @@ p {
 
 .sm-text {
   font-size: var(--font-size-5);
+}
+
+.badge {
+  padding: var(--space-2);
+  background-color: var(--primary-200);
+  font-size: var(--font-size-5);
+  font-weight: bold;
 }
 
 /* Containers */
@@ -81,7 +91,7 @@ p {
 #upload-view #drag-drop-zone:hover {
   background-color: var(--primary-200);
 }
-#upload-view .title {
+#upload-view > .title {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
@@ -95,6 +105,13 @@ p {
   flex-grow: 1;
   overflow-y: auto;
   padding: var(--space-4) 0;
+}
+
+#upload-view #upload-list > .title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--gray-700);
 }
 
 #available-plugins {
