@@ -1,2 +1,37 @@
-@import "design-system.css";
 @import "reset.css";
+@import "design-system.css";
+
+/* Basic configuration */
+
+html {
+  font-size: var(--font-size-2);
+}
+
+body {
+  font-family: "Lato", Arial, sans-serif;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+h1 {
+  font-size: var(--font-size-1);
+}
+
+h2 {
+  font-size: var(--font-size-2);
+}
+
+h3 {
+  font-size: var(--font-size-3);
+}
+
+p {
+  font-size: var(--font-size-4);
+}
+
+.sm-text {
+  font-size: var(--font-size-5);
+}
