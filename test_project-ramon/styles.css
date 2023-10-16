@@ -67,6 +67,27 @@ p {
   padding: var(--space-6);
 }
 #upload-view #drag-drop-zone {
+  border: 1px dashed var(--primary-600);
+  padding: var(--space-8) var(--space-6);
+  border-radius: var(--space-4);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  background-color: var(--primary-50);
+  gap: 10px;
+  align-items: center;
+}
+#upload-view #drag-drop-zone:hover {
+  background-color: var(--primary-200);
+}
+#upload-view .title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+#upload-view .highlight {
+  color: var(--primary-600);
 }
 
 #upload-view #upload-list {
