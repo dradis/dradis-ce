@@ -184,13 +184,14 @@ button.primary:hover {
 
 /* Upload View > Footer */
 
-#upload-view footer {
+#upload-view .footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid var(--primary-200);
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -2px 10px var(--primary-200);
   padding: var(--space-5);
+  border-radius: 0 0 var(--space-5) var(--space-5);
 }
 
 #upload-view footer .link-button {
