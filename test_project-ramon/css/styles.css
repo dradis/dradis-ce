@@ -46,11 +46,47 @@ p {
   font-size: var(--font-size-6);
 }
 
-.badge {
-  padding: var(--space-2);
-  background-color: var(--primary-200);
+button {
+  background: var(--primary-500);
+  border-radius: var(--space-2);
+  padding: var(--space-4) var(--space-6);
+  border: none;
   font-size: var(--font-size-5);
+  cursor: pointer;
+}
+button:hover {
+  background: var(--primary-600);
+}
+
+button.primary {
+  color: white;
+}
+
+button.primary:hover {
+  background: var(--primary-600);
+}
+
+.badge {
+  background-color: var(--primary-200);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-6);
+  border-radius: var(--space-3);
   font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge.inverted {
+  background-color: var(--primary-50);
+  color: var(--primary-900);
+}
+
+.link-button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--gray-700);
 }
 
 .ov-auto {
@@ -125,6 +161,19 @@ p {
   align-items: center;
   gap: var(--space-3);
   color: var(--gray-700);
+}
+
+#upload-view footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--primary-200);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  padding: var(--space-4);
+}
+
+#upload-view footer .link-button {
+  font-size: var(--font-size-5);
 }
 
 #available-plugins {
