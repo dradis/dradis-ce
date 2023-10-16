@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/dradis/dradis-html_export.git
-  revision: 308f8d4ba9009b2180ea7fb7466db1453b16a5a5
-  branch: rails-7-compatibility
+  revision: 70ccfe4e99d8cf077afe5aa5a97c73b2dd07049b
+  branch: rails-7-upgrade
   specs:
     dradis-html_export (4.10.1)
       RedCloth (~> 4.3.2)
