@@ -10,30 +10,32 @@
       href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,300&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="reset.css" />
-    <link rel="stylesheet" href="design-system.css" />
-    <link rel="stylesheet" href="styles.css" />
+
+    <!-- <link rel="stylesheet" href="css/reset.css" /> -->
+    <link rel="stylesheet" href="css/bulma.min.css" />
+    <link rel="stylesheet" href="css/design-system.css" />
+    <link rel="stylesheet" href="css/styles.css" />
     <script src="scripts.js" defer></script>
   </head>
 
   <body>
-    <section class="container">
+    <section class="container is-fullhd">
       <div id="upload-view" class="box">
         <header><h3>Upload Output Files</h3></header>
         <section id="drag-drop-zone">
           <img alt="icon-upload" src="imgs/upload.svg" />
           <div class="title">
-            <p class="sm-text">Drag & Drop</p>
-            <p class="sm-text">
+            <p class="is-size-7">Drag & Drop</p>
+            <p class="is-size-7">
               or <a href="#" class="highlight">Choose Files</a> to Upload
             </p>
           </div>
         </section>
         <section id="upload-list">
-          <div class="title">
-            <p>Upload List</p>
+          <header class="title">
+            <h5 class="is-size-7">Upload List</h5>
             <span class="badge">0</span>
-          </div>
+          </header>
         </section>
         <footer>Buttons</footer>
       </div>
