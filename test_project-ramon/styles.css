@@ -59,6 +59,7 @@ p {
   display: flex;
   flex-direction: column;
   height: 100%;
+  gap: var(--space-4);
 }
 
 #upload-view .header,
