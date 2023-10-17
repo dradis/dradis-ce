@@ -50,3 +50,29 @@
   --font-size-5: 0.75rem; /* 12px */
   --font-size-6: 0.65rem; /* 10px */
 }
+
+/* Style the scrollbar track (background) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Style the scrollbar thumb (the moving part) */
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary-600);
+  border-radius: 100px;
+}
+
+/* On hover over the thumb */
+::-webkit-scrollbar-thumb:hover {
+  background-color: grey;
+}
+
+/* Style the scrollbar button (up & down buttons – not commonly seen) */
+::-webkit-scrollbar-button {
+  display: none; /* This will hide the buttons */
+}
+
+/* Style the scrollbar track pieces (the areas not covered by the thumb) */
+::-webkit-scrollbar-track-piece {
+  background-color: var(--primary-200);
+}

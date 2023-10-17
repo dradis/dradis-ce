@@ -136,6 +136,14 @@ select:focus {
   flex-shrink: 0;
   /* padding: var(--space-6); */
 }
+
+#upload-view .sm-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--gray-700);
+}
+
 #upload-view #drag-drop-zone {
   border: 1px dashed var(--primary-600);
   padding: var(--space-8) var(--space-6);
@@ -164,15 +172,9 @@ select:focus {
 
 #upload-list {
   flex-grow: 1;
-  overflow-y: auto;
-  padding: var(--space-4) 0;
-}
-
-#upload-list > .title {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  color: var(--gray-700);
+  overflow-y: overlay;
+  padding: var(--space-4);
+  margin-right: var(--space-3);
 }
 
 /* Upload View > Upload Cards */
