@@ -37,6 +37,41 @@
             <span class="badge">0</span>
           </header>
           <div class="upload-cards">
+            <div class="upload-card proc-ok">
+              <header class="card-top">
+                <figure><img alt="File icon" src="imgs/file.svg" /></figure>
+                <div class="card-info">
+                  <p class="tool-name has-text-weight-semibold">
+                    sample_nessus.xml
+                  </p>
+                  <div class="is-flex">
+                    <p class="tool-type is-size-7 has-text-grey mr-2">
+                      Nessus
+                    </p>
+                    <p class="tool-size is-size-7 has-text-grey">
+                      268 kbs
+                    </p>
+                  </div>
+                </div>
+                <div class="loading-spinner ml-auto">
+                  <img alt="loading" src="imgs/spinner.svg" />
+                </div>
+              </header>
+              <footer class="card-bottom p-1">
+                <div id="tool">
+                  <p class="has-text-grey is-size-7">Tool</p>
+                  <select id="tool-selection">
+                    <option value="nessus">Nessus</option>
+                    <option value="nmap">Nmap</option>
+                    <option value="wpsacan">WPScan</option>
+                  </select>
+                </div>
+                <div id="process-failed">
+                  <img alt="alert icon" src="imgs/alert.svg" />
+                  <p class="is-size-7">Process Failed</p>
+                </div>
+              </footer>
+            </div>
             <div class="upload-card">
               <header class="card-top">
                 <figure><img alt="File icon" src="imgs/file.svg" /></figure>

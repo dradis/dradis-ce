@@ -175,7 +175,13 @@ select:focus {
   color: var(--gray-700);
 }
 
-/* Upload View > Upload List */
+/* Upload View > Upload Cards */
+
+#upload-list .upload-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
 
 #upload-list .upload-card {
   border: 1px solid var(--primary-400);
@@ -200,12 +206,27 @@ select:focus {
   gap: var(--space-3);
 }
 
+#upload-list .upload-card.proc-ok #process-failed {
+  display: none;
+}
+
+#tool {
+  flex: 1;
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
 #tool-selection {
   width: 100%;
 }
 
 #process-failed {
   color: var(--alert);
+  flex: 1;
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
 }
 
 /* Upload View > Footer */
