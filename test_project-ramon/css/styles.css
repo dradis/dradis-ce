@@ -282,7 +282,9 @@ select:focus {
   padding: var(--space-3) var(--space-4);
   color: white;
   display: flex;
+  justify-content: space-between;
 }
+
 #upload-popup .up-status {
   background: var(--primary-200);
   padding: var(--space-3) var(--space-4);
@@ -308,6 +310,7 @@ select:focus {
 
 #upload-popup .up-files .card-top {
   border-bottom: 1px solid var(--primary-200);
+  padding: var(--space-3);
 }
 
 #upload-popup .card-top {
