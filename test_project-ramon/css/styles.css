@@ -261,3 +261,19 @@ select:focus {
   flex: 1;
   background-color: var(--primary-100);
 }
+
+/* USABILITY TEST STAGES */
+
+.stage-1 .sm-title,
+.stage-1 #upload-list {
+  visibility: hidden;
+}
+
+.stage-2 .delete-card,
+.stage-2 .card-bottom {
+  display: none !important;
+}
+
+.stage-3 .loading-spinner {
+  display: none;
+}
