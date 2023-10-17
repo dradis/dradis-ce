@@ -82,6 +82,18 @@ button.primary:hover {
   color: var(--primary-900);
 }
 
+select {
+  border: 1px solid var(--primary-400);
+  padding: var(--space-3) var(--space-3);
+  border-radius: var(--space-2);
+}
+
+select:focus {
+  border-color: var(--primary-400); /* Darker shade of blue for the border */
+  outline: none; /* Remove default browser outline */
+  box-shadow: 0 0 5px rgba(0, 0, 255, 0.3); /* Add a subtle box shadow */
+}
+
 .link-button {
   display: flex;
   align-items: center;
