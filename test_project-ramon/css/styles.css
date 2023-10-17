@@ -262,6 +262,49 @@ select:focus {
   background-color: var(--primary-100);
 }
 
+/* Upload Popup */
+
+#upload-popup {
+  position: absolute;
+  right: 10%;
+  width: 360px;
+  bottom: 0;
+  background: white;
+}
+
+#upload-popup .up-main {
+  border-radius: var(--space-3) var(--space-3) 0 0;
+  background: var(--primary-600);
+  padding: var(--space-3) var(--space-4);
+  color: white;
+  display: flex;
+}
+#upload-popup .up-status {
+  background: var(--primary-200);
+  padding: var(--space-3) var(--space-4);
+  color: white;
+  display: flex;
+  justify-content: end;
+}
+
+#upload-popup .up-files {
+  padding: var(--space-3);
+}
+
+#upload-popup .up-files .card-top {
+  border-bottom: 1px solid var(--primary-200);
+}
+
+#upload-popup .card-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+#upload-popup .loading-spinner2 {
+  width: 50px;
+}
+
 /* USABILITY TEST STAGES */
 
 .stage-1 .sm-title,
