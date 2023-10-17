@@ -231,6 +231,7 @@ select:focus {
   display: flex;
   gap: var(--space-3);
   align-items: center;
+  justify-content: space-between;
 }
 
 .delete-card img {
