@@ -239,6 +239,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     var dragDropZone = document.getElementById("drag-drop-zone");
     var uploadAll = document.getElementById("bt-upload-all");
+    var uploadPopup = document.getElementById("upload-popup");
 
     if (dragDropZone) {
       dragDropZone.addEventListener("click", function () {
@@ -271,6 +272,23 @@
         if (document.body.classList.contains("stage-3")) {
           document.body.classList.remove("stage-3");
           document.body.classList.add("stage-4");
+        }
+      });
+    }
+
+    if (uploadPopup) {
+      uploadPopup.addEventListener("click", function () {
+        if (
+          document.body.classList.contains("stage-4") &&
+          document.body.classList.contains("up2")
+        ) {
+          document.body.classList.remove("stage-4");
+          document.body.classList.remove("up2");
+          document.body.classList.add("stage-1");
+          document.body.classList.add("up1");
+        } else if (document.body.classList.contains("stage-4")) {
+          document.body.classList.remove("up1");
+          document.body.classList.add("up2");
         }
       });
     }

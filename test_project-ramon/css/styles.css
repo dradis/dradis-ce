@@ -273,6 +273,7 @@ select:focus {
   bottom: -1000px;
   background: #ffffff;
   transition: 0.5s;
+  cursor: pointer;
 }
 
 #upload-popup .up-main {
@@ -297,8 +298,8 @@ select:focus {
   align-items: center;
 }
 
-#upload-popup .up-status .message {
-  color: var(--primary-900);
+#upload-popup .up-status .end-message {
+  color: var(--primary-1000);
 }
 
 #upload-popup .up-files {
@@ -326,7 +327,9 @@ select:focus {
   visibility: hidden;
 }
 .stage-1 #upload-view .footer > a,
-.stage-1 #upload-view .footer > button {
+.stage-1 #upload-view .footer > button,
+.stage-2 #upload-view .footer > a,
+.stage-2 #upload-view .footer > button {
   opacity: 0.4;
   pointer-events: none;
 }
