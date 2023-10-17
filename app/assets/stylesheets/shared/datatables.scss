@@ -5,6 +5,7 @@ div.dataTables_wrapper {
     .column-actions {
       position: sticky;
       right: 0;
+      opacity: 0;
       box-shadow: -8px 0px 10px 0px rgba(82, 63, 105, 0.08);
 
       a {
@@ -85,6 +86,11 @@ div.dataTables_wrapper {
               background-color: $checkboxFill;
               border-color: $checkboxFill;
             }
+          }
+        }
+        &:hover {
+          td.column-actions {
+            opacity: 1;
           }
         }
       }
