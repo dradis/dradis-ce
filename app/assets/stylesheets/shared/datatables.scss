@@ -2,6 +2,14 @@ div.dataTables_wrapper {
   .dataTable {
     margin-top: 0 !important;
 
+    tr.odd .column-actions {
+      background-color: rgba(242, 242, 242, 0.8);
+    }
+
+    tr.even .column-actions {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+
     .column-actions {
       position: sticky;
       right: 0;
