@@ -15,14 +15,6 @@ div.dataTables_wrapper {
       right: 0;
       opacity: 0;
       box-shadow: -8px 0px 10px 0px rgba(82, 63, 105, 0.08);
-
-      a {
-        visibility: hidden;
-
-        &:first-of-type {
-          padding-right: 0.5rem;
-        }
-      }
     }
 
     .no-sort {
@@ -149,15 +141,6 @@ div.dataTables_wrapper {
               opacity: 1;
             }
           }
-        }
-      }
-    }
-
-    tr {
-      &:focus-within,
-      &:hover {
-        .column-actions a {
-          visibility: visible;
         }
       }
     }
