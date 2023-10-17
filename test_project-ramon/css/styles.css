@@ -178,8 +178,18 @@ button.primary:hover {
   gap: var(--space-4);
 }
 
-.loading-spinner {
+#upload-list .upload-card .loading-spinner {
   width: 50px;
+}
+
+#upload-list .upload-card .card-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+#tool-selection {
+  width: 100%;
 }
 
 /* Upload View > Footer */
