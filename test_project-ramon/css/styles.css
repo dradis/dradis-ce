@@ -329,7 +329,9 @@ select:focus {
 .stage-1 #upload-view .footer > a,
 .stage-1 #upload-view .footer > button,
 .stage-2 #upload-view .footer > a,
-.stage-2 #upload-view .footer > button {
+.stage-2 #upload-view .footer > button,
+.stage-4 #upload-view .footer > a,
+.stage-4 #upload-view .footer > button {
   opacity: 0.4;
   pointer-events: none;
 }
