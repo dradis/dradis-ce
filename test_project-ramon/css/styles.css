@@ -287,6 +287,17 @@ select:focus {
   justify-content: end;
 }
 
+#upload-popup .up-status .after {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#upload-popup .up-status .message {
+  color: var(--primary-900);
+}
+
 #upload-popup .up-files {
   padding: var(--space-3);
 }

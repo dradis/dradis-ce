@@ -171,9 +171,16 @@
     </section>
 
     <div id="upload-popup">
-      <header class="up-main">2 files uploading</header>
+      <header class="up-main">
+        <div class="up1">2 files uploading</div>
+        <div class="up2">1 upload complete</div>
+      </header>
       <section class="up-status">
-        <a href="#" class="is-size-7">CANCEL ALL</a>
+        <a href="#" class="is-size-7 up1">CANCEL ALL</a>
+        <div class="after up2">
+          <span class="is-size-7 message mb-0">1 upload failed</span>
+          <a href="#" class="is-size-7 up1">RETRY</a>
+        </div>
       </section>
       <section class="up-files">
         <header class="card-top">
