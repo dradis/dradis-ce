@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="css/bulma.min.css" />
     <link rel="stylesheet" href="css/design-system.css" />
     <link rel="stylesheet" href="css/styles.css" />
-    <script src="scripts.js" defer></script>
+    <script src="usability-test.js" defer></script>
   </head>
 
   <body class="stage-1 up1">
@@ -31,13 +31,13 @@
             </p>
           </div>
         </section>
-        <header class="sm-title mb-0 mx-4">
+        <header id="loading-card" class="sm-title mb-0 mx-4">
           <h5 class="is-size-7">Upload List</h5>
           <span class="badge">0</span>
         </header>
         <section id="upload-list" class="px-4 py-0">
           <div class="upload-cards">
-            <div class="upload-card proc-ok">
+            <div class="upload-card proc-ok up-card">
               <header class="card-top">
                 <figure><img alt="File icon" src="imgs/file.svg" /></figure>
                 <div class="card-info">
@@ -75,7 +75,7 @@
                 </div>
               </footer>
             </div>
-            <div class="upload-card proc-ok">
+            <div class="upload-card proc-ok up-card">
               <header class="card-top">
                 <figure><img alt="File icon" src="imgs/file.svg" /></figure>
                 <div class="card-info">
@@ -129,7 +129,7 @@
                     </p>
                   </div>
                 </div>
-                <div class="loading-spinner ml-auto">
+                <div class="loading-spinner ml-auto up-card">
                   <img alt="loading" src="imgs/spinner.svg" />
                 </div>
                 <a class="delete-card ml-auto" href="#"
@@ -234,3 +234,35 @@
     </div>
   </body>
 </html>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var dragDropZone = document.getElementById("drag-drop-zone");
+
+    if (dragDropZone) {
+      dragDropZone.addEventListener("click", function () {
+        if (document.body.classList.contains("stage-1")) {
+          document.body.classList.remove("stage-1");
+          document.body.classList.add("stage-2");
+        } else if (document.body.classList.contains("stage-2")) {
+          document.body.classList.remove("stage-2");
+          document.body.classList.add("stage-3");
+        } else if (document.body.classList.contains("stage-3")) {
+          document.body.classList.remove("stage-3");
+          document.body.classList.add("stage-4");
+        } else if (
+          document.body.classList.contains("stage-4") &&
+          document.body.classList.contains("up2")
+        ) {
+          document.body.classList.remove("stage-4");
+          document.body.classList.remove("up2");
+          document.body.classList.add("stage-1");
+          document.body.classList.add("up1");
+        } else if (document.body.classList.contains("stage-4")) {
+          document.body.classList.remove("up1");
+          document.body.classList.add("up2");
+        }
+      });
+    }
+  });
+</script>

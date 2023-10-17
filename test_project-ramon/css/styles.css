@@ -344,6 +344,10 @@ select:focus {
   bottom: 0px !important;
 }
 
+.stage-4 .up-card {
+  display: none !important;
+}
+
 body.up1 .up1 {
   display: none !important;
 }
