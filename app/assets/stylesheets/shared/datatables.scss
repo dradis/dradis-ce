@@ -3,6 +3,9 @@ div.dataTables_wrapper {
     margin-top: 0 !important;
 
     .column-actions {
+      position: sticky;
+      right: 0;
+      box-shadow: -8px 0px 10px 0px rgba(82, 63, 105, 0.08);
 
       a {
         visibility: hidden;
