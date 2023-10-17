@@ -27,6 +27,9 @@ class Activity < ApplicationRecord
     includes(:trackable).order('activities.created_at DESC').limit(20)
   end
 
+  scope :filter_by_user_id, -> (id) { where user_id: id }
+  scope :filter_by_type, -> (type) { where trackable_type: type }
+
   # -- Callbacks ------------------------------------------------------------
 
   # Cast action to a string so the 'inclusion' validation works with symbols

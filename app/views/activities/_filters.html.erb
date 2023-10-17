@@ -1,0 +1,8 @@
+<div class="activity-filters ">
+  <%= form_with url: project_activities_path(current_project.id), method: :get, local: true, class: 'd-flex flex-row' do |f| %>
+    <%= f.select :user, options_from_collection_for_select(User.all, :id, :name), {include_blank: 'Filter by user'}, { class: 'form-select', include_blank: 'Select user' } %>
+    <%= f.select :types, Activity.select(:trackbable_type).distinct.pluck(:trackable_type), {include_blank: 'Filter by type'}, { class: 'form-select' } %>
+
+    <%= f.submit 'Search', class: "form-submit" %>
+  <% end %>
+</div>

@@ -7,10 +7,10 @@ class ActivitiesController < AuthenticatedController
   def index
     @page = params[:page].present? ? params[:page].to_i : 1
 
-    activities = current_project.activities
-                                .includes(:trackable)
-                                .order(created_at: :desc)
-                                .page(@page)
+    activities = current_project.activities.includes(:trackable)
+    activities = activities.filter_by_user_id(params[:user]) if params[:user].present?
+    activities = activities.filter_by_type(params[:type]) if params[:type].present?
+    activities = activities.order(created_at: :desc).page(@page)
 
     @activities_groups = activities.group_by do |activity|
       activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
