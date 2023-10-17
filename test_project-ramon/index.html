@@ -161,7 +161,7 @@
             <img alt="trash" src="imgs/trash.svg" />
             <span>Remove All</span>
           </a>
-          <button class="primary">
+          <button id="bt-upload-all" class="primary">
             <span class="mr-2">Upload All</span>
             <span class="badge inverted">0</span>
           </button>
@@ -238,6 +238,7 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     var dragDropZone = document.getElementById("drag-drop-zone");
+    var uploadAll = document.getElementById("bt-upload-all");
 
     if (dragDropZone) {
       dragDropZone.addEventListener("click", function () {
@@ -261,6 +262,15 @@
         } else if (document.body.classList.contains("stage-4")) {
           document.body.classList.remove("up1");
           document.body.classList.add("up2");
+        }
+      });
+    }
+
+    if (uploadAll) {
+      uploadAll.addEventListener("click", function () {
+        if (document.body.classList.contains("stage-3")) {
+          document.body.classList.remove("stage-3");
+          document.body.classList.add("stage-4");
         }
       });
     }
