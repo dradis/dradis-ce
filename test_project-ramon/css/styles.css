@@ -204,6 +204,10 @@ select:focus {
   width: 100%;
 }
 
+#process-failed {
+  color: var(--alert);
+}
+
 /* Upload View > Footer */
 
 #upload-view .footer {
