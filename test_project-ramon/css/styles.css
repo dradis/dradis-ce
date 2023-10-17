@@ -210,6 +210,10 @@ select:focus {
   display: none;
 }
 
+#upload-list .upload-card.proc-error #tool {
+  display: none;
+}
+
 #tool {
   flex: 1;
   display: flex;
@@ -227,6 +231,11 @@ select:focus {
   display: flex;
   gap: var(--space-3);
   align-items: center;
+}
+
+.delete-card img {
+  width: 24px;
+  opacity: 0.5;
 }
 
 /* Upload View > Footer */
