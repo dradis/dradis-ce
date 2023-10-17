@@ -11,6 +11,8 @@ body {
   padding: 0;
   box-sizing: border-box;
   padding: 20px;
+  position: relative;
+  overflow: hidden;
 }
 h1,
 h2,
@@ -268,8 +270,9 @@ select:focus {
   position: absolute;
   right: 10%;
   width: 360px;
-  bottom: 0;
-  background: white;
+  bottom: -1000px;
+  background: #ffffff;
+  transition: 0.5s;
 }
 
 #upload-popup .up-main {
@@ -337,7 +340,8 @@ select:focus {
   display: none;
 }
 
-.stage4 {
+.stage-4 #upload-popup {
+  bottom: 0px !important;
 }
 
 body.up1 .up1 {
