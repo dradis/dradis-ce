@@ -174,9 +174,9 @@ select:focus {
 
 #upload-list {
   flex-grow: 1;
-  overflow-y: overlay;
+  overflow-y: auto;
   padding: var(--space-4);
-  margin-right: var(--space-3);
+  margin-right: var(--space-2);
 }
 
 /* Upload View > Upload Cards */
