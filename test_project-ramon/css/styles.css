@@ -247,4 +247,5 @@ select:focus {
 
 #available-plugins {
   flex: 1;
+  background-color: var(--primary-100);
 }
