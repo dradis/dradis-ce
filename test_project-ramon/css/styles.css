@@ -334,6 +334,19 @@ select:focus {
   pointer-events: none;
 }
 
+.stage-1 #bt-upload-all .badge.b2 {
+  display: none;
+}
+.stage-2 #bt-upload-all .badge.b2 {
+  display: none;
+}
+.stage-3 #bt-upload-all .badge.b1 {
+  display: none;
+}
+.stage-4 #bt-upload-all .badge.b2 {
+  display: none;
+}
+
 .stage-2 .delete-card,
 .stage-2 .card-bottom {
   display: none !important;
