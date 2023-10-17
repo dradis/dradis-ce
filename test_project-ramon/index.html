@@ -18,7 +18,7 @@
     <script src="scripts.js" defer></script>
   </head>
 
-  <body class="stage-3">
+  <body class="stage-4 up1">
     <section class="container is-fullhd">
       <div id="upload-view" class="box p-0">
         <header class="pt-4 px-4 pb-0"><h3>Upload Output Files</h3></header>
@@ -172,14 +172,14 @@
 
     <div id="upload-popup">
       <header class="up-main">
-        <div class="up1">2 files uploading</div>
-        <div class="up2">1 upload complete</div>
+        <div class="up2">2 files uploading</div>
+        <div class="up1">1 upload complete</div>
       </header>
       <section class="up-status">
-        <a href="#" class="is-size-7 up1">CANCEL ALL</a>
-        <div class="after up2">
+        <a href="#" class="is-size-7 up2">CANCEL ALL</a>
+        <div class="after up1">
           <span class="is-size-7 message mb-0">1 upload failed</span>
-          <a href="#" class="is-size-7 up1">RETRY</a>
+          <a href="#" class="is-size-7">RETRY</a>
         </div>
       </section>
       <section class="up-files">
@@ -198,13 +198,13 @@
               </p>
             </div>
           </div>
-          <div class="loading-spinner2 ml-auto">
+          <div class="loading-spinner2 up2 ml-auto">
             <img alt="loading" src="imgs/spinner.svg" />
           </div>
-          <a class="delete-card" href="#"
+          <a class="delete-card up2" href="#"
             ><img alt="delete icon" src="imgs/trash.svg"
           /></a>
-          <img alt="success up2" src="imgs/alert2.svg" />
+          <img alt="success" class="up1 ml-auto" src="imgs/alert2.svg" />
         </header>
         <header class="card-top">
           <figure><img alt="File icon" src="imgs/file.svg" /></figure>
@@ -221,14 +221,14 @@
               </p>
             </div>
           </div>
-          <div class="loading-spinner2 ml-auto up1">
+          <div class="loading-spinner2 ml-auto up2">
             <img alt="loading" src="imgs/spinner.svg" />
           </div>
-          <a class="delete-card up1" href="#"
+          <a class="delete-card up2" href="#"
             ><img alt="delete icon" src="imgs/trash.svg"
           /></a>
 
-          <img alt="success up2" src="imgs/success.svg" />
+          <img alt="success" class="up1 ml-auto" src="imgs/success.svg" />
         </header>
       </section>
     </div>
