@@ -29,6 +29,9 @@ class Activity < ApplicationRecord
 
   scope :filter_by_user_id, -> (id) { where user_id: id }
   scope :filter_by_type, -> (type) { where trackable_type: type }
+  scope :filter_by_date, -> (period_start, period_end) {
+    where("created_at >= ? AND created_at <= ?", period_start.beginning_of_day, period_end.end_of_day )
+  }
 
   # -- Callbacks ------------------------------------------------------------
 

@@ -17,6 +17,7 @@
 
 //= require vendor/datatables.min
 //= require vendor/stupidtable
+//= require vendor/datepicker.min
 
 //= require cable
 

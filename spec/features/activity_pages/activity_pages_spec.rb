@@ -12,14 +12,36 @@ describe 'Activity pages:' do
   context 'as authenticated user' do
     describe 'index page', js: true do
       let(:trackable) { create(:issue) }
+      let(:trackable_card) { create(:card) }
       let(:user) { create(:user) }
+      let(:second_user) { create(:user) }
 
       let(:create_activities) do
-        50.times do
+        35.times do
           activity = Activity.create(
             user: user,
             trackable_type: trackable.class,
             trackable_id: trackable.id,
+            action: 'update',
+            created_at: Time.current - ((1..5).to_a.sample.days)
+          )
+        end
+
+        10.times do
+          activity = Activity.create(
+            user: second_user,
+            trackable_type: trackable_card.class,
+            trackable_id: trackable_card.id,
+            action: 'update',
+            created_at: Time.current - ((1..5).to_a.sample.days)
+          )
+        end
+
+        5.times do
+          activity = Activity.create(
+            user: user,
+            trackable_type: trackable_card.class,
+            trackable_id: trackable_card.id,
             action: 'update',
             created_at: Time.current - ((1..5).to_a.sample.days)
           )
@@ -47,6 +69,18 @@ describe 'Activity pages:' do
         date_headers.each do |date_header|
           expect(page).to have_content(date_header, count: 1)
         end
+      end
+
+      describe 'filters' do
+        # user filter exists
+        # user filter works
+        # type filter exists
+        # type filter works
+        # data filter exists
+        # data filter works
+          # for day
+          # for range
+        # filters work combined
       end
 
       describe 'infinite scroll' do

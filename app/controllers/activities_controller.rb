@@ -10,6 +10,7 @@ class ActivitiesController < AuthenticatedController
     activities = current_project.activities.includes(:trackable)
     activities = activities.filter_by_user_id(params[:user]) if params[:user].present?
     activities = activities.filter_by_type(params[:type]) if params[:type].present?
+    activities = activities.filter_by_date(period_start, period_end) if params[:period_start].present?
     activities = activities.order(created_at: :desc).page(@page)
 
     @activities_groups = activities.group_by do |activity|
@@ -28,6 +29,18 @@ class ActivitiesController < AuthenticatedController
 
     respond_to do |format|
       format.js
+    end
+  end
+
+  def period_start
+    DateTime.parse params[:period_start]
+  end
+
+  def period_end
+    if params[:period_end]
+      DateTime.parse params[:period_end]
+    else
+      period_start
     end
   end
 end

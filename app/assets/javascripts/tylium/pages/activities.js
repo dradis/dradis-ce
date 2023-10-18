@@ -29,4 +29,11 @@ document.addEventListener('turbolinks:load', function() {
       }
     });
   }
+  const elem = document.getElementById('daterangepicker');
+  const rangepicker = new DateRangePicker(elem, {
+    todayHighlight: true,
+    maxDate: new Date(),
+    autohide: true,
+    format: 'dd/mm/yyyy'
+  });
 });
