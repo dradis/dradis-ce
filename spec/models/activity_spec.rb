@@ -61,6 +61,26 @@ describe Activity do
     end
   end
 
+  describe "#filter_by_date" do
+    before do
+      issue = create(:issue)
+      activity = create(:activity, trackable: issue)
+      activity2 = create(:activity, trackable: issue, created_at: DateTime.now.beginning_of_year - 1.year)
+      activity3 = create(:activity, trackable: issue, created_at: DateTime.now.beginning_of_year - 1.year)
+    end
+
+    context "when passed a valid date" do
+      it "returns activities within the date" do
+        year_start = DateTime.now.beginning_of_year
+        last_year_start = year_start - 1.year
+        period_end = DateTime.now.end_of_day
+
+        expect(Activity.filter_by_date(year_start, period_end).count).to eq 1
+        expect(Activity.filter_by_date(last_year_start, period_end).count).to eq 3
+      end
+    end
+  end
+
   describe "#trackable=" do
     context "when passed an Issue" do
       it "sets trackable_type as Issue, not Note" do
