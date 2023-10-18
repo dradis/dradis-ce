@@ -23,7 +23,7 @@ describe 'Activity pages:' do
             trackable_type: trackable.class,
             trackable_id: trackable.id,
             action: 'update',
-            created_at: Time.current - ((1..5).to_a.sample.days)
+            created_at: Time.current - 1.month
           )
         end
 
@@ -33,7 +33,7 @@ describe 'Activity pages:' do
             trackable_type: trackable_card.class,
             trackable_id: trackable_card.id,
             action: 'update',
-            created_at: Time.current - ((1..5).to_a.sample.days)
+            created_at: Time.current
           )
         end
 
@@ -43,7 +43,7 @@ describe 'Activity pages:' do
             trackable_type: trackable_card.class,
             trackable_id: trackable_card.id,
             action: 'update',
-            created_at: Time.current - ((1..5).to_a.sample.days)
+            created_at: Time.current - 2.days
           )
         end
       end
@@ -72,15 +72,47 @@ describe 'Activity pages:' do
       end
 
       describe 'filters' do
-        # user filter exists
-        # user filter works
-        # type filter exists
-        # type filter works
-        # data filter exists
-        # data filter works
-          # for day
-          # for range
-        # filters work combined
+        it "has user filter" do
+          expect(page).to have_selector('#user', count: 1)
+        end
+
+        it "user filter works" do
+          visit project_activities_path(current_project, user: second_user.id)
+          expect(page).to have_selector('.activity', count: 10)
+        end
+
+        it "has type filter" do
+          expect(page).to have_selector('#type', count: 1)
+        end
+
+        it "type filter works" do
+          visit project_activities_path(current_project, type: "Card")
+          expect(page).to have_selector('.activity', count: 15)
+        end
+
+        it "has daterange filter" do
+          expect(page).to have_selector('#daterangepicker', count: 1)
+          expect(page).to have_selector('#period_start', count: 1)
+          expect(page).to have_selector('#period_end', count: 1)
+        end
+
+        it "daterange filter works" do
+          period_start = Time.current - 3.days
+          period_end = Time.current
+
+          visit project_activities_path(current_project, period_start: period_start, period_end: period_end)
+          expect(page).to have_selector('.activity', count: 15)
+        end
+
+        it "daterange filter works for single day" do
+          visit project_activities_path(current_project, period_start: Time.current, period_end: Time.current)
+          expect(page).to have_selector('.activity', count: 10)
+        end
+
+        it "combined filter works" do
+          visit project_activities_path(current_project, type: "Card", user: second_user.id)
+          expect(page).to have_selector('.activity', count: 10)
+        end
       end
 
       describe 'infinite scroll' do
