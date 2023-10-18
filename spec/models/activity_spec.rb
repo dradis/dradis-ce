@@ -11,6 +11,56 @@ describe Activity do
 
   it { should validate_inclusion_of(:action).in_array %i[create update destroy] }
 
+
+  describe "#filter_by_user_id" do
+    before do
+      issue = create(:issue)
+      @user = create(:user)
+      activity = create(:activity, trackable: issue, user: @user)
+      activity2 = create(:activity, trackable: issue, user: @user)
+      activity3 = create(:activity, trackable: issue)
+    end
+
+    context "when passed a valid user id" do
+      it "returns activities of this user" do
+        expect(Activity.filter_by_user_id(@user.id).count).to eq 2
+        expect(Activity.all.count).to eq 3
+      end
+    end
+
+    context "when passed a non valid user id" do
+      it "returns an empty collection" do
+        user_id = User.last.id + 1
+        expect(Activity.filter_by_user_id(user_id).count).to eq 0
+        expect(Activity.all.count).to eq 3
+      end
+    end
+  end
+
+  describe "#filter_by_type" do
+    before do
+      issue = create(:issue)
+      card = create(:card)
+      activity = create(:activity, trackable: issue)
+      activity2 = create(:activity, trackable: card)
+      activity3 = create(:activity, trackable: card)
+    end
+
+    context "when passed a valid type" do
+      it "returns activities of this user" do
+        expect(Activity.filter_by_type("Card").count).to eq 2
+        expect(Activity.all.count).to eq 3
+      end
+    end
+
+    context "when passed a non valid type" do
+      it "returns an empty collection" do
+        expect(Activity.filter_by_type("galaxy").count).to eq 0
+        expect(Activity.all.count).to eq 3
+      end
+    end
+  end
+
   describe "#trackable=" do
     context "when passed an Issue" do
       it "sets trackable_type as Issue, not Note" do
