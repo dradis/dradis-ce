@@ -43,6 +43,10 @@ module Dradis
       'UserPreferences'
     ]
 
+    # Override the default credentials lookup paths. See bin/rails credentials:help
+    config.credentials.content_path = Rails.root.join('config', 'shared', 'credentials.yml.enc')
+    config.credentials.key_path = Rails.root.join('config', 'shared', 'master.key')
+
     # Don't generate system test files.
     config.generators.system_tests = nil
   end
