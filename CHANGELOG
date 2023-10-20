@@ -1,8 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - [entity]:
     - [future tense verb] [feature]
-  - Upgraded gems:
-    - [gem]
+  - Upgraded gems: importmap-rails
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
