@@ -24,7 +24,7 @@ Bundler.require(*Rails.groups)
 module Dradis
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.1
+    config.load_defaults 7.0
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -42,6 +42,10 @@ module Dradis
       'Symbol',
       'UserPreferences'
     ]
+
+    # Override the default credentials lookup paths. See bin/rails credentials:help
+    config.credentials.content_path = Rails.root.join('config', 'shared', 'credentials.yml.enc')
+    config.credentials.key_path = Rails.root.join('config', 'shared', 'master.key')
 
     # Don't generate system test files.
     config.generators.system_tests = nil
