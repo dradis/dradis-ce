@@ -486,9 +486,10 @@ GEM
       date
     timecop (0.9.5)
     timeout (0.4.0)
-    turbolinks (5.2.1)
-      turbolinks-source (~> 5.2)
-    turbolinks-source (5.2.0)
+    turbo-rails (1.5.0)
+      actionpack (>= 6.0.0)
+      activejob (>= 6.0.0)
+      railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.3.0)
@@ -614,7 +615,7 @@ DEPENDENCIES
   thor (~> 1.2.1)
   time (>= 0.2.2)
   timecop
-  turbolinks (~> 5)
+  turbo-rails (~> 1.4)
   unicorn (= 6.1.0)
   warden (~> 1.2.3)
   web-console (>= 4.1.0)
