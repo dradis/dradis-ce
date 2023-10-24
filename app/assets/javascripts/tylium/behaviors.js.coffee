@@ -174,7 +174,7 @@ document.addEventListener "turbo:load", ->
       else
         $(this).find($('[data-behavior~=scroll-wrapper]')).removeClass('hidden');
 
-  # Disable turbolinks for on-page anchor links (prevents page from jumping to top and allows smooth-scrolling)
+  # Disable turbo for on-page anchor links (prevents page from jumping to top and allows smooth-scrolling)
   if $('a[href^="#"]').length
     $('a[href^="#"]').each ->
       if !$(this).data('turbo')
