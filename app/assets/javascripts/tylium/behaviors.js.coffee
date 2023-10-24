@@ -6,7 +6,7 @@
 # The current list of plugins:
 #   * jQuery.Textile     - handles the note editor (/vendor/)
 
-document.addEventListener "turbolinks:load", ->
+document.addEventListener "turbo:load", ->
 
   # --------------------------------------------------- Standard jQuery plugins
 
@@ -177,8 +177,8 @@ document.addEventListener "turbolinks:load", ->
   # Disable turbolinks for on-page anchor links (prevents page from jumping to top and allows smooth-scrolling)
   if $('a[href^="#"]').length
     $('a[href^="#"]').each ->
-      if !$(this).data('turbolinks')
-        $(this).attr 'data-turbolinks', 'false'
+      if !$(this).data('turbo')
+        $(this).attr 'data-turbo', 'false'
       return
 
   # Smooth Scrolling - scroll to element on page load if hash present in current browser url
