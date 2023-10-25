@@ -4,10 +4,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
-    - Bug tracker items:
-      - [item]
+    - Evidence: Fix switching Evidence templates at the Issue level
   - New integrations:
     - [integration]
   - Integration enhancements:
