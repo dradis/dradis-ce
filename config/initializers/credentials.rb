@@ -31,4 +31,10 @@ if !content_path.exist? | content_path.zero?
 
   enc_conf = ActiveSupport::EncryptedConfiguration.new(config_path: content_path, key_path: key_path, env_key: 'RAILS_MASTER_KEY', raise_if_missing_key: true)
   enc_conf.write(contents)
+
+  # We need to manually set Rails.application.credentials here
+  # so that the credentials are accessible immediately after being created.
+  # Since this file is run after railties sets Rails.application.credentials,
+  # Without this line, credentials are nil until a reboot
+  Rails.application.credentials = enc_conf
 end
