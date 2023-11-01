@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Upgrade to Rails 7.0.8
   - Replace unicorn with puma in production
   - Upgraded gems:
     - [gem]
