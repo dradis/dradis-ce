@@ -69,6 +69,10 @@ gem 'time', '>= 0.2.2'
 
 gem 'font-awesome-sass', '~> 6.4.0'
 
+gem 'importmap-rails', '~> 1.2'
+
+gem 'sprockets-rails', '>= 3.0.0'
+
 # ------------------------------------------------------ With native extensions
 # These require native extensions.
 # Ensure Traveling Ruby provides an appropriate version before bumping.
