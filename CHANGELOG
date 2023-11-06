@@ -1,7 +1,9 @@
 [v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
-  - Upgraded gems: importmap-rails, rails, turbo-rails
+  - Upgrade to Rails 7.0.8
+  - Add importmap-rails to handle js libraries
+  - Remove turbolinks and add turbo-rails
+  - Upgraded gems:
+    - [gem]
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
