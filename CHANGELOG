@@ -1,6 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Upgrade to Rails 7.0.8
   - Replace unicorn with puma in production
+  - Add importmap-rails to handle js libraries
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
