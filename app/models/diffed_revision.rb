@@ -9,9 +9,10 @@ class DiffedRevision
 
   def diff
     @diff ||=
-      Differ.diff_by_line(
-        after[content_attribute],
-        before[content_attribute]
+      Differ.diff(
+        after[content_attribute].gsub(/\r/, ''),
+        before[content_attribute].gsub(/\r/, ''),
+        /(\s)/
       )
   end
 
