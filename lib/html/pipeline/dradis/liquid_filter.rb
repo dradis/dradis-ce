@@ -3,7 +3,7 @@ module HTML
     module Dradis
       class LiquidFilter < TextFilter
         def call
-          @text = HTML::IgnoreLiquidInTextileBlockCodes.call(@text)
+          @text = HTML::IgnoreLiquid.call(@text)
 
           assigns = context.fetch(:liquid_assigns, {})
 

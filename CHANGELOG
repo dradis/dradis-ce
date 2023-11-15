@@ -5,8 +5,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Liquid: ignore liquid syntax in urls
     - Bug tracker items:
       - [item]
   - New integrations:

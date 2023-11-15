@@ -6,40 +6,23 @@ module HTML
     ).freeze
 
     class << self
-      def call(text)
-        @lines = text.lines
-        # Initialize a flag to identify block codes in the loop,
-        # possible values are "bc. ", "bc.. ", nil
+      def call(text, index, line, lines)
+        @lines = lines
         current_block_code_type = nil
-        output = []
-
-        @lines.each_with_index do |line, index|
-          BLOCK_CODE_TYPES.each do |block_code_type|
-            if line.start_with?(block_code_type)
-              current_block_code_type = block_code_type
-            end
-          end
-
-          # If the flag is set previously, check if we can set it to nil
-          if current_block_code_type
-            if can_close_block_code?(
-              block_code_type: current_block_code_type,
-              line: line,
-              index: index
-            )
-              current_block_code_type = nil
-            end
-          end
-
-          # If the flag is still present, ignore liquid
-          if current_block_code_type
-            output << "{% raw %}#{line.chomp}{% endraw %}\n"
-          else
-            output << line
+        BLOCK_CODE_TYPES.each do |block_code_type|
+          if line.start_with?(block_code_type)
+            current_block_code_type = block_code_type
           end
         end
 
-        output.join
+        if can_close_block_code?(
+          block_code_type: current_block_code_type,
+          line: line,
+          index: index
+          )
+          current_block_code_type = nil
+        end
+        current_block_code_type
       end
 
       def can_close_block_code?(block_code_type:, index:, line:)
