@@ -34,8 +34,7 @@ module LiquidEnabledResource
 
     result['project'] = ProjectDrop.new(project)
     result['issues'] = project.issues.map { |issue| IssueDrop.new(issue) }
-    result['notes'] = project.notes.map { |note| NoteDrop.new(note) }
-    result['nodes'] = project.nodes.map { |node| NodeDrop.new(node) }
+    result['nodes'] = project.nodes.user_nodes.map { |node| NodeDrop.new(node) }
     result['evidences'] = project.evidence.map { |evidence| EvidenceDrop.new(evidence) }
     result['tags'] = project.tags.map { |tags| TagDrop.new(tags) }
 

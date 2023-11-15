@@ -7,8 +7,7 @@ shared_examples 'liquid dynamic content' do |item_type, node_association|
     create(:tag, project: current_project)
 
     record.content = record.content + "\n" +
-      "{% for issue in issues %}{{ issue.fields['Title'] }}, {% endfor %}\n" \
-      "{% for note in notes %}{{ note.fields['Title'] }}, {% endfor %}\n" \
+      "{% for issue in issues %}{{ issue.title }}, {% endfor %}\n" \
       "{% for node in nodes %}{{ node.label }}, {% endfor %}\n" \
       "{% for e in evidences %}{{ e.fields['EvidenceBlock1'] }}, {% endfor %}\n" \
       "{% for tag in tags %}{{ tag.name }}, {% endfor %}\n" \
@@ -34,10 +33,7 @@ shared_examples 'liquid dynamic content' do |item_type, node_association|
     current_project.issues.each do |issue|
       expect(find('.note-text-inner')).to have_content(issue.title)
     end
-    current_project.notes.each do |note|
-      expect(find('.note-text-inner')).to have_content(note.fields['Title'])
-    end
-    current_project.nodes.each do |node|
+    current_project.nodes.user_nodes.each do |node|
       expect(find('.note-text-inner')).to have_content(node.label)
     end
     current_project.evidence.each do |evidence|
