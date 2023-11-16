@@ -38,6 +38,7 @@ module HTML
             output << line
           end
         end
+
         output.join
       end
 
