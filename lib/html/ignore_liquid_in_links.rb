@@ -13,7 +13,8 @@ module HTML
         output = []
 
         lines.each_with_index do |line, index|
-          if line !~ LIQUID_RAW_RE && line =~ LINK_RE # check that it's a link and is not already escaped
+          # check that it doesn't yet have {% raw %} tags and is a url
+          if line !~ LIQUID_RAW_RE && line =~ LINK_RE
             output << "{% raw %}#{line.chomp}{% endraw %}\n"
           else
             output << line
