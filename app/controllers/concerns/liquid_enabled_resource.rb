@@ -36,7 +36,7 @@ module LiquidEnabledResource
     result['issues'] = project.issues.map { |issue| IssueDrop.new(issue) }
     result['nodes'] = project.nodes.user_nodes.map { |node| NodeDrop.new(node) }
     result['evidences'] = project.evidence.map { |evidence| EvidenceDrop.new(evidence) }
-    result['tags'] = project.tags.map { |tags| TagDrop.new(tags) }
+    result['tags'] = project.tags.map { |tag| TagDrop.new(tag) }
 
     result
   end
