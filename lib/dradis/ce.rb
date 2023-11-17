@@ -16,3 +16,5 @@ require 'html/pipeline/dradis/fieldable_filter'
 require 'html/pipeline/dradis/liquid_filter'
 require 'html/pipeline/dradis/mentions_filter'
 require 'html/pipeline/dradis/textile_filter'
+
+require 'authentication_strategies'

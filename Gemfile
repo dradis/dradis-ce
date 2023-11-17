@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.7.4'
+gem 'rails', '~> 7.0.8'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -68,6 +68,10 @@ gem 'thor', '~> 1.2.1'
 gem 'time', '>= 0.2.2'
 
 gem 'font-awesome-sass', '~> 6.4.0'
+
+gem 'importmap-rails', '~> 1.2'
+
+gem 'sprockets-rails', '>= 3.0.0'
 
 # ------------------------------------------------------ With native extensions
 # These require native extensions.
@@ -136,14 +140,11 @@ gem 'net-smtp'
 gem 'net-pop'
 gem 'net-imap'
 
+gem 'puma', '6.4.0'
+
 # ------------------------------------------------------------------ Deployment
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
-group :production do
-  # Use Unicorn as the web server
-  gem 'unicorn',  '6.1.0'
-end
 
 # ----------------------------------------------------- Development and Testing
 group :development do
@@ -152,7 +153,7 @@ group :development do
   # Display performance information such as SQL time and flame graphs for each request in your browser.
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem 'rack-mini-profiler', '~> 2.0'
-  gem 'listen', '~> 3.3'
+  gem 'listen'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
@@ -183,19 +184,16 @@ group :development, :test do
   gem 'byebug', platform: :mri
 
   gem 'rspec-rails', '~> 4.0.2'
-
-  gem 'puma', '~> 5.0'
 end
 
 group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
-  gem 'capybara', '>= 3.26'
+  gem 'capybara', '~> 3.39'
   gem 'guard-rspec', require: false
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '~> 4.11'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'timecop'
-  gem 'webdrivers'
 
   # Required by capybara
   gem 'matrix'
@@ -216,12 +214,12 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 4.9.0'
+gem 'dradis-plugins', '~> 4.10.0'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 4.9.0'
+gem 'dradis-projects', '~> 4.10.0'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)
@@ -233,33 +231,32 @@ end
 
 # ----------------------------------------------------------------- Calculators
 
-# Update these to v4.10.0 before release
-gem 'dradis-calculator_cvss', github: 'dradis/dradis-calculator_cvss'
-gem 'dradis-calculator_dread', github: 'dradis/dradis-calculator_dread'
+gem 'dradis-calculator_cvss', '~> 4.10.0'
+gem 'dradis-calculator_dread', '~> 4.10.0'
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv_export', '~> 4.9.0'
-gem 'dradis-html_export', '~> 4.9.1'
+gem 'dradis-csv_export', '~> 4.10.0'
+gem 'dradis-html_export', github: 'dradis/dradis-html_export', branch: 'rails-7-upgrade'
 
 # ---------------------------------------------------------------------- Import
-gem 'dradis-csv', '~> 4.9.0'
+gem 'dradis-csv', '~> 4.10.0'
 
 # ---------------------------------------------------------------------- Upload
-gem 'dradis-acunetix', '~> 4.9.0'
-gem 'dradis-brakeman', '~> 4.9.0'
-gem 'dradis-burp', '~> 4.9.0'
-gem 'dradis-coreimpact', '~> 4.9.0'
-gem 'dradis-metasploit', '~> 4.9.0'
-gem 'dradis-nessus', '~> 4.9.0'
-gem 'dradis-netsparker', '~> 4.9.0'
-gem 'dradis-nexpose', '~> 4.9.0'
-gem 'dradis-nikto', '~> 4.9.0'
-gem 'dradis-nipper', '~> 4.9.0'
-gem 'dradis-nmap', '~> 4.9.0'
-gem 'dradis-ntospider', '~> 4.9.0'
-gem 'dradis-openvas', '~> 4.9.0'
-gem 'dradis-qualys', '~> 4.9.0'
-gem 'dradis-saint', '~> 4.9.0'
-gem 'dradis-veracode', '~> 4.9.0'
-gem 'dradis-wpscan', '~> 4.9.0'
-gem 'dradis-zap', '~> 4.9.0'
+gem 'dradis-acunetix', '~> 4.10.0'
+gem 'dradis-brakeman', '~> 4.10.0'
+gem 'dradis-burp', '~> 4.10.0'
+gem 'dradis-coreimpact', '~> 4.10.0'
+gem 'dradis-metasploit', '~> 4.10.0'
+gem 'dradis-nessus', '~> 4.10.0'
+gem 'dradis-netsparker', '~> 4.10.0'
+gem 'dradis-nexpose', '~> 4.10.0'
+gem 'dradis-nikto', '~> 4.10.0'
+gem 'dradis-nipper', '~> 4.10.0'
+gem 'dradis-nmap', '~> 4.10.0'
+gem 'dradis-ntospider', '~> 4.10.0'
+gem 'dradis-openvas', '~> 4.10.0'
+gem 'dradis-qualys', '~> 4.10.0'
+gem 'dradis-saint', '~> 4.10.0'
+gem 'dradis-veracode', '~> 4.10.0'
+gem 'dradis-wpscan', '~> 4.10.0'
+gem 'dradis-zap', '~> 4.10.0'

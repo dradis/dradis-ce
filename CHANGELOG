@@ -1,11 +1,11 @@
 [v#.#.#] ([month] [YYYY])
-  - Tylium: 
-    - Consolidate sidebars
-    - Show liquid content in editor preview
+  - Upgrade to Rails 7.0.8
+  - Replace unicorn with puma in production
+  - Add importmap-rails to handle js libraries
+  - Tylium: show liquid content in editor preview
   - Upgraded gems:
-    - font-awesome-sass, nokogiri, rails, sanitize
+    - [gem]
   - Bugs fixes:
-    - QA: Enable @mentions and formatting toolbar for comments in QA show views
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
@@ -27,6 +27,19 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v4.10.0 (September 2023)
+  - Tylium: 
+    - Consolidate sidebars
+    - Add issue.author to liquid issue drop
+  - Upgraded gems:
+    - font-awesome-sass, nokogiri, puma, rails, sanitize, selenium-webdriver
+  - Bugs fixes:
+    - QA: Enable @mentions and formatting toolbar for comments in QA show views
+  - REST/JSON API enhancements:
+    - Boards, Lists, Cards: add initial implementation
+  - Security Fixes:
+    - Medium: Authenticated (author) broken access control: read access to system files
 
 v4.9.0 (June 2023)
   - Tylium: Extend support for Liquid Dynamic Content
@@ -220,6 +233,8 @@ v4.1.0 (November 2021)
       - Remove orphaned <b> tags
   - Security Fixes:
     - High: Authenticated author broken access control: read access to issue content
+    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v4.0.0 (July 2021)
   * Dynamic content across the app
