@@ -17,8 +17,7 @@ module HTML
           else
             line
           end
-        end
-        lines.join
+        end.join
       end
     end
   end
