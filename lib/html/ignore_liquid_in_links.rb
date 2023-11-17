@@ -10,17 +10,15 @@ module HTML
     class << self
       def call(text)
         lines = text.lines
-        output = []
 
-        lines.each_with_index do |line, index|
-          # check that it doesn't yet have {% raw %} tags and is a url
+        lines.map do |line|
           if line !~ LIQUID_RAW_RE && line =~ LINK_RE
-            output << "{% raw %}#{line.chomp}{% endraw %}\n"
+            "{% raw %}#{line.chomp}{% endraw %}\n"
           else
-            output << line
+            line
           end
         end
-        output.join
+        lines.join
       end
     end
   end
