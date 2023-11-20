@@ -12,7 +12,7 @@ class EvidenceController < NestedNodeResourceController
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
   skip_before_action :find_or_initialize_node, only: [:create_multiple]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
-  before_action :set_form_preview_path, only: [:new, :edit]
+  before_action :set_form_preview_path, only: [:new, :create, :edit, :update]
 
   def show
     @issue = @evidence.issue

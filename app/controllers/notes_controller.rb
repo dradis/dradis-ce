@@ -12,7 +12,7 @@ class NotesController < NestedNodeResourceController
   before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
-  before_action :set_form_preview_path, only: [:edit]
+  before_action :set_form_preview_path, only: [:new, :create, :edit, :update]
 
   def new
     @note = @node.notes.new

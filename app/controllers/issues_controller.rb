@@ -18,7 +18,7 @@ class IssuesController < AuthenticatedController
   before_action :set_or_initialize_issue, except: [:import, :index]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
   before_action :set_affected_nodes, only: [:show]
-  before_action :set_form_cancel_path, only: [:new, :edit]
+  before_action :set_form_cancel_path, only: [:new, :create, :edit, :update]
   before_action :set_form_preview_path, only: [:new, :edit]
   before_action :set_tags, except: [:destroy]
   before_action :store_location, only: [:index, :show]
