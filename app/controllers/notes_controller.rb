@@ -7,10 +7,12 @@ class NotesController < NestedNodeResourceController
   include MultipleDestroy
   include NodesSidebar
   include NotificationsReader
+  include Previewable
 
   before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
+  before_action :set_form_preview_path, only: [:create, :edit, :update]
 
   def new
     @note = @node.notes.new
@@ -98,5 +100,9 @@ class NotesController < NestedNodeResourceController
     else
       "node-#{@node.id}-note"
     end
+  end
+
+  def set_form_preview_path
+    @form_preview_path = @note.new_record? ? {} : { preview_url: preview_project_node_note_path(current_project, @node, @note) }
   end
 end
