@@ -80,9 +80,8 @@ describe 'evidence' do
     let(:model) { @evidence }
     include_examples 'nodes pages breadcrumbs', :show, Evidence
 
-    let(:record) { create(:evidence, issue: @issue, node: @node, content: "#[Title]#\nEvidence Title\n\n#[Description]#\nLiquid: {{evidence.fields['Title']}}") }
+    let(:record) { create(:evidence, issue: @issue, node: @node, content: "#[Title]#\nEvidence Title\n\n#[Description]#\nLiquid: {{evidence.title}}") }
     include_examples 'liquid dynamic content', 'evidence', true
-    include_examples 'liquid preview', 'evidence', true
   end
 
   describe 'edit page', js: true do
@@ -166,6 +165,9 @@ describe 'evidence' do
 
       include_examples 'a form with local auto save', Evidence, :edit
     end
+
+    let(:record) { create(:evidence, issue: @issue, node: @node, content: "#[Title]#\nEvidence Title\n\n#[Description]#\nLiquid: {{evidence.title}}\n\nProject: {{project.name}}") }
+    include_examples 'liquid preview', 'evidence', true
   end
 
   describe 'new page', js: true do

@@ -306,6 +306,9 @@ describe 'Issues pages' do
 
           include_examples 'a form with local auto save', Issue, :edit
         end
+
+        let(:record) { create(:issue, node: issuelib, updated_at: 2.seconds.ago, text: "#[Title]#\nTitle\n\n#[Description]#\nLiquid: {{issue.title}}\n\nProject: {{project.name}}") }
+        include_examples 'liquid preview', 'issue', false
       end
 
       describe 'show page' do
@@ -403,8 +406,8 @@ describe 'Issues pages' do
           end
         end
 
-        let(:record) { create(:issue, node: issuelib, updated_at: 2.seconds.ago, text: "#[Title]#\nTitle\n\n#[Description]#\nLiquid: {{issue.fields['Title']}}") }
-        include_examples 'liquid dynamic content', :issue, false
+        let(:record) { create(:issue, node: issuelib, updated_at: 2.seconds.ago, text: "#[Title]#\nTitle\n\n#[Description]#\nLiquid: {{issue.title}}") }
+        include_examples 'liquid dynamic content', 'issue', false
       end
     end
 
