@@ -406,7 +406,7 @@ describe 'Issues pages' do
           end
         end
 
-        let(:record) { create(:issue, node: issuelib, updated_at: 2.seconds.ago, text: "#[Title]#\nTitle\n\n#[Description]#\nLiquid: {{issue.title}}") }
+        let(:liquid_record) { create(:issue, node: issuelib, updated_at: 2.seconds.ago, text: "#[Title]#\nTitle\n\n#[Description]#\nLiquid: {{issue.title}}") }
         include_examples 'liquid dynamic content', 'issue', false
       end
     end
