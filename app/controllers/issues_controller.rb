@@ -8,6 +8,7 @@ class IssuesController < AuthenticatedController
   include Mentioned
   include MultipleDestroy
   include NotificationsReader
+  include Previewable
   include ProjectScoped
 
   before_action :set_issuelib
@@ -18,6 +19,7 @@ class IssuesController < AuthenticatedController
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
   before_action :set_affected_nodes, only: [:show]
   before_action :set_form_cancel_path, only: [:new, :edit]
+  before_action :set_form_preview_path, only: [:new, :create, :edit, :update]
   before_action :set_tags, except: [:destroy]
   before_action :store_location, only: [:index, :show]
 
@@ -147,6 +149,10 @@ class IssuesController < AuthenticatedController
     path = @issue.new_record? ? project_issues_path(current_project) : [current_project, @issue]
 
     @form_cancel_path = session[:return_to] ? session[:return_to] : path
+  end
+
+  def set_form_preview_path
+    @form_preview_path = @issue.new_record? ? {} : { preview_url: preview_project_issue_path(current_project, @issue) }
   end
 
   def set_columns

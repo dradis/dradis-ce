@@ -55,7 +55,7 @@ Rails.application.routes.draw do
 
     post :create_multiple_evidence, to: 'issues/evidence#create_multiple'
 
-    resources :issues, concerns: :multiple_destroy do
+    resources :issues, concerns: [:multiple_destroy, :previewable] do
       collection do
         post :import
         resources :merge, only: [:new, :create], controller: 'issues/merge'
@@ -86,11 +86,11 @@ Rails.application.routes.draw do
 
       resource :merge, only: [:create], controller: 'nodes/merge'
 
-      resources :notes, concerns: :multiple_destroy do
+      resources :notes, concerns: [:multiple_destroy, :previewable] do
         resources :revisions, only: [:index, :show]
       end
 
-      resources :evidence, except: :index, concerns: :multiple_destroy do
+      resources :evidence, except: :index, concerns: [:multiple_destroy, :previewable] do
         resources :revisions, only: [:index, :show]
       end
 
@@ -108,7 +108,7 @@ Rails.application.routes.draw do
     resources :tags, except: [:show]
 
     namespace :qa do
-      resources :issues, only: [:edit, :index, :show, :update], concerns: :multiple_update
+      resources :issues, only: [:edit, :index, :show, :update], concerns: [:multiple_update, :previewable]
     end
 
     get 'search' => 'search#index'
