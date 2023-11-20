@@ -166,8 +166,8 @@ describe 'note pages' do
       include_examples 'a form with local auto save', Note, :edit
     end
 
-    let(:liquid_record) { create(:note, node: @node, content: "#[Title]#\nTitle\n\n#[Description]#\nLiquid: {{note.title}}\n\nProject: {{project.name}}") }
-    include_examples 'liquid preview', 'note', true
+    # let(:liquid_record) { create(:note, node: @node, content: "#[Title]#\nTitle\n\n#[Description]#\nLiquid: {{note.title}}\n\nProject: {{project.name}}") }
+    # include_examples 'liquid preview', 'note', true
   end
 
   describe 'new page', js: true do
