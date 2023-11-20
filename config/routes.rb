@@ -24,6 +24,12 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :previewable do
+    member do
+      post :preview
+    end
+  end
+
   resources :notifications, only: [:index, :update]
 
   resources :projects, only: [:index, :show] do
