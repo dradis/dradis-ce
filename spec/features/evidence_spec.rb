@@ -166,7 +166,7 @@ describe 'evidence' do
       include_examples 'a form with local auto save', Evidence, :edit
     end
 
-    let(:record) { create(:evidence, issue: @issue, node: @node, content: "#[Title]#\nEvidence Title\n\n#[Description]#\nLiquid: {{evidence.title}}\n\nProject: {{project.name}}") }
+    let(:liquid_record) { create(:evidence, issue: @issue, node: @node, content: "#[Title]#\nEvidence Title\n\n#[Description]#\nLiquid: {{evidence.title}}\n\nProject: {{project.name}}") }
     include_examples 'liquid preview', 'evidence', true
   end
 
