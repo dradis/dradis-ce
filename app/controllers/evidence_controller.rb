@@ -8,7 +8,7 @@ class EvidenceController < NestedNodeResourceController
   include NotificationsReader
   include Previewable
 
-  before_action :set_or_initialize_evidence, except: [ :index, :create_multiple ]
+  before_action :set_or_initialize_evidence, except: [ :index, :create_multiple, :preview ]
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
   skip_before_action :find_or_initialize_node, only: [:create_multiple]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
@@ -110,9 +110,10 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def liquid_resource_assigns
+    @evidence = @evidence || @node.evidence.find_by(id: params[:id])
     {
       'evidence' => EvidenceDrop.new(@evidence),
-      'node' => NodeDrop.new(@evidence.node)
+      'node' => NodeDrop.new(@node)
     }
   end
 
@@ -124,12 +125,7 @@ class EvidenceController < NestedNodeResourceController
   # passed by the user.
   def set_or_initialize_evidence
     if params[:id]
-      @evidence =
-        if @node.evidence.find_by(id: params[:id])
-          @node.evidence.includes(:issue, issue: [:tags]).find(params[:id])
-        else
-          redirect_to project_node_path(current_project, @node), alert: 'This evidence does not exist'
-        end
+      @evidence = @node.evidence.includes(:issue, issue: [:tags]).find(params[:id])
     elsif params[:evidence]
       @evidence = Evidence.new(evidence_params) do |e|
         e.node = @node
