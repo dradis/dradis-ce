@@ -86,6 +86,7 @@ class NotesController < NestedNodeResourceController
   end
 
   def liquid_resource_assigns
+    # find note inline for preview action
     @note = @note || @node.notes.find_by(id: params[:id])
     { 'note' => NoteDrop.new(@note) }
   end

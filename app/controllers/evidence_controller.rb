@@ -110,6 +110,7 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def liquid_resource_assigns
+    # find evidence inline for preview action
     @evidence = @evidence || @node.evidence.find_by(id: params[:id])
     {
       'evidence' => EvidenceDrop.new(@evidence),
