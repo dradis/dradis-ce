@@ -13,6 +13,12 @@ class LiquidAssignsService
     result['evidences'] = project.evidence.map { |evidence| EvidenceDrop.new(evidence) }
     result['tags'] = project.tags.map { |tag| TagDrop.new(tag) }
 
+    if defined?(Dradis::Pro)
+      result['content_blocks'] = project.content_blocks.map { |cb| ContentBlockDrop.new(cb) }
+      result['document_properties'] = DocumentPropertiesDrop.new(properties: project.content_library.properties)
+      result['team'] = TeamDrop.new(project.team)
+    end
+
     result
   end
 end

@@ -8,8 +8,14 @@ class Project
   attr_reader :id, :name
 
   # -- Class Methods --------------------------------------------------------
-  def self.create(args={})
+  def self.create(args = {})
     new(**args.merge(id: 1))
+  end
+
+  # Improve parity with Pro by making Project respond with the #includes method
+  # from ActiveRecord.
+  def self.includes(*args)
+    self
   end
 
   def self.find(id)
@@ -17,7 +23,7 @@ class Project
   end
 
   # This tricks NamingService.name_project (used by KitImportJob)
-  def self.exists?(args={})
+  def self.exists?(args = {})
     false
   end
 
