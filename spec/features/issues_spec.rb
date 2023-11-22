@@ -307,10 +307,8 @@ describe 'Issues pages' do
           include_examples 'a form with local auto save', Issue, :edit
         end
 
-        context 'when including liquid content' do
-          before do
-            @record = create(:issue, node: issuelib, updated_at: 2.seconds.ago, text: "#[Title]#\nFoo\n\n#[Description]#\nLiquid: {{issue.title}}\n\nProject: {{project.name}}")
-          end
+        describe 'when including liquid content' do
+          let(:record) { create(:issue, node: issuelib, updated_at: 2.seconds.ago, text: "#[Title]#\nFoo\n\n#[Description]#\nLiquid: {{issue.title}}\n\nProject: {{project.name}}") }
           include_examples 'liquid preview', 'issue', false
         end
       end
@@ -410,10 +408,8 @@ describe 'Issues pages' do
           end
         end
 
-        context 'when including liquid content' do
-          before do
-            @record = create(:issue, node: issuelib, updated_at: 2.seconds.ago, text: "#[Title]#\nFoo\n\n#[Description]#\nLiquid: {{issue.title}}")
-          end
+        describe 'when including liquid content' do
+          let(:record) { create(:issue, node: issuelib, updated_at: 2.seconds.ago, text: "#[Title]#\nFoo\n\n#[Description]#\nLiquid: {{issue.title}}") }
           include_examples 'liquid dynamic content', 'issue', false
         end
       end

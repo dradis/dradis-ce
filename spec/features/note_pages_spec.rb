@@ -77,10 +77,8 @@ describe 'note pages' do
     let(:model) { @note }
     include_examples 'nodes pages breadcrumbs', :show, Note
 
-    context 'when including liquid content' do
-      before do
-        @record = create(:note, node: @node, content: "#[Title]#\nFoo\n\n#[Description]#\nLiquid: {{note.title}}")
-      end
+    describe 'when including liquid content' do
+      let(:record) { create(:note, node: @node, content: "#[Title]#\nFoo\n\n#[Description]#\nLiquid: {{note.title}}") }
       include_examples 'liquid dynamic content', 'note', true
     end
   end
@@ -171,9 +169,7 @@ describe 'note pages' do
     end
 
     context 'when including liquid content' do
-      before do
-        @record = create(:note, node: @node, content: "#[Title]#\nFoo\n\n#[Description]#\nLiquid: {{note.title}}\n\nProject: {{project.name}}")
-      end
+      let(:record) { create(:note, node: @node, content: "#[Title]#\nFoo\n\n#[Description]#\nLiquid: {{note.title}}\n\nProject: {{project.name}}") }
       include_examples 'liquid preview', 'note', true
     end
   end

@@ -80,10 +80,8 @@ describe 'evidence' do
     let(:model) { @evidence }
     include_examples 'nodes pages breadcrumbs', :show, Evidence
 
-    context 'when including liquid content' do
-      before do
-        @record = create(:evidence, issue: @issue, node: @node, content: "#[Title]#\nFoo\n\n#[Description]#\nLiquid: {{evidence.title}}")
-      end
+    describe 'when including liquid content' do
+      let(:record) { create(:evidence, issue: @issue, node: @node, content: "#[Title]#\nFoo\n\n#[Description]#\nLiquid: {{evidence.title}}") }
       include_examples 'liquid dynamic content', 'evidence', true
     end
   end
@@ -170,10 +168,8 @@ describe 'evidence' do
       include_examples 'a form with local auto save', Evidence, :edit
     end
 
-    context 'when including liquid content' do
-      before do
-        @record = create(:evidence, issue: @issue, node: @node, content: "#[Title]#\nEvidence Title\n\n#[Description]#\nLiquid: {{evidence.title}}\n\nProject: {{project.name}}")
-      end
+    describe 'when including liquid content' do
+      let(:record) { create(:evidence, issue: @issue, node: @node, content: "#[Title]#\nEvidence Title\n\n#[Description]#\nLiquid: {{evidence.title}}\n\nProject: {{project.name}}") }
       include_examples 'liquid preview', 'evidence', true
     end
   end
