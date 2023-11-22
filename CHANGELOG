@@ -2,7 +2,6 @@
   - Upgrade to Rails 7.0.8
   - Replace unicorn with puma in production
   - Add importmap-rails to handle js libraries
-  - Add project records as available drops in liquid
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
