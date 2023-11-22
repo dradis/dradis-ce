@@ -16,6 +16,7 @@ class NotesController < NestedNodeResourceController
 
   def new
     @note = @node.notes.new
+    set_form_preview_path
 
     # See ContentFromTemplate concern
     @note.text = template_content if params[:template]
