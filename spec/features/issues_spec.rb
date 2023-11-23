@@ -308,7 +308,7 @@ describe 'Issues pages' do
         end
 
         describe 'when including liquid content' do
-          let(:record) { create(:issue, node: issuelib, updated_at: 2.seconds.ago, text: "#[Title]#\nFoo\n\n#[Description]#\nLiquid: {{issue.title}}\n\nProject: {{project.name}}") }
+          let(:record) { create(:issue, :with_liquid, node: issuelib) }
           include_examples 'liquid preview', 'issue', false
         end
       end
@@ -409,7 +409,7 @@ describe 'Issues pages' do
         end
 
         describe 'when including liquid content' do
-          let(:record) { create(:issue, node: issuelib, updated_at: 2.seconds.ago, text: "#[Title]#\nFoo\n\n#[Description]#\nLiquid: {{issue.title}}") }
+          let(:record) { create(:issue, :with_liquid, node: issuelib) }
           include_examples 'liquid dynamic content', 'issue', false
         end
       end

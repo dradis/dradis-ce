@@ -81,7 +81,7 @@ describe 'evidence' do
     include_examples 'nodes pages breadcrumbs', :show, Evidence
 
     describe 'when including liquid content' do
-      let(:record) { create(:evidence, issue: @issue, node: @node, content: "#[Title]#\nFoo\n\n#[Description]#\nLiquid: {{evidence.title}}") }
+      let(:record) { create(:evidence, :with_liquid, issue: @issue, node: @node) }
       include_examples 'liquid dynamic content', 'evidence', true
     end
   end
@@ -169,7 +169,7 @@ describe 'evidence' do
     end
 
     describe 'when including liquid content' do
-      let(:record) { create(:evidence, issue: @issue, node: @node, content: "#[Title]#\nEvidence Title\n\n#[Description]#\nLiquid: {{evidence.title}}\n\nProject: {{project.name}}") }
+      let(:record) { create(:evidence, :with_liquid, issue: @issue, node: @node) }
       include_examples 'liquid preview', 'evidence', true
     end
   end

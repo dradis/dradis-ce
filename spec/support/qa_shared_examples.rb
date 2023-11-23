@@ -79,8 +79,8 @@ shared_examples 'qa pages' do |item_type|
     end
 
     it 'parses liquid content' do
-      expect(find('.note-text-inner')).to have_content("Liquid: #{record.fields["Title"]}")
-      expect(find('.note-text-inner')).not_to have_content("Liquid: {{#{item_type.to_s}.fields['Title']}}")
+      expect(find('.note-text-inner')).to have_content("Liquid: #{record.title}")
+      expect(find('.note-text-inner')).not_to have_content("Liquid: {{#{item_type.to_s}.title}}")
     end
 
     it 'shows the record\'s content' do
