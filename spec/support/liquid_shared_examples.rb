@@ -1,8 +1,11 @@
 shared_examples 'liquid dynamic content' do |item_type, node_association|
 
   before do
-    @path = node_association ?
-      polymorphic_path([current_project, record.node, record]) : polymorphic_path([current_project, record])
+    @path = if node_association
+      polymorphic_path([current_project, record.node, record])
+    else
+      polymorphic_path([current_project, record])
+    end
     visit @path
   end
 
@@ -15,8 +18,11 @@ end
 shared_examples 'liquid preview' do |item_type, node_association|
 
   before do
-    @path = node_association ?
-      polymorphic_path([:edit, current_project, record.node, record]) : polymorphic_path([:edit, current_project, record])
+    @path = if node_association
+      polymorphic_path([:edit, current_project, record.node, record])
+    else
+      polymorphic_path([:edit, current_project, record])
+    end
     visit @path
     click_link 'Source'
   end
