@@ -427,8 +427,7 @@ describe 'Issues pages' do
           visit project_issue_revisions_path(current_project, issue)
 
           within '.js-diff-body' do
-            expect(page).to have_text('issue text')
-            expect(page).to have_text('updated text')
+            expect(page).to have_text('issue[0m[32mupdated[0m text') # match the format of the inline diff
           end
         end
       end
