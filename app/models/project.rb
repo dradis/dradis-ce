@@ -12,12 +12,6 @@ class Project
     new(**args.merge(id: 1))
   end
 
-  # Improve parity with Pro by making Project respond with the #includes method
-  # from ActiveRecord.
-  def self.includes(*args)
-    self
-  end
-
   def self.find(id)
     new(id: id.to_i)
   end
