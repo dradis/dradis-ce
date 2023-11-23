@@ -19,7 +19,7 @@ class IssuesController < AuthenticatedController
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
   before_action :set_affected_nodes, only: [:show]
   before_action :set_form_cancel_path, only: [:new, :edit]
-  before_action :set_form_preview_path, only: [:new, :create, :edit, :update]
+  before_action :set_form_preview_path, only: [:edit]
   before_action :set_tags, except: [:destroy]
   before_action :store_location, only: [:index, :show]
 
@@ -152,12 +152,7 @@ class IssuesController < AuthenticatedController
   end
 
   def set_form_preview_path
-    @form_preview_path =
-      if @issue.new_record?
-        nil
-      else
-        preview_project_issue_path(current_project, @issue)
-      end
+    @form_preview_path = preview_project_issue_path(current_project, @issue)
   end
 
   def set_columns
