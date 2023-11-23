@@ -5,10 +5,4 @@ module Previewable
     @text = params[:text]
     render 'markup/preview', layout: false
   end
-
-  private
-
-  def set_form_preview_path
-    @form_preview_path = nil
-  end
 end
