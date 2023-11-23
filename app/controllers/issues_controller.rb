@@ -152,7 +152,12 @@ class IssuesController < AuthenticatedController
   end
 
   def set_form_preview_path
-    @form_preview_path = @issue.new_record? ? {} : { preview_url: preview_project_issue_path(current_project, @issue) }
+    @form_preview_path =
+      if @issue.new_record?
+        nil
+      else
+        preview_project_issue_path(current_project, @issue)
+      end
   end
 
   def set_columns

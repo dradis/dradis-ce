@@ -106,6 +106,11 @@ class NotesController < NestedNodeResourceController
   end
 
   def set_form_preview_path
-    @form_preview_path = @note.new_record? ? {} : { preview_url: preview_project_node_note_path(current_project, @node, @note) }
+    @form_preview_path =
+    if @note.new_record?
+      nil
+    else
+      preview_project_node_note_path(current_project, @node, @note)
+    end
   end
 end
