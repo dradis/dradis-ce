@@ -9,15 +9,12 @@ class NotesController < NestedNodeResourceController
   include NotificationsReader
   include Previewable
 
-  before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy, :preview]
+  before_action :find_or_initialize_note, except: [:index, :multiple_destroy, :preview]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
-  before_action :set_form_preview_path, only: [:create, :edit, :update]
+  before_action :set_form_preview_path, only: [:new, :create, :edit, :update]
 
   def new
-    @note = @node.notes.new
-    set_form_preview_path
-
     # See ContentFromTemplate concern
     @note.text = template_content if params[:template]
   end
