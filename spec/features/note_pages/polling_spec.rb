@@ -28,7 +28,6 @@ describe 'note pages', js: true do
 
     describe 'and someone deletes that Note' do
       before do
-        @note.destroy
         create(:activity, action: :destroy, trackable: @note, user: @other_user)
 
         call_poller
@@ -43,7 +42,6 @@ describe 'note pages', js: true do
       before do
         @note.update(text: 'whatever')
         create(:activity, action: :update, trackable: @note, user: @other_user)
-        @note.destroy
         create(:activity, action: :destroy, trackable: @note, user: @other_user)
         call_poller
       end
