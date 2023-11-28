@@ -29,4 +29,10 @@ document.addEventListener('turbolinks:load', function() {
       }
     });
   }
+
+  $(function() {
+    $('[data-behavior~=activity-filters]').change(function() {
+      $(this).submit();
+    });
+  });
 });

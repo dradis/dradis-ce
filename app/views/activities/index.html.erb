@@ -11,6 +11,10 @@
   </nav>
 <% end %>
 
+<div class="content-container mt-3 py-3">
+  <%= render 'activities/filters' %>
+</div>
+
 <div class="content-container mt-3 <%= 'pt-3' if @activities_groups.any? %>">
   <% if @activities_groups.any? %>
     <div class="container">
