@@ -151,10 +151,6 @@ class IssuesController < AuthenticatedController
     @form_cancel_path = session[:return_to] ? session[:return_to] : path
   end
 
-  def set_form_preview_path
-    @form_preview_path = preview_project_issue_path(current_project, @issue)
-  end
-
   def set_columns
     default_field_names = ['Title', 'Tags', 'Affected', 'State'].freeze
     extra_field_names = ['Created', 'Created by', 'Updated'].freeze

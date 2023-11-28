@@ -18,7 +18,7 @@ class QA::IssuesController < AuthenticatedController
 
   def edit
     @form_cancel_path = project_qa_issue_path(current_project, @issue)
-    @form_preview_path = preview_project_qa_issue_path(current_project, @issue)
+    set_form_preview_path
     @tags = current_project.tags
   end
 

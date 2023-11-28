@@ -9,7 +9,7 @@ class NotesController < NestedNodeResourceController
   include NotificationsReader
   include Previewable
 
-  before_action :find_or_initialize_note, except: [:index, :multiple_destroy, :preview]
+  before_action :find_or_initialize_note, except: [:index, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
   before_action :set_form_preview_path, only: [:edit]
@@ -83,8 +83,6 @@ class NotesController < NestedNodeResourceController
   end
 
   def liquid_resource_assigns
-    # find note inline for preview action
-    @note = @note || @node.notes.find_by(id: params[:id])
     { 'note' => NoteDrop.new(@note) }
   end
 
@@ -100,9 +98,5 @@ class NotesController < NestedNodeResourceController
     else
       "node-#{@node.id}-note"
     end
-  end
-
-  def set_form_preview_path
-    @form_preview_path = preview_project_node_note_path(current_project, @node, @note)
   end
 end

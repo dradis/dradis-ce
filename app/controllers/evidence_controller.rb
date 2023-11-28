@@ -8,7 +8,7 @@ class EvidenceController < NestedNodeResourceController
   include NotificationsReader
   include Previewable
 
-  before_action :set_or_initialize_evidence, only: [ :show, :new, :create, :edit, :update, :destroy ]
+  before_action :set_or_initialize_evidence, only: [ :show, :new, :create, :edit, :update, :destroy, :preview ]
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
   skip_before_action :find_or_initialize_node, only: [:create_multiple]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
@@ -110,16 +110,10 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def liquid_resource_assigns
-    # find evidence inline for preview action
-    @evidence = @evidence || @node.evidence.find_by(id: params[:id])
     {
       'evidence' => EvidenceDrop.new(@evidence),
       'node' => NodeDrop.new(@node)
     }
-  end
-
-  def set_form_preview_path
-    @form_preview_path = preview_project_node_evidence_path(current_project, @node, @evidence)
   end
 
   # Look for the Evidence we are going to be working with based on the :id
