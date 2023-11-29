@@ -8,12 +8,14 @@ module Notifiable
   def create_notifications(action:, actor:, recipients:)
     ActiveRecord::Base.transaction do
       recipients.each do |recipient|
-        Notification.create(
-          action: action,
-          actor: actor,
-          notifiable: self,
-          recipient: recipient
-        )
+        if Ability.new(recipient).can?(:read, self)
+          Notification.create(
+            action: action,
+            actor: actor,
+            notifiable: self,
+            recipient: recipient
+          )
+        end
       end
     end
   end
