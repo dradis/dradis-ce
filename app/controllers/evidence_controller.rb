@@ -112,7 +112,7 @@ class EvidenceController < NestedNodeResourceController
   def liquid_resource_assigns
     {
       'evidence' => EvidenceDrop.new(@evidence),
-      'node' => NodeDrop.new(@node)
+      'node' => NodeDrop.new(@evidence.node)
     }
   end
 
