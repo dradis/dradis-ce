@@ -6,14 +6,13 @@ class LiquidAssignsService
   end
 
   def assigns
-    result = {}
-    result['project'] = ProjectDrop.new(project)
-
-    if defined?(Dradis::Pro)
-      result['document_properties'] = DocumentPropertiesDrop.new(properties: project.content_library.properties)
-      result['team'] = TeamDrop.new(project.team)
-    end
-
+    result = { 'project' => ProjectDrop.new(project) }
+    result.merge!(assigns_pro) if defined?(Dradis::Pro)
     result
+  end
+
+  private
+
+  def assigns_pro
   end
 end
