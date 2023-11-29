@@ -1,7 +1,8 @@
 <div class="activity-filters ">
   <%= form_with url: project_activities_path(current_project.id), method: :get, remote: true, class: 'form-row d-flex flex-row' do |f| %>
-    <%= f.select :user, options_from_collection_for_select(User.all, :id, :name, params[:user]), { include_blank: 'Filter by user'}, { class: 'form-select m-2 form-select-sm', onchange: '$(this.form).submit();' } %>
-    <%= f.select :type, Activity.select(:trackbable_type).distinct.pluck(:trackable_type), { include_blank: 'Filter by type', selected: params[:type]}, { class: 'form-select m-2 form-select-sm', onchange: '$(this.form).submit();' } %>
+    <%# f.select :user, options_from_collection_for_select(User.all, :id, :name, params[:user]), { include_blank: 'Filter by user'}, { class: 'form-select m-2 form-select-sm', onchange: '$(this.form).submit();' } %>
+    <%# f.select :type, Activity.select(:trackbable_type).distinct.pluck(:trackable_type), { include_blank: 'Filter by type', selected: params[:type]}, { class: 'form-select m-2 form-select-sm', onchange: '$(this.form).submit();' } %>
+    <%= f.select :usertypeselect, grouped_options_for_select(@options), { include_blank: true }, { multiple: true, class: "form-control m-2 form-control-sm" } %>
 
     <div id="" class="input-group">
       <%= f.date_field :period_start, max: Date.today, placeholder: "From date", value: params[:period_start], class: 'form-control form-control-sm my-2', onchange: '$(this.form).submit();' %>
@@ -11,4 +12,5 @@
 
     <%= link_to 'Clear',project_activities_path(current_project.id) , class: "btn btn-danger m-2 pt-2" %>
   <% end %>
+
 </div>

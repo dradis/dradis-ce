@@ -6,7 +6,10 @@ class ActivitiesController < AuthenticatedController
 
   def index
     @page = params[:page].present? ? params[:page].to_i : 1
-
+    @options = [
+      ['Types', Activity.select(:trackbable_type).distinct.pluck(:trackable_type)],
+      ['Users', User.distinct.pluck(:email, :id)]
+    ]
     activities = current_project.activities.includes(:trackable)
     activities = activities.filter_by_user_id(params[:user]) if params[:user].present?
     activities = activities.filter_by_type(params[:type]) if params[:type].present?

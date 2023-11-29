@@ -29,4 +29,9 @@ document.addEventListener('turbolinks:load', function() {
       }
     });
   }
+
+  new TomSelect("#usertypeselect",{
+    persist: false
+  });
+
 });

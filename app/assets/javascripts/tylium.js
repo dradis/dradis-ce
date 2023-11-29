@@ -14,7 +14,6 @@
 //= require tribute
 //= require popper
 //= require bootstrap
-
 //= require cable
 
 //= require shared/auto_save/local
@@ -36,6 +35,7 @@
 //= require shared/datatable/state
 //= require shared/datatable/tag
 //= require shared/datatable/validate
+//= require shared/tomselect
 
 //= require tylium/plugins/jquery.breadcrumbs
 //= require tylium/plugins/jquery.treemodal
