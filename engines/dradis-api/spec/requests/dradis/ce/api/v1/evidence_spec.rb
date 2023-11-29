@@ -4,7 +4,9 @@ describe 'Evidence API' do
 
   include_context 'project scoped API'
   include_context 'https'
+  include_context 'versioned API'
 
+  let(:api_version) { 1 }
   let(:node)  { create(:node, project: current_project) }
   let(:issue) { create(:issue, node: current_project.issue_library) }
 
@@ -38,7 +40,7 @@ describe 'Evidence API' do
           Evidence.create!(node: node, content: "#[a]#\nA", issue: @issues[0]),
           Evidence.create!(node: node, content: "#[b]#\nB", issue: @issues[1]),
           Evidence.create!(node: node, content: "#[c]#\nC", issue: @issues[2]),
-        ] << create_list(:evidence, 30, issue: @issues[3], node: node)
+        ] + create_list(:evidence, 30, issue: @issues[3], node: node)
         @other_evidence = create(:evidence, issue: issue, node: current_project.issue_library)
         get "/api/nodes/#{node.id}/evidence?#{params}", env: @env
       end

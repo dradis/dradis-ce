@@ -1,6 +1,8 @@
 [v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
+  - Upgrade to Rails 7.0.8
+  - Replace unicorn with puma in production
+  - Add importmap-rails to handle js libraries
+  - Revision history: Improve version history for content with carriage return
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
@@ -29,12 +31,16 @@
         notifications for Issues they were subscribed to, resulting in the
         disclosure of Issue titles.
 
-[v4.10.0] (September 2023)
-  - Tylium: Consolidate sidebars
+v4.10.0 (September 2023)
+  - Tylium: 
+    - Consolidate sidebars
+    - Add issue.author to liquid issue drop
   - Upgraded gems:
-    - font-awesome-sass, nokogiri, rails, sanitize
+    - font-awesome-sass, nokogiri, puma, rails, sanitize, selenium-webdriver
   - Bugs fixes:
     - QA: Enable @mentions and formatting toolbar for comments in QA show views
+  - REST/JSON API enhancements:
+    - Boards, Lists, Cards: add initial implementation
   - Security Fixes:
     - Medium: Authenticated (author) broken access control: read access to system files
 

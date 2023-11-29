@@ -72,6 +72,29 @@
     {
       "warning_type": "File Access",
       "warning_code": 16,
+      "fingerprint": "180c4b532ac14a974f17a0884b71b2dfd1bfe01815b4c84ae070f082842a49fc",
+      "check_name": "FileAccess",
+      "message": "Model attribute used in file name",
+      "file": "engines/dradis-api/app/controllers/dradis/ce/api/v3/attachments_controller.rb",
+      "line": 56,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "File.rename(Attachment.find(params[:filename], :conditions => ({ :node_id => current_project.nodes.find(params[:node_id]).id })).fullpath, Attachment.pwd.join(current_project.nodes.find(params[:node_id]).id.to_s, CGI.unescape(attachment_params[:filename])).to_s)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Dradis::CE::API::V3::AttachmentsController",
+        "method": "update"
+      },
+      "user_input": "Attachment.find(params[:filename], :conditions => ({ :node_id => current_project.nodes.find(params[:node_id]).id })).fullpath",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": "False positive: The destination filename is prepended by the Attachments directory and validated as such to prevent being moved to the other directories"
+    },
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
       "fingerprint": "304438305b6566ea4f5a6ab8019a50149221c5e61b9f8a6dffb4775186ed0642",
       "check_name": "FileAccess",
       "message": "Model attribute used in file name",
@@ -210,6 +233,30 @@
       "note": "False positive: params[:uploader] here is being validated in the controller"
     },
     {
+      "warning_type": "Denial of Service",
+      "warning_code": 76,
+      "fingerprint": "d4b56fe0de40fbaed1bfdd6cc44d57ac2dc2b4aef5293c2afc326aef6e0c88e6",
+      "check_name": "RegexDoS",
+      "message": "Model attribute used in regular expression",
+      "file": "engines/dradis-api/app/controllers/dradis/ce/api/v3/attachments_controller.rb",
+      "line": 55,
+      "link": "https://brakemanscanner.org/docs/warning_types/denial_of_service/",
+      "code": "/^#{Attachment.pwd}/",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Dradis::CE::API::V3::AttachmentsController",
+        "method": "update"
+      },
+      "user_input": "Attachment.pwd",
+      "confidence": "Medium",
+      "cwe_id": [
+        20,
+        185
+      ],
+      "note": "False positive: Attachment.pwd is set by the admin to specify the directory for the attachments"
+    },
+    {
       "warning_type": "Remote Code Execution",
       "warning_code": 24,
       "fingerprint": "d770dd85f99cd870dfc8bdd9723722b31d84135f55133cf2907dff47b854c98d",
@@ -267,6 +314,6 @@
       "note": "False positive: The params is used to fetch the boards and cannot be manipulated by user input"
     }
   ],
-  "updated": "2023-03-30 20:21:19 +0800",
+  "updated": "2023-08-18 10:40:16 -0400",
   "brakeman_version": "5.4.0"
 }
