@@ -101,30 +101,30 @@ describe 'Activity pages:' do
       end
 
       describe 'filters' do
-        it "has user filter" do
+        it 'has user filter' do
           expect(page).to have_selector('#user', count: 1)
         end
 
-        it "user filter works" do
+        it 'user filter works' do
           visit project_activities_path(current_project, user: second_user.id)
           expect(page).to have_selector('.activity', count: 10)
         end
 
-        it "has type filter" do
+        it 'has type filter' do
           expect(page).to have_selector('#type', count: 1)
         end
 
-        it "type filter works" do
-          visit project_activities_path(current_project, type: "Card")
+        it 'type filter works' do
+          visit project_activities_path(current_project, type: 'Card')
           expect(page).to have_selector('.activity', count: 15)
         end
 
-        it "has daterange filter" do
+        it 'has daterange filter' do
           expect(page).to have_selector('#period_start', count: 1)
           expect(page).to have_selector('#period_end', count: 1)
         end
 
-        it "daterange filter works" do
+        it 'daterange filter works' do
           period_start = Time.current - 3.days
           period_end = Time.current
 
@@ -132,13 +132,13 @@ describe 'Activity pages:' do
           expect(page).to have_selector('.activity', count: 15)
         end
 
-        it "daterange filter works for single day" do
+        it 'daterange filter works for single day' do
           visit project_activities_path(current_project, period_start: Time.current, period_end: Time.current)
           expect(page).to have_selector('.activity', count: 10)
         end
 
-        it "combined filter works" do
-          visit project_activities_path(current_project, type: "Card", user: second_user.id)
+        it 'combined filter works' do
+          visit project_activities_path(current_project, type: 'Card', user: second_user.id)
           expect(page).to have_selector('.activity', count: 10)
         end
       end

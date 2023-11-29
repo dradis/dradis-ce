@@ -34,15 +34,15 @@ class ActivitiesController < AuthenticatedController
 
   private
 
-    def period_start
-      DateTime.parse params[:period_start]
-    end
+  def period_start
+    DateTime.parse params[:period_start]
+  end
 
-    def period_end
-      if params[:period_end].empty?
-        DateTime.now
-      else
-        DateTime.parse params[:period_end]
-      end
+  def period_end
+    if params[:period_end].empty?
+      DateTime.now
+    else
+      DateTime.parse params[:period_end]
     end
+  end
 end
