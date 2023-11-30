@@ -47,7 +47,8 @@ describe Comment do
     it 'creates notifications when a comment has mentions' do
       issue_owner = create(:user, email: 'owner@dradis.test')
       commentable = create(:issue, author: issue_owner.email)
-      create(:subscription, subscribable: commentable)
+      subscribed = create(:user)
+      create(:subscription, subscribable: commentable, user: subscribed)
       mentioned = create(:user, email: 'mentioned@dradis.test')
       comment = create(
         :comment,
