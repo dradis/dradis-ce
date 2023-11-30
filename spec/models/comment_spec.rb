@@ -63,5 +63,18 @@ describe Comment do
       expect(Notification.where(action: 'mention').count).to eq(2)
       expect(Notification.where(action: 'create').count).to eq(1)
     end
+
+    it 'does not create notifications for recipients without read access' do
+      commentable = create(:issue)
+      recipient_without_access = create(:user)
+      create(:subscription, subscribable: commentable, user: recipient_without_access)
+      comment = create(:comment, commentable: commentable)
+
+      allow_any_instance_of(Ability).to receive(:can?).with(:read, comment).and_return(false)
+
+      expect {
+        comment.notify(action: 'create', actor: comment.user, recipients: [recipient_without_access])
+      }.to change { Notification.count }.by(0)
+    end
   end
 end
