@@ -48,6 +48,7 @@ class Comment < ApplicationRecord
       subscribers = User.includes(:subscriptions).where(
         subscriptions: { subscribable_id: commentable.id, subscribable_type: commentable.class.to_s }
       ).where.not(id: [user.id] + mentions.pluck(:id))
+      subscribers = subscribers.select { |user| Ability.new(user).can?(:read, self) }
       create_notifications(action: :create, actor: actor, recipients: subscribers)
     end
   end

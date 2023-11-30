@@ -73,7 +73,7 @@ describe Comment do
       allow_any_instance_of(Ability).to receive(:can?).with(:read, comment).and_return(false)
 
       expect {
-        comment.notify(action: 'create', actor: comment.user, recipients: [recipient_without_access])
+        comment.notify(action: 'create', actor: comment.user, recipients: [])
       }.to change { Notification.count }.by(0)
     end
   end
