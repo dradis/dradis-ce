@@ -11,7 +11,7 @@ describe NotificationsBroadcastingJob do #, type: :job do
       expect(NotificationsChannel).to receive(:broadcast_to).twice
 
       commentable = create(:issue)
-      create_list(:subscription, 2, subscribable: commentable)
+      subscriptions = create_list(:subscription, 2, subscribable: commentable)
       notifiable = create(:comment, commentable: commentable)
       project = commentable.node.project
 

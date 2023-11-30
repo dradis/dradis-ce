@@ -36,7 +36,7 @@ describe Comment do
   describe '#notify' do
     it 'creates notifications when a comment is created' do
       commentable = create(:issue)
-      create_list(:subscription, 2, subscribable: commentable)
+      subscriptions = create_list(:subscription, 2, subscribable: commentable)
       comment = create(:comment, commentable: commentable)
 
       expect {
