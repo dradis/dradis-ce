@@ -8,13 +8,11 @@ class NotesController < NestedNodeResourceController
   include NodesSidebar
   include NotificationsReader
 
-  before_action :find_or_initialize_note, except: [:index, :new, :multiple_destroy]
+  before_action :find_or_initialize_note, except: [:index, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
 
   def new
-    @note = @node.notes.new
-
     # See ContentFromTemplate concern
     @note.text = template_content if params[:template]
   end
@@ -40,6 +38,7 @@ class NotesController < NestedNodeResourceController
 
   def edit
     @versions_count = @note.versions.count
+    @form_preview_path = preview_project_node_note_path(current_project, @node, @note)
   end
 
   # Update the attributes of a Note

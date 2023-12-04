@@ -4,6 +4,7 @@
   - Add importmap-rails to handle js libraries
   - Add LiquidAssignsService
   - Revision history: Improve version history for content with carriage return
+  - Tylium: Show liquid content in editor preview
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
