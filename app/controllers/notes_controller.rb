@@ -7,12 +7,10 @@ class NotesController < NestedNodeResourceController
   include MultipleDestroy
   include NodesSidebar
   include NotificationsReader
-  include Previewable
 
   before_action :find_or_initialize_note, except: [:index, :multiple_destroy]
   before_action :initialize_nodes_sidebar, only: [:edit, :new, :show]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
-  before_action :set_form_preview_path, only: [:edit]
 
   def new
     # See ContentFromTemplate concern
@@ -40,6 +38,7 @@ class NotesController < NestedNodeResourceController
 
   def edit
     @versions_count = @note.versions.count
+    @form_preview_path = preview_project_node_note_path(current_project, @node, @note)
   end
 
   # Update the attributes of a Note

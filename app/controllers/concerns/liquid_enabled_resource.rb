@@ -14,6 +14,11 @@ module LiquidEnabledResource
     {}
   end
 
+  def preview
+    @text = params[:text]
+    render 'markup/preview', layout: false
+  end
+
   private
 
   def default_liquid_assigns

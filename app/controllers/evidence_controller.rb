@@ -6,13 +6,11 @@ class EvidenceController < NestedNodeResourceController
   include MultipleDestroy
   include NodesSidebar
   include NotificationsReader
-  include Previewable
 
-  before_action :set_or_initialize_evidence, only: [ :show, :new, :create, :edit, :update, :destroy, :preview ]
+  before_action :set_or_initialize_evidence, except: [ :index, :create_multiple ]
   before_action :initialize_nodes_sidebar, only: [ :edit, :new, :show ]
   skip_before_action :find_or_initialize_node, only: [:create_multiple]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
-  before_action :set_form_preview_path, only: [:edit]
 
   def show
     @issue = @evidence.issue
@@ -47,6 +45,7 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def edit
+    @form_preview_path = preview_project_node_evidence_path(current_project, @node, @evidence)
   end
 
   def update
