@@ -27,7 +27,10 @@
   - Security Fixes:
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Low: Authenticated (author) information disclosure
+      - After a user has been removed from a project, they may still get 
+        notifications for Issues they were subscribed to, resulting in the
+        disclosure of Issue titles.
 
 v4.10.0 (September 2023)
   - Tylium: 
