@@ -6,6 +6,8 @@ require 'rails_helper'
 describe Methodology do
   subject { ::Methodology.new }
 
+  it { should validate_presence_of :content }
+
   # FIXME, right now ActiveModel lint fails because to_params returns the filename even if
   # persisted? is false.
   # The problem is we're using an spurious Methodology object (whose backend is a Note and
