@@ -15,7 +15,7 @@ end
 class Section
   def initialize(xml_node); @node = xml_node; end
   def name(); @name ||= @node.xpath('name')[0].text; end
-  def tasks(); @node.xpath('tasks/task').collect{|t| Task.new(t) }; end
+  def tasks(); @node.xpath('tasks/task').collect { |t| Task.new(t) }; end
 end
 
 class Methodology
@@ -197,7 +197,7 @@ class Methodology
   end
 
   def sections
-    self.doc.xpath('methodology/sections/section').collect{|s| Section.new(s) }
+    self.doc.xpath('methodology/sections/section').collect { |s| Section.new(s) }
   end
 
   # This should be replaced by a has_many association
@@ -210,7 +210,7 @@ class Methodology
   end
 
   def completed_tasks
-    self.tasks.select{|task| task.checked? }
+    self.tasks.select { |task| task.checked? }
   end
 
   private
