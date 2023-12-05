@@ -306,6 +306,11 @@ describe 'Issues pages' do
 
           include_examples 'a form with local auto save', Issue, :edit
         end
+
+        describe 'when including liquid content' do
+          let(:record) { create(:issue, :with_liquid, node: issuelib) }
+          include_examples 'liquid preview', 'issue', false
+        end
       end
 
       describe 'show page' do
@@ -403,8 +408,10 @@ describe 'Issues pages' do
           end
         end
 
-        let(:record) { create(:issue, node: issuelib, updated_at: 2.seconds.ago, text: "#[Title]#\nTitle\n\n#[Description]#\nLiquid: {{issue.fields['Title']}}") }
-        include_examples 'liquid dynamic content', :issue, false
+        describe 'when including liquid content' do
+          let(:record) { create(:issue, :with_liquid, node: issuelib) }
+          include_examples 'liquid dynamic content', 'issue', false
+        end
       end
     end
 
@@ -427,8 +434,7 @@ describe 'Issues pages' do
           visit project_issue_revisions_path(current_project, issue)
 
           within '.js-diff-body' do
-            expect(page).to have_text('issue text')
-            expect(page).to have_text('updated text')
+            expect(page).to have_text('issue[0m[32mupdated[0m text') # match the format of the inline diff
           end
         end
       end

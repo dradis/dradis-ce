@@ -3,8 +3,8 @@
 #
 #     let(:submit_form) { click_link "delete" }
 #
-shared_examples "deleted item is listed in Trash" do |item_type|
-  it "deletes the item and destroy revision is shown in Trash" do
+shared_examples 'deleted item is listed in Trash' do |item_type|
+  it 'deletes the item and destroy revision is shown in Trash' do
     with_versioning do
       submit_form
       visit project_trash_path(current_project)
@@ -17,8 +17,8 @@ end
 
 # Apart from the 'submit_form' let variable described above, another let variable
 # called 'model' should be defined, which will be the object to recover.
-shared_examples "recover deleted item" do |item_type|
-  it "should recover item listed in Trash", js: true do
+shared_examples 'recover deleted item' do |item_type|
+  it 'should recover item listed in Trash', js: true do
     with_versioning do
       submit_form
       visit project_trash_path(current_project)
@@ -48,8 +48,8 @@ end
 
 # Apart from the 'submit_form' let variable described above, another let variable
 # called 'model' should be defined, which will be the object to recover.
-shared_examples "recover deleted item without node" do |item_type|
-  it "should recover item listed in Trash even if its node has been destroyed", js: true do
+shared_examples 'recover deleted item without node' do |item_type|
+  it 'should recover item listed in Trash even if its node has been destroyed', js: true do
     with_versioning do
       submit_form
       visit project_node_path(model.node.project, model.node.id)
@@ -61,6 +61,11 @@ shared_examples "recover deleted item without node" do |item_type|
 
       expect do
         visit project_trash_path(current_project)
+
+        within '#trash' do
+          @item_count = page.all('td', text: item_type.to_s).count
+        end
+
         rr_path = recover_project_revision_path(current_project, model.versions.last)
         accept_confirm do
           find(:xpath, "//a[@href='#{rr_path}']").click
@@ -75,7 +80,7 @@ shared_examples "recover deleted item without node" do |item_type|
       )
 
       within '#trash' do
-        expect(page).not_to have_content item_type.to_s
+        expect(page.all('td', text: item_type.to_s).count).to eq(@item_count - 1)
       end
       expect(model.class.find_by_id(model.id)).not_to be_nil
       expect(page).to have_content /Recovered/i
