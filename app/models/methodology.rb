@@ -27,6 +27,7 @@ class Methodology
 
   attr_accessor :content, :filename, :name, :updated_at
 
+  validates_presence_of :content
   # validates_presence_of :name
   # validates_format_of :name, :with => /\A\w+[\w\s]*\z/
   validate :xml_syntax
@@ -45,7 +46,6 @@ class Methodology
     @pwd ||= Pathname.new(Configuration.paths_templates_methodologies)
   end
 
-
   # --------------------------------------------------------- ActiveModel::Lint
 
   # ActiveModel expects you to define an id() method to uniquely identify each
@@ -61,7 +61,6 @@ class Methodology
   # def destroyed?()  true end
   def persisted?()  false end
 
-
   # ---------------------------------------------------------------- Enumerable
 
   # When comparing two NoteTemplate instances, sort them alphabetically on their
@@ -70,12 +69,10 @@ class Methodology
     self.name <=> other.name
   end
 
-
   # ------------------------------------------------------ ActiveRecord finders
 
   # Find by :id, which in this case is the file's basename
   def self.find(id)
-
     # Discard any input with weird characters
     if (id =~ /\A[\x00\/\\:\*\?\"<>\|]\z/)
       raise Exception.new('Not found!')
@@ -103,20 +100,19 @@ class Methodology
     end.sort
   end
 
-
   # -------------------------------------------------------------- Constructors
 
   # Creates an instance of Methodology from a given XML file.
   def self.from_file(filename)
     Methodology.new({
-      :filename => File.basename(filename, '.xml'),
-      :content => File.read(filename),
-      :updated_at => File.mtime(filename)
+      filename: File.basename(filename, '.xml'),
+      content: File.read(filename),
+      updated_at: File.mtime(filename)
     })
   end
 
   # Constructor a la ActiveRecord. Attributes: :name, :file
-  def initialize(attributes={})
+  def initialize(attributes = {})
     attributes.each do |name, value|
       send("#{name}=", value)
     end
@@ -178,13 +174,12 @@ class Methodology
   end
 
   def version
-    @version ||= if !doc.root
-                   nil
-                 elsif doc.root[:version].nil?
-                   doc.root.name == 'board' ? 2 : 1
-                 else
-                   doc.root[:version].to_i
-                 end
+    @version ||=
+      if doc.root[:version].nil?
+        doc.root.name == 'board' ? 2 : 1
+      else
+        doc.root[:version].to_i
+      end
   end
 
   # ----------------------------------------------------- Sections, lists, tasks
