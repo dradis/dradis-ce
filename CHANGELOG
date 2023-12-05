@@ -8,7 +8,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - Evidence: Fix switching Evidence templates at the Issue level
+    - Evidence: Prevent loading old Evidence template content at the Issue level
   - New integrations:
     - [integration]
   - Integration enhancements:
