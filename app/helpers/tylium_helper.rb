@@ -12,22 +12,12 @@ module TyliumHelper
   end
 
   def flash_messages
-    # In general controllers use :error, but :alert is used with redirect_to
-    #   http://guides.rubyonrails.org/action_controller_overview.html#the-flash
-    alert_types = {
-      'alert'   => 'alert-danger',
-      'error'   => 'alert-danger',
-      'info'    => 'alert-info',
-      'notice'  => 'alert-success',
-      'warning' => 'alert-warning'
-    }
+    flash.select { |key, _| FlashHelper::ALERT_TYPES.keys.include?(key) }.collect do |name, msg|
+      flash_attrs = flash_attrs(name)
 
-    flash.select { |key, _| alert_types.keys.include?(key) }.collect do |name, msg|
-      flash_css = "alert #{alert_types.fetch(name)} alert-dismissible"
-
-      content_tag :div, class: flash_css do
+      content_tag :div, class: flash_attrs[:flash_css] do
         [
-          button_tag(class: 'btn-close', data: { bs_dismiss: 'alert' }) do
+          button_tag(class: 'btn-close', data: flash_attrs[:data_attrs]) do
             '<span class="visually-hidden">Close alert</span>'.html_safe
           end,
           h(msg)
