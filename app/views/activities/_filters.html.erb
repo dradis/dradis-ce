@@ -1,12 +1,18 @@
 <div class="activity-filters">
-  <%= form_with url: project_activities_path(current_project.id), method: :get, remote: true, class: 'form-row d-flex flex-row' do |f| %>
-    <%= f.label :user, 'Filter by user', class: 'visually-hidden' %>
-    <%= f.select :user, options_from_collection_for_select(User.all, :id, :name, params[:user]), { include_blank: 'All users' }, { class: 'form-select m-2 form-select-sm' } %>
-
-    <%= f.label :type, 'Filter by type', class: 'visually-hidden' %>
-    <%= f.select :type, options_from_collection_for_select(Activity.select(:trackbable_type).distinct.pluck(:trackable_type), :to_s, :demodulize ), { include_blank: 'All types', selected: params[:type] }, { class: 'form-select m-2 form-select-sm' } %>
+  <%= form_with url: project_activities_path(current_project.id), method: :get, remote: true, class: 'form-row d-flex flex-xl-row flex-column' do |f| %>
     <div class="input-group">
-      <span class="input-group-text input-group-sm my-2">Date range from</span>
+      <%= f.label :user, class: 'col-form-label m-2' %>
+      <%= f.select :user, options_from_collection_for_select(User.all, :id, :name, params[:user]), { include_blank: 'All users' }, { class: 'form-select m-2 form-select-sm' } %>
+    </div>
+
+    <div class="input-group">
+      <%= f.label :type, class: 'col-form-label m-2' %>
+      <%= f.select :type, options_from_collection_for_select(Activity.select(:trackbable_type).distinct.pluck(:trackable_type), :to_s, :demodulize ), { include_blank: 'All types', selected: params[:type] }, { class: 'form-select m-2 form-select-sm' } %>
+    </div>
+
+    <div class="input-group">
+      <%= f.label :date_range, class: 'col-form-label m-2' %>
+      <span class="input-group-text input-group-sm my-2">from</span>
       <%= f.label :period_start, class: 'visually-hidden' %>
       <%= f.date_field :period_start, max: Date.today, placeholder: 'From date', value: params[:period_start], class: 'form-control form-control-sm my-2' %>
       <span class="input-group-text input-group-sm my-2">to</span>
