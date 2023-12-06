@@ -20,6 +20,9 @@
       <%= f.date_field :period_end, max: Date.today, placeholder: 'To date', value: params[:period_end] || Date.today, class: 'form-control form-control-sm my-2' %>
     </div>
 
-    <%= link_to 'Clear', project_activities_path(current_project.id) , class: "btn btn-danger m-2 pt-2" %>
+    <%= link_to project_activities_path(current_project.id), class: 'btn btn-danger m-2 pt-2' do %>
+      <i class="d-inline fa-solid fa-xmark me-2"></i><span class="d-inline">Clear</span>
+    <% end %>
+
   <% end %>
 </div>
