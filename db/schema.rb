@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_144728) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.integer "blob_id", null: false
+    t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -138,7 +138,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_144728) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.integer "position"
-    t.text "properties", limit: 4294967295
+    t.text "properties", limit: 1073741823
     t.integer "children_count", default: 0, null: false
     t.index ["parent_id"], name: "index_nodes_on_parent_id"
     t.index ["type_id"], name: "index_nodes_on_type_id"
@@ -216,7 +216,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_144728) do
     t.string "whodunnit"
     t.text "object", limit: 1073741823
     t.datetime "created_at", precision: nil
-    t.bigint "project_id"
+    t.integer "project_id"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
     t.index ["project_id"], name: "index_versions_on_project_id"
   end

@@ -1,5 +1,8 @@
 {
   "name": "dradis",
   "private": true,
-  "dependencies": {}
+  "devDependencies": {
+    "@prettier/plugin-ruby": "^4.0.3",
+    "prettier": "^3.1.0"
+  }
 }
