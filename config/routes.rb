@@ -105,6 +105,8 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
+    resources :tasks, only: :index
+
     resources :tags, except: [:show]
 
     namespace :qa do
