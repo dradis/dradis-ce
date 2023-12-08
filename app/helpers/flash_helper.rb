@@ -17,6 +17,6 @@ module FlashHelper
     attrs
   end
 
-  def flash_attrs_pro(name)
+  def flash_attrs_pro(name, attrs)
   end
 end
