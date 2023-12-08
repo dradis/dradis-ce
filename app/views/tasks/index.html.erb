@@ -1,11 +1,24 @@
 <% content_for :title, 'My Tasks' %>
 <div class="content-container" id="tasks-viewer">
    <div class="methodology">
-      <h4 class="methodology__title">Methodology Title 1</h4>
+      <h4 class="dropdown-toggle" data-bs-toggle="dropdown">Methodology 1 <i class="fa-solid fa-caret-down fa-fw"></i></h4>
+      <ul class="dropdown-menu">
+         <li class="dropdown-menu__item"><input type="checkbox" checked/>Methodology 1</li>
+         <li class="dropdown-menu__item"><input type="checkbox"/>Methodology 2</li>
+      </ul>
       <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
          <div class="row">
             <div class="col-sm-6">
-
+               <div class="dt-buttons btn-group flex-wrap">
+                  <button class="btn" tabindex="0" aria-controls="DataTables_Table_2" type="button" title="Select all" id="select-all"><span><label for="select-all-checkbox" class="visually-hidden">Select all"</label><input type="checkbox" id="select-all-checkbox"></span></button> 
+                  <div class="btn-group"><button class="btn buttons-collection dropdown-toggle d-none" tabindex="0" aria-controls="DataTables_Table_2" type="button" data-behavior="table-action" aria-expanded="false"><span><i class="fa-solid fa-adjust fa-fw"></i>State<i class="fa-solid fa-caret-down fa-fw"></i></span></button></div>
+                  <button class="btn text-danger d-none" tabindex="0" aria-controls="DataTables_Table_2" type="button" data-behavior="table-action"><span><i class="fa-solid fa-trash fa-fw"></i>Delete</span></button> <button class="btn d-none" tabindex="0" aria-controls="DataTables_Table_2" type="button" data-behavior="table-action"><span><i class="fa-solid fa-compress fa-fw"></i> Merge</span></button> 
+                  <div class="btn-group"><button class="btn buttons-collection dropdown-toggle d-none tag-btn" tabindex="0" aria-controls="DataTables_Table_2" type="button" data-behavior="table-action" aria-expanded="false"><span><i class="fa-solid fa-tags fa-fw"></i>Tag<i class="fa-solid fa-caret-down fa-fw"></i></span></button></div>
+                  <div class="btn-group"><button class="btn buttons-collection dropdown-toggle buttons-colvis" tabindex="0" aria-controls="DataTables_Table_2" type="button" title="Choose columns to show" aria-haspopup="true" aria-expanded="false"><span><i class="fa-solid fa-columns me-1 fa-fw"></i>Columns<i class="fa-solid fa-caret-down fa-fw"></i></span></button></div>
+               </div>
+            </div>
+            <div class="col-sm-6">
+               <div id="DataTables_Table_2_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="DataTables_Table_2"></label></div>
             </div>
          </div>
          <div class="row">
@@ -15,7 +28,7 @@
                      <thead>
                         <tr role="row">
                            <th class="no-sort sorting" data-column-visible="false" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Select: activate to sort column ascending"><span class="visually-hidden">Select</span></th>
-                           <th class="sorting sorting_asc" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Title</th>
+                           <th class="sorting sorting_desc" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-sort="descending" aria-label="Title: activate to sort column ascending">Title</th>
                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Tags: activate to sort column ascending">Tags</th>
                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Affected: activate to sort column ascending">Affected</th>
                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="State: activate to sort column ascending">State</th>
@@ -23,87 +36,21 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <tr id="issue-17" data-tag-url="/projects/1/issues/17" class="odd">
+                        <tr id="issue-16" data-tag-url="/projects/1/issues/16" class="odd">
                            <td class="select-checkbox" data-behavior="select-checkbox"></td>
-                           <td class="sorting_1" data-behavior="" data-sort="Apache 1.3 HTTP Server Expect Header Cross-Site Scripting"><a data-qa-visible="false" href="/projects/1/issues/17">Apache 1.3 HTTP Server Expect Header Cross-Site Scripting</a><a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/17">Apache 1.3 HTTP Server Expect Header Cross-Site Scripting</a></td>
+                           <td class="sorting_1" data-behavior="" data-sort="TCP Sequence Number Approximation Based Denial of Service"><a data-qa-visible="false" href="/projects/1/issues/16">TCP Sequence Number Approximation Based Denial of Service</a><a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/16">TCP Sequence Number Approximation Based Denial of Service</a></td>
                            <td class="" data-behavior="tag" data-sort="High"><span class="issue-severity"><i class="fa-solid fa-bug" style="color: #d62728"></i> High</span></td>
-                           <td class="text-break-spaces" data-behavior="" data-sort="1"><a href="/projects/1/nodes/7">10.0.155.160</a></td>
-                           <td class="" data-behavior="" data-sort="published">Published</td>
-                           <td class="column-actions">
-                              <a data-qa-visible="false" href="/projects/1/issues/17/edit">
-                              <i class="fa-solid fa-pencil"></i> Edit
-                              </a>              <a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/17/edit">
-                              <i class="fa-solid fa-pencil"></i> Edit
-                              </a>              <a data-confirm="Are you sure?
-                                 Proceeding will delete this issue and any associated evidence." data-qa-visible="false" class="text-error-hover" rel="nofollow" data-method="delete" href="/projects/1/issues/17">
-                              <i class="fa-solid fa-trash"></i> Delete
-                              </a>            
+                           <td class="text-break-spaces" data-behavior="" data-sort="2"><a href="/projects/1/nodes/6">10.0.155.157</a>
+                              <a href="/projects/1/nodes/7">10.0.155.160</a>
                            </td>
-                        </tr>
-                        <tr id="issue-18" data-tag-url="/projects/1/issues/18" class="even">
-                           <td class="select-checkbox" data-behavior="select-checkbox"></td>
-                           <td class="sorting_1" data-behavior="" data-sort="Apache Web Server ETag Header Information Disclosure Weakness"><a data-qa-visible="false" href="/projects/1/issues/18">Apache Web Server ETag Header Information Disclosure Weakness</a><a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/18">Apache Web Server ETag Header Information Disclosure Weakness</a></td>
-                           <td class="" data-behavior="tag" data-sort="Medium"><span class="issue-severity"><i class="fa-solid fa-bug" style="color: #ff7f0e"></i> Medium</span></td>
-                           <td class="text-break-spaces" data-behavior="" data-sort="1"><a href="/projects/1/nodes/7">10.0.155.160</a></td>
                            <td class="" data-behavior="" data-sort="published">Published</td>
                            <td class="column-actions">
-                              <a data-qa-visible="false" href="/projects/1/issues/18/edit">
+                              <a data-qa-visible="false" href="/projects/1/issues/16/edit">
                               <i class="fa-solid fa-pencil"></i> Edit
-                              </a>              <a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/18/edit">
-                              <i class="fa-solid fa-pencil"></i> Edit
-                              </a>              <a data-confirm="Are you sure?
-                                 Proceeding will delete this issue and any associated evidence." data-qa-visible="false" class="text-error-hover" rel="nofollow" data-method="delete" href="/projects/1/issues/18">
-                              <i class="fa-solid fa-trash"></i> Delete
-                              </a>            
-                           </td>
-                        </tr>
-                        <tr id="issue-11" data-tag-url="/projects/1/issues/11" class="odd">
-                           <td class="select-checkbox" data-behavior="select-checkbox"></td>
-                           <td class="sorting_1" data-behavior="" data-sort="Blind SQL Injection"><a data-qa-visible="false" href="/projects/1/issues/11">Blind SQL Injection</a><a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/11">Blind SQL Injection</a></td>
-                           <td class="" data-behavior="tag" data-sort="Critical"><span class="issue-severity"><i class="fa-solid fa-bug" style="color: #9467bd"></i> Critical</span></td>
-                           <td class="text-break-spaces" data-behavior="" data-sort="1"><a href="/projects/1/nodes/5">1.1.1.1</a></td>
-                           <td class="" data-behavior="" data-sort="published">Published</td>
-                           <td class="column-actions">
-                              <a data-qa-visible="false" href="/projects/1/issues/11/edit">
-                              <i class="fa-solid fa-pencil"></i> Edit
-                              </a>              <a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/11/edit">
+                              </a>              <a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/16/edit">
                               <i class="fa-solid fa-pencil"></i> Edit
                               </a>              <a data-confirm="Are you sure?
-                                 Proceeding will delete this issue and any associated evidence." data-qa-visible="false" class="text-error-hover" rel="nofollow" data-method="delete" href="/projects/1/issues/11">
-                              <i class="fa-solid fa-trash"></i> Delete
-                              </a>            
-                           </td>
-                        </tr>
-                        <tr id="issue-15" data-tag-url="/projects/1/issues/15" class="even">
-                           <td class="select-checkbox" data-behavior="select-checkbox"></td>
-                           <td class="sorting_1" data-behavior="" data-sort="Firewall Detected"><a data-qa-visible="false" href="/projects/1/issues/15">Firewall Detected</a><a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/15">Firewall Detected</a></td>
-                           <td class="" data-behavior="tag" data-sort="Info"><span class="issue-severity"><i class="fa-solid fa-bug" style="color: #2ca02c"></i> Info</span></td>
-                           <td class="text-break-spaces" data-behavior="" data-sort="1"><a href="/projects/1/nodes/6">10.0.155.157</a></td>
-                           <td class="" data-behavior="" data-sort="published">Published</td>
-                           <td class="column-actions">
-                              <a data-qa-visible="false" href="/projects/1/issues/15/edit">
-                              <i class="fa-solid fa-pencil"></i> Edit
-                              </a>              <a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/15/edit">
-                              <i class="fa-solid fa-pencil"></i> Edit
-                              </a>              <a data-confirm="Are you sure?
-                                 Proceeding will delete this issue and any associated evidence." data-qa-visible="false" class="text-error-hover" rel="nofollow" data-method="delete" href="/projects/1/issues/15">
-                              <i class="fa-solid fa-trash"></i> Delete
-                              </a>            
-                           </td>
-                        </tr>
-                        <tr id="issue-12" data-tag-url="/projects/1/issues/12" class="odd">
-                           <td class="select-checkbox" data-behavior="select-checkbox"></td>
-                           <td class="sorting_1" data-behavior="" data-sort="Secure HyperText Transfer Protocol (S-HTTP) Detection"><a data-qa-visible="false" href="/projects/1/issues/12">Secure HyperText Transfer Protocol (S-HTTP) Detection</a><a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/12">Secure HyperText Transfer Protocol (S-HTTP) Detection</a></td>
-                           <td class="" data-behavior="tag" data-sort="Low"><span class="issue-severity"><i class="fa-solid fa-bug" style="color: #6baed6"></i> Low</span></td>
-                           <td class="text-break-spaces" data-behavior="" data-sort="1"><a href="/projects/1/nodes/4">173.45.230.150</a></td>
-                           <td class="" data-behavior="" data-sort="published">Published</td>
-                           <td class="column-actions">
-                              <a data-qa-visible="false" href="/projects/1/issues/12/edit">
-                              <i class="fa-solid fa-pencil"></i> Edit
-                              </a>              <a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/12/edit">
-                              <i class="fa-solid fa-pencil"></i> Edit
-                              </a>              <a data-confirm="Are you sure?
-                                 Proceeding will delete this issue and any associated evidence." data-qa-visible="false" class="text-error-hover" rel="nofollow" data-method="delete" href="/projects/1/issues/12">
+                                 Proceeding will delete this issue and any associated evidence." data-qa-visible="false" class="text-error-hover" rel="nofollow" data-method="delete" href="/projects/1/issues/16">
                               <i class="fa-solid fa-trash"></i> Delete
                               </a>            
                            </td>
@@ -125,21 +72,87 @@
                               </a>            
                            </td>
                         </tr>
-                        <tr id="issue-16" data-tag-url="/projects/1/issues/16" class="odd">
+                        <tr id="issue-12" data-tag-url="/projects/1/issues/12" class="odd">
                            <td class="select-checkbox" data-behavior="select-checkbox"></td>
-                           <td class="sorting_1" data-behavior="" data-sort="TCP Sequence Number Approximation Based Denial of Service"><a data-qa-visible="false" href="/projects/1/issues/16">TCP Sequence Number Approximation Based Denial of Service</a><a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/16">TCP Sequence Number Approximation Based Denial of Service</a></td>
-                           <td class="" data-behavior="tag" data-sort="High"><span class="issue-severity"><i class="fa-solid fa-bug" style="color: #d62728"></i> High</span></td>
-                           <td class="text-break-spaces" data-behavior="" data-sort="2"><a href="/projects/1/nodes/6">10.0.155.157</a>
-                              <a href="/projects/1/nodes/7">10.0.155.160</a>
-                           </td>
+                           <td class="sorting_1" data-behavior="" data-sort="Secure HyperText Transfer Protocol (S-HTTP) Detection"><a data-qa-visible="false" href="/projects/1/issues/12">Secure HyperText Transfer Protocol (S-HTTP) Detection</a><a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/12">Secure HyperText Transfer Protocol (S-HTTP) Detection</a></td>
+                           <td class="" data-behavior="tag" data-sort="Low"><span class="issue-severity"><i class="fa-solid fa-bug" style="color: #6baed6"></i> Low</span></td>
+                           <td class="text-break-spaces" data-behavior="" data-sort="1"><a href="/projects/1/nodes/4">173.45.230.150</a></td>
                            <td class="" data-behavior="" data-sort="published">Published</td>
                            <td class="column-actions">
-                              <a data-qa-visible="false" href="/projects/1/issues/16/edit">
+                              <a data-qa-visible="false" href="/projects/1/issues/12/edit">
                               <i class="fa-solid fa-pencil"></i> Edit
-                              </a>              <a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/16/edit">
+                              </a>              <a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/12/edit">
                               <i class="fa-solid fa-pencil"></i> Edit
                               </a>              <a data-confirm="Are you sure?
-                                 Proceeding will delete this issue and any associated evidence." data-qa-visible="false" class="text-error-hover" rel="nofollow" data-method="delete" href="/projects/1/issues/16">
+                                 Proceeding will delete this issue and any associated evidence." data-qa-visible="false" class="text-error-hover" rel="nofollow" data-method="delete" href="/projects/1/issues/12">
+                              <i class="fa-solid fa-trash"></i> Delete
+                              </a>            
+                           </td>
+                        </tr>
+                        <tr id="issue-15" data-tag-url="/projects/1/issues/15" class="even">
+                           <td class="select-checkbox" data-behavior="select-checkbox"></td>
+                           <td class="sorting_1" data-behavior="" data-sort="Firewall Detected"><a data-qa-visible="false" href="/projects/1/issues/15">Firewall Detected</a><a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/15">Firewall Detected</a></td>
+                           <td class="" data-behavior="tag" data-sort="Info"><span class="issue-severity"><i class="fa-solid fa-bug" style="color: #2ca02c"></i> Info</span></td>
+                           <td class="text-break-spaces" data-behavior="" data-sort="1"><a href="/projects/1/nodes/6">10.0.155.157</a></td>
+                           <td class="" data-behavior="" data-sort="published">Published</td>
+                           <td class="column-actions">
+                              <a data-qa-visible="false" href="/projects/1/issues/15/edit">
+                              <i class="fa-solid fa-pencil"></i> Edit
+                              </a>              <a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/15/edit">
+                              <i class="fa-solid fa-pencil"></i> Edit
+                              </a>              <a data-confirm="Are you sure?
+                                 Proceeding will delete this issue and any associated evidence." data-qa-visible="false" class="text-error-hover" rel="nofollow" data-method="delete" href="/projects/1/issues/15">
+                              <i class="fa-solid fa-trash"></i> Delete
+                              </a>            
+                           </td>
+                        </tr>
+                        <tr id="issue-11" data-tag-url="/projects/1/issues/11" class="odd">
+                           <td class="select-checkbox" data-behavior="select-checkbox"></td>
+                           <td class="sorting_1" data-behavior="" data-sort="Blind SQL Injection"><a data-qa-visible="false" href="/projects/1/issues/11">Blind SQL Injection</a><a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/11">Blind SQL Injection</a></td>
+                           <td class="" data-behavior="tag" data-sort="Critical"><span class="issue-severity"><i class="fa-solid fa-bug" style="color: #9467bd"></i> Critical</span></td>
+                           <td class="text-break-spaces" data-behavior="" data-sort="1"><a href="/projects/1/nodes/5">1.1.1.1</a></td>
+                           <td class="" data-behavior="" data-sort="published">Published</td>
+                           <td class="column-actions">
+                              <a data-qa-visible="false" href="/projects/1/issues/11/edit">
+                              <i class="fa-solid fa-pencil"></i> Edit
+                              </a>              <a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/11/edit">
+                              <i class="fa-solid fa-pencil"></i> Edit
+                              </a>              <a data-confirm="Are you sure?
+                                 Proceeding will delete this issue and any associated evidence." data-qa-visible="false" class="text-error-hover" rel="nofollow" data-method="delete" href="/projects/1/issues/11">
+                              <i class="fa-solid fa-trash"></i> Delete
+                              </a>            
+                           </td>
+                        </tr>
+                        <tr id="issue-18" data-tag-url="/projects/1/issues/18" class="even">
+                           <td class="select-checkbox" data-behavior="select-checkbox"></td>
+                           <td class="sorting_1" data-behavior="" data-sort="Apache Web Server ETag Header Information Disclosure Weakness"><a data-qa-visible="false" href="/projects/1/issues/18">Apache Web Server ETag Header Information Disclosure Weakness</a><a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/18">Apache Web Server ETag Header Information Disclosure Weakness</a></td>
+                           <td class="" data-behavior="tag" data-sort="Medium"><span class="issue-severity"><i class="fa-solid fa-bug" style="color: #ff7f0e"></i> Medium</span></td>
+                           <td class="text-break-spaces" data-behavior="" data-sort="1"><a href="/projects/1/nodes/7">10.0.155.160</a></td>
+                           <td class="" data-behavior="" data-sort="published">Published</td>
+                           <td class="column-actions">
+                              <a data-qa-visible="false" href="/projects/1/issues/18/edit">
+                              <i class="fa-solid fa-pencil"></i> Edit
+                              </a>              <a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/18/edit">
+                              <i class="fa-solid fa-pencil"></i> Edit
+                              </a>              <a data-confirm="Are you sure?
+                                 Proceeding will delete this issue and any associated evidence." data-qa-visible="false" class="text-error-hover" rel="nofollow" data-method="delete" href="/projects/1/issues/18">
+                              <i class="fa-solid fa-trash"></i> Delete
+                              </a>            
+                           </td>
+                        </tr>
+                        <tr id="issue-17" data-tag-url="/projects/1/issues/17" class="odd">
+                           <td class="select-checkbox" data-behavior="select-checkbox"></td>
+                           <td class="sorting_1" data-behavior="" data-sort="Apache 1.3 HTTP Server Expect Header Cross-Site Scripting"><a data-qa-visible="false" href="/projects/1/issues/17">Apache 1.3 HTTP Server Expect Header Cross-Site Scripting</a><a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/17">Apache 1.3 HTTP Server Expect Header Cross-Site Scripting</a></td>
+                           <td class="" data-behavior="tag" data-sort="High"><span class="issue-severity"><i class="fa-solid fa-bug" style="color: #d62728"></i> High</span></td>
+                           <td class="text-break-spaces" data-behavior="" data-sort="1"><a href="/projects/1/nodes/7">10.0.155.160</a></td>
+                           <td class="" data-behavior="" data-sort="published">Published</td>
+                           <td class="column-actions">
+                              <a data-qa-visible="false" href="/projects/1/issues/17/edit">
+                              <i class="fa-solid fa-pencil"></i> Edit
+                              </a>              <a class="d-none" data-qa-visible="true" href="/projects/1/qa/issues/17/edit">
+                              <i class="fa-solid fa-pencil"></i> Edit
+                              </a>              <a data-confirm="Are you sure?
+                                 Proceeding will delete this issue and any associated evidence." data-qa-visible="false" class="text-error-hover" rel="nofollow" data-method="delete" href="/projects/1/issues/17">
                               <i class="fa-solid fa-trash"></i> Delete
                               </a>            
                            </td>
@@ -150,7 +163,25 @@
             </div>
          </div>
          <div class="dataTables_footer_content">
+            <div class="dataTables_length" id="DataTables_Table_2_length">
+               <label>
+                  Show 
+                  <select name="DataTables_Table_2_length" aria-controls="DataTables_Table_2" class="custom-select custom-select-sm form-control form-control-sm">
+                     <option value="25">25</option>
+                     <option value="50">50</option>
+                     <option value="100">100</option>
+                     <option value="-1">All</option>
+                  </select>
+                  entries
+               </label>
+            </div>
+            <div class="dataTables_info" id="DataTables_Table_2_info" role="status" aria-live="polite">Showing 1 to 7 of 7 entries</div>
             <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_2_paginate">
+               <ul class="pagination">
+                  <li class="paginate_button page-item previous disabled" id="DataTables_Table_2_previous"><a href="#" aria-controls="DataTables_Table_2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
+                  <li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_2" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
+                  <li class="paginate_button page-item next disabled" id="DataTables_Table_2_next"><a href="#" aria-controls="DataTables_Table_2" data-dt-idx="2" tabindex="0" class="page-link">Next</a></li>
+               </ul>
             </div>
          </div>
       </div>
