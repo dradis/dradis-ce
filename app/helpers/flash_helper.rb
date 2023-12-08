@@ -13,6 +13,10 @@ module FlashHelper
     attrs = {}
     attrs[:flash_css] = "alert #{ALERT_TYPES.fetch(name)} alert-dismissible"
     attrs[:data_attrs] = { bs_dismiss: 'alert' }
+    attrs = flash_attrs_pro(name, attrs) if defined? Dradis::Pro
     attrs
+  end
+
+  def flash_attrs_pro(name)
   end
 end
