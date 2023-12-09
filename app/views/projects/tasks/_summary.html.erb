@@ -1,16 +1,109 @@
 <section class="summary-panel">
-  <h4 class="header-underline">My tasks<span class="actions pt-1">
-  <div class="action">
-  <%= link_to project_tasks_path(current_project) do %>
-    <i class="fa-solid fa-user fa-fw"></i>View All
-    <% end %>
-  </div>
-</span></h4>
-<ul class="tasks-list">
-    <li class="tasks-list__item">
-      <i class="fa-solid fa-user fa-fw"></i>
-    </li>
-</ul>
-
-  
+   <h4 class="header-underline">
+      My tasks
+      <span class="actions pt-1">
+         <div class="action">
+            <%= link_to project_tasks_path(current_project) do %>
+            <i class="fa-solid fa-user fa-fw"></i>View All
+            <% end %>
+         </div>
+      </span>
+   </h4>
+   <div class="table-wrapper">
+      <table class="table table-striped tasks-table"
+      data-behavior="dradis-datatable"
+      data-default-columns='["Type", "Title", "Tags"]'
+      data-item-name="task_list"
+      <thead>
+         <tr>
+            <th>Type</th>
+            <th>Title</th>
+            <th>Tags</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr id="task_list-1">
+            <td data-sort="Card"><i class="fa-solid fa-address-card"></i></td>
+            <td data-sort="Create your first issue in Dradis">
+               <a href="/projects/1/boards/1/lists/1/cards/1">[Issues, Evidence, and Plugins] Create your first Issue</a>
+            </td>
+            <td data-sort="High">
+               <div class="card-badges">
+                  <div class="badge-due-date badge bg-danger">
+                     <span>
+                     <i class="fa-solid fa-bug"></i>
+                     </span>
+                     <span>High</span>
+                  </div>
+               </div>
+            </td>
+         </tr>
+         <tr id="task_list-2">
+            <td data-sort="Card"><i class="fa-solid fa-address-card"></i></td>
+            <td data-sort="Create your first issue in Dradis">
+               <a href="/projects/1/boards/1/lists/1/cards/1">[Issues, Evidence, and Plugins] Create your first Issue</a>
+            </td>
+            <td data-sort="High">
+               <div class="card-badges">
+                  <div class="badge-due-date badge bg-danger">
+                     <span>
+                     <i class="fa-solid fa-bug"></i>
+                     </span>
+                     <span>High</span>
+                  </div>
+               </div>
+            </td>
+         </tr>
+         <tr id="task_list-3">
+            <td data-sort="Card"><i class="fa-solid fa-address-card"></i></td>
+            <td data-sort="[Issues, Evidence, and Plugins] Create your first Issue">
+               <a href="/projects/1/boards/1/lists/1/cards/1">[Issues, Evidence, and Plugins] Create your first Issue</a>
+            </td>
+            <td data-sort="High">
+               <div class="card-badges">
+                  <div class="badge-due-date badge bg-danger">
+                     <span>
+                     <i class="fa-solid fa-bug"></i>
+                     </span>
+                     <span>High</span>
+                  </div>
+               </div>
+            </td>
+         </tr>
+         <tr id="task_list-4">
+            <td data-sort="Card"><i class="fa-solid fa-address-card"></i></td>
+            <td data-sort="[Issues, Evidence, and Plugins] Create your first Issue">
+               <a href="/projects/1/boards/1/lists/1/cards/1">[Issues, Evidence, and Plugins] Create your first Issue</a>
+            </td>
+            <td data-sort="High">
+               <div class="card-badges">
+                  <div class="badge-due-date badge bg-danger">
+                     <span>
+                     <i class="fa-solid fa-bug"></i>
+                     </span>
+                     <span>High</span>
+                  </div>
+               </div>
+            </td>
+         </tr>
+         <tr id="task_list-5">
+            <td data-sort="Card"><i class="fa-solid fa-address-card"></i></td>
+            <td data-sort="[Issues, Evidence, and Plugins] Create your first Issue">
+               <a href="/projects/1/boards/1/lists/1/cards/1">[Issues, Evidence, and Plugins] Create your first Issue</a>
+            </td>
+            <td data-sort="High">
+               <div class="card-badges">
+                  <div class="badge-due-date badge bg-danger">
+                     <span>
+                     <i class="fa-solid fa-bug"></i>
+                     </span>
+                     <span>High</span>
+                  </div>
+               </div>
+            </td>
+         </tr>
+      </tbody>
+      </table>
+   </div>
+   </table>
 </section>

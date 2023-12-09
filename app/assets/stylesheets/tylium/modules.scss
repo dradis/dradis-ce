@@ -1,27 +1,27 @@
-@import 'tylium/modules/alerts';
-@import 'tylium/modules/attachments';
-@import 'tylium/modules/buttons';
-@import 'tylium/modules/boards';
-@import 'tylium/modules/console';
-@import 'tylium/modules/datatables';
-@import 'tylium/modules/dots-menu';
-@import 'tylium/modules/dropdown';
-@import 'tylium/modules/issues/evidence';
-@import 'tylium/modules/issues/import';
-@import 'tylium/modules/issues/issues';
-@import 'tylium/modules/issues/merge';
-@import 'tylium/modules/modals';
-@import 'tylium/modules/navbar';
-@import 'tylium/modules/nodes';
-@import 'tylium/modules/projects';
-@import 'tylium/modules/restrict_height';
-@import 'tylium/modules/search';
-@import 'tylium/modules/secondary_sidebar';
-@import 'tylium/modules/sidebar';
-@import 'tylium/modules/styles';
-@import 'tylium/modules/tour';
-@import 'tylium/modules/uploads';
-@import 'tylium/modules/versions';
+@import "tylium/modules/alerts";
+@import "tylium/modules/attachments";
+@import "tylium/modules/buttons";
+@import "tylium/modules/boards";
+@import "tylium/modules/console";
+@import "tylium/modules/datatables";
+@import "tylium/modules/dots-menu";
+@import "tylium/modules/dropdown";
+@import "tylium/modules/issues/evidence";
+@import "tylium/modules/issues/import";
+@import "tylium/modules/issues/issues";
+@import "tylium/modules/issues/merge";
+@import "tylium/modules/modals";
+@import "tylium/modules/navbar";
+@import "tylium/modules/nodes";
+@import "tylium/modules/projects";
+@import "tylium/modules/restrict_height";
+@import "tylium/modules/search";
+@import "tylium/modules/secondary_sidebar";
+@import "tylium/modules/sidebar";
+@import "tylium/modules/styles";
+@import "tylium/modules/tour";
+@import "tylium/modules/uploads";
+@import "tylium/modules/versions";
 
 [aria-tooltip] {
   position: relative;
@@ -161,7 +161,7 @@
 
     .action {
       &:not(:first-child)::before {
-        content: '-';
+        content: "-";
       }
 
       &:first-child {
@@ -257,19 +257,19 @@ table {
         width: 80%;
 
         &.editing {
-          background-image: image-url('silk/pencil.png');
+          background-image: image-url("silk/pencil.png");
         }
 
         &.failed {
-          background-image: image-url('silk/stop.png');
+          background-image: image-url("silk/stop.png");
         }
 
         &.saved {
-          background-image: image-url('silk/accept.png');
+          background-image: image-url("silk/accept.png");
         }
 
         &.saving {
-          background-image: image-url('loading.gif');
+          background-image: image-url("loading.gif");
         }
       }
     }
@@ -279,6 +279,9 @@ table {
     th {
       border: none;
     }
+  }
+
+  &.tasks-table {
   }
 }
 
