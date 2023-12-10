@@ -9,7 +9,7 @@
       <div class="table-wrapper">
               <table class="table table-striped"
               data-behavior="dradis-datatable"
-              data-default-columns='["Title", "Tags", "Due Date", "Status", "Assignees"]'
+              data-default-columns='["Title", "Tags", "Due Date", "Status", "Assignees", "Actions"]'
               data-item-name="name_of_entity"
               data-local-storage-key="project.ce.name_of_entities_datatable">
                 <thead>
@@ -21,6 +21,7 @@
                     <th>Due Date</th>
                     <th>Status</th>
                     <th>Assignees</th>
+                    <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Actions</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -34,6 +35,12 @@
                     <td data-sort="Assignees">
                       <img class="assignee-img" alt="user's avatar" src="/assets/profile.png" />
                     </td>
+                    <td class="column-actions">
+       
+              <i class="fa-solid fa-pencil"></i> Edit
+
+              <i class="fa-solid fa-trash"></i> Delete
+          </td>
                   </tr>
                   <tr id="name_of_entity-2">
                     <td class="select-checkbox" data-behavior="select-checkbox"></td>
@@ -43,6 +50,10 @@
                     <td data-sort="Row 2 Col 4 Data">Row 2 Col 4 Data</td>
                     <td data-sort="Row 2 Col 4 Data">Row 2 Col 5 Data</td>
                     <td data-sort="Row 1 Col 4 Data">Row 2 Col 6 Data</td>
+                    <td class="column-actions">
+              <i class="fa-solid fa-pencil"></i> Edit
+              <i class="fa-solid fa-trash"></i> Delete
+          </td>
                   </tr>
                   <tr id="name_of_entity-3">
                     <td class="select-checkbox" data-behavior="select-checkbox"></td>
@@ -52,6 +63,14 @@
                     <td data-sort="Row 3 Col 4 Data">Row 3 Col 4 Data</td>
                     <td data-sort="Row 3 Col 4 Data">Row 3 Col 5 Data</td>
                     <td data-sort="Row 1 Col 4 Data">Row 3 Col 6 Data</td>
+                    <td class="column-actions">
+
+              <i class="fa-solid fa-pencil"></i> Edit
+
+
+              <i class="fa-solid fa-trash"></i> Delete
+
+          </td>
                   </tr>
                 </tbody>
               </table>
