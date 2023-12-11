@@ -69,14 +69,14 @@
     }
 
     .loader {
-      background: image-url('loading.gif') no-repeat center;
+      background: image-url("loading.gif") no-repeat center;
       height: 50px;
       width: 420px;
     }
 
     .dropdown-menu {
       .notification-container {
-        width: 420px;
+        width: min-content;
         max-height: 500px;
         margin: 0;
         overflow: auto;
@@ -92,6 +92,18 @@
 
           &:last-child {
             border-bottom: none;
+          }
+
+          .notification-img {
+            height: 26px;
+            width: 26px;
+            border-radius: 50%;
+            margin-right: 8px;
+          }
+
+          .notification-text {
+            width: 240px;
+            text-wrap: wrap;
           }
         }
 
@@ -145,5 +157,5 @@ body.notifications {
 }
 
 .pull-right {
-    float: right
+  float: right;
 }

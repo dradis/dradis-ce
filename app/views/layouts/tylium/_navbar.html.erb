@@ -31,10 +31,19 @@
               <%= link_to main_app.project_configurations_path(current_project), class: 'nav-link', title: 'Configuration' do %><i class="fa-solid fa-cog fa-lg"></i> Configuration<% end %>
             </li>
             <li class="nav-item notifications dropdown">
-              <%= link_to main_app.project_notifications_path(current_project), class: 'nav-link dropdown-toggle', data: { bs_toggle: 'dropdown',  behavior: 'notifications-dropdown close-collapse', project_id: current_project.id }, role: 'button', title: 'Notifications' do %>
-                <i class="notifications-bell fa-solid fa-bell fa-lg"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i> Notifications
+                <!-- Removed d-none and default notification logic for demo purposes, I can see there's default logic for conditional rendering but I couldn't work out how to force my new notifications in -->
+              <%= link_to main_app.project_notifications_path(current_project), class: 'nav-link dropdown-toggle', data: { bs_toggle: 'dropdown',  behavior: 'close-collapse', project_id: current_project.id }, role: 'button', title: 'Notifications' do %>
+                <i class="notifications-bell fa-solid fa-bell fa-lg"><i class="notifications-dot" data-behavior="notifications-dot"></i></i> Notifications
               <% end %>
-              <div class="dropdown-menu dropdown-menu-end" data-url="<%= main_app.notifications_path %>"></div>
+              <!-- Modified default code here for demo purposes and to show html structure of proposed new notifications -->
+              <div class="dropdown-menu dropdown-menu-end">
+              <ul class="notification-container">
+                <li class="notification">
+                  <img class="notification-img" alt="user's avatar" src="/assets/profile.png" />
+                  <p class="notification-text"><a href="/">Ben Wells</a> assigned the card <a href="">[Issues, Evidence and Plugins] to you</a></p>
+                </li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item dropdown">
               <%= link_to '#', class: 'nav-link dropdown-toggle', data: { bs_toggle: 'dropdown', behavior: 'close-collapse' }, role: 'button', title: 'Help' do %>
