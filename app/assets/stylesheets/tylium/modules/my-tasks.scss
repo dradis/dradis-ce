@@ -2,6 +2,8 @@
   .methodology-toggle {
     margin-bottom: 24px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 
     i {
       font-size: 14px;
