@@ -1,0 +1,36 @@
+#tasks-viewer {
+  .methodology-toggle {
+    margin-bottom: 24px;
+    cursor: pointer;
+
+    i {
+      font-size: 14px;
+    }
+  }
+
+  .methodology {
+    .table-wrapper {
+      .table {
+        .assignees {
+          display: flex;
+
+          .assignees-img {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+
+            // Creates stacked effect for assignee images, decided to nest selectors like this as I can see this is done elsewhere, but usually I'd make use of SCSS &, e.g &-img and &-count
+
+            &:not(:first-of-type) {
+              margin-left: -8px;
+            }
+          }
+
+          .assignees-count {
+            margin-left: 6px;
+          }
+        }
+      }
+    }
+  }
+}

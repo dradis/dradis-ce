@@ -1,16 +1,16 @@
 <% content_for :title, 'My Tasks' %>
 <div class="content-container" id="tasks-viewer">
-   <div class="methodology">
-      <h4 class="dropdown-toggle" data-bs-toggle="dropdown">Methodology 1 <i class="fa-solid fa-caret-down fa-fw"></i></h4>
+  <h4 class="dropdown-toggle methodology-toggle" data-bs-toggle="dropdown">Methodology 1 <i class="fa-solid fa-caret-down fa-fw"></i></h4>
       <ul class="dropdown-menu">
          <li class="dropdown-menu__item"><input type="checkbox" checked/>Methodology 1</li>
          <li class="dropdown-menu__item"><input type="checkbox"/>Methodology 2</li>
       </ul>
+   <div class="methodology">
       <div class="table-wrapper">
               <table class="table table-striped"
               data-behavior="dradis-datatable"
               data-default-columns='["Title", "Tags", "Due Date", "Status", "Assignees", "Actions"]'
-              data-item-name="name_of_entity"
+              data-item-name="my_tasks_table"
               data-local-storage-key="project.ce.name_of_entities_datatable">
                 <thead>
                   <tr>
@@ -25,15 +25,18 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr id="name_of_entity-1">
+                  <tr id="my_tasks_table-1">
                     <td class="select-checkbox" data-behavior="select-checkbox"></td>
                     <td data-sort="Card"><i class="fa-solid fa-address-card"></i></td>
                     <td data-sort="[Issues, Evidence, and Plugins] Create your first Issue"><a href="">[Issues, Evidence, and Plugins] Create your first Issue</a></td>
                     <td data-sort="Critical"><span class="issue-severity"><i class="fa-solid fa-bug" style="color: #9467bd"></i> Critical</span></td>
                     <td data-sort="Dec 21"><span class="due-date"><i class="fa-solid fa-clock" style="color: #9467bd"></i> Dec 21</span></td>
                     <td data-sort="In Progress">In Progress</td>
-                    <td data-sort="Assignees">
-                      <img class="assignee-img" alt="user's avatar" src="/assets/profile.png" />
+                    <td data-sort="Assignees" class="assignees">
+                      <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
+                      <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
+                      <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
+                      <p class="assignees-count">+3</p>
                     </td>
                     <td class="column-actions">
        
@@ -42,7 +45,7 @@
               <i class="fa-solid fa-trash"></i> Delete
           </td>
                   </tr>
-                  <tr id="name_of_entity-2">
+                  <tr id="my_tasks_table-2">
                     <td class="select-checkbox" data-behavior="select-checkbox"></td>
                     <td data-sort="Card"><i class="fa-solid fa-address-card"></i></td>
                     <td data-sort="Row 2 Col 2 Data">Row 2 Col 2 Data</td>
@@ -55,7 +58,7 @@
               <i class="fa-solid fa-trash"></i> Delete
           </td>
                   </tr>
-                  <tr id="name_of_entity-3">
+                  <tr id="my_tasks_table-3">
                     <td class="select-checkbox" data-behavior="select-checkbox"></td>
                     <td data-sort="Card"><i class="fa-solid fa-address-card"></i></td>
                     <td data-sort="Row 3 Col 2 Data">Row 3 Col 2 Data</td>

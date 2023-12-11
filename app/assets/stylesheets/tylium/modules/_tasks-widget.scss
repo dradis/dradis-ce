@@ -1,0 +1,62 @@
+.tasks-summary {
+  .header-underline {
+    .actions {
+      display: flex;
+      align-items: center;
+    }
+
+    .dropdown-menu {
+      .dt-button {
+        &.buttons-tableSorting {
+          padding-left: 2.25rem;
+          position: relative;
+          cursor: pointer;
+
+          &.active {
+            &::before {
+              background-color: $checkboxFill;
+              background-image: image-url("check.svg");
+              border-color: $checkboxFill;
+            }
+          }
+
+          &::before {
+            --checkboxSize: 13px;
+            background-repeat: no-repeat;
+            background-position-y: center;
+            background-position-x: -2.4px;
+            background-size: 130%;
+            border: 1px solid $defaultText;
+            border-radius: 2px;
+            content: "";
+            height: var(--checkboxSize);
+            left: 1rem;
+            position: absolute;
+            top: calc(50% - (var(--checkboxSize) / 2));
+            width: var(--checkboxSize);
+          }
+        }
+
+        &:focus,
+        &:hover {
+          outline: none;
+        }
+      }
+    }
+  }
+
+  .table-wrapper {
+    .tasks-table {
+      &-body {
+        .task-item {
+          .task-item-title {
+            i {
+              color: $defaultText;
+              margin-right: 6px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

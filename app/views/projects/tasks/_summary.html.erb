@@ -1,35 +1,41 @@
-<section class="summary-panel">
+<section class="summary-panel tasks-summary">
    <h4 class="header-underline">
       My tasks
       <span class="actions pt-1">
+        <div class="action">
+        <button class="btn buttons-collection dropdown-toggle buttons-colvis" data-bs-toggle="dropdown" tabindex="0" type="button" title="Choose how to sort items"><span>Sorting<i class="fa-solid fa-sort me-1 fa-fw"></i></span></button>
+        <ul class="dropdown-menu">
+          <li class="dt-button dropdown-item buttons-tableSorting" tabindex="0"><span>Title</span></li> 
+          <li class="dt-button dropdown-item buttons-tableSorting" tabindex="0"><span>Due Date</span></li> 
+          <li class="dt-button dropdown-item buttons-tableSorting" tabindex="0"><span>Priority</span></li> 
+        </ul>
+        </div>
          <div class="action">
             <%= link_to project_tasks_path(current_project) do %>
-            <i class="fa-solid fa-user fa-fw"></i>View All
+            <i class="fa-solid fa-user fa-fw"></i>View All Tasks
             <% end %>
          </div>
       </span>
    </h4>
    <div class="table-wrapper">
       <table class="table table-striped tasks-table"
-      data-behavior="dradis-datatable"
-      data-default-columns='["Type", "Title", "Tags"]'
-      data-item-name="task_list"
-      <thead>
+      data-default-columns='["Title", "Tags", "Due Date"]'
+      data-item-name="task_list">
+      <thead class="tasks-table-header">
          <tr>
-            <th>Type</th>
             <th>Title</th>
             <th>Tags</th>
+            <th>Due Date</th>
          </tr>
       </thead>
-      <tbody>
-         <tr id="task_list-1">
-            <td data-sort="Card"><i class="fa-solid fa-address-card"></i></td>
+      <tbody class="tasks-table-body">
+         <tr id="task_list-1" class="task-item">
             <td data-sort="Create your first issue in Dradis">
-               <a href="/projects/1/boards/1/lists/1/cards/1">[Issues, Evidence, and Plugins] Create your first Issue</a>
+               <a class="task-item-title" href="/projects/1/boards/1/lists/1/cards/1"><i class="fa-solid fa-address-card"></i>[Issues, Evidence, and Plugins] Create your first Issue</a>
             </td>
             <td data-sort="High">
                <div class="card-badges">
-                  <div class="badge-due-date badge bg-danger">
+                  <div class="badge-tag badge bg-danger">
                      <span>
                      <i class="fa-solid fa-bug"></i>
                      </span>
@@ -37,67 +43,113 @@
                   </div>
                </div>
             </td>
+            <td data-sort="21 Dec">
+               <div class="card-badges">
+                  <div class="badge-due-date badge bg-primary">
+                     <span>
+                     <i class="fa-solid fa-clock"></i>
+                     </span>
+                     <span>21 Dec</span>
+                  </div>
+               </div>
+            </td>
          </tr>
-         <tr id="task_list-2">
-            <td data-sort="Card"><i class="fa-solid fa-address-card"></i></td>
+         <tr id="task_list-2" class="task-item">
             <td data-sort="Create your first issue in Dradis">
-               <a href="/projects/1/boards/1/lists/1/cards/1">[Issues, Evidence, and Plugins] Create your first Issue</a>
+               <a class="task-item-title" href="/projects/1/boards/1/lists/1/cards/1"><i class="fa-solid fa-address-card"></i>[Issues, Evidence, and Plugins] Create your first Issue</a>
             </td>
             <td data-sort="High">
                <div class="card-badges">
-                  <div class="badge-due-date badge bg-danger">
+                  <div class="badge-tag badge bg-warning">
                      <span>
                      <i class="fa-solid fa-bug"></i>
                      </span>
-                     <span>High</span>
+                     <span>Medium</span>
+                  </div>
+               </div>
+            </td>
+            <td data-sort="02 Jan">
+               <div class="card-badges">
+                  <div class="badge-due-date badge bg-primary">
+                     <span>
+                     <i class="fa-solid fa-clock"></i>
+                     </span>
+                     <span>02 Jan</span>
                   </div>
                </div>
             </td>
          </tr>
-         <tr id="task_list-3">
-            <td data-sort="Card"><i class="fa-solid fa-address-card"></i></td>
-            <td data-sort="[Issues, Evidence, and Plugins] Create your first Issue">
-               <a href="/projects/1/boards/1/lists/1/cards/1">[Issues, Evidence, and Plugins] Create your first Issue</a>
+         <tr id="task_list-3" class="task-item">
+            <td data-sort="Create your first issue in Dradis">
+               <a class="task-item-title" href="/projects/1/boards/1/lists/1/cards/1"><i class="fa-solid fa-address-card"></i>[Issues, Evidence, and Plugins] Create your first Issue</a>
             </td>
-            <td data-sort="High">
+            <td data-sort="Low">
                <div class="card-badges">
-                  <div class="badge-due-date badge bg-danger">
+                  <div class="badge-tag badge bg-success">
                      <span>
                      <i class="fa-solid fa-bug"></i>
                      </span>
-                     <span>High</span>
+                     <span>Low</span>
+                  </div>
+               </div>
+            </td>
+            <td data-sort="02 Jan">
+               <div class="card-badges">
+                  <div class="badge-due-date badge bg-primary">
+                     <span>
+                     <i class="fa-solid fa-clock"></i>
+                     </span>
+                     <span>02 Jan</span>
                   </div>
                </div>
             </td>
          </tr>
-         <tr id="task_list-4">
-            <td data-sort="Card"><i class="fa-solid fa-address-card"></i></td>
-            <td data-sort="[Issues, Evidence, and Plugins] Create your first Issue">
-               <a href="/projects/1/boards/1/lists/1/cards/1">[Issues, Evidence, and Plugins] Create your first Issue</a>
+         <tr id="task_list-4" class="task-item">
+            <td data-sort="Create your first issue in Dradis">
+               <a class="task-item-title" href="/projects/1/boards/1/lists/1/cards/1"><i class="fa-solid fa-address-card"></i>[Issues, Evidence, and Plugins] Create your first Issue</a>
             </td>
-            <td data-sort="High">
+            <td data-sort="Low">
                <div class="card-badges">
-                  <div class="badge-due-date badge bg-danger">
+                  <div class="badge-tag badge bg-success">
                      <span>
                      <i class="fa-solid fa-bug"></i>
                      </span>
-                     <span>High</span>
+                     <span>Low</span>
+                  </div>
+               </div>
+            </td>
+            <td data-sort="04 Feb">
+               <div class="card-badges">
+                  <div class="badge-due-date badge bg-primary">
+                     <span>
+                     <i class="fa-solid fa-clock"></i>
+                     </span>
+                     <span>04 Feb</span>
                   </div>
                </div>
             </td>
          </tr>
-         <tr id="task_list-5">
-            <td data-sort="Card"><i class="fa-solid fa-address-card"></i></td>
-            <td data-sort="[Issues, Evidence, and Plugins] Create your first Issue">
-               <a href="/projects/1/boards/1/lists/1/cards/1">[Issues, Evidence, and Plugins] Create your first Issue</a>
+         <tr id="task_list-5" class="task-item">
+            <td data-sort="Create your first issue in Dradis">
+               <a class="task-item-title" href="/projects/1/boards/1/lists/1/cards/1"><i class="fa-solid fa-address-card"></i>[Issues, Evidence, and Plugins] Create your first Issue</a>
             </td>
             <td data-sort="High">
                <div class="card-badges">
-                  <div class="badge-due-date badge bg-danger">
+                  <div class="badge-tag badge bg-success">
                      <span>
                      <i class="fa-solid fa-bug"></i>
                      </span>
-                     <span>High</span>
+                     <span>Low</span>
+                  </div>
+               </div>
+            </td>
+            <td data-sort="12 Feb">
+               <div class="card-badges">
+                  <div class="badge-due-date badge bg-primary">
+                     <span>
+                     <i class="fa-solid fa-clock"></i>
+                     </span>
+                     <span>12 Feb</span>
                   </div>
                </div>
             </td>
