@@ -11,8 +11,13 @@
   }
 
   .dropdown-menu {
-    .dt-button {
+    .buttons-methodologySorting {
       cursor: pointer;
+
+      &.active {
+        background: none;
+        font-weight: bold;
+      }
     }
   }
 
