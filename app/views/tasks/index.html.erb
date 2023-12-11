@@ -1,10 +1,11 @@
 <% content_for :title, 'My Tasks' %>
 <div class="content-container" id="tasks-viewer">
-  <h4 class="dropdown-toggle methodology-toggle" data-bs-toggle="dropdown">Methodology 1 <i class="fa-solid fa-caret-down fa-fw"></i></h4>
-      <ul class="dropdown-menu">
-         <li class="dropdown-menu__item"><input type="checkbox" checked/>Methodology 1</li>
-         <li class="dropdown-menu__item"><input type="checkbox"/>Methodology 2</li>
-      </ul>
+    <h4 class="dropdown-toggle methodology-toggle buttons-colvis" data-bs-toggle="dropdown" tabindex="0" type="button" title="Choose a methodology to view"><span>Methodology 1<i class="fa-solid fa-caret-down me-1 fa-fw"></i></span></h4>
+    <ul class="dropdown-menu">
+      <li class="dt-button dropdown-item buttons-tableSorting" tabindex="0"><span>Methodology 1</span></li> 
+      <li class="dt-button dropdown-item buttons-tableSorting" tabindex="0"><span>Methodology 2</span></li> 
+      <li class="dt-button dropdown-item buttons-tableSorting" tabindex="0"><span>Methodology 3</span></li> 
+    </ul>
    <div class="methodology">
       <div class="table-wrapper">
               <table class="table table-striped"
@@ -32,11 +33,13 @@
                     <td data-sort="Critical"><span class="issue-severity"><i class="fa-solid fa-bug" style="color: #9467bd"></i> Critical</span></td>
                     <td data-sort="Dec 21"><span class="due-date"><i class="fa-solid fa-clock" style="color: #9467bd"></i> Dec 21</span></td>
                     <td data-sort="In Progress">In Progress</td>
-                    <td data-sort="Assignees" class="assignees">
-                      <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
-                      <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
-                      <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
-                      <p class="assignees-count">+3</p>
+                    <td data-sort="Assignees">
+                      <div class="assignees">
+                        <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
+                        <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
+                        <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
+                        <p class="assignees-count">+3</p>
+                      </div>
                     </td>
                     <td class="column-actions">
        
