@@ -13,6 +13,7 @@
           cursor: pointer;
 
           &.active {
+            background: none;
             &::before {
               background-color: $checkboxFill;
               background-image: image-url("check.svg");

@@ -10,9 +10,16 @@
     }
   }
 
+  .dropdown-menu {
+    .dt-button {
+      cursor: pointer;
+    }
+  }
+
   .methodology {
     .table-wrapper {
       .table {
+        // Would be better to integrate this into the wider table stylesheet if assignees appear in any other tabls across the platform, something to implement if I had more time and was more comfortable with the codebase.
         .assignees {
           display: flex;
           height: 100%;
