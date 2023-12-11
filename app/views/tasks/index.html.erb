@@ -1,141 +1,141 @@
 <% content_for :title, 'My Tasks' %>
 <div class="content-container" id="tasks-viewer">
-    <h4 class="dropdown-toggle methodology-toggle buttons-colvis" data-bs-toggle="dropdown" tabindex="0" type="button" title="Choose a methodology to view"><span>Getting started with Dradis checklist <i class="fa-solid fa-caret-down me-1 fa-fw"></i></span></h4>
-    <ul class="dropdown-menu">
-      <li class="dt-button dropdown-item buttons-methodologySorting active" tabindex="0"><span>Getting started with Dradis checklist</span></li> 
-      <li class="dt-button dropdown-item buttons-methodologySorting" tabindex="1"><span>Methodology 2</span></li> 
-      <li class="dt-button dropdown-item buttons-methodologySorting" tabindex="2"><span>Methodology 3</span></li> 
-    </ul>
-   <div class="methodology">
-      <div class="table-wrapper">
-              <table class="table table-striped"
-              data-behavior="dradis-datatable"
-              data-default-columns='["Title", "Tags", "Due Date", "Status", "Assignees", "Actions"]'
-              data-item-name="my_tasks_table"
-              data-local-storage-key="project.ce.name_of_entities_datatable">
-                <thead>
-                  <tr>
-                    <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Select</span></th>
-                    <th>Type</th>
-                    <th>Title</th>
-                    <th>Tags</th>
-                    <th>Due Date</th>
-                    <th>Status</th>
-                    <th>Assignees</th>
-                    <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Actions</span></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr id="my_tasks_table-1">
-                    <td class="select-checkbox" data-behavior="select-checkbox"></td>
-                    <td data-sort="Card"><i class="fa-solid fa-address-card"></i> Card</td>
-                    <td data-sort="[Issues, Evidence, and Plugins] Create your first Issue"><a href="/projects/1/boards/1/lists/1/cards/1">[Issues, Evidence, and Plugins] Create your first Issue</a></td>
-                    <td data-sort="High">
-                      <div class="card-badges">
-                        <div class="badge-tag badge bg-danger">
-                          <span>
-                          <i class="fa-solid fa-bug"></i>
-                          </span>
-                          <span>High</span>
-                        </div>
-                      </div>
-                    </td>
-                    <td data-sort="21 Dec">
-                      <div class="card-badges">
-                        <div class="badge-tag badge bg-success">
-                          <span>
-                          <i class="fa-solid fa-clock"></i>
-                          </span>
-                          <span>21 Dec</span>
-                        </div>
-                      </div>
-                    </td>
-                    <td data-sort="In Progress">In Progress</td> 
-                    <td data-sort="Assignees">
-                      <div class="assignees">
-                        <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
-                        <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
-                        <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
-                        <p class="assignees-count">+3</p>
-                      </div>
-                    </td>
-                    <td class="column-actions">
-                    <i class="fa-solid fa-pencil"></i> Edit
-                    <i class="fa-solid fa-trash"></i> Delete
-                  </td>
-                  <tr id="my_tasks_table-2">
-                  <td class="select-checkbox" data-behavior="select-checkbox"></td>
-                  <td data-sort="Card"><i class="fa-solid fa-address-card"></i> Card</td>
-                  <td data-sort="[Issues, Evidence, and Plugins] Create your first Issue"><a href="/projects/1/boards/1/lists/1/cards/1">[Issues, Evidence, and Plugins] Create your first Issue</a></td>
-                  <td data-sort="Medium">
-                    <div class="card-badges">
-                      <div class="badge-tag badge bg-warning">
-                        <span>
-                        <i class="fa-solid fa-bug"></i>
-                        </span>
-                        <span>Medium</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td data-sort="21 Dec">
-                    <div class="card-badges">
-                      <div class="badge-tag badge bg-success">
-                        <span>
-                        <i class="fa-solid fa-clock"></i>
-                        </span>
-                        <span>02 Jan</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td data-sort="In Progress">In Progress</td>
-                  <td data-sort="Assignees">
-                    <div class="assignees">
-                      <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
-                    </div>
-                  </td>
-                  <td class="column-actions">
-                  <i class="fa-solid fa-pencil"></i> Edit
-                  <i class="fa-solid fa-trash"></i> Delete
-                </td>
-                </tr>
-                <tr id="my_tasks_table-3">
-                <td class="select-checkbox" data-behavior="select-checkbox"></td>
-                <td data-sort="Card"><i class="fa-solid fa-address-card"></i> Card</td>
-                <td data-sort="[Issues, Evidence, and Plugins] Create your first Issue"><a href="/projects/1/boards/1/lists/1/cards/1">[Issues, Evidence, and Plugins] Create your first Issue</a></td>
-                <td data-sort="High">
-                  <div class="card-badges">
-                    <div class="badge-tag badge bg-success">
-                      <span>
-                      <i class="fa-solid fa-bug"></i>
-                      </span>
-                      <span>Low</span>
-                    </div>
-                  </div>
-                </td>
-                <td data-sort="02 Jan">
-                  <div class="card-badges">
-                    <div class="badge-tag badge bg-success">
-                      <span>
-                      <i class="fa-solid fa-clock"></i>
-                      </span>
-                      <span>02 Jan</span>
-                    </div>
-                  </div>
-                </td>
-                <td data-sort="In Progress">In Progress</td>
-                <td data-sort="Assignees">
-                  <div class="assignees">
-                    <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
-                    <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
-                  </div>
-                </td>
-                <td class="column-actions">
-                <i class="fa-solid fa-pencil"></i> Edit
-                <i class="fa-solid fa-trash"></i> Delete
-              </td>
-              </tr>
-                </tbody>
-              </table>
-            </div>
+  <h4 class="dropdown-toggle methodology-toggle buttons-colvis" data-bs-toggle="dropdown" tabindex="0" type="button" title="Choose a methodology to view"><span>Getting started with Dradis checklist <i class="fa-solid fa-caret-down me-1 fa-fw"></i></span></h4>
+  <ul class="dropdown-menu">
+    <li class="dt-button dropdown-item buttons-methodologySorting active" tabindex="0"><span>Getting started with Dradis checklist</span></li>
+    <li class="dt-button dropdown-item buttons-methodologySorting" tabindex="1"><span>Methodology 2</span></li>
+    <li class="dt-button dropdown-item buttons-methodologySorting" tabindex="2"><span>Methodology 3</span></li>
+  </ul>
+  <div class="methodology">
+    <div class="table-wrapper">
+      <table class="table table-striped"
+        data-behavior="dradis-datatable"
+        data-default-columns='["Title", "Tags", "Due Date", "Status", "Assignees", "Actions"]'
+        data-item-name="my_tasks_table"
+        data-local-storage-key="project.ce.name_of_entities_datatable">
+        <thead>
+          <tr>
+            <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Select</span></th>
+            <th>Type</th>
+            <th>Title</th>
+            <th>Tags</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Assignees</th>
+            <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Actions</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="my_tasks_table-1">
+            <td class="select-checkbox" data-behavior="select-checkbox"></td>
+            <td data-sort="Card"><i class="fa-solid fa-address-card"></i> Card</td>
+            <td data-sort="[Issues, Evidence, and Plugins] Create your first Issue"><a href="/projects/1/boards/1/lists/1/cards/1">[Issues, Evidence, and Plugins] Create your first Issue</a></td>
+            <td data-sort="High">
+              <div class="card-badges">
+                <div class="badge-tag badge bg-danger">
+                  <span>
+                  <i class="fa-solid fa-bug"></i>
+                  </span>
+                  <span>High</span>
+                </div>
+              </div>
+            </td>
+            <td data-sort="21 Dec">
+              <div class="card-badges">
+                <div class="badge-tag badge bg-success">
+                  <span>
+                  <i class="fa-solid fa-clock"></i>
+                  </span>
+                  <span>21 Dec</span>
+                </div>
+              </div>
+            </td>
+            <td data-sort="In Progress">In Progress</td>
+            <td data-sort="Assignees">
+              <div class="assignees">
+                <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
+                <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
+                <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
+                <p class="assignees-count">+3</p>
+              </div>
+            </td>
+            <td class="column-actions">
+              <i class="fa-solid fa-pencil"></i> Edit
+              <i class="fa-solid fa-trash"></i> Delete
+            </td>
+          <tr id="my_tasks_table-2">
+            <td class="select-checkbox" data-behavior="select-checkbox"></td>
+            <td data-sort="Card"><i class="fa-solid fa-address-card"></i> Card</td>
+            <td data-sort="[Issues, Evidence, and Plugins] Create your first Issue"><a href="/projects/1/boards/1/lists/1/cards/1">[Issues, Evidence, and Plugins] Create your first Issue</a></td>
+            <td data-sort="Medium">
+              <div class="card-badges">
+                <div class="badge-tag badge bg-warning">
+                  <span>
+                  <i class="fa-solid fa-bug"></i>
+                  </span>
+                  <span>Medium</span>
+                </div>
+              </div>
+            </td>
+            <td data-sort="21 Dec">
+              <div class="card-badges">
+                <div class="badge-tag badge bg-success">
+                  <span>
+                  <i class="fa-solid fa-clock"></i>
+                  </span>
+                  <span>02 Jan</span>
+                </div>
+              </div>
+            </td>
+            <td data-sort="In Progress">In Progress</td>
+            <td data-sort="Assignees">
+              <div class="assignees">
+                <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
+              </div>
+            </td>
+            <td class="column-actions">
+              <i class="fa-solid fa-pencil"></i> Edit
+              <i class="fa-solid fa-trash"></i> Delete
+            </td>
+          </tr>
+          <tr id="my_tasks_table-3">
+            <td class="select-checkbox" data-behavior="select-checkbox"></td>
+            <td data-sort="Card"><i class="fa-solid fa-address-card"></i> Card</td>
+            <td data-sort="[Issues, Evidence, and Plugins] Create your first Issue"><a href="/projects/1/boards/1/lists/1/cards/1">[Issues, Evidence, and Plugins] Create your first Issue</a></td>
+            <td data-sort="High">
+              <div class="card-badges">
+                <div class="badge-tag badge bg-success">
+                  <span>
+                  <i class="fa-solid fa-bug"></i>
+                  </span>
+                  <span>Low</span>
+                </div>
+              </div>
+            </td>
+            <td data-sort="02 Jan">
+              <div class="card-badges">
+                <div class="badge-tag badge bg-success">
+                  <span>
+                  <i class="fa-solid fa-clock"></i>
+                  </span>
+                  <span>02 Jan</span>
+                </div>
+              </div>
+            </td>
+            <td data-sort="In Progress">In Progress</td>
+            <td data-sort="Assignees">
+              <div class="assignees">
+                <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
+                <img class="assignees-img" alt="user's avatar" src="/assets/profile.png" />
+              </div>
+            </td>
+            <td class="column-actions">
+              <i class="fa-solid fa-pencil"></i> Edit
+              <i class="fa-solid fa-trash"></i> Delete
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+  </div>
 </div>
