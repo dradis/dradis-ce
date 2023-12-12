@@ -25,71 +25,65 @@ describe Activity do
     end
   end
 
-  describe '#filter_by_user_id' do
+  describe 'filtering' do
     before do
+      card = create(:card)
       issue = create(:issue)
       @user = create(:user)
-      activity = create(:activity, trackable: issue, user: @user)
-      activity2 = create(:activity, trackable: issue, user: @user)
-      activity3 = create(:activity, trackable: issue)
+      activity = create(:activity, trackable: issue, user: @user, created_at: DateTime.now.beginning_of_year)
+      activity2 = create(:activity, trackable: card, user: @user, created_at: DateTime.now.beginning_of_year)
+      activity3 = create(:activity, trackable: card, created_at: DateTime.now.beginning_of_year - 1.year)
     end
 
-    context 'when passed a valid user id' do
-      it 'returns activities of this user' do
-        expect(Activity.filter_by_user_id(@user.id).count).to eq 2
-        expect(Activity.all.count).to eq 3
+    describe '#by_user' do
+      context 'when passed a valid user id' do
+        it 'returns activities of this user' do
+          expect(Activity.by_user(@user.id).count).to eq 2
+        end
+      end
+
+      context 'when passed a non valid user id' do
+        it 'returns an empty collection' do
+          user_id = User.last.id + 1
+          expect(Activity.by_user(user_id).count).to eq 0
+          expect(Activity.all.count).to eq 3
+        end
       end
     end
 
-    context 'when passed a non valid user id' do
-      it 'returns an empty collection' do
-        user_id = User.last.id + 1
-        expect(Activity.filter_by_user_id(user_id).count).to eq 0
-        expect(Activity.all.count).to eq 3
+    describe '#by_type' do
+      context 'when passed a valid type' do
+        it 'returns activities of this user' do
+          expect(Activity.by_type('Card').count).to eq 2
+          expect(Activity.all.count).to eq 3
+        end
       end
-    end
-  end
 
-  describe '#filter_by_type' do
-    before do
-      issue = create(:issue)
-      card = create(:card)
-      activity = create(:activity, trackable: issue)
-      activity2 = create(:activity, trackable: card)
-      activity3 = create(:activity, trackable: card)
-    end
-
-    context 'when passed a valid type' do
-      it 'returns activities of this user' do
-        expect(Activity.filter_by_type('Card').count).to eq 2
-        expect(Activity.all.count).to eq 3
+      context 'when passed a non valid type' do
+        it 'returns an empty collection' do
+          expect(Activity.by_type('galaxy').count).to eq 0
+          expect(Activity.all.count).to eq 3
+        end
       end
     end
 
-    context 'when passed a non valid type' do
-      it 'returns an empty collection' do
-        expect(Activity.filter_by_type('galaxy').count).to eq 0
-        expect(Activity.all.count).to eq 3
+    describe '#by_period_start' do
+      context 'when passed a valid date' do
+        it 'returns activities within the date' do
+          year_start = DateTime.now.beginning_of_year
+
+          expect(Activity.by_period_start(year_start).count).to eq 2
+        end
       end
     end
-  end
 
-  describe '#filter_by_date' do
-    before do
-      issue = create(:issue)
-      activity = create(:activity, trackable: issue)
-      activity2 = create(:activity, trackable: issue, created_at: DateTime.now.beginning_of_year - 1.year)
-      activity3 = create(:activity, trackable: issue, created_at: DateTime.now.beginning_of_year - 1.year)
-    end
+    describe '#by_period_end' do
+      context 'when passed a valid date' do
+        it 'returns activities within the date' do
+          period_end = DateTime.now.end_of_day - 1.year
 
-    context 'when passed a valid date' do
-      it 'returns activities within the date' do
-        year_start = DateTime.now.beginning_of_year
-        last_year_start = year_start - 1.year
-        period_end = DateTime.now.end_of_day
-
-        expect(Activity.filter_by_date(year_start, period_end).count).to eq 1
-        expect(Activity.filter_by_date(last_year_start, period_end).count).to eq 3
+          expect(Activity.by_period_end(period_end).count).to eq 1
+        end
       end
     end
   end

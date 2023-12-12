@@ -8,9 +8,7 @@ class ActivitiesController < AuthenticatedController
     @page = params[:page].present? ? params[:page].to_i : 1
 
     activities = current_project.activities.includes(:trackable)
-    activities = activities.filter_by_user_id(params[:user]) if params[:user].present?
-    activities = activities.filter_by_type(params[:type]) if params[:type].present?
-    activities = activities.filter_by_date(period_start, period_end) if params[:period_start].present?
+    activities = filter_activities(activities)
     activities = activities.order(created_at: :desc).page(@page)
 
     @activities_groups = activities.group_by do |activity|
@@ -44,5 +42,25 @@ class ActivitiesController < AuthenticatedController
     else
       DateTime.parse params[:period_end]
     end
+  end
+
+  def filtering_params
+    params.slice(:user, :type, :period_start, :period_end)
+  end
+
+  def filter_activities(activities)
+    filtering_params.each do |k, value|
+      next if value.blank?
+
+      if k == 'period_start'
+        value = DateTime.parse(value).beginning_of_day
+      elsif k == 'period_end'
+        value = DateTime.parse(value).end_of_day
+      end
+
+      activities = activities.send("by_#{k}", value)
+    end
+
+    activities
   end
 end

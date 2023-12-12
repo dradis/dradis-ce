@@ -105,7 +105,7 @@ describe 'Activity pages:' do
           expect(page).to have_selector('#user', count: 1)
         end
 
-        it 'user filter works' do
+        it 'by user' do
           visit project_activities_path(current_project, user: second_user.id)
           expect(page).to have_selector('.activity', count: 10)
         end
@@ -114,7 +114,7 @@ describe 'Activity pages:' do
           expect(page).to have_selector('#type', count: 1)
         end
 
-        it 'type filter works' do
+        it 'by type' do
           visit project_activities_path(current_project, type: 'Card')
           expect(page).to have_selector('.activity', count: 15)
         end
@@ -124,7 +124,7 @@ describe 'Activity pages:' do
           expect(page).to have_selector('#period_end', count: 1)
         end
 
-        it 'daterange filter works' do
+        it 'by date' do
           period_start = Time.current - 3.days
           period_end = Time.current
 

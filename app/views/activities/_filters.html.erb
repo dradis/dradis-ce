@@ -1,4 +1,4 @@
-<%= form_with url: project_activities_path(current_project.id), method: :get, remote: true, class: 'd-flex flex-xl-row flex-column gap-3', data: { behavior: 'activity-filters' } do |f| %>
+<%= form_with url: project_activities_path(current_project), method: :get, remote: true, class: 'd-flex flex-xl-row flex-column gap-3', data: { behavior: 'activity-filters' } do |f| %>
   <div class="d-flex flex-column flex-sm-row w-100 gap-3">
     <div class="w-100">
       <%= f.label :user, class: 'form-label' %>
@@ -6,7 +6,7 @@
     </div>
     <div class="w-100">
       <%= f.label :type, class: 'form-label' %>
-      <%= f.select :type, options_from_collection_for_select(Activity.select(:trackbable_type).distinct.pluck(:trackable_type), :to_s, :demodulize, params[:type] ), { include_blank: 'All types', selected: params[:type] }, { class: 'form-select' } %>
+      <%= f.select :type, options_from_collection_for_select(Activity.pluck(:trackable_type).uniq, :to_s, :demodulize, params[:type] ), { include_blank: 'All types', selected: params[:type] }, { class: 'form-select' } %>
     </div>
   </div>
 
