@@ -4,6 +4,7 @@
   - Revision history: Improve version history for content with carriage return
   - Tylium: Show liquid content in editor preview
   - Web-server: Replace unicorn with puma in production
+  - Kit Import: Use file name sequencing when a template file with the same name exists
   - Upgraded gems:
     - rails
   - Bugs fixes:
