@@ -17,6 +17,11 @@ class KitImportJob < ApplicationJob
     @logger = logger
     @project = nil
     @report_templates_dir = Configuration.paths_templates_reports
+    @templates_dirs = {
+      'projects' => ProjectTemplate.pwd,
+      'notes' => NoteTemplate.pwd,
+      'methodologies' => Methodology.pwd
+    }
     @working_dir = Dir.mktmpdir
     @word_rtp = nil
 
@@ -42,7 +47,7 @@ class KitImportJob < ApplicationJob
   end
 
   private
-  attr_reader :current_user, :logger, :report_templates_dir, :working_dir
+  attr_reader :current_user, :logger, :report_templates_dir, :templates_dirs, :working_dir
 
   def assign_project_rtp
     logger.info { 'Assigning RTP to project...' }
@@ -180,19 +185,20 @@ class KitImportJob < ApplicationJob
   end
 
   def import_templates(template_type)
-    template_directory = "#{working_dir}/kit/templates/#{template_type}"
-    return unless Dir.exist?(template_directory)
+    template_wd = "#{working_dir}/kit/templates/#{template_type}"
+    return unless Dir.exist?(template_wd)
+    template_pwd = templates_dirs[template_type]
 
-    Dir["#{template_directory}/*"].each do |file|
+    Dir["#{template_wd}/*"].each do |file|
       return unless File.file?(file)
       file_name = NamingService.name_file(
         original_filename: File.basename(file),
-        pathname: Pathname.new(Configuration.send("paths_templates_#{template_type}"))
+        pathname: template_pwd
       )
 
       FileUtils.cp(
         file,
-        File.join(Configuration.send("paths_templates_#{template_type}"), file_name)
+        File.join(template_pwd, file_name)
       )
     end
   end
