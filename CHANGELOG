@@ -7,8 +7,7 @@
   - Upgraded gems:
     - rails
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Methodologies: validate presence of content
     - Bug tracker items:
       - [item]
   - New integrations:
