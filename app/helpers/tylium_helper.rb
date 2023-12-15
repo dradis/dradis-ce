@@ -13,7 +13,7 @@ module TyliumHelper
 
   def flash_messages
     flash.select { |key, _| FlashHelper::ALERT_TYPES.keys.include?(key) }.collect do |name, msg|
-      flash_attrs = flash_attrs(name)
+      flash_attrs = flash_attrs(msg, name)
 
       content_tag :div, class: flash_attrs[:flash_css] do
         [
