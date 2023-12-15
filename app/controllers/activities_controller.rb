@@ -3,6 +3,7 @@
 
 class ActivitiesController < AuthenticatedController
   include ProjectScoped
+  include ActivitiesHelper
 
   def index
     @page = params[:page].present? ? params[:page].to_i : 1
@@ -49,16 +50,16 @@ class ActivitiesController < AuthenticatedController
   end
 
   def filter_activities(activities)
-    filtering_params.each do |k, value|
+    filtering_params.each do |key, value|
       next if value.blank?
 
-      if k == 'period_start'
+      if key == 'period_start'
         value = DateTime.parse(value).beginning_of_day
-      elsif k == 'period_end'
+      elsif key == 'period_end'
         value = DateTime.parse(value).end_of_day
       end
 
-      activities = activities.send("by_#{k}", value)
+      activities = activities.send("by_#{key}", value)
     end
 
     activities
