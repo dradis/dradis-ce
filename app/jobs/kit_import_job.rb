@@ -185,11 +185,11 @@ class KitImportJob < ApplicationJob
   end
 
   def import_templates(template_type)
-    template_wd = "#{working_dir}/kit/templates/#{template_type}"
-    return unless Dir.exist?(template_wd)
+    kit_template_directory = "#{working_dir}/kit/templates/#{template_type}"
+    return unless Dir.exist?(kit_template_directory)
     template_pwd = templates_dirs[template_type]
 
-    Dir["#{template_wd}/*"].each do |file|
+    Dir["#{kit_template_directory}/*"].each do |file|
       return unless File.file?(file)
       file_name = NamingService.name_file(
         original_filename: File.basename(file),
