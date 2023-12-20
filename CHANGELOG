@@ -31,6 +31,7 @@
       - After a user has been removed from a project, they may still get 
         notifications for Issues they were subscribed to, resulting in the
         disclosure of Issue titles.
+    - Low: Information Disclosure in the Output Console of Upload Manager
 
 v4.10.0 (September 2023)
   - Tylium: 
