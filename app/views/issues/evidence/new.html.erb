@@ -89,7 +89,6 @@
       <div class="row">
         <div class="col-12">
           <h5>Evidence Content</h5>
-          <% cache [@content, @issue, @nodes_for_add_evidence] do %>
             <%= f.hidden_field :issue_id, value: @issue.id %>
             <%= f.hidden_field :node_id, value: @issue.node_id %>
 
@@ -107,7 +106,6 @@
                 rows: 20,
                 value: (@template_content || @content)
               %>
-          <% end %>
         </div>
       </div>
       <div class="row">

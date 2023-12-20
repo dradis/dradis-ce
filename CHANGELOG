@@ -7,9 +7,8 @@
   - Upgraded gems:
     - rails
   - Bugs fixes:
+    - Evidence: Prevent loading old Evidence template content at the Issue level
     - Methodologies: validate presence of content
-    - Bug tracker items:
-      - [item]
   - New integrations:
     - [integration]
   - Integration enhancements:
