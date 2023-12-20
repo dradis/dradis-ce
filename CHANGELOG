@@ -1,14 +1,14 @@
 [v#.#.#] ([month] [YYYY])
-  - Upgrade to Rails 7.0.8
-  - Replace unicorn with puma in production
-  - Add importmap-rails to handle js libraries
-  - Add LiquidAssignsService
+  - Assets: Add importmap-rails to handle js libraries
+  - Liquid: Add LiquidAssignsService
   - Revision history: Improve version history for content with carriage return
   - Tylium: Show liquid content in editor preview
+  - Web-server: Replace unicorn with puma in production
   - Upgraded gems:
-    - [gem]
+    - rails
   - Bugs fixes:
     - Evidence: Prevent loading old Evidence template content at the Issue level
+    - Methodologies: validate presence of content
   - New integrations:
     - [integration]
   - Integration enhancements:
