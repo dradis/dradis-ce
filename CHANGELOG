@@ -9,6 +9,7 @@
   - Bugs fixes:
     - Evidence: Prevent loading old Evidence template content at the Issue level
     - Methodologies: validate presence of content
+    - Issues: Displays liquid content within the title throughout the app
   - New integrations:
     - [integration]
   - Integration enhancements:
