@@ -5,6 +5,7 @@
     - [gem]
   - Bugs fixes:
     - Tylium: Fix redirection when updating an issue or content block
+    - Issues: Render liquid content within the title throughout the app
     - Bug tracker items:
       - [item]
   - New integrations:
@@ -47,7 +48,7 @@ v4.11.0 (January 2024)
     - Qualys: Add support for the output for Qualys WAS API 3.13 and later
   - Security Fixes:
     - Low: Authenticated (author) information disclosure
-      - After a user has been removed from a project, they may still get 
+      - After a user has been removed from a project, they may still get
         notifications for Issues they were subscribed to, resulting in the
         disclosure of Issue titles.
     - Low: Authenticated (author) information disclosure in the output console of upload manager
