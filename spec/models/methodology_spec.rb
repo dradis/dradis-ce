@@ -6,6 +6,8 @@ require 'rails_helper'
 describe Methodology do
   subject { ::Methodology.new }
 
+  it { should validate_presence_of :content }
+
   # FIXME, right now ActiveModel lint fails because to_params returns the filename even if
   # persisted? is false.
   # The problem is we're using an spurious Methodology object (whose backend is a Note and
@@ -24,8 +26,8 @@ describe Methodology do
     FileUtils.rm_rf('tmp/templates')
   end
 
-  describe "#destroy" do
-    it "deletes file from disk on destroy" do
+  describe '#destroy' do
+    it 'deletes file from disk on destroy' do
       mt = Methodology.new(
         content: '<foo version="2">bar</foo>',
         filename: 'mt_test'
@@ -46,7 +48,7 @@ describe Methodology do
 
       filename = Methodology.pwd.join('foobar.xml')
       FileUtils.mkdir_p(Methodology.pwd)
-      File.open(filename,'w'){ |f| f<<'barfoo' }
+      File.open(filename, 'w') { |f| f << 'barfoo' }
 
       mt = Methodology.from_file(filename)
       expect(mt.content).to eq('barfoo')
@@ -56,8 +58,8 @@ describe Methodology do
     end
   end
 
-  describe "#name=" do
-    it "updates content when setting :name attribute" do
+  describe '#name=' do
+    it 'updates content when setting :name attribute' do
       methodology = Methodology.from_file('spec/fixtures/files/methodologies/webapp.xml')
       methodology.name = 'Foo'
       expect(methodology.name).to eq('Foo')
@@ -65,7 +67,7 @@ describe Methodology do
     end
   end
 
-  describe "#save" do
+  describe '#save' do
     it "creates the base dir if it doesn't exist when saving" do
       FileUtils.rm_rf(Methodology.pwd) if File.exists?(Methodology.pwd)
 
@@ -84,8 +86,7 @@ describe Methodology do
       Timecop.return
     end
 
-
-    it "saves the template contents when saving the instance" do
+    it 'saves the template contents when saving the instance' do
       mt = Methodology.new(
         content: '<foo version="2">bar</foo>',
         filename: 'mt_test'
@@ -98,8 +99,8 @@ describe Methodology do
     end
   end
 
-  describe "#to_html_anchor" do
-    it "discards non-alphanumeric characters in the name" do
+  describe '#to_html_anchor' do
+    it 'discards non-alphanumeric characters in the name' do
       methodology = Methodology.new(filename: 'mt_test')
 
       methodology.name = 'Foo [Bar]'
@@ -113,15 +114,15 @@ describe Methodology do
     end
   end
 
-  context "working with tasks" do
-    it "defines a #tasks method that returns the list of tasks across sections" do
+  context 'working with tasks' do
+    it 'defines a #tasks method that returns the list of tasks across sections' do
       methodology = Methodology.from_file('spec/fixtures/files/methodologies/webapp.xml')
       expect(methodology).to respond_to(:tasks)
       expect(methodology.tasks).to respond_to(:count)
       expect(methodology.tasks.count).to eq(4)
     end
 
-    it "defines a #completed_tasks method that returns the list of tasks already completed" do
+    it 'defines a #completed_tasks method that returns the list of tasks already completed' do
       methodology = Methodology.from_file('spec/fixtures/files/methodologies/webapp.xml')
       expect(methodology).to respond_to(:completed_tasks)
       expect(methodology.completed_tasks).to respond_to(:count)

@@ -49,6 +49,7 @@ top of things.
       http://securityreactions.tumblr.com/post/31726556638/we-have-an-ids-and-a-waf
 ````
 
+* Add a CHANGELOG entry.
 * Make sure you have added the necessary tests for your changes.
 * Run _all_ the tests to assure nothing else was accidentally broken.
 * Adhere to our [style guides](https://github.com/dradis/dradis-ce/wiki).

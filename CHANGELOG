@@ -8,10 +8,8 @@
   - Upgraded gems:
     - rails
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
-    - Bug tracker items:
-      - [item]
+    - Evidence: Prevent loading old Evidence template content at the Issue level
+    - Methodologies: validate presence of content
   - New integrations:
     - [integration]
   - Integration enhancements:
