@@ -4,6 +4,7 @@ class KitImportJob < ApplicationJob
     'html_export' => ['html.erb'],
     'word' => ['docm', 'docx']
   }
+  TEMPLATE_TYPES = %w{ methodologies notes plugins projects }
 
   queue_as :dradis_upload
 
@@ -17,11 +18,12 @@ class KitImportJob < ApplicationJob
     @logger = logger
     @project = nil
     @report_templates_dir = Configuration.paths_templates_reports
-    @templates_dirs = {
-      'projects' => ProjectTemplate.pwd,
-      'notes' => NoteTemplate.pwd,
-      'methodologies' => Methodology.pwd
-    }
+    @templates_dirs = TEMPLATE_TYPES.map do |template_type|
+      [
+        template_type,
+        Pathname.new(Configuration.send("paths_templates_#{template_type}"))
+      ]
+    end.to_h
     @working_dir = Dir.mktmpdir
     @word_rtp = nil
 
@@ -112,15 +114,8 @@ class KitImportJob < ApplicationJob
   end
 
   def import_plugin_templates
-    template_directory = "#{working_dir}/kit/templates/plugins/"
-    return unless File.directory?(template_directory)
-
     logger.info { 'Copying Plugin Manager templates...' }
-
-    FileUtils.cp_r(
-      "#{template_directory}/.",
-      Configuration.send('paths_templates_plugins')
-    )
+    import_templates('plugins')
   end
 
   def import_project_templates
@@ -185,21 +180,22 @@ class KitImportJob < ApplicationJob
   end
 
   def import_templates(template_type)
-    kit_template_directory = "#{working_dir}/kit/templates/#{template_type}"
-    return unless Dir.exist?(kit_template_directory)
+    kit_template_dir = "#{working_dir}/kit/templates/#{template_type}"
+    return unless Dir.exist?(kit_template_dir)
     template_pwd = templates_dirs[template_type]
 
-    Dir["#{kit_template_directory}/*"].each do |file|
-      return unless File.file?(file)
-      file_name = NamingService.name_file(
-        original_filename: File.basename(file),
-        pathname: template_pwd
-      )
+    if template_type == 'plugins'
+      FileUtils.cp_r("#{kit_template_dir}/.", template_pwd)
+    else
+      Dir["#{kit_template_dir}/*"].each do |file|
+        return unless File.file?(file)
+        file_name = NamingService.name_file(
+          original_filename: File.basename(file),
+          pathname: template_pwd
+        )
 
-      FileUtils.cp(
-        file,
-        File.join(template_pwd, file_name)
-      )
+        FileUtils.cp(file, "#{template_pwd}/#{file_name}")
+      end
     end
   end
 
