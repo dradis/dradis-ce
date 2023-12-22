@@ -6,10 +6,10 @@
   - Web-server: Replace unicorn with puma in production
   - Upgraded gems:
     - rails
-    - nokogiri (lock to 1.14.5)
   - Bugs fixes:
     - Evidence: Prevent loading old Evidence template content at the Issue level
     - Methodologies: validate presence of content
+    - Burp: Temporarily lock nokogiri to 1.14.5 to avoid XML parsing error
   - New integrations:
     - [integration]
   - Integration enhancements:
