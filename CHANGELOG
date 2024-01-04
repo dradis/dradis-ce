@@ -9,6 +9,14 @@ v4.11.0 (January 2024)
   - Bugs fixes:
     - Evidence: Prevent loading old Evidence template content at the Issue level
     - Methodologies: validate presence of content
+  - Integration enhancements:
+    - Burp: Fix compatibility with nokogiri >= 1.15
+    - Nexpose:
+      - Add port/protocol to evidences
+      - Use the details in <os> as the OS node property
+      - Import `vulnerability.risk_score` as a new Issue field
+      - Allow multiple evidence with the same test id & node address
+    - Qualys: Add support for the output for Qualys WAS API 3.13 and later
   - Security Fixes:
     - Low: Authenticated (author) information disclosure
       - After a user has been removed from a project, they may still get 
