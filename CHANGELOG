@@ -10,7 +10,7 @@ v4.11.0 (January 2024)
     - Evidence: Prevent loading old Evidence template content at the Issue level
     - Methodologies: validate presence of content
   - Integration enhancements:
-    - Burp: Fix compatibility with nokogiri >= 1.15
+    - Burp: Change nokogiri search to xpath to support nokogiri >= 1.15
     - Nexpose:
       - Add port/protocol to evidences
       - Use the details in <os> as the OS node property
