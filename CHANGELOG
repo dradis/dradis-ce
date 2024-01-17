@@ -4,6 +4,7 @@ v4.11.0 (January 2024)
   - Revision history: Improve version history for content with carriage return
   - Tylium: Show liquid content in editor preview
   - Web-server: Replace unicorn with puma in production
+  - Note: Enable ActiveSupport load hooks
   - Upgraded gems:
     - rails
   - Bugs fixes:
