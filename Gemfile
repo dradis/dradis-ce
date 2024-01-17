@@ -236,7 +236,7 @@ gem 'dradis-calculator_dread', '~> 4.11.0'
 
 # ---------------------------------------------------------------------- Export
 gem 'dradis-csv_export', '~> 4.11.0'
-gem 'dradis-html_export', github: 'dradis/dradis-html_export', branch: 'rails-7-upgrade'
+gem 'dradis-html_export', '~> 4.11.0'
 
 # ---------------------------------------------------------------------- Import
 gem 'dradis-csv', '~> 4.11.0'
@@ -245,7 +245,7 @@ gem 'dradis-csv', '~> 4.11.0'
 gem 'dradis-acunetix', '~> 4.11.0'
 gem 'dradis-brakeman', '~> 4.11.0'
 gem 'dradis-burp', '~> 4.11.0'
-gem 'dradis-coreimpact', github: 'dradis/dradis-coreimpact', branch: 'main'
+gem 'dradis-coreimpact', '~> 4.11.0'
 gem 'dradis-metasploit', '~> 4.11.0'
 gem 'dradis-nessus', '~> 4.11.0'
 gem 'dradis-netsparker', '~> 4.11.0'
