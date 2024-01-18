@@ -45,6 +45,7 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def edit
+    @form_preview_path = preview_project_node_evidence_path(current_project, @node, @evidence)
   end
 
   def update

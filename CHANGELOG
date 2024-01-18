@@ -1,3 +1,30 @@
+v4.11.0 (January 2024)
+  - Assets: Add importmap-rails to handle js libraries
+  - Liquid: Add LiquidAssignsService
+  - Revision history: Improve version history for content with carriage return
+  - Tylium: Show liquid content in editor preview
+  - Web-server: Replace unicorn with puma in production
+  - Note: Enable ActiveSupport load hooks
+  - Upgraded gems:
+    - rails
+  - Bugs fixes:
+    - Evidence: Prevent loading old Evidence template content at the Issue level
+    - Methodologies: validate presence of content
+  - Integration enhancements:
+    - Burp: Change nokogiri search to xpath to support nokogiri >= 1.15
+    - Nexpose:
+      - Add port/protocol to evidences
+      - Use the details in <os> as the OS node property
+      - Import `vulnerability.risk_score` as a new Issue field
+      - Allow multiple evidence with the same test id & node address
+    - Qualys: Add support for the output for Qualys WAS API 3.13 and later
+  - Security Fixes:
+    - Low: Authenticated (author) information disclosure
+      - After a user has been removed from a project, they may still get 
+        notifications for Issues they were subscribed to, resulting in the
+        disclosure of Issue titles.
+    - Low: Authenticated (author) information disclosure in the output console of upload manager
+
 v4.10.0 (September 2023)
   - Tylium: 
     - Consolidate sidebars

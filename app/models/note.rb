@@ -34,6 +34,14 @@ class Note < ApplicationRecord
 
   dradis_has_fields_for :text
 
+  # FIXME - ISSUE?/NOTE INHERITANCE
+  # Issues have QA states but notes don't currently use states.
+  # Since Issue is an extension of Note, notes have a state column too.
+  # We need to define the enum here so that states can be referenced whether
+  # the Note or the Issue is pulled when calling Activity.includes(:trackable).
+  # (Since we're not using STI, .includes only joins the class of the most recent
+  # Activity instead of pulling the correct class (Note/Issue) for each activity)
+  enum state: [:draft, :ready_for_review, :published]
 
   # -- Relationships --------------------------------------------------------
   belongs_to :category
@@ -61,17 +69,17 @@ class Note < ApplicationRecord
   validates :node, presence: true
   validates :text, length: { maximum: DB_MAX_TEXT_LENGTH }
 
-
   # -- Scopes ---------------------------------------------------------------
   scope :recently_created, -> { where(['notes.created_at > ?', 1.day.ago]) }
   scope :recently_updated, -> { where(['notes.updated_at > ?', 1.day.ago]) }
 
   # -- Class Methods --------------------------------------------------------
 
-
   # -- Instance Methods -----------------------------------------------------
 
   def field_or_text(field_name)
     fields.fetch(field_name, text.truncate(20))
   end
+
+  ActiveSupport.run_load_hooks(:note_model, self)
 end
