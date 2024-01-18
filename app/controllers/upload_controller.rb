@@ -17,9 +17,7 @@ class UploadController < AuthenticatedController
   before_action :validate_uploader, only: [:create, :parse]
   before_action :validate_state, only: [:create, :parse]
 
-  def index
-    @last_job = Log.new.uid
-  end
+  def index; end
 
   # TODO: this would overwrite an existing file with the same name.
   # See AttachmentsController#create
@@ -31,7 +29,7 @@ class UploadController < AuthenticatedController
     @attachment.save
 
     @success = true
-    @item_id = params[:item_id].to_i
+    @item_id = Log.new.uid + 1
     flash.now[:notice] = "Successfully uploaded #{ filename }"
   end
 

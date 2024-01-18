@@ -1,4 +1,9 @@
 <% if @success -%>
+  ConsoleUpdater.jobId = <%= @item_id %>
+  $('#result').data('id', ConsoleUpdater.jobId)
+  $('#result').show()
+  $('#item_id').val(ConsoleUpdater.jobId)
+
   $('#filesize').text('<%=j number_to_human_size( File.size(@attachment.fullpath) ) %>');
   $('#spinner').hide();
   ConsoleUpdater.parsing = true;
