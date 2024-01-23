@@ -34,7 +34,7 @@ class AttachmentsController < AuthenticatedController
       delete_type: 'DELETE'
     }
 
-    if Mime::Type.lookup_by_extension(File.extname(@attachment.filename).downcase.tr('.','')).to_s =~ /^image\//
+    if Mime::Type.lookup_by_extension(File.extname(@attachment.filename).downcase.tr('.', '')).to_s =~ /^image\//
       json[:thumbnail_url] = project_node_attachment_path(current_project, @node, @attachment.filename)
     end
 
@@ -48,7 +48,7 @@ class AttachmentsController < AuthenticatedController
   def show
     filename = params[:filename]
 
-    @attachment  = Attachment.find(filename, conditions: { node_id: @node.id } )
+    @attachment  = Attachment.find(filename, conditions: { node_id: @node.id })
     send_options = { filename: @attachment.filename }
 
     # Figure out the best way of displaying the file (by default send it as
@@ -81,7 +81,7 @@ class AttachmentsController < AuthenticatedController
   def destroy
     filename = params[:filename]
 
-    @attachment = Attachment.find(filename, conditions: { node_id: @node.id} )
+    @attachment = Attachment.find(filename, conditions: { node_id: @node.id })
     @attachment.delete
 
     render json: { success: true }
