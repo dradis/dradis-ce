@@ -24,6 +24,11 @@
 # RSpec testing
 /spec/.examples.txt
 
+# Ignore kamal deployment files
+/.env*
+/.kamal/*
+/config/deploy.yml
+
 # App-specific
 /attachments/
 /backup/
