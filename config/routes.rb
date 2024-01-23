@@ -95,7 +95,7 @@ Rails.application.routes.draw do
       end
 
       constraints(filename: /.*/) do
-        resources :attachments, param: :filename
+        resources :attachments, only: [:index, :show, :create, :destroy], param: :filename
       end
     end
 

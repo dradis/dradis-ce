@@ -7,7 +7,12 @@ require 'config/environment'
 # add the dradis core tasks, and define the namespaces for import, export, and
 # upload tasks
 require File.expand_path('../lib/tasks/thorfile', __FILE__)
-Dir['./lib/tasks/thor/**/*.rb'].sort.each { |f| require f }
+
+require './lib/tasks/thor/digest.rb'
+require './lib/tasks/thor/gemfile.rb'
+require './lib/tasks/thor/logs.rb'
+require './lib/tasks/thor/reset.rb'
+require './lib/tasks/thor/setup.rb'
 
 # a gemified plugin can also add Thor tasks
 puts 'Loaded add-ons:'
