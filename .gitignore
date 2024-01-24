@@ -24,7 +24,7 @@
 # RSpec testing
 /spec/.examples.txt
 
-# Ignore kamal deployment files
+# Ignore environment and deployment files
 /.env*
 /.kamal/*
 /config/deploy.yml
