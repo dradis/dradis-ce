@@ -6,6 +6,8 @@ WORKDIR /app
 # Copying dradis-ce app
 COPY . .
 
+ENV RAILS_ENV="production"
+
 # Copying sample files
 COPY config/database.yml.template config/database.yml
 COPY config/smtp.yml.template config/smtp.yml
@@ -17,6 +19,7 @@ RUN mkdir -p templates/
 
 # Is this only needed because M1 build?
 RUN bundle config build.ffi --enable-libffi-alloc
+RUN bundle config set without 'development test'
 
 # Installing dependencies
 RUN bundle install
