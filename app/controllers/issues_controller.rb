@@ -73,6 +73,7 @@ class IssuesController < AuthenticatedController
   end
 
   def edit
+    @form_preview_path = preview_project_issue_path(current_project, @issue)
   end
 
   def update

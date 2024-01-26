@@ -11,5 +11,11 @@ FactoryBot.define do
         issue.tags << FactoryBot.create(:tag)
       end
     end
+
+    trait :with_liquid do
+      text {
+        "#[Title]#\nFoo\n\n#[Description]#\nLiquid: {{issue.title}}\n\nProject: {{project.name}}"
+      }
+    end
   end
 end
