@@ -4,8 +4,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Tylium: Fix redirection when updating an issue or content block
     - Bug tracker items:
       - [item]
   - New integrations:
