@@ -133,12 +133,12 @@ class IssuesController < AuthenticatedController
 
     if params[:return_to] == 'qa'
       if @issue.ready_for_review?
-        redirect_to_target_or_default project_qa_issue_path(current_project, @issue), notice: notice
+        redirect_to project_qa_issue_path(current_project, @issue), notice: notice
       else
-        redirect_to_target_or_default project_qa_issues_path(current_project), notice: notice
+        redirect_to project_qa_issues_path(current_project), notice: notice
       end
     else
-      redirect_to_target_or_default project_issue_path(current_project, @issue), notice: notice
+      redirect_to project_issue_path(current_project, @issue), notice: notice
     end
   end
 
@@ -151,9 +151,7 @@ class IssuesController < AuthenticatedController
   end
 
   def set_form_cancel_path
-    path = @issue.new_record? ? project_issues_path(current_project) : [current_project, @issue]
-
-    @form_cancel_path = session[:return_to] ? session[:return_to] : path
+    @form_cancel_path = @issue.new_record? ? project_issues_path(current_project) : [current_project, @issue]
   end
 
   def set_columns
