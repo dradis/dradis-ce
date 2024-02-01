@@ -33,33 +33,23 @@ class ActivitiesController < AuthenticatedController
 
   private
 
-  def period_start
-    DateTime.parse params[:period_start]
-  end
-
-  def period_end
-    if params[:period_end].empty?
-      DateTime.now
-    else
-      DateTime.parse params[:period_end]
-    end
-  end
-
   def filtering_params
-    params.slice(:user, :type, :period_start, :period_end)
+    params.slice(:user_id, :trackable_type, :since, :before)
   end
 
   def filter_activities(activities)
     filtering_params.each do |key, value|
       next if value.blank?
 
-      if key == 'period_start'
+      if key == 'since'
         value = DateTime.parse(value).beginning_of_day
-      elsif key == 'period_end'
+        activities = activities.since value
+      elsif key == 'before'
         value = DateTime.parse(value).end_of_day
+        activities = activities.before value
+      elsif ['user_id', 'trackable_type'].include? key
+        activities = activities.where(key.to_sym => value)
       end
-
-      activities = activities.send("by_#{key}", value)
     end
 
     activities

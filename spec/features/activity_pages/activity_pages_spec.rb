@@ -102,43 +102,43 @@ describe 'Activity pages:' do
 
       describe 'filters' do
         it 'has user filter' do
-          expect(page).to have_selector('#user', count: 1)
+          expect(page).to have_selector('#user_id', count: 1)
         end
 
         it 'by user' do
-          visit project_activities_path(current_project, user: second_user.id)
+          visit project_activities_path(current_project, user_id: second_user.id)
           expect(page).to have_selector('.activity', count: 10)
         end
 
         it 'has type filter' do
-          expect(page).to have_selector('#type', count: 1)
+          expect(page).to have_selector('#trackable_type', count: 1)
         end
 
-        it 'by type' do
-          visit project_activities_path(current_project, type: 'Card')
+        it 'by trackable_type' do
+          visit project_activities_path(current_project, trackable_type: 'Card')
           expect(page).to have_selector('.activity', count: 15)
         end
 
         it 'has daterange filter' do
-          expect(page).to have_selector('#period_start', count: 1)
-          expect(page).to have_selector('#period_end', count: 1)
+          expect(page).to have_selector('#since', count: 1)
+          expect(page).to have_selector('#before', count: 1)
         end
 
         it 'by date' do
-          period_start = Time.current - 3.days
-          period_end = Time.current
+          since = Time.current - 3.days
+          before = Time.current
 
-          visit project_activities_path(current_project, period_start: period_start, period_end: period_end)
+          visit project_activities_path(current_project, since: since, before: before)
           expect(page).to have_selector('.activity', count: 15)
         end
 
         it 'daterange filter works for single day' do
-          visit project_activities_path(current_project, period_start: Time.current, period_end: Time.current)
+          visit project_activities_path(current_project, since: Time.current, before: Time.current)
           expect(page).to have_selector('.activity', count: 10)
         end
 
         it 'combined filter works' do
-          visit project_activities_path(current_project, type: 'Card', user: second_user.id)
+          visit project_activities_path(current_project, trackable_type: 'Card', user_id: second_user.id)
           expect(page).to have_selector('.activity', count: 10)
         end
       end

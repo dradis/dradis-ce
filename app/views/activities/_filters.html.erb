@@ -1,12 +1,12 @@
 <%= form_with url: project_activities_path(current_project), method: :get, remote: true, class: 'd-flex flex-xl-row flex-column gap-3', data: { behavior: 'activity-filters' } do |f| %>
   <div class="d-flex flex-column flex-sm-row w-100 gap-3">
     <div class="w-100">
-      <%= f.label :user, class: 'form-label' %>
-      <%= f.select :user, options_from_collection_for_select(users_for_select, :id, :name, params[:user]), { include_blank: 'All users' }, { class: 'form-select' } %>
+      <%= f.label :user_id, class: 'form-label' %>
+      <%= f.select :user_id, options_from_collection_for_select(users_for_select, :id, :name, params[:user_id]), { include_blank: 'All users' }, { class: 'form-select' } %>
     </div>
     <div class="w-100">
-      <%= f.label :type, class: 'form-label' %>
-      <%= f.select :type, options_from_collection_for_select(current_project.activities.pluck(:trackable_type).uniq, :to_s, :demodulize, params[:type] ), { include_blank: 'All types', selected: params[:type] }, { class: 'form-select' } %>
+      <%= f.label :trackable_type, class: 'form-label' %>
+      <%= f.select :trackable_type, options_from_collection_for_select(current_project.activities.pluck(:trackable_type).uniq, :to_s, :demodulize, params[:trackable_type] ), { include_blank: 'All types', selected: params[:type] }, { class: 'form-select' } %>
     </div>
   </div>
 
@@ -14,11 +14,11 @@
     <span class="form-label mb-2 d-block">Date range</span>
     <div class="d-flex flex-column flex-sm-row gap-3 w-100">
       <div class="input-group">
-        <%= f.date_field :period_start, max: params[:period_end] || Date.today, min: "01-01-2016", placeholder: 'From date', value: params[:period_start], class: 'form-control', data: { behavior: 'period-start' } %>
-        <%= f.label :period_start, class: 'visually-hidden' %>
+        <%= f.date_field :since, max: params[:before] || Date.today, min: "01-01-2016", placeholder: 'From date', value: params[:since], class: 'form-control', data: { behavior: 'since' } %>
+        <%= f.label :since, class: 'visually-hidden' %>
         <span class="input-group-text">to</span>
-        <%= f.label :period_end, class: 'visually-hidden' %>
-        <%= f.date_field :period_end, max: Date.today, min: params[:period_start], placeholder: 'To date', value: params[:period_end] || Date.today, class: 'form-control' %>
+        <%= f.label :before, class: 'visually-hidden' %>
+        <%= f.date_field :before, max: Date.today, min: params[:since], placeholder: 'To date', value: params[:before] || Date.today, class: 'form-control' %>
       </div>
 
       <%= link_to project_activities_path(current_project.id), class: 'text-error-hover text-nowrap d-flex align-items-center' do %>

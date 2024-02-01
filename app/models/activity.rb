@@ -26,10 +26,9 @@ class Activity < ApplicationRecord
   scope :latest, -> do
     includes(:trackable).order('activities.created_at DESC').limit(20)
   end
-  scope :by_user, -> (id) { where user_id: id }
-  scope :by_type, -> (type) { where trackable_type: type }
-  scope :by_period_start, -> (period_start) { where('created_at >= ?', period_start) }
-  scope :by_period_end, -> (period_end) { where('created_at <= ?', period_end) }
+
+  scope :since, -> (period_start) { where('created_at >= ?', period_start) }
+  scope :before, -> (period_end) { where('created_at <= ?', period_end) }
 
   # -- Callbacks ------------------------------------------------------------
 
