@@ -15,39 +15,35 @@ describe 'Activity pages:' do
       let(:trackable_card) { create(:card) }
       let(:user) { create(:user) }
       let(:second_user) { create(:user) }
+      let(:project) { current_project }
+
       let(:create_activities) do
-        35.times do
-          activity = Activity.create(
-            user: user,
-            trackable_type: trackable.class,
-            trackable_id: trackable.id,
-            action: 'update',
-            project: current_project,
-            created_at: Time.current - 1.month
-          )
-        end
+        create_list(:activity, 35,
+          user: user,
+          trackable_type: trackable.class,
+          trackable_id: trackable.id,
+          action: 'update',
+          project: project,
+          created_at: Time.current - 1.month
+        )
 
-        10.times do
-          activity = Activity.create(
-            user: second_user,
-            trackable_type: trackable_card.class,
-            trackable_id: trackable_card.id,
-            action: 'update',
-            project: current_project,
-            created_at: Time.current
-          )
-        end
+        create_list(:activity, 10,
+          user: second_user,
+          trackable_type: trackable_card.class,
+          trackable_id: trackable_card.id,
+          action: 'update',
+          project: project,
+          created_at: Time.current
+        )
 
-        5.times do
-          activity = Activity.create(
-            user: user,
-            trackable_type: trackable_card.class,
-            trackable_id: trackable_card.id,
-            action: 'update',
-            project: current_project,
-            created_at: Time.current - 2.days
-          )
-        end
+        create_list(:activity, 5,
+          user: user,
+          trackable_type: trackable_card.class,
+          trackable_id: trackable_card.id,
+          action: 'update',
+          project: project,
+          created_at: Time.current - 2.days
+        )
       end
 
       before do
