@@ -3,10 +3,10 @@
 
 class ActivitiesController < AuthenticatedController
   include ProjectScoped
-  include ActivitiesHelper
 
   def index
     @page = params[:page].present? ? params[:page].to_i : 1
+    @users_for_select = current_project.activities.map(&:user).uniq.union(current_project.authors.enabled)
 
     activities = current_project.activities.includes(:trackable)
     activities = filter_activities(activities)
@@ -34,7 +34,7 @@ class ActivitiesController < AuthenticatedController
   private
 
   def filtering_params
-    params.slice(:user_id, :trackable_type, :since, :before)
+    params.permit(:user_id, :trackable_type, :since, :before)
   end
 
   def filter_activities(activities)

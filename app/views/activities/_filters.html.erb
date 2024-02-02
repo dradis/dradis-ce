@@ -2,7 +2,7 @@
   <div class="d-flex flex-column flex-sm-row w-100 gap-3">
     <div class="w-100">
       <%= f.label :user_id, class: 'form-label' %>
-      <%= f.select :user_id, options_from_collection_for_select(users_for_select, :id, :name, params[:user_id]), { include_blank: 'All users' }, { class: 'form-select' } %>
+      <%= f.select :user_id, options_from_collection_for_select(@users_for_select, :id, :name, params[:user_id]), { include_blank: 'All users' }, { class: 'form-select' } %>
     </div>
     <div class="w-100">
       <%= f.label :trackable_type, class: 'form-label' %>
