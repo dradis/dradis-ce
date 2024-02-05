@@ -42,10 +42,10 @@ class ActivitiesController < AuthenticatedController
       next if value.blank?
 
       if key == 'since'
-        value = DateTime.parse(value).beginning_of_day
+        value = DateTime.parse(value).beginning_of_day rescue ArgumentError
         activities = activities.since value
       elsif key == 'before'
-        value = DateTime.parse(value).end_of_day
+        value = DateTime.parse(value).end_of_day rescue ArgumentError
         activities = activities.before value
       elsif ['user_id', 'trackable_type'].include? key
         activities = activities.where(key.to_sym => value)
