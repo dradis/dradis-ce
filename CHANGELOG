@@ -2,7 +2,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - [gem]
+    - nokogiri
   - Bugs fixes:
     - Tylium: Fix redirection when updating an issue or content block
     - Bug tracker items:
