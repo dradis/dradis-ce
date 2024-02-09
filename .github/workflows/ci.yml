@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
@@ -48,7 +48,7 @@ jobs:
       RAILS_ENV: test
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Create database.yml
         run: cp config/database.yml.template config/database.yml
       - name: Install Ruby and gems
