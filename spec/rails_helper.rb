@@ -35,18 +35,19 @@ ActiveRecord::Migration.maintain_test_schema!
 
 Capybara.register_driver :chrome do |app|
   options = %w[headless disable-gpu window-size=1920,1080]
+  driver_options = Selenium::WebDriver::Chrome::Options.new(
+    args: options
+  )
 
   if ENV['REMOTE_DRIVER']
-    Selenium::WebDriver.for :remote, options: options, url: ENV['REMOTE_DRIVER']
+    Selenium::WebDriver.for :remote, url: ENV['REMOTE_DRIVER'], options: driver_options
   else
     Capybara::Selenium::Driver.new(
       app,
       browser: :chrome,
       timeout: 120,
       clear_local_storage: true,
-      options: Selenium::WebDriver::Chrome::Options.new(
-        args: options
-      )
+      options: driver_options
     )
   end
 end
