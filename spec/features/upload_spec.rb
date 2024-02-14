@@ -8,7 +8,7 @@ describe 'Restoring project files', focus: true do
       visit project_upload_path(current_project)
     end
 
-    it 'transforms methodologies into boards' do
+    it 'transforms methodologies into boards', js: true do
       select 'Dradis::Plugins::Projects::Upload::Template'
       attach_file \
         'file',
