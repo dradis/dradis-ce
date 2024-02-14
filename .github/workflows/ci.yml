@@ -53,7 +53,7 @@ jobs:
       - name: Setup chromedriver
         uses: nanasess/setup-chromedriver@v2
         with:
-          chromedriver-version: '122.0.6261.29'
+          chromedriver-version: '121.0.6167.16'
       - name: Run chromedriver
         run: |
           export DISPLAY=:99
