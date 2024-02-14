@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-describe "Describe attachments" do
-  it "should require authenticated users" do
+describe 'Describe attachments' do
+  it 'should require authenticated users' do
     node = create(:node)
     visit project_node_attachments_path(node.project, node)
 
@@ -9,7 +9,7 @@ describe "Describe attachments" do
     expect(page).to have_content('Access denied.')
   end
 
-  describe "as authenticated user", focus: true do
+  describe 'as authenticated user', focus: true do
     before do
       login_to_project_as_user
       @node = create(:node, project: current_project)
@@ -19,7 +19,7 @@ describe "Describe attachments" do
       FileUtils.rm_rf(Attachment.pwd.join(@node.id.to_s))
     end
 
-    it "stores the file on disk" do
+    it 'stores the file on disk' do
       visit project_node_path(current_project, @node)
 
       file_path = Rails.root.join('spec/fixtures/files/rails.png')
@@ -30,12 +30,12 @@ describe "Describe attachments" do
       expect(File.exist?(Attachment.pwd.join(@node.id.to_s, 'rails.png'))).to be true
     end
 
-    it "auto-renames the upload if an attachment with the same name already exists" do
+    it 'auto-renames the upload if an attachment with the same name already exists' do
       node_attachments = Attachment.pwd.join(@node.id.to_s)
       FileUtils.rm_rf(node_attachments)
       FileUtils.mkdir_p(node_attachments)
 
-      FileUtils.cp( Rails.root.join('spec/fixtures/files/rails.png'), node_attachments.join('rails.png') )
+      FileUtils.cp(Rails.root.join('spec/fixtures/files/rails.png'), node_attachments.join('rails.png'))
       expect(Dir["#{node_attachments}/*"].count).to eq(1)
 
       visit project_node_path(current_project, @node)
@@ -48,7 +48,7 @@ describe "Describe attachments" do
     end
 
     it 'builds a URL encoded link for attachments' do
-      FileUtils.mkdir_p( Attachment.pwd.join(@node.id.to_s) )
+      FileUtils.mkdir_p(Attachment.pwd.join(@node.id.to_s))
 
       filenames = ['attachment with space.png', 'attachmentwith&.png', 'attachmentwith+.png']
 
