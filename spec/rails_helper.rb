@@ -38,6 +38,7 @@ Capybara.register_driver :chrome do |app|
   driver_options = Selenium::WebDriver::Chrome::Options.new(
     args: options
   )
+  driver_options.add_option('w3c', false)
 
   if ENV['REMOTE_DRIVER']
     Capybara::Selenium::Driver.new(
