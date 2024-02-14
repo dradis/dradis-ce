@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'card pages', js: true do
+describe 'card pages', js: true, focus: true do
   include ActivityMacros
 
   subject { page }
