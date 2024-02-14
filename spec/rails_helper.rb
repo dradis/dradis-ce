@@ -42,8 +42,8 @@ Capybara.register_driver :chrome do |app|
   if ENV['REMOTE_DRIVER']
     Capybara::Selenium::Driver.new(
       app,
+      browser: :remote,
       url: ENV['REMOTE_DRIVER'],
-      browser: :chrome,
       timeout: 120,
       clear_local_storage: true,
       options: driver_options
