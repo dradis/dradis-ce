@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RAILS_ENV: test
-      REMOTE_DRIVER: http://localhost:4444/wd/hub
+      REMOTE_DRIVER: http://localhost:9515/wd/hub
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
