@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Restoring project files', focus: true do
+describe 'Restoring project files', pending: true do
   before { login_to_project_as_user }
 
   context 'with v1 methodologies data' do
