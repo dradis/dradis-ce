@@ -9,7 +9,7 @@ describe "Describe attachments" do
     expect(page).to have_content('Access denied.')
   end
 
-  describe "as authenticated user" do
+  describe "as authenticated user", focus: true do
     before do
       login_to_project_as_user
       @node = create(:node, project: current_project)
