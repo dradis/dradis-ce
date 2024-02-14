@@ -56,7 +56,8 @@ jobs:
           chromedriver-version: '120.0.6099.109'
       - name: Run chromedriver
         run: |
-          Xvfb :99 &
+          export DISPLAY=:99
+          chromedriver --url-base=/wd/hub &
       - name: Create database.yml
         run: cp config/database.yml.template config/database.yml
       - name: Install Ruby and gems
@@ -69,5 +70,3 @@ jobs:
         run: bundle exec rails assets:precompile
       - name: Run tests
         run: bundle exec rspec spec engines -p
-        env:
-          DISPLAY: :99
