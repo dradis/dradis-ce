@@ -40,7 +40,14 @@ Capybara.register_driver :chrome do |app|
   )
 
   if ENV['REMOTE_DRIVER']
-    Selenium::WebDriver.for :remote, url: ENV['REMOTE_DRIVER'], options: driver_options
+    Capybara::Selenium::Driver.new(
+      app,
+      url: ENV['REMOTE_DRIVER'],
+      browser: :chrome,
+      timeout: 120,
+      clear_local_storage: true,
+      options: driver_options
+    )
   else
     Capybara::Selenium::Driver.new(
       app,
