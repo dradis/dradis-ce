@@ -1,4 +1,4 @@
-class CreateMappings < ActiveRecord::Migration[7.0]
+class CreateMappings < ActiveRecord::Migration[6.1]
   def change
     create_table :mappings do |t|
       t.string :component

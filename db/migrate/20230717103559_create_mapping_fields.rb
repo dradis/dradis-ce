@@ -1,4 +1,4 @@
-class CreateMappingFields < ActiveRecord::Migration[7.0]
+class CreateMappingFields < ActiveRecord::Migration[6.1]
   def change
     create_table :mapping_fields do |t|
       t.references :mapping, null: false, foreign_key: true
