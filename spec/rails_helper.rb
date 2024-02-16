@@ -33,34 +33,21 @@ end
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
-Capybara.register_driver :chrome do |app|
-  options = %w[headless disable-gpu window-size=1920,1080]
-  driver_options = Selenium::WebDriver::Chrome::Options.new(
+Capybara.register_driver :firefox do |app|
+  options = %w[--headless --disable-gpu --window-size=1920,1080]
+  driver_options = Selenium::WebDriver::Firefox::Options.new(
     args: options
   )
-
-  if ENV['REMOTE_DRIVER']
-    Capybara::Selenium::Driver.new(
-      app,
-      browser: :remote,
-      url: ENV['REMOTE_DRIVER'],
-      timeout: 120,
-      clear_local_storage: true,
-      options: driver_options
-    )
-  else
-    Capybara::Selenium::Driver.new(
-      app,
-      browser: :chrome,
-      timeout: 120,
-      clear_local_storage: true,
-      options: driver_options
-    )
-  end
+  Capybara::Selenium::Driver.new(
+    app,
+    browser: :firefox,
+    clear_local_storage: true,
+    options: driver_options
+  )
 end
 
 Capybara.server = :puma, { Silent: true }
-Capybara.javascript_driver = :chrome
+Capybara.javascript_driver = :firefox
 Selenium::WebDriver.logger
 
 RSpec.configure do |config|
