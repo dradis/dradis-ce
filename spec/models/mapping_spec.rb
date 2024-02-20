@@ -6,5 +6,5 @@ describe Mapping do
   it { should validate_presence_of(:component) }
   it { should validate_presence_of(:source) }
 
-  it { should validate_uniqueness_of(:destination).scoped_to([:component, :source]) }
+  it { should validate_uniqueness_of(:destination).scoped_to([:component, :source]).case_insensitive }
 end
