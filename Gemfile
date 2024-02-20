@@ -37,7 +37,7 @@ gem 'bootsnap', '>= 1.12.0', require: false
 # ---------------------------------------------------- Dradis Community Edition
 gem 'bootstrap', '~> 5.2.3'
 gem 'jquery-rails'
-gem 'jquery-ui-rails'
+gem 'jquery-ui-rails', github: 'jquery-ui-rails/jquery-ui-rails', tag: 'v7.0.0'
 gem 'jquery-fileupload-rails', '~> 0.3.4'
 gem 'jquery-hotkeys-rails'
 
@@ -87,7 +87,7 @@ gem 'bcrypt', '3.1.12'
 gem 'json', '2.3.0'
 
 # XML manipulation
-gem 'nokogiri', '>= 1.14.3'
+gem 'nokogiri', '>= 1.16.2'
 
 # MySQL backend
 # gem 'mysql2', '~> 0.5.1'
@@ -191,7 +191,7 @@ group :test do
   gem 'factory_bot_rails'
   gem 'capybara', '~> 3.39'
   gem 'guard-rspec', require: false
-  gem 'selenium-webdriver', '~> 4.11'
+  gem 'selenium-webdriver', '~> 4.17'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'timecop'
 
@@ -214,7 +214,7 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 4.11.0'
+gem 'dradis-plugins', github: 'dradis/dradis-plugins', branch: 'fix/template-caching'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
