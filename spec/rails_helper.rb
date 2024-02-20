@@ -34,7 +34,7 @@ end
 ActiveRecord::Migration.maintain_test_schema!
 
 Capybara.register_driver :firefox do |app|
-  options = %w[--headless --disable-gpu --window-size=1920,1080]
+  options = %w[--headless --disable-gpu --width=1920 --height=1080]
   Capybara::Selenium::Driver.new(
     app,
     browser: :firefox,
