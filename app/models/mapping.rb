@@ -5,7 +5,8 @@ class Mapping < ApplicationRecord
   # -- Callbacks ------------------------------------------------------------
 
   # -- Validations ----------------------------------------------------------
-  validates :destination, uniqueness: { scope: [:component, :source], case_sensitive: false }
+  validates :destination,
+    uniqueness: { scope: [:component, :source], case_sensitive: false }
   validates :component, presence: true
   validates :source, presence: true
 

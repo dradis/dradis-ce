@@ -10,5 +10,5 @@ describe MappingField do
   it { should validate_presence_of(:destination_field) }
   it { should validate_presence_of(:source_field) }
 
-  it { should validate_uniqueness_of(:destination_field).scoped_to([:mapping_id, :source_field]) }
+  it { should validate_uniqueness_of(:destination_field).scoped_to([:mapping_id, :source_field]).case_insensitive }
 end

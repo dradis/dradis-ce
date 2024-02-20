@@ -6,7 +6,9 @@ class MappingField < ApplicationRecord
   #
   # -- Validations ----------------------------------------------------------
   validates :content, presence: true
-  validates :destination_field, presence: true, uniqueness: { scope: [:mapping_id, :source_field] }
+  validates :destination_field,
+    presence: true,
+    uniqueness: { scope: [:mapping_id, :source_field], case_sensitive: false }
   validates :source_field, presence: true
 
   # -- Scopes ---------------------------------------------------------------
