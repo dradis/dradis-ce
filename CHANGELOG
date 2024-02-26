@@ -21,9 +21,7 @@
     - [API entity]:
       - [future tense verb] [API enhancement]
   - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: Authenticated (author) information disclosure around attachments
 
 v4.11.0 (January 2024)
   - Assets: Add importmap-rails to handle js libraries
