@@ -9,15 +9,12 @@ class MappingMigrationService
   def call
     upload_integrations.each do |integration|
       @integration_name = integration.plugin_name.to_s
-      # for each file, create a mapping for that file name&plugin_name
-      # combination, for each RTP in the instance (or nil for CE)
+
       template_files.each do |template_file|
         @template_file = template_file
-        if defined? ReportTemplateProperties
-          ReportTemplateProperties.all.each do |rtp|
-            @rtp_id = rtp.id
-            migrate
-          end
+
+        if defined?(Dradis::Pro)
+          migrate_pro
         else
           migrate
         end
@@ -49,6 +46,7 @@ class MappingMigrationService
   end
 
   def migrate
+    # for each file, create a mapping for the uploader&plugin_name combination
     ActiveRecord::Base.transaction do
       mapping = create_mapping
 
@@ -67,6 +65,9 @@ class MappingMigrationService
         create_mapping_field(mapping, field_title)
       end
     end
+  end
+
+  def migrate_pro
   end
 
   def template_fields
