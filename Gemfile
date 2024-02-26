@@ -37,7 +37,6 @@ gem 'bootsnap', '>= 1.12.0', require: false
 # ---------------------------------------------------- Dradis Community Edition
 gem 'bootstrap', '~> 5.2.3'
 gem 'jquery-rails'
-gem 'jquery-ui-rails', github: 'jquery-ui-rails/jquery-ui-rails', tag: 'v7.0.0'
 gem 'jquery-fileupload-rails', '~> 0.3.4'
 gem 'jquery-hotkeys-rails'
 
