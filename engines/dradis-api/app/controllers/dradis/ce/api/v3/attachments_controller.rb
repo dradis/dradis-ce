@@ -49,7 +49,7 @@ module Dradis::CE::API
         attachment.close
 
         begin
-          new_name    = CGI::unescape(attachment_params[:filename])
+          new_name = ActiveStorage::Filename.new(CGI::unescape(attachment_params[:filename])).sanitized
           destination = Attachment.pwd.join(@node.id.to_s, new_name).to_s
 
           if !File.exist?(destination) && !destination.match(/^#{Attachment.pwd}/).nil?

@@ -7,7 +7,7 @@
       "check_name": "FileAccess",
       "message": "Model attribute used in file name",
       "file": "app/models/methodology.rb",
-      "line": 45,
+      "line": 46,
       "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
       "code": "Pathname.new(Configuration.paths_templates_methodologies)",
       "render_path": null,
@@ -22,29 +22,6 @@
         22
       ],
       "note": "False positive: Methodology.pwd is set by the admin to specify the directory for the methodologies"
-    },
-    {
-      "warning_type": "File Access",
-      "warning_code": 16,
-      "fingerprint": "09d87237277bcd06991414158c7cd31e2509901094bf16a2150ed693de64b134",
-      "check_name": "FileAccess",
-      "message": "Model attribute used in file name",
-      "file": "app/controllers/attachments_controller.rb",
-      "line": 54,
-      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
-      "code": "File.rename(Attachment.find(params[:filename], :conditions => ({ :node_id => Node.find(params[:node_id]).id })).fullpath, Attachment.pwd.join(Node.find(params[:node_id]).id.to_s, CGI.unescape(attachment_params[:filename])).to_s)",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "AttachmentsController",
-        "method": "update"
-      },
-      "user_input": "Attachment.find(params[:filename], :conditions => ({ :node_id => Node.find(params[:node_id]).id })).fullpath",
-      "confidence": "Medium",
-      "cwe_id": [
-        22
-      ],
-      "note": "False positive: The destination filename is prepended by the Attachments directory and validated as such to prevent being moved to the other directories"
     },
     {
       "warning_type": "File Access",
@@ -72,13 +49,13 @@
     {
       "warning_type": "File Access",
       "warning_code": 16,
-      "fingerprint": "180c4b532ac14a974f17a0884b71b2dfd1bfe01815b4c84ae070f082842a49fc",
+      "fingerprint": "181111efa57541bc267ce0d83ec29ebf91e8a4137560c394221a841ed3abc656",
       "check_name": "FileAccess",
       "message": "Model attribute used in file name",
       "file": "engines/dradis-api/app/controllers/dradis/ce/api/v3/attachments_controller.rb",
       "line": 56,
       "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
-      "code": "File.rename(Attachment.find(params[:filename], :conditions => ({ :node_id => current_project.nodes.find(params[:node_id]).id })).fullpath, Attachment.pwd.join(current_project.nodes.find(params[:node_id]).id.to_s, CGI.unescape(attachment_params[:filename])).to_s)",
+      "code": "File.rename(Attachment.find(params[:filename], :conditions => ({ :node_id => current_project.nodes.find(params[:node_id]).id })).fullpath, Attachment.pwd.join(current_project.nodes.find(params[:node_id]).id.to_s, ActiveStorage::Filename.new(CGI.unescape(attachment_params[:filename])).sanitized).to_s)",
       "render_path": null,
       "location": {
         "type": "method",
@@ -95,13 +72,13 @@
     {
       "warning_type": "File Access",
       "warning_code": 16,
-      "fingerprint": "304438305b6566ea4f5a6ab8019a50149221c5e61b9f8a6dffb4775186ed0642",
+      "fingerprint": "4099e6d8d79a20e6f28eba284d002183020d0dca9121bb6815f1f66da1a669e8",
       "check_name": "FileAccess",
       "message": "Model attribute used in file name",
       "file": "engines/dradis-api/app/controllers/dradis/ce/api/v1/attachments_controller.rb",
       "line": 56,
       "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
-      "code": "File.rename(Attachment.find(params[:filename], :conditions => ({ :node_id => current_project.nodes.find(params[:node_id]).id })).fullpath, Attachment.pwd.join(current_project.nodes.find(params[:node_id]).id.to_s, CGI.unescape(attachment_params[:filename])).to_s)",
+      "code": "File.rename(Attachment.find(params[:filename], :conditions => ({ :node_id => current_project.nodes.find(params[:node_id]).id })).fullpath, Attachment.pwd.join(current_project.nodes.find(params[:node_id]).id.to_s, ActiveStorage::Filename.new(CGI.unescape(attachment_params[:filename])).sanitized).to_s)",
       "render_path": null,
       "location": {
         "type": "method",
@@ -139,37 +116,13 @@
       "note": "False positive: Attachment.pwd is set by the admin to specify the directory for the attachments"
     },
     {
-      "warning_type": "Denial of Service",
-      "warning_code": 76,
-      "fingerprint": "6f64eb88c9651a86dbf00fca38c6c78c4be01606919636ff1e1b2f8043fc360a",
-      "check_name": "RegexDoS",
-      "message": "Model attribute used in regular expression",
-      "file": "app/controllers/attachments_controller.rb",
-      "line": 53,
-      "link": "https://brakemanscanner.org/docs/warning_types/denial_of_service/",
-      "code": "/^#{Attachment.pwd}/",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "AttachmentsController",
-        "method": "update"
-      },
-      "user_input": "Attachment.pwd",
-      "confidence": "Medium",
-      "cwe_id": [
-        20,
-        185
-      ],
-      "note": "False positive: Attachment.pwd is set by the admin to specify the directory for the attachments"
-    },
-    {
       "warning_type": "File Access",
       "warning_code": 16,
       "fingerprint": "7ada3bdeb90b2dc5426fa0256610c44d5c3ac233e029fa4af5c705fb5741d14d",
       "check_name": "FileAccess",
       "message": "Model attribute used in file name",
       "file": "app/models/methodology.rb",
-      "line": 127,
+      "line": 123,
       "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
       "code": "FileUtils.mkdir_p(Methodology.pwd)",
       "render_path": null,
@@ -216,7 +169,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on parameter value",
       "file": "app/controllers/upload_controller.rb",
-      "line": 136,
+      "line": 134,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "params[:uploader].constantize",
       "render_path": null,
@@ -314,6 +267,6 @@
       "note": "False positive: The params is used to fetch the boards and cannot be manipulated by user input"
     }
   ],
-  "updated": "2023-08-18 10:40:16 -0400",
+  "updated": "2024-02-01 13:59:52 +0800",
   "brakeman_version": "5.4.0"
 }
