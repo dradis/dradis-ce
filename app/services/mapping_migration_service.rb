@@ -1,25 +1,24 @@
 class MappingMigrationService
-  attr_reader :integration_name, :rtp_id, :template_file, :templates_dir, :upload_integrations
-
-  def initialize
-    @templates_dir = Configuration.paths_templates_plugins
-    @upload_integrations = Dradis::Plugins::with_feature(:upload)
-  end
+  LEGACY_TEMPLATE_REGEX = /%(\S*?)%/
+  attr_reader :integration_name, :rtp_id, :template_file
 
   def call
+    upload_integrations = Dradis::Plugins::with_feature(:upload)
+
     upload_integrations.each do |integration|
       @integration_name = integration.plugin_name.to_s
 
       template_files.each do |template_file|
         @template_file = template_file
 
-        if defined?(Dradis::Pro)
-          migrate_pro
-        else
+        rtp_ids = defined?(Dradis::Pro) ? ReportTemplateProperties.ids : [nil]
+        rtp_ids.each do |rtp_id|
+          @rtp_id = rtp_id
           migrate
+
+          # delete the .template files after migrating them to the db
+          File.delete(template_file)
         end
-        # delete the .template files after migrating them to the db
-        File.delete(template_file)
       end
     end
   end
@@ -52,10 +51,10 @@ class MappingMigrationService
 
       template_fields.each do |field_title, field_content|
         # set source_field by taking the first match to the existing %% syntax
-        source_field = field_content.match(/%(?<field>\S*?)%/)
+        source_field = field_content.match(LEGACY_TEMPLATE_REGEX)
         @source_field =
-          if source_field && !source_field['field'].empty?
-            source_field['field']
+          if source_field && !source_field[1].empty?
+            source_field[1]
           else
             'custom text'
           end
@@ -67,15 +66,13 @@ class MappingMigrationService
     end
   end
 
-  def migrate_pro
-  end
-
   def template_fields
-    template_content = File.open(template_file).read
+    template_content = File.read(template_file)
     FieldParser.source_to_fields(template_content)
   end
 
   def template_files
+    templates_dir = Configuration.paths_templates_plugins
     plugin_templates_dir = File.join(templates_dir, integration_name)
     Dir["#{plugin_templates_dir}/*.template"]
   end
@@ -83,7 +80,7 @@ class MappingMigrationService
   def update_syntax(field_content)
     # turn the %% syntax into the new
     # '{{ <integration>[was-issue.title] }}' format
-    field_content.gsub(/%(\S*?)%/) do |content|
+    field_content.gsub(LEGACY_TEMPLATE_REGEX) do |content|
       "{{ #{integration_name}[#{content[1..-2]}] }}"
     end
   end
