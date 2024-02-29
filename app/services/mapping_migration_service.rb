@@ -14,7 +14,7 @@ class MappingMigrationService
         rtp_ids = defined?(Dradis::Pro) ? ReportTemplateProperties.ids : [nil]
         rtp_ids.each do |rtp_id|
           @rtp_id = rtp_id
-          migrate(rtp_id)
+          migrate
           File.rename template_file, "#{template_file}.legacy"
         end
       end

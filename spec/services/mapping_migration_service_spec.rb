@@ -32,10 +32,10 @@ RSpec.describe MappingMigrationService do
       expect(Mapping.last.mapping_fields.first.content).to eq('{{ qualys[evidence.test_field] }}')
     end
 
-    it 'deletes .template files after migrating them to mappings' do
+    it 'renames .template files after migrating them to mappings' do
       expect(File.exist?(@templates_dir.join('qualys/evidence.template'))).to be true
       migrate_templates
-      expect(File.exist?(@templates_dir.join('qualys/evidence.template'))).to be false
+      expect(File.exist?(@templates_dir.join('qualys/evidence.template.old'))).to be false
     end
   end
 end
