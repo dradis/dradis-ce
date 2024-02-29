@@ -217,9 +217,13 @@ describe 'Issues pages' do
         end
 
         describe 'submitting the form with valid information' do
-          let(:new_content) { "#[Description]#\r\nNew info" }
+          let(:field) { '#[Description]#' }
+          let(:value) { 'New info' }
+          let(:new_content) { "#{field}\r\n#{value}" }
+
           before do
-            fill_in :issue_text, with: new_content
+            fill_in :issue_text, with: field
+            find('#issue_text').send_keys :enter, value
           end
 
           let(:submit_form) { click_button 'Update Issue' }
