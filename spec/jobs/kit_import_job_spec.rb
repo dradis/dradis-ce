@@ -76,6 +76,33 @@ RSpec.describe KitImportJob do
       expect(ProjectTemplate.find_template('dradis-template-no-methodologies')).to_not be_nil
     end
 
+    it 'renames project templates if template with same name already exists' do
+      project_template = ProjectTemplate.new(filename: 'dradis-template-welcome')
+      project_template.save
+
+      described_class.new.perform(@tmp_file, logger: Log.new.write('Testing...'))
+
+      expect(ProjectTemplate.find_template('dradis-template-welcome_copy-01')).to_not be_nil
+    end
+
+    it 'renames note templates if template with same name already exists' do
+      note_template = NoteTemplate.new(filename: 'evidence')
+      note_template.save
+
+      described_class.new.perform(@tmp_file, logger: Log.new.write('Testing...'))
+
+      expect(NoteTemplate.find('evidence_copy-01')).to_not be_nil
+    end
+
+    it 'renames methodology templates if template with same name already exists' do
+      methodology = Methodology.new(filename: 'OWASPv4_Testing_Methodology')
+      methodology.save
+
+      described_class.new.perform(@tmp_file, logger: Log.new.write('Testing...'))
+
+      expect(Methodology.find('OWASPv4_Testing_Methodology_copy-01')).to_not be_nil
+    end
+
     if defined?(Dradis::Pro)
       it 'imports Pro-only content too' do
         described_class.new.perform(@tmp_file, logger: Log.new.write('Testing...'))

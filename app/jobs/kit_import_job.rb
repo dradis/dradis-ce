@@ -4,6 +4,7 @@ class KitImportJob < ApplicationJob
     'html_export' => ['html.erb'],
     'word' => ['docm', 'docx']
   }
+  TEMPLATE_TYPES = %w{ methodologies notes plugins projects }
 
   queue_as :dradis_upload
 
@@ -17,6 +18,12 @@ class KitImportJob < ApplicationJob
     @logger = logger
     @project = nil
     @report_templates_dir = Configuration.paths_templates_reports
+    @templates_dirs = TEMPLATE_TYPES.map do |template_type|
+      [
+        template_type,
+        Pathname.new(Configuration.send("paths_templates_#{template_type}"))
+      ]
+    end.to_h
     @working_dir = Dir.mktmpdir
     @word_rtp = nil
 
@@ -42,7 +49,7 @@ class KitImportJob < ApplicationJob
   end
 
   private
-  attr_reader :current_user, :logger, :report_templates_dir, :working_dir
+  attr_reader :current_user, :logger, :report_templates_dir, :templates_dirs, :working_dir
 
   def assign_project_rtp
     logger.info { 'Assigning RTP to project...' }
@@ -107,8 +114,6 @@ class KitImportJob < ApplicationJob
   end
 
   def import_plugin_templates
-    return unless File.directory?("#{working_dir}/kit/templates/plugins/")
-
     logger.info { 'Copying Plugin Manager templates...' }
     import_templates('plugins')
   end
@@ -175,13 +180,23 @@ class KitImportJob < ApplicationJob
   end
 
   def import_templates(template_type)
-    template_directory = "#{working_dir}/kit/templates/#{template_type}"
-    return unless Dir.exist?(template_directory)
+    kit_template_dir = "#{working_dir}/kit/templates/#{template_type}"
+    return unless Dir.exist?(kit_template_dir)
+    template_pwd = templates_dirs[template_type]
 
-    FileUtils.cp_r(
-      "#{template_directory}/.",
-      Configuration.send("paths_templates_#{template_type}")
-    )
+    if template_type == 'plugins'
+      FileUtils.cp_r("#{kit_template_dir}/.", template_pwd)
+    else
+      Dir["#{kit_template_dir}/*"].each do |file|
+        return unless File.file?(file)
+        file_name = NamingService.name_file(
+          original_filename: File.basename(file),
+          pathname: template_pwd
+        )
+
+        FileUtils.cp(file, "#{template_pwd}/#{file_name}")
+      end
+    end
   end
 
   def unzip(file)
