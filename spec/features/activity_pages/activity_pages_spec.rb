@@ -12,18 +12,38 @@ describe 'Activity pages:' do
   context 'as authenticated user' do
     describe 'index page', js: true do
       let(:trackable) { create(:issue) }
+      let(:trackable_card) { create(:card) }
       let(:user) { create(:user) }
+      let(:second_user) { create(:user) }
+      let(:project) { current_project }
 
       let(:create_activities) do
-        50.times do
-          activity = Activity.create(
-            user: user,
-            trackable_type: trackable.class,
-            trackable_id: trackable.id,
-            action: 'update',
-            created_at: Time.current - ((1..5).to_a.sample.days)
-          )
-        end
+        create_list(:activity, 35,
+          user: user,
+          trackable_type: trackable.class,
+          trackable_id: trackable.id,
+          action: 'update',
+          project: project,
+          created_at: Time.current - 1.month
+        )
+
+        create_list(:activity, 10,
+          user: second_user,
+          trackable_type: trackable_card.class,
+          trackable_id: trackable_card.id,
+          action: 'update',
+          project: project,
+          created_at: Time.current
+        )
+
+        create_list(:activity, 5,
+          user: user,
+          trackable_type: trackable_card.class,
+          trackable_id: trackable_card.id,
+          action: 'update',
+          project: project,
+          created_at: Time.current - 2.days
+        )
       end
 
       before do
@@ -73,6 +93,49 @@ describe 'Activity pages:' do
           date_headers.each do |date_header|
             expect(page).to have_content(date_header, count: 1)
           end
+        end
+      end
+
+      describe 'filters' do
+        it 'has user filter' do
+          expect(page).to have_selector('#user_id', count: 1)
+        end
+
+        it 'by user' do
+          visit project_activities_path(current_project, user_id: second_user.id)
+          expect(page).to have_selector('.activity', count: 10)
+        end
+
+        it 'has type filter' do
+          expect(page).to have_selector('#trackable_type', count: 1)
+        end
+
+        it 'by trackable_type' do
+          visit project_activities_path(current_project, trackable_type: 'Card')
+          expect(page).to have_selector('.activity', count: 15)
+        end
+
+        it 'has daterange filter' do
+          expect(page).to have_selector('#since', count: 1)
+          expect(page).to have_selector('#before', count: 1)
+        end
+
+        it 'by date' do
+          since = Time.current - 3.days
+          before = Time.current
+
+          visit project_activities_path(current_project, since: since, before: before)
+          expect(page).to have_selector('.activity', count: 15)
+        end
+
+        it 'daterange filter works for single day' do
+          visit project_activities_path(current_project, since: Time.current, before: Time.current)
+          expect(page).to have_selector('.activity', count: 10)
+        end
+
+        it 'combined filter works' do
+          visit project_activities_path(current_project, trackable_type: 'Card', user_id: second_user.id)
+          expect(page).to have_selector('.activity', count: 10)
         end
       end
     end
