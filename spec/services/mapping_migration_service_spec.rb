@@ -18,6 +18,7 @@ RSpec.describe MappingMigrationService do
     after do
       FileUtils.rm_r(Rails.root.join('spec/fixtures/files/templates/plugins/qualys'))
     end
+
     it 'creates mappings and associated mapping fields' do
       migrate_templates
 
@@ -25,7 +26,7 @@ RSpec.describe MappingMigrationService do
       else
         expect(Mapping.last.destination).to eq(nil)
       end
-      expect(Mapping.last.source).to eq('evidence')
+      expect(Mapping.last.source).to eq('vuln_evidence')
       expect(Mapping.last.mapping_fields.last.source_field).to eq('custom text')
       expect(Mapping.last.mapping_fields.last.destination_field).to eq('Custom')
       expect(Mapping.last.mapping_fields.first.destination_field).to eq('TestField')
@@ -35,7 +36,7 @@ RSpec.describe MappingMigrationService do
     it 'renames .template files after migrating them to mappings' do
       expect(File.exist?(@templates_dir.join('qualys/evidence.template'))).to be true
       migrate_templates
-      expect(File.exist?(@templates_dir.join('qualys/evidence.template.old'))).to be false
+      expect(File.exist?(@templates_dir.join('qualys/evidence.template.legacy'))).to be true
     end
   end
 end

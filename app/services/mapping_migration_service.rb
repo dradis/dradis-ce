@@ -1,5 +1,5 @@
 class MappingMigrationService
-  LEGACY_FIELDS_REGEX = /%(\S*?)%/
+  LEGACY_FIELDS_REGEX = /%(\S+?)%/
   attr_reader :integration_name, :rtp_id
 
   def call
@@ -16,7 +16,7 @@ class MappingMigrationService
       else
         integration_template_files.each do |template_file|
           mapping_source = File.basename(template_file, '.template')
-          # for each file, create a mapping & mapping_fields for each field defined in the .template
+          # create a mapping & mapping_fields for each field in the file
           migrate(template_file, mapping_source)
         end
       end
@@ -42,12 +42,8 @@ class MappingMigrationService
     template_fields.each do |field_title, field_content|
       # set source_field by taking the first match to the existing %% syntax
       source_field = field_content.match(LEGACY_FIELDS_REGEX)
-      source_field =
-        if source_field && !source_field[1].empty?
-          source_field[1]
-        else
-          'custom text'
-        end
+      source_field = source_field ? source_field[1] : 'custom text'
+
       updated_content = update_syntax(field_content)
 
       mapping.mapping_fields.find_or_create_by!(
