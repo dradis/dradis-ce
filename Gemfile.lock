@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/dradis/dradis-burp.git
-  revision: 81b48a9755b0ef63c3e979028dc917dcf2527e39
+  revision: b6a17cb77c294bb1af6398f6389d7bbf74d717f6
   branch: mappings-manager/legacy-mapping-reference
   specs:
     dradis-burp (4.11.0)
