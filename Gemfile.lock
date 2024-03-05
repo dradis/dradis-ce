@@ -1,9 +1,27 @@
 GIT
+  remote: https://github.com/dradis/dradis-burp.git
+  revision: 81b48a9755b0ef63c3e979028dc917dcf2527e39
+  branch: mappings-manager/legacy-mapping-reference
+  specs:
+    dradis-burp (4.11.0)
+      dradis-plugins (~> 4.0)
+      nokogiri (~> 1.3)
+
+GIT
   remote: https://github.com/dradis/dradis-plugins.git
   revision: e69d1f42c85f647662307019b8b492152a5c3c29
   branch: fix/template-caching
   specs:
     dradis-plugins (4.11.0)
+
+GIT
+  remote: https://github.com/dradis/dradis-qualys.git
+  revision: 05376a5045acbca3da144a12ccc3609e46ccca0c
+  branch: mappings-manager/legacy-mapping-reference
+  specs:
+    dradis-qualys (4.11.0)
+      dradis-plugins (~> 4.0)
+      nokogiri (~> 1.3)
 
 PATH
   remote: engines/dradis-api
@@ -137,9 +155,6 @@ GEM
       nokogiri (~> 1.3)
     dradis-brakeman (4.11.0)
       dradis-plugins (~> 4.0)
-    dradis-burp (4.11.0)
-      dradis-plugins (~> 4.0)
-      nokogiri (~> 1.3)
     dradis-calculator_cvss (4.11.0)
       dradis-plugins (~> 4.0)
     dradis-calculator_dread (4.11.0)
@@ -181,9 +196,6 @@ GEM
     dradis-projects (4.11.0)
       dradis-plugins (>= 4.8.0)
       rubyzip
-    dradis-qualys (4.11.0)
-      dradis-plugins (~> 4.0)
-      nokogiri (~> 1.3)
     dradis-saint (4.11.0)
       combustion (~> 0.6.0)
       dradis-plugins (~> 4.0)
@@ -534,7 +546,7 @@ DEPENDENCIES
   dradis-acunetix (~> 4.11.0)
   dradis-api!
   dradis-brakeman (~> 4.11.0)
-  dradis-burp (~> 4.11.0)
+  dradis-burp!
   dradis-calculator_cvss (~> 4.11.0)
   dradis-calculator_dread (~> 4.11.0)
   dradis-coreimpact (~> 4.11.0)
@@ -552,7 +564,7 @@ DEPENDENCIES
   dradis-openvas (~> 4.11.0)
   dradis-plugins!
   dradis-projects (~> 4.11.0)
-  dradis-qualys (~> 4.11.0)
+  dradis-qualys!
   dradis-saint (~> 4.11.0)
   dradis-veracode (~> 4.11.0)
   dradis-wpscan (~> 4.11.0)

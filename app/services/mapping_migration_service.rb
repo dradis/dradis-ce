@@ -1,5 +1,5 @@
 class MappingMigrationService
-  LEGACY_TEMPLATE_REGEX = /%(\S*?)%/
+  LEGACY_FIELDS_REGEX = /%(\S*?)%/
   attr_reader :integration_name, :rtp_id
 
   def call
@@ -12,7 +12,7 @@ class MappingMigrationService
       @integration_name = integration.plugin_name.to_s
 
       if integration.uploaders.count > 1
-        migrate_multiple_uploaders(integration_name)
+        migrate_multiple_uploaders(integration)
       else
         template_files.each do |template_file|
           mapping_source = File.basename(template_file, '.template')
@@ -42,38 +42,16 @@ class MappingMigrationService
     )
   end
 
-  def migrate_multiple_uploaders(integration_name)
-    source_mapping = self.send("#{integration_name}_source_mapping")
+  def migrate_multiple_uploaders(integration)
+    legacy_mapping_reference = integration.module_parent::Mapping.legacy_mapping_reference
     integration_templates_dir = File.join(@templates_dir, integration_name)
 
-    source_mapping.each do |source_field, legacy_name|
-      template_file = Dir["#{integration_templates_dir}/#{legacy_name}.template*"]
+    legacy_mapping_reference.each do |source_field, legacy_template_name|
+      template_file = Dir["#{integration_templates_dir}/#{legacy_template_name}.template*"]
       if template_file.any? { |file| File.exist?(file) }
         migrate(template_file[0], source_field)
       end
     end
-  end
-
-  def burp_source_mapping
-    # create a mapping for each legacy template type:
-    {
-      'html_evidence' => 'html_evidence',
-      'html_issue' => 'issue',
-      'xml_evidence' => 'evidence',
-      'xml_issue' => 'issue'
-    }
-  end
-
-  def qualys_source_mapping
-    # create a mapping for each legacy template type:
-    {
-      'asset_evidence' => 'asset-evidence',
-      'asset_issue' => 'asset-issue',
-      'vuln_evidence' => 'evidence',
-      'vuln_element' => 'element',
-      'was_evidence' => 'was-evidence',
-      'was_issue' => 'was-issue'
-    }
   end
 
   def migrate(template_file, mapping_source)
@@ -83,10 +61,11 @@ class MappingMigrationService
       # for each file, create a mapping for the uploader&plugin_name combination
       ActiveRecord::Base.transaction do
         mapping = create_mapping(template_file, mapping_source)
-        template_fields = template_fields(template_file)
+        template_fields = parse_template_fields(template_file)
+
         template_fields.each do |field_title, field_content|
           # set source_field by taking the first match to the existing %% syntax
-          source_field = field_content.match(LEGACY_TEMPLATE_REGEX)
+          source_field = field_content.match(LEGACY_FIELDS_REGEX)
           @source_field =
             if source_field && !source_field[1].empty?
               source_field[1]
@@ -103,7 +82,7 @@ class MappingMigrationService
     File.rename template_file, "#{template_file}.legacy"
   end
 
-  def template_fields(template_file)
+  def parse_template_fields(template_file)
     template_content = File.read(template_file)
     FieldParser.source_to_fields(template_content)
   end
@@ -117,7 +96,7 @@ class MappingMigrationService
   def update_syntax(field_content)
     # turn the %% syntax into the new
     # '{{ <integration>[was-issue.title] }}' format
-    field_content.gsub(LEGACY_TEMPLATE_REGEX) do |content|
+    field_content.gsub(LEGACY_FIELDS_REGEX) do |content|
       "{{ #{integration_name}[#{content[1..-2]}] }}"
     end
   end
