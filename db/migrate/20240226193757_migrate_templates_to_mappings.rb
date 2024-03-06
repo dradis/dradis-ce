@@ -4,5 +4,6 @@ class MigrateTemplatesToMappings < ActiveRecord::Migration[7.0]
   end
 
   def down
+    MappingMigrationService.new.reverse_migration
   end
 end

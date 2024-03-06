@@ -23,6 +23,27 @@ class MappingMigrationService
     end
   end
 
+  def reverse_migration
+    upload_integrations = Dradis::Plugins::with_feature(:upload)
+    upload_integrations = upload_integrations - [
+      Dradis::Plugins::Projects::Engine, Dradis::Plugins::CSV::Engine
+    ]
+    templates_dir = Configuration.paths_templates_plugins
+
+    upload_integrations.each do |integration|
+      integration_name = integration.plugin_name.to_s
+
+      Mapping.where(component: integration_name).destroy_all
+
+      plugin_templates_dir = File.join(templates_dir, integration_name)
+      legacy_files = Dir["#{plugin_templates_dir}/*.template.legacy"]
+
+      legacy_files.each do |file|
+        File.rename file, file.split('.legacy').first
+      end
+    end
+  end
+
   private
 
   def create_mapping(mapping_source)
@@ -67,6 +88,11 @@ class MappingMigrationService
     end
   end
 
+  # previously our integrations with multiple uploaders (Burp, Qualys) had inconsistent
+  # template names (some included the uploader, some didn't)
+  # they have been renamed to follow a consistent 'uploader_entity' structure, but
+  # in order to migrate the old templates to the db with the new names as the source
+  # we need to reference an object in the integration that maps the new name to the old one
   def migrate_multiple_upload_integration(integration)
     legacy_mapping_reference = integration.module_parent::Mapping.legacy_mapping_reference
     integration_templates_dir = File.join(@templates_dir, integration_name)
