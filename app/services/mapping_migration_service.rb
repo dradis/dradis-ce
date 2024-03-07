@@ -74,9 +74,9 @@ class MappingMigrationService
       ActiveRecord::Base.transaction do
         mapping = create_mapping(mapping_source)
         create_mapping_fields(mapping, template_file)
-        File.rename template_file, "#{template_file}.legacy"
       end
     end
+    File.rename template_file, "#{template_file}.legacy"
   end
 
   # previously our integrations with multiple uploaders (Burp, Qualys) had inconsistent
