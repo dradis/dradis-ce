@@ -1,6 +1,9 @@
 [v#.#.#] ([month] [YYYY])
   - [entity]:
     - [future tense verb] [feature]
+  - Session time out
+    - Inform users to re-login when using the editor while timed out
+    - Return users to the last view before the session times out
   - Upgraded gems:
     - nokogiri, rails
   - Bugs fixes:
