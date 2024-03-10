@@ -113,6 +113,7 @@
       .dropdown-menu {
         border-radius: 0 0 0.5rem 0.5rem;
         margin-top: 0.6rem;
+        min-height: 100px;
       }
 
       .nav-link {
@@ -210,8 +211,10 @@
   }
 }
 
-@media screen and (max-width: 991px) {
-  .top-nav {
+.top-nav {
+  z-index: 4;
+
+  @media screen and (max-width: 991px) {
     display: none;
   }
 }
