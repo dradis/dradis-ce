@@ -42,7 +42,7 @@
     &.show {
       @media screen and (max-width: 991px) {
         position: absolute;
-        background: white;
+        background: $darkGreen;
         top: 100%;
         right: 0%;
         display: flex;
@@ -52,7 +52,6 @@
           flex-direction: column;
           align-items: flex-start;
           padding: 0.25rem 0;
-          border: 1px solid $borderColor;
 
           .nav-item {
             margin: 0;

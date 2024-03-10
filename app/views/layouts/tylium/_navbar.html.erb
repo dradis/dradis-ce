@@ -78,12 +78,12 @@
               <% end %>
             </li>
             <li class="mobile-only nav-item">
-              <%= link_to main_app.project_configurations_path(current_project), class: 'nav-link', title: 'Configuration' do %><i class="fa-solid fa-cog fa-lg"></i><% end %>
+              <%= link_to main_app.project_configurations_path(current_project), class: 'nav-link', title: 'Configuration' do %><i class="fa-solid fa-cog fa-lg"></i> Settings<% end %>
             </li>
             <li class="mobile-only nav-item notifications dropdown">
               <%= link_to main_app.project_notifications_path(current_project), class: 'nav-link dropdown-toggle', data: { bs_toggle: 'dropdown',  behavior: 'notifications-dropdown close-collapse', project_id: current_project.id }, role: 'button', title: 'Notifications' do %>
                 <i class="notifications-bell fa-solid fa-bell fa-lg"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i>
-              <% end %>
+                Notifications<% end %>
               <div class="dropdown-menu dropdown-menu-end" data-url="<%= main_app.notifications_path %>"></div>
             </li>
             <li class="mobile-only nav-item dropdown">
