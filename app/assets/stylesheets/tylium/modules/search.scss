@@ -3,7 +3,7 @@
     height: 40px;
     margin-left: 1rem;
     position: relative;
-    width: 40px;
+    width: 38px;
     transition: width 0.2s ease-in-out;
     z-index: 1;
 
@@ -57,6 +57,14 @@
       transition: opacity 0.2s ease-in-out, width 0.2s ease-in-out,
         right 0.2s ease-in-out, border-bottom 0.2s 0.15s ease-in-out;
       width: 0;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .form-search {
+      .btn {
+        background: $lightGreen;
+      }
     }
   }
 

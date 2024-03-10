@@ -66,9 +66,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbar">
           <ul class="navbar-nav ms-auto mt-lg-0">
-            <li class="nav-item search">
-              <%= render "layouts/tylium/search" %>
-            </li>
+            
             <li class="nav-item">
               <%= link_to main_app.project_upload_manager_path(current_project), class: 'nav-link', title: 'Upload' do %><i class="fa-solid fa-cloud-upload fa-lg"></i> Upload<% end %>
             </li>
@@ -117,7 +115,9 @@
             <li class="mobile-only nav-item">
               <%= link_to main_app.logout_path, class: 'nav-link', title: 'Logout', data: { turbolinks: false }  do %>Logout<% end %>
             </li>
-
+            <li class="nav-item search">
+              <%= render "layouts/tylium/search" %>
+            </li>
           </ul>
         </div>
       </div>
