@@ -1,10 +1,10 @@
 .navbar-collapse {
   .form-search {
     height: 40px;
-    margin-left: 0.25rem;
+    margin-left: 1rem;
     position: relative;
+    width: 40px;
     transition: width 0.2s ease-in-out;
-    width: 0px;
     z-index: 1;
 
     .btn {
