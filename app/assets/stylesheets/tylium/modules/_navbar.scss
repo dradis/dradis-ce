@@ -63,7 +63,7 @@
               border-radius: 0;
               margin-top: 0;
               position: initial;
-              
+              min-height: 100px;
 
               .dropdown-item {
                 padding-right: 1rem;
@@ -199,6 +199,14 @@
      .mobile-only {
        display: none;
      }
+  }
+
+  & .dropdown-menu {
+    min-height: 100px;
+
+    .dropdown-item {
+      color: $darkGreen !important;
+    }
   }
 }
 
