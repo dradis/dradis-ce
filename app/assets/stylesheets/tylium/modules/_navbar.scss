@@ -195,5 +195,16 @@
   & .project-title {
     color: $lightGreen;
   }
-  
+
+  @media screen and (min-width: 992px) {
+     .mobile-only {
+       display: none;
+     }
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .top-nav {
+    display: none;
+  }
 }
