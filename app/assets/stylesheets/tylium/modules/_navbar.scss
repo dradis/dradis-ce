@@ -64,6 +64,7 @@
               border-radius: 0;
               margin-top: 0;
               position: initial;
+              
 
               .dropdown-item {
                 padding-right: 1rem;
@@ -174,4 +175,25 @@
       top: 0.6rem;
     }
   }
+}
+
+#subnav {
+  background-color: $darkGreen;
+
+  & a {
+    color: $white;
+  }
+
+  & .nav-item:hover {
+    background-color: transparent;
+
+    & .nav-link {
+      color: $lightGreen;
+    }
+  }
+
+  & .project-title {
+    color: $lightGreen;
+  }
+  
 }
