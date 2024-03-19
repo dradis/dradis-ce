@@ -1,9 +1,168 @@
 GIT
+  remote: https://github.com/dradis/dradis-acunetix.git
+  revision: d5f42eddd52798ca95943debd8723731ee935d2b
+  branch: mappings-manager/add-uploaders
+  specs:
+    dradis-acunetix (4.11.0)
+      dradis-plugins (~> 4.0)
+      nokogiri (~> 1.3)
+
+GIT
+  remote: https://github.com/dradis/dradis-brakeman.git
+  revision: 40c76b41e6fdf6253cb186a9bb1a18cde574b6a0
+  branch: mappings-manager/add-uploaders
+  specs:
+    dradis-brakeman (4.11.0)
+      dradis-plugins (~> 4.0)
+
+GIT
+  remote: https://github.com/dradis/dradis-burp.git
+  revision: 58a15441f796ae1611c855cb739486177c06994b
+  branch: mappings-manager/add-uploaders
+  specs:
+    dradis-burp (4.11.0)
+      dradis-plugins (~> 4.0)
+      nokogiri (~> 1.3)
+
+GIT
+  remote: https://github.com/dradis/dradis-coreimpact.git
+  revision: 5731e1da3901eacd92f9bfe4f4cc43ae1604ee98
+  branch: mappings-manager/add-uploaders
+  specs:
+    dradis-coreimpact (4.11.0)
+      dradis-plugins (~> 4.0)
+
+GIT
+  remote: https://github.com/dradis/dradis-metasploit.git
+  revision: 4eab6a3fef664705518ba435bf21857c09c47541
+  branch: mappings-manager/add-uploaders
+  specs:
+    dradis-metasploit (4.11.0)
+      dradis-plugins (~> 4.0)
+      nokogiri (~> 1.3)
+
+GIT
+  remote: https://github.com/dradis/dradis-nessus.git
+  revision: 06740a2a240ae2be5fc14da5aced25534dcca262
+  branch: mappings-manager/add-uploaders
+  specs:
+    dradis-nessus (4.11.0)
+      dradis-plugins (~> 4.0)
+      nokogiri
+
+GIT
+  remote: https://github.com/dradis/dradis-netsparker.git
+  revision: 2f6d4d40034b928a0f41b8d489697e742bdaa38e
+  branch: mappings-manager/add-uploaders
+  specs:
+    dradis-netsparker (4.11.0)
+      dradis-plugins (~> 4.0)
+      nokogiri (>= 1.12.5)
+
+GIT
+  remote: https://github.com/dradis/dradis-nexpose.git
+  revision: 439cb5dbe2825ce5461c58813348a69961c6e4a4
+  branch: mappings-manager/add-uploaders
+  specs:
+    dradis-nexpose (4.11.0)
+      dradis-plugins (~> 4.0)
+      nokogiri (~> 1.3)
+
+GIT
+  remote: https://github.com/dradis/dradis-nikto.git
+  revision: fbbca4b43f30fc241df142c55238b2feb7c7f3fe
+  branch: mappings-manager/add-uploaders
+  specs:
+    dradis-nikto (4.11.0)
+      dradis-plugins (~> 4.0)
+      nokogiri (~> 1.3)
+
+GIT
+  remote: https://github.com/dradis/dradis-nipper.git
+  revision: 169535775f078913ca3d38eb6bd7dbcc80a333dd
+  branch: mappings-manager/add-uploaders
+  specs:
+    dradis-nipper (4.11.0)
+      dradis-plugins (~> 4.0)
+
+GIT
+  remote: https://github.com/dradis/dradis-nmap.git
+  revision: a653ad66543cdef3361a1f6dd1fbb07d9e4eada7
+  branch: mappings-manager/add-uploaders
+  specs:
+    dradis-nmap (4.11.0)
+      dradis-plugins (~> 4.0)
+      ruby-nmap (~> 0.7)
+
+GIT
+  remote: https://github.com/dradis/dradis-ntospider.git
+  revision: 0c2ae49734090ce60982fe8c01658832cf96180a
+  branch: mappings-manager/add-uploaders
+  specs:
+    dradis-ntospider (4.11.0)
+      dradis-plugins (~> 4.0)
+
+GIT
+  remote: https://github.com/dradis/dradis-openvas.git
+  revision: 1678903dd6e35fd8c4cfdbf55333c6f3f18c352b
+  branch: mappings-manager/add-uploaders
+  specs:
+    dradis-openvas (4.11.0)
+      dradis-plugins (~> 4.0)
+
+GIT
   remote: https://github.com/dradis/dradis-plugins.git
   revision: e69d1f42c85f647662307019b8b492152a5c3c29
   branch: fix/template-caching
   specs:
     dradis-plugins (4.11.0)
+
+GIT
+  remote: https://github.com/dradis/dradis-qualys.git
+  revision: 82712e710418dd7e116223c9e1a29b4ba73ebf79
+  branch: mappings-manager/add-uploaders
+  specs:
+    dradis-qualys (4.11.0)
+      dradis-plugins (~> 4.0)
+      nokogiri (~> 1.3)
+
+GIT
+  remote: https://github.com/dradis/dradis-saint.git
+  revision: 7d5e45da4f61edb50798ed61c86ce6b7f4c1698b
+  branch: mappings-manager/add-uploaders
+  specs:
+    dradis-saint (4.11.0)
+      combustion (~> 0.6.0)
+      dradis-plugins (~> 4.0)
+      nokogiri
+      rake (~> 13.0)
+      rspec-rails
+
+GIT
+  remote: https://github.com/dradis/dradis-veracode.git
+  revision: 0442dee4651101bf5530dadc2e68f73faf69a381
+  branch: mappings-manager/add-uploaders
+  specs:
+    dradis-veracode (4.11.0)
+      dradis-plugins (~> 4.0)
+
+GIT
+  remote: https://github.com/dradis/dradis-wpscan.git
+  revision: 2e5ff1b8e01413dbfd3901f179f9bd62290513d2
+  branch: mappings-manager/add-uploaders
+  specs:
+    dradis-wpscan (4.11.0)
+      dradis-plugins (~> 4.0)
+      multi_json
+
+GIT
+  remote: https://github.com/dradis/dradis-zap.git
+  revision: 9deb31fe0dcfb05533414b90a64a371422340336
+  branch: mappings-manager/add-uploaders
+  specs:
+    dradis-zap (4.11.0)
+      dradis-plugins (~> 4.0)
+      nokogiri (~> 1.3)
 
 PATH
   remote: engines/dradis-api
@@ -132,19 +291,9 @@ GEM
     date (3.3.4)
     diff-lcs (1.5.0)
     differ (0.1.2)
-    dradis-acunetix (4.11.0)
-      dradis-plugins (~> 4.0)
-      nokogiri (~> 1.3)
-    dradis-brakeman (4.11.0)
-      dradis-plugins (~> 4.0)
-    dradis-burp (4.11.0)
-      dradis-plugins (~> 4.0)
-      nokogiri (~> 1.3)
     dradis-calculator_cvss (4.11.0)
       dradis-plugins (~> 4.0)
     dradis-calculator_dread (4.11.0)
-      dradis-plugins (~> 4.0)
-    dradis-coreimpact (4.11.0)
       dradis-plugins (~> 4.0)
     dradis-csv (4.11.0)
       dradis-plugins (~> 4.0)
@@ -154,50 +303,9 @@ GEM
       RedCloth (~> 4.3.2)
       dradis-plugins (>= 4.8.0)
       rails_autolink (~> 1.1)
-    dradis-metasploit (4.11.0)
-      dradis-plugins (~> 4.0)
-      nokogiri (~> 1.3)
-    dradis-nessus (4.11.0)
-      dradis-plugins (~> 4.0)
-      nokogiri
-    dradis-netsparker (4.11.0)
-      dradis-plugins (~> 4.0)
-      nokogiri (>= 1.12.5)
-    dradis-nexpose (4.11.0)
-      dradis-plugins (~> 4.0)
-      nokogiri (~> 1.3)
-    dradis-nikto (4.11.0)
-      dradis-plugins (~> 4.0)
-      nokogiri (~> 1.3)
-    dradis-nipper (4.11.0)
-      dradis-plugins (~> 4.0)
-    dradis-nmap (4.11.0)
-      dradis-plugins (~> 4.0)
-      ruby-nmap (~> 0.7)
-    dradis-ntospider (4.11.0)
-      dradis-plugins (~> 4.0)
-    dradis-openvas (4.11.0)
-      dradis-plugins (~> 4.0)
     dradis-projects (4.11.0)
       dradis-plugins (>= 4.8.0)
       rubyzip
-    dradis-qualys (4.11.0)
-      dradis-plugins (~> 4.0)
-      nokogiri (~> 1.3)
-    dradis-saint (4.11.0)
-      combustion (~> 0.6.0)
-      dradis-plugins (~> 4.0)
-      nokogiri
-      rake (~> 13.0)
-      rspec-rails
-    dradis-veracode (4.11.0)
-      dradis-plugins (~> 4.0)
-    dradis-wpscan (4.11.0)
-      dradis-plugins (~> 4.0)
-      multi_json
-    dradis-zap (4.11.0)
-      dradis-plugins (~> 4.0)
-      nokogiri (~> 1.3)
     erubi (1.12.0)
     execjs (2.7.0)
     factory_bot (6.2.1)
@@ -531,32 +639,32 @@ DEPENDENCIES
   coffee-rails (~> 5.0)
   database_cleaner
   differ (~> 0.1.2)
-  dradis-acunetix (~> 4.11.0)
+  dradis-acunetix!
   dradis-api!
-  dradis-brakeman (~> 4.11.0)
-  dradis-burp (~> 4.11.0)
+  dradis-brakeman!
+  dradis-burp!
   dradis-calculator_cvss (~> 4.11.0)
   dradis-calculator_dread (~> 4.11.0)
-  dradis-coreimpact (~> 4.11.0)
+  dradis-coreimpact!
   dradis-csv (~> 4.11.0)
   dradis-csv_export (~> 4.11.0)
   dradis-html_export (~> 4.11.0)
-  dradis-metasploit (~> 4.11.0)
-  dradis-nessus (~> 4.11.0)
-  dradis-netsparker (~> 4.11.0)
-  dradis-nexpose (~> 4.11.0)
-  dradis-nikto (~> 4.11.0)
-  dradis-nipper (~> 4.11.0)
-  dradis-nmap (~> 4.11.0)
-  dradis-ntospider (~> 4.11.0)
-  dradis-openvas (~> 4.11.0)
+  dradis-metasploit!
+  dradis-nessus!
+  dradis-netsparker!
+  dradis-nexpose!
+  dradis-nikto!
+  dradis-nipper!
+  dradis-nmap!
+  dradis-ntospider!
+  dradis-openvas!
   dradis-plugins!
   dradis-projects (~> 4.11.0)
-  dradis-qualys (~> 4.11.0)
-  dradis-saint (~> 4.11.0)
-  dradis-veracode (~> 4.11.0)
-  dradis-wpscan (~> 4.11.0)
-  dradis-zap (~> 4.11.0)
+  dradis-qualys!
+  dradis-saint!
+  dradis-veracode!
+  dradis-wpscan!
+  dradis-zap!
   factory_bot_rails
   font-awesome-sass (~> 6.4.0)
   foreman

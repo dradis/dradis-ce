@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_21_144728) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_14_201737) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -131,6 +131,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_144728) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
+  create_table "mapping_fields", force: :cascade do |t|
+    t.integer "mapping_id", null: false
+    t.string "source_field"
+    t.string "destination_field"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mapping_id"], name: "index_mapping_fields_on_mapping_id"
+  end
+
+  create_table "mappings", force: :cascade do |t|
+    t.string "component"
+    t.string "source"
+    t.string "destination"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "nodes", force: :cascade do |t|
     t.integer "type_id"
     t.string "label"
@@ -225,6 +243,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_144728) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "boards", "nodes", on_delete: :cascade
   add_foreign_key "comments", "users", on_delete: :nullify
+  add_foreign_key "mapping_fields", "mappings"
   add_foreign_key "notifications", "users", column: "actor_id", on_delete: :cascade
   add_foreign_key "notifications", "users", column: "recipient_id", on_delete: :cascade
   add_foreign_key "subscriptions", "users"
