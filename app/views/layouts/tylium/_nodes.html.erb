@@ -9,7 +9,9 @@
             <a href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false"><i class="fa-solid fa-plus"></i></a>
             <div class="dropdown-menu">
               <a href="#modal_add_branch_node" class="dropdown-item" tabindex="-1" data-bs-toggle="modal"> Add top-level node</a>
-              <a href="#modal_add_child_node" class="dropdown-item" tabindex="-1" data-bs-toggle="modal"> Add subnode</a>
+              <% if @node.present? %>
+                <a href="#modal_add_child_node" class="dropdown-item" tabindex="-1" data-bs-toggle="modal"> Add subnode</a>
+              <% end %>
             </div>
           </div>
         </div>

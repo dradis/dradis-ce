@@ -18,6 +18,32 @@ describe 'node pages' do
     end
 
     describe "clicking the '+' button in the 'Nodes' sidebar", js: true do
+      context 'when no node is selected' do
+        before do
+          visit project_path(current_project)
+          find('.add-node-toggle').click
+        end
+
+        it 'contains a link to create a top-level node only' do
+          expect(page).to have_link 'Add top-level node'
+          expect(page).not_to have_link 'Add subnode'
+        end
+      end
+
+      context 'when a node is selected' do
+        before do
+          visit project_node_path(node.project, node)
+          find('.add-node-toggle').click
+        end
+
+        let(:node) { create(:node, project: current_project) }
+
+        it 'contains links to create a top-level node and a subnode' do
+          expect(page).to have_link 'Add top-level node'
+          expect(page).to have_link 'Add subnode'
+        end
+      end
+
       context 'when Add top-level node is clicked' do
         before do
           visit project_path(current_project)
