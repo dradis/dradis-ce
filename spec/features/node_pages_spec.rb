@@ -18,87 +18,89 @@ describe 'node pages' do
     end
 
     describe "clicking the '+' button in the 'Nodes' sidebar", js: true do
-      before do
-        visit project_path(current_project)
-        find('.add-node-toggle').click
-        click_link 'Add top-level node'
-      end
-
-      let(:submit_form) { click_button 'Add' }
-
-      it 'shows a modal for adding a top-level node' do
-        expect(page).to have_field :branch_node_label
-      end
-
-      describe "submitting the 'new top-level node' form" do
-        it 'creates and shows the new node' do
-          fill_in :branch_node_label, with: 'My awesome node'
-          expect { submit_form }.to change { Node.count }.by(1)
-          expect(page).to have_content 'Successfully created node.'
-          new_node = Node.last
-          expect(current_path).to eq project_node_path(new_node.project, new_node)
+      context 'when Add top-level node is clicked' do
+        before do
+          visit project_path(current_project)
+          find('.add-node-toggle').click
+          click_link 'Add top-level node'
         end
-      end
 
-      include_examples 'creates an Activity', :create, Node
+        let(:submit_form) { click_button 'Add' }
 
-      example 'adding multiple root nodes' do
-        choose 'Add multiple'
-        expect(page).to have_no_field :branch_node_label
-        expect(page).to have_field :branch_nodes_list
+        it 'shows a modal for adding a top-level node' do
+          expect(page).to have_field :branch_node_label
+        end
 
-        # Include a blank line to make sure that no node gets created:
-        fill_in :branch_nodes_list, with: <<-LIST.strip_heredoc
-            node 1
+        describe "submitting the 'new top-level node' form" do
+          it 'creates and shows the new node' do
+            fill_in :branch_node_label, with: 'My awesome node'
+            expect { submit_form }.to change { Node.count }.by(1)
+            expect(page).to have_content 'Successfully created node.'
+            new_node = Node.last
+            expect(current_path).to eq project_node_path(new_node.project, new_node)
+          end
+        end
 
-            node_2
-                 node with trailing whitespace
-          LIST
+        include_examples 'creates an Activity', :create, Node
 
-        expect do
-          click_button 'Add'
-        end.to change { current_project.nodes.in_tree.count }.by(3) \
-          .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(3)
+        example 'adding multiple root nodes' do
+          choose 'Add multiple'
+          expect(page).to have_no_field :branch_node_label
+          expect(page).to have_field :branch_nodes_list
 
-        expect(
-          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h|
-            h[:job]
-          }.last(3)
-        ).to include *Array.new(3, ActivityTrackingJob)
-        expect(
-          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
-            h1[:args].map { |h2| h2['action'] }
-          }.flatten.last(3)
-        ).to include *Array.new(3, 'create')
-        expect(
-          ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
-            h1[:args].map { |h2| h2['trackable_type'] }
-          }.flatten.last(3)
-        ).to include *Array.new(3, 'Node')
+          # Include a blank line to make sure that no node gets created:
+          fill_in :branch_nodes_list, with: <<-LIST.strip_heredoc
+              node 1
 
-        expect(current_project.nodes.last(3).map(&:label)).to match_array([
-          'node 1',
-          'node_2',
-          'node with trailing whitespace',
-        ])
+              node_2
+                   node with trailing whitespace
+            LIST
 
-        # redirects to project root:
-        expect(page).to have_selector 'h3', text: /PROJECT SUMMARY/i
-      end
+          expect do
+            click_button 'Add'
+          end.to change { current_project.nodes.in_tree.count }.by(3) \
+            .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(3)
 
-      example 'adding multiple root host nodes' do
-        choose 'Add multiple'
+          expect(
+            ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h|
+              h[:job]
+            }.last(3)
+          ).to include *Array.new(3, ActivityTrackingJob)
+          expect(
+            ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+              h1[:args].map { |h2| h2['action'] }
+            }.flatten.last(3)
+          ).to include *Array.new(3, 'create')
+          expect(
+            ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+              h1[:args].map { |h2| h2['trackable_type'] }
+            }.flatten.last(3)
+          ).to include *Array.new(3, 'Node')
 
-        fill_in :branch_nodes_list, with: "foo\nbar"
-        select 'Host', from: :branch_nodes_icon
+          expect(current_project.nodes.last(3).map(&:label)).to match_array([
+            'node 1',
+            'node_2',
+            'node with trailing whitespace',
+          ])
 
-        expect do
-          click_button 'Add'
-        end.to change { current_project.nodes.in_tree.count }.by(2)
+          # redirects to project root:
+          expect(page).to have_selector 'h3', text: /PROJECT SUMMARY/i
+        end
 
-        expect(
-          current_project.nodes.in_tree.last(2).all? { |n| n.type_id == Node::Types::HOST }
-        ).to be true
+        example 'adding multiple root host nodes' do
+          choose 'Add multiple'
+
+          fill_in :branch_nodes_list, with: "foo\nbar"
+          select 'Host', from: :branch_nodes_icon
+
+          expect do
+            click_button 'Add'
+          end.to change { current_project.nodes.in_tree.count }.by(2)
+
+          expect(
+            current_project.nodes.in_tree.last(2).all? { |n| n.type_id == Node::Types::HOST }
+          ).to be true
+        end
       end
     end
 
