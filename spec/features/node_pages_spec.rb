@@ -102,6 +102,83 @@ describe 'node pages' do
           ).to be true
         end
       end
+
+      context 'when Add subnode is clicked' do
+        before do
+          visit project_node_path(node.project, node)
+          find('.add-node-toggle').click
+          click_link 'Add subnode'
+        end
+
+        let(:node) { create(:node, project: current_project) }
+
+        let(:submit_form) { click_button 'Add' }
+
+        it 'shows a modal for adding a subnode' do
+          expect(page).to have_field :child_node_label
+        end
+
+        example 'adding a single node' do
+          fill_in 'child_node_label', with: 'My new node'
+          expect do
+            click_button 'Add'
+          end.to change { node.children.count }.by(1)
+            .and have_enqueued_job(ActivityTrackingJob).with(
+              action: 'create',
+              project_id: current_project.id,
+              trackable_id: node.children.last.try(:id) || Node.last.id + 1,
+              trackable_type: 'Node',
+              user_id: @logged_in_as.id
+            )
+
+          new_node = node.children.last
+          expect(new_node.label).to eq 'My new node'
+        end
+
+        example 'adding multiple nodes' do
+          choose 'Add multiple'
+          expect(page).to have_no_field :child_node_label
+          expect(page).to have_field :child_nodes_list
+
+          # Include a blank line to make sure that no node gets created:
+          fill_in :child_nodes_list, with: <<-LIST.strip_heredoc
+            node 1
+
+            node_2
+                 node with trailing whitespace
+          LIST
+
+          expect do
+            click_button 'Add'
+          end.to change { node.children.count }.by(3)
+          .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(3)
+
+          expect(
+            ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h|
+              h[:job]
+            }.last(3)
+          ).to eq Array.new(3, ActivityTrackingJob)
+          expect(
+            ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+              h1[:args].map { |h2| h2['action'] }
+            }.flatten.last(3)
+          ).to eq Array.new(3, 'create')
+          expect(
+            ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+              h1[:args].map { |h2| h2['trackable_type'] }
+            }.flatten.last(3)
+          ).to eq Array.new(3, 'Node')
+
+          expect(node.children.pluck(:label)).to match_array([
+            'node 1',
+            'node_2',
+            'node with trailing whitespace',
+          ])
+
+          # redirects to parent node's page
+          expect(page).to have_selector 'ol.breadcrumb > li.active', text: node.label
+        end
+      end
     end
 
     describe 'adding child nodes to an existing node', :js do
