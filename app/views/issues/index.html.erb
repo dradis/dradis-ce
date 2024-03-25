@@ -9,7 +9,7 @@
 
   <div class="note-text-inner">
 
-    <% if !@issues.any? %>
+    <% if @issues.any? %>
       <div data-behavior="datatable-paths"
            data-table-destroy-url="<%= multiple_destroy_project_issues_path(current_project) %>"
            data-table-destroy-confirmation="Are you sure?&#10;&#10;Proceeding will delete the selected issue(s) and any associated evidence."
