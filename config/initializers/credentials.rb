@@ -5,15 +5,15 @@ if secret_token_path.exist?
 end
 
 # 2. Create an internal encrypted credentials file if none exists
-config_path = Rails.root.join('config', 'shared', 'credentials.yml.enc')
-key_path = config_path.dirname.join('master.key')
+content_path = Rails.application.config.credentials.content_path
+key_path = Rails.application.config.credentials.key_path
 
-if !config_path.exist? | config_path.zero?
-  warn "The file #{config_path} does not exists or is empty."
-  warn "Generating a new file and writing to #{config_path}; this will invalidate the previous Rails sessions."
+if !content_path.exist? | content_path.zero?
+  warn "The file #{content_path} does not exists or is empty."
+  warn "Generating a new file and writing to #{content_path}; this will invalidate the previous Rails sessions."
 
   # For good measure
-  FileUtils.mkdir_p(config_path.dirname)
+  FileUtils.mkdir_p(content_path.dirname)
 
   require 'securerandom'
   contents = {
@@ -29,16 +29,12 @@ if !config_path.exist? | config_path.zero?
   key_path.binwrite(key)
   key_path.chmod 0600
 
-  enc_conf = ActiveSupport::EncryptedConfiguration.new(config_path: config_path, key_path: key_path, env_key: 'RAILS_MASTER_KEY', raise_if_missing_key: true)
+  enc_conf = ActiveSupport::EncryptedConfiguration.new(config_path: content_path, key_path: key_path, env_key: 'RAILS_MASTER_KEY', raise_if_missing_key: true)
   enc_conf.write(contents)
-end
 
-# 3. Load the custom internal credentials file.
-#
-# From ./bin/rails credentials:help
-#
-# In addition to that, the default credentials lookup paths can be overridden through
-# `config.credentials.content_path` and `config.credentials.key_path`.
-#   encrypted_settings.yml.enc
-Rails.application.config.credentials.content_path = config_path
-Rails.application.config.credentials.key_path = key_path
+  # We need to manually set Rails.application.credentials here
+  # so that the credentials are accessible immediately after being created.
+  # Since this file is run after railties sets Rails.application.credentials,
+  # Without this line, credentials are nil until a reboot
+  Rails.application.credentials = enc_conf
+end

@@ -1,5 +1,5 @@
 //= require jquery3
-//= require jquery-ui
+//= require jquery-ui.min
 //= require rails-ujs
 //= require turbolinks
 // require activestorage
@@ -14,9 +14,6 @@
 //= require tribute
 //= require popper
 //= require bootstrap
-
-//= require vendor/datatables.min
-//= require vendor/stupidtable
 
 //= require cable
 

@@ -5,8 +5,7 @@ class QA::IssuesController < AuthenticatedController
   include ProjectScoped
 
   before_action :set_issues
-  before_action :set_issue, only: [:edit, :show, :update]
-  before_action :store_location, only: [:index, :show]
+  before_action :set_issue, only: [:edit, :show, :preview, :update]
   before_action :validate_state, only: [:multiple_update, :update]
 
   def index
@@ -17,6 +16,7 @@ class QA::IssuesController < AuthenticatedController
 
   def edit
     @form_cancel_path = project_qa_issue_path(current_project, @issue)
+    @form_preview_path = preview_project_qa_issue_path(current_project, @issue)
     @tags = current_project.tags
   end
 
@@ -39,7 +39,14 @@ class QA::IssuesController < AuthenticatedController
           track_state_change(issue)
         end
 
-        format.html { redirect_to_target_or_default project_qa_issues_path(current_project), notice: 'State updated successfully.' }
+        format.html do
+          if params[:return_to] == 'qa'
+            redirect_to project_qa_issues_path(current_project), notice: 'State updated successfully.'
+          else
+            redirect_to project_issues_path(current_project), notice: 'State updated successfully.'
+          end
+        end
+
         format.json { head :ok }
       else
         format.html { render :show, alert: @issues.errors.full_messages.join('; ') }
