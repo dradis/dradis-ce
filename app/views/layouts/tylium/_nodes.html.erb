@@ -11,6 +11,10 @@
             <% end %>
             <div class='dropdown-menu'>
               <a href='#modal_add_branch_node' class='dropdown-item' tabindex='-1' data-bs-toggle='modal'>Add top-level node</a>
+              <% if @node %>
+                <div class='divider'></div>
+                <a href='#modal_add_child_node' class='dropdown-item' tabindex='-1' data-bs-toggle='modal'>Add subnode</a>
+              <% end %>
             </div>
           </div>
         </div>

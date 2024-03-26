@@ -18,10 +18,35 @@ describe 'node pages' do
     end
 
     describe "clicking the '+' button in the 'Nodes' sidebar", js: true do
-      it 'shows a link to create a top-level node' do
-        visit project_path(current_project)
-        find('.add-node-toggle').click
-        expect(page).to have_link 'Add top-level node'
+      context 'when there is no node selected' do
+        before do
+          visit project_path(current_project)
+          find('.add-node-toggle').click
+        end
+
+        it 'contains a link to create a top-level node' do
+          expect(page).to have_link 'Add top-level node'
+        end
+
+        it 'does not contain a link to create a subnode' do
+          expect(page).not_to have_link 'Add subnode'
+        end
+      end
+
+      context 'when there is a node selected' do
+        before do
+          node = create(:node, label: 'My node', project: current_project)
+          visit project_node_path(node.project, node)
+          find('.add-node-toggle').click
+        end
+
+        it 'contains a link to create a top-level node' do
+          expect(page).to have_link 'Add top-level node'
+        end
+
+        it 'contains a link to create a subnode' do
+          expect(page).to have_link 'Add subnode'
+        end
       end
 
       context 'when "Add top-level node" is clicked' do
@@ -105,6 +130,92 @@ describe 'node pages' do
 
           expect(
             current_project.nodes.in_tree.last(2).all? { |n| n.type_id == Node::Types::HOST }
+          ).to be true
+        end
+      end
+
+      context 'when "Add subnode" is clicked' do
+        before do
+          visit project_node_path(node.project, node)
+          find('.add-node-toggle').click
+          click_link 'Add subnode'
+        end
+
+        let(:node) { create(:node, project: current_project) }
+        let(:submit_form) { click_button 'Add' }
+
+        it 'shows a modal for adding a subnode' do
+          expect(page).to have_content("Add a child to the #{node.label} node")
+        end
+
+        describe "submitting the 'new subnode' form" do
+          it 'creates and shows the new subnode' do
+            fill_in :child_node_label, with: 'My awesome subnode'
+            expect { submit_form }.to change { Node.count }.by(1)
+            expect(page).to have_content 'Successfully created node.'
+            new_node = Node.last
+            expect(current_path).to eq project_node_path(new_node.project, new_node)
+          end
+        end
+
+        include_examples 'creates an Activity', :create, Node
+
+        example 'adding multiple subnodes' do
+          choose 'Add multiple'
+          expect(page).to have_no_field :child_node_label
+          expect(page).to have_field :child_nodes_list
+
+          # Include a blank line to make sure that no subnode gets created:
+          fill_in :child_nodes_list, with: <<-LIST.strip_heredoc
+            subnode 1
+
+            subnode_2
+                subnode with trailing whitespace
+          LIST
+
+          expect do
+            click_button 'Add'
+          end.to change { node.children.count }.by(3) \
+            .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(3)
+
+          expect(
+            ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h|
+              h[:job]
+            }.last(3)
+          ).to eq Array.new(3, ActivityTrackingJob)
+          expect(
+            ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+              h1[:args].map { |h2| h2['action'] }
+            }.flatten.last(3)
+          ).to eq Array.new(3, 'create')
+          expect(
+            ActiveJob::Base.queue_adapter.enqueued_jobs.map { |h1|
+              h1[:args].map { |h2| h2['trackable_type'] }
+            }.flatten.last(3)
+          ).to eq Array.new(3, 'Node')
+
+          expect(node.children.pluck(:label)).to match_array([
+            'subnode 1',
+            'subnode_2',
+            'subnode with trailing whitespace',
+          ])
+
+          # redirects to the parent node's page
+          expect(page).to have_selector 'ol.breadcrumb > li.active', text: node.label
+        end
+
+        example 'adding multiple host subnodes' do
+          choose 'Add multiple'
+
+          fill_in :child_nodes_list, with: "foo\nbar"
+          select 'Host', from: :child_nodes_icon
+
+          expect do
+            click_button 'Add'
+          end.to change { node.children.count }.by(2)
+
+          expect(
+            node.children.all? { |n| n.type_id == Node::Types::HOST }
           ).to be true
         end
       end
