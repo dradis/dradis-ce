@@ -5,7 +5,14 @@
       <span class="sidebar-link-label">Nodes</span>
       <div class="d-flex align-items-center gap-1">
         <div class="add-node">
-          <a href="#modal_add_branch_node" data-bs-toggle="modal" tabindex="-1"><i class="fa-solid fa-plus" data-behavior="add-node"></i><span class="visually-hidden">Add node</span></a>
+          <div class="dropdown">
+            <%= link_to 'javascript:void(0)', class: 'dropdown-toggle add-node-toggle', data: { bs_toggle: 'dropdown' } do %>
+              <i class="fa-solid fa-plus"></i>
+            <% end %>
+            <div class='dropdown-menu'>
+              <a href='#modal_add_branch_node' class='dropdown-item' tabindex='-1' data-bs-toggle='modal'>Add top-level node</a>
+            </div>
+          </div>
         </div>
         <div class="dropdown node-tree-dropdown">
           <%= link_to "#node-tree", data: { bs_toggle: 'collapse', behavior: 'collapse-collection toggle-node-tree' } do %>
