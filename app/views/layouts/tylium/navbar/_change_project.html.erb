@@ -1,0 +1,18 @@
+<div class="navbar-brand" data-behavior="navbar-brand">
+  <% if current_project.team %>
+    <%= link_to current_project.team.name, main_app.team_path(current_project.team), data: { turbolinks: false }, class: 'project-title' %>
+    <i class="fa-solid fa-angle-right"></i>
+  <% end %>
+
+  <%= link_to current_project.name, main_app.project_path(current_project), class: 'project-title' %>
+
+  <% if defined?(Dradis::Pro) %>
+    <%= link_to main_app.projects_path, class: 'change-project-link', data: { turbolinks: false }, title: 'Change Project' do %>
+      <i class="fa-solid fa-random fa-fw"></i> Change Project
+    <% end %>
+  <% else %>
+    <%= link_to 'javascript:void(0)', class: 'js-try-pro change-project-link', data: { term: 'projects', url: 'https://dradis.com/pro/pages/projects.html'}, title: 'Change Project' do %>
+      <i class="fa-solid fa-random fa-fw"></i> Change Project
+    <% end %>
+  <% end %>
+</div>

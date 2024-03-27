@@ -1,68 +1,82 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-light" data-behavior="navbar">
   <div class="container-fluid">
     <div class="d-flex justify-content-between w-100">
-      <div class="navbar-brand" data-behavior="navbar-brand">
-        <%= link_to current_project.name, main_app.project_path(current_project), class: 'project-title' %>
-        <%= link_to 'javascript:void(0)', class: 'js-try-pro change-project-link', data: { term: 'projects', url: 'https://dradis.com/pro/pages/projects.html'}, title: 'Change Project' do %>
-          <i class="fa-solid fa-random fa-fw"></i> Change Project
-        <% end %>
-      </div>
+
+      <%= render partial: 'layouts/tylium/navbar/change_project' %>
+
       <div class="d-inline-flex">
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation" data-behavior="navbar-toggler">
           <span class="navbar-toggler-icon"><i class="fa-solid fa-bars"></i></span>
         </button>
         <div class="collapse navbar-collapse" id="navbar">
           <ul class="navbar-nav ms-auto mt-lg-0">
+
             <li class="nav-item search">
-              <%= render "layouts/tylium/search" %>
+              <%= render "layouts/tylium/navbar/search" %>
             </li>
+
             <li class="nav-item">
-              <%= link_to main_app.project_upload_manager_path(current_project), class: 'nav-link', title: 'Upload' do %><i class="fa-solid fa-cloud-upload fa-lg"></i> Upload<% end %>
+              <%= link_to main_app.project_upload_manager_path(current_project), class: 'nav-link', title: 'Upload' do %>
+                <i class="fa-solid fa-cloud-upload fa-lg"></i> Upload
+              <% end %>
             </li>
+
             <li class="nav-item">
-              <%= link_to main_app.project_export_manager_path(current_project), class: 'nav-link', title: 'Export' do %><i class="fa-regular fa-file-text fa-lg"></i> Export<% end %>
+              <%= link_to main_app.project_export_manager_path(current_project), class: 'nav-link', title: 'Export' do %>
+                <i class="fa-regular fa-file-text fa-lg"></i> Export
+              <% end %>
             </li>
+
             <li class="nav-item">
               <%= link_to main_app.project_qa_issues_path(current_project), class: 'nav-link', title: 'QA' do %>
                 <i class="fa-regular fa-handshake fa-lg"></i> QA
               <% end %>
             </li>
-            <li class="nav-item">
-              <%= link_to main_app.project_configurations_path(current_project), class: 'nav-link', title: 'Configuration' do %><i class="fa-solid fa-cog fa-lg"></i> Configuration<% end %>
-            </li>
-            <li class="nav-item notifications dropdown">
-              <%= link_to main_app.project_notifications_path(current_project), class: 'nav-link dropdown-toggle', data: { bs_toggle: 'dropdown',  behavior: 'notifications-dropdown close-collapse', project_id: current_project.id }, role: 'button', title: 'Notifications' do %>
-                <i class="notifications-bell fa-solid fa-bell fa-lg"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i> Notifications
-              <% end %>
-              <div class="dropdown-menu dropdown-menu-end" data-url="<%= main_app.notifications_path %>"></div>
-            </li>
+
             <li class="nav-item dropdown">
-              <%= link_to '#', class: 'nav-link dropdown-toggle', data: { bs_toggle: 'dropdown', behavior: 'close-collapse' }, role: 'button', title: 'Help' do %>
-                <i class="fa-solid fa-question fa-lg"></i> Help
-              <% end %>
+              <a href="javascript:void(0)" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-behavior="close-collapse" title="Configuration">
+                <i class="fa-solid fa-cog fa-lg"></i> Configuration
+              </a>
+
               <div class="dropdown-menu dropdown-menu-end">
-                <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="training-course" data-url="https://dradis.com/academy/dradis-course/?utm_source=ce&utm_medium=app&utm_campaign=try-pro&utm_term=training-course">Free training course</a>
-                <a href="https://dradis.com/support/guides/projects/?utm_source=ce&utm_medium=app" target="_blank" class="dropdown-item">Projects 101</a>
-                <a href="https://dradis.com/support/guides/troubleshooting/?utm_source=ce&utm_medium=app" target="_blank" class="dropdown-item">Troubleshooting</a>
-                <div class="divider"></div>
-                <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="contact-support" data-url="https://dradis.com/pro/pages/support.html">Contact support</a>
-                <a href="https://evening-hamlet-4416.herokuapp.com/" target="_blank" class="dropdown-item">Chat on Slack</a>
-                <a href="https://github.com/dradis/dradis-ce/issues" class="js-hs-beacon dropdown-item">Report an issue</a>
-                <a href="http://dradis.com/support/" target="_blank" class="dropdown-item">Support website</a>
-                <a href="https://discuss.dradisframework.org" target="_blank" class="dropdown-item">Community forums</a>
-                <div class="divider"></div>
-                <a href="https://dradis.com/careers/" target="_blank" class="dropdown-item">We're hiring</a>
-                <%# FIXME: re-enable Tour %>
-                <!--
-              <div class="divider"></div>
-              <a href="javascript:void(0)" class="js-tour-start dropdown-item">Show Tour</a>
-              -->
-                <div class="divider"></div>
-                <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="try-pro" data-url="https://dradis.com/pro/pages/upgrade.html">Try Dradis Pro</a>
+                <% if defined?(Dradis::Pro) %>
+                  <%= link_to 'Project properties', main_app.edit_project_path(current_project), data: { turbolinks: false }, class: 'dropdown-item' %>
+                  <div class="divider"></div>
+                <% end %>
+
+                <%= link_to 'Configure plugins', main_app.project_configurations_path(current_project), class: 'dropdown-item' %>
               </div>
             </li>
-            <li class="nav-item">
-              <%= link_to main_app.logout_path, class: 'nav-link', title: 'Logout', data: { turbolinks: false }  do %><i class="fa-solid fa-sign-out fa-lg"></i> Logout<% end %>
+
+            <li class="nav-item notifications dropdown">
+              <%=
+                link_to main_app.project_notifications_path(current_project),
+                  class: 'nav-link dropdown-toggle',
+                  data: {
+                    bs_toggle: 'dropdown',
+                    behavior: 'notifications-dropdown close-collapse',
+                    project_id: current_project.id
+                  },
+                  role: 'button',
+                  title: 'Notifications' do %>
+
+                  <i class="notifications-bell fa-solid fa-bell fa-lg"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i> Notifications
+              <% end %>
+
+              <div class="dropdown-menu dropdown-menu-end" data-url="<%= main_app.notifications_path %>"></div>
+            </li>
+
+            <%= render partial: 'layouts/tylium/navbar/help' %>
+
+            <li class="nav-item dropdown user-menu ms-lg-1 ms-0">
+              <a href="javascript:void(0)" class="nav-link dropdown-toggle py-1 p-1 d-flex justify-content-lg-between align-items-center" data-bs-toggle="dropdown" data-behavior="close-collapse" title="User">
+                <%= avatar_image(current_user, size: 32) %>
+                <span class="user-menu-name"><%= current_user.name %></span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end">
+                <%= link_to 'Profile', main_app.profile_path, class:'dropdown-item', data: { turbolinks: false } if defined?(Dradis::Pro) %>
+                <%= link_to 'Log out', main_app.logout_path, class:'dropdown-item', data: { turbolinks: false } %>
+              </div>
             </li>
           </ul>
         </div>

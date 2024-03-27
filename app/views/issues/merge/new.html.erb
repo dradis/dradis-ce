@@ -13,9 +13,8 @@
   </nav>
 <% end %>
 
-<div class="content-container">
-  <div id="issues_editor">
-    <div class="note-text-inner">
+<div class="content-container" id="issues_editor">
+  <div class="note-text-inner">
       <h4 class="header-underline">You're merging <%= @issues.count %> Issues into a target Issue</h4>
 
       <%= form_tag project_merge_index_path(current_project) do %>
@@ -91,5 +90,4 @@
         </div>
       <% end %>
     </div>
-  </div>
 </div>
