@@ -1,0 +1,31 @@
+<li class="nav-item dropdown">
+  <a href="javascript:void(0)" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-behavior="close-collapse" title="Help">
+    <i class="fa-solid fa-question fa-lg"></i> Help
+  </a>
+
+  <div class="dropdown-menu dropdown-menu-end">
+    <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="training-course" data-url="https://dradis.com/academy/dradis-course/?utm_source=ce&utm_medium=app&utm_campaign=try-pro&utm_term=training-course">Free training course</a>
+    <a href="https://dradis.com/support/guides/projects/?utm_source=ce&utm_medium=app" target="_blank" class="dropdown-item">Projects 101</a>
+    <a href="https://dradis.com/support/guides/troubleshooting/?utm_source=ce&utm_medium=app" target="_blank" class="dropdown-item">Troubleshooting</a>
+    <div class="divider"></div>
+
+    <% if defined?(Dradis::Pro) %>
+    <a href="javascript:void(0)" class="dropdown-item" data-behavior="js-hs-beacon">Contact support</a>
+    <a href="https://dradispro.slack.com/" target="_blank" class="dropdown-item">Chat on Slack</a>
+    <% else %>
+    <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="contact-support" data-url="https://dradis.com/pro/pages/support.html">Contact support</a>
+    <a href="https://dradis.slack.com/" target="_blank" class="dropdown-item">Chat on Slack</a>
+    <% end %>
+
+    <a href="https://github.com/dradis/dradis-ce/issues" target="_blank" class="dropdown-item">Report an issue</a>
+    <a href="http://dradis.com/support/" target="_blank" class="dropdown-item">Support website</a>
+    <a href="https://discuss.dradisframework.org" target="_blank" class="dropdown-item">Community forums</a>
+    <div class="divider"></div>
+    <a href="https://dradis.com/careers/" target="_blank" class="dropdown-item">We're hiring</a>
+
+    <% unless defined?(Dradis::Pro) %>
+    <div class="divider"></div>
+    <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="try-pro" data-url="https://dradis.com/pro/pages/upgrade.html">Try Dradis Pro</a>
+    <% end %>
+  </div>
+</li>
