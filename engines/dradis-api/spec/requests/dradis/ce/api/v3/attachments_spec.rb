@@ -67,15 +67,24 @@ describe 'Attachments API' do
 
         expect(attachment_0).to eq({
           'filename' => 'image0.png',
-          'link' => "/projects/#{current_project.id}/nodes/#{node.id}/attachments/image0.png"
+          'size' => nil,
+          'created_at' => nil,
+          'link' => "/projects/#{current_project.id}/nodes/#{node.id}/attachments/image0.png",
+          'download' => "https://www.example.com/api/nodes/#{node.id}/attachments/#{attachment_0['filename']}/download"
         })
         expect(attachment_1).to eq({
           'filename' => 'image1.png',
-          'link' => "/projects/#{current_project.id}/nodes/#{node.id}/attachments/image1.png"
+          'size' => nil,
+          'created_at' => nil,
+          'link' => "/projects/#{current_project.id}/nodes/#{node.id}/attachments/image1.png",
+          'download' => "https://www.example.com/api/nodes/#{node.id}/attachments/#{attachment_1['filename']}/download"
         })
         expect(attachment_2).to eq({
           'filename' => 'image2.png',
-          'link' => "/projects/#{current_project.id}/nodes/#{node.id}/attachments/image2.png"
+          'size' => nil,
+          'created_at' => nil,
+          'link' => "/projects/#{current_project.id}/nodes/#{node.id}/attachments/image2.png",
+          'download' => "https://www.example.com/api/nodes/#{node.id}/attachments/#{attachment_2['filename']}/download"
         })
       end
 
@@ -104,9 +113,11 @@ describe 'Attachments API' do
 
       it 'returns JSON information about the attachment' do
         retrieved_attachment = JSON.parse(response.body)
-        expect(retrieved_attachment.keys).to match_array(%w[filename link])
+        expect(retrieved_attachment.keys).to match_array(%w[filename size created_at link download])
         expect(retrieved_attachment['filename']).to eq 'image.png'
+        expect(retrieved_attachment['size']).to eq 1787
         expect(retrieved_attachment['link']).to eq "/projects/#{current_project.id}/nodes/#{node.id}/attachments/image.png"
+        expect(retrieved_attachment['download']).to eq "https://www.example.com/api/nodes/#{node.id}/attachments/image.png/download"
       end
     end
 
@@ -158,10 +169,10 @@ describe 'Attachments API' do
         attachment_0 = retrieved_attachments.detect { |n| n['filename'] == 'rails.png' }
         attachment_1 = retrieved_attachments.detect { |n| n['filename'] == 'rails_copy-01.png' }
 
-        expect(attachment_0.keys).to match_array %w[filename link]
+        expect(attachment_0.keys).to match_array %w[filename size created_at link download]
         expect(attachment_0['filename']).to eq 'rails.png'
         expect(attachment_0['link']).to eq "/projects/#{current_project.id}/nodes/#{node.id}/attachments/rails.png"
-        expect(attachment_1.keys).to match_array %w[filename link]
+        expect(attachment_1.keys).to match_array %w[filename size created_at link download]
         expect(attachment_1['filename']).to eq 'rails_copy-01.png'
         expect(attachment_1['link']).to eq "/projects/#{current_project.id}/nodes/#{node.id}/attachments/rails_copy-01.png"
       end
@@ -287,6 +298,18 @@ describe 'Attachments API' do
         parsed_response = JSON.parse(response.body)
         expect(parsed_response['message']).to eq\
           'Resource deleted successfully'
+      end
+    end
+
+    describe 'GET /api/nodes/:node_id/attachments/:filename/download' do
+      it 'responds with the file' do
+        create(:attachment, filename: 'image.png', node: node)
+
+        get "/api/nodes/#{node.id}/attachments/image.png/download", env: @env
+
+        expect(response.headers['Content-Type']).to eq('image/png')
+        expect(response.headers['Content-Length']).to eq('1787')
+        expect(response.headers['Content-Disposition']).to eq("attachment; filename=\"image.png\"; filename*=UTF-8''image.png")
       end
     end
   end
