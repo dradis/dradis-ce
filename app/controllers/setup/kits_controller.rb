@@ -10,7 +10,7 @@ module Setup
       when :none
         mark_as_done
       when :welcome
-        kit_folder = Rails.root.join('lib','tasks', 'templates','welcome').to_s
+        kit_folder = Rails.root.join('lib', 'tasks', 'templates', 'welcome').to_s
         logger = Log.new.info('Loading Welcome kit...')
         # Before we import the Kit we need at least 1 user
         User.create!(email: 'adama@dradisframework.com') unless defined?(Dradis::Pro)
