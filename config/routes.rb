@@ -144,9 +144,9 @@ Rails.application.routes.draw do
   namespace :setup, only: [:index] do
     if defined?(Dradis::Pro)
     else
-      resource :kit, only: [:new, :create]
       resource :password, only: [:new, :create]
     end
+    resource :kit, only: [:new, :create]
   end
 
   resources :subscriptions, only: [:index, :create, :destroy]
