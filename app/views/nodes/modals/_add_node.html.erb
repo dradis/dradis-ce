@@ -61,13 +61,18 @@
           url: main_app.project_nodes_path(current_project),
           html: { class: 'add_one_node_form form-horizontal', id: "new_#{type}_node_form" }
         ) do |f| %>
-          <%= f.hidden_field :parent_id, id: "#{type}_parent_id" %>
           <%= f.input :label, input_html: { id: "#{type}_node_label", data: { behavior: 'node-label' } } %>
           <%= f.input :type_id,
             collection: [["No icon", Node::Types::DEFAULT], ["Host", Node::Types::HOST]],
             include_blank: false,
             label: 'Icon',
             input_html: { class: 'form-select', id: "#{type}_node_icon", data: { behavior: 'node-icon' } }
+          %>
+          <%= f.input :parent_id,
+            collection: @nodes.map { |n| [n.label, n.id] },
+            include_blank: true,
+            label: 'Parent node',
+            input_html: { class: 'form-select', id: "parent_node_select", data: { behavior: 'node-parent' } }
           %>
         <% end %>
 
