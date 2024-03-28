@@ -21,6 +21,18 @@
       </div>
 
       <div class="modal-body">
+        <div class='form-check' data-behavior='node-type-toggle'>
+          <%= check_box_tag(
+                'node_type',
+                :child,
+                type == :child,
+                id: 'node_type_child',
+                class: "node_type_toggle form-check-input") %>
+          <%= label_tag "node_type_child", "Sub-node", class: 'form-check-label' %>
+        </div>
+
+        <hr>
+
         <%# we need to scope the names of the radio buttons to this specific modal
           # so that clicking a radio in the 'add child' modal won't deselect the
           # radios in the 'add branch' modal %>
@@ -50,7 +62,6 @@
           url: main_app.project_nodes_path(current_project),
           html: { class: 'add_one_node_form form-horizontal', id: "new_#{type}_node_form" }
         ) do |f| %>
-          <%= f.hidden_field :parent_id, id: "#{type}_parent_id" %>
           <%= f.input :label, input_html: { id: "#{type}_node_label", data: { behavior: 'node-label' } } %>
           <%= f.input :type_id,
             collection: [["No icon", Node::Types::DEFAULT], ["Host", Node::Types::HOST]],
@@ -58,6 +69,14 @@
             label: 'Icon',
             input_html: { class: 'form-select', id: "#{type}_node_icon", data: { behavior: 'node-icon' } }
           %>
+          <div data-behavior='parent-node-select'>
+            <%= f.input :parent_id,
+              collection: current_project.nodes.user_nodes.order(:label).map { |n| [n.label, n.id] },
+              include_blank: true,
+              label: 'Parent node',
+              input_html: { class: 'form-select', id: "parent_node_select", data: { behavior: 'node-parent' } }
+            %>
+          </div>
         <% end %>
 
         <%# We can't use 'form_for' because 'list' isn't an attribute that exists
@@ -70,7 +89,6 @@
             Please add at least one node
           </div>
 
-          <%= hidden_field_tag "nodes[parent_id]", @node.id if type == :child %>
           <%= label_tag "#{type}_nodes_list", 'To create multiple nodes, add one node name per line:', class: 'form-label' %>
           <%= text_area_tag "nodes[list]", "", rows: 3, class: 'mb-3 nodes_list form-control', id: "#{type}_nodes_list", data: { behavior: 'nodes-list' } %>
           <%= label_tag "#{type}_nodes_icon", 'Icon', class: 'form-label' %>
@@ -84,6 +102,17 @@
             id: "#{type}_nodes_icon",
             data: { behavior: 'nodes-icon' })
           %>
+          <div data-behavior='parent-node-select'>
+            <%= label_tag "nodes[parent_id]", 'Parent node', class: 'form-label' %>
+            <%= select_tag(
+              "nodes[parent_id]",
+              options_from_collection_for_select(current_project.nodes.user_nodes.order(:label), 'id', 'label'),
+              include_blank: true,
+              class: 'form-select',
+              id: "parent_node_select",
+              data: { behavior: 'node-parent' }
+            ) %>
+          </div>
         <% end %>
       </div>
 

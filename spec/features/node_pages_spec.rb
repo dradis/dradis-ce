@@ -19,10 +19,12 @@ describe 'node pages' do
 
     describe "clicking the '+' button in the 'Nodes' sidebar", js: true do
       before do
+        existing_node
         visit project_path(current_project)
         find('.add-node > a').click
       end
 
+      let(:existing_node) { create(:node, label: 'Existing node', project: current_project) }
       let(:submit_form) { click_button 'Add' }
 
       it 'shows a modal for adding a top-level node' do
@@ -98,6 +100,38 @@ describe 'node pages' do
         expect(
           current_project.nodes.in_tree.last(2).all? { |n| n.type_id == Node::Types::HOST }
         ).to be true
+      end
+
+      context 'when Sub-node checkbox is selected' do
+        before do
+          check 'Sub-node'
+        end
+
+        let(:submit_form) { click_button 'Add' }
+
+        it 'displays the Parent node dropdown' do
+          expect(page).to have_field :parent_node_select
+        end
+
+        context 'when adding one sub-node' do
+          it 'creates a sub-node' do
+            fill_in :branch_node_label, with: 'My sub-node'
+            select existing_node.label, from: :parent_node_select
+            expect { submit_form }.to change { existing_node.children.count }.by(1)
+          end
+        end
+
+        context 'when adding multiple sub-nodes' do
+          before do
+            choose 'Add multiple'
+          end
+
+          it 'creates multiple sub-nodes' do
+            fill_in :branch_nodes_list, with: "sub-node 1\nsub-node 2"
+            select existing_node.label, from: :parent_node_select
+            expect { submit_form }.to change { existing_node.children.count }.by(2)
+          end
+        end
       end
     end
 

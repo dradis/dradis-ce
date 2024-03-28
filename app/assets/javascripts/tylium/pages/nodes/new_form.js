@@ -15,6 +15,23 @@
       }
     }
 
+    var $checkbox = $('[data-behavior=node-type-toggle] .form-check-input');
+    var $parentNodeSelect = $('[data-behavior=parent-node-select]');
+
+    if (!$checkbox.prop('checked')) {
+      $parentNodeSelect.css('display', 'none');
+    } else {
+      $parentNodeSelect.css('display', 'block');
+    }
+
+    $checkbox.change(function() {
+      if (!$checkbox.prop('checked')) {
+        $parentNodeSelect.css('display', 'none');
+      } else {
+        $parentNodeSelect.css('display', 'block');
+      }
+    });
+
     if ($('[data-behavior~=copy-node-label]').length) {
       $('[data-behavior~=copy-node-label]').click(function() {
         var $modal = $(this).parents('[data-behavior~=add-node]'),
