@@ -21,6 +21,17 @@
       </div>
 
       <div class="modal-body">
+        <div class='form-check' data-behavior='node-type-toggle'>
+          <%= check_box_tag(
+                'node_type',
+                :child,
+                type == :child,
+                class: "node_type_toggle form-check-input") %>
+          <%= label_tag "node_type_child", "Sub-node", class: 'form-check-label' %>
+        </div>
+
+        <hr>
+
         <%# we need to scope the names of the radio buttons to this specific modal
           # so that clicking a radio in the 'add child' modal won't deselect the
           # radios in the 'add branch' modal %>
