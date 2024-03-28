@@ -68,12 +68,14 @@
             label: 'Icon',
             input_html: { class: 'form-select', id: "#{type}_node_icon", data: { behavior: 'node-icon' } }
           %>
-          <%= f.input :parent_id,
-            collection: @nodes.map { |n| [n.label, n.id] },
-            include_blank: true,
-            label: 'Parent node',
-            input_html: { class: 'form-select', id: "parent_node_select", data: { behavior: 'node-parent' } }
-          %>
+          <div data-behavior='parent-node-select'>
+            <%= f.input :parent_id,
+              collection: @nodes.map { |n| [n.label, n.id] },
+              include_blank: true,
+              label: 'Parent node',
+              input_html: { class: 'form-select', id: "parent_node_select", data: { behavior: 'node-parent' } }
+            %>
+          </div>
         <% end %>
 
         <%# We can't use 'form_for' because 'list' isn't an attribute that exists
