@@ -88,7 +88,6 @@
             Please add at least one node
           </div>
 
-          <%= hidden_field_tag "nodes[parent_id]", @node.id if type == :child %>
           <%= label_tag "#{type}_nodes_list", 'To create multiple nodes, add one node name per line:', class: 'form-label' %>
           <%= text_area_tag "nodes[list]", "", rows: 3, class: 'mb-3 nodes_list form-control', id: "#{type}_nodes_list", data: { behavior: 'nodes-list' } %>
           <%= label_tag "#{type}_nodes_icon", 'Icon', class: 'form-label' %>
@@ -102,6 +101,17 @@
             id: "#{type}_nodes_icon",
             data: { behavior: 'nodes-icon' })
           %>
+          <div data-behavior='parent-node-select'>
+            <%= label_tag "nodes[parent_id]", 'Parent node', class: 'form-label' %>
+            <%= select_tag(
+              "nodes[parent_id]",
+              options_from_collection_for_select(current_project.nodes.user_nodes.order(:label), 'id', 'label'),
+              include_blank: true,
+              class: 'form-select',
+              id: "parent_node_select",
+              data: { behavior: 'node-parent' }
+            ) %>
+          </div>
         <% end %>
       </div>
 
