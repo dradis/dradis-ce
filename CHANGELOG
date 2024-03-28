@@ -4,6 +4,7 @@
   - Upgraded gems:
     - nokogiri, rails
   - Bugs fixes:
+    - Sidebar: Prevent version number from overlapping listed records
     - Tylium: Fix redirection when updating an issue or content block
     - Bug tracker items:
       - [item]
