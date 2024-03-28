@@ -70,7 +70,7 @@
           %>
           <div data-behavior='parent-node-select'>
             <%= f.input :parent_id,
-              collection: @nodes.map { |n| [n.label, n.id] },
+              collection: current_project.nodes.user_nodes.order(:label).map { |n| [n.label, n.id] },
               include_blank: true,
               label: 'Parent node',
               input_html: { class: 'form-select', id: "parent_node_select", data: { behavior: 'node-parent' } }
