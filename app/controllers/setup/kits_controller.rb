@@ -14,7 +14,7 @@ module Setup
         kit_folder = Rails.root.join('lib','tasks', 'templates','welcome').to_s
         logger = Log.new.info('Loading Welcome kit...')
         # Before we import the Kit we need at least 1 user
-        User.create!(email: 'adama@dradisframework.com')
+        User.create!(email: 'adama@dradis.com')
         KitImportJob.perform_later(kit_folder, logger: logger)
       end
 
