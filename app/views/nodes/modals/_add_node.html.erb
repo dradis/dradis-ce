@@ -15,9 +15,8 @@
         <% else %>
           <h5 class="modal-title" id="modal-title">Add a child to the <strong><%= @node.label %></strong> node</h5>
         <% end %>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-          <i class="fa fa-times"></i>
-          <span class="sr-only">Close modal</span>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">
+          <span class="visually-hidden">Close modal</span>
         </button>
       </div>
 
@@ -25,26 +24,23 @@
         <%# we need to scope the names of the radio buttons to this specific modal
           # so that clicking a radio in the 'add child' modal won't deselect the
           # radios in the 'add branch' modal %>
-        <div class='radio' data-behavior='copy-node-label'>
-          <label>
-            <%= radio_button_tag(
+        <div class='form-check ps-0' data-behavior='copy-node-label'>
+          <%= radio_button_tag(
               "add_#{type}_node",
               :one,
               true,
-              class: "add_node_radio") %>
-            Add one
-          </label>
+              class: "add_node_radio form-check-radio") %>
+          <%= label_tag "add_#{type}_node_one", "Add one", class: 'form-check-label' %>
         </div>
 
-        <div class='radio' data-behavior='copy-node-label'>
-          <label>
-            <%= radio_button_tag(
+        <div class='form-check ps-0' data-behavior='copy-node-label'>
+
+          <%= radio_button_tag(
               "add_#{type}_node",
               :multiple,
               false,
               class: "add_node_radio") %>
-            Add multiple
-          </label>
+          <%= label_tag "add_#{type}_node_multiple", "Add multiple", class: 'form-check-label' %>
         </div>
 
         <hr>
@@ -60,7 +56,7 @@
             collection: [["No icon", Node::Types::DEFAULT], ["Host", Node::Types::HOST]],
             include_blank: false,
             label: 'Icon',
-            input_html: { class: 'custom-select', id: "#{type}_node_icon", data: { behavior: 'node-icon' } }
+            input_html: { class: 'form-select', id: "#{type}_node_icon", data: { behavior: 'node-icon' } }
           %>
         <% end %>
 
@@ -75,16 +71,16 @@
           </div>
 
           <%= hidden_field_tag "nodes[parent_id]", @node.id if type == :child %>
-          <%= label_tag "#{type}_nodes_list", 'To create multiple nodes, add one node name per line:' %>
-          <%= text_area_tag "nodes[list]", "", rows: 3, class: 'form-control mb-3 nodes_list', id: "#{type}_nodes_list", data: { behavior: 'nodes-list' } %>
-          <%= label_tag "#{type}_nodes_icon", 'Icon' %>
+          <%= label_tag "#{type}_nodes_list", 'To create multiple nodes, add one node name per line:', class: 'form-label' %>
+          <%= text_area_tag "nodes[list]", "", rows: 3, class: 'mb-3 nodes_list form-control', id: "#{type}_nodes_list", data: { behavior: 'nodes-list' } %>
+          <%= label_tag "#{type}_nodes_icon", 'Icon', class: 'form-label' %>
           <%= select_tag(
             "nodes[type_id]",
             options_for_select(
               [["No icon", Node::Types::DEFAULT], ["Host", Node::Types::HOST]]
             ),
             include_blank: false,
-            class: 'custom-select',
+            class: 'form-select',
             id: "#{type}_nodes_icon",
             data: { behavior: 'nodes-icon' })
           %>
@@ -93,7 +89,7 @@
 
       <div class="modal-footer">
         <input type="submit" value="Add" class="modal_add_node_submit_btn btn btn-primary" />
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn" data-bs-dismiss="modal" aria-hidden="true">Close</button>
       </div>
     </div>
   </div>

@@ -8,7 +8,7 @@
 
   <%= f.error_notification %>
 
-  <%= label_tag :issue_text, 'Issue source input', class: 'sr-only' %>
+  <%= label_tag :issue_text, 'Issue source input', class: 'visually-hidden' %>
   <%=
     f.input :text,
       label: false,
@@ -27,6 +27,10 @@
 
   <% if @issue.persisted? %>
     <%= hidden_field :issue, :original_updated_at, value: @issue.updated_at.to_i %>
+  <% end %>
+
+  <% if controller.class.name.deconstantize == 'QA' %>
+    <%= hidden_field nil, :return_to, value: :qa %>
   <% end %>
 
   <%= render 'issues/tag_input', f: f %>

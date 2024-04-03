@@ -8,7 +8,7 @@ class Project
   attr_reader :id, :name
 
   # -- Class Methods --------------------------------------------------------
-  def self.create(args={})
+  def self.create(args = {})
     new(**args.merge(id: 1))
   end
 
@@ -17,7 +17,7 @@ class Project
   end
 
   # This tricks NamingService.name_project (used by KitImportJob)
-  def self.exists?(args={})
+  def self.exists?(args = {})
     false
   end
 
@@ -84,6 +84,10 @@ class Project
 
   def tags
     Tag.all
+  end
+
+  def team
+    nil
   end
 
   def testers_for_mentions

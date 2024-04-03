@@ -13,6 +13,7 @@ describe 'Issues pages' do
     let!(:records) do
       create_list(:issue, 10, state: :ready_for_review, node: current_project.issue_library)
     end
+    let(:record) { create(:issue, :with_liquid, state: :ready_for_review, node: current_project.issue_library) }
 
     include_examples 'qa pages', :issue
   end

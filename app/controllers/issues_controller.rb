@@ -19,7 +19,6 @@ class IssuesController < AuthenticatedController
   before_action :set_affected_nodes, only: [:show]
   before_action :set_form_cancel_path, only: [:new, :edit]
   before_action :set_tags, except: [:destroy]
-  before_action :store_location, only: [:index, :show]
 
   def index
   end
@@ -74,6 +73,7 @@ class IssuesController < AuthenticatedController
   end
 
   def edit
+    @form_preview_path = preview_project_issue_path(current_project, @issue)
   end
 
   def update
@@ -84,9 +84,7 @@ class IssuesController < AuthenticatedController
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
-        format.html do
-          redirect_to_target_or_default project_issue_path(current_project, @issue), notice: 'Issue updated.'
-        end
+        format.html { redirect_to_main_or_qa }
       else
         format.html do
           flash.now[:alert] = 'Issue couldn\'t be updated.'
@@ -125,6 +123,25 @@ class IssuesController < AuthenticatedController
   end
 
   private
+
+  def liquid_resource_assigns
+    { 'issue' => IssueDrop.new(@issue) }
+  end
+
+  def redirect_to_main_or_qa
+    notice = 'Issue updated.'
+
+    if params[:return_to] == 'qa'
+      if @issue.ready_for_review?
+        redirect_to project_qa_issue_path(current_project, @issue), notice: notice
+      else
+        redirect_to project_qa_issues_path(current_project), notice: notice
+      end
+    else
+      redirect_to project_issue_path(current_project, @issue), notice: notice
+    end
+  end
+
   def set_affected_nodes
     @affected_nodes = Node.joins(:evidence)
                           .select('nodes.id, label, type_id, count(evidence.id) as evidence_count, nodes.updated_at')
@@ -134,9 +151,7 @@ class IssuesController < AuthenticatedController
   end
 
   def set_form_cancel_path
-    path = @issue.new_record? ? project_issues_path(current_project) : [current_project, @issue]
-
-    @form_cancel_path = session[:return_to] ? session[:return_to] : path
+    @form_cancel_path = @issue.new_record? ? project_issues_path(current_project) : [current_project, @issue]
   end
 
   def set_columns

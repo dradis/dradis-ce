@@ -45,6 +45,7 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def edit
+    @form_preview_path = preview_project_node_evidence_path(current_project, @node, @evidence)
   end
 
   def update
@@ -105,6 +106,13 @@ class EvidenceController < NestedNodeResourceController
   def autogenerate_issue
     @evidence.issue = Issue.autogenerate_from(@evidence)
     track_created(@evidence.issue)
+  end
+
+  def liquid_resource_assigns
+    {
+      'evidence' => EvidenceDrop.new(@evidence),
+      'node' => NodeDrop.new(@evidence.node)
+    }
   end
 
   # Look for the Evidence we are going to be working with based on the :id

@@ -13,7 +13,7 @@
               <th>Item</th>
               <th>Removed by</th>
               <th>When</th>
-              <th class="no-sort" data-column-visible="false"><span class="sr-only">Actions</span></th>
+              <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Actions</span></th>
             </tr>
           </thead>
           <tbody>
@@ -33,7 +33,7 @@
                         method: :post,
                         data: { confirm: 'Are you sure?' }
                       ) do %>
-                        <i class="fa fa-refresh"></i> Recover
+                        <i class="fa-solid fa-refresh"></i> Recover
                       <% end %>
                     </td>
                   </tr>

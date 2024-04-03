@@ -5,13 +5,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.7.3'
+gem 'rails', '~> 7.0.8'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
 
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+# Use ruby-terser as compressor for JavaScript assets
+gem 'terser', '~> 1.1'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'mini_racer', platforms: :ruby
@@ -35,9 +35,8 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.12.0', require: false
 
 # ---------------------------------------------------- Dradis Community Edition
-gem 'bootstrap', '~> 4.3.1'
+gem 'bootstrap', '~> 5.2.3'
 gem 'jquery-rails'
-gem 'jquery-ui-rails'
 gem 'jquery-fileupload-rails', '~> 0.3.4'
 gem 'jquery-hotkeys-rails'
 
@@ -67,6 +66,12 @@ gem 'thor', '~> 1.2.1'
 # Ruby dependency, version specified here due to CVE-2023-28756
 gem 'time', '>= 0.2.2'
 
+gem 'font-awesome-sass', '~> 6.4.0'
+
+gem 'importmap-rails', '~> 1.2'
+
+gem 'sprockets-rails', '>= 3.0.0'
+
 # ------------------------------------------------------ With native extensions
 # These require native extensions.
 # Ensure Traveling Ruby provides an appropriate version before bumping.
@@ -81,7 +86,7 @@ gem 'bcrypt', '3.1.12'
 gem 'json', '2.3.0'
 
 # XML manipulation
-gem 'nokogiri', '>= 1.14.3'
+gem 'nokogiri', '>= 1.16.2'
 
 # MySQL backend
 # gem 'mysql2', '~> 0.5.1'
@@ -99,7 +104,7 @@ gem 'RedCloth', '~> 4.3.2', require: 'redcloth'
 gem 'rinku'
 
 # html-pipeline dependency for html sanitization
-gem 'sanitize', '6.0.1'
+gem 'sanitize', '6.0.2'
 
 # SQLite3 DB driver
 gem 'sqlite3'
@@ -136,16 +141,11 @@ gem 'net-imap'
 
 gem 'matrix'
 
-gem 'puma', '~> 5.0'
+gem 'puma', '>= 6.4.2'
 
 # ------------------------------------------------------------------ Deployment
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
-group :production do
-  # Use Unicorn as the web server
-  gem 'unicorn',  '6.1.0'
-end
 
 # ----------------------------------------------------- Development and Testing
 group :development do
@@ -154,7 +154,7 @@ group :development do
   # Display performance information such as SQL time and flame graphs for each request in your browser.
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem 'rack-mini-profiler', '~> 2.0'
-  gem 'listen', '~> 3.3'
+  gem 'listen'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
@@ -190,12 +190,11 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
-  gem 'capybara', '>= 3.26'
+  gem 'capybara', '~> 3.39'
   gem 'guard-rspec', require: false
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '~> 4.17'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'timecop'
-  gem 'webdrivers'
 
   # Required by capybara
   gem 'matrix'
@@ -216,12 +215,12 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 4.8.0'
+gem 'dradis-plugins', github: 'dradis/dradis-plugins', branch: 'fix/template-caching'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 4.8.0'
+gem 'dradis-projects', '~> 4.11.0'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)
@@ -232,32 +231,33 @@ end
 # effective.
 
 # ----------------------------------------------------------------- Calculators
-gem 'dradis-calculator_cvss', '~> 4.8.0'
-gem 'dradis-calculator_dread', '~> 4.8.0'
+
+gem 'dradis-calculator_cvss', '~> 4.11.0'
+gem 'dradis-calculator_dread', '~> 4.11.0'
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv_export', '~> 4.8.0'
-gem 'dradis-html_export', '~> 4.8.0'
+gem 'dradis-csv_export', '~> 4.11.0'
+gem 'dradis-html_export', '~> 4.11.0'
 
 # ---------------------------------------------------------------------- Import
-gem 'dradis-csv', '~> 4.8.0'
+gem 'dradis-csv', '~> 4.11.0'
 
 # ---------------------------------------------------------------------- Upload
-gem 'dradis-acunetix', '~> 4.8.0'
-gem 'dradis-brakeman', '~> 4.8.0'
-gem 'dradis-burp', '~> 4.8.0'
-gem 'dradis-coreimpact', '~> 4.8.0'
-gem 'dradis-metasploit', '~> 4.8.0'
-gem 'dradis-nessus', '~> 4.8.0'
-gem 'dradis-netsparker', '~> 4.8.0'
-gem 'dradis-nexpose', '~> 4.8.0'
-gem 'dradis-nikto', '~> 4.8.0'
-gem 'dradis-nipper', '~> 4.8.0'
-gem 'dradis-nmap', '~> 4.8.0'
-gem 'dradis-ntospider', '~> 4.8.0'
-gem 'dradis-openvas', '~> 4.8.0'
-gem 'dradis-qualys', '~> 4.8.0'
-gem 'dradis-saint', '~> 4.8.0'
-gem 'dradis-veracode', '~> 4.8.0'
-gem 'dradis-wpscan', '~> 4.8.0'
-gem 'dradis-zap', '~> 4.8.0'
+gem 'dradis-acunetix', '~> 4.11.0'
+gem 'dradis-brakeman', '~> 4.11.0'
+gem 'dradis-burp', '~> 4.11.0'
+gem 'dradis-coreimpact', '~> 4.11.0'
+gem 'dradis-metasploit', '~> 4.11.0'
+gem 'dradis-nessus', '~> 4.11.0'
+gem 'dradis-netsparker', '~> 4.11.0'
+gem 'dradis-nexpose', '~> 4.11.0'
+gem 'dradis-nikto', '~> 4.11.0'
+gem 'dradis-nipper', '~> 4.11.0'
+gem 'dradis-nmap', '~> 4.11.0'
+gem 'dradis-ntospider', '~> 4.11.0'
+gem 'dradis-openvas', '~> 4.11.0'
+gem 'dradis-qualys', '~> 4.11.0'
+gem 'dradis-saint', '~> 4.11.0'
+gem 'dradis-veracode', '~> 4.11.0'
+gem 'dradis-wpscan', '~> 4.11.0'
+gem 'dradis-zap', '~> 4.11.0'

@@ -1,0 +1,11 @@
+<div class="alert alert-warning m-0">
+  <p>
+    This exporter doesn't have any report templates yet.
+    <% if current_user.respond_to?(:role?) && current_user.role?(:admin) %>
+      <%= link_to 'Upload a template', main_app.admin_templates_reports_path(tab: plugin_name) %>, then try again.
+    <% else %>
+      Please contact your administrator.
+    <% end %>
+  </p>
+  <p>Read more about <%= link_to 'report templates', 'https://dradis.com/support/guides/administration/report_templates.html', target: '_blank' %>.</p>
+</div>

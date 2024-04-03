@@ -1,14 +1,14 @@
 <div class="btn-group btn-states" data-behavior="btn-states">
   <button id="export-button" class="btn btn-lg btn-primary">Export <span data-behavior="state-button">Published</span> Records</button>
-  <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <span class="sr-only">Toggle Dropdown</span>
+  <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="visually-hidden">Toggle Dropdown</span>
   </button>
   <div class="dropdown-menu">
-    <%= collection_radio_buttons(plugin_name, :scope, [['published', 'published'], ['all', 'all']], :first, :first) do |b| %>
+    <%= collection_radio_buttons(nil, :scope, [['published', 'published'], ['all', 'all']], :first, :first) do |b| %>
       <span>
-        <%= b.label class: 'state' do %>
-          <%= b.radio_button class: 'd-none', data: { behavior: 'state-radio'}, checked: b.value == 'published' %>
-          <i class="fa fa-check fa-fw"></i>
+        <%= b.label class: 'state', for: "#{plugin_name}_scope_#{b.value}" do %>
+          <%= b.radio_button id: "#{plugin_name}_scope_#{b.value}", class: 'd-none', data: { behavior: 'state-radio'}, checked: b.value == 'published' %>
+          <i class="fa-solid fa-check fa-fw"></i>
           <div class="state-label">
             <p data-behavior="state-label"><%= b.text.humanize %></p>
             <% case b.value %>
@@ -16,10 +16,10 @@
             <span>Only records that have been reviewed and published.</span>
             <% when 'all' %>
             <span>All records, regardless if they are draft, ready for review, or published.</span>
-            <% end %>
-          </div>
-        <% end %>
-      </span>
-    <% end %>
-  </div>
+          <% end %>
+        </div>
+      <% end %>
+    </span>
+  <% end %>
+</div>
 </div>

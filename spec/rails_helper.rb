@@ -2,7 +2,7 @@
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'spec_helper'
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -10,7 +10,6 @@ require 'rspec/rails'
 require 'capybara/rspec'
 require 'paper_trail/frameworks/rspec'
 require 'shoulda/matchers'
-
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -26,7 +25,7 @@ require 'shoulda/matchers'
 # require only the support files necessary.
 #
 # Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
-["", "engines/**/"].each do |dir|
+['', 'engines/**/'].each do |dir|
   Dir[Rails.root.join("#{dir}spec/support/**/*.rb")].each { |f| require f }
 end
 
@@ -34,15 +33,21 @@ end
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
-Capybara.register_driver :chrome do |app|
-  options = %w[headless disable-gpu window-size=1920,1080]
-  Capybara::Selenium::Driver.new app, browser: :chrome,
-    options: Selenium::WebDriver::Chrome::Options.new(args: options),
-    clear_local_storage: true
+Capybara.register_driver :firefox do |app|
+  options = %w[--headless --disable-gpu]
+  Capybara::Selenium::Driver.new(
+    app,
+    browser: :firefox,
+    clear_local_storage: true,
+    options: Selenium::WebDriver::Firefox::Options.new(
+      args: options
+    )
+  )
 end
 
 Capybara.server = :puma, { Silent: true }
-Capybara.javascript_driver = :chrome
+Capybara.javascript_driver = :firefox
+Selenium::WebDriver.logger
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -83,7 +88,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   # config.include WaitForAjax, type: :feature
 
-  config.example_status_persistence_file_path = Rails.root.join("spec", ".examples.txt")
+  config.example_status_persistence_file_path = Rails.root.join('spec', '.examples.txt')
 
   config.before(:suite) do
     begin

@@ -25,14 +25,10 @@ document.addEventListener "turbolinks:load", ->
     });
 
     $(':file').change ->
-      ConsoleUpdater.jobId = ConsoleUpdater.jobId + 1
       fileName = this.value.split('\\').pop()
       $('#console').empty()
       $('#filename').text(fileName)
       $('#spinner').show()
-      $('#result').data('id', ConsoleUpdater.jobId)
-      $('#result').show()
-      $('#item_id').val(ConsoleUpdater.jobId)
       $('[data-behavior~=file-label]').text(fileName)
 
       $(this).closest('form').submit()

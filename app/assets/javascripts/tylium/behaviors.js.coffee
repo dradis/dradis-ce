@@ -93,7 +93,7 @@ document.addEventListener "turbolinks:load", ->
     url = url + '?utm_source=ce&utm_medium=app&utm_campaign=try-pro&utm_term=' + term
 
     $iframe.attr('src', url)
-    $('#try-pro').modal()
+    new bootstrap.Modal('#try-pro').show()
 
   # If project id is changed in project path
   if !(/^\/projects\/1(\/|$)/.test(window.location.pathname))
@@ -139,7 +139,7 @@ document.addEventListener "turbolinks:load", ->
       $this = $(this)
       $this.find('[data-behavior~=toggle-chevron]').toggleClass('fa-chevron-down fa-chevron-up')
 
-      if $this.is('[data-behavior~=import-box]') && $($this.data('target')).innerHeight() == 0
+      if $this.is('[data-behavior~=import-box-header]') && $($this.data('target')).innerHeight() == 0
         $($this.data('target')).find("input[type='text']:first").focus()
 
   # Scroll for more indicator functionality

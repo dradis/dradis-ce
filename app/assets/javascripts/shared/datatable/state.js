@@ -14,7 +14,7 @@ $(document).on('preInit.dt', 'body.issues.index', function (e, settings) {
     className: 'd-none',
     extend: 'collection',
     name: 'stateBtn',
-    text: '<i class="fa fa-adjust fa-fw"></i>State<i class="fa fa-caret-down fa-fw"></i>',
+    text: '<i class="fa-solid fa-adjust fa-fw"></i>State<i class="fa-solid fa-caret-down fa-fw"></i>',
     buttons: DradisDatatable.prototype.setupStateButtons.call(api),
   });
 });
@@ -47,7 +47,7 @@ DradisDatatable.prototype.setupStateButtons = function () {
   states.forEach(function (state) {
     stateButtons.push({
       text: $(
-        `<i class="fa ${state[1]} fa-fw mr-1"></i><span>${state[0]}</span>`
+        `<i class="fa-solid ${state[1]} fa-fw me-1"></i><span>${state[0]}</span>`
       ),
       action: DradisDatatable.prototype.updateRecordState.call(
         api,
@@ -72,6 +72,7 @@ DradisDatatable.prototype.updateRecordState = function (newState) {
       data: {
         ids: DradisDatatable.prototype.rowIds(selectedRows),
         state: newState,
+        return_to: $('[data-behavior~=qa-viewer]').length > 0 ? 'qa' : null
       },
       success: function () {
         DradisDatatable.prototype.toggleStateBtn.call(api, false);
@@ -80,8 +81,8 @@ DradisDatatable.prototype.updateRecordState = function (newState) {
 
         $('[data-behavior="qa-alert"]').remove();
         $('.page-title').after(`
-          <div class="alert alert-success" data-behavior="qa-alert">
-            <a class="close" data-dismiss="alert" href="javascript:void(0)">x</a>
+          <div class="alert alert-success alert-dismissible" data-behavior="qa-alert">
+            <a class="btn-close" data-bs-dismiss="alert" href="javascript:void(0)"><span class="visually-hidden">Close alert</span></a>
             Successfully set the records as ${newState}!
           </div>
         `);

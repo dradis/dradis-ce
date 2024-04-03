@@ -9,7 +9,7 @@
         <% @all_columns.each do |column| %>
           <th><%= column %></th>
         <% end %>
-        <th class="no-sort" data-column-visible="false"><span class="sr-only">Actions</span></th>
+        <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Actions</span></th>
       </tr>
     </thead>
     <tbody>
@@ -24,7 +24,7 @@
                 [
                   tag.display_name,
                   content_tag(:span, class: 'tag', style: "color: #{tag.color}") do
-                    content_tag(:i, nil, class: 'fa fa-tag fa-fw mr-1') + tag.display_name
+                    content_tag(:i, nil, class: 'fa-solid fa-tag fa-fw me-1') + tag.display_name
                   end
                 ]
               when 'Color'
@@ -44,10 +44,10 @@
             <% end  %>
             <td class="column-actions">
               <%= link_to edit_project_tag_path(current_project, tag), remote: true do %>
-                <i class="fa fa-pencil"></i> Edit
+                <i class="fa-solid fa-pencil"></i> Edit
               <% end %>
               <%= link_to project_tag_path(current_project, tag), method: :delete, data: { confirm: "Are you sure?\n\nProceeding will delete this tag. Any issues with this tag will be untagged." }, class: 'text-error-hover' do %>
-                <i class="fa fa-trash"></i> Delete
+                <i class="fa-solid fa-trash"></i> Delete
               <% end %>
             </td>
           </tr>

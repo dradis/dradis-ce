@@ -16,10 +16,10 @@ body {
 a {
   color: $linkColor;
   transition: color 0.2s ease-in-out;
+  text-decoration: none;
 
   &:hover {
     color: $linkColorHover;
-    text-decoration: none;
   }
 }
 
@@ -63,6 +63,13 @@ code {
 
 .disabled {
   color: $mutedText !important;
+}
+
+.dradis-placeholder {
+  font-style: italic;
+  margin-left: 1rem;
+  cursor: default;
+  height: 3rem;
 }
 
 .dropdown-toggle:not(.dropdown-toggle-split)::after {
@@ -113,13 +120,6 @@ mark {
   }
 }
 
-.placeholder {
-  font-style: italic;
-  margin-left: 1rem;
-  cursor: default;
-  height: 3rem;
-}
-
 pre code {
   background-color: initial;
   padding: 0;
@@ -147,11 +147,12 @@ select:not(select[multiple]) {
   appearance: none !important;
   -moz-appearance: none !important;
   -webkit-appearance: none !important;
-  background: white
-    url('data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+')
-    no-repeat 95% 50% !important;
-  background-position: calc(100% - 5px) center !important;
-  padding-right: 1.5rem !important;
+  background-color: white;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-position: right 0.75rem center;
+  background-size: 1rem 0.75rem;
+  background-repeat: no-repeat;
+  padding-right: 2rem !important;
 }
 
 // Firefox Fixes //
@@ -167,13 +168,6 @@ select:not(select[multiple]) {
 
 .small {
   font-weight: 300;
-}
-
-.sticky-top {
-  position: sticky !important;
-  top: $mainContentMargin;
-  margin-bottom: $mainContentMargin;
-  z-index: 2;
 }
 
 strong {
@@ -218,10 +212,6 @@ strong {
 
 .text-primary {
   color: $primaryColor !important;
-}
-
-.top-5 {
-  top: 5rem !important;
 }
 
 ul {

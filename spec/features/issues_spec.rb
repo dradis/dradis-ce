@@ -60,7 +60,7 @@ describe 'Issues pages' do
 
             expect(page).to have_selector('.alert-success', text: 'State updated successfully.')
             expect(issue.reload.state).to eq new_state.downcase.gsub(' ', '_')
-            within 'tbody tr' do
+            within 'tbody tr', match: :first do
               expect(page).to have_content(new_state)
             end
           end
@@ -217,9 +217,13 @@ describe 'Issues pages' do
         end
 
         describe 'submitting the form with valid information' do
-          let(:new_content) { "#[Description]#\r\nNew info" }
+          let(:field) { '#[Description]#' }
+          let(:value) { 'New info' }
+          let(:new_content) { "#{field}\r\n#{value}" }
+
           before do
-            fill_in :issue_text, with: new_content
+            fill_in :issue_text, with: field
+            find('#issue_text').send_keys :enter, value
           end
 
           let(:submit_form) { click_button 'Update Issue' }
@@ -306,6 +310,11 @@ describe 'Issues pages' do
 
           include_examples 'a form with local auto save', Issue, :edit
         end
+
+        describe 'when including liquid content' do
+          let(:record) { create(:issue, :with_liquid, node: issuelib) }
+          include_examples 'liquid preview', 'issue', false
+        end
       end
 
       describe 'show page' do
@@ -353,8 +362,8 @@ describe 'Issues pages' do
           it 'presents the table of hosts affected by a given issue', js: true do
             click_link 'Evidence'
             expect(page).to have_selector('[data-behavior~=dradis-datatable]')
-            expect(find('.secondary-sidebar-content')).to have_content('10.0.0.1')
-            expect(find('.secondary-sidebar-content')).to have_content('10.0.0.2', count: 3)
+            expect(find('#evidence-tab')).to have_content('10.0.0.1')
+            expect(find('#evidence-tab')).to have_content('10.0.0.2', count: 3)
           end
 
           it 'presents the evidence of the other nodes on click', js: true do
@@ -402,6 +411,11 @@ describe 'Issues pages' do
             expect(page).to have_text "(#{@issue.state.humanize})"
           end
         end
+
+        describe 'when including liquid content' do
+          let(:record) { create(:issue, :with_liquid, node: issuelib) }
+          include_examples 'liquid dynamic content', 'issue', false
+        end
       end
     end
 
@@ -424,8 +438,7 @@ describe 'Issues pages' do
           visit project_issue_revisions_path(current_project, issue)
 
           within '.js-diff-body' do
-            expect(page).to have_text('issue text')
-            expect(page).to have_text('updated text')
+            expect(page).to have_text('issue[0m[32mupdated[0m text') # match the format of the inline diff
           end
         end
       end

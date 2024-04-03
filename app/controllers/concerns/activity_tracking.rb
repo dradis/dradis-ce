@@ -30,4 +30,8 @@ module ActivityTracking
   def track_updated(trackable, user: current_user, project: current_project)
     track_activity(trackable, :update, user, project)
   end
+
+  def track_state_change(trackable, user: current_user, project: current_project)
+    track_activity(trackable, :state_change, user, project)
+  end
 end

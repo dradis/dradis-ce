@@ -12,7 +12,7 @@ describe 'evidence' do
 
   example 'show page with wrong Node ID in URL' do
     node     = create(:node)
-    evidence = create(:evidence, node:)
+    evidence = create(:evidence, node: node)
     wrong_node = create(:node)
     expect do
       visit project_node_evidence_path(current_project, wrong_node, evidence)
@@ -79,6 +79,11 @@ describe 'evidence' do
 
     let(:model) { @evidence }
     include_examples 'nodes pages breadcrumbs', :show, Evidence
+
+    describe 'when including liquid content' do
+      let(:record) { create(:evidence, :with_liquid, issue: @issue, node: @node) }
+      include_examples 'liquid dynamic content', 'evidence', true
+    end
   end
 
   describe 'edit page', js: true do
@@ -86,7 +91,7 @@ describe 'evidence' do
 
     before do
       issue = create(:issue, node: issue_lib)
-      @evidence = create(:evidence, issue:, node: @node, updated_at: 2.seconds.ago)
+      @evidence = create(:evidence, issue: issue, node: @node, updated_at: 2.seconds.ago)
       visit edit_project_node_evidence_path(current_project, @node, @evidence)
       click_link 'Source'
     end
@@ -161,6 +166,11 @@ describe 'evidence' do
       let(:model_attributes) { [{ name: :content, value: 'Edit Evidence' }] }
 
       include_examples 'a form with local auto save', Evidence, :edit
+    end
+
+    describe 'when including liquid content' do
+      let(:record) { create(:evidence, :with_liquid, issue: @issue, node: @node) }
+      include_examples 'liquid preview', 'evidence', true
     end
   end
 

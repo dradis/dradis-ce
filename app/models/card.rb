@@ -84,13 +84,14 @@ class Card < ApplicationRecord
     end
   end
 
-  private
   def local_fields
     {
       'List'  => list.name.parameterize(preserve_case: true, separator: '_'),
       'Title' => name
     }
   end
+
+  private
 
   # We are saving the board_id to the card's version so that if the card's list
   # is deleted, we still have an idea if the card's board still exists.

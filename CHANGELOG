@@ -2,9 +2,10 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - [gem]
+    - nokogiri, rails
   - Bugs fixes:
     - Digital Ocean: Fix one click deploy button
+    - Tylium: Fix redirection when updating an issue or content block
     - Bug tracker items:
       - [item]
   - New integrations:
@@ -24,6 +25,65 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v4.11.0 (January 2024)
+  - Assets: Add importmap-rails to handle js libraries
+  - Liquid: Add LiquidAssignsService
+  - Revision history: Improve version history for content with carriage return
+  - Tylium: Show liquid content in editor preview
+  - Web-server: Replace unicorn with puma in production
+  - Note: Enable ActiveSupport load hooks
+  - Upgraded gems:
+    - rails
+  - Bugs fixes:
+    - Evidence: Prevent loading old Evidence template content at the Issue level
+    - Methodologies: validate presence of content
+  - Integration enhancements:
+    - Burp: Change nokogiri search to xpath to support nokogiri >= 1.15
+    - Nexpose:
+      - Add port/protocol to evidences
+      - Use the details in <os> as the OS node property
+      - Import `vulnerability.risk_score` as a new Issue field
+      - Allow multiple evidence with the same test id & node address
+    - Qualys: Add support for the output for Qualys WAS API 3.13 and later
+  - Security Fixes:
+    - Low: Authenticated (author) information disclosure
+      - After a user has been removed from a project, they may still get 
+        notifications for Issues they were subscribed to, resulting in the
+        disclosure of Issue titles.
+    - Low: Authenticated (author) information disclosure in the output console of upload manager
+
+v4.10.0 (September 2023)
+  - Tylium: 
+    - Consolidate sidebars
+    - Add issue.author to liquid issue drop
+  - Upgraded gems:
+    - font-awesome-sass, nokogiri, puma, rails, sanitize, selenium-webdriver
+  - Bugs fixes:
+    - QA: Enable @mentions and formatting toolbar for comments in QA show views
+  - REST/JSON API enhancements:
+    - Boards, Lists, Cards: add initial implementation
+  - Security Fixes:
+    - Medium: Authenticated (author) broken access control: read access to system files
+
+v4.9.0 (June 2023)
+  - Tylium: Extend support for Liquid Dynamic Content
+  - QA: Show state changes in activity feed
+  - Upgraded gems:
+    - bootstrap, popper_js, simple_form
+  - Bugs fixes:
+    - QA: Redirect to correct view when changing states on QA edit views
+  - Integration enhancements:
+    - Acunetix: Parse inline code, not just code blocks
+    - Burp: Adds strong and code tags parsing
+    - CSV: Fix CSV Upload for files with special characters
+    - Nessus:
+      - Parse code tags as inline code
+      - Add plugin_type as an available Issue field
+    - Nexpose:
+      - Parse inline code, not just code blocks
+      - Wrap ciphers in the `ssl-weak-message-authentication-code-algorithms` finding
+    - Qualys: Adds Request/Response Evidence fields for Web Application Scans (WAS)
 
 v4.8.0 (April 2023)
   - Sessions: Store :secret_key_base in encrypted configuration file
@@ -198,6 +258,8 @@ v4.1.0 (November 2021)
       - Remove orphaned <b> tags
   - Security Fixes:
     - High: Authenticated author broken access control: read access to issue content
+    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v4.0.0 (July 2021)
   * Dynamic content across the app

@@ -3,7 +3,7 @@
     position: relative;
     overflow: visible;
     background-color: $sidebarActiveColor;
-    
+
     &:after {
       position: absolute;
       content: '';
@@ -20,9 +20,10 @@
 }
 
 .breadcrumb {
+  background-color: $gray-200;
   flex-wrap: nowrap;
   margin-bottom: 0;
-  padding-left: $mainContentPadding;
+  padding: 0.75rem 1rem 0.75rem $mainContentPadding;
   white-space: nowrap;
   width: 100%;
 
@@ -33,9 +34,10 @@
       color: darken($mutedText, 4.15%);
     }
 
-    &+ .breadcrumb-item::before {
-      font-family: "fontawesome";
-      content: "\f105";
+    & + .breadcrumb-item::before {
+      content: '\f105';
+      font-family: var(--fa-style-family, 'Font Awesome 6 Free');
+      font-weight: 600;
     }
 
     &:last-of-type {
@@ -50,9 +52,18 @@
   cursor: default;
 }
 
-.secondary-sidebar-content {
-  .sticky-top {
-    top: calc(#{$mainContentMargin} + 4.35rem);
+.row > *[class*='col-'] {
+  position: relative;
+}
+
+.sticky-top {
+  position: sticky !important;
+  top: 5rem;
+  margin-bottom: $mainContentMargin;
+  z-index: 2;
+
+  &.sticky-top-with-title {
+    top: 2rem;
   }
 }
 
@@ -89,7 +100,7 @@
     z-index: 1050;
   }
 
-  @include media-breakpoint-down(md) {
+  @include media-breakpoint-down(lg) {
     padding-bottom: 9rem;
 
     .content-container {
