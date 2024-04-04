@@ -4,7 +4,8 @@ spec:
   - environment_slug: ruby-on-rails
     envs:
     - key: RAILS_ENV
-      value: development
+      value: production
+      scope: RUN_TIME
     - key: RAILS_SERVE_STATIC_FILES
       value: enabled
       scope: RUN_TIME
