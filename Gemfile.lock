@@ -9,8 +9,8 @@ GIT
 
 GIT
   remote: https://github.com/dradis/dradis-plugins.git
-  revision: e69d1f42c85f647662307019b8b492152a5c3c29
-  branch: fix/template-caching
+  revision: 160b6c1f0a3ce23e5e08ce0495baa080096ef5dd
+  branch: mappings-manager/template-migration
   specs:
     dradis-plugins (4.11.0)
 

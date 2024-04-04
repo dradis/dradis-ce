@@ -11,8 +11,9 @@ Rails.application.reloader.to_prepare do
     # ---------------------------------------------------------------- 3.1 Upload
     template_dir = Configuration.paths_templates_plugins
 
-    Dradis::Plugins::with_feature(:upload).each do |plugin|
-      plugin.copy_templates(to: template_dir)
+    Dradis::Plugins::with_feature(:upload).each do |integration|
+      integration.copy_templates(to: template_dir)
+      integration.migrate_templates_to_mappings(from: template_dir)
     end
 
     # ---------------------------------------------------------------- 3.2 Export
