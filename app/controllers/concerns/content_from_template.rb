@@ -18,4 +18,9 @@ module ContentFromTemplate
       raise e
     end
   end
+
+  def card_template
+    card = Card.find(params[:from_card_id])
+    "#[Title]#\n" + card.name + "\n" + card.description
+  end
 end
