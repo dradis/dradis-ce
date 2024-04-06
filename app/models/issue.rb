@@ -11,6 +11,7 @@ class Issue < Note
   include Taggable
 
   # -- Relationships --------------------------------------------------------
+  belongs_to :card, optional: true
   has_many :evidence, dependent: :destroy
   has_many :affected, through: :evidence, source: :node
 
