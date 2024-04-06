@@ -40,7 +40,10 @@ class IssuesController < AuthenticatedController
     # See ContentFromTemplate concern
     @issue.text = template_content if params[:template]
 
-    @issue.text = card_template if params[:from_card_id]
+    if params[:from_card_id]
+      @issue.text = card_template
+      @issue.card_id = params[:from_card_id]
+    end
   end
 
   def create

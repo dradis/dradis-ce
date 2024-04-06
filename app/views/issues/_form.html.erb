@@ -29,6 +29,10 @@
     <%= hidden_field :issue, :original_updated_at, value: @issue.updated_at.to_i %>
   <% end %>
 
+  <% if @issue.card_id %>
+    <%= hidden_field :issue, :card_id, value: @issue.card_id %>
+  <% end %>
+
   <% if controller.class.name.deconstantize == 'QA' %>
     <%= hidden_field nil, :return_to, value: :qa %>
   <% end %>
