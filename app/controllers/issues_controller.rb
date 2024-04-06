@@ -211,7 +211,7 @@ class IssuesController < AuthenticatedController
   end
 
   def issue_params
-    params.require(:issue).permit(:state, :tag_list, :text)
+    params.require(:issue).permit(:state, :tag_list, :text, :card_id)
   end
 
   def set_auto_save_key
