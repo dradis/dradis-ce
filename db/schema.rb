@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_21_144728) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_06_181439) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -152,6 +152,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_144728) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.integer "state", default: 0, null: false
+    t.integer "card_id"
+    t.index ["card_id"], name: "index_notes_on_card_id"
     t.index ["category_id"], name: "index_notes_on_category_id"
     t.index ["node_id"], name: "index_notes_on_node_id"
   end
@@ -225,6 +227,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_144728) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "boards", "nodes", on_delete: :cascade
   add_foreign_key "comments", "users", on_delete: :nullify
+  add_foreign_key "notes", "cards"
   add_foreign_key "notifications", "users", column: "actor_id", on_delete: :cascade
   add_foreign_key "notifications", "users", column: "recipient_id", on_delete: :cascade
   add_foreign_key "subscriptions", "users"
