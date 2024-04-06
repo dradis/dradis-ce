@@ -160,12 +160,12 @@ describe 'Issues pages' do
         end
 
         context 'when passed a from card id', js: true do
+          before do
+            board = create(:board, project: current_project, node: current_project.methodology_library)
+            list = create(:list, board: board)
+            @card = create(:card, list: list)
+          end
           it 'preloads the editor with the card fields' do
-
-            @board = create(:board, project: current_project, node: current_project.methodology_library)
-            @list = create(:list, board: @board)
-            @card = create(:card, list: @list)
-
             visit new_project_issue_path(current_project, from_card_id: @card.id)
 
             expect(find_field('item_form[field_name_0]').value).to include('Title')
@@ -173,7 +173,15 @@ describe 'Issues pages' do
             expect(find_field('item_form[field_value_0]').value).to include(@card.name)
             expect(@card.description).to include(find_field('item_form[field_value_1]').value)
           end
+
+          it 'create issue with the card id' do
+            visit new_project_issue_path(current_project, from_card_id: @card.id)
+
+            click_button 'Create Issue'
+            expect(Issue.last.card_id).to eq(@card.id)
+          end
         end
+
         context 'when the issue has a Tags field' do
           it 'tags the issue with the corresponding tag if only one is present' do
             tag_field = '!f89406_private'
