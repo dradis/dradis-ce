@@ -12,14 +12,14 @@ Rails.application.reloader.to_prepare do
     template_dir = Configuration.paths_templates_plugins
 
     Dradis::Plugins::with_feature(:upload).each do |integration|
-      integration.copy_templates(to: template_dir)
+      integration.copy_samples(to: template_dir)
       integration.migrate_templates_to_mappings(from: template_dir)
     end
 
     # ---------------------------------------------------------------- 3.2 Export
     template_dir = Configuration.paths_templates_reports
     Dradis::Plugins::with_feature(:export).each do |plugin|
-      plugin.copy_templates(to: template_dir)
+      plugin.copy_samples(to: template_dir)
     end
   end
 end
