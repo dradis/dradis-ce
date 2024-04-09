@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/dradis/dradis-plugins.git
-  revision: 160b6c1f0a3ce23e5e08ce0495baa080096ef5dd
+  revision: c7c48f2c945f5f8d6e7bf6886dead068a7a37675
   branch: mappings-manager/template-migration
   specs:
     dradis-plugins (4.11.0)
