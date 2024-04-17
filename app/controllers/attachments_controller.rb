@@ -41,21 +41,6 @@ class AttachmentsController < AuthenticatedController
     render json: [json], content_type: 'text/plain'
   end
 
-  # It is possible to rename attachments and this function provides that
-  # functionality.
-  def update
-    filename    = params[:filename]
-    attachment  = Attachment.find(filename, conditions: { node_id: @node.id })
-    attachment.close
-    new_name    = CGI::unescape(attachment_params[:filename])
-    destination = Attachment.pwd.join(@node.id.to_s, new_name).to_s
-
-    if !File.exist?(destination) && !destination.match(/^#{Attachment.pwd}/).nil?
-      File.rename attachment.fullpath, destination
-    end
-    render json: { success: true }
-  end
-
   # This function will send the Attachment file to the browser. It will try to
   # figure out if the file is an image in which case the attachment will be
   # displayed inline. By default the <tt>Content-disposition</tt> will be set to
