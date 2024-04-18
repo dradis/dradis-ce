@@ -302,7 +302,7 @@ describe 'Attachments API' do
     end
 
     describe 'GET /api/nodes/:node_id/attachments/:filename/download' do
-      it 'responds with the file' do
+      it 'returns with the file' do
         create(:attachment, filename: 'image.png', node: node)
 
         get "/api/nodes/#{node.id}/attachments/image.png/download", env: @env
