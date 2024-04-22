@@ -82,7 +82,7 @@ describe 'issue form', js: true do
       field_string = "#[Field]#\nTest Value"
 
       click_link 'Source'
-      fill_in 'issue_text', with: fieldless_string + '\n' + field_string
+      fill_in 'issue_text', with: fieldless_string + "\n" + field_string
 
       click_link 'Fields'
 
