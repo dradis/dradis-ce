@@ -1,137 +1,121 @@
 GIT
   remote: https://github.com/dradis/dradis-acunetix.git
-  revision: d5f42eddd52798ca95943debd8723731ee935d2b
-  branch: mappings-manager/add-uploaders
+  revision: f3670e475bf3e6d171d43fb061d3c9e7185a18a5
   specs:
-    dradis-acunetix (4.11.0)
+    dradis-acunetix (4.12.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
 
 GIT
   remote: https://github.com/dradis/dradis-brakeman.git
-  revision: 40c76b41e6fdf6253cb186a9bb1a18cde574b6a0
-  branch: mappings-manager/add-uploaders
+  revision: a59ef3403d3ad596941382990d53956b535b6442
   specs:
-    dradis-brakeman (4.11.0)
+    dradis-brakeman (4.12.0)
       dradis-plugins (~> 4.0)
 
 GIT
   remote: https://github.com/dradis/dradis-burp.git
-  revision: 58a15441f796ae1611c855cb739486177c06994b
-  branch: mappings-manager/add-uploaders
+  revision: 21eb812ea839d1f556938709dbfc25f78559ded4
   specs:
-    dradis-burp (4.11.0)
+    dradis-burp (4.12.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
 
 GIT
   remote: https://github.com/dradis/dradis-coreimpact.git
-  revision: 5731e1da3901eacd92f9bfe4f4cc43ae1604ee98
-  branch: mappings-manager/add-uploaders
+  revision: c50f9270dd49859e5d3ee147af87f9b75fe4082d
   specs:
-    dradis-coreimpact (4.11.0)
+    dradis-coreimpact (4.12.0)
       dradis-plugins (~> 4.0)
 
 GIT
   remote: https://github.com/dradis/dradis-metasploit.git
-  revision: 4eab6a3fef664705518ba435bf21857c09c47541
-  branch: mappings-manager/add-uploaders
+  revision: 95556559e765c89155c8cf2185cd8a2946f096c5
   specs:
-    dradis-metasploit (4.11.0)
+    dradis-metasploit (4.12.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
 
 GIT
   remote: https://github.com/dradis/dradis-nessus.git
-  revision: 06740a2a240ae2be5fc14da5aced25534dcca262
-  branch: mappings-manager/add-uploaders
+  revision: e11829da4241922bfd26136b0011b2909aaf3144
   specs:
-    dradis-nessus (4.11.0)
+    dradis-nessus (4.12.0)
       dradis-plugins (~> 4.0)
       nokogiri
 
 GIT
   remote: https://github.com/dradis/dradis-netsparker.git
-  revision: 2f6d4d40034b928a0f41b8d489697e742bdaa38e
-  branch: mappings-manager/add-uploaders
+  revision: 8e1ee7b0790bb935263dd8711de08300d6d91d5e
   specs:
-    dradis-netsparker (4.11.0)
+    dradis-netsparker (4.12.0)
       dradis-plugins (~> 4.0)
       nokogiri (>= 1.12.5)
 
 GIT
   remote: https://github.com/dradis/dradis-nexpose.git
-  revision: 439cb5dbe2825ce5461c58813348a69961c6e4a4
-  branch: mappings-manager/add-uploaders
+  revision: b44222b335af3d608f43deb8d4806fd77e7d08ee
   specs:
-    dradis-nexpose (4.11.0)
+    dradis-nexpose (4.12.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
 
 GIT
   remote: https://github.com/dradis/dradis-nikto.git
-  revision: fbbca4b43f30fc241df142c55238b2feb7c7f3fe
-  branch: mappings-manager/add-uploaders
+  revision: bca8bc1954e74c8702f009c7a6b2cd8ef6845c8b
   specs:
-    dradis-nikto (4.11.0)
+    dradis-nikto (4.12.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
 
 GIT
   remote: https://github.com/dradis/dradis-nipper.git
-  revision: 169535775f078913ca3d38eb6bd7dbcc80a333dd
-  branch: mappings-manager/add-uploaders
+  revision: 92c98a8a200ec056b10fbed4dba9fbfaa8dc8932
   specs:
-    dradis-nipper (4.11.0)
+    dradis-nipper (4.12.0)
       dradis-plugins (~> 4.0)
 
 GIT
   remote: https://github.com/dradis/dradis-nmap.git
-  revision: a653ad66543cdef3361a1f6dd1fbb07d9e4eada7
-  branch: mappings-manager/add-uploaders
+  revision: 10c1fa773e4c46ba34c5e75d5bb806512671b49a
   specs:
-    dradis-nmap (4.11.0)
+    dradis-nmap (4.12.0)
       dradis-plugins (~> 4.0)
       ruby-nmap (~> 0.7)
 
 GIT
   remote: https://github.com/dradis/dradis-ntospider.git
-  revision: 0c2ae49734090ce60982fe8c01658832cf96180a
-  branch: mappings-manager/add-uploaders
+  revision: 0884791fdb57d89927c383e84d4d81c4d115e7f4
   specs:
-    dradis-ntospider (4.11.0)
+    dradis-ntospider (4.12.0)
       dradis-plugins (~> 4.0)
 
 GIT
   remote: https://github.com/dradis/dradis-openvas.git
-  revision: 1678903dd6e35fd8c4cfdbf55333c6f3f18c352b
-  branch: mappings-manager/add-uploaders
+  revision: ceaef202911f8073fcf99dc0fa9717fb729078d9
   specs:
     dradis-openvas (4.11.0)
       dradis-plugins (~> 4.0)
 
 GIT
   remote: https://github.com/dradis/dradis-plugins.git
-  revision: c7c48f2c945f5f8d6e7bf6886dead068a7a37675
-  branch: mappings-manager/template-migration
+  revision: 35efe7b19670d7c75a0594a464080a8c46652f24
   specs:
     dradis-plugins (4.11.0)
 
 GIT
   remote: https://github.com/dradis/dradis-qualys.git
-  revision: 82712e710418dd7e116223c9e1a29b4ba73ebf79
-  branch: mappings-manager/add-uploaders
+  revision: 1c1f6ce6ba3348dc31f5f9567d20cee77a6004d8
   specs:
-    dradis-qualys (4.11.0)
+    dradis-qualys (4.12.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
 
 GIT
   remote: https://github.com/dradis/dradis-saint.git
-  revision: 7d5e45da4f61edb50798ed61c86ce6b7f4c1698b
-  branch: mappings-manager/add-uploaders
+  revision: d36a55f129674ed90ab4e47b68f91bdbddd14fb3
   specs:
-    dradis-saint (4.11.0)
+    dradis-saint (4.12.0)
       combustion (~> 0.6.0)
       dradis-plugins (~> 4.0)
       nokogiri
@@ -140,27 +124,24 @@ GIT
 
 GIT
   remote: https://github.com/dradis/dradis-veracode.git
-  revision: 0442dee4651101bf5530dadc2e68f73faf69a381
-  branch: mappings-manager/add-uploaders
+  revision: 5719028296d55632d5baaac4e9f369fab684ded8
   specs:
-    dradis-veracode (4.11.0)
+    dradis-veracode (4.12.0)
       dradis-plugins (~> 4.0)
 
 GIT
   remote: https://github.com/dradis/dradis-wpscan.git
-  revision: 2e5ff1b8e01413dbfd3901f179f9bd62290513d2
-  branch: mappings-manager/add-uploaders
+  revision: 8b036f1b1c6386381fd5b2e8301d4932e8ac23f4
   specs:
-    dradis-wpscan (4.11.0)
+    dradis-wpscan (4.12.0)
       dradis-plugins (~> 4.0)
       multi_json
 
 GIT
   remote: https://github.com/dradis/dradis-zap.git
-  revision: 9deb31fe0dcfb05533414b90a64a371422340336
-  branch: mappings-manager/add-uploaders
+  revision: 05fb435b4ce26b879953a0459c9c988ad9f2739c
   specs:
-    dradis-zap (4.11.0)
+    dradis-zap (4.12.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
 
