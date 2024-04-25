@@ -2,7 +2,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - nokogiri, rails
+    - nokogiri, rails, ruby
   - Bugs fixes:
     - Sidebar: Prevent version number from overlapping listed records
     - Tylium: Fix redirection when updating an issue or content block
