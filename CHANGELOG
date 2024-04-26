@@ -1,29 +1,12 @@
-[v#.#.#] ([month] [YYYY])
+v4.12.0 (May 2024)
   - Mappings: Map fields from scanner integrations to Dradis fields
   - Upgraded gems:
     - nokogiri, rails
   - Bugs fixes:
     - Sidebar: Prevent version number from overlapping listed records
     - Tylium: Fix redirection when updating an issue or content block
-    - Bug tracker items:
-      - [item]
   - New integrations:
-    - [integration]
-  - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
-  - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
-  - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
-  - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Pentera
 
 v4.11.0 (January 2024)
   - Assets: Add importmap-rails to handle js libraries
