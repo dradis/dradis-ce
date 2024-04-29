@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Attachments: Add size, created_at, and download link to the API
   - Mappings: Map fields from scanner integrations to Dradis fields
   - Upgraded gems:
     - nokogiri, rails
