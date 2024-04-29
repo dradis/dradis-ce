@@ -15,8 +15,8 @@ module Dradis::CE::API
       def show
         begin
           @attachment = Attachment.find(params[:filename], conditions: { node_id: @node.id })
-          @file_size = File.size(@attachment.fullpath)
-          @created_at = File.ctime(@attachment.fullpath)
+          @file_size = @attachment.size
+          @created_at = @attachment.ctime
         rescue
           raise ActiveRecord::RecordNotFound, "Couldn't find attachment with filename '#{params[:filename]}'"
         end
