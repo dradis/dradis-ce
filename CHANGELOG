@@ -1,8 +1,10 @@
 [v#.#.#] ([month] [YYYY])
   - Attachments: Add size, created_at, and download link to the API
+  - Mappings: Map fields from scanner integrations to Dradis fields
   - Upgraded gems:
     - nokogiri, rails
   - Bugs fixes:
+    - Sidebar: Prevent version number from overlapping listed records
     - Tylium: Fix redirection when updating an issue or content block
     - Bug tracker items:
       - [item]

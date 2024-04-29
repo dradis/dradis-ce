@@ -86,6 +86,10 @@ class Project
     Tag.all
   end
 
+  def team
+    nil
+  end
+
   def testers_for_mentions
     User.all
   end
