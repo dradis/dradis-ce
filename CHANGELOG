@@ -4,8 +4,8 @@ v4.12.0 (May 2024)
   - Upgraded gems:
     - nokogiri, rails
   - Bugs fixes:
+    - Projects: Fix redirection when updating an issue or content block
     - Sidebar: Prevent version number from overlapping listed records
-    - Tylium: Fix redirection when updating an issue or content block
   - New integrations:
     - Pentera
 
