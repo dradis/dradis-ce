@@ -139,7 +139,7 @@ document.addEventListener "turbolinks:load", ->
       $this = $(this)
       $this.find('[data-behavior~=toggle-chevron]').toggleClass('fa-chevron-down fa-chevron-up')
 
-      if $this.is('[data-behavior~=import-box]') && $($this.data('target')).innerHeight() == 0
+      if $this.is('[data-behavior~=import-box-header]') && $($this.data('target')).innerHeight() == 0
         $($this.data('target')).find("input[type='text']:first").focus()
 
   # Scroll for more indicator functionality

@@ -29,6 +29,10 @@
     <%= hidden_field :issue, :original_updated_at, value: @issue.updated_at.to_i %>
   <% end %>
 
+  <% if controller.class.name.deconstantize == 'QA' %>
+    <%= hidden_field nil, :return_to, value: :qa %>
+  <% end %>
+
   <%= render 'issues/tag_input', f: f %>
 
   <div class="form-actions">

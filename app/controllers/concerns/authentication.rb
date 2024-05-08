@@ -54,12 +54,6 @@ module Authentication
     session[:return_to] = nil
   end
 
-  # Store the URI of the current request in the session.
-  # We can return to this location by calling #redirect_back_or_default.
-  def store_location
-    session[:return_to] = request.original_url
-  end
-
   # The main accessor for the warden proxy instance
   # :api: public
   def warden

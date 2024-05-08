@@ -24,7 +24,9 @@ Dradis::CE::API::Engine::routes.draw do
           resources :evidence
           resources :notes
           constraints(filename: /.*/) do
-            resources :attachments, param: :filename
+            resources :attachments, param: :filename do
+              get :download, on: :member
+            end
           end
         end
       end
