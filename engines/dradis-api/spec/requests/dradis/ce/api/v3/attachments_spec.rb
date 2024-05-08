@@ -261,6 +261,18 @@ describe 'Attachments API' do
             expect(response.status).to eq(400)
           end
         end
+
+        context 'when passing a path traversal filename' do
+          let(:filename) { "../#{node.id}/../../lib/tasks/thor/test.rb" }
+          let(:params) { { attachment: { filename: filename } } }
+
+          it 'does not move the attachment' do
+            put_attachment
+            expected_name = ActiveStorage::Filename.new(filename).sanitized
+
+            expect(File.exist?(Attachment.pwd.join(node.id.to_s, expected_name))).to be true
+          end
+        end
       end
 
       context 'when JSON is not sent' do
