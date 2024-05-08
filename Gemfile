@@ -213,12 +213,12 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', github: 'dradis/dradis-plugins'
+gem 'dradis-plugins', '~> 4.12.0'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 4.11.0'
+gem 'dradis-projects', '~> 4.12.0'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)
@@ -230,32 +230,32 @@ end
 
 # ----------------------------------------------------------------- Calculators
 
-gem 'dradis-calculator_cvss', '~> 4.11.0'
-gem 'dradis-calculator_dread', '~> 4.11.0'
+gem 'dradis-calculator_cvss', '~> 4.12.0'
+gem 'dradis-calculator_dread', '~> 4.12.0'
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv_export', '~> 4.11.0'
-gem 'dradis-html_export', '~> 4.11.0'
+gem 'dradis-csv_export', '~> 4.12.0'
+gem 'dradis-html_export', '~> 4.12.0'
 
 # ---------------------------------------------------------------------- Import
-gem 'dradis-csv', '~> 4.11.0'
+gem 'dradis-csv', '~> 4.12.0'
 
 # ---------------------------------------------------------------------- Upload
-gem 'dradis-acunetix', github: 'dradis/dradis-acunetix'
-gem 'dradis-brakeman', github: 'dradis/dradis-brakeman'
-gem 'dradis-burp', github: 'dradis/dradis-burp'
-gem 'dradis-coreimpact', github: 'dradis/dradis-coreimpact'
-gem 'dradis-metasploit', github: 'dradis/dradis-metasploit'
-gem 'dradis-nessus', github: 'dradis/dradis-nessus'
-gem 'dradis-netsparker', github: 'dradis/dradis-netsparker'
-gem 'dradis-nexpose', github: 'dradis/dradis-nexpose'
-gem 'dradis-nikto', github: 'dradis/dradis-nikto'
-gem 'dradis-nipper', github: 'dradis/dradis-nipper'
-gem 'dradis-nmap', github: 'dradis/dradis-nmap'
-gem 'dradis-ntospider', github: 'dradis/dradis-ntospider'
-gem 'dradis-openvas', github: 'dradis/dradis-openvas'
-gem 'dradis-qualys', github: 'dradis/dradis-qualys'
-gem 'dradis-saint', github: 'dradis/dradis-saint'
-gem 'dradis-veracode', github: 'dradis/dradis-veracode'
-gem 'dradis-wpscan', github: 'dradis/dradis-wpscan'
-gem 'dradis-zap', github: 'dradis/dradis-zap'
+gem 'dradis-acunetix', '~> 4.12.0'
+gem 'dradis-brakeman', '~> 4.12.0'
+gem 'dradis-burp', '~> 4.12.0'
+gem 'dradis-coreimpact', '~> 4.12.0'
+gem 'dradis-metasploit', '~> 4.12.0'
+gem 'dradis-nessus', '~> 4.12.0'
+gem 'dradis-netsparker', '~> 4.12.0'
+gem 'dradis-nexpose', '~> 4.12.0'
+gem 'dradis-nikto', '~> 4.12.0'
+gem 'dradis-nipper', '~> 4.12.0'
+gem 'dradis-nmap', '~> 4.12.0'
+gem 'dradis-ntospider', '~> 4.12.0'
+gem 'dradis-openvas', '~> 4.12.0'
+gem 'dradis-qualys', '~> 4.12.0'
+gem 'dradis-saint', '~> 4.12.0'
+gem 'dradis-veracode', '~> 4.12.0'
+gem 'dradis-wpscan', '~> 4.12.0'
+gem 'dradis-zap', '~> 4.12.0'
