@@ -1,0 +1,41 @@
+#task-viewer {
+  margin: 0 2rem;
+  padding: 0;
+
+  .tasks {
+    .task-list {
+      padding-left: calc(var(--bs-gutter-x) * .5);
+      padding-right: calc(var(--bs-gutter-x) * .5);
+
+      .list-group-item {
+        border: 1px solid #DDDDDD;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .pagination {
+      border: none;
+
+      .page-item {
+        &.active {
+          .page-link {
+            background-color: #378137;
+            border-color: #378137;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+@media (max-width: 991.98px) {
+  #task-viewer {
+    margin: calc(2rem / 2);
+  }
+}

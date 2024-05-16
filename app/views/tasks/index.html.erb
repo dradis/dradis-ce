@@ -1,5 +1,34 @@
 <% content_for :title, 'My Tasks' %>
 
-<div class="content-container mt-3">
-  <h1>Edit me in app/views/tasks/index.html.erb</h1>
+<div id="task-viewer" class="row">
+  <div class="col-12 mt-3 p-0 tasks">
+    <div class="row py-2">
+      <div class="col-6 col-sm-4">
+        <div id="task-list-filter">
+          <input class="form-control form-control-sm pull-left" type="search" placeholder="Filter tasks" aria-label="Filter tasks">
+        </div>
+      </div>
+      <div class="col-6 col-sm-8">
+        <button type="button" class="btn btn-primary pull-right"><i class="fa fa-plus me-1"></i>Add task</button>
+      </div>
+    </div>
+    <div class="row">
+      <ul class="list-group task-list">
+      <li class="list-group-item">Cras justo odio</li>
+      <li class="list-group-item">Dapibus ac facilisis in</li>
+      <li class="list-group-item">Morbi leo risus</li>
+      <li class="list-group-item">Porta ac consectetur ac</li>
+      <li class="list-group-item">Vestibulum at eros</li>
+    </div>
+    <div class="row">
+      <div>
+        <ul class="pagination pull-right">
+          <li class="page-item previous disabled" id=""><a href="#" aria-controls="" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
+          <li class="page-item active"><a href="#" aria-controls="" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
+          <li class="page-item next disabled" id=""><a href="#" aria-controls="" data-dt-idx="2" tabindex="0" class="page-link">Next</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ul>
 </div>
