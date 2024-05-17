@@ -3,26 +3,279 @@
 <div id="task-viewer" class="row">
   <div class="col-12 mt-3 p-0 tasks">
     <div class="row py-2">
-      <div class="col-6 col-sm-4">
-        <div id="task-list-filter">
-          <input class="form-control form-control-sm pull-left" type="search" placeholder="Filter tasks" aria-label="Filter tasks">
-        </div>
-      </div>
-      <div class="col-6 col-sm-8">
-        <button type="button" class="btn btn-primary pull-right"><i class="fa fa-plus me-1"></i>Add task</button>
+      <div class="d-flex flex-row flex-wrap task-sorting">
+        <div class="flex-grow px-0 pe-sm-2 py-2" id="task-filter"><input class="form-control form-control-sm" type="search" placeholder="Filter tasks" aria-label="Filter tasks"></div>
+        <div class="p-2"><button type="button" class="btn btn-outline-primary btn-sm">Name <span><i class="fa fa-sort" aria-hidden="true"></i></span></button></div>
+        <div class="p-2"><button type="button" class="btn btn-outline-primary btn-sm">Date <span><i class="fa fa-sort" aria-hidden="true"></i></span></button></div>
+        <div class="p-2"><button class="btn btn-outline-primary btn-sm">Deadline <span><i class="fa fa-sort-desc" aria-hidden="true"></i></span></button></div>
+        <div class="p-2 px-0 pe-sm-0 ms-auto" id="add-task"><button type="button" class="btn btn-primary"><span><i class="fa fa-plus" aria-hidden="true"></i></span> Add task</button></div>
       </div>
     </div>
     <div class="row">
       <ul class="list-group task-list">
-      <li class="list-group-item">Cras justo odio</li>
-      <li class="list-group-item">Dapibus ac facilisis in</li>
-      <li class="list-group-item">Morbi leo risus</li>
-      <li class="list-group-item">Porta ac consectetur ac</li>
-      <li class="list-group-item">Vestibulum at eros</li>
+        <li class="list-group-item task">
+          <div class="d-flex flex-row flex-wrap justify-content-between">
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+              <div class="d-flex flex-column">
+                <div><small class="attribute-type">Task</small></div>
+                <div><p id="task-name"><a href="">[Issues, Evidence, and Plugins] Tag your Issue</a></p></div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+             <div class="d-flex flex-column">
+                <div><small class="attribute-type">Date created</small></div>
+                <div><p id="task-cdate">15/05/2024</p></div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+              <div class="d-flex flex-column">
+                <div><small class="attribute-type">Deadline</small></div>
+                <div><p id="task-deadline">02/06/2024</p></div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+              <div class="d-flex flex-column">
+                <div><small class="attribute-type">Status</small></div>
+                <div><p id="task-status">In progress</p></div>
+              </div>
+            </div>
+            <div class="p-2 task-attribute">
+            <div class="d-flex flex-column">
+                <div><small class="attribute-type">Assigned to</small></div>
+                <div>
+                  <span class="gravatar">
+                    <img alt="nicola's avatar" data-fallback-image="/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png" height="30" onerror="this.src = '/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png';" style="width: 30px; height: 30px;" title="nicola" width="30" src="/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png">
+                    <img alt="nicola's avatar" data-fallback-image="/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png" height="30" onerror="this.src = '/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png';" style="width: 30px; height: 30px;" title="nicola" width="30" src="/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png">
+                </span>
+                </div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 align-self-center task-attribute">
+              <ul class="list-group list-group-horizontal task-quick-actions">
+                <li>
+                  <a href=""><i class="fa fa-pencil-square fa-lg" title="Edit Task"></i></a>
+                </li>
+                <li>
+                  <a href=""><i class="fa fa-exchange fa-lg" title="Re-assign Task"></i></a>
+                </li>
+                <li>
+                  <a href=""><i class="fa fa-trash fa-lg" title="Delete Task"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item task">
+          <div class="d-flex flex-row flex-wrap justify-content-between">
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+              <div class="d-flex flex-column">
+                <div><small class="attribute-type">Task</small></div>
+                <div><p id="task-name"><a href="">[OWASP Top 10] A2:2017 - Broken Authentication</a></p></div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+             <div class="d-flex flex-column">
+                <div><small class="attribute-type">Date created</small></div>
+                <div><p id="task-cdate">11/05/2024</p></div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+              <div class="d-flex flex-column">
+                <div><small class="attribute-type">Deadline</small></div>
+                <div><p id="task-deadline">19/05/2024</p></div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+              <div class="d-flex flex-column">
+                <div><small class="attribute-type">Status</small></div>
+                <div><p id="task-status">In progress</p></div>
+              </div>
+            </div>
+            <div class="p-2 task-attribute">
+              <div class="d-flex flex-column">
+                <div><small class="attribute-type">Assigned to</small></div>
+                <div>
+                  <span class="gravatar">
+                    <img alt="nicola's avatar" data-fallback-image="/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png" height="30" onerror="this.src = '/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png';" style="width: 30px; height: 30px;" title="nicola" width="30" src="/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png">
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 align-self-center task-attribute">
+              <ul class="list-group list-group-horizontal task-quick-actions">
+                <li>
+                  <a href=""><i class="fa fa-pencil-square fa-lg" title="Edit Task"></i></a>
+                </li>
+                <li>
+                  <a href=""><i class="fa fa-exchange fa-lg" title="Re-assign Task"></i></a>
+                </li>
+                <li>
+                  <a href=""><i class="fa fa-trash fa-lg" title="Delete Task"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+         <li class="list-group-item task">
+          <div class="d-flex flex-row flex-wrap justify-content-between">
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+              <div class="d-flex flex-column">
+                <div><small class="attribute-type">Task</small></div>
+                <div><p id="task-name"><a href="">[Nodes, Notes, and Node properties] After uploading output from a tool, explore the Nodes added under plugin.output</a></p></div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+             <div class="d-flex flex-column">
+                <div><small class="attribute-type">Date created</small></div>
+                <div><p id="task-cdate">26/04/2024</p></div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+              <div class="d-flex flex-column">
+                <div><small class="attribute-type">Deadline</small></div>
+                <div><p id="task-deadline">12/08/2024</p></div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+              <div class="d-flex flex-column">
+                <div><small class="attribute-type">Status</small></div>
+                <div><p id="task-status">To do</p></div>
+              </div>
+            </div>
+            <div class="p-2 task-attribute">
+              <div class="d-flex flex-column">
+                <div><small class="attribute-type">Assigned to</small></div>
+                <div>
+                  <span class="gravatar">
+                    <img alt="nicola's avatar" data-fallback-image="/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png" height="30" onerror="this.src = '/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png';" style="width: 30px; height: 30px;" title="nicola" width="30" src="/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png">
+                    <img alt="nicola's avatar" data-fallback-image="/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png" height="30" onerror="this.src = '/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png';" style="width: 30px; height: 30px;" title="nicola" width="30" src="/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png">
+                    <img alt="nicola's avatar" data-fallback-image="/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png" height="30" onerror="this.src = '/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png';" style="width: 30px; height: 30px;" title="nicola" width="30" src="/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png">
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 align-self-center task-attribute">
+              <ul class="list-group list-group-horizontal task-quick-actions">
+                <li>
+                  <a href=""><i class="fa fa-pencil-square fa-lg" title="Edit Task"></i></a>
+                </li>
+                <li>
+                  <a href=""><i class="fa fa-exchange fa-lg" title="Re-assign Task"></i></a>
+                </li>
+                <li>
+                  <a href=""><i class="fa fa-trash fa-lg" title="Delete Task"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item task">
+          <div class="d-flex flex-row flex-wrap justify-content-between">
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+              <div class="d-flex flex-column">
+                <div><small class="attribute-type">Task</small></div>
+                <div><p id="task-name"><a href="">Read the "1.- Scope" Node</a></p></div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+             <div class="d-flex flex-column">
+                <div><small class="attribute-type">Date created</small></div>
+                <div><p id="task-cdate">10/01/2024</p></div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+              <div class="d-flex flex-column">
+                <div><small class="attribute-type">Deadline</small></div>
+                <div><p id="task-deadline">--</p></div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+              <div class="d-flex flex-column">
+                <div><small class="attribute-type">Status</small></div>
+                <div><p id="task-status">In progress</p></div>
+              </div>
+            </div>
+            <div class="p-2 task-attribute">
+              <div class="d-flex flex-column">
+                <div><small class="attribute-type">Assigned to</small></div>
+                <div>
+                  <span class="gravatar">
+                    <img alt="nicola's avatar" data-fallback-image="/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png" height="30" onerror="this.src = '/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png';" style="width: 30px; height: 30px;" title="nicola" width="30" src="/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png">
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 align-self-center task-attribute">
+              <ul class="list-group list-group-horizontal task-quick-actions">
+                <li>
+                  <a href=""><i class="fa fa-pencil-square fa-lg" title="Edit Task"></i></a>
+                </li>
+                <li>
+                  <a href=""><i class="fa fa-exchange fa-lg" title="Re-assign Task"></i></a>
+                </li>
+                <li>
+                  <a href=""><i class="fa fa-trash fa-lg" title="Delete Task"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item task">
+          <div class="d-flex flex-row flex-wrap justify-content-between">
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+              <div class="d-flex flex-column">
+                <div><small class="attribute-type">Task</small></div>
+                <div><p id="task-name"><a href="">Open the Methodologies view</a></p></div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+             <div class="d-flex flex-column">
+                <div><small class="attribute-type">Date created</small></div>
+                <div><p id="task-cdate">10/05/2024</p></div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+              <div class="d-flex flex-column">
+                <div><small class="attribute-type">Deadline</small></div>
+                <div><p id="task-deadline">--</p></div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 task-attribute">
+              <div class="d-flex flex-column">
+                <div><small class="attribute-type">Status</small></div>
+                <div><p id="task-status">In progress</p></div>
+              </div>
+            </div>
+            <div class="p-2 task-attribute">
+              <div class="d-flex flex-column">
+                <div><small class="attribute-type">Assigned to</small></div>
+                <div>
+                  <span class="gravatar">
+                    <img alt="nicola's avatar" data-fallback-image="/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png" height="30" onerror="this.src = '/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png';" style="width: 30px; height: 30px;" title="nicola" width="30" src="/assets/profile-676b8ec621f9438865075f79b199eb98644007b96db8a5f7b0a3d14a28384bd5.png">
+                </span>
+                </div>
+              </div>
+            </div>
+            <div class="flex-grow p-3 p-sm-2 align-self-center task-attribute">
+              <ul class="list-group list-group-horizontal task-quick-actions">
+                <li>
+                  <a href=""><i class="fa fa-pencil-square fa-lg" title="Edit Task"></i></a>
+                </li>
+                <li>
+                  <a href=""><i class="fa fa-exchange fa-lg" title="Re-assign Task"></i></a>
+                </li>
+                <li>
+                  <a href=""><i class="fa fa-trash fa-lg" title="Delete Task"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
     <div class="row">
       <div>
-        <ul class="pagination pull-right">
+        <ul class="pagination">
           <li class="page-item previous disabled" id=""><a href="#" aria-controls="" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
           <li class="page-item active"><a href="#" aria-controls="" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
           <li class="page-item next disabled" id=""><a href="#" aria-controls="" data-dt-idx="2" tabindex="0" class="page-link">Next</a></li>
@@ -30,5 +283,4 @@
       </div>
     </div>
   </div>
-</ul>
 </div>

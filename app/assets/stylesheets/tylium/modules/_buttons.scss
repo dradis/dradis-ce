@@ -8,6 +8,18 @@
   &.btn-primary:not(:disabled):not(.disabled).active {
     @include button($primaryColor);
   }
+  &.btn-outline-primary {
+    background: none;
+    border: 1px solid $primaryColor;
+    color: $primaryColor;
+  
+    &:hover,
+    &:focus, 
+    &:active { 
+      background-color: $primaryColor;
+      color: $white;
+    }
+  }
   &.btn-danger {
     @include button($red);
   }
