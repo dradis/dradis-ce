@@ -88,5 +88,33 @@ body.projects {
         }
       }
     }
+
+    #tasks-summary {
+      .list-group-item {
+        border-radius: 5px;
+        margin-bottom: 1rem;
+
+        &:last-of-type { margin-bottom: 0; }
+
+        .badge {
+          padding: 0.4rem;
+          font-weight: 300;
+
+          &.badge-primary { background-color: $primaryColor; }
+          &.badge-progress { background-color: $orange; }
+          &.badge-pending { background-color: $blue; }
+        }
+      }
+
+      .urgent-tasks .list-group-item{
+        border: 1px solid $borderColor;
+        border-left: 5px solid $purple;
+      }
+
+      .following-tasks .list-group-item{
+        border: 1px solid $borderColor;
+        border-left: 5px solid $red;
+      }
+    }
   }
 }

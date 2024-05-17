@@ -1,4 +1,69 @@
 <section class="summary-panel">
-  <h4>Edit me in app/views/projects/tasks/_summary.html.erb</h4>
-  <%= link_to 'link to my tasks view', project_tasks_path(current_project) %>
+  <h4 class="header-underline">My Tasks <span class="actions pt-1"><%= link_to 'View all tasks (48)', project_tasks_path(current_project), class: "text-end text-decoration-underline" %></span></h4>
+  <div id="tasks-summary">
+    <div class="row my-4">
+      <h5 class="fw-bolder">Due today <span>(3/8)</span></h5>
+      <ul class="px-2 list-group urgent-tasks">
+        <a href="" class="list-group-item list-group-item-action">
+          <div class="mb-2">
+            <p>[Issues, Evidence, and Plugins] Tag your Issue</p>
+          </div>
+          <div class="align-right">
+            <span class="badge badge-primary">Getting started</span>
+            <span class="badge badge-progress">In progress</span>
+          </div>
+        </a>
+        <a href="" class="list-group-item list-group-item-action">
+          <div class="mb-2">
+            <p>[OWASP Top 10] A2:2017 - Broken Authentication</p>
+          </div>
+          <div>
+            <span class="badge badge-primary">Simple OWASP checklist</span>
+            <span class="badge badge-progress">In progress</span>
+          </div>
+        </a>
+        <a href="" class="list-group-item list-group-item-action">
+          <div class="mb-2">
+            <p>[Nodes, Notes, and Node properties] After uploading output from a tool, explore the Nodes added under plugin.output
+          </div>
+          <div>
+            <span class="badge badge-primary">Getting started</span>
+            <span class="badge badge-pending">To do</span>
+          </div>
+        </a>
+      </ul>
+    </div>
+    <div class="row">
+      <h5 class="fw-bolder">Next <span>(3/40)</span></h5>
+      <ul class="px-2 list-group following-tasks">
+        <a href="" class="list-group-item list-group-item-action">
+          <div class="mb-2">
+            <p>Read the "1.- Scope" Node</p>
+          </div>
+          <div>
+            <span class="badge badge-primary">Getting started</span>
+            <span class="badge badge-progress">In progress</span>
+          </div>
+        </a>
+        <a href="" class="list-group-item list-group-item-action">
+          <div class="mb-2">
+            <p>Open the Methodologies view</p>
+          </div>
+          <div>
+            <span class="badge badge-primary">Getting started</span>
+            <span class="badge badge-progress">In progress</span>
+          </div>
+        </a>
+        <a href="" class="list-group-item list-group-item-action">
+          <div class="mb-2">
+            <p>[Issues, Evidence, and Plugins] Create your first Issue</p>
+          </div>
+          <div>
+            <span class="badge badge-primary">Getting started</span>
+            <span class="badge badge-pending">To do</span>
+          </div>
+        </a>
+      </ul>
+    </div>
+  </div>
 </section>
