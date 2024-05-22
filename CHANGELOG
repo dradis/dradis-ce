@@ -22,9 +22,7 @@
     - [API entity]:
       - [future tense verb] [API enhancement]
   - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: Authenticated (author) horizontal privilege escalation affecting attachments
 
 v4.12.0 (May 2024)
   - Attachments: Add size, created_at, and download link to the API
