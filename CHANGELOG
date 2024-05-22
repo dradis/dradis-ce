@@ -1,8 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - [entity]:
     - [future tense verb] [feature]
-  - Upgraded gems:
-    - nokogiri
+  - Upgraded gems: nokogiri, rexml
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
