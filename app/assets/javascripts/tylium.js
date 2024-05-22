@@ -1,5 +1,5 @@
 //= require jquery3
-//= require jquery-ui
+//= require jquery-ui.min
 //= require rails-ujs
 //= require turbolinks
 // require activestorage

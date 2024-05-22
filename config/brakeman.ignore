@@ -53,7 +53,7 @@
       "check_name": "FileAccess",
       "message": "Model attribute used in file name",
       "file": "engines/dradis-api/app/controllers/dradis/ce/api/v3/attachments_controller.rb",
-      "line": 56,
+      "line": 58,
       "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
       "code": "File.rename(Attachment.find(params[:filename], :conditions => ({ :node_id => current_project.nodes.find(params[:node_id]).id })).fullpath, Attachment.pwd.join(current_project.nodes.find(params[:node_id]).id.to_s, ActiveStorage::Filename.new(CGI.unescape(attachment_params[:filename])).sanitized).to_s)",
       "render_path": null,
@@ -139,6 +139,29 @@
       "note": "False positive: Methodology.pwd is set by the admin to specify the directory for the methodologies"
     },
     {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "8ab35d05ae235702bf80402025acb8093cc59c0d280b55baf56d771af3780018",
+      "check_name": "SendFile",
+      "message": "Model attribute used in file name",
+      "file": "engines/dradis-api/app/controllers/dradis/ce/api/v3/attachments_controller.rb",
+      "line": 79,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "send_file(Attachment.find(params[:filename], :conditions => ({ :node_id => current_project.nodes.find(params[:node_id]).id })).fullpath)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Dradis::CE::API::V3::AttachmentsController",
+        "method": "download"
+      },
+      "user_input": "Attachment.find(params[:filename], :conditions => ({ :node_id => current_project.nodes.find(params[:node_id]).id })).fullpath",
+      "confidence": "Medium",
+      "cwe_id": [
+        22
+      ],
+      "note": "False positive: The destination filename is prepended by the Attachments directory and validated as such to prevent being moved to the other directories"
+    },
+    {
       "warning_type": "Denial of Service",
       "warning_code": 76,
       "fingerprint": "8f55036ea205e625cf6610fdc1211bc5a25bac3eb4504ff97bb2797c4140695b",
@@ -192,7 +215,7 @@
       "check_name": "RegexDoS",
       "message": "Model attribute used in regular expression",
       "file": "engines/dradis-api/app/controllers/dradis/ce/api/v3/attachments_controller.rb",
-      "line": 55,
+      "line": 57,
       "link": "https://brakemanscanner.org/docs/warning_types/denial_of_service/",
       "code": "/^#{Attachment.pwd}/",
       "render_path": null,
@@ -267,6 +290,6 @@
       "note": "False positive: The params is used to fetch the boards and cannot be manipulated by user input"
     }
   ],
-  "updated": "2024-02-01 13:59:52 +0800",
+  "updated": "2024-03-07 16:33:01 +0800",
   "brakeman_version": "5.4.0"
 }
