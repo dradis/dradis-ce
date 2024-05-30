@@ -29,11 +29,14 @@ RSpec.describe LiquidAssignsService do
       report_content = project.content_library
       report_content.properties = { 'dradis.project' => project.name }
       report_content.save
+
+      create(:content_block, project: project)
     end
 
     it 'builds a hash with Dradis::Pro assigns' do
       expect(liquid_assigns['document_properties'].available_properties).to eq({ 'dradis.project' => project.name })
       expect(liquid_assigns['team'].name).to eq(project.team.name)
+      expect(liquid_assigns['content_blocks'].map(&:content)).to eq(project.content_blocks.map(&:content))
     end
   end
 end
