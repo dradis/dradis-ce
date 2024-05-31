@@ -31,7 +31,7 @@ class LiquidAssignsService
     records = project.send(type.to_s.pluralize)
     records = records.user_nodes if type == :node
 
-    cache_key = "liquid-project-#{type.to_s.pluralize}#{records.maximum(:updated_at)}/#{records.pluck(:id).join('-')}"
+    cache_key = "liquid-project-#{project.id}-#{type.to_s.pluralize}:#{records.maximum(:updated_at).to_i}-#{records.count}"
     drop_class = "#{type.to_s.camelize}Drop".constantize
 
     Rails.cache.fetch(cache_key) do
