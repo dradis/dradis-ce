@@ -1,6 +1,6 @@
 [v#.#.#] ([month] [YYYY])
   - Liquid: Make project-level drops available for Liquid syntax
-  - Upgraded gems: nokogiri, rexml
+  - Upgraded gems: nokogiri, rails, rexml
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
