@@ -6,7 +6,7 @@ class LiquidAssignsService
   end
 
   def assigns
-    result = project_drops
+    result = project_assigns
     result.merge!(assigns_pro) if defined?(Dradis::Pro)
     result
   end
@@ -16,23 +16,23 @@ class LiquidAssignsService
   def assigns_pro
   end
 
-  def project_drops
+  def project_assigns
     {
-      'evidence' => project_records(type: :evidence),
-      'issues' => project_records(type: :issue),
-      'nodes' => project_records(type: :node),
-      'notes' => project_records(type: :note),
+      'evidences' => cached_drops(project.evidence),
+      'issues' => cached_drops(project.issues),
+      'nodes' => cached_drops(project.nodes.user_nodes),
+      'notes' => cached_drops(project.notes),
       'project' => ProjectDrop.new(project),
-      'tags' => project_records(type: :tag)
+      'tags' => cached_drops(project.tags)
     }
   end
 
-  def project_records(type:)
-    records = project.send(type.to_s.pluralize)
-    records = records.user_nodes if type == :node
+  def cached_drops(records)
+    return [] if records.empty?
 
-    cache_key = "liquid-project-#{project.id}-#{type.to_s.pluralize}:#{records.maximum(:updated_at).to_i}-#{records.count}"
-    drop_class = "#{type.to_s.camelize}Drop".constantize
+    type = records.first.class.to_s.underscore
+    cache_key = "liquid-project-#{project.id}-#{type.pluralize}:#{records.maximum(:updated_at).to_i}-#{records.count}"
+    drop_class = "#{type.camelize}Drop".constantize
 
     Rails.cache.fetch(cache_key) do
       records.map { |record| drop_class.new(record) }
