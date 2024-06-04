@@ -21,6 +21,7 @@
         <div class="note-text-inner">
           <h4 class="mb-4 header-underline align-items-center">
             <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
+            <%= render partial: 'shared/liquid_loading' %>
             <span class="actions">
               <span class="action">
                 <%= link_to edit_project_qa_issue_path(current_project, @issue) do %>

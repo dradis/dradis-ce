@@ -21,6 +21,7 @@
             <div id="<%= dom_id(@note) %>" class="note-text-inner">
               <h4 class="header-underline">
                 <span class="text-truncate" title="<%= @note.title %>"><%= @note.title %></span>
+                <%= render partial: 'shared/liquid_loading' %>
                 <%= render partial: 'actions' %>
               </h4>
               <div class="content-textile" data-behavior="content-textile liquid-async" data-path="<%= preview_project_node_note_path(current_project, @note.node, @note) %>" data-content="<%= @note.text %>" >

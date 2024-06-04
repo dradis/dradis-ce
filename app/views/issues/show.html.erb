@@ -33,6 +33,7 @@
             <div class="note-text-inner">
               <h4 class="mb-4 header-underline">
                 <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
+                <%= render partial: 'shared/liquid_loading' %>
                 <%= render partial: 'actions' %>
               </h4>
               <div class="content-textile" data-behavior="content-textile liquid-async" data-path="<%= preview_project_issue_path(current_project, @issue) %>" data-content="<%= @issue.text %>" >
