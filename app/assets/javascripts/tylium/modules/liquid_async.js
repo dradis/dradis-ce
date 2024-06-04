@@ -3,15 +3,17 @@ document.addEventListener('turbolinks:load', function () {
     var that = this,
         data = { text: $(that).attr('data-content') };
 
-    $.ajax($(that).attr('data-path'), {
+    fetch($(that).attr('data-path'), {
       method: 'POST',
       headers: {
         "Accept": "text/html",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "X-CSRF-Token": $('meta[name="csrf-token"]').attr('content')
       },
-      data: JSON.stringify(data)
+      body: JSON.stringify(data)
     }).
-    done(function(html){
+    then(response => response.text()).
+    then(function(html) {
       $(that).html(html);
     });
   });
