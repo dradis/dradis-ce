@@ -51,6 +51,7 @@
 //= require tylium/modules/export
 //= require tylium/modules/fileupload
 //= require tylium/modules/issues
+//= require tylium/modules/liquid_async
 //= require tylium/modules/nodes
 //= require tylium/modules/search
 //= require tylium/modules/sidebar

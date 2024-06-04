@@ -32,9 +32,8 @@
                 <span class="text-truncate" title="Evidence for this instance">Evidence for this instance</span>
                 <%= render partial: 'actions' %>
               </h4>
-
-              <div class="content-textile" data-behavior="content-textile">
-                <%= markup(@evidence.content, liquid: true) %>
+              <div class="content-textile" data-behavior="content-textile liquid-async" data-path="<%= preview_project_node_evidence_path(current_project, @evidence.node, @evidence) %>" data-content="<%= @evidence.content %>" >
+                <%= markup(@evidence.content) %>
               </div>
               <div class="author-info">
                 <span class="ms-auto">Author: <%= @evidence.author || 'n/a' %></span>

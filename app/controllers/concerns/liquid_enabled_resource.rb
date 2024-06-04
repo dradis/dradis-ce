@@ -15,6 +15,8 @@ module LiquidEnabledResource
   end
 
   def preview
+    # Artificial load time for testing
+    sleep 3
     @text = params[:text]
     render 'markup/preview', layout: false
   end
