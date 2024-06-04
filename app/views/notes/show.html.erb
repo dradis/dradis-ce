@@ -23,7 +23,7 @@
                 <span class="text-truncate" title="<%= @note.title %>"><%= @note.title %></span>
                 <%= render partial: 'actions' %>
               </h4>
-              <div class="content-textile" data-behavior="content-textile liquid-async" data-path="<%= preview_project_note_path(current_project, @note) %>" data-content="<%= @note.text %>" >
+              <div class="content-textile" data-behavior="content-textile liquid-async" data-path="<%= preview_project_node_note_path(current_project, @note.node, @note) %>" data-content="<%= @note.text %>" >
                 <%= markup(@note.text) %>
               </div>
               <div class="author-info">
