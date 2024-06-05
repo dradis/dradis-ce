@@ -77,7 +77,7 @@ describe 'note pages' do
     let(:model) { @note }
     include_examples 'nodes pages breadcrumbs', :show, Note
 
-    describe 'when including liquid content' do
+    describe 'when including liquid content', js: true do
       let(:record) { create(:note, :with_liquid, node: @node) }
       include_examples 'liquid dynamic content', 'note', true
     end

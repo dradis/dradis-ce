@@ -80,7 +80,7 @@ describe 'evidence' do
     let(:model) { @evidence }
     include_examples 'nodes pages breadcrumbs', :show, Evidence
 
-    describe 'when including liquid content' do
+    describe 'when including liquid content', js: true do
       let(:record) { create(:evidence, :with_liquid, issue: @issue, node: @node) }
       include_examples 'liquid dynamic content', 'evidence', true
     end

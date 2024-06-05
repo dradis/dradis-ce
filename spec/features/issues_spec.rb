@@ -412,7 +412,7 @@ describe 'Issues pages' do
           end
         end
 
-        describe 'when including liquid content' do
+        describe 'when including liquid content', js: true do
           let(:record) { create(:issue, :with_liquid, node: issuelib) }
           include_examples 'liquid dynamic content', 'issue', false
         end
