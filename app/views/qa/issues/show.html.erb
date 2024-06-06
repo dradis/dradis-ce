@@ -21,6 +21,7 @@
         <div class="note-text-inner">
           <h4 class="mb-4 header-underline align-items-center">
             <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
+            <%= render partial: 'shared/liquid_loading' %>
             <span class="actions">
               <span class="action">
                 <%= link_to edit_project_qa_issue_path(current_project, @issue) do %>
@@ -29,8 +30,8 @@
               </span>
             </span>
           </h4>
-          <div class="content-textile" data-behavior="content-textile">
-            <%= markup(@issue.text, liquid: true) %>
+          <div class="content-textile" data-behavior="content-textile liquid-async" data-path="<%= preview_project_issue_path(current_project, @issue) %>" data-content="<%= @issue.text %>" >
+            <%= markup(@issue.text) %>
           </div>
           <div class="author-info">
             <span class="ms-auto">Author: <%= @issue.author || 'n/a' %></span>
