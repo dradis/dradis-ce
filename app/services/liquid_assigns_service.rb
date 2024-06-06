@@ -1,8 +1,11 @@
 class LiquidAssignsService
-  attr_accessor :project
+  AVAILABLE_PROJECT_ASSIGNS = %w{ evidences issues nodes notes tags }.freeze
 
-  def initialize(project)
+  attr_accessor :project, :text
+
+  def initialize(project:, text: nil)
     @project = project
+    @text = text
   end
 
   def assigns
@@ -16,15 +19,13 @@ class LiquidAssignsService
   def assigns_pro
   end
 
-  def project_assigns
-    {
-      'evidences' => cached_drops(project.evidence),
-      'issues' => cached_drops(project.issues),
-      'nodes' => cached_drops(project.nodes.user_nodes),
-      'notes' => cached_drops(project.notes),
-      'project' => ProjectDrop.new(project),
-      'tags' => cached_drops(project.tags)
-    }
+  # This method uses Liquid::VariableLookup to find all liquid variables from
+  # a given text. We use the list to know which project assign we need.
+  def assigns_from_content
+    return AVAILABLE_PROJECT_ASSIGNS if text.nil?
+
+    variable_lookup = Liquid::VariableLookup.parse(text)
+    return (variable_lookup.lookups & AVAILABLE_PROJECT_ASSIGNS)
   end
 
   def cached_drops(records)
@@ -37,5 +38,25 @@ class LiquidAssignsService
     Rails.cache.fetch(cache_key) do
       records.map { |record| drop_class.new(record) }
     end
+  end
+
+  def project_assigns
+    project_assigns = { 'project' => ProjectDrop.new(project) }
+
+    assigns_from_content.each do |var|
+      records =
+        case var
+        when 'evidences'
+          project.evidence
+        when 'nodes'
+          project.nodes.user_nodes
+        else
+          project.send(var.to_sym)
+        end
+
+      project_assigns.merge!(var => cached_drops(records))
+    end
+
+    project_assigns
   end
 end
