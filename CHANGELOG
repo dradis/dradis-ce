@@ -1,5 +1,5 @@
 [v#.#.#] ([month] [YYYY])
-  - Liquid: Make project-level drops available for Liquid syntax
+  - Liquid: Make project-level collections available for Liquid syntax
   - Upgraded gems: nokogiri, rails, rexml
   - Bugs fixes:
     - [entity]:

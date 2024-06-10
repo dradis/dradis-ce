@@ -28,12 +28,11 @@ class LiquidAssignsService
     return (variable_lookup.lookups & AVAILABLE_PROJECT_ASSIGNS)
   end
 
-  def cached_drops(records)
+  def cached_drops(records, record_type)
     return [] if records.empty?
 
-    type = records.first.class.to_s.underscore
-    cache_key = "liquid-project-#{project.id}-#{type.pluralize}:#{records.maximum(:updated_at).to_i}-#{records.count}"
-    drop_class = "#{type.camelize}Drop".constantize
+    cache_key = "liquid-project-#{project.id}-#{record_type.pluralize}:#{records.maximum(:updated_at).to_i}-#{records.count}"
+    drop_class = "#{record_type.camelize}Drop".constantize
 
     Rails.cache.fetch(cache_key) do
       records.map { |record| drop_class.new(record) }
@@ -43,18 +42,18 @@ class LiquidAssignsService
   def project_assigns
     project_assigns = { 'project' => ProjectDrop.new(project) }
 
-    assigns_from_content.each do |var|
+    assigns_from_content.each do |record_type|
       records =
-        case var
+        case record_type
         when 'evidences'
           project.evidence
         when 'nodes'
           project.nodes.user_nodes
         else
-          project.send(var.to_sym)
+          project.send(record_type.to_sym)
         end
 
-      project_assigns.merge!(var => cached_drops(records))
+      project_assigns.merge!(record_type => cached_drops(records, record_type.singularize))
     end
 
     project_assigns
