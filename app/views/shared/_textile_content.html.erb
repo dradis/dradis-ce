@@ -1,0 +1,5 @@
+<% content = record.is_a?(Note) ? record.text : record.content %>
+
+<%= content_tag :div, class: 'content-textile', data: { behavior: 'content-textile liquid-async', path: preview_path, content: content } do %>
+  <%= markup(content) %>
+<% end %>
