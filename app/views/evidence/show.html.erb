@@ -33,9 +33,7 @@
                 <%= render partial: 'shared/liquid_loading' %>
                 <%= render partial: 'actions' %>
               </h4>
-              <div class="content-textile" data-behavior="content-textile liquid-async" data-path="<%= preview_project_node_evidence_path(current_project, @evidence.node, @evidence) %>" data-content="<%= @evidence.content %>" >
-                <%= markup(@evidence.content) %>
-              </div>
+              <%= render partial: 'shared/textile_content', locals: { record: @evidence, preview_path: preview_project_node_evidence_path(current_project, @evidence.node, @evidence) } %>
               <div class="author-info">
                 <span class="ms-auto">Author: <%= @evidence.author || 'n/a' %></span>
               </div>
