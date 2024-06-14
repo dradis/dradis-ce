@@ -19,13 +19,13 @@ module NodeProperties
   end
 
   SERVICE_KEYS = %i[protocol port state product reason name version]
-  SERVICE_PROPERTIES = %i[services services_extras]
+  SERVICE_PROPERTIES = %w[services services_extras]
 
   # -------------------------------------------- Individual property management
   # Sets a property, storing value as Array when needed
   # and taking care of duplications
   def set_property(key, value)
-    if SERVICE_PROPERTIES.include?(key.to_sym) # let's get defensive
+    if SERVICE_PROPERTIES.include?(key.to_s) # let's get defensive
       raise ArgumentError, 'don\'t use set_property for :services or '\
                            ':services_extras, use set_service instead'
     end
