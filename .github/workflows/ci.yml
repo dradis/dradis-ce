@@ -5,6 +5,7 @@ on:
     branches: ['*']
   push:
     branches: [develop, main]
+  workflow_dispatch:
 
 jobs:
   audits:
