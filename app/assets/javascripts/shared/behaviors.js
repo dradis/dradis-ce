@@ -88,6 +88,14 @@
         searchParams.set('tab', currentTab);
         history.pushState(null, null, `?${searchParams.toString()}`);
       });
+
+    // Allows users to navigate using the native browser back/forward buttons
+    // even when we manipulate the browser history with pushState()
+    $(window)
+      .unbind()
+      .on('popstate', function () {
+        location.reload();
+      });
   }
 
   document.addEventListener('turbolinks:load', function () {
