@@ -81,17 +81,12 @@
     }
 
     // Update address bar with current tab param
-    $(parentElement)
-      .find('[data-bs-toggle~=tab]')
+    $('[data-bs-toggle~=tab]')
+      .unbind()
       .on('shown.bs.tab', function (e) {
         let currentTab = $(e.target).attr('href').substring(1);
         searchParams.set('tab', currentTab);
-        let urlWithTab = `?${searchParams.toString()}`;
-        history.pushState(
-          { turbolinks: true, url: urlWithTab },
-          '',
-          urlWithTab
-        );
+        history.pushState(null, null, `?${searchParams.toString()}`);
       });
   }
 
