@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Attachments: Copy attachments when moving an evidence/note
   - Liquid: Make project-level collections available for Liquid syntax
   - Upgraded gems: nokogiri, rails, rexml
   - Bugs fixes:

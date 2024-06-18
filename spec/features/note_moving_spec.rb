@@ -30,9 +30,13 @@ describe 'moving a note', js: true do
     click_move_note
   end
 
-  let(:current_note) { @note = create(:note, node: @node_5) }
+  let(:text) { "#[Description]#\nTest Note\n" }
+  let(:current_note) { @note = create(:note, text: text, node: @node_5) }
 
   describe 'moving a note to a different node' do
+    let(:attachment) { create(:attachment, node: @node_5) }
+    let(:text) { "#[Description]#\n!/projects/#{current_project.id}/nodes/#{@node_5.id}/attachments/#{attachment.filename}!\n" }
+
     before do
       within('#modal_move_note') do
         click_link @node_1.label
@@ -46,6 +50,10 @@ describe 'moving a note', js: true do
 
     it 'should redirect to note show path' do
       expect(current_path).to eq(project_node_note_path(current_project, @node_1, current_note))
+    end
+
+    it 'should update the attachment reference to the new node' do
+      expect(current_note.reload.content).to include("nodes/#{@node_1.id}")
     end
   end
 
