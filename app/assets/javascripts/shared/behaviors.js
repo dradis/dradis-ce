@@ -81,8 +81,8 @@
     }
 
     // Update address bar with current tab param
-    $('[data-bs-toggle~=tab]')
-      .unbind()
+    $(parentElement)
+      .find('[data-bs-toggle~=tab]')
       .on('shown.bs.tab', function (e) {
         let currentTab = $(e.target).attr('href').substring(1);
         searchParams.set('tab', currentTab);
@@ -91,11 +91,9 @@
 
     // Allows users to navigate using the native browser back/forward buttons
     // even when we manipulate the browser history with pushState()
-    $(window)
-      .unbind()
-      .on('popstate', function () {
-        location.reload();
-      });
+    $(window).on('popstate', function () {
+      location.reload();
+    });
   }
 
   document.addEventListener('turbolinks:load', function () {
