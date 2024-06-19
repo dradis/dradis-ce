@@ -4,34 +4,30 @@ class LiquidCachedAssigns < Hash
   attr_accessor :assigns, :project
 
   def initialize(project:)
-    @assigns = { 'project' => ProjectDrop.new(@project) }
+    @assigns = { 'project' => ProjectDrop.new(project) }
+    @assigns.merge!(assigns_pro)
+
     @project = project
   end
 
   def [](record_type)
-    return unless AVAILABLE_PROJECT_ASSIGNS.include?(record_type)
-
-    if assigns[record_type]
-      assigns[record_type]
-    else
-      assigns[record_type] = cached_drops(record_type)
-    end
+    assigns[record_type] ||= cached_drops(record_type)
   end
 
-  def inspect
-    assigns.inspect
+  def key?(key)
+    AVAILABLE_PROJECT_ASSIGNS.include?(key.to_s) || assigns.key?(key)
   end
 
-  def key?(msg)
-    AVAILABLE_PROJECT_ASSIGNS.include?(msg.to_s)
-  end
-
-  def respond_to?(msg)
-    return true if key?(msg)
-    super(msg)
+  def merge!(hash)
+    @assigns.merge!(hash)
+    self
   end
 
   private
+
+  def assigns_pro
+    {}
+  end
 
   def cached_drops(record_type)
     records = project_records(record_type)
@@ -47,6 +43,8 @@ class LiquidCachedAssigns < Hash
   end
 
   def project_records(record_type)
+    return [] unless AVAILABLE_PROJECT_ASSIGNS.include?(record_type)
+
     case record_type
     when 'evidences'
       project.evidence
