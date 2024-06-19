@@ -14,7 +14,7 @@ Rails.application.reloader.to_prepare do
     if Mapping.table_exists?
       Dradis::Plugins::with_feature(:upload).each do |integration|
         integration.copy_samples(to: template_dir)
-        integration.migrate_templates_to_mappings(from: template_dir)
+        integration.migrate_templates_to_mappings(from: template_dir) if !Rails.env.test?
       end
     end
 
