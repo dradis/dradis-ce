@@ -86,14 +86,19 @@
       .on('shown.bs.tab', function (e) {
         let currentTab = $(e.target).attr('href').substring(1);
         searchParams.set('tab', currentTab);
-        history.pushState(null, null, `?${searchParams.toString()}`);
+        let urlWithTab = `?${searchParams.toString()}`;
+        history.replaceState(null, null, urlWithTab);
       });
 
     // Allows users to navigate using the native browser back/forward buttons
     // even when we manipulate the browser history with pushState()
-    $(window).on('popstate', function () {
-      location.reload();
-    });
+    $(window)
+      .off()
+      .on('popstate', function () {
+        if (location.search.length) {
+          Turbolinks.visit(location, { action: 'replace' });
+        }
+      });
   }
 
   document.addEventListener('turbolinks:load', function () {
