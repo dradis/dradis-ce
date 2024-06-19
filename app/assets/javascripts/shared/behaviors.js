@@ -87,7 +87,7 @@
         let currentTab = $(e.target).attr('href').substring(1);
         searchParams.set('tab', currentTab);
         let urlWithTab = `?${searchParams.toString()}`;
-        history.replaceState(null, null, urlWithTab);
+        history.pushState(null, null, urlWithTab);
       });
 
     // Allows users to navigate using the native browser back/forward buttons
