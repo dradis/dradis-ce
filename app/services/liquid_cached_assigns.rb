@@ -4,10 +4,10 @@ class LiquidCachedAssigns < Hash
   attr_accessor :assigns, :project
 
   def initialize(project:)
+    @project = project
+
     @assigns = { 'project' => ProjectDrop.new(project) }
     @assigns.merge!(assigns_pro)
-
-    @project = project
   end
 
   def [](record_type)
