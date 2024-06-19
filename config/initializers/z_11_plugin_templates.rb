@@ -10,7 +10,7 @@ Rails.application.reloader.to_prepare do
   if (ActiveRecord::Base.connection rescue false) && Configuration.table_exists? && Configuration.paths_templates.exist?
     # ---------------------------------------------------------------- 3.1 Upload
     template_dir = Configuration.paths_templates_plugins
-
+    # mappings table may not exist when migrating from an old OVA to a new one so we need this guard
     if Mapping.table_exists?
       Dradis::Plugins::with_feature(:upload).each do |integration|
         integration.copy_samples(to: template_dir)
