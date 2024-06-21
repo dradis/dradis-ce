@@ -14,8 +14,16 @@ class LiquidCachedAssigns < Hash
     assigns[record_type] ||= cached_drops(record_type)
   end
 
+  # SEE: https://github.com/Shopify/liquid/blob/77bc56/lib/liquid/context.rb#L211
+  # Liquid is checking if the variable is present in the assigns hash by
+  # calling the `key?` method. Since we're lazily loading the keys, the variable
+  # may not yet be present in the assigns hash.
   def key?(key)
     AVAILABLE_PROJECT_ASSIGNS.include?(key.to_s) || assigns.key?(key)
+  end
+
+  def merge(hash)
+    LiquidCachedAssigns.new(project: project).merge!(@assigns.merge(hash))
   end
 
   def merge!(hash)
