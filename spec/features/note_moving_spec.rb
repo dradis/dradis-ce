@@ -34,10 +34,13 @@ describe 'moving a note', js: true do
   let(:current_note) { @note = create(:note, text: text, node: @node_5) }
 
   describe 'moving a note to a different node' do
-    let(:attachment) { create(:attachment, node: @node_5) }
+    let(:attachment) { create(:attachment, filename: 'name with spaces.png', node: @node_5) }
     let(:text) { "#[Description]#\n!/projects/#{current_project.id}/nodes/#{@node_5.id}/attachments/#{attachment.filename}!\n" }
 
     before do
+      # Ensure this works with duplicated attachment
+      create(:attachment, filename: 'name with spaces.png', node: @node_1)
+
       within('#modal_move_note') do
         click_link @node_1.label
         click_submit
