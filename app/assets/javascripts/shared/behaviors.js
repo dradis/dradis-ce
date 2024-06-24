@@ -87,17 +87,11 @@
         let currentTab = $(e.target).attr('href').substring(1);
         searchParams.set('tab', currentTab);
         let urlWithTab = `?${searchParams.toString()}`;
-        history.pushState(null, null, urlWithTab);
-      });
-
-    // Allows users to navigate using the native browser back/forward buttons
-    // even when we manipulate the browser history with pushState()
-    $(window)
-      .off()
-      .on('popstate', function () {
-        if (location.search.length) {
-          Turbolinks.visit(location, { action: 'replace' });
-        }
+        history.pushState(
+          { turbolinks: true, url: urlWithTab },
+          '',
+          urlWithTab
+        );
       });
   }
 
