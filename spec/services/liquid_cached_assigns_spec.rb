@@ -20,11 +20,13 @@ RSpec.describe LiquidCachedAssigns do
     end
 
     it 'builds a hash of liquid assigns' do
+      issues = project.issues.map(&:title)
+
       expect(liquid_assigns['project'].name).to eq(project.name)
-      expect(liquid_assigns['issues'].map(&:title)).to eq(project.issues.map(&:title))
+      expect(liquid_assigns['issues'].map(&:title)).to eq(issues)
       expect(liquid_assigns['evidences'].map(&:title)).to eq(project.evidence.map(&:title))
       expect(liquid_assigns['nodes'].map(&:label)).to eq(project.nodes.user_nodes.map(&:label))
-      expect(liquid_assigns['notes'].map(&:title)).to eq(project.notes.map(&:title))
+      expect(liquid_assigns['notes'].map(&:title)).to eq(project.notes.map(&:title) - issues)
       expect(liquid_assigns['tags'].map(&:display_name)).to eq(project.tags.map(&:display_name))
     end
   end

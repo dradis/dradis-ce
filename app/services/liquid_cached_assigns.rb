@@ -58,6 +58,9 @@ class LiquidCachedAssigns < Hash
       project.evidence
     when 'nodes'
       project.nodes.user_nodes
+    when 'notes'
+      # FIXME - ISSUE/NOTE INHERITANCE
+      project.notes.includes(:node).where.not(node: { type_id: Node::Types::ISSUELIB })
     else
       project.send(record_type.to_sym)
     end
