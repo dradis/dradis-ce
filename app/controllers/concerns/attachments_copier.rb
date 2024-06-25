@@ -7,7 +7,7 @@ module AttachmentsCopier
 
       if attachment
         new_attachment = attachment.copy_to(record.node)
-        new_filename = ERB::Util.url_encode(new_attachment.filename)
+        new_filename = new_attachment.url_encoded_filename
         new_path = full_screenshot_path.gsub(
           /nodes\/[0-9]+\/attachments\/.+/,
           "nodes/#{new_attachment.node_id}/attachments/#{new_filename}"
