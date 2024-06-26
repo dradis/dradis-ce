@@ -1,9 +1,9 @@
 [v#.#.#] ([month] [YYYY])
+  - Attachments: Copy attachments when moving an evidence/note
   - Liquid: Make project-level collections available for Liquid syntax
   - Upgraded gems: nokogiri, rails, rexml
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Navigation: Restore functionality of native browser back/forward buttons
     - Bug tracker items:
       - [item]
   - New integrations:
