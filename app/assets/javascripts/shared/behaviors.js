@@ -81,11 +81,18 @@
     }
 
     // Update address bar with current tab param
-    $('[data-bs-toggle~=tab]').on('shown.bs.tab', function (e) {
-      let currentTab = $(e.target).attr('href').substring(1);
-      searchParams.set('tab', currentTab);
-      history.pushState(null, null, `?${searchParams.toString()}`);
-    });
+    $(parentElement)
+      .find('[data-bs-toggle~=tab]')
+      .on('shown.bs.tab', function (e) {
+        let currentTab = $(e.target).attr('href').substring(1);
+        searchParams.set('tab', currentTab);
+        let urlWithTab = `?${searchParams.toString()}`;
+        history.pushState(
+          { turbolinks: true, url: urlWithTab },
+          '',
+          urlWithTab
+        );
+      });
   }
 
   document.addEventListener('turbolinks:load', function () {
