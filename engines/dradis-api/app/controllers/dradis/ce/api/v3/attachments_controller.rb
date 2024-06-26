@@ -15,6 +15,8 @@ module Dradis::CE::API
       def show
         begin
           @attachment = Attachment.find(params[:filename], conditions: { node_id: @node.id })
+          @file_size = @attachment.size
+          @created_at = @attachment.ctime
         rescue
           raise ActiveRecord::RecordNotFound, "Couldn't find attachment with filename '#{params[:filename]}'"
         end
@@ -49,7 +51,7 @@ module Dradis::CE::API
         attachment.close
 
         begin
-          new_name    = CGI::unescape(attachment_params[:filename])
+          new_name = ActiveStorage::Filename.new(CGI::unescape(attachment_params[:filename])).sanitized
           destination = Attachment.pwd.join(@node.id.to_s, new_name).to_s
 
           if !File.exist?(destination) && !destination.match(/^#{Attachment.pwd}/).nil?
@@ -69,6 +71,15 @@ module Dradis::CE::API
         @attachment.delete
 
         render_successful_destroy_message
+      end
+
+      def download
+        begin
+          @attachment = Attachment.find(params[:filename], conditions: { node_id: @node.id })
+          send_file(@attachment.fullpath)
+        rescue
+          raise ActiveRecord::RecordNotFound, "Couldn't find attachment with filename '#{params[:filename]}'"
+        end
       end
 
       private

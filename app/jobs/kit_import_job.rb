@@ -90,7 +90,7 @@ class KitImportJob < ApplicationJob
     end
 
     @project = Project.create(
-      name: NamingService.name_project(File.basename(project_package, '.zip'))
+      name: NamingService.name_project(File.basename(project_package, '.zip').titleize)
     )
 
     if @project.errors.any?
