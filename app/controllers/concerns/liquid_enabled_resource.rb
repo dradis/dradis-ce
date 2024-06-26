@@ -35,6 +35,6 @@ module LiquidEnabledResource
     project = Project.find(params[:project_id])
     authorize! :use, project
 
-    LiquidAssignsService.new(project).assigns
+    LiquidAssignsService.new(project: project, text: params[:text]).assigns
   end
 end

@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.8'
+gem 'rails', '~> 7.0.8.4'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -254,6 +254,7 @@ gem 'dradis-nipper', '~> 4.12.0'
 gem 'dradis-nmap', '~> 4.12.0'
 gem 'dradis-ntospider', '~> 4.12.0'
 gem 'dradis-openvas', '~> 4.12.0'
+gem 'dradis-pentera', '~> 4.12.0'
 gem 'dradis-qualys', '~> 4.12.0'
 gem 'dradis-saint', '~> 4.12.0'
 gem 'dradis-veracode', '~> 4.12.0'
