@@ -185,7 +185,7 @@ class KitImportJob < ApplicationJob
     return unless Dir.exist?(kit_template_dir)
 
     Dir["#{kit_template_dir}/*"].each do |file|
-      return unless File.file?(file)
+      return unless File.exist?(file)
 
       file_name = name_file(File.basename(file), destination)
       FileUtils.cp(file, "#{destination}/#{file_name}")
