@@ -23,7 +23,9 @@ class LiquidCachedAssigns < Hash
   end
 
   def merge(hash)
-    LiquidCachedAssigns.new(project: project).merge!(@assigns.merge(hash))
+    lca = LiquidCachedAssigns.new(project: project)
+    lca.assigns = @assigns.merge(hash)
+    lca
   end
 
   def merge!(hash)
