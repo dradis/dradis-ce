@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe KitImportJob do
   before do
-    @user    = create(:user)
+    @user = create(:user)
 
     file = File.new(Rails.root.join('spec', 'fixtures', 'files', 'templates', 'kit.zip'))
     @tmp_dir  = Rails.root.join('tmp', 'rspec')
@@ -14,7 +14,7 @@ RSpec.describe KitImportJob do
     FileUtils.cp file.path, @tmp_dir
     @tmp_file = File.new(@tmp_dir.join('kit.zip'))
 
-    ['methodologies', 'notes', 'plugins', 'projects', 'reports'].each do |item|
+    ['methodologies', 'notes', 'projects', 'reports'].each do |item|
       conf = Configuration.find_or_initialize_by(name: "admin:paths:templates:#{item}")
       folder = @tmp_dir.join(item)
       conf.value = folder
@@ -54,9 +54,6 @@ RSpec.describe KitImportJob do
 
       # project template
       expect(ProjectTemplate.find_template('dradis-template-welcome')).to_not be_nil
-
-      # plugin templates
-      expect(Dir[Configuration.paths_templates_plugins + '/nessus/*']).to_not be_empty
 
       # report template files
       expect(File.exists?(Rails.root.join('tmp', 'rspec', 'reports', 'word', 'dradis_welcome_template.v0.5.docm'))).to eq true

@@ -4,7 +4,7 @@ class KitImportJob < ApplicationJob
     'html_export' => ['html.erb'],
     'word' => ['docm', 'docx']
   }
-  TEMPLATE_TYPES = %w{ methodologies notes plugins projects }
+  TEMPLATE_TYPES = %w{ methodologies notes projects reports }
 
   queue_as :dradis_upload
 
@@ -17,7 +17,6 @@ class KitImportJob < ApplicationJob
     @current_user = user_id ? User.find(user_id) : User.first
     @logger = logger
     @project = nil
-    @report_templates_dir = Configuration.paths_templates_reports
     @templates_dirs = TEMPLATE_TYPES.map do |template_type|
       [
         template_type,
@@ -31,7 +30,6 @@ class KitImportJob < ApplicationJob
 
     import_methodology_templates
     import_note_templates
-    import_plugin_templates
     import_project_package
     import_project_templates
     import_report_template_files
@@ -39,6 +37,7 @@ class KitImportJob < ApplicationJob
     if defined?(Dradis::Pro)
       import_report_template_properties
       import_rules
+      import_mappings
 
       assign_project_rtp
     end
@@ -49,7 +48,7 @@ class KitImportJob < ApplicationJob
   end
 
   private
-  attr_reader :current_user, :logger, :report_templates_dir, :templates_dirs, :working_dir
+  attr_reader :current_user, :logger, :templates_dirs, :working_dir
 
   def assign_project_rtp
     logger.info { 'Assigning RTP to project...' }
@@ -67,6 +66,12 @@ class KitImportJob < ApplicationJob
       folder = File.join(source, '.')
       FileUtils.cp_r folder, working_dir
     end
+  end
+
+  def import_mappings
+    logger.info { 'Adding Mappings...' }
+    mappings_seed = "#{working_dir}/kit/mappings_seed.rb"
+    load mappings_seed if File.exist?(mappings_seed)
   end
 
   def import_methodology_templates
@@ -113,11 +118,6 @@ class KitImportJob < ApplicationJob
     logger.info { "  - New Project #{@project.id} created." }
   end
 
-  def import_plugin_templates
-    logger.info { 'Copying Plugin Manager templates...' }
-    import_templates('plugins')
-  end
-
   def import_project_templates
     logger.info { 'Copying project templates...' }
     import_templates('projects')
@@ -126,13 +126,13 @@ class KitImportJob < ApplicationJob
   def import_report_template_files
     logger.info { 'Copying report template files...' }
 
-    FileUtils.mkdir_p report_templates_dir
+    FileUtils.mkdir_p templates_dirs['reports']
     %w{
       excel
       html_export
       word
     }.each do |plugin|
-      dest = "#{report_templates_dir}/#{plugin}/"
+      dest = "#{templates_dirs['reports']}/#{plugin}/"
       temp_plugin_path = "#{working_dir}/kit/templates/reports/#{plugin}/*"
 
       # Only allow certain file extensions
@@ -149,7 +149,7 @@ class KitImportJob < ApplicationJob
     logger.info { 'Adding properties to report template files...' }
 
     Dradis::Plugins.with_feature(:rtp).each do |plugin|
-      Dir.glob(File.join(report_templates_dir, plugin.plugin_name.to_s, '*')) do |template|
+      Dir.glob(File.join(templates_dirs['reports'], plugin.plugin_name.to_s, '*')) do |template|
         basename = File.basename(template, '.*')
         reports_dir = "#{working_dir}/kit/templates/reports"
         default_properties = "#{reports_dir}/#{plugin.plugin_name}/#{basename}.rb"
@@ -181,22 +181,22 @@ class KitImportJob < ApplicationJob
 
   def import_templates(template_type)
     kit_template_dir = "#{working_dir}/kit/templates/#{template_type}"
+    destination = templates_dirs[template_type]
     return unless Dir.exist?(kit_template_dir)
-    template_pwd = templates_dirs[template_type]
 
-    if template_type == 'plugins'
-      FileUtils.cp_r("#{kit_template_dir}/.", template_pwd)
-    else
-      Dir["#{kit_template_dir}/*"].each do |file|
-        return unless File.file?(file)
-        file_name = NamingService.name_file(
-          original_filename: File.basename(file),
-          pathname: template_pwd
-        )
+    Dir["#{kit_template_dir}/*"].each do |file|
+      return unless File.file?(file)
 
-        FileUtils.cp(file, "#{template_pwd}/#{file_name}")
-      end
+      file_name = name_file(File.basename(file), destination)
+      FileUtils.cp(file, "#{destination}/#{file_name}")
     end
+  end
+
+  def name_file(original_filename, pathname)
+    NamingService.name_file(
+      original_filename: original_filename,
+      pathname: pathname
+    )
   end
 
   def unzip(file)
