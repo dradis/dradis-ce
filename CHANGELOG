@@ -1,5 +1,4 @@
 [v#.#.#] ([month] [YYYY])
-  - TESTING CI
   - Liquid: Make project-level collections available for Liquid syntax
   - Upgraded gems: nokogiri, rails, rexml
   - Bugs fixes:
