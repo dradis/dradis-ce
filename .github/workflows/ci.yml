@@ -32,7 +32,7 @@ jobs:
       IS_MERGE: ${{ github.base_ref == '' }}
       PREV_SHA: ${{ github.event.before }}
       TARGET_BRANCH: ${{ github.base_ref }}
-      FALLBACK_BRANCH: 'develop'
+      FALLBACK_BRANCH: 'origin/develop'
     steps:
       - name: Checkout code
         uses: actions/checkout@v1
