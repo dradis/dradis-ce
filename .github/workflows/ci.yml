@@ -32,6 +32,7 @@ jobs:
       IS_MERGE: ${{ github.base_ref == '' }}
       PREV_SHA: ${{ github.event.before }}
       TARGET_BRANCH: ${{ github.base_ref }}
+      FALLBACK_BRANCH: 'develop'
     steps:
       - name: Checkout code
         uses: actions/checkout@v1
@@ -40,7 +41,7 @@ jobs:
         with:
           bundler-cache: true
       - name: Lint changed files
-        run: bin/rubocop-ci ${{ env.TARGET_BRANCH || env.PREV_SHA }} ${{ env.IS_MERGE }}
+        run: bin/rubocop-ci ${{ env.TARGET_BRANCH || env.PREV_SHA || env.FALLBACK_BRANCH }} ${{ env.IS_MERGE }}
   rspec:
     name: RSpec
     needs: [audits, rubocop]
