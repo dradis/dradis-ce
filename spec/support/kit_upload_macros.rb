@@ -10,7 +10,7 @@ module KitUploadMacros
     FileUtils.cp file.path, @tmp_dir
     @tmp_file = File.new(@tmp_dir.join('kit.zip'))
 
-    ['methodologies', 'notes', 'plugins', 'projects', 'reports'].each do |item|
+    ['methodologies', 'notes', 'projects', 'reports'].each do |item|
       conf = Configuration.find_or_initialize_by(name: "admin:paths:templates:#{item}")
       folder = @tmp_dir.join(item)
       conf.value = folder
