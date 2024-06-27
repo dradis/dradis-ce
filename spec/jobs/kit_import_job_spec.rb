@@ -67,7 +67,7 @@ RSpec.describe KitImportJob do
     end
 
     it 'renames methodology templates if template with same name already exists' do
-      methodology = Methodology.new(filename: 'OWASPv4_Testing_Methodology')
+      methodology = Methodology.new(filename: 'OWASPv4_Testing_Methodology', content: '<xml/>')
       methodology.save
 
       described_class.new.perform(@tmp_file, logger: Log.new.write('Testing...'))
