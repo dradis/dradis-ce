@@ -21,7 +21,7 @@
     </thead>
     <tbody>
       <% issues.each do |issue| %>
-        <% cache [issue, @all_columns, issue.try(:affected), issue.try(:state), 'issues-table', @tags] do %>
+        <% cache [issue, @all_columns, issue.try(:affected_count), issue.affected.pluck(:updated_at), issue.try(:state), 'issues-table', @tags] do %>
           <tr id="issue-<%= issue.id %>" data-tag-url="<%= project_issue_path(current_project, issue) %>">
             <td class="select-checkbox" data-behavior="select-checkbox"></td>
             <% @all_columns.each do |column| %>
