@@ -98,7 +98,7 @@ gem 'nokogiri', '>= 1.16.2'
 gem 'rails-html-sanitizer', '~> 1.4.4'
 
 # Textile markup
-gem 'RedCloth', '~> 4.3.2', require: 'redcloth'
+gem 'RedCloth', '~> 4.3.4', require: 'redcloth'
 
 # html-pipeline dependency for auto-linking
 gem 'rinku'
