@@ -1,7 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Attachments: Copy attachments when moving an evidence/note
   - Liquid: Make project-level collections available for Liquid syntax
-  - Upgraded gems: nokogiri, rails, rexml
+  - Upgraded gems: nokogiri, rails, redcloth, rexml
   - Bugs fixes:
     - Navigation: Restore functionality of native browser back/forward buttons
     - Bug tracker items:
