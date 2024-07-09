@@ -3,6 +3,7 @@
   - Liquid: Make project-level collections available for Liquid syntax
   - Upgraded gems: nokogiri, rails, redcloth, rexml
   - Bugs fixes:
+    - Issues: Update Affected column after a node has been renamed or merged
     - Navigation: Restore functionality of native browser back/forward buttons
     - Bug tracker items:
       - [item]
