@@ -10,19 +10,19 @@
         <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, id: 'new_upload', data: { parse_url: project_upload_parse_path(current_project) } do %>
           <div class="mb-5 mt-4 pt-2">
             <%= label_tag :uploader do %>
-              <h5>1. Tool are you uploading output from</h5>
+              <h5>1. Tool you are uploading output from</h5>
             <% end %>
             <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { class: 'form-select', data: { behavior: 'tool-select' } } %>
           </div>
           <div class="mb-5">
             <%= label_tag :state do %>
-              <h5>2. State for uploaded records</h5>
+              <h5>2. State of uploaded records</h5>
             <% end %>
             <%= select_tag 'state', options_for_select(Issue.states.map { |s, id| [s.humanize, s] }), { class: 'form-select state-select', data: { behavior: 'state-select' } } %>
           </div>
           <div class="mb-4">
             <%= label_tag :file do %>
-              <h5>3. Upload output file</h5>
+              <h5>3. Upload tool output file</h5>
             <% end %>
             <div>
               <label class="visually-hidden" data-behavior="file-label">Choose file</label>
