@@ -7015,7 +7015,7 @@ var   durationWeek$1 = durationDay$1 * 7;
 
   var category20c = colors("3182bd6baed69ecae1c6dbefe6550dfd8d3cfdae6bfdd0a231a35474c476a1d99bc7e9c0756bb19e9ac8bcbddcdadaeb636363969696bdbdbdd9d9d9");
 
-  var category20 = colors("1f77b40b3d912a9d8f264653e639466d597a8d99ae6a05721b263b003566023047900c3f343a404950578b00002c3e50b22222d2691e8b4513ff4500");
+  var category20 = colors("1f77b45d779abf59009b6f00258625258647d62728cd04008d5eb97168af8c564b935245c03896e31970747474464646757615dbdb8d0f808b457b85");
 
   var cubehelix$3 = interpolateCubehelixLong(cubehelix(300, 0.5, 0.0), cubehelix(-240, 0.5, 1.0));
 
