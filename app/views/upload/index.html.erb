@@ -1,33 +1,39 @@
 <% content_for :title, 'Upload Manager' %>
 
 <div class="row m-0">
-  <div class="col-lg-6 col-xl-5 p-0">
-    <div class="content-container mt-3 mr-lg-3" data-behavior="content-container">
+  <div class="col-lg-6 col-xl-5 p-0 order-1">
+    <div class="content-container mt-3 me-lg-3" data-behavior="content-container">
       <h4 class="header-underline">Upload Output Files</h4>
       <p class="mt-4">Use the form below to upload output files from other tools.</p>
 
       <div class="mt-4">
         <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, id: 'new_upload', data: { parse_url: project_upload_parse_path(current_project) } do %>
-          <div class="form-group mb-5 mt-4 pt-2">
+          <div class="mb-5 mt-4 pt-2">
             <%= label_tag :uploader do %>
-              <h5>1. Choose a tool</h5>
+              <h5>1. Tool you are uploading output from</h5>
             <% end %>
-            <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { :class => 'form-control' } %>
+            <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { class: 'form-select', data: { behavior: 'tool-select' } } %>
           </div>
-          <div class="form-group mb-4">
-            <%= label_tag :file do %>
-              <h5>2. Choose a file</h5>
+          <div class="mb-5">
+            <%= label_tag :state do %>
+              <h5>2. State of uploaded records</h5>
             <% end %>
-            <div class="custom-file">
-              <%= file_field_tag 'file', class: 'custom-file-input' %>
-              <label class="custom-file-label" data-behavior="file-label">Choose file</label>
+            <%= select_tag 'state', options_for_select(Issue.states.map { |s, id| [s.humanize, s] }), { class: 'form-select state-select', data: { behavior: 'state-select' } } %>
+          </div>
+          <div class="mb-4">
+            <%= label_tag :file do %>
+              <h5>3. Upload tool output file</h5>
+            <% end %>
+            <div>
+              <label class="visually-hidden" data-behavior="file-label">Choose file</label>
+              <%= file_field_tag 'file', class: 'form-control' %>
               <%= hidden_field_tag 'item_id' %>
               <%= hidden_field_tag 'attachment' %>
               <%= hidden_field_tag 'format', 'js' %>
             </div>
           </div>
         <% end %>
-            
+
         <p>Upload progress:</p>
         <div class="progress mb-2">
           <div class="progress-bar progress-bar-striped">
@@ -39,34 +45,34 @@
     </div>
   </div>
 
-  <div class="col-lg-6 col-xl-7 p-0">
-    <div class="content-container mt-0 mt-lg-3 ml-lg-3 restrict-height" data-height="match-prev" data-behavior="restrict-height">
+  <div class="col-lg-6 col-xl-7 p-0 order-3 order-lg-2">
+    <div class="content-container mt-0 mt-lg-3 ms-lg-3 restrict-height" data-height="match-prev" data-behavior="restrict-height">
       <h4 class="header-underline">Available plugins</h4>
 
-      <div id="plugin-list">
-      <table class="table table-striped mb-0">
-        <thead>
-          <tr>
-            <th>Plugin</th>
-            <th>Description</th>
-            <th>Version</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @uploaders.each do |uploader| %>
+      <div class="overflow-auto">
+        <table class="table table-striped mb-0">
+          <thead>
             <tr>
-              <td><code><%= uploader.name %></code></td>
-              <td><%= uploader.meta[:description] %></td>
-              <td><%= uploader.meta[:version] %></td>
+              <th>Plugin</th>
+              <th>Description</th>
+              <th>Version</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% @uploaders.each do |uploader| %>
+              <tr>
+                <td><code><%= uploader.name %></code></td>
+                <td><%= uploader.meta[:description] %></td>
+                <td><%= uploader.meta[:version] %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 
-  <div class="col-12 p-0">
+  <div class="col-12 p-0 order-2 order-lg-3">
     <div class="content-container mt-0">
       <h4 class="header-underline">Output console</h4>
       <div id="status"></div>
@@ -78,7 +84,3 @@
     </div>
   </div>
 </div>
-
-<script type="text/javascript" charset="utf-8">
-  ConsoleUpdater.jobId = <%= @last_job %>;
-</script>

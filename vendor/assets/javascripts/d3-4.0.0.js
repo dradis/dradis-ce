@@ -1,4 +1,7 @@
 // https://d3js.org Version 4.0.0. Copyright 2016 Mike Bostock.
+
+// WARNING! This file is patched on line 7018 
+
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -7012,7 +7015,7 @@ var   durationWeek$1 = durationDay$1 * 7;
 
   var category20c = colors("3182bd6baed69ecae1c6dbefe6550dfd8d3cfdae6bfdd0a231a35474c476a1d99bc7e9c0756bb19e9ac8bcbddcdadaeb636363969696bdbdbdd9d9d9");
 
-  var category20 = colors("1f77b4aec7e8ff7f0effbb782ca02c98df8ad62728ff98969467bdc5b0d58c564bc49c94e377c2f7b6d27f7f7fc7c7c7bcbd22dbdb8d17becf9edae5");
+  var category20 = colors("1f77b45d779abf59009b6f00258625258647d62728cd04008d5eb97168af8c564b935245c03896e31970747474464646757615dbdb8d0f808b457b85");
 
   var cubehelix$3 = interpolateCubehelixLong(cubehelix(300, 0.5, 0.0), cubehelix(-240, 0.5, 1.0));
 

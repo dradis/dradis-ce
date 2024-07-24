@@ -19,8 +19,8 @@ class DradisDatatable {
 
     // Disable ability to toggle column visibility that has data-column-visible="false"
     var columnVisibleIndexes = [];
-    this.tableHeaders.forEach(function(column, index) {
-      if(column.dataset.columnVisible != 'false') {
+    this.tableHeaders.forEach(function (column, index) {
+      if (column.dataset.columnVisible != 'false') {
         columnVisibleIndexes.push(index);
       }
     });
@@ -28,7 +28,7 @@ class DradisDatatable {
     // Only show default columns on first load
     var hiddenColumnIndexes = [];
     if (localStorage.getItem(this.localStorageKey) === null) {
-      this.tableHeaders.forEach(function(column, index) {
+      this.tableHeaders.forEach(function (column, index) {
         var columnName = column.textContent.trim();
 
         if (!that.defaultColumns.includes(columnName)) {
@@ -44,72 +44,74 @@ class DradisDatatable {
         dom: {
           button: {
             tag: 'button',
-            className: 'btn'
-          }
+            className: 'btn',
+          },
         },
         buttons: [
           {
-            available: function() {
-              return that.$table.find('[data-behavior~=select-checkbox]').length;
+            available: function () {
+              return that.$table.find('[data-behavior~=select-checkbox]')
+                .length;
             },
             attr: {
-              id: 'select-all'
+              id: 'select-all',
             },
             name: 'selectAll',
-            text: '<label for="select-all-checkbox" class="sr-only">Select all"</label><input type="checkbox" id="select-all-checkbox" />',
-            titleAttr: 'Select all'
+            text: '<label for="select-all-checkbox" class="visually-hidden">Select all"</label><input type="checkbox" id="select-all-checkbox" />',
+            titleAttr: 'Select all',
           },
           {
             attr: {
-              'data-behavior': 'table-action'
+              'data-behavior': 'table-action',
             },
-            text: '<i class="fa fa-trash fa-fw"></i>Delete',
+            text: '<i class="fa-solid fa-trash fa-fw"></i>Delete',
             className: 'text-danger d-none',
             name: 'bulkDeleteBtn',
-            action: this.bulkDelete.bind(this)
+            action: this.bulkDelete.bind(this),
           },
           {
             attr: {
-              'data-behavior': 'table-action'
+              'data-behavior': 'table-action',
             },
-            available: function() {
+            available: function () {
               return that.$paths.data('table-merge-url') !== undefined;
             },
-            text: '<i class="fa fa-compress fa-fw"></i> Merge',
+            text: '<i class="fa-solid fa-compress fa-fw"></i> Merge',
             name: 'mergeBtn',
             className: 'd-none',
-            action: this.mergeSelected.bind(this)
+            action: this.mergeSelected.bind(this),
           },
           {
             attr: {
-              'data-behavior': 'table-action'
+              'data-behavior': 'table-action',
             },
             autoClose: true,
-            available: function(){
+            available: function () {
               return that.$table.data('tags') !== undefined;
             },
-            className: 'd-none',
+            className: 'd-none tag-btn',
             extend: 'collection',
             name: 'tagBtn',
-            text: '<i class="fa fa-tags fa-fw"></i>Tag<i class="fa fa-caret-down fa-fw"></i>',
-            buttons: this.setupTagButtons()
+            text: '<i class="fa-solid fa-tags fa-fw"></i>Tag<i class="fa-solid fa-caret-down fa-fw"></i>',
+            buttons: this.setupTagButtons(),
           },
           {
             extend: 'colvis',
-            text: '<i class="fa fa-columns mr-1 fa-fw"></i>Columns<i class="fa fa-caret-down fa-fw"></i>',
+            text: '<i class="fa-solid fa-columns me-1 fa-fw"></i>Columns<i class="fa-solid fa-caret-down fa-fw"></i>',
             titleAttr: 'Choose columns to show',
             className: 'btn',
-            columns: columnVisibleIndexes
-          }
-        ]
+            columns: columnVisibleIndexes,
+          },
+        ],
       },
       columnDefs: [
         {
           targets: hiddenColumnIndexes,
-          visible: false
-        }
+          visible: false,
+        },
       ],
-      dom: "<'row'<'col-sm-6'B>\
+      dom:
+        "<'row'<'col-sm-6'B>\
         <'col-sm-6'f>>" +
         "<'row'<'col-lg-12'tr>>" +
         "<'dataTables_footer_content'lip>",
@@ -117,8 +119,8 @@ class DradisDatatable {
         settings.oInstance.wrap("<div class='table-wrapper'></div>");
       },
       lengthMenu: [
-        [ 25, 50, 100, -1 ],
-        [ '25', '50', '100', 'All' ]
+        [25, 50, 100, -1],
+        ['25', '50', '100', 'All'],
       ],
       pageLength: 25,
       stateSave: true,
@@ -172,9 +174,13 @@ class DradisDatatable {
       //     }
       //   ]
       // }
-      stateSaveCallback: function(_settings, savedStateData) {
-        var newSavedStateData = that.addTableHeadersToSavedStateData(savedStateData);
-        localStorage.setItem(that.localStorageKey, JSON.stringify(newSavedStateData));
+      stateSaveCallback: function (_settings, savedStateData) {
+        var newSavedStateData =
+          that.addTableHeadersToSavedStateData(savedStateData);
+        localStorage.setItem(
+          that.localStorageKey,
+          JSON.stringify(newSavedStateData)
+        );
       },
       // https://datatables.net/reference/option/stateLoadCallback
       // DataTables will call stateLoadCallback() on page load.
@@ -202,19 +208,23 @@ class DradisDatatable {
       //
       // To prevent a reset from happening, we just have to ensure that the number of columns on the page
       // matches the length of columns array in the saved state object.
-      stateLoadCallback: function(_settings) {
-        var localStorageData = JSON.parse(localStorage.getItem(that.localStorageKey));
+      stateLoadCallback: function (_settings) {
+        var localStorageData = JSON.parse(
+          localStorage.getItem(that.localStorageKey)
+        );
 
         if (localStorageData !== null) {
-          return that.rebuildSavedStateColumnsFromLocalStorage(localStorageData);
+          return that.rebuildSavedStateColumnsFromLocalStorage(
+            localStorageData
+          );
         } else {
           return null;
         }
       },
       select: {
         selector: 'td.select-checkbox',
-        style: 'multi'
-      }
+        style: 'multi',
+      },
     });
 
     this.behaviors();
@@ -237,41 +247,53 @@ class DradisDatatable {
   // came from which table column on the page, so we add the table's column header
   // in the data before saving it in localStorage.
   addTableHeadersToSavedStateData(data) {
-    this.tableHeaders.forEach(function(th, index) {
+    this.tableHeaders.forEach(function (th, index) {
       data.columns[index].header = th.textContent;
-    })
+    });
 
     return data;
   }
 
   toggleLoadingState(rows, isLoading) {
-    var buttons = this.dataTable.buttons('[data-behavior~=table-action]').nodes();
+    var buttons = this.dataTable
+      .buttons('[data-behavior~=table-action]')
+      .nodes();
 
     $(buttons).toggleClass('disabled', isLoading);
 
-    rows.nodes().toArray().forEach(function(tr) {
-      if (isLoading) {
-        $(tr).find('[data-behavior~=error-loading]').remove();
-        $(tr).find('[data-behavior~=select-checkbox]').append('<div class="spinner-border spinner-border-sm text-primary" data-behavior="spinner"><span class="sr-only">Loading</div>');
-      } else {
-        $(tr).find('[data-behavior~=spinner]').remove();
-      }
-    })
+    rows
+      .nodes()
+      .toArray()
+      .forEach(function (tr) {
+        if (isLoading) {
+          $(tr).find('[data-behavior~=error-loading]').remove();
+          $(tr)
+            .find('[data-behavior~=select-checkbox]')
+            .append(
+              '<div class="spinner-border spinner-border-sm text-primary" data-behavior="spinner"><span class="visually-hidden">Loading</div>'
+            );
+        } else {
+          $(tr).find('[data-behavior~=spinner]').remove();
+        }
+      });
   }
 
   rowIds(rows) {
-    var ids = rows.ids().toArray().map(function(id) {
-      // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
-      // so we split it by the delimiter to get the id number.
-      return id.split('-')[1];
-    });
+    var ids = rows
+      .ids()
+      .toArray()
+      .map(function (id) {
+        // The dom id for <tr> is in the following format: <tr id="item_name-id"></tr>,
+        // so we split it by the delimiter to get the id number.
+        return id.split('-')[1];
+      });
     return ids;
   }
 
   unbindDataTable() {
     var that = this;
 
-    document.addEventListener('turbolinks:before-cache', function() {
+    document.addEventListener('turbolinks:before-cache', function () {
       that.dataTable.destroy();
     });
   }
@@ -289,9 +311,9 @@ class DradisDatatable {
   // Old columns are automatically removed, because we are iterating the columns
   // on the page, and not columns inside the saved state object.
   rebuildSavedStateColumnsFromLocalStorage(localStorageData) {
-    var containsHeader = localStorageData.columns.some(function(column) {
+    var containsHeader = localStorageData.columns.some(function (column) {
       return 'header' in column;
-    })
+    });
 
     // Return localStorageData if none of the columns contain the header property,
     // so that we don't show a page without columns.
@@ -301,18 +323,18 @@ class DradisDatatable {
 
     var newColumns = [];
 
-    this.tableHeaders.forEach(function(th, _index) {
+    this.tableHeaders.forEach(function (th, _index) {
       var columnData = { visible: false };
 
-      var column = localStorageData.columns.find(function(column) {
+      var column = localStorageData.columns.find(function (column) {
         if (column.header == th.textContent) {
           columnData = column;
           return true;
         }
-      })
+      });
 
       newColumns.push(columnData);
-    })
+    });
 
     localStorageData.columns = newColumns;
     return localStorageData;

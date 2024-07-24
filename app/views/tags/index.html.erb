@@ -1,0 +1,32 @@
+<% content_for :title, 'Tags' %>
+<div class="content-container mt-3">
+  <h4 class="header-underline">Tags Management
+    <span class="actions pt-1">
+      <div class="action">
+        <%= link_to new_project_tag_path(current_project), remote: :true do %>
+          <i class="fa-solid fa-plus fa-fw"></i> New Tag
+        <% end %>
+      </div>
+    </span>
+  </h4>
+
+  <% if @tags.any? %>
+    <%= render 'table' %>
+  <% else %>
+    <div class="empty-state mt-3">
+      <div class="empty-state-icon">
+        <%= image_tag "icons/#{rand(9)}.svg" %>
+      </div>
+      <div class="empty-state-body">
+        <div class="container">
+          <h4 class="empty-state-title">There are no tags created yet.</h4>
+          <p class="empty-state-body-text">Use tags to flag and/or organize your issues.</p>
+          <div class="empty-state-actions">
+            <a href="https://dradis.com/support/guides/projects/tags.html"
+            class="empty-state-docs-link" target="_blank">More about tags</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

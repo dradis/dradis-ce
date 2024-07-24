@@ -1,13 +1,11 @@
 .secondary-sidebar {
-  background: $sidebarActiveColor;
-  border-right: 1px solid $borderColor;
+  background-color: $sidebarActiveColor;
   color: $lightColor;
-  height: calc(100vh - 60px);
-  overflow: auto;
-  padding: 1rem;
-  position: sticky;
-  top: 0;
-  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  font-size: 0.9rem;
+  padding: 0.6rem 1rem;
 
   a {
     color: lighten($lightColor, 20%);
@@ -17,16 +15,12 @@
     }
   }
 
-  @media screen and (max-width: 1199px) {
-    width: 24%;
-  }
-
-  @media screen and (max-width: 991px) {
-    width: 31.8%;
-  }
-
-  @include media-breakpoint-down(md) {
+  @include media-breakpoint-down(lg) {
     display: none;
+  }
+
+  h5 {
+    font-size: 1rem;
   }
 
   .header-inner {
@@ -37,7 +31,7 @@
       cursor: default;
       margin-top: 0.5rem;
       padding-right: 2.5rem;
-    
+
       a {
         color: $lightColor;
       }
@@ -52,13 +46,12 @@
     }
 
     .options {
-
       a {
         color: $lightColor;
-        
+
         &:hover {
           color: $white;
-        } 
+        }
       }
 
       .dropdown {
@@ -72,7 +65,7 @@
           max-width: 180px;
           overflow: hidden;
           text-overflow: ellipsis;
-    
+
           &:active,
           &:hover {
             color: $linkColorHover;
@@ -83,7 +76,6 @@
   }
 
   .note-list {
-
     .active > a {
       color: $white !important;
     }
@@ -93,7 +85,7 @@
       padding: 0.5rem;
       border-radius: 3px;
       transition: all 0.2s ease-in-out;
-      
+
       a {
         color: $lightColor;
       }
@@ -101,13 +93,13 @@
       &.active a {
         color: $white;
       }
-  
+
       .list-item-actions {
         padding-top: 0.3rem;
         text-align: right;
         visibility: hidden;
         transition: visibility 0.1s ease-in-out;
-  
+
         a {
           padding: 0 4px;
         }
@@ -121,24 +113,24 @@
           border-radius: 5px;
           transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
         }
-  
+
         .list-item-action-delete:hover {
           color: $white;
           background-color: $red;
         }
-  
+
         .list-item-action-edit:hover {
           color: $white;
           background-color: $green;
         }
       }
-  
+
       &:hover {
         background-color: lighten($sidebarActiveColor, 3%);
-  
+
         a {
           color: $lightColor;
-  
+
           &:hover {
             color: $white;
           }
@@ -149,13 +141,19 @@
         }
       }
     }
-  
+
     .summary-link {
       color: $lightColor;
+      display: block;
+      max-width: 13.5rem;
 
       &:hover {
         color: $white;
       }
     }
+  }
+
+  .sidebar-toggle-link {
+    color: $lightColor;
   }
 }

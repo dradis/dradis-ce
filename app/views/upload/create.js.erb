@@ -1,17 +1,23 @@
 <% if @success -%>
+  ConsoleUpdater.jobId = <%= @item_id %>
+  $('#result').data('id', ConsoleUpdater.jobId)
+  $('#result').show()
+  $('#item_id').val(ConsoleUpdater.jobId)
+
   $('#filesize').text('<%=j number_to_human_size( File.size(@attachment.fullpath) ) %>');
   $('#spinner').hide();
   ConsoleUpdater.parsing = true;
   url = $('#new_upload').data('parse-url');
-  $.post(
-    url, {
-      item_id: <%= @item_id %>,
-      uploader: '<%= params[:uploader] %>',
-      file: '<%= @attachment.filename %>',
-    },
-    null,
-    'script'
-  );
+  data = {
+    file: '<%= @attachment.filename %>',
+    item_id: <%= @item_id %>,
+    uploader: '<%= params[:uploader] %>'
+  };
+  <% if @state %>
+    data.state = '<%= @state %>';
+  <% end %>
+
+  $.post(url, data, null, 'script');
 
   $('#attachment').val('<%= @attachment.filename %>');
   setTimeout(ConsoleUpdater.updateConsole, 1000);

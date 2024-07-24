@@ -14,7 +14,6 @@
 **
 =end
 
-
 # ==Description
 # This class in an abstraction layer to the <tt>attachments/</tt> folder. It allows
 # access to the folder content in a way that mimics the working of ActiveRecord
@@ -66,6 +65,8 @@ class Attachment < File
   AttachmentPwd = Rails.env.test? ? Rails.root.join('tmp', 'attachments') : Rails.root.join('attachments')
   FileUtils.mkdir_p(AttachmentPwd) unless File.exists?(AttachmentPwd)
 
+  SCREENSHOT_REGEX = /\!((https?:\/\/.+)|((\/pro)?\/projects\/(\d+)\/nodes\/(\d+)\/attachments\/(.+?)(\(.*\))?))\!/i
+
   # -- Class Methods  ---------------------------------------------------------
 
   def self.all(*args)
@@ -81,7 +82,7 @@ class Attachment < File
   end
 
   def self.find_by(filename:, node_id:)
-    find(filename, conditions: { node_id: node_id } )
+    find(filename, conditions: { node_id: node_id })
   rescue StandardError
   end
 
@@ -91,17 +92,17 @@ class Attachment < File
     dir = Dir.new(pwd)
 
     # makes the find request and stores it to resources
-    return_value = case args.first
+    case args.first
     when :all, :first, :last
       attachments = []
       if options[:conditions] && options[:conditions][:node_id]
         node_id = options[:conditions][:node_id].to_s
         raise "Node with ID=#{node_id} does not exist" unless Node.exists?(node_id)
-        if (File.exist?( File.join(pwd, node_id)))
+        if (File.exist?(File.join(pwd, node_id)))
           node_dir = Dir.new(pwd.join(node_id)).sort
           node_dir.each do |attachment|
             next unless (attachment =~ /^(.+)$/) == 0 && !File.directory?(pwd.join(node_id, attachment))
-            attachments << Attachment.new(:filename => $1, :node_id => node_id.to_i)
+            attachments << Attachment.new(filename: $1, node_id: node_id.to_i)
           end
         end
       else
@@ -110,7 +111,7 @@ class Attachment < File
           node_dir = Dir.new(pwd.join(node)).sort
           node_dir.each do |attachment|
             next unless (attachment =~ /^(.+)$/) == 0 && !File.directory?(pwd.join(node, attachment))
-            attachments << Attachment.new(:filename => $1, :node_id => node.to_i)
+            attachments << Attachment.new(filename: $1, node_id: node.to_i)
           end
         end
         attachments.sort_by!(&:filename)
@@ -129,18 +130,17 @@ class Attachment < File
       # in this routine we find the attachment by file name and node id
       filename = args.first
       attachments = []
-      raise "You need to supply a node id in the condition parameter" unless options[:conditions] && options[:conditions][:node_id]
+      raise 'You need to supply a node id in the condition parameter' unless options[:conditions] && options[:conditions][:node_id]
       node_id = options[:conditions][:node_id].to_s
       raise "Node with ID=#{node_id} does not exist" unless Node.exists?(node_id)
       node_dir = Dir.new(pwd.join(node_id)).sort
       node_dir.each do |attachment|
         next unless ((attachment =~ /^(.+)$/) == 0 && $1 == filename)
-        attachments << Attachment.new(:filename => $1, :node_id => node_id.to_i)
+        attachments << Attachment.new(filename: $1, node_id: node_id.to_i)
       end
       raise "Could not find Attachment with filename #{filename}" if attachments.empty?
       attachments.first
     end
-    return return_value
   end
 
   def self.model_name

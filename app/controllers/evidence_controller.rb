@@ -1,4 +1,5 @@
 class EvidenceController < NestedNodeResourceController
+  include AttachmentsCopier
   include ConflictResolver
   include EvidenceHelper
   include LiquidEnabledResource
@@ -13,8 +14,7 @@ class EvidenceController < NestedNodeResourceController
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
 
   def show
-    @activities   = @evidence.activities.latest
-    @issue        = @evidence.issue
+    @issue = @evidence.issue
 
     load_conflicting_revisions(@evidence)
   end
@@ -38,7 +38,7 @@ class EvidenceController < NestedNodeResourceController
       else
         format.html {
           initialize_nodes_sidebar
-          render "new"
+          render 'new'
         }
       end
       format.js
@@ -46,6 +46,7 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def edit
+    @form_preview_path = preview_project_node_evidence_path(current_project, @node, @evidence)
   end
 
   def update
@@ -54,6 +55,8 @@ class EvidenceController < NestedNodeResourceController
 
       @evidence.assign_attributes(evidence_params)
       autogenerate_issue if evidence_params[:issue_id].blank?
+
+      copy_attachments(@evidence) if @evidence.node_changed?
 
       if @evidence.save
         track_updated(@evidence)
@@ -65,7 +68,7 @@ class EvidenceController < NestedNodeResourceController
       else
         format.html {
           initialize_nodes_sidebar
-          render "edit"
+          render 'edit'
         }
       end
       format.js
@@ -108,6 +111,13 @@ class EvidenceController < NestedNodeResourceController
     track_created(@evidence.issue)
   end
 
+  def liquid_resource_assigns
+    {
+      'evidence' => EvidenceDrop.new(@evidence),
+      'node' => NodeDrop.new(@evidence.node)
+    }
+  end
+
   # Look for the Evidence we are going to be working with based on the :id
   # passed by the user.
   def set_or_initialize_evidence
@@ -128,11 +138,11 @@ class EvidenceController < NestedNodeResourceController
 
   def set_auto_save_key
     @auto_save_key =  if @evidence&.persisted?
-                        "evidence-#{@evidence.id}"
-                      elsif params[:template]
-                        "node-#{@node.id}-evidence-#{params[:template]}"
-                      else
-                        "node-#{@node.id}-evidence"
-                      end
+      "evidence-#{@evidence.id}"
+    elsif params[:template]
+      "node-#{@node.id}-evidence-#{params[:template]}"
+    else
+      "node-#{@node.id}-evidence"
+    end
   end
 end

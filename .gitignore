@@ -7,7 +7,6 @@
 /db/*.sqlite3
 /db/*.sqlite3-*
 /config/database.yml
-/config/secrets.yml
 /config/smtp.yml
 /log/*
 /tmp/*
@@ -25,6 +24,11 @@
 # RSpec testing
 /spec/.examples.txt
 
+# Ignore environment and deployment files
+/.env*
+/.kamal/*
+/config/deploy.yml
+
 # App-specific
 /attachments/
 /backup/
@@ -32,7 +36,6 @@
 /templates/
 /sample_files/
 /Gemfile.plugins
-/Gemfile.codeship
 
 # Vagrant
 .vagrant/

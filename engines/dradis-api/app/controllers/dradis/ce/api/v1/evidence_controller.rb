@@ -51,7 +51,6 @@ module Dradis::CE::API
       def evidence_params
         params.require(:evidence).permit(:content, :issue_id)
       end
-
     end
   end
 end

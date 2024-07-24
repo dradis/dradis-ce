@@ -1,0 +1,79 @@
+<% content_for :title, 'Quality Assurance' %>
+
+<% content_for :breadcrumbs do %>
+  <%= render 'breadcrumbs' %>
+<% end %>
+
+<% content_for :sidebar do %>
+  <%= render partial: 'qa/sidebar', locals: 
+    { 
+      index_path: project_qa_issues_path(current_project),
+      name: 'issues_for_review',
+      records: @issues
+    }
+  %>
+<% end %>
+
+<div class="row m-0">
+  <div class="col-12 col-xxl-7 p-0">
+    <div class="content-container pb-3 me-xxl-3">
+      <% cache ['issue-content', @issue] do %>
+        <div class="note-text-inner">
+          <h4 class="mb-4 header-underline align-items-center">
+            <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
+            <%= render partial: 'shared/liquid_loading' %>
+            <span class="actions">
+              <span class="action">
+                <%= link_to edit_project_qa_issue_path(current_project, @issue) do %>
+                  <i class="fa-solid fa-pencil fa-fw"></i> Edit
+                <% end %>
+              </span>
+            </span>
+          </h4>
+          <%= render partial: 'shared/textile_content', locals: { record: @issue, preview_path: preview_project_issue_path(current_project, @issue) } %>
+          <div class="author-info">
+            <span class="ms-auto">Author: <%= @issue.author || 'n/a' %></span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-12 col-xxl-5 p-0">
+    <div class="sticky-top">
+      <%= render partial: 'widget' %>
+
+      <div class="content-container ms-xxl-3">
+        <%= content_tag :div,
+          spinner_tag,
+          data: {
+            behavior: 'fetch fetch-comments',
+            path: comments_path(
+              comment: {
+                commentable_type: @issue.class,
+                commentable_id: @issue.id
+              }
+            )
+          }
+        %>
+
+        <%= render_view_hooks('issues/comments') %>
+      </div>
+
+      <div class="content-container ms-xxl-3">
+        <%= content_tag :div,
+          spinner_tag,
+          data: {
+            behavior: 'fetch fetch-subscriptions',
+            path: subscriptions_path(
+              subscription: {
+                subscribable_type: @issue.class,
+                subscribable_id: @issue.id
+              }
+            )
+          }
+        %>
+      </div>
+    </div>
+  </div>
+</div>

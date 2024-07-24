@@ -1,0 +1,9 @@
+body.issues.import {
+  div.dataTables_wrapper .dataTable {
+    min-height: 12rem; // ensure state selection menu is fully visible when the table only has 1 result
+
+    .column-actions {
+      width: 15.25rem;
+    }
+  }
+}

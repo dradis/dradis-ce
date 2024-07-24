@@ -1,0 +1,24 @@
+<% content_for :title, 'Edit issue' %>
+
+<% content_for :sidebar do %>
+  <%= render partial: 'qa/sidebar', locals: 
+    { 
+      index_path: project_qa_issues_path(current_project),
+      name: 'issues_for_review',
+      records: @issues
+    }
+  %>
+<% end %>
+
+<% content_for :breadcrumbs do %>
+  <%= render partial: 'breadcrumbs' %>
+<% end %>
+
+<div class="content-container" id="issues_editor">
+  <div class="note-text-inner">
+    <h4 class="header-underline">Edit issue (<%= @issue.state.humanize %>)</h4>
+    <!-- This div is needed to allow correct tabbing order in Chrome when page is loaded with turbolinks -->
+    <div class="autofocus" autofocus="true" tabindex="1"></div>
+    <%= render 'issues/form' %>
+  </div>
+</div>

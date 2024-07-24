@@ -39,11 +39,6 @@ document.addEventListener "turbolinks:load", ->
 
   if $('body.boards.show').length
     # ------------------------------------------------------------- List modals
-    $(document).on 'click', '.js-list-modal', (e)->
-      e.preventDefault()
-      $($(this).attr('href')).modal()
-
-      false
 
     # Instantiate reusable variables
     item = newListId = oldListId = prevIndex = null

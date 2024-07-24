@@ -1,20 +1,13 @@
-<div class="note-list">
-  <%= content_tag :div, id: 'issue_summary_link', class: current_page?(main_app.project_issues_path(current_project)) ? 'p-2 mb-2 active' : 'p-2 mb-2' do %>
-    <%= link_to main_app.project_issues_path(current_project), class: 'summary-link' do %>
-      <i class="fa fa-bar-chart"></i>
-      Issues Summary
-    <% end %>
-  <% end %>
+<div class="inner-content">
+  <%= render 'shared/sidebar_collection',
+    category_id: nil,
+    collection: @issues,
+    name: 'Issues',
+    new_path: main_app.new_project_issue_path(current_project)
+  %>
+
+  <%= render 'issues/import_box' %>
+
+  <!-- Attachments -->
+  <%= render partial: 'attachments/attachment_box', locals: { attachments_node: current_project.plugin_uploads_node } %>
 </div>
-
-<%= render 'shared/sidebar_collection',
-  category_id: nil,
-  collection: @issues,
-  name: 'Issues',
-  new_path: main_app.new_project_issue_path(current_project)
-%>
-
-<%= render 'issues/import_box' %>
-
-<!-- Attachments -->
-<%= render partial: 'attachments/attachment_box', locals: { attachments_node: current_project.plugin_uploads_node } %>

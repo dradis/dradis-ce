@@ -154,7 +154,7 @@ class @ActivitiesPoller
     if $link.length
       $link.remove()
       if ($('#notes .list-item').length == 1)
-        $('#notes .placeholder').slideDown(300)
+        $('#notes .dradis-placeholder').slideDown(300)
 
       if @_currentlyViewingNote(noteId)
         @_showNoteDeletedAlert()
@@ -180,7 +180,7 @@ class @ActivitiesPoller
     if $link.length
       $link.remove()
       if ($('#evidence .list-item').length == 1)
-        $('#notes .placeholder').slideDown(300)
+        $('#notes .dradis-placeholder').slideDown(300)
 
     if @_currentlyViewingEvidence(evidenceId)
       @_showEvidenceDeletedAlert()
@@ -334,13 +334,13 @@ class @ActivitiesPoller
 
   @_addLink: (selector, link) ->
     $("##{selector}").append(link)
-    $("##{selector} .placeholder").hide()
+    $("##{selector} .dradis-placeholder").hide()
 
 
   @_removeCardLink: (link) ->
     link.remove()
     if ($('#tasks .list-item').length == 1)
-      $('#tasks .placeholder').slideDown(300)
+      $('#tasks .dradis-placeholder').slideDown(300)
 
 
   @_currentlyViewingBoard: (boardId) ->

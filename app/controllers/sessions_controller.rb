@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: :failure
 
   def create
-    warden.authenticate!
+    warden.authenticate!(*AuthenticationStrategies.strategies)
     redirect_to_target_or_default root_url
   end
 

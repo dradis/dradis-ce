@@ -15,7 +15,7 @@ shared_examples 'an editor that remembers what view you like' do
   before do
     visit action_path
   end
-  
+
   it 'will load source view after using source view' do
     click_link 'Source'
 
@@ -59,7 +59,7 @@ shared_examples 'a textile form view' do |klass|
       within '[data-behavior~=textile-form-field]', match: :first do
         click_link 'Delete'
       end
-    }.to change{ all('.textile-form-field').count }.by(-1)
+    }.to change { all('.textile-form-field').count }.by(-1)
   end
 
   it 'saves the item when submitted', js: true do
@@ -67,7 +67,7 @@ shared_examples 'a textile form view' do |klass|
     fill_in('item_form[field_value_0]', with: 'Test Item')
 
     # Wait for the source view change buffer time
-    sleep 0.5
+    find('.textile-preview', text: /Test Item/)
 
     within '.form-actions' do
       find('[type="submit"]').click
@@ -88,7 +88,7 @@ shared_examples 'a textile form view' do |klass|
     field_string = "#[Field]#\nTest Value"
 
     click_link 'Source'
-    fill_in "#{klass.to_s.downcase}_#{content_attribute}", with: fieldless_string + "\n" +  field_string
+    fill_in "#{klass.to_s.downcase}_#{content_attribute}", with: fieldless_string + "\n" + field_string
 
     click_link 'Fields'
 

@@ -11,7 +11,7 @@
   <div class="form-inputs">
     <%= f.association :issue, collection: current_project.issues.sort, label_method: :title, include_blank: 'Auto-generate a new issue' %>
 
-    <%= label_tag :evidence_content, 'Evidence content', class: 'sr-only' %>
+    <%= label_tag :evidence_content, 'Evidence content', class: 'visually-hidden' %>
     <%=
       f.input :content,
       label: false,

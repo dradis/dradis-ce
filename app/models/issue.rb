@@ -26,7 +26,7 @@ class Issue < Note
   #
   # FIXME - ISSUE/NOTE INHERITANCE
   def activities(*params)
-    Activity.where(trackable_type: "Issue", trackable_id: self.id)
+    Activity.where(trackable_type: 'Issue', trackable_id: self.id)
   end
 
   # `has_many :comments` doesn't work as normal here, because we're not
@@ -66,9 +66,7 @@ class Issue < Note
 
   # -- Validations ----------------------------------------------------------
 
-
   # -- Scopes ---------------------------------------------------------------
-
 
   # -- Class Methods --------------------------------------------------------
 
@@ -106,14 +104,14 @@ class Issue < Note
   # This is useful in a number of views to present or hide information about
   # all the instances for a given issue and node/host.
   def evidence_by_node()
-    results = Hash.new{|h,k| h[k] = [] }
+    results = Hash.new { |h, k| h[k] = [] }
 
     self.evidence.includes(:node).each do |evidence|
       results[evidence.node] << evidence
     end
 
     # This sorts nodes by IP address. Non-IPs appear first
-    results.sort_by do |node,_|
+    results.sort_by do |node, _|
       node.label.split('.').map(&:to_i)
     end
   end
@@ -127,7 +125,7 @@ class Issue < Note
     issue_ids = [issue_ids] if issue_ids.is_a?(Integer)
 
     # check all specified ids are integers
-    return merged unless issue_ids.all?{|i| i.is_a? Integer}
+    return merged unless issue_ids.all? { |i| i.is_a? Integer }
 
     # assert current id is not there
     issue_ids -= [id]

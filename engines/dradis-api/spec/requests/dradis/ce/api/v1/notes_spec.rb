@@ -4,7 +4,9 @@ describe 'Notes API' do
 
   include_context 'project scoped API'
   include_context 'https'
+  include_context 'versioned API'
 
+  let(:api_version) { 1 }
   let(:node) { create(:node, project: current_project) }
 
   context 'as unauthenticated user' do
@@ -54,7 +56,7 @@ describe 'Notes API' do
 
         it 'retrieves all the notes for the given node' do
           expect(retrieved_notes.count).to eq 33
-          retrieved_titles = retrieved_notes.map{ |json| json['title'] }
+          retrieved_titles = retrieved_notes.map { |json| json['title'] }
           expect(retrieved_titles).to match_array(@notes.map(&:title))
         end
 
@@ -104,6 +106,7 @@ describe 'Notes API' do
         expect(retrieved_note['id']).to eq @note.id
         expect(retrieved_note['title']).to eq 'My note'
         expect(retrieved_note['category_id']).to eq category.id
+        expect(retrieved_note['author']).to eq @note.author
         expect(retrieved_note['fields'].keys).to match_array(
           %w[foo fizz Title]
         )
@@ -135,7 +138,7 @@ describe 'Notes API' do
             before { params[:note][:category_id] = category.id }
 
             it 'creates a note with the given node & category' do
-              expect{post_note}.to change{node.notes.count}.by(1)
+              expect { post_note }.to change { node.notes.count }.by(1)
               note = node.notes.last
               expect(note.category).to eq category
             end
@@ -154,14 +157,14 @@ describe 'Notes API' do
 
           context 'and category is not specified' do
             it 'creates a note with the given node & default category' do
-              expect{post_note}.to change{node.notes.count}.by(1)
+              expect { post_note }.to change { node.notes.count }.by(1)
               expect(node.notes.last.category).to eq Category.default
             end
           end
         end
 
         context 'with params for an invalid note' do
-          let(:params) { { note: { text: 'a'*65536 } } } # too long
+          let(:params) { { note: { text: 'a' * 65536 } } } # too long
 
           it 'responds with HTTP code 422' do
             post_note
@@ -169,7 +172,7 @@ describe 'Notes API' do
           end
 
           it 'doesn\'t create a note' do
-            expect{post_note}.not_to change{Note.count}
+            expect { post_note }.not_to change { Note.count }
           end
         end
 
@@ -177,7 +180,7 @@ describe 'Notes API' do
           let(:params) { {} }
 
           it 'doesn\'t create a note' do
-            expect{post_note}.not_to change{Note.count}
+            expect { post_note }.not_to change { Note.count }
           end
 
           it 'responds with HTTP code 422' do
@@ -197,7 +200,7 @@ describe 'Notes API' do
 
       context 'when JSON is not sent' do
         it 'responds with HTTP code 415' do
-          params = { note: { } }
+          params = { note: {} }
           post url, params: params, env: @env
           expect(response.status).to eq(415)
         end
@@ -241,7 +244,7 @@ describe 'Notes API' do
         end
 
         context 'with params for an invalid note' do
-          let(:params) { { note: { text: 'a'*65536 } } } # too long
+          let(:params) { { note: { text: 'a' * 65536 } } } # too long
 
           it 'responds with HTTP code 422' do
             put_note
@@ -249,7 +252,7 @@ describe 'Notes API' do
           end
 
           it 'doesn\'t update the note' do
-            expect{put_note}.not_to change{note.reload.attributes}
+            expect { put_note }.not_to change { note.reload.attributes }
           end
         end
 
@@ -257,7 +260,7 @@ describe 'Notes API' do
           let(:params) { {} }
 
           it 'doesn\'t update the note' do
-            expect{put_note}.not_to change{note.reload.attributes}
+            expect { put_note }.not_to change { note.reload.attributes }
           end
 
           it 'responds with HTTP code 422' do
@@ -279,7 +282,7 @@ describe 'Notes API' do
         let(:params) { { note: { text: 'New Note' } } }
 
         it 'responds with HTTP code 415' do
-          expect{put url, params: params, env: @env}.not_to change{note.reload.attributes}
+          expect { put url, params: params, env: @env }.not_to change { note.reload.attributes }
           expect(response.status).to eq 415
         end
       end

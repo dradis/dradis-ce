@@ -1,0 +1,24 @@
+<div class="inner-content">
+  <div class="header">
+    <div class="header-inner">
+      <div class="options">
+        <div class="dropdown">
+          <%= link_to "##{name.downcase}", data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+            <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle <%= name.downcase %> list</span>
+          <% end %>
+        </div>
+      </div>
+      <h5 class="header-underline header-name">
+        <%= link_to index_path do %>
+          <%= name.humanize %>
+        <% end %>
+      </h5>
+    </div>
+  </div>
+
+  <div id="<%= name.downcase %>" class="note-list collapse show">
+    <% records.each do |record| %>
+      <%= render partial: 'sidebar_item', locals: { record: record } %>
+    <% end %>
+  </div>
+</div>

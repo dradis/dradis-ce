@@ -3,6 +3,8 @@ if ENV['RAILS_RELATIVE_URL_ROOT']
 end
 
 Rails.application.routes.draw do
+  get 'up', to: ->(env) { [204, {}, ['']] }
+
   # ------------------------------------------------------------ Authentication
   # Sign in / sign out
   get '/login'  => 'sessions#new'
@@ -15,6 +17,18 @@ Rails.application.routes.draw do
   concern :multiple_destroy do
     collection do
       delete :multiple_destroy
+    end
+  end
+
+  concern :multiple_update do
+    collection do
+      patch :multiple_update
+    end
+  end
+
+  concern :previewable do
+    member do
+      post :preview
     end
   end
 
@@ -43,7 +57,7 @@ Rails.application.routes.draw do
 
     post :create_multiple_evidence, to: 'issues/evidence#create_multiple'
 
-    resources :issues, concerns: :multiple_destroy do
+    resources :issues, concerns: [:multiple_destroy, :previewable] do
       collection do
         post :import
         resources :merge, only: [:new, :create], controller: 'issues/merge'
@@ -74,16 +88,16 @@ Rails.application.routes.draw do
 
       resource :merge, only: [:create], controller: 'nodes/merge'
 
-      resources :notes, concerns: :multiple_destroy do
+      resources :notes, concerns: [:multiple_destroy, :previewable] do
         resources :revisions, only: [:index, :show]
       end
 
-      resources :evidence, except: :index, concerns: :multiple_destroy do
+      resources :evidence, except: :index, concerns: [:multiple_destroy, :previewable] do
         resources :revisions, only: [:index, :show]
       end
 
       constraints(filename: /.*/) do
-        resources :attachments, param: :filename
+        resources :attachments, only: [:index, :show, :create, :destroy], param: :filename
       end
     end
 
@@ -93,14 +107,17 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
+    resources :tags, except: [:show]
+
+    namespace :qa do
+      resources :issues, only: [:edit, :index, :show, :update], concerns: [:multiple_update, :previewable]
+    end
+
     get 'search' => 'search#index'
     get 'trash' => 'revisions#trash'
 
     # ------------------------------------------------------- Export Manager
-    get  '/export'                   => 'export#index',             as: :export_manager
-    post '/export'                   => 'export#create'
-    get  '/export/validate'          => 'export#validate',          as: :validate_export
-    get  '/export/validation_status' => 'export#validation_status', as: :validation_status
+    get  '/export' => 'export#index', as: :export_manager
 
     # ------------------------------------------------------- Upload Manager
     get  '/upload'        => 'upload#index',  as: :upload_manager
@@ -108,7 +125,7 @@ Rails.application.routes.draw do
     post '/upload/parse'  => 'upload#parse'
 
     if Rails.env.development?
-      get '/styles'          => 'styles_tylium#index'
+      get '/styles' => 'styles_tylium#index'
     end
   end
 
@@ -127,9 +144,9 @@ Rails.application.routes.draw do
   namespace :setup, only: [:index] do
     if defined?(Dradis::Pro)
     else
-      resource :kit, only: [:new, :create]
       resource :password, only: [:new, :create]
     end
+    resource :kit, only: [:new, :create]
   end
 
   resources :subscriptions, only: [:index, :create, :destroy]

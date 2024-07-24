@@ -1,0 +1,36 @@
+
+# Ignore git directory.
+/.git
+
+# Ignore bundle config.
+/.bundle
+
+# Ignore environment and deployment files.
+/.env*
+/.kamal/*
+/config/deploy.yml
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore pidfiles.
+/tmp/pids/*
+!/tmp/pids/.keep
+
+# Ignore storage.
+/storage/*
+!/storage/.keep
+/tmp/storage/*
+!/tmp/storage/.keep
+
+# Ignore assets.
+/public/assets
+
+# Ignore applicaiton folders
+/attachments/
+/config/shared/*
+/db/*.sqlite3
+/templates/*

@@ -20,15 +20,14 @@ top of things.
 ## Making Changes
 
 * Create a topic branch from where you want to base your work.
-  * This is usually the master branch.
+  * This is usually the develop branch.
   * Only target release branches if you are certain your fix must be on that
     branch.
-  * To quickly create a topic branch based on master; `git branch
-    fix/master/my_contribution master` then checkout the new branch with `git
-    checkout fix/master/my_contribution`.  Please avoid working directly on the
-    `master` branch.
+  * To quickly create a topic branch based on develop; `git branch
+    my_contribution develop` then checkout the new branch with `git
+    checkout my_contribution`.  Please avoid working directly on the
+    `develop` branch.
 * Make commits of logical units.
-* Check for unnecessary whitespace with `git diff --check` before committing.
 * Make sure your commit messages are in the proper format.
 
 ````
@@ -50,14 +49,18 @@ top of things.
       http://securityreactions.tumblr.com/post/31726556638/we-have-an-ids-and-a-waf
 ````
 
+* Add a CHANGELOG entry.
 * Make sure you have added the necessary tests for your changes.
 * Run _all_ the tests to assure nothing else was accidentally broken.
+* Adhere to our [style guides](https://github.com/dradis/dradis-ce/wiki).
+* Ensure all GH checks have passed.
 
 ## Submitting Changes
 
-* Review our [Contributor's Agreement](https://github.com/dradis/dradis-ce/wiki/Contributor%27s-agreement). Sending us a pull request means you have read and accept to this agreement
+* Review our [Contributor's Agreement](https://github.com/dradis/dradis-ce/wiki/Contributor%27s-agreement). Sending us a pull request means you have read and accepted this agreement
 * Push your changes to a topic branch in your fork of the repository.
 * Submit a **pull request** to the repository in the dradis organization.
+* Ensure you include testing steps in your pull request
 * Include a link to the pull request in the ticket
 
 

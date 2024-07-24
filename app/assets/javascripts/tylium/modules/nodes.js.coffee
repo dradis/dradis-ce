@@ -23,9 +23,9 @@ document.addEventListener "turbolinks:load", ->
 
     $('[data-behavior~=evidence-dropdown-toggle]').click (e) ->
       e.stopPropagation()
-      $('[data-name~=evidence]').click()
+      new bootstrap.Dropdown($("[data-name='evidence']")).show();
 
     $('[data-behavior~=notes-dropdown-toggle]').click (e) ->
       e.stopPropagation()
-      $('[data-name~=notes]').click()
+      new bootstrap.Dropdown($("[data-name='notes']")).show();
 

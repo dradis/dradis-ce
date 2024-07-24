@@ -1,3 +1,13 @@
+//= link application.css
+//= link setup/setup.css
+//= link tylium.css
+
+//= link legacy.application.js
+//= link tylium.js
+
+//= link_tree ../../javascript .js
+//= link_tree ../../../vendor/javascript .js
+
 //= link_tree ../images
-//= link_directory ../javascripts .js
-//= link_directory ../stylesheets .css
+
+//= link_tree ../../../vendor/assets

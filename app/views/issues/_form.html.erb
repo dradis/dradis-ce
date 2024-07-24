@@ -8,7 +8,7 @@
 
   <%= f.error_notification %>
 
-  <%= label_tag :issue_text, 'Issue source input', class: 'sr-only' %>
+  <%= label_tag :issue_text, 'Issue source input', class: 'visually-hidden' %>
   <%=
     f.input :text,
       label: false,
@@ -29,17 +29,23 @@
     <%= hidden_field :issue, :original_updated_at, value: @issue.updated_at.to_i %>
   <% end %>
 
-  <%= render 'tag_input', f: f %>
+  <% if controller.class.name.deconstantize == 'QA' %>
+    <%= hidden_field nil, :return_to, value: :qa %>
+  <% end %>
+
+  <%= render 'issues/tag_input', f: f %>
 
   <div class="form-actions">
-    <%= f.button :submit, nil, class: 'btn btn-primary' %> or
-    <%=
-      link_to 'Cancel',
-      @issue.new_record? ? project_issues_path(current_project) : [current_project, @issue],
-      class: 'cancel-link',
-      data: {
-        behavior: 'clear-local-auto-save'
-      }
-    %>
+    <%= render partial: 'qa/state_button', locals: { f: f, record: @issue } %>
   </div>
+  or
+  <%=
+    link_to 'Cancel',
+    @form_cancel_path,
+    class: 'cancel-link',
+    data: {
+      behavior: 'clear-local-auto-save'
+    }
+    %>
+</div>
 <% end %>

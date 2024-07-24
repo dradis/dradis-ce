@@ -1,7 +1,7 @@
 en:
   simple_form:
-    "yes": 'Yes'
-    "no": 'No'
+    'yes': 'Yes'
+    'no': 'No'
     required:
       text: 'required'
       mark: '*'
@@ -9,7 +9,7 @@ en:
       # When using html, text and mark won't be used.
       html: '<span class="required-input">*</span>'
     error_notification:
-      default_message: "Please review the problems below:"
+      default_message: 'Please review the problems below:'
     # Examples
     # labels:
     #   defaults:
