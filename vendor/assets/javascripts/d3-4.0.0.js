@@ -1,6 +1,6 @@
 // https://d3js.org Version 4.0.0. Copyright 2016 Mike Bostock.
 
-// WARNING! This file is patched on line 7018 
+// WARNING! This file is patched on line 7018
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
