@@ -16,6 +16,7 @@ document.addEventListener('turbolinks:load', function () {
       .then((response) => response.text())
       .then(function (html) {
         $(that).html(html);
+        $(that).trigger('dradis:liquid-rendered');
         $spinner.addClass('d-none');
       });
   });
