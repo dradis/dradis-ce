@@ -32,20 +32,10 @@ class QuoteSelector {
           <span>Quote Text</span>\
       </div>'
     );
-
-    // Append the quote button to the comments feed on load
-    this.appendQuoteBtn();
-
-    // Async liquid render replaces the content, including the quote button, so
-    // we append the quote button to record's content after rendering liquid.
-    this.$content.on('dradis:liquid-rendered', () => {
-      this.appendQuoteBtn();
-    });
-  }
-
-  appendQuoteBtn() {
     this.$content.append(this.$quoteBtn);
+
     this.$content.data('quoteSelector', this);
+
     this.behaviors();
   }
 
