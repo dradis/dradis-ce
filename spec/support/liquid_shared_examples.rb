@@ -9,14 +9,15 @@ shared_examples 'liquid dynamic content' do |item_type, node_association|
     visit @path
   end
 
-  it 'dynamically renders item properties' do
+  it 'dynamically renders item properties', js: true do
+    expect(page).to have_no_css('span.text-nowrap', text: 'Loading liquid dynamic content', wait: 10)
+
     expect(find('.note-text-inner')).to have_content("Liquid: #{record.title}")
     expect(find('.note-text-inner')).not_to have_content("Liquid: {{#{item_type}.title}}")
   end
 end
 
 shared_examples 'liquid preview' do |item_type, node_association|
-
   before do
     @path = if node_association
       polymorphic_path([:edit, current_project, record.node, record])
