@@ -35,7 +35,7 @@ class TagsController < AuthenticatedController
   def destroy
     if @tag.destroy
       track_destroyed(@tag)
-      redirect_to project_tags_path(current_project), alert: 'Tag deleted.'
+      redirect_to project_tags_path(current_project), notice: 'Tag deleted.'
     else
       redirect_to project_tags_path(current_project), alert: @tag.errors.full_messages.join('; ')
     end
