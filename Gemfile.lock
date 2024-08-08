@@ -578,7 +578,7 @@ DEPENDENCIES
   net-imap
   net-pop
   net-smtp
-  nokogiri (>= 1.16.2)
+  nokogiri (>= 1.16.5)
   paper_trail (~> 12.2.0)
   parslet (~> 1.6.0)
   pg

@@ -93,7 +93,7 @@ class AttachmentsController < AuthenticatedController
   # give :node_id is valid.
   def find_or_initialize_node
     begin
-      @node = Node.find(params[:node_id])
+      @node = current_project.nodes.find(params[:node_id])
     rescue
       redirect_to root_path, alert: 'Node not found'
     end
