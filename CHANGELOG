@@ -1,3 +1,14 @@
+v4.13.0 (July 2024)
+  - Attachments: Copy attachments when moving an evidence/note
+  - Liquid: Make project-level collections available for Liquid syntax
+  - Upgraded gems: nokogiri, rails, redcloth, rexml
+  - Bugs fixes:
+    - Navigation: Restore functionality of native browser back/forward buttons
+  - Security Fixes:
+    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
 v4.12.0 (May 2024)
   - Attachments: Add size, created_at, and download link to the API
   - Mappings: Map fields from scanner integrations to Dradis fields
@@ -9,7 +20,7 @@ v4.12.0 (May 2024)
   - New integrations:
     - Pentera
   - Security Fixes:
-    - High: Authenticated author path traversal on attachment rename
+    - High: Authenticated author path traversal
 
 v4.11.0 (January 2024)
   - Assets: Add importmap-rails to handle js libraries
