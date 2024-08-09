@@ -105,6 +105,32 @@ body.projects {
         border-radius: 0.5rem;
         display: flex;       
         padding: 1rem;
+
+        &:before {
+          border: 3px solid;
+          border-radius: 0.5rem 0 0 0.5rem;
+          bottom: 1px;
+          content: " ";
+          left: 1px;
+          position: absolute;
+          top: 1px;
+        }
+
+        &.green:before {
+          border-color: $green;
+        }
+
+        &.orange:before {
+          border-color: $orange;
+        }
+
+        &.red:before {
+          border-color: $red;
+        }
+
+        &.yellow:before {
+          border-color: $yellow;
+        }
       }
     }
   }
