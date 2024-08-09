@@ -92,28 +92,41 @@ body.projects {
 
   .tasks {
     .list-group-item {
-      border: none;
+      border: 1px solid $borderColor;
+      border-radius: 0.5rem;
       margin-bottom: 1rem;
-      padding: 0;
+      padding: 1rem;
+
+      &:active, &:focus, &:hover  {
+        background-color: $secondaryBgColor;
+      }
 
       &:last-of-type {
         margin-bottom: 0;
       }
 
       .list-group-item-action {
-        border: 1px solid $borderColor;
-        border-radius: 0.5rem;
-        display: flex;       
-        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 1rem;
+
+        &:active, &:focus, &:hover  {
+          background-color: $secondaryBgColor;
+        }
+
+        .badge {
+          width: fit-content;
+          padding: 0.313rem;
+        }
 
         &:before {
           border: 3px solid;
           border-radius: 0.5rem 0 0 0.5rem;
-          bottom: 1px;
+          bottom: 0;
           content: " ";
-          left: 1px;
+          left: 0;
           position: absolute;
-          top: 1px;
+          top: 0;
         }
 
         &.green:before {
