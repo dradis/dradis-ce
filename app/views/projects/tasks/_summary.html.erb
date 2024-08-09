@@ -1,4 +1,33 @@
 <section class="summary-panel">
-  <h4>Edit me in app/views/projects/tasks/_summary.html.erb</h4>
-  <%= link_to 'link to my tasks view', project_tasks_path(current_project) %>
+    <h4 class="header-underline">My Tasks
+    <span class="actions pt-1">
+        <div class="action">
+            <%= link_to 'All Tasks', project_tasks_path(current_project) %>
+        </div>
+    </span>
+    </h4>
+    <h5 class="mb-2 mt-4">Due today (3/8)</h5>
+    <ul class="list-group tasks">
+        <li class="list-group-item">
+            <a href="#" class="list-group-item-action">[OWASP Top 10] A2:2017 - Broken Authentication</a>
+        </li>
+        <li class="list-group-item">
+            <a href="#" class="list-group-item-action">Step 1: Prepare the release notes</a>
+        </li>
+        <li class="list-group-item">
+            <a href="#" class="list-group-item-action">[OWASP Top 10] A2:2017 - Broken Authentication</a>
+        </li>
+    </ul>
+    <h5 class="mb-2 mt-4">Next (3/40)</h5>
+    <ul class="list-group tasks">
+        <li class="list-group-item">
+            <a href="#" class="list-group-item-action">[OWASP Top 10] A3:2017 - Sensitive Data Exchange</a>
+        </li>
+        <li class="list-group-item">
+            <a href="#" class="list-group-item-action">[OWASP Top 10] A4:2017 - XML External Entities (XXE)</a>
+        </li>
+        <li class="list-group-item">
+            <a href="#" class="list-group-item-action">Step 3: Deal with security advisories</a>
+        </li>
+    </ul>
 </section>
