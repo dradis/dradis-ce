@@ -1,6 +1,43 @@
 <% content_for :title, 'My Tasks' %>
 
 <div class="content-container mt-3">
-    <!--Table of user assigned tasks-->
-    <table class="table"></table>
-</div> 
+  <table class="table table-striped"
+          data-behavior="dradis-datatable"
+          data-default-columns='["Title", "Methodology", "Due Date", "Assigned"]'
+          data-local-storage-key="project.ce.<%= dom_id(current_project) %>.tasks_datatable">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Methodology</th>
+        <th>Due Date</th>
+        <th>Assigned</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <td><%= link_to task.name, project_board_list_card_path(current_project, task.board, task.list, task) %></td>
+          <td><%= task.board.name %></td>
+          <td>
+            <% if task.due_date == Date.today %>
+              <span class="due-today">Today</span>
+            <% elsif task.due_date == Date.tomorrow %>
+              <span class="due-tomorrow">Tomorrow</span>
+            <% else %>
+              <span class="<%= task.due_date < Date.today ? 'due-overdue' : 'due-later' %>">
+                <%= task&.due_date&.strftime('%b %e') %>
+              </span>
+            <% end %>
+          </td>
+          <td>
+            <ul>
+              <% task.assignees.each do |assignee| %>
+                <li> <%= avatar_image(assignee, size: 30) %> <%= assignee.name %></li>
+              <% end %>
+            </ul>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
