@@ -24,7 +24,7 @@
             <% elsif task.due_date == Date.tomorrow %>
               <span class="due-tomorrow">Tomorrow</span>
             <% else %>
-              <span class="<%= task.due_date < Date.today ? 'due-overdue' : 'due-later' %>">
+              <span class="<%= task.due_date && task.due_date < Date.today ? 'due-overdue' : 'due-later' %>">
                 <%= task&.due_date&.strftime('%b %e') %>
               </span>
             <% end %>
