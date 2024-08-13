@@ -12,10 +12,7 @@
     <h5 class="mb-2 mt-4">Due today (3/8)</h5>
     <ul class="list-group tasks">
       <% @tasks[:today][0..2].each do |task| %>
-        <li class="list-group-item">
-          <%= link_to task.name, project_board_list_card_path(current_project, task.board, task.list, task), class: 'list-group-item-action due-today' %>
-          <span class="badge bg-primary"><%= task.board.name %></span>
-        </li>
+        <%= render partial: 'projects/tasks/task', locals: { task: task, task_class: 'due-today' } %>
       <% end %>
     </ul>
   <% end %>
@@ -24,18 +21,12 @@
     <h5 class="mb-2 mt-4">Next (3/40)</h5>
     <ul class="list-group tasks future-tasks">
       <% (@tasks[:tomorrow][0..2] || []).each do |task| %>
-        <li class="list-group-item">
-          <%= link_to task.name, project_board_list_card_path(current_project, task.board, task.list, task), class: 'list-group-item-action due-tomorrow' %>
-          <span class="badge bg-primary"><%= task.board.name %></span>
-        </li>
+        <%= render partial: 'projects/tasks/task', locals: { task: task, task_class: 'due-tomorrow' } %>
       <% end %>
 
       <% unless @tasks[:tomorrow].size >= 3 %>
         <% (@tasks[:future][0..2] || []).each do |task| %>
-          <li class="list-group-item">
-            <%= link_to task.name, project_board_list_card_path(current_project, task.board, task.list, task), class: 'list-group-item-action due-future' %>
-            <span class="badge bg-primary"><%= task.board.name %></span>
-          </li>
+          <%= render partial: 'projects/tasks/task', locals: { task: task, task_class: 'due-future' } %>
         <% end %>
       <% end %>
     </ul>
