@@ -1,38 +1,38 @@
 <section class="summary-panel">
-    <h4 class="header-underline">My Tasks
+  <h4 class="header-underline">My Tasks
     <span class="actions pt-1">
-        <div class="action">
-            <%= link_to project_tasks_path(current_project) do %>
-                <i class="fa-solid fa-tasks sidebar-link-icon"></i> All Tasks
-            <% end %>
-        </div>
+      <div class="action">
+        <%= link_to project_tasks_path(current_project) do %>
+          <i class="fa-solid fa-tasks sidebar-link-icon"></i> All Tasks
+        <% end %>
+      </div>
     </span>
-    </h4>
-    <h5 class="mb-2 mt-4">Due today (3/8)</h5>
-    <ul class="list-group tasks">
-        <% @tasks.each do |task| %>
-            <% if task.due_date && task.due_date == Date.today %>
-                <li class="list-group-item">
-                    <%= link_to task.name, project_board_list_card_path(current_project, task.board, task.list, task), class: 'list-group-item-action due-today' %>
-                    <span class="badge bg-primary"><%= task.board.name %></span>
-                </li>  
-            <% end %>
-        <% end %>
-    </ul>
-    <h5 class="mb-2 mt-4">Next (3/40)</h5>
-    <ul class="list-group tasks">
-        <% @tasks.each do |task| %>
-            <% if task.due_date && task.due_date == Date.tomorrow %>
-                <li class="list-group-item">
-                    <%= link_to task.name, project_board_list_card_path(current_project, task.board, task.list, task), class: 'list-group-item-action due-tomorrow' %>
-                    <span class="badge bg-primary"><%= task.board.name %></span>
-                </li>
-            <% elsif task.due_date && task.due_date > Date.today %>
-                <li class="list-group-item">
-                    <%= link_to task.name, project_board_list_card_path(current_project, task.board, task.list, task), class: 'list-group-item-action due-future' %>
-                    <span class="badge bg-primary"><%= task.board.name %></span>
-                </li>
-            <% end %>
-        <% end %>
-    </ul>
+  </h4>
+  <h5 class="mb-2 mt-4">Due today (3/8)</h5>
+  <ul class="list-group tasks">
+    <% @tasks.each do |task| %>
+      <% if task.due_date && task.due_date == Date.today %>
+        <li class="list-group-item">
+          <%= link_to task.name, project_board_list_card_path(current_project, task.board, task.list, task), class: 'list-group-item-action due-today' %>
+          <span class="badge bg-primary"><%= task.board.name %></span>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+  <h5 class="mb-2 mt-4">Next (3/40)</h5>
+  <ul class="list-group tasks">
+    <% @tasks.each do |task| %>
+      <% if task.due_date && task.due_date == Date.tomorrow %>
+        <li class="list-group-item">
+          <%= link_to task.name, project_board_list_card_path(current_project, task.board, task.list, task), class: 'list-group-item-action due-tomorrow' %>
+          <span class="badge bg-primary"><%= task.board.name %></span>
+        </li>
+      <% elsif task.due_date && task.due_date > Date.today %>
+        <li class="list-group-item">
+          <%= link_to task.name, project_board_list_card_path(current_project, task.board, task.list, task), class: 'list-group-item-action due-future' %>
+          <span class="badge bg-primary"><%= task.board.name %></span>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
 </section>
