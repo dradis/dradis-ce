@@ -20,7 +20,9 @@ class ProjectsController < AuthenticatedController
     @methodologies = current_project.methodology_library.notes.map { |n| Methodology.new(filename: n.id, content: n.text) }
     @nodes         = current_project.nodes.in_tree
     @tags          = current_project.tags
-    @tasks         = grouped_tasks(current_user.cards)
+
+    # Arel.sql('-due_date desc') sorts the records by due_date with null due_date records last
+    @tasks         = grouped_tasks(current_user.cards.order(Arel.sql('-due_date desc')))
 
     @count_by_tag  = { unassigned: 0 }
     @issues_by_tag = Hash.new { |h, k| h[k] = [] }
