@@ -12,4 +12,21 @@ module TasksHelper
       content_tag(:span, task.due_date.strftime('%b %e'), class: due_date_class)
     end
   end
+
+  def grouped_tasks(tasks)
+    tasks.group_by do |task|
+      case task.due_date
+      when nil
+        :no_due_date
+      when ->(date) { date < Date.today }
+        :overdue
+      when Date.today
+        :today
+      when Date.tomorrow
+        :tomorrow
+      else
+        :future
+      end
+    end
+  end
 end

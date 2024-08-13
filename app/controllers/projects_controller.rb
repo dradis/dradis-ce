@@ -1,5 +1,6 @@
 class ProjectsController < AuthenticatedController
   include NotificationsReader
+  include TasksHelper
 
   before_action :set_project
 
@@ -19,7 +20,7 @@ class ProjectsController < AuthenticatedController
     @methodologies = current_project.methodology_library.notes.map { |n| Methodology.new(filename: n.id, content: n.text) }
     @nodes         = current_project.nodes.in_tree
     @tags          = current_project.tags
-    @tasks         = current_user.cards
+    @tasks         = grouped_tasks(current_user.cards)
 
     @count_by_tag  = { unassigned: 0 }
     @issues_by_tag = Hash.new { |h, k| h[k] = [] }
