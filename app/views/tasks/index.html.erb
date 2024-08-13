@@ -20,9 +20,9 @@
           <td><%= task.board.name %></td>
           <td><%= due_date_badge(task) %></td>
           <td>
-            <ul>
+            <ul class="p-0">
               <% task.assignees.each do |assignee| %>
-                <li> <%= avatar_image(assignee, size: 30) %> <%= assignee.name %></li>
+                <li><%= avatar_image(assignee, size: 30) %></li>
               <% end %>
             </ul>
           </td>
