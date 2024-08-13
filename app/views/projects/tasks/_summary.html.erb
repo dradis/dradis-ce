@@ -2,7 +2,9 @@
     <h4 class="header-underline">My Tasks
     <span class="actions pt-1">
         <div class="action">
-            <%= link_to 'All Tasks', project_tasks_path(current_project) %>
+            <%= link_to project_tasks_path(current_project) do %>
+                <i class="fa-solid fa-tasks sidebar-link-icon"></i> All Tasks
+            <% end %>
         </div>
     </span>
     </h4>
