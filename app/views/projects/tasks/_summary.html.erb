@@ -15,13 +15,16 @@
         <%= render partial: 'projects/tasks/task', locals: { task: task, task_class: 'due-today' } %>
       <% end %>
     </ul>
-    <% if @tasks[:today].size > 3 %>
-      <p class="small mt-2 mb-0 text-center">+ <%= @tasks[:today].size - 3 %> more</p>
-    <% end %>
+
+    <p class="small mt-2 mb-0 text-center">&nbsp;
+      <% if @tasks[:today].size > 3 %>
+        + <%= @tasks[:today].size - 3 %> more
+      <% end %>
+    </p>
   <% end %>
 
   <% if @tasks[:tomorrow]&.any? || @tasks[:future]&.any? %>
-    <h5 class="mb-2 mt-4">Next</h5>
+    <h5 class="mb-2">Next</h5>
     <ul class="list-group tasks future-tasks">
       <% (@tasks[:tomorrow][0..2] || []).each do |task| %>
         <%= render partial: 'projects/tasks/task', locals: { task: task, task_class: 'due-tomorrow' } %>
@@ -33,8 +36,11 @@
         <% end %>
       <% end %>
     </ul>
-    <% if (@tasks[:tomorrow].size + @tasks[:future].size) > 3 %>
-      <p class="small mt-2 mb-0 text-center">+ <%= (@tasks[:tomorrow].size + @tasks[:future].size) - 3 %> more</p>
-    <% end %>
+
+    <p class="small mt-2 mb-0 text-center">&nbsp;
+      <% if (@tasks[:tomorrow].size + @tasks[:future].size) > 3 %>
+        + <%= (@tasks[:tomorrow].size + @tasks[:future].size) - 3 %> more
+      <% end %>
+    </p>
   <% end %>
 </section>
