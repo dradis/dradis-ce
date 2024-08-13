@@ -13,7 +13,7 @@
         <% @tasks.each do |task| %>
             <% if task.due_date && task.due_date == Date.today %>
                 <li class="list-group-item">
-                    <%= link_to task.name, project_board_list_card_path(current_project, task.board, task.list, task), class: 'list-group-item-action' %>
+                    <%= link_to task.name, project_board_list_card_path(current_project, task.board, task.list, task), class: 'list-group-item-action due-today' %>
                     <span class="badge bg-primary"><%= task.board.name %></span>
                 </li>  
             <% end %>
@@ -24,12 +24,12 @@
         <% @tasks.each do |task| %>
             <% if task.due_date && task.due_date == Date.tomorrow %>
                 <li class="list-group-item">
-                    <%= link_to task.name, project_board_list_card_path(current_project, task.board, task.list, task), class: 'list-group-item-action' %>
+                    <%= link_to task.name, project_board_list_card_path(current_project, task.board, task.list, task), class: 'list-group-item-action due-tomorrow' %>
                     <span class="badge bg-primary"><%= task.board.name %></span>
                 </li>
             <% elsif task.due_date && task.due_date > Date.today %>
                 <li class="list-group-item">
-                    <%= link_to task.name, project_board_list_card_path(current_project, task.board, task.list, task), class: 'list-group-item-action' %>
+                    <%= link_to task.name, project_board_list_card_path(current_project, task.board, task.list, task), class: 'list-group-item-action due-future' %>
                     <span class="badge bg-primary"><%= task.board.name %></span>
                 </li>
             <% end %>
