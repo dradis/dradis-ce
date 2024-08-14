@@ -221,7 +221,7 @@ gem 'dradis-api', path: 'engines/dradis-api'
 gem 'dradis-projects', '~> 4.13.0'
 
 plugins_file = 'Gemfile.plugins'
-if File.exists?(plugins_file)
+if File.exist?(plugins_file)
   eval(IO.read(plugins_file), binding)
 end
 
