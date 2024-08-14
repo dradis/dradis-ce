@@ -8,40 +8,21 @@
       </div>
     </span>
   </h4>
-  <% if @tasks[:today]&.any? %>
-    <h5 class="mb-2 mt-4">Due today</h5>
+  <% if @tasks.any? %>
     <ul class="list-group tasks">
-      <% @tasks[:today][0...tasks_widget_limit].each do |task| %>
-        <%= render partial: 'projects/tasks/task', locals: { task: task, task_class: 'due-today' } %>
+      <% @tasks.first(@tasks_limit).each do |task| %>
+        <li class="list-group-item">
+          <%= link_to project_board_list_card_path(current_project, task.board, task.list, task), class: "list-group-item-action #{widget_task_class(task)}" do %>
+            <span class="text-truncate" title="<%= task.name%>"><%= task.name %></span>
+          <% end %>
+          <span class="badge bg-primary"><%= task.board.name %></span>
+        </li>
       <% end %>
     </ul>
 
     <p class="small mt-2 mb-0 text-center">&nbsp;
-      <% if @tasks[:today].size > tasks_widget_limit %>
-        + <%= @tasks[:today].size - tasks_widget_limit %> more
-      <% end %>
-    </p>
-  <% end %>
-
-  <% if @tasks[:tomorrow]&.any? || @tasks[:future]&.any?%>
-    <h5 class="mb-2">Next</h5>
-    <ul class="list-group tasks future-tasks">
-      <% if @tasks[:tomorrow]&.any? %>
-        <% (@tasks[:tomorrow][0...tasks_widget_limit]).each do |task| %>
-          <%= render partial: 'projects/tasks/task', locals: { task: task, task_class: 'due-tomorrow' } %>
-        <% end %>
-      <% end %>
-
-      <% if @tasks[:tomorrow].blank? || @tasks[:tomorrow]&.size <= tasks_widget_limit  %>
-        <% (@tasks[:future][0...(tasks_widget_limit - @tasks[:tomorrow]&.size || 0)] || []).each do |task| %>
-          <%= render partial: 'projects/tasks/task', locals: { task: task, task_class: 'due-future' } %>
-        <% end %>
-      <% end %>
-    </ul>
-
-    <p class="small mt-2 mb-0 text-center">&nbsp;
-      <% if ((@tasks[:tomorrow]&.size || 0) + (@tasks[:future]&.size || 0)) > tasks_widget_limit %>
-        + <%= (@tasks[:tomorrow]&.size + @tasks[:future]&.size) - tasks_widget_limit %> more
+      <% if @tasks.size > @tasks_limit %>
+        + <%= @tasks.size - @tasks_limit %> more
       <% end %>
     </p>
   <% end %>
