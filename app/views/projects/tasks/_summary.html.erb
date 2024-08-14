@@ -11,35 +11,37 @@
   <% if @tasks[:today]&.any? %>
     <h5 class="mb-2 mt-4">Due today</h5>
     <ul class="list-group tasks">
-      <% @tasks[:today][0..2].each do |task| %>
+      <% @tasks[:today][0...tasks_widget_limit].each do |task| %>
         <%= render partial: 'projects/tasks/task', locals: { task: task, task_class: 'due-today' } %>
       <% end %>
     </ul>
 
     <p class="small mt-2 mb-0 text-center">&nbsp;
-      <% if @tasks[:today].size > 3 %>
-        + <%= @tasks[:today].size - 3 %> more
+      <% if @tasks[:today].size > tasks_widget_limit %>
+        + <%= @tasks[:today].size - tasks_widget_limit %> more
       <% end %>
     </p>
   <% end %>
 
-  <% if @tasks[:tomorrow]&.any? || @tasks[:future]&.any? %>
+  <% if @tasks[:tomorrow]&.any? || @tasks[:future]&.any?%>
     <h5 class="mb-2">Next</h5>
     <ul class="list-group tasks future-tasks">
-      <% (@tasks[:tomorrow][0..2] || []).each do |task| %>
-        <%= render partial: 'projects/tasks/task', locals: { task: task, task_class: 'due-tomorrow' } %>
+      <% if @tasks[:tomorrow]&.any? %>
+        <% (@tasks[:tomorrow][0...tasks_widget_limit]).each do |task| %>
+          <%= render partial: 'projects/tasks/task', locals: { task: task, task_class: 'due-tomorrow' } %>
+        <% end %>
       <% end %>
 
-      <% unless @tasks[:tomorrow].size >= 3 %>
-        <% (@tasks[:future][0..2] || []).each do |task| %>
+      <% if @tasks[:tomorrow].blank? || @tasks[:tomorrow]&.size <= tasks_widget_limit  %>
+        <% (@tasks[:future][0...(tasks_widget_limit - @tasks[:tomorrow]&.size || 0)] || []).each do |task| %>
           <%= render partial: 'projects/tasks/task', locals: { task: task, task_class: 'due-future' } %>
         <% end %>
       <% end %>
     </ul>
 
     <p class="small mt-2 mb-0 text-center">&nbsp;
-      <% if (@tasks[:tomorrow].size + @tasks[:future].size) > 3 %>
-        + <%= (@tasks[:tomorrow].size + @tasks[:future].size) - 3 %> more
+      <% if ((@tasks[:tomorrow]&.size || 0) + (@tasks[:future]&.size || 0)) > tasks_widget_limit %>
+        + <%= (@tasks[:tomorrow]&.size + @tasks[:future]&.size) - tasks_widget_limit %> more
       <% end %>
     </p>
   <% end %>

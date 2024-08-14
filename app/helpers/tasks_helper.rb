@@ -29,4 +29,8 @@ module TasksHelper
       end
     end
   end
+
+  def tasks_widget_limit
+    3
+  end
 end
