@@ -121,32 +121,6 @@ body.projects {
           width: fit-content;
           padding: 0.313rem;
         }
-
-        &:before {
-          border: 3px solid;
-          border-radius: 0.5rem 0 0 0.5rem;
-          bottom: 0;
-          content: ' ';
-          left: 0;
-          position: absolute;
-          top: 0;
-        }
-
-        &.due-future:before {
-          border-color: #198754;
-        }
-
-        &.due-today:before {
-          border-color: #fd7e14;
-        }
-
-        &.due-overdue:before {
-          border-color: #dc3545;
-        }
-
-        &.due-tomorrow:before {
-          border-color: #ffc107;
-        }
       }
     }
   }
