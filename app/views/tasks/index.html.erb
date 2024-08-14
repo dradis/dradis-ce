@@ -22,7 +22,7 @@
           <td data-sort="<%= task.board.name %>"><%= task.board.name %></td>
           <td data-sort="<%= task.due_date || 'no-due-date' %>"><%= due_date_badge(task) %></td>
           <td>
-            <ul class="m-0 p-0">
+            <ul class="d-flex flex-wrap m-0 p-0">
               <% task.assignees.each do |assignee| %>
                 <li class="d-inline-flex" data-bs-toggle="tooltip" data-bs-placement="top" title="<%= assignee.name %>">
                   <%= avatar_image(assignee, size: 30) %>
