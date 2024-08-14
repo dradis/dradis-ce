@@ -13,20 +13,16 @@ module TasksHelper
     end
   end
 
-  def grouped_tasks(tasks)
-    tasks.group_by do |task|
-      case task.due_date
-      when nil
-        :no_due_date
-      when ->(date) { date < Date.today }
-        :overdue
-      when Date.today
-        :today
-      when Date.tomorrow
-        :tomorrow
-      else
-        :future
-      end
+  def widget_task_class(task)
+    return unless task.due_date
+
+    case task.due_date
+    when Date.today
+      'due-today'
+    when Date.tomorrow
+      'due-tomorrow'
+    else
+      task.due_date < Date.today ? 'due-overdue' : 'due-future'
     end
   end
 
