@@ -21,7 +21,7 @@
       <% end %>
       <%= content_tag :li, :class => controller_path.include?('tasks') ? 'active' : '' do %>
         <%= link_to main_app.project_tasks_path(current_project), class: 'sidebar-link', data: { behavior: 'sidebar-link' } do %>
-          <i class="fa-solid fa-tasks sidebar-link-icon"></i> <span class="sidebar-link-label">Tasks</span>
+          <i class="fa-solid fa-tasks sidebar-link-icon"></i> <span class="sidebar-link-label">My Tasks</span>
         <% end %>
       <% end %>
       <%= content_tag :li, :class => action_name == 'trash' ? 'active' : '' do %>
