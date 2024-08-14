@@ -15,6 +15,7 @@
           <%= link_to project_board_list_card_path(current_project, task.board, task.list, task), class: "list-group-item-action #{widget_task_class(task)}" do %>
             <span class="text-truncate" title="<%= task.name%>"><%= task.name %></span>
           <% end %>
+          <%= due_date_badge(task) %>
           <span class="badge bg-primary"><%= task.board.name %></span>
         </li>
       <% end %>
