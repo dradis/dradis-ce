@@ -16,9 +16,11 @@
     <tbody>
       <% @tasks.each do |task| %>
         <tr>
-          <td><%= link_to task.name, project_board_list_card_path(current_project, task.board, task.list, task) %></td>
-          <td><%= task.board.name %></td>
-          <td><%= due_date_badge(task) %></td>
+          <td data-sort="<%= task.name %>">
+            <%= link_to task.name, project_board_list_card_path(current_project, task.board, task.list, task) %>
+          </td>
+          <td data-sort="<%= task.board.name %>"><%= task.board.name %></td>
+          <td data-sort="<%= task.due_date || 'no-due-date' %>"><%= due_date_badge(task) %></td>
           <td>
             <ul class="p-0">
               <% task.assignees.each do |assignee| %>
