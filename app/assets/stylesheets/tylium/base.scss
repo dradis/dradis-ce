@@ -33,8 +33,13 @@ a {
   background-color: $primaryColor !important;
 }
 
+.bg-warning {
+  color: $defaultText;
+}
+
 .bg-warning-dark {
-  background-color: #fd7e14;
+  background-color: $orange;
+  color: $defaultText;
 }
 
 blockquote {
