@@ -10,40 +10,6 @@ document.addEventListener "turbolinks:load", ->
 
   # --------------------------------------------------- Standard jQuery plugins
 
-  # Initialize clipboard.js:
-  clipboard = new Clipboard('.js-attachment-url-copy')
-
-  clipboard.on 'success', (e) ->
-    $btn = $(e.trigger)
-    e.clearSelection()
-    $btn.tooltip
-      placement: 'bottom'
-      title:     'Copied attachment URL to clipboard!',
-      trigger:   'manual'
-    $btn.tooltip('show')
-
-
-  clipboard.on 'error', (e) ->
-    actionKey = if e.action == 'cut' then 'X' else 'C'
-    if /Mac/i.test(navigator.userAgent)
-      actionMsg = 'Press ⌘-' + actionKey + ' to '+ e.action
-    else
-      actionMsg = 'Press Ctrl-' + actionKey + ' to ' + e.action
-
-    $btn = $(e.trigger)
-
-    $btn.tooltip
-      placement: 'bottom'
-      title:     actionMsg
-      trigger:   'manual'
-    $btn.tooltip('show')
-
-
-  $(".attachments-box").on "mouseleave", ".js-attachment-url-copy", ->
-    $this = $(this)
-    $this.tooltip('hide')
-
-
   # -------------------------------------------------------- Our jQuery plugins
 
   # Activate jQuery.breadCrumbs
@@ -139,7 +105,7 @@ document.addEventListener "turbolinks:load", ->
       $this = $(this)
       $this.find('[data-behavior~=toggle-chevron]').toggleClass('fa-chevron-down fa-chevron-up')
 
-      if $this.is('[data-behavior~=import-box]') && $($this.data('target')).innerHeight() == 0
+      if $this.is('[data-behavior~=import-box-header]') && $($this.data('target')).innerHeight() == 0
         $($this.data('target')).find("input[type='text']:first").focus()
 
   # Scroll for more indicator functionality

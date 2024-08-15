@@ -1,5 +1,5 @@
 module ApplicationHelper # :nodoc:
-  def markup(text, options={})
+  def markup(text, options = {})
     return unless text.present?
 
     context = {}
@@ -38,8 +38,8 @@ module ApplicationHelper # :nodoc:
     ;nil
   end
 
-  def spinner_tag(spinner_class: 'text-primary')
-    content_tag :div, class: 'd-flex align-items-center justify-content-center spinner-container' do
+  def spinner_tag(spinner_class: 'text-primary', align: 'center', inline: false)
+    content_tag :div, class: "#{inline ? 'd-inline-flex' : 'd-flex' } align-items-center justify-content-#{align} spinner-container" do
       content_tag :div, nil, class: "spinner-border #{spinner_class}"
     end
   end

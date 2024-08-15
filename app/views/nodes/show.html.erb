@@ -12,7 +12,11 @@
     <a href="#notes-tab" data-bs-toggle="tab" class="nav-link"><i class="fa-regular fa-file-text"></i> Notes</a>
   </li>
   <li class="nav-item">
-    <a class="js-try-pro nav-link" href="javascript:void(0)" data-term="node-boards" data-url="https://dradisframework.com/pro/pages/consistency.html"><i class="fa-brands fa-trello"></i> Methodology</a>
+    <% if defined?(Dradis::Pro) %>
+    <a href="#methodology-tab" data-bs-toggle="tab" class="nav-link"><i class="fa-brands fa-trello"></i> Methodology</a>
+    <% else %>
+    <a class="js-try-pro nav-link" href="javascript:void(0)" data-term="node-boards" data-url="https://dradis.com/pro/pages/consistency.html"><i class="fa-brands fa-trello"></i> Methodology</a>
+    <% end %>
   </li>
   <li class="nav-item">
     <a href="#properties-tab" data-bs-toggle="tab" class="nav-link active">

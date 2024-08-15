@@ -354,12 +354,11 @@ describe 'node pages' do
         @node.save!
       end
 
-      it 'shows the current node in the sidebar node tree', js: true do # bug fix
+      it 'shows the current node in the sidebar node tree', js: true do
         find('.tree-header').click
 
-        within '.main-sidebar .nodes-nav' do
-          click_link class: 'toggle'
-          should have_content 'My node'
+        within ".main-sidebar .nodes-nav #node_#{@node.id}" do
+          expect(page).to have_content 'My node'
         end
       end
     end

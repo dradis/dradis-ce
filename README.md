@@ -1,8 +1,8 @@
 # Welcome to the Dradis Framework
 
-[ ![CI](https://github.com/dradis/dradis-ce/actions/workflows/ci.yml/badge.svg)](https://github.com/dradis/dradis-ce/actions/workflows/ci.yml)
-[ ![Code quality](https://codeclimate.com/github/dradis/dradis-ce/badges/gpa.svg)](https://codeclimate.com/github/dradis/dradis-ce)
-[ ![Black Hat Arsenal](https://www.toolswatch.org/badges/arsenal/2016.svg)](https://www.blackhat.com/us-16/arsenal.html#dradis-framework)
+[![CI](https://github.com/dradis/dradis-ce/actions/workflows/ci.yml/badge.svg)](https://github.com/dradis/dradis-ce/actions/workflows/ci.yml)
+[![Black Hat Arsenal](https://www.toolswatch.org/badges/arsenal/2016.svg)](https://www.blackhat.com/us-16/arsenal.html#dradis-framework)
+[![@dradisfw on X](https://img.shields.io/twitter/follow/dradisfw?style=social)](https://twitter.com/dradisfw)
 
 Dradis is an open-source collaboration framework, tailored to InfoSec teams.
 
@@ -54,29 +54,18 @@ There are two editions of Dradis Framework:
 
 [Installing Dradis from Git](https://dradis.com/ce/documentation/install_git.html)
 
-### Using Vagrant
+### Using Docker
 
-If you'd like to use dradis in Vagrant, you can use the included Vagrantfile.
+If you'd like to use Dradis in Docker, first get the latest image:
 
 ```
-# Clone the repo
-git clone https://github.com/dradis/dradis-ce.git
-cd dradis-ce/
+docker image pull dradis/dradis-ce:latest
+```
 
-# install/start the vagrant box
-vagrant up
-# ssh into the box
-vagrant ssh
+And then run the container:
 
-# install ruby in the vagrant box
-cd /dradis/dradis-ce
-rvm install "$(cat .ruby-version)"
-
-
-# Then you can proceed with standard setup from within Vagrant
-ruby bin/setup
-# You'll need to tell the server to bind to 0.0.0.0 for port forwarding:
-bundle exec rails server -b 0.0.0.0
+```
+docker run -it -p 3000:3000 dradis/dradis-ce
 ```
 
 

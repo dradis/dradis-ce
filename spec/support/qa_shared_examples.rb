@@ -78,7 +78,9 @@ shared_examples 'qa pages' do |item_type|
       visit polymorphic_path([current_project, :qa, record])
     end
 
-    it 'parses liquid content' do
+    it 'parses liquid content', js: true do
+      expect(page).to have_no_css('span.text-nowrap', text: 'Loading liquid dynamic content', wait: 10)
+
       expect(find('.note-text-inner')).to have_content("Liquid: #{record.title}")
       expect(find('.note-text-inner')).not_to have_content("Liquid: {{#{item_type.to_s}.title}}")
     end
