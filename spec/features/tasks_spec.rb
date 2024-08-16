@@ -44,5 +44,4 @@ describe 'My Tasks' do
       end
     end
   end
-
 end
