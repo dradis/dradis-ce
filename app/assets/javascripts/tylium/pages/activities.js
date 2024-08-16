@@ -37,10 +37,11 @@ document.addEventListener('turbolinks:load', function() {
   $('[data-behavior~=activity-filters] input[type="date"]').change(function () {
     const dateValue = $(this).val();
     const periodStart = $('[data-behavior~=since]').attr('min');
-    if (dateValue !== '' && !isNaN(Date.parse(dateValue))) {
-      if (Date.parse(dateValue) >= Date.parse(periodStart)) {
-        $(this).closest('form').submit();
-      }
+    if (
+      (dateValue !== '' && !isNaN(Date.parse(dateValue))) &&
+      (Date.parse(dateValue) >= Date.parse(periodStart))
+    ) {
+      $(this).closest('form').submit();
     }
   });
 });

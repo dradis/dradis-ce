@@ -6,7 +6,7 @@ class ActivitiesController < AuthenticatedController
 
   def index
     @page = params[:page].present? ? params[:page].to_i : 1
-    @users_for_select = current_project.activities.map(&:user).uniq.union(current_project.authors.enabled)
+    @users_for_select = current_project.activities.map(&:user).union(current_project.authors.enabled)
 
     activities = current_project.activities.includes(:trackable)
     activities = filter_activities(activities)
@@ -38,20 +38,28 @@ class ActivitiesController < AuthenticatedController
   end
 
   def filter_activities(activities)
-    filtering_params.each do |key, value|
-      next if value.blank?
+    if params[:since].present? && valid_date?(params[:since])
+      activities = activities.since(DateTime.parse(params[:since]).beginning_of_day)
+    end
 
-      if key == 'since'
-        value = DateTime.parse(value).beginning_of_day rescue ArgumentError
-        activities = activities.since value
-      elsif key == 'before'
-        value = DateTime.parse(value).end_of_day rescue ArgumentError
-        activities = activities.before value
-      elsif ['user_id', 'trackable_type'].include? key
-        activities = activities.where(key.to_sym => value)
-      end
+    if params[:before].present? && valid_date?(params[:before])
+      activities = activities.before(DateTime.parse(params[:before]).end_of_day)
+    end
+
+    if params[:user_id].present?
+      activities = activities.where(user_id: params[:user_id])
+    end
+
+    if params[:trackable_type].present?
+      activities = activities.where(trackable_type: params[:trackable_type])
     end
 
     activities
+  end
+
+  def valid_date?(date_string)
+    Date.parse(date_string)
+  rescue ArgumentError
+    false
   end
 end

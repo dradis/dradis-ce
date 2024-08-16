@@ -97,45 +97,73 @@ describe 'Activity pages:' do
       end
 
       describe 'filters' do
-        it 'has user filter' do
-          expect(page).to have_selector('#user_id', count: 1)
+        context 'valid filter options' do
+          it 'has user filter' do
+            expect(page).to have_selector('#user_id', count: 1)
+          end
+
+          it 'by user' do
+            visit project_activities_path(current_project, user_id: second_user.id)
+            expect(all('.activity').count).to eq(10)
+          end
+
+          it 'has type filter' do
+            expect(page).to have_selector('#trackable_type', count: 1)
+          end
+
+          it 'by trackable_type' do
+            visit project_activities_path(current_project, trackable_type: 'Card')
+            expect(page).to have_selector('.activity', count: 15)
+          end
+
+          it 'has daterange filter' do
+            expect(page).to have_selector('#since', count: 1)
+            expect(page).to have_selector('#before', count: 1)
+          end
+
+          it 'combined filter works' do
+            visit project_activities_path(current_project, trackable_type: 'Card', user_id: second_user.id)
+            expect(page).to have_selector('.activity', count: 10)
+          end
+
+          it 'filters by date' do
+            since = Time.current - 3.days
+            before = Time.current
+
+            visit project_activities_path(current_project, since: since, before: before)
+            expect(page).to have_selector('.activity', count: 15)
+          end
+
+          it 'filters for single day' do
+            visit project_activities_path(current_project, since: Time.current, before: Time.current)
+            expect(page).to have_selector('.activity', count: 10)
+          end
         end
 
-        it 'by user' do
-          visit project_activities_path(current_project, user_id: second_user.id)
-          expect(page).to have_selector('.activity', count: 10)
-        end
+        context 'invalid filter options' do
+          context 'invalid dates' do
+            it 'returns no activities' do
+              since = Time.current + 3.days
+              before = Time.current
 
-        it 'has type filter' do
-          expect(page).to have_selector('#trackable_type', count: 1)
-        end
+              visit project_activities_path(current_project, since: since, before: before)
+              expect(page).to_not have_selector('.activity')
+            end
+          end
 
-        it 'by trackable_type' do
-          visit project_activities_path(current_project, trackable_type: 'Card')
-          expect(page).to have_selector('.activity', count: 15)
-        end
+          context 'invalid trackable type' do
+            it 'returns no activities' do
+              visit project_activities_path(current_project, trackable_type: 'InvalidType')
+              expect(page).to_not have_selector('.activity')
+            end
+          end
 
-        it 'has daterange filter' do
-          expect(page).to have_selector('#since', count: 1)
-          expect(page).to have_selector('#before', count: 1)
-        end
-
-        it 'by date' do
-          since = Time.current - 3.days
-          before = Time.current
-
-          visit project_activities_path(current_project, since: since, before: before)
-          expect(page).to have_selector('.activity', count: 15)
-        end
-
-        it 'daterange filter works for single day' do
-          visit project_activities_path(current_project, since: Time.current, before: Time.current)
-          expect(page).to have_selector('.activity', count: 10)
-        end
-
-        it 'combined filter works' do
-          visit project_activities_path(current_project, trackable_type: 'Card', user_id: second_user.id)
-          expect(page).to have_selector('.activity', count: 10)
+          context 'invalid user' do
+            it 'returns no activities' do
+              visit project_activities_path(current_project, user_id: -1)
+              expect(page).to_not have_selector('.activity')
+            end
+          end
         end
       end
     end
