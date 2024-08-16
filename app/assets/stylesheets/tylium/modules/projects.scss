@@ -114,6 +114,7 @@ body.projects {
         color: $linkColor;
         padding-bottom: 0.5rem;
         pointer-events: auto;
+        width: max-content;
 
         &:active,
         &:focus,
