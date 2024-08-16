@@ -12,8 +12,8 @@
     <ul class="list-group tasks">
       <% @tasks.first(@tasks_limit).each do |task| %>
         <li class="d-flex flex-column list-group-item">
-          <%= link_to project_board_list_card_path(current_project, task.board, task.list, task), class: "list-group-item-action" do %>
-            <span class="text-truncate" title="<%= task.name%>"><%= task.name %></span>
+          <%= link_to project_board_list_card_path(current_project, task.board, task.list, task), class: "list-group-item-action text-truncate" do %>
+            <%= task.name %>
           <% end %>
           <span class="small text-muted"><%= task.board.name %></span>
           <%= due_date_badge(task) %>

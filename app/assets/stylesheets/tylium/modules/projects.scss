@@ -95,16 +95,15 @@ body.projects {
       border-radius: 0.5rem;
       margin-bottom: 1rem;
       padding: 1rem;
-
-      &:active,
-      &:focus,
-      &:hover {
-        background-color: $secondaryBgColor;
-      }
+      pointer-events: none;
 
       .badge {
         margin-top: 0.5rem;
         width: max-content;
+      }
+
+      &:hover {
+        background-color: $secondaryBgColor;
       }
 
       &:last-of-type {
@@ -112,12 +111,15 @@ body.projects {
       }
 
       .list-group-item-action {
+        color: $linkColor;
         padding-bottom: 0.5rem;
+        pointer-events: auto;
 
         &:active,
         &:focus,
         &:hover {
           background-color: $secondaryBgColor;
+          color: $linkColorHover;
         }
 
         .badge {
