@@ -26,5 +26,11 @@
         + <%= @tasks.size - @tasks_limit %> more
       <% end %>
     </p>
+  <% else %>
+    <%= render 'shared/empty_state',
+      name: 'task',
+      docs_link: 'https://dradis.com/support/guides/projects/methodologies.html#task',
+      text: 'Use tasks to represent a check, an action, or a step that you need to complete.'
+    %>
   <% end %>
 </section>
