@@ -21,8 +21,9 @@ class ProjectsController < AuthenticatedController
     @nodes         = current_project.nodes.in_tree
     @tags          = current_project.tags
 
+    project_cards = @boards.map(&:cards)[0]
     # Using Arel.sql to sort the records by due_date with null due_date records last
-    @tasks         = current_user.cards.order(Arel.sql('due_date IS NULL, due_date ASC'))
+    @tasks = project_cards.order(Arel.sql('due_date IS NULL, due_date ASC')).filter_map { |card| card if card.assignees.include? current_user }
     @tasks_limit   = 5
 
     @count_by_tag  = { unassigned: 0 }
