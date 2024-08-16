@@ -39,7 +39,8 @@ describe 'My Tasks' do
         expect(page).not_to have_selector('table.dataTable')
         expect(page).not_to have_selector('td a', text: @card.name)
 
-        expect(page).to have_content("You don't have any assigned tasks yet")
+        expect(page).to have_selector('.empty-state')
+        expect(page).to have_content("You don't have any tasks yet")
       end
     end
   end
