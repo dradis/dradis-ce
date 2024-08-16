@@ -1,6 +1,7 @@
 [v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
+  - Tasks:
+    - Add view with user assigned tasks
+    - Add dashboard widget for quick access to assigned tasks
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
@@ -25,12 +26,6 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-
-[v#.#.#] ([month] [YYYY])
-  - Tasks:
-    - Add view with user assigned tasks
-    - Add dashboard widget for quick access to assigned tasks
-
 
 v4.13.0 (July 2024)
   - Attachments: Copy attachments when moving an evidence/note
