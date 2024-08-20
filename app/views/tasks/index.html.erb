@@ -4,11 +4,14 @@
   <% if @tasks.any? %>
     <table class="table table-striped"
             data-behavior="dradis-datatable"
-            data-default-columns='["Title", "Methodology", "Due Date", "Assigned"]'
-            data-local-storage-key="project.ce.<%= dom_id(current_project) %>.tasks_datatable">
+            data-default-columns="<%= @default_columns %>"
+            data-local-storage-key="<%= @local_storage_key %>">
       <thead>
         <tr>
           <th>Title</th>
+          <% unless params[:project_id] %>
+            <th>Project</th>
+          <% end %>
           <th>Methodology</th>
           <th>Due Date</th>
           <th>Assigned</th>
@@ -18,8 +21,11 @@
         <% @tasks.each do |task| %>
           <tr>
             <td data-sort="<%= task.name %>">
-              <%= link_to task.name, project_board_list_card_path(current_project, task.board, task.list, task) %>
+              <%= link_to task.name, project_board_list_card_path(task.project, task.board, task.list, task) %>
             </td>
+            <% unless params[:project_id] %>
+              <td data-sort="<%= task.project.name %>"><%= task.project.name %></td>
+            <% end %>
             <td data-sort="<%= task.board.name %>"><%= task.board.name %></td>
             <td data-sort="<%= task.due_date || 'no-due-date' %>"><%= due_date_badge(task) %></td>
             <td>
