@@ -19,28 +19,30 @@ describe 'My Tasks' do
       @card = create(:card, list: list)
     end
 
-    context 'with assigned tasks' do
-      it 'renders the user\'s assigned tasks in a dataTable', js: true do
-        @card.assignees = [User.first]
-        @card.save
+    describe 'in a project' do
+      context 'with assigned tasks' do
+        it 'renders the user\'s assigned tasks in a dataTable', js: true do
+          @card.assignees = [User.first]
+          @card.save
 
-        visit project_tasks_path(current_project)
-        expect(page).to have_selector('table.dataTable')
-        expect(page).to have_selector('td a', text: @card.name)
+          visit project_tasks_path(current_project)
+          expect(page).to have_selector('table.dataTable')
+          expect(page).to have_selector('td a', text: @card.name)
+        end
       end
-    end
 
-    context 'without assigned tasks' do
-      it 'renders an empty state' do
-        @card.assignees = []
-        @card.save
+      context 'without assigned tasks' do
+        it 'renders an empty state' do
+          @card.assignees = []
+          @card.save
 
-        visit project_tasks_path(current_project)
-        expect(page).not_to have_selector('table.dataTable')
-        expect(page).not_to have_selector('td a', text: @card.name)
+          visit project_tasks_path(current_project)
+          expect(page).not_to have_selector('table.dataTable')
+          expect(page).not_to have_selector('td a', text: @card.name)
 
-        expect(page).to have_selector('.empty-state')
-        expect(page).to have_content("You don't have any tasks yet")
+          expect(page).to have_selector('.empty-state')
+          expect(page).to have_content("You don't have any tasks yet")
+        end
       end
     end
   end
