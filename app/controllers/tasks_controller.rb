@@ -1,6 +1,9 @@
 class TasksController < AuthenticatedController
   include ProjectScoped
 
+  skip_before_action :set_project, if: -> { params[:project_id].blank? }
+  skip_before_action :set_nodes, if: -> { params[:project_id].blank? }
+
   layout :set_layout
   def index
     @default_columns = ['Title', 'Methodology', 'Due Date', 'Assigned']
@@ -23,15 +26,9 @@ class TasksController < AuthenticatedController
 
   protected
 
-  # ProjectScoped always calls current_project and set_nodes. We are overwriting
-  # it here to prevent errors in Pro when viewing tasks outside of projects.
+  # ProjectScoped always calls current_project. We are overwriting it here to
+  # prevent errors in Pro when viewing tasks outside of projects.
   def current_project
-    return if params[:project_id].blank?
-
-    super
-  end
-
-  def set_nodes
     return if params[:project_id].blank?
 
     super
