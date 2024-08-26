@@ -56,6 +56,17 @@ class KitImportJob < ApplicationJob
     @project.update_attribute :report_template_properties_id, @word_rtp.id if @word_rtp
   end
 
+  def copy_file(file, destination)
+    return unless File.file?(file)
+
+    file_name = NamingService.name_file(
+      original_filename: File.basename(file),
+      pathname: destination
+    )
+
+    FileUtils.cp(file, "#{destination}/#{file_name}")
+  end
+
   def copy_kit_to_working_dir(source)
     if File.file?(source)
       FileUtils.cp source, working_dir
@@ -185,18 +196,8 @@ class KitImportJob < ApplicationJob
     return unless Dir.exist?(kit_template_dir)
 
     Dir["#{kit_template_dir}/*"].each do |file|
-      return unless File.file?(file)
-
-      file_name = name_file(File.basename(file), destination)
-      FileUtils.cp(file, "#{destination}/#{file_name}")
+      copy_file(file, destination)
     end
-  end
-
-  def name_file(original_filename, pathname)
-    NamingService.name_file(
-      original_filename: original_filename,
-      pathname: pathname
-    )
   end
 
   def unzip(file)
