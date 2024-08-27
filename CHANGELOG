@@ -1,6 +1,5 @@
 [v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
+  - Kit Import: Use file name sequencing when a template file with the same name exists
   - Upgraded gems:
     - rexml
   - Bugs fixes:
