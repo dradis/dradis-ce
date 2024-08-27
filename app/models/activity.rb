@@ -27,6 +27,9 @@ class Activity < ApplicationRecord
     includes(:trackable).order('activities.created_at DESC').limit(20)
   end
 
+  scope :since, -> (period_start) { where('created_at >= ?', period_start) }
+  scope :before, -> (period_end) { where('created_at <= ?', period_end) }
+
   # -- Callbacks ------------------------------------------------------------
 
   # Cast action to a string so the 'inclusion' validation works with symbols
