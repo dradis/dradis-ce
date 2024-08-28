@@ -5,6 +5,7 @@ class TasksController < AuthenticatedController
   skip_before_action :set_nodes, if: -> { params[:project_id].blank? }
 
   layout :set_layout
+  
   def index
     @default_columns = ['Title', 'Methodology', 'Due Date', 'Assigned']
 
