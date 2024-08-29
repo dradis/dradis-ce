@@ -1,27 +1,21 @@
 class TasksController < AuthenticatedController
   include ProjectScoped
 
+  before_action :set_tasks, only: :index
+
   skip_before_action :set_project, if: -> { params[:project_id].blank? }
   skip_before_action :set_nodes, if: -> { params[:project_id].blank? }
 
   layout :set_layout
-  
+
   def index
     @default_columns = ['Title', 'Methodology', 'Due Date', 'Assigned']
 
     if params[:project_id].present?
-      cards = current_project.methodology_library.boards.map(&:cards)[0]
       @local_storage_key = "project.ce.project_#{current_project.id}.tasks_datatable"
     else
-      cards = current_user.cards
       @default_columns.insert(1, 'Project')
-      @local_storage_key = 'project.pro.tasks_datatable'
-    end
-
-    @tasks = if cards
-      cards.filter_map { |card| card if card.assignees.include? current_user }
-    else
-      []
+      @local_storage_key = 'pro.tasks_datatable'
     end
   end
 
@@ -37,5 +31,17 @@ class TasksController < AuthenticatedController
 
   def set_layout
     params[:project_id].present? ? 'tylium' : 'mintcreek'
+  end
+
+  def set_tasks
+    @tasks ||= begin
+      cards = current_user.cards
+
+      if params[:project_id].present?
+        cards.select { |card| card.project.id == current_project.id }
+      else
+        cards
+      end
+    end
   end
 end
