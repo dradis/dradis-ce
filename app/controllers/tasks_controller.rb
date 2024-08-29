@@ -6,8 +6,6 @@ class TasksController < AuthenticatedController
   skip_before_action :set_project, if: -> { params[:project_id].blank? }
   skip_before_action :set_nodes, if: -> { params[:project_id].blank? }
 
-  layout :set_layout
-
   def index
     @default_columns = ['Title', 'Methodology', 'Due Date', 'Assigned']
 
@@ -27,10 +25,6 @@ class TasksController < AuthenticatedController
     return if params[:project_id].blank?
 
     super
-  end
-
-  def set_layout
-    params[:project_id].present? ? 'tylium' : 'mintcreek'
   end
 
   def set_tasks
