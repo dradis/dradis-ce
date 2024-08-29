@@ -3,10 +3,15 @@ module TasksHelper
 
   def all_assigned_tasks
     @assigned_tasks ||= begin
-      current_user.cards
+      tasks = current_user.cards
         # Using Arel.sql to sort the records by due_date with null due_date records last
         .order(Arel.sql('due_date IS NULL, due_date ASC'))
-        .select { |card| card.project.id == current_project.id }
+
+      if params[:project_id]
+        return tasks.select { |card| card.project.id == current_project.id }
+      end
+
+      tasks
     end
   end
 

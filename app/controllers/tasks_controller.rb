@@ -1,13 +1,13 @@
 class TasksController < AuthenticatedController
   include ProjectScoped
-
-  before_action :set_tasks, only: :index
+  include TasksHelper
 
   skip_before_action :set_project, if: -> { params[:project_id].blank? }
   skip_before_action :set_nodes, if: -> { params[:project_id].blank? }
 
   def index
     @default_columns = ['Title', 'Methodology', 'Due Date', 'Assigned']
+    @tasks = all_assigned_tasks
 
     if params[:project_id].present?
       @local_storage_key = "project.ce.project_#{current_project.id}.tasks_datatable"
@@ -25,17 +25,5 @@ class TasksController < AuthenticatedController
     return if params[:project_id].blank?
 
     super
-  end
-
-  def set_tasks
-    @tasks ||= begin
-      cards = current_user.cards
-
-      if params[:project_id].present?
-        cards.select { |card| card.project.id == current_project.id }
-      else
-        cards
-      end
-    end
   end
 end
