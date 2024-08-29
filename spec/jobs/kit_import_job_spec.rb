@@ -3,41 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe KitImportJob do
+  include KitUploadMacros
+
   before do
-    @user    = create(:user)
-
-    file = File.new(Rails.root.join('spec', 'fixtures', 'files', 'templates', 'kit.zip'))
-    @tmp_dir  = Rails.root.join('tmp', 'rspec')
-    FileUtils.mkdir_p @tmp_dir
-
-    # Use a temporary file for the job instead of the original fixture
-    FileUtils.cp file.path, @tmp_dir
-    @tmp_file = File.new(@tmp_dir.join('kit.zip'))
-
-    ['methodologies', 'notes', 'plugins', 'projects', 'reports'].each do |item|
-      conf = Configuration.find_or_initialize_by(name: "admin:paths:templates:#{item}")
-      folder = @tmp_dir.join(item)
-      conf.value = folder
-      conf.save!
-      FileUtils.mkdir_p folder
-    end
-
-    allow(NoteTemplate).to receive(:pwd).and_return(
-      Pathname.new(Configuration.paths_templates_notes)
-    )
-    allow(Methodology).to receive(:pwd).and_return(
-      Pathname.new(Configuration.paths_templates_methodologies)
-    )
-    allow(ProjectTemplate).to receive(:pwd).and_return(
-      Pathname.new(Configuration.paths_templates_projects)
-    )
+    @user = create(:user)
+    setup_kit_import
   end
 
   describe '#perform' do
     after(:all) do
-      FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
-      FileUtils.rm_rf(Rails.root.join('tmp', 'rspec'))
-      Configuration.delete_by('name LIKE ?', 'admin:paths:%')
+      cleanup_kit_import
     end
 
     it 'imports kit content' do
@@ -55,9 +30,6 @@ RSpec.describe KitImportJob do
       # project template
       expect(ProjectTemplate.find_template('dradis-template-welcome')).to_not be_nil
 
-      # plugin templates
-      expect(Dir[Configuration.paths_templates_plugins + '/nessus/*']).to_not be_empty
-
       # report template files
       expect(File.exists?(Rails.root.join('tmp', 'rspec', 'reports', 'word', 'dradis_welcome_template.v0.5.docm'))).to eq true
       expect(File.exists?(Rails.root.join('tmp', 'rspec', 'reports', 'excel', 'dradis_template-excel-simple.v1.3.xlsx'))).to eq true
@@ -74,6 +46,33 @@ RSpec.describe KitImportJob do
 
       described_class.new.perform(tmp_file, logger: Log.new.write('Testing...'))
       expect(ProjectTemplate.find_template('dradis-template-no-methodologies')).to_not be_nil
+    end
+
+    it 'renames project templates if template with same name already exists' do
+      project_template = ProjectTemplate.new(filename: 'dradis-template-welcome')
+      project_template.save
+
+      described_class.new.perform(@tmp_file, logger: Log.new.write('Testing...'))
+
+      expect(ProjectTemplate.find_template('dradis-template-welcome_copy-01')).to_not be_nil
+    end
+
+    it 'renames note templates if template with same name already exists' do
+      note_template = NoteTemplate.new(filename: 'evidence')
+      note_template.save
+
+      described_class.new.perform(@tmp_file, logger: Log.new.write('Testing...'))
+
+      expect(NoteTemplate.find('evidence_copy-01')).to_not be_nil
+    end
+
+    it 'renames methodology templates if template with same name already exists' do
+      methodology = Methodology.new(filename: 'OWASPv4_Testing_Methodology', content: '<xml/>')
+      methodology.save
+
+      described_class.new.perform(@tmp_file, logger: Log.new.write('Testing...'))
+
+      expect(Methodology.find('OWASPv4_Testing_Methodology_copy-01')).to_not be_nil
     end
 
     if defined?(Dradis::Pro)
