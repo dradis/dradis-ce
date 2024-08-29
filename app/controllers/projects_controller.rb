@@ -21,7 +21,6 @@ class ProjectsController < AuthenticatedController
     @nodes         = current_project.nodes.in_tree
     @tags          = current_project.tags
     @tasks         = assigned_tasks
-    @tasks_limit   = 5
 
     @count_by_tag  = { unassigned: 0 }
     @issues_by_tag = Hash.new { |h, k| h[k] = [] }

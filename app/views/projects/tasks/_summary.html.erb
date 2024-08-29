@@ -10,7 +10,7 @@
   </h4>
   <% if @tasks.any? %>
     <ul class="list-group tasks">
-      <% @tasks.first(@tasks_limit).each do |task| %>
+      <% @tasks.each do |task| %>
         <li class="d-flex flex-column list-group-item">
           <%= link_to project_board_list_card_path(current_project, task.board, task.list, task), class: "list-group-item-action text-truncate" do %>
             <%= task.name %>
@@ -22,8 +22,8 @@
     </ul>
 
     <p class="small mt-2 mb-0 text-center">&nbsp;
-      <% if @tasks.size > @tasks_limit %>
-        + <%= @tasks.size - @tasks_limit %> more
+      <% if overflow_tasks_count %>
+        + <%= overflow_tasks_count %> more
       <% end %>
     </p>
   <% else %>
