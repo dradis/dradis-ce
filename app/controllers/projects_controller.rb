@@ -20,16 +20,7 @@ class ProjectsController < AuthenticatedController
     @methodologies = current_project.methodology_library.notes.map { |n| Methodology.new(filename: n.id, content: n.text) }
     @nodes         = current_project.nodes.in_tree
     @tags          = current_project.tags
-
-    project_cards = @boards.map(&:cards)[0]
-    @tasks = if project_cards
-      # Using Arel.sql to sort the records by due_date with null due_date records last
-      project_cards.order(Arel.sql('due_date IS NULL, due_date ASC')).filter_map do |card|
-        card if card.assignees.include? current_user
-      end
-    else
-      []
-    end
+    @tasks         = assigned_tasks
     @tasks_limit   = 5
 
     @count_by_tag  = { unassigned: 0 }
