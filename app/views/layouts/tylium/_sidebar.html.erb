@@ -19,6 +19,11 @@
           <i class="fa-brands fa-trello sidebar-link-icon"></i> <span class="sidebar-link-label">Methodologies</span>
         <% end %>
       <% end %>
+      <%= content_tag :li, :class => controller_path.include?('tasks') ? 'active' : '' do %>
+        <%= link_to main_app.project_tasks_path(current_project), class: 'sidebar-link', data: { behavior: 'sidebar-link' } do %>
+          <i class="fa-solid fa-tasks sidebar-link-icon"></i> <span class="sidebar-link-label">Tasks</span>
+        <% end %>
+      <% end %>
       <%= content_tag :li, :class => action_name == 'trash' ? 'active' : '' do %>
         <%= link_to main_app.project_trash_path(current_project), class: 'sidebar-link', data: { behavior: 'sidebar-link' } do %>
           <i class="fa-solid fa-trash sidebar-link-icon" aria-hidden="true"></i> <span class="sidebar-link-label">Trash</span>
