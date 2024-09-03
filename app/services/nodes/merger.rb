@@ -42,11 +42,15 @@ class Nodes::Merger
 
   def move_descendents
     DESCENDENT_RELATIONSHIPS.each do |relation, column|
-      # update_all doesn't update timestamps so we need to do it manually
-      source_node.send(relation).update_all(
-        column => target_node.id,
-        :updated_at => Time.current
-      )
+      if relation == :activities
+        source_node.send(relation).update_all(column => target_node.id)
+      else
+        # update_all doesn't update timestamps so we need to do it manually
+        source_node.send(relation).update_all(
+          column => target_node.id,
+          :updated_at => Time.current
+        )
+      end
     end
   end
 
