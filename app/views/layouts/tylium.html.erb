@@ -94,6 +94,10 @@
       <%= render partial: 'tags/modals/form' %>
     <% end %>
 
+    <% if defined?(Dradis::Pro) && (controller_name == 'issues' && action_name == 'show') %>
+      <%= render partial: 'dradis/pro/plugins/issuelib/issues/diff_modal' %>
+    <% end %>
+
     <%= render 'console/console' %>
     <!-- End of modals -->
 

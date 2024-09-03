@@ -1,16 +1,16 @@
 .modal {
-
   .modal-dialog {
-    max-width: 560px;
+    &:not(.modal-lg, .modal-xl) {
+      max-width: 560px;
+    }
 
     .modal-content {
       font-size: 0.9rem;
 
       .modal-body {
-
         .add_multiple_nodes_form {
           display: none;
-        
+
           .add_multiple_nodes_error {
             display: none;
             color: #b94a48;
@@ -49,7 +49,6 @@
   }
 
   &#modal_delete_node {
-
     ul {
       list-style: disc;
       padding-left: 30px;
@@ -70,7 +69,7 @@
         text-decoration: underline !important;
       }
     }
-    
+
     .invalid-selection {
       cursor: not-allowed;
     }
@@ -109,13 +108,12 @@
   }
 
   &#try-pro {
-    
     .modal-dialog {
       max-width: 80%;
-  
+
       .modal-body {
         height: 80vh;
-    
+
         iframe {
           border: none;
           top: 0;
@@ -125,7 +123,7 @@
           width: 100%;
         }
       }
-  
+
       .modal-header h5 span {
         color: $primaryColor;
       }
