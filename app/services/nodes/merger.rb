@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Nodes::Merger
+  include AttachmentsCopier
+
   def self.call(target_node, source_node)
     new(target_node, source_node).call
   end
@@ -90,15 +92,33 @@ class Nodes::Merger
   end
 
   def copy_attachments
-    self.copied_attachments = []
+    self.copied_attachments = {}
 
     source_node.attachments.each do |attachment|
-      copied_attachments << attachment.copy_to(target_node)
+      new_attachment = attachment.copy_to(target_node)
+      copied_attachments[attachment.filename] = new_attachment
+    end
+    update_attachment_references
+  end
+
+  def update_attachment_references
+    target_node.evidence_ids.each do |evidence_id|
+      evidence = Evidence.find(evidence_id)
+      evidence.content.scan(Attachment::SCREENSHOT_REGEX).each do |screenshot_path|
+        full_screenshot_path, _, _, _, _, node_id, original_filename, _ = screenshot_path
+        # skip if the attachment already references the new node
+        next if node_id == target_node.id
+
+        new_attachment = copied_attachments[original_filename]
+        new_content = updated_record_content(evidence.content, full_screenshot_path, new_attachment)
+
+        evidence.update_attribute('content', new_content)
+      end
     end
   end
 
   def undo_attachments_copy
     return unless copied_attachments&.any?
-    copied_attachments.each(&:delete)
+    copied_attachments.values.each(&:delete)
   end
 end

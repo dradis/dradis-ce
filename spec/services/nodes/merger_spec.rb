@@ -80,6 +80,22 @@ RSpec.describe Nodes::Merger do
       FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
     end
 
+    it 'updates evidence screenshot links to point to new node' do
+      attachment = create(:attachment, node: source_node)
+      evidence = create(:evidence,
+        content: "#[Description]#\n\n!/pro/projects/#{source_node.project_id}/nodes/#{source_node.id}/attachments/#{attachment.url_encoded_filename}!",
+        node: source_node
+      )
+      merge_nodes
+
+      expect(evidence.reload.content)
+        .to include("/nodes/#{target_node.id}/attachments/#{attachment.url_encoded_filename}")
+      expect(evidence.reload.content)
+        .not_to include("/nodes/#{source_node.id}/attachments/#{attachment.url_encoded_filename}")
+
+      FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
+    end
+
     describe 'property merges' do
       it 'merges basic properties together' do
         source_node = create(:node, :with_properties)
@@ -220,6 +236,20 @@ RSpec.describe Nodes::Merger do
       it 'does not change source node attachments count' do
         create(:attachment, node: source_node)
         expect { merge_nodes }.not_to change { source_node.attachments.count }
+
+        FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
+      end
+
+      it 'does not update evidence screenshot links to point to new node' do
+        attachment = create(:attachment, node: source_node)
+        evidence = create(:evidence,
+          content: "#[Description]#\n\n!/pro/projects/#{source_node.project_id}/nodes/#{source_node.id}/attachments/#{attachment.url_encoded_filename}!",
+          node: source_node
+        )
+        merge_nodes
+
+        expect(evidence.content).to include("/nodes/#{source_node.id}/attachments/#{attachment.url_encoded_filename}")
+        expect(evidence.content).not_to include("/nodes/#{target_node.id}/attachments/#{attachment.url_encoded_filename}")
 
         FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
       end
