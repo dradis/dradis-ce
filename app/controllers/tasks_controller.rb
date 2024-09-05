@@ -11,9 +11,6 @@ class TasksController < AuthenticatedController
 
     if params[:project_id].present?
       @local_storage_key = "project.ce.project_#{current_project.id}.tasks_datatable"
-    else
-      @default_columns.insert(1, 'Project')
-      @local_storage_key = 'pro.tasks_datatable'
     end
   end
 
