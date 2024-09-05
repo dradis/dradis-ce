@@ -20,7 +20,7 @@ class ProjectsController < AuthenticatedController
     @methodologies = current_project.methodology_library.notes.map { |n| Methodology.new(filename: n.id, content: n.text) }
     @nodes         = current_project.nodes.in_tree
     @tags          = current_project.tags
-    @tasks         = assigned_tasks
+    @tasks         = assigned_tasks_for_widget
 
     @count_by_tag  = { unassigned: 0 }
     @issues_by_tag = Hash.new { |h, k| h[k] = [] }

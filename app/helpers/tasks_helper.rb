@@ -1,27 +1,27 @@
 module TasksHelper
   TASKS_LIMIT = 5
 
-  def all_assigned_tasks
-    @assigned_tasks ||= begin
+  def assigned_cards
+    @assigned_cards ||= begin
       # Using Arel.sql to sort the records by due_date with null due_date records last
-      tasks = current_user.cards.order(Arel.sql('due_date IS NULL, due_date ASC'))
+      cards = current_user.cards.order(Arel.sql('due_date IS NULL, due_date ASC'))
 
       if params[:project_id]
-        return tasks.select { |card| card.project.id == current_project.id }
+        cards.select { |card| card.project.id == current_project.id }
+      else
+        cards
       end
-
-      tasks
     end
   end
 
-  def assigned_tasks
-    all_assigned_tasks.first(TASKS_LIMIT)
+  def assigned_tasks_for_widget
+    assigned_cards.first(TASKS_LIMIT)
   end
 
   def overflow_tasks_count
-    return unless all_assigned_tasks.size > TASKS_LIMIT
+    return 0 unless assigned_cards.size > TASKS_LIMIT
 
-    all_assigned_tasks.size - TASKS_LIMIT
+    assigned_cards.size - TASKS_LIMIT
   end
 
   def due_date_badge(task)
