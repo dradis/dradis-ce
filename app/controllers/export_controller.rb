@@ -9,7 +9,9 @@ class ExportController < AuthenticatedController
 
   def non_draft_records?
     issue_states = current_project.issues.pluck(:state).uniq
-    (issue_states & ['published', 'ready_for_review']).any?
+    non_draft_states = ['published', 'ready_for_review']
+
+    (issue_states & non_draft_states).any?
   end
 
   # In case something goes wrong with the export, fail graciously instead of
