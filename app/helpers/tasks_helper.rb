@@ -15,10 +15,10 @@ module TasksHelper
     end
   end
 
-  def overflow_tasks_count
-    return 0 unless assigned_cards.size > TASKS_LIMIT
+  def overflow_tasks_count(tasks)
+    return 0 unless tasks.size > TASKS_LIMIT
 
-    assigned_cards.size - TASKS_LIMIT
+    tasks.size - TASKS_LIMIT
   end
 
   def due_date_badge(task)
