@@ -1,22 +1,18 @@
 module TasksHelper
   TASKS_LIMIT = 5
 
-  def assigned_cards
+  def assigned_cards(project_id = nil)
     @assigned_cards ||= begin
       # Using Arel.sql to sort the records by due_date with null due_date records last
       cards = current_user.cards.order(Arel.sql('due_date IS NULL, due_date ASC'))
 
       # params[:id] is used for projects#show widget
-      if params[:id] || params[:project_id]
+      if project_id
         cards.select { |card| card.project.id == current_project.id }
       else
         cards
       end
     end
-  end
-
-  def assigned_tasks_for_widget
-    assigned_cards.first(TASKS_LIMIT)
   end
 
   def overflow_tasks_count
