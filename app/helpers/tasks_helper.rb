@@ -6,7 +6,6 @@ module TasksHelper
       # Using Arel.sql to sort the records by due_date with null due_date records last
       cards = current_user.cards.order(Arel.sql('due_date IS NULL, due_date ASC'))
 
-      # params[:id] is used for projects#show widget
       if project_id
         cards.select { |card| card.project.id == current_project.id }
       else
