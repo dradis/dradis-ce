@@ -7,10 +7,10 @@ class TasksController < AuthenticatedController
 
   def index
     @default_columns = ['Title', 'Methodology', 'Due Date', 'Assigned']
-    @tasks = assigned_cards(current_project.id)
 
     if params[:project_id].present?
       @local_storage_key = "project.ce.project_#{current_project.id}.tasks_datatable"
+      @tasks = assigned_cards(current_project.id)
     end
   end
 
