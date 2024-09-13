@@ -1,6 +1,8 @@
 class ExportController < AuthenticatedController
   include ProjectScoped
 
+  NON_DRAFT_STATES = ['published', 'ready_for_review'].freeze
+
   def index
     @default_button_state = non_draft_records? ? 'published' : 'all'
   end
@@ -9,9 +11,11 @@ class ExportController < AuthenticatedController
 
   def non_draft_records?
     issue_states = current_project.issues.pluck(:state).uniq
-    non_draft_states = ['published', 'ready_for_review']
+    (issue_states & NON_DRAFT_STATES).any? || non_draft_records_pro
+  end
 
-    (issue_states & non_draft_states).any?
+  def non_draft_records_pro
+    false
   end
 
   # In case something goes wrong with the export, fail graciously instead of
