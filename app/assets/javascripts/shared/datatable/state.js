@@ -1,53 +1,61 @@
-$(document).on('preInit.dt', 'body.issues.index', function (e, settings) {
-  var $paths = $('[data-behavior~=datatable-paths]');
-  if ($paths.data('table-state-url') == undefined) {
-    return;
+$(document).on(
+  'preInit.dt',
+  'body.issues.index, body.content_blocks.index, body.entries.index',
+  function (e, settings) {
+    var $paths = $('[data-behavior~=datatable-paths]');
+    if ($paths.data('table-state-url') == undefined) {
+      return;
+    }
+
+    var api = new $.fn.dataTable.Api(settings);
+
+    api.button().add(1, {
+      attr: {
+        'data-behavior': 'table-action',
+      },
+      autoClose: true,
+      className: 'd-none',
+      extend: 'collection',
+      name: 'stateBtn',
+      text: '<i class="fa-solid fa-adjust fa-fw"></i>State<i class="fa-solid fa-caret-down fa-fw"></i>',
+      buttons: DradisDatatable.prototype.setupStateButtons.call(api),
+    });
   }
+);
 
-  var api = new $.fn.dataTable.Api(settings);
+$(document).on(
+  'init.dt',
+  'body.issues.index, body.content_blocks.index, body.entries.index',
+  function (e, settings) {
+    var $paths = $('[data-behavior~=datatable-paths]');
+    if ($paths.data('table-state-url') == undefined) {
+      return;
+    }
 
-  api.button().add(1, {
-    attr: {
-      'data-behavior': 'table-action',
-    },
-    autoClose: true,
-    className: 'd-none',
-    extend: 'collection',
-    name: 'stateBtn',
-    text: '<i class="fa-solid fa-adjust fa-fw"></i>State<i class="fa-solid fa-caret-down fa-fw"></i>',
-    buttons: DradisDatatable.prototype.setupStateButtons.call(api),
-  });
-});
-
-$(document).on('init.dt', 'body.issues.index', function (e, settings) {
-  var $paths = $('[data-behavior~=datatable-paths]');
-  if ($paths.data('table-state-url') == undefined) {
-    return;
+    var api = new $.fn.dataTable.Api(settings);
+    api.on(
+      'select.dt deselect.dt',
+      function () {
+        var selectedCount = this.rows({ selected: true }).count();
+        DradisDatatable.prototype.toggleStateBtn.call(api, selectedCount !== 0);
+      }.bind(api)
+    );
   }
-
-  var api = new $.fn.dataTable.Api(settings);
-  api.on(
-    'select.dt deselect.dt',
-    function () {
-      var selectedCount = this.rows({ selected: true }).count();
-      DradisDatatable.prototype.toggleStateBtn.call(api, selectedCount !== 0);
-    }.bind(api)
-  );
-});
+);
 
 DradisDatatable.prototype.setupStateButtons = function () {
   var states = $('[data-behavior~=dradis-datatable]').data('state-icons'),
     stateButtons = [],
     api = this;
 
-  if ($('[data-behavior~=qa-viewer]').length > 0) {
+  if ($('[data-behavior~=qa-viewer]').length) {
     states.splice(1, 1);
   }
 
   states.forEach(function (state) {
     stateButtons.push({
       text: $(
-        `<i class="fa-solid ${state[1]} fa-fw me-1"></i><span>${state[0]}</span>`
+        `<i class="fa-solid ${state[1]} fa-fw me-2"></i><span>${state[0]}</span>`
       ),
       action: DradisDatatable.prototype.updateRecordState.call(
         api,
@@ -72,7 +80,7 @@ DradisDatatable.prototype.updateRecordState = function (newState) {
       data: {
         ids: DradisDatatable.prototype.rowIds(selectedRows),
         state: newState,
-        return_to: $('[data-behavior~=qa-viewer]').length > 0 ? 'qa' : null
+        return_to: $('[data-behavior~=qa-viewer]').length > 0 ? 'qa' : null,
       },
       success: function () {
         DradisDatatable.prototype.toggleStateBtn.call(api, false);

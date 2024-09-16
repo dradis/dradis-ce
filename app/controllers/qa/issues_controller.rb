@@ -47,10 +47,10 @@ class QA::IssuesController < AuthenticatedController
           end
         end
 
-        format.json { head :ok }
+        format.json { { status: 200 } }
       else
         format.html { render :show, alert: @issues.errors.full_messages.join('; ') }
-        format.json { head :not_found }
+        format.json { { status: 404 } }
       end
     end
   end
