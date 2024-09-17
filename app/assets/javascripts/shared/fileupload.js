@@ -20,6 +20,14 @@ function fileUploadInit() {
           $.blueimp.fileupload.prototype.options.destroy.call(this, e, data);
         }
       },
+      downloadTemplateId:
+        $('[data-behavior~=jquery-upload]').data('template-download') === false
+          ? null
+          : 'template-download',
+      uploadTemplateId:
+        $('[data-behavior~=jquery-upload]').data('template-upload') === false
+          ? null
+          : 'template-upload',
     })
     .on('fileuploadadd', function (e, data) {
       // data.$textarea is added to the input field owned by the editor and is
@@ -45,7 +53,6 @@ function fileUploadInit() {
       if (data.replaceImagePlaceholder !== undefined) {
         $.each(data.files, data.replaceImagePlaceholder.bind(null, data));
       }
-      window.initBehaviors($('[data-behavior~=jquery-upload]'));
     });
 }
 
