@@ -53,7 +53,9 @@
               <% end %>
 
               <div class="card-actions mt-4">
-                <%= link_to 'Create Issue', class: 'btn btn-primary' %>
+                <%= link_to 'Create Issue', new_project_issue_path(card_id: @card.id, issue: {
+                    text: "#{@card.name} #{@card.description}"
+                    }), class: 'btn btn-primary' %>
                 </div>
               </div>
 
