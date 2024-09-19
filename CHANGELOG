@@ -25,6 +25,9 @@
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
+  [v4.14.0] ([September] [2024])
+  - Issues: Card data can be used to template a new Issue creation
+
 v4.13.0 (July 2024)
   - Attachments: Copy attachments when moving an evidence/note
   - Liquid: Make project-level collections available for Liquid syntax
