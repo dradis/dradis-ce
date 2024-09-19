@@ -28,7 +28,7 @@
                   <span class="text-truncate" title="<%= @card.name %>"><%= @card.name %></span>
                   <%= render partial: 'actions' %>
                 </h4>
-
+                
                 <div class="card-description">
                   <div class="content-textile" data-behavior="content-textile">
                     <%= markup(@card.description) %>
@@ -51,6 +51,11 @@
                   </div>
                 <% end %>
               <% end %>
+
+              <div class="card-actions mt-4">
+                <%= link_to 'Create Issue', class: 'btn btn-primary' %>
+                </div>
+              </div>
 
             </div>
           </div>
