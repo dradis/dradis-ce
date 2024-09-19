@@ -287,6 +287,20 @@ describe 'Card pages:' do
           }.to raise_error ActiveRecord::RecordNotFound
         end
       end
+
+      describe 'clicking Create Issue' do
+
+        it 'displays the Create Issue button' do
+          visit project_board_list_card_path(current_project, @board, @list, @card)
+          expect(page).to have_link('Create Issue')
+        end
+
+        it 'creates a new issue with the cards information' do
+        click_link 'Create Issue'
+        expect(page).to have_text(card.name)
+        expect(page).to have_text(card.description)
+        end
+      end
     end
   end
 end
