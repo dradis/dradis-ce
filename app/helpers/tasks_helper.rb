@@ -9,7 +9,8 @@ module TasksHelper
       if project_id
         cards.select { |card| card.project.id == current_project.id }
       else
-        cards
+        valid_project_ids = Project.kept.current.accessible_by(current_ability).ids
+        cards.select { |card| card.project.id.in? valid_project_ids }
       end
     end
   end
