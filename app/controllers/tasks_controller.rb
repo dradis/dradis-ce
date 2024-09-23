@@ -2,8 +2,8 @@ class TasksController < AuthenticatedController
   include ProjectScoped
   include TasksHelper
 
-  skip_before_action :set_project, if: -> { params[:project_id].blank? }
-  skip_before_action :set_nodes, if: -> { params[:project_id].blank? }
+  skip_before_action :set_project, unless: -> { current_project }
+  skip_before_action :set_nodes, unless: -> { current_project }
 
   def index
     @default_columns = ['Title', 'Methodology', 'Due Date', 'Assigned']
