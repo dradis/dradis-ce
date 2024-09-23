@@ -14,7 +14,7 @@ class TasksController < AuthenticatedController
     end
   end
 
-  protected
+  private
 
   # ProjectScoped always calls current_project. We are overwriting it here to
   # prevent errors in Pro when viewing tasks outside of projects.
