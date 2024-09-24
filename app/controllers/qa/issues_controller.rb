@@ -46,11 +46,8 @@ class QA::IssuesController < AuthenticatedController
             redirect_to project_issues_path(current_project), notice: 'State updated successfully.'
           end
         end
-
-        format.json { { status: 200 } }
       else
         format.html { render :show, alert: @issues.errors.full_messages.join('; ') }
-        format.json { { status: 404 } }
       end
     end
   end
