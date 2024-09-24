@@ -1,0 +1,7 @@
+.combobox {
+  @extend .form-select;
+}
+
+.combobox-options {
+  @extend .dropdown-menu;
+}
