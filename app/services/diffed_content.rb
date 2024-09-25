@@ -93,7 +93,7 @@ class DiffedContent
   end
 
   def normalize_content(record)
-    fields = record.fields.except('id', 'plugin', 'plugin_id')
+    fields = record.fields.except(*EXCLUDED_FIELDS)
 
     record.content =
       fields.map do |field, value|
