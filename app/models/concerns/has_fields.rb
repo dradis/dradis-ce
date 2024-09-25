@@ -56,7 +56,7 @@ module HasFields
         updated_fields[field] = value
         self.send(
           :"#{container_field}=",
-          updated_fields.to_a.map { |h| "#[#{h[0]}]#\n#{h[1]}" }.join("\n\n")
+          FieldParser.fields_hash_to_source(updated_fields)
         )
       end
 
@@ -71,5 +71,4 @@ module HasFields
       end
     end
   end
-
 end
