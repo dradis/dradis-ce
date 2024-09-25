@@ -59,6 +59,16 @@ module HasFields
           updated_fields.to_a.map { |h| "#[#{h[0]}]#\n#{h[1]}" }.join("\n\n")
         )
       end
+
+      # Completely removes the field (field header and value) from the content
+      define_method :delete_field do |field|
+        updated_fields = fields
+        updated_fields.except!(field)
+        self.send(
+          :"#{container_field}=",
+          FieldParser.fields_hash_to_source(updated_fields)
+        )
+      end
     end
   end
 

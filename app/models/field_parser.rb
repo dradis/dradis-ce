@@ -16,6 +16,19 @@ class FieldParser
     end.compact.join("\n\n")
   end
 
+  # Convert a hash of field name/value pairs to Dradis-style item content.
+  def self.fields_hash_to_source(fields)
+    fields.map do |field, value|
+      value = value.to_s
+
+      str = ''
+      str << "#[#{field}]#\n" unless field.empty?
+      str << "#{value}" unless value.empty?
+
+      str
+    end.compact.join("\n\n")
+  end
+
   # Parse the contents of the field and split it to return a Hash of field
   # name/value pairs. Field / values are defined using this syntax:
   #
