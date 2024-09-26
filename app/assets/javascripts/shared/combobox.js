@@ -9,8 +9,8 @@ class ComboBox {
     this.config = (this.$target.data('combobox-config') || '')
       .split(' ')
       .filter(Boolean);
-    this.debounceTimeout = 500;
-    this.allowFocusTimeout = 150;
+    this.debounceTimer = 250;
+    this.allowFocusDelay = 150;
 
     this.init();
   }
@@ -127,7 +127,7 @@ class ComboBox {
           this.$filter.val(null).trigger('textchange');
         }
       }
-    }, this.allowFocusTimeout);
+    }, this.allowFocusDelay);
   }
 
   selectOption($option) {
