@@ -127,7 +127,7 @@ class ComboBox {
           this.$filter.val(null).trigger('textchange');
         }
       }
-    }, this.allowFocusDelay);
+    }, this.allowFocusTimeout);
   }
 
   selectOption($option) {
