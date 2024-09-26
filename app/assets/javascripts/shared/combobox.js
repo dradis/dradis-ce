@@ -36,9 +36,10 @@ class ComboBox {
     if (this.config.includes('filter')) {
       const idSuffix = Math.random().toString(36);
       this.$comboboxMenu.append(
-        `<div class="d-flex">\
+        `<div class="d-flex flex-column px-2 pt-1">\
           <label class="visually-hidden" for="combobox-filter-${idSuffix}">Filter options</label>\
-          <input type="search" class="form-control mx-2 mb-2 mt-1" data-behavior="combobox-filter" id="combobox-filter-${idSuffix}" placeholder="Filter options...">\
+          <input type="search" class="form-control mb-2" data-behavior="combobox-filter" id="combobox-filter-${idSuffix}" placeholder="Filter options...">\
+          <span class="d-block text-secondary text-center d-none pe-none" data-behavior="no-results">No results.</span>
         </div>`
       );
       this.$filter = this.$comboboxMenu.find(
@@ -107,12 +108,23 @@ class ComboBox {
 
     this.debounceTimeout = setTimeout(() => {
       const filterText = this.$filter.val().toLowerCase();
-      this.$comboboxOptions.each(function () {
-        const $option = $(this);
-        const optionText = $option.text().toLowerCase();
+      let matchedOptions = 0;
 
-        $option.toggleClass('d-none', !optionText.includes(filterText));
+      this.$comboboxOptions.each(function () {
+        const $option = $(this),
+          optionText = $option.text().toLowerCase(),
+          isMatch = optionText.includes(filterText);
+
+        $option.toggleClass('d-none', !isMatch);
+
+        if (isMatch) {
+          matchedOptions++;
+        }
       });
+
+      this.$filter
+        .next('[data-behavior~=no-results]')
+        .toggleClass('d-none', matchedOptions > 0);
     }, this.debounceTimer);
   }
 
