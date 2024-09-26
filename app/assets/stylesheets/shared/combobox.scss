@@ -1,7 +1,21 @@
 .combobox {
-  @extend .form-select;
+  @extend .form-control, .form-select;
 }
 
-.combobox-options {
+.combobox-menu {
   @extend .dropdown-menu;
+
+  width: 100%;
+}
+
+.combobox-option {
+  cursor: pointer;
+  padding: 0.25rem 1rem;
+
+  &.selected,
+  &:hover,
+  &:focus-visible {
+    background-color: $primaryColor;
+    color: $white;
+  }
 }

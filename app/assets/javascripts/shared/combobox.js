@@ -14,19 +14,18 @@ class ComboBox {
     const that = this;
 
     this.$target.addClass('d-none');
+
     this.$target.parent().append(
       '<div class="combobox" tabindex="0" data-behavior="combobox"></div>\
-      <div class="combobox-options" data-behavior="combobox-options"></div>'
+      <div class="combobox-menu" data-behavior="combobox-menu"></div>'
     );
 
     this.$combobox = this.$target.parent().find('[data-behavior~=combobox]');
 
-    this.$comboboxOptions = this.$combobox.next(
-      '[data-behavior~=combobox-options]'
-    );
+    this.$comboboxMenu = this.$combobox.next('[data-behavior~=combobox-menu]');
 
     this.$target.find('option').each(function () {
-      that.$comboboxOptions.append(
+      that.$comboboxMenu.append(
         `<div \
           class="combobox-option" \
           data-behavior="combobox-option" \
@@ -36,12 +35,15 @@ class ComboBox {
       );
     });
 
-    if (this.$target.find('option[selected]').length) {
-      this.$combobox.text(this.$target.find('option[selected]').text());
-    } else {
-      this.$combobox.text(this.$comboboxOptions.children().first().text());
-    }
+    this.$comboboxOptions = this.$comboboxMenu.find(
+      '[data-behavior~=combobox-option]'
+    );
 
+    const $initialOption = this.$comboboxOptions.filter(
+      `[data-value="${this.$target.val()}"]`
+    );
+
+    this.selectOption($initialOption);
     this.behaviors();
   }
 
@@ -49,11 +51,29 @@ class ComboBox {
     const that = this;
 
     this.$combobox.on('focus', function () {
-      that.$comboboxOptions.css('display', 'block');
+      that.$comboboxMenu.css('display', 'block');
     });
 
     this.$combobox.on('blur', function () {
-      that.$comboboxOptions.css('display', 'none');
+      // Delay the hiding to allow click event to fire on options
+      setTimeout(() => {
+        that.$comboboxMenu.css('display', 'none');
+      }, 150);
     });
+
+    this.$comboboxOptions.each(function () {
+      const $option = $(this);
+      $(this).on('click', function (event) {
+        event.stopPropagation();
+        that.selectOption($option);
+      });
+    });
+  }
+
+  selectOption($option) {
+    this.$combobox.text($option.text());
+    this.$target.val($option.data('value'));
+    this.$comboboxOptions.removeClass('selected');
+    $option.addClass('selected');
   }
 }

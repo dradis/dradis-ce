@@ -110,7 +110,7 @@ SimpleForm.setup do |config|
   end
 
   # vertical select input
-  config.wrappers :vertical_select, class: 'mb-3' do |b|
+  config.wrappers :vertical_select, class: 'mb-3 position-relative' do |b|
     b.use :html5
     b.optional :readonly
     b.use :label, class: 'form-label'
@@ -124,7 +124,7 @@ SimpleForm.setup do |config|
     b.use :html5
     b.optional :readonly
     b.use :label, class: 'form-label'
-    b.wrapper class: 'd-flex flex-row justify-content-between align-items-center' do |ba|
+    b.wrapper class: 'd-flex flex-row justify-content-between align-items-center position-relative' do |ba|
       ba.use :input, class: 'form-select mx-1', error_class: 'is-invalid', valid_class: ''
     end
     b.use :full_error, wrap_with: { class: 'invalid-feedback d-block' }
@@ -220,7 +220,7 @@ SimpleForm.setup do |config|
     b.use :html5
     b.optional :readonly
     b.use :label, class: 'col-sm-3 col-form-label'
-    b.wrapper :grid_wrapper, class: 'col-sm-9' do |ba|
+    b.wrapper :grid_wrapper, class: 'col-sm-9 position-relative' do |ba|
       ba.use :input, class: 'form-select', error_class: 'is-invalid', valid_class: ''
       ba.use :full_error, wrap_with: { class: 'invalid-feedback' }
       ba.use :hint, wrap_with: { class: 'form-text' }
@@ -232,7 +232,7 @@ SimpleForm.setup do |config|
     b.use :html5
     b.optional :readonly
     b.use :label, class: 'col-sm-3 col-form-label'
-    b.wrapper :grid_wrapper, class: 'col-sm-9' do |ba|
+    b.wrapper :grid_wrapper, class: 'col-sm-9 position-relative' do |ba|
       ba.wrapper class: 'd-flex flex-row justify-content-between align-items-center' do |bb|
         bb.use :input, class: 'form-select mx-1', error_class: 'is-invalid', valid_class: ''
       end
@@ -337,7 +337,7 @@ SimpleForm.setup do |config|
   end
 
   # custom multi select
-  config.wrappers :floating_labels_select, class: 'form-floating mb-3' do |b|
+  config.wrappers :floating_labels_select, class: 'form-floating mb-3 position-relative' do |b|
     b.use :html5
     b.optional :readonly
     b.use :input, class: 'form-select', error_class: 'is-invalid', valid_class: ''
