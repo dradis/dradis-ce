@@ -6,6 +6,9 @@ class ComboBox {
     }
 
     this.$target = $target;
+    this.config = (this.$target.data('combobox-config') || '')
+      .split(' ')
+      .filter(Boolean);
 
     this.init();
   }
@@ -27,6 +30,16 @@ class ComboBox {
     this.$combobox = this.$comboboxContainer.find('[data-behavior~=combobox]');
 
     this.$comboboxMenu = this.$combobox.next('[data-behavior~=combobox-menu]');
+
+    if (this.config.includes('filter')) {
+      const idSuffix = Math.random().toString(36);
+      this.$comboboxMenu.append(
+        `<div class="d-flex">\
+          <label class="visually-hidden" for="combobox-filter-${idSuffix}">Filter options</label>\
+          <input type="search" class="form-control mx-2 mb-1" data-behavior="combobox-filter" id="combobox-filter-${idSuffix}" placeholder="Filter options...">\
+        </div>`
+      );
+    }
 
     this.$target.find('option').each(function () {
       that.$comboboxMenu.append(
@@ -62,11 +75,8 @@ class ComboBox {
       that.$comboboxMenu.css('display', 'block');
     });
 
-    this.$combobox.on('blur', function () {
-      // Delay the hiding to allow click event to fire on options
-      setTimeout(() => {
-        that.$comboboxMenu.css('display', 'none');
-      }, 150);
+    this.$comboboxContainer.on('focusout', function () {
+      that.hideMenu(this);
     });
 
     this.$comboboxOptions.each(function () {
@@ -76,6 +86,16 @@ class ComboBox {
         that.selectOption($option);
       });
     });
+  }
+
+  hideMenu(element) {
+    // Delay the hiding the menu to allow click events to fire on menu children
+    setTimeout(() => {
+      // Only hide the menu if the combobox nor it's children have focus
+      if (!$(element).is(':focus') && !$(element).find(':focus').length) {
+        this.$comboboxMenu.css('display', 'none');
+      }
+    }, 150);
   }
 
   selectOption($option) {
