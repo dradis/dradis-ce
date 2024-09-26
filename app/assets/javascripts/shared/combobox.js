@@ -13,16 +13,18 @@ class ComboBox {
   init() {
     const that = this;
 
-    this.$target.addClass('d-none');
+    this.$target
+      .addClass('d-none')
+      .wrap('<div class="position-relative"></div>');
 
-    this.$target.wrap('<div class="position-relative"></div>');
+    this.$comboboxContainer = this.$target.parent();
 
-    this.$target.parent().append(
+    this.$comboboxContainer.append(
       '<div class="combobox" tabindex="0" data-behavior="combobox"></div>\
       <div class="combobox-menu" data-behavior="combobox-menu"></div>'
     );
 
-    this.$combobox = this.$target.parent().find('[data-behavior~=combobox]');
+    this.$combobox = this.$comboboxContainer.find('[data-behavior~=combobox]');
 
     this.$comboboxMenu = this.$combobox.next('[data-behavior~=combobox-menu]');
 
@@ -41,9 +43,13 @@ class ComboBox {
       '[data-behavior~=combobox-option]'
     );
 
-    const $initialOption = this.$comboboxOptions.filter(
+    let $initialOption = this.$comboboxOptions.filter(
       `[data-value="${this.$target.val()}"]`
     );
+
+    $initialOption = $initialOption.length
+      ? $initialOption
+      : this.$comboboxOptions.first();
 
     this.selectOption($initialOption);
     this.behaviors();
