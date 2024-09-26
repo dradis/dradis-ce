@@ -9,6 +9,7 @@ class ComboBox {
     this.config = (this.$target.data('combobox-config') || '')
       .split(' ')
       .filter(Boolean);
+    this.debounceTimeout = 500;
 
     this.init();
   }
@@ -38,6 +39,9 @@ class ComboBox {
           <label class="visually-hidden" for="combobox-filter-${idSuffix}">Filter options</label>\
           <input type="search" class="form-control mx-2 mb-1" data-behavior="combobox-filter" id="combobox-filter-${idSuffix}" placeholder="Filter options...">\
         </div>`
+      );
+      this.$filter = this.$comboboxMenu.find(
+        '[data-behavior~=combobox-filter]'
       );
     }
 
@@ -86,6 +90,26 @@ class ComboBox {
         that.selectOption($option);
       });
     });
+
+    if (this.$filter) {
+      this.$filter.on('textchange', function () {
+        that.handleFiltering();
+      });
+    }
+  }
+
+  handleFiltering() {
+    clearTimeout(this.debounceTimeout);
+
+    this.debounceTimeout = setTimeout(() => {
+      const filterText = this.$filter.val().toLowerCase();
+      this.$comboboxOptions.each(function () {
+        const $option = $(this);
+        const optionText = $option.text().toLowerCase();
+
+        $option.toggleClass('d-none', optionText.includes(filterText));
+      });
+    }, this.debounceTimer);
   }
 
   hideMenu(element) {
