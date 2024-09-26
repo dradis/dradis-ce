@@ -48,12 +48,12 @@ class ComboBox {
 
     this.$target.find('option').each(function () {
       that.$comboboxMenu.append(
-        `<div \
+        `<span \
           class="combobox-option" \
           data-behavior="combobox-option" \
           data-value="${$(this).attr('value')}">\
             ${$(this).text()}\
-        </div>`
+        </span>`
       );
     });
 

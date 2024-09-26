@@ -10,6 +10,7 @@
 
 .combobox-option {
   cursor: pointer;
+  display: block;
   padding: 0.25rem 1rem;
 
   &.selected,
