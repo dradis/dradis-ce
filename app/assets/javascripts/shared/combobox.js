@@ -10,6 +10,7 @@ class ComboBox {
       .split(' ')
       .filter(Boolean);
     this.debounceTimeout = 500;
+    this.allowFocusTimeout = 150;
 
     this.init();
   }
@@ -121,8 +122,12 @@ class ComboBox {
       // Only hide the menu if the combobox nor it's children have focus
       if (!$(element).is(':focus') && !$(element).find(':focus').length) {
         this.$comboboxMenu.css('display', 'none');
+
+        if (this.$filter) {
+          this.$filter.val(null).trigger('textchange');
+        }
       }
-    }, 150);
+    }, this.allowFocusDelay);
   }
 
   selectOption($option) {
