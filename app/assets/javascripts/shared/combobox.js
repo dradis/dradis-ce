@@ -15,6 +15,8 @@ class ComboBox {
 
     this.$target.addClass('d-none');
 
+    this.$target.wrap('<div class="position-relative"></div>');
+
     this.$target.parent().append(
       '<div class="combobox" tabindex="0" data-behavior="combobox"></div>\
       <div class="combobox-menu" data-behavior="combobox-menu"></div>'
