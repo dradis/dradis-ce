@@ -110,7 +110,7 @@ class ComboBox {
         const $option = $(this);
         const optionText = $option.text().toLowerCase();
 
-        $option.toggleClass('d-none', optionText.includes(filterText));
+        $option.toggleClass('d-none', !optionText.includes(filterText));
       });
     }, this.debounceTimer);
   }
