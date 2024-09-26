@@ -37,7 +37,7 @@ class ComboBox {
       this.$comboboxMenu.append(
         `<div class="d-flex">\
           <label class="visually-hidden" for="combobox-filter-${idSuffix}">Filter options</label>\
-          <input type="search" class="form-control mx-2 mb-1" data-behavior="combobox-filter" id="combobox-filter-${idSuffix}" placeholder="Filter options...">\
+          <input type="search" class="form-control mx-2 mb-2 mt-1" data-behavior="combobox-filter" id="combobox-filter-${idSuffix}" placeholder="Filter options...">\
         </div>`
       );
       this.$filter = this.$comboboxMenu.find(
@@ -77,6 +77,9 @@ class ComboBox {
 
     this.$combobox.on('focus', function () {
       that.$comboboxMenu.css('display', 'block');
+      if (that.$filter) {
+        that.$filter.focus();
+      }
     });
 
     this.$comboboxContainer.on('focusout', function () {
