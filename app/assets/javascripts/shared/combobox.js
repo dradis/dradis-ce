@@ -47,15 +47,35 @@ class ComboBox {
       );
     }
 
-    this.$target.find('option').each(function () {
-      that.$comboboxMenu.append(
-        `<span \
-          class="combobox-option" \
-          data-behavior="combobox-option" \
-          data-value="${$(this).attr('value')}">\
-            ${$(this).text()}\
-        </span>`
-      );
+    this.$target.children().each(function () {
+      switch (this.tagName.toLowerCase()) {
+        case 'option':
+          that.appendOption(that.$comboboxMenu, $(this));
+          break;
+
+        case 'optgroup':
+          that.$comboboxMenu.append(
+            `<div class="combobox-optgroup" data-behavior="combobox-optgroup">\
+              <span class="d-block px-2 py-1">${$(this).attr('label')}<span>\
+            </div>`
+          );
+
+          $(this)
+            .children('option')
+            .each(function () {
+              that.appendOption(
+                that.$comboboxMenu
+                  .find('[data-behavior~=combobox-optgroup]')
+                  .last(),
+                $(this)
+              );
+            });
+          break;
+
+        default:
+          console.warn('Unexpected element: ', this.tagName);
+          break;
+      }
     });
 
     this.$comboboxOptions = this.$comboboxMenu.find(
@@ -103,6 +123,17 @@ class ComboBox {
     }
   }
 
+  appendOption($parent, $option) {
+    $parent.append(
+      `<span \
+        class="combobox-option" \
+        data-behavior="combobox-option" \
+        data-value="${$option.attr('value')}">\
+          ${$option.text()}\
+      </span>`
+    );
+  }
+
   handleFiltering() {
     clearTimeout(this.debounceTimeout);
 
@@ -113,7 +144,8 @@ class ComboBox {
       this.$comboboxOptions.each(function () {
         const $option = $(this),
           optionText = $option.text().toLowerCase(),
-          isMatch = optionText.includes(filterText);
+          isOption = $(this).is('[data-behavior~=combobox-option]'),
+          isMatch = isOption && optionText.includes(filterText);
 
         $option.toggleClass('d-none', !isMatch);
 
@@ -121,6 +153,8 @@ class ComboBox {
           matchedOptions++;
         }
       });
+
+      this.$comboboxMenu.find('[data-behavior~=combobox-optgroup]');
 
       this.$filter
         .next('[data-behavior~=no-results]')

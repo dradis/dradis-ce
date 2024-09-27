@@ -1,3 +1,19 @@
+@mixin combobox-option {
+  color: var(--bs-dropdown-color);
+  cursor: pointer;
+  display: block;
+  font-size: 0.9rem;
+  padding: 0.25rem 1rem;
+  pointer-events: auto;
+
+  &.selected,
+  &:hover,
+  &:focus-visible {
+    background-color: $primaryColor;
+    color: $white;
+  }
+}
+
 .combobox {
   @extend .form-control, .form-select;
 }
@@ -7,16 +23,21 @@
 
   width: 100%;
 }
+.combobox-optgroup {
+  color: $mutedText;
+  display: block;
+  font-size: 0.8rem;
+  pointer-events: none;
+
+  .combobox-option {
+    @include combobox-option;
+  }
+
+  &:not(:has(.combobox-option:not(.d-none))) {
+    display: none;
+  }
+}
 
 .combobox-option {
-  cursor: pointer;
-  display: block;
-  padding: 0.25rem 1rem;
-
-  &.selected,
-  &:hover,
-  &:focus-visible {
-    background-color: $primaryColor;
-    color: $white;
-  }
+  @include combobox-option;
 }
