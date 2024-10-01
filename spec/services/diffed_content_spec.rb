@@ -13,6 +13,16 @@ describe DiffedContent do
         target: "#[Title]#\n<mark>Issue2</mark>\n"
       })
     end
+
+    it 'ignores attachments from the diff' do
+      issue1.update text: "#[Title]#\nIssue1\n!attachment1!"
+      issue2.update text: "#[Title]#\nIssue2\n!attachment2!"
+
+      expect(subject.content_diff).to eq({
+        source: "#[Title]#\n<mark>Issue1</mark>\n\n",
+        target: "#[Title]#\n<mark>Issue2</mark>\n\n"
+      })
+    end
   end
 
   describe '#changed?' do

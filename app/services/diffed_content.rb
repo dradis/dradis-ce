@@ -85,7 +85,11 @@ class DiffedContent
 
   def diff_by_word(source_content, target_content)
     Differ.format = :html
-    differ_result = Differ.diff_by_word(source_content, target_content)
+    differ_result =
+      Differ.diff_by_word(
+        source_content.gsub(/!.+?!/, ''),
+        target_content.gsub(/!.+?!/, '')
+      )
 
     output = highlighted_string(differ_result)
 
