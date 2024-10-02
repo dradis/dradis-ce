@@ -6,7 +6,7 @@ class TasksController < AuthenticatedController
   skip_before_action :set_nodes, unless: -> { current_project }
 
   def index
-    @default_columns = ['Title', 'Methodology', 'Due Date', 'Assigned']
+    @default_columns = ['Title', 'Methodology', 'List', 'Due Date', 'Assigned']
 
     if current_project
       @local_storage_key = "project.ce.project_#{current_project.id}.tasks_datatable"
