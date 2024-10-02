@@ -13,6 +13,7 @@
             <th>Project</th>
           <% end %>
           <th>Methodology</th>
+          <th>List</th>
           <th>Due Date</th>
           <th>Assigned</th>
         </tr>
@@ -27,6 +28,7 @@
               <td data-sort="<%= task.project.name %>"><%= task.project.name %></td>
             <% end %>
             <td data-sort="<%= task.board.name %>"><%= task.board.name %></td>
+            <td data-sort="<%= task.list.name %>"><%= task.list.name %></td>
             <td data-sort="<%= task.due_date || 'no-due-date' %>"><%= due_date_badge(task) %></td>
             <td>
               <ul class="d-flex flex-wrap m-0 p-0">
