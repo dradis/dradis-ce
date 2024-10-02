@@ -27,8 +27,8 @@ class DiffedContent
           @target.fields.except(*EXCLUDED_FIELDS).keys
 
         fields.filter_map do |field|
-          source_value = source.fields[field] || ''
-          target_value = target.fields[field] || ''
+          source_value = content_with_ignored_screenshots(source.fields[field] || '')
+          target_value = content_with_ignored_screenshots(target.fields[field] || '')
 
           if source_value != target_value
             [field, diff_by_word(source_value, target_value)]
@@ -39,7 +39,8 @@ class DiffedContent
 
   def changed?
     source.updated_at != target.updated_at &&
-      source.content != target.content
+      content_with_ignored_screenshots(source.content) !=
+      content_with_ignored_screenshots(target.content)
   end
 
   def content_for_update(field_params = nil)
@@ -54,6 +55,10 @@ class DiffedContent
   end
 
   private
+
+  def content_with_ignored_screenshots(content)
+    content.gsub(/(\n|\A)!\S+!(\n|\z)/, '')
+  end
 
   # Given a target record, update its field depending on the following cases:
   # 1) If the source record has the existing field:
@@ -87,8 +92,8 @@ class DiffedContent
     Differ.format = :html
     differ_result =
       Differ.diff_by_word(
-        source_content.gsub(/!.+?!/, ''),
-        target_content.gsub(/!.+?!/, '')
+        content_with_ignored_screenshots(source_content),
+        content_with_ignored_screenshots(target_content)
       )
 
     output = highlighted_string(differ_result)

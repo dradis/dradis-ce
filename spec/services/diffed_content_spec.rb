@@ -15,12 +15,12 @@ describe DiffedContent do
     end
 
     it 'ignores attachments from the diff' do
-      issue1.update text: "#[Title]#\nIssue1\n!attachment1!"
-      issue2.update text: "#[Title]#\nIssue2\n!attachment2!"
+      issue1.update text: "#[Title]#\nIssue1\n!attachment1!\n\n!attachment2!"
+      issue2.update text: "#[Title]#\nIssue2\n!attachment3!\n\n!attachment4!"
 
       expect(subject.content_diff).to eq({
-        source: "#[Title]#\n<mark>Issue1</mark>\n\n",
-        target: "#[Title]#\n<mark>Issue2</mark>\n\n"
+        source: "#[Title]#\n<mark>Issue1</mark>",
+        target: "#[Title]#\n<mark>Issue2</mark>"
       })
     end
   end
