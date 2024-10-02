@@ -121,6 +121,11 @@ class ComboBox {
         that.handleFiltering();
       });
     }
+
+    this.$target.on('change', function () {
+      let $el = that.$comboboxOptions.filter(`[data-value="${$(this).val()}"]`);
+      that.selectOption($el);
+    });
   }
 
   appendOption($parent, $option) {
