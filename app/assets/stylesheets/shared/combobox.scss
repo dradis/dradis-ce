@@ -16,6 +16,16 @@
 
 .combobox {
   @extend .form-control, .form-select;
+
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  min-height: 2.25rem;
+
+  &.multiple {
+    --spacing: 0.25rem;
+    padding: var(--spacing) 2.25rem var(--spacing) var(--spacing);
+  }
 }
 
 .combobox-menu {
@@ -23,6 +33,28 @@
 
   width: 100%;
 }
+.combobox-multi-option {
+  align-items: center;
+  border: 1px solid $primaryColor;
+  border-radius: $border-radius;
+  display: flex;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  width: max-content;
+  padding: 0.15rem 0.5rem;
+  pointer-events: none;
+
+  .unselect-multi-option {
+    cursor: pointer;
+    pointer-events: auto;
+    transition: color 0.2s ease-in-out;
+
+    &:hover {
+      color: $primaryColor;
+    }
+  }
+}
+
 .combobox-optgroup {
   color: $mutedText;
   display: block;
