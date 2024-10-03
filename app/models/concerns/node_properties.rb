@@ -12,7 +12,7 @@ module NodeProperties
       # Node properties:
       # * Serialized as JSON
       # * The smart setter set_property(key, value) takes care of duplications, etc.
-      serialize :properties, JSONWithIndifferentAccess
+      serialize :properties, type: JSONWithIndifferentAccess
 
       validates :raw_properties, json: { message: 'contains invalid JSON' }
     end

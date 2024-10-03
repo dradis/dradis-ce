@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.1.4'
+gem 'rails', '~> 7.2.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -181,8 +181,8 @@ end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-
-  gem 'rspec-rails', '~> 4.0.2'
+  # rspec-rails < 6.1.0 does not support rails 7.2
+  gem 'rspec-rails', '~> 6.1.0'
 end
 
 group :test do
