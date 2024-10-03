@@ -20,6 +20,15 @@ module HasFields
     fields["Title"].present?
   end
 
+  private
+
+  def update_container(container_field, updated_fields)
+    self.send(
+      :"#{container_field}=",
+      FieldParser.fields_hash_to_source(updated_fields)
+    )
+  end
+
   module ClassMethods
     # Method for models to define which attribute is to be converted to fields.
     #
@@ -52,22 +61,16 @@ module HasFields
       define_method :set_field do |field, value|
         # Don't use 'fields' as a local variable name or it conflicts with the
         # #fields getter method
-        updated_fields        = fields
+        updated_fields = fields
         updated_fields[field] = value
-        self.send(
-          :"#{container_field}=",
-          FieldParser.fields_hash_to_source(updated_fields)
-        )
+        self.update_container(container_field, updated_fields)
       end
 
       # Completely removes the field (field header and value) from the content
       define_method :delete_field do |field|
         updated_fields = fields
         updated_fields.except!(field)
-        self.send(
-          :"#{container_field}=",
-          FieldParser.fields_hash_to_source(updated_fields)
-        )
+        self.update_container(container_field, updated_fields)
       end
     end
   end
