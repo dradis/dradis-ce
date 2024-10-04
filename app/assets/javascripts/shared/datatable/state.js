@@ -1,6 +1,5 @@
 $(document).on(
   'preInit.dt',
-  'body.issues.index',
   function (e, settings) {
     var $paths = $('[data-behavior~=datatable-paths]');
     if ($paths.data('table-state-url') == undefined) {
@@ -25,7 +24,6 @@ $(document).on(
 
 $(document).on(
   'init.dt',
-  'body.issues.index',
   function (e, settings) {
     var $paths = $('[data-behavior~=datatable-paths]');
     if ($paths.data('table-state-url') == undefined) {
@@ -47,10 +45,6 @@ DradisDatatable.prototype.setupStateButtons = function () {
   var states = $('[data-behavior~=dradis-datatable]').data('state-icons'),
     stateButtons = [],
     api = this;
-
-  if ($('[data-behavior~=qa-viewer]').length) {
-    states.splice(1, 1);
-  }
 
   states.forEach(function (state) {
     stateButtons.push({
