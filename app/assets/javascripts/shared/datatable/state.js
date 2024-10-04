@@ -74,7 +74,7 @@ DradisDatatable.prototype.updateRecordState = function (newState) {
       data: {
         ids: DradisDatatable.prototype.rowIds(selectedRows),
         state: newState,
-        return_to: $('[data-behavior~=qa-viewer]').length > 0 ? 'qa' : null,
+        return_to: $paths.data('table-return-to'),
       },
       success: function () {
         DradisDatatable.prototype.toggleStateBtn.call(api, false);
