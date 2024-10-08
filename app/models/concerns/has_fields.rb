@@ -11,13 +11,13 @@ module HasFields
   # Extract a Title file if one exists.
   def title
     fields.fetch(
-      "Title",
-      "(No #[Title]# field)"
+      'Title',
+      '(No #[Title]# field)'
     )
   end
 
   def title?
-    fields["Title"].present?
+    fields['Title'].present?
   end
 
   private

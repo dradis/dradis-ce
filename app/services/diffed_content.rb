@@ -97,7 +97,7 @@ class DiffedContent
 
     record.content =
       fields.map do |field, value|
-        "#[#{field}]#\n#{value.gsub("\r",'')}\n"
+        "#[#{field}]#\n#{value.gsub("\r", '')}\n"
       end.join("\n")
   end
 

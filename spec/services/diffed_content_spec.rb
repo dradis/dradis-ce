@@ -47,8 +47,8 @@ describe DiffedContent do
       context 'the field is present in both the source and target' do
         it 'returns the updated content' do
           expect(subject.content_for_update('Title')).to eq({
-            :source => "#[Title]#\n#{issue2.reload.title}",
-            :target => "#[Title]#\n#{issue1.reload.title}"
+            source: "#[Title]#\n#{issue2.reload.title}",
+            target: "#[Title]#\n#{issue1.reload.title}"
           })
         end
       end
@@ -60,8 +60,8 @@ describe DiffedContent do
 
         it 'returns the updated content' do
           expect(subject.content_for_update('Description')).to eq({
-            :source => "#[Title]#\n#{issue1.reload.title}\n\n#[Description]#\nTest Description",
-            :target => "#[Title]#\n#{issue2.reload.title}"
+            source: "#[Title]#\n#{issue1.reload.title}\n\n#[Description]#\nTest Description",
+            target: "#[Title]#\n#{issue2.reload.title}"
           })
         end
       end
@@ -74,8 +74,8 @@ describe DiffedContent do
 
         it 'returns the updated content' do
           expect(subject.content_for_update('Description')).to eq({
-            :source => "#[Title]#\n#{issue1.reload.title}\n\n#[Description]#\nTest Description",
-            :target => "#[Title]#\n#{issue2.reload.title}\n\n#[Description]#\n"
+            source: "#[Title]#\n#{issue1.reload.title}\n\n#[Description]#\nTest Description",
+            target: "#[Title]#\n#{issue2.reload.title}\n\n#[Description]#\n"
           })
         end
       end
@@ -87,8 +87,8 @@ describe DiffedContent do
 
         it 'returns the updated content' do
           expect(subject.content_for_update('Mitigation')).to eq({
-            :source => "#[Title]#\n#{issue1.reload.title}\n\n#[Mitigation]#\nTest Mitigation",
-            :target => "#[Title]#\n#{issue2.reload.title}\n\n#[Description]#\nTest Description"
+            source: "#[Title]#\n#{issue1.reload.title}\n\n#[Mitigation]#\nTest Mitigation",
+            target: "#[Title]#\n#{issue2.reload.title}\n\n#[Description]#\nTest Description"
           })
         end
       end
@@ -97,8 +97,8 @@ describe DiffedContent do
     context 'field_params is not present' do
       it 'returns the issue and entry content' do
         expect(subject.content_for_update(nil)).to eq({
-          :source => "#[Title]#\n#{issue2.reload.title}\n",
-          :target => "#[Title]#\n#{issue1.reload.title}\n"
+          source: "#[Title]#\n#{issue2.reload.title}\n",
+          target: "#[Title]#\n#{issue1.reload.title}\n"
         })
       end
     end
