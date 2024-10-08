@@ -1,8 +1,6 @@
 class ExportController < AuthenticatedController
   include ProjectScoped
 
-  NON_DRAFT_STATES = ['published', 'ready_for_review'].freeze
-
   def index
     @default_button_state = non_draft_records? ? 'published' : 'all'
   end
@@ -10,8 +8,8 @@ class ExportController < AuthenticatedController
   private
 
   def non_draft_records?
-    issue_states = current_project.issues.pluck(:state).uniq
-    (issue_states & NON_DRAFT_STATES).any? || non_draft_records_pro
+    issues = current_project.issues
+    issues.published.or(issues.ready_for_review).any? || non_draft_records_pro
   end
 
   def non_draft_records_pro
