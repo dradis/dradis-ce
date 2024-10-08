@@ -95,7 +95,9 @@
       });
 
     // Initialize clipboard.js
-    const clipboard = new Clipboard('[data-clipboard-text]');
+    const clipboard = new Clipboard(
+      parentElement.querySelectorAll('[data-clipboard-text]')
+    );
 
     clipboard.on('success', function (e) {
       const $copyBtn = $(e.trigger);
