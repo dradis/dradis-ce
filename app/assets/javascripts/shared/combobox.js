@@ -151,7 +151,7 @@ class ComboBox {
   appendOption($parent, $option) {
     $parent.append(
       `<span\
-        class="combobox-option"\
+        class="combobox-option ${$option.attr('disabled') ? 'disabled' : ''}"\
         data-behavior="combobox-option"\
         data-value="${$option.attr('value')}">\
           ${$option.text()}\

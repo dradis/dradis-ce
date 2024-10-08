@@ -6,11 +6,18 @@
   padding: 0.25rem 1rem;
   pointer-events: auto;
 
-  &.selected,
-  &:hover,
-  &:focus-visible {
-    background-color: $primaryColor;
-    color: $white;
+  &:not(.disabled) {
+    &.selected,
+    &:hover,
+    &:focus-visible {
+      background-color: $primaryColor;
+      color: $white;
+    }
+  }
+
+  &.disabled {
+    pointer-events: none;
+    background-color: $dropdownLinkBackgroundHover;
   }
 }
 
