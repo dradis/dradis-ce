@@ -41,17 +41,8 @@
                   <tr>
                     <td class="name">
                       <%= link_to main_app.project_node_attachment_path(node.project, node, attachment.filename), download: attachment.filename, title: attachment.filename, class: 'filename' do %>
-                        <i class="fa-solid fa-paperclip"></i> <%= short_filename(attachment.filename) %>
+                        <i class="fa-solid fa-download me-1"></i><%= short_filename(attachment.filename) %>
                       <% end %>
-                    </td>
-                    <td rowspan="2" align="right" class="delete">
-                      <button
-                        class="btn btn-trash btn-transparent"
-                        data-type="DELETE"
-                        data-url="<%= main_app.project_node_attachment_path(node.project, node, attachment.filename) %>"
-                      >
-                        <i class="fa-solid fa-trash"></i>
-                      </button>
                     </td>
                     <td rowspan="2" align="right" class="copy-link">
                       <button
@@ -59,6 +50,15 @@
                         data-clipboard-text="!<%= main_app.project_node_attachment_path(node.project, node, '') + attachment.url_encoded_filename %>!"
                       >
                         <i class="fa-solid fa-link"></i>
+                      </button>
+                    </td>
+                    <td rowspan="2" align="right" class="delete">
+                      <button
+                        class="btn btn-trash btn-transparent"
+                        data-type="DELETE"
+                        data-url="<%= main_app.project_node_attachment_path(node.project, node, attachment.filename) %>"
+                      >
+                        <i class="fa-solid fa-xmark"></i>
                       </button>
                     </td>
                   </tr>
@@ -135,26 +135,26 @@
               {% } else { %}
                 <td class="name">
                   <a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}" class="filename">
-                    <i class="fa-solid fa-paperclip"></i>
+                    <i class="fa-solid fa-download"></i>
                     {%= file.name %}
                   </a>
                 </td>
 
-                <td rowspan="2" align="right" class="delete">
-                  <button
-                    class="btn btn-trash btn-transparent"
-                    data-type="{%=file.delete_type%}"
-                    data-url="{%=file.delete_url%}"
-                  >
-                    <i class="fa-solid fa-trash"></i>
-                  </button>
-                </td>
                 <td rowspan="2" align="right" class="copy-link">
                   <button
                     class="btn btn-copy btn-transparent"
                     data-clipboard-text="!{%= file.url %}!"
                   >
                     <i class="fa-solid fa-link"></i>
+                  </button>
+                </td>
+                <td rowspan="2" align="right" class="delete">
+                  <button
+                    class="btn btn-trash btn-transparent"
+                    data-type="{%=file.delete_type%}"
+                    data-url="{%=file.delete_url%}"
+                  >
+                    <i class="fa-solid fa-xmark"></i>
                   </button>
                 </td>
               {% } %}
