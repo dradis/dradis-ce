@@ -49,6 +49,23 @@
   }
 }
 
+.btn-link {
+  background-color: transparent;
+  border: none;
+  color: $linkColor;
+  padding: 0;
+  text-decoration: none;
+
+  &:active,
+  &:focus,
+  &:hover,
+  &:not(:disabled):not(.disabled):active {
+    background-color: transparent;
+    box-shadow: none !important;
+    color: $linkColorHover;
+  }
+}
+
 .btn-placeholder {
   align-items: center;
   background-color: $primaryColor;
