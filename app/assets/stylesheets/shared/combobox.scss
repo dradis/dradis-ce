@@ -16,8 +16,8 @@
   }
 
   &.disabled {
-    pointer-events: none;
     background-color: $dropdownLinkBackgroundHover;
+    pointer-events: none;
   }
 }
 
@@ -25,8 +25,8 @@
   @extend .form-control, .form-select;
 
   display: flex;
-  gap: 0.5rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
   min-height: 2.25rem;
 
   &.multiple {
@@ -37,19 +37,19 @@
 
 .combobox-menu {
   @extend .dropdown-menu;
-
   width: 100%;
 }
+
 .combobox-multi-option {
   align-items: center;
   border: 1px solid $primaryColor;
   border-radius: $border-radius;
   display: flex;
-  gap: 0.35rem;
   font-size: 0.8rem;
-  width: max-content;
+  gap: 0.35rem;
   padding: 0.15rem 0.5rem;
   pointer-events: none;
+  width: max-content;
 
   .unselect-multi-option {
     cursor: pointer;
