@@ -37,11 +37,13 @@ module Dradis
       env.export_concurrent = false
     end
     config.action_view.form_with_generates_remote_forms = true
-    config.active_record.yaml_column_permitted_classes = [
-      'ActiveModel::Errors',
-      'Symbol',
-      'UserPreferences'
-    ]
+    config.after_initialize do
+      config.active_record.yaml_column_permitted_classes = [
+        ActiveModel::Errors,
+        Symbol,
+        UserPreferences
+      ]
+    end
 
     # Override the default credentials lookup paths. See bin/rails credentials:help
     config.credentials.content_path = Rails.root.join('config', 'shared', 'credentials.yml.enc')
