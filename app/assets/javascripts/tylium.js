@@ -27,6 +27,7 @@
 //= require shared/notifications
 //= require shared/revisions
 //= require shared/rtp_validation
+//= require shared/state_button
 //= require shared/subscriptions
 
 //= require shared/datatable/main
@@ -55,7 +56,6 @@
 //= require tylium/modules/nodes
 //= require tylium/modules/search
 //= require tylium/modules/sidebar
-//= require tylium/modules/state_button
 //= require tylium/modules/activities/poller
 // require tylium/modules/tour
 //= require tylium/modules/uploads
