@@ -131,6 +131,7 @@ class ComboBox {
       $(this).on('click', function (event) {
         event.stopPropagation();
         that.selectOptions($option);
+        that.$target.trigger('change');
       });
     });
 
