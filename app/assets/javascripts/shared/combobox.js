@@ -105,6 +105,10 @@ class ComboBox {
       : this.$comboboxOptions.first();
 
     this.selectOptions($initialOption);
+    this.$combobox.toggleClass(
+      'disabled',
+      !!this.$target.attr('disabled')?.length
+    );
     this.behaviors();
   }
 
@@ -163,6 +167,11 @@ class ComboBox {
       }
 
       that.selectOptions($options);
+
+      that.$combobox.toggleClass(
+        'disabled',
+        !!$(this).attr('disabled')?.length
+      );
     });
   }
 
