@@ -22,7 +22,7 @@ class ComboBox {
 
     this.$target
       .addClass('d-none')
-      .wrap('<div class="position-relative"></div>');
+      .wrap('<div class="combobox-container"></div>');
 
     this.$comboboxContainer = this.$target.parent();
 

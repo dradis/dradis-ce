@@ -14,10 +14,18 @@
       color: $white;
     }
   }
+}
 
-  &.disabled {
-    background-color: $dropdownLinkBackgroundHover;
+.combobox-container {
+  position: relative;
+
+  .disabled {
+    background-color: $disabledInputBg;
     pointer-events: none;
+
+    .unselect-multi-option {
+      pointer-events: none;
+    }
   }
 }
 
@@ -32,15 +40,6 @@
   &.multiple {
     --spacing: 0.25rem;
     padding: var(--spacing) 2.25rem var(--spacing) var(--spacing);
-  }
-
-  &.disabled {
-    background-color: $dropdownLinkBackgroundHover;
-    pointer-events: none;
-
-    .unselect-multi-option {
-      pointer-events: none;
-    }
   }
 }
 
