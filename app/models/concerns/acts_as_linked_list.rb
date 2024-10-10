@@ -47,7 +47,6 @@ module ActsAsLinkedList
     # Returns true.
     def move(item, new_position = {})
       item.class.transaction do
-        previous_item = item.send("previous_#{item.class.name.downcase}")
         next_item = item.send("next_#{item.class.name.downcase}")
 
         # Update previous position
