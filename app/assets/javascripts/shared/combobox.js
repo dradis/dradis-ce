@@ -20,9 +20,22 @@ class ComboBox {
   init() {
     const that = this;
 
+    // Prevent re-init
+    if (this.$target.parent().is('[data-behavior~=combobox-container]')) {
+      const $existingContainer = this.$target.parent(),
+        $targetParent = $existingContainer.parent(),
+        $targetSelect = this.$target.clone();
+
+      $targetSelect.appendTo($targetParent);
+      $existingContainer.remove();
+      this.$target = $targetSelect;
+    }
+
     this.$target
       .addClass('d-none')
-      .wrap('<div class="combobox-container"></div>');
+      .wrap(
+        '<div class="combobox-container" data-behavior="combobox-container"></div>'
+      );
 
     this.$comboboxContainer = this.$target.parent();
 
