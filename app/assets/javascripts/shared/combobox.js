@@ -49,7 +49,7 @@ class ComboBox {
     this.$combobox = this.$comboboxContainer.find('[data-behavior~=combobox]');
     this.$comboboxMenu = this.$combobox.next('[data-behavior~=combobox-menu]');
 
-    if (this.config.includes('filter')) {
+    if (!this.config.includes('no-filter')) {
       const idSuffix = Math.random().toString(36);
       this.$comboboxMenu.append(
         `<div class="d-flex flex-column pt-1">\
