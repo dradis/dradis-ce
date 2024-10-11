@@ -11,7 +11,11 @@
     &:hover,
     &:focus-visible {
       background-color: $primaryColor;
-      color: $white;
+      color: $white !important;
+
+      i {
+        color: $white !important;
+      }
     }
   }
 }
@@ -32,13 +36,14 @@
 .combobox {
   @extend .form-control, .form-select;
 
+  align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
   min-height: 2.25rem;
 
   &.multiple {
     --spacing: 0.25rem;
+    gap: 0.5rem;
     padding: var(--spacing) 2.25rem var(--spacing) var(--spacing);
   }
 }

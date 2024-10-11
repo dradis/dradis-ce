@@ -190,6 +190,10 @@ class ComboBox {
   }
 
   appendOption($parent, $option) {
+    const iconClass = $option.data('combobox-option-icon'),
+      iconColor = $option.data('combobox-option-icon-color'),
+      optionColor = $option.data('combobox-option-color');
+
     $parent.append(
       `<span\
         class="combobox-option ${$option.attr('disabled') ? 'disabled' : ''}"\
@@ -199,6 +203,20 @@ class ComboBox {
         ${$option.text()}\
       </span>`
     );
+
+    const $appendedOption = $parent.children().last();
+
+    if (iconClass) {
+      $appendedOption.prepend(`<i class="${iconClass} fa-fw me-1"></i>`);
+
+      if (iconColor) {
+        $appendedOption.find('i').attr('style', `color: ${iconColor}`);
+      }
+    }
+
+    if (optionColor) {
+      $appendedOption.attr('style', `color: ${optionColor}`);
+    }
   }
 
   appendCustomOption(value) {
@@ -313,7 +331,8 @@ class ComboBox {
         selectedValues.push($option.data('value'));
         that.$target.val(selectedValues);
       } else {
-        that.$combobox.text($option.text());
+        that.$combobox.html($option.html());
+        that.$combobox.attr('style', $option.attr('style') || '');
         that.$target.val($option.data('value'));
         that.$comboboxOptions.removeClass('selected');
       }
