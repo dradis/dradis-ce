@@ -1,7 +1,7 @@
 PATH
   remote: engines/dradis-api
   specs:
-    dradis-api (4.13.0)
+    dradis-api (4.14.0)
       jbuilder
 
 GEM
@@ -327,7 +327,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     public_suffix (5.0.3)
-    puma (6.4.2)
+    puma (6.4.3)
       nio4r (~> 2.0)
     racc (1.8.0)
     rack (2.2.9)
@@ -391,7 +391,7 @@ GEM
       vegas (~> 0.1.2)
     resque-status (0.5.0)
       resque (~> 1.19)
-    rexml (3.3.4)
+    rexml (3.3.6)
       strscan
     rinku (2.0.6)
     rprogram (0.3.2)
@@ -578,11 +578,11 @@ DEPENDENCIES
   net-imap
   net-pop
   net-smtp
-  nokogiri (>= 1.16.2)
+  nokogiri (>= 1.16.5)
   paper_trail (~> 12.2.0)
   parslet (~> 1.6.0)
   pg
-  puma (>= 6.4.2)
+  puma (>= 6.4.3)
   rack-mini-profiler (~> 2.0)
   rails (~> 7.0.8.4)
   rails-html-sanitizer (~> 1.4.4)

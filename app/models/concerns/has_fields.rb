@@ -11,13 +11,22 @@ module HasFields
   # Extract a Title file if one exists.
   def title
     fields.fetch(
-      "Title",
-      "(No #[Title]# field)"
+      'Title',
+      '(No #[Title]# field)'
     )
   end
 
   def title?
-    fields["Title"].present?
+    fields['Title'].present?
+  end
+
+  private
+
+  def update_container(container_field, updated_fields)
+    self.send(
+      :"#{container_field}=",
+      FieldParser.fields_hash_to_source(updated_fields)
+    )
   end
 
   module ClassMethods
@@ -52,14 +61,17 @@ module HasFields
       define_method :set_field do |field, value|
         # Don't use 'fields' as a local variable name or it conflicts with the
         # #fields getter method
-        updated_fields        = fields
+        updated_fields = fields
         updated_fields[field] = value
-        self.send(
-          :"#{container_field}=",
-          updated_fields.to_a.map { |h| "#[#{h[0]}]#\n#{h[1]}" }.join("\n\n")
-        )
+        self.update_container(container_field, updated_fields)
+      end
+
+      # Completely removes the field (field header and value) from the content
+      define_method :delete_field do |field|
+        updated_fields = fields
+        updated_fields.except!(field)
+        self.update_container(container_field, updated_fields)
       end
     end
   end
-
 end
