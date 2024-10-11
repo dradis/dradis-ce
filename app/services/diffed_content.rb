@@ -1,5 +1,5 @@
 class DiffedContent
-  EXCLUDED_FIELDS = %w(id plugin plugin_id AddonTags)
+  EXCLUDED_FIELDS = %w(id plugin plugin_id)
 
   attr_reader :source, :target
 
