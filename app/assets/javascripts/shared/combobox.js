@@ -194,7 +194,7 @@ class ComboBox {
       `<span\
         class="combobox-option ${$option.attr('disabled') ? 'disabled' : ''}"\
         data-behavior="combobox-option"\
-        data-value="${$option.attr('value')}"\
+        data-value="${$option.attr('value') || $option.text()}"\
       >\
         ${$option.text()}\
       </span>`
