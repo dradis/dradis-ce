@@ -45,7 +45,9 @@ function fileUploadInit() {
       if (data.replaceImagePlaceholder !== undefined) {
         $.each(data.files, data.replaceImagePlaceholder.bind(null, data));
       }
-      window.initBehaviors($('[data-behavior~=jquery-upload]'));
+      window.initBehaviors(
+        document.querySelector('[data-behavior~=jquery-upload]')
+      );
     });
 }
 
