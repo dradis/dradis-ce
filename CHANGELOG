@@ -1,7 +1,7 @@
 v4.14.0 (October 2024)
   - Kit Import: Use file name sequencing when a template file with the same name exists
   - Upgraded gems:
-    - puma, rexml
+    - puma, rails, rexml
 
 v4.13.0 (July 2024)
   - Attachments: Copy attachments when moving an evidence/note
