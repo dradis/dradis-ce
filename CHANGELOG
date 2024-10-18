@@ -1,3 +1,8 @@
+v4.14.0 (October 2024)
+  - Kit Import: Use file name sequencing when a template file with the same name exists
+  - Upgraded gems:
+    - puma, rails, rexml
+
 v4.13.0 (July 2024)
   - Attachments: Copy attachments when moving an evidence/note
   - Liquid: Make project-level collections available for Liquid syntax
@@ -5,9 +10,7 @@ v4.13.0 (July 2024)
   - Bugs fixes:
     - Navigation: Restore functionality of native browser back/forward buttons
   - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: Authenticated (author) horizontal privilege escalation affecting attachments
 
 v4.12.0 (May 2024)
   - Attachments: Add size, created_at, and download link to the API
