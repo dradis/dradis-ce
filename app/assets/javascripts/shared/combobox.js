@@ -45,7 +45,7 @@ class ComboBox {
 
   buildDom() {
     this.$target
-      .addClass('xd-none')
+      .addClass('d-none')
       .wrap(
         '<div class="combobox-container" data-behavior="combobox-container"></div>'
       );
