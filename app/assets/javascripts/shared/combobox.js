@@ -333,20 +333,20 @@ class ComboBox {
         </div>`
       );
 
-      this.$combobox
-        .children()
-        .last()
-        .find('[data-behavior~=unselect-multi-option]')
-        .on('click', (e) => {
-          this.unselectMultiOption($(e.currentTarget).parent());
-        });
-
       let selectedValues = this.$target.val() || [];
       selectedValues.push($option.data('value'));
       this.$target.val(selectedValues);
 
       $option.addClass('selected');
     });
+
+    this.$combobox.on(
+      'click',
+      '[data-behavior~=unselect-multi-option]',
+      (e) => {
+        this.unselectMultiOption($(e.currentTarget).parent());
+      }
+    );
   }
 
   unselectMultiOption($option) {
