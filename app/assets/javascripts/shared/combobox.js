@@ -293,50 +293,57 @@ class ComboBox {
   }
 
   selectOptions(options) {
-    const that = this;
-
     if (!Array.isArray(options)) {
       options = [options];
     }
 
-    options.forEach(function ($option) {
-      if (that.isMultiSelect) {
-        if (
-          that.$combobox.find(`[data-option-value="${$option.data('value')}"]`)
-            .length
-        ) {
-          return;
-        }
+    if (this.isMultiSelect) {
+      this.selectMultiOptions(options);
+    } else {
+      this.selectSingleOption(options[0]);
+    }
+  }
 
-        that.$combobox.append(
-          `<div class="combobox-multi-option" data-option-value="${$option.data(
-            'value'
-          )}">\
-            <span>${$option.text()}</span>\
-            <div class="unselect-multi-option" data-behavior="unselect-multi-option">\
-              <i class="fa-solid fa-xmark"></i>\
-              <span class="visually-hidden">Unselect option</span>\
-            </div>\
-          </div>`
-        );
+  selectSingleOption($option) {
+    this.$combobox.html($option.html());
+    this.$combobox.attr('style', $option.attr('style') || '');
+    this.$target.val($option.data('value'));
+    this.$comboboxOptions.removeClass('selected');
+    $option.addClass('selected');
+  }
 
-        that.$combobox
-          .children()
-          .last()
-          .find('[data-behavior~=unselect-multi-option]')
-          .on('click', function () {
-            that.unselectMultiOption($(this).parent());
-          });
-
-        let selectedValues = that.$target.val() || [];
-        selectedValues.push($option.data('value'));
-        that.$target.val(selectedValues);
-      } else {
-        that.$combobox.html($option.html());
-        that.$combobox.attr('style', $option.attr('style') || '');
-        that.$target.val($option.data('value'));
-        that.$comboboxOptions.removeClass('selected');
+  selectMultiOptions($options) {
+    $options.forEach(($option) => {
+      if (
+        this.$combobox.find(`[data-option-value="${$option.data('value')}"]`)
+          .length
+      ) {
+        return;
       }
+
+      this.$combobox.append(
+        `<div class="combobox-multi-option" data-option-value="${$option.data(
+          'value'
+        )}">\
+          <span>${$option.text()}</span>\
+          <div class="unselect-multi-option" data-behavior="unselect-multi-option">\
+            <i class="fa-solid fa-xmark"></i>\
+            <span class="visually-hidden">Unselect option</span>\
+          </div>\
+        </div>`
+      );
+
+      this.$combobox
+        .children()
+        .last()
+        .find('[data-behavior~=unselect-multi-option]')
+        .on('click', (e) => {
+          this.unselectMultiOption($(e.currentTarget).parent());
+        });
+
+      let selectedValues = this.$target.val() || [];
+      selectedValues.push($option.data('value'));
+      this.$target.val(selectedValues);
 
       $option.addClass('selected');
     });
