@@ -139,14 +139,15 @@ class ComboBox {
       that.hideMenu(this);
     });
 
-    this.$comboboxOptions.each(function () {
-      const $option = $(this);
-      $(this).on('click', function (event) {
-        event.stopPropagation();
-        that.selectOptions($option);
-        that.$target.trigger('change');
-      });
-    });
+    this.$comboboxMenu.on(
+      'click',
+      '[data-behavior~=combobox-option]',
+      (event) => {
+        const $option = $(event.currentTarget);
+        this.selectOptions($option);
+        this.$target.trigger('change');
+      }
+    );
 
     if (this.$filter) {
       this.$filter.on('textchange', function () {
