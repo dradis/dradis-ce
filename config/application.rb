@@ -40,7 +40,11 @@ module Dradis
     config.after_initialize do
       config.active_record.yaml_column_permitted_classes = [
         ActiveModel::Errors,
+        ActiveSupport::TimeWithZone,
+        ActiveSupport::TimeZone,
+        Date,
         Symbol,
+        Time,
         UserPreferences
       ]
     end
