@@ -10,7 +10,7 @@
 
   .dots-dropdown-header {
     font-weight: 400 !important;
-    
+
     &:hover {
       color: $linkColor !important;
       background-color: initial !important;
@@ -20,6 +20,10 @@
       border-top: 1px solid $borderColor;
       margin-top: 0.3rem;
       padding-top: 0.3rem;
+    }
+
+    &:not(:has(+ .dropdown-item)) {
+      display: none;
     }
   }
 
