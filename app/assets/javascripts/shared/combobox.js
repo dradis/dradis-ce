@@ -7,7 +7,6 @@ class ComboBox {
 
     this.$target = $target;
 
-    this.allowFocusDelay = 150;
     this.config = (this.$target.data('combobox-config') || '')
       .split(' ')
       .filter(Boolean);
@@ -94,12 +93,16 @@ class ComboBox {
   }
 
   attachEventListeners() {
-    this.$combobox.on('focus', () => {
-      this.$comboboxMenu.css('display', 'block');
-      this.$filter?.focus();
+    $(document).on('click', (event) => {
+      // Hide the menu if the user clicks outside of the ComboBox
+      if (!$(event.target).closest(this.$comboboxContainer).length) {
+        this.hideMenu();
+      }
     });
 
-    this.$comboboxContainer.on('focusout', () => this.hideMenu());
+    this.$combobox.on('click', () => {
+      this.showMenu();
+    });
 
     this.$comboboxMenu.on(
       'click',
@@ -108,6 +111,7 @@ class ComboBox {
         const $option = $(event.currentTarget);
         this.selectOptions($option);
         this.$target.trigger('change');
+        if (!this.isMultiSelect) this.hideMenu();
       }
     );
 
@@ -115,6 +119,11 @@ class ComboBox {
 
     this.$addOption?.on('click', () => {
       this.appendCustomOption(this.$filter.val());
+      if (this.isMultiSelect) {
+        this.$filter?.val(null).trigger('textchange');
+      } else {
+        this.hideMenu();
+      }
     });
 
     this.$target.on('change', (event) => {
@@ -147,8 +156,10 @@ class ComboBox {
     this.$combobox.on(
       'click',
       '[data-behavior~=unselect-multi-option]',
-      (e) => {
-        this.unselectMultiOption($(e.currentTarget).parent());
+      (event) => {
+        event.stopPropagation();
+        this.unselectMultiOption($(event.currentTarget).parent());
+        this.$combobox.blur();
       }
     );
   }
@@ -204,17 +215,8 @@ class ComboBox {
   }
 
   hideMenu() {
-    // Delay the hiding the menu to allow click events to fire on menu children
-    setTimeout(() => {
-      // Only hide the menu if neither the combobox nor it's children have focus
-      if (
-        !this.$comboboxContainer.is(':focus') &&
-        !this.$comboboxContainer.find(':focus').length
-      ) {
-        this.$comboboxMenu.css('display', 'none');
-        this.$filter?.val(null).trigger('textchange');
-      }
-    }, this.allowFocusDelay);
+    this.$comboboxMenu.css('display', 'none');
+    this.$filter?.val(null).trigger('textchange');
   }
 
   isAlreadyInitialized() {
@@ -338,6 +340,11 @@ class ComboBox {
       this.$filter.attr('placeholder', 'Filter or create options...');
       this.$addOption = this.$filter.siblings('[data-behavior~=add-option]');
     }
+  }
+
+  showMenu() {
+    this.$comboboxMenu.css('display', 'block');
+    this.$filter?.focus();
   }
 
   unselectMultiOption($option) {
