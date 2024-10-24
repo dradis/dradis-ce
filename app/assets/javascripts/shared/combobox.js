@@ -29,81 +29,53 @@ class ComboBox {
     this.attachEventListeners();
   }
 
-  isAlreadyInitialized() {
-    return this.$target.parent().is('[data-behavior~=combobox-container]');
-  }
+  appendCustomOption(value) {
+    this.$target.append(`<option value="${value}">${value}</option>`);
 
-  reinitialize() {
-    const $existingContainer = this.$target.parent(),
-      $targetParent = $existingContainer.parent(),
-      $targetSelect = this.$target.clone();
+    const $option = this.$target.children().last();
 
-    $targetSelect.appendTo($targetParent);
-    $existingContainer.remove();
-    this.$target = $targetSelect;
-  }
-
-  buildDom() {
-    this.$target
-      .addClass('d-none')
-      .wrap(
-        '<div class="combobox-container" data-behavior="combobox-container"></div>'
-      );
-
-    this.$comboboxContainer = this.$target.parent();
-
-    this.$comboboxContainer.append(`
-      <div class="combobox ${this.isMultiSelect ? 'multiple' : ''}" 
-        tabindex="0" 
-        data-behavior="combobox">
-      </div>
-      <div class="combobox-menu" data-behavior="combobox-menu"></div>
-    `);
-
-    this.$combobox = this.$comboboxContainer.find('[data-behavior~=combobox]');
-    this.$comboboxMenu = this.$combobox.next('[data-behavior~=combobox-menu]');
-  }
-
-  setupFilter() {
-    if (this.config.includes('no-filter')) return;
-
-    const idSuffix = Math.random().toString(36);
-
-    this.$comboboxMenu.append(`
-      <div class="d-flex flex-column pt-1">
-        <label class="visually-hidden" for="combobox-filter-${idSuffix}">Filter options</label>
-        <input type="search" class="form-control mx-2 mb-2 w-auto" data-behavior="combobox-filter" id="combobox-filter-${idSuffix}" placeholder="Filter options...">
-        <span class="d-block text-secondary text-center d-none pe-none" data-behavior="no-results">No results.</span>
-      </div>
-    `);
-
-    this.$filter = this.$comboboxMenu.find('[data-behavior~=combobox-filter]');
-
-    if (this.config.includes('add-options')) {
-      this.$filter.parent().append(
-        `<span class="combobox-option d-none" data-behavior="add-option">
-          <i class="fa-solid fa-plus me-1"></i>
-          Create <strong>${this.$filter.val()}</strong> option
-          </span>`
-      );
-
-      this.$filter.attr('placeholder', 'Filter or create options...');
-      this.$addOption = this.$filter.siblings('[data-behavior~=add-option]');
-    }
-  }
-
-  populateOptions() {
-    this.$target.children().each((_, child) => {
-      if (child.tagName.toLowerCase() === 'option') {
-        this.appendOption(this.$comboboxMenu, $(child));
-      } else if (child.tagName.toLowerCase() === 'optgroup') {
-        this.appendOptgroup($(child));
-      }
-    });
+    this.appendOption(this.$comboboxMenu, $option);
 
     this.$comboboxOptions = this.$comboboxMenu.find(
       '[data-behavior~=combobox-option]'
     );
+
+    this.selectOptions(this.$comboboxOptions.last());
+  }
+
+  appendOption($parent, $option) {
+    const disabled = $option.attr('disabled') ? 'disabled' : '';
+    const value = $option.attr('value') || $option.text();
+
+    const {
+      comboboxOptionIcon: iconClass,
+      comboboxOptionIconColor: iconColor,
+      comboboxOptionColor: optionColor,
+    } = $option.data();
+
+    $parent.append(
+      `<span
+        class="combobox-option ${disabled}"
+        data-behavior="combobox-option"
+        data-value="${value}"
+      >
+        ${$option.text()}
+      </span>`
+    );
+
+    const $appendedOption = $parent.children().last();
+
+    if (iconClass) {
+      $appendedOption.prepend(`<i class="${iconClass} fa-fw me-1"></i>`);
+
+      if (iconColor) {
+        $appendedOption.find('i').attr('style', `color: ${iconColor}`);
+      }
+    }
+
+    if (optionColor) {
+      $appendedOption.attr('style', `color: ${optionColor}`);
+    }
   }
 
   appendOptgroup($optgroup) {
@@ -119,22 +91,6 @@ class ComboBox {
         $(option)
       );
     });
-  }
-
-  setInitialSelection() {
-    let $initialOption = this.$comboboxOptions.filter(
-      `[data-value="${this.$target.val()}"]`
-    );
-
-    $initialOption = $initialOption.length
-      ? $initialOption
-      : this.$comboboxOptions.first();
-
-    this.selectOptions($initialOption);
-    this.$combobox.toggleClass(
-      'disabled',
-      !!this.$target.attr('disabled')?.length
-    );
   }
 
   attachEventListeners() {
@@ -197,53 +153,25 @@ class ComboBox {
     );
   }
 
-  appendOption($parent, $option) {
-    const disabled = $option.attr('disabled') ? 'disabled' : '';
-    const value = $option.attr('value') || $option.text();
+  buildDom() {
+    this.$target
+      .addClass('d-none')
+      .wrap(
+        '<div class="combobox-container" data-behavior="combobox-container"></div>'
+      );
 
-    const {
-      comboboxOptionIcon: iconClass,
-      comboboxOptionIconColor: iconColor,
-      comboboxOptionColor: optionColor,
-    } = $option.data();
+    this.$comboboxContainer = this.$target.parent();
 
-    $parent.append(
-      `<span
-        class="combobox-option ${disabled}"
-        data-behavior="combobox-option"
-        data-value="${value}"
-      >
-        ${$option.text()}
-      </span>`
-    );
+    this.$comboboxContainer.append(`
+      <div class="combobox ${this.isMultiSelect ? 'multiple' : ''}" 
+        tabindex="0" 
+        data-behavior="combobox">
+      </div>
+      <div class="combobox-menu" data-behavior="combobox-menu"></div>
+    `);
 
-    const $appendedOption = $parent.children().last();
-
-    if (iconClass) {
-      $appendedOption.prepend(`<i class="${iconClass} fa-fw me-1"></i>`);
-
-      if (iconColor) {
-        $appendedOption.find('i').attr('style', `color: ${iconColor}`);
-      }
-    }
-
-    if (optionColor) {
-      $appendedOption.attr('style', `color: ${optionColor}`);
-    }
-  }
-
-  appendCustomOption(value) {
-    this.$target.append(`<option value="${value}">${value}</option>`);
-
-    const $option = this.$target.children().last();
-
-    this.appendOption(this.$comboboxMenu, $option);
-
-    this.$comboboxOptions = this.$comboboxMenu.find(
-      '[data-behavior~=combobox-option]'
-    );
-
-    this.selectOptions(this.$comboboxOptions.last());
+    this.$combobox = this.$comboboxContainer.find('[data-behavior~=combobox]');
+    this.$comboboxMenu = this.$combobox.next('[data-behavior~=combobox-menu]');
   }
 
   handleFiltering() {
@@ -289,24 +217,32 @@ class ComboBox {
     }, this.allowFocusDelay);
   }
 
-  selectOptions(options) {
-    if (!Array.isArray(options)) {
-      options = [options];
-    }
-
-    if (this.isMultiSelect) {
-      this.selectMultiOptions(options);
-    } else {
-      this.selectSingleOption(options[0]);
-    }
+  isAlreadyInitialized() {
+    return this.$target.parent().is('[data-behavior~=combobox-container]');
   }
 
-  selectSingleOption($option) {
-    this.$combobox.html($option.html());
-    this.$combobox.attr('style', $option.attr('style') || '');
-    this.$target.val($option.data('value'));
-    this.$comboboxOptions.removeClass('selected');
-    $option.addClass('selected');
+  populateOptions() {
+    this.$target.children().each((_, child) => {
+      if (child.tagName.toLowerCase() === 'option') {
+        this.appendOption(this.$comboboxMenu, $(child));
+      } else if (child.tagName.toLowerCase() === 'optgroup') {
+        this.appendOptgroup($(child));
+      }
+    });
+
+    this.$comboboxOptions = this.$comboboxMenu.find(
+      '[data-behavior~=combobox-option]'
+    );
+  }
+
+  reinitialize() {
+    const $existingContainer = this.$target.parent(),
+      $targetParent = $existingContainer.parent(),
+      $targetSelect = this.$target.clone();
+
+    $targetSelect.appendTo($targetParent);
+    $existingContainer.remove();
+    this.$target = $targetSelect;
   }
 
   selectMultiOptions($options) {
@@ -338,6 +274,70 @@ class ComboBox {
 
       $option.addClass('selected');
     });
+  }
+
+  selectOptions(options) {
+    if (!Array.isArray(options)) {
+      options = [options];
+    }
+
+    if (this.isMultiSelect) {
+      this.selectMultiOptions(options);
+    } else {
+      this.selectSingleOption(options[0]);
+    }
+  }
+
+  selectSingleOption($option) {
+    this.$combobox.html($option.html());
+    this.$combobox.attr('style', $option.attr('style') || '');
+    this.$target.val($option.data('value'));
+    this.$comboboxOptions.removeClass('selected');
+    $option.addClass('selected');
+  }
+
+  setInitialSelection() {
+    let $initialOption = this.$comboboxOptions.filter(
+      `[data-value="${this.$target.val()}"]`
+    );
+
+    $initialOption = $initialOption.length
+      ? $initialOption
+      : this.$comboboxOptions.first();
+
+    this.selectOptions($initialOption);
+    this.$combobox.toggleClass(
+      'disabled',
+      !!this.$target.attr('disabled')?.length
+    );
+  }
+
+  setupFilter() {
+    if (this.config.includes('no-filter')) return;
+
+    const idSuffix = Math.random().toString(36);
+
+    this.$comboboxMenu.append(`
+      <div class="d-flex flex-column pt-1">
+        <label class="visually-hidden" for="combobox-filter-${idSuffix}">Filter options</label>
+        <input type="search" class="form-control mx-2 mb-2 w-auto" data-behavior="combobox-filter" id="combobox-filter-${idSuffix}" placeholder="Filter options...">
+        <span class="d-block text-secondary text-center d-none pe-none" data-behavior="no-results">No results.</span>
+      </div>
+    `);
+
+    this.$filter = this.$comboboxMenu.find('[data-behavior~=combobox-filter]');
+
+    if (this.config.includes('add-options')) {
+      this.$filter.parent().append(
+        `<span class="combobox-option d-none" data-behavior="add-option">
+          <i class="fa-solid fa-plus me-1"></i>
+          Create <strong>${this.$filter.val()}</strong> option
+          </span>`
+      );
+
+      this.$filter.attr('placeholder', 'Filter or create options...');
+      this.$addOption = this.$filter.siblings('[data-behavior~=add-option]');
+    }
   }
 
   unselectMultiOption($option) {
