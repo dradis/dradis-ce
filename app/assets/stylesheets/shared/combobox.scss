@@ -21,9 +21,11 @@
       background-color: $primaryColor;
     }
 
-    &:hover,
-    &:focus-visible {
-      background-color: $darkColor;
+    &:not(.selected) {
+      &:hover,
+      &:focus-visible {
+        background-color: darken($primaryColor, 6%);
+      }
     }
   }
 }
