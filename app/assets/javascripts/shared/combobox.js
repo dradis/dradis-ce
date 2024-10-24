@@ -6,12 +6,12 @@ class ComboBox {
     }
 
     this.$target = $target;
-
     this.config = (this.$target.data('combobox-config') || '')
       .split(' ')
       .filter(Boolean);
     this.debounceTimer = 250;
     this.isMultiSelect = this.$target.attr('multiple');
+    this.idSuffix = Math.random().toString(36).substring(2);
 
     this.init();
   }
@@ -55,6 +55,9 @@ class ComboBox {
     $parent.append(
       `<span
         class="combobox-option ${disabled}"
+        role="option"
+        id="combobox-option-${this.idSuffix}-${value}"
+        aria-selected="false"
         data-behavior="combobox-option"
         data-value="${value}"
       >
@@ -74,6 +77,10 @@ class ComboBox {
 
     if (optionColor) {
       $appendedOption.attr('style', `color: ${optionColor}`);
+    }
+
+    if (disabled) {
+      $appendedOption.attr('aria-disabled', 'true');
     }
   }
 
@@ -168,17 +175,30 @@ class ComboBox {
     this.$target
       .addClass('d-none')
       .wrap(
-        '<div class="combobox-container" data-behavior="combobox-container"></div>'
+        `<div class="combobox-container" data-behavior="combobox-container"></div>`
       );
 
     this.$comboboxContainer = this.$target.parent();
 
     this.$comboboxContainer.append(`
-      <div class="combobox ${this.isMultiSelect ? 'multiple' : ''}" 
+      <div 
+        class="combobox ${this.isMultiSelect ? 'multiple' : ''}" 
         tabindex="0" 
+        role="combobox"
+        aria-expanded="false"
+        aria-owns="combobox-menu-${this.idSuffix}" 
+        aria-controls="combobox-menu-${this.idSuffix}" 
+        aria-haspopup="listbox" 
+        aria-autocomplete="list"
         data-behavior="combobox">
       </div>
-      <div class="combobox-menu" data-behavior="combobox-menu"></div>
+      <div 
+        class="combobox-menu" 
+        role="listbox" 
+        id="combobox-menu-${this.idSuffix}" 
+        ${this.isMultiSelect ? 'aria-multiselectable="true"' : ''} 
+        data-behavior="combobox-menu">
+      </div>
     `);
 
     this.$combobox = this.$comboboxContainer.find('[data-behavior~=combobox]');
@@ -216,6 +236,7 @@ class ComboBox {
 
   hideMenu() {
     this.$comboboxMenu.css('display', 'none');
+    this.$combobox.attr('aria-expanded', 'false');
     this.$filter?.val(null).trigger('textchange');
   }
 
@@ -274,7 +295,7 @@ class ComboBox {
       selectedValues.push($option.data('value'));
       this.$target.val(selectedValues);
 
-      $option.addClass('selected');
+      $option.attr('aria-selected', 'true');
     });
   }
 
@@ -295,7 +316,9 @@ class ComboBox {
     this.$combobox.attr('style', $option.attr('style') || '');
     this.$target.val($option.data('value'));
     this.$comboboxOptions.removeClass('selected');
+    this.$comboboxOptions.attr('aria-selected', 'false');
     $option.addClass('selected');
+    $option.attr('aria-selected', 'true');
   }
 
   setInitialSelection() {
@@ -317,12 +340,10 @@ class ComboBox {
   setupFilter() {
     if (this.config.includes('no-filter')) return;
 
-    const idSuffix = Math.random().toString(36);
-
     this.$comboboxMenu.append(`
       <div class="d-flex flex-column pt-1">
-        <label class="visually-hidden" for="combobox-filter-${idSuffix}">Filter options</label>
-        <input type="search" class="form-control mx-2 mb-2 w-auto" data-behavior="combobox-filter" id="combobox-filter-${idSuffix}" placeholder="Filter options...">
+        <label class="visually-hidden" for="combobox-filter-${this.idSuffix}">Filter options</label>
+        <input type="search" class="form-control mx-2 mb-2 w-auto" data-behavior="combobox-filter" id="combobox-filter-${this.idSuffix}" placeholder="Filter options...">
         <span class="d-block text-secondary text-center d-none pe-none" data-behavior="no-results">No results.</span>
       </div>
     `);
@@ -344,6 +365,7 @@ class ComboBox {
 
   showMenu() {
     this.$comboboxMenu.css('display', 'block');
+    this.$combobox.attr('aria-expanded', 'true');
     this.$filter?.focus();
   }
 
