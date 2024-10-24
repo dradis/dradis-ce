@@ -301,6 +301,7 @@ class ComboBox {
       let selectedValues = this.$target.val() || [];
       selectedValues.push($option.data('value'));
       this.$target.val(selectedValues);
+      $option.addClass('selected');
       $option.attr('aria-selected', 'true');
     });
   }
