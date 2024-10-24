@@ -10,12 +10,20 @@
     &.selected,
     &:hover,
     &:focus-visible {
-      background-color: $primaryColor;
       color: $white !important;
 
       i {
         color: $white !important;
       }
+    }
+
+    &.selected {
+      background-color: $primaryColor;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background-color: $darkColor;
     }
   }
 }
