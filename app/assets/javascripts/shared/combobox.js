@@ -116,7 +116,14 @@ class ComboBox {
       '[data-behavior~=combobox-option]',
       (event) => {
         const $option = $(event.currentTarget);
-        this.selectOptions($option);
+        if ($option.hasClass('selected') && this.isMultiSelect) {
+          const $unselectedOption = this.$combobox.find(
+            `[data-option-value="${$option.data('value')}"]`
+          );
+          this.unselectMultiOption($unselectedOption);
+        } else {
+          this.selectOptions($option);
+        }
         this.$target.trigger('change');
         if (!this.isMultiSelect) this.hideMenu();
       }
@@ -294,7 +301,6 @@ class ComboBox {
       let selectedValues = this.$target.val() || [];
       selectedValues.push($option.data('value'));
       this.$target.val(selectedValues);
-
       $option.attr('aria-selected', 'true');
     });
   }
