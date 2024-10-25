@@ -14,7 +14,16 @@
       <div class="content-container pb-3 me-xl-3">
         <div class="diff">
           <h4 class="header-underline">Viewing changes from <%= @diffed_revision.updated_at %></h4>
-          <pre class='js-diff-body'><%= @diffed_revision.diff.format_as(:color) %></pre>
+          <span class="d-block pt-1">
+            <% if @diffed_revision.changed_state.any? %>
+              State:
+              <del><%= @diffed_revision.changed_state[:before].humanize %></del>
+              <ins><%= @diffed_revision.changed_state[:after].humanize %></ins>
+            <% elsif  @record.state %>
+              State: <%= @record.state.humanize %>
+            <% end %>
+          </span>
+          <pre class='js-diff-body mt-3'><%= @diffed_revision.diff.format_as(:color) %></pre>
         </div>
       </div>
     <% end %>
@@ -58,17 +67,13 @@
   <% if @diffed_revision %>
     <div class="col-12 col-xl-4 col-xxl-3 p-0">
       <div class="sticky-top">
-        <div class="content-container mt-0 mt-xl-4 ms-xl-3">
+        <div class="content-container mt-0 mt-xl-4 ms-xl-3 pb-4">
           <h4 class="header-underline">Legend</h4>
-          <p><del>removed text</del></p>
-          <p><ins>added text</ins></p>
+          <p>
+            <del>removed text</del>
+            <ins>added text</ins>
+          </p>
         </div>
-        <% if @diffed_revision.changed_state.any? %>
-          <div class="content-container ms-xl-3">
-            <h4 class="header-underline">State Change</h4>
-            <%= @diffed_revision.changed_state[:before].humanize %> ➡ <%= @diffed_revision.changed_state[:after].humanize %>
-          </div>
-        <% end %>
         <% if @revision.previous %>
           <div class="content-container ms-xl-3">
             <h4 class="header-underline">Previous revision</h4>
