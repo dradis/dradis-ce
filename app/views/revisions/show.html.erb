@@ -66,10 +66,7 @@
         <% if @diffed_revision.changed_state.any? %>
           <div class="content-container ms-xl-3">
             <h4 class="header-underline">State Change</h4>
-            <ul>
-              <li><strong>From:</strong> <%= @diffed_revision.changed_state[:before].humanize %></li>
-              <li><strong>To:</strong> <%= @diffed_revision.changed_state[:after].humanize %></li>
-            </ul>
+            <%= @diffed_revision.changed_state[:before].humanize %> ➡ <%= @diffed_revision.changed_state[:after].humanize %>
           </div>
         <% end %>
         <% if @revision.previous %>

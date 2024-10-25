@@ -36,8 +36,7 @@ describe 'Revisions#show:' do
       visit project_issue_revisions_path(current_project, record)
 
       expect(page).to have_content('State Change')
-      expect(page).to have_content('From: Draft')
-      expect(page).to have_content('To: Published')
+      expect(page).to have_content('Draft ➡ Published')
     end
   end
 end
