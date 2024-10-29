@@ -24,7 +24,7 @@ Bundler.require(*Rails.groups)
 module Dradis
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 7.1
 
     # ** Please read carefully, this must be configured in config/application.rb **
     # Change the format of the cache entry.
@@ -41,6 +41,8 @@ module Dradis
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets dradis html tasks])
+
+    config.active_record.default_column_serializer = YAML
 
     # Configuration for the application, engines, and railties goes here.
     #
