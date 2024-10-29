@@ -24,7 +24,7 @@ Bundler.require(*Rails.groups)
 module Dradis
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.1
+    config.load_defaults 7.2
 
     # ** Please read carefully, this must be configured in config/application.rb **
     # Change the format of the cache entry.
