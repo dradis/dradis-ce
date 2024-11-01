@@ -72,7 +72,7 @@ class Node < ApplicationRecord
   }
 
   scope :user_nodes, -> {
-    where("type_id IN (?)", Types::USER_TYPES)
+    where('type_id IN (?)', Types::USER_TYPES)
   }
 
   # -- Class Methods --------------------------------------------------------
@@ -84,7 +84,7 @@ class Node < ApplicationRecord
 
   # Return all the Attachment objects associated with this Node.
   def attachments
-    Attachment.find(:all, :conditions => {:node_id => self.id})
+    Attachment.find(:all, conditions: { node_id: self.id })
   end
 
   def user_node?

@@ -13,12 +13,12 @@ describe NoteTemplate do
     FileUtils.rm_rf('tmp/templates/')
   end
 
-  it "defines a class .pwd() method" do
+  it 'defines a class .pwd() method' do
     expect(NoteTemplate::methods).to include(:pwd)
     expect(NoteTemplate.pwd).to respond_to('join')
   end
 
-  it "provides a find(id) method" do
+  it 'provides a find(id) method' do
     expect(NoteTemplate::methods).to include(:find)
 
     # Handle non-existing
@@ -27,14 +27,14 @@ describe NoteTemplate do
     # Handle existing templates
     FileUtils.mkdir_p(NoteTemplate.pwd) unless File.exist?(NoteTemplate.pwd)
     test_file = NoteTemplate.pwd.join('foo.txt')
-    File.open( test_file, 'w' ){ |f| f << 'bar' }
+    File.open(test_file, 'w') { |f| f << 'bar' }
     expect { NoteTemplate.find('foo') }.to_not raise_error()
     nt = NoteTemplate.find('foo')
     expect(nt.content).to eq('bar')
     File.delete(test_file)
   end
 
-  it "validates presence of filename" do
+  it 'validates presence of filename' do
     nt = NoteTemplate.new(content: 'foobar')
     expect(nt).not_to be_valid()
 
@@ -49,23 +49,23 @@ describe NoteTemplate do
   end
 
   it "doesn't accept bad characters in the name" do
-    nt = NoteTemplate.new(name: '../../../../../etc' )
+    nt = NoteTemplate.new(name: '../../../../../etc')
     expect(nt).to_not be_valid()
 
-    nt.name = "foo"
+    nt.name = 'foo'
     expect(nt).to be_valid()
 
     nt.name = 'bar.txt'
     expect(nt).to_not be_valid()
   end
 
-  it "needs to be valid before it is saved on disk" do
+  it 'needs to be valid before it is saved on disk' do
     nt = NoteTemplate.new
     expect(nt).to_not be_valid()
     expect(nt.save).to be false
   end
 
-  pending "prevents a template from being overwritten"
+  pending 'prevents a template from being overwritten'
 
   it "creates the templates dir if it doesn't exist when saving" do
     FileUtils.rm_rf(NoteTemplate.pwd) if File.exist?(NoteTemplate.pwd)
@@ -80,8 +80,7 @@ describe NoteTemplate do
     File.delete(new_note_template)
   end
 
-
-  it "saves the template contents when saving the instance" do
+  it 'saves the template contents when saving the instance' do
     nt = NoteTemplate.new(content: 'FooBar', filename: 'tpl_test')
     expect(nt.save).to be true
     filename = NoteTemplate.pwd.join('tpl_test.txt')
@@ -91,7 +90,7 @@ describe NoteTemplate do
     File.delete(filename)
   end
 
-  it "deletes file from disk on destroy" do
+  it 'deletes file from disk on destroy' do
     nt = NoteTemplate.new(content: 'FooBar', filename: 'tpl_test')
     nt.save
 
@@ -109,7 +108,7 @@ describe NoteTemplate do
 
     FileUtils.mkdir_p(NoteTemplate.pwd) unless File.exist?(NoteTemplate.pwd)
     filename = NoteTemplate.pwd.join('foobar.txt')
-    File.open(filename,'w'){ |f| f<<'barfoo' }
+    File.open(filename, 'w') { |f| f << 'barfoo' }
 
     nt = NoteTemplate.from_file(filename)
     expect(nt.content).to eq('barfoo')

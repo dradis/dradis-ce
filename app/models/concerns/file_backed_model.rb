@@ -5,7 +5,6 @@
 #   http://asciicasts.com/episodes/219-active-model
 #   https://github.com/rails/rails/blob/master/activemodel/lib/active_model/conversion.rb
 module FileBackedModel
-
   class FileNotFoundException < Exception; end
 
   def self.included(base)
@@ -24,8 +23,6 @@ module FileBackedModel
       validates_format_of :name, with: /\A\w+[\w\s]*\z/, message: 'needs to be simple: please use letters, numbers and spaces'
     end
   end
-
-
 
   module ClassMethods
     # ------------------------------------------------------- Common attributes
@@ -56,12 +53,10 @@ module FileBackedModel
       @default_path = path
     end
 
-
     # ---------------------------------------------------- ActiveRecord finders
 
     # Find by :id, which in this case is the file's basename
     def find(id)
-
       # Discard any input with weird characters
       if (id =~ /\A[\x00\/\\:\*\?\"<>\|]\z/)
         raise Exception.new('Not found!')
@@ -87,9 +82,7 @@ module FileBackedModel
         self.from_file(file)
       end.sort
     end
-
   end # /ClassMethods
-
 
   # --------------------------------------------------------- ActiveModel::Lint
 
@@ -107,7 +100,6 @@ module FileBackedModel
     @persisted ||= File.exist?(full_path)
   end
 
-
   # ---------------------------------------------------------------- Enumerable
 
   # When comparing two NoteTemplate instances, sort them alphabetically on their
@@ -119,7 +111,7 @@ module FileBackedModel
   # -------------------------------------------------- Constructors & Lifecycle
 
   # Constructor a la ActiveRecord. Attributes: :name, :file
-  def initialize(attributes={})
+  def initialize(attributes = {})
     attributes.each do |name, value|
       send("#{name}=", value)
     end
@@ -158,6 +150,6 @@ module FileBackedModel
   end
 
   def name=(new_name)
-    self.filename= new_name.gsub(/ /,'_').underscore
+    self.filename = new_name.gsub(/ /, '_').underscore
   end
 end
