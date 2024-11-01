@@ -191,7 +191,7 @@ group :test do
   gem 'capybara', '~> 3.39'
   gem 'guard-rspec', require: false
   gem 'selenium-webdriver', '~> 4.17'
-  gem 'shoulda-matchers', '~> 3.1'
+  gem 'shoulda-matchers', '~> 4.0.1'
   gem 'timecop'
 
   # Required by capybara

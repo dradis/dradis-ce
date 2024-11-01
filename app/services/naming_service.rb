@@ -26,7 +26,7 @@ class NamingService
   # If not, return the name with a count based alternative.
   #   name: the project name
   def self.name_project(name)
-    return name unless Project.exist?(name: name)
+    return name unless Project.exists?(name: name)
 
     projects = Project.where('name LIKE ?', "#{name}_copy-%")
     project_names = projects.map(&:name)
