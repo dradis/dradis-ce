@@ -464,7 +464,7 @@ GEM
       rprogram (~> 0.3)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
-    ruby_audit (2.1.0)
+    ruby_audit (2.2.0)
       bundler-audit (~> 0.9.0)
     rubyzip (2.3.2)
     sanitize (6.0.2)
@@ -649,7 +649,7 @@ DEPENDENCIES
   whenever
 
 RUBY VERSION
-   ruby 3.1.2p20
+   ruby 3.2.0p0
 
 BUNDLED WITH
    2.3.16
