@@ -25,7 +25,7 @@ describe NoteTemplate do
     expect { NoteTemplate.find('none_existent') }.to raise_error(FileBackedModel::FileNotFoundException)
 
     # Handle existing templates
-    FileUtils.mkdir_p(NoteTemplate.pwd) unless File.exists?(NoteTemplate.pwd)
+    FileUtils.mkdir_p(NoteTemplate.pwd) unless File.exist?(NoteTemplate.pwd)
     test_file = NoteTemplate.pwd.join('foo.txt')
     File.open( test_file, 'w' ){ |f| f << 'bar' }
     expect { NoteTemplate.find('foo') }.to_not raise_error()
@@ -68,14 +68,14 @@ describe NoteTemplate do
   pending "prevents a template from being overwritten"
 
   it "creates the templates dir if it doesn't exist when saving" do
-    FileUtils.rm_rf(NoteTemplate.pwd) if File.exists?(NoteTemplate.pwd)
+    FileUtils.rm_rf(NoteTemplate.pwd) if File.exist?(NoteTemplate.pwd)
 
     nt = NoteTemplate.new(name: 'New Spec Template', content: 'Simple note content: *kapow*!')
     expect(nt.save).to be true
 
     new_note_template = NoteTemplate.pwd.join('new_spec_template.txt')
-    expect(File.exists?(NoteTemplate.pwd)).to be true
-    expect(File.exists?(new_note_template)).to be true
+    expect(File.exist?(NoteTemplate.pwd)).to be true
+    expect(File.exist?(new_note_template)).to be true
     expect(File.read(new_note_template)).to eq('Simple note content: *kapow*!')
     File.delete(new_note_template)
   end
@@ -86,7 +86,7 @@ describe NoteTemplate do
     expect(nt.save).to be true
     filename = NoteTemplate.pwd.join('tpl_test.txt')
 
-    expect(File.exists?(filename)).to be true
+    expect(File.exist?(filename)).to be true
     expect(File.read(filename)).to eq('FooBar')
     File.delete(filename)
   end
@@ -96,18 +96,18 @@ describe NoteTemplate do
     nt.save
 
     filename = NoteTemplate.pwd.join('tpl_test.txt')
-    expect(File.exists?(filename)).to be true
+    expect(File.exist?(filename)).to be true
     expect(nt).to respond_to('destroy')
     expect(nt).to respond_to('delete')
     nt.destroy
-    expect(File.exists?(filename)).to be false
+    expect(File.exist?(filename)).to be false
   end
 
   it "destroy() works even if the file doesn't exist any more or never existed" do
     nt = NoteTemplate.new(filename: 'foobar')
     expect { nt.destroy }.not_to raise_error
 
-    FileUtils.mkdir_p(NoteTemplate.pwd) unless File.exists?(NoteTemplate.pwd)
+    FileUtils.mkdir_p(NoteTemplate.pwd) unless File.exist?(NoteTemplate.pwd)
     filename = NoteTemplate.pwd.join('foobar.txt')
     File.open(filename,'w'){ |f| f<<'barfoo' }
 

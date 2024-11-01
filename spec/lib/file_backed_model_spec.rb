@@ -40,7 +40,7 @@ describe FileBackedModel do
   # ----------------------------------------------------------- File operations
   describe '.from_file' do
     it "loads an instance based on the file on disk" do
-      FileUtils.mkdir_p(pwd) unless File.exists?(pwd)
+      FileUtils.mkdir_p(pwd) unless File.exist?(pwd)
       File.open(rspec_file, 'w'){|f| f << 'bar'}
 
       expect(subject.class).to respond_to(:from_file)
@@ -62,7 +62,7 @@ describe FileBackedModel do
     end
 
     it "deletes the file from disk if this is a file-backed model" do
-      FileUtils.mkdir_p(pwd) unless File.exists?(pwd)
+      FileUtils.mkdir_p(pwd) unless File.exist?(pwd)
       File.open(rspec_file, 'w'){|f| f << 'foobar' }
 
       expect(File.exist?(rspec_file)).to be true
@@ -104,7 +104,7 @@ describe FileBackedModel do
   # ------------------------------------------------------------------- Finders
   describe '.all' do
     it "returns a new instance for each file in the .pwd" do
-      FileUtils.mkdir_p(pwd) unless File.exists?(pwd)
+      FileUtils.mkdir_p(pwd) unless File.exist?(pwd)
 
       (1..3).each do |i|
         File.open(pwd.join("#{i}.txt"), 'w'){|f| f << 'foo' }
@@ -123,7 +123,7 @@ describe FileBackedModel do
     end
 
     it "loads an instance based on the file name" do
-      FileUtils.mkdir_p(pwd) unless File.exists?(pwd)
+      FileUtils.mkdir_p(pwd) unless File.exist?(pwd)
       File.open(rspec_file, 'w'){|f| f << 'bar'}
 
       expect(subject.class).to respond_to(:find)
@@ -142,7 +142,7 @@ describe FileBackedModel do
   # ---------------------------------------------------------- Instance methods
   describe '#name' do
     it "responds to #name based on the filename" do
-      FileUtils.mkdir_p(pwd) unless File.exists?(pwd)
+      FileUtils.mkdir_p(pwd) unless File.exist?(pwd)
       File.open(rspec_file, 'w'){|f| f << 'bar' }
 
       bfbm = BasicFileBackedModel.from_file(rspec_file)

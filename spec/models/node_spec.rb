@@ -27,11 +27,11 @@ describe Node do
     end
 
     it 'deletes all associated attachments' do
-      expect(File.exists?(@attachment.fullpath)).to be false
+      expect(File.exist?(@attachment.fullpath)).to be false
     end
 
     it 'deletes its corresponding attachment subfolder' do
-      expect(File.exists?(Attachment.pwd.join(node.id.to_s))).to be false
+      expect(File.exist?(Attachment.pwd.join(node.id.to_s))).to be false
     end
 
     it "doesn't delete or nullify any associated Activities" do

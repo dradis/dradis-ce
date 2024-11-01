@@ -8,7 +8,7 @@ class NamingService
     # Remove newlines and duplicate spaces
     original_filename = original_filename.squish
 
-    return original_filename unless File.exists?(pathname.join(original_filename))
+    return original_filename unless File.exist?(pathname.join(original_filename))
 
     extension = File.extname(original_filename)
     basename = File.basename(original_filename, extension)
@@ -26,7 +26,7 @@ class NamingService
   # If not, return the name with a count based alternative.
   #   name: the project name
   def self.name_project(name)
-    return name unless Project.exists?(name: name)
+    return name unless Project.exist?(name: name)
 
     projects = Project.where("name LIKE ?", "#{name}_copy-%")
     project_names = projects.map(&:name)

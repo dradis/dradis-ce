@@ -99,12 +99,12 @@ module FileBackedModel
 
   def new_record?()
     # return true unless self.filename
-    return !File.exists?(full_path)
+    return !File.exist?(full_path)
   end
 
   # def destroyed?()  true end
   def persisted?()
-    @persisted ||= File.exists?(full_path)
+    @persisted ||= File.exist?(full_path)
   end
 
 
@@ -126,7 +126,7 @@ module FileBackedModel
   end
 
   def destroy
-    return true unless filename && File.exists?(full_path)
+    return true unless filename && File.exist?(full_path)
     File.delete(full_path)
     self
   end
@@ -134,7 +134,7 @@ module FileBackedModel
 
   def save
     return false if !valid?
-    FileUtils.mkdir_p(self.class.pwd) unless File.exists?(self.class.pwd)
+    FileUtils.mkdir_p(self.class.pwd) unless File.exist?(self.class.pwd)
     File.open(full_path, 'w') do |f|
       f << self.content
     end

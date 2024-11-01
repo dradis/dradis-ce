@@ -18,7 +18,7 @@ class DradisTasks < Thor
       init_all = false
       Dir['config/*.template'].each do |template|
         config = File.join('config', File.basename(template, '.template'))
-        if !(File.exists?(config))
+        if !(File.exist?(config))
           if (init_all)
             puts "Initilizing #{config}..."
             FileUtils.cp(template, config)

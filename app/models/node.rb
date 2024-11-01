@@ -102,7 +102,7 @@ class Node < ApplicationRecord
   # deleted too
   def destroy_attachments
     attachments_dir = Attachment.pwd.join(self.id.to_s)
-    FileUtils.rm_rf attachments_dir if File.exists?(attachments_dir)
+    FileUtils.rm_rf attachments_dir if File.exist?(attachments_dir)
   end
 
   def parent_node
