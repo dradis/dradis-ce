@@ -1,7 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Ruby: Upgrade ruby version to 3.2.0
   - Upgraded gems:
-    - [gem]
+    - paper_trail, rails, rails-html-sanitizer, rexml, rspec-rails
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
