@@ -35,8 +35,9 @@ describe 'Revisions#show:' do
     it 'shows the state change' do
       visit project_issue_revisions_path(current_project, record)
 
-      expect(page).to have_content('State Change')
-      expect(page).to have_content('Draft ➡ Published')
+      expect(page).to have_content('State:')
+      expect(page).to have_css('del', text: 'Draft')
+      expect(page).to have_css('ins', text: 'Published')
     end
   end
 end
