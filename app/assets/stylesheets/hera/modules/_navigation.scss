@@ -1,6 +1,9 @@
 .navbar {
   &.in-project {
     background-color: #fff;
-    top: 60px;
+    border-bottom: 1px solid #e8e8e8;
+    height: 60px;
+    padding: 0.5rem 7rem;
+    top: 70px;
   }
 }
