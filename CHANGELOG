@@ -1,7 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Revisions: Show changed state in the revisions view
   - Upgraded gems:
-    - [gem]
+    - rexml
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
