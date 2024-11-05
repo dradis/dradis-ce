@@ -20,6 +20,11 @@
                 <span>Issues</span>
               <% end %>
             <% end %>
+            <%= content_tag :li, :class => controller_path == 'nodes' ? 'active' : '' do %>
+              <%= link_to main_app.project_boards_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
+                <span>Nodes</span>
+              <% end %>
+            <% end %>
             <%= content_tag :li, :class => controller_path == 'boards' || controller_path == 'cards' ? 'active' : '' do %>
               <%= link_to main_app.project_boards_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
                 <span>Methodologies</span>
@@ -30,11 +35,6 @@
             <%= content_tag :li, :class => controller_namespace == 'report_content' ? 'active' : '' do %>
               <%= link_to main_app.project_document_properties_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
                 <span>Report content</span>
-              <% end %>
-            <% end %>
-            <%= content_tag :li, :class => controller_path == 'nodes' ? 'active' : '' do %>
-              <%= link_to main_app.project_boards_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
-                <span>Nodes</span>
               <% end %>
             <% end %>
             <%= content_tag :li, :class => action_name == 'trash' ? 'active' : '' do %>

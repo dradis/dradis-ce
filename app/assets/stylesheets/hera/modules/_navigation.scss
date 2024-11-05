@@ -2,8 +2,30 @@
   &.in-project {
     background-color: #fff;
     border-bottom: 1px solid #e8e8e8;
-    height: 60px;
-    padding: 0.5rem 7rem;
+    height: auto;
+    padding: 0 7rem;
     top: 70px;
+
+    .navbar-collapse {
+      li {
+        border-bottom: 5px solid transparent;
+        margin-right: 1rem;
+        padding: 0.5rem 0;
+
+        a {
+          color: #282828;
+        }
+
+        &.active {
+          border-bottom: 5px solid #a9d1eb;
+        }
+      }
+    }
+
+    .vr {
+      align-self: center;
+      height: 2rem;
+      margin-right: 1rem;
+    }
   }
 }
