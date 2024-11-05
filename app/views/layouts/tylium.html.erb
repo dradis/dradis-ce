@@ -30,8 +30,10 @@
 
   <body class="<%= controller_name %> <%= action_name %>">
 
-    <%= render 'layouts/tylium/navbar' %>
-    <%= render 'layouts/tylium/sidebar' %>
+    <header>
+      <%= render 'layouts/mintcreek/navbar' %>
+      <%= render 'layouts/tylium/navbar' %>
+    </header>
 
     <div id="view-content" class="view-content" data-behavior="view-content">
       <%= render 'shared/noscript' %>

@@ -1,8 +1,8 @@
-<nav class="navbar navbar-expand-lg fixed-top navbar-light" data-behavior="navbar">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top in-project" data-behavior="navbar">
   <div class="container-fluid">
     <div class="d-flex justify-content-between w-100">
 
-      <%= render partial: 'layouts/tylium/navbar/change_project' %>
+      <!--<%= render partial: 'layouts/tylium/navbar/change_project' %>-->
 
       <div class="d-inline-flex">
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation" data-behavior="navbar-toggler">
@@ -10,10 +10,37 @@
         </button>
         <div class="collapse navbar-collapse" id="navbar">
           <ul class="navbar-nav ms-auto mt-lg-0">
+            <%= content_tag :li, :class => controller_path == 'projects' ? 'active' : '' do %>
+              <%= link_to main_app.project_path(current_project), class: 'sidebar-link', data: { behavior: 'sidebar-link' } do %>
+                <i class="fa-solid fa-tachometer sidebar-link-icon"></i> <span class="sidebar-link-label">Dashboard</span>
+              <% end %>
+            <% end %>
+            <%= content_tag :li, :class => controller_path.include?('issues') ? 'active' : '' do %>
+              <%= link_to main_app.project_issues_path(current_project), class: 'sidebar-link', data: { behavior: 'sidebar-link' } do %>
+                <i class="fa-solid fa-bug sidebar-link-icon"></i> <span class="sidebar-link-label">All issues</span>
+              <% end %>
+            <% end %>
+            <%= content_tag :li, :class => controller_path == 'boards' || controller_path == 'cards' ? 'active' : '' do %>
+              <%= link_to main_app.project_boards_path(current_project), class: 'sidebar-link', data: { behavior: 'sidebar-link' } do %>
+                <i class="fa-brands fa-trello sidebar-link-icon"></i> <span class="sidebar-link-label">Methodologies</span>
+              <% end %>
+            <% end %>
+            <!-- Report content will become a dropdown menu for document properties and content blocks -->
+            <% controller_namespace = controller_path.split('/')[0] %>
+            <%= content_tag :li, :class => controller_namespace == 'report_content' ? 'active' : '' do %>
+              <%= link_to main_app.project_document_properties_path(current_project), class: 'sidebar-link', data: { behavior: 'sidebar-link' } do %>
+                <i class="fa-solid fa-file-text sidebar-link-icon"></i> <span class="sidebar-link-label">Report content</span>
+              <% end %>
+            <% end %>
+            <%= content_tag :li, :class => action_name == 'trash' ? 'active' : '' do %>
+              <%= link_to main_app.project_trash_path(current_project), class: 'sidebar-link', data: { behavior: 'sidebar-link' } do %>
+                <i class="fa-solid fa-trash sidebar-link-icon" aria-hidden="true"></i> <span class="sidebar-link-label">Trash</span>
+              <% end %>
+            <% end %>
 
-            <li class="nav-item search">
+           <!-- <li class="nav-item search">
               <%= render "layouts/tylium/navbar/search" %>
-            </li>
+            </li> -->
 
             <li class="nav-item">
               <%= link_to main_app.project_upload_manager_path(current_project), class: 'nav-link', title: 'Upload' do %>
@@ -33,7 +60,7 @@
               <% end %>
             </li>
 
-            <li class="nav-item dropdown">
+            <!--<li class="nav-item dropdown">
               <a href="javascript:void(0)" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-behavior="close-collapse" title="Configuration">
                 <i class="fa-solid fa-cog fa-lg"></i> Configuration
               </a>
@@ -77,7 +104,7 @@
                 <%= link_to 'Profile', main_app.profile_path, class:'dropdown-item', data: { turbolinks: false } if defined?(Dradis::Pro) %>
                 <%= link_to 'Log out', main_app.logout_path, class:'dropdown-item', data: { turbolinks: false } %>
               </div>
-            </li>
+            </li>-->
           </ul>
         </div>
       </div>

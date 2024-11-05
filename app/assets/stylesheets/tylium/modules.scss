@@ -11,17 +11,19 @@
 @import 'tylium/modules/issues/issues';
 @import 'tylium/modules/issues/merge';
 @import 'tylium/modules/modals';
-@import 'tylium/modules/navbar';
+//@import 'tylium/modules/navbar';
 @import 'tylium/modules/nodes';
 @import 'tylium/modules/projects';
 @import 'tylium/modules/restrict_height';
 @import 'tylium/modules/search';
 @import 'tylium/modules/secondary_sidebar';
-@import 'tylium/modules/sidebar';
+// @import 'tylium/modules/sidebar';
 @import 'tylium/modules/styles';
 @import 'tylium/modules/tour';
 @import 'tylium/modules/uploads';
 @import 'tylium/modules/versions';
+@import 'hera/modules/navigation';
+@import 'hera/modules';
 
 [aria-tooltip] {
   position: relative;
