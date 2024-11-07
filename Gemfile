@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.2'
+ruby '3.2.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 7.2.1.1'
@@ -191,7 +191,7 @@ group :test do
   gem 'capybara', '~> 3.39'
   gem 'guard-rspec', require: false
   gem 'selenium-webdriver', '~> 4.17'
-  gem 'shoulda-matchers', '~> 3.1'
+  gem 'shoulda-matchers', '~> 4.0.1'
   gem 'timecop'
 
   # Required by capybara
@@ -221,7 +221,7 @@ gem 'dradis-api', path: 'engines/dradis-api'
 gem 'dradis-projects', '~> 4.14.0'
 
 plugins_file = 'Gemfile.plugins'
-if File.exists?(plugins_file)
+if File.exist?(plugins_file)
   eval(IO.read(plugins_file), binding)
 end
 
