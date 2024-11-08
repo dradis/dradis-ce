@@ -1,11 +1,14 @@
 <% cache ['tags-table', @all_columns, @tags] do %>
   <table class="table table-striped mb-0"
-         data-behavior="dradis-datatable"
-         data-default-columns="<%= @default_columns.to_json %>"
-         data-item-name="tags"
-         data-local-storage-key="project.ce.<%= dom_id(current_project) %>.tags_datatable">
+    data-behavior="dradis-datatable"
+    data-default-columns="<%= @default_columns.to_json %>"
+    data-item-name="tags"
+    data-local-storage-key="project.ce.<%= dom_id(current_project) %>.tags_datatable"
+    data-reorderable="true">
     <thead>
       <tr>
+        <th class="no-sort d-none" data-column-visible="false"><span class="visually-hidden">Sort rank</span></th>
+        <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Sort handle</span></th>
         <% @all_columns.each do |column| %>
           <th><%= column %></th>
         <% end %>
@@ -13,9 +16,14 @@
       </tr>
     </thead>
     <tbody>
-      <% @tags.each do |tag| %>
+      <% @tags.each_with_index do |tag, sort_rank| %>
         <% cache [tag, @all_columns, 'tags-table'] do %>
           <tr id="tag-<%= tag.id %>">
+            <%# DataTables requires a cell with a sequence number in each row to perform the reorder %>
+            <td class="d-none"><%= sort_rank %></td>
+            <td class="text-secondary text-center">
+              <i class="fa-solid fa-reorder"></i><span class="visually-hidden">Change tag order</span>
+            </td>
             <% @all_columns.each do |column| %>
               <%
               sort, display =
