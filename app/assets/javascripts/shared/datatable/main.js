@@ -238,6 +238,7 @@ class DradisDatatable {
   behaviors() {
     this.setupCheckboxListeners();
     this.setupMergeButtonToggle();
+    this.setupReorderListener();
     this.setupTagButtonToggle();
     this.setupBulkDeleteButtonToggle();
     this.setupValidation();

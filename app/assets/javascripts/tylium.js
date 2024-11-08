@@ -34,6 +34,7 @@
 //= require shared/datatable/checkbox
 //= require shared/datatable/delete
 //= require shared/datatable/merge
+//= require shared/datatable/reorder
 //= require shared/datatable/state
 //= require shared/datatable/tag
 //= require shared/datatable/validate
