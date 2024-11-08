@@ -123,6 +123,11 @@ class DradisDatatable {
         ['25', '50', '100', 'All'],
       ],
       pageLength: 25,
+      rowReorder: {
+        enabled: this.$table.data('reorderable'),
+        selector: 'td:has(.fa-reorder)',
+        snapX: 0,
+      },
       stateSave: true,
       stateDuration: 0, // https://datatables.net/reference/option/stateDuration#Default
       // https://datatables.net/reference/option/stateSaveCallback

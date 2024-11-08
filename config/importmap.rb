@@ -13,5 +13,7 @@ pin 'datatables/dataTables.fixedHeader.min'
 pin 'datatables/fixedHeader.bootstrap4.min'
 pin 'datatables/dataTables.select.min'
 pin 'datatables/select.bootstrap4.min'
+pin 'datatables/dataTables.rowReorder.min'
+pin 'datatables/rowReorder.bootstrap5.min'
 
 pin 'stupidtable'
