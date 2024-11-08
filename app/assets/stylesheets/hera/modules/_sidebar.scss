@@ -1,0 +1,83 @@
+.main-sidebar {
+  background-color: #fff;
+  border-right: 1px solid #eee;
+  height: 100vh;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  margin-top: 130px;
+  overflow: hidden;
+  padding: 1rem 1rem;
+  position: fixed;
+  z-index: 1010;
+
+  &.sidebar-collapsed {
+    width: 1rem;
+  }
+
+  &.sidebar-expanded {
+    width: 16rem;
+
+    .sidebar-toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    .scrollable-content {
+      display: flex;
+      flex-direction: column;
+      height: 80vh;
+      overflow-y: auto;
+
+      .nodes-nav {
+        margin: 0;
+        padding: 0;
+
+        .node-tree {
+          .node-list {
+            &.restrict-height {
+              max-height: calc(100vh - 330px - 1.5rem);
+
+              .gradient {
+                background: linear-gradient(
+                  180deg,
+                  rgba($sidebarBackground, 0) 0%,
+                  rgba($sidebarBackground, 0.75) 50%,
+                  rgba($sidebarBackground, 1) 100%
+                );
+              }
+
+              li {
+                padding-left: 0.5rem;
+              }
+
+              .line {
+                border-color: $lightColor;
+              }
+
+              .scroll-more {
+                left: calc(50% - 4rem);
+                background: $sidebarBackground;
+                border-color: $lightColor;
+                font-size: 0.9rem;
+              }
+            }
+          }
+        }
+      }
+
+      .version {
+        cursor: default;
+        font-size: 0.625rem;
+        margin-top: auto;
+        padding: 0.2em 0;
+        text-align: center;
+      }
+
+      .tree-header {
+        h4 {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

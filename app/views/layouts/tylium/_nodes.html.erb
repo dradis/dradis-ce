@@ -1,23 +1,14 @@
-<ul class="nodes-nav tree-navigation">
-  <li class="tree-header sidebar-link m-0 <%= 'active' if controller_path.include?('nodes') %>" data-behavior="nodes-tree sidebar-toggle open-only">
-    <i class="fa-solid fa-sitemap sidebar-link-icon"></i>
-    <div class="sidebar-link-label-container">
-      <span class="sidebar-link-label">Nodes</span>
-      <div class="d-flex align-items-center gap-1">
-        <div class="add-node">
-          <a href="#modal_add_branch_node" data-bs-toggle="modal" tabindex="-1"><i class="fa-solid fa-plus" data-behavior="add-node"></i><span class="visually-hidden">Add node</span></a>
-        </div>
-        <div class="dropdown node-tree-dropdown">
-          <%= link_to "#node-tree", data: { bs_toggle: 'collapse', behavior: 'collapse-collection toggle-node-tree' } do %>
-            <i class="fa-solid fs-6" data-behavior="toggle-icon"></i><span class="visually-hidden">Toggle node tree</span>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </li>
 
+<div class="d-flex flex-row justify-content-between align-items-center tree-header">
+  <h4><i class="fa-solid fa-sitemap me-1"></i>Nodes</h4>
+  <div class="add-node">
+    <a href="#modal_add_branch_node" data-bs-toggle="modal" tabindex="-1"><i class="fa-solid fa-plus" data-behavior="add-node"></i><span class="visually-hidden">Add node</span></a>
+  </div>
+</div>
+
+<ul class="nodes-nav tree-navigation">
   <div id="node-tree" class="note-list collapse show" data-behavior="node-tree-content">
-    <div class="nodes-list restrict-height px-lg-3" data-behavior="restrict-height">
+    <div class="nodes-list restrict-height mt-4" data-behavior="restrict-height">
       <% if @nodes.empty? %>
         <%= render 'shared/empty_state',
           actions_partial: 'layouts/tylium/nodes/empty_state_actions',
