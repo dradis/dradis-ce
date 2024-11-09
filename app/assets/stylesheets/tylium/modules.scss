@@ -149,6 +149,7 @@
 }
 
 .header-underline {
+  align-items: center;
   border-bottom: 1px solid $borderColor;
   display: flex;
   margin-bottom: 0.5em;
@@ -229,12 +230,6 @@ pre {
   background-color: $secondaryBgColor;
   border: 1px solid $borderColor;
   border-radius: 5px;
-}
-
-.rounded-start,
-.rounded-end {
-  // Bootstrap rounds the desired corners, but doesn't square up the rest
-  border-radius: 0;
 }
 
 .tabs-container {
