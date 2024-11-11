@@ -1,31 +1,51 @@
 .main-sidebar {
-  background-color: #fff;
-  border-right: 1px solid #eee;
+  background-color: $white-dark;
+  border-right: 2px solid $border-color-light;
   height: 100vh;
-  bottom: 0;
-  left: 0;
+  left: -7%;
   top: 0;
+  bottom: 0;
   margin-top: 130px;
-  overflow: hidden;
+  overflow-x: hidden;
   padding: 1rem 1rem;
   position: fixed;
+  width: 0;
+  transition: 0.5s;
   z-index: 1010;
 
   &.sidebar-collapsed {
-    width: 1rem;
+    width: 0.5rem;
+
+    .scrollable-content,
+    .version {
+      visibility: hidden;
+    }
+
+    .sidebar-toggle {
+      position: fixed;
+      left: 0;
+    }
   }
 
   &.sidebar-expanded {
     width: 16rem;
+    left: 0;
 
-    .sidebar-toggle-icon {
-      transform: rotate(180deg);
+    .sidebar-toggle {
+      border-right: none;
+      position: absolute;
+      right: -1px;
+
+      .sidebar-toggle-icon {
+        transform: rotate(180deg);
+      }
     }
 
     .scrollable-content {
       display: flex;
       flex-direction: column;
       height: 80vh;
+      margin-top: 3rem;
       overflow-y: auto;
 
       .nodes-nav {
@@ -79,5 +99,28 @@
         }
       }
     }
+  }
+
+  .sidebar-toggle {
+    background-color: $white;
+    border: 1px solid $border-color-light;
+    border-radius: 0.2rem;
+    padding: 0.2rem 0.5rem;
+  }
+
+  @media (min-width: 576px) {
+    left: -4%;
+  }
+
+  @media (min-width: 768px) {
+    left: -3%;
+  }
+
+  @media (min-width: 1024px) {
+    left: -2.5%;
+  }
+
+  @media (min-width: 1200px) {
+    left: -1.5%;
   }
 }

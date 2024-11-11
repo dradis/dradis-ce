@@ -73,10 +73,7 @@
 
       if (this.$sidebar.is($('[data-behavior~=main-sidebar]'))) {
         this.$navbarBrand.css('padding-left', 0);
-        this.$viewContent.css({
-          left: this.$sidebar.css('width'),
-          width: `calc(100vw - ${this.$sidebar.css('width')})`,
-        });
+        this.$viewContent.css('margin-left', 0);
       }
 
       this.changeState(this.storageKey, false);
@@ -101,10 +98,7 @@
         .addClass('sidebar-expanded');
 
       if (this.$sidebar.is($('[data-behavior~=main-sidebar]'))) {
-        this.$viewContent.css({
-          left: this.$sidebar.css('width'),
-          width: `calc(100vw - ${this.$sidebar.css('width')})`,
-        });
+        this.$viewContent.css('margin-left', 256);
 
         if (window.innerWidth > this.minBreakpoint) {
           var navbarBrandOffset = parseFloat(
