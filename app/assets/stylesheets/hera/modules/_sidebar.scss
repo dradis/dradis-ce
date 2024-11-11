@@ -1,12 +1,10 @@
 .main-sidebar {
   background-color: $white-dark;
   border-right: 2px solid $border-color-light;
-  height: 100vh;
-  left: -7%;
-  top: 0;
   bottom: 0;
-  margin-top: 130px;
-  overflow-x: hidden;
+  height: calc(100vh - #{$navbar-height});
+  left: -7%;
+  overflow: hidden;
   padding: 1rem 1rem;
   position: fixed;
   width: 0;
@@ -16,8 +14,7 @@
   &.sidebar-collapsed {
     width: 0.5rem;
 
-    .scrollable-content,
-    .version {
+    .scrollable-content {
       visibility: hidden;
     }
 
@@ -44,9 +41,10 @@
     .scrollable-content {
       display: flex;
       flex-direction: column;
-      height: 80vh;
-      margin-top: 3rem;
-      overflow-y: auto;
+      justify-content: space-between;
+      height: 100%;
+      padding-top: 4rem;
+      overflow-y: scroll;
 
       .nodes-nav {
         margin: 0;
