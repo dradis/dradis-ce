@@ -1,7 +1,7 @@
 .navbar {
   &.in-project {
-    background-color: #fff;
-    border-bottom: 1px solid #e8e8e8;
+    background-color: $white;
+    border-bottom: 1px solid $border-color-light;
     height: auto;
     top: 70px;
     overflow: scroll;
@@ -14,7 +14,7 @@
         padding: 0.6rem;
 
         .nav-link {
-          color: #282828;
+          color: $grey-dark;
           display: flex;
           flex-direction: row;
           font-size: 1.2rem;
@@ -27,10 +27,10 @@
         }
 
         &.active {
-          border-bottom: 5px solid #a9d1eb;
+          border-bottom: 5px solid $brand-color-light;
 
           .nav-link {
-            color: #282828;
+            color: $grey-dark;
           }
         }
       }
