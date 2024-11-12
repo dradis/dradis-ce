@@ -1,113 +1,110 @@
-<nav class="navbar navbar-expand-lg navbar-light fixed-top in-project" data-behavior="navbar">
+<nav class="navbar navbar-expand navbar-light fixed-top in-project" data-behavior="navbar">
   <div class="container-fluid">
-    <div class="d-flex justify-content-between w-100">
+<%#     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation" data-behavior="navbar-toggler">
+      <span class="navbar-toggler-icon"><i class="fa-solid fa-bars"></i></span>
+    </button> %>
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="navbar-nav">
+        <%= content_tag :li, class: 'nav-item ' << (controller_path == 'projects' ? 'active' : '') do %>
+          <%= link_to main_app.project_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
+            <i class="fa-regular fa-folder-open me-md-1"></i>
+            <span class="d-none d-md-block">Project overview</span>
+          <% end %>
+        <% end %>
+        <%= content_tag :li, class: 'nav-item ' << (controller_path.include?('issues') ? 'active' : '') do %>
+          <%= link_to main_app.project_issues_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
+            <i class="fa-solid fa-bug me-md-1"></i>
+            <span class="d-none d-md-block">Issues</span>
+          <% end %>
+        <% end %>
+        <%= content_tag :li, class: 'nav-item ' << (controller_path == 'boards' || controller_path == 'cards' ? 'active' : '') do %>
+          <%= link_to main_app.project_boards_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
+            <i class="fa-brands fa-trello me-md-1"></i>
+            <span class="d-none d-md-block">Methodologies</span>
+          <% end %>
+        <% end %>
+        <!-- Report content will become a dropdown menu for document properties and content blocks -->
+        
+        <%= content_tag :li, class: 'nav-item ' << (action_name == 'trash' ? 'active' : '') do %>
+          <%= link_to main_app.project_trash_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
+            <i class="fa-solid fa-trash-can me-md-1"></i>
+            <span class="d-none d-md-block">Bin</span>
+          <% end %>
+        <% end %>
 
-      <!--<%= render partial: 'layouts/tylium/navbar/change_project' %>-->
+        <!-- <li class="nav-item search">
+          <%= render "layouts/tylium/navbar/search" %>
+        </li> -->
+        <div class="vr"></div>
+        
+        <li class="nav-item">
+          <%= link_to main_app.project_upload_manager_path(current_project), class: 'nav-link', title: 'Upload' do %>
+            <i class="fa-solid fa-cloud-arrow-up me-md-1"></i>
+            <span class="d-none d-md-block">Upload</span>
+          <% end %>
+        </li>
 
-      <div class="d-inline-flex">
-        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation" data-behavior="navbar-toggler">
-          <span class="navbar-toggler-icon"><i class="fa-solid fa-bars"></i></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbar">
-          <ul class="navbar-nav ms-auto mt-lg-0">
-            <%= content_tag :li, :class => controller_path == 'projects' ? 'active' : '' do %>
-              <%= link_to main_app.project_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
-                <span>Project overview</span>
-              <% end %>
+        <li class="nav-item">
+          <%= link_to main_app.project_export_manager_path(current_project), class: 'nav-link', title: 'Export' do %>
+            <i class="fa-solid fa-file-export me-md-1"></i>
+            <span class="d-none d-md-block">Export</span>
+          <% end %>
+        </li>
+
+        <li class="nav-item">
+          <%= link_to main_app.project_qa_issues_path(current_project), class: 'nav-link', title: 'QA' do %>
+            <i class="fa-regular fa-handshake me-md-1"></i>
+            <span class="d-none d-md-block">QA</span>
+          <% end %>
+        </li>
+
+        <!--<li class="nav-item dropdown">
+          <a href="javascript:void(0)" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-behavior="close-collapse" title="Configuration">
+            <i class="fa-solid fa-cog fa-lg"></i> Configuration
+          </a>
+
+          <div class="dropdown-menu dropdown-menu-end">
+            <% if defined?(Dradis::Pro) %>
+              <%= link_to 'Project properties', main_app.edit_project_path(current_project), data: { turbolinks: false }, class: 'dropdown-item' %>
+              <div class="divider"></div>
             <% end %>
-            <%= content_tag :li, :class => controller_path.include?('issues') ? 'active' : '' do %>
-              <%= link_to main_app.project_issues_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
-                <span>Issues</span>
-              <% end %>
-            <% end %>
-            <%= content_tag :li, :class => controller_path == 'nodes' ? 'active' : '' do %>
-              <%= link_to main_app.project_boards_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
-                <span>Nodes</span>
-              <% end %>
-            <% end %>
-            <%= content_tag :li, :class => controller_path == 'boards' || controller_path == 'cards' ? 'active' : '' do %>
-              <%= link_to main_app.project_boards_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
-                <span>Methodologies</span>
-              <% end %>
-            <% end %>
-            <!-- Report content will become a dropdown menu for document properties and content blocks -->
-            <%= content_tag :li, :class => action_name == 'trash' ? 'active' : '' do %>
-              <%= link_to main_app.project_trash_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
-                <span>Bin</span>
-              <% end %>
-            <% end %>
 
-           <!-- <li class="nav-item search">
-              <%= render "layouts/tylium/navbar/search" %>
-            </li> -->
-            <div class="vr"></div>
-            
-            <li class="nav-item">
-              <%= link_to main_app.project_upload_manager_path(current_project), class: 'nav-link', title: 'Upload' do %>
-                <span>Upload</span>
-              <% end %>
-            </li>
+            <%= link_to 'Configure plugins', main_app.project_configurations_path(current_project), class: 'dropdown-item' %>
+          </div>
+        </li>
 
-            <li class="nav-item">
-              <%= link_to main_app.project_export_manager_path(current_project), class: 'nav-link', title: 'Export' do %>
-                <span>Export</span>
-              <% end %>
-            </li>
+        <li class="nav-item notifications dropdown">
+          <%=
+            link_to main_app.project_notifications_path(current_project),
+              class: 'nav-link dropdown-toggle',
+              data: {
+                bs_toggle: 'dropdown',
+                behavior: 'notifications-dropdown close-collapse',
+                project_id: current_project.id
+              },
+              role: 'button',
+              title: 'Notifications' do %>
 
-            <li class="nav-item">
-              <%= link_to main_app.project_qa_issues_path(current_project), class: 'nav-link', title: 'QA' do %>
-                <span>QA</span>
-              <% end %>
-            </li>
+              <i class="notifications-bell fa-solid fa-bell fa-lg"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i> Notifications
+          <% end %>
 
-            <!--<li class="nav-item dropdown">
-              <a href="javascript:void(0)" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-behavior="close-collapse" title="Configuration">
-                <i class="fa-solid fa-cog fa-lg"></i> Configuration
-              </a>
+          <div class="dropdown-menu dropdown-menu-end" data-url="<%= main_app.notifications_path %>"></div>
+        </li>
 
-              <div class="dropdown-menu dropdown-menu-end">
-                <% if defined?(Dradis::Pro) %>
-                  <%= link_to 'Project properties', main_app.edit_project_path(current_project), data: { turbolinks: false }, class: 'dropdown-item' %>
-                  <div class="divider"></div>
-                <% end %>
+        <%= render partial: 'layouts/tylium/navbar/help' %>
 
-                <%= link_to 'Configure plugins', main_app.project_configurations_path(current_project), class: 'dropdown-item' %>
-              </div>
-            </li>
-
-            <li class="nav-item notifications dropdown">
-              <%=
-                link_to main_app.project_notifications_path(current_project),
-                  class: 'nav-link dropdown-toggle',
-                  data: {
-                    bs_toggle: 'dropdown',
-                    behavior: 'notifications-dropdown close-collapse',
-                    project_id: current_project.id
-                  },
-                  role: 'button',
-                  title: 'Notifications' do %>
-
-                  <i class="notifications-bell fa-solid fa-bell fa-lg"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i> Notifications
-              <% end %>
-
-              <div class="dropdown-menu dropdown-menu-end" data-url="<%= main_app.notifications_path %>"></div>
-            </li>
-
-            <%= render partial: 'layouts/tylium/navbar/help' %>
-
-            <li class="nav-item dropdown user-menu ms-lg-1 ms-0">
-              <a href="javascript:void(0)" class="nav-link dropdown-toggle py-1 p-1 d-flex justify-content-lg-between align-items-center" data-bs-toggle="dropdown" data-behavior="close-collapse" title="User">
-                <%= avatar_image(current_user, size: 32) %>
-                <span class="user-menu-name"><%= current_user.name %></span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-end">
-                <%= link_to 'Profile', main_app.profile_path, class:'dropdown-item', data: { turbolinks: false } if defined?(Dradis::Pro) %>
-                <%= link_to 'Log out', main_app.logout_path, class:'dropdown-item', data: { turbolinks: false } %>
-              </div>
-            </li>-->
-          </ul>
-        </div>
-      </div>
+        <li class="nav-item dropdown user-menu ms-lg-1 ms-0">
+          <a href="javascript:void(0)" class="nav-link dropdown-toggle py-1 p-1 d-flex justify-content-lg-between align-items-center" data-bs-toggle="dropdown" data-behavior="close-collapse" title="User">
+            <%= avatar_image(current_user, size: 32) %>
+            <span class="user-menu-name"><%= current_user.name %></span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-end">
+            <%= link_to 'Profile', main_app.profile_path, class:'dropdown-item', data: { turbolinks: false } if defined?(Dradis::Pro) %>
+            <%= link_to 'Log out', main_app.logout_path, class:'dropdown-item', data: { turbolinks: false } %>
+          </div>
+        </li>-->
+      </ul>
     </div>
+    <!--<%= render partial: 'layouts/tylium/navbar/change_project' %>-->
   </div>
 </nav>

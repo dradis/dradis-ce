@@ -3,21 +3,48 @@
     background-color: #fff;
     border-bottom: 1px solid #e8e8e8;
     height: auto;
-    padding: 0 7rem;
     top: 70px;
+    overflow: scroll;
+    padding: 0;
 
-    .navbar-collapse {
-      li {
+    .navbar-nav {
+      .nav-item {
         border-bottom: 5px solid transparent;
         margin-right: 1rem;
-        padding: 0.5rem 0;
+        padding: 0.6rem;
 
-        a {
+        .nav-link {
           color: #282828;
+          display: flex;
+          flex-direction: row;
+          font-size: 1.2rem;
+          align-items: baseline;
+
+          @media (min-width: 768px) {
+            font-size: 0.9rem;
+            padding: 0.5rem 0;
+          }
         }
 
         &.active {
           border-bottom: 5px solid #a9d1eb;
+
+          .nav-link {
+            color: #282828;
+          }
+        }
+      }
+      @media (min-width: 567px) {
+        .nav-item,
+        .vr {
+          margin-right: 0.2rem;
+        }
+      }
+
+      @media (min-width: 992px) {
+        .nav-item,
+        .vr {
+          margin-right: 1rem;
         }
       }
     }
@@ -26,6 +53,10 @@
       align-self: center;
       height: 2rem;
       margin-right: 1rem;
+    }
+
+    @media (min-width: 1200px) {
+      padding: 0 7rem;
     }
   }
 }
