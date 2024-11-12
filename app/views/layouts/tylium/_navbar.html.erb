@@ -1,26 +1,23 @@
 <nav class="navbar navbar-expand navbar-light fixed-top in-project" data-behavior="navbar">
-  <div class="container-fluid">
-<%#     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation" data-behavior="navbar-toggler">
-      <span class="navbar-toggler-icon"><i class="fa-solid fa-bars"></i></span>
-    </button> %>
+  <div class="container-fluid p-0">
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="navbar-nav">
         <%= content_tag :li, class: 'nav-item ' << (controller_path == 'projects' ? 'active' : '') do %>
           <%= link_to main_app.project_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
             <i class="fa-regular fa-folder-open me-md-1"></i>
-            <span class="d-none d-md-block">Project overview</span>
+            <span class="d-none d-lg-block">Project overview</span>
           <% end %>
         <% end %>
         <%= content_tag :li, class: 'nav-item ' << (controller_path.include?('issues') ? 'active' : '') do %>
           <%= link_to main_app.project_issues_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
             <i class="fa-solid fa-bug me-md-1"></i>
-            <span class="d-none d-md-block">Issues</span>
+            <span class="d-none d-lg-block">Issues</span>
           <% end %>
         <% end %>
         <%= content_tag :li, class: 'nav-item ' << (controller_path == 'boards' || controller_path == 'cards' ? 'active' : '') do %>
           <%= link_to main_app.project_boards_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
             <i class="fa-brands fa-trello me-md-1"></i>
-            <span class="d-none d-md-block">Methodologies</span>
+            <span class="d-none d-lg-block">Methodologies</span>
           <% end %>
         <% end %>
         <!-- Report content will become a dropdown menu for document properties and content blocks -->
@@ -28,7 +25,7 @@
         <%= content_tag :li, class: 'nav-item ' << (action_name == 'trash' ? 'active' : '') do %>
           <%= link_to main_app.project_trash_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
             <i class="fa-solid fa-trash-can me-md-1"></i>
-            <span class="d-none d-md-block">Bin</span>
+            <span class="d-none d-lg-block">Bin</span>
           <% end %>
         <% end %>
 
@@ -40,21 +37,21 @@
         <li class="nav-item">
           <%= link_to main_app.project_upload_manager_path(current_project), class: 'nav-link', title: 'Upload' do %>
             <i class="fa-solid fa-cloud-arrow-up me-md-1"></i>
-            <span class="d-none d-md-block">Upload</span>
+            <span class="d-none d-lg-block">Upload</span>
           <% end %>
         </li>
 
         <li class="nav-item">
           <%= link_to main_app.project_export_manager_path(current_project), class: 'nav-link', title: 'Export' do %>
             <i class="fa-solid fa-file-export me-md-1"></i>
-            <span class="d-none d-md-block">Export</span>
+            <span class="d-none d-lg-block">Export</span>
           <% end %>
         </li>
 
         <li class="nav-item">
           <%= link_to main_app.project_qa_issues_path(current_project), class: 'nav-link', title: 'QA' do %>
             <i class="fa-regular fa-handshake me-md-1"></i>
-            <span class="d-none d-md-block">QA</span>
+            <span class="d-none d-lg-block">QA</span>
           <% end %>
         </li>
 
