@@ -19,34 +19,6 @@
   }
 }
 
-.breadcrumb {
-  background-color: $gray-200;
-  flex-wrap: nowrap;
-  margin-bottom: 0;
-  padding: 0.75rem 1rem 0.75rem $mainContentPadding;
-  white-space: nowrap;
-  width: 100%;
-
-  .breadcrumb-item {
-    white-space: nowrap;
-
-    &.active {
-      color: darken($mutedText, 4.15%);
-    }
-
-    & + .breadcrumb-item::before {
-      content: '\f105';
-      font-family: var(--fa-style-family, 'Font Awesome 6 Free');
-      font-weight: 600;
-    }
-
-    &:last-of-type {
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  }
-}
-
 .page-title {
   margin: 1rem 0 0 $mainContentMargin;
   cursor: default;
@@ -87,10 +59,9 @@
   }
 
   nav:not(.d-flex) {
-    border-bottom: 1px solid $borderColor;
     position: sticky;
     top: 0;
-    z-index: 1050;
+    z-index: 1000;
   }
 
   @include media-breakpoint-down(lg) {

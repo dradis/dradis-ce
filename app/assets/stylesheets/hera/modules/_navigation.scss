@@ -98,3 +98,33 @@
     }
   }
 }
+
+.breadcrumb {
+  background-color: transparent;
+  border: none;
+  flex-wrap: nowrap;
+  margin-bottom: 2rem;
+  padding: 0.75rem 1rem 0.75rem $mainContentPadding;
+  white-space: nowrap;
+  width: 100%;
+
+  .breadcrumb-item {
+    white-space: nowrap;
+
+    &.active {
+      color: $muted-text;
+    }
+
+    & + .breadcrumb-item::before {
+      content: '\f105';
+      font-family: var(--fa-style-family, 'Font Awesome 6 Free');
+      font-weight: 600;
+      color: darken($border-color-light, 5%);
+    }
+
+    &:last-of-type {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
