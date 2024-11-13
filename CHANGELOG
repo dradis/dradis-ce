@@ -1,6 +1,8 @@
 [v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
+  - Welcome Kit:
+    - Add HTML report template
+    - Add Issue and evidence templates
+    - Update OWASP Top 10 methodology to latest version (2021)
   - Upgraded gems:
     - rexml
   - Bugs fixes:
