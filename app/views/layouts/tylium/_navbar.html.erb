@@ -4,19 +4,19 @@
       <ul class="navbar-nav">
         <%= content_tag :li, class: 'nav-item ' << (controller_path == 'projects' ? 'active' : '') do %>
           <%= link_to main_app.project_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
-            <i class="fa-regular fa-folder-open me-md-1"></i>
+            <i class="fa-regular fa-folder-open me-md-1" title="Project overview"></i>
             <span class="d-none d-lg-block">Project overview</span>
           <% end %>
         <% end %>
         <%= content_tag :li, class: 'nav-item ' << (controller_path.include?('issues') ? 'active' : '') do %>
           <%= link_to main_app.project_issues_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
-            <i class="fa-solid fa-bug me-md-1"></i>
+            <i class="fa-solid fa-bug me-md-1" title="Issues"></i>
             <span class="d-none d-lg-block">Issues</span>
           <% end %>
         <% end %>
         <%= content_tag :li, class: 'nav-item ' << (controller_path == 'boards' || controller_path == 'cards' ? 'active' : '') do %>
           <%= link_to main_app.project_boards_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
-            <i class="fa-brands fa-trello me-md-1"></i>
+            <i class="fa-brands fa-trello me-md-1" title="Methodologies"></i>
             <span class="d-none d-lg-block">Methodologies</span>
           <% end %>
         <% end %>
@@ -24,8 +24,8 @@
         
         <%= content_tag :li, class: 'nav-item ' << (action_name == 'trash' ? 'active' : '') do %>
           <%= link_to main_app.project_trash_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
-            <i class="fa-solid fa-trash-can me-md-1"></i>
-            <span class="d-none d-lg-block">Bin</span>
+            <i class="fa-solid fa-trash-can me-md-1" title="Project bin"></i>
+            <span class="d-none d-lg-block">Project bin</span>
           <% end %>
         <% end %>
 
@@ -36,21 +36,21 @@
         
         <li class="nav-item">
           <%= link_to main_app.project_upload_manager_path(current_project), class: 'nav-link', title: 'Upload' do %>
-            <i class="fa-solid fa-cloud-arrow-up me-md-1"></i>
+            <i class="fa-solid fa-cloud-arrow-up me-md-1" title="Upload"></i>
             <span class="d-none d-lg-block">Upload</span>
           <% end %>
         </li>
 
         <li class="nav-item">
           <%= link_to main_app.project_export_manager_path(current_project), class: 'nav-link', title: 'Export' do %>
-            <i class="fa-solid fa-file-export me-md-1"></i>
+            <i class="fa-solid fa-file-export me-md-1" title="Export"></i>
             <span class="d-none d-lg-block">Export</span>
           <% end %>
         </li>
 
         <li class="nav-item">
           <%= link_to main_app.project_qa_issues_path(current_project), class: 'nav-link', title: 'QA' do %>
-            <i class="fa-regular fa-handshake me-md-1"></i>
+            <i class="fa-regular fa-handshake me-md-1" title="QA"></i>
             <span class="d-none d-lg-block">QA</span>
           <% end %>
         </li>
