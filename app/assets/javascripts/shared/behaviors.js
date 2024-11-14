@@ -135,6 +135,18 @@
       }, 1000);
     });
 
+    // Sortable lists
+    $('[data-behavior~=ui-sortable]').sortable({
+      axis: 'y',
+      containment: 'parent',
+      cursor: 'move',
+      handle: '.fa-reorder',
+      update: function () {
+        console.log($(this))
+        $.post($(this).data('sort-url'), $(this).sortable('serialize'));
+      },
+    });
+    
     window.initBehaviors = initBehaviors;
   }
 

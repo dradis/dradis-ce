@@ -1,6 +1,7 @@
 class TagsController < AuthenticatedController
   include ProjectScoped
   include ActivityTracking
+  include Sortable
 
   before_action :set_columns, only: :index
   load_and_authorize_resource
