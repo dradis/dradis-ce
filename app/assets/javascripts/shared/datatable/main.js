@@ -126,7 +126,7 @@ class DradisDatatable {
       rowReorder: {
         enabled: this.$table.data('reorderable'),
         selector: 'td:has(.fa-reorder)',
-        snapX: 0,
+        snapX: 8,
       },
       stateSave: true,
       stateDuration: 0, // https://datatables.net/reference/option/stateDuration#Default

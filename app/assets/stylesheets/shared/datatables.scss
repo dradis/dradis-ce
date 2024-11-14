@@ -27,6 +27,10 @@ div.dataTables_wrapper {
 
     tbody {
       tr {
+        &.dt-rowReorder-moving {
+          outline-color: $lightColor;
+        }
+
         .select-checkbox {
           padding-left: 0.25rem;
 
@@ -268,4 +272,9 @@ div.dataTables_wrapper {
       border-bottom: 1px solid darken($white, 10%);
     }
   }
+}
+
+div.dt-rowReorder-float-parent {
+  border-radius: 0.15rem;
+  outline-color: $primaryColor;
 }
