@@ -30,11 +30,12 @@
         }
 
         .nav-link {
+          align-items: center;
           color: $grey-dark;
           display: flex;
           flex-direction: row;
           font-size: 1rem;
-          align-items: center;
+          text-transform: capitalize;
 
           &.dropdown-toggle::after {
             display: inline-block;
