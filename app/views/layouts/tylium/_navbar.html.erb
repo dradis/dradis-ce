@@ -31,12 +31,6 @@
               <% end %>
             <% end %>
             <!-- Report content will become a dropdown menu for document properties and content blocks -->
-            <% controller_namespace = controller_path.split('/')[0] %>
-            <%= content_tag :li, :class => controller_namespace == 'report_content' ? 'active' : '' do %>
-              <%= link_to main_app.project_document_properties_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
-                <span>Report content</span>
-              <% end %>
-            <% end %>
             <%= content_tag :li, :class => action_name == 'trash' ? 'active' : '' do %>
               <%= link_to main_app.project_trash_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
                 <span>Bin</span>
