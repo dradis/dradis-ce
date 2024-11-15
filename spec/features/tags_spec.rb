@@ -8,17 +8,21 @@ describe 'Tag pages:' do
   end
 
   describe 'tags#index', js: true do
-    let!(:tag) { create(:tag, name: '!9467bd_critical' , project: current_project) }
+    let!(:tag) { create(:tag, name: '!9467bd_critical' , project: current_project, position: 1) }
+    let!(:tag2) { create(:tag, name: '!d62728_high' , project: current_project, position: 2) }
+    let!(:tag3) { create(:tag, name: '!ff7f0e_medium' , project: current_project, position: 3) }
+
     before do
       visit project_tags_path(current_project)
     end
+
     let(:default_columns) { ['Name'] }
     let(:hidden_columns) { ['Color', 'Created', 'Updated'] }
     let(:filter) { { keyword: tag.name, filter_count: 1 } }
 
     it_behaves_like 'a DataTable'
 
-    describe 'can delete tag', js: true do
+    describe 'deleting a tag', js: true do
       it 'deletes the Tag' do
         page.find("tr#tag-#{tag.id}").hover
         page.accept_confirm do
@@ -29,7 +33,7 @@ describe 'Tag pages:' do
       end
     end
 
-    describe 'can edit tag', js: true do
+    describe 'editing a tag', js: true do
       it 'updates the Tag' do
         page.find("tr#tag-#{tag.id}").hover
         click_link('Edit')
@@ -39,6 +43,23 @@ describe 'Tag pages:' do
           click_button 'Update Tag'
         end.to change { tag.reload.name }.from('!9467bd_critical').to('!000000_test')
         expect(page).to have_text('Tag updated.')
+      end
+    end
+
+    describe 'sorting tags', js: true do
+      it 'updates tag priority values' do
+        expect(tag.position).to eq(1)
+        expect(tag2.position).to eq(2)
+        expect(tag3.position).to eq(3)
+
+        tag3_element = find("#tag-#{tag3.id}").find('.fa-reorder')
+        tag1_element = find("#tag-#{tag.id}")
+
+        tag3_element.drag_to(tag1_element)
+
+        expect(tag.reload.position).to eq(2)
+        expect(tag2.reload.position).to eq(3)
+        expect(tag3.reload.position).to eq(1)
       end
     end
   end
@@ -62,7 +83,7 @@ describe 'Tag pages:' do
         expect(page).to have_link('Test')
       end
 
-      it 'renders manage tag' do
+      it 'renders manage tags' do
         click_link 'Manage tags'
         expect(current_path).to eq(project_tags_path(current_project))
       end
@@ -90,7 +111,7 @@ describe 'Tag pages:' do
         expect(page).to have_link('Ultra')
       end
 
-      it 'renders manage tag' do
+      it 'renders manage tags' do
         click_link 'Manage Tags'
         expect(current_path).to eq(project_tags_path(current_project))
       end
