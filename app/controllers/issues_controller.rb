@@ -202,7 +202,7 @@ class IssuesController < AuthenticatedController
   end
 
   def set_tags
-    @tags = current_project.tags.order(:position)
+    @tags = current_project.tags
   end
 
   def issue_params
