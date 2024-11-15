@@ -7,7 +7,7 @@ class TagsController < AuthenticatedController
   load_and_authorize_resource
 
   def index
-    @tags = current_project.tags
+    @tags = current_project.tags.order(:position)
   end
 
   def new; end
