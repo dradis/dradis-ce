@@ -2,11 +2,9 @@ module Sortable
   extend ActiveSupport::Concern
 
   def sort
-    klass = sort_params[:controller].classify.constantize
-
-    klass.transaction do
+    sortable_class.transaction do
       sort_params[:sortable_ids].each_with_index do |id, index|
-        klass.where(id: id.to_i).update_all({ position: index + 1 })
+        sortable_class.where(id: id.to_i).update_all({ position: index + 1 })
       end
     end
 
@@ -16,6 +14,11 @@ module Sortable
   private
 
   def sort_params
-    params.permit(:controller, sortable_ids: [])
+    params.permit(sortable_ids: [])
+  end
+
+  def sortable_class
+    # to be implemented by each controller
+    raise NotImplementedError
   end
 end
