@@ -142,8 +142,10 @@
       cursor: 'move',
       handle: '.fa-reorder',
       update: function () {
-        console.log($(this))
-        $.post($(this).data('sort-url'), $(this).sortable('serialize'));
+        $.post(
+          $(this).data('sort-url'), 
+          $(this).sortable('serialize', { key: 'sortable_ids[]' })
+        );
       },
     });
     
