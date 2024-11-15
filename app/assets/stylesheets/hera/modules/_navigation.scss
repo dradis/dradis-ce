@@ -6,6 +6,14 @@
     top: 70px;
     padding: 0;
 
+    .navbar-brand {
+      img {
+        height: 2.2em;
+        margin: 3px 0 -3px;
+        padding: 0 15px;
+      }
+    }
+
     .navbar-nav {
       .nav-item {
         border-bottom: 5px solid transparent;

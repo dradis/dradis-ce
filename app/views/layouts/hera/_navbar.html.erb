@@ -1,5 +1,10 @@
 <nav class="navbar navbar-expand navbar-light fixed-top in-project" data-behavior="navbar">
   <div class="container-fluid p-0">
+    <% if defined?(Dradis::CE)%>
+      <%= link_to main_app.project_path(current_project), class: 'navbar-brand' do %>
+        <%= image_tag 'logo_small.png', alt: 'Dradis Pro logo', class: 'p-lg-0' %>
+      <% end %>
+    <% end %>
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="navbar-nav">
         <%= content_tag :li, class: 'nav-item ' << (controller_path == 'projects' ? 'active' : '') do %>
@@ -28,10 +33,6 @@
             <span class="d-none d-lg-block">Project bin</span>
           <% end %>
         <% end %>
-
-        <!-- <li class="nav-item search">
-          <%= render "layouts/tylium/navbar/search" %>
-        </li> -->
         <div class="vr"></div>
         
         <li class="nav-item">
@@ -54,6 +55,58 @@
             <span class="d-none d-lg-block">QA</span>
           <% end %>
         </li>
+      </ul>
+
+      <% if defined?(Dradis::CE) %>
+        <ul class="navbar-nav">
+          <li class="d-none d-xl-inline">
+            <%= render "layouts/tylium/navbar/search" %>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="javascript:void(0)" class="nav-link dropdown-toggle no-caret" data-bs-toggle="dropdown" data-behavior="close-collapse" title="Configuration">
+              <i class="fa-solid fa-cog fa-lg d-none d-xl-inline"></i> 
+              <span class="dinline d-xl-none">Configuration</span>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><%= link_to 'Configure plugins', main_app.project_configurations_path(current_project), class: 'dropdown-item' %></li>
+            </ul>
+          </li>
+          <li class="nav-item notifications dropdown py-2 py-lg-0">
+            <%= 
+              link_to main_app.project_notifications_path(current_project), 
+                class: 'dropdown-toggle', 
+                data: { 
+                  bs_toggle: 'dropdown', 
+                  behavior: 'notifications-dropdown close-collapse',
+                  project_id: current_project.id 
+                }, 
+                role: 'button', 
+                title: 'Notifications' do %>
+              <i class="notifications-bell fa-solid fa-bell"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i>
+            <% end %>
+            <div class="dropdown-menu dropdown-menu-lg-end mt-lg-1 rounded-0 rounded-bottom" data-url="<%= main_app.notifications_path %>">
+            </div>
+          </li>
+          <%= render partial: 'layouts/tylium/navbar/help' %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <%= avatar_image(current_user, size: 32) %>
+              <span class="ms-1"><%= current_user.name %></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+              <li><%= link_to 'Profile', main_app.profile_path, class: 'dropdown-item', data: { turbolinks: false } if defined?(Dradis::Pro)%></li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <%= link_to main_app.logout_path,  class: 'dropdown-item', data: { turbolinks: false } do %>
+                  <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                  <span>Logout</span>
+                <% end %>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      <% end %>
 
         <!--<li class="nav-item dropdown">
           <a href="javascript:void(0)" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-behavior="close-collapse" title="Configuration">
@@ -100,7 +153,6 @@
             <%= link_to 'Log out', main_app.logout_path, class:'dropdown-item', data: { turbolinks: false } %>
           </div>
         </li>-->
-      </ul>
     </div>
     <!--<%= render partial: 'layouts/tylium/navbar/change_project' %>-->
   </div>
