@@ -1,8 +1,14 @@
+.ce {
+  .main-sidebar {
+    height: calc(100vh - #{$navbar-height-ce});
+  }
+}
+
 .main-sidebar {
   background-color: $white-dark;
   border-right: 2px solid $border-color-light;
   bottom: 0;
-  height: calc(100vh - #{$navbar-height});
+  height: calc(100vh - #{$navbar-height-pro});
   left: -7%;
   overflow: hidden;
   padding: 1rem 1rem;

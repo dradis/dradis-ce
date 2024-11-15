@@ -1,7 +1,13 @@
+.ce {
+  .view-content {
+    margin-top: $navbar-height-ce;
+  }
+}
+
 .view-content {
   background-color: $white;
   margin-left: 16rem;
-  margin-top: 130px;
+  margin-top: $navbar-height-pro;
   padding: 2rem;
   transition: margin-left 0.5s;
 }

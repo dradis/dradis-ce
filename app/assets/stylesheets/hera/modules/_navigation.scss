@@ -1,3 +1,22 @@
+.ce {
+  .navbar.in-project {
+    padding: 0 2rem;
+    top: 0;
+
+    .container-fluid {
+      max-width: 1680px;
+
+      .navbar-brand {
+        img {
+          height: 2.2em;
+          margin: 3px 0 -3px;
+          padding: 0 15px;
+        }
+      }
+    }
+  }
+}
+
 .navbar {
   &.in-project {
     background-color: $white;
@@ -5,14 +24,6 @@
     height: auto;
     top: 70px;
     padding: 0;
-
-    .navbar-brand {
-      img {
-        height: 2.2em;
-        margin: 3px 0 -3px;
-        padding: 0 15px;
-      }
-    }
 
     .navbar-nav {
       .nav-item {
@@ -54,6 +65,12 @@
             border-right: 0.3em solid transparent;
             border-bottom: 0;
             border-left: 0.3em solid transparent;
+
+            &.no-caret-xl {
+              @media (min-width: 1200px) {
+                display: none;
+              }
+            }
           }
 
           @media (min-width: 1024px) {

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand navbar-light fixed-top in-project" data-behavior="navbar">
   <div class="container-fluid p-0">
-    <% if defined?(Dradis::CE)%>
+    <% if !defined?(Dradis::Pro) %>
       <%= link_to main_app.project_path(current_project), class: 'navbar-brand' do %>
         <%= image_tag 'logo_small.png', alt: 'Dradis Pro logo', class: 'p-lg-0' %>
       <% end %>
@@ -57,13 +57,13 @@
         </li>
       </ul>
 
-      <% if defined?(Dradis::CE) %>
+      <% if !defined?(Dradis::Pro) %>
         <ul class="navbar-nav">
           <li class="d-none d-xl-inline">
             <%= render "layouts/hera/navbar/search" %>
           </li>
           <li class="nav-item dropdown">
-            <a href="javascript:void(0)" class="nav-link dropdown-toggle no-caret" data-bs-toggle="dropdown" data-behavior="close-collapse" title="Configuration">
+            <a href="javascript:void(0)" class="nav-link dropdown-toggle no-caret-xl" data-bs-toggle="dropdown" data-behavior="close-collapse" title="Configuration">
               <i class="fa-solid fa-cog fa-lg d-none d-xl-inline"></i> 
               <span class="dinline d-xl-none">Configuration</span>
             </a>
@@ -72,7 +72,7 @@
               <li><%= link_to 'Configure plugins', main_app.project_configurations_path(current_project), class: 'dropdown-item' %></li>
             </ul>
           </li>
-          <li class="nav-item notifications dropdown py-2 py-lg-0">
+          <li class="nav-item notifications dropdown">
             <%= 
               link_to main_app.project_notifications_path(current_project), 
                 class: 'dropdown-toggle', 
@@ -85,8 +85,8 @@
                 title: 'Notifications' do %>
               <i class="notifications-bell fa-solid fa-bell"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i>
             <% end %>
-            <div class="dropdown-menu dropdown-menu-lg-end mt-lg-1 rounded-0 rounded-bottom" data-url="<%= main_app.notifications_path %>">
-            </div>
+            <ul class="dropdown-menu dropdown-menu-end" data-url="<%= main_app.notifications_path %>">
+            </ul>
           </li>
           <%= render partial: 'layouts/hera/navbar/help' %>
           <li class="nav-item dropdown">

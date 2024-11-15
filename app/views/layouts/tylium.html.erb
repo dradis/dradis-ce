@@ -28,7 +28,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="<%= controller_name %> <%= action_name %>">
+  <body class="<%= defined?(Dradis::Pro) ? 'pro' : 'ce' %> <%= controller_name %> <%= action_name %>">
 
     <header>
       <%= render 'layouts/hera/navbar' %>
