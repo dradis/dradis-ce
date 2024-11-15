@@ -107,52 +107,6 @@
           </li>
         </ul>
       <% end %>
-
-        <!--<li class="nav-item dropdown">
-          <a href="javascript:void(0)" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-behavior="close-collapse" title="Configuration">
-            <i class="fa-solid fa-cog fa-lg"></i> Configuration
-          </a>
-
-          <div class="dropdown-menu dropdown-menu-end">
-            <% if defined?(Dradis::Pro) %>
-              <%= link_to 'Project properties', main_app.edit_project_path(current_project), data: { turbolinks: false }, class: 'dropdown-item' %>
-              <div class="divider"></div>
-            <% end %>
-
-            <%= link_to 'Configure plugins', main_app.project_configurations_path(current_project), class: 'dropdown-item' %>
-          </div>
-        </li>
-
-        <li class="nav-item notifications dropdown">
-          <%=
-            link_to main_app.project_notifications_path(current_project),
-              class: 'nav-link dropdown-toggle',
-              data: {
-                bs_toggle: 'dropdown',
-                behavior: 'notifications-dropdown close-collapse',
-                project_id: current_project.id
-              },
-              role: 'button',
-              title: 'Notifications' do %>
-
-              <i class="notifications-bell fa-solid fa-bell fa-lg"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i> Notifications
-          <% end %>
-
-          <div class="dropdown-menu dropdown-menu-end" data-url="<%= main_app.notifications_path %>"></div>
-        </li>
-
-        <%= render partial: 'layouts/tylium/navbar/help' %>
-
-        <li class="nav-item dropdown user-menu ms-lg-1 ms-0">
-          <a href="javascript:void(0)" class="nav-link dropdown-toggle py-1 p-1 d-flex justify-content-lg-between align-items-center" data-bs-toggle="dropdown" data-behavior="close-collapse" title="User">
-            <%= avatar_image(current_user, size: 32) %>
-            <span class="user-menu-name"><%= current_user.name %></span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-end">
-            <%= link_to 'Profile', main_app.profile_path, class:'dropdown-item', data: { turbolinks: false } if defined?(Dradis::Pro) %>
-            <%= link_to 'Log out', main_app.logout_path, class:'dropdown-item', data: { turbolinks: false } %>
-          </div>
-        </li>-->
     </div>
     <!--<%= render partial: 'layouts/tylium/navbar/change_project' %>-->
   </div>
