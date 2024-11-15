@@ -1,0 +1,119 @@
+.navbar {
+  .form-search {
+    height: 2rem;
+    margin-left: 0.25rem;
+    position: relative;
+    transition: width 0.2s ease-in-out;
+    width: 0px;
+    z-index: 1;
+
+    .btn {
+      align-items: center;
+      background: initial;
+      border-radius: 0.375rem;
+      color: $grey-dark;
+      display: flex;
+      font-size: 1em;
+      height: 2rem;
+      position: absolute;
+      right: 0;
+      top: 3px;
+      width: 2rem;
+    }
+
+    &:active,
+    &:hover {
+      width: 9.5rem;
+      cursor: pointer;
+
+      .btn {
+        background-color: none;
+        border: none;
+        color: $grey-dark;
+        transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+      }
+
+      .search-query {
+        border-bottom-color: $link-color;
+        opacity: 1;
+        right: 1.25rem;
+        width: 9rem;
+      }
+    }
+
+    .search-query {
+      background: none;
+      border: 0;
+      border-bottom: 1px solid transparent;
+      color: $grey-dark;
+      height: 2rem;
+      opacity: 0;
+      outline: 0;
+      padding: 0 1.25rem 0 0.5rem;
+      position: absolute;
+      right: 0;
+      top: 3px;
+      transition: opacity 0.2s ease-in-out, width 0.2s ease-in-out,
+        right 0.2s ease-in-out, border-bottom 0.2s 0.15s ease-in-out;
+      width: 0;
+    }
+  }
+
+  @media (max-width: 1199px) {
+    .form-search {
+      margin: 0 0.5rem 0 0;
+      width: auto;
+
+      .btn {
+        left: 0;
+        right: initial;
+        top: 0;
+      }
+
+      &:hover {
+        .btn {
+          background: initial;
+          color: $link-color;
+        }
+      }
+
+      .search-query {
+        border-bottom: 1px solid $link-color;
+        margin: 0 0.5rem;
+        opacity: 1;
+        padding: 0 1rem 0 1.5rem;
+        position: initial;
+        width: auto;
+      }
+    }
+  }
+}
+
+body.search.index {
+  .inset-button-wrapper {
+    max-width: 300px;
+  }
+
+  .match-snippet {
+    background-color: $secondaryBgColor;
+    border: 1px solid $borderColor;
+    padding: 0.25rem 0.5rem;
+  }
+
+  tr:first-child td {
+    border-top: none;
+  }
+
+  .result-details {
+    color: $mutedText;
+    margin: 10px 0;
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  .search-match-title {
+    font-weight: 600;
+  }
+}
