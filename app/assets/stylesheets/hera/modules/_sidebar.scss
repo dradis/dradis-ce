@@ -9,16 +9,16 @@
   border-right: 2px solid $border-color-light;
   bottom: 0;
   height: calc(100vh - #{$navbar-height-pro});
-  left: -7%;
+  left: -25px;
   overflow: hidden;
   padding: 1rem 1rem;
   position: fixed;
-  width: 0;
+  width: 10px;
   transition: 0.5s;
   z-index: 1010;
 
   &.sidebar-collapsed {
-    width: 0.5rem;
+    width: 10px;
 
     .scrollable-content {
       visibility: hidden;
@@ -110,21 +110,5 @@
     border: 1px solid $border-color-light;
     border-radius: 0.2rem;
     padding: 0.2rem 0.5rem;
-  }
-
-  @media (min-width: 576px) {
-    left: -4%;
-  }
-
-  @media (min-width: 768px) {
-    left: -3%;
-  }
-
-  @media (min-width: 1024px) {
-    left: -2.5%;
-  }
-
-  @media (min-width: 1200px) {
-    left: -1.5%;
   }
 }
