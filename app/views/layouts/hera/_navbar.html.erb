@@ -10,19 +10,19 @@
         <%= content_tag :li, class: 'nav-item ' << (controller_path == 'projects' ? 'active' : '') do %>
           <%= link_to main_app.project_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
             <i class="fa-regular fa-folder-open me-md-1" title="Project overview"></i>
-            <span class="d-none d-lg-block">Project overview</span>
+            <span>Project overview</span>
           <% end %>
         <% end %>
         <%= content_tag :li, class: 'nav-item ' << (controller_path.include?('issues') ? 'active' : '') do %>
           <%= link_to main_app.project_issues_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
             <i class="fa-solid fa-bug me-md-1" title="Issues"></i>
-            <span class="d-none d-lg-block">Issues</span>
+            <span>Issues</span>
           <% end %>
         <% end %>
         <%= content_tag :li, class: 'nav-item ' << (controller_path == 'boards' || controller_path == 'cards' ? 'active' : '') do %>
           <%= link_to main_app.project_boards_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
             <i class="fa-brands fa-trello me-md-1" title="Methodologies"></i>
-            <span class="d-none d-lg-block">Methodologies</span>
+            <span >Methodologies</span>
           <% end %>
         <% end %>
         <!-- Report content will become a dropdown menu for document properties and content blocks -->
@@ -30,7 +30,7 @@
         <%= content_tag :li, class: 'nav-item ' << (action_name == 'trash' ? 'active' : '') do %>
           <%= link_to main_app.project_trash_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
             <i class="fa-solid fa-trash-can me-md-1" title="Project bin"></i>
-            <span class="d-none d-lg-block">Project bin</span>
+            <span >Project bin</span>
           <% end %>
         <% end %>
         <div class="vr"></div>
@@ -38,21 +38,21 @@
         <li class="nav-item">
           <%= link_to main_app.project_upload_manager_path(current_project), class: 'nav-link', title: 'Upload' do %>
             <i class="fa-solid fa-cloud-arrow-up me-md-1" title="Upload"></i>
-            <span class="d-none d-lg-block">Upload</span>
+            <span>Upload</span>
           <% end %>
         </li>
 
         <li class="nav-item">
           <%= link_to main_app.project_export_manager_path(current_project), class: 'nav-link', title: 'Export' do %>
             <i class="fa-solid fa-file-export me-md-1" title="Export"></i>
-            <span class="d-none d-lg-block">Export</span>
+            <span>Export</span>
           <% end %>
         </li>
 
         <li class="nav-item">
           <%= link_to main_app.project_qa_issues_path(current_project), class: 'nav-link', title: 'QA' do %>
             <i class="fa-regular fa-handshake me-md-1" title="QA"></i>
-            <span class="d-none d-lg-block">QA</span>
+            <span>QA</span>
           <% end %>
         </li>
       </ul>
@@ -64,8 +64,7 @@
           </li>
           <li class="nav-item dropdown">
             <a href="javascript:void(0)" class="nav-link dropdown-toggle no-caret-xl" data-bs-toggle="dropdown" data-behavior="close-collapse" title="Configuration">
-              <i class="fa-solid fa-cog fa-lg d-none d-xl-inline"></i> 
-              <span class="dinline d-xl-none">Configuration</span>
+              <i class="fa-solid fa-cog fa-lg"></i> 
             </a>
 
             <ul class="dropdown-menu dropdown-menu-end">
@@ -95,8 +94,6 @@
               <span class="ms-1"><%= current_user.name %></span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-              <li><%= link_to 'Profile', main_app.profile_path, class: 'dropdown-item', data: { turbolinks: false } if defined?(Dradis::Pro)%></li>
-              <li><hr class="dropdown-divider"></li>
               <li>
                 <%= link_to main_app.logout_path,  class: 'dropdown-item', data: { turbolinks: false } do %>
                   <i class="fa-solid fa-arrow-right-from-bracket"></i>
