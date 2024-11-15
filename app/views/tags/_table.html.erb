@@ -6,27 +6,27 @@
     data-local-storage-key="project.ce.<%= dom_id(current_project) %>.tags_datatable">
     <thead>
       <tr>
-        <th class="no-sort"><span>Sort Position</span></th>
-        <th class="no-sort"></th>
         <% @all_columns.each do |column| %>
-          <th class="no-sort"><%= column %></th>
+          <th class="no-sort">
+            <span class="<%= class_names('visually-hidden': column == 'Sort'  )%>"><%= column %></span>
+          </th>
         <% end %>
-        <th class="no-sort"><span >Actions</span></th>
+        <th class="no-sort"><span class="visually-hidden">Actions</span></th>
       </tr>
     </thead>
     <tbody data-behavior='ui-sortable', data-sort-url="<%= sort_project_tags_path(current_project) %>">
       <% @tags.each do |tag| %>
         <% cache [tag, @all_columns, 'tags-table'] do %>
           <tr id="tag-<%= tag.id %>">
-            <%# DataTables requires a cell with a sequence number in each row to perform the reorder %>
-            <td class=""><%= tag.position %></td>
-            <td class="text-secondary text-center">
-              <i class="fa-solid fa-reorder"></i>
-            </td>
             <% @all_columns.each do |column| %>
               <%
               sort, display =
               case column
+              when 'Sort'
+                [
+                  'Change sort order', 
+                  content_tag(:i, nil, class: 'fa-solid fa-reorder') + content_tag(:span, 'Change sort order', class: 'visually-hidden')
+                ]
               when 'Name'
                 [
                   tag.display_name,
@@ -44,6 +44,7 @@
               %>
               <%= content_tag :td,
                 display,
+                class: class_names('text-secondary text-center': column == 'Sort'),
                 data: {
                   sort: sort
                 }
