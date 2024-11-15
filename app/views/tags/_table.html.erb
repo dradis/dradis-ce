@@ -7,10 +7,17 @@
     data-reorderable="true">
     <thead>
       <tr>
-        <th class="no-sort d-none" data-column-visible="false"><span class="visually-hidden">Sort rank</span></th>
-        <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Sort handle</span></th>
         <% @all_columns.each do |column| %>
-          <th><%= column %></th>
+
+          <%= content_tag :th, 
+            class: class_names('no-sort', 'd-none': column == 'Sort rank'), 
+            data: { column_visible: !['Sort rank', 'Sort handle'].include?(column) } do %>
+            <% if ['Sort rank', 'Sort handle'].include?(column) %>
+              <%= content_tag :span, column, class: 'visually-hidden' %>
+            <% else %>
+              <%= column %>
+            <% end %>
+          <% end %>
         <% end %>
         <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Actions</span></th>
       </tr>
@@ -19,15 +26,14 @@
       <% @tags.each_with_index do |tag, sort_rank| %>
         <% cache [tag, @all_columns, 'tags-table'] do %>
           <tr id="tag-<%= tag.id %>">
-            <%# DataTables requires a cell with a sequence number in each row to perform the reorder %>
-            <td class="d-none"><%= sort_rank %></td>
-            <td class="text-secondary text-center">
-              <i class="fa-solid fa-reorder"></i><span class="visually-hidden">Change tag order</span>
-            </td>
             <% @all_columns.each do |column| %>
               <%
               sort, display =
               case column
+              when 'Sort rank'
+                [sort_rank, sort_rank]
+              when 'Sort handle'
+                ['Change tag order', content_tag(:i, nil, class: 'fa-solid fa-reorder') + content_tag(:span, 'Change tag order', class: 'visually-hidden')]
               when 'Name'
                 [
                   tag.display_name,
@@ -45,6 +51,10 @@
               %>
               <%= content_tag :td,
                 display,
+                class: class_names(
+                  'd-none': column == 'Sort rank', 
+                  'text-secondary text-center': column == 'Sort handle'
+                ),
                 data: {
                   sort: sort
                 }

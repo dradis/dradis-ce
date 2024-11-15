@@ -50,7 +50,7 @@ class TagsController < AuthenticatedController
   end
 
   def set_columns
-    default_field_names = ['Name'].freeze
+    default_field_names = ['Sort rank', 'Sort handle', 'Name'].freeze
     extra_field_names = ['Color', 'Created', 'Updated'].freeze
 
     @default_columns = default_field_names
