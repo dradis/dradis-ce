@@ -1,7 +1,7 @@
 class StylesTyliumController < AuthenticatedController
   include ProjectScoped
 
-  layout 'tylium'
+  layout 'hera'
 
   def index; end
 end

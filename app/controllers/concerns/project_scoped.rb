@@ -7,7 +7,7 @@ module ProjectScoped
 
     helper        :tylium
     helper_method :current_project
-    layout        'tylium'
+    layout        'hera'
   end
 
   protected
