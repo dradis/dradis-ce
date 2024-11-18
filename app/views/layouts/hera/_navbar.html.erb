@@ -78,51 +78,7 @@
       </ul>
 
       <% if !defined?(Dradis::Pro) %>
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <%= render "layouts/hera/navbar/search" %>
-          </li>
-          <li class="nav-item dropdown">
-            <a href="javascript:void(0)" class="nav-link dropdown-toggle no-caret-xl" data-bs-toggle="dropdown" data-behavior="close-collapse" title="Configuration">
-              <i class="fa-solid fa-cog fa-lg"></i> 
-            </a>
-
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><%= link_to 'Configure plugins', main_app.project_configurations_path(current_project), class: 'dropdown-item' %></li>
-            </ul>
-          </li>
-          <li class="nav-item notifications dropdown">
-            <%= 
-              link_to main_app.project_notifications_path(current_project), 
-                class: 'dropdown-toggle', 
-                data: { 
-                  bs_toggle: 'dropdown', 
-                  behavior: 'notifications-dropdown close-collapse',
-                  project_id: current_project.id 
-                }, 
-                role: 'button', 
-                title: 'Notifications' do %>
-              <i class="notifications-bell fa-solid fa-bell"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i>
-            <% end %>
-            <ul class="dropdown-menu dropdown-menu-end" data-url="<%= main_app.notifications_path %>">
-            </ul>
-          </li>
-          <%= render partial: 'layouts/hera/navbar/help' %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= avatar_image(current_user, size: 32) %>
-              <span class="ms-1"><%= current_user.name %></span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-              <li>
-                <%= link_to main_app.logout_path,  class: 'dropdown-item', data: { turbolinks: false } do %>
-                  <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                  <span>Logout</span>
-                <% end %>
-              </li>
-            </ul>
-          </li>
-        </ul>
+        <%= render "layouts/hera/navbar/complementary_nav" %>
       <% end %>
     </div>
     <!--<%= render partial: 'layouts/tylium/navbar/change_project' %>-->
