@@ -81,6 +81,10 @@
             }
           }
 
+          span {
+            width: max-content;
+          }
+
           @media (min-width: 1024px) {
             font-size: 0.9rem;
           }
