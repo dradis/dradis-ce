@@ -40,7 +40,9 @@ gem 'jquery-rails'
 gem 'jquery-fileupload-rails', '~> 0.3.4'
 gem 'jquery-hotkeys-rails'
 
+# Sortable lists
 gem 'acts_as_list', '~> 0.7.5'
+
 # Organize Node tree
 gem 'acts_as_tree', '~> 2.9.1'
 
