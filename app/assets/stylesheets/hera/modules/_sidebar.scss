@@ -6,6 +6,7 @@ main:has(.main-sidebar.sidebar-collapsed) {
   background-color: $white-dark;
   border-right: 2px solid $border-color-light;
   padding: 1rem 0;
+  position: relative;
 
   .sidebar-content {
     display: none;
