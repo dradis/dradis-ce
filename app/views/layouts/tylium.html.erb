@@ -31,7 +31,8 @@
   <body class="<%= defined?(Dradis::Pro) ? 'pro' : 'ce' %> <%= controller_name %> <%= action_name %>">
 
     <header>
-      <%= render 'layouts/hera/navbar' %>
+      <%= render 'layouts/hera/instance_nav' %>
+      <%= render 'layouts/hera/project_nav' %>
     </header>
 
     <%= render "layouts/hera/sidebar" %>
