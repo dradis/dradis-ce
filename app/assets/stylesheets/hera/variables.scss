@@ -1,15 +1,24 @@
-//Color Palette
-$brand-color-light: #d4e8f5;
+// Branding
+// Do Not Use Directly! - use Theme variables instead
+$ce-green-light: #b0e59c;
+$ce-green: #64bc46;
+$ce-green-dark: #325b23;
+
+// Theme
+$light: $ce-green-light, 1.75%;
+$primary: $ce-green;
+$dark: $ce-green-dark;
+
+// Color Palette
 $grey-dark: #282828;
-$border-color-light: #e8e8e8;
-$border-color-dark: #3c3c3c;
 $link-color: #2171a3;
-$muted-text: #636363;
-$shadow-dark: #3c3c3c;
-$shadow-light: #eeeeee;
-$system-red: #cc293b;
-$white: #ffffff;
+$shadow-color: #eeeeee;
 $white-dark: #f9f9f9;
 
-//Navbar
+// Bootstrap Overrides
+$border-color: #e8e8e8;
+$muted-text: #636363;
+$red: #cc293b;
+
+// Navbar
 $navbar-height: 70px;

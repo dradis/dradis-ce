@@ -20,7 +20,7 @@
 .navbar {
   &.in-project {
     background-color: $white;
-    border-bottom: 1px solid $border-color-light;
+    border-bottom: 1px solid $border-color;
     height: auto;
     top: 70px;
     padding: 0;
@@ -32,14 +32,14 @@
         padding: 0.65rem;
 
         .dropdown-menu {
-          border: 1px solid $border-color-light;
-          box-shadow: 1px 1px 5px 0px rgba($shadow-light, 0.5);
+          border: 1px solid $border-color;
+          box-shadow: 1px 1px 5px 0px rgba($shadow-color, 0.5);
 
           .dropdown-item {
             &:hover,
             &:focus {
               color: $grey-dark;
-              background-color: $brand-color-light;
+              background-color: $light;
             }
           }
         }
@@ -79,7 +79,7 @@
         }
 
         &.active {
-          border-bottom: 5px solid $brand-color-light;
+          border-bottom: 5px solid $light;
 
           .nav-link {
             color: $grey-dark;
@@ -145,7 +145,7 @@
       content: '\f105';
       font-family: var(--fa-style-family, 'Font Awesome 6 Free');
       font-weight: 600;
-      color: darken($border-color-light, 5%);
+      color: darken($border-color, 5%);
     }
 
     &:last-of-type {

@@ -4,7 +4,7 @@ main:has(.main-sidebar.sidebar-collapsed) {
 
 .main-sidebar {
   background-color: $white-dark;
-  border-right: 2px solid $border-color-light;
+  border-right: 2px solid $border-color;
   padding: 1rem 0;
   position: relative;
 
@@ -56,7 +56,7 @@ main:has(.main-sidebar.sidebar-collapsed) {
 
   .sidebar-toggle {
     background-color: $white;
-    border: 1px solid $border-color-light;
+    border: 1px solid $border-color;
     border-radius: 0.2rem;
     padding: 0.2rem 0.5rem;
     position: absolute;
