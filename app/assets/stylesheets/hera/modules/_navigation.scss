@@ -13,6 +13,14 @@
           padding: 0 15px;
         }
       }
+
+      .navbar-collapse {
+        justify-content: space-between;
+
+        .navbar-nav {
+          align-items: center;
+        }
+      }
     }
   }
 }
@@ -79,7 +87,7 @@
         }
 
         &.active {
-          border-bottom: 5px solid $brand-color-light;
+          border-bottom: 5px solid $brand-color-light-ce;
 
           .nav-link {
             color: $grey-dark;
