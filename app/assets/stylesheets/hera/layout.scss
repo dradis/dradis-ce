@@ -1,13 +1,14 @@
-.ce {
-  .view-content {
-    margin-top: $navbar-height-ce;
-  }
+main {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 20rem 1fr;
+  margin-top: $navbar-height;
 }
 
 .view-content {
   background-color: $white;
   margin-left: 16rem;
-  margin-top: $navbar-height-pro;
+  margin-top: $navbar-height;
   padding: 2rem;
   transition: margin-left 0.5s;
 }

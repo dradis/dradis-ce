@@ -1,92 +1,38 @@
-.ce {
-  .main-sidebar {
-    height: calc(100vh - #{$navbar-height-ce});
-  }
+main:has(.main-sidebar.sidebar-collapsed) {
+  grid-template-columns: 0.5rem 1fr;
 }
 
 .main-sidebar {
   background-color: $white-dark;
   border-right: 2px solid $border-color-light;
-  bottom: 0;
-  height: calc(100vh - #{$navbar-height-pro});
-  left: -25px;
-  overflow: hidden;
-  padding: 1rem 1rem;
-  position: fixed;
-  width: 10px;
-  transition: 0.5s;
-  z-index: 1010;
+  padding: 1rem 0;
 
-  &.sidebar-collapsed {
-    width: 10px;
-
-    .scrollable-content {
-      visibility: hidden;
-    }
-
-    .sidebar-toggle {
-      position: fixed;
-      left: 0;
-    }
+  .sidebar-content {
+    display: none;
   }
 
   &.sidebar-expanded {
-    width: 16rem;
-    left: 0;
+    padding: 1rem 1rem;
 
     .sidebar-toggle {
       border-right: none;
       position: absolute;
-      right: -1px;
+      right: 0;
 
       .sidebar-toggle-icon {
         transform: rotate(180deg);
       }
     }
 
-    .scrollable-content {
+    .sidebar-content {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       height: 100%;
-      padding-top: 4rem;
-      overflow-y: scroll;
 
       .nodes-nav {
         margin: 0;
         padding: 0;
-
-        .node-tree {
-          .node-list {
-            &.restrict-height {
-              max-height: calc(100vh - 330px - 1.5rem);
-
-              .gradient {
-                background: linear-gradient(
-                  180deg,
-                  rgba($sidebarBackground, 0) 0%,
-                  rgba($sidebarBackground, 0.75) 50%,
-                  rgba($sidebarBackground, 1) 100%
-                );
-              }
-
-              li {
-                padding-left: 0.5rem;
-              }
-
-              .line {
-                border-color: $lightColor;
-              }
-
-              .scroll-more {
-                left: calc(50% - 4rem);
-                background: $sidebarBackground;
-                border-color: $lightColor;
-                font-size: 0.9rem;
-              }
-            }
-          }
-        }
       }
 
       .version {
@@ -98,6 +44,8 @@
       }
 
       .tree-header {
+        padding-right: 2rem;
+
         h4 {
           margin-bottom: 0;
         }
@@ -110,5 +58,8 @@
     border: 1px solid $border-color-light;
     border-radius: 0.2rem;
     padding: 0.2rem 0.5rem;
+    position: absolute;
+    top: 1rem;
+    right: -1rem;
   }
 }
