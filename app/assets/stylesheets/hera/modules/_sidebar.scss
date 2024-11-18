@@ -16,9 +16,8 @@ main:has(.main-sidebar.sidebar-collapsed) {
     padding: 1rem 1rem;
 
     .sidebar-toggle {
-      border-right: none;
       position: absolute;
-      right: 0;
+      right: -0.75rem;
 
       .sidebar-toggle-icon {
         transform: rotate(180deg);
@@ -30,6 +29,11 @@ main:has(.main-sidebar.sidebar-collapsed) {
       flex-direction: column;
       justify-content: space-between;
       height: 100%;
+
+      .add-node {
+        font-size: 0.9rem;
+        margin-right: 0.5rem;
+      }
 
       .nodes-nav {
         margin: 0;
@@ -45,8 +49,6 @@ main:has(.main-sidebar.sidebar-collapsed) {
       }
 
       .tree-header {
-        padding-right: 2rem;
-
         h4 {
           margin-bottom: 0;
         }
