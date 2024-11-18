@@ -38,35 +38,33 @@
 //= require shared/datatable/tag
 //= require shared/datatable/validate
 
-//= require tylium/plugins/jquery.breadcrumbs
-//= require tylium/plugins/jquery.treemodal
-//= require tylium/plugins/jquery.treenav
+//= require hera/vendor/jquery.breadcrumbs
+//= require hera/vendor/jquery.treemodal
+//= require hera/vendor/jquery.treenav
 
-//= require tylium/behaviors
+//= require hera/behaviors
 //= require shared/behaviors
 
-//= require tylium/engines
-//= require tylium/keyboard_shortcuts
+//= require hera/engines
 
-//= require tylium/modules/configurations
-//= require tylium/modules/export
-//= require tylium/modules/fileupload
-//= require tylium/modules/issues
-//= require tylium/modules/liquid_async
-//= require tylium/modules/nodes
-//= require tylium/modules/search
-//= require tylium/modules/activities/poller
-// require tylium/modules/tour
-//= require tylium/modules/uploads
-
-//= require tylium/pages/activities
-//= require tylium/pages/boards
-//= require tylium/pages/issues
-//= require tylium/pages/nodes/new_form
-//= require tylium/pages/projects/boards_summary
-//= require tylium/pages/projects/issues_chart
-//= require tylium/pages/projects/summary
-//= require tylium/pages/qa
-//= require tylium/pages/upload
-
+//= require hera/modules/activities_poller
+// require hera/modules/configurations
+// require hera/modules/export
+// require hera/modules/fileupload
+// require hera/modules/issues
+// require hera/modules/liquid_async
+// require hera/modules/nodes
+//= require hera/modules/search
 //= require hera/modules/sidebar
+//= require hera/modules/try_pro
+// require hera/modules/uploads
+
+// require hera/pages/activities
+// require hera/pages/boards
+// require hera/pages/issues
+// require hera/pages/nodes/new_form
+// require hera/pages/projects/boards_summary
+// require hera/pages/projects/issues_chart
+// require hera/pages/projects/summary
+// require hera/pages/qa
+// require hera/pages/upload
