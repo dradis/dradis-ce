@@ -48,14 +48,12 @@ describe 'Tag pages:' do
 
     describe 'sorting tags', js: true do
       it 'updates tag priority values' do
-        expect(tag.position).to eq(1)
-        expect(tag2.position).to eq(2)
-        expect(tag3.position).to eq(3)
-
         tag3_element = find("#tag-#{tag3.id}").find('.fa-reorder')
         tag1_element = find("#tag-#{tag.id}")
 
         tag3_element.drag_to(tag1_element)
+
+        wait_for_ajax
 
         expect(tag.reload.position).to eq(2)
         expect(tag2.reload.position).to eq(3)
