@@ -7,27 +7,47 @@
     <% end %>
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="navbar-nav">
-        <%= content_tag :li, class: 'nav-item ' << (controller_path == 'projects' ? 'active' : '') do %>
-          <%= link_to main_app.project_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
+        <%= content_tag :li, class: class_names('nav-item', active: controller_path == 'projects') do %>
+          <% link_to main_app.project_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
             <i class="fa-regular fa-folder-open me-md-1" title="Project overview"></i>
             <span>Project overview</span>
           <% end %>
         <% end %>
-        <%= content_tag :li, class: 'nav-item ' << (controller_path.include?('issues') ? 'active' : '') do %>
+        <%= content_tag :li, class: class_names('nav-item', active: controller_path == 'issues') do %>
           <%= link_to main_app.project_issues_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
             <i class="fa-solid fa-bug me-md-1" title="Issues"></i>
             <span>Issues</span>
           <% end %>
         <% end %>
-        <%= content_tag :li, class: 'nav-item ' << (controller_path == 'boards' || controller_path == 'cards' ? 'active' : '') do %>
+        <%= content_tag :li, class: class_names('nav-item', active: controller_path == 'methodologies') do %>
           <%= link_to main_app.project_boards_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
             <i class="fa-brands fa-trello me-md-1" title="Methodologies"></i>
             <span >Methodologies</span>
           <% end %>
         <% end %>
-        <!-- Report content will become a dropdown menu for document properties and content blocks -->
+
+        <% if defined?(Dradis::Pro) %>
+          <li class="nav-item dropdown">
+            <a href="javascript:void(0)" class="nav-link dropdown-toggle" id="document-properties-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-file-lines me-md-1" title="Report content"></i>
+              <span class="d-none d-lg-block">Report content</span>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="document-properties-dropdown">
+              <li>
+                <%= link_to main_app.project_document_properties_path(current_project), class: 'dropdown-item' do %>
+                  <span>Document properties</span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to main_app.project_content_blocks_path(current_project), class: 'dropdown-item' do %>
+                  <span>Content blocks</span>
+                <% end %>
+              </li>
+            </ul>
+          </li>
+        <% end %>
         
-        <%= content_tag :li, class: 'nav-item ' << (action_name == 'trash' ? 'active' : '') do %>
+        <%= content_tag :li, class: class_names('nav-item', active: controller_path == 'trash') do %>
           <%= link_to main_app.project_trash_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
             <i class="fa-solid fa-trash-can me-md-1" title="Project bin"></i>
             <span >Project bin</span>
