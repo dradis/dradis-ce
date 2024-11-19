@@ -1,14 +1,7 @@
 main {
   display: grid;
   gap: 1rem;
-  grid-template-columns: 20rem 1fr;
+  grid-template-columns: $sidebar-width 1fr;
   margin-top: $navbar-height;
-}
-
-.view-content {
-  background-color: $white;
-  margin-left: 16rem;
-  margin-top: $navbar-height;
-  padding: 2rem;
-  transition: margin-left 0.5s;
+  transition: grid-template-columns 0.2s linear;
 }

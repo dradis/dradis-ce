@@ -3,17 +3,20 @@ main:has(.main-sidebar.sidebar-collapsed) {
 }
 
 .main-sidebar {
+  --padding: 1rem;
   background-color: $white-dark;
   border-right: 2px solid $border-color;
-  padding: 1rem 0;
-  position: relative;
+  padding: var(--padding) 0;
+  position: sticky;
+  top: $navbar-height;
+  height: calc(100vh - #{$navbar-height});
 
   .sidebar-content {
     display: none;
   }
 
   &.sidebar-expanded {
-    padding: 1rem 1rem;
+    padding: var(--padding) var(--padding);
 
     .sidebar-toggle {
       position: absolute;
