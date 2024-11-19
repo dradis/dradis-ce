@@ -4,7 +4,7 @@
   </li>
   <% if defined?(Dradis::Pro) %>
     <% if can?(:read, Project) || can?(:read, Team)  -%>
-      <%= content_tag :li, class: 'nav-item' << (controller_path == 'trash' ? ' active' : '') do %>
+      <%= content_tag :li, class: class_names('nav-item', active: controller_path == 'trash') do %>
         <%= link_to main_app.trash_index_path, class: 'nav-link' do %>
           <i class="fa-regular fa-trash-can <%= class_names('d-inline': current_user.role?(:admin)) %>"></i>
         <% end %>
@@ -12,32 +12,44 @@
     <% end %>
   <% end %>
   <li class="nav-item dropdown">
-    <a href="javascript:void(0)" class="nav-link dropdown-toggle no-caret-xl" data-bs-toggle="dropdown" data-behavior="close-collapse" title="Configuration">
-      <i class="fa-solid fa-cog fa-lg"></i> 
+    <a href="javascript:void(0)" class="nav-link dropdown-toggle no-caret-xl" id="configurationDropdown" title="Configuration" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="fa-solid fa-cog fa-lg d-none d-xl-inline" title="Configuration"></i> 
+      <span class="dinline d-xl-none">Configuration</span>
     </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="configurationDropdown">
+      <% if defined?(Dradis::Pro) %>
+        <% if @project %>
+          <%= link_to 'Project properties', main_app.edit_project_path(current_project), data: { turbolinks: false }, class: 'dropdown-item' %>
+          <%= link_to 'Configure plugins', main_app.project_configurations_path(current_project), class: 'dropdown-item' %>
+          <li><hr class="dropdown-divider"></li>
+        <% end %>
+        <%= link_to 'Instance Configuration', main_app.admin_configurations_path, class: 'dropdown-item' %>
+        <%= link_to 'Usage Analytics', main_app.admin_analytics_path, class: 'dropdown-item' %>
 
-    <ul class="dropdown-menu dropdown-menu-end">
-      <li><%= link_to 'Configure plugins', main_app.project_configurations_path(current_project), class: 'dropdown-item' %></li>
+      <% else %>
+        <%= link_to 'Configure plugins', main_app.project_configurations_path(current_project), class: 'dropdown-item' %>
+      <% end %>
     </ul>
   </li>
   <li class="nav-item notifications dropdown">
     <%= 
       link_to main_app.project_notifications_path(current_project), 
         class: 'dropdown-toggle', 
+        id: 'notificationsDropdown',
         data: { 
           bs_toggle: 'dropdown', 
           behavior: 'notifications-dropdown close-collapse',
           project_id: current_project.id 
         }, 
         role: 'button', 
-        title: 'Notifications' do %>
-      <i class="notifications-bell fa-solid fa-bell"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i>
+        'aria-expanded': 'false' do %>
+      <i class="notifications-bell fa-solid fa-bell" title="Notifications"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i>
     <% end %>
-    <ul class="dropdown-menu dropdown-menu-end" data-url="<%= main_app.notifications_path %>">
+    <ul class="dropdown-menu dropdown-menu-end" data-url="<%= main_app.notifications_path %>"  aria-labelledby="notificationsDropdown">
     </ul>
   </li>
+  <%= render partial: 'layouts/hera/navbar/help' %>
   <% if !defined?(Dradis::Pro) %>
-    <%= render partial: 'layouts/hera/navbar/help' %>
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <%= avatar_image(current_user, size: 32) %>
