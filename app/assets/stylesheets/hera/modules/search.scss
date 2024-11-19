@@ -11,13 +11,13 @@
       align-items: center;
       background: initial;
       border-radius: 0.375rem;
-      color: $grey-dark;
+      color: $white;
       display: flex;
       font-size: 1em;
       height: 2rem;
       position: absolute;
       right: 0;
-      top: 3px;
+      top: 0;
       width: 2rem;
     }
 
@@ -29,12 +29,12 @@
       .btn {
         background-color: none;
         border: none;
-        color: $grey-dark;
+        color: $brand-color-light-ce;
         transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
       }
 
       .search-query {
-        border-bottom-color: $link-color;
+        border-bottom-color: $brand-color-light-ce;
         opacity: 1;
         right: 1.25rem;
         width: 9rem;
@@ -45,14 +45,14 @@
       background: none;
       border: 0;
       border-bottom: 1px solid transparent;
-      color: $grey-dark;
+      color: $white-dark;
       height: 2rem;
       opacity: 0;
       outline: 0;
       padding: 0 1.25rem 0 0.5rem;
       position: absolute;
       right: 0;
-      top: 3px;
+      top: 0;
       transition: opacity 0.2s ease-in-out, width 0.2s ease-in-out,
         right 0.2s ease-in-out, border-bottom 0.2s 0.15s ease-in-out;
       width: 0;
@@ -73,12 +73,12 @@
       &:hover {
         .btn {
           background: initial;
-          color: $link-color;
+          color: $white;
         }
       }
 
       .search-query {
-        border-bottom: 1px solid $link-color;
+        border-bottom: 1px solid $white;
         margin: 0 0.5rem;
         opacity: 1;
         padding: 0 1rem 0 1.5rem;
