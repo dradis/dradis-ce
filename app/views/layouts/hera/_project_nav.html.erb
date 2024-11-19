@@ -1,10 +1,5 @@
-<nav class="navbar navbar-expand navbar-light fixed-top in-project" data-behavior="navbar">
+<nav class="navbar navbar-expand fixed-top project-nav" data-behavior="navbar">
   <div class="container-fluid p-0">
-    <% if !defined?(Dradis::Pro) %>
-      <%= link_to main_app.project_path(current_project), class: 'navbar-brand' do %>
-        <%= image_tag 'logo_small.png', alt: 'Dradis Pro logo', class: 'p-lg-0' %>
-      <% end %>
-    <% end %>
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="navbar-nav">
         <%= content_tag :li, class: class_names('nav-item', active: controller_path == 'projects') do %>
@@ -76,11 +71,6 @@
           <% end %>
         </li>
       </ul>
-
-      <% if !defined?(Dradis::Pro) %>
-        <%= render "layouts/hera/navbar/complementary_nav" %>
-      <% end %>
     </div>
-    <!--<%= render partial: 'layouts/tylium/navbar/change_project' %>-->
   </div>
 </nav>
