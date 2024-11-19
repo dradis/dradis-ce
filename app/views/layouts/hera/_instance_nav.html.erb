@@ -4,6 +4,7 @@
       <%= link_to main_app.project_path(current_project), class: 'navbar-brand' do %>
         <%= image_tag 'logo_small.png', alt: 'Dradis Pro logo', class: 'p-lg-0' %>
       <% end %>
+      <%= render partial: 'layouts/hera/navbar/change_project' %>
     <% else %>
       <%= link_to current_user.role?(:contributor) ? main_app.contributors_home_path : main_app.dashboard_path, class: 'navbar-brand' do %>
         <%= image_tag 'dradispro-logo.png', alt: 'Dradis Pro logo', class: 'p-lg-0' %>
@@ -81,67 +82,6 @@
       </ul>
     <% end %>
 
-      <ul class="navbar-nav">
-        <li class="nav-item search">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </li>
-        <% if defined?(Dradis::Pro) %>
-          <% if can?(:read, Project) || can?(:read, Team)  -%>
-            <%= content_tag :li, class: 'nav-item' << (controller_path == 'trash' ? ' active' : '') do %>
-              <%= link_to main_app.trash_index_path, class: 'nav-link' do %>
-                <i class="fa-regular fa-trash-can <%= class_names('d-inline': current_user.role?(:admin)) %>"></i>
-              <% end %>
-            <% end %>
-          <% end %>
-        <% end %>
-        <li class="nav-item notifications dropdown">
-          <%= link_to main_app.notifications_path, class: 'nav-link dropdown-toggle', data: { bs_toggle: 'dropdown', behavior: 'notifications-dropdown close-collapse' }, role: 'button', title: 'Notifications' do %>
-            <i class="notifications-bell fa-solid fa-bell"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i>
-          <% end %>
-          <ul class="dropdown-menu dropdown-menu-end" data-url="<%= main_app.notifications_path %>">
-          </ul>
-        </li>
-        <% if defined?(Dradis::Pro) %>
-          <!-- Fix design for contributors -->
-          <% if current_user.role?(:contributor) -%>
-            <div class="contributor-navbar">
-              <div class="navbar-text mx-sm-3 p-0">
-                <%= avatar_image(current_user, size: 35) %>
-                <%= current_user.name %>
-              </div>
-              <%= link_to 'Logout', main_app.contributors_logout_path, class: 'btn btn-outline-primary' %>
-            </div>
-
-          <% else %>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="helpDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa-solid fa-circle-question"></i><span class="visually-hidden">Help Menu</span>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="helpDropdown">
-                <li><a class="dropdown-item" href="http://drad.is/l/chat" target="_blank">Chat</a></li>
-                <li><a class="dropdown-item" href="mailto:email@securityroots.com?Subject=How%20do%20I..." class="js-hs-beacon">Open a ticket</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="https://dradis.com/support" target="_blank">Support website</a></li>
-                <li><a class="dropdown-item" href="https://discuss.dradisframework.org" target="_blank">Community forums</a></li>
-              </ul>
-            </li>
-          <% end %>
-
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="profileDropdown"
-            role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= avatar_image(current_user, size: 32) %>
-              <span class="ms-1"><%= current_user.name %></span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-              <li><%= link_to 'Profile', main_app.profile_path, class: 'dropdown-item js-profile', data: { email: current_user.email } %></li>
-              <li><%= link_to 'Notification Settings', main_app.edit_user_preferences_notifications_path, class: 'dropdown-item' %></li>
-              <li><hr class="dropdown-divider"></li>
-              <li class="logout-link"><%= link_to 'Log out', main_app.logout_path,  class: 'dropdown-item' %></li>
-            </ul>
-          </li>
-        <% end %>
-      </ul>
-    </div>
+    <%= render 'layouts/hera/navbar/complementary_nav' %>
   </div>
 </nav>
