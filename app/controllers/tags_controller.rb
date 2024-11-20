@@ -48,6 +48,10 @@ class TagsController < AuthenticatedController
     Tag
   end
 
+  def sortable_records
+    current_project.tags
+  end
+
   def tag_params
     modified_params = params.require(:tag).permit(:name, :color)
     modified_params[:name] = "#{modified_params[:color].gsub('#', '!')}_#{modified_params[:name]}"
