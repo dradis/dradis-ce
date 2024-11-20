@@ -6,15 +6,16 @@
     <% if can?(:read, Project) || can?(:read, Team)  -%>
       <%= content_tag :li, class: class_names('nav-item', active: controller_path == 'trash') do %>
         <%= link_to main_app.trash_index_path, class: 'nav-link' do %>
-          <i class="fa-regular fa-trash-can <%= class_names('d-inline': current_user.role?(:admin)) %>"></i>
+          <i class="fa-regular fa-trash-can d-none d-lg-inline <%= class_names('d-inline': current_user.role?(:admin)) %>"></i>
+          <span class="d-inline d-lg-none">Bin</span>
         <% end %>
       <% end %>
     <% end %>
   <% end %>
   <li class="nav-item dropdown">
     <a href="javascript:void(0)" class="nav-link dropdown-toggle no-caret-xl" id="configurationDropdown" title="Configuration" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-      <i class="fa-solid fa-cog d-none d-xl-inline" title="Configuration"></i> 
-      <span class="dinline d-xl-none">Configuration</span>
+      <i class="fa-solid fa-cog d-none d-lg-inline" title="Configuration"></i> 
+      <span class="d-inline d-lg-none">Configuration</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="configurationDropdown">
       <% if defined?(Dradis::Pro) %>
@@ -34,7 +35,7 @@
   <li class="nav-item notifications dropdown">
     <%= 
       link_to main_app.project_notifications_path(current_project), 
-        class: 'dropdown-toggle', 
+        class: 'nav-link dropdown-toggle no-caret-xl', 
         id: 'notificationsDropdown',
         data: { 
           bs_toggle: 'dropdown', 
@@ -43,7 +44,8 @@
         }, 
         role: 'button', 
         'aria-expanded': 'false' do %>
-      <i class="notifications-bell fa-solid fa-bell" title="Notifications"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i>
+      <i class="notifications-bell fa-solid fa-bell d-none d-lg-inline" title="Notifications"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i>
+      <span class="d-inline d-lg-none">Notifications</span>
     <% end %>
     <ul class="dropdown-menu dropdown-menu-end" data-url="<%= main_app.notifications_path %>"  aria-labelledby="notificationsDropdown">
     </ul>

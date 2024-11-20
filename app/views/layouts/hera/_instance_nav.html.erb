@@ -9,11 +9,14 @@
       <%= link_to current_user.role?(:contributor) ? main_app.contributors_home_path : main_app.dashboard_path, class: 'navbar-brand' do %>
         <%= image_tag 'dradispro-logo.png', alt: 'Dradis Pro logo', class: 'p-lg-0' %>
       <% end %>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <% end %>
 
-      <div class="collapse navbar-collapse" id="navbarCollapse" data-behavior="navbar-collapse">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse" data-behavior="navbar-collapse">
+      <% if defined?(Dradis::Pro) %>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <%= content_tag :li, class:'nav-item' << (controller_path == 'dashboard' ? ' active' : '') do %>
             <% link_to 'Dashboard', current_user.role?(:contributor) ? main_app.contributors_home_path : main_app.dashboard_path, class: 'nav-link' %>
@@ -56,32 +59,9 @@
             <%= content_tag :li, class: 'nav-item' << (controller_path == 'admin/users' ? ' active' : '') do %>
               <%= link_to 'Users', main_app.admin_users_path, class: 'nav-link' %>
             <% end %>
-
-          <!--
-          <%= content_tag :li, class: 'nav-item dropdown' << ( ['admin/analytics', 'admin/configurations'].include?(controller_path) ? ' active' : '') do %>
-            <a class="dropdown-toggle" href="javascript:void(0)"
-              id="settingsDropdown" role="button"  data-bs-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              Settings
-            </a>
-            <div class="dropdown-menu" aria-labelledby="settingsDropdown">
-              <%= link_to 'Instance Configuration', main_app.admin_configurations_path, class: 'dropdown-item' %>
-              <%= link_to 'Usage Analytics', main_app.admin_analytics_path, class: 'dropdown-item' %>
-            </div>
-          <% end %>-->
-        <% end %>
-
-        <!--
-        <% if can?(:read, Project) || can?(:read, Team)  -%>
-          <%= content_tag :li, class: '' << (controller_path == 'trash' ? ' active' : '') do %>
-            <%= link_to main_app.trash_index_path do %>
-              <i class="fa-solid fa-trash d-none <%= class_names('d-lg-inline d-xl-none': current_user.role?(:admin)) %>"></i><span class="d-inline <%= class_names('d-lg-none d-xl-inline': current_user.role?(:admin)) %>">Trash</span>
-            <% end %>
           <% end %>
-        <% end %> -->
-      </ul>
-    <% end %>
-
+        </ul>
+      <% end %>
     <%= render 'layouts/hera/navbar/complementary_nav' %>
   </div>
 </nav>
