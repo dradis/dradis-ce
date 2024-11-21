@@ -109,7 +109,7 @@
         &:active,
         &:focus,
         &:hover {
-          color: $brand-color-light-ce;
+          color: $brand-color-light;
         }
       }
     }
@@ -122,10 +122,10 @@
         &:active,
         &:focus,
         &:hover {
-          background-color: $brand-color-light-ce;
+          background-color: $brand-color-light;
 
           .dropdown-item {
-            background-color: $brand-color-light-ce;
+            background-color: $brand-color-light;
             color: $grey-dark;
           }
         }
@@ -133,7 +133,7 @@
     }
 
     .dropdown-divider {
-      border-top: 1px solid $link-color-ce;
+      border-top: 1px solid $link-color;
       border-bottom: 1px solid $border-color-dark;
     }
 
@@ -142,9 +142,9 @@
       color: $white;
 
       &:focus {
-        border: 2px solid $brand-color-light-ce;
+        border: 2px solid $brand-color-light;
         box-shadow: none;
-        color: $brand-color-light-ce;
+        color: $brand-color-light;
       }
     }
 
@@ -181,7 +181,7 @@
         &:focus,
         &:hover {
           .nav-link {
-            color: $link-color-ce;
+            color: $link-color;
           }
         }
 
