@@ -6,7 +6,6 @@ body {
   grid-template-areas:
     'navigation navigation'
     'nodes-sidebar view-content';
-  transition: grid-template-columns 0.2s linear;
 }
 
 a {

@@ -1,4 +1,4 @@
-main:has(.main-sidebar.sidebar-collapsed) {
+body:has(.main-sidebar.sidebar-collapsed) {
   grid-template-columns: 0.5rem 1fr;
 }
 
@@ -12,49 +12,33 @@ main:has(.main-sidebar.sidebar-collapsed) {
   height: calc(100vh - #{$navbar-height});
 
   .sidebar-content {
-    display: none;
-  }
-
-  &.sidebar-expanded {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
     padding: var(--padding) var(--padding);
 
-    .sidebar-toggle {
-      position: absolute;
-      right: -0.75rem;
-
-      .sidebar-toggle-icon {
-        transform: rotate(180deg);
-      }
+    .add-node {
+      font-size: 0.9rem;
+      margin-right: 0.5rem;
     }
 
-    .sidebar-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 100%;
+    .nodes-nav {
+      margin: 0;
+      padding: 0;
+    }
 
-      .add-node {
-        font-size: 0.9rem;
-        margin-right: 0.5rem;
-      }
+    .version {
+      cursor: default;
+      font-size: 0.625rem;
+      margin-top: auto;
+      padding: 0.2em 0;
+      text-align: center;
+    }
 
-      .nodes-nav {
-        margin: 0;
-        padding: 0;
-      }
-
-      .version {
-        cursor: default;
-        font-size: 0.625rem;
-        margin-top: auto;
-        padding: 0.2em 0;
-        text-align: center;
-      }
-
-      .tree-header {
-        h4 {
-          margin-bottom: 0;
-        }
+    .tree-header {
+      h4 {
+        margin-bottom: 0;
       }
     }
   }
@@ -65,7 +49,17 @@ main:has(.main-sidebar.sidebar-collapsed) {
     border-radius: 0.2rem;
     padding: 0.2rem 0.5rem;
     position: absolute;
+    right: -0.75rem;
     top: 1rem;
-    right: -1rem;
+  }
+
+  &.sidebar-collapsed {
+    .sidebar-content {
+      display: none;
+    }
+
+    .sidebar-toggle-icon {
+      transform: rotate(180deg);
+    }
   }
 }
