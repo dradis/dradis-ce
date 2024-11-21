@@ -6,7 +6,6 @@ body:has(.main-sidebar.sidebar-collapsed) {
   --padding: 1rem;
   background-color: $white-dark;
   border-right: 2px solid $border-color;
-  padding: var(--padding) 0;
   position: sticky;
   top: $navbar-height;
   height: calc(100vh - #{$navbar-height});
@@ -50,12 +49,16 @@ body:has(.main-sidebar.sidebar-collapsed) {
     padding: 0.2rem 0.5rem;
     position: absolute;
     right: -0.75rem;
-    top: 1rem;
+    top: var(--padding);
   }
 
   &.sidebar-collapsed {
     .sidebar-content {
       display: none;
+    }
+
+    .sidebar-toggle {
+      right: -1rem;
     }
 
     .sidebar-toggle-icon {
