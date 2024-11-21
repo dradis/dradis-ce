@@ -20,6 +20,13 @@ $border-color: #e8e8e8;
 $muted-text: #636363;
 $red: #cc293b;
 
+$theme-colors: map-merge(
+  $theme-colors,
+  (
+    'primary': $dark,
+  )
+);
+
 //Navbar
 $instance-nav-bg: #1e3915; //ce-green-900
 $navbar-height: 7rem;
