@@ -7,8 +7,12 @@
   </div>
   <div class="sidebar-content" data-behavior="sidebar-content">
     <%= render 'layouts/tylium/nodes' %>
-    <div class="version ">
-      <span>v<%= Dradis::CE.version %></span>
+    <div class="version">
+      <% if defined?(Dradis::Pro) %>
+        <span>Dradis Professional Edition v<%= Dradis::Pro.version %></span>
+      <% else %>
+        <span>Dradis Community Edition v<%= Dradis::CE.version %></span>
+      <% end %>
     </div>
   </div>
 </div>
