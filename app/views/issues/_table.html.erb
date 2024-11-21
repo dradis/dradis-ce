@@ -14,7 +14,7 @@
       <tr>
         <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Select</span></th>
         <% @all_columns.each do |column| %>
-          <th><%= column %></th>
+          <%= content_tag :th, column, class: class_names('reverse-sort': column == 'Tags') %>
         <% end %>
         <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Actions</span></th>
       </tr>

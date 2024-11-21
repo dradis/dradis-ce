@@ -129,6 +129,20 @@ div.dataTables_wrapper {
               opacity: 1;
             }
           }
+
+          &.reverse-sort {
+            &.sorting_asc {
+              &::after {
+                content: '\f0d7';
+              }
+            }
+
+            &.sorting_desc {
+              &::after {
+                content: '\f0d8';
+              }
+            }
+          }
         }
       }
     }
