@@ -44,10 +44,6 @@ class TagsController < AuthenticatedController
 
   private
 
-  def sortable_class
-    Tag
-  end
-
   def sortable_records
     current_project.tags
   end
