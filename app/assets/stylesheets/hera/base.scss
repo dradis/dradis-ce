@@ -1,5 +1,12 @@
 body {
   background-color: $white;
+  display: grid;
+  grid-template-rows: $navbar-height 1fr;
+  grid-template-columns: $sidebar-width 1fr;
+  grid-template-areas:
+    'navigation navigation'
+    'nodes-sidebar view-content';
+  transition: grid-template-columns 0.2s linear;
 }
 
 a {

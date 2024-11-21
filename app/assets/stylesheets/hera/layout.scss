@@ -1,7 +1,7 @@
+header {
+  grid-area: navigation;
+}
+
 main {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: $sidebar-width 1fr;
-  margin-top: $navbar-height;
-  transition: grid-template-columns 0.2s linear;
+  padding: 1rem;
 }
