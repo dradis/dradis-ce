@@ -1,6 +1,21 @@
+@font-face {
+  font-family: 'ProximaNovaLight';
+  src: font-url('proximanova-light.woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ProximaNovaRegular';
+  src: font-url('proximanova-regular.woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
 body {
   background-color: $white;
   display: grid;
+  font-family: 'ProximaNovaLight', 'system-ui';
   grid-template-rows: $navbar-height 1fr;
   grid-template-columns: $sidebar-width 1fr;
   grid-template-areas:
@@ -11,6 +26,16 @@ body {
 a {
   color: $link-color;
   text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong {
+  font-family: 'ProximaNovaRegular', 'system-ui';
 }
 
 ul {
