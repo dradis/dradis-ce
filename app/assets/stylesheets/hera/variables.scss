@@ -5,46 +5,40 @@ $ce-green: #64bc46;
 $ce-green-dark: #325b23;
 
 // Theme
-$light: $ce-green-light, 1.75%;
-$primary: $ce-green;
+$light: $ce-green-100;
+$primary: $ce-green-500;
 $dark: $ce-green-dark;
 
-// Color Palette
-$grey-dark: #282828;
-$link-color: #2171a3;
-$shadow-color: #eeeeee;
-$white-dark: #f9f9f9;
-
 // Bootstrap Overrides
-$border-color: #e8e8e8;
-$muted-text: #636363;
-$red: #cc293b;
+$green: $green-500;
+$orange: $orange-500;
+$red: $red-500;
+$yellow: $yellow-500;
+
+//Borders
+$border-color: $grey-200;
+$border-color-dark: $grey-900;
+
+//Misc
+$white-dark: $grey-100;
 
 // Navbar
-$navbar-height: 70px;
+$instance-nav-bg: $ce-green-300;
+$instance-nav-hover: $ce-green-700;
+
+//Shadows
+$shadow-color-light: $grey-200;
+$shadow-color-dark: $grey-800;
+
+//Text
+$text-default: $grey-900;
+$text-muted: $grey-700;
+$text-link: $ce-green-700;
 
 // Sidebar
 $sidebar-width: 20rem;
-//CE colours
-$brand-color-light-ce: #c1e4b5; //ce-green-100
-$link-color-ce: #3c712a; //ce-green-700
-
-//Pro colours
-$brand-color-light: #d4e8f5;
-$link-color: #2171a3;
-
-//Color Palette
-$border-color-light: #e8e8e8;
-$border-color-dark: #3c3c3c;
-$grey-dark: #282828;
-$muted-text: #636363;
-$shadow-dark: #3c3c3c;
-$shadow-light: #eeeeee;
-$system-red: #cc293b;
-$white: #ffffff;
-$white-dark: #f9f9f9;
 
 //Navbar
-$instance-nav-bg: #1e3915; //ce-green-900
+$navbar-height: 70px;
 $navbar-height-ce: 70px;
 $navbar-height-pro: 130px;
