@@ -12,13 +12,13 @@
     <div class="nodes-list restrict-height mt-4" data-behavior="restrict-height">
       <% if @nodes.empty? %>
         <%= render 'shared/empty_state',
-          actions_partial: 'layouts/tylium/nodes/empty_state_actions',
+          actions_partial: 'layouts/hera/nodes/empty_state_actions',
           docs_link: 'https://dradis.com/support/guides/projects/nodes.html',
           name: 'node',
           text: 'Use nodes to structure and organize your project.'
         %>
       <% else %>
-        <%= render partial: 'layouts/tylium/node', collection: @nodes %>
+        <%= render partial: 'layouts/hera/node', collection: @nodes %>
       <% end %>
     </div>
   </div>

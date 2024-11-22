@@ -21,7 +21,7 @@
 
   <%= content_tag :ul, data: {id: dom_id(node, 'menu')}, class: "children #{css_class_for_sub_nodes(node)}" do %>
     <% if node.ancestor_of?(@node) %>
-      <%= render partial: "layouts/tylium/node", collection: node.children %>
+      <%= render partial: "layouts/hera/node", collection: node.children %>
     <% else %>
       <li class="loading">Loading...</li>
       <li class="error">Loading error. Please try again.</li>

@@ -28,7 +28,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="<%= defined?(Dradis::Pro) ? 'pro' : 'ce' %> <%= controller_name %> <%= action_name %>">
+  <body class="<%= controller_name %> <%= action_name %>">
 
     <header>
       <%= render 'layouts/hera/instance_nav' %>
@@ -42,18 +42,20 @@
     <main data-behavior="view-content">
       <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
       <%= render 'shared/noscript' %>
-      <%= render "layouts/tylium/project_teaser" %>
+      <%= render "layouts/hera/project_teaser" %>
       <%= flash_messages %>
       <% if content_for?(:title) && !content_for?(:sidebar) %>
         <h3 class="page-title"><%= yield(:title) %></h3>
       <% end %>
-      <%= content_for?(:content) ? yield(:content) : yield %>
+      <div class="container-fluid">
+        <%= content_for?(:content) ? yield(:content) : yield %>
+      </div>
     </main>
 
     <%= render 'activities/poller' %>
 
     <!-- All modals go here -->
-    <%= render 'layouts/tylium/modals' %>
+    <%= render 'layouts/hera/modals' %>
     <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
 
     <% if controller_name == 'boards' %>
@@ -101,6 +103,6 @@
 
     <%# Always render the Tour content, the user may click on the link in the help menu. %>
     <%# FIXME: re-enable Tour %>
-    <%#= render 'layouts/tylium/tour' %>
+    <%#= render 'layouts/hera/tour' %>
   </body>
 </html>
