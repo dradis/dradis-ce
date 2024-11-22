@@ -39,10 +39,10 @@
 
     <div id="view-content" class="view-content" data-behavior="view-content">
       <%= render 'shared/noscript' %>
-      <div class="row m-0">
+      <div class="row">
         <div class="col-12 p-0">
           <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
-          <%= render "layouts/tylium/project_teaser" %>
+          <%= render "layouts/hera/project_teaser" %>
           <% if content_for?(:title) && !content_for?(:sidebar) %>
             <h3 class="page-title"><%= yield(:title) %></h3>
           <% end %>
@@ -55,7 +55,7 @@
     <%= render 'activities/poller' %>
 
     <!-- All modals go here -->
-    <%= render 'layouts/tylium/modals' %>
+    <%= render 'layouts/hera/modals' %>
     <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
 
     <% if controller_name == 'boards' %>
@@ -103,6 +103,6 @@
 
     <%# Always render the Tour content, the user may click on the link in the help menu. %>
     <%# FIXME: re-enable Tour %>
-    <%#= render 'layouts/tylium/tour' %>
+    <%#= render 'layouts/hera/tour' %>
   </body>
 </html>
