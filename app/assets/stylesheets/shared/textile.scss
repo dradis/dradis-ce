@@ -31,8 +31,8 @@
   }
 
   pre {
-    background-color: $secondaryBgColor;
-    border: 1px solid $borderColor;
+    background-color: $secondary-bg;
+    border: 1px solid $border-color;
     border-radius: 3px;
     margin: 0.75rem 0;
     padding: 10px;
@@ -178,8 +178,8 @@
       }
 
       .textile-form-body {
-        background-color: $secondaryBgColor;
-        border: 1px solid $borderColor;
+        background-color: $secondary-bg;
+        border: 1px solid $border-color;
         border-radius: 5px;
       }
 
@@ -213,9 +213,9 @@
         }
 
         &:hover {
-          background-color: darken($secondaryBgColor, 2%);
-          border-bottom-color: $borderColor;
-          border-top-color: $borderColor;
+          background-color: darken($secondary-bg, 2%);
+          border-bottom-color: $border-color;
+          border-top-color: $border-color;
 
           .actions {
             opacity: 1;
@@ -249,7 +249,7 @@
         justify-content: center;
 
         h5 {
-          color: $mutedText;
+          color: $muted-text;
           margin-bottom: 1.75rem;
         }
       }
@@ -269,16 +269,16 @@
       a {
         border-radius: 3px;
         border: 0px none;
-        color: $linkColor;
+        color: $link-color;
 
         &:hover {
           background: #fff;
           border: 0px none;
-          color: $linkColorHover;
+          color: $link-color-hover;
         }
 
         &.active {
-          background: darken($grayDark, 10%);
+          background: darken($grey-dark, 10%);
           color: #fff;
         }
       }

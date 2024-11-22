@@ -1,7 +1,5 @@
 body.merge.new {
-
   #issues_editor {
-
     .nav-pills {
       border-bottom: none;
 
@@ -11,7 +9,7 @@ body.merge.new {
         margin-top: 5px;
         margin-right: 5px;
         line-height: 10px;
-        border: 1px solid $borderColor;
+        border: 1px solid $border-color;
         border-radius: 4px;
       }
     }
@@ -22,10 +20,9 @@ body.merge.new {
   }
 
   #preview_issue_new {
-
     #new_issue {
       padding: 1rem;
-      border-top: 1px solid $borderColor;
+      border-top: 1px solid $border-color;
     }
   }
 
@@ -38,7 +35,7 @@ body.merge.new {
     padding: 1rem;
 
     .tab-pane {
-      border: 1px solid $borderColor;
+      border: 1px solid $border-color;
       border-radius: 4px;
       padding: 1rem;
     }

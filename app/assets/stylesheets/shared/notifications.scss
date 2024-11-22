@@ -1,6 +1,6 @@
 @mixin notification-list-item {
   position: relative;
-  border-bottom: 1px solid $borderColor;
+  border-bottom: 1px solid $border-color;
   padding: 0 2rem 0.5rem 1rem;
   display: flex;
 
@@ -11,7 +11,7 @@
     z-index: 2;
 
     .time {
-      color: $mutedText;
+      color: $muted-text;
     }
   }
 
@@ -43,7 +43,7 @@
   }
 
   &.unread {
-    background-color: $grayLight;
+    background-color: $white-dark;
 
     .notification-icon {
       opacity: 0.15;
@@ -104,7 +104,7 @@
         padding: 0 1em;
         line-height: 2em;
         font-size: 0.8rem;
-        border-bottom: 1px solid $borderColor;
+        border-bottom: 1px solid $border-color;
 
         div {
           display: inline-block;
@@ -113,7 +113,7 @@
 
       .footer {
         line-height: 2em;
-        border-top: 1px solid $borderColor;
+        border-top: 1px solid $border-color;
         font-size: 0.8rem;
       }
     }
@@ -145,5 +145,5 @@ body.notifications {
 }
 
 .pull-right {
-    float: right
+  float: right;
 }

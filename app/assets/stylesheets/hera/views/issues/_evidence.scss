@@ -8,14 +8,14 @@ body.evidence.new {
       border-bottom-right-radius: 0;
 
       &:focus {
-        border-color: $borderColor;
+        border-color: $border-color;
         box-shadow: none;
       }
     }
 
     &:focus-within {
-      border-color: $darkColor;
-      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px $darkColor;
+      border-color: $dark;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px $dark;
     }
 
     select {
@@ -26,7 +26,7 @@ body.evidence.new {
 
       &:focus,
       &:active {
-        border-color: $borderColor;
+        border-color: $border-color;
         box-shadow: none;
       }
     }

@@ -28,7 +28,7 @@
 
       .modal-header {
         align-items: center;
-        background-color: $secondaryBgColor;
+        background-color: $secondary-bg;
 
         .close {
           margin: 0;
@@ -43,7 +43,7 @@
       }
 
       .modal-footer {
-        background-color: $secondaryBgColor;
+        background-color: $secondary-bg;
       }
     }
   }
@@ -56,7 +56,7 @@
   }
 
   .tree-modal-box {
-    border: 1px solid $borderColor;
+    border: 1px solid $border-color;
     padding: 0.5em 1em;
     margin-bottom: 0.5em;
     max-height: 50vh;
@@ -125,7 +125,7 @@
       }
 
       .modal-header h5 span {
-        color: $primaryColor;
+        color: $primary;
       }
     }
   }

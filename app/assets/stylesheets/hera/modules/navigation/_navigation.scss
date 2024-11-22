@@ -1,23 +1,25 @@
-.ce {
-  .instance-nav {
-    .nav-item {
-      .nav-link {
-        &.dropdown-toggle::after {
-          @media (min-width: 992px) and (max-width: 1199px) {
-            display: none;
-          }
+@import 'hera/variables';
+
+.instance-nav {
+  .nav-item {
+    .nav-link {
+      &.dropdown-toggle::after {
+        @media (min-width: 992px) and (max-width: 1199px) {
+          display: none;
         }
       }
+    }
 
-      @media (max-width: 1023px) {
-        padding: 1rem 0;
-        width: 100%;
-      }
+    @media (max-width: 1023px) {
+      padding: 1rem 0;
+      width: 100%;
     }
   }
 }
 
 .navbar {
+  height: $navbar-height;
+
   .container-fluid {
     max-width: 1680px;
 
@@ -95,7 +97,6 @@
 
   &.instance-nav {
     background-color: $instance-nav-bg;
-    height: auto;
     padding: 0;
     top: 0;
     z-index: 1050;
@@ -164,7 +165,6 @@
   &.project-nav {
     background-color: $white;
     border-bottom: 1px solid $border-color;
-    height: auto;
     top: 54px;
     overflow-x: scroll;
     padding: 0;
@@ -270,7 +270,7 @@
   border: none;
   flex-wrap: nowrap;
   margin-bottom: 2rem;
-  padding: 0.75rem 1rem 0.75rem $mainContentPadding;
+  padding: 0.75rem 1rem 0.75rem $padding;
   white-space: nowrap;
   width: 100%;
 

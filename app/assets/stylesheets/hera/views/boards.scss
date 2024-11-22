@@ -47,7 +47,7 @@ body.boards.index {
   }
 
   .board-tile {
-    background-color: $primaryColor;
+    background-color: $primary;
     border-radius: 3px;
     color: $white;
     display: block;
@@ -56,8 +56,8 @@ body.boards.index {
     transition: background-color 0.2s ease-in-out;
 
     &.board-new {
-      background-color: darken($secondaryBgColor, 5%);
-      color: $defaultText;
+      background-color: darken($secondary-bg, 5%);
+      color: $default-text;
       display: table-cell;
       height: 5rem;
       font-weight: 400;
@@ -67,7 +67,7 @@ body.boards.index {
       transition: all 0.2s ease-in-out;
 
       &:hover {
-        background-color: darken($secondaryBgColor, 10%);
+        background-color: darken($secondary-bg, 10%);
       }
 
       @include media-breakpoint-down(lg) {
@@ -76,7 +76,7 @@ body.boards.index {
     }
 
     &:hover {
-      background-color: darken($primaryColor, 5%);
+      background-color: darken($primary, 5%);
     }
 
     .board-tile-details {
@@ -102,7 +102,7 @@ body.boards.index {
 
 body.boards.show {
   .board {
-    background-color: lighten($primaryBgColor, 20%);
+    background-color: lighten($primary-bg, 20%);
     display: flex;
     flex-direction: row;
     overflow-x: auto;
@@ -111,7 +111,7 @@ body.boards.show {
   }
 
   .card {
-    border: 1px solid $borderColor;
+    border: 1px solid $border-color;
     border-radius: 3px;
     margin-bottom: 0.25rem;
     max-width: 300px;
@@ -141,13 +141,13 @@ body.boards.show {
     transition: all 0.2s ease-in-out;
 
     &:hover {
-      background-color: darken($secondaryBgColor, 5%);
+      background-color: darken($secondary-bg, 5%);
     }
   }
 
   .list {
-    background-color: $secondaryBgColor;
-    border: 1px solid $borderColor;
+    background-color: $secondary-bg;
+    border: 1px solid $border-color;
     border-radius: 3px;
     display: flex;
     flex-direction: column;
@@ -194,7 +194,7 @@ body.boards.show {
   }
 
   .list-new {
-    background-color: $primaryColor;
+    background-color: $primary;
     border: none;
     border-radius: 3px;
     padding: 0.25rem;
@@ -205,7 +205,7 @@ body.boards.show {
     }
 
     &:hover {
-      background-color: darken($primaryColor, 5%);
+      background-color: darken($primary, 5%);
     }
   }
 
@@ -214,7 +214,7 @@ body.boards.show {
   }
 
   .sortable-placeholder {
-    background-color: darken($secondaryBgColor, 10%);
+    background-color: darken($secondary-bg, 10%);
     border-radius: 3px;
     margin-bottom: 0.4rem;
   }

@@ -96,14 +96,14 @@ body.styles_tylium {
       right: 0;
       padding: 0.3rem;
       display: inline-flex;
-      background-color: $primaryBgColor;
+      background-color: $primary-bg;
       border: 1px solid transparent;
       border-radius: 5px;
       transition: all 0.2s ease-in-out;
 
       &:hover {
-        background-color: $secondaryBgColor;
-        border: 1px solid $borderColor;
+        background-color: $secondary-bg;
+        border: 1px solid $border-color;
       }
     }
   }

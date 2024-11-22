@@ -3,11 +3,11 @@ body.projects {
     #boards-summary {
       display: flex;
       flex-wrap: wrap;
-  
+
       .pie-chart {
         width: 50%;
       }
-  
+
       &.loading {
         background: image_url('loading.gif') no-repeat center;
       }
@@ -35,7 +35,7 @@ body.projects {
       display: flex;
       justify-content: center;
       align-items: center;
-  
+
       svg text {
         font-size: 14px;
       }
@@ -48,13 +48,12 @@ body.projects {
         margin-bottom: 1rem;
 
         .card-body {
-          
           .list-group-item {
             border: none;
             transition: background-color 0.2s ease-in-out;
 
             &:hover {
-              background-color: darken($primaryBgColor, 3%);
+              background-color: darken($primary-bg, 3%);
             }
 
             li {
@@ -65,7 +64,7 @@ body.projects {
 
         .card-header {
           color: $white;
-  
+
           h5 {
             margin-bottom: 0;
           }
@@ -80,7 +79,7 @@ body.projects {
 
           .card-body li {
             color: #222;
-          };
+          }
 
           .card-header {
             background-color: #222;

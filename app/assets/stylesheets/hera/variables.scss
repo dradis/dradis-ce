@@ -1,19 +1,16 @@
+@import 'bootstrap/functions';
+@import 'bootstrap/variables';
+
 // Branding
 // Do Not Use Directly! - use Theme variables instead
 $ce-green-light: #b0e59c;
 $ce-green: #64bc46;
 $ce-green-dark: #325b23;
 
-// Theme
-$light: $ce-green-light, 1.75%;
+// Edition Colors
+$light: $ce-green-light;
 $primary: $ce-green;
 $dark: $ce-green-dark;
-
-// Color Palette
-$grey-dark: #282828;
-$link-color: #2171a3;
-$shadow-color: #eeeeee;
-$white-dark: #f9f9f9;
 
 // Bootstrap Overrides
 $border-color: #e8e8e8;
@@ -27,9 +24,25 @@ $theme-colors: map-merge(
   )
 );
 
-//Navbar
+// Theme
+$border-color-dark: $dark;
+$border-color-light: $light;
+$error-text: $red;
+$focus-shadow: 0 0 0 0.2rem unquote(#{$primary}80) !important;
+$grey-dark: #282828;
+$link-color: darken($primary, 2.25%);
+$link-color-hover: darken($link-color, 15%);
+$shadow-color: #eeeeee;
+$white-dark: #f9f9f9;
+
+// Layout
+$default-text: $grey-dark;
+$primary-bg: $white;
+$secondary-bg: $white-dark;
+
+// Navbar
 $instance-nav-bg: #1e3915; //ce-green-900
-$navbar-height: 7rem;
+$navbar-height: 3.5rem;
 
 // Sidebar
 $sidebar-width: 20rem;
@@ -38,13 +51,6 @@ $sidebar-width: 20rem;
 $brand-color-light: #c1e4b5; //ce-green-100
 $link-color: #3c712a; //ce-green-700
 
-//Color Palette
-$border-color-light: #e8e8e8;
-$border-color-dark: #3c3c3c;
-$grey-dark: #282828;
-$muted-text: #636363;
-$shadow-dark: #3c3c3c;
-$shadow-light: #eeeeee;
-$system-red: #cc293b;
-$white: #ffffff;
-$white-dark: #f9f9f9;
+// Spacing
+$margin: 1.5rem;
+$padding: 1.5rem;

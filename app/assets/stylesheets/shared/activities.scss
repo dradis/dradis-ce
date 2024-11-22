@@ -13,9 +13,8 @@
 
 // this is for activities in the projects#show feed
 .activity-feed {
-
   .activity {
-    border-bottom: 1px solid $borderColor;
+    border-bottom: 1px solid $border-color;
     overflow: hidden;
     padding: 1rem 0;
 
@@ -27,7 +26,7 @@
       display: block;
 
       .time {
-        color: $mutedText;
+        color: $muted-text;
         font-size: 0.8rem;
       }
     }
@@ -54,22 +53,19 @@
 
 // this is for activities#index
 .activities.index {
-
   .activities-groups-container {
-
     .activity-date-header {
       display: flex;
       justify-content: center;
 
       time {
-        background-color: $primaryBgColor;
+        background-color: $primary-bg;
         font-size: 1.5rem;
         padding: 1rem 0;
       }
     }
 
     .activities-group {
-
       .activities {
         position: relative;
         width: 50%;
@@ -77,7 +73,8 @@
         .activity {
           border: 1px solid transparent;
           padding: 1rem;
-          transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+          transition: background-color 0.2s ease-in-out,
+            border-color 0.2s ease-in-out;
 
           .activity-icon {
             padding-left: 1rem;
@@ -101,15 +98,15 @@
           }
 
           &:hover {
-            background-color: darken($primaryBgColor, 3%);
+            background-color: darken($primary-bg, 3%);
             border-bottom-left-radius: 5px;
-            border-color: $borderColor;
+            border-color: $border-color;
             border-top-left-radius: 5px;
           }
         }
 
         &:before {
-          border-left: 1px solid $borderColor;
+          border-left: 1px solid $border-color;
           bottom: 0;
           content: '';
           margin-left: -1px;
@@ -120,7 +117,6 @@
       }
 
       &:nth-child(even) {
-
         .activities {
           margin-left: auto;
 

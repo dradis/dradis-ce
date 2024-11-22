@@ -47,20 +47,20 @@ div.dataTables_wrapper {
           }
 
           &:before {
-            border-color: $defaultText;
+            border-color: $default-text;
             border-radius: 2px;
             margin: 0;
           }
         }
 
         &.selected {
-          color: $defaultText;
+          color: $default-text;
 
           a {
-            color: $linkColor;
+            color: $link-color;
 
             &:hover {
-              color: $linkColorHover;
+              color: $link-color-hover;
             }
           }
 
@@ -80,8 +80,8 @@ div.dataTables_wrapper {
             }
 
             &:before {
-              background-color: $checkboxFill;
-              border-color: $checkboxFill;
+              background-color: $primary;
+              border-color: $primary;
             }
           }
         }
@@ -162,24 +162,23 @@ div.dataTables_wrapper {
         .page-item {
           &.active {
             .page-link {
-              background: $primaryColor;
-              border-color: $primaryColor;
+              background: $primary;
+              border-color: $primary;
               color: $white;
             }
           }
 
           &.disabled {
             .page-link {
-              color: $mutedText;
+              color: $muted-text;
             }
           }
 
           .page-link {
-            color: $linkColor;
+            color: $link-color;
 
             &:focus {
-              box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
-                0 0 1px $darkColor;
+              box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 1px $dark;
             }
           }
         }
@@ -228,9 +227,9 @@ div.dataTables_wrapper {
 
         &.active {
           &::before {
-            background-color: $checkboxFill;
+            background-color: $primary;
             background-image: image-url('check.svg');
-            border-color: $checkboxFill;
+            border-color: $primary;
           }
         }
 
@@ -240,7 +239,7 @@ div.dataTables_wrapper {
           background-position-y: center;
           background-position-x: -2.4px;
           background-size: 130%;
-          border: 1px solid $defaultText;
+          border: 1px solid $default-text;
           border-radius: 2px;
           content: '';
           height: var(--checkboxSize);

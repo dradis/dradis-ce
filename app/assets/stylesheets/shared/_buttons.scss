@@ -1,6 +1,6 @@
 .btn-placeholder {
   align-items: center;
-  background-color: $primaryColor;
+  background-color: $primary;
   border-radius: 0.25rem;
   color: $white;
   cursor: default;
@@ -42,7 +42,7 @@
     padding: 0.5rem 1.75rem 0.5rem 0.5rem;
 
     &:hover {
-      background-color: $dropdownLinkBackgroundHover;
+      background-color: $white-dark;
     }
 
     i {
@@ -51,12 +51,12 @@
     }
 
     input:checked + i {
-      color: $primaryColor;
+      color: $primary;
     }
 
     .state-label {
       p {
-        color: $primaryColor;
+        color: $primary;
         margin: 0;
       }
 

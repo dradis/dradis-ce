@@ -16,16 +16,68 @@ body {
   background-color: $white;
   display: grid;
   font-family: 'ProximaNovaLight', 'system-ui';
-  grid-template-rows: $navbar-height 1fr;
-  grid-template-columns: $sidebar-width 1fr;
-  grid-template-areas:
-    'navigation navigation'
-    'nodes-sidebar view-content';
 }
 
 a {
   color: $link-color;
   text-decoration: none;
+  transition: color 0.2s ease-in-out;
+
+  &:focus-visible {
+    box-shadow: $focus-shadow;
+    outline: none !important;
+  }
+
+  &:hover {
+    color: $link-color-hover;
+  }
+}
+
+.actions {
+  text-transform: capitalize;
+  white-space: nowrap;
+  font-size: 0.9rem;
+}
+
+.bg-primary {
+  background-color: $primary !important;
+}
+
+blockquote {
+  border-left: 3px solid $primary;
+  padding-left: 1rem;
+}
+
+.btn:focus,
+.custom-file-input:focus ~ .custom-file-label {
+  border-color: $dark;
+  box-shadow: $focus-shadow;
+  outline: none !important;
+}
+
+code {
+  background-color: $light;
+  border-radius: $border-radius;
+  padding: 0.15rem 0.25rem;
+}
+
+.disabled,
+:disabled {
+  color: $muted-text !important;
+}
+
+.form-actions {
+  padding-top: 1rem;
+  border-top: 1px solid $border-color;
+}
+
+.form-control {
+  font-size: inherit;
+
+  &:focus {
+    border-color: $dark;
+    box-shadow: $focus-shadow;
+  }
 }
 
 h1,
@@ -36,6 +88,60 @@ h5,
 h6,
 strong {
   font-family: 'ProximaNovaRegular', 'system-ui';
+}
+
+mark {
+  background-color: yellow;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.nav-pills {
+  .nav-link {
+    transition: all 0s ease-in-out;
+
+    &.active {
+      background-color: $secondary-bg;
+      color: $link-color-hover;
+    }
+  }
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+pre code {
+  background-color: initial;
+  padding: 0;
+}
+
+.required-input {
+  color: $red;
+}
+
+.text-break-spaces {
+  white-space: break-spaces !important;
+}
+
+.text-error {
+  color: $error-text !important;
+}
+
+.text-error-hover {
+  color: $error-text !important;
+
+  &:hover {
+    color: darken($error-text, 10%) !important;
+  }
+}
+
+.text-muted {
+  color: $muted-text !important;
+}
+
+.text-primary {
+  color: $primary !important;
 }
 
 ul {

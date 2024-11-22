@@ -1,13 +1,13 @@
-body.issues.edit, body.issues.new {
-
+body.issues.edit,
+body.issues.new {
   .tag-input {
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
 
     .btn {
-      background: $primaryBgColor;
-      color: $defaultText;
+      background: $primary-bg;
+      color: $default-text;
     }
   }
 }
@@ -15,7 +15,7 @@ body.issues.edit, body.issues.new {
 body.issues.edit {
   #cvss-tabs.nav-pills {
     .nav-link.active {
-      background-color: $primaryColor;
+      background-color: $primary;
       color: $white;
     }
   }
@@ -23,7 +23,7 @@ body.issues.edit {
 
 body.issues.index {
   .add-issues {
-    border: 1px solid $darkColor;
+    border: 1px solid $dark;
     border-radius: 5px;
     height: 100%;
 
@@ -34,8 +34,8 @@ body.issues.index {
     }
 
     .card-header {
-      background: $darkColor;
-      color: lighten($lightColor, 5%);
+      background: $dark;
+      color: lighten($light, 5%);
 
       .card-title {
         margin-bottom: 0;
@@ -55,14 +55,14 @@ body.issues.index {
   }
 
   .tab-content.outer-tab {
-    border-right: 1px solid $borderColor;
-    border-bottom: 1px solid $borderColor;
-    border-left: 1px solid $borderColor;
+    border-right: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+    border-left: 1px solid $border-color;
   }
 
   .tab-pane {
     padding: 1.5rem;
-  } 
+  }
 }
 
 body.issues.show {
@@ -70,7 +70,7 @@ body.issues.show {
     padding-left: 2rem;
 
     .content-textile {
-      border-left: 6px solid $borderColor;
+      border-left: 6px solid $border-color;
       margin-left: 1rem;
       padding-left: 1rem;
     }

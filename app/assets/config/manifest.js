@@ -1,6 +1,5 @@
 //= link application.css
 //= link setup/setup.css
-//= link tylium.css
 //= link hera.css
 
 //= link legacy.application.js

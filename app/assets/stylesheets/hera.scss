@@ -1,7 +1,5 @@
-@import 'bootstrap/functions';
-@import 'bootstrap/variables';
+// Vendor stylesheets and our overrides
 @import 'hera/custom_grid';
-@import 'tylium/variables';
 @import 'hera/variables';
 @import 'bootstrap';
 
@@ -10,6 +8,7 @@
 
 @import 'vendor/datatables.min';
 
+// Shared stylesheets
 @import 'shared/activities';
 @import 'shared/buttons';
 @import 'shared/comments';
@@ -26,8 +25,10 @@
 @import 'shared/textile.scss';
 @import 'shared/validations';
 
-@import 'hera/base';
-@import 'hera/engines';
-@import 'hera/layout';
-@import 'hera/modules';
-@import 'hera/utilities';
+// Hera stylesheets
+@import 'hera/base'; // Base HTML elements like body, h1, etc.
+@import 'hera/engines'; // Styles injected by our engines (gems)
+@import 'hera/layout'; // Layout-level styling (header, main, columns, etc)
+@import 'hera/modules'; // Styling for reuseable components
+@import 'hera/utilities'; // Utility classes
+@import 'hera/views'; // View-specific styling

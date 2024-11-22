@@ -1,7 +1,7 @@
 #tour-content {
   .modal {
-//    margin-left: -380px;
-//    width: 760px;
+    //    margin-left: -380px;
+    //    width: 760px;
     margin-left: -40%;
     width: 80%;
 
@@ -23,16 +23,12 @@
       h2.font-responsive {
         font-size: 24px;
         @media (min-width: 768px) and (max-width: 979px) {
-          font-size:13px;
+          font-size: 13px;
         }
       }
 
-      strong {
-        font-family: 'Helvetica Neue', helvetica, sans-serif;
-      }
-
       .navigation {
-        color: $primaryBgColor;
+        color: $primary-bg;
         text-align: center;
         font-style: italic;
       }
@@ -68,7 +64,7 @@
       }
 
       .textile-inner {
-          padding: 0 5px;
+        padding: 0 5px;
 
         textarea {
           min-height: 400px;

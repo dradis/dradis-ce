@@ -1,7 +1,45 @@
+body {
+  grid-template-rows: calc(#{$navbar-height} * 2) 1fr;
+  grid-template-columns: $sidebar-width 1fr;
+  grid-template-areas:
+    'navigation navigation'
+    'nodes-sidebar view-content';
+}
+
+.content-container {
+  background-color: $primary-bg;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  margin-bottom: $margin;
+  padding: $padding;
+  position: relative;
+  outline: none;
+
+  .alert {
+    margin: 1rem 0;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  // @include media-breakpoint-down(lg) {
+  //   padding-bottom: 9rem;
+
+  //   .content-container {
+  //     margin: calc(#{$margin} / 2);
+  //   }
+  // }
+}
+
 header {
   grid-area: navigation;
 }
 
-main {
-  padding: 1rem;
+.row {
+  padding: 0 0.75rem;
+
+  & > *[class*='col-'] {
+    position: relative;
+  }
 }
