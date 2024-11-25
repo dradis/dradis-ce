@@ -110,7 +110,7 @@
         &:active,
         &:focus,
         &:hover {
-          color: $brand-color-light;
+          color: $instance-nav-hover;
         }
       }
     }
@@ -123,29 +123,29 @@
         &:active,
         &:focus,
         &:hover {
-          background-color: $brand-color-light;
+          background-color: $instance-nav-hover;
 
           .dropdown-item {
-            background-color: $brand-color-light;
-            color: $grey-dark;
+            background-color: $instance-nav-hover;
+            color: $text-default;
           }
         }
       }
     }
 
     .dropdown-divider {
-      border-top: 1px solid $link-color;
+      border-top: 1px solid $text-link;
       border-bottom: 1px solid $border-color-dark;
     }
 
     .navbar-toggler {
-      border: 1px solid $border-color-light;
+      border: 1px solid $border-color;
       color: $white;
 
       &:focus {
-        border: 2px solid $brand-color-light;
+        border: 2px solid $instance-nav-hover;
         box-shadow: none;
-        color: $brand-color-light;
+        color: $instance-nav-hover;
       }
     }
 
@@ -181,18 +181,18 @@
         &:focus,
         &:hover {
           .nav-link {
-            color: $link-color;
+            color: $text-link;
           }
         }
 
         .dropdown-menu {
           border: 1px solid $border-color;
-          box-shadow: 1px 1px 5px 0px rgba($shadow-color, 0.5);
+          box-shadow: 1px 1px 5px 0px rgba($shadow-color-light, 0.5);
 
           .dropdown-item {
             &:hover,
             &:focus {
-              color: $grey-dark;
+              color: $text-default;
               background-color: $light;
             }
           }
@@ -203,7 +203,7 @@
         }
 
         .nav-link {
-          color: $grey-dark;
+          color: $text-default;
           display: flex;
           flex-direction: row;
           font-size: 1rem;
@@ -219,10 +219,10 @@
         }
 
         &.active {
-          border-bottom: 5px solid $brand-color-light;
+          border-bottom: 5px solid $light;
 
           .nav-link {
-            color: $grey-dark;
+            color: $text-default;
           }
         }
       }
@@ -278,7 +278,7 @@
     white-space: nowrap;
 
     &.active {
-      color: $muted-text;
+      color: $text-muted;
     }
 
     & + .breadcrumb-item::before {

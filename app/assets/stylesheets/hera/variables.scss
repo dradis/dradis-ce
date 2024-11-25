@@ -1,28 +1,38 @@
 @import 'bootstrap/functions';
 @import 'bootstrap/variables';
 
-// Branding
-// Do Not Use Directly! - use Theme variables instead
-$ce-green-light: #b0e59c;
-$ce-green: #64bc46;
-$ce-green-dark: #325b23;
+@import 'hera/colors';
 
-// Edition Colors
-$light: $ce-green-light;
-$primary: $ce-green;
-$dark: $ce-green-dark;
+// Theme
+$light: $ce-green-100;
+$primary: $ce-green-500;
+$dark: $ce-green-700;
 
 // Bootstrap Overrides
-$border-color: #e8e8e8;
-$muted-text: #636363;
-$red: #cc293b;
+$green: $green-500;
+$orange: $orange-500;
+$red: $red-500;
+$yellow: $yellow-500;
 
-$theme-colors: map-merge(
-  $theme-colors,
-  (
-    'primary': $dark,
-  )
-);
+//Borders
+$border-color: $grey-200;
+$border-color-dark: $grey-900;
+
+//Misc
+$white-dark: $grey-100;
+
+// Navbar
+$instance-nav-bg: $ce-green-700;
+$instance-nav-hover: $ce-green-200;
+
+//Shadows
+$shadow-color-light: $grey-200;
+$shadow-color-dark: $grey-800;
+
+//Text
+$text-default: $grey-900;
+$text-muted: $grey-700;
+$text-link: $ce-green-700;
 
 // Theme
 $border-color-dark: $dark;
@@ -34,6 +44,16 @@ $link-color: darken($primary, 2.25%);
 $link-color-hover: darken($link-color, 15%);
 $shadow-color: #eeeeee;
 $white-dark: #f9f9f9;
+
+$theme-colors: map-merge(
+  $theme-colors,
+  (
+    'primary': $dark,
+  )
+);
+
+// Sidebar
+$sidebar-width: 20rem;
 
 // Layout
 $default-text: $grey-dark;

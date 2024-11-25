@@ -29,12 +29,12 @@
       .btn {
         background-color: none;
         border: none;
-        color: $brand-color-light;
+        color: $light;
         transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
       }
 
       .search-query {
-        border-bottom-color: $brand-color-light;
+        border-bottom-color: $light;
         opacity: 1;
         right: 1.25rem;
         width: 9rem;
