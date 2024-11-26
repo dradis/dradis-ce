@@ -33,6 +33,7 @@ $shadow-color-dark: $grey-800;
 $text-default: $grey-900;
 $text-muted: $grey-700;
 $text-link: $ce-green-700;
+$text-small: 0.9rem;
 
 // Theme
 $border-color-dark: $dark;
@@ -54,7 +55,7 @@ $theme-colors: map-merge(
 
 // Sidebar
 $sidebar-width: 20rem;
-$secondary-sidebar-width: 15rem;
+$secondary-sidebar-width: 20rem;
 
 // Layout
 $default-text: $grey-dark;

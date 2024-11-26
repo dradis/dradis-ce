@@ -6,7 +6,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
 .sidebar {
   --padding: 1rem;
   background-color: $white-dark;
-  border-right: 2px solid $border-color;
+  --margin: 1rem;
   position: sticky;
   top: $navbar-height;
   height: calc(100vh - #{$navbar-height});
@@ -17,6 +17,44 @@ body:has(.main-sidebar.sidebar-collapsed) {
     height: 100%;
     justify-content: space-between;
     padding: var(--padding) var(--padding) 0.25rem var(--padding);
+    overflow-y: scroll;
+
+    .header {
+      margin-bottom: var(--margin);
+
+      .header-inner {
+        .add {
+          display: flex;
+          justify-content: center;
+          margin-bottom: calc(var(--margin) * 2);
+        }
+
+        .options {
+          h5 {
+            display: flex;
+            justify-content: space-between;
+          }
+        }
+      }
+    }
+
+    .note-list {
+      .list-item {
+        border-bottom: 1px solid $border-color-light;
+        font-size: $text-small;
+        padding-bottom: var(--padding);
+        margin-bottom: var(--margin);
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .list-item-actions {
+          display: flex;
+          justify-content: flex-end;
+        }
+      }
+    }
   }
 
   .sidebar-toggle {
@@ -35,6 +73,8 @@ body:has(.main-sidebar.sidebar-collapsed) {
   }
 
   &.main-sidebar {
+    border-right: 2px solid $border-color;
+
     .sidebar-content {
       .add-node {
         font-size: 0.9rem;
@@ -76,7 +116,8 @@ body:has(.main-sidebar.sidebar-collapsed) {
     }
   }
 
-  .secondary-sidebar {
+  &.secondary-sidebar {
+    border-left: 2px solid $border-color;
     .sidebar-toggle {
       left: -0.75rem;
       .sidebar-toggle-icon {
