@@ -1,6 +1,7 @@
 body:has(.main-sidebar.sidebar-collapsed) {
   grid-template-columns: 0.5rem 1fr;
 }
+// need to fix ^ when collapsed
 
 .main-sidebar {
   --padding: 1rem;
@@ -59,6 +60,50 @@ body:has(.main-sidebar.sidebar-collapsed) {
 
     .sidebar-toggle {
       right: -1rem;
+    }
+
+    .sidebar-toggle-icon {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.secondary-sidebar {
+  --padding: 1rem;
+  background-color: $white-dark;
+  border-left: 2px solid $border-color;
+  position: sticky;
+  top: $navbar-height;
+  height: calc(100vh - #{$navbar-height});
+
+  .sidebar-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    padding: var(--padding) var(--padding) 0.25rem var(--padding);
+  }
+
+  .sidebar-toggle {
+    background-color: $white;
+    border: 1px solid $border-color;
+    border-radius: 0.2rem;
+    padding: 0.2rem 0.5rem;
+    position: absolute;
+    left: -0.75rem;
+    top: var(--padding);
+    .sidebar-toggle-icon {
+      transform: rotate(180deg);
+    }
+  }
+
+  &.sidebar-collapsed {
+    .sidebar-content {
+      display: none;
+    }
+
+    .sidebar-toggle {
+      left: -1rem;
     }
 
     .sidebar-toggle-icon {
