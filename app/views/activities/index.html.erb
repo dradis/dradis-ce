@@ -11,7 +11,7 @@
   </nav>
 <% end %>
 
-<div class="content-container mt-3 <%= 'pt-3' if @activities_groups.any? %>">
+<div class="content-container">
   <% if @activities_groups.any? %>
     <div class="container">
       <div class="activities-groups-container" data-behavior="infinite-scroll-container" data-page="<%= @page %>" data-url="<%= project_activities_path(current_project, format: :js) %>" data-can-load-more="true">
@@ -30,4 +30,4 @@
       text: 'As you make progress this page will show you different milestones you go through. Have to step out for a meeting or off on leave for a couple of days? Review the feed when you get back to get a sense of what\'s new.'
     %>
   <% end %>
-<div>
+  <div>
