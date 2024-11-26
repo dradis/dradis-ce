@@ -5,7 +5,7 @@ module ProjectScoped
     before_action :set_project
     before_action :set_nodes
 
-    helper        :tylium
+    helper        :hera
     helper_method :current_project
     layout        'hera'
   end

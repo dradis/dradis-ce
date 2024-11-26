@@ -3,7 +3,7 @@ class ProjectsController < AuthenticatedController
 
   before_action :set_project
 
-  helper        :tylium
+  helper        :hera
   helper_method :current_project
   layout        'hera'
 

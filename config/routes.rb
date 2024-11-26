@@ -125,7 +125,7 @@ Rails.application.routes.draw do
     post '/upload/parse'  => 'upload#parse'
 
     if Rails.env.development?
-      get '/styles' => 'styles_tylium#index'
+      get '/styles' => 'styles_hera#index'
     end
   end
 

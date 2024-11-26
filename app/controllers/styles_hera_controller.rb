@@ -1,4 +1,4 @@
-class StylesTyliumController < AuthenticatedController
+class StylesHeraController < AuthenticatedController
   include ProjectScoped
 
   layout 'hera'

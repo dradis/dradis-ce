@@ -2,7 +2,7 @@
 
 <%= render 'poller_alerts' unless request.xhr? %>
 
-<%# FIXME: this is the current convention for modal rendering in Tylium. We
+<%# FIXME: this is the current convention for modal rendering in Hera. We
   #   could probably improve it by making use of a single :content_for block %>
 <% content_for :board_rename_modal do %>
   <%= render partial: 'boards/modals/board_rename_form', locals: { board: @board } %>
