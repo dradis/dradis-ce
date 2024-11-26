@@ -3,7 +3,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
 }
 // need to fix ^ when collapsed
 
-.main-sidebar {
+.sidebar {
   --padding: 1rem;
   background-color: $white-dark;
   border-right: 2px solid $border-color;
@@ -17,97 +17,81 @@ body:has(.main-sidebar.sidebar-collapsed) {
     height: 100%;
     justify-content: space-between;
     padding: var(--padding) var(--padding) 0.25rem var(--padding);
+  }
 
-    .add-node {
-      font-size: 0.9rem;
-      margin-right: 0.5rem;
+  .sidebar-toggle {
+    background-color: $white;
+    border: 1px solid $border-color;
+    border-radius: 0.2rem;
+    padding: 0.2rem 0.5rem;
+    position: absolute;
+    top: var(--padding);
+  }
+
+  &.sidebar-collapsed {
+    .sidebar-content {
+      display: none;
+    }
+  }
+
+  &.main-sidebar {
+    .sidebar-content {
+      .add-node {
+        font-size: 0.9rem;
+        margin-right: 0.5rem;
+      }
+
+      .nodes-nav {
+        margin: 0;
+        padding: 0;
+      }
+
+      .version {
+        cursor: default;
+        font-size: 0.625rem;
+        margin-top: auto;
+        padding: 0.2em 0;
+        text-align: center;
+      }
+
+      .tree-header {
+        h4 {
+          margin-bottom: 0;
+        }
+      }
     }
 
-    .nodes-nav {
-      margin: 0;
-      padding: 0;
+    .sidebar-toggle {
+      right: -0.75rem;
     }
 
-    .version {
-      cursor: default;
-      font-size: 0.625rem;
-      margin-top: auto;
-      padding: 0.2em 0;
-      text-align: center;
-    }
+    &.sidebar-collapsed {
+      .sidebar-toggle {
+        right: -1rem;
+      }
 
-    .tree-header {
-      h4 {
-        margin-bottom: 0;
+      .sidebar-toggle-icon {
+        transform: rotate(180deg);
       }
     }
   }
 
-  .sidebar-toggle {
-    background-color: $white;
-    border: 1px solid $border-color;
-    border-radius: 0.2rem;
-    padding: 0.2rem 0.5rem;
-    position: absolute;
-    right: -0.75rem;
-    top: var(--padding);
-  }
-
-  &.sidebar-collapsed {
-    .sidebar-content {
-      display: none;
-    }
-
+  .secondary-sidebar {
     .sidebar-toggle {
-      right: -1rem;
+      left: -0.75rem;
+      .sidebar-toggle-icon {
+        transform: rotate(180deg);
+      }
     }
 
-    .sidebar-toggle-icon {
-      transform: rotate(180deg);
-    }
-  }
-}
+    &.sidebar-collapsed {
+      .sidebar-toggle {
+        left: -1rem;
+      }
 
-.secondary-sidebar {
-  --padding: 1rem;
-  background-color: $white-dark;
-  border-left: 2px solid $border-color;
-  position: sticky;
-  top: $navbar-height;
-  height: calc(100vh - #{$navbar-height});
-
-  .sidebar-content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: space-between;
-    padding: var(--padding) var(--padding) 0.25rem var(--padding);
-  }
-
-  .sidebar-toggle {
-    background-color: $white;
-    border: 1px solid $border-color;
-    border-radius: 0.2rem;
-    padding: 0.2rem 0.5rem;
-    position: absolute;
-    left: -0.75rem;
-    top: var(--padding);
-    .sidebar-toggle-icon {
-      transform: rotate(180deg);
-    }
-  }
-
-  &.sidebar-collapsed {
-    .sidebar-content {
-      display: none;
-    }
-
-    .sidebar-toggle {
-      left: -1rem;
-    }
-
-    .sidebar-toggle-icon {
-      transform: rotate(180deg);
+      .sidebar-toggle-icon {
+        transform: rotate(0deg);
+      }
     }
   }
 }
