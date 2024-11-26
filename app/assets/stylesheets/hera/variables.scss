@@ -36,13 +36,11 @@ $sidebar-width: 20rem;
 
 // Layout
 $primary-bg: $white;
-$secondary-bg: $white-dark;
+$secondary-bg: $grey-100;
 $focus-shadow: 0 0 0 0.2rem unquote(#{$primary}80) !important;
 $link-color: darken($primary, 2.25%);
 $link-color-hover: darken($link-color, 15%);
 $shadow-color: $grey-200;
-$white-dark: $grey-100;
-
 // Spacing
 $margin: 1.5rem;
 $padding: 1.5rem;

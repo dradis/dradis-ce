@@ -4,7 +4,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
 
 .main-sidebar {
   --padding: 1rem;
-  background-color: $white-dark;
+  background-color: $grey-100;
   border-right: 2px solid $border-color;
   position: sticky;
   top: $navbar-height;
