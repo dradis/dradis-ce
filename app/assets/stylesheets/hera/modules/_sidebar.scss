@@ -130,6 +130,36 @@ body:has(.main-sidebar.sidebar-collapsed) {
 
   &.secondary-sidebar {
     border-left: 2px solid $border-color;
+    width: $sidebar-width;
+
+    .sidebar-content {
+      .attachments-box {
+        .drop-zone {
+          border-radius: 0.5rem;
+          cursor: default;
+          margin-bottom: var(--margin);
+          outline: 3px dashed $border-color;
+          padding: calc(var(--padding) * 2);
+          text-align: center;
+
+          span {
+            color: $text-muted;
+          }
+
+          .fileupload-buttonbar {
+            margin-right: 0;
+            margin-top: var(--margin);
+
+            .fileinput-button {
+              color: $text-link;
+              float: none;
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+
     .sidebar-toggle {
       left: -0.75rem;
       .sidebar-toggle-icon {
