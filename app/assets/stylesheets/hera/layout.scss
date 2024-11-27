@@ -27,14 +27,6 @@ body {
   p:last-child {
     margin-bottom: 0;
   }
-
-  // @include media-breakpoint-down(lg) {
-  //   padding-bottom: 9rem;
-
-  //   .content-container {
-  //     margin: calc(#{$margin} / 2);
-  //   }
-  // }
 }
 
 header {
@@ -47,4 +39,11 @@ header {
   & > *[class*='col-'] {
     position: relative;
   }
+}
+
+.sticky-top {
+  position: sticky !important;
+  top: calc((#{$navbar-height} * 2) + (#{$padding} / 1.5));
+  margin-bottom: $margin;
+  z-index: 2;
 }
