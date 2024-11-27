@@ -41,15 +41,27 @@ body:has(.main-sidebar.sidebar-collapsed) {
     .note-list {
       .list-item {
         border-bottom: 1px solid $border-color;
+        display: flex;
+        flex-direction: row;
         font-size: $text-small;
-        padding-bottom: var(--padding);
+        justify-content: space-between;
         margin-bottom: var(--margin);
+        padding-bottom: var(--padding);
+
+        a {
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          display: -webkit-box;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
 
         &:last-child {
           border-bottom: none;
         }
 
         .list-item-actions {
+          align-items: flex-start;
           display: flex;
           justify-content: flex-end;
         }
