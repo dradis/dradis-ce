@@ -8,7 +8,7 @@
         menu_class: 'pull-right'
       %>
     </div>
-    <div class="options">
+    <div class="section-title">
       <h5 class="header-underline header-name"><%= local_assigns[:index_path] ? link_to(name, index_path) : name.humanize %>
         <%= link_to "##{name.downcase}", data: { bs_toggle: 'collapse', behavior: 'collapse-collection' }, class: local_assigns.fetch(:collapse_class, '') do %>
           <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle <%= name.downcase %> list</span>
