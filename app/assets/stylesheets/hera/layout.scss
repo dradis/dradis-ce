@@ -1,6 +1,6 @@
 body {
   grid-template-rows: calc(#{$navbar-height} * 2) 1fr;
-  grid-template-columns: $sidebar-width 1fr $secondary-sidebar-width;
+  grid-template-columns: $sidebar-width 1fr $sidebar-width;
   grid-template-areas:
     'navigation navigation navigation'
     'nodes-sidebar view-content secondary-sidebar';
