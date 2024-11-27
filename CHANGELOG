@@ -24,9 +24,7 @@
     - [API entity]:
       - [future tense verb] [API enhancement]
   - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - High: Authenticated (author) persistent cross-site scripting
 
 v4.14.0 (October 2024)
   - Kit Import: Use file name sequencing when a template file with the same name exists
