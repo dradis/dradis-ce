@@ -1,8 +1,10 @@
 [v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
+  - Welcome Kit:
+    - Add HTML report template
+    - Add Issue and evidence templates
+    - Update OWASP Top 10 methodology to latest version (2021)
   - Upgraded gems:
-    - [gem]
+    - rexml
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
@@ -25,7 +27,11 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    
+
+v4.14.0 (October 2024)
+  - Kit Import: Use file name sequencing when a template file with the same name exists
+  - Upgraded gems:
+    - puma, rails, rexml
 
 v4.13.0 (July 2024)
   - Attachments: Copy attachments when moving an evidence/note
