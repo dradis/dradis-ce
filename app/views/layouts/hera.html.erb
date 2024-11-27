@@ -39,17 +39,15 @@
       <%# Sidebar with node tree goes here %>
     </aside>
 
-    <main data-behavior="view-content">
+    <main class="container-fluid" data-behavior="view-content">
       <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
       <%= render 'shared/noscript' %>
-      <%= render "layouts/hera/project_teaser" %>
+      <%= render "layouts/hera/project_teaser" unless defined?(Dradis::Pro) %>
       <%= flash_messages %>
       <% if content_for?(:title) && !content_for?(:sidebar) %>
         <h3 class="page-title"><%= yield(:title) %></h3>
       <% end %>
-      <div class="container-fluid">
-        <%= content_for?(:content) ? yield(:content) : yield %>
-      </div>
+      <%= content_for?(:content) ? yield(:content) : yield %>
     </main>
 
     <%= render 'activities/poller' %>

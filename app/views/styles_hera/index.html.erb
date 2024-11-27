@@ -204,129 +204,64 @@
     </div>
 
     <div class="content-container">
-      <div class="content-container restrict-height half-height" data-behavior="restrict-height" style="border: none;">
-        <div class="scroll-offset" id="scroll"></div>
-        <div class="style-header">
-          <h4 class="header-underline">Scroll-for-more Indicator</h4>
-          <a class="reveal-code" data-bs-toggle="collapse" href="#scroll-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
-        </div>
-        <div class="style-example">
-          <p>This content-container has a max-height defined but the content requires more space than the max-height property allows. As a result the "Scroll-for-more" indicator is displayed, allowing the user to scroll through the content while seeing a visual cue, letting the user know that there is more content to see.</p>
-
-          <p>The height can be limited using the appropriate class:</p>
-          <ul>
-            <li><em>.full-height</em> - full available height of layout</li>
-            <li><em>.half-height</em> - half available height of layout</li>
-            <li><em>.quarter-height</em> - quarter available height of layout</li>
-          </ul>
-
-          <p>Alternatively, the content-container can be set to match the same height as the next or previous content-container in the row.
-            <br>
-            To achieve this, set the data-behavior value to <em>restrict-height</em> without setting a <em>*-height</em> class. Set the data-height value to either <em>match-next</em> or <em>match-prev</em>.
-
-            <p>Lorem Content:</p>
-
-            <p>Ut cupidatat aliqua eu eu labore pariatur commodo ipsum. Ad irure reprehenderit velit consequat excepteur dolor et duis sunt culpa aliqua ipsum voluptate voluptate. Enim velit ipsum id aliqua laborum ex mollit nostrud esse eiusmod aute aliqua magna. Dolore voluptate do in esse ullamco aute aliqua ea sint sit do commodo. Laborum ex anim eu fugiat ut qui ex. Proident adipisicing elit duis deserunt culpa amet voluptate. Elit ad incididunt voluptate velit qui adipisicing.</p>
-
-            <p>Eiusmod consectetur et elit magna eu aliquip ex. Do mollit veniam deserunt sint excepteur velit ut elit duis. Lorem voluptate sit velit cupidatat fugiat esse ullamco. Nisi consequat ut Lorem nostrud est sunt duis est excepteur elit esse reprehenderit anim tempor. Et ut eiusmod fugiat commodo eiusmod occaecat Lorem tempor elit excepteur et.</p>
-
-            <p>Dolor quis magna eiusmod ea excepteur nulla dolore amet velit. Qui dolore sint veniam ex magna id labore minim dolore reprehenderit nisi voluptate excepteur. Quis officia fugiat voluptate commodo ea voluptate dolor esse Lorem est. Veniam do anim exercitation culpa sint nisi ex et fugiat anim consectetur. Veniam mollit consectetur est velit aute esse eu Lorem. Veniam mollit eiusmod veniam tempor consequat pariatur nulla consectetur excepteur sunt et.</p>
-
-            <p>Reprehenderit aliqua fugiat in nulla amet. Officia est dolore eu ex culpa occaecat excepteur cupidatat. Laborum do nisi sunt aliqua voluptate.</p>
-
-            <p>In sunt esse adipisicing cillum minim excepteur cupidatat aliquip do eiusmod excepteur. Anim tempor sint mollit sint qui id dolore ad consectetur ea est ex dolore. In eu eu ex commodo anim magna amet aliquip dolor fugiat nisi. Cillum consectetur tempor excepteur deserunt voluptate eiusmod. Velit nostrud id duis et in consequat sit dolor cillum. Minim cupidatat enim ex minim commodo cupidatat cupidatat officia dolor. Magna do aliquip qui dolor consectetur do nulla ea.</p>
-
-            <p>Aute do nostrud ipsum aliquip duis qui reprehenderit quis sint irure cupidatat et excepteur. Esse veniam minim ullamco reprehenderit consectetur ea fugiat tempor proident aliquip cillum deserunt velit. Velit fugiat quis esse et nostrud nostrud enim Lorem irure deserunt officia. Sint nostrud nulla sint eu anim reprehenderit elit ea aliqua excepteur nisi laborum ad aute. Exercitation irure et in esse velit dolore. Magna aliquip pariatur occaecat enim amet est minim pariatur cupidatat occaecat qui elit ex.</p>
-
-            <p>Anim aliqua et sunt sit fugiat tempor proident. Mollit culpa eiusmod labore voluptate. Proident reprehenderit id quis consequat laborum excepteur culpa voluptate occaecat laboris voluptate est.</p>
-
-            <p>Culpa incididunt laborum elit minim cillum pariatur adipisicing velit ut excepteur est fugiat eiusmod. Elit amet enim exercitation esse consequat eiusmod. Fugiat ea eiusmod laboris duis et ipsum sit dolor. Nisi esse cupidatat exercitation excepteur tempor magna occaecat deserunt esse. Quis est culpa irure consectetur officia veniam dolor voluptate ullamco occaecat. Duis ex sunt dolore sint commodo.</p>
-
-            <p>Ut cupidatat aliqua eu eu labore pariatur commodo ipsum. Ad irure reprehenderit velit consequat excepteur dolor et duis sunt culpa aliqua ipsum voluptate voluptate. Enim velit ipsum id aliqua laborum ex mollit nostrud esse eiusmod aute aliqua magna. Dolore voluptate do in esse ullamco aute aliqua ea sint sit do commodo. Laborum ex anim eu fugiat ut qui ex. Proident adipisicing elit duis deserunt culpa amet voluptate. Elit ad incididunt voluptate velit qui adipisicing.</p>
-
-            <p>Eiusmod consectetur et elit magna eu aliquip ex. Do mollit veniam deserunt sint excepteur velit ut elit duis. Lorem voluptate sit velit cupidatat fugiat esse ullamco. Nisi consequat ut Lorem nostrud est sunt duis est excepteur elit esse reprehenderit anim tempor. Et ut eiusmod fugiat commodo eiusmod occaecat Lorem tempor elit excepteur et.</p>
-
-            <p>Dolor quis magna eiusmod ea excepteur nulla dolore amet velit. Qui dolore sint veniam ex magna id labore minim dolore reprehenderit nisi voluptate excepteur. Quis officia fugiat voluptate commodo ea voluptate dolor esse Lorem est. Veniam do anim exercitation culpa sint nisi ex et fugiat anim consectetur. Veniam mollit consectetur est velit aute esse eu Lorem. Veniam mollit eiusmod veniam tempor consequat pariatur nulla consectetur excepteur sunt et.</p>
-
-            <p>Anim aliqua et sunt sit fugiat tempor proident. Mollit culpa eiusmod labore voluptate. Proident reprehenderit id quis consequat laborum excepteur culpa voluptate occaecat laboris voluptate est.</p>
-
-            <p class="m-0">Culpa incididunt laborum elit minim cillum pariatur adipisicing velit ut excepteur est fugiat eiusmod. Elit amet enim exercitation esse consequat eiusmod. Fugiat ea eiusmod laboris duis et ipsum sit dolor. Nisi esse cupidatat exercitation excepteur tempor magna occaecat deserunt esse. Quis est culpa irure consectetur officia veniam dolor voluptate ullamco occaecat. Duis ex sunt dolore sint commodo.</p>
-          </div>
-        </div>
-
-        <div class="style-code-wrapper collapse" id="scroll-code">
-          <pre class="style-code" style="margin: 2rem;">
-<code><span class="ct"> // Example showing a content-container restricted to half the height of the browser view (this is the way this example content-container is set up). Height options are full-height, half-height or quarter-height</span>
-<span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"content-container restrict-height half-height"</span><span class="an"> data-behavior=</span><span class="av">"restrict-height"</span><span class="et">></span>
-
-<span class="ct"> // Example showing a content-container restricted to match the height of the next content-container in the row. Options for 'data-height' are 'match-next' and 'match-prev'</span>
-<span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"content-container restrict-height"</span><span class="an"> data-behavior=</span><span class="av">"restrict-height"</span><span class="an"> data-height=</span><span class="av">"match-next"</span><span class="et">></span>
-  <span class="et">&lt;h4</span><span class="an"> class=</span><span class="av">"header-underline"</span><span class="et">></span><span class="et">></span>Scroll-for-more Indicator<span class="et">&lt;/h4</span><span class="et">></span>
-  <span class="et">&lt;p</span><span class="et">></span>Content Here<span class="et">&lt;/p></span>
-<span class="et">&lt;/div</span><span class="et">></span></code>
-        </pre>
-        </div>
+      <div class="scroll-offset" id="tables"></div>
+      <div class="style-header">
+        <h4 class="header-underline">Tables</h4>
+        <a class="reveal-code" data-bs-toggle="collapse" href="#tables-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
       </div>
+      <div class="style-example">
+        <p>Tables in Dradis have a special structure in order to allow them to be scrollable and sortable. The below table is an example of a table exceeding the container boundaries but all data is still visisible thanks to a horizontally scrollable table wrapper.</p>
 
-      <div class="content-container">
-        <div class="scroll-offset" id="tables"></div>
-        <div class="style-header">
-          <h4 class="header-underline">Tables</h4>
-          <a class="reveal-code" data-bs-toggle="collapse" href="#tables-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
-        </div>
-        <div class="style-example">
-          <p>Tables in Dradis have a special structure in order to allow them to be scrollable and sortable. The below table is an example of a table exceeding the container boundaries but all data is still visisible thanks to a horizontally scrollable table wrapper.</p>
-
-          <div class="d-flex justify-content-center mt-4">
-            <div class="table-wrapper">
-              <table class="table table-striped"
+        <div class="d-flex justify-content-center mt-4">
+          <div class="table-wrapper">
+            <table class="table table-striped"
               data-behavior="dradis-datatable"
               data-default-columns='["Col 1 Header", "Col 2 Header", "Col 3 Header", "Col 4 Header", "Col 5 Header"]'
               data-item-name="name_of_entity"
               data-local-storage-key="project.ce.name_of_entities_datatable">
-                <thead>
-                  <tr>
-                    <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Select</span></th>
-                    <th>Col 1 Header</th>
-                    <th>Col 2 Header</th>
-                    <th>Col 3 Header</th>
-                    <th>Col 4 Header</th>
-                    <th>Col 5 Header</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr id="name_of_entity-1">
-                    <td class="select-checkbox" data-behavior="select-checkbox"></td>
-                    <td data-sort="Row 1 Col 1 Data">Row 1 Col 1 Data</td>
-                    <td data-sort="Row 1 Col 2 Data">Row 1 Col 2 Data</td>
-                    <td data-sort="Row 1 Col 3 Data">Row 1 Col 3 Data</td>
-                    <td data-sort="Row 1 Col 4 Data">Row 1 Col 4 Data</td>
-                    <td data-sort="Row 1 Col 4 Data">Row 1 Col 5 Data</td>
-                  </tr>
-                  <tr id="name_of_entity-2">
-                    <td class="select-checkbox" data-behavior="select-checkbox"></td>
-                    <td data-sort="Row 2 Col 1 Data">Row 2 Col 1 Data</td>
-                    <td data-sort="Row 2 Col 2 Data">Row 2 Col 2 Data</td>
-                    <td data-sort="Row 2 Col 3 Data">Row 2 Col 3 Data</td>
-                    <td data-sort="Row 2 Col 4 Data">Row 2 Col 4 Data</td>
-                    <td data-sort="Row 2 Col 4 Data">Row 2 Col 5 Data</td>
-                  </tr>
-                  <tr id="name_of_entity-3">
-                    <td class="select-checkbox" data-behavior="select-checkbox"></td>
-                    <td data-sort="Row 3 Col 1 Data">Row 3 Col 1 Data</td>
-                    <td data-sort="Row 3 Col 2 Data">Row 3 Col 2 Data</td>
-                    <td data-sort="Row 3 Col 3 Data">Row 3 Col 3 Data</td>
-                    <td data-sort="Row 3 Col 4 Data">Row 3 Col 4 Data</td>
-                    <td data-sort="Row 3 Col 4 Data">Row 3 Col 5 Data</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+              <thead>
+                <tr>
+                  <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Select</span></th>
+                  <th>Col 1 Header</th>
+                  <th>Col 2 Header</th>
+                  <th>Col 3 Header</th>
+                  <th>Col 4 Header</th>
+                  <th>Col 5 Header</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr id="name_of_entity-1">
+                  <td class="select-checkbox" data-behavior="select-checkbox"></td>
+                  <td data-sort="Row 1 Col 1 Data">Row 1 Col 1 Data</td>
+                  <td data-sort="Row 1 Col 2 Data">Row 1 Col 2 Data</td>
+                  <td data-sort="Row 1 Col 3 Data">Row 1 Col 3 Data</td>
+                  <td data-sort="Row 1 Col 4 Data">Row 1 Col 4 Data</td>
+                  <td data-sort="Row 1 Col 4 Data">Row 1 Col 5 Data</td>
+                </tr>
+                <tr id="name_of_entity-2">
+                  <td class="select-checkbox" data-behavior="select-checkbox"></td>
+                  <td data-sort="Row 2 Col 1 Data">Row 2 Col 1 Data</td>
+                  <td data-sort="Row 2 Col 2 Data">Row 2 Col 2 Data</td>
+                  <td data-sort="Row 2 Col 3 Data">Row 2 Col 3 Data</td>
+                  <td data-sort="Row 2 Col 4 Data">Row 2 Col 4 Data</td>
+                  <td data-sort="Row 2 Col 4 Data">Row 2 Col 5 Data</td>
+                </tr>
+                <tr id="name_of_entity-3">
+                  <td class="select-checkbox" data-behavior="select-checkbox"></td>
+                  <td data-sort="Row 3 Col 1 Data">Row 3 Col 1 Data</td>
+                  <td data-sort="Row 3 Col 2 Data">Row 3 Col 2 Data</td>
+                  <td data-sort="Row 3 Col 3 Data">Row 3 Col 3 Data</td>
+                  <td data-sort="Row 3 Col 4 Data">Row 3 Col 4 Data</td>
+                  <td data-sort="Row 3 Col 4 Data">Row 3 Col 5 Data</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
+      </div>
 
-        <div class="style-code-wrapper collapse" id="tables-code">
-          <pre class="style-code">
+      <div class="style-code-wrapper collapse" id="tables-code">
+        <pre class="style-code">
 <code><span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"table-wrapper"</span><span class="et">></span>
   <span class="et">&lt;table</span>
     <span class="an">class=</span><span class="av">"table table-striped"</span>
@@ -373,92 +308,92 @@
   <span class="et">&lt;/table></span>
 <span class="et">&lt;/div></span></code>
         </pre>
-        </div>
       </div>
+    </div>
 
-      <div class="content-container">
-        <div class="scroll-offset" id="input"></div>
-        <div class="style-header">
-          <h4 class="header-underline">Text Input with Inset Button</h4>
-          <a class="reveal-code" data-bs-toggle="collapse" href="#input-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
-        </div>
-        <div class="style-example">
-          <div class="container">
-            <div class="row">
-              <div class="col-8 offset-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
-                <div class="inset-button-wrapper">
-                  <label for="inset-example" class="visually-hidden">Example input element with inset button</label>
-                  <input type="text" class="form-control" id="inset-example" placeholder="Placeholder Text...">
-                  <button type="submit" class="btn btn-primary">Button</button>
-                </div>
+    <div class="content-container">
+      <div class="scroll-offset" id="input"></div>
+      <div class="style-header">
+        <h4 class="header-underline">Text Input with Inset Button</h4>
+        <a class="reveal-code" data-bs-toggle="collapse" href="#input-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+      </div>
+      <div class="style-example">
+        <div class="container">
+          <div class="row">
+            <div class="col-8 offset-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+              <div class="inset-button-wrapper">
+                <label for="inset-example" class="visually-hidden">Example input element with inset button</label>
+                <input type="text" class="form-control" id="inset-example" placeholder="Placeholder Text...">
+                <button type="submit" class="btn btn-primary">Button</button>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="style-code-wrapper collapse" id="input-code">
-          <pre class="style-code">
+      <div class="style-code-wrapper collapse" id="input-code">
+        <pre class="style-code">
 <code><span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"inset-button-wrapper"</span><span class="et">></span>
   <span class="et">&lt;input</span><span class="an"> type=</span><span class="av">"text"</span><span class="an"> class=</span><span class="av">"form-control"</span><span class="an"> placeholder=</span><span class="av">"Placeholder Text..."</span><span class="et">></span>
   <span class="et">&lt;button</span><span class="an"> type=</span><span class="av">"submit"</span><span class="an"> class=</span><span class="av">"btn btn-primary"</span><span class="et">></span>Button<span class="et">&lt;/button></span>
 <span class="et">&lt;/div</span><span class="et">></span></code>
         </pre>
+      </div>
+    </div>
+
+    <div class="content-container">
+      <div class="scroll-offset" id="tooltips"></div>
+      <div class="style-header">
+        <h4 class="header-underline">Tooltips using aria-tooltips</h4>
+        <a class="reveal-code" data-bs-toggle="collapse" href="#tooltips-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+      </div>
+      <div class="style-example">
+        <p>Hover over the below button to see a tooltip using the aria-tooltip attribute. We use aria-tooltips as tooltips as they are easily customizable and do not require any kind of plugin's or 3rd party code to function. This example uses a button element but this can be used on almost any kind of element.</p>
+        <div class="w-100 d-flex justify-content-center">
+          <button class="btn btn-primary" aria-tooltip="Tooltip text using aria-tooltip">Hover Me!</button>
         </div>
       </div>
 
-      <div class="content-container">
-        <div class="scroll-offset" id="tooltips"></div>
-        <div class="style-header">
-          <h4 class="header-underline">Tooltips using aria-tooltips</h4>
-          <a class="reveal-code" data-bs-toggle="collapse" href="#tooltips-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
-        </div>
-        <div class="style-example">
-          <p>Hover over the below button to see a tooltip using the aria-tooltip attribute. We use aria-tooltips as tooltips as they are easily customizable and do not require any kind of plugin's or 3rd party code to function. This example uses a button element but this can be used on almost any kind of element.</p>
-          <div class="w-100 d-flex justify-content-center">
-            <button class="btn btn-primary" aria-tooltip="Tooltip text using aria-tooltip">Hover Me!</button>
-          </div>
-        </div>
-
-        <div class="style-code-wrapper collapse" id="tooltips-code">
-          <pre class="style-code">
+      <div class="style-code-wrapper collapse" id="tooltips-code">
+        <pre class="style-code">
 <code><span class="et">&lt;button</span><span class="an"> class=</span><span class="av">"btn btn-primary"</span><span class="an"> aria-tooltip=</span><span class="av">"Tooltip text using aria-tooltips"</span><span class="et">></span>Hover Me!<span class="et">&lt;/button></span></code>
         </pre>
+      </div>
+    </div>
+
+    <div class="content-container">
+      <div class="scroll-offset" id="typography"></div>
+      <div class="style-header">
+        <h4 class="header-underline">Typography</h4>
+        <a class="reveal-code" data-bs-toggle="collapse" href="#typography-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+      </div>
+      <div class="style-example">
+        <div class="row">
+          <div class="col-12">
+            <p>Hera uses the <a href="https://www.google.com/fonts/specimen/Open+Sans" target="_blank">Open Sans</a> font. The font-weight is set to 300 but we also have <span class="fw4">400</span> and <span class="fw6">600</span> available. The font size is set to 1rem = 16px.</p>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-6 text-center">
+            <h1>Heading 1</h1>
+            <h2>Heading 2</h2>
+            <h3>Heading 3</h3>
+            <h4>Heading 4</h4>
+            <h5>Heading 5</h5>
+            <h6>Heading 6</h6>
+          </div>
+          <div class="col-6 text-center">
+            <p class="lead">Paragraph with lead class</p>
+            <p>Normal paragraph</p>
+            <p><a href="javascript:void(0)">Link example</a></p>
+            <p class="text-error">Error text</p>
+            <p class="text-muted">Muted text</p>
+          </div>
         </div>
       </div>
 
-      <div class="content-container">
-        <div class="scroll-offset" id="typography"></div>
-        <div class="style-header">
-          <h4 class="header-underline">Typography</h4>
-          <a class="reveal-code" data-bs-toggle="collapse" href="#typography-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
-        </div>
-        <div class="style-example">
-          <div class="row">
-            <div class="col-12">
-              <p>Hera uses the <a href="https://www.google.com/fonts/specimen/Open+Sans" target="_blank">Open Sans</a> font. The font-weight is set to 300 but we also have <span class="fw4">400</span> and <span class="fw6">600</span> available. The font size is set to 1rem = 16px.</p>
-            </div>
-          </div>
-          <div class="row mt-4">
-            <div class="col-6 text-center">
-              <h1>Heading 1</h1>
-              <h2>Heading 2</h2>
-              <h3>Heading 3</h3>
-              <h4>Heading 4</h4>
-              <h5>Heading 5</h5>
-              <h6>Heading 6</h6>
-            </div>
-            <div class="col-6 text-center">
-              <p class="lead">Paragraph with lead class</p>
-              <p>Normal paragraph</p>
-              <p><a href="javascript:void(0)">Link example</a></p>
-              <p class="text-error">Error text</p>
-              <p class="text-muted">Muted text</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="style-code-wrapper collapse" id="typography-code">
-          <pre class="style-code">
+      <div class="style-code-wrapper collapse" id="typography-code">
+        <pre class="style-code">
 <code><span class="et">&lt;h1</span><span class="et">></span>Heading 1<span class="et">&lt;/h1</span><span class="et">></span>
 <span class="et">&lt;h2</span><span class="et">></span>Heading 2<span class="et">&lt;/h2</span><span class="et">></span>
 <span class="et">&lt;h4</span><span class="an"> class=</span><span class="av">"header-underline"</span><span class="et">></span><span class="et">></span>Heading 3<span class="et">&lt;/h4</span><span class="et">></span>
@@ -472,44 +407,43 @@
 <span class="et">&lt;p</span><span class="an"> class=</span><span class="av">"text-error"</span><span class="et">></span>Error text<span class="et">&lt;/p</span><span class="et">></span>
 <span class="et">&lt;p</span><span class="an"> class=</span><span class="av">"text-muted"</span><span class="et">></span>Muted text<span class="et">&lt;/p</span><span class="et">></span></code>
         </pre>
-        </div>
       </div>
-
     </div>
 
-    <div class="col-lg-4 col-xl-3 d-none d-lg-block">
-      <div class="content-container sticky-top sticky-top-with-title">
-        <h4 class="header-underline">Quick Nav</h4>
-        <nav class="d-flex flex-column" data-behavior="smooth-scroll-nav">
-          <a href="#container" class="nav-link">Content Container</a>
-          <a href="#tabs" class="nav-link">Content Container with Tabs</a>
-          <a href="#dots" class="nav-link">Dots Menu</a>
-          <a href="#modals" class="nav-link">Modals</a>
-          <a href="#toolbar" class="nav-link">Rich Toolbar</a>
-          <a href="#scroll" class="nav-link">Scroll-For-More Indicator</a>
-          <a href="#tables" class="nav-link">Tables</a>
-          <a href="#input" class="nav-link">Text Input with Inset Button</a>
-          <a href="#tooltips" class="nav-link">Tooltips Using Aria-Tooltips</a>
-          <a href="#typography" class="nav-link">Typography</a>
-        </nav>
+  </div>
 
-        <div class="style-header mt-5">
-          <h4 class="header-underline">Sticky Top</h4>
-          <a class="reveal-code" data-bs-toggle="collapse" href="#sticky-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  <div class="col-lg-4 col-xl-3 d-none d-lg-block">
+    <div class="content-container sticky-top">
+      <h4 class="header-underline">Quick Nav</h4>
+      <nav class="d-flex flex-column" data-behavior="smooth-scroll-nav">
+        <a href="#container" class="nav-link">Content Container</a>
+        <a href="#tabs" class="nav-link">Content Container with Tabs</a>
+        <a href="#dots" class="nav-link">Dots Menu</a>
+        <a href="#modals" class="nav-link">Modals</a>
+        <a href="#toolbar" class="nav-link">Rich Toolbar</a>
+        <a href="#tables" class="nav-link">Tables</a>
+        <a href="#input" class="nav-link">Text Input with Inset Button</a>
+        <a href="#tooltips" class="nav-link">Tooltips Using Aria-Tooltips</a>
+        <a href="#typography" class="nav-link">Typography</a>
+      </nav>
+
+      <div class="style-header mt-5">
+        <h4 class="header-underline">Sticky Top</h4>
+        <a class="reveal-code" data-bs-toggle="collapse" href="#sticky-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+      </div>
+      <div class="style-example">
+        <p class="m-0">This is an example of a sticky container that will stay at the top of the view as the user scrolls.
         </div>
-        <div class="style-example">
-          <p class="m-0">This is an example of a sticky container that will stay at the top of the view as the user scrolls.
-          </div>
 
-          <div class="style-code-wrapper collapse" id="sticky-code">
-            <pre class="style-code">
+        <div class="style-code-wrapper collapse" id="sticky-code">
+          <pre class="style-code">
 <code><span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"content-container sticky-top"</span><span class="et">></span>
   <span class="et">&lt;h4</span><span class="an"> class=</span><span class="av">"header-underline"</span><span class="et">></span><span class="et">></span>Header Text Here<span class="et">&lt;/h4</span><span class="et">></span>
   <span class="et">&lt;p</span><span class="et">></span>Content Here<span class="et">&lt;/p</span><span class="et">></span>
 <span class="et">&lt;/div</span><span class="et">></span></code>
         </pre>
-          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
