@@ -41,7 +41,7 @@
     <main class="container-fluid" data-behavior="view-content">
       <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
       <%= render 'shared/noscript' %>
-      <%= render "layouts/hera/project_teaser" %>
+      <%= render "layouts/hera/project_teaser" unless defined?(Dradis::Pro) %>
       <%= flash_messages %>
       <% if content_for?(:title) && !content_for?(:sidebar) %>
         <h3 class="page-title"><%= yield(:title) %></h3>
