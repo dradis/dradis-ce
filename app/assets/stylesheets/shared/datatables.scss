@@ -47,14 +47,14 @@ div.dataTables_wrapper {
           }
 
           &:before {
-            border-color: $default-text;
+            border-color: $text-default;
             border-radius: 2px;
             margin: 0;
           }
         }
 
         &.selected {
-          color: $default-text;
+          color: $text-default;
 
           a {
             color: $link-color;
@@ -239,7 +239,7 @@ div.dataTables_wrapper {
           background-position-y: center;
           background-position-x: -2.4px;
           background-size: 130%;
-          border: 1px solid $default-text;
+          border: 1px solid $text-default;
           border-radius: 2px;
           content: '';
           height: var(--checkboxSize);

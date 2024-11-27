@@ -3,7 +3,6 @@
 //= link hera.css
 
 //= link legacy.application.js
-//= link tylium.js
 //= link hera.js
 
 //= link_tree ../../javascript .js

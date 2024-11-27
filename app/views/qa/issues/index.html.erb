@@ -8,9 +8,9 @@
   </li>
 </ul>
 
-<div class="row m-0">
-  <div class="col-12 p-0">
-    <div class="content-container mt-0 pb-3" id="qa-viewer" data-behavior="qa-viewer">
+<div class="row p-0">
+  <div class="col-12">
+    <div class="content-container" id="qa-viewer" data-behavior="qa-viewer">
       <% if @issues.any? %>
         <div data-behavior="datatable-paths"
              data-table-state-url="<%= multiple_update_project_qa_issues_path(current_project) %>"

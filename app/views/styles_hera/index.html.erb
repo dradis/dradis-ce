@@ -1,13 +1,13 @@
-<% content_for :title, 'Tylium Style Guide' %>
+<% content_for :title, 'Hera Style Guide' %>
 
-<div class="row m-0">
-  <div class="col-md-12 col-lg-8 col-xl-9 p-0">
+<div class="row p-0 mt-3">
+  <div class="col-md-12 col-lg-8 col-xl-9">
 
     <div class="content-container">
-      <h1 class="text-center mb-4">Tylium Style Guide [ WIP ]</h1>
-      <p>Welcome to the Tylium style guide, here you will see all the major custom style components that we use in the Tylium layout.</p>
+      <h1 class="text-center mb-4">Hera Style Guide [ WIP ]</h1>
+      <p>Welcome to the Hera style guide, here you will see all the major custom style components that we use in the Hera layout.</p>
       <p>If you find something you would like to implement in the view you are working on, you can simply press the <i class="fa-solid fa-code" style="font-weight: bold;"></i> button to reveal the code structure including all the element tags, classes, data-attributes etc.</p>
-      <p>Tylium uses Bootstrap 4, please refer to <a href="https://getbootstrap.com/docs/4.0/getting-started/introduction/" target="_blank">the official documentation</a> for standard bootstrap classes and element structure.</p>
+      <p>Hera uses Bootstrap 4, please refer to <a href="https://getbootstrap.com/docs/4.0/getting-started/introduction/" target="_blank">the official documentation</a> for standard bootstrap classes and element structure.</p>
     </div>
 
     <div class="content-container">
@@ -17,7 +17,7 @@
         <a class="reveal-code" data-bs-toggle="collapse" href="#container-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
       </div>
       <div class="style-example">
-        <p class="m-0">Each individual section of Tylium should be wrapped in a content container with an optional header element. The content container gives the elements a white background, grey border with subtle border radius as well as uniform padding and margin. The height is set to auto without a max-height. In order to limit the max-height, please refer to the <a href="#scroll">Scroll For More</a> section.</p>
+        <p class="m-0">Each individual section of Hera should be wrapped in a content container with an optional header element. The content container gives the elements a white background, grey border with subtle border radius as well as uniform padding and margin. The height is set to auto without a max-height. In order to limit the max-height, please refer to the <a href="#scroll">Scroll For More</a> section.</p>
       </div>
 
       <div class="style-code-wrapper collapse" id="container-code">
@@ -41,7 +41,7 @@
         <a data-bs-toggle="tab" class="nav-link" href="#tab3">Tab 3</a>
       </li>
     </ul>
-    <div class="content-container mt-0">
+    <div class="content-container">
       <div class="scroll-offset" id="tabs" style="top: -4rem;"></div>
 
       <div class="style-header">
@@ -50,7 +50,7 @@
       </div>
 
       <div class="style-example">
-        <div class="tab-content mt-0">
+        <div class="tab-content">
           <div id="tab1" class="tab-pane fade">
             <p>Tab 1 Content</p>
           </div>
@@ -77,8 +77,8 @@
   <span class="et">&lt;/li></span>
 <span class="et">&lt;/ul></span>
 
-<span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"content-container mt-0"</span><span class="et">></span>
-  <span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"tab-content mt-0"</span><span class="et">></span>
+<span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"content-container"</span><span class="et">></span>
+  <span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"tab-content"</span><span class="et">></span>
     <span class="et">&lt;div</span><span class="an"> id=</span><span class="av">"tab1"</span><span class="an"> class=</span><span class="av">"tab-pane fade"</span><span class="et">></span>
       <span class="et">&lt;p</span><span class="et">></span>Tab 1 Content<span class="et">&lt;/p></span>
     <span class="et">&lt;/div</span><span class="et">></span>
@@ -154,7 +154,7 @@
 <code><span class="ct">// This line goes in the view where you would want to use a button or link to trigger the modal dialog.</span>
 <span class="et">&lt;a</span><span class="an"> class=</span><span class="av">"btn btn-primary"</span><span class="an"> data-bs-toggle=</span><span class="av">"modal"</span><span class="an"> href=</span><span class="av">"#modal-example"</span><span class="et">></span>Click for modal<span class="et">&lt;/a></span>
 
-<span class="ct">// This block must be added as a partial to the modals section of "layouts/tylium.html.erb" near the end of the file.</span>
+<span class="ct">// This block must be added as a partial to the modals section of "layouts/Hera.html.erb" near the end of the file.</span>
 <span class="et">&lt;div</span><span class="an"> id=</span><span class="av">"modal-example"</span><span class="an"> class=</span><span class="av">"modal fade"</span><span class="an"> tab-index=</span><span class="av">"-1"</span><span class="et">></span>
   <span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"modal-dialog"</span><span class="et">></span>
     <span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"modal-content"</span><span class="et">></span>
@@ -203,8 +203,8 @@
       </div>
     </div>
 
-    <div class="content-container p-0">
-      <div class="content-container m-0 restrict-height half-height" data-behavior="restrict-height" style="border: none;">
+    <div class="content-container">
+      <div class="content-container restrict-height half-height" data-behavior="restrict-height" style="border: none;">
         <div class="scroll-offset" id="scroll"></div>
         <div class="style-header">
           <h4 class="header-underline">Scroll-for-more Indicator</h4>
@@ -435,7 +435,7 @@
         <div class="style-example">
           <div class="row">
             <div class="col-12">
-              <p>Tylium uses the <a href="https://www.google.com/fonts/specimen/Open+Sans" target="_blank">Open Sans</a> font. The font-weight is set to 300 but we also have <span class="fw4">400</span> and <span class="fw6">600</span> available. The font size is set to 1rem = 16px.</p>
+              <p>Hera uses the <a href="https://www.google.com/fonts/specimen/Open+Sans" target="_blank">Open Sans</a> font. The font-weight is set to 300 but we also have <span class="fw4">400</span> and <span class="fw6">600</span> available. The font size is set to 1rem = 16px.</p>
             </div>
           </div>
           <div class="row mt-4">
@@ -477,8 +477,8 @@
 
     </div>
 
-    <div class="col-lg-4 col-xl-3 p-0 d-none d-lg-block">
-      <div class="content-container sticky-top sticky-top-with-title ms-0">
+    <div class="col-lg-4 col-xl-3 d-none d-lg-block">
+      <div class="content-container sticky-top sticky-top-with-title">
         <h4 class="header-underline">Quick Nav</h4>
         <nav class="d-flex flex-column" data-behavior="smooth-scroll-nav">
           <a href="#container" class="nav-link">Content Container</a>

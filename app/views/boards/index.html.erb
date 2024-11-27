@@ -2,7 +2,7 @@
 
 <%= render 'poller_alerts' unless  request.xhr? %>
 
-<div class="content-container pb-3 mt-3">
+<div class="content-container">
   <% if @boards.any? %>
     <ul class="board-list">
       <% @boards.each do |board| %>
@@ -36,10 +36,10 @@
     </ul>
   <% else %>
     <%= render 'shared/empty_state',
-      actions_partial: 'boards/empty_state_actions',
-      docs_link: 'https://dradis.com/support/guides/projects/methodologies.html',
-      name: 'methodology',
-      text: 'Drive consistency and quality by using a standard methodology for each assessment type.'
-    %>
+          actions_partial: 'boards/empty_state_actions',
+          docs_link: 'https://dradis.com/support/guides/projects/methodologies.html',
+          name: 'methodology',
+          text: 'Drive consistency and quality by using a standard methodology for each assessment type.'
+        %>
   <% end %>
 </div>

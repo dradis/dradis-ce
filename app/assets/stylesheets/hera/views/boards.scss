@@ -57,7 +57,7 @@ body.boards.index {
 
     &.board-new {
       background-color: darken($secondary-bg, 5%);
-      color: $default-text;
+      color: $text-default;
       display: table-cell;
       height: 5rem;
       font-weight: 400;

@@ -31,12 +31,11 @@
   <body class="<%= controller_name %> <%= action_name %>">
 
     <header>
-      <%= render 'layouts/hera/instance_nav' %>
-      <%= render 'layouts/hera/project_nav' %>
+      <%# Nav goes here %>
     </header>
 
     <aside>
-      <%= render "layouts/hera/sidebar" %>
+      <%# Sidebar with node tree goes here %>
     </aside>
 
     <main data-behavior="view-content">
@@ -96,8 +95,8 @@
       <%= render partial: 'notes/modals/move' %>
     <% end %>
 
-    <% if controller_name == 'styles_tylium' %>
-      <%= render partial: 'styles_tylium/modal' %>
+    <% if controller_name == 'styles_hera' %>
+      <%= render partial: 'styles_hera/modal' %>
     <% end %>
 
     <% if %w[tags issues].include?(controller_name) %>

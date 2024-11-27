@@ -1,12 +1,10 @@
 @import 'bootstrap/functions';
-@import 'bootstrap/variables';
-
 @import 'hera/colors';
 
 // Theme
-$light: $ce-green-100;
-$primary: $ce-green-500;
-$dark: $ce-green-700;
+$light: $brand-100;
+$primary: $brand-500;
+$dark: $brand-700;
 
 // Bootstrap Overrides
 $green: $green-500;
@@ -14,65 +12,39 @@ $orange: $orange-500;
 $red: $red-500;
 $yellow: $yellow-500;
 
-//Borders
+// Borders
 $border-color: $grey-200;
 $border-color-dark: $grey-900;
 
-//Misc
-$white-dark: $grey-100;
-
-// Navbar
-$instance-nav-bg: $ce-green-700;
-$instance-nav-hover: $ce-green-200;
-
-//Shadows
+// Shadows
 $shadow-color-light: $grey-200;
 $shadow-color-dark: $grey-800;
 
-//Text
+// Text
 $text-default: $grey-900;
+$text-error: $red;
+$text-link: $brand-700;
 $text-muted: $grey-700;
-$text-link: $ce-green-700;
 $text-small: 0.9rem;
 
-// Theme
-$border-color-dark: $dark;
-$border-color-light: $light;
-$error-text: $red;
-$focus-shadow: 0 0 0 0.2rem unquote(#{$primary}80) !important;
-$grey-dark: #282828;
-$link-color: darken($primary, 2.25%);
-$link-color-hover: darken($link-color, 15%);
-$shadow-color: #eeeeee;
-$white-dark: #f9f9f9;
-
-$theme-colors: map-merge(
-  $theme-colors,
-  (
-    'primary': $dark,
-  )
-);
-
-// Sidebar
-$sidebar-width: 20rem;
-$secondary-sidebar-width: 20rem;
-
-// Layout
-$default-text: $grey-dark;
-$primary-bg: $white;
-$secondary-bg: $white-dark;
-
 // Navbar
-$instance-nav-bg: #1e3915; //ce-green-900
+$instance-nav-bg: $brand-700;
+$instance-nav-hover: $brand-200;
 $navbar-height: 3.5rem;
 
 // Sidebar
 $sidebar-width: 20rem;
 
-// CE colors
-$brand-color-light: #c1e4b5; //ce-green-100
-$link-color: #3c712a; //ce-green-700
-
+// Layout
+$primary-bg: $white;
+$secondary-bg: $grey-100;
+$focus-shadow: 0 0 0 0.2rem unquote(#{$primary}80) !important;
+$link-color: darken($primary, 2.25%);
+$link-color-hover: darken($link-color, 15%);
+$shadow-color: $grey-200;
 // Spacing
 $margin: 1.5rem;
 $padding: 1.5rem;
+
+// This line must be last to override BS5 colors.
+@import 'bootstrap/variables';

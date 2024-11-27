@@ -125,14 +125,14 @@ pre code {
 }
 
 .text-error {
-  color: $error-text !important;
+  color: $text-error !important;
 }
 
 .text-error-hover {
-  color: $error-text !important;
+  color: $text-error !important;
 
   &:hover {
-    color: darken($error-text, 10%) !important;
+    color: darken($text-error, 10%) !important;
   }
 }
 

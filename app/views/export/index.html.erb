@@ -1,7 +1,7 @@
 <% content_for :title, 'Export Manager' %>
 
 <% if Dradis::Plugins.with_feature(:export).empty? %>
-  <div class="content-container mt-3">
+  <div class="content-container">
     <div class="alert alert-error m-0">
       <p class="lead">Sorry, we were unable to detect any export plugins. This is strange because Dradis ships with a number of plugins installed by default.</p>
       <p class="mb-0">Check the Export section of your <code><%= Rails.root.join('Gemfile.plugins') %></code> file.</p>
@@ -17,8 +17,8 @@
       <li class="nav-item"><a href="javascript:void(0)" class="js-try-pro nav-link" data-term="excel-reports" data-url="https://dradis.com/pro/pages/excel.html"><i class="fa-solid fa-file-excel fa-fw"></i>Excel</a></li>
     <% end %>
   </ul>
-  <div class="content-container mt-0">
-    <div class="tab-content mt-0">
+  <div class="content-container">
+    <div class="tab-content">
       <%= render_view_hooks 'export/index-content', feature: :export %>
     </div>
   </div>
