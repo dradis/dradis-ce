@@ -40,7 +40,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
 
     .note-list {
       .list-item {
-        border-bottom: 1px solid $border-color-light;
+        border-bottom: 1px solid $border-color;
         font-size: $text-small;
         padding-bottom: var(--padding);
         margin-bottom: var(--margin);
