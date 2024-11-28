@@ -269,12 +269,12 @@
       a {
         border-radius: 3px;
         border: 0px none;
-        color: $link-color;
+        color: $text-link;
 
         &:hover {
           background: #fff;
           border: 0px none;
-          color: $link-color-hover;
+          color: $text-link-hover;
         }
 
         &.active {

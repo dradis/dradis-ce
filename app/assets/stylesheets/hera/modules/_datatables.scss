@@ -3,11 +3,11 @@ div.dataTables_wrapper {
     .dropdown-item,
     .dropdown-item.active {
       background-color: $white;
-      color: $link-color;
+      color: $text-link;
 
       &:focus,
       &:hover {
-        color: $link-color-hover;
+        color: $text-link-hover;
         background-color: $grey-100;
       }
     }
