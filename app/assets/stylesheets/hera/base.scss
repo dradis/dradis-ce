@@ -107,6 +107,12 @@ mark {
   }
 }
 
+.no-caret {
+  &.dropdown-toggle::after {
+    display: none;
+  }
+}
+
 p:last-child {
   margin-bottom: 0;
 }

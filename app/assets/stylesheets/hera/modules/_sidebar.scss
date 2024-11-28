@@ -30,6 +30,10 @@ body:has(.main-sidebar.sidebar-collapsed) {
         }
 
         .section-title {
+          border-bottom: 1px solid;
+          display: flex;
+          justify-content: space-between;
+
           a.collapsed {
             transform: rotate(180deg);
           }
@@ -38,6 +42,11 @@ body:has(.main-sidebar.sidebar-collapsed) {
             border-color: $text-default;
             display: flex;
             justify-content: space-between;
+          }
+
+          .options {
+            display: flex;
+            align-items: center;
           }
         }
       }
@@ -67,6 +76,8 @@ body:has(.main-sidebar.sidebar-collapsed) {
           justify-content: flex-end;
         }
       }
+
+      margin-bottom: calc(var(--margin) * 2);
 
       :nth-last-child(2) {
         border-bottom: none;

@@ -5,13 +5,14 @@
   <div class="header">
     <div class="header-inner">
       <div class="section-title">
-        <h5 class="header-underline header-name">Attachments
+        <h5 class="header-name">Attachments</h5>
+        <div class="options">
           <%= link_to '#attachment-box', 
-          data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
-          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i>
-          <span class="visually-hidden">Toggle attachments list</span>
-        <% end %>
-        </h5>
+            data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+            <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i>
+            <span class="visually-hidden">Toggle attachments list</span>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
