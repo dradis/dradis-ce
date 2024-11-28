@@ -14,7 +14,7 @@
   <% end %>
   <li class="nav-item dropdown">
     <a href="javascript:void(0)" class="nav-link dropdown-toggle no-caret-xl" id="configurationDropdown" title="Configuration" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-      <i class="fa-solid fa-cog d-none d-lg-inline" title="Configuration"></i> 
+      <i class="fa-solid fa-cog d-none d-lg-inline" title="Configuration"></i>
       <span class="d-inline d-lg-none">Configuration</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="configurationDropdown">
@@ -47,8 +47,8 @@
       <i class="notifications-bell fa-solid fa-bell d-none d-lg-inline" title="Notifications"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i>
       <span class="d-inline d-lg-none">Notifications</span>
     <% end %>
-    <ul class="dropdown-menu dropdown-menu-end" data-url="<%= main_app.notifications_path %>"  aria-labelledby="notificationsDropdown">
-    </ul>
+    <div class="dropdown-menu dropdown-menu-end" data-url="<%= main_app.notifications_path %>"  aria-labelledby="notificationsDropdown">
+    </div>
   </li>
   <%= render partial: 'layouts/hera/navbar/help' %>
 
@@ -63,29 +63,29 @@
         <li><%= link_to 'Notification Settings', main_app.edit_user_preferences_notifications_path, class: 'dropdown-item' %></li>
         <li><hr class="dropdown-divider"></li>
       <% end %>
-        <%= link_to main_app.logout_path,  class: 'dropdown-item', data: { turbolinks: false } do %>
-          <i class="fa-solid fa-arrow-right-from-bracket"></i>
-          <span class="ms-1">Logout</span>
-        <% end %>
-      </li>
-    </ul>
-  </li>
-  <% if defined?(Dradis::Pro) %>
-    <% if current_user.role?(:contributor) -%>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle py-0 d-flex align-items-center" href="javascript:void(0)" id="contributorDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <%= avatar_image(current_user, size: 32) %>
-          <span class="ms-1"><%= current_user.name %></span>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="contributorDropdown">
-          <li>
-            <%= link_to main_app.contributors_logout_path, class: 'dropdown-item', data: { turbolinks: false } do %>
-              <i class="fa-solid fa-arrow-right-from-bracket"></i>
-              <span>Logout</span>
-            <% end %>
-          </li>
-        </ul>
-      </li>
-    <% end %>
+      <%= link_to main_app.logout_path,  class: 'dropdown-item', data: { turbolinks: false } do %>
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        <span class="ms-1">Logout</span>
+      <% end %>
+    </li>
+  </ul>
+</li>
+<% if defined?(Dradis::Pro) %>
+  <% if current_user.role?(:contributor) -%>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle py-0 d-flex align-items-center" href="javascript:void(0)" id="contributorDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <%= avatar_image(current_user, size: 32) %>
+        <span class="ms-1"><%= current_user.name %></span>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="contributorDropdown">
+        <li>
+          <%= link_to main_app.contributors_logout_path, class: 'dropdown-item', data: { turbolinks: false } do %>
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>Logout</span>
+          <% end %>
+        </li>
+      </ul>
+    </li>
   <% end %>
+<% end %>
 </ul>
