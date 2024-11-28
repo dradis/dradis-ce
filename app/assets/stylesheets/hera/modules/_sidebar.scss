@@ -30,6 +30,10 @@ body:has(.main-sidebar.sidebar-collapsed) {
         }
 
         .section-title {
+          a.collapsed {
+            transform: rotate(180deg);
+          }
+
           h5 {
             border-color: $text-default;
             display: flex;
