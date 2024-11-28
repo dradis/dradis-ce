@@ -1,23 +1,8 @@
 @import 'hera/variables';
 
-.instance-nav {
-  .nav-item {
-    .nav-link {
-      &.dropdown-toggle::after {
-        @media (min-width: 992px) and (max-width: 1199px) {
-          display: none;
-        }
-      }
-    }
-
-    @media (max-width: 1023px) {
-      padding: 1rem 0;
-      width: 100%;
-    }
-  }
-}
-
 .navbar {
+  --margin: 1rem;
+  --padding: 1rem;
   height: $navbar-height;
 
   .container-fluid {
@@ -55,7 +40,7 @@
             border-left: 0.3em solid transparent;
 
             &.no-caret-xl {
-              @media (min-width: 1200px) {
+              @media (min-width: 992px) {
                 display: none;
               }
             }
@@ -68,8 +53,6 @@
       justify-content: space-between;
 
       &.show {
-        padding: 1rem 0;
-
         .dropdown {
           .dropdown-toggle {
             &.show {
@@ -78,8 +61,8 @@
           }
           .dropdown-menu {
             .dropdown-item {
-              padding: 0.5rem 0;
-              padding-left: 2rem;
+              padding: calc(var(--padding) / 0.5rem) 0;
+              padding-left: calc(var(--padding) * 2);
             }
           }
         }
@@ -87,7 +70,7 @@
     }
 
     @media (min-width: 1200px) {
-      padding: 0 2rem;
+      padding: 0 calc(var(--padding) * 2);
     }
   }
 
@@ -105,7 +88,7 @@
     .complementary-nav {
       a,
       .nav-link {
-        color: $white;
+        color: $instance-nav-links;
 
         &:active,
         &:focus,
@@ -119,14 +102,24 @@
       background-color: $instance-nav-bg;
       border: none;
 
+      .dropdown-item {
+        color: $text-default;
+
+        &:active,
+        &:focus,
+        &:hover {
+          background-color: lighten($instance-nav-bg, 10%);
+        }
+      }
+
       li {
         &:active,
         &:focus,
         &:hover {
-          background-color: $instance-nav-hover;
+          background-color: $instance-nav-bg;
 
           .dropdown-item {
-            background-color: $instance-nav-hover;
+            background-color: lighten($instance-nav-bg, 10%);
             color: $text-default;
           }
         }
@@ -134,13 +127,16 @@
     }
 
     .dropdown-divider {
-      border-top: 1px solid $text-link;
-      border-bottom: 1px solid $border-color-dark;
+      border-top: 1px solid $light;
+    }
+
+    .navbar-collapse {
+      background-color: $instance-nav-bg;
     }
 
     .navbar-toggler {
-      border: 1px solid $border-color;
-      color: $white;
+      border: 1px solid $instance-nav-links;
+      color: $instance-nav-links;
 
       &:focus {
         border: 2px solid $instance-nav-hover;
@@ -156,7 +152,30 @@
     @media (max-width: 1199px) {
       .change-project {
         a {
-          font-size: 0.9rem;
+          font-size: $text-small;
+        }
+      }
+    }
+
+    @media (max-width: 991px) {
+      .container-fluid {
+        padding: 0;
+
+        .navbar-brand {
+          margin-right: 0;
+        }
+
+        .navbar-nav {
+          padding: 1rem;
+
+          li {
+            width: 100%;
+            padding: 0.5rem 0;
+          }
+        }
+
+        .navbar-toggler {
+          margin-right: var(--margin);
         }
       }
     }
@@ -173,7 +192,7 @@
     .navbar-nav {
       .nav-item {
         border-bottom: 5px solid transparent;
-        margin-right: 1rem;
+        margin-right: var(--margin);
         padding: 0.65rem;
 
         &.active,
@@ -214,7 +233,7 @@
           }
 
           @media (min-width: 1024px) {
-            font-size: 0.9rem;
+            font-size: $text-small;
           }
         }
 
@@ -256,7 +275,7 @@
     .vr {
       align-self: center;
       height: 2rem;
-      margin-right: 1rem;
+      margin-right: var(--margin);
     }
 
     @media (min-width: 1200px) {
@@ -269,7 +288,7 @@
   background-color: transparent;
   border: none;
   flex-wrap: nowrap;
-  margin-bottom: 2rem;
+  margin-bottom: calc(var(--margin) * 2);
   padding: 0.75rem 1rem 0.75rem $padding;
   white-space: nowrap;
   width: 100%;

@@ -25,10 +25,12 @@ $text-default: $grey-900;
 $text-error: $red;
 $text-link: $brand-700;
 $text-muted: $grey-700;
+$text-small: 0.9rem;
 
 // Navbar
-$instance-nav-bg: $brand-700;
-$instance-nav-hover: $brand-200;
+$instance-nav-bg: $brand-200;
+$instance-nav-hover: $brand-600;
+$instance-nav-links: $brand-800;
 $navbar-height: 3.5rem;
 
 // Sidebar
@@ -41,6 +43,7 @@ $focus-shadow: 0 0 0 0.2rem unquote(#{$primary}80) !important;
 $link-color: darken($primary, 2.25%);
 $link-color-hover: darken($link-color, 15%);
 $shadow-color: $grey-200;
+
 // Spacing
 $margin: 1.5rem;
 $padding: 1.5rem;
