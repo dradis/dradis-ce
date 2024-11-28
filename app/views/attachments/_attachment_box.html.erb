@@ -24,34 +24,29 @@
           <% for attachment in node.attachments do %>
             <tr class="template-download">
               <td colspan="4">
-                <table>
+                <table class="file">
                   <tr>
                     <td class="name">
                       <%= link_to main_app.project_node_attachment_path(node.project, node, attachment.filename), download: attachment.filename, title: attachment.filename, class: 'filename' do %>
                         <i class="fa-solid fa-paperclip"></i> <%= short_filename(attachment.filename) %>
                       <% end %>
                     </td>
-                    <td rowspan="2" align="right" class="delete">
-                      <button
-                        class="btn btn-trash btn-transparent"
-                        data-type="DELETE"
-                        data-url="<%= main_app.project_node_attachment_path(node.project, node, attachment.filename) %>"
-                      >
-                        <i class="fa-solid fa-trash"></i>
-                      </button>
-                    </td>
                     <td rowspan="2" align="right" class="copy-link">
                       <button
-                        class="btn btn-copy btn-transparent"
+                        class="btn btn-sm btn-secondary"
                         data-clipboard-text="!<%= main_app.project_node_attachment_path(node.project, node, '') + attachment.url_encoded_filename %>!"
                       >
                         <i class="fa-solid fa-link"></i>
                       </button>
                     </td>
-                  </tr>
-                  <tr>
-                    <td class="size">
-                      <span><%= number_to_human_size(File.size(attachment)) %></span>
+                    <td rowspan="2" align="right" class="delete">
+                      <button
+                        class="btn btn-sm btn-danger"
+                        data-type="DELETE"
+                        data-url="<%= main_app.project_node_attachment_path(node.project, node, attachment.filename) %>"
+                      >
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
                     </td>
                   </tr>
                 </table>
@@ -116,6 +111,7 @@
       </tr>
   {% } %}
 </script>
+
 <!-- The template to display files available for download -->
 <script id="template-download" type="text/x-tmpl">
   {% for (var i=0, file; file=o.files[i]; i++) { %}
