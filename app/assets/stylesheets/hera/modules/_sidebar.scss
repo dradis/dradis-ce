@@ -23,31 +23,40 @@ body:has(.main-sidebar.sidebar-collapsed) {
       margin-bottom: var(--margin);
 
       .header-inner {
+        border-bottom: 1px solid;
+        color: $text-default;
+        display: flex;
+        justify-content: space-between;
+
+        a {
+          color: $text-default;
+
+          &:active,
+          &:focus,
+          &:hover {
+            color: $text-link;
+          }
+        }
+
         .add {
           display: flex;
           justify-content: center;
           margin-bottom: calc(var(--margin) * 2);
         }
 
-        .section-title {
-          border-bottom: 1px solid;
+        a.collapsed {
+          transform: rotate(180deg);
+        }
+
+        h5 {
+          border-color: $text-default;
           display: flex;
           justify-content: space-between;
+        }
 
-          a.collapsed {
-            transform: rotate(180deg);
-          }
-
-          h5 {
-            border-color: $text-default;
-            display: flex;
-            justify-content: space-between;
-          }
-
-          .options {
-            display: flex;
-            align-items: center;
-          }
+        .options {
+          display: flex;
+          align-items: center;
         }
       }
     }

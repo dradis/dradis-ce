@@ -1,7 +1,6 @@
 <div class="header">
   <div class="header-inner">
-    <div class="section-title">
-      <h5 class="header-name"><%= local_assigns[:index_path] ? link_to(name, index_path) : name.humanize %></h5>
+    <h5 class="header-name"><%= local_assigns[:index_path] ? link_to(name, index_path) : name.humanize %></h5>
       <div class="options">
         <%= render 'shared/add_item_dropdown',
           name: name,
@@ -13,7 +12,6 @@
           <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle <%= name.downcase %> list</span>
         <% end %>
       </div>
-    </div>
   </div>
 </div>
 

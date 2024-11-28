@@ -1,6 +1,11 @@
 <div class="inner-content">
   <div class="header">
     <div class="header-inner">
+      <h5 class="header-name">
+        <%= link_to index_path do %>
+          <%= name.humanize %>
+        <% end %>
+      </h5>
       <div class="options">
         <div class="dropdown">
           <%= link_to "##{name.downcase}", data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
@@ -8,11 +13,6 @@
           <% end %>
         </div>
       </div>
-      <h5 class="header-underline header-name">
-        <%= link_to index_path do %>
-          <%= name.humanize %>
-        <% end %>
-      </h5>
     </div>
   </div>
 
