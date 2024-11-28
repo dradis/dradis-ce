@@ -8,7 +8,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
   border-right: 2px solid $border-color;
   position: sticky;
   top: $navbar-height;
-  height: calc(100vh - #{$navbar-height});
+  height: calc(100vh - (#{$navbar-height} * 2));
 
   .sidebar-content {
     display: flex;
