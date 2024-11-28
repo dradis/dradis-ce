@@ -16,6 +16,7 @@ body {
   background-color: $white;
   display: grid;
   font-family: 'ProximaNovaLight', 'system-ui';
+  text-wrap: pretty;
 }
 
 a {
