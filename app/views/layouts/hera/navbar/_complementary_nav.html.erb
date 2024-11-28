@@ -1,4 +1,4 @@
-<ul class="navbar-nav complementary-nav">
+<ul class="navbar-nav navbar-nav-scroll complementary-nav">
   <li class="nav-item">
     <%= render "layouts/hera/navbar/search" %>
   </li>
@@ -20,12 +20,12 @@
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="configurationDropdown">
       <% if defined?(Dradis::Pro) %>
         <% if @project %>
-          <%= link_to 'Project properties', main_app.edit_project_path(current_project), data: { turbolinks: false }, class: 'dropdown-item' %>
-          <%= link_to 'Configure plugins', main_app.project_configurations_path(current_project), class: 'dropdown-item' %>
+          <li><%= link_to 'Project properties', main_app.edit_project_path(current_project), data: { turbolinks: false }, class: 'dropdown-item' %></li>
+          <li><%= link_to 'Configure plugins', main_app.project_configurations_path(current_project), class: 'dropdown-item' %></li>
           <li><hr class="dropdown-divider"></li>
         <% end %>
-        <%= link_to 'Instance Configuration', main_app.admin_configurations_path, class: 'dropdown-item' %>
-        <%= link_to 'Usage Analytics', main_app.admin_analytics_path, class: 'dropdown-item' %>
+        <li><%= link_to 'Instance Configuration', main_app.admin_configurations_path, class: 'dropdown-item' %></li>
+        <li><%= link_to 'Usage Analytics', main_app.admin_analytics_path, class: 'dropdown-item' %></li>
 
       <% else %>
         <%= link_to 'Configure plugins', main_app.project_configurations_path(current_project), class: 'dropdown-item' %>

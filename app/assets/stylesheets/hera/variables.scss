@@ -26,10 +26,12 @@ $text-error: $red;
 $text-link: $brand-700;
 $text-link-hover: darken($text-link, 15%);
 $text-muted: $grey-700;
+$text-small: 0.9rem;
 
 // Navbar
-$instance-nav-bg: $brand-700;
-$instance-nav-hover: $brand-200;
+$instance-nav-bg: $brand-200;
+$instance-nav-hover: $brand-600;
+$instance-nav-links: $brand-800;
 $navbar-height: 3.5rem;
 
 // Sidebar
