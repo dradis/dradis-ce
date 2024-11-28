@@ -130,7 +130,12 @@ body:has(.main-sidebar.sidebar-collapsed) {
 
   &.secondary-sidebar {
     border-left: 2px solid $border-color;
+    right: 0;
     width: $sidebar-width;
+
+    &.sidebar-collapsed {
+      width: 5px;
+    }
 
     .sidebar-content {
       .attachments-box {
