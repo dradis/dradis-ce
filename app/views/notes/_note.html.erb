@@ -11,15 +11,15 @@
   <% end %>
 
   <div class="list-item-actions">
-    <%= link_to edit_project_node_note_path(@node.project, @node, note), class:'list-item-action-edit' do %>
-      <i class="fa-solid fa-pencil"></i> Edit
+    <%= link_to edit_project_node_note_path(@node.project, @node, note), class:'btn btn-sm btn-warning list-item-action-edit me-1' do %>
+      <i class="fa-solid fa-pencil"></i><span class="fa-sr-only">Edit</span>
     <% end %>
 
     <%= link_to [@node.project, @node, note],
           method: :delete,
           data: { confirm: "Are you sure?\n\nProceeding will delete this note from the associated node." },
-          class: 'list-item-action-delete' do %>
-      <i class="fa-solid fa-trash"></i> Delete
+          class: 'btn btn-sm btn-danger list-item-action-delete' do %>
+      <i class="fa-solid fa-trash"></i><span class="fa-sr-only">Delete</span>
     <% end %>
   </div>
 
