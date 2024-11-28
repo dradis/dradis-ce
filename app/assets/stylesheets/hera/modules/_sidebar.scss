@@ -31,6 +31,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
 
         .section-title {
           h5 {
+            border-color: $text-default;
             display: flex;
             justify-content: space-between;
           }
@@ -142,7 +143,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
         .drop-zone {
           border-radius: 0.5rem;
           cursor: default;
-          margin-bottom: var(--margin);
+          margin: var(--margin) 0;
           outline: 3px dashed $border-color;
           padding: calc(var(--padding) * 2);
           text-align: center;
