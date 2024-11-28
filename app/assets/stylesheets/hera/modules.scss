@@ -189,14 +189,14 @@
 }
 
 .nav-link {
-  color: $link-color;
+  color: $text-link;
   display: block;
   padding: 0.5rem 1rem;
   transition: color 0.2s ease-in-out;
   text-decoration: none;
 
   &:hover {
-    color: $link-color-hover;
+    color: $text-link-hover;
   }
 }
 
