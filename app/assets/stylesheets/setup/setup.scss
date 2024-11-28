@@ -13,11 +13,11 @@ body {
 }
 
 a {
-  color: $link-color;
+  color: $text-link;
   transition: color 0.2s ease-in-out;
 
   &:hover {
-    color: $link-color-hover;
+    color: $text-link-hover;
     text-decoration: none;
   }
 }

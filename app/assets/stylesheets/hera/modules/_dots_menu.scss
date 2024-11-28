@@ -12,7 +12,7 @@
     font-weight: 400 !important;
 
     &:hover {
-      color: $link-color !important;
+      color: $text-link !important;
       background-color: initial !important;
     }
 
@@ -42,7 +42,7 @@
   &:hover,
   &.show {
     .dropdown-toggle {
-      color: $link-color-hover;
+      color: $text-link-hover;
     }
   }
 }
