@@ -62,6 +62,14 @@ body:has(.main-sidebar.sidebar-collapsed) {
     }
 
     .note-list {
+      margin-bottom: calc(var(--margin) * 2);
+
+      &:not(#issues_for_review) {
+        :nth-last-child(2) {
+          border-bottom: none;
+        }
+      }
+
       .list-item {
         border-bottom: 1px solid $border-color;
         display: flex;
@@ -84,12 +92,10 @@ body:has(.main-sidebar.sidebar-collapsed) {
           display: flex;
           justify-content: flex-end;
         }
-      }
 
-      margin-bottom: calc(var(--margin) * 2);
-
-      :nth-last-child(2) {
-        border-bottom: none;
+        &:last-child {
+          border-bottom: none;
+        }
       }
     }
   }
