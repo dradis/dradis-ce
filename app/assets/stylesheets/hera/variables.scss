@@ -24,6 +24,7 @@ $shadow-color-dark: $grey-800;
 $text-default: $grey-900;
 $text-error: $red;
 $text-link: $brand-700;
+$text-link-hover: darken($text-link, 15%);
 $text-muted: $grey-700;
 $text-small: 0.9rem;
 
@@ -40,8 +41,6 @@ $sidebar-width: 20rem;
 $primary-bg: $white;
 $secondary-bg: $grey-100;
 $focus-shadow: 0 0 0 0.2rem unquote(#{$primary}80) !important;
-$link-color: darken($primary, 2.25%);
-$link-color-hover: darken($link-color, 15%);
 $shadow-color: $grey-200;
 
 // Spacing
