@@ -61,15 +61,15 @@ body:has(.main-sidebar.sidebar-collapsed) {
           text-overflow: ellipsis;
         }
 
-        &:last-child {
-          border-bottom: none;
-        }
-
         .list-item-actions {
           align-items: flex-start;
           display: flex;
           justify-content: flex-end;
         }
+      }
+
+      :nth-last-child(2) {
+        border-bottom: none;
       }
     }
   }
