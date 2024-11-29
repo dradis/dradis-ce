@@ -5,11 +5,11 @@ body:has(.main-sidebar.sidebar-collapsed) {
 
 .sidebar {
   --padding: 1rem;
-  background-color: $white-dark;
+  background-color: $white;
   --margin: 1rem;
   position: sticky;
-  top: $navbar-height;
-  height: calc(100vh - #{$navbar-height});
+  top: calc(#{$navbar-height} * 2);
+  height: calc(100vh - (#{$navbar-height} * 2));
 
   .sidebar-content {
     display: flex;
@@ -60,7 +60,6 @@ body:has(.main-sidebar.sidebar-collapsed) {
         }
       }
     }
-
     .note-list {
       margin-bottom: calc(var(--margin) * 2);
 

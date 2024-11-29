@@ -8,7 +8,7 @@
     style: ('visibility: hidden' if node.children_count == 0)
 
   ) do %>
-    <i class="fa-solid fa-caret-right"></i>
+    <i class="fa-solid fa-caret-right fa-fw"></i>
     <span class="visually-hidden">Toggle child nodes</span>
   <% end %>
 
@@ -23,8 +23,8 @@
     <% if node.ancestor_of?(@node) %>
       <%= render partial: "layouts/hera/node", collection: node.children %>
     <% else %>
-      <li class="loading">Loading...</li>
-      <li class="error">Loading error. Please try again.</li>
+      <li class="loading ps-3 ms-3">Loading...</li>
+      <li class="error ps-3 ms-3">Loading error. Please try again.</li>
     <% end %>
   <% end %>
 <% end %>
