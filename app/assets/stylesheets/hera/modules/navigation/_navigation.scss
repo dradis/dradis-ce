@@ -59,8 +59,10 @@
           }
           .dropdown-menu {
             .dropdown-item {
-              padding: calc(var(--padding) / 0.5rem) 0;
-              padding-left: calc(var(--padding) * 2);
+              @media (max-width: 991px) {
+                padding: 0.5rem 0;
+                padding-left: calc(var(--padding) * 2);
+              }
             }
           }
         }
@@ -98,7 +100,7 @@
 
     .dropdown-menu {
       background-color: $instance-nav-bg;
-      border: none;
+      border: 1px solid $light;
 
       .dropdown-item {
         color: $text-default;
@@ -121,6 +123,10 @@
             color: $text-default;
           }
         }
+      }
+
+      @media (max-width: 991px) {
+        border: none;
       }
     }
 
@@ -168,7 +174,7 @@
 
           li {
             width: 100%;
-            padding: 0.5rem 0;
+            padding: 0.5 0;
           }
         }
 
