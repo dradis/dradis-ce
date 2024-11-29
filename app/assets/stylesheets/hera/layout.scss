@@ -40,10 +40,3 @@ header {
     position: relative;
   }
 }
-
-.sticky-top {
-  position: sticky !important;
-  top: calc((#{$navbar-height} * 2) + (#{$padding} / 1.5));
-  margin-bottom: $margin;
-  z-index: 2;
-}
