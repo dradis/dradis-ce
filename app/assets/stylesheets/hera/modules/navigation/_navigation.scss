@@ -51,6 +51,8 @@
       justify-content: space-between;
 
       &.show {
+        box-shadow: 0 4px 8px 0 $shadow-color-light;
+
         .dropdown {
           .dropdown-toggle {
             &.show {
@@ -160,38 +162,26 @@
         }
       }
     }
-
-    @media (max-width: 991px) {
-      .container-fluid {
-        padding: 0;
-
-        .navbar-brand {
-          margin-right: 0;
-        }
-
-        .navbar-nav {
-          padding: 1rem;
-
-          li {
-            width: 100%;
-            padding: 0.5 0;
-          }
-        }
-
-        .navbar-toggler {
-          margin-right: var(--margin);
-        }
-      }
-    }
   }
 
   &.project-nav {
     background-color: $white;
     border-bottom: 1px solid $border-color;
-    top: 54px;
-    overflow-x: scroll;
+    top: $navbar-height;
     padding: 0;
-    z-index: 1000;
+    z-index: 1040;
+
+    .dropdown-divider {
+      border-top: 1px solid $border-color;
+    }
+
+    .navbar-collapse {
+      background-color: $white;
+
+      @media (max-width: 991px) {
+        border-bottom: 1px solid $border-color;
+      }
+    }
 
     .navbar-nav {
       .nav-item {
@@ -249,31 +239,6 @@
           }
         }
       }
-
-      @media (min-width: 567px) {
-        .nav-item,
-        .vr {
-          margin-right: 0.8rem;
-        }
-      }
-
-      @media (min-width: 992px) {
-        .nav-item,
-        .vr {
-          margin-right: 0.6rem;
-        }
-
-        .nav-item {
-          padding: 0.5rem;
-        }
-      }
-
-      @media (min-width: 1200px) {
-        .nav-item,
-        .vr {
-          margin-right: 0;
-        }
-      }
     }
 
     .vr {
@@ -284,6 +249,29 @@
 
     @media (min-width: 1200px) {
       padding: 0 4.5rem;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .container-fluid {
+      padding: 0;
+
+      .navbar-brand {
+        margin-right: 0;
+      }
+
+      .navbar-nav {
+        padding: 1rem;
+
+        li {
+          width: 100%;
+          padding: 0.5 0;
+        }
+      }
+
+      .navbar-toggler {
+        margin-right: var(--margin);
+      }
     }
   }
 }
