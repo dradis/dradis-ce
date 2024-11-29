@@ -6,7 +6,7 @@
   - Upgraded gems:
     - rexml
   - Bugs fixes:
-    - [entity]:
+    - Editor: Fix incorrect parsing of field value options that contain Liquid
       - [future tense verb] [bug fix]
     - Bug tracker items:
       - [item]
