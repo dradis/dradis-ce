@@ -1,4 +1,4 @@
-@import 'hera/colors';
+@import 'hera/modules/attachments';
 @import 'hera/modules/buttons';
 @import 'hera/modules/datatables';
 @import 'hera/modules/dots_menu';
@@ -188,14 +188,14 @@
 }
 
 .nav-link {
-  color: $link-color;
+  color: $text-link;
   display: block;
   padding: 0.5rem 1rem;
   transition: color 0.2s ease-in-out;
   text-decoration: none;
 
   &:hover {
-    color: $link-color-hover;
+    color: $text-link-hover;
   }
 }
 
@@ -206,7 +206,7 @@
 }
 
 .page-title {
-  margin: 1rem 1.5rem;
+  margin: 1.5rem 0;
 }
 
 pre {

@@ -19,7 +19,7 @@ body {
 }
 
 a {
-  color: $link-color;
+  color: $text-link;
   text-decoration: none;
   transition: color 0.2s ease-in-out;
 
@@ -29,7 +29,7 @@ a {
   }
 
   &:hover {
-    color: $link-color-hover;
+    color: $text-link-hover;
   }
 }
 
@@ -102,7 +102,7 @@ mark {
 
     &.active {
       background-color: $secondary-bg;
-      color: $link-color-hover;
+      color: $text-link-hover;
     }
   }
 }
