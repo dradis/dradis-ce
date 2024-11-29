@@ -15,7 +15,7 @@
 <% end %>
 
 <div class="row p-0">
-  <div class="col-12 col-xxl-7">
+  <div class="col-12">
     <div class="content-container">
       <% cache ['issue-content', @issue] do %>
         <div class="note-text-inner">
@@ -37,14 +37,11 @@
         </div>
       <% end %>
     </div>
-  </div>
 
-  <div class="col-12 col-xxl-5">
-    <div class="sticky-top">
-      <%= render partial: 'widget' %>
+    <%= render partial: 'widget' %>
 
-      <div class="content-container">
-        <%= content_tag :div,
+    <div class="content-container">
+      <%= content_tag :div,
           spinner_tag,
           data: {
             behavior: 'fetch fetch-comments',
@@ -57,11 +54,11 @@
           }
         %>
 
-        <%= render_view_hooks('issues/comments') %>
-      </div>
+      <%= render_view_hooks('issues/comments') %>
+    </div>
 
-      <div class="content-container">
-        <%= content_tag :div,
+    <div class="content-container">
+      <%= content_tag :div,
           spinner_tag,
           data: {
             behavior: 'fetch fetch-subscriptions',
@@ -73,7 +70,6 @@
             )
           }
         %>
-      </div>
     </div>
   </div>
 </div>
