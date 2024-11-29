@@ -7,7 +7,6 @@
     - rexml
   - Bugs fixes:
     - Editor: Fix incorrect parsing of field value options that contain Liquid
-      - [future tense verb] [bug fix]
     - Bug tracker items:
       - [item]
   - New integrations:
