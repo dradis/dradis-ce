@@ -20,35 +20,23 @@
           <tr id="tag-<%= tag.id %>">
             <% @all_columns.each do |column| %>
               <%
-              sort, display =
+               content =
               case column
               when 'Sort'
-                [
-                  'Change sort order', 
                   content_tag(:i, nil, class: 'fa-solid fa-reorder') + content_tag(:span, 'Change sort order', class: 'visually-hidden')
-                ]
               when 'Name'
-                [
-                  tag.display_name,
                   content_tag(:span, class: 'tag', style: "color: #{tag.color}") do
                     content_tag(:i, nil, class: 'fa-solid fa-tag fa-fw me-1') + tag.display_name
                   end
-                ]
               when 'Color'
-                [tag.color, content_tag(:span, tag.color, style:  "color: #{tag.color}")]
+                content_tag(:span, tag.color, style:  "color: #{tag.color}")
               when 'Created'
-                [tag.created_at.to_i, local_time_ago(tag.created_at)]
+                local_time_ago(tag.created_at)
               when 'Updated'
-                [tag.updated_at.to_i, local_time_ago(tag.updated_at)]
+                local_time_ago(tag.updated_at)
               end
               %>
-              <%= content_tag :td,
-                display,
-                class: class_names('text-secondary text-center': column == 'Sort'),
-                data: {
-                  sort: sort
-                }
-              %>
+              <%= content_tag :td, content, class: class_names('text-secondary text-center': column == 'Sort') %>
             <% end  %>
             <td class="column-actions">
               <%= link_to edit_project_tag_path(current_project, tag), remote: true do %>
