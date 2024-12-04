@@ -11,12 +11,12 @@ class Differ {
   }
 
   highlightString(text, diffType) {
-    if (diffType == 'del') {
+    if (diffType === 'del') {
       return text
         .replace(this.delRegex, '<mark>$1</mark>')
         .replace(this.insRegex, '');
     }
-    else if (diffType == 'ins') {
+    else if (diffType === 'ins') {
       return text
         .replace(this.insRegex, '<mark>$1</mark>')
         .replace(this.delRegex, '');
