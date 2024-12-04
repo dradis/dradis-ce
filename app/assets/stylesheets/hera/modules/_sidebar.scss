@@ -4,7 +4,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
 // need to fix ^ when collapsed
 
 .sidebar {
-  --padding: 1rem;
+  --padding: 1.25rem;
   --margin: 1rem;
   background-color: $white;
   position: sticky;
@@ -111,7 +111,8 @@ body:has(.main-sidebar.sidebar-collapsed) {
     background-color: $white;
     border: 1px solid $border-color;
     border-radius: 0.2rem;
-    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.25rem;
     position: absolute;
     top: var(--padding);
   }
@@ -152,12 +153,12 @@ body:has(.main-sidebar.sidebar-collapsed) {
     }
 
     .sidebar-toggle {
-      right: -1rem;
+      right: -0.2rem;
     }
 
     &.sidebar-collapsed {
       .sidebar-toggle {
-        right: -1rem;
+        right: -0.75rem;
       }
 
       .sidebar-toggle-icon {
@@ -251,7 +252,8 @@ body:has(.main-sidebar.sidebar-collapsed) {
     }
 
     .sidebar-toggle {
-      left: -1rem;
+      left: -0.2rem;
+
       .sidebar-toggle-icon {
         transform: rotate(180deg);
       }
@@ -259,7 +261,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
 
     &.sidebar-collapsed {
       .sidebar-toggle {
-        left: -1rem;
+        left: -0.75rem;
       }
 
       .sidebar-toggle-icon {
