@@ -83,7 +83,7 @@ class Project
   end
 
   def tags
-    Tag.all.order(:position)
+    Tag.all
   end
 
   def team

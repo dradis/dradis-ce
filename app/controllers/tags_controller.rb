@@ -45,7 +45,7 @@ class TagsController < AuthenticatedController
   private
 
   def sortable_records
-    current_project.tags
+    { klass: Tag, ids: current_project.tags.ids }
   end
 
   def tag_params

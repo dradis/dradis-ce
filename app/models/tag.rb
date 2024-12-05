@@ -40,6 +40,7 @@ class Tag < ApplicationRecord
   }
 
   # -- Scopes -----------------------------------------------------------------
+  default_scope { order(:position) }
 
   # -- Class Methods ----------------------------------------------------------
 

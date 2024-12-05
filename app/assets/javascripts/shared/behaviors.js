@@ -143,8 +143,8 @@
       handle: '.fa-grip-vertical',
       update: function () {
         $.post(
-          $(this).data('sort-url'),
-          $(this).sortable('serialize', { key: 'sortable_ids[]' })
+          $(this).data('sort-url'), 
+          $(this).sortable('serialize', { key: 'sorted_ids[]' })
         );
       },
     });
