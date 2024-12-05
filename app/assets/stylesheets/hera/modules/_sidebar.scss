@@ -22,9 +22,9 @@ body:has(.main-sidebar.sidebar-collapsed) {
 
     .dradis-placeholder {
       font-style: italic;
-      margin-left: 1rem;
       cursor: default;
-      height: 3rem;
+      color: $text-muted;
+      font-size: 0.9rem;
     }
 
     .header {
