@@ -127,7 +127,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
     font-size: 0.75rem;
     padding: 0.2rem 0.25rem;
     position: absolute;
-    top: var(--padding);
+    top: calc(var(--padding) / 2);
   }
 
   &.sidebar-collapsed {
@@ -232,7 +232,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
   &.secondary-sidebar {
     border-left: 2px solid $border-color;
     right: 0;
-    width: $sidebar-width;
+    width: calc(#{$sidebar-width} * 1.25);
 
     &.sidebar-collapsed {
       width: 0.5rem;
