@@ -23,7 +23,7 @@
                content =
               case column
               when 'Sort'
-                  content_tag(:i, nil, class: 'fa-solid fa-reorder') + content_tag(:span, 'Change sort order', class: 'visually-hidden')
+                  content_tag(:i, nil, class: 'fa-solid fa-grip-vertical w-100') + content_tag(:span, 'Change sort order', class: 'visually-hidden')
               when 'Name'
                   content_tag(:span, class: 'tag', style: "color: #{tag.color}") do
                     content_tag(:i, nil, class: 'fa-solid fa-tag fa-fw me-1') + tag.display_name
