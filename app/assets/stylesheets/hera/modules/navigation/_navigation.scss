@@ -108,7 +108,7 @@
       }
 
       @media (min-width: 1200px) {
-        padding: 0 calc(var(--padding) * 2);
+        padding: 0 var(--padding);
       }
 
       .navbar-toggler {
@@ -318,19 +318,15 @@
       }
 
       @media (min-width: 992px) {
-        padding: 0 var(--padding);
+        padding: 0 4.5rem;
 
         .vr {
           margin-right: var(--margin);
         }
       }
 
-      @media (min-width: 1024px) {
-        padding: 0 4.5rem;
-      }
-
       @media (min-width: 1200px) {
-        padding: 0 5rem;
+        padding: 0 4rem;
       }
     }
 
