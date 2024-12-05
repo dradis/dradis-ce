@@ -97,6 +97,12 @@ body:has(.main-sidebar.sidebar-collapsed) {
           text-overflow: ellipsis;
         }
 
+        &.active {
+          > a {
+            color: $black;
+          }
+        }
+
         .list-item-actions {
           align-items: flex-start;
           display: flex;
