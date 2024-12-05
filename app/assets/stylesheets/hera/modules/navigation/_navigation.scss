@@ -73,6 +73,14 @@ header {
                 }
               }
             }
+
+            @media (max-width: 991px) {
+              font-size: 1rem;
+            }
+
+            @media (min-with: 992px) {
+              font-size: $text-small;
+            }
           }
 
           @media (min-with: 992px) {
