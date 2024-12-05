@@ -1,5 +1,35 @@
 @import 'hera/variables';
 
+.breadcrumb {
+  background-color: transparent;
+  border: none;
+  flex-wrap: nowrap;
+  margin-bottom: calc(var(--margin) * 2);
+  padding: 0.75rem 1rem 0.75rem $padding;
+  white-space: nowrap;
+  width: 100%;
+
+  .breadcrumb-item {
+    white-space: nowrap;
+
+    &.active {
+      color: $text-muted;
+    }
+
+    & + .breadcrumb-item::before {
+      content: '\f105';
+      font-family: var(--fa-style-family, 'Font Awesome 6 Free');
+      font-weight: 600;
+      color: darken($border-color, 5%);
+    }
+
+    &:last-of-type {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
 .sticky-nav {
   position: sticky;
   top: 0;
@@ -47,6 +77,10 @@
                 }
               }
             }
+          }
+
+          @media (min-with: 992px) {
+            margin-right: var(--margin);
           }
         }
       }
@@ -165,8 +199,13 @@
         }
       }
 
-      .nav-item {
-        margin-right: 0.5rem;
+      @media (max-width: 991px) {
+        .nav-item.dropdown {
+          .nav-link.show {
+            background-color: $light;
+            color: $text-default;
+          }
+        }
       }
 
       @media (max-width: 1199px) {
@@ -198,15 +237,6 @@
         .nav-item {
           border-bottom: 5px solid transparent;
           border-top: 5px solid transparent;
-
-          &.active,
-          &:active,
-          &:focus,
-          &:hover {
-            .nav-link {
-              color: $text-link;
-            }
-          }
 
           .dropdown-menu {
             border: 1px solid $border-color;
@@ -241,11 +271,30 @@
             }
           }
 
-          &.active {
-            border-bottom: 5px solid $light;
+          @media (max-width: 991px) {
+            &.active {
+              .nav-link {
+                color: $text-default;
+              }
+            }
+          }
 
-            .nav-link {
-              color: $text-default;
+          @media (min-width: 992px) {
+            margin-right: var(--margin);
+
+            &.active,
+            &:active,
+            &:focus,
+            &:hover {
+              border-bottom: 5px solid $light;
+
+              .nav-link {
+                color: $text-link;
+              }
+            }
+
+            &:last-child {
+              margin-right: 0;
             }
           }
         }
@@ -258,15 +307,19 @@
 
       @media (max-width: 991px) {
         background-color: $instance-nav-bg;
-        padding: 0.5rem 0;
+        padding: 0;
 
         .nav-item.active {
-          background-color: $light;
+          .nav-link {
+            background-color: $light;
+            color: $text-default;
+          }
         }
       }
 
       @media (min-width: 992px) {
-        .nav-item,
+        padding: 0 var(--padding);
+
         .vr {
           margin-right: var(--margin);
         }
@@ -274,6 +327,10 @@
 
       @media (min-width: 1024px) {
         padding: 0 4.5rem;
+      }
+
+      @media (min-width: 1200px) {
+        padding: 0 5rem;
       }
     }
 
@@ -296,34 +353,9 @@
       }
     }
   }
-}
 
-.breadcrumb {
-  background-color: transparent;
-  border: none;
-  flex-wrap: nowrap;
-  margin-bottom: calc(var(--margin) * 2);
-  padding: 0.75rem 1rem 0.75rem $padding;
-  white-space: nowrap;
-  width: 100%;
-
-  .breadcrumb-item {
-    white-space: nowrap;
-
-    &.active {
-      color: $text-muted;
-    }
-
-    & + .breadcrumb-item::before {
-      content: '\f105';
-      font-family: var(--fa-style-family, 'Font Awesome 6 Free');
-      font-weight: 600;
-      color: darken($border-color, 5%);
-    }
-
-    &:last-of-type {
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+  @media (max-width: 991px) {
+    overflow: scroll;
+    height: 90vh;
   }
 }
