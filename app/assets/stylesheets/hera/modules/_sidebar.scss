@@ -3,7 +3,8 @@ body:has(.main-sidebar.sidebar-collapsed) {
 }
 
 .main-sidebar {
-  --padding: 1rem;
+  --padding: 1.25rem;
+  --margin: 1rem;
   background-color: $white;
   border-right: 2px solid $border-color;
   position: sticky;
@@ -17,8 +18,46 @@ body:has(.main-sidebar.sidebar-collapsed) {
     justify-content: space-between;
     padding: var(--padding) var(--padding) 0.25rem var(--padding);
 
-    .add-node {
-      margin-right: 0.5rem;
+    .header {
+      margin-bottom: var(--margin);
+
+      .header-inner {
+        border-bottom: 1px solid;
+        color: $text-default;
+        display: flex;
+        justify-content: space-between;
+
+        a {
+          color: $text-default;
+
+          &:active,
+          &:focus,
+          &:hover {
+            color: $text-link;
+          }
+        }
+
+        .add {
+          display: flex;
+          justify-content: center;
+          margin-bottom: calc(var(--margin) * 2);
+        }
+
+        a.collapsed {
+          transform: rotate(180deg);
+        }
+
+        h5 {
+          border-color: $text-default;
+          display: flex;
+          justify-content: space-between;
+        }
+
+        .options {
+          display: flex;
+          align-items: center;
+        }
+      }
     }
 
     .nodes-nav {
@@ -75,12 +114,6 @@ body:has(.main-sidebar.sidebar-collapsed) {
       }
     }
 
-    .tree-header {
-      h4 {
-        margin-bottom: 0;
-      }
-    }
-
     .version {
       cursor: default;
       font-size: 0.625rem;
@@ -97,7 +130,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
     padding: 0.2rem 0.5rem;
     position: absolute;
     right: -0.75rem;
-    top: var(--padding);
+    top: calc(var(--padding) / 2);
   }
 
   &.sidebar-collapsed {
