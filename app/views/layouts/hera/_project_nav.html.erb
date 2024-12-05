@@ -1,9 +1,6 @@
-<nav class="navbar navbar-expand-lg fixed-top project-nav">
+<nav class="navbar navbar-expand-lg project-nav">
   <div class="container-fluid justify-content-end p-lg-0">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#project_navbar" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <i class="fa-solid fa-bars"></i>
-    </button>
-    <div class="collapse navbar-collapse" id="project_navbar" data-behavior="navbar-collapse">
+    <div class="collapse navbar-collapse dual-nav" id="project_navbar" data-behavior="navbar-collapse">
       <ul class="navbar-nav">
         <%= content_tag :li, class: class_names('nav-item', active: controller_path == 'projects') do %>
           <% link_to main_app.project_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>

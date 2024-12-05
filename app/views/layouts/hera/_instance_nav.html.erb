@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg fixed-top instance-nav">
+<nav class="navbar navbar-expand-lg instance-nav">
   <div class="container-fluid">
     <% if !defined?(Dradis::Pro) %>
       <%= link_to main_app.project_path(current_project), class: 'navbar-brand' do %>
@@ -11,11 +11,11 @@
       <% end %>
     <% end %>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#instance_navbar" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <i class="fa-solid fa-ellipsis"></i>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".dual-nav" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars"></i>
     </button>
 
-    <div class="collapse navbar-collapse justify-content-end" id="instance_navbar" data-behavior="navbar-collapse">
+    <div class="collapse navbar-collapse justify-content-end dual-nav" id="instance_navbar" data-behavior="navbar-collapse">
       <% if defined?(Dradis::Pro) %>
         <ul class="navbar-nav navbar-nav-scroll me-auto mb-2 mb-lg-0">
           <%= content_tag :li, class:'nav-item' << (controller_path == 'dashboard' ? ' active' : '') do %>
