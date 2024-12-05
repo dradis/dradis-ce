@@ -69,14 +69,8 @@ body:has(.main-sidebar.sidebar-collapsed) {
       }
     }
 
-    .note-list {
+    .collapse {
       margin-bottom: calc(var(--margin) * 2);
-
-      &:not(#issues_for_review) {
-        :nth-last-child(2) {
-          border-bottom: none;
-        }
-      }
 
       .list-item {
         align-items: center;
@@ -104,9 +98,9 @@ body:has(.main-sidebar.sidebar-collapsed) {
         }
 
         .list-item-actions {
-          align-items: flex-start;
           display: flex;
           justify-content: flex-end;
+          margin-left: 0.5rem;
         }
 
         &:last-child {
