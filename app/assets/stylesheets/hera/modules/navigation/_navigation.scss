@@ -30,11 +30,7 @@
   }
 }
 
-.sticky-nav {
-  position: sticky;
-  top: 0;
-  z-index: 1050;
-
+header {
   .navbar {
     --margin: 1rem;
     --padding: 1rem;
