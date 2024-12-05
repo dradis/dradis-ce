@@ -48,7 +48,7 @@ describe 'Tag pages:' do
 
     describe 'sorting tags', js: true do
       it 'updates tag priority values' do
-        tag3_element = find("#tag-#{tag3.id}").find('.fa-reorder')
+        tag3_element = find("#tag-#{tag3.id}").find('.fa-grip-vertical')
         tag1_element = find("#tag-#{tag.id}")
 
         tag3_element.drag_to(tag1_element)
