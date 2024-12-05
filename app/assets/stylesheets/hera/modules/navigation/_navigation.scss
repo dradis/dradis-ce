@@ -78,7 +78,7 @@ header {
               font-size: 1rem;
             }
 
-            @media (min-with: 992px) {
+            @media (min-width: 992px) {
               font-size: $text-small;
             }
           }
@@ -263,7 +263,6 @@ header {
             color: $text-default;
             display: flex;
             flex-direction: row;
-            font-size: 1rem;
             text-transform: capitalize;
 
             span {
