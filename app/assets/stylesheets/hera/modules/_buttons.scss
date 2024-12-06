@@ -3,21 +3,22 @@
   text-shadow: 0 0 0;
   font-weight: 300;
   font-size: inherit;
-  color: $white;
+  color: $black;
 
   &.btn-primary,
   &.btn-primary:not(:disabled):not(.disabled).active {
     @include button($primary);
+    color: $white;
   }
   &.btn-danger {
     @include button($red);
+    color: $white;
   }
   &.btn-success {
     @include button($green);
   }
   &.btn-warning {
     @include button($yellow);
-    color: $black;
   }
 
   &.dropdown-toggle-split {
