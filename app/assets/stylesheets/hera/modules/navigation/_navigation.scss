@@ -56,6 +56,13 @@ header {
 
           .nav-link {
             align-items: center;
+            color: $instance-nav-links;
+
+            &:active,
+            &:focus,
+            &:hover {
+              color: $instance-nav-hover;
+            }
 
             &.dropdown-toggle::after {
               display: inline-block;
@@ -105,6 +112,8 @@ header {
             }
             .dropdown-menu {
               .dropdown-item {
+                color: $instance-nav-links;
+
                 @media (max-width: 991px) {
                   padding: 0.5rem 0;
                   padding-left: calc(var(--padding) * 2);
@@ -161,7 +170,7 @@ header {
         border: 1px solid $light;
 
         .dropdown-item {
-          color: $text-default;
+          color: $instance-nav-links;
 
           &:active,
           &:focus,
@@ -269,12 +278,16 @@ header {
             flex-direction: row;
             text-transform: capitalize;
 
+            i {
+              font-size: $text-small;
+            }
+
             span {
               width: max-content;
             }
 
-            @media (min-width: 1024px) {
-              font-size: $text-small;
+            @media (max-width: 991px) {
+              color: $instance-nav-links;
             }
           }
 
