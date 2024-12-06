@@ -10,6 +10,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
   position: sticky;
   top: calc(#{$navbar-height} * 2);
   height: calc(100vh - (#{$navbar-height} * 2));
+  overflow-y: clip;
 
   .sidebar-content {
     display: flex;
@@ -127,9 +128,10 @@ body:has(.main-sidebar.sidebar-collapsed) {
     background-color: $white;
     border: 1px solid $border-color;
     border-radius: 0.2rem;
-    padding: 0.2rem 0.5rem;
+    font-size: 0.9rem;
+    padding: 0.25rem 0.5rem 0.15rem;
     position: absolute;
-    right: -0.75rem;
+    right: -0.9rem;
     top: calc(var(--padding) / 2);
   }
 
@@ -139,7 +141,8 @@ body:has(.main-sidebar.sidebar-collapsed) {
     }
 
     .sidebar-toggle {
-      right: -1rem;
+      right: -1.1rem;
+      padding-right: 0.4rem;
     }
 
     .sidebar-toggle-icon {
