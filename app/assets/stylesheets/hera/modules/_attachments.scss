@@ -37,7 +37,8 @@
     .cancel,
     .copy-link,
     .delete {
-      width: 2rem;
+      width: 1.5rem;
+      text-align: right;
     }
 
     .error {
@@ -93,32 +94,32 @@
     width: 100%;
     border-spacing: 0 3px;
 
+    tr:hover {
+      .btn {
+        opacity: 1;
+      }
+    }
+
     td {
       border: none;
       padding: 0;
 
       .btn {
-        background-color: transparent;
+        color: $text-link;
         padding: 4px 6px;
+        opacity: 0.25;
+        transition: opacity 0.15s ease-in-out;
 
         &.btn-copy {
-          color: $text-default;
-
-          &:active,
-          &:focus,
+          &:focus-visible,
           &:hover {
-            border-color: $text-muted;
-            color: $text-muted;
+            color: $text-link-hover;
           }
         }
 
         &.btn-trash {
-          color: $text-default;
-
-          &:active,
-          &:focus,
+          &:focus-visible,
           &:hover {
-            border-color: $red;
             color: $red;
           }
         }

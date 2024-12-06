@@ -32,7 +32,7 @@
                     </td>
                     <td rowspan="2" class="copy-link">
                       <button
-                        class="btn btn-sm btn-copy"
+                        class="btn btn-sm btn-transparent btn-copy"
                         data-clipboard-text="!<%= main_app.project_node_attachment_path(node.project, node, '') + attachment.url_encoded_filename %>!"
                       >
                         <i class="fa-solid fa-link fa-fw"></i>
@@ -40,7 +40,7 @@
                     </td>
                     <td rowspan="2" class="delete">
                       <button
-                        class="btn btn-sm btn-trash"
+                        class="btn btn-sm btn-transparent btn-trash"
                         data-type="DELETE"
                         data-url="<%= main_app.project_node_attachment_path(node.project, node, attachment.filename) %>"
                       >

@@ -98,26 +98,25 @@ body:has(.main-sidebar.sidebar-collapsed) {
           }
         }
 
+        &:focus-visible,
+        &:hover {
+          .list-item-actions {
+            opacity: 1;
+          }
+        }
+
         .list-item-actions {
           display: flex;
           justify-content: flex-end;
           margin-left: 0.5rem;
+          gap: 0.5rem;
+          opacity: 0.25;
+          transition: opacity 0.15s ease-in-out;
 
           .list-item-action-delete {
-            &:active,
-            &:focus,
+            &:focus-visible,
             &:hover {
-              border-color: $red;
               color: $red;
-            }
-          }
-
-          .list-item-action-edit {
-            &:active,
-            &:focus,
-            &:hover {
-              border-color: $text-muted;
-              color: $text-muted;
             }
           }
         }
