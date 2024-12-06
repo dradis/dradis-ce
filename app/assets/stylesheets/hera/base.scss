@@ -57,9 +57,10 @@ blockquote {
 }
 
 code {
-  background-color: $light;
+  background-color: $brand-100;
+  color: $primary;
   border-radius: $border-radius;
-  padding: 0.15rem 0.25rem;
+  padding: 0.15rem 0.5rem;
 }
 
 .disabled,
@@ -86,9 +87,12 @@ h2,
 h3,
 h4,
 h5,
-h6,
-strong {
+h6 {
   font-family: 'ProximaNovaRegular', 'system-ui';
+
+  & * {
+    font-family: 'ProximaNovaLight', 'system-ui';
+  }
 }
 
 mark {
@@ -125,6 +129,10 @@ pre code {
 
 .required-input {
   color: $red;
+}
+
+strong {
+  font-family: 'ProximaNovaRegular', 'system-ui';
 }
 
 .text-break-spaces {
