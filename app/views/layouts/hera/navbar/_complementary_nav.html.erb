@@ -18,18 +18,8 @@
       <span class="d-inline d-lg-none">Configuration</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="configurationDropdown">
-      <% if defined?(Dradis::Pro) %>
-        <% if @project %>
-          <li><%= link_to 'Project properties', main_app.edit_project_path(current_project), data: { turbolinks: false }, class: 'dropdown-item' %></li>
-          <li><%= link_to 'Configure plugins', main_app.project_configurations_path(current_project), class: 'dropdown-item' %></li>
-          <li><hr class="dropdown-divider"></li>
-        <% end %>
-        <li><%= link_to 'Instance Configuration', main_app.admin_configurations_path, class: 'dropdown-item' %></li>
-        <li><%= link_to 'Usage Analytics', main_app.admin_analytics_path, class: 'dropdown-item' %></li>
-      <% else %>
-        <li><%= link_to 'Configure plugins', main_app.project_configurations_path(current_project), class: 'dropdown-item' %></li>
-        <li><%= link_to "Manage Tags", project_tags_path(current_project), class: 'dropdown-item' %></li>
-      <% end %>
+      <li><%= link_to 'Configure plugins', main_app.project_configurations_path(current_project), class: 'dropdown-item' %></li>
+      <li><%= link_to "Manage Tags", project_tags_path(current_project), class: 'dropdown-item' %></li>
     </ul>
   </li>
   <li class="nav-item notifications dropdown">
