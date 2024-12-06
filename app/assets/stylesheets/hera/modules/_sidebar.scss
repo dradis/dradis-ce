@@ -10,6 +10,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
   position: sticky;
   top: calc(#{$navbar-height} * 2);
   height: calc(100vh - (#{$navbar-height} * 2));
+  overflow-y: clip;
 
   .sidebar-content {
     display: flex;
@@ -118,8 +119,8 @@ body:has(.main-sidebar.sidebar-collapsed) {
     background-color: $white;
     border: 1px solid $border-color;
     border-radius: 0.2rem;
-    font-size: 0.75rem;
-    padding: 0.2rem 0.25rem;
+    font-size: 0.9rem;
+    padding: 0.25rem 0.5rem 0.15rem;
     position: absolute;
     top: calc(var(--padding) / 2);
   }
