@@ -26,9 +26,9 @@
         <% end %>
         <li><%= link_to 'Instance Configuration', main_app.admin_configurations_path, class: 'dropdown-item' %></li>
         <li><%= link_to 'Usage Analytics', main_app.admin_analytics_path, class: 'dropdown-item' %></li>
-
       <% else %>
-        <%= link_to 'Configure plugins', main_app.project_configurations_path(current_project), class: 'dropdown-item' %>
+        <li><%= link_to 'Configure plugins', main_app.project_configurations_path(current_project), class: 'dropdown-item' %></li>
+        <li><%= link_to "Manage Tags", project_tags_path(current_project), class: 'dropdown-item' %></li>
       <% end %>
     </ul>
   </li>
