@@ -98,6 +98,13 @@
   }
 }
 
+#console {
+  @include ajax-console;
+  height: auto;
+  min-height: 25rem;
+  max-height: 70vh;
+}
+
 .divider {
   border-top: 1px solid $border-color;
   height: 0;
