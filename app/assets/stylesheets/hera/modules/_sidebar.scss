@@ -116,8 +116,8 @@ body:has(.main-sidebar.sidebar-collapsed) {
             &:active,
             &:focus,
             &:hover {
-              border-color: $yellow;
-              color: $yellow;
+              border-color: $text-muted;
+              color: $text-muted;
             }
           }
         }
