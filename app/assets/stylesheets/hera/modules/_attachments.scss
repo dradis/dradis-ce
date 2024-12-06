@@ -2,7 +2,7 @@
   font-size: 0.9rem;
 
   .drop-zone {
-    background: $light;
+    background: $brand-100;
     border-radius: 0.5rem;
     outline: 3px dashed $border-color;
     color: $text-muted;
@@ -37,7 +37,7 @@
     .cancel,
     .copy-link,
     .delete {
-      width: 2.1rem;
+      width: 2rem;
     }
 
     .error {
@@ -98,6 +98,7 @@
       padding: 0;
 
       .btn {
+        background-color: transparent;
         padding: 4px 6px;
 
         &.btn-copy {
@@ -119,14 +120,6 @@
           &:hover {
             border-color: $red;
             color: $red;
-          }
-        }
-
-        &.btn-transparent {
-          background: transparent;
-
-          &:not(:disabled):not(.disabled):active {
-            background: transparent;
           }
         }
       }

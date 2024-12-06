@@ -10,13 +10,24 @@
     @include button($primary);
     color: $white;
   }
+
   &.btn-danger {
     @include button($red);
     color: $white;
   }
+
   &.btn-success {
     @include button($green);
   }
+
+  &.btn-transparent {
+    background: transparent;
+
+    &:not(:disabled):not(.disabled):active {
+      background: transparent;
+    }
+  }
+
   &.btn-warning {
     @include button($yellow);
   }
