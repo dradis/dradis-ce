@@ -56,9 +56,10 @@ blockquote {
 }
 
 code {
-  background-color: $light;
+  background-color: $brand-100;
+  color: $primary;
   border-radius: $border-radius;
-  padding: 0.15rem 0.25rem;
+  padding: 0.15rem 0.5rem;
 }
 
 .disabled,
