@@ -1,6 +1,7 @@
 @import 'hera/modules/attachments';
 @import 'hera/modules/buttons';
 @import 'hera/modules/datatables';
+@import 'hera/modules/dropdown';
 @import 'hera/modules/dots_menu';
 @import 'hera/modules/modals';
 
@@ -108,10 +109,6 @@
   display: initial;
   margin: 0.25rem;
   width: 0;
-}
-
-.fa-fw {
-  margin-right: 0.25rem;
 }
 
 .form-actions {
