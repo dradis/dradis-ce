@@ -36,6 +36,12 @@
     }
   }
 
+  span:not(:last-child) {
+    .state {
+      border-bottom: 1px solid $border-color;
+    }
+  }
+
   .state {
     display: flex;
     margin: 0;
