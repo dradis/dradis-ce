@@ -1,6 +1,7 @@
 @import 'hera/modules/attachments';
 @import 'hera/modules/buttons';
 @import 'hera/modules/datatables';
+@import 'hera/modules/dropdown';
 @import 'hera/modules/dots_menu';
 @import 'hera/modules/modals';
 @import 'hera/modules/sidebar';
@@ -96,6 +97,13 @@
   ul {
     margin-top: 1em;
   }
+}
+
+#console {
+  @include ajax-console;
+  height: auto;
+  min-height: 25rem;
+  max-height: 70vh;
 }
 
 .divider {
@@ -219,7 +227,7 @@ pre {
 }
 
 .tabs-container {
-  margin: 1rem $margin -1px $margin;
+  margin: 1rem $margin -1px 0;
   padding-left: 0.25rem;
   border-bottom: 1px solid transparent;
 
