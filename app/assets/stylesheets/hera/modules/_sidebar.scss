@@ -111,10 +111,6 @@ body:has(.main-sidebar.sidebar-collapsed) {
     }
   }
 
-  &.sidebar-expanded {
-    overflow: hidden;
-  }
-
   .sidebar-toggle {
     background-color: $white;
     border: 1px solid $border-color;
@@ -210,12 +206,13 @@ body:has(.main-sidebar.sidebar-collapsed) {
     }
 
     .sidebar-toggle {
-      right: -0.2rem;
+      right: -0.9rem;
     }
 
     &.sidebar-collapsed {
       .sidebar-toggle {
-        right: -0.75rem;
+        right: -1.1rem;
+        padding-right: 0.4rem;
       }
 
       .sidebar-toggle-icon {
@@ -234,7 +231,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
     }
 
     .sidebar-toggle {
-      left: -0.2rem;
+      left: -0.9rem;
 
       .sidebar-toggle-icon {
         transform: rotate(180deg);
@@ -243,7 +240,8 @@ body:has(.main-sidebar.sidebar-collapsed) {
 
     &.sidebar-collapsed {
       .sidebar-toggle {
-        left: -0.75rem;
+        left: -1.1rem;
+        padding-left: 0.4rem;
       }
 
       .sidebar-toggle-icon {
