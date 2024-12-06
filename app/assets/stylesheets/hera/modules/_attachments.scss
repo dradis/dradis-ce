@@ -101,18 +101,24 @@
         padding: 4px 6px;
 
         &.btn-copy {
-          color: $white;
+          color: $text-default;
 
+          &:active,
+          &:focus,
           &:hover {
-            color: $light;
+            border-color: $yellow;
+            color: $yellow;
           }
         }
 
         &.btn-trash {
-          color: $red;
+          color: $text-default;
 
+          &:active,
+          &:focus,
           &:hover {
-            color: darken($red, 10%);
+            border-color: $red;
+            color: $red;
           }
         }
 

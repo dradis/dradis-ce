@@ -102,6 +102,24 @@ body:has(.main-sidebar.sidebar-collapsed) {
           display: flex;
           justify-content: flex-end;
           margin-left: 0.5rem;
+
+          .list-item-action-delete {
+            &:active,
+            &:focus,
+            &:hover {
+              border-color: $red;
+              color: $red;
+            }
+          }
+
+          .list-item-action-edit {
+            &:active,
+            &:focus,
+            &:hover {
+              border-color: $yellow;
+              color: $yellow;
+            }
+          }
         }
 
         &:last-child {
