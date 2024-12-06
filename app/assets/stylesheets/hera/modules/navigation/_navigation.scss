@@ -57,6 +57,7 @@ header {
           .nav-link {
             align-items: center;
             color: $instance-nav-links;
+            text-transform: capitalize;
 
             &:active,
             &:focus,
@@ -171,6 +172,7 @@ header {
 
         .dropdown-item {
           color: $instance-nav-links;
+          text-transform: capitalize;
 
           &:active,
           &:focus,
@@ -260,6 +262,8 @@ header {
             box-shadow: 1px 1px 5px 0px rgba($shadow-color-light, 0.5);
 
             .dropdown-item {
+              text-transform: capitalize;
+
               &:hover,
               &:focus {
                 color: $text-default;
@@ -276,7 +280,6 @@ header {
             color: $text-default;
             display: flex;
             flex-direction: row;
-            text-transform: capitalize;
 
             i {
               font-size: $text-small;
