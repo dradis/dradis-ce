@@ -85,9 +85,12 @@ h2,
 h3,
 h4,
 h5,
-h6,
-strong {
+h6 {
   font-family: 'ProximaNovaRegular', 'system-ui';
+
+  & * {
+    font-family: 'ProximaNovaLight', 'system-ui';
+  }
 }
 
 mark {
@@ -118,6 +121,10 @@ pre code {
 
 .required-input {
   color: $red;
+}
+
+strong {
+  font-family: 'ProximaNovaRegular', 'system-ui';
 }
 
 .text-break-spaces {
