@@ -16,6 +16,12 @@
       this.$toggleLink.on('click', function () {
         that.toggle(!that.isSidebarOpen());
       });
+
+      $(window).on('resize', function () {
+        if ($(window).width() < 992) {
+          that.close();
+        }
+      });
     }
 
     changeState(key, state) {

@@ -1,7 +1,6 @@
 body:has(.main-sidebar.sidebar-collapsed) {
   grid-template-columns: 0.5rem 1fr;
 }
-// need to fix ^ when collapsed
 
 .sidebar {
   --padding: 1.25rem;
@@ -11,6 +10,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
   top: calc(#{$navbar-height} * 2);
   height: calc(100vh - (#{$navbar-height} * 2));
   overflow-y: clip;
+  z-index: 3;
 
   .sidebar-content {
     display: flex;
@@ -197,12 +197,6 @@ body:has(.main-sidebar.sidebar-collapsed) {
         padding: 0.2em 0;
         text-align: center;
       }
-
-      .tree-header {
-        h4 {
-          margin-bottom: 0;
-        }
-      }
     }
 
     .sidebar-toggle {
@@ -251,6 +245,32 @@ body:has(.main-sidebar.sidebar-collapsed) {
 
     .template-download {
       font-size: $text-small;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  body,
+  body:has(.main-sidebar.sidebar-collapsed) {
+    grid-template-columns: 0 1fr;
+  }
+
+  .sidebar {
+    position: fixed;
+
+    &.main-sidebar {
+      left: 0.35rem;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .sidebar:not(.sidebar-collapsed) {
+    width: calc(100vw - 0.4rem);
+
+    &.main-sidebar {
+      z-index: 4;
+      left: 0.1rem;
     }
   }
 }
