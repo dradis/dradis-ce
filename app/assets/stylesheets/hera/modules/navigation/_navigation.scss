@@ -81,6 +81,10 @@ header {
             @media (min-width: 992px) {
               font-size: $text-small;
             }
+
+            @media (min-width: 1200px) {
+              font-size: 1rem;
+            }
           }
 
           @media (min-with: 992px) {
