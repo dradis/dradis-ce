@@ -50,7 +50,6 @@
         <% end %>
 
         <div class="vr d-none d-lg-inline-block"></div>
-        <li class="nav-item d-lg-none d-xl-none"><hr class="dropdown-divider"></li>
 
         <li class="<%= class_names('nav-item', active: controller_path == 'upload') %>">
           <%= link_to main_app.project_upload_manager_path(current_project), class: 'nav-link', title: 'Upload' do %>
