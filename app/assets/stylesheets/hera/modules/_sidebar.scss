@@ -9,7 +9,6 @@ body:has(.main-sidebar.sidebar-collapsed) {
   position: sticky;
   top: calc(#{$navbar-height} * 2);
   height: calc(100vh - (#{$navbar-height} * 2));
-  overflow-y: clip;
   z-index: 3;
 
   .sidebar-content {
@@ -19,7 +18,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
     max-height: calc(100vh - (#{$navbar-height} * 2));
     justify-content: flex-start;
     padding: var(--padding) var(--padding) 0.25rem var(--padding);
-    overflow-y: scroll;
+    overflow-y: auto;
 
     .dradis-placeholder {
       font-style: italic;
@@ -138,6 +137,10 @@ body:has(.main-sidebar.sidebar-collapsed) {
         }
       }
     }
+  }
+
+  &.sidebar-expanded {
+    overflow-y: clip;
   }
 
   .sidebar-toggle {
