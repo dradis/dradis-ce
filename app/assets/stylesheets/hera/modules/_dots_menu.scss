@@ -34,6 +34,10 @@
   .dropdown-toggle {
     padding: 0.6rem 0.7rem;
 
+    &::after {
+      display: none;
+    }
+
     .fa-lg {
       font-size: 1.15rem;
     }

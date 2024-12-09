@@ -29,6 +29,19 @@ body {
   }
 }
 
+.content-grid {
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+footer {
+  background-color: $brand-100;
+  cursor: default;
+  font-size: 0.8rem;
+  padding: 0.5rem;
+  text-align: center;
+}
+
 header {
   grid-area: navigation;
 }

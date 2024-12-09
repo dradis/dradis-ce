@@ -1,8 +1,8 @@
 @mixin ajax-console {
-  background-color: #000;
+  background-color: $black;
   border-radius: 5px;
-  color: #CCC;
-  margin: 1rem;
+  color: $grey-500;
+  margin: 1rem 0;
   height: 400px;
   overflow: auto;
   padding: 1rem;
