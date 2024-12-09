@@ -87,6 +87,10 @@
     display: inline-block;
   }
 
+  .header {
+    margin-top: var(--margin);
+  }
+
   table {
     margin-bottom: 0;
     color: $white;
