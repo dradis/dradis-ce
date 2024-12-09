@@ -127,7 +127,13 @@ body:has(.main-sidebar.sidebar-collapsed) {
           padding-top: 0;
         }
 
-        &:nth-last-child(2) {
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+
+      &:not(.qa-list) {
+        .list-item:nth-last-child(2) {
           border-bottom: none;
         }
       }
