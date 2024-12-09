@@ -62,11 +62,6 @@ code {
   padding: 0.15rem 0.5rem;
 }
 
-.disabled,
-:disabled {
-  color: $text-muted !important;
-}
-
 .form-actions {
   padding-top: 1rem;
   border-top: 1px solid $border-color;
