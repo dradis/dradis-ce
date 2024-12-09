@@ -1,5 +1,5 @@
 body:has(.main-sidebar.sidebar-collapsed) {
-  grid-template-columns: 0.5rem 1fr;
+  grid-template-columns: $sidebar-width-collapsed 1fr;
 }
 
 .sidebar {
@@ -154,6 +154,8 @@ body:has(.main-sidebar.sidebar-collapsed) {
   }
 
   &.sidebar-collapsed {
+    width: $sidebar-width-collapsed !important;
+
     .sidebar-content {
       display: none;
     }
@@ -161,6 +163,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
 
   &.main-sidebar {
     border-right: 2px solid $border-color;
+    width: $sidebar-width;
 
     .sidebar-content {
       .add-node {
@@ -252,10 +255,6 @@ body:has(.main-sidebar.sidebar-collapsed) {
     right: 0;
     width: calc(#{$sidebar-width} * 1.25);
 
-    &.sidebar-collapsed {
-      width: 0.5rem;
-    }
-
     .sidebar-toggle {
       left: -0.9rem;
 
@@ -297,8 +296,8 @@ body:has(.main-sidebar.sidebar-collapsed) {
 }
 
 @include media-breakpoint-down(sm) {
-  .sidebar:not(.sidebar-collapsed) {
-    width: calc(100vw - 0.4rem);
+  .sidebar.sidebar-expanded {
+    width: calc(100vw - 0.4rem) !important;
 
     &.main-sidebar {
       z-index: 4;
