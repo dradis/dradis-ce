@@ -7,12 +7,5 @@
   </div>
   <div class="sidebar-content" data-behavior="sidebar-content">
     <%= render 'layouts/hera/nodes' %>
-    <div class="version">
-      <% if defined?(Dradis::Pro) %>
-        <span>Dradis Professional Edition v<%= Dradis::Pro.version %></span>
-      <% else %>
-        <span>Dradis Community Edition v<%= Dradis::CE.version %></span>
-      <% end %>
-    </div>
   </div>
 </div>
