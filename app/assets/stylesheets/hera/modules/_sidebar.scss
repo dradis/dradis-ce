@@ -17,7 +17,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
     flex-direction: column;
     height: 100%;
     max-height: calc(100vh - (#{$navbar-height} * 2));
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: var(--padding) var(--padding) 0.25rem var(--padding);
     overflow-y: scroll;
 
