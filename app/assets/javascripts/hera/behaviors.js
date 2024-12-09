@@ -39,7 +39,7 @@ document.addEventListener('turbolinks:load', function () {
   });
 
   // Toggle sidebar menu
-  $('[data-behavior~=main-sidebar]').each(function () {
+  $('[data-behavior~=sidebar]').each(function () {
     new Sidebar($(this));
   });
 
