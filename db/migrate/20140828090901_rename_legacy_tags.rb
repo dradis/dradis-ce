@@ -1,6 +1,6 @@
 class RenameLegacyTags < ActiveRecord::Migration[5.1]
   def up
-    Tag.all.each do |tag|
+    Tag.all.unscoped.each do |tag|
       case tag.name
       when '!9467bd'
         tag.update_attribute :name, '!9467bd_Purple'
