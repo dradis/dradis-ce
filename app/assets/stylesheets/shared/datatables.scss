@@ -258,8 +258,7 @@ div.dataTables_wrapper {
   }
 
   .table-wrapper {
-    max-height: calc(100vh - 60px - 14rem);
-    overflow: auto;
+    overflow-x: auto;
   }
 
   tr:last-of-type {
