@@ -168,7 +168,7 @@ header {
 
       .dropdown-menu {
         background-color: $instance-nav-bg;
-        border: 1px solid $light;
+        border: 1px solid $instance-nav-border;
 
         .dropdown-item {
           color: $instance-nav-links;
@@ -200,7 +200,7 @@ header {
       }
 
       .dropdown-divider {
-        border-top: 1px solid $light;
+        border-top: 1px solid $instance-nav-border;
       }
 
       .navbar-collapse {
