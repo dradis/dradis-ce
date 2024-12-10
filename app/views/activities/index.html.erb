@@ -4,7 +4,7 @@
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <%= link_to 'Dashboard', project_path(current_project) %>
+        <%= link_to current_project.name, project_path(current_project) %>
       </li>
       <li class="breadcrumb-item active">All Activity</li>
     </ol>

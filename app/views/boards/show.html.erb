@@ -12,6 +12,9 @@
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
+        <%= link_to current_project.name, project_path(current_project) %>
+      </li>
+      <li class="breadcrumb-item">
         <%= link_to 'Methodologies', project_boards_path(current_project) %>
       </li>
       <li class="breadcrumb-item active"><%= @board.name %></li>
