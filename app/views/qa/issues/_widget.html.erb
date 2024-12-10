@@ -1,9 +1,20 @@
-<div class="content-container">
-  <h4 class="header-underline">QA</h4>
-  <p class="fw-bold mb-2">Update State</p>
+<div class="header">
+  <div class="header-inner">
+    <h5 class="header-name font-light">Update State</h5>
+    <div class="options">
+      <div class="dropdown">
+        <%= link_to "#update-state", data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle update state</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="update-state" class="note-list qa-list collapse show">
   <div class="btn-group">
     <%= button_to 'Draft', project_qa_issue_path(current_project, id: @issue, state: 'draft'), method: :put, class: 'btn btn-secondary text-dark rounded-start' %>
-    <div class="btn-placeholder rounded-0">Ready for review</div>
+    <div class="btn-placeholder rounded-0">Review</div>
     <%= button_to 'Published', project_qa_issue_path(current_project, id: @issue, state: 'published'), method: :put, class: 'btn btn-secondary text-dark rounded-end' %>
   </div>
 </div>
