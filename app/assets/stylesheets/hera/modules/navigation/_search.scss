@@ -34,7 +34,7 @@
       }
 
       .search-query {
-        border-bottom-color: $light;
+        border-bottom-color: $instance-nav-links;
         opacity: 1;
         right: 1.25rem;
         width: 9rem;
@@ -78,12 +78,18 @@
       }
 
       .search-query {
-        border-bottom: 1px solid $light;
+        --width: calc(100vw - var(--padding));
+        border-bottom: 1px solid $instance-nav-links;
         margin: 0 0.5rem;
         opacity: 1;
         padding: 0 1rem 0 1.5rem;
         position: initial;
-        width: auto;
+        width: var(--width);
+
+        &:active,
+        &:hover {
+          width: var(--width);
+        }
       }
     }
   }
