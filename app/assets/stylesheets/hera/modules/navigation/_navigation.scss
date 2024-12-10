@@ -160,7 +160,6 @@ header {
 
     &.instance-nav {
       background-color: $instance-nav-bg;
-      border-bottom: 1px solid $instance-nav-border;
       padding: 0;
 
       .change-project,
@@ -204,6 +203,8 @@ header {
         }
 
         li {
+          padding: 0 !important;
+
           &:active,
           &:focus,
           &:hover {
@@ -240,7 +241,15 @@ header {
         }
       }
 
+      @media (min-width: 992px) {
+        border-bottom: 1px solid $instance-nav-border;
+      }
+
       @media (max-width: 991px) {
+        .complementary-nav {
+          padding-bottom: 0;
+        }
+
         .nav-item.dropdown {
           .nav-link.show {
             background-color: $light;
@@ -393,7 +402,7 @@ header {
   }
 
   @media (max-width: 991px) {
-    overflow: scroll;
-    height: 90vh;
+    overflow: auto;
+    height: 100vh;
   }
 }
