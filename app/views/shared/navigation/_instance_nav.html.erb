@@ -2,12 +2,11 @@
   <div class="container-fluid">
     <% if !defined?(Dradis::Pro) %>
       <%= link_to main_app.project_path(current_project), class: 'navbar-brand' do %>
-        <%= image_tag 'logo_small.png', alt: 'Dradis Pro logo', class: 'p-lg-0' %>
+        <%= image_tag 'logo_small.png', alt: 'Dradis CE logo', class: 'p-lg-0' %>
       <% end %>
-      <%= render partial: 'layouts/hera/navbar/change_project' %>
     <% else %>
       <%= link_to current_user.role?(:contributor) ? main_app.contributors_home_path : main_app.dashboard_path, class: 'navbar-brand' do %>
-        <%= image_tag 'dradispro-logo.png', alt: 'Dradis Pro logo', class: 'p-lg-0' %>
+        <%= image_tag 'logo_small.png', alt: 'Dradis Pro logo', class: 'p-lg-0' %>
       <% end %>
     <% end %>
 
@@ -16,8 +15,8 @@
     </button>
 
     <div class="collapse navbar-collapse justify-content-end dual-nav" id="instance_navbar" data-behavior="navbar-collapse">
-      <% if defined?(Dradis::Pro) %>
-        <ul class="navbar-nav navbar-nav-scroll me-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav navbar-nav-scroll me-auto mb-2 mb-lg-0">
+        <% if defined?(Dradis::Pro) %>
           <%= content_tag :li, class:'nav-item' << (controller_path == 'dashboard' ? ' active' : '') do %>
             <% link_to 'Dashboard', current_user.role?(:contributor) ? main_app.contributors_home_path : main_app.dashboard_path, class: 'nav-link' %>
           <% end %>
@@ -32,8 +31,8 @@
             <% end %>
           <% end -%>
 
-          <%= render 'layouts/mintcreek/integrations_menu' if current_user.role?(:admin) %>
-          <%= render 'layouts/mintcreek/tools_menu' %>
+          <%= render 'shared/navigation/integrations_menu' if current_user.role?(:admin) %>
+          <%= render 'shared/navigation/tools_menu' %>
 
           <% if current_user.role?(:admin) -%>
             <%= content_tag :li, class: 'nav-item ' << (controller_path == 'admin/mappings' ? 'active' : '') do %>
@@ -43,25 +42,35 @@
             <%= content_tag :li, class: 'nav-item dropdown' << (controller_path.include?('admin/templates') ? ' active' : '') do %>
               <a class="nav-link dropdown-toggle" href="javascript:void(0)"
                 id="templatesDropdown" role="button" data-bs-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
+                aria-haspopup="true" aria-expanded="false"
+              >
                 Templates
               </a>
               <ul class="dropdown-menu" aria-labelledby="templatesDropdown">
                 <li><%= link_to 'Methodologies', main_app.admin_templates_methodologies_path, class: 'dropdown-item' %></li>
-                <li><%= link_to 'Notes',         main_app.admin_templates_notes_path,         class: 'dropdown-item' %></li>
-                <li><%= link_to 'Projects',      main_app.admin_templates_projects_path,      class: 'dropdown-item' %></li>
-                <li><%= link_to 'Reports',       main_app.admin_templates_reports_path,       class: 'dropdown-item' %></li>
+                <li><%= link_to 'Notes', main_app.admin_templates_notes_path,  class: 'dropdown-item' %></li>
+                <li><%= link_to 'Projects', main_app.admin_templates_projects_path, class: 'dropdown-item' %></li>
+                <li><%= link_to 'Reports', main_app.admin_templates_reports_path, class: 'dropdown-item' %></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><%= link_to 'Kit Upload',  main_app.admin_templates_kits_path,    class: 'dropdown-item' %>
-                </ul>
-              <% end %>
-
-              <%= content_tag :li, class: 'nav-item' << (controller_path == 'admin/users' ? ' active' : '') do %>
-                <%= link_to 'Users', main_app.admin_users_path, class: 'nav-link' %>
-              <% end %>
+                <li><%= link_to 'Kit Upload',  main_app.admin_templates_kits_path, class: 'dropdown-item' %></li>
+              </ul>
             <% end %>
-          </ul>
+
+            <%= content_tag :li, class: 'nav-item' << (controller_path == 'admin/users' ? ' active' : '') do %>
+              <%= link_to 'Users', main_app.admin_users_path, class: 'nav-link' %>
+            <% end %>
+          <% end %>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to 'javascript:void(0)', class: 'js-try-pro nav-link', data: { term: 'projects', url: 'https://dradis.com/pro/pages/projects.html' } do %>
+              <span>Projects</span>
+            <% end %>
+          </li>
+          <%= render 'shared/navigation/tools_menu' %>
         <% end %>
-        <%= render 'shared/navigation/complementary_nav' %>
-      </div>
-    </nav>
+      </ul>
+
+      <%= render 'shared/navigation/complementary_nav' %>
+    </div>
+  </div>
+</nav>

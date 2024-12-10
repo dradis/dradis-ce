@@ -162,7 +162,6 @@ header {
       background-color: $instance-nav-bg;
       padding: 0;
 
-      .change-project,
       .complementary-nav {
         a,
         .nav-link {
@@ -172,10 +171,6 @@ header {
           &:focus,
           &:hover {
             color: $instance-nav-hover;
-
-            &.change-project-link {
-              text-decoration: underline;
-            }
           }
         }
 
@@ -254,14 +249,6 @@ header {
           .nav-link.show {
             background-color: $light;
             color: $text-default;
-          }
-        }
-      }
-
-      @media (max-width: 1199px) {
-        .change-project {
-          a {
-            font-size: $text-small;
           }
         }
       }
