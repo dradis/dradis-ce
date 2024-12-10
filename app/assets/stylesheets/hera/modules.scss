@@ -233,6 +233,21 @@ pre {
 
   .nav-item {
     z-index: 2;
+
+    .nav-link.active {
+      padding-bottom: 0.6rem;
+    }
+  }
+
+  @media (max-width: 991px) {
+    flex-wrap: nowrap;
+    .nav-link {
+      padding: 0.5rem;
+
+      i {
+        display: none;
+      }
+    }
   }
 }
 
