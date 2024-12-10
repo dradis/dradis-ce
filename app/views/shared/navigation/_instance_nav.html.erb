@@ -53,15 +53,15 @@
                 <li><%= link_to 'Reports',       main_app.admin_templates_reports_path,       class: 'dropdown-item' %></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><%= link_to 'Kit Upload',  main_app.admin_templates_kits_path,    class: 'dropdown-item' %>
-              </ul>
-            <% end %>
+                </ul>
+              <% end %>
 
-            <%= content_tag :li, class: 'nav-item' << (controller_path == 'admin/users' ? ' active' : '') do %>
-              <%= link_to 'Users', main_app.admin_users_path, class: 'nav-link' %>
+              <%= content_tag :li, class: 'nav-item' << (controller_path == 'admin/users' ? ' active' : '') do %>
+                <%= link_to 'Users', main_app.admin_users_path, class: 'nav-link' %>
+              <% end %>
             <% end %>
-          <% end %>
-        </ul>
-      <% end %>
-    <%= render 'layouts/hera/navbar/complementary_nav' %>
-  </div>
-</nav>
+          </ul>
+        <% end %>
+        <%= render 'shared/navigation/complementary_nav' %>
+      </div>
+    </nav>

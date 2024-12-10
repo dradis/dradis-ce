@@ -47,7 +47,7 @@
       <%= avatar_image(current_user, size: 32) %>
       <span class="d-block d-lg-none ms-1"><%= current_user.name %></span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">  
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
       <li>
         <%= link_to main_app.logout_path,  class: 'dropdown-item', data: { turbolinks: false } do %>
           <i class="fa-solid fa-arrow-right-from-bracket"></i>
