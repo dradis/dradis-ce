@@ -1,4 +1,4 @@
-<ul class="navbar-nav navbar-nav-scroll complementary-nav">
+<ul class="navbar-nav navbar-nav-scroll complementary-nav pt-0">
   <li class="nav-item">
     <%= render "layouts/hera/navbar/search" %>
   </li>
@@ -42,7 +42,7 @@
   </li>
   <%= render partial: 'layouts/hera/navbar/help' %>
 
-  <li class="nav-item dropdown">
+  <li class="nav-item dropdown me-0">
     <a class="nav-link dropdown-toggle pe-0 py-lg-0 d-flex align-items-center no-caret-xl" href="javascript:void(0)" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <%= avatar_image(current_user, size: 32) %>
       <span class="d-block d-lg-none ms-1"><%= current_user.name %></span>

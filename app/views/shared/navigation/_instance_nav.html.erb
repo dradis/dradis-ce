@@ -15,7 +15,7 @@
     </button>
 
     <div class="collapse navbar-collapse justify-content-end dual-nav" id="instance_navbar" data-behavior="navbar-collapse">
-      <ul class="navbar-nav navbar-nav-scroll me-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav navbar-nav-scroll me-auto pb-0">
         <% if defined?(Dradis::Pro) %>
           <%= content_tag :li, class:'nav-item' << (controller_path == 'dashboard' ? ' active' : '') do %>
             <% link_to 'Dashboard', current_user.role?(:contributor) ? main_app.contributors_home_path : main_app.dashboard_path, class: 'nav-link' %>
