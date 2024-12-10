@@ -51,7 +51,9 @@
                 <li><%= link_to 'Notes', main_app.admin_templates_notes_path,  class: 'dropdown-item' %></li>
                 <li><%= link_to 'Projects', main_app.admin_templates_projects_path, class: 'dropdown-item' %></li>
                 <li><%= link_to 'Reports', main_app.admin_templates_reports_path, class: 'dropdown-item' %></li>
-                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <div class="dropdown-divider"></div>
+                </li>
                 <li><%= link_to 'Kit Upload',  main_app.admin_templates_kits_path, class: 'dropdown-item' %></li>
               </ul>
             <% end %>
