@@ -161,6 +161,7 @@ header {
 
     &.instance-nav {
       background-color: $instance-nav-bg;
+      border-bottom: 1px solid $instance-nav-border;
       padding: 0;
 
       .change-project,
