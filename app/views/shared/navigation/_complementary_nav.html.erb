@@ -1,7 +1,9 @@
 <ul class="navbar-nav navbar-nav-scroll complementary-nav pt-0">
-  <li class="nav-item">
-    <%= render "layouts/hera/navbar/search" %>
-  </li>
+  <% if @project %>
+    <li class="nav-item">
+      <%= render "layouts/hera/navbar/search" %>
+    </li>
+  <% end %>
   <% if defined?(Dradis::Pro) %>
     <% if (can?(:read, Project) || can?(:read, Team)) && @project.blank? %>
       <%= content_tag :li, class: class_names('nav-item', active: controller_path == 'trash') do %>
