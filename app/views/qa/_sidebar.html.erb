@@ -8,11 +8,9 @@
         <% end %>
       </h5>
       <div class="options">
-        <div class="dropdown">
-          <%= link_to "##{name.downcase}", data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
-            <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle <%= name.downcase %> list</span>
-          <% end %>
-        </div>
+        <%= link_to "##{name.downcase}", data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle <%= name.downcase %> list</span>
+        <% end %>
       </div>
     </div>
   </div>
