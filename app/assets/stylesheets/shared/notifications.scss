@@ -102,6 +102,10 @@
         li.no-content {
           padding: 0.5rem;
         }
+
+        @media (max-width: 991px) {
+          width: 100%;
+        }
       }
 
       .notification-header {
