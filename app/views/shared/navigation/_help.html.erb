@@ -14,7 +14,9 @@
     <li>
       <a href="https://dradis.com/support/guides/troubleshooting/?utm_source=ce&utm_medium=app&utm_campaign=support&utm_term=troubleshooting" target="_blank" class="dropdown-item">Troubleshooting</a>
     </li>
-    <li><hr class="dropdown-divider"></li>
+    <li>
+      <div class="dropdown-divider"></div>
+    </li>
 
     <% if defined?(Dradis::Pro) %>
       <li>
@@ -41,13 +43,17 @@
     <li>
       <a href="https://discuss.dradis.com?utm_source=ce&utm_medium=app&utm_campaign=forum" target="_blank" class="dropdown-item">Community forums</a>
     </li>
-    <li><hr class="dropdown-divider"></li>
+    <li>
+      <div class="dropdown-divider"></div>
+    </li>
     <li>
       <a href="https://dradis.com/careers/?utm_source=ce&utm_medium=app&utm_campaign=careers" target="_blank" class="dropdown-item">We're hiring</a>
     </li>
 
     <% unless defined?(Dradis::Pro) %>
-      <li><hr class="dropdown-divider"></li>
+      <li>
+        <div class="dropdown-divider"></div>
+      </li>
       <li>
         <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="try-pro" data-url="https://dradis.com/pro/pages/upgrade.html">Try Dradis Pro</a>
       </li>
