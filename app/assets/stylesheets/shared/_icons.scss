@@ -2,6 +2,14 @@
   color: $green;
 }
 
+.fa-grip-vertical {
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
 .fa-info-circle {
   color: $blue;
 }

@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Tags: Add custom ordering
   - Welcome Kit:
     - Add HTML report template
     - Add Issue and evidence templates
