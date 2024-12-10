@@ -112,6 +112,8 @@ header {
               }
             }
             .dropdown-menu {
+              box-shadow: none;
+
               .dropdown-item {
                 color: $instance-nav-links;
 
