@@ -2,19 +2,18 @@
   font-size: 0.9rem;
 
   .drop-zone {
-    background: $light;
-    outline: 1px dashed $white;
-    color: darken($dark, 2%);
-    padding: 50px;
+    background: $brand-100;
+    border-radius: 0.5rem;
+    outline: 3px dashed $border-color;
+    color: $text-muted;
+    padding: 2.5rem;
     text-align: center;
-    margin: 0.5rem 0 1rem 0;
+    margin: 1rem 0;
     cursor: default;
   }
 
   .fileinput-button {
-    background-color: transparent;
-    color: $light;
-    display: inline;
+    color: $text-link;
     float: none;
     margin: 0;
 
@@ -38,7 +37,8 @@
     .cancel,
     .copy-link,
     .delete {
-      width: 30px;
+      width: 1.5rem;
+      text-align: right;
     }
 
     .error {
@@ -46,16 +46,11 @@
     }
 
     .filename {
-      white-space: nowrap;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
       text-overflow: ellipsis;
       overflow: hidden;
-    }
-
-    .name {
-      width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
 
     .progress {
@@ -68,10 +63,32 @@
       font-size: 80%;
       padding-bottom: 0.3rem;
     }
+
+    .template-download {
+      border-bottom: 1px solid $border-color;
+
+      &:first-child {
+        .file {
+          margin-top: 0;
+        }
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .file {
+        margin: calc(var(--margin) / 2) 0;
+      }
+    }
   }
 
   #fileupload {
     display: inline-block;
+  }
+
+  .header {
+    margin-top: var(--margin);
   }
 
   table {
@@ -79,37 +96,35 @@
     color: $white;
     table-layout: fixed;
     width: 100%;
-    border-collapse: separate;
     border-spacing: 0 3px;
+
+    tr:hover {
+      .btn {
+        opacity: 1;
+      }
+    }
 
     td {
       border: none;
       padding: 0;
 
       .btn {
+        color: $text-link;
         padding: 4px 6px;
+        opacity: 0.25;
+        transition: opacity 0.15s ease-in-out;
 
         &.btn-copy {
-          color: $white;
-
+          &:focus-visible,
           &:hover {
-            color: $light;
+            color: $text-link-hover;
           }
         }
 
         &.btn-trash {
-          color: $red;
-
+          &:focus-visible,
           &:hover {
-            color: darken($red, 10%);
-          }
-        }
-
-        &.btn-transparent {
-          background: transparent;
-
-          &:not(:disabled):not(.disabled):active {
-            background: transparent;
+            color: $red;
           }
         }
       }

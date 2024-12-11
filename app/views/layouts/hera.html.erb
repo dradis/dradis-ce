@@ -59,6 +59,12 @@
       </footer>
     </div>
 
+    <% if content_for?(:sidebar) %>
+      <aside>
+        <%= render "layouts/hera/secondary_sidebar" %>
+      </aside>
+    <% end %>
+
     <%= render 'activities/poller' %>
 
     <!-- All modals go here -->

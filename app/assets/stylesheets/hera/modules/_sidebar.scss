@@ -1,26 +1,38 @@
 body:has(.main-sidebar.sidebar-collapsed) {
-  grid-template-columns: 0.5rem 1fr;
+  grid-template-columns: $sidebar-width-collapsed 1fr;
 }
 
-.main-sidebar {
+.sidebar {
   --padding: 1.25rem;
   --margin: 1rem;
   background-color: $white;
-  border-right: 2px solid $border-color;
   position: sticky;
   top: calc(#{$navbar-height} * 2);
   height: calc(100vh - (#{$navbar-height} * 2));
-  overflow-y: clip;
+  z-index: 3;
 
   .sidebar-content {
     display: flex;
     flex-direction: column;
     height: 100%;
+    max-height: calc(100vh - (#{$navbar-height} * 2));
     justify-content: flex-start;
     padding: var(--padding) var(--padding) 0.25rem var(--padding);
+    overflow-y: auto;
+
+    .dradis-placeholder {
+      font-style: italic;
+      cursor: default;
+      color: $text-muted;
+      font-size: 0.9rem;
+    }
 
     .header {
-      margin-bottom: var(--margin);
+      padding-bottom: var(--padding);
+
+      &:not(:first-of-type) {
+        margin-top: var(--margin);
+      }
 
       .header-inner {
         border-bottom: 1px solid;
@@ -61,59 +73,74 @@ body:has(.main-sidebar.sidebar-collapsed) {
       }
     }
 
-    .nodes-nav {
-      margin: 0;
-      padding: 0;
+    .note-list {
+      .list-item {
+        align-items: center;
+        border-bottom: 1px solid $border-color;
+        display: flex;
+        flex-direction: row;
+        font-size: $text-small;
+        justify-content: space-between;
+        padding-bottom: calc(var(--padding) / 1.5);
+        padding-top: calc(var(--padding) / 1.5);
 
-      .nodes-list {
-        .empty-state {
-          &-actions {
-            margin-top: 1.5rem;
-            text-align: center;
+        & > a {
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          display: -webkit-box;
+          line-height: 1.15rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        &.active {
+          > a {
+            color: $black;
           }
+        }
 
-          .container {
-            padding: 0;
+        &:focus-visible,
+        &:hover {
+          .list-item-actions {
+            opacity: 1;
           }
+        }
 
-          &-icon {
-            img {
-              width: 6rem;
+        .list-item-actions {
+          display: flex;
+          justify-content: flex-end;
+          margin-left: 0.5rem;
+          gap: 0.5rem;
+          opacity: 0.25;
+          transition: opacity 0.15s ease-in-out;
+
+          .list-item-action-delete {
+            &:focus-visible,
+            &:hover {
+              color: $red;
             }
           }
-
-          &-title {
-            font-size: 1.4rem;
-            margin: 1.5rem 0;
-          }
         }
 
-        .node {
-          line-height: 1.75rem;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          overflow: hidden;
-
-          &.active > a {
-            color: $dark;
-          }
+        &:first-child {
+          padding-top: 0;
         }
 
-        ul.children {
-          display: none;
-          margin: 0;
-          padding: 0;
+        &:last-child {
+          border-bottom: none;
+        }
+      }
 
-          .error {
-            display: none;
-          }
-
-          .node {
-            padding-left: 0.5rem;
-          }
+      &:not(.qa-list) {
+        .list-item:nth-last-child(2) {
+          border-bottom: none;
         }
       }
     }
+  }
+
+  &.sidebar-expanded {
+    overflow-y: clip;
   }
 
   .sidebar-toggle {
@@ -123,22 +150,158 @@ body:has(.main-sidebar.sidebar-collapsed) {
     font-size: 0.9rem;
     padding: 0.25rem 0.5rem 0.15rem;
     position: absolute;
-    right: -0.9rem;
     top: calc(var(--padding) / 2);
   }
 
   &.sidebar-collapsed {
+    width: $sidebar-width-collapsed !important;
+
     .sidebar-content {
       display: none;
     }
+  }
 
-    .sidebar-toggle {
-      right: -1.1rem;
-      padding-right: 0.4rem;
+  &.main-sidebar {
+    border-right: 2px solid $border-color;
+    width: $sidebar-width;
+
+    .sidebar-content {
+      .add-node {
+        font-size: 0.9rem;
+        margin-right: 0.5rem;
+      }
+
+      .nodes-nav {
+        margin: 0;
+        padding: 0;
+
+        .nodes-list {
+          .empty-state {
+            &-actions {
+              margin-top: 1.5rem;
+              text-align: center;
+            }
+
+            .container {
+              padding: 0;
+            }
+
+            &-icon {
+              img {
+                width: 6rem;
+              }
+            }
+
+            &-title {
+              font-size: 1.4rem;
+              margin: 1.5rem 0;
+            }
+          }
+
+          .node {
+            line-height: 1.75rem;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+
+            &.active > a {
+              color: $black;
+            }
+          }
+
+          ul.children {
+            display: none;
+            margin: 0;
+            padding: 0;
+
+            .error {
+              display: none;
+            }
+
+            .node {
+              padding-left: 0.5rem;
+            }
+          }
+        }
+      }
+
+      .version {
+        cursor: default;
+        font-size: 0.625rem;
+        margin-top: auto;
+        padding: 0.2em 0;
+        text-align: center;
+      }
     }
 
-    .sidebar-toggle-icon {
-      transform: rotate(180deg);
+    .sidebar-toggle {
+      right: -0.9rem;
+    }
+
+    &.sidebar-collapsed {
+      .sidebar-toggle {
+        right: -1.1rem;
+        padding-right: 0.4rem;
+      }
+
+      .sidebar-toggle-icon {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &.secondary-sidebar {
+    border-left: 2px solid $border-color;
+    right: 0;
+    width: calc(#{$sidebar-width} * 1.25);
+
+    .sidebar-toggle {
+      left: -0.9rem;
+
+      .sidebar-toggle-icon {
+        transform: rotate(180deg);
+      }
+    }
+
+    &.sidebar-collapsed {
+      .sidebar-toggle {
+        left: -1.1rem;
+        padding-left: 0.4rem;
+      }
+
+      .sidebar-toggle-icon {
+        transform: rotate(0deg);
+      }
+    }
+
+    .template-download {
+      font-size: $text-small;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  body,
+  body:has(.main-sidebar.sidebar-collapsed) {
+    grid-template-columns: 0 1fr;
+  }
+
+  .sidebar {
+    position: fixed;
+
+    &.main-sidebar {
+      left: 0.35rem;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .sidebar.sidebar-expanded {
+    width: calc(100vw - 0.4rem) !important;
+
+    &.main-sidebar {
+      z-index: 4;
+      left: 0.1rem;
     }
   }
 }

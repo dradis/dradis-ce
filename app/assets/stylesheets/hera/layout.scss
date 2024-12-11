@@ -2,8 +2,8 @@ body {
   grid-template-rows: calc(#{$navbar-height} * 2) 1fr;
   grid-template-columns: $sidebar-width 1fr;
   grid-template-areas:
-    'navigation navigation'
-    'nodes-sidebar view-content';
+    'navigation navigation navigation'
+    'nodes-sidebar view-content secondary-sidebar';
 }
 
 .container,

@@ -1,4 +1,4 @@
-<div class="main-sidebar sidebar" data-behavior="sidebar" data-storage-key="sidebar-expanded">
+<div class="secondary-sidebar sidebar" data-behavior="sidebar" data-storage-key="secondary-sidebar-expanded">
   <div class="sidebar-toggle">
     <a href="javascript:void(0)" class="sidebar-toggle-link" data-behavior="sidebar-toggle">
       <i class="fa-solid fa-chevron-left sidebar-toggle-icon"></i>
@@ -6,6 +6,6 @@
     </a>
   </div>
   <div class="sidebar-content" data-behavior="sidebar-content">
-    <%= render 'layouts/hera/nodes' %>
+    <%= yield :sidebar %>
   </div>
 </div>

@@ -26,6 +26,7 @@ $text-error: $red;
 $text-link: $brand-700;
 $text-link-hover: darken($text-link, 15%);
 $text-muted: $grey-700;
+$text-small: 0.9rem;
 
 // Navbar
 $instance-nav-bg: $brand-700;
@@ -35,6 +36,7 @@ $navbar-height: 3.5rem;
 
 // Sidebar
 $sidebar-width: 14rem;
+$sidebar-width-collapsed: 0.5rem;
 
 // Layout
 $primary-bg: $white;
