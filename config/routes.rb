@@ -107,7 +107,9 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
-    resources :tags, except: [:show]
+    resources :tags, except: [:show] do
+      collection { post :sort }
+    end
 
     namespace :qa do
       resources :issues, only: [:edit, :index, :show, :update], concerns: [:multiple_update, :previewable]

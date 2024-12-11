@@ -16,15 +16,15 @@
       <% end %>
     </button>
     <div class="dropdown-menu">
-      <%= link_to 'javascript:void(0)', class: 'js-taglink dropdown-item',  style: "color: #555", data: { tag: "" } do %>
-        <i class="fa-solid fa-tag fa-fw me-1"></i>
-        No tag
-      <% end %>
       <% @tags.each do |tag| %>
         <%= link_to 'javascript:void(0)', class: 'js-taglink dropdown-item',  style: "color: #{ tag.color }", data: { tag: h(tag.name) } do %>
           <i class="fa-solid fa-tag fa-fw me-1"></i>
           <%= h(tag.display_name) %>
         <% end %>
+      <% end %>
+      <%= link_to 'javascript:void(0)', class: 'js-taglink dropdown-item',  style: "color: #555", data: { tag: "" } do %>
+        <i class="fa-solid fa-tag fa-fw me-1"></i>
+        No tag
       <% end %>
       <div class="divider"></div>
       <%= link_to new_project_tag_path(current_project), remote: true, class: 'dropdown-item' do %>

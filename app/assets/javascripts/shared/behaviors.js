@@ -119,6 +119,20 @@
       }, 1000);
     });
 
+    // Sortable lists
+    $('[data-behavior~=ui-sortable]').sortable({
+      axis: 'y',
+      containment: 'parent',
+      cursor: 'grabbing',
+      handle: '.fa-grip-vertical',
+      update: function () {
+        $.post(
+          $(this).data('sort-url'), 
+          $(this).sortable('serialize', { key: 'sorted_ids[]' })
+        );
+      },
+    });
+
     window.initBehaviors = initBehaviors;
   }
 
