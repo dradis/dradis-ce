@@ -47,6 +47,10 @@ header {
               border-bottom: 0;
               border-left: 0.3em solid transparent;
 
+              &.no-caret {
+                display: none;
+              }
+
               &.no-caret-xl {
                 @media (min-width: 992px) {
                   display: none;
