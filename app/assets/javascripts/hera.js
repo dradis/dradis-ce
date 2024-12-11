@@ -43,6 +43,7 @@
 
 //= require hera/behaviors
 //= require shared/behaviors
+//= require shared/notifications
 
 //= require hera/engines
 
