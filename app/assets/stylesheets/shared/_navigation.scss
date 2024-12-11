@@ -1,7 +1,7 @@
 header {
   .navbar {
-    --margin: 1rem;
-    --padding: 1rem;
+    --margin: 1em;
+    --padding: 1em;
 
     .container-fluid {
       padding: 0 1em;
@@ -73,8 +73,8 @@ header {
             padding: 0;
 
             .nav-link {
-              font-size: 1rem;
-              padding: 0.5rem var(--padding);
+              font-size: 1em;
+              padding: 0.5em var(--padding);
             }
           }
         }
@@ -97,7 +97,7 @@ header {
                 color: $instance-nav-links;
 
                 @media (max-width: 991px) {
-                  padding: 0.5rem 0;
+                  padding: 0.5em 0;
                   padding-left: calc(var(--padding) * 2);
                 }
               }
@@ -232,7 +232,7 @@ header {
         .navbar-nav {
           li {
             width: 100%;
-            padding: 0.5rem 0;
+            padding: 0.5em 0;
           }
         }
       }
