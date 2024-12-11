@@ -16,11 +16,9 @@
 
     <div class="collapse navbar-collapse justify-content-end dual-nav" id="instance_navbar" data-behavior="navbar-collapse">
       <ul class="navbar-nav navbar-nav-scroll me-auto pb-0">
-        <% if @project %>
-          <li class="nav-item d-lg-none">
-            <%= render "layouts/hera/navbar/search" %>
-          </li>
-        <% end %>
+        <li class="nav-item d-lg-none">
+          <%= render "layouts/hera/navbar/search" %>
+        </li>
         <% if defined?(Dradis::Pro) %>
           <%= content_tag :li, class:'nav-item' << (controller_path == 'dashboard' ? ' active' : '') do %>
             <% link_to 'Dashboard', current_user.role?(:contributor) ? main_app.contributors_home_path : main_app.dashboard_path, class: 'nav-link' %>
