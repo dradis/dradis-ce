@@ -127,7 +127,7 @@ header {
         border-color: transparent;
       }
 
-      .complementary-nav {
+      .utility-nav {
         a,
         .nav-link {
           color: $instance-nav-links;
@@ -198,7 +198,7 @@ header {
         background-color: $instance-nav-bg;
       }
 
-      .navbar-nav:not(.complementary-nav) {
+      .navbar-nav:not(.utility-nav) {
         .nav-item {
           @media (min-width: 992px) {
             margin-inline: calc(var(--margin) / 4);
@@ -226,7 +226,7 @@ header {
       }
 
       @media (max-width: 991px) {
-        .complementary-nav {
+        .utility-nav {
           padding-bottom: 0;
         }
 
