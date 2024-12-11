@@ -1,28 +1,16 @@
 document.addEventListener('turbolinks:load', function () {
   $('[data-behavior~=form-search]').hover(function () {
-    $('[data-behavior~=search-query]').focus();
+    $(this).find('[data-behavior~=search-query]').focus();
   });
-
-  var submitSearch = function () {
-    if ($('[data-behavior~=search-query]').val() !== '') {
-      $('[data-behavior~=form-search]').submit();
-      $('[data-behavior~=search-query]').val('Searching...');
-      return false;
-    } else {
-      $('[data-behavior~=search-query]')
-        .effect('shake', { direction: 'left', times: 2, distance: 5 }, 'fast')
-        .focus();
-    }
-  };
 
   $('[data-behavior~=search-button]').on('click', function (e) {
     e.preventDefault();
-    submitSearch();
+    submitSearch($(this).parents('form'));
   });
 
   $('[data-behavior~=search-query]').on('keypress', function (e) {
     if (e.which === 13) {
-      submitSearch();
+      submitSearch($(this).parents('form'));
     }
   });
 
@@ -34,6 +22,19 @@ document.addEventListener('turbolinks:load', function () {
     });
   }
 });
+
+function submitSearch($form) {
+  if ($form.find('[data-behavior~=search-query]').val() !== '') {
+    $form.submit();
+    $form.find('[data-behavior~=search-query]').val('Searching...');
+    return false;
+  } else {
+    $form
+      .find('[data-behavior~=search-query]')
+      .effect('shake', { direction: 'left', times: 2, distance: 5 }, 'fast')
+      .focus();
+  }
+}
 
 class SearchWordHighlight {
   highlight(element, term) {
