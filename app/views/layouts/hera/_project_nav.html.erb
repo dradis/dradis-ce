@@ -42,13 +42,6 @@
           </li>
         <% end %>
 
-        <%= content_tag :li, class: class_names('nav-item', active: action_name == 'trash') do %>
-          <%= link_to main_app.project_trash_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
-            <i class="fa-solid fa-trash-can me-1" title="Trash"></i>
-            <span >Trash</span>
-          <% end %>
-        <% end %>
-
         <div class="vr d-none d-lg-inline-block"></div>
 
         <li class="<%= class_names('nav-item', active: controller_path == 'upload') %>">
