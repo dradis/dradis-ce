@@ -36,7 +36,7 @@
     </header>
 
     <aside>
-      <%# Sidebar with node tree goes here %>
+      <%= render "layouts/hera/sidebar" %>
     </aside>
 
     <div class="content-grid">
@@ -59,6 +59,12 @@
         <span>- <a href="https://dradis.com" target="_blank">dradis.com</a></span>
       </footer>
     </div>
+
+    <% if content_for?(:sidebar) %>
+      <aside>
+        <%= render "layouts/hera/secondary_sidebar" %>
+      </aside>
+    <% end %>
 
     <%= render 'activities/poller' %>
 

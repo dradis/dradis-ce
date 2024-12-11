@@ -1,5 +1,6 @@
 <div class="header">
   <div class="header-inner">
+    <h5 class="header-name"><%= local_assigns[:index_path] ? link_to(name, index_path) : name.humanize %></h5>
     <div class="options">
       <%= render 'shared/add_item_dropdown',
         name: name,
@@ -7,8 +8,10 @@
         category_id: local_assigns[:category_id],
         menu_class: 'pull-right'
       %>
+      <%= link_to "##{name.downcase}", data: { bs_toggle: 'collapse', behavior: 'collapse-collection' }, class: local_assigns.fetch(:collapse_class, '') do %>
+        <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle <%= name.downcase %> list</span>
+      <% end %>
     </div>
-    <h5 class="header-underline header-name"><%= local_assigns[:index_path] ? link_to(name, index_path) : name.humanize %></h5>
   </div>
 </div>
 

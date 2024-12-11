@@ -16,6 +16,8 @@ body {
   background-color: $white;
   display: grid;
   font-family: 'ProximaNovaLight', 'system-ui';
+  text-wrap: pretty;
+  overflow-x: clip;
 }
 
 a {
@@ -103,6 +105,12 @@ mark {
       background-color: $secondary-bg;
       color: $text-link-hover;
     }
+  }
+}
+
+.no-caret {
+  &.dropdown-toggle::after {
+    display: none;
   }
 }
 
