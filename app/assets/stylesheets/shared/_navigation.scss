@@ -127,7 +127,14 @@ header {
 
     &.instance-nav {
       background-color: $instance-nav-bg;
+      border-bottom: 1px solid $instance-nav-border;
       padding: 0;
+      transition: border-color 0s;
+
+      &:has(.navbar-collapse.show),
+      &:has(.navbar-collapse.collapsing) {
+        border-color: transparent;
+      }
 
       .complementary-nav {
         a,
@@ -205,10 +212,6 @@ header {
           box-shadow: none;
           color: $instance-nav-hover;
         }
-      }
-
-      @media (min-width: 992px) {
-        border-bottom: 1px solid $instance-nav-border;
       }
 
       @media (max-width: 991px) {
