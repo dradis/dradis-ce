@@ -1,7 +1,7 @@
 @mixin notification-list-item {
   position: relative;
-  border-bottom: 1px solid $border-color;
-  padding: 0 2rem 0.5rem 1rem;
+  border-bottom: 1px solid $instance-nav-border;
+  padding: 0.5rem 2rem 0.5rem 1rem;
   display: flex;
 
   .body {
@@ -24,6 +24,10 @@
     }
   }
 
+  &:last-child {
+    border-bottom: none;
+  }
+
   .notification-icon {
     position: absolute;
     display: flex;
@@ -43,7 +47,7 @@
   }
 
   &.unread {
-    background-color: $grey-100;
+    background-color: $light;
 
     .notification-icon {
       opacity: 0.15;
@@ -58,12 +62,12 @@
       position: relative;
 
       .notifications-dot {
-        background: red;
+        background: $red;
         border-radius: 50%;
         height: 12px;
         position: absolute;
         right: calc(50% - 0.75rem);
-        top: -1rem;
+        top: -0.5rem;
         width: 12px;
       }
     }
@@ -98,13 +102,25 @@
         li.no-content {
           padding: 0.5rem;
         }
+
+        @media (max-width: 991px) {
+          width: 100%;
+        }
       }
 
       .notification-header {
         padding: 0 1em;
         line-height: 2em;
         font-size: 0.8rem;
-        border-bottom: 1px solid $border-color;
+        border-bottom: 1px solid $instance-nav-border;
+
+        a {
+          &:active,
+          &:focus,
+          &:hover {
+            text-decoration: underline;
+          }
+        }
 
         div {
           display: inline-block;
@@ -113,7 +129,7 @@
 
       .footer {
         line-height: 2em;
-        border-top: 1px solid $border-color;
+        border-top: 1px solid $instance-nav-border;
         font-size: 0.8rem;
       }
     }

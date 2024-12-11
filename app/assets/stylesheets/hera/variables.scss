@@ -2,7 +2,7 @@
 @import 'shared/colors';
 
 // Theme
-$light: $brand-500;
+$light: $brand-100;
 $primary: $brand-700;
 $dark: $brand-900;
 
@@ -26,12 +26,14 @@ $text-error: $red;
 $text-link: $brand-700;
 $text-link-hover: darken($text-link, 15%);
 $text-muted: $grey-700;
+$text-small: 0.9rem;
 
 // Navbar
-$instance-nav-bg: $brand-700;
+$instance-nav-bg: $brand-200;
 $instance-nav-border: $brand-400;
-$instance-nav-hover: $brand-200;
-$navbar-height: 3.5rem;
+$instance-nav-hover: $brand-900;
+$instance-nav-links: $brand-800;
+$navbar-height: 3.375rem;
 
 // Sidebar
 $sidebar-width: 20rem;

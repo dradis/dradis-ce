@@ -4,6 +4,8 @@
 @import 'hera/modules/dropdown';
 @import 'hera/modules/dots_menu';
 @import 'hera/modules/modals';
+@import 'hera/modules/navigation/navigation';
+@import 'hera/modules/navigation/search';
 
 [aria-tooltip] {
   position: relative;
@@ -69,6 +71,36 @@
   opacity: 0;
 }
 
+.breadcrumb {
+  background-color: transparent;
+  border: none;
+  flex-wrap: nowrap;
+  margin-bottom: calc(var(--margin) * 2);
+  padding: 0.75rem 1rem 0.75rem $padding;
+  white-space: nowrap;
+  width: 100%;
+
+  .breadcrumb-item {
+    white-space: nowrap;
+
+    &.active {
+      color: $text-muted;
+    }
+
+    & + .breadcrumb-item::before {
+      content: '\f105';
+      font-family: var(--fa-style-family, 'Font Awesome 6 Free');
+      font-weight: 600;
+      color: darken($border-color, 5%);
+    }
+
+    &:last-of-type {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
 .column-actions a {
   white-space: nowrap;
 }
@@ -125,6 +157,10 @@
 .gravatar {
   float: left;
   margin-right: 5px;
+
+  .disabled {
+    filter: grayscale(100%);
+  }
 
   &.gravatar-inline {
     margin: 0 0 -3px 0;

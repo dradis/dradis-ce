@@ -1,0 +1,77 @@
+<nav class="navbar navbar-expand-lg project-nav">
+  <div class="container-fluid justify-content-end p-lg-0">
+    <div class="collapse navbar-collapse dual-nav" id="project_navbar" data-behavior="navbar-collapse">
+      <ul class="navbar-nav">
+        <%= content_tag :li, class: class_names('nav-item', active: controller_path == 'projects') do %>
+          <% link_to main_app.project_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
+            <i class="fa-regular fa-folder-open me-1" title="Overview"></i>
+            <span>Overview</span>
+          <% end %>
+        <% end %>
+        <%= content_tag :li, class: class_names('nav-item', active: controller_path == 'issues') do %>
+          <%= link_to main_app.project_issues_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
+            <i class="fa-solid fa-bug me-1" title="Issues"></i>
+            <span>Issues</span>
+          <% end %>
+        <% end %>
+        <%= content_tag :li, class: class_names('nav-item', active: ['boards', 'cards'].include?(controller_path)) do %>
+          <%= link_to main_app.project_boards_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
+            <i class="fa-brands fa-trello me-1" title="Methodologies"></i>
+            <span >Methodologies</span>
+          <% end %>
+        <% end %>
+
+        <% if defined?(Dradis::Pro) %>
+          <li class="nav-item dropdown">
+            <a href="javascript:void(0)" class="nav-link dropdown-toggle" id="document-properties-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-file-lines me-1" title="Report content"></i>
+              <span>Report content</span>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="document-properties-dropdown">
+              <li>
+                <%= link_to main_app.project_document_properties_path(current_project), class: 'dropdown-item' do %>
+                  <span>Document properties</span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to main_app.project_content_blocks_path(current_project), class: 'dropdown-item' do %>
+                  <span>Content blocks</span>
+                <% end %>
+              </li>
+            </ul>
+          </li>
+        <% end %>
+
+        <%= content_tag :li, class: class_names('nav-item', active: action_name == 'trash') do %>
+          <%= link_to main_app.project_trash_path(current_project), class: 'nav-link', data: { behavior: 'nav-link' } do %>
+            <i class="fa-solid fa-trash-can me-1" title="Trash"></i>
+            <span >Trash</span>
+          <% end %>
+        <% end %>
+
+        <div class="vr d-none d-lg-inline-block"></div>
+
+        <li class="<%= class_names('nav-item', active: controller_path == 'upload') %>">
+          <%= link_to main_app.project_upload_manager_path(current_project), class: 'nav-link', title: 'Upload' do %>
+            <i class="fa-solid fa-cloud-arrow-up me-1" title="Upload"></i>
+            <span>Upload</span>
+          <% end %>
+        </li>
+
+        <li class="<%= class_names('nav-item', active: controller_path == 'export') %>">
+          <%= link_to main_app.project_export_manager_path(current_project), class: 'nav-link', title: 'Export' do %>
+            <i class="fa-solid fa-file-export me-1" title="Export"></i>
+            <span>Export</span>
+          <% end %>
+        </li>
+
+        <li class="<%= class_names('nav-item', active: controller_path.include?('qa')) %>">
+          <%= link_to main_app.project_qa_issues_path(current_project), class: 'nav-link', title: 'QA' do %>
+            <i class="fa-regular fa-handshake me-1" title="QA"></i>
+            <span>QA</span>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
