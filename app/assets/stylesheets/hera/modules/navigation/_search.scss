@@ -34,7 +34,6 @@
       }
 
       .search-query {
-        border-bottom-color: $instance-nav-links;
         opacity: 1;
         right: 1.25rem;
         width: 9rem;
@@ -44,7 +43,6 @@
     .search-query {
       background: none;
       border: 0;
-      border-bottom: 1px solid transparent;
       color: $text-default;
       height: 2rem;
       opacity: 0;
@@ -54,7 +52,7 @@
       right: 0;
       top: 0;
       transition: opacity 0.2s ease-in-out, width 0.2s ease-in-out,
-        right 0.2s ease-in-out, border-bottom 0.2s 0.15s ease-in-out;
+        right 0.2s ease-in-out;
       width: 0;
     }
   }

@@ -1,29 +1,4 @@
 <ul class="navbar-nav navbar-nav-scroll utility-nav pt-0">
-  <% if @project %>
-    <li class="nav-item d-none d-lg-block">
-      <%= render "layouts/hera/navbar/search" %>
-    </li>
-  <% end %>
-  <% if defined?(Dradis::Pro) %>
-    <% if (can?(:read, Project) || can?(:read, Team)) && !@project %>
-      <%= content_tag :li, class: class_names('nav-item', active: controller_path == 'trash') do %>
-        <%= link_to main_app.trash_index_path, class: 'nav-link' do %>
-          <i class="fa-solid fa-trash-can d-none d-lg-inline <%= class_names('d-inline': current_user.role?(:admin)) %>"></i>
-          <span class="d-inline d-lg-none">Trash</span>
-        <% end %>
-      <% end %>
-    <% end %>
-  <% end %>
-  <li class="nav-item dropdown">
-    <a href="javascript:void(0)" class="nav-link dropdown-toggle no-caret-xl" id="configurationDropdown" title="Configuration" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-      <i class="fa-solid fa-cog d-none d-lg-inline" title="Configuration"></i>
-      <span class="d-inline d-lg-none">Configuration</span>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="configurationDropdown">
-      <li><%= link_to 'Configure Integrations', main_app.project_configurations_path(current_project), class: 'dropdown-item' %></li>
-      <li><%= link_to "Manage Tags", project_tags_path(current_project), class: 'dropdown-item' %></li>
-    </ul>
-  </li>
   <li class="nav-item notifications dropdown">
     <%= 
       link_to main_app.project_notifications_path(current_project), 
