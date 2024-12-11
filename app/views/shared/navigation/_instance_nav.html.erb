@@ -20,16 +20,16 @@
           <%= render "layouts/hera/navbar/search" %>
         </li>
         <% if defined?(Dradis::Pro) %>
-          <%= content_tag :li, class:'nav-item' << (controller_path == 'dashboard' ? ' active' : '') do %>
+          <%= content_tag :li, class: class_names('nav-item', active: controller_path == 'dashboard') do %>
             <% link_to 'Dashboard', current_user.role?(:contributor) ? main_app.contributors_home_path : main_app.dashboard_path, class: 'nav-link' %>
           <% end %>
           <% if can?(:read, Team) -%>
-            <%= content_tag :li, class: 'nav-item' << (controller_path == 'teams' ? ' active' : '') do %>
+            <%= content_tag :li, class: class_names('nav-item', active: controller_path == 'teams') do %>
               <%= link_to 'Teams', main_app.teams_path, class: 'nav-link' %>
             <% end %>
           <% end %>
           <% if can?(:read, Project)  -%>
-            <%= content_tag :li, class: 'nav-item' << (controller_path == 'projects' ? ' active' : '') do %>
+            <%= content_tag :li, class: class_names('nav-item', active: controller_path == 'projects') do %>
               <%= link_to 'Projects', main_app.projects_path, class: 'nav-link' %>
             <% end %>
           <% end -%>
@@ -38,11 +38,11 @@
           <%= render 'shared/navigation/tools_menu' %>
 
           <% if current_user.role?(:admin) -%>
-            <%= content_tag :li, class: 'nav-item ' << (controller_path == 'admin/mappings' ? 'active' : '') do %>
+            <%= content_tag :li, class: class_names('nav-item', active: controller_path == 'admin/mappings') do %>
               <%= link_to 'Mappings Manager', main_app.admin_mappings_index_path, class: 'nav-link' %>
             <% end %>
 
-            <%= content_tag :li, class: 'nav-item dropdown' << (controller_path.include?('admin/templates') ? ' active' : '') do %>
+            <%= content_tag :li, class: class_names('nav-item', 'dropdown', active: controller_path.include?('admin/templates')) do %>
               <a class="nav-link dropdown-toggle" href="javascript:void(0)"
                 id="templatesDropdown" role="button" data-bs-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false"
@@ -61,7 +61,7 @@
               </ul>
             <% end %>
 
-            <%= content_tag :li, class: 'nav-item' << (controller_path == 'admin/users' ? ' active' : '') do %>
+            <%= content_tag :li, class_names('nav-item', active: controller_path == 'admin/users') do %>
               <%= link_to 'Users', main_app.admin_users_path, class: 'nav-link' %>
             <% end %>
           <% end %>

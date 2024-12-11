@@ -22,7 +22,7 @@
         <% end %>
 
         <% if defined?(Dradis::Pro) %>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown <% class_names(active: ['document_properties', 'content_blocks'].include?(controller_path))%>">
             <a href="javascript:void(0)" class="nav-link dropdown-toggle" id="document-properties-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fa-solid fa-file-lines me-1" title="Report content"></i>
               <span>Report content</span>
