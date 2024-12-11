@@ -5,7 +5,7 @@
     </li>
   <% end %>
   <% if defined?(Dradis::Pro) %>
-    <% if (can?(:read, Project) || can?(:read, Team)) && @project.blank? %>
+    <% if (can?(:read, Project) || can?(:read, Team)) && !@project %>
       <%= content_tag :li, class: class_names('nav-item', active: controller_path == 'trash') do %>
         <%= link_to main_app.trash_index_path, class: 'nav-link' do %>
           <i class="fa-solid fa-trash-can d-none d-lg-inline <%= class_names('d-inline': current_user.role?(:admin)) %>"></i>
