@@ -1,0 +1,119 @@
+header {
+  .navbar {
+    &.project-nav {
+      background-color: $white;
+      border-bottom: 1px solid $border-color;
+      padding: 0;
+
+      .dropdown-divider {
+        border-top: 1px solid $border-color;
+      }
+
+      .navbar-collapse {
+        @media (max-width: 991px) {
+          max-height: 75vh;
+          overflow-y: scroll;
+        }
+      }
+
+      .navbar-nav {
+        .nav-item {
+          .dropdown-menu {
+            border: 1px solid $border-color;
+            box-shadow: 1px 1px 5px 0px rgba($shadow-color-light, 0.5);
+
+            .dropdown-item {
+              text-transform: capitalize;
+
+              &:hover,
+              &:focus {
+                color: $text-default;
+                background-color: $light;
+              }
+            }
+          }
+
+          &:last-of-type {
+            margin-right: 0;
+          }
+
+          .nav-link {
+            color: $text-default;
+            display: flex;
+            flex-direction: row;
+
+            i {
+              font-size: $text-small;
+            }
+
+            span {
+              width: max-content;
+            }
+
+            @media (max-width: 991px) {
+              color: $instance-nav-links;
+            }
+          }
+
+          @media (max-width: 991px) {
+            &.active {
+              .nav-link {
+                color: $text-default;
+              }
+            }
+          }
+
+          @media (min-width: 992px) {
+            border-bottom: 5px solid transparent;
+            border-top: 5px solid transparent;
+            margin-right: var(--margin);
+
+            &.active,
+            &:active,
+            &:focus,
+            &:hover {
+              border-bottom: 5px solid $light;
+
+              .nav-link {
+                color: $text-link;
+              }
+            }
+
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+        }
+      }
+
+      .vr {
+        align-self: center;
+        height: 2rem;
+      }
+
+      @media (max-width: 991px) {
+        background-color: $instance-nav-bg;
+        padding: 0;
+
+        .nav-item.active {
+          .nav-link {
+            background-color: $light;
+            color: $text-default;
+          }
+        }
+      }
+
+      @media (min-width: 992px) {
+        padding: 0 4.5rem;
+
+        .vr {
+          margin-right: var(--margin);
+        }
+      }
+
+      @media (min-width: 1200px) {
+        padding: 0 4rem;
+      }
+    }
+  }
+}
