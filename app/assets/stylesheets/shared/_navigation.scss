@@ -4,6 +4,8 @@ header {
     --padding: 1rem;
 
     .container-fluid {
+      padding: 0 1em;
+
       .navbar-brand {
         img {
           height: 2.2em;
@@ -25,6 +27,7 @@ header {
           .nav-link {
             align-items: center;
             color: $instance-nav-links;
+            font-size: 1em;
 
             &:active,
             &:focus,
@@ -54,7 +57,7 @@ header {
             }
 
             @media (min-width: 1200px) {
-              font-size: 1rem;
+              font-size: 1em;
             }
           }
 
