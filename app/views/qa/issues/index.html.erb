@@ -1,5 +1,16 @@
 <% content_for :title, 'Quality Assurance' %>
 
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to current_project.name, project_path(current_project) %>
+    </li>
+    <li class="breadcrumb-item active">
+      QA
+    </li>
+  </ol>
+<% end %>
+
 <ul class="tabs-container nav nav-tabs main-tabs">
   <li class="nav-item">
     <%= link_to project_qa_issues_path(current_project), class: 'nav-link active' do %>

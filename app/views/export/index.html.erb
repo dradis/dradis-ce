@@ -1,4 +1,15 @@
-<% content_for :title, 'Export Manager' %>
+<% content_for :title, 'Export' %>
+
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to current_project.name, project_path(current_project) %>
+    </li>
+    <li class="breadcrumb-item active">
+      Export
+    </li>
+  </ol>
+<% end %>
 
 <% if Dradis::Plugins.with_feature(:export).empty? %>
   <div class="content-container">

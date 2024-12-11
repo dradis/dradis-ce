@@ -1,4 +1,16 @@
 <% content_for :title, 'Tags' %>
+
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to current_project.name, project_path(current_project) %>
+    </li>
+    <li class="breadcrumb-item active">
+      Tags
+    </li>
+  </ol>
+<% end %>
+
 <div class="content-container">
   <h4 class="header-underline">Tags Management
     <span class="actions pt-1">

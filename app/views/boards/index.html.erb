@@ -1,5 +1,16 @@
 <% content_for :title, 'Methodologies' %>
 
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to current_project.name, project_path(current_project) %>
+    </li>
+    <li class="breadcrumb-item active">
+      Methodologies
+    </li>
+  </ol>
+<% end %>
+
 <%= render 'poller_alerts' unless  request.xhr? %>
 
 <div class="content-container">

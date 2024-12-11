@@ -1,5 +1,16 @@
 <% content_for :title, 'Configuration Manager' %>
 
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to current_project.name, project_path(current_project) %>
+    </li>
+    <li class="breadcrumb-item active">
+      Configuration Manager
+    </li>
+  </ol>
+<% end %>
+
 <% if @configs.count == 0 %>
   <div class="content-container">
     <h4 class="mb-3">You haven't enabled any add-ons that require configuration</h4>

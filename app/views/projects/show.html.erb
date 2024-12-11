@@ -1,5 +1,14 @@
 <% content_for :title, current_project.name %>
 
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <%= link_to current_project.name, project_path(current_project) %>
+  </li>
+  <li class="breadcrumb-item active">
+    Overview
+  </li>
+</ol>
+
 <div class="row p-0">
   <div class="col-12 col-lg-6 col-xxl-4">
     <div class="content-container">
