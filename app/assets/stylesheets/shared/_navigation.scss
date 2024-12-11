@@ -28,7 +28,6 @@ header {
             align-items: center;
             color: $instance-nav-links;
             font-size: 1em;
-            padding: var(-padding);
 
             &:active,
             &:focus,
@@ -187,6 +186,10 @@ header {
 
       .dropdown-divider {
         border-top: 1px solid $instance-nav-border;
+      }
+
+      .nav-link {
+        padding: calc(var(--padding) / 2);
       }
 
       .navbar-collapse {
