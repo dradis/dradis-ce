@@ -19,6 +19,10 @@
     display: flex;
     align-items: center;
 
+    .gravatar {
+      margin-left: 5px;
+    }
+
     img {
       border-radius: 50%;
     }
@@ -42,7 +46,7 @@
 
   .notification-read {
     position: absolute;
-    top: 15px;
+    top: 30px;
     right: 15px;
   }
 
