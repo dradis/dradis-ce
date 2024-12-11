@@ -28,6 +28,7 @@ header {
             align-items: center;
             color: $instance-nav-links;
             font-size: 1em;
+            padding: var(-padding);
 
             &:active,
             &:focus,
