@@ -41,7 +41,7 @@ header {
             color: $text-default;
             display: flex;
             flex-direction: row;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
 
             i {
               font-size: $text-small;
@@ -67,7 +67,6 @@ header {
           @media (min-width: 992px) {
             border-bottom: 5px solid transparent;
             border-top: 5px solid transparent;
-            margin-right: var(--margin);
 
             &.active,
             &:active,
@@ -105,15 +104,11 @@ header {
       }
 
       @media (min-width: 992px) {
-        padding: 0 4.5rem;
+        padding: 0 1rem;
 
         .vr {
           margin-right: var(--margin);
         }
-      }
-
-      @media (min-width: 1200px) {
-        padding: 0 4rem;
       }
     }
   }
