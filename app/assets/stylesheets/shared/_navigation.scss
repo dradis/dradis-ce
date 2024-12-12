@@ -262,6 +262,6 @@ header {
 
   @media (max-width: 991px) {
     overflow: auto;
-    height: 100vh;
+    height: fit-content;
   }
 }
