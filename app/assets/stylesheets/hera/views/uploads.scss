@@ -1,9 +1,36 @@
 body.upload {
+  .content-overflow {
+    flex: auto;
+
+    .content-container {
+      bottom: 0;
+      max-width: -webkit-fill-available;
+      max-width: fill-available;
+      max-width: -moz-available;
+      overflow: auto;
+      position: absolute;
+      top: 0;
+
+      @media (min-width: 1510px) {
+        margin-right: calc(var(--bs-gutter-x) * 0.5);
+      }
+    }
+
+    @media (max-width: 991px) {
+      &:last-of-type {
+        padding: 0;
+      }
+
+      .content-container {
+        position: relative;
+      }
+    }
+  }
 
   .progress-bar {
     position: relative;
 
-    .percent { 
+    .percent {
       position: absolute;
       display: inline-block;
       text-align: center;
