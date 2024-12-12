@@ -18,6 +18,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+          rubygems: latest
       - name: Security audit dependencies
         run: bundle exec bundler-audit --update --ignore CVE-2023-50724 CVE-2023-50725 CVE-2023-50727 CVE-2024-21510
       - name: Security audit ruby
@@ -40,6 +41,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+          rubygems: latest
       - name: Lint changed files
         run: bin/rubocop-ci ${{ env.TARGET_BRANCH || env.PREV_SHA || env.FALLBACK_BRANCH }} ${{ env.IS_MERGE }}
   rspec:
@@ -57,6 +59,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+          rubygems: latest
       - name: Prepare database
         run: bundle exec rails db:prepare
       - name: Precompile assets
