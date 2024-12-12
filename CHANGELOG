@@ -4,7 +4,7 @@
     - Add HTML report template
     - Add Issue and evidence templates
     - Update OWASP Top 10 methodology to latest version (2021)
-  - Upgraded gems:
+  - Upgraded gems: rails
     - rexml
   - Bugs fixes:
     - [entity]:
