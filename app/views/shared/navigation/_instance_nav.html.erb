@@ -44,12 +44,12 @@
 
             <%= content_tag :li, class: class_names('nav-item', 'dropdown', active: controller_path.include?('admin/templates')) do %>
               <a class="nav-link dropdown-toggle" href="javascript:void(0)"
-                id="templatesDropdown" role="button" data-bs-toggle="dropdown"
+                id="templates-dropdown" role="button" data-bs-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false"
               >
                 Templates
               </a>
-              <ul class="dropdown-menu" aria-labelledby="templatesDropdown">
+              <ul class="dropdown-menu" aria-labelledby="templates-dropdown">
                 <li><%= link_to 'Methodologies', main_app.admin_templates_methodologies_path, class: 'dropdown-item' %></li>
                 <li><%= link_to 'Notes', main_app.admin_templates_notes_path,  class: 'dropdown-item' %></li>
                 <li><%= link_to 'Projects', main_app.admin_templates_projects_path, class: 'dropdown-item' %></li>
