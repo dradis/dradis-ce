@@ -6,7 +6,7 @@
     - Add Issue and evidence templates
     - Update OWASP Top 10 methodology to latest version (2021)
   - Upgraded gems:
-    - rexml
+    - rails, rexml
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
