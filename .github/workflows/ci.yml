@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
@@ -35,7 +35,7 @@ jobs:
       FALLBACK_BRANCH: 'origin/develop'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
