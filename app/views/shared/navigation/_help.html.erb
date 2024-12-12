@@ -50,7 +50,7 @@
       <a href="https://dradis.com/careers/?utm_source=ce&utm_medium=app&utm_campaign=careers" target="_blank" class="dropdown-item">We're hiring</a>
     </li>
 
-    <% unless defined?(Dradis::Pro) %>
+    <% if !defined?(Dradis::Pro) %>
       <li>
         <div class="dropdown-divider"></div>
       </li>
