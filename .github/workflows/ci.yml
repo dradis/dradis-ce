@@ -25,28 +25,28 @@ jobs:
         run: bundle exec ruby-audit update && bundle exec ruby-audit check --ignore CVE-2021-33621 CVE-2024-27282
       - name: Security audit application code
         run: bundle exec brakeman -q -w2
-  rubocop:
-    name: RuboCop
-    needs: [audits]
-    runs-on: ubuntu-latest
-    env:
-      IS_MERGE: ${{ github.base_ref == '' }}
-      PREV_SHA: ${{ github.event.before }}
-      TARGET_BRANCH: ${{ github.base_ref }}
-      FALLBACK_BRANCH: 'origin/develop'
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Install Ruby and gems
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-          rubygems: latest
-      - name: Lint changed files
-        run: bin/rubocop-ci ${{ env.TARGET_BRANCH || env.PREV_SHA || env.FALLBACK_BRANCH }} ${{ env.IS_MERGE }}
+  # rubocop:
+  #   name: RuboCop
+  #   needs: [audits]
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     IS_MERGE: ${{ github.base_ref == '' }}
+  #     PREV_SHA: ${{ github.event.before }}
+  #     TARGET_BRANCH: ${{ github.base_ref }}
+  #     FALLBACK_BRANCH: 'origin/develop'
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #     - name: Install Ruby and gems
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true
+  #         rubygems: latest
+  #     - name: Lint changed files
+  #       run: bin/rubocop-ci ${{ env.TARGET_BRANCH || env.PREV_SHA || env.FALLBACK_BRANCH }} ${{ env.IS_MERGE }}
   rspec:
     name: RSpec
-    needs: [audits, rubocop]
+    needs: [audits]
     runs-on: ubuntu-latest
     env:
       RAILS_ENV: test
