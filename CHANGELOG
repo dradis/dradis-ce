@@ -1,5 +1,5 @@
 [v#.#.#] ([month] [YYYY])
-  - Hera: A new layout with incremental improvements. In this iteration we redesigned the navigation and increased workspace real estate.
+  - Hera: Add new layout with redesigned navigation
   - Tags: Add custom ordering
   - Welcome Kit:
     - Add HTML report template
