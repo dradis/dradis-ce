@@ -32,6 +32,11 @@ body {
   p:last-child {
     margin-bottom: 0;
   }
+
+  &.restrict-height {
+    height: calc(100vh - 10rem);
+    overflow: auto;
+  }
 }
 
 .content-grid {
