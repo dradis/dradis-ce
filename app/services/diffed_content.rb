@@ -84,12 +84,8 @@ class DiffedContent
   end
 
   def diff_by_word(source_content, target_content)
-    Differ.format = :html
-    differ_result = Differ.diff_by_word(source_content, target_content)
-
-    output = highlighted_string(differ_result)
-
-    { source: output[1], target: output[0] }
+    Differ.format = :color
+    Differ.diff_by_word(source_content, target_content)
   end
 
   def normalize_content(record)
@@ -99,22 +95,5 @@ class DiffedContent
       fields.map do |field, value|
         "#[#{field}]#\n#{value.gsub("\r", '')}\n"
       end.join("\n")
-  end
-
-  def highlighted_string(differ_result)
-    [:delete, :insert].map do |highlight_type|
-      result_str = differ_result.dup.to_s
-
-      case highlight_type
-      when :delete
-        result_str.gsub!(/<del class="differ">(.*?)<\/del>/m, '<mark>\1</mark>')
-        result_str.gsub!(/<ins class="differ">(.*?)<\/ins>/m, '')
-      when :insert
-        result_str.gsub!(/<ins class="differ">(.*?)<\/ins>/m, '<mark>\1</mark>')
-        result_str.gsub!(/<del class="differ">(.*?)<\/del>/m, '')
-      end
-
-      result_str.html_safe
-    end
   end
 end

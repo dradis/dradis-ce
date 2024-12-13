@@ -8,10 +8,9 @@ describe DiffedContent do
 
   describe '#content_diff' do
     it 'returns the diff' do
-      expect(subject.content_diff).to eq({
-        source: "#[Title]#\n<mark>Issue1</mark>\n",
-        target: "#[Title]#\n<mark>Issue2</mark>\n"
-      })
+      expect(subject.content_diff.to_s).to eq(
+        "#[Title]#\n\e[31mIssue2\e[0m\e[32mIssue1\e[0m\n"
+      )
     end
   end
 
@@ -33,12 +32,9 @@ describe DiffedContent do
 
   describe '#unsynced_fields' do
     it 'returns the fields that have changed between the source and the target' do
-      expect(subject.unsynced_fields).to eq({
-        'Title' => {
-          source: '<mark>Issue1</mark>',
-          target: '<mark>Issue2</mark>'
-        }
-      })
+      expect(subject.unsynced_fields['Title'].to_s).to eq(
+        "\e[31mIssue2\e[0m\e[32mIssue1\e[0m"
+      )
     end
   end
 
