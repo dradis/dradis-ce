@@ -87,7 +87,7 @@ class Comment < ApplicationRecord
     xml_builder.content do
       xml_builder.cdata!(content)
     end
-    xml_builder.author(user.email)
+    xml_builder.author(user&.email)
     xml_builder.created_at(created_at.to_i)
   end
 
