@@ -216,12 +216,12 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 4.14.0'
+gem 'dradis-plugins', '~> 4.15.0'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 4.14.0'
+gem 'dradis-projects', '~> 4.15.0'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)
@@ -233,33 +233,33 @@ end
 
 # ----------------------------------------------------------------- Calculators
 
-gem 'dradis-calculator_cvss', '~> 4.14.0'
-gem 'dradis-calculator_dread', '~> 4.14.0'
+gem 'dradis-calculator_cvss', '~> 4.15.0'
+gem 'dradis-calculator_dread', '~> 4.15.0'
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv_export', '~> 4.14.0'
-gem 'dradis-html_export', '~> 4.14.0'
+gem 'dradis-csv_export', '~> 4.15.0'
+gem 'dradis-html_export', '~> 4.15.0'
 
 # ---------------------------------------------------------------------- Import
-gem 'dradis-csv', '~> 4.14.0'
+gem 'dradis-csv', '~> 4.15.0'
 
 # ---------------------------------------------------------------------- Upload
-gem 'dradis-acunetix', '~> 4.14.0'
-gem 'dradis-brakeman', '~> 4.14.0'
-gem 'dradis-burp', '~> 4.14.0'
-gem 'dradis-coreimpact', '~> 4.14.0'
-gem 'dradis-metasploit', '~> 4.14.0'
-gem 'dradis-nessus', '~> 4.14.0'
-gem 'dradis-netsparker', '~> 4.14.0'
-gem 'dradis-nexpose', '~> 4.14.0'
-gem 'dradis-nikto', '~> 4.14.0'
-gem 'dradis-nipper', '~> 4.14.0'
-gem 'dradis-nmap', '~> 4.14.0'
-gem 'dradis-ntospider', '~> 4.14.0'
-gem 'dradis-openvas', '~> 4.14.0'
-gem 'dradis-pentera', '~> 4.14.0'
-gem 'dradis-qualys', '~> 4.14.0'
-gem 'dradis-saint', '~> 4.14.0'
-gem 'dradis-veracode', '~> 4.14.0'
-gem 'dradis-wpscan', '~> 4.14.0'
-gem 'dradis-zap', '~> 4.14.0'
+gem 'dradis-acunetix', '~> 4.15.0'
+gem 'dradis-brakeman', '~> 4.15.0'
+gem 'dradis-burp', '~> 4.15.0'
+gem 'dradis-coreimpact', '~> 4.15.0'
+gem 'dradis-metasploit', '~> 4.15.0'
+gem 'dradis-nessus', '~> 4.15.0'
+gem 'dradis-netsparker', '~> 4.15.0'
+gem 'dradis-nexpose', '~> 4.15.0'
+gem 'dradis-nikto', '~> 4.15.0'
+gem 'dradis-nipper', '~> 4.15.0'
+gem 'dradis-nmap', '~> 4.15.0'
+gem 'dradis-ntospider', '~> 4.15.0'
+gem 'dradis-openvas', '~> 4.15.0'
+gem 'dradis-pentera', '~> 4.15.0'
+gem 'dradis-qualys', '~> 4.15.0'
+gem 'dradis-saint', '~> 4.15.0'
+gem 'dradis-veracode', '~> 4.15.0'
+gem 'dradis-wpscan', '~> 4.15.0'
+gem 'dradis-zap', '~> 4.15.0'
