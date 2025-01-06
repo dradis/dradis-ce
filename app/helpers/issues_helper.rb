@@ -65,13 +65,13 @@ module IssuesHelper
       content =
         if tag
           [
-            colored_icon_for_model(issue, 'fa-bug'),
+            colored_icon_for_model(issue, 'fa-tag'),
             h(tag.display_name)
           ]
         else
           [
-            content_tag(:i, nil, class: 'fa-solid fa-bug'),
-            'Untagged'
+            content_tag(:i, nil, class: 'fa-solid fa-tag'),
+            'No tag'
           ]
         end
 
