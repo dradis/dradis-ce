@@ -1,4 +1,4 @@
-[v#.#.#] ([month] [YYYY])
+v4.15.0 (December 2024)
   - Tags: Add custom ordering
   - Welcome Kit:
     - Add HTML report template
@@ -6,28 +6,10 @@
     - Update OWASP Top 10 methodology to latest version (2021)
   - Upgraded gems:
     - rails, rexml
-  - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
-    - Bug tracker items:
-      - [item]
-  - New integrations:
-    - [integration]
-  - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
-  - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
-  - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
+  - Integration enhancements: 
+    - Qualys: Add `cvss3_base`, `cvss3_temporal`, and `cvss3_version` as available vuln fields
   - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - High: Authenticated (author) persistent cross-site scripting
 
 v4.14.0 (October 2024)
   - Kit Import: Use file name sequencing when a template file with the same name exists
