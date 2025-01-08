@@ -95,6 +95,7 @@ header {
 
       @media (max-width: 991px) {
         background-color: $instance-nav-bg;
+        overflow-x: hidden;
         padding: 0;
 
         .nav-item.active {
