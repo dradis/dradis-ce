@@ -13,6 +13,11 @@ header {
         @media (max-width: 991px) {
           max-height: 75vh;
           overflow-y: scroll;
+
+          .dropdown-menu {
+            background-color: $brand-200;
+            border: none;
+          }
         }
       }
 
@@ -21,9 +26,6 @@ header {
           margin: 0;
 
           .dropdown-menu {
-            border: 1px solid $border-color;
-            box-shadow: 1px 1px 5px 0px rgba($shadow-color-light, 0.5);
-
             .dropdown-item {
               text-transform: capitalize;
               font-size: 0.85rem;
@@ -33,6 +35,11 @@ header {
                 color: $text-default;
                 background-color: $light;
               }
+            }
+
+            @media (min-width: 992px) {
+              border: 1px solid $border-color;
+              box-shadow: 1px 1px 5px 0px rgba($shadow-color-light, 0.5);
             }
           }
 
