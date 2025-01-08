@@ -129,6 +129,15 @@ class ComboBox {
       }
     );
 
+    this.$comboboxMenu.on('scroll', (event) => {
+      if (
+        event.target.scrollTop + event.target.clientHeight >=
+        event.target.scrollHeight
+      ) {
+        console.log('Reached the bottom of the menu');
+      }
+    });
+
     this.$filter?.on('textchange', () => this.handleFiltering());
 
     this.$addOption?.on('click', () => {
