@@ -18,6 +18,8 @@ header {
 
       .navbar-nav {
         .nav-item {
+          margin: 0;
+
           .dropdown-menu {
             border: 1px solid $border-color;
             box-shadow: 1px 1px 5px 0px rgba($shadow-color-light, 0.5);
@@ -32,10 +34,6 @@ header {
                 background-color: $light;
               }
             }
-          }
-
-          &:last-of-type {
-            margin-right: 0;
           }
 
           .nav-link {
@@ -77,6 +75,8 @@ header {
 
               .nav-link {
                 color: $text-link;
+                padding-left: 1rem;
+                padding-right: 1rem;
               }
             }
 
@@ -90,6 +90,7 @@ header {
       .vr {
         align-self: center;
         height: 2rem;
+        margin: 0 0.5rem;
       }
 
       @media (max-width: 991px) {
@@ -106,10 +107,6 @@ header {
 
       @media (min-width: 992px) {
         padding: 0 1rem;
-
-        .vr {
-          margin-right: var(--margin);
-        }
       }
     }
   }
