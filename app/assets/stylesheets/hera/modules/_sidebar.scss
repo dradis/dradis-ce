@@ -1,4 +1,4 @@
-body:has(.main-sidebar.sidebar-collapsed) {
+body:not(.unauthenticated):has(.main-sidebar.sidebar-collapsed) {
   grid-template-columns: $sidebar-width-collapsed 1fr;
 }
 
@@ -7,8 +7,7 @@ body:has(.main-sidebar.sidebar-collapsed) {
   --margin: 1rem;
   background-color: $white;
   position: sticky;
-  top: calc(#{$navbar-height} * 2);
-  height: calc(100vh - (#{$navbar-height} * 2));
+  height: 100%;
   z-index: 3;
 
   .sidebar-content {

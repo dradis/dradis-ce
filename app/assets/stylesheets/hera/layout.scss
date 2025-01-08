@@ -3,7 +3,7 @@ body:not(.unauthenticated) {
     grid-template-rows: #{$navbar-height} 1fr;
   }
   @media (min-width: 992px) {
-    grid-template-rows: calc(#{$navbar-height} * 2) 1fr;
+    grid-template-rows: calc(#{$navbar-height} * 1.8) 1fr;
   }
   grid-template-columns: $sidebar-width 1fr;
   grid-template-areas:
