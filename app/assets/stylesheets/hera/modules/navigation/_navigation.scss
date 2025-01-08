@@ -53,6 +53,11 @@ header {
             @media (max-width: 991px) {
               color: $instance-nav-links;
             }
+
+            @media (min-width: 992px) {
+              padding-left: 1rem;
+              padding-right: 1rem;
+            }
           }
 
           @media (max-width: 991px) {
