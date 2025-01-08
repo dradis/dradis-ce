@@ -1,4 +1,4 @@
-body {
+body:not(.unauthenticated) {
   @media (max-width: 991px) {
     grid-template-rows: #{$navbar-height} 1fr;
   }
