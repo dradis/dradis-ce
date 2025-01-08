@@ -120,6 +120,13 @@ header {
 
       @media (min-width: 992px) {
         padding: 0 1rem;
+
+        .navbar-nav.utility-nav {
+          .nav-link {
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+          }
+        }
       }
     }
   }
