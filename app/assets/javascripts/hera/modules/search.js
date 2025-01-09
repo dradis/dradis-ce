@@ -9,7 +9,8 @@ document.addEventListener('turbolinks:load', function () {
   });
 
   $('[data-behavior~=search-query]').on('keypress', function (e) {
-    if (e.which === 13) {
+    const enterKeyCode = 13;
+    if (e.which === enterKeyCode) {
       submitSearch($(this).parents('form'));
     }
   });
