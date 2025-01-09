@@ -26,8 +26,9 @@ document.addEventListener('turbolinks:load', function () {
 function submitSearch($form) {
   if ($form.find('[data-behavior~=search-query]').val() !== '') {
     $form.submit();
-    $form.find('[data-behavior~=search-query]').val('Searching...');
-    return false;
+    setTimeout(() => {
+      $form.find('[data-behavior~=search-query]').val('Searching...');
+    }, 100);
   } else {
     $form
       .find('[data-behavior~=search-query]')
