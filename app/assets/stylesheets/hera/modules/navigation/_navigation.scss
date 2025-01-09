@@ -122,9 +122,23 @@ header {
         padding: 0 1rem;
 
         .navbar-nav.utility-nav {
+          a,
           .nav-link {
+            color: $instance-nav-links;
             padding-left: 0.5rem;
             padding-right: 0.5rem;
+
+            &:active,
+            &:focus,
+            &:hover {
+              color: $instance-nav-hover;
+              padding-left: 0.5rem;
+              padding-right: 0.5rem;
+            }
+          }
+
+          .nav-item {
+            border: none;
           }
         }
       }
