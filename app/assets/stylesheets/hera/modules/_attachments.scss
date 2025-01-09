@@ -18,7 +18,11 @@
     margin: 0;
 
     &:hover {
-      color: $white;
+      color: $text-link-hover;
+    }
+
+    label[for='file-upload'] {
+      cursor: pointer;
     }
 
     input[type='file'] {
