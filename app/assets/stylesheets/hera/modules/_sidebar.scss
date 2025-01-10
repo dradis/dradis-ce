@@ -137,6 +137,10 @@ body:not(.unauthenticated):has(.main-sidebar.sidebar-collapsed) {
     }
   }
 
+  &.sidebar-expanded {
+    overflow-y: clip;
+  }
+
   .sidebar-toggle {
     background-color: $white;
     border: 1px solid $border-color;
