@@ -81,20 +81,32 @@
       <% end %>
     <% end %>
 
+    <% if content_for?(:bulk_update_modal) %>
+      <%= yield(:bulk_update_modal) %>
+    <% end %>
+
+    <% if content_for?(:diff_modal) %>
+      <%= yield(:diff_modal) %>
+    <% end %>
+
     <% if controller_name == 'boards' || controller_name == 'projects' %>
       <%= render 'boards/modals/new_board_form' unless request.xhr? %>
     <% end %>
 
-    <% if controller_path == 'evidence' %>
-      <%= render partial: 'evidence/modals/move' %>
-    <% end %>
-
-    <% if @node && @node.label != 'Methodologies' %>
+    <% if @node && @node.label != 'Methodologies'%>
+      <% if @board %>
+        <%= render partial: 'boards/modals/board_rename_form', locals: { board: @board } %>
+      <% end %>
+      <%= render partial: 'boards/modals/new_board_form' %>
       <%= render partial: 'nodes/modals/add_node', locals: { type: :child } %>
       <%= render partial: 'nodes/modals/delete' %>
       <%= render partial: 'nodes/modals/merge' %>
       <%= render partial: 'nodes/modals/move' %>
       <%= render partial: 'nodes/modals/rename' %>
+    <% end %>
+
+    <% if controller_path == 'evidence' %>
+      <%= render partial: 'evidence/modals/move' %>
     <% end %>
 
     <% if controller_name == 'notes'%>
@@ -111,9 +123,5 @@
 
     <%= render 'console/console' %>
     <!-- End of modals -->
-
-    <%# Always render the Tour content, the user may click on the link in the help menu. %>
-    <%# FIXME: re-enable Tour %>
-    <%#= render 'layouts/hera/tour' %>
   </body>
 </html>
