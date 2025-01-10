@@ -129,15 +129,6 @@ class ComboBox {
       }
     );
 
-    this.$comboboxMenu.on('scroll', (event) => {
-      if (
-        event.target.scrollTop + event.target.clientHeight >=
-        event.target.scrollHeight
-      ) {
-        console.log('Reached the bottom of the menu');
-      }
-    });
-
     this.$filter?.on('textchange', () => this.handleFiltering());
 
     this.$addOption?.on('click', () => {
@@ -226,26 +217,54 @@ class ComboBox {
 
     this.debounceTimeout = setTimeout(() => {
       const filterText = this.$filter.val().toLowerCase();
-      let matchedOptions = 0;
 
-      this.$comboboxOptions.each((_, option) => {
-        const $option = $(option),
-          isOption = $option.is('[data-behavior~=combobox-option]'),
-          isMatch =
-            isOption && $option.text().toLowerCase().includes(filterText);
+      if (this.config.includes('remote-filter')) {
+        const url = this.$target.data('url');
 
-        $option.toggleClass('d-none', !isMatch);
+        this.$comboboxMenu.find(
+          '[data-behavior~=combobox-option]'
+        ).remove()
 
-        if (isMatch) matchedOptions++;
-      });
+        // add spinner
 
-      if (this.config.includes('add-options')) {
-        this.$addOption.find('strong').text(this.$filter.val());
-        this.$addOption.toggleClass('d-none', matchedOptions > 0);
+        fetch(url + '?query=' + filterText)
+          .then(response => response.json())
+          .then(data => {
+            if (data.length) {
+              data.forEach(option => {
+                const $option = $(`<option value="${option[1]}">${option[0]}</option>`);
+
+                this.appendOption(this.$comboboxMenu, $option);
+              });
+            } else {
+              this.$filter
+                .next('[data-behavior~=no-results]')
+                .toggleClass('d-none', true);
+            }
+          });
+
       } else {
-        this.$filter
-          .next('[data-behavior~=no-results]')
-          .toggleClass('d-none', matchedOptions > 0);
+        let matchedOptions = 0;
+
+        this.$comboboxOptions.each((_, option) => {
+          const $option = $(option),
+            isOption = $option.is('[data-behavior~=combobox-option]'),
+            isMatch =
+              isOption && $option.text().toLowerCase().includes(filterText);
+
+          $option.toggleClass('d-none', !isMatch);
+
+          if (isMatch) matchedOptions++;
+        });
+
+        if (this.config.includes('add-options')) {
+          this.$addOption.find('strong').text(this.$filter.val());
+          this.$addOption.toggleClass('d-none', matchedOptions > 0);
+        } else {
+          this.$filter
+            .next('[data-behavior~=no-results]')
+            .toggleClass('d-none', matchedOptions > 0);
+        }
       }
     }, this.debounceTimer);
   }
