@@ -22,23 +22,11 @@
         <% end %>
 
         <% if defined?(Dradis::Pro) %>
-          <li class="nav-item dropdown <% class_names(active: ['document_properties', 'content_blocks'].include?(controller_path))%>">
-            <a href="javascript:void(0)" class="nav-link dropdown-toggle" id="document-properties-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa-solid fa-file-lines me-1" title="Report content"></i>
-              <span>Report content</span>
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="document-properties-dropdown">
-              <li>
-                <%= link_to main_app.project_document_properties_path(current_project), class: 'dropdown-item' do %>
-                  <span>Document properties</span>
-                <% end %>
-              </li>
-              <li>
-                <%= link_to main_app.project_content_blocks_path(current_project), class: 'dropdown-item' do %>
-                  <span>Content blocks</span>
-                <% end %>
-              </li>
-            </ul>
+          <li class="nav-item <% class_names(active: ['document_properties', 'content_blocks'].include?(controller_path))%>">
+            <i class="fa-solid fa-file-lines me-1" title="Report content"></i>
+            <%= link_to main_app.project_document_properties_path(current_project), class: 'nav-link' do %>
+              <span>Report Content</span>
+            <% end %>
           </li>
         <% end %>
 
