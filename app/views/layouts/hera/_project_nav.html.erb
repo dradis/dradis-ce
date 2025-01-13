@@ -23,8 +23,8 @@
 
         <% if defined?(Dradis::Pro) %>
           <li class="nav-item <% class_names(active: ['document_properties', 'content_blocks'].include?(controller_path))%>">
-            <i class="fa-solid fa-file-lines me-1" title="Report content"></i>
             <%= link_to main_app.project_document_properties_path(current_project), class: 'nav-link' do %>
+              <i class="fa-solid fa-file-lines me-1" title="Report content"></i>
               <span>Report Content</span>
             <% end %>
           </li>
