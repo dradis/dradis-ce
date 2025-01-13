@@ -1,18 +1,23 @@
-document.addEventListener('turbolinks:load', function() {
-  var $infiniteScrollContainer = $('[data-behavior="infinite-scroll-container"]');
+document.addEventListener('turbolinks:load', function () {
+  var $infiniteScrollContainer = $(
+    '[data-behavior="infinite-scroll-container"]'
+  );
   var loading = false;
 
   if ($infiniteScrollContainer.length) {
-    var $viewContent = $('[data-behavior="view-content"]');
-
-    $viewContent.on('scroll', function() {
+    // Attach the scroll event to the window instead of a specific element
+    $(window).on('scroll', function () {
       var canLoadMore = $infiniteScrollContainer.data('canLoadMore');
-      var scrollHeight = $viewContent[0].scrollHeight;
-      var scrollTop = $viewContent.scrollTop();
-      var viewHeight = $viewContent.height();
+      var scrollTop = window.scrollY || document.documentElement.scrollTop;
+      var scrollHeight = document.documentElement.scrollHeight;
+      var viewHeight = window.innerHeight;
 
       // 64px is the sum of margin bottom and padding bottom of the content-container class
-      if (canLoadMore && !loading && viewHeight + scrollTop >= (scrollHeight - 64)) {
+      if (
+        canLoadMore &&
+        !loading &&
+        viewHeight + scrollTop >= scrollHeight - 64
+      ) {
         var page = $infiniteScrollContainer.data('page') + 1;
         var url = $infiniteScrollContainer.data('url');
         loading = true;
@@ -21,11 +26,11 @@ document.addEventListener('turbolinks:load', function() {
         $.ajax({
           url: url,
           data: { page: page },
-          success: function(data) {
+          success: function (data) {
             loading = false;
             $('[data-behavior="activities-spinner"]').hide();
-          }
-        })
+          },
+        });
       }
     });
   }
