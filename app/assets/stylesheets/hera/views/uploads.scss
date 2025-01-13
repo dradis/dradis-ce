@@ -4,12 +4,10 @@ body.upload {
 
     .content-container {
       bottom: 0;
-      max-width: -webkit-fill-available;
-      max-width: fill-available;
-      max-width: -moz-available;
       overflow: auto;
       position: absolute;
       top: 0;
+      width: 100%;
 
       @media (min-width: 1510px) {
         margin-right: calc(var(--bs-gutter-x) * 0.5);
