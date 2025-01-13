@@ -12,7 +12,7 @@
   font-style: normal;
 }
 
-body {
+body:not(.unauthenticated) {
   background-color: $white;
   display: grid;
   font-family: 'ProximaNovaLight', 'system-ui';

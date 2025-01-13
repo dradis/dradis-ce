@@ -11,6 +11,9 @@ body.unauthenticated {
   );
   background-repeat: no-repeat;
   color: $text-default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 300;
   min-height: 100vh;
 
