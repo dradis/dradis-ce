@@ -15,7 +15,7 @@
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="configurationDropdown">
       <li><%= link_to 'Configure Integrations', main_app.project_configurations_path(current_project), class: 'dropdown-item' %></li>
-      <li><%= link_to "Manage Tags", project_tags_path(current_project), class: 'dropdown-item' %></li>
+      <li><%= link_to "Manage Tags", main_app.project_tags_path(current_project), class: 'dropdown-item' %></li>
     </ul>
   </li>
 </ul>
