@@ -25,6 +25,10 @@
       <span class="d-block d-lg-none ms-1"><%= current_user.name %></span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="user-profile">
+      <% if defined?(Dradis::Pro) %>
+        <li><%= link_to 'Profile', main_app.profile_path, class: 'dropdown-item js-profile', data: { email: current_user.email } %></li>
+        <li><hr class="dropdown-divider"></li>
+      <% end %>
       <li>
         <%= link_to main_app.logout_path,  class: 'dropdown-item', data: { turbolinks: false } do %>
           <i class="fa-solid fa-arrow-right-from-bracket"></i>
