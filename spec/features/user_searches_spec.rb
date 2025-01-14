@@ -20,16 +20,13 @@ describe 'User searches', type: :feature do
     end
   end
 
-  it 'when click on search button search results form is shown' do
+  it 'when click on search button search results form is shown', :js do
     within '.project-nav' do
-      fill_in 'q', with: 'test'
-            within '.project-nav' do
-        click_on 'search-btn'
-      end
-
-      expect(page.current_path).to eq project_search_path(current_project)
-      expect(page).to have_content 'Search results'
+      fill_in 'q', with: 'test', visible: false
+      click_on 'search-btn'
     end
+    expect(page.current_path).to eq project_search_path(current_project)
+    expect(page).to have_content 'Search Results: test'
   end
 
   context 'search results' do
@@ -38,7 +35,7 @@ describe 'User searches', type: :feature do
       term = 'search'
 
       page.find('.project-nav #q').set(term)
-            within '.project-nav' do
+      within '.project-nav' do
         click_on 'search-btn'
       end
 
@@ -56,7 +53,7 @@ describe 'User searches', type: :feature do
       term = 'search'
 
       page.find('.project-nav #q').set(term)
-            within '.project-nav' do
+      within '.project-nav' do
         click_on 'search-btn'
       end
 
@@ -69,7 +66,7 @@ describe 'User searches', type: :feature do
       setup_test_data
       term = 'search'
       page.find('.project-nav #q').set(term)
-            within '.project-nav' do
+      within '.project-nav' do
         click_on 'search-btn'
       end
 
@@ -88,7 +85,7 @@ describe 'User searches', type: :feature do
       setup_test_data
       term = 'search'
       page.find('.project-nav #q').set(term)
-            within '.project-nav' do
+      within '.project-nav' do
         click_on 'search-btn'
       end
 
@@ -107,7 +104,7 @@ describe 'User searches', type: :feature do
       setup_test_data
       term = 'search'
       page.find('.project-nav #q').set(term)
-            within '.project-nav' do
+      within '.project-nav' do
         click_on 'search-btn'
       end
 
@@ -126,8 +123,8 @@ describe 'User searches', type: :feature do
       setup_test_data
       term = 'search'
       page.find('.project-nav #q').set(term)
-      
-            within '.project-nav' do
+
+      within '.project-nav' do
         click_on 'search-btn'
       end
 
@@ -143,7 +140,7 @@ describe 'User searches', type: :feature do
     end
 
     it 'sees message warning when no search criteria entered' do
-            within '.project-nav' do
+      within '.project-nav' do
         click_on 'search-btn'
       end
 
@@ -153,7 +150,7 @@ describe 'User searches', type: :feature do
     it 'sees message warning when no matches find' do
       page.find('.project-nav #q').set('no matches')
 
-            within '.project-nav' do
+      within '.project-nav' do
         click_on 'search-btn'
       end
 
