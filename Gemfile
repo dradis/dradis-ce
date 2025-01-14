@@ -233,12 +233,12 @@ end
 
 # ----------------------------------------------------------------- Calculators
 
-gem 'dradis-calculator_cvss', '~> 4.15.0'
-gem 'dradis-calculator_dread', '~> 4.15.0'
+gem 'dradis-calculator_cvss', github: 'dradis/dradis-calculator_cvss', branch: 'rails/upgrade-7.2'
+gem 'dradis-calculator_dread', github: 'dradis/dradis-calculator_dread', branch: 'rails/upgrade-7.2'
 
 # ---------------------------------------------------------------------- Export
 gem 'dradis-csv_export', '~> 4.15.0'
-gem 'dradis-html_export', '~> 4.15.0'
+gem 'dradis-html_export', github: 'dradis/dradis-html_export', branch: 'rails/upgrade-7.2'
 
 # ---------------------------------------------------------------------- Import
 gem 'dradis-csv', '~> 4.15.0'
