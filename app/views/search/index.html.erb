@@ -1,9 +1,18 @@
 <%
-  title = "Search results"
+  title = "Search Results"
   title << ": #{params[:q]}" if params[:q].present?
-
-  content_for :title, title
 %>
+
+<% content_for :title, title %>
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <%= link_to current_project.name, project_path(current_project) %>
+  </li>
+  <li class="breadcrumb-item active">
+    <%= title %>
+  </li>
+</ol>
 
 <% if params[:q].blank? %>
   <div class="content-container">
