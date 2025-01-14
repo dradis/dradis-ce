@@ -75,17 +75,11 @@
 .breadcrumb {
   background-color: transparent;
   border: none;
-  flex-wrap: nowrap;
   margin-bottom: calc(var(--margin) * 2);
   padding: 0.75rem 0;
-  white-space: nowrap;
   width: 100%;
 
   .breadcrumb-item {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
     &.active {
       color: $text-muted;
     }
