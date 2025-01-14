@@ -2,7 +2,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - paper_trail, rails, rails-html-sanitizer, rexml, rspec-rails
+    - nokogiri, paper_trail, rails, rails-html-sanitizer, rexml, rspec-rails
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]

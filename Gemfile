@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.2.1.1'
+gem 'rails', '~> 7.2.2.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -98,7 +98,7 @@ gem 'nokogiri', '>= 1.16.5'
 # before 1.0.4, so make sure we're using 1.0.4+:
 # see https://github.com/rails/rails-html-sanitizer/commit/f3ba1a839a
 # and https://github.com/flavorjones/loofah/issues/144
-gem 'rails-html-sanitizer', '~> 1.6'
+gem 'rails-html-sanitizer', '~> 1.6.1'
 
 # Textile markup
 gem 'RedCloth', '~> 4.3.4', require: 'redcloth'
