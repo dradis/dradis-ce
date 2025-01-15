@@ -82,8 +82,9 @@ describe 'Card pages:' do
           check @second_user.name
 
           submit_form
-
-          expect(Card.last.assignees.count).to eq 2
+          card = Card.last
+          expect(current_path).to eq(project_board_list_card_path(current_project, @board, @list, card))
+          expect(card.assignees.count).to eq 2
         end
       end
 
