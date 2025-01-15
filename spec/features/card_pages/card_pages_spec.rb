@@ -84,6 +84,8 @@ describe 'Card pages:' do
           submit_form
           card = Card.last
           expect(current_path).to eq(project_board_list_card_path(current_project, @board, @list, card))
+          expect(page).to have_text(@first_user.name)
+          expect(page).to have_text(@second_user.name)
           expect(card.assignees.count).to eq 2
         end
       end
