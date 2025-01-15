@@ -69,16 +69,14 @@
     <%= render 'layouts/hera/modals' %>
     <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
 
-    <% if controller_name == 'boards' %>
-      <% if content_for?(:board_rename_modal) %>
-        <%= yield(:board_rename_modal) %>
-      <% end %>
-      <% if content_for?(:list_new_modal) %>
-        <%= yield(:list_new_modal) %>
-      <% end %>
-      <% if content_for?(:list_rename_modal) %>
-        <%= yield(:list_rename_modal) %>
-      <% end %>
+    <% if content_for?(:board_rename_modal) %>
+      <%= yield(:board_rename_modal) %>
+    <% end %>
+    <% if content_for?(:list_new_modal) %>
+      <%= yield(:list_new_modal) %>
+    <% end %>
+    <% if content_for?(:list_rename_modal) %>
+      <%= yield(:list_rename_modal) %>
     <% end %>
 
     <% if content_for?(:bulk_update_modal) %>
