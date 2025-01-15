@@ -27,6 +27,8 @@ $text-link: $brand-700;
 $text-link-hover: darken($text-link, 15%);
 $text-muted: $grey-700;
 $text-small: 0.9rem;
+$text-success: darken($green-700, 10%);
+$text-warning: darken($yellow-600, 15%);
 
 // Navbar
 $instance-nav-bg: $brand-200;
