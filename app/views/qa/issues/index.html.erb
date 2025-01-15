@@ -1,5 +1,16 @@
 <% content_for :title, 'Quality Assurance' %>
 
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to current_project.name, project_path(current_project) %>
+    </li>
+    <li class="breadcrumb-item active">
+      QA
+    </li>
+  </ol>
+<% end %>
+
 <ul class="tabs-container nav nav-tabs main-tabs">
   <li class="nav-item">
     <%= link_to project_qa_issues_path(current_project), class: 'nav-link active' do %>
@@ -8,9 +19,9 @@
   </li>
 </ul>
 
-<div class="row m-0">
-  <div class="col-12 p-0">
-    <div class="content-container mt-0 pb-3" id="qa-viewer" data-behavior="qa-viewer">
+<div class="row p-0">
+  <div class="col-12">
+    <div class="content-container" id="qa-viewer" data-behavior="qa-viewer">
       <% if @issues.any? %>
         <div data-behavior="datatable-paths"
              data-table-state-url="<%= multiple_update_project_qa_issues_path(current_project) %>"
@@ -36,9 +47,9 @@
                 <a href="https://dradis.com/support/guides/projects/qa.html" class="empty-state-docs-link" target="_blank">More about QA</a>
               </div>
             </div>
-          <% end %>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>

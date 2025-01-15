@@ -113,7 +113,6 @@ describe 'note pages' do
     describe 'submitting the form with valid information', js: true do
       let(:new_content) { 'New note text' }
       before do
-        click_link 'Source'
         fill_in :note_text, with: new_content
       end
 

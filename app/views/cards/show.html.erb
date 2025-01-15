@@ -17,10 +17,10 @@
     </li>
   </ul>
 
-  <div class="row m-0">
-    <div class="col-12 col-xxl-7 p-0">
-      <div class="content-container mt-0 me-xxl-3">
-        <div class="tab-content mt-0">
+  <div class="row p-0">
+    <div class="col-12">
+      <div class="content-container">
+        <div class="tab-content">
           <div class="tab-pane active" id="info-tab">
             <% cache ['card-information-tab', @card] do %>
               <div class="note-text-inner">
@@ -56,12 +56,9 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="col-12 col-xxl-5 p-0">
-      <div class="sticky-top">
-        <div class="content-container ms-xxl-3 mt-0">
-          <%= content_tag :div,
+      <div class="content-container">
+        <%= content_tag :div,
             spinner_tag,
             data: {
               behavior: 'fetch fetch-comments',
@@ -73,10 +70,10 @@
               )
             }
           %>
-        </div>
+      </div>
 
-        <div class="content-container ms-xxl-3">
-          <%= content_tag :div,
+      <div class="content-container">
+        <%= content_tag :div,
             spinner_tag,
             data: {
               behavior: 'fetch fetch-subscriptions',
@@ -88,7 +85,6 @@
               )
             }
           %>
-        </div>
       </div>
     </div>
   </div>

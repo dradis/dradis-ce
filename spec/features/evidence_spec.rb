@@ -123,7 +123,6 @@ describe 'evidence' do
     describe 'submitting the form with valid information', js: true do
       let(:new_content) { 'new content' }
       before do
-        click_link 'Source'
         fill_in :evidence_content, with: new_content
       end
 

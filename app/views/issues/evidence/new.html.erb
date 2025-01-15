@@ -3,8 +3,15 @@
 <% content_for :breadcrumbs do %>
   <nav>
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><%= link_to 'All issues', project_issues_path(current_project) %></li>
-      <li class="breadcrumb-item"><%= link_to @issue.title, project_issue_path(current_project, @issue, tab: 'evidence-tab') %></li>
+      <li class="breadcrumb-item">
+        <%= link_to current_project.name, project_path(current_project) %>
+      </li>
+      <li class="breadcrumb-item">
+        <%= link_to 'All issues', project_issues_path(current_project) %>
+      </li>
+      <li class="breadcrumb-item">
+        <%= link_to @issue.title, project_issue_path(current_project, @issue, tab: 'evidence-tab') %>
+      </li>
       <li class="breadcrumb-item active">New Evidence</li>
     </ol>
   </nav>

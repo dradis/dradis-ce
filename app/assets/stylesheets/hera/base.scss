@@ -1,0 +1,168 @@
+@font-face {
+  font-family: 'ProximaNovaLight';
+  src: font-url('proximanova-light.woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ProximaNovaRegular';
+  src: font-url('proximanova-regular.woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+body:not(.unauthenticated) {
+  background-color: $white;
+  display: grid;
+  font-family: 'ProximaNovaLight', 'system-ui';
+  min-height: 100vh;
+  text-wrap: pretty;
+  overflow-x: clip;
+}
+
+a {
+  color: $text-link;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+
+  &:focus-visible {
+    box-shadow: $focus-shadow;
+    outline: none !important;
+  }
+
+  &:hover {
+    color: $text-link-hover;
+  }
+}
+
+.actions {
+  text-transform: capitalize;
+  white-space: nowrap;
+  font-size: 0.9rem;
+}
+
+.bg-primary {
+  background-color: $primary !important;
+}
+
+blockquote {
+  border-left: 3px solid $primary;
+  padding-left: 1rem;
+}
+
+.btn:focus,
+.custom-file-input:focus ~ .custom-file-label {
+  border-color: $dark;
+  box-shadow: $focus-shadow;
+  outline: none !important;
+}
+
+code {
+  background-color: $brand-100;
+  color: $primary;
+  border-radius: $border-radius;
+  padding: 0.15rem 0.5rem;
+}
+
+.form-actions {
+  padding-top: 1rem;
+  border-top: 1px solid $border-color;
+}
+
+.form-control {
+  font-size: inherit;
+
+  &:focus {
+    border-color: $dark;
+    box-shadow: $focus-shadow;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'ProximaNovaRegular', 'system-ui';
+
+  & * {
+    font-family: 'ProximaNovaLight', 'system-ui';
+  }
+}
+
+mark {
+  background-color: yellow;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.nav-pills {
+  .nav-link {
+    transition: all 0s ease-in-out;
+
+    &.active {
+      background-color: $secondary-bg;
+      color: $text-link-hover;
+    }
+  }
+}
+
+.no-caret {
+  &.dropdown-toggle::after {
+    display: none;
+  }
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+pre code {
+  background-color: initial;
+  padding: 0;
+}
+
+.required-input {
+  color: $red;
+}
+
+strong {
+  font-family: 'ProximaNovaRegular', 'system-ui';
+}
+
+.text-break-spaces {
+  white-space: break-spaces !important;
+}
+
+.text-error {
+  color: $text-error !important;
+}
+
+.text-error-hover {
+  color: $text-error !important;
+
+  &:hover {
+    color: darken($text-error, 10%) !important;
+  }
+}
+
+.text-muted {
+  color: $text-muted !important;
+}
+
+.text-primary {
+  color: $primary !important;
+}
+
+.text-success {
+  color: $text-success !important;
+}
+.text-warning {
+  color: $text-warning !important;
+}
+
+ul {
+  list-style: none;
+}

@@ -1,6 +1,17 @@
 <% content_for :title, 'Notifications' %>
 
 <% if @current_project %>
+  <% content_for :breadcrumbs do %>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <%= link_to current_project.name, project_path(current_project) %>
+      </li>
+      <li class="breadcrumb-item active">
+        Notifications
+      </li>
+    </ol>
+  <% end %>
+
   <div class="content-container">
     <h4 class="header-underline w-100">
       <%= render partial: 'notifications/header' %>

@@ -4,10 +4,10 @@
   width: 100%;
 
   .editor-toolbar {
-    background-color: $secondaryBgColor;
-    border: 1px solid $borderColor;
+    background-color: $secondary-bg;
+    border: 1px solid $border-color;
     border-radius: 20px;
-    box-shadow: 0 20px 30px 0 rgba(33,55,74,0.1);
+    box-shadow: 0 20px 30px 0 rgba(33, 55, 74, 0.1);
     display: inline-flex;
     opacity: 0;
     padding: 0.25rem;
@@ -20,7 +20,7 @@
 
     &:after {
       border: 0.5rem solid;
-      border-color: $secondaryBgColor transparent transparent;
+      border-color: $secondary-bg transparent transparent;
       content: '';
       height: 0;
       left: 20%;
@@ -31,7 +31,7 @@
 
     &:before {
       border: 0.5rem solid;
-      border-color: $borderColor transparent transparent;
+      border-color: $border-color transparent transparent;
       content: '';
       height: 0;
       left: 20%;
@@ -45,7 +45,7 @@
       background-color: transparent;
       border: 1px solid transparent;
       border-radius: 1rem;
-      color: $defaultText;
+      color: $text-default;
       cursor: pointer;
       display: flex;
       height: 1.75rem;
@@ -59,8 +59,8 @@
       }
 
       &:hover {
-        background-color: $primaryBgColor;
-        border-color: $borderColor;
+        background-color: $primary-bg;
+        border-color: $border-color;
       }
 
       &.image-btn {
@@ -92,7 +92,7 @@
   &.sticky-toolbar {
     .editor-toolbar {
       border: none;
-      border-bottom: 1px solid $borderColor;
+      border-bottom: 1px solid $border-color;
       border-radius: 0px;
       box-shadow: none;
       display: block;
@@ -110,7 +110,7 @@
         display: inline-flex;
       }
 
-      &+ .textarea-container {
+      & + .textarea-container {
         margin-top: -42px !important;
       }
     }
@@ -124,13 +124,13 @@
     height: 100%;
   }
 }
-  
+
 .selection-quote-button {
   align-items: center;
-  background-color: $secondaryBgColor;
-  border: 1px solid $borderColor;
+  background-color: $secondary-bg;
+  border: 1px solid $border-color;
   border-radius: 25px;
-  box-shadow: 0 20px 30px 0 rgba(33,55,74,0.1);
+  box-shadow: 0 20px 30px 0 rgba(33, 55, 74, 0.1);
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -139,10 +139,10 @@
   user-select: none;
   width: auto;
   z-index: 3;
-  
+
   &:after {
     border: 0.5rem solid;
-    border-color: $secondaryBgColor transparent transparent;
+    border-color: $secondary-bg transparent transparent;
     content: '';
     height: 0;
     left: 0.7rem;
@@ -153,7 +153,7 @@
 
   &:before {
     border: 0.5rem solid;
-    border-color: $borderColor transparent transparent;
+    border-color: $border-color transparent transparent;
     content: '';
     height: 0;
     left: 0.7rem;

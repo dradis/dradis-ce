@@ -1,0 +1,82 @@
+body.issues.edit,
+body.issues.new {
+  .tag-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    .btn {
+      background: $primary-bg;
+      color: $text-default;
+    }
+  }
+}
+
+body.issues.edit {
+  #cvss-tabs.nav-pills {
+    .nav-link.active {
+      background-color: $primary;
+      color: $white;
+    }
+  }
+}
+
+body.issues.index {
+  .add-issues {
+    border: 1px solid $dark;
+    border-radius: 5px;
+    height: 100%;
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .card-header {
+      background: $dark;
+      color: lighten($light, 5%);
+
+      .card-title {
+        margin-bottom: 0;
+        text-transform: capitalize;
+      }
+    }
+  }
+
+  .empty-state {
+    &-actions {
+      margin-top: 0;
+    }
+
+    &-body-text {
+      text-align: left;
+    }
+  }
+
+  .tab-content.outer-tab {
+    border-right: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+    border-left: 1px solid $border-color;
+  }
+
+  .tab-pane {
+    padding: 1.5rem;
+  }
+}
+
+body.issues.show {
+  .evidence-content {
+    padding-left: 2rem;
+
+    .content-textile {
+      border-left: 6px solid $border-color;
+      margin-left: 1rem;
+      padding-left: 1rem;
+    }
+
+    .tab-content {
+      padding: 1rem 0 0 1rem;
+    }
+  }
+}

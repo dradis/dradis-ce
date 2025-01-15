@@ -4,6 +4,17 @@
   <%= render 'sidebar'%>
 <% end %>
 
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to current_project.name, project_path(current_project) %>
+    </li>
+    <li class="breadcrumb-item active">
+      Issues
+    </li>
+  </ol>
+<% end %>
+
 <!-- Main content -->
 <div class="content-container" id="issue-viewer">
 

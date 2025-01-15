@@ -1,9 +1,9 @@
 body.unauthenticated.holiday {
-  $holidayColor: #C30F16;
+  $holidayColor: #c30f16;
 
-  --primaryColor: #{$holidayColor};
-  --primaryColorDark: #{darken($holidayColor, 10)};
-  --primaryColorLight: #{lighten($holidayColor, 20)};
+  --primary: #{$holidayColor};
+  --dark: #{darken($holidayColor, 10)};
+  --light: #{lighten($holidayColor, 20)};
 
   &::after,
   &::before {

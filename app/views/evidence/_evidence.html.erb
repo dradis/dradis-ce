@@ -12,14 +12,14 @@
 
   <div class="list-item-actions">
     <%= link_to edit_project_node_evidence_path(@node.project, @node, evidence), class:'list-item-action-edit' do %>
-      <i class="fa-solid fa-pencil"></i> Edit
+      <i class="fa-solid fa-pencil fa-fw"></i><span class="visually-hidden">Edit</span>
     <% end %>
 
     <%= link_to [current_project, @node, evidence],
           method: :delete,
           data: { confirm: "Are you sure?\n\n\Proceeding will delete this evidence from the associated node." },
           class: 'list-item-action-delete' do %>
-      <i class="fa-solid fa-trash"></i> Delete
+      <i class="fa-solid fa-trash fa-fw"></i><span class="visually-hidden">Delete</span>
     <% end %>
   </div>
 

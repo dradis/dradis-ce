@@ -102,7 +102,7 @@ shared_examples 'a form with local auto save' do |klass, action|
 
   context 'when Cancel is clicked' do
     it 'clears cached data' do
-      within('.view-content') do
+      within('[data-behavior="view-content"]') do
         scroll_to(:bottom)
       end
       click_link 'Cancel'
