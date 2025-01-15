@@ -5,6 +5,23 @@
   font-size: inherit;
   color: $black;
 
+  &.btn-link {
+    background-color: transparent;
+    color: $text-link;
+    font-size: inherit;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible,
+    &:not(:disabled):not(.disabled):active {
+      background-color: transparent;
+      color: $text-link-hover;
+      text-decoration: none;
+    }
+  }
+
   &.btn-primary,
   &.btn-primary:not(:disabled):not(.disabled).active {
     @include button($primary);
