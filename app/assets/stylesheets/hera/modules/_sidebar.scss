@@ -292,6 +292,7 @@ body:not(.unauthenticated):has(.main-sidebar.sidebar-collapsed) {
 
   .sidebar {
     position: fixed;
+    top: calc(#{$navbar-height} + 0.3rem);
 
     &.main-sidebar {
       left: 0.35rem;
