@@ -21,11 +21,11 @@
 //= require shared/charts
 //= require shared/comments
 //= require shared/console_updater
+//= require shared/differ
 //= require shared/editor_toolbar
 //= require shared/quote_selector
 //= require shared/mentions
 //= require shared/notifications
-//= require shared/revisions
 //= require shared/rtp_validation
 //= require shared/state_button
 //= require shared/subscriptions

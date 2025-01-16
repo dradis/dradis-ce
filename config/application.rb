@@ -26,16 +26,9 @@ module Dradis
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.2
 
-    # ** Please read carefully, this must be configured in config/application.rb **
-    # Change the format of the cache entry.
-    # Changing this default means that all new cache entries added to the cache
-    # will have a different format that is not supported by Rails 7.0
-    # applications.
-    # Only change this value after your application is fully deployed to Rails 7.1
-    # and you have no plans to rollback.
-    # When you're ready to change format, add this to `config/application.rb` (NOT
-    # this file):
-    # config.active_support.cache_format_version = 7.1
+    # Change the format of the cache entry. Changing this default means that all new cache entries
+    # added to the cache will have a different format that is not supported by Rails 7.0 applications.
+    config.active_support.cache_format_version = 7.1
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
