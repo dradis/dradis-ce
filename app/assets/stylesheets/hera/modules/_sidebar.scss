@@ -47,6 +47,12 @@ body:not(.unauthenticated):has(.main-sidebar.sidebar-collapsed) {
           &:hover {
             color: $text-link;
           }
+
+          &.disabled {
+            color: lighten($text-muted, 15%);
+            cursor: not-allowed;
+            pointer-events: none;
+          }
         }
 
         .add {
