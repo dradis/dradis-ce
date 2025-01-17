@@ -47,7 +47,7 @@ class Comment < ApplicationRecord
       # to be an ActiveRecord::Relation.
       subscribers = User.includes(:subscriptions).where(
         subscriptions: { subscribable_id: commentable.id, subscribable_type: commentable.class.to_s }
-      ).where.not(id: [user.id] + mentions.pluck(:id))
+      ).where.not(id: [user.id] + mentions.pluck(:id)).enabled
       subscribers = subscribers.select { |user| Ability.new(user).can?(:read, self) }
       create_notifications(action: :create, actor: actor, recipients: subscribers)
     end
@@ -87,7 +87,7 @@ class Comment < ApplicationRecord
     xml_builder.content do
       xml_builder.cdata!(content)
     end
-    xml_builder.author(user.email)
+    xml_builder.author(user&.email)
     xml_builder.created_at(created_at.to_i)
   end
 

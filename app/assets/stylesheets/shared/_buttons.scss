@@ -1,6 +1,6 @@
 .btn-placeholder {
   align-items: center;
-  background-color: $primaryColor;
+  background-color: $primary;
   border-radius: 0.25rem;
   color: $white;
   cursor: default;
@@ -36,13 +36,19 @@
     }
   }
 
+  span:not(:last-child) {
+    .state {
+      border-bottom: 1px solid $border-color;
+    }
+  }
+
   .state {
     display: flex;
     margin: 0;
     padding: 0.5rem 1.75rem 0.5rem 0.5rem;
 
     &:hover {
-      background-color: $dropdownLinkBackgroundHover;
+      background-color: $grey-100;
     }
 
     i {
@@ -51,12 +57,13 @@
     }
 
     input:checked + i {
-      color: $primaryColor;
+      color: $primary;
     }
 
     .state-label {
       p {
-        color: $primaryColor;
+        color: $primary;
+        font-size: 1rem;
         margin: 0;
       }
 
