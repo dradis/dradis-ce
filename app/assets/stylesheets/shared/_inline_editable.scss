@@ -1,5 +1,4 @@
 .textile-form-field:hover {
-
   .inline-editable i.fa-pencil {
     opacity: 0.2;
   }
@@ -17,7 +16,7 @@
     &:hover {
       i.fa-pencil {
         opacity: 1;
-      }  
+      }
     }
   }
 
@@ -30,7 +29,7 @@
     z-index: 1;
   }
 
-  input[type="text"],
+  input[type='text'],
   textarea,
   select {
     border: 1px solid transparent;
@@ -39,7 +38,7 @@
     &:focus,
     &:hover {
       border-color: transparent;
-      border-bottom-color: $primaryColor;
+      border-bottom-color: $primary;
     }
 
     &:focus {
@@ -48,7 +47,7 @@
     }
   }
 
-  input[type="text"] {
+  input[type='text'] {
     background-color: transparent;
     font-weight: 600;
     margin: 0 1.5rem 0.5rem 1.5rem;
@@ -66,7 +65,7 @@
   }
 
   select {
-    background-color: $primaryBgColor;
+    background-color: $primary-bg;
     margin: 0 1.5rem 2.25rem 1.5rem;
   }
 }
