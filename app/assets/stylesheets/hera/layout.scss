@@ -5,10 +5,9 @@ body:not(.unauthenticated) {
   @media (min-width: 992px) {
     grid-template-rows: calc(#{$navbar-height} * 2) 1fr;
   }
-  grid-template-columns: $sidebar-width 1fr;
   grid-template-areas:
-    'navigation navigation navigation'
-    'nodes-sidebar view-content secondary-sidebar';
+    'navigation'
+    'view-content';
 }
 
 .container,
@@ -41,6 +40,7 @@ body:not(.unauthenticated) {
 
 .content-grid {
   display: grid;
+  grid-template-columns: auto 1fr auto;
   grid-template-rows: 1fr auto;
 }
 

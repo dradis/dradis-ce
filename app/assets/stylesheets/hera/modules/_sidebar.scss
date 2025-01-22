@@ -1,7 +1,3 @@
-body:not(.unauthenticated):has(.main-sidebar.sidebar-collapsed) {
-  grid-template-columns: $sidebar-width-collapsed 1fr;
-}
-
 .sidebar {
   --padding: 1.25rem;
   --margin: 1rem;
@@ -139,6 +135,12 @@ body:not(.unauthenticated):has(.main-sidebar.sidebar-collapsed) {
         .list-item:nth-last-child(2) {
           border-bottom: none;
         }
+      }
+    }
+
+    .summary-link.active {
+      a {
+        color: $black;
       }
     }
   }
