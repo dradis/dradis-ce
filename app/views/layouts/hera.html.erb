@@ -32,94 +32,90 @@
 
     <header class="sticky-top">
       <%= render 'shared/navigation/instance_nav' %>
-      <%= render 'layouts/hera/project_nav' %>
+      <%= render 'layouts/hera/project_nav' if defined?(current_project) && current_project&.persisted? %>
     </header>
 
-    <aside>
-      <%= render "layouts/hera/sidebar" %>
-    </aside>
-
     <div class="content-grid">
-      <main class="container-fluid" data-behavior="view-content">
-        <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
-        <%= render 'shared/noscript' %>
-        <%= render "layouts/hera/project_teaser" unless defined?(Dradis::Pro) %>
-        <%= flash_messages %>
-        <%= content_for?(:content) ? yield(:content) : yield %>
-      </main>
-      <footer>
-        <% if defined?(Dradis::Pro) %>
-          <span>Dradis Professional Edition v<%= Dradis::Pro.version %></span>
-        <% else %>
-          <span>Dradis Community Edition v<%= Dradis::CE.version %></span>
-        <% end %>
-        <span>- <a href="https://dradis.com" target="_blank">dradis.com</a></span>
-      </footer>
+      <aside>
+        <%= render 'layouts/hera/sidebar' if defined?(current_project) && current_project&.persisted? %>
+      </aside>
+      <div class="d-flex flex-column justify-content-between" data-behavior="view-content">
+        <main class="container-fluid">
+          <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
+          <%= render 'shared/noscript' %>
+          <%= render "layouts/hera/project_teaser" unless defined?(Dradis::Pro) %>
+          <%= flash_messages %>
+          <%= content_for?(:content) ? yield(:content) : yield %>
+        </main>
+        <footer>
+          <% if defined?(Dradis::Pro) %>
+            <span>Dradis Professional Edition v<%= Dradis::Pro.version %></span>
+          <% else %>
+            <span>Dradis Community Edition v<%= Dradis::CE.version %></span>
+          <% end %>
+          <span>- <a href="https://dradis.com" target="_blank">dradis.com</a></span>
+        </footer>
+      </div>
+      <% if content_for?(:sidebar) %>
+        <%= render "layouts/hera/secondary_sidebar" %>
+      <% end %>
     </div>
 
-    <% if content_for?(:sidebar) %>
-      <aside>
-        <%= render "layouts/hera/secondary_sidebar" %>
-      </aside>
-    <% end %>
-
-    <%= render 'activities/poller' %>
+    <%= render 'activities/poller' if defined?(current_project) && current_project&.persisted? %>
 
     <!-- All modals go here -->
-    <%= render 'layouts/hera/modals' %>
-    <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
+    <% if defined?(current_project) && current_project&.persisted? %>
+      <%= render 'layouts/hera/modals' %>
+      <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
 
-    <% if content_for?(:board_rename_modal) %>
-      <%= yield(:board_rename_modal) %>
-    <% end %>
-    <% if content_for?(:list_new_modal) %>
-      <%= yield(:list_new_modal) %>
-    <% end %>
-    <% if content_for?(:list_rename_modal) %>
-      <%= yield(:list_rename_modal) %>
-    <% end %>
-
-    <% if content_for?(:bulk_update_modal) %>
-      <%= yield(:bulk_update_modal) %>
-    <% end %>
-
-    <% if content_for?(:diff_modal) %>
-      <%= yield(:diff_modal) %>
-    <% end %>
-
-    <% if controller_name == 'boards' || controller_name == 'projects' %>
-      <%= render 'boards/modals/new_board_form' unless request.xhr? %>
-    <% end %>
-
-    <% if @node && @node.label != 'Methodologies'%>
-      <% if @board %>
-        <%= render partial: 'boards/modals/board_rename_form', locals: { board: @board } %>
+      <% if content_for?(:board_rename_modal) %>
+        <%= yield(:board_rename_modal) %>
       <% end %>
-      <%= render partial: 'boards/modals/new_board_form' %>
-      <%= render partial: 'nodes/modals/add_node', locals: { type: :child } %>
-      <%= render partial: 'nodes/modals/delete' %>
-      <%= render partial: 'nodes/modals/merge' %>
-      <%= render partial: 'nodes/modals/move' %>
-      <%= render partial: 'nodes/modals/rename' %>
-    <% end %>
+      <% if content_for?(:list_new_modal) %>
+        <%= yield(:list_new_modal) %>
+      <% end %>
+      <% if content_for?(:list_rename_modal) %>
+        <%= yield(:list_rename_modal) %>
+      <% end %>
 
-    <% if controller_path == 'evidence' %>
-      <%= render partial: 'evidence/modals/move' %>
-    <% end %>
+      <% if content_for?(:bulk_update_modal) %>
+        <%= yield(:bulk_update_modal) %>
+      <% end %>
 
-    <% if controller_name == 'notes'%>
-      <%= render partial: 'notes/modals/move' %>
-    <% end %>
+      <% if content_for?(:diff_modal) %>
+        <%= yield(:diff_modal) %>
+      <% end %>
 
-    <% if controller_name == 'styles_hera' %>
-      <%= render partial: 'styles_hera/modal' %>
-    <% end %>
+      <% if controller_name == 'boards' || controller_name == 'projects' %>
+        <%= render 'boards/modals/new_board_form' unless request.xhr? %>
+      <% end %>
 
-    <% if %w[tags issues].include?(controller_name) %>
-      <%= render partial: 'tags/modals/form' %>
-    <% end %>
+      <% if @node && @node.label != 'Methodologies'%>
+        <%= render partial: 'nodes/modals/add_node', locals: { type: :child } %>
+        <%= render partial: 'nodes/modals/delete' %>
+        <%= render partial: 'nodes/modals/merge' %>
+        <%= render partial: 'nodes/modals/move' %>
+        <%= render partial: 'nodes/modals/rename' %>
+      <% end %>
 
-    <%= render 'console/console' %>
+      <% if controller_path == 'evidence' %>
+        <%= render partial: 'evidence/modals/move' %>
+      <% end %>
+
+      <% if controller_name == 'notes'%>
+        <%= render partial: 'notes/modals/move' %>
+      <% end %>
+
+      <% if controller_name == 'styles_hera' %>
+        <%= render partial: 'styles_hera/modal' %>
+      <% end %>
+
+      <% if %w[tags issues].include?(controller_name) %>
+        <%= render partial: 'tags/modals/form' %>
+      <% end %>
+
+      <%= render 'console/console' %>
+    <% end %>
     <!-- End of modals -->
   </body>
 </html>
