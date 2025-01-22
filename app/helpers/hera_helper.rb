@@ -56,4 +56,8 @@ module HeraHelper
 
     content_tag :i, nil, options
   end
+
+  def page_title
+    [content_for(:title), "Dradis #{defined?(Dradis::Pro) ? 'Professional' : 'Community' } Edition"].compact.join(' | ')
+  end
 end
