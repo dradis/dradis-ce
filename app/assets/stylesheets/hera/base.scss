@@ -51,13 +51,13 @@ a {
 .alert-success {
   background-color: $green-100 !important;
   border: 1px solid $green-200;
-  color: darken($green-700, 10%);
+  color: $green-800;
 }
 
 .alert-warning {
   background-color: $yellow-100 !important;
   border: 1px solid $yellow-300;
-  color: darken($yellow-700, 10%);
+  color: $yellow-800;
 }
 
 .bg-info {
@@ -67,6 +67,14 @@ a {
 
 .bg-primary {
   background-color: $primary !important;
+}
+
+.bg-success {
+  color: $green-800;
+}
+
+.bg-warning {
+  color: $yellow-800;
 }
 
 blockquote {
