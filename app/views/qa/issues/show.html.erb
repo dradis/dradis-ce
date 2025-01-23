@@ -27,6 +27,8 @@
                 <%= link_to edit_project_qa_issue_path(current_project, @issue) do %>
                   <i class="fa-solid fa-pencil fa-fw"></i> Edit
                 <% end %>
+              </span>
+              <span class="action">
                 <%= link_to project_issue_revisions_path(current_project, @issue, return_to: :qa) do %>
                   <i class="fa-solid fa-history fa-fw"></i> View History
                 <% end %>
