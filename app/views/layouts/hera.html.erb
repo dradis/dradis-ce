@@ -28,7 +28,18 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="<%= controller_name %> <%= action_name %>">
+  <%= 
+    content_tag(
+      :body, 
+      class: class_names(controller_path.gsub('/', '-'), 
+        controller_name, 
+        action_name, 
+        'in-project': defined?(current_project) && current_project&.persisted?
+      ),
+      data: {
+        env: (Rails.env unless Rails.env.production?),
+      } 
+    ) do %>
 
     <header class="sticky-top">
       <%= render 'shared/navigation/instance_nav' %>
@@ -117,5 +128,5 @@
       <%= render 'console/console' %>
     <% end %>
     <!-- End of modals -->
-  </body>
+  <% end %>
 </html>
