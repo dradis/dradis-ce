@@ -1,7 +1,7 @@
 <% content_for :title, "#{@record.class.model_name} ##{@record.id} - comparing revisions" %>
 
 <% content_for :breadcrumbs do %>
-  <%= render partial: 'breadcrumbs' %>
+  <%= render partial: 'breadcrumbs', locals: { return_to_qa: @return_to_qa } %>
 <% end %>
 
 <% if @node %>
