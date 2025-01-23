@@ -42,6 +42,29 @@ a {
   font-size: 0.9rem;
 }
 
+.alert-danger {
+  background-color: $red-100 !important;
+  border: 1px solid $red-200;
+  color: $red-600;
+}
+
+.alert-success {
+  background-color: $green-100 !important;
+  border: 1px solid $green-200;
+  color: darken($green-700, 10%);
+}
+
+.alert-warning {
+  background-color: $yellow-100 !important;
+  border: 1px solid $yellow-300;
+  color: darken($yellow-700, 10%);
+}
+
+.bg-info {
+  background-color: $green-100 !important;
+  color: $green-900;
+}
+
 .bg-primary {
   background-color: $primary !important;
 }
@@ -100,10 +123,12 @@ mark {
 
 .nav-pills {
   .nav-link {
+    border: 1px solid $border-color;
     transition: all 0s ease-in-out;
 
     &.active {
       background-color: $secondary-bg;
+      border: 1px solid $border-color;
       color: $text-link-hover;
     }
   }
