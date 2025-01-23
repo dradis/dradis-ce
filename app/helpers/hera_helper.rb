@@ -50,6 +50,9 @@ module HeraHelper
     end.join("\n").html_safe
   end
 
+  def in_project?
+    defined?(current_project) && current_project&.persisted?
+  end
 
   def page_title
     [content_for(:title), "Dradis #{defined?(Dradis::Pro) ? 'Professional' : 'Community' } Edition"].compact.join(' | ')

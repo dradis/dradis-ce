@@ -34,7 +34,7 @@
       class: class_names(controller_path.gsub('/', '-'), 
         controller_name, 
         action_name, 
-        'in-project': defined?(current_project) && current_project&.persisted?
+        'in-project': in_project?
       ),
       data: {
         env: (Rails.env unless Rails.env.production?),
@@ -43,12 +43,12 @@
 
     <header class="sticky-top">
       <%= render 'shared/navigation/instance_nav' %>
-      <%= render 'layouts/hera/project_nav' if defined?(current_project) && current_project&.persisted? %>
+      <%= render 'layouts/hera/project_nav' if in_project? %>
     </header>
 
     <div class="content-grid">
       <aside>
-        <%= render 'layouts/hera/sidebar' if defined?(current_project) && current_project&.persisted? %>
+        <%= render 'layouts/hera/sidebar' if in_project? %>
       </aside>
       <div class="d-flex flex-column justify-content-between" data-behavior="view-content">
         <main class="container-fluid">
@@ -72,10 +72,10 @@
       <% end %>
     </div>
 
-    <%= render 'activities/poller' if defined?(current_project) && current_project&.persisted? %>
+    <%= render 'activities/poller' if in_project? %>
 
     <!-- All modals go here -->
-    <% if defined?(current_project) && current_project&.persisted? %>
+    <% if in_project? %>
       <%= render 'layouts/hera/modals' %>
       <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
 
