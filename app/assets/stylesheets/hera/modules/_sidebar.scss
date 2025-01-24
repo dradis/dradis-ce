@@ -1,3 +1,10 @@
+body:not(.in-project) {
+  .sidebar {
+    top: #{$navbar-height};
+    height: calc(100vh - #{$navbar-height});
+  }
+}
+
 .sidebar {
   --padding: 1.25rem;
   --margin: 1rem;
