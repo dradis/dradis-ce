@@ -2,9 +2,18 @@ body:not(.unauthenticated) {
   @media (max-width: 991px) {
     grid-template-rows: #{$navbar-height} 1fr;
   }
-  @media (min-width: 992px) {
-    grid-template-rows: calc(#{$navbar-height} * 2) 1fr;
+
+  &.in-project {
+    @media (min-width: 992px) {
+      grid-template-rows: calc(#{$navbar-height} * 2) 1fr;
+    }
   }
+  &:not(.in-project) {
+    @media (min-width: 992px) {
+      grid-template-rows: #{$navbar-height} 1fr;
+    }
+  }
+
   grid-template-areas:
     'navigation'
     'view-content';
