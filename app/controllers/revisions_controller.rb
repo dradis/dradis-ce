@@ -7,13 +7,14 @@ class RevisionsController < AuthenticatedController
   before_action :load_record, except: [ :trash, :recover ]
 
   def index
-    redirect_to action: :show, id: @record.versions.last.try(:id) || 0
+    redirect_to action: :show, id: @record.versions.last.try(:id) || 0, return_to: params[:return_to]
   end
 
   def show
     # Use `reorder`, not `order`, to override Paper Trail's default scope
     @revisions = @record.versions.includes(:item).reorder('created_at DESC')
     @revision  = @revisions.find(params[:id])
+    @return_to_qa = params[:return_to] == 'qa'
 
     if @revision.event == 'update'
       @diffed_revision = DiffedRevision.new(@revision, @record)

@@ -28,7 +28,7 @@ module RevisionsHelper
     when Card
       project_board_list_card_revision_path(current_project, @board, @list, record, revision)
     when Issue
-      project_issue_revision_path(current_project, record, revision)
+      project_issue_revision_path(current_project, record, revision, params)
     when Note
       project_node_note_revision_path(current_project, record.node, record, revision)
     when Evidence
