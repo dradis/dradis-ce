@@ -289,7 +289,7 @@
 @include media-breakpoint-down(lg) {
   body,
   body:has(.main-sidebar.sidebar-collapsed) {
-    grid-template-columns: 0 1fr;
+    grid-template-columns: 1fr;
   }
 
   .sidebar {
