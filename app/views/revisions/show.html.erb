@@ -43,7 +43,7 @@
                     <% if revision == @revision %>
                       Currently Viewing
                     <% elsif revision.event == "update" %>
-                      <%= link_to "View Changes", record_revision_path(@record, revision) %>
+                      <%= link_to "View Changes", record_revision_path(@record, revision, return_to: @return_to_qa ? :qa : nil) %>
                     <% end %>
                   <% end %>
                 </td>
