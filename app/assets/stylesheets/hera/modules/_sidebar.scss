@@ -151,7 +151,7 @@ body:not(.in-project) {
 
     .page-tips {
       .bg-info {
-        padding: calc(val(--padding) / 2);
+        padding: calc(var(--padding) / 2);
         border-radius: $border-radius;
       }
     }
