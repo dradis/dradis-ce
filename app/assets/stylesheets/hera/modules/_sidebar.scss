@@ -22,6 +22,10 @@ body:not(.in-project) {
     padding: var(--padding) var(--padding) 0.25rem var(--padding);
     overflow-y: auto;
 
+    .btn-block {
+      width: 100%;
+    }
+
     .dradis-placeholder {
       font-style: italic;
       cursor: default;
@@ -142,6 +146,13 @@ body:not(.in-project) {
         .list-item:nth-last-child(2) {
           border-bottom: none;
         }
+      }
+    }
+
+    .page-tips {
+      .bg-info {
+        padding: calc(val(--padding) / 2);
+        border-radius: $border-radius;
       }
     }
 
