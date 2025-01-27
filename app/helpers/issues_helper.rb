@@ -86,7 +86,13 @@ module IssuesHelper
 
   def state_icons
     state_icons = []
-    Issue.states.keys.each do |state|
+    states = Issue.states.keys
+
+    if current_project && !can?(:publish, current_project)
+      states = states - ['published']
+    end
+
+    states.each do |state|
       case state
       when 'draft'
         state_icons << ['Draft', 'fa-pencil-square']

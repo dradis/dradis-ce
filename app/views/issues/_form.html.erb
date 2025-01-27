@@ -36,7 +36,7 @@
   <%= render 'issues/tag_input', f: f %>
 
   <div class="form-actions">
-    <%= render partial: 'qa/state_button', locals: { f: f, record: @issue } %>
+    <%= render partial: 'qa/state_button', locals: { f: f, record: @issue, states: @states } %>
   </div>
   or
   <%=
