@@ -113,6 +113,18 @@
   }
 }
 
+.btn-placeholder {
+  align-items: center;
+  background-color: $primary;
+  border-radius: 0.25rem;
+  color: $white;
+  cursor: default;
+  display: flex;
+  padding: 0.375rem 0.75rem;
+  text-align: center;
+  z-index: 1;
+}
+
 .btn-states {
   .dropdown-menu {
     max-width: 20rem;
