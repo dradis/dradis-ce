@@ -234,18 +234,33 @@
 //vertical nav-tabs
 .nav {
   &.flex-column {
-    .nav-link {
-      border: 1px solid $border-color;
-
-      &.active {
-        background-color: $primary;
-        border: none;
-        color: $white;
+    .nav-item {
+      &:first-child {
+        .nav-link {
+          border-top-left-radius: $border-radius;
+          border-top-right-radius: $border-radius;
+        }
       }
 
-      &:focus,
-      &:hover {
-        background-color: $light;
+      &:last-child {
+        .nav-link {
+          border-bottom-left-radius: $border-radius;
+          border-bottom-right-radius: $border-radius;
+        }
+      }
+
+      .nav-link {
+        border: 1px solid $border-color;
+
+        &.active {
+          background-color: $instance-nav-bg;
+          border: none;
+        }
+
+        &:focus,
+        &:hover {
+          background-color: $light;
+        }
       }
     }
   }
