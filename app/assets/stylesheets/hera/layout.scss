@@ -61,26 +61,6 @@ header {
   grid-area: navigation;
 }
 
-.pagination {
-  padding-top: 0.75rem;
-  margin-bottom: 0.75rem;
-  border-top: 1px solid $border-color;
-
-  > * {
-    padding-right: 5px;
-  }
-}
-
-.page {
-  &.page-mini {
-    padding: 10px;
-  }
-  &.page-none {
-    margin: 0 0;
-    padding: 0px;
-  }
-}
-
 .row {
   padding: 0 0.75rem;
 
