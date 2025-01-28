@@ -96,6 +96,39 @@ code {
   padding: 0.15rem 0.5rem;
 }
 
+.empty-state {
+  &-actions {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+  }
+
+  &-body-text {
+    text-align: center;
+  }
+
+  &-docs-link {
+    font-size: 0.8rem;
+  }
+
+  &-icon {
+    border-radius: 50%;
+    margin: 0 auto;
+    width: max-content;
+
+    img {
+      height: auto;
+      width: 11.5rem;
+    }
+  }
+
+  &-title {
+    margin: 3rem 0;
+    text-align: center;
+  }
+}
+
 .form-actions {
   padding-top: 1rem;
   border-top: 1px solid $border-color;
