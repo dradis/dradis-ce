@@ -289,6 +289,8 @@ div.dataTables_wrapper {
       transition: color 0s;
 
       &.buttons-columnVisibility {
+        padding-left: 2.25rem;
+
         &.active {
           &::before {
             background-color: $primary;
