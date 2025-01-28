@@ -9,7 +9,9 @@
 @import 'hera/modules/navigation/navigation';
 @import 'hera/modules/navigation/search';
 @import 'hera/modules/notifications';
+@import 'hera/modules/revisions';
 @import 'hera/modules/sidebar';
+@import 'hera/modules/validations';
 
 [aria-tooltip] {
   position: relative;
