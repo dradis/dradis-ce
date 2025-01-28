@@ -231,6 +231,26 @@
   white-space: nowrap;
 }
 
+//vertical nav-tabs
+.nav {
+  &.flex-column {
+    .nav-link {
+      border: 1px solid $border-color;
+
+      &.active {
+        background-color: $primary;
+        border: none;
+        color: $white;
+      }
+
+      &:focus,
+      &:hover {
+        background-color: $light;
+      }
+    }
+  }
+}
+
 .nav-link {
   color: $text-link;
   display: block;
