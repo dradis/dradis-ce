@@ -5,6 +5,11 @@
   font-size: inherit;
   color: $black;
 
+  &.btn-block {
+    display: block;
+    width: 100%;
+  }
+
   &.btn-danger {
     @include button($red);
     color: $white;
