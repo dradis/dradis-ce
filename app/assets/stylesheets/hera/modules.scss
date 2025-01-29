@@ -231,6 +231,14 @@
   white-space: nowrap;
 }
 
+.list-group {
+  .list-group-item {
+    &:hover {
+      background-color: $light;
+    }
+  }
+}
+
 //vertical nav-tabs
 .nav {
   &.flex-column {
