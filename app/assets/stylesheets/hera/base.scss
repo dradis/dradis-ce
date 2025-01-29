@@ -168,7 +168,7 @@ mark {
     transition: all 0s ease-in-out;
 
     &.active {
-      background-color: $secondary-bg;
+      background-color: $instance-nav-bg;
       border: 1px solid $border-color;
       color: $text-link-hover;
     }
