@@ -246,11 +246,13 @@
         .nav-link {
           border-bottom-left-radius: $border-radius;
           border-bottom-right-radius: $border-radius;
+          border-bottom: 1px solid $border-color;
         }
       }
 
       .nav-link {
         border: 1px solid $border-color;
+        border-bottom: none;
 
         &.active {
           background-color: $instance-nav-bg;
