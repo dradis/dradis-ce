@@ -84,11 +84,7 @@ class IssuesController < AuthenticatedController
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
 
-        if @issue.state_previously_changed? && !@issue.text_previously_changed?
-          track_state_change(@issue)
-        else
-          track_updated(@issue)
-        end
+        track_update_or_state_change
 
         format.html { redirect_to_main_or_qa }
       else
@@ -222,6 +218,14 @@ class IssuesController < AuthenticatedController
       "project-#{current_project.id}-issue-#{params[:template]}"
     else
       "project-#{current_project.id}-issue"
+    end
+  end
+
+  def track_update_or_state_change
+    if @issue.state_previously_changed? && !@issue.text_previously_changed?
+      track_state_change(@issue)
+    else
+      track_updated(@issue)
     end
   end
 end
