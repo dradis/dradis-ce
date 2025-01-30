@@ -163,7 +163,12 @@ mark {
 }
 
 .nav-pills {
+  .nav-item:first-child {
+    margin-right: 0.5rem;
+  }
+
   .nav-link {
+    background-color: $secondary-bg;
     border: 1px solid $border-color;
     transition: all 0s ease-in-out;
 
