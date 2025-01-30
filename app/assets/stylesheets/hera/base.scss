@@ -207,6 +207,14 @@ strong {
   font-family: 'ProximaNovaRegular', 'system-ui';
 }
 
+.tab-content {
+  .card {
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
+
 .text-break-spaces {
   white-space: break-spaces !important;
 }
