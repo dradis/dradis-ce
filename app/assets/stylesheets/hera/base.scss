@@ -96,6 +96,10 @@ code {
   padding: 0.15rem 0.5rem;
 }
 
+.d-none {
+  display: none;
+}
+
 .empty-state {
   &-actions {
     align-items: center;
@@ -163,7 +167,16 @@ mark {
 }
 
 .nav-pills {
+  .nav-item {
+    margin-right: 0.5rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
   .nav-link {
+    background-color: $secondary-bg;
     border: 1px solid $border-color;
     transition: all 0s ease-in-out;
 
@@ -172,6 +185,14 @@ mark {
       border: 1px solid $border-color;
       color: $text-link-hover;
     }
+  }
+}
+
+.nav-tabs + .tab-content {
+  .card {
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
   }
 }
 
