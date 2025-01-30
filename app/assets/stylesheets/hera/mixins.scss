@@ -27,13 +27,3 @@
     }
   }
 }
-
-@mixin button($color) {
-  border: 0px none;
-  background: $color;
-
-  &:hover,
-  &:not(:disabled):not(.disabled):active {
-    background: darken($color, 10);
-  }
-}
