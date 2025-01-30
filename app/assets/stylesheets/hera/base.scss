@@ -184,6 +184,16 @@ mark {
   }
 }
 
+.nav-tabs {
+  .tab-content {
+    .card {
+      border-top: none;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+}
+
 .no-caret {
   &.dropdown-toggle::after {
     display: none;
@@ -205,14 +215,6 @@ pre code {
 
 strong {
   font-family: 'ProximaNovaRegular', 'system-ui';
-}
-
-.tab-content {
-  .card {
-    border-top: none;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  }
 }
 
 .text-break-spaces {
