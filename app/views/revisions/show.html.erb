@@ -1,7 +1,7 @@
 <% content_for :title, "#{@record.class.model_name} ##{@record.id} - comparing revisions" %>
 
 <% content_for :breadcrumbs do %>
-  <%= render partial: 'breadcrumbs', locals: { return_to_qa: @return_to_qa } %>
+  <%= render partial: 'breadcrumbs', locals: { qa: @qa } %>
 <% end %>
 
 <% if @node %>
@@ -43,7 +43,7 @@
                     <% if revision == @revision %>
                       Currently Viewing
                     <% elsif revision.event == "update" %>
-                      <%= link_to "View Changes", record_revision_path(@record, revision, return_to: @return_to_qa ? :qa : nil) %>
+                      <%= link_to "View Changes", record_revision_path(@record, revision, qa: @qa) %>
                     <% end %>
                   <% end %>
                 </td>

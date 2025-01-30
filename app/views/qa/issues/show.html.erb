@@ -29,7 +29,7 @@
                 <% end %>
               </span>
               <span class="action">
-                <%= link_to project_issue_revisions_path(current_project, @issue, return_to: :qa) do %>
+                <%= link_to project_issue_revisions_path(current_project, @issue, qa: true) do %>
                   <i class="fa-solid fa-history fa-fw"></i> View History
                 <% end %>
               </span>
