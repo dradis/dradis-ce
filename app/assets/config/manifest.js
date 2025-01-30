@@ -2,7 +2,7 @@
 //= link setup/setup.css
 //= link hera.css
 
-//= link legacy.application.js
+//= link application.js
 //= link hera.js
 
 //= link_tree ../../javascript .js
