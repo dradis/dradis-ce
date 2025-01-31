@@ -28,6 +28,11 @@
                   <i class="fa-solid fa-pencil fa-fw"></i> Edit
                 <% end %>
               </span>
+              <span class="action">
+                <%= link_to project_issue_revisions_path(current_project, @issue, qa: true) do %>
+                  <i class="fa-solid fa-history fa-fw"></i> View History
+                <% end %>
+              </span>
             </span>
           </h4>
           <%= render partial: 'shared/textile_content', locals: { record: @issue, preview_path: preview_project_issue_path(current_project, @issue) } %>
