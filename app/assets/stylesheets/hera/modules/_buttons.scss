@@ -259,3 +259,22 @@
     }
   }
 }
+
+.btn-xs {
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 1px 5px;
+}
+
+.show {
+  & > .btn-info.dropdown-toggle {
+    background-color: $mint-light;
+    border-color: $mint-light;
+  }
+
+  & > .btn-primary.dropdown-toggle {
+    background-color: $aqua-light;
+    border-color: $aqua-light;
+  }
+}
