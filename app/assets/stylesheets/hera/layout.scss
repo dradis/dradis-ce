@@ -63,6 +63,18 @@ header {
   grid-area: navigation;
 }
 
+hr {
+  border-bottom: solid 2px rgba(0, 0, 0, 0.25);
+  border-top: 0;
+  margin: 1.25rem 0;
+
+  &.small {
+    border-bottom: solid 5px rgba(0, 0, 0, 0.25);
+    margin-left: 0;
+    width: 75px;
+  }
+}
+
 .row {
   padding: 0 0.75rem;
 
