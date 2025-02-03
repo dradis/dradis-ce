@@ -269,12 +269,12 @@
 
 .show {
   & > .btn-info.dropdown-toggle {
-    background-color: $mint-light;
-    border-color: $mint-light;
+    background-color: darken($green-700, 10%);
+    border-color: darken($green-700, 10%);
   }
 
   & > .btn-primary.dropdown-toggle {
-    background-color: $aqua-light;
-    border-color: $aqua-light;
+    background-color: $primary;
+    border-color: $primary;
   }
 }
