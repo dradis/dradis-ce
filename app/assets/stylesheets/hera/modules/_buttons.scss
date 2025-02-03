@@ -77,6 +77,36 @@
     }
   }
 
+  .btn-outline-info {
+    color: darken($green-700, 10%);
+    border-color: darken($green-700, 10%);
+
+    &:hover,
+    &:focus,
+    &:focus-visible,
+    &:active,
+    &:not(:disabled):not(.disabled):active {
+      color: $white;
+      border-color: darken($green-700, 10%);
+      background: darken($green-700, 10%);
+    }
+  }
+
+  .btn-outline-lavender {
+    border-color: $lavender-dark;
+    color: $lavender-dark;
+
+    &:hover,
+    &:focus,
+    &:focus-visible,
+    &:active,
+    &:not(:disabled):not(.disabled):active {
+      background-color: $lavender-dark;
+      border-color: $lavender-dark;
+      color: $white;
+    }
+  }
+
   &.btn-primary,
   &.btn-primary:not(:disabled):not(.disabled).active {
     @include button($primary);
