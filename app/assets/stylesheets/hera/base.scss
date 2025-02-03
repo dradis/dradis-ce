@@ -60,6 +60,21 @@ a {
   color: $yellow-800;
 }
 
+.badge-outline-danger {
+  border: 1px solid $red;
+  color: $red;
+}
+
+.badge-outline-info {
+  border: 1px solid darken($green-700, 10%);
+  color: darken($green-700, 10%);
+}
+
+.badge-outline-lavender {
+  border: 1px solid $lavender-dark;
+  color: $lavender-dark;
+}
+
 .bg-info {
   background-color: $green-100 !important;
   color: $green-900;
