@@ -1,6 +1,8 @@
 [v#.#.#] ([month] [YYYY])
   - Hera: Add new layout with redesigned navigation
-  - QA: Add View History link when viewing Issues/Content blocks
+  - QA:
+    - Add View History link when viewing Issues/Content blocks
+    - Redirect to the next item after reviewing
   - Upgraded gems:
     - [gem]
   - Bugs fixes:

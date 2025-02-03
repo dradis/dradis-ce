@@ -23,7 +23,8 @@ class QA::IssuesController < AuthenticatedController
   def update
     if @issue.update(state: @state, updated_at: Time.now)
       track_state_change(@issue)
-      redirect_to project_qa_issues_path(current_project), notice: 'State updated successfully.'
+
+      redirect_to_next_issue_or_index
     else
       render :show, alert: @issue.errors.full_messages.join('; ')
     end
@@ -60,6 +61,17 @@ class QA::IssuesController < AuthenticatedController
 
   def liquid_resource_assigns
     { 'issue' => IssueDrop.new(@issue) }
+  end
+
+  def redirect_to_next_issue_or_index
+    notice = 'State updated successfully.'
+    next_issue = current_project.issues.ready_for_review.first
+
+    if next_issue
+      redirect_to project_qa_issue_path(current_project, next_issue), notice: notice
+    else
+      redirect_to project_qa_issues_path(current_project), notice: notice
+    end
   end
 
   def set_issue
