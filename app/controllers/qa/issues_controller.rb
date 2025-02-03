@@ -64,10 +64,11 @@ class QA::IssuesController < AuthenticatedController
   end
 
   def redirect_to_next_issue_or_index
-    notice = 'State updated successfully.'
+    notice = "State successfully updated for #{@issue.title}."
     next_issue = current_project.issues.ready_for_review.first
 
     if next_issue
+      notice << ' You are now viewing the next issue ready for review.'
       redirect_to project_qa_issue_path(current_project, next_issue), notice: notice
     else
       redirect_to project_qa_issues_path(current_project), notice: notice
