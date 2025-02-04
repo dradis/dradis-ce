@@ -144,9 +144,22 @@ code {
   }
 }
 
+fieldset.check_boxes {
+  .form-check {
+    margin-bottom: 0.5rem;
+  }
+}
+
 .form-actions {
   padding-top: 1rem;
   border-top: 1px solid $border-color;
+}
+
+.form-check-input {
+  &:checked {
+    background-color: $primary;
+    border-color: $primary;
+  }
 }
 
 .form-control {
