@@ -80,8 +80,14 @@ a {
   color: $green-900;
 }
 
+.bg-lavender {
+  background-color: $lavender-light;
+  color: darken($lavender-dark, 40%);
+}
+
 .bg-primary {
   background-color: $primary !important;
+  color: $white;
 }
 
 .bg-success {
