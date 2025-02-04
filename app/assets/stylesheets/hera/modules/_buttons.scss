@@ -77,7 +77,7 @@
     }
   }
 
-  .btn-outline-info {
+  &.btn-outline-info {
     color: darken($green-700, 10%);
     border-color: darken($green-700, 10%);
 
@@ -92,7 +92,7 @@
     }
   }
 
-  .btn-outline-lavender {
+  &.btn-outline-lavender {
     border-color: $lavender-dark;
     color: $lavender-dark;
 
@@ -107,7 +107,7 @@
     }
   }
 
-  .btn-outline-primary {
+  &.btn-outline-primary {
     color: $primary;
     border-color: $primary;
 
@@ -122,7 +122,22 @@
     }
   }
 
-  .btn-outline-success {
+  &.btn-outline-secondary {
+    border-color: $grey-700;
+    color: $grey-700;
+
+    &:hover,
+    &:focus,
+    &:focus-visible,
+    &:active,
+    &:not(:disabled):not(.disabled):active {
+      background: $grey-700;
+      border-color: $grey-700;
+      color: $white;
+    }
+  }
+
+  &.btn-outline-success {
     border-color: darken($green-700, 10%);
     color: darken($green-700, 10%);
 
@@ -137,7 +152,7 @@
     }
   }
 
-  .btn-outline-warning {
+  &.btn-outline-warning {
     &:hover,
     &:focus,
     &:focus-visible,
@@ -179,6 +194,19 @@
   &.rounded-end {
     // Bootstrap rounds the desired corners, but doesn't square up the rest
     border-radius: 0;
+  }
+
+  &.btn-secondary {
+    background-color: $grey-700;
+    color: $white;
+
+    &:hover,
+    &:focus,
+    &:focus-visible,
+    &:active,
+    &:not(:disabled):not(.disabled):active {
+      background-color: $grey-900;
+    }
   }
 
   &.btn-success {
