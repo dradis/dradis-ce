@@ -2,7 +2,7 @@
   - Hera: Add new layout with redesigned navigation
   - QA:
     - Add View History link when viewing Issues/Content blocks
-    - Redirect to the next item after reviewing
+    - Automatically go to the next record after reviewing
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
