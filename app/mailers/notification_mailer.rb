@@ -22,6 +22,6 @@ class NotificationMailer < ApplicationMailer
   end
 
   def set_login_path_for_user # careful not to override login_path route helper
-    login_url
+    @login_path_for_user = login_url
   end
 end
