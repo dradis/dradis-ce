@@ -41,13 +41,29 @@ DradisDatatable.prototype.setupStateButtons = function () {
     api = this;
 
   states.forEach(function (state) {
+    const publishDisabled =
+      state[0] === 'Published' &&
+      $('[data-published-state]').data('published-state') === false;
+
+    let attrs;
+
+    if (publishDisabled) {
+      attrs = {
+        'data-bs-toggle': 'tooltip',
+        'data-bs-title': 'You are not a Reviewer for this project.',
+      };
+    }
+
     stateButtons.push({
-      text: $(
-        `<i class="fa-solid ${state[1]} fa-fw me-2"></i><span>${state[0]}</span>`
-      ),
       action: DradisDatatable.prototype.updateRecordState.call(
         api,
-        state[0].toLowerCase().replaceAll(' ', '_')
+        state[0].toLowerCase().replaceAll(' ', '_'),
+        $('[data-published-state]').data('published-state') != false
+      ),
+      attr: attrs,
+      className: publishDisabled ? 'disabled' : null,
+      text: $(
+        `<i class="fa-solid ${state[1]} fa-fw me-2"></i><span>${state[0]}</span>`
       ),
     });
   });
@@ -55,7 +71,11 @@ DradisDatatable.prototype.setupStateButtons = function () {
   return stateButtons;
 };
 
-DradisDatatable.prototype.updateRecordState = function (newState) {
+DradisDatatable.prototype.updateRecordState = function (newState, canPublish) {
+  if (newState == 'Published' && canPublish) {
+    return;
+  }
+
   var api = this;
 
   return function () {
