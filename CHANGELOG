@@ -16,8 +16,8 @@
       - [integration bug fixes]:
         - [future tense verb] [integration bug fix]
   - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
+    - HTML:
+      - Fix default HTML report template to work with CE
   - REST/JSON API enhancements:
     - [API entity]:
       - [future tense verb] [API enhancement]
