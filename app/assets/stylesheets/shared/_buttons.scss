@@ -12,6 +12,8 @@
 
   &.disabled {
     background-color: $grey-200;
+    border-color: $grey-500;
+    border-left-color: $primary;
     color: $grey-700;
     cursor: not-allowed;
   }
