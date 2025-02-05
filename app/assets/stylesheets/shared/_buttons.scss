@@ -56,6 +56,17 @@
     margin: 0;
     padding: 0.5rem 1.75rem 0.5rem 0.5rem;
 
+    &:has(input:disabled) {
+      background-color: $grey-200;
+      cursor: not-allowed;
+
+      .state-label {
+        p {
+          color: $grey-700;
+        }
+      }
+    }
+
     &:hover {
       background-color: $grey-100;
     }
