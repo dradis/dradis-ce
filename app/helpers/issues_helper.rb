@@ -88,10 +88,6 @@ module IssuesHelper
     state_icons = []
     states = Issue.states.keys
 
-    if current_project && !can?(:publish, current_project)
-      states = states - ['published']
-    end
-
     states.each do |state|
       case state
       when 'draft'

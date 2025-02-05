@@ -9,6 +9,5 @@ module QAStates
 
   def set_states
     @states = Issue.states.dup
-    @states.delete('published') unless can?(:publish, current_project)
   end
 end
