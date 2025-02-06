@@ -164,7 +164,7 @@ shared_examples 'qa pages' do |item_type|
       end
     end
 
-    context 'user is a reviewer', focus: true do
+    context 'user is a reviewer' do
       before do
         allow_any_instance_of(Project).to receive(:reviewers).and_return(User.all)
         visit polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
