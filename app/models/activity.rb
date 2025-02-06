@@ -27,6 +27,10 @@ class Activity < ApplicationRecord
     includes(:trackable).order('activities.created_at DESC').limit(20)
   end
 
+  scope :by_user, -> (user_id) do
+    includes(:trackable).where(user_id: user_id) if user_id.present?
+  end
+
   # -- Callbacks ------------------------------------------------------------
 
   # Cast action to a string so the 'inclusion' validation works with symbols

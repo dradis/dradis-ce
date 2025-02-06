@@ -8,6 +8,13 @@
       </li>
       <li class="breadcrumb-item active">All Activity</li>
     </ol>
+    <%=form_with(url: project_activities_path(current_project), method: :get, local: true) do |f| %>
+      <div>
+        <%= label_tag :user_id, "User ID" %>
+        <%= f.select :user_id, User.all.map {|user| [user.email, user.id]}, selected: params[:user_id]%>
+      </div>
+      <%= submit_tag "Search" %>
+    <%end%>
   </nav>
 <% end %>
 

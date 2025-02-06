@@ -6,11 +6,14 @@ class ActivitiesController < AuthenticatedController
 
   def index
     @page = params[:page].present? ? params[:page].to_i : 1
-
+    
     activities = current_project.activities
                                 .includes(:trackable)
                                 .order(created_at: :desc)
                                 .page(@page)
+
+    #Search filter logic using the scopes
+    activities = activities.by_user(params[:user_id])
 
     @activities_groups = activities.group_by do |activity|
       activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
