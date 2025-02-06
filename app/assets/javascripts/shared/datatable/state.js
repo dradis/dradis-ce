@@ -43,7 +43,7 @@ DradisDatatable.prototype.setupStateButtons = function () {
   states.forEach(function (state) {
     const publishDisabled =
       state[0] === 'Published' &&
-      $('[data-published-state]').data('published-state') === false;
+      !$('[data-can-publish]').data('can-publish');
 
     let attrs;
 
@@ -58,7 +58,7 @@ DradisDatatable.prototype.setupStateButtons = function () {
       action: DradisDatatable.prototype.updateRecordState.call(
         api,
         state[0].toLowerCase().replaceAll(' ', '_'),
-        $('[data-published-state]').data('published-state') != false
+        $('[data-can-publish]').data('can-publish')
       ),
       attr: attrs,
       className: publishDisabled ? 'disabled' : null,
