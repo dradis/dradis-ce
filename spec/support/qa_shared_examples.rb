@@ -147,6 +147,38 @@ shared_examples 'qa pages' do |item_type|
     end
   end
 
+  describe 'reviewer role', js: true do
+    context 'user is not a reviewer' do
+      before do
+        allow_any_instance_of(Project).to receive(:reviewers).and_return(User.none)
+        visit polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
+      end
+
+      it 'disables the "published" state option' do
+        page.find('td.select-checkbox', match: :first).click
+        click_button 'State'
+
+        save_and_open_page
+
+        expect(page).to have_css('.dt-button.dropdown-item.disabled', text: 'Published')
+      end
+    end
+
+    context 'user is a reviewer', focus: true do
+      before do
+        allow_any_instance_of(Project).to receive(:reviewers).and_return(User.all)
+        visit polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
+      end
+
+      it 'allows the "published" state option' do
+        page.find('td.select-checkbox', match: :first).click
+        click_button 'State'
+
+        expect(page).to have_css('.dt-button.dropdown-item', text: 'Published')
+      end
+    end
+  end
+
   def job_params(record)
     {
       action: 'state_change',
