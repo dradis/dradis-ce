@@ -6,7 +6,7 @@ class NotificationMailer < ApplicationMailer
   def digest
     @notifications = params[:notifications]
     @user = params[:user]
-    set_login_path_for_user
+    set_paths_for_user
     @type = params[:type]
 
     mail to: @user.email, subject: 'You have unread notifications.'
@@ -21,7 +21,7 @@ class NotificationMailer < ApplicationMailer
       )
   end
 
-  def set_login_path_for_user # careful not to override login_path route helper
+  def set_paths_for_user # careful not to override login_path route helper
     @login_path_for_user = login_url
   end
 end
