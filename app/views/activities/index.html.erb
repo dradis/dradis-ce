@@ -12,10 +12,10 @@
       <div>
         <%= label_tag :user_id, "User" %>
         <%= f.select :user_id, User.all.map {|user| [user.email, user.id]}, include_blank: true, selected: params[:user_id]%>
-      </div>
-      <div>
         <%= label_tag :start_date, "Start date" %>
-        <%= f.date_field :start_date, value: params[:start_date]%>
+        <%= f.date_field :start_date, value: params[:start_date], id: 'start_date'%>
+        <%= label_tag :end_date, "End date" %>
+        <%= f.date_field :end_date, value: params[:end_date], id: 'end_date' %>
       </div>
       <%= submit_tag "Search" %>
     <%end%>

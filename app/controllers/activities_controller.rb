@@ -3,7 +3,7 @@
 
 class ActivitiesController < AuthenticatedController
   include ProjectScoped
-  before_action :set_start_date, only: :index
+  before_action :set_start_date_and_end_date, only: :index
 
   def index
     @page = params[:page].present? ? params[:page].to_i : 1
@@ -20,7 +20,7 @@ class ActivitiesController < AuthenticatedController
       activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
     end
 
-    filter_by_start_date(@activities_groups)
+    filter_by_date_range(@activities_groups)
   end
 
   def poll
@@ -39,14 +39,19 @@ class ActivitiesController < AuthenticatedController
 
   private 
 
-  def set_start_date 
+  def set_start_date_and_end_date
     @start_date = params[:start_date].present? ? DatetimeHelper.parse(params[:start_date]) : nil
+    @end_date = params[:end_date].present? ? DatetimeHelper.parse(params[:end_date]) : nil
   end
 
-  def filter_by_start_date(activities)
+  def filter_by_date_range(activities)
     #Condition to select groups based on time
-    if @start_date
-      @activities_groups = @activities_groups.select do |date, activities| 
+    if @start_date && @end_date.present?
+    @activities_groups = @activities_groups.select do |date, activities| 
+      DatetimeHelper.parse(date) >= @start_date && DatetimeHelper.parse(date) <= @end_date
+    end
+    elsif @start_date
+      @activities_groups = @activities_groups.select do |date, activities|
         DatetimeHelper.parse(date) == @start_date
       end
     end
