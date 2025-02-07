@@ -3,6 +3,7 @@
 
 class ActivitiesController < AuthenticatedController
   include ProjectScoped
+  before_action :set_start_date, only: :index
 
   def index
     @page = params[:page].present? ? params[:page].to_i : 1
@@ -18,6 +19,8 @@ class ActivitiesController < AuthenticatedController
     @activities_groups = activities.group_by do |activity|
       activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
     end
+
+    filter_by_start_date(@activities_groups)
   end
 
   def poll
@@ -31,6 +34,21 @@ class ActivitiesController < AuthenticatedController
 
     respond_to do |format|
       format.js
+    end
+  end
+
+  private 
+
+  def set_start_date 
+    @start_date = params[:start_date].present? ? DatetimeHelper.parse(params[:start_date]) : nil
+  end
+
+  def filter_by_start_date(activities)
+    #Condition to select groups based on time
+    if @start_date
+      @activities_groups = @activities_groups.select do |date, activities| 
+        DatetimeHelper.parse(date) == @start_date
+      end
     end
   end
 end

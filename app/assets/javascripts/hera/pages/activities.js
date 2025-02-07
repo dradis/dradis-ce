@@ -19,7 +19,8 @@ document.addEventListener('turbolinks:load', function () {
         viewHeight + scrollTop >= scrollHeight - 64
       ) {
         var page = $infiniteScrollContainer.data('page') + 1;
-        var url = $infiniteScrollContainer.data('url');
+        var selectedStartDate = $('#start_date').val();
+        var url = $infiniteScrollContainer.data('url') + '?start_date=' + selectedStartDate;
         loading = true;
         $('[data-behavior="activities-spinner"]').show();
 

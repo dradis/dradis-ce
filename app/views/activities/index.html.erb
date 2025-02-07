@@ -10,8 +10,12 @@
     </ol>
     <%=form_with(url: project_activities_path(current_project), method: :get, local: true) do |f| %>
       <div>
-        <%= label_tag :user_id, "User ID" %>
-        <%= f.select :user_id, User.all.map {|user| [user.email, user.id]}, selected: params[:user_id]%>
+        <%= label_tag :user_id, "User" %>
+        <%= f.select :user_id, User.all.map {|user| [user.email, user.id]}, include_blank: true, selected: params[:user_id]%>
+      </div>
+      <div>
+        <%= label_tag :start_date, "Start date" %>
+        <%= f.date_field :start_date, value: params[:start_date]%>
       </div>
       <%= submit_tag "Search" %>
     <%end%>
