@@ -16,6 +16,8 @@
         <%= f.date_field :start_date, value: params[:start_date], id: 'start_date'%>
         <%= label_tag :end_date, "End date" %>
         <%= f.date_field :end_date, value: params[:end_date], id: 'end_date' %>
+        <%= label_tag :user_id, "Activity Type" %>
+        <%= f.select :trackable_type, Activity.pluck(:trackable_type).uniq, include_blank: true, selected: params[:trackable_type]%>
       </div>
       <%= submit_tag "Search" %>
     <%end%>

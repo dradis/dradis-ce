@@ -3,7 +3,7 @@
 
 class ActivitiesController < AuthenticatedController
   include ProjectScoped
-  before_action :set_start_date_and_end_date, only: :index
+  #before_action :set_start_date_and_end_date, only: :index
 
   def index
     @page = params[:page].present? ? params[:page].to_i : 1
@@ -26,8 +26,9 @@ class ActivitiesController < AuthenticatedController
       @activities += activities.to_a
     end
 
-    #Search filter by user logic only keeping activities that match the condition
+    #Search filter by user logic and trackable_type only keeping activities that match the condition
     @activities = @activities.select { |activity| activity.user_id == params[:user_id].to_i } if params[:user_id].present?
+    @activities = @activities.select { |activity| activity.trackable_type == params[:trackable_type] } if params[:trackable_type].present?
 
     @activities_groups = @activities.group_by do |activity|
       activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
@@ -52,12 +53,9 @@ class ActivitiesController < AuthenticatedController
 
   private 
 
-  def set_start_date_and_end_date
+  def filter_by_date_range(activities)
     @start_date = params[:start_date].present? ? DatetimeHelper.parse(params[:start_date]) : nil
     @end_date = params[:end_date].present? ? DatetimeHelper.parse(params[:end_date]) : nil
-  end
-
-  def filter_by_date_range(activities)
     #Condition to select groups based on time
     if @start_date && @end_date.present?
     @activities_groups = @activities_groups.select do |date, activities| 

@@ -22,7 +22,8 @@ document.addEventListener('turbolinks:load', function () {
         
         var selectedStartDate = $('#start_date').val();
         var selectedEndDate = $('#end_date').val();
-        var url = $infiniteScrollContainer.data('url') + '?start_date=' + selectedStartDate + '&end_date=' + selectedEndDate;
+        var selectedTrackableType = $('#trackable_type').val();
+        var url = $infiniteScrollContainer.data('url') + '?start_date=' + selectedStartDate + '&end_date=' + selectedEndDate + '&trackable_type' + selectedTrackableType;
         loading = true;
         $('[data-behavior="activities-spinner"]').show();
 
