@@ -19,16 +19,17 @@ document.addEventListener('turbolinks:load', function () {
         viewHeight + scrollTop >= scrollHeight - 64
       ) {
         var page = $infiniteScrollContainer.data('page') + 1;
-        var selectedStartDate = $('#start_date').val();
-        var selectedEndDate = $('#end_date').val();
-        var selectedTrackableType = $('#trackable_type').val();
-        var url = $infiniteScrollContainer.data('url') + '?start_date=' + selectedStartDate + '&end_date=' + selectedEndDate + '&trackable_type' + selectedTrackableType;
+        var userId = $('#user_id').val();
+        var startDate = $('#start_date').val();
+        var endDate = $('#end_date').val();
+        var trackableType = $('#trackable_type').val();
+        var url = $infiniteScrollContainer.data('url') + '?user' + userId + 'start_date=' + startDate + '&end_date=' + endDate + '&trackable_type' + trackableType;
         loading = true;
         $('[data-behavior="activities-spinner"]').show();
 
         $.ajax({
           url: url,
-          data: { page: page },
+          data: { page: page, user_id: userId, start_date: startDate, end_date: endDate, trackable_type: trackableType },
           success: function (data) {
             loading = false;
             $('[data-behavior="activities-spinner"]').hide();

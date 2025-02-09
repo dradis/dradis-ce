@@ -33,7 +33,6 @@ class ActivitiesController < AuthenticatedController
     @activities_groups = @activities.group_by do |activity|
       activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
     end
-
     filter_by_date_range(@activities_groups)
   end
 
