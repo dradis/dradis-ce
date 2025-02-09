@@ -27,3 +27,9 @@ var $infiniteScrollContainer = $('[data-behavior="infinite-scroll-container"]');
 <% else %>
   $infiniteScrollContainer.data('canLoadMore', false);
 <% end %>
+
+<% if @can_load_more %>
+  $infiniteScrollContainer.data('canLoadMore', true);
+<% else %>
+  $infiniteScrollContainer.data('canLoadMore', false);
+<% end %>

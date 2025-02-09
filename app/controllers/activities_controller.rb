@@ -7,16 +7,29 @@ class ActivitiesController < AuthenticatedController
 
   def index
     @page = params[:page].present? ? params[:page].to_i : 1
-    
-    activities = current_project.activities
-                                .includes(:trackable)
-                                .order(created_at: :desc)
-                                .page(@page)
 
-    #Search filter logic using the scopes
-    activities = activities.by_user(params[:user_id])
+    #Initiate empty array for activities on all pages
+    @activities = []
+    current_activities = current_project.activities.count 
 
-    @activities_groups = activities.group_by do |activity|
+    #Calculating current number of pages since we're using Kaminari's default paging
+    current_pages = (current_activities / Kaminari.config.default_per_page.to_f).ceil
+
+    @can_load_more = @page < current_pages
+
+    (1..current_pages).each do |page_number|
+      activities = current_project.activities
+                                  .includes(:trackable)
+                                  .order(created_at: :desc)
+                                  .page(page_number)
+                                  
+      @activities += activities.to_a
+    end
+
+    #Search filter by user logic only keeping activities that match the condition
+    @activities = @activities.select { |activity| activity.user_id == params[:user_id].to_i } if params[:user_id].present?
+
+    @activities_groups = @activities.group_by do |activity|
       activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
     end
 
