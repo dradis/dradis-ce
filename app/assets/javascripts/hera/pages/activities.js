@@ -19,7 +19,6 @@ document.addEventListener('turbolinks:load', function () {
         viewHeight + scrollTop >= scrollHeight - 64
       ) {
         var page = $infiniteScrollContainer.data('page') + 1;
-        
         var selectedStartDate = $('#start_date').val();
         var selectedEndDate = $('#end_date').val();
         var selectedTrackableType = $('#trackable_type').val();
@@ -38,4 +37,15 @@ document.addEventListener('turbolinks:load', function () {
       }
     });
   }
+
+  // Jquery
+  $(document).ready(function() {
+    $('#reset_button').on('click', function(){
+      var actualUrl = window.location.pathname;
+
+      history.replaceState(null, null, actualUrl);
+
+      window.location.reload()
+    })
+  })
 });

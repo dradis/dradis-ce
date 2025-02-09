@@ -19,7 +19,8 @@
         <%= label_tag :user_id, "Activity Type" %>
         <%= f.select :trackable_type, Activity.pluck(:trackable_type).uniq, include_blank: true, selected: params[:trackable_type]%>
       </div>
-      <%= submit_tag "Search" %>
+      <%= submit_tag "Search", class: 'btn btn-secondary' %>
+      <%= button_tag "Reset", type: :reset, class: 'btn btn-secondary' , id: 'reset_button'%>
     <%end%>
   </nav>
 <% end %>
