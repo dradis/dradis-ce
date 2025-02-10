@@ -54,7 +54,7 @@
       <div class="d-flex flex-column justify-content-between" data-behavior="view-content">
         <main class="container-fluid">
           <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
-          <%= render 'shared/noscript' %>
+          <%= render 'layouts/hera/noscript' %>
           <%= render "layouts/hera/project_teaser" unless defined?(Dradis::Pro) %>
           <%= flash_messages %>
           <%= content_for?(:content) ? yield(:content) : yield %>
