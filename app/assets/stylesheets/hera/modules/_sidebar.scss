@@ -313,7 +313,7 @@ body:not(.in-project) {
   .sidebar {
     height: calc(100vh - #{$navbar-height});
     position: fixed;
-    top: calc(#{$navbar-height} + 0.3rem);
+    top: $navbar-height;
 
     &.main-sidebar {
       left: 0.35rem;

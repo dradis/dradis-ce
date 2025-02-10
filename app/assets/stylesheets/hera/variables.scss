@@ -35,7 +35,7 @@ $instance-nav-bg: $brand-200;
 $instance-nav-border: $brand-400;
 $instance-nav-hover: $brand-900;
 $instance-nav-links: $brand-800;
-$navbar-height: 3.2rem;
+$navbar-height: calc(3.2rem - 1px); // 1px to account for border
 
 // Sidebar
 $sidebar-width: 14rem;
