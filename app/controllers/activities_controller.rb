@@ -27,12 +27,13 @@ class ActivitiesController < AuthenticatedController
     end
 
     #Search filter by user logic and trackable_type only keeping activities that match the condition
-    @activities = @activities.select { |activity| activity.user_id == params[:user_id].to_i } if params[:user_id].present?
-    @activities = @activities.select { |activity| activity.trackable_type == params[:trackable_type] } if params[:trackable_type].present?
+    @activities = filter_by_user(@activities)
+    @activities = filter_by_trackable_type(@activities)
 
     @activities_groups = @activities.group_by do |activity|
       activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
     end
+
     filter_by_date_range(@activities_groups)
   end
 
@@ -51,6 +52,20 @@ class ActivitiesController < AuthenticatedController
   end
 
   private 
+  
+  def filter_by_user(activities)
+    if params[:user_id].present?
+      activities = @activities.select { |activity| activity.user_id == params[:user_id].to_i }
+    end
+    activities
+  end
+
+  def filter_by_trackable_type(activities)
+    if params[:trackable_type]
+      activities = @activities.select { |activity| activity.trackable_type == params[:trackable_type] } if params[:trackable_type].present?
+    end
+    activities
+  end
 
   def filter_by_date_range(activities)
     @start_date = params[:start_date].present? ? DatetimeHelper.parse(params[:start_date]) : nil
