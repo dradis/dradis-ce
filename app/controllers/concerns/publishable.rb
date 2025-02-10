@@ -9,7 +9,7 @@ module Publishable
 
   def ensure_reviewer
     params_method = "#{controller_name.singularize}_params"
-    return if can?(:publish, current_project) || !self.respond_to?(params_method) 
+    return if can?(:publish, current_project) || !self.respond_to?(params_method)
 
     record_params = self.send(params_method)
     current_state =
