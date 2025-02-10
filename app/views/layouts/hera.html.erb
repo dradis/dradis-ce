@@ -43,8 +43,8 @@
     ) do %>
 
     <header class="sticky-top">
-      <%= render 'shared/navigation/instance_nav' %>
-      <%= render 'layouts/hera/project_nav' if in_project? %>
+      <%= render 'layouts/hera/instance_nav' %>
+      <%= render 'layouts/hera/navbar/projects/project_nav' if in_project? %>
     </header>
 
     <div class="content-grid">
