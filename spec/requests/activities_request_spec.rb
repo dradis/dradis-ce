@@ -41,7 +41,6 @@ RSpec.describe "Activities", type: :request do
         activities_groups = activities.group_by do |activity|
           activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
         end
-        #byebug
         expect((activities).count).to eq(50)
         expect((activities).all? { |activity| activity.user_id == user.id }).to be_truthy
       end
