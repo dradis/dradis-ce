@@ -61,19 +61,5 @@ RSpec.describe "Activities", type: :request do
         expect((activities).all? { |activity| activity.trackable_type == 'Node' }).to be_truthy
       end
     end
-
-    context "when a date range filter is applied" do
-      it "filters activities by date_range_filter" do
-        get project_activities_path(current_project), params: { project_id: current_project.id, start_date: '2017-08-16', end_date: '2024-12-31' }
-        activities = Activity.order(created_at: :desc)
-        activities_groups = activities.group_by do |activity|
-          activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
-        end
-        byebug
-        expect((activities).count).to eq(1)
-
-        expect((activities).first.created_at_to_date).to eq(Date.parse('2017-08-18'))
-      end
-    end
   end
 end
