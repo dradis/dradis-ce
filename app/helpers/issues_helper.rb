@@ -86,9 +86,7 @@ module IssuesHelper
 
   def state_icons
     state_icons = []
-    states = Issue.states.keys
-
-    states.each do |state|
+    Issue.states.keys.each do |state|
       case state
       when 'draft'
         state_icons << ['Draft', 'fa-pencil-square']

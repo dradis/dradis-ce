@@ -152,7 +152,8 @@ shared_examples 'qa pages' do |item_type|
   describe 'reviewer role', js: true do
     context 'user is not a reviewer' do
       before do
-        allow_any_instance_of(Project).to receive(:reviewers).and_return(User.none)
+        other_user = create(:user)
+        allow_any_instance_of(Project).to receive(:reviewers).and_return(User.where(id: other_user.id))
         visit polymorphic_path([current_project, :qa, item_type.to_s.pluralize.to_sym])
       end
 

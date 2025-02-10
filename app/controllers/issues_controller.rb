@@ -9,7 +9,7 @@ class IssuesController < AuthenticatedController
   include MultipleDestroy
   include NotificationsReader
   include ProjectScoped
-  include QAStates
+  include Publishable
 
   before_action :set_issuelib
   before_action :set_issues, except: [:destroy]
