@@ -48,6 +48,32 @@ body:not(.unauthenticated) {
   display: grid;
   grid-template-columns: auto 1fr auto;
   grid-template-rows: 1fr auto;
+  width: 100vw;
+
+  @include media-breakpoint-up(lg) {
+    &:has(.sidebar-expanded.main-sidebar):has(
+        .sidebar-expanded.secondary-sidebar
+      )
+      .view-content {
+      width: calc(100vw - (#{$sidebar-width} + (#{$sidebar-width} * 1.25)));
+    }
+
+    &:has(.sidebar-expanded.main-sidebar):not(
+        :has(.sidebar-expanded.secondary-sidebar)
+      )
+      .view-content {
+      width: calc(100vw - #{$sidebar-width} - #{$sidebar-width-collapsed});
+    }
+
+    &:has(.sidebar-expanded.secondary-sidebar):not(
+        :has(.sidebar-expanded.main-sidebar)
+      )
+      .view-content {
+      width: calc(
+        100vw - (#{$sidebar-width} * 1.25) - #{$sidebar-width-collapsed}
+      );
+    }
+  }
 }
 
 footer {
@@ -86,4 +112,11 @@ main {
   & > *[class*='col-'] {
     position: relative;
   }
+}
+
+.view-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: calc(100vw - (#{$sidebar-width-collapsed} * 2));
 }

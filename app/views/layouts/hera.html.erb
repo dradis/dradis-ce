@@ -51,7 +51,7 @@
       <aside>
         <%= render 'layouts/hera/sidebar' if in_project? %>
       </aside>
-      <div class="d-flex flex-column justify-content-between" data-behavior="view-content">
+      <div class="view-content" data-behavior="view-content">
         <main class="container-fluid">
           <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
           <%= render 'layouts/hera/noscript' %>
