@@ -51,6 +51,7 @@ body:not(.unauthenticated) {
   width: 100vw;
 
   @include media-breakpoint-up(lg) {
+    // both sidebars rendered and are expanded
     &:has(.sidebar-expanded.main-sidebar):has(
         .sidebar-expanded.secondary-sidebar
       )
@@ -63,15 +64,29 @@ body:not(.unauthenticated) {
       );
     }
 
-    &:has(.sidebar-expanded.main-sidebar):not(
-        :has(.sidebar-expanded.secondary-sidebar)
+    // main sidebar is expanded, secondary sidebar is not rendered
+    &:has(.main-sidebar.sidebar-expanded):not(:has(.secondary-sidebar))
+      .view-content {
+      width: calc(100vw - #{$sidebar-width});
+    }
+
+    // main sidebar is expanded, secondary sidebar is collapsed
+    &:has(.main-sidebar.sidebar-expanded):has(.secondary-sidebar):not(
+        :has(.secondary-sidebar.sidebar-expanded)
       )
       .view-content {
       width: calc(100vw - #{$sidebar-width} - #{$sidebar-width-collapsed});
     }
 
-    &:has(.sidebar-expanded.secondary-sidebar):not(
-        :has(.sidebar-expanded.main-sidebar)
+    // secondary sidebar is expanded, main sidebar is not rendered
+    &:has(.secondary-sidebar.sidebar-expanded):not(:has(.main-sidebar))
+      .view-content {
+      width: calc(100vw - (#{$sidebar-width} * #{$sidebar-width-multiplier}));
+    }
+
+    // secondary sidebar is expanded, main sidebar is collapsed
+    &:has(.secondary-sidebar.sidebar-expanded):has(.main-sidebar):not(
+        :has(.main-sidebar.sidebar-expanded)
       )
       .view-content {
       width: calc(
@@ -123,5 +138,13 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: calc(100vw - (#{$sidebar-width-collapsed} * 2));
+
+  &:has(.main-sidebar),
+  &:has(.secondary-sidebar) {
+    width: calc(100vw - #{$sidebar-width-collapsed});
+  }
+
+  &:has(.main-sidebar):has(.secondary-sidebar) {
+    width: calc(100vw - (#{$sidebar-width-collapsed} * 2));
+  }
 }
