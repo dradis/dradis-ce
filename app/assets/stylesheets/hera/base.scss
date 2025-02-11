@@ -19,6 +19,7 @@ body:not(.unauthenticated) {
   min-height: 100vh;
   text-wrap: pretty;
   overflow-x: clip;
+  overscroll-behavior: none;
 }
 
 a {
