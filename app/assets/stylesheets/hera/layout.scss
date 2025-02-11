@@ -55,7 +55,12 @@ body:not(.unauthenticated) {
         .sidebar-expanded.secondary-sidebar
       )
       .view-content {
-      width: calc(100vw - (#{$sidebar-width} + (#{$sidebar-width} * 1.25)));
+      width: calc(
+        100vw -
+          (
+            #{$sidebar-width} + (#{$sidebar-width} * #{$sidebar-width-multiplier})
+          )
+      );
     }
 
     &:has(.sidebar-expanded.main-sidebar):not(
@@ -70,7 +75,7 @@ body:not(.unauthenticated) {
       )
       .view-content {
       width: calc(
-        100vw - (#{$sidebar-width} * 1.25) - #{$sidebar-width-collapsed}
+        100vw - (#{$sidebar-width} * #{$sidebar-width-multiplier}) - #{$sidebar-width-collapsed}
       );
     }
   }
