@@ -2,7 +2,7 @@
   - Hera: Add new layout with redesigned navigation
   - QA: Add View History link when viewing Issues/Content blocks
   - Upgraded gems:
-    - [gem]
+    - net-imap
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
