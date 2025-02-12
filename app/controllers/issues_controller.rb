@@ -84,7 +84,6 @@ class IssuesController < AuthenticatedController
         @modified = true
         check_for_edit_conflicts(@issue, updated_at_before_save)
         track_updated(@issue)
-
         format.html { redirect_to_main_or_qa }
       else
         format.html do
