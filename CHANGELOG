@@ -4,7 +4,7 @@
     - Add View History link when viewing Issues/Content blocks
     - Automatically go to the next record after reviewing
   - Upgraded gems:
-    - [gem]
+    - net-imap
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
