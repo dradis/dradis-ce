@@ -69,9 +69,9 @@ class QA::IssuesController < AuthenticatedController
 
     if next_issue
       notice << ' You are now viewing the next issue ready for review.'
-      [project_qa_issue_path(current_project, next_issue), notice: notice]
+      [project_qa_issue_path(current_project, next_issue), { notice: notice }]
     else
-      [project_qa_issues_path(current_project), notice: notice]
+      [project_qa_issues_path(current_project), { notice: notice }]
     end
   end
 
