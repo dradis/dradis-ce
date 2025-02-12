@@ -1,7 +1,7 @@
 <% content_for :title, "#{@record.class.model_name} ##{@record.id} - comparing revisions" %>
 
 <% content_for :breadcrumbs do %>
-  <%= render partial: 'breadcrumbs' %>
+  <%= render partial: 'breadcrumbs', locals: { qa: @qa } %>
 <% end %>
 
 <% content_for :sidebar do %>
@@ -107,7 +107,7 @@
                     <% if revision == @revision %>
                       Currently Viewing
                     <% elsif revision.event == "update" %>
-                      <%= link_to "View Changes", record_revision_path(@record, revision) %>
+                      <%= link_to "View Changes", record_revision_path(@record, revision, qa: @qa) %>
                     <% end %>
                   <% end %>
                 </td>
