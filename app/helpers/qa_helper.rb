@@ -22,4 +22,14 @@ module QAHelper
       {}
     end
   end
+
+  def radio_button_for(form_helper)
+    is_disabled = form_helper.value == 'published' && !can?(:publish, current_project)
+
+    form_helper.radio_button(
+      class: 'd-none',
+      data: { behavior: 'state-radio' },
+      disabled: is_disabled
+    )
+  end
 end
