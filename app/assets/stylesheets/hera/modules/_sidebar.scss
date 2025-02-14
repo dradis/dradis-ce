@@ -7,7 +7,7 @@ body:not(.in-project) {
 
 .sidebar {
   --padding: 1.25rem;
-  --margin: 1rem;
+  --margin: 1.25rem;
   background-color: $white;
   position: sticky;
   top: calc(#{$navbar-height} * 2);
