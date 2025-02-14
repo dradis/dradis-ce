@@ -86,7 +86,7 @@ describe 'card pages', js: true do
         elsif action == :show
           expect(page).to\
             have_selector(
-              'ol.breadcrumb li:nth-child(2) a',
+              'ol.breadcrumb li:nth-child(3) a',
               text: "#{@board.name} - #{@other_list.name}"
             )
         end

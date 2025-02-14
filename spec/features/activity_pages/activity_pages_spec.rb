@@ -54,7 +54,7 @@ describe 'Activity pages:' do
           times_to_scroll = (Activity.count / Kaminari.config.default_per_page.to_f).ceil
 
           times_to_scroll.times do
-            page.execute_script('$("[data-behavior=\'view-content\']").scrollTop(100000)')
+            page.execute_script('$(document).scrollTop(100000)')
           end
         end
 

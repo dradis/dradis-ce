@@ -1,0 +1,19 @@
+<li class="nav-item dropdown">
+  <a href="javascript:void(0)" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="tools-dropdown">
+    Tools
+    <b class="caret"></b>
+  </a>
+
+  <ul class="dropdown-menu" aria-labelledby="tools-dropdown">
+    <%= render_view_hooks('tools_menu') %>
+
+    <% if defined?(Dradis::Pro) %>
+      <%= link_to 'Contributors Dashboard', main_app.contributors_home_path, class: 'dropdown-item' %>
+
+      <% if current_user.role?(:admin) %>
+        <div class="dropdown-divider"></div>
+        <%= link_to 'Tool Manager', main_app.admin_integrations_path(tab: 'tools'), class: 'dropdown-item' %>
+      <% end %>
+    <% end %>
+  </ul>
+</li>

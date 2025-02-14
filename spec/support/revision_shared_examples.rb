@@ -54,7 +54,9 @@ shared_examples 'recover deleted item without node' do |item_type|
       submit_form
       visit project_node_path(model.node.project, model.node.id)
       find('[data-behavior~=nodes-more-dropdown]').click
-      click_link 'Delete'
+      within '[data-behavior~=nodes-more-dropdown] + .dropdown-menu' do
+        click_link 'Delete'
+      end
       within '#modal_delete_node' do
         click_link 'Delete'
       end
