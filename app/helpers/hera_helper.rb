@@ -5,7 +5,7 @@ module HeraHelper
     css << extra_class if extra_class
 
     options = { class: css.join(' ') }
-    tag     = nil
+    tag = nil
 
     case model
     when Evidence
