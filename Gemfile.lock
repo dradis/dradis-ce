@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/dradis/dradis-calculator_cvss.git
-  revision: 2024e3b1ede95d0134a104ae8e69ec495dfb242b
+  revision: 7cf3b17f4947423c8bf64184dfa74af963e78a47
   branch: rails/upgrade-7.2
   specs:
     dradis-calculator_cvss (4.15.0)
