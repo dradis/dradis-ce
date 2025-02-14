@@ -2,7 +2,7 @@
   - Hera: Add new layout with redesigned navigation
   - QA: Add View History link when viewing Issues/Content blocks
   - Upgraded gems:
-    - net-imap, nokogiri, paper_trail, rails, rails-html-sanitizer, rexml, rspec-rails
+    - net-imap, nokogiri, paper_trail, rack, rails, rails-html-sanitizer, rexml, rspec-rails
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
