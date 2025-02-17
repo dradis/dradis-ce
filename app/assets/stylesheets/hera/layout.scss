@@ -127,8 +127,6 @@ main {
 }
 
 .row {
-  padding: 0 0.75rem;
-
   & > *[class*='col-'] {
     position: relative;
   }
