@@ -34,7 +34,7 @@ class QA::IssuesController < AuthenticatedController
     @issues = current_project.issues.where(id: params[:ids])
 
     respond_to do |format|
-      if @issues.update_all(state: @state, updated_at: Time.now)
+      if @issues.update(state: @state)
 
         @issues.each do |issue|
           track_state_change(issue)
