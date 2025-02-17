@@ -132,6 +132,10 @@ main {
   }
 }
 
+select.form-select[multiple] {
+  padding: 0;
+}
+
 .view-content {
   display: flex;
   flex-direction: column;
