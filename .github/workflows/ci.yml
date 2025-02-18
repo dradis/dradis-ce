@@ -53,10 +53,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Set up Firefox
-        uses: browser-actions/setup-firefox@v1
-        with:
-          firefox-version: '134.0.2' # specify firefox version
       - name: Create database.yml
         run: cp config/database.yml.template config/database.yml
       - name: Install Ruby and gems
