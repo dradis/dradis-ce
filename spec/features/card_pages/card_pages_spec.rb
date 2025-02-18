@@ -85,9 +85,9 @@ describe 'Card pages:' do
 
           card = Card.last
           expect(current_path).to eq(project_board_list_card_path(current_project, @board, @list, card))
-          expect(card.assignees.count).to eq 2
 
           assignee_ids = card.reload.assignees.pluck(:id)
+          expect(assignee_ids.count).to eq 2
           expect(assignee_ids.include? @first_user.id).to be true
           expect(assignee_ids.include? @second_user.id).to be true
         end
