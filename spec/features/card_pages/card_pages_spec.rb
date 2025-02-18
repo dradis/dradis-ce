@@ -183,10 +183,14 @@ describe 'Card pages:' do
         end
 
         it 'assigns selected and unassigns unselected' do
+          expect(page).to have_checked_field("card_assignee_ids_#{@first_user.id}")
+          expect(page).to have_unchecked_field("card_assignee_ids_#{@second_user.id}")
+
           uncheck @first_user.name
           check @second_user.name
 
-          wait_for_ajax
+          expect(page).to have_checked_field("card_assignee_ids_#{@second_user.id}")
+          expect(page).to have_unchecked_field("card_assignee_ids_#{@first_user.id}")
 
           submit_form
           expect(current_path).to eq(project_board_list_card_path(current_project, @board, @list, @card))
