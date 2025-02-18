@@ -1,7 +1,8 @@
 [v#.#.#] ([month] [YYYY])
   - Hera: Add new layout with redesigned navigation
   - QA: Add View History link when viewing Issues/Content blocks
-  - Upgraded gems: capybara, net-imap, rack
+  - Upgraded gems:
+    - net-imap, rack
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
