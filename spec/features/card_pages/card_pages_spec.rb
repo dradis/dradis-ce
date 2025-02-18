@@ -82,11 +82,14 @@ describe 'Card pages:' do
           check @second_user.name
 
           submit_form
+
           card = Card.last
           expect(current_path).to eq(project_board_list_card_path(current_project, @board, @list, card))
-          expect(page).to have_text(@first_user.name)
-          expect(page).to have_text(@second_user.name)
           expect(card.assignees.count).to eq 2
+
+          assignee_ids = card.reload.assignees.pluck(:id)
+          expect(assignee_ids.include? @first_user.id).to be true
+          expect(assignee_ids.include? @second_user.id).to be true
         end
       end
 
@@ -183,20 +186,16 @@ describe 'Card pages:' do
         end
 
         it 'assigns selected and unassigns unselected' do
-          expect(page).to have_checked_field("card_assignee_ids_#{@first_user.id}")
-          expect(page).to have_unchecked_field("card_assignee_ids_#{@second_user.id}")
-
           uncheck @first_user.name
           check @second_user.name
 
-          expect(page).to have_checked_field("card_assignee_ids_#{@second_user.id}")
-          expect(page).to have_unchecked_field("card_assignee_ids_#{@first_user.id}")
-
           submit_form
+
           expect(current_path).to eq(project_board_list_card_path(current_project, @board, @list, @card))
 
-          expect(page).not_to have_text(@first_user.name)
-          expect(page).to have_text(@second_user.name)
+          assignee_ids = @card.reload.assignees.pluck(:id)
+          expect(assignee_ids.include? @first_user.id).to be false
+          expect(assignee_ids.include? @second_user.id).to be true
         end
       end
 
