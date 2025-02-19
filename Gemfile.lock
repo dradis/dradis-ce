@@ -523,6 +523,7 @@ PLATFORMS
   ruby
   x86_64-darwin-21
   x86_64-linux
+  x86_64-linux-gnu
 
 DEPENDENCIES
   RedCloth (~> 4.3.4)
