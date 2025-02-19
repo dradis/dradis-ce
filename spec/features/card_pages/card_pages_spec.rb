@@ -81,6 +81,9 @@ describe 'Card pages:' do
           check @first_user.name
           check @second_user.name
 
+          expect(page).to have_checked_field("card_assignee_ids_#{@first_user.id}")
+          expect(page).to have_checked_field("card_assignee_ids_#{@second_user.id}")
+
           submit_form
 
           card = Card.last
@@ -188,6 +191,9 @@ describe 'Card pages:' do
         it 'assigns selected and unassigns unselected' do
           uncheck @first_user.name
           check @second_user.name
+
+          expect(page).to have_unchecked_field("card_assignee_ids_#{@first_user.id}")
+          expect(page).to have_checked_field("card_assignee_ids_#{@second_user.id}")
 
           submit_form
 
