@@ -18,8 +18,10 @@ jobs:
         run: sudo apt-get install libsqlite3-dev
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
-        # with:
-          # bundler-cache: true
+        with:
+          bundler-cache: false
+      - name: Install dependencies
+        run: bundle install
       - name: Security audit dependencies
         run: bundle exec bundler-audit --update --ignore CVE-2023-50724 CVE-2023-50725 CVE-2023-50727 CVE-2024-21510
       - name: Security audit ruby
