@@ -12,12 +12,6 @@ GIT
     dradis-calculator_dread (4.15.0)
       dradis-plugins (~> 4.0)
 
-PATH
-  remote: engines/dradis-api
-  specs:
-    dradis-api (4.15.0)
-      jbuilder
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -146,9 +140,6 @@ GEM
       dradis-plugins (>= 4.8.0)
       rails_autolink (~> 1.1)
     dradis-plugins (4.15.0)
-    dradis-projects (4.15.0)
-      dradis-plugins (>= 4.8.0)
-      rubyzip
     erubi (1.13.0)
     execjs (2.7.0)
     factory_bot (6.2.1)
@@ -480,14 +471,11 @@ DEPENDENCIES
   coffee-rails (~> 5.0)
   database_cleaner
   differ (~> 0.1.2)
-  dradis-api!
   dradis-calculator_cvss!
   dradis-calculator_dread!
   dradis-csv (~> 4.15.0)
   dradis-csv_export (~> 4.15.0)
   dradis-html_export (~> 4.15.0)
-  dradis-plugins (~> 4.15.0)
-  dradis-projects (~> 4.15.0)
   factory_bot_rails
   font-awesome-sass (~> 6.4.0)
   foreman
