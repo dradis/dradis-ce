@@ -36,6 +36,8 @@ describe 'notifications index page' do
 
     visit project_notifications_path(@project)
 
+    wait_for_ajax
+
     expect(page).to have_selector '.notification', count: 2
     expect(page).not_to have_content "You don't have any notifications yet."
   end
