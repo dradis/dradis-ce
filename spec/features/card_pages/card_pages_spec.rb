@@ -192,6 +192,8 @@ describe 'Card pages:' do
           uncheck @first_user.name
           check @second_user.name
 
+          wait_for_ajax
+
           expect(page).to have_unchecked_field("card_assignee_ids_#{@first_user.id}")
           expect(page).to have_checked_field("card_assignee_ids_#{@second_user.id}")
 
