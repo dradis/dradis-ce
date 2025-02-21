@@ -61,6 +61,12 @@ a {
   color: $yellow-800;
 }
 
+b,
+.form-label,
+strong {
+  font-family: 'ProximaNovaRegular', 'system-ui';
+}
+
 .badge-outline-danger {
   border: 1px solid $red;
   color: $red;
@@ -244,10 +250,6 @@ pre code {
 
 .required-input {
   color: $red;
-}
-
-strong {
-  font-family: 'ProximaNovaRegular', 'system-ui';
 }
 
 .text-break-spaces {
