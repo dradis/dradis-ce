@@ -89,7 +89,7 @@ gem 'bcrypt', '3.1.12'
 gem 'json', '2.3.0'
 
 # XML manipulation
-gem 'nokogiri', '>= 1.16.5'
+gem 'nokogiri', '>= 1.18.3'
 
 # MySQL backend
 # gem 'mysql2', '~> 0.5.6'
@@ -140,7 +140,7 @@ gem 'whenever', require: false
 
 gem 'net-smtp'
 gem 'net-pop'
-gem 'net-imap'
+gem 'net-imap', '>= 0.5.6'
 
 gem 'puma', '>= 6.4.3'
 
