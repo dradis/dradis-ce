@@ -257,6 +257,10 @@ div.dataTables_wrapper {
     flex: unset;
 
     .btn {
+      @include button($secondary-bg);
+      color: $text-default;
+      flex-grow: 0;
+
       &:first-child {
         border-color: $border-color;
       }
@@ -267,7 +271,8 @@ div.dataTables_wrapper {
     }
 
     .buttons-collection {
-      @extend .btn-default;
+      @include button($secondary-bg);
+      color: $text-default;
 
       &.dropdown-toggle {
         &:after {
