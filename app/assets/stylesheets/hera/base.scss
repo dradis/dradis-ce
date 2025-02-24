@@ -68,6 +68,10 @@ th {
   font-family: 'ProximaNovaRegular', 'system-ui';
 }
 
+.badge {
+  font-size: 0.8rem;
+}
+
 .badge-outline-danger {
   border: 1px solid $red;
   color: $red;
