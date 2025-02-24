@@ -9,7 +9,6 @@
 }
 
 .btn {
-  @include button($grey-200);
   text-shadow: 0 0 0;
   font-weight: 300;
   font-size: inherit;
@@ -189,15 +188,8 @@
     }
   }
 
-  &.btn-secondary {
-    @include button($grey-200);
-
-    &:active,
-    &:focus-visible,
-    &:hover,
-    &:not(:disabled):not(.disabled):active {
-      color: $text-default;
-    }
+  &.btn-sm {
+    font-size: 0.85rem;
   }
 
   &.btn-success {
@@ -214,6 +206,13 @@
 
   &.btn-warning {
     @include button($yellow);
+  }
+
+  &.btn-xs {
+    border-radius: 0.25rem;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    padding: 0.15rem 0.5rem;
   }
 
   &.dropdown-toggle-split {
@@ -313,13 +312,6 @@
       }
     }
   }
-}
-
-.btn-xs {
-  border-radius: 3px;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  padding: 1px 5px;
 }
 
 .show {
