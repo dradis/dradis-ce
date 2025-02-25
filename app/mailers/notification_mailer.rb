@@ -22,7 +22,9 @@ class NotificationMailer < ApplicationMailer
   end
 
   def set_paths_for_user
-    @login_path_for_user = login_url
-    @user_preferences_path = edit_user_preferences_notifications_url
+    is_contributor = @user.role?(:contributor)
+
+    @login_path_for_user = is_contributor ? contributors_login_url : login_url
+    @user_preferences_path = edit_user_preferences_notifications_url(contributors: is_contributor ? true : nil)
   end
 end
