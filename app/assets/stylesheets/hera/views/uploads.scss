@@ -1,11 +1,4 @@
 body.upload {
-  .content-container {
-    height: 100%;
-
-    @include media-breakpoint-up(lg) {
-      margin-bottom: 0;
-    }
-  }
   .progress-bar {
     position: relative;
 
