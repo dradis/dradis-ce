@@ -1,6 +1,6 @@
 body.upload {
   .content-container {
-    min-height: min-content;
+    height: 100%;
 
     @include media-breakpoint-up(lg) {
       margin-bottom: 0;
