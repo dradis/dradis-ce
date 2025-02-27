@@ -2,7 +2,7 @@
   - Hera: Add new layout with redesigned navigation
   - QA: Add View History link when viewing Issues/Content blocks
   - Upgraded gems:
-    - [gem]
+    - net-imap, nokogiri, rack
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
@@ -16,8 +16,7 @@
       - [integration bug fixes]:
         - [future tense verb] [integration bug fix]
   - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
+    - Export: Default export button to 'All' if all records in project are in 'draft' state
   - REST/JSON API enhancements:
     - [API entity]:
       - [future tense verb] [API enhancement]
