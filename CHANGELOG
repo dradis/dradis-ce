@@ -15,8 +15,7 @@
       - [integration bug fixes]:
         - [future tense verb] [integration bug fix]
   - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
+    - Export: Default export button to 'All' if all records in project are in 'draft' state
   - REST/JSON API enhancements:
     - [API entity]:
       - [future tense verb] [API enhancement]

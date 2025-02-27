@@ -8,8 +8,12 @@ class ExportController < AuthenticatedController
   private
 
   def non_draft_records?
+    non_draft_records_ce || non_draft_records_pro
+  end
+
+  def non_draft_records_ce
     issues = current_project.issues
-    issues.published.or(issues.ready_for_review).any? || non_draft_records_pro
+    issues.published.or(issues.ready_for_review).any?
   end
 
   def non_draft_records_pro
