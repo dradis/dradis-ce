@@ -1,4 +1,8 @@
 class RenameLegacyTags < ActiveRecord::Migration[5.1]
+  # Future-proof this migration by ignoring model's default_scope
+  # https://discuss.rubyonrails.org/t/skip-default-scope-when-running-migrations/46906/2
+  class Tag < ActiveRecord::Base; end
+
   def up
     Tag.all.each do |tag|
       case tag.name
