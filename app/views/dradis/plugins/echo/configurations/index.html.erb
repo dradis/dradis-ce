@@ -1,0 +1,32 @@
+<% content_for :title, 'Dradis Echo Configuration' %>
+
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active">Dradis Echo Configuration</li>
+  </ol>
+<% end %>
+
+<%= form_tag configurations_path, method: :patch, class: 'w-100' do %>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <% @configurations.each do |configuration| %>
+          <%= fields_for "config[#{configuration[:name]}]", configuration do |f| %>
+            <div class="mb-3">
+              <label for="<%= configuration[:name] %>" class="form-label"><%= configuration[:name].to_s.titleize.gsub(':', ' : ') %></label>
+              <%=
+                text_field_tag :value,
+                  configuration[:value],
+                  class: 'form-control',
+                  id: "config_1_"
+              %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="form-actions">
+    <%= submit_tag 'Save Configuration', class: 'btn btn-primary' %>
+  </div>
+<% end %>
