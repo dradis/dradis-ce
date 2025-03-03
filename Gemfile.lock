@@ -1,28 +1,32 @@
 GIT
   remote: https://github.com/dradis/dradis-calculator_cvss.git
-  revision: 7cf3b17f4947423c8bf64184dfa74af963e78a47
-  branch: rails/upgrade-7.2
+  revision: 6cbf4bb9413a63332c36fccabfca14cdd86dfcaf
   specs:
     dradis-calculator_cvss (4.15.0)
       dradis-plugins (~> 4.0)
 
 GIT
   remote: https://github.com/dradis/dradis-calculator_dread.git
-  revision: 2a44b4c755eb0435f2cf4039821b5407e1393b23
-  branch: rails/upgrade-7.2
+  revision: 2cdcef7972b6e549f9dc02e5673621ea59f52d37
   specs:
     dradis-calculator_dread (4.15.0)
       dradis-plugins (~> 4.0)
 
 GIT
   remote: https://github.com/dradis/dradis-html_export.git
-  revision: ca1e887f85b14cbd8e34f40ee01ba6212d3e67c2
-  branch: rails/upgrade-7.2
+  revision: d242bdf7f841922792e9a747ff15dcc8dbbb8d10
   specs:
     dradis-html_export (4.15.0)
       RedCloth (~> 4.3.2)
       dradis-plugins (>= 4.8.0)
       rails_autolink (~> 1.1)
+
+GIT
+  remote: https://github.com/dradis/dradis-plugins.git
+  revision: a889479bf37cf99cab420b08e7bfc415a9510598
+  branch: rails/upgrade-7.2
+  specs:
+    dradis-plugins (4.15.0)
 
 PATH
   remote: engines/dradis-api
@@ -207,7 +211,6 @@ GEM
       dradis-plugins (~> 4.0)
     dradis-pentera (4.15.0)
       dradis-plugins (~> 4.0)
-    dradis-plugins (4.15.0)
     dradis-projects (4.15.0)
       dradis-plugins (>= 4.8.0)
       rubyzip
@@ -603,7 +606,7 @@ DEPENDENCIES
   dradis-ntospider (~> 4.15.0)
   dradis-openvas (~> 4.15.0)
   dradis-pentera (~> 4.15.0)
-  dradis-plugins (~> 4.15.0)
+  dradis-plugins!
   dradis-projects (~> 4.15.0)
   dradis-qualys (~> 4.15.0)
   dradis-saint (~> 4.15.0)

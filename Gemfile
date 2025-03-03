@@ -216,7 +216,7 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 4.15.0'
+gem 'dradis-plugins', github: 'dradis/dradis-plugins', branch: 'rails/upgrade-7.2'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
@@ -233,12 +233,12 @@ end
 
 # ----------------------------------------------------------------- Calculators
 
-gem 'dradis-calculator_cvss', github: 'dradis/dradis-calculator_cvss', branch: 'rails/upgrade-7.2'
-gem 'dradis-calculator_dread', github: 'dradis/dradis-calculator_dread', branch: 'rails/upgrade-7.2'
+gem 'dradis-calculator_cvss', github: 'dradis/dradis-calculator_cvss'
+gem 'dradis-calculator_dread', github: 'dradis/dradis-calculator_dread'
 
 # ---------------------------------------------------------------------- Export
 gem 'dradis-csv_export', '~> 4.15.0'
-gem 'dradis-html_export', github: 'dradis/dradis-html_export', branch: 'rails/upgrade-7.2'
+gem 'dradis-html_export', github: 'dradis/dradis-html_export'
 
 # ---------------------------------------------------------------------- Import
 gem 'dradis-csv', '~> 4.15.0'
