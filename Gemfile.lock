@@ -633,7 +633,7 @@ DEPENDENCIES
   net-pop
   net-smtp
   nokogiri (>= 1.18.3)
-  paper_trail (~> 12.2.0)
+  paper_trail (~> 15.2.0)
   parslet (~> 1.6.0)
   pg
   puma (>= 6.4.3)
