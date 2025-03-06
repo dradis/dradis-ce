@@ -18,21 +18,7 @@
       <div class="dropdown-divider"></div>
     </li>
 
-    <% if defined?(Dradis::Pro) %>
-      <li>
-        <a href="javascript:void(0)" class="dropdown-item" data-behavior="js-hs-beacon">Contact support</a>
-      </li>
-      <li>
-        <a href="https://dradispro.slack.com/" target="_blank" class="dropdown-item">Chat on Slack</a>
-      </li>
-    <% else %>
-      <li>
-        <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="contact-support" data-url="https://dradis.com/pro/pages/support.html">Contact support</a>
-      </li>
-      <li>
-        <a href="https://dradis.slack.com/" target="_blank" class="dropdown-item">Chat on Slack</a>
-      </li>
-    <% end %>
+    <%= render partial: 'layouts/hera/navbar/instance_nav/help_menu/ce' %>
 
     <li>
       <a href="https://github.com/dradis/dradis-ce/issues" target="_blank" class="dropdown-item">Report an issue</a>
@@ -49,14 +35,12 @@
     <li>
       <a href="https://dradis.com/careers/?utm_source=ce&utm_medium=app&utm_campaign=careers" target="_blank" class="dropdown-item">We're hiring</a>
     </li>
+    <li>
+      <div class="dropdown-divider"></div>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="try-pro" data-url="https://dradis.com/pro/pages/upgrade.html">Try Dradis Pro</a>
+    </li>
 
-    <% if !defined?(Dradis::Pro) %>
-      <li>
-        <div class="dropdown-divider"></div>
-      </li>
-      <li>
-        <a href="javascript:void(0)" class="js-try-pro dropdown-item" data-term="try-pro" data-url="https://dradis.com/pro/pages/upgrade.html">Try Dradis Pro</a>
-      </li>
-    <% end %>
   </ul>
 </li>
