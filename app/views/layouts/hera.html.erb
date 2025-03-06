@@ -59,14 +59,7 @@
           <%= flash_messages %>
           <%= content_for?(:content) ? yield(:content) : yield %>
         </main>
-        <footer>
-          <% if defined?(Dradis::Pro) %>
-            <span>Dradis Professional Edition v<%= Dradis::Pro.version %></span>
-          <% else %>
-            <span>Dradis Community Edition v<%= Dradis::CE.version %></span>
-          <% end %>
-          <span>- <a href="https://dradis.com" target="_blank">dradis.com</a></span>
-        </footer>
+        <%= render 'layouts/hera/footer' %>
       </div>
       <% if content_for?(:sidebar) %>
         <%= render "layouts/hera/secondary_sidebar" %>
