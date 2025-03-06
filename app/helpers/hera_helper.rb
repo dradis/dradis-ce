@@ -54,6 +54,18 @@ module HeraHelper
     defined?(current_project) && current_project&.persisted?
   end
 
+  def navbar_brand
+    if !defined?(Dradis::Pro) 
+     link_to main_app.project_path(current_project), class: 'navbar-brand' do 
+        image_tag 'logo_small.png', alt: 'Dradis CE logo', class: 'p-lg-0'
+       end 
+    else 
+      link_to current_user.role?(:contributor) ? main_app.contributors_home_path : main_app.dashboard_path, class: 'navbar-brand' do 
+        image_tag 'logo_small.png', alt: 'Dradis Pro logo', class: 'p-lg-0' 
+      end
+    end
+  end
+
   def page_title
     [content_for(:title), "Dradis #{defined?(Dradis::Pro) ? 'Professional' : 'Community' } Edition"].compact.join(' | ')
   end
