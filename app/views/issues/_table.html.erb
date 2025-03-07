@@ -14,7 +14,7 @@
       <tr>
         <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Select</span></th>
         <% @all_columns.each do |column| %>
-          <th><%= column %></th>
+          <%= content_tag :th, column, class: class_names('reverse-sort': column == 'Tags') %>
         <% end %>
         <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Actions</span></th>
       </tr>
@@ -31,7 +31,7 @@
                   [issue.title, (link_to(issue.title, [current_project, issue], data: { qa_visible: false } ) + link_to(issue.title, project_qa_issue_path(current_project, issue), class: 'd-none', data: { qa_visible: true }))]
                 when 'Tags'
                   [
-                    issue.tags.any? ? issue.tags.first.display_name : '',
+                    issue.tags.any? ? issue.tags.first.position : false,
                     tag_and_name_for(issue)
                   ]
                 when 'Affected'

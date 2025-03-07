@@ -1,0 +1,16 @@
+#[Title]#
+
+#[CVSSv4.BaseScore]#
+
+#[CVSSv4.BaseVector]#
+
+#[Type]#
+Internal | External
+
+#[Description]#
+
+#[Solution]#
+
+#[References]#
+
+
