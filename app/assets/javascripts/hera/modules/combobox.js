@@ -221,18 +221,25 @@ class ComboBox {
       if (this.config.includes('remote-filter')) {
         const url = this.$target.data('url');
 
-        this.$comboboxMenu.find(
-          '[data-behavior~=combobox-option]'
-        ).remove()
+        this.$comboboxMenu.find('[data-behavior~=spinner]').remove();
+        this.$comboboxMenu.find('[data-behavior~=combobox-option]').remove();
 
-        // add spinner
+        this.$comboboxMenu.append(
+          `<div class="py-2 text-center" data-behavior="spinner">
+            <div class="spinner-border text-primary">
+              <span class="visually-hidden">Loading</span>
+            </div>
+          </div>`
+        );
 
         fetch(url + '?query=' + filterText)
-          .then(response => response.json())
-          .then(data => {
+          .then((response) => response.json())
+          .then((data) => {
             if (data.length) {
-              data.forEach(option => {
-                const $option = $(`<option value="${option[1]}">${option[0]}</option>`);
+              data.forEach((option) => {
+                const $option = $(
+                  `<option value="${option[1]}">${option[0]}</option>`
+                );
 
                 this.appendOption(this.$comboboxMenu, $option);
               });
@@ -241,8 +248,8 @@ class ComboBox {
                 .next('[data-behavior~=no-results]')
                 .toggleClass('d-none', true);
             }
+            this.$comboboxMenu.find('[data-behavior~=spinner]').remove();
           });
-
       } else {
         let matchedOptions = 0;
 
