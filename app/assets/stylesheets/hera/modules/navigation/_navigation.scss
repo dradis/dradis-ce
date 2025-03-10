@@ -183,6 +183,12 @@ header {
               color: $text-default;
             }
           }
+
+          &:first-child {
+            .dropdown-divider {
+              display: none;
+            }
+          }
         }
 
         @media (max-width: 991px) {
