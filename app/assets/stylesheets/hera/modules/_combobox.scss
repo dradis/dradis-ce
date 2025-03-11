@@ -38,6 +38,10 @@
 .combobox-container {
   position: relative;
 
+  &.combobox-inline {
+    display: inline-block;
+  }
+
   & > .disabled {
     background-color: $grey-200;
     pointer-events: none;
