@@ -7,8 +7,8 @@
   pointer-events: auto;
 
   &.disabled {
+    background-color: $grey-200;
     cursor: not-allowed;
-    pointer-events: none;
   }
 
   &:not(.disabled) {
@@ -38,7 +38,7 @@
 .combobox-container {
   position: relative;
 
-  .disabled {
+  & > .disabled {
     background-color: $grey-200;
     pointer-events: none;
 
