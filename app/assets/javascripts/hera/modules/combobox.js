@@ -178,6 +178,18 @@ class ComboBox {
       );
     });
 
+    // Ensure the combobox is enabled/disabled when the select is enabled/disabled dynamically
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'disabled') {
+          const isDisabled = !!$(mutation.target).attr('disabled');
+          this.$combobox.toggleClass('disabled', isDisabled);
+        }
+      });
+    });
+
+    observer.observe(this.$target[0], { attributes: true });
+
     this.$combobox.on(
       'click',
       '[data-behavior~=unselect-multi-option]',
