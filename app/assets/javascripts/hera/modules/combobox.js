@@ -54,12 +54,13 @@ class ComboBox {
 
     $parent.append(
       `<span
-        class="combobox-option ${disabled}"
-        role="option"
-        id="combobox-option-${this.idSuffix}-${value}"
         aria-selected="false"
+        class="combobox-option ${disabled}"
         data-behavior="combobox-option"
         data-value="${value}"
+        id="combobox-option-${this.idSuffix}-${value}"
+        role="option"
+        tabindex="${disabled ? '-1' : '0'}"
       >
         ${$option.text()}
       </span>`
@@ -100,9 +101,9 @@ class ComboBox {
   }
 
   attachEventListeners() {
-    $(document).on('click', (event) => {
-      // Hide the menu if the user clicks outside of the ComboBox
-      if (!$(event.target).closest(this.$comboboxContainer).length) {
+    this.$comboboxContainer.on('focusout', (event) => {
+      // Hide menu if the newly focused element is outside of the ComboBox
+      if (!$(event.relatedTarget).closest(this.$comboboxContainer).length) {
         this.hideMenu();
       }
     });
@@ -111,34 +112,37 @@ class ComboBox {
       this.showMenu();
     });
 
+    this.$combobox.on('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        this.showMenu();
+        event.preventDefault();
+      }
+    });
+
     this.$comboboxMenu.on(
-      'click',
+      'click keydown',
       '[data-behavior~=combobox-option]',
       (event) => {
-        const $option = $(event.currentTarget);
-        if ($option.hasClass('selected') && this.isMultiSelect) {
-          const $unselectedOption = this.$combobox.find(
-            `[data-option-value="${$option.data('value')}"]`
-          );
-          this.unselectMultiOption($unselectedOption);
-        } else {
-          this.selectOptions($option);
+        if (
+          event.type === 'click' ||
+          event.key === 'Enter' ||
+          event.key === ' '
+        ) {
+          this.handleOptionSelection($(event.currentTarget), event);
         }
-        this.$target.trigger('change');
-        if (!this.isMultiSelect) this.hideMenu();
       }
     );
 
-    this.$filter?.on('textchange', () => this.handleFiltering());
-
-    this.$addOption?.on('click', () => {
-      this.appendCustomOption(this.$filter.val());
-      if (this.isMultiSelect) {
-        this.$filter?.val(null).trigger('textchange');
-      } else {
-        this.hideMenu();
+    this.$comboboxMenu.on('keydown', '[data-behavior~=add-option]', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        this.handleAddingCustomOption();
+        event.preventDefault();
       }
     });
+
+    this.$addOption?.on('click', () => this.handleAddingCustomOption());
+
+    this.$filter?.on('textchange', () => this.handleFiltering());
 
     this.$target.on('change', (event) => {
       let $options = [];
@@ -212,6 +216,15 @@ class ComboBox {
     this.$comboboxMenu = this.$combobox.next('[data-behavior~=combobox-menu]');
   }
 
+  handleAddingCustomOption() {
+    this.appendCustomOption(this.$filter.val());
+    if (this.isMultiSelect) {
+      this.$filter?.val(null).trigger('textchange');
+    } else {
+      this.hideMenu();
+    }
+  }
+
   handleFiltering() {
     clearTimeout(this.debounceTimeout);
 
@@ -274,6 +287,21 @@ class ComboBox {
         }
       }
     }, this.debounceTimer);
+  }
+
+  handleOptionSelection($option, event) {
+    if ($option.hasClass('selected') && this.isMultiSelect) {
+      const $unselectedOption = this.$combobox.find(
+        `[data-option-value="${$option.data('value')}"]`
+      );
+      this.unselectMultiOption($unselectedOption);
+    } else {
+      this.selectOptions($option);
+    }
+    this.$target.trigger('change');
+    if (!this.isMultiSelect) this.hideMenu();
+
+    if (event) event.preventDefault();
   }
 
   hideMenu() {
@@ -394,7 +422,7 @@ class ComboBox {
 
     if (this.config.includes('add-options')) {
       this.$filter.parent().append(
-        `<span class="combobox-option d-none" data-behavior="add-option">
+        `<span class="combobox-option d-none" data-behavior="add-option" tabindex="0">
           <i class="fa-solid fa-plus me-1"></i>
           Create <strong>${this.$filter.val()}</strong> option
           </span>`
