@@ -121,7 +121,7 @@
 
     // Initialize ComboBox
     $(parentElement)
-      .find('select')
+      .find('select:not(.custom-select)')
       .each(function () {
         new ComboBox($(this));
       });
