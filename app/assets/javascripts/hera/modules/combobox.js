@@ -134,6 +134,8 @@ class ComboBox {
           event.key === ' '
         ) {
           this.handleOptionSelection($(event.currentTarget), event);
+        } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+          this.handleArrowNavigation(event);
         }
       }
     );
@@ -228,6 +230,25 @@ class ComboBox {
     } else {
       this.hideMenu();
     }
+  }
+
+  handleArrowNavigation(event) {
+    event.preventDefault();
+
+    const $options = this.$comboboxOptions.not('.disabled');
+    const $focusedOption = this.$comboboxMenu.find(
+      '[data-behavior~=combobox-option]:focus'
+    );
+
+    let newIndex = $options.index($focusedOption);
+
+    if (event.key === 'ArrowDown') {
+      newIndex = newIndex < $options.length - 1 ? newIndex + 1 : 0;
+    } else if (event.key === 'ArrowUp') {
+      newIndex = newIndex > 0 ? newIndex - 1 : $options.length - 1;
+    }
+
+    $options.eq(newIndex).focus();
   }
 
   handleFiltering() {
