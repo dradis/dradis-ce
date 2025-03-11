@@ -16,6 +16,7 @@
     &:hover,
     &:focus-visible {
       color: $white !important;
+      outline: none;
 
       i {
         color: $white !important;
