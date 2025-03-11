@@ -178,17 +178,29 @@ class ComboBox {
       );
     });
 
-    // Ensure the combobox is enabled/disabled when the select is enabled/disabled dynamically
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
+        // Handle changes in the `disabled` attribute of the target select
         if (mutation.attributeName === 'disabled') {
-          const isDisabled = !!$(mutation.target).attr('disabled');
+          const isDisabled = !!this.$target.attr('disabled');
           this.$combobox.toggleClass('disabled', isDisabled);
+        }
+
+        // Ensure changes to options are reflected in the combobox
+        if (mutation.type === 'childList') {
+          this.$comboboxMenu.empty();
+          this.setupFilter();
+          this.populateOptions();
+          this.setInitialSelection();
+          this.attachEventListeners();
         }
       });
     });
 
-    observer.observe(this.$target[0], { attributes: true });
+    observer.observe(this.$target[0], {
+      attributes: true,
+      childList: true,
+    });
 
     this.$combobox.on(
       'click',
