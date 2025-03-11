@@ -329,13 +329,8 @@ class ComboBox {
   }
 
   reinitialize() {
-    const $existingContainer = this.$target.parent(),
-      $targetParent = $existingContainer.parent(),
-      $targetSelect = this.$target.clone();
-
-    $targetSelect.appendTo($targetParent);
-    $existingContainer.remove();
-    this.$target = $targetSelect;
+    this.$comboboxContainer.remove();
+    this.init();
   }
 
   selectMultiOptions($options) {
