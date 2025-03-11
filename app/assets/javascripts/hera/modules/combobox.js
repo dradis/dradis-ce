@@ -9,6 +9,11 @@ class ComboBox {
     this.config = (this.$target.data('combobox-config') || '')
       .split(' ')
       .filter(Boolean);
+
+    if (this.config.includes('no-combobox')) {
+      return;
+    }
+
     this.debounceTimer = 250;
     this.isMultiSelect = this.$target.attr('multiple');
     this.idSuffix = Math.random().toString(36).substring(2);
