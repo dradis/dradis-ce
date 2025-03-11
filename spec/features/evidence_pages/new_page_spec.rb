@@ -19,7 +19,7 @@ describe 'Evidence new page' do
     end
 
     it 'shows existing nodes' do
-      within('.existing-node-list') do
+      within('[data-behavior~=combobox-container] #evidence_node_ids') do
         expect(page).to have_text @node.label
       end
     end
@@ -27,7 +27,7 @@ describe 'Evidence new page' do
     it 'creates an evidence with the selected template for selected node' do
       visit new_project_issue_evidence_path(current_project, @issue, template: 'simple_note')
 
-      within('.existing-node-list') { select(@node.label) }
+      within('[data-behavior~=combobox-container] #evidence_node_ids') { select(@node.label) }
       expect { click_button('Create Evidence') }.to change { Evidence.count }.by(1)
 
       evidence = Evidence.last
@@ -78,7 +78,7 @@ describe 'Evidence new page' do
     end
 
     it 'assigns the current user as the evidence author' do
-      within('.existing-node-list') { select(@node.label) }
+      within('[data-behavior~=combobox-container] #evidence_node_ids') { select(@node.label) }
       expect { click_button('Create Evidence') }.to change { Evidence.count }.by(1)
       expect(@node.reload.evidence.last.author).to eq(@logged_in_as.email)
     end
