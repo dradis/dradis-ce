@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Forms: Add a combobox for selecting, filtering, and creating options
   - Hera: Add new layout with redesigned navigation
   - QA: Add View History link when viewing Issues/Content blocks
   - Upgraded gems:
