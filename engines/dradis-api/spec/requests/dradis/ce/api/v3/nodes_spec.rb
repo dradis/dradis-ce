@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'Nodes API' do
-
   include_context 'project scoped API'
   include_context 'https'
 
@@ -66,6 +65,7 @@ describe 'Nodes API' do
 
         retrieved_node = JSON.parse(response.body)
         expect(retrieved_node['label']).to eq node.label
+        expect(retrieved_node['properties']).to eq node.properties
       end
     end
 
@@ -80,6 +80,9 @@ describe 'Nodes API' do
             label:     'New Node',
             type_id:   Node::Types::HOST,
             parent_id: parent_node_id,
+            properties: {
+              'ip' => '1.1.1.1'
+            },
             position:  3
           }
         }
@@ -130,13 +133,19 @@ describe 'Nodes API' do
     end
 
     describe 'PUT /api/nodes/:id' do
-
       let(:node) { create(:node, label: 'Existing Node', project: current_project) }
 
       let(:valid_put) do
         put "/api/nodes/#{ node.id }", params: valid_params.to_json, env: @env.merge('CONTENT_TYPE' => 'application/json')
       end
-      let(:valid_params) { { node: { label: 'Updated Node' } } }
+      let(:valid_params) do
+        {
+          node: {
+            label: 'Updated Node',
+            properties: { 'ip' => '1.0.0.1' }
+          }
+        }
+      end
 
       it 'updates a node' do
         valid_put
@@ -144,6 +153,7 @@ describe 'Nodes API' do
         expect(current_project.nodes.find(node.id).label).to eq valid_params[:node][:label]
         retrieved_node = JSON.parse(response.body)
         expect(retrieved_node['label']).to eq valid_params[:node][:label]
+        expect(retrieved_node['properties']).to eq valid_params[:node][:properties]
       end
 
       let(:submit_form) { valid_put }
@@ -185,7 +195,6 @@ describe 'Nodes API' do
     end
 
     describe 'DELETE /api/nodes/:id' do
-
       let(:node) { create(:node, label: 'Existing Node', project: current_project) }
       let(:delete_node) { delete "/api/nodes/#{ node.id }", env: @env }
 
@@ -201,5 +210,4 @@ describe 'Nodes API' do
       include_examples 'creates an Activity', :destroy
     end
   end
-
 end
