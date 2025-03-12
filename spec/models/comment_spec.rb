@@ -36,7 +36,7 @@ describe Comment do
   describe '#notify' do
     it 'creates notifications when a comment is created' do
       commentable = create(:issue)
-      create_list(:subscription, 2, subscribable: commentable)
+      subscriptions = create_list(:subscription, 2, subscribable: commentable)
       comment = create(:comment, commentable: commentable)
 
       expect {
@@ -47,7 +47,8 @@ describe Comment do
     it 'creates notifications when a comment has mentions' do
       issue_owner = create(:user, email: 'owner@dradis.test')
       commentable = create(:issue, author: issue_owner.email)
-      create(:subscription, subscribable: commentable)
+      subscribed = create(:user)
+      create(:subscription, subscribable: commentable, user: subscribed)
       mentioned = create(:user, email: 'mentioned@dradis.test')
       comment = create(
         :comment,
@@ -62,6 +63,19 @@ describe Comment do
 
       expect(Notification.where(action: 'mention').count).to eq(2)
       expect(Notification.where(action: 'create').count).to eq(1)
+    end
+
+    it 'does not create notifications for recipients without read access' do
+      commentable = create(:issue)
+      recipient_without_access = create(:user)
+      create(:subscription, subscribable: commentable, user: recipient_without_access)
+      comment = create(:comment, commentable: commentable)
+
+      allow_any_instance_of(Ability).to receive(:can?).with(:read, comment).and_return(false)
+
+      expect {
+        comment.notify(action: 'create', actor: comment.user, recipients: [])
+      }.to change { Notification.count }.by(0)
     end
   end
 end

@@ -47,22 +47,6 @@
           });
       });
 
-    // Allow page anchors to work
-    $(parentElement)
-      .find('[data-behavior~=deeplinks] >* a')
-      .click(function (e) {
-        history.pushState(null, null, $(e.target).attr('href'));
-      });
-
-    // Show the pane for a given anchor
-    $(parentElement)
-      .find('[data-behavior~=deeplinks] >* a')
-      .each(function () {
-        if (window.location.hash == $(this).attr('href')) {
-          $(this).tab('show');
-        }
-      });
-
     // Init Bootstrap tooltips with 1ms delay for tooltips within <script type='text/x-tmpl'>
     setTimeout(function () {
       const tooltipTriggerList = document.querySelectorAll(
@@ -81,11 +65,75 @@
     }
 
     // Update address bar with current tab param
-    $('[data-bs-toggle~=tab]').on('shown.bs.tab', function (e) {
-      let currentTab = $(e.target).attr('href').substring(1);
-      searchParams.set('tab', currentTab);
-      history.pushState(null, null, `?${searchParams.toString()}`);
+    $(parentElement)
+      .find('[data-bs-toggle~=tab]')
+      .on('shown.bs.tab', function (e) {
+        let currentTab = $(e.target).attr('href').substring(1);
+        searchParams.set('tab', currentTab);
+        let urlWithTab = `?${searchParams.toString()}`;
+        history.pushState(
+          { turbolinks: true, url: urlWithTab },
+          '',
+          urlWithTab
+        );
+      });
+
+    // Initialize clipboard.js
+    const clipboard = new Clipboard(
+      parentElement.querySelectorAll('[data-clipboard-text]')
+    );
+
+    clipboard.on('success', function (e) {
+      const $copyBtn = $(e.trigger);
+      e.clearSelection();
+      $copyBtn.tooltip({
+        placement: 'bottom',
+        title: 'Copied to clipboard!',
+        trigger: 'manual',
+      });
+      $copyBtn.tooltip('show');
+      setTimeout(function () {
+        $copyBtn.tooltip('hide');
+      }, 1000);
     });
+
+    clipboard.on('error', function (e) {
+      const actionKey = e.action === 'cut' ? 'X' : 'C',
+        $copyBtn = $(e.trigger);
+      let actionMsg;
+
+      if (/Mac/i.test(navigator.userAgent)) {
+        actionMsg = 'Press ⌘-' + actionKey + ' to ' + e.action;
+      } else {
+        actionMsg = 'Press Ctrl-' + actionKey + ' to ' + e.action;
+      }
+
+      $copyBtn.tooltip({
+        placement: 'bottom',
+        title: actionMsg,
+        trigger: 'manual',
+      });
+      $copyBtn.tooltip('show');
+      setTimeout(function () {
+        $copyBtn.tooltip('hide');
+      }, 1000);
+    });
+
+    // Sortable lists
+    $('[data-behavior~=ui-sortable]').sortable({
+      axis: 'y',
+      containment: 'parent',
+      cursor: 'grabbing',
+      handle: '.fa-grip-vertical',
+      update: function () {
+        $.post(
+          $(this).data('sort-url'), 
+          $(this).sortable('serialize', { key: 'sorted_ids[]' })
+        );
+      },
+    });
+
+    window.initBehaviors = initBehaviors;
   }
 
   document.addEventListener('turbo:load', function () {

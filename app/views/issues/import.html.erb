@@ -1,8 +1,17 @@
-<% content_for :title, 'Import issues' %>
+<% content_for :title, 'Import Issues' %>
 
 <% content_for :sidebar do %>
   <%= render 'sidebar'%>
 <% end %>
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <%= link_to current_project.name, project_path(current_project) %>
+  </li>
+  <li class="breadcrumb-item active">
+    Import Issues
+  </li>
+</ol>
 
 <!-- Main content -->
 <div class="content-container">
@@ -73,40 +82,40 @@
                                 <p data-behavior="state-label"><%= b.text.humanize %></p>
                                 <% case b.value %>
                                 <% when 'draft' %>
-                                <span>Still not ready for review or the report.</span>
+                                  <span>Still not ready for review or the report.</span>
                                 <% when 'ready_for_review' %>
-                                <span>All done on this one, ready for QA.</span>
+                                  <span>All done on this one, ready for QA.</span>
                                 <% when 'published' %>
-                                <span>Content is final, ready for the report.</span>
-                              <% end %>
-                            </div>
-                          <% end %>
-                        </span>
-                      <% end %>
+                                  <span>Content is final, ready for the report.</span>
+                                <% end %>
+                              </div>
+                            <% end %>
+                          </span>
+                        <% end %>
+                      </div>
                     </div>
-                  </div>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      <% else %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
 
-        <div class="empty-state mt-3">
-          <div class="empty-state-icon">
-            <%= image_tag "icons/#{rand(9)}.svg" %>
-          </div>
-          <div class="empty-state-body">
-            <div class="container">
-              <h4 class="empty-state-title">This query yielded no results</h4>
-              <div class="empty-state-actions">
-                <a href="https://dradisframework.com/support/guides/issuelibrary/add_to_project.html" class="empty-state-docs-link" target="_blank">More about importing issues</a>
+          <div class="empty-state mt-3">
+            <div class="empty-state-icon">
+              <%= image_tag "icons/#{rand(9)}.svg" %>
+            </div>
+            <div class="empty-state-body">
+              <div class="container">
+                <h4 class="empty-state-title">This query yielded no results</h4>
+                <div class="empty-state-actions">
+                  <a href="https://dradis.com/support/guides/issuelibrary/add_to_project.html" class="empty-state-docs-link" target="_blank">More about importing issues</a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
 </div>

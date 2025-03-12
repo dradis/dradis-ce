@@ -1,8 +1,19 @@
-<% content_for :title, 'Upload Manager' %>
+<% content_for :title, 'Upload' %>
 
-<div class="row m-0">
-  <div class="col-lg-6 col-xl-5 p-0 order-1">
-    <div class="content-container mt-3 me-lg-3" data-behavior="content-container">
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to current_project.name, project_path(current_project) %>
+    </li>
+    <li class="breadcrumb-item active">
+      Upload
+    </li>
+  </ol>
+<% end %>
+
+<div class="row p-0">
+  <div class="col-lg-6 col-xl-5 order-1">
+    <div class="content-container" data-behavior="content-container">
       <h4 class="header-underline">Upload Output Files</h4>
       <p class="mt-4">Use the form below to upload output files from other tools.</p>
 
@@ -10,19 +21,19 @@
         <%= form_tag project_upload_manager_path(current_project, format: :js), multipart: true, id: 'new_upload', data: { parse_url: project_upload_parse_path(current_project) } do %>
           <div class="mb-5 mt-4 pt-2">
             <%= label_tag :uploader do %>
-              <h5>1. Tool are you uploading output from</h5>
+              <h5>1. Tool you are uploading output from</h5>
             <% end %>
             <%= select_tag 'uploader', options_from_collection_for_select(@uploaders, :name, :name), { class: 'form-select', data: { behavior: 'tool-select' } } %>
           </div>
           <div class="mb-5">
             <%= label_tag :state do %>
-              <h5>2. State for uploaded records</h5>
+              <h5>2. State of uploaded records</h5>
             <% end %>
             <%= select_tag 'state', options_for_select(Issue.states.map { |s, id| [s.humanize, s] }), { class: 'form-select state-select', data: { behavior: 'state-select' } } %>
           </div>
           <div class="mb-4">
             <%= label_tag :file do %>
-              <h5>3. Upload output file</h5>
+              <h5>3. Upload tool output file</h5>
             <% end %>
             <div>
               <label class="visually-hidden" data-behavior="file-label">Choose file</label>
@@ -45,8 +56,8 @@
     </div>
   </div>
 
-  <div class="col-lg-6 col-xl-7 p-0 order-3 order-lg-2">
-    <div class="content-container mt-0 mt-lg-3 ms-lg-3 restrict-height" data-height="match-prev" data-behavior="restrict-height">
+  <div class="col-lg-6 col-xl-7 order-3 order-lg-2 content-overflow">
+    <div class="content-container">
       <h4 class="header-underline">Available plugins</h4>
 
       <div class="overflow-auto">
@@ -72,8 +83,8 @@
     </div>
   </div>
 
-  <div class="col-12 p-0 order-2 order-lg-3">
-    <div class="content-container mt-0">
+  <div class="col-12 order-2 order-lg-3">
+    <div class="content-container">
       <h4 class="header-underline">Output console</h4>
       <div id="status"></div>
       <%= content_tag :div, id: 'result', style: 'display:none', data: { url: status_console_index_path }  do %>
@@ -84,7 +95,3 @@
     </div>
   </div>
 </div>
-
-<script type="text/javascript" charset="utf-8">
-  ConsoleUpdater.jobId = <%= @last_job %>;
-</script>

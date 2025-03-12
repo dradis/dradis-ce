@@ -9,9 +9,10 @@ class DiffedRevision
 
   def diff
     @diff ||=
-      Differ.diff_by_line(
-        after[content_attribute],
-        before[content_attribute]
+      Differ.diff(
+        after[content_attribute].gsub(/\r/, ''),
+        before[content_attribute].gsub(/\r/, ''),
+        /(\s)/
       )
   end
 
@@ -33,6 +34,21 @@ class DiffedRevision
 
   def updated_at
     after['updated_at'].strftime(RevisionsHelper::DATE_FORMAT)
+  end
+
+  def changed_state
+    return {} unless @record.respond_to?(:state)
+
+    # Cast the ['state'] attribute as it can be both the state index (0,1,2) or
+    # the state name.
+    before_state = @record.class.new(state: before['state']).state
+    after_state = @record.class.new(state: after['state']).state
+
+    if before_state != after_state
+      { after: after_state, before: before_state }
+    else
+      {}
+    end
   end
 
   private

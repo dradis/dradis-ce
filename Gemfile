@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.8'
+gem 'rails', '~> 7.0.8.7'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -36,9 +36,11 @@ gem 'bootsnap', '>= 1.12.0', require: false
 # ---------------------------------------------------- Dradis Community Edition
 gem 'bootstrap', '~> 5.2.3'
 gem 'jquery-rails'
-gem 'jquery-ui-rails'
 gem 'jquery-fileupload-rails', '~> 0.3.4'
 gem 'jquery-hotkeys-rails'
+
+# Sortable lists
+gem 'acts_as_list', '~> 0.7.5'
 
 # Organize Node tree
 gem 'acts_as_tree', '~> 2.9.1'
@@ -86,10 +88,10 @@ gem 'bcrypt', '3.1.12'
 gem 'json', '2.3.0'
 
 # XML manipulation
-gem 'nokogiri', '>= 1.14.3'
+gem 'nokogiri', '>= 1.18.3'
 
 # MySQL backend
-# gem 'mysql2', '~> 0.5.1'
+# gem 'mysql2', '~> 0.5.6'
 
 # actionpack depends on rails-html-sanitizer, which has an XSS vulnerability
 # before 1.0.4, so make sure we're using 1.0.4+:
@@ -98,7 +100,7 @@ gem 'nokogiri', '>= 1.14.3'
 gem 'rails-html-sanitizer', '~> 1.4.4'
 
 # Textile markup
-gem 'RedCloth', '~> 4.3.2', require: 'redcloth'
+gem 'RedCloth', '~> 4.3.4', require: 'redcloth'
 
 # html-pipeline dependency for auto-linking
 gem 'rinku'
@@ -137,16 +139,13 @@ gem 'whenever', require: false
 
 gem 'net-smtp'
 gem 'net-pop'
-gem 'net-imap'
+gem 'net-imap', '>= 0.5.6'
+
+gem 'puma', '>= 6.4.3'
 
 # ------------------------------------------------------------------ Deployment
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
-group :production do
-  # Use Unicorn as the web server
-  gem 'unicorn',  '6.1.0'
-end
 
 # ----------------------------------------------------- Development and Testing
 group :development do
@@ -186,16 +185,14 @@ group :development, :test do
   gem 'byebug', platform: :mri
 
   gem 'rspec-rails', '~> 4.0.2'
-
-  gem 'puma', '~> 5.6.7'
 end
 
 group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
-  gem 'capybara', '~> 3.35.1'
+  gem 'capybara', '~> 3.39'
   gem 'guard-rspec', require: false
-  gem 'selenium-webdriver', '~> 4.11'
+  gem 'selenium-webdriver', '~> 4.17'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'timecop'
 
@@ -218,12 +215,12 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 4.10.0'
+gem 'dradis-plugins', '~> 4.15.0'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 4.10.0'
+gem 'dradis-projects', '~> 4.15.0'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)
@@ -239,28 +236,29 @@ gem 'dradis-calculator_cvss', github: 'dradis/dradis-calculator_cvss', branch: '
 gem 'dradis-calculator_dread', github: 'dradis/dradis-calculator_dread', branch: 'turbo'
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv_export', '~> 4.10.0'
-gem 'dradis-html_export', github: 'dradis/dradis-html_export', branch: 'rails-7-upgrade'
+gem 'dradis-csv_export', '~> 4.15.0'
+gem 'dradis-html_export', '~> 4.15.0'
 
 # ---------------------------------------------------------------------- Import
 gem 'dradis-csv', github: 'dradis/dradis-csv', branch: 'turbo'
 
 # ---------------------------------------------------------------------- Upload
-gem 'dradis-acunetix', '~> 4.10.0'
-gem 'dradis-brakeman', '~> 4.10.0'
-gem 'dradis-burp', '~> 4.10.0'
-gem 'dradis-coreimpact', '~> 4.10.0'
-gem 'dradis-metasploit', '~> 4.10.0'
-gem 'dradis-nessus', '~> 4.10.0'
-gem 'dradis-netsparker', '~> 4.10.0'
-gem 'dradis-nexpose', '~> 4.10.0'
-gem 'dradis-nikto', '~> 4.10.0'
-gem 'dradis-nipper', '~> 4.10.0'
-gem 'dradis-nmap', '~> 4.10.0'
-gem 'dradis-ntospider', '~> 4.10.0'
-gem 'dradis-openvas', '~> 4.10.0'
-gem 'dradis-qualys', '~> 4.10.0'
-gem 'dradis-saint', '~> 4.10.0'
-gem 'dradis-veracode', '~> 4.10.0'
-gem 'dradis-wpscan', '~> 4.10.0'
-gem 'dradis-zap', '~> 4.10.0'
+gem 'dradis-acunetix', '~> 4.15.0'
+gem 'dradis-brakeman', '~> 4.15.0'
+gem 'dradis-burp', '~> 4.15.0'
+gem 'dradis-coreimpact', '~> 4.15.0'
+gem 'dradis-metasploit', '~> 4.15.0'
+gem 'dradis-nessus', '~> 4.15.0'
+gem 'dradis-netsparker', '~> 4.15.0'
+gem 'dradis-nexpose', '~> 4.15.0'
+gem 'dradis-nikto', '~> 4.15.0'
+gem 'dradis-nipper', '~> 4.15.0'
+gem 'dradis-nmap', '~> 4.15.0'
+gem 'dradis-ntospider', '~> 4.15.0'
+gem 'dradis-openvas', '~> 4.15.0'
+gem 'dradis-pentera', '~> 4.15.0'
+gem 'dradis-qualys', '~> 4.15.0'
+gem 'dradis-saint', '~> 4.15.0'
+gem 'dradis-veracode', '~> 4.15.0'
+gem 'dradis-wpscan', '~> 4.15.0'
+gem 'dradis-zap', '~> 4.15.0'

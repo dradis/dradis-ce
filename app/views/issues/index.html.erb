@@ -4,6 +4,17 @@
   <%= render 'sidebar'%>
 <% end %>
 
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to current_project.name, project_path(current_project) %>
+    </li>
+    <li class="breadcrumb-item active">
+      Issues
+    </li>
+  </ol>
+<% end %>
+
 <!-- Main content -->
 <div class="content-container" id="issue-viewer">
 
@@ -22,7 +33,7 @@
       <%= render 'shared/empty_state',
         actions_partial: 'issues/empty_state_actions',
         name: 'issue',
-        docs_link: 'https://dradisframework.com/support/guides/projects/issues.html',
+        docs_link: 'https://dradis.com/support/guides/projects/issues.html',
         text: 'Use issues to represent vulnerabilities or findings. Issues contain general information, such as: Title, Description, Recommendation, CVE\'s, etc. Issues are the findings you\'ll end up including in your report.'
       %>
     <% end %>

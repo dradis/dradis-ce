@@ -1,4 +1,5 @@
 class EvidenceController < NestedNodeResourceController
+  include AttachmentsCopier
   include ConflictResolver
   include EvidenceHelper
   include LiquidEnabledResource
@@ -45,6 +46,7 @@ class EvidenceController < NestedNodeResourceController
   end
 
   def edit
+    @form_preview_path = preview_project_node_evidence_path(current_project, @node, @evidence)
   end
 
   def update
@@ -53,6 +55,8 @@ class EvidenceController < NestedNodeResourceController
 
       @evidence.assign_attributes(evidence_params)
       autogenerate_issue if evidence_params[:issue_id].blank?
+
+      copy_attachments(@evidence) if @evidence.node_changed?
 
       if @evidence.save
         track_updated(@evidence)

@@ -1,19 +1,15 @@
 class FieldParser
   FIELDS_REGEX = /#\[(.+?)\]#[\r|\n](.*?)(?=#\[|\z)/m
-  FIELDLESS_REGEX = /^([\s\S]*?)(?=\n{,2}#\[.+?\]#|\z)/
+  HEADERLESS_REGEX = /^([\s\S]*?)(?=\n{,2}#\[.+?\]#|\z)/
 
   # Convert serialized form data to Dradis-style item content.
   def self.fields_to_source(serialized_form)
-    serialized_form.each_slice(2).map do |field_name, field_value|
-      field = field_name[:value]
-      value = field_value[:value]
+    serialized_form.each_slice(2).map(&to_source).compact.join("\n\n")
+  end
 
-      str = ''
-      str << "#[#{field}]#\n" unless field.empty?
-      str << "#{value}" unless value.empty?
-
-      str
-    end.compact.join("\n\n")
+  # Convert a hash of field name/value pairs to Dradis-style item content.
+  def self.fields_hash_to_source(fields)
+    fields.map(&to_source).compact.join("\n\n")
   end
 
   # Parse the contents of the field and split it to return a Hash of field
@@ -38,7 +34,7 @@ class FieldParser
   #   #[Description]#
   #   Lorem ipsum...
   #
-  # If the string contains a fieldless string, it will be prepended to
+  # If the string contains a headerless field, it will be prepended to
   # the result. E.g.
   #
   #   Line 1
@@ -54,18 +50,33 @@ class FieldParser
       field.map(&:strip)
     end
 
-    fieldless_string = parse_fieldless_string(string)
+    headerless_fields = parse_fields_without_headers(string)
 
-    if fieldless_string.present?
-      array.prepend(['', fieldless_string])
+    if headerless_fields.present?
+      array.prepend(['', headerless_fields])
     end
 
     array
   end
 
-  # Field-less strings are strings that do not have a field header (#[Field]#).
+  # Headerless fields are strings that do not have a field header (#[Field]#).
   # This parses all characters before a field header or end of string.
-  def self.parse_fieldless_string(source)
-    source[FIELDLESS_REGEX, 1]
+  def self.parse_fields_without_headers(source)
+    source[HEADERLESS_REGEX, 1]
+  end
+
+  private
+
+  def self.to_source
+    return Proc.new do |field, value|
+      field = field.is_a?(String) ? field.to_s : field[:value]
+      value = value.is_a?(String) ? value.to_s : value[:value]
+
+      str = ''
+      str << "#[#{field}]#\n" unless field.empty?
+      str << value unless value.empty?
+
+      str
+    end
   end
 end

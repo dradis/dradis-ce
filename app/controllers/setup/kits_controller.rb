@@ -8,13 +8,12 @@ module Setup
     def create
       case @kit
       when :none
-        # weaksauce alert: this creates a Node which flags the Setup as done.
-        Project.new.issue_library
+        mark_as_done
       when :welcome
-        kit_folder = Rails.root.join('lib','tasks', 'templates','welcome').to_s
+        kit_folder = Rails.root.join('lib', 'tasks', 'templates', 'welcome').to_s
         logger = Log.new.info('Loading Welcome kit...')
         # Before we import the Kit we need at least 1 user
-        User.create!(email: 'adama@dradisframework.com')
+        User.create!(email: 'adama@dradis.com') unless defined?(Dradis::Pro)
         KitImportJob.perform_later(kit_folder, logger: logger)
       end
 
@@ -24,7 +23,20 @@ module Setup
 
     private
     def ensure_pristine
+      defined?(Dradis::Pro) ? ensure_pristine_pro : ensure_pristine_ce
+    end
+
+    def ensure_pristine_ce
       redirect_to project_path(1) unless Node.count.zero?
+    end
+
+    def mark_as_done
+      defined?(Dradis::Pro) ? mark_as_done_pro : mark_as_done_ce
+    end
+
+    def mark_as_done_ce
+      # weaksauce alert: this creates a Node which flags the Setup as done.
+      Project.new.issue_library
     end
 
     def set_kit

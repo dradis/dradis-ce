@@ -34,26 +34,11 @@ class AttachmentsController < AuthenticatedController
       delete_type: 'DELETE'
     }
 
-    if Mime::Type.lookup_by_extension(File.extname(@attachment.filename).downcase.tr('.','')).to_s =~ /^image\//
+    if Mime::Type.lookup_by_extension(File.extname(@attachment.filename).downcase.tr('.', '')).to_s =~ /^image\//
       json[:thumbnail_url] = project_node_attachment_path(current_project, @node, @attachment.filename)
     end
 
     render json: [json], content_type: 'text/plain'
-  end
-
-  # It is possible to rename attachments and this function provides that
-  # functionality.
-  def update
-    filename    = params[:filename]
-    attachment  = Attachment.find(filename, conditions: { node_id: @node.id } )
-    attachment.close
-    new_name    = CGI::unescape(attachment_params[:filename])
-    destination = Attachment.pwd.join(@node.id.to_s, new_name).to_s
-
-    if !File.exist?(destination) && !destination.match(/^#{Attachment.pwd}/).nil?
-      File.rename attachment.fullpath, destination
-    end
-    render json: { success: true }
   end
 
   # This function will send the Attachment file to the browser. It will try to
@@ -63,7 +48,7 @@ class AttachmentsController < AuthenticatedController
   def show
     filename = params[:filename]
 
-    @attachment  = Attachment.find(filename, conditions: { node_id: @node.id } )
+    @attachment  = Attachment.find(filename, conditions: { node_id: @node.id })
     send_options = { filename: @attachment.filename }
 
     # Figure out the best way of displaying the file (by default send it as
@@ -96,7 +81,7 @@ class AttachmentsController < AuthenticatedController
   def destroy
     filename = params[:filename]
 
-    @attachment = Attachment.find(filename, conditions: { node_id: @node.id} )
+    @attachment = Attachment.find(filename, conditions: { node_id: @node.id })
     @attachment.delete
 
     render json: { success: true }
@@ -108,7 +93,7 @@ class AttachmentsController < AuthenticatedController
   # give :node_id is valid.
   def find_or_initialize_node
     begin
-      @node = Node.find(params[:node_id])
+      @node = current_project.nodes.find(params[:node_id])
     rescue
       redirect_to root_path, alert: 'Node not found'
     end

@@ -5,6 +5,7 @@ on:
     branches: ['*']
   push:
     branches: [develop, main]
+  workflow_dispatch:
 
 jobs:
   audits:
@@ -13,14 +14,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Install sqlite3 dependencies
+        run: sudo apt-get install libsqlite3-dev
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
       - name: Security audit dependencies
-        run: bundle exec bundler-audit --update --ignore CVE-2023-31606
+        run: bundle exec bundler-audit --update --ignore CVE-2023-50724 CVE-2023-50725 CVE-2023-50727 CVE-2024-21510
       - name: Security audit ruby
-        run: bundle exec ruby-audit update && bundle exec ruby-audit check --ignore CVE-2021-33621
+        run: bundle exec ruby-audit update && bundle exec ruby-audit check --ignore CVE-2021-33621 CVE-2024-27282
       - name: Security audit application code
         run: bundle exec brakeman -q -w2
   rubocop:
@@ -31,6 +34,7 @@ jobs:
       IS_MERGE: ${{ github.base_ref == '' }}
       PREV_SHA: ${{ github.event.before }}
       TARGET_BRANCH: ${{ github.base_ref }}
+      FALLBACK_BRANCH: 'origin/develop'
     steps:
       - name: Checkout code
         uses: actions/checkout@v1
@@ -39,7 +43,7 @@ jobs:
         with:
           bundler-cache: true
       - name: Lint changed files
-        run: bin/rubocop-ci ${{ env.TARGET_BRANCH || env.PREV_SHA }} ${{ env.IS_MERGE }}
+        run: bin/rubocop-ci ${{ env.TARGET_BRANCH || env.PREV_SHA || env.FALLBACK_BRANCH }} ${{ env.IS_MERGE }}
   rspec:
     name: RSpec
     needs: [audits, rubocop]
@@ -48,7 +52,7 @@ jobs:
       RAILS_ENV: test
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Create database.yml
         run: cp config/database.yml.template config/database.yml
       - name: Install Ruby and gems

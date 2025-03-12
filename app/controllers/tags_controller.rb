@@ -1,6 +1,7 @@
 class TagsController < AuthenticatedController
   include ProjectScoped
   include ActivityTracking
+  include Sortable
 
   before_action :set_columns, only: :index
   load_and_authorize_resource
@@ -35,13 +36,17 @@ class TagsController < AuthenticatedController
   def destroy
     if @tag.destroy
       track_destroyed(@tag)
-      redirect_to project_tags_path(current_project), alert: 'Tag deleted.'
+      redirect_to project_tags_path(current_project), notice: 'Tag deleted.'
     else
       redirect_to project_tags_path(current_project), alert: @tag.errors.full_messages.join('; ')
     end
   end
 
   private
+
+  def sortable_records
+    { klass: Tag, ids: current_project.tags.ids }
+  end
 
   def tag_params
     modified_params = params.require(:tag).permit(:name, :color)
@@ -50,7 +55,7 @@ class TagsController < AuthenticatedController
   end
 
   def set_columns
-    default_field_names = ['Name'].freeze
+    default_field_names = ['Sort', 'Name'].freeze
     extra_field_names = ['Color', 'Created', 'Updated'].freeze
 
     @default_columns = default_field_names

@@ -49,6 +49,7 @@ top of things.
       http://securityreactions.tumblr.com/post/31726556638/we-have-an-ids-and-a-waf
 ````
 
+* Add a CHANGELOG entry.
 * Make sure you have added the necessary tests for your changes.
 * Run _all_ the tests to assure nothing else was accidentally broken.
 * Adhere to our [style guides](https://github.com/dradis/dradis-ce/wiki).
@@ -56,9 +57,10 @@ top of things.
 
 ## Submitting Changes
 
-* Review our [Contributor's Agreement](https://github.com/dradis/dradis-ce/wiki/Contributor%27s-agreement). Sending us a pull request means you have read and accept to this agreement
+* Review our [Contributor's Agreement](https://github.com/dradis/dradis-ce/wiki/Contributor%27s-agreement). Sending us a pull request means you have read and accepted this agreement
 * Push your changes to a topic branch in your fork of the repository.
 * Submit a **pull request** to the repository in the dradis organization.
+* Ensure you include testing steps in your pull request
 * Include a link to the pull request in the ticket
 
 

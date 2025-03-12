@@ -3,6 +3,8 @@ if ENV['RAILS_RELATIVE_URL_ROOT']
 end
 
 Rails.application.routes.draw do
+  get 'up', to: ->(env) { [204, {}, ['']] }
+
   # ------------------------------------------------------------ Authentication
   # Sign in / sign out
   get '/login'  => 'sessions#new'
@@ -21,6 +23,12 @@ Rails.application.routes.draw do
   concern :multiple_update do
     collection do
       patch :multiple_update
+    end
+  end
+
+  concern :previewable do
+    member do
+      post :preview
     end
   end
 
@@ -49,7 +57,7 @@ Rails.application.routes.draw do
 
     post :create_multiple_evidence, to: 'issues/evidence#create_multiple'
 
-    resources :issues, concerns: :multiple_destroy do
+    resources :issues, concerns: [:multiple_destroy, :previewable] do
       collection do
         post :import
         resources :merge, only: [:new, :create], controller: 'issues/merge'
@@ -80,16 +88,16 @@ Rails.application.routes.draw do
 
       resource :merge, only: [:create], controller: 'nodes/merge'
 
-      resources :notes, concerns: :multiple_destroy do
+      resources :notes, concerns: [:multiple_destroy, :previewable] do
         resources :revisions, only: [:index, :show]
       end
 
-      resources :evidence, except: :index, concerns: :multiple_destroy do
+      resources :evidence, except: :index, concerns: [:multiple_destroy, :previewable] do
         resources :revisions, only: [:index, :show]
       end
 
       constraints(filename: /.*/) do
-        resources :attachments, param: :filename
+        resources :attachments, only: [:index, :show, :create, :destroy], param: :filename
       end
     end
 
@@ -99,10 +107,12 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
-    resources :tags, except: [:show]
+    resources :tags, except: [:show] do
+      collection { post :sort }
+    end
 
     namespace :qa do
-      resources :issues, only: [:edit, :index, :show, :update], concerns: :multiple_update
+      resources :issues, only: [:edit, :index, :show, :update], concerns: [:multiple_update, :previewable]
     end
 
     get 'search' => 'search#index'
@@ -117,7 +127,7 @@ Rails.application.routes.draw do
     post '/upload/parse'  => 'upload#parse'
 
     if Rails.env.development?
-      get '/styles' => 'styles_tylium#index'
+      get '/styles' => 'styles_hera#index'
     end
   end
 
@@ -136,9 +146,9 @@ Rails.application.routes.draw do
   namespace :setup, only: [:index] do
     if defined?(Dradis::Pro)
     else
-      resource :kit, only: [:new, :create]
       resource :password, only: [:new, :create]
     end
+    resource :kit, only: [:new, :create]
   end
 
   resources :subscriptions, only: [:index, :create, :destroy]

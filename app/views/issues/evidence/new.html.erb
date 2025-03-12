@@ -3,8 +3,15 @@
 <% content_for :breadcrumbs do %>
   <nav>
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><%= link_to 'All issues', project_issues_path(current_project) %></li>
-      <li class="breadcrumb-item"><%= link_to @issue.title, project_issue_path(current_project, @issue, tab: 'evidence-tab') %></li>
+      <li class="breadcrumb-item">
+        <%= link_to current_project.name, project_path(current_project) %>
+      </li>
+      <li class="breadcrumb-item">
+        <%= link_to 'All issues', project_issues_path(current_project) %>
+      </li>
+      <li class="breadcrumb-item">
+        <%= link_to @issue.title, project_issue_path(current_project, @issue, tab: 'evidence-tab') %>
+      </li>
       <li class="breadcrumb-item active">New Evidence</li>
     </ol>
   </nav>
@@ -89,7 +96,6 @@
       <div class="row">
         <div class="col-12">
           <h5>Evidence Content</h5>
-          <% cache [@content, @issue, @nodes_for_add_evidence] do %>
             <%= f.hidden_field :issue_id, value: @issue.id %>
             <%= f.hidden_field :node_id, value: @issue.node_id %>
 
@@ -107,7 +113,6 @@
                 rows: 20,
                 value: (@template_content || @content)
               %>
-          <% end %>
         </div>
       </div>
       <div class="row">

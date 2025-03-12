@@ -1,5 +1,17 @@
 <% content_for :title, 'Tags' %>
-<div class="content-container mt-3">
+
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to current_project.name, project_path(current_project) %>
+    </li>
+    <li class="breadcrumb-item active">
+      Tags
+    </li>
+  </ol>
+<% end %>
+
+<div class="content-container">
   <h4 class="header-underline">Tags Management
     <span class="actions pt-1">
       <div class="action">
@@ -22,7 +34,7 @@
           <h4 class="empty-state-title">There are no tags created yet.</h4>
           <p class="empty-state-body-text">Use tags to flag and/or organize your issues.</p>
           <div class="empty-state-actions">
-            <a href="https://dradisframework.com/support/guides/projects/tags.html"
+            <a href="https://dradis.com/support/guides/projects/tags.html"
             class="empty-state-docs-link" target="_blank">More about tags</a>
           </div>
         </div>

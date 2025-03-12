@@ -1,29 +1,17 @@
 .validation {
-  .fa-check {
-    color: $green;
-  }
-
-  .fa-info-circle {
-    color: $blue;
-  }
-
-  .fa-times {
-    color: $red;
-  }
-
   &.validation-feed {
     .validation-list {
-      margin: 1rem 0 0;
+      list-style-type: none;
       padding: 0;
 
       li {
         i {
-          margin-right: .15rem;
+          margin-right: 0.15rem;
         }
 
         .text-error {
           font-size: 90%;
-          margin: 0 0 .5rem 1.3rem;
+          margin: 0 0 0.5rem 1.6rem;
         }
 
         &:last-of-type .text-error {

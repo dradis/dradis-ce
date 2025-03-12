@@ -24,20 +24,19 @@
   <%= render_view_hooks 'issues/show-tabs' %>
 </ul>
 
-<div class="row m-0">
-  <div class="col-12 col-xxl-7 p-0">
-    <div class="content-container mt-0 pb-3 me-xxl-3">
-      <div class="tab-content mt-0">
+<div class="row p-0">
+  <div class="col-12">
+    <div class="content-container">
+      <div class="tab-content">
         <div class="tab-pane active" id="info-tab">
           <% cache ['issue-information-tab', @issue] do %>
             <div class="note-text-inner">
               <h4 class="mb-4 header-underline">
                 <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
+                <%= render partial: 'shared/liquid_loading' %>
                 <%= render partial: 'actions' %>
               </h4>
-              <div class="content-textile" data-behavior="content-textile">
-                <%= markup(@issue.text, liquid: true) %>
-              </div>
+              <%= render partial: 'shared/textile_content', locals: { record: @issue, preview_path: preview_project_issue_path(current_project, @issue)  } %>
               <div class="author-info">
                 <span class="ms-auto">Author: <%= @issue.author || 'n/a' %></span>
               </div>
@@ -59,12 +58,9 @@
         <%= render_view_hooks 'issues/show-content' %>
       </div>
     </div>
-  </div>
 
-  <div class="col-12 col-xxl-5 p-0">
-    <div class="sticky-top">
-      <div class="content-container ms-xxl-3 mt-0">
-        <%= content_tag :div,
+    <div class="content-container">
+      <%= content_tag :div,
           spinner_tag,
           data: {
             behavior: 'fetch fetch-comments',
@@ -77,11 +73,11 @@
           }
         %>
 
-        <%= render_view_hooks('issues/comments') %>
-      </div>
+      <%= render_view_hooks('issues/comments') %>
+    </div>
 
-      <div class="content-container ms-xxl-3">
-        <%= content_tag :div,
+    <div class="content-container">
+      <%= content_tag :div,
           spinner_tag,
           data: {
             behavior: 'fetch fetch-subscriptions',
@@ -93,7 +89,6 @@
             )
           }
         %>
-      </div>
     </div>
   </div>
 </div>

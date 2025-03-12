@@ -11,14 +11,14 @@
 
   <div class="list-item-actions">
     <%= link_to main_app.edit_project_issue_path(current_project, issue), class:'list-item-action-edit' do %>
-      <i class="fa-solid fa-pencil"></i> Edit
+      <i class="fa-solid fa-pencil fa-fw"></i><span class="visually-hidden">Edit</span>
     <% end %>
 
     <%= link_to main_app.project_issue_path(current_project, issue),
         method: :delete,
         data: { confirm: "Are you sure?\n\nProceeding will delete this issue and any associated evidence." },
         class: 'list-item-action-delete' do %>
-      <i class="fa-solid fa-trash"></i> Delete
+      <i class="fa-solid fa-trash fa-fw"></i><span class="visually-hidden">Delete</span>
     <% end %>
   </div>
 

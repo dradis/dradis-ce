@@ -4,6 +4,7 @@ class KitImportJob < ApplicationJob
     'html_export' => ['html.erb'],
     'word' => ['docm', 'docx']
   }
+  TEMPLATE_TYPES = %w{ methodologies notes projects reports }
 
   queue_as :dradis_upload
 
@@ -16,7 +17,12 @@ class KitImportJob < ApplicationJob
     @current_user = user_id ? User.find(user_id) : User.first
     @logger = logger
     @project = nil
-    @report_templates_dir = Configuration.paths_templates_reports
+    @templates_dirs = TEMPLATE_TYPES.map do |template_type|
+      [
+        template_type,
+        Pathname.new(Configuration.send("paths_templates_#{template_type}"))
+      ]
+    end.to_h
     @working_dir = Dir.mktmpdir
     @word_rtp = nil
 
@@ -24,7 +30,6 @@ class KitImportJob < ApplicationJob
 
     import_methodology_templates
     import_note_templates
-    import_plugin_templates
     import_project_package
     import_project_templates
     import_report_template_files
@@ -32,6 +37,7 @@ class KitImportJob < ApplicationJob
     if defined?(Dradis::Pro)
       import_report_template_properties
       import_rules
+      import_mappings
 
       assign_project_rtp
     end
@@ -42,12 +48,23 @@ class KitImportJob < ApplicationJob
   end
 
   private
-  attr_reader :current_user, :logger, :report_templates_dir, :working_dir
+  attr_reader :current_user, :logger, :templates_dirs, :working_dir
 
   def assign_project_rtp
     logger.info { 'Assigning RTP to project...' }
 
     @project.update_attribute :report_template_properties_id, @word_rtp.id if @word_rtp
+  end
+
+  def copy_file(file, destination)
+    return unless File.file?(file)
+
+    file_name = NamingService.name_file(
+      original_filename: File.basename(file),
+      pathname: destination
+    )
+
+    FileUtils.cp(file, "#{destination}/#{file_name}")
   end
 
   def copy_kit_to_working_dir(source)
@@ -60,6 +77,12 @@ class KitImportJob < ApplicationJob
       folder = File.join(source, '.')
       FileUtils.cp_r folder, working_dir
     end
+  end
+
+  def import_mappings
+    logger.info { 'Adding Mappings...' }
+    mappings_seed = "#{working_dir}/kit/mappings_seed.rb"
+    load mappings_seed if File.exist?(mappings_seed)
   end
 
   def import_methodology_templates
@@ -83,7 +106,7 @@ class KitImportJob < ApplicationJob
     end
 
     @project = Project.create(
-      name: NamingService.name_project(File.basename(project_package, '.zip'))
+      name: NamingService.name_project(File.basename(project_package, '.zip').titleize)
     )
 
     if @project.errors.any?
@@ -106,13 +129,6 @@ class KitImportJob < ApplicationJob
     logger.info { "  - New Project #{@project.id} created." }
   end
 
-  def import_plugin_templates
-    return unless File.directory?("#{working_dir}/kit/templates/plugins/")
-
-    logger.info { 'Copying Plugin Manager templates...' }
-    import_templates('plugins')
-  end
-
   def import_project_templates
     logger.info { 'Copying project templates...' }
     import_templates('projects')
@@ -121,13 +137,13 @@ class KitImportJob < ApplicationJob
   def import_report_template_files
     logger.info { 'Copying report template files...' }
 
-    FileUtils.mkdir_p report_templates_dir
+    FileUtils.mkdir_p templates_dirs['reports']
     %w{
       excel
       html_export
       word
     }.each do |plugin|
-      dest = "#{report_templates_dir}/#{plugin}/"
+      dest = "#{templates_dirs['reports']}/#{plugin}/"
       temp_plugin_path = "#{working_dir}/kit/templates/reports/#{plugin}/*"
 
       # Only allow certain file extensions
@@ -144,7 +160,7 @@ class KitImportJob < ApplicationJob
     logger.info { 'Adding properties to report template files...' }
 
     Dradis::Plugins.with_feature(:rtp).each do |plugin|
-      Dir.glob(File.join(report_templates_dir, plugin.plugin_name.to_s, '*')) do |template|
+      Dir.glob(File.join(templates_dirs['reports'], plugin.plugin_name.to_s, '*')) do |template|
         basename = File.basename(template, '.*')
         reports_dir = "#{working_dir}/kit/templates/reports"
         default_properties = "#{reports_dir}/#{plugin.plugin_name}/#{basename}.rb"
@@ -175,13 +191,15 @@ class KitImportJob < ApplicationJob
   end
 
   def import_templates(template_type)
-    template_directory = "#{working_dir}/kit/templates/#{template_type}"
-    return unless Dir.exist?(template_directory)
+    kit_template_dir = "#{working_dir}/kit/templates/#{template_type}"
+    return unless Dir.exist?(kit_template_dir)
 
-    FileUtils.cp_r(
-      "#{template_directory}/.",
-      Configuration.send("paths_templates_#{template_type}")
-    )
+    destination = templates_dirs[template_type]
+    FileUtils.mkdir_p(destination) unless File.exist?(destination)
+
+    Dir["#{kit_template_dir}/*"].each do |file|
+      copy_file(file, destination)
+    end
   end
 
   def unzip(file)

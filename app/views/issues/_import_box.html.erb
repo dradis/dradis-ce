@@ -1,20 +1,17 @@
 <div class="header">
   <div class="header-inner">
+    <h5 class="header-name">Import issues</h5>
     <div class="options">
-      <div class="dropdown">
-
-        <%= link_to '#import-box', 
-          class: 'import-toggle', 
-          data: { bs_toggle: 'collapse', behavior: 'collapse-collection import-box' } do %>
-          <i class="fa-solid fa-chevron-down" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle import box</span>
-        <% end %>
-      </div>
+      <%= link_to '#import-box', 
+        class: 'import-toggle', 
+        data: { bs_toggle: 'collapse', behavior: 'collapse-collection import-box-header' } do %>
+        <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle import box</span>
+      <% end %>
     </div>
-    <h5 class="header-underline header-name">Import issues</h5>
   </div>
 </div>
 
-<%= content_tag :div, class: 'import-box collapse', id: 'import-box' do %>
+<%= content_tag :div, class: 'import-box collapse show', id: 'import-box', data: { behavior: 'import-box' } do %>
   <% if Dradis::Plugins::with_feature(:import).empty? %>
     <p>
       Connect Dradis to a library of issue descriptions so you don't have to
@@ -22,8 +19,8 @@
     </p>
     <p class="mb-2">Libraries:</p>
     <ul class="fa-ul">
-      <li><i class="fa-solid fa-li fa-chevron-right"></i><a href="https://dradisframework.com/ce/addons/mediawiki.html?utm_source=ce&utm_medium=app" target="_blank">MediaWiki</a></li>
-      <li><i class="fa-solid fa-li fa-chevron-right"></i><a href="javascript:void(0)" class="js-try-pro" data-term="issuelib" data-url="https://dradisframework.com/pro/pages/issuelib.html"><i class="fa-solid fa-book"></i> Built-in Issue Library</a></li>
+      <li><i class="fa-solid fa-li fa-chevron-right"></i><a href="https://dradis.com/integrations/mediawiki.html?utm_source=ce&utm_medium=app" target="_blank">MediaWiki</a></li>
+      <li><i class="fa-solid fa-li fa-chevron-right"></i><a href="javascript:void(0)" class="js-try-pro" data-term="issuelib" data-url="https://dradis.com/pro/pages/issuelib.html"><i class="fa-solid fa-book"></i> Built-in Issue Library</a></li>
     </ul>
   <% else %>
     <% Dradis::Plugins::with_feature(:import).each do |plugin| %>

@@ -14,6 +14,11 @@ module LiquidEnabledResource
     {}
   end
 
+  def preview
+    @text = params[:text]
+    render 'markup/preview', layout: false
+  end
+
   private
 
   def default_liquid_assigns
@@ -25,15 +30,11 @@ module LiquidEnabledResource
   end
 
   def project_assigns
-    result = {}
-
     # This is required because we may be in Markup#preview that's passing
-    # :project_id for Tylium rendered editors
+    # :project_id for Hera rendered editors
     project = Project.find(params[:project_id])
     authorize! :use, project
 
-    result['project'] = ProjectDrop.new(project)
-
-    result
+    LiquidCachedAssigns.new(project: project)
   end
 end

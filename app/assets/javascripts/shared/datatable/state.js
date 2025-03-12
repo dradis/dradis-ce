@@ -1,4 +1,4 @@
-$(document).on('preInit.dt', 'body.issues.index', function (e, settings) {
+$(document).on('preInit.dt', function (e, settings) {
   var $paths = $('[data-behavior~=datatable-paths]');
   if ($paths.data('table-state-url') == undefined) {
     return;
@@ -8,18 +8,18 @@ $(document).on('preInit.dt', 'body.issues.index', function (e, settings) {
 
   api.button().add(1, {
     attr: {
-      'data-behavior': 'table-action',
+      'data-behavior': 'table-action datatable-state-button',
     },
     autoClose: true,
     className: 'd-none',
     extend: 'collection',
     name: 'stateBtn',
-    text: '<i class="fa-solid fa-adjust fa-fw"></i>State<i class="fa-solid fa-caret-down fa-fw"></i>',
+    text: '<i class="fa-solid fa-adjust fa-fw"></i>State</i>',
     buttons: DradisDatatable.prototype.setupStateButtons.call(api),
   });
 });
 
-$(document).on('init.dt', 'body.issues.index', function (e, settings) {
+$(document).on('init.dt', function (e, settings) {
   var $paths = $('[data-behavior~=datatable-paths]');
   if ($paths.data('table-state-url') == undefined) {
     return;
@@ -33,6 +33,10 @@ $(document).on('init.dt', 'body.issues.index', function (e, settings) {
       DradisDatatable.prototype.toggleStateBtn.call(api, selectedCount !== 0);
     }.bind(api)
   );
+
+  $('[data-behavior~=datatable-state-button]').click(
+    DradisDatatable.prototype.reenableTooltip
+  )
 });
 
 DradisDatatable.prototype.setupStateButtons = function () {
@@ -40,18 +44,30 @@ DradisDatatable.prototype.setupStateButtons = function () {
     stateButtons = [],
     api = this;
 
-  if ($('[data-behavior~=qa-viewer]').length > 0) {
-    states.splice(1, 1);
-  }
-
   states.forEach(function (state) {
+    const publishDisabled =
+      state[0] === 'Published' &&
+      !$('[data-can-publish]').data('can-publish');
+
+    let attrs;
+
+    if (publishDisabled) {
+      attrs = {
+        'data-bs-toggle': 'tooltip',
+        'data-bs-title': 'You are not a Reviewer for this project.',
+      };
+    }
+
     stateButtons.push({
-      text: $(
-        `<i class="fa-solid ${state[1]} fa-fw me-1"></i><span>${state[0]}</span>`
-      ),
       action: DradisDatatable.prototype.updateRecordState.call(
         api,
-        state[0].toLowerCase().replaceAll(' ', '_')
+        state[0].toLowerCase().replaceAll(' ', '_'),
+        $('[data-can-publish]').data('can-publish')
+      ),
+      attr: attrs,
+      className: publishDisabled ? 'disabled' : null,
+      text: $(
+        `<i class="fa-solid ${state[1]} fa-fw me-2"></i><span>${state[0]}</span>`
       ),
     });
   });
@@ -59,7 +75,11 @@ DradisDatatable.prototype.setupStateButtons = function () {
   return stateButtons;
 };
 
-DradisDatatable.prototype.updateRecordState = function (newState) {
+DradisDatatable.prototype.updateRecordState = function (newState, canPublish) {
+  if (newState == 'Published' && canPublish) {
+    return;
+  }
+
   var api = this;
 
   return function () {
@@ -72,6 +92,7 @@ DradisDatatable.prototype.updateRecordState = function (newState) {
       data: {
         ids: DradisDatatable.prototype.rowIds(selectedRows),
         state: newState,
+        return_to: $paths.data('table-return-to'),
       },
       success: function () {
         DradisDatatable.prototype.toggleStateBtn.call(api, false);
@@ -96,4 +117,12 @@ DradisDatatable.prototype.updateRecordState = function (newState) {
 DradisDatatable.prototype.toggleStateBtn = function (isShown) {
   var stateBtn = this.buttons('stateBtn:name');
   $(stateBtn[0].node).toggleClass('d-none', !isShown);
+};
+
+DradisDatatable.prototype.reenableTooltip = function (e) {
+  var button = $(this).siblings('.dt-button-collection:first').find('.dt-button.disabled');
+
+  if (button.length) {
+    window.initBehaviors(button.html());
+  }
 };

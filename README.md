@@ -1,8 +1,8 @@
 # Welcome to the Dradis Framework
 
-[ ![CI](https://github.com/dradis/dradis-ce/actions/workflows/ci.yml/badge.svg)](https://github.com/dradis/dradis-ce/actions/workflows/ci.yml)
-[ ![Code quality](https://codeclimate.com/github/dradis/dradis-ce/badges/gpa.svg)](https://codeclimate.com/github/dradis/dradis-ce)
-[ ![Black Hat Arsenal](https://www.toolswatch.org/badges/arsenal/2016.svg)](https://www.blackhat.com/us-16/arsenal.html#dradis-framework)
+[![CI](https://github.com/dradis/dradis-ce/actions/workflows/ci.yml/badge.svg)](https://github.com/dradis/dradis-ce/actions/workflows/ci.yml)
+[![Black Hat Arsenal](https://www.toolswatch.org/badges/arsenal/2016.svg)](https://www.blackhat.com/us-16/arsenal.html#dradis-framework)
+[![@dradisfw on X](https://img.shields.io/twitter/follow/dradisfw?style=social)](https://twitter.com/dradisfw)
 
 Dradis is an open-source collaboration framework, tailored to InfoSec teams.
 
@@ -24,26 +24,20 @@ To try Dradis Community, you can deploy your own instance (you will need account
 * Platform independent
 * Markup support for the notes: text styles, code blocks, images, links, etc.
 * Integration with existing systems and tools:
-  * [Brakeman](https://dradisframework.com/ce/addons/brakeman.html)
-  * [Burp Suite](https://dradisframework.com/ce/addons/burp.html)
-  * [MediaWiki](https://dradisframework.com/ce/addons/mediawiki.html)
-  * [Metasploit](https://dradisframework.com/ce/addons/metasploit.html)
-  * [Nessus](https://dradisframework.com/ce/addons/nessus.html)
-  * [NeXpose](https://dradisframework.com/ce/addons/nexpose.html)
-  * [Nikto](https://dradisframework.com/ce/addons/nikto.html)
-  * [Nmap](https://dradisframework.com/ce/addons/nmap.html)
-  * [OpenVAS](https://dradisframework.com/ce/addons/openvas.html)
-  * [OSVDB](https://dradisframework.com/ce/addons/osvdb.html)
-  * [Qualys](https://dradisframework.com/ce/addons/qualys.html)
-  * [Retina](https://dradisframework.com/ce/addons/retina.html)
-  * [SAINT](https://dradisframework.com/ce/addons/saint.html)
-  * [SureCheck](https://dradisframework.com/ce/addons/surecheck.html)
-  * [VulnDB](https://dradisframework.com/ce/addons/vulndb.html)
-  * [w3af](https://dradisframework.com/ce/addons/w3af.html)
-  * [wXf](https://dradisframework.com/ce/addons/wxf.html)
-  * [Zed Attack Proxy](https://dradisframework.com/ce/addons/zap.html)
+  * [Brakeman](https://dradis.com/integrations/brakeman.html)
+  * [Burp Suite](https://dradis.com/integrations/burp.html)
+  * [MediaWiki](https://dradis.com/integrations/mediawiki.html)
+  * [Metasploit](https://dradis.com/integrations/metasploit.html)
+  * [Nessus](https://dradis.com/integrations/nessus.html)
+  * [NeXpose](https://dradis.com/integrations/nexpose.html)
+  * [Nikto](https://dradis.com/integrations/nikto.html)
+  * [Nmap](https://dradis.com/integrations/nmap.html)
+  * [OpenVAS](https://dradis.com/integrations/openvas.html)
+  * [Qualys](https://dradis.com/integrations/qualys.html)
+  * [SAINT](https://dradis.com/integrations/saint.html)
+  * [Zed Attack Proxy](https://dradis.com/integrations/zap.html)
   * ...
-  * [Full list](http://dradisframework.org/addons/)
+  * [Full list](http://dradis.com/integrations/)
 
 
 ## Editions
@@ -51,45 +45,34 @@ To try Dradis Community, you can deploy your own instance (you will need account
 There are two editions of Dradis Framework:
 
 * **Dradis Framework Community Edition (CE)**: open-source and available freely under the GPLv2 license.
-* **Dradis Framework Professional Edition (Pro)**: includes extra features that are more useful for organizations dealing with bigger teams and multiple projects at a time. To use Pro and get official support please [become a subscriber](https://dradisframework.com/pro/).
+* **Dradis Framework Professional Edition (Pro)**: includes extra features that are more useful for organizations dealing with bigger teams and multiple projects at a time. To use Pro and get official support please [become a subscriber](https://dradis.com/).
 
 
 ## Getting started: Community Edition
 
 ### From Git (recommended)
 
-[Installing Dradis from Git](https://dradisframework.com/ce/documentation/install_git.html)
+[Installing Dradis from Git](https://dradis.com/ce/documentation/install_git.html)
 
-### Using Vagrant
+### Using Docker
 
-If you'd like to use dradis in Vagrant, you can use the included Vagrantfile.
+If you'd like to use Dradis in Docker, first get the latest image:
 
 ```
-# Clone the repo
-git clone https://github.com/dradis/dradis-ce.git
-cd dradis-ce/
+docker image pull dradis/dradis-ce:latest
+```
 
-# install/start the vagrant box
-vagrant up
-# ssh into the box
-vagrant ssh
+And then run the container:
 
-# install ruby in the vagrant box
-cd /dradis/dradis-ce
-rvm install "$(cat .ruby-version)"
-
-
-# Then you can proceed with standard setup from within Vagrant
-ruby bin/setup
-# You'll need to tell the server to bind to 0.0.0.0 for port forwarding:
-bundle exec rails server -b 0.0.0.0
+```
+docker run -it -p 3000:3000 dradis/dradis-ce
 ```
 
 
 ## Getting help
 
-* http://dradisframework.org/
-* [Community Forums](https://discuss.dradisframework.org/)
+* https://dradis.com/support/
+* [Community Forums](https://discuss.dradis.com/)
 * [Slack channel](https://evening-hamlet-4416.herokuapp.com/)
 * IRC: **#dradis** `irc.freenode.org`
 
@@ -127,4 +110,4 @@ Dradis Framework Professional Edition is released under a commercial license.
 
 ## We're hiring
 
-If you love open source, Ruby on Rails and would like to have a lot of freedom and autonomy in your work, maybe you should consider [joining our team](https://dradisframework.com/careers.html) to make Dradis even better.
+If you love open source, Ruby on Rails and would like to have a lot of freedom and autonomy in your work, maybe you should consider [joining our team](https://dradis.com/careers.html) to make Dradis even better.

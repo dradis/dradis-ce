@@ -4,14 +4,14 @@
   }
 
   .comment-wrapper {
-    border-bottom: 1px solid $borderColor;
+    border-bottom: 1px solid $border-color;
     padding-bottom: 0.5rem;
 
     .comment {
       margin-top: 0.5rem;
       padding: 15px;
       border-radius: 5px;
-      background-color: $primaryBgColor;
+      background-color: $primary-bg;
 
       .content {
         margin-left: 2.5rem;
@@ -32,7 +32,7 @@
       }
 
       &:hover {
-        background-color: $secondaryBgColor;
+        background-color: $secondary-bg;
 
         .actions.current_user {
           visibility: visible;

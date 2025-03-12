@@ -77,8 +77,10 @@ describe 'note pages' do
     let(:model) { @note }
     include_examples 'nodes pages breadcrumbs', :show, Note
 
-    let(:record) { create(:note, node: @node, content: "#[Title]#\nTitle\n\n#[Description]#\nLiquid: {{note.fields['Title']}}") }
-    include_examples 'liquid dynamic content', :note, true
+    describe 'when including liquid content' do
+      let(:record) { create(:note, :with_liquid, node: @node) }
+      include_examples 'liquid dynamic content', 'note', true
+    end
   end
 
   describe 'edit page', js: true do
@@ -111,7 +113,6 @@ describe 'note pages' do
     describe 'submitting the form with valid information', js: true do
       let(:new_content) { 'New note text' }
       before do
-        click_link 'Source'
         fill_in :note_text, with: new_content
       end
 
@@ -164,6 +165,11 @@ describe 'note pages' do
       let(:model_attributes) { [{ name: :text, value: 'Edit Note' }] }
 
       include_examples 'a form with local auto save', Note, :edit
+    end
+
+    context 'when including liquid content' do
+      let(:record) { create(:note, :with_liquid, node: @node) }
+      include_examples 'liquid preview', 'note', true
     end
   end
 
