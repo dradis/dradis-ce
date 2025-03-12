@@ -72,7 +72,7 @@
         searchParams.set('tab', currentTab);
         let urlWithTab = `?${searchParams.toString()}`;
         history.pushState(
-          { turbolinks: true, url: urlWithTab },
+          { turbo: true, url: urlWithTab },
           '',
           urlWithTab
         );

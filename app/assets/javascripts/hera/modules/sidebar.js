@@ -28,7 +28,7 @@
 
     changeState(key, state) {
       localStorage.setItem(key, state);
-      Turbolinks.clearCache();
+      Turbo.cache.clear();
     }
 
     close() {
