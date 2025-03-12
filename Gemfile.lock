@@ -22,6 +22,12 @@ GIT
     dradis-csv (4.15.0)
       dradis-plugins (~> 4.0)
 
+GIT
+  remote: https://github.com/dradis/dradis-plugins.git
+  revision: 33cbb1764ee27fd69e6d60fbdae31c43f8933c18
+  specs:
+    dradis-plugins (4.15.0)
+
 PATH
   remote: engines/dradis-api
   specs:
@@ -193,7 +199,6 @@ GEM
       dradis-plugins (~> 4.0)
     dradis-pentera (4.15.0)
       dradis-plugins (~> 4.0)
-    dradis-plugins (4.15.0)
     dradis-projects (4.15.0)
       dradis-plugins (>= 4.8.0)
       rubyzip
@@ -567,7 +572,7 @@ DEPENDENCIES
   dradis-ntospider (~> 4.15.0)
   dradis-openvas (~> 4.15.0)
   dradis-pentera (~> 4.15.0)
-  dradis-plugins (~> 4.15.0)
+  dradis-plugins!
   dradis-projects (~> 4.15.0)
   dradis-qualys (~> 4.15.0)
   dradis-saint (~> 4.15.0)
