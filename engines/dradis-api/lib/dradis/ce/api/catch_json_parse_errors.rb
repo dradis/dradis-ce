@@ -1,5 +1,5 @@
 module Dradis::CE::API
-  class CatchJsonParseErrors
+  class CatchJSONParseErrors
 
     def initialize(app)
       @app = app

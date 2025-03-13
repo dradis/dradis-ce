@@ -1,6 +1,6 @@
 # Usage:
 #   validates :json_attribute, presence: true, json: true
-class JsonValidator < ActiveModel::EachValidator
+class JSONValidator < ActiveModel::EachValidator
 
   def initialize(options)
     options.reverse_merge!(message: :invalid)

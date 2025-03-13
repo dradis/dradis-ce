@@ -9,7 +9,7 @@ module NodeProperties
       # Node properties:
       # * Serialized as JSON
       # * The smart setter set_property(key, value) takes care of duplications, etc.
-      serialize :properties, coder: JsonWithIndifferentAccess
+      serialize :properties, coder: JSONWithIndifferentAccess
 
       validates :raw_properties, json: { message: 'contains invalid JSON' }
     end
@@ -29,7 +29,7 @@ module NodeProperties
 
     current_value = self.properties[key]
 
-    # Even though we're serializing JsonWithIndifferentAccess, and the
+    # Even though we're serializing JSONWithIndifferentAccess, and the
     # properties can be returned using String or Symbol keys, the
     # :value_is_there variable defined below is depending on Array's #include?
     # and this method wouldn't match two hashes unless they're both
