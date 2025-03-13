@@ -137,11 +137,11 @@ GEM
       thor (~> 1.0)
     byebug (11.1.1)
     cancancan (1.17.0)
-    capybara (3.39.2)
+    capybara (3.40.0)
       addressable
       matrix
       mini_mime (>= 0.1.3)
-      nokogiri (~> 1.8)
+      nokogiri (~> 1.11)
       rack (>= 1.6.0)
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
@@ -351,6 +351,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.3-x86_64-darwin)
       racc (~> 1.4)
+    nokogiri (1.18.3-x86_64-linux-gnu)
+      racc (~> 1.4)
     notiffany (0.1.3)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -460,10 +462,10 @@ GEM
     rspec-mocks (3.13.2)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-rails (6.1.5)
-      actionpack (>= 6.1)
-      activesupport (>= 6.1)
-      railties (>= 6.1)
+    rspec-rails (7.0.2)
+      actionpack (>= 7.0)
+      activesupport (>= 7.0)
+      railties (>= 7.0)
       rspec-core (~> 3.13)
       rspec-expectations (~> 3.13)
       rspec-mocks (~> 3.13)
@@ -582,7 +584,7 @@ DEPENDENCIES
   bundler-audit
   byebug
   cancancan (~> 1.10)
-  capybara (~> 3.39)
+  capybara (~> 3.40)
   coffee-rails (~> 5.0)
   database_cleaner
   differ (~> 0.1.2)
@@ -648,7 +650,7 @@ DEPENDENCIES
   resque
   resque-status
   rinku
-  rspec-rails (~> 6.1.0)
+  rspec-rails (~> 7.0.0)
   rubocop
   ruby_audit
   rubyzip (>= 1.2.2)

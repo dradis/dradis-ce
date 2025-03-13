@@ -184,14 +184,14 @@ end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-  # rspec-rails < 6.1.0 does not support rails 7.2
-  gem 'rspec-rails', '~> 6.1.0'
+  # rspec-rails < 7.0.0 does not support rails 7.2
+  gem 'rspec-rails', '~> 7.0.0'
 end
 
 group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
-  gem 'capybara', '~> 3.39'
+  gem 'capybara', '~> 3.40'
   gem 'guard-rspec', require: false
   gem 'selenium-webdriver', '~> 4.17'
   gem 'shoulda-matchers', '~> 3.1'
