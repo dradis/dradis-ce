@@ -33,7 +33,7 @@ module Dradis
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w[assets dradis html tasks])
+    config.autoload_lib(ignore: %w[assets tasks templates])
 
     config.active_record.default_column_serializer = YAML
 
@@ -48,17 +48,6 @@ module Dradis
       env.export_concurrent = false
     end
     config.action_view.form_with_generates_remote_forms = true
-    config.after_initialize do
-      config.active_record.yaml_column_permitted_classes = [
-        ActiveModel::Errors,
-        ActiveSupport::TimeWithZone,
-        ActiveSupport::TimeZone,
-        Date,
-        Symbol,
-        Time,
-        UserPreferences
-      ]
-    end
 
     # Override the default credentials lookup paths. See bin/rails credentials:help
     config.credentials.content_path = Rails.root.join('config', 'shared', 'credentials.yml.enc')
