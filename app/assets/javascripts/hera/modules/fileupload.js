@@ -45,9 +45,11 @@ function fileUploadInit() {
       if (data.replaceImagePlaceholder !== undefined) {
         $.each(data.files, data.replaceImagePlaceholder.bind(null, data));
       }
-      window.initBehaviors(
-        document.querySelector('[data-behavior~=jquery-upload]')
-      );
+      setTimeout(function () {
+        window.initBehaviors(
+          document.querySelector('[data-behavior~=jquery-upload]')
+        );
+      }, 100);
     });
 }
 
