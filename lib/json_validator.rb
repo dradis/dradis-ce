@@ -1,7 +1,6 @@
 # Usage:
 #   validates :json_attribute, presence: true, json: true
 class JSONValidator < ActiveModel::EachValidator
-
   def initialize(options)
     options.reverse_merge!(message: :invalid)
     super(options)
@@ -14,5 +13,4 @@ class JSONValidator < ActiveModel::EachValidator
   rescue JSON::ParserError => exception
     record.errors.add(options[:attribute] || attribute, options[:message], message: exception.message)
   end
-
 end

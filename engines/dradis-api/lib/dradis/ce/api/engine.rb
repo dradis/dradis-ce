@@ -7,7 +7,7 @@ module Dradis::CE::API
     provides :addon
     description 'Dradis REST HTTP API'
 
-    initializer "dradis-api.inflections" do
+    initializer 'dradis-api.inflections' do
       ActiveSupport::Inflector.inflections do |inflect|
         inflect.acronym('API')
         inflect.acronym('CE')
@@ -28,6 +28,5 @@ module Dradis::CE::API
         mount Dradis::CE::API::Engine => '/', as: :dradis_api
       end
     end
-
   end
 end
