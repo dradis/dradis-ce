@@ -1,0 +1,9 @@
+<div>
+  <p>Dradis Echo request initiated #<%= @prompt_id %></p>
+
+  <%# Subscribe to main channel for real-time updates via ActionCable %>
+  <%= turbo_stream_from @prompt_id, 'prompts' %>
+
+  <%# Here is where we will stream the responses from the LLM %>
+  <pre id="messages" class="overflow-y-auto max-h-[80vh]"></pre>
+</div>
