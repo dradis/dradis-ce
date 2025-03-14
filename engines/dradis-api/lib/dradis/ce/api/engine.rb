@@ -7,7 +7,7 @@ module Dradis::CE::API
     provides :addon
     description 'Dradis REST HTTP API'
 
-    initializer "dradis-api.inflections" do
+    initializer 'dradis-api.inflections' do
       ActiveSupport::Inflector.inflections do |inflect|
         inflect.acronym('API')
         inflect.acronym('CE')
@@ -20,7 +20,7 @@ module Dradis::CE::API
     end
 
     initializer 'dradis-api.insert_middleware' do |app|
-      app.config.middleware.insert_before Warden::Manager, Dradis::CE::API::CatchJsonParseErrors
+      app.config.middleware.insert_before Warden::Manager, Dradis::CE::API::CatchJSONParseErrors
     end
 
     initializer 'dradis-api.mount_engine' do
@@ -28,6 +28,5 @@ module Dradis::CE::API
         mount Dradis::CE::API::Engine => '/', as: :dradis_api
       end
     end
-
   end
 end

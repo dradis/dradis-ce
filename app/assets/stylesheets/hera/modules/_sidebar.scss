@@ -34,7 +34,7 @@ body:not(.in-project) {
     }
 
     .header {
-      padding-bottom: var(--padding);
+      padding-bottom: calc(var(--padding) / 2);
 
       &:not(:first-of-type) {
         margin-top: var(--margin);

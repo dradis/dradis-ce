@@ -13,6 +13,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.plural /^os+$/i, 'OSs'
   inflect.acronym 'IP'
   inflect.acronym 'IPs'
+  inflect.acronym 'JSON'
   inflect.acronym 'OS'
   inflect.acronym 'OSs'
   inflect.acronym 'QA'
