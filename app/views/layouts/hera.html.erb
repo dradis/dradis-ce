@@ -32,11 +32,7 @@
   <%= 
     content_tag(
       :body, 
-      class: class_names(controller_path.gsub('/', '-'), 
-        controller_name, 
-        action_name, 
-        'in-project': in_project?
-      ),
+      class: body_css,
       data: {
         env: (Rails.env unless Rails.env.production?),
       } 
@@ -44,12 +40,12 @@
 
     <header class="sticky-top">
       <%= render 'layouts/hera/navbar/instance_nav' %>
-      <%= render 'layouts/hera/navbar/projects/project_nav' if in_project? %>
+      <%= yield(:sub_nav) if content_for?(:sub_nav) %>
     </header>
 
     <div class="content-grid">
       <aside>
-        <%= render 'layouts/hera/sidebar' if in_project? %>
+        <%= yield(:node_sidebar) if content_for?(:node_sidebar) %>
       </aside>
       <div class="view-content" data-behavior="view-content">
         <main class="container-fluid">
@@ -66,61 +62,12 @@
       <% end %>
     </div>
 
-    <%= render 'activities/poller' if in_project? %>
+    <%= yield(:poller) if content_for?(:poller) %>
 
     <!-- All modals go here -->
-    <% if in_project? %>
-      <%= render 'layouts/hera/modals' %>
-      <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
+    <%= yield(:modals) if content_for?(:modals) %>
 
-      <% if content_for?(:board_rename_modal) %>
-        <%= yield(:board_rename_modal) %>
-      <% end %>
-      <% if content_for?(:list_new_modal) %>
-        <%= yield(:list_new_modal) %>
-      <% end %>
-      <% if content_for?(:list_rename_modal) %>
-        <%= yield(:list_rename_modal) %>
-      <% end %>
-
-      <% if content_for?(:bulk_update_modal) %>
-        <%= yield(:bulk_update_modal) %>
-      <% end %>
-
-      <% if content_for?(:diff_modal) %>
-        <%= yield(:diff_modal) %>
-      <% end %>
-
-      <% if controller_name == 'boards' || controller_name == 'projects' %>
-        <%= render 'boards/modals/new_board_form' unless request.xhr? %>
-      <% end %>
-
-      <% if @node && @node.label != 'Methodologies'%>
-        <%= render partial: 'nodes/modals/add_node', locals: { type: :child } %>
-        <%= render partial: 'nodes/modals/delete' %>
-        <%= render partial: 'nodes/modals/merge' %>
-        <%= render partial: 'nodes/modals/move' %>
-        <%= render partial: 'nodes/modals/rename' %>
-      <% end %>
-
-      <% if controller_path == 'evidence' %>
-        <%= render partial: 'evidence/modals/move' %>
-      <% end %>
-
-      <% if controller_name == 'notes'%>
-        <%= render partial: 'notes/modals/move' %>
-      <% end %>
-
-      <% if controller_name == 'styles_hera' %>
-        <%= render partial: 'styles_hera/modal' %>
-      <% end %>
-
-      <% if %w[tags issues].include?(controller_name) %>
-        <%= render partial: 'tags/modals/form' %>
-      <% end %>
-
-      <%= render 'console/console' %>
-    <% end %>
+    <%= render 'console/console' %>
     <!-- End of modals -->
   <% end %>
 </html>

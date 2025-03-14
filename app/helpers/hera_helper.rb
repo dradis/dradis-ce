@@ -1,4 +1,10 @@
 module HeraHelper
+  def body_css
+    classes = [controller_path.gsub('/', '-'), action_name]
+    classes << content_for(:body_class) if content_for?(:body_class)
+    classes.compact.join(' ')
+  end
+
   def colored_icon_for_model(model, icon_class, extra_class = nil)
     css =  ['fa-solid']
     css << icon_class
@@ -48,10 +54,6 @@ module HeraHelper
         ].join("\n").html_safe
       end
     end.join("\n").html_safe
-  end
-
-  def in_project?
-    defined?(current_project) && current_project&.persisted?
   end
 
   def navbar_brand

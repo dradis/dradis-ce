@@ -7,6 +7,7 @@ module ProjectScoped
 
     helper        :hera
     helper_method :current_project 
+    layout       'hera/project'
   end
 
   protected

@@ -41,7 +41,7 @@ class ProjectsController < AuthenticatedController
     end
 
     respond_to do |format|
-      format.html { render layout: 'hera' if !request.xhr? }
+      format.html { render layout: 'hera/project' if !request.xhr? }
       format.json { render json: @boards }
     end
   end
