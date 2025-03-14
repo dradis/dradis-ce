@@ -1,6 +1,5 @@
 module Dradis::CE::API
-  class CatchJsonParseErrors
-
+  class CatchJSONParseErrors
     def initialize(app)
       @app = app
     end
@@ -18,16 +17,15 @@ module Dradis::CE::API
         #
         # Note that this is undocumented behavior, which means that this error
         # handler could break without warning in future versions of Rails:
-        return [ 400, { "Content-Type" => "application/json" },
+        return [ 400, { 'Content-Type' => 'application/json' },
           [
             {
-              message:     "Bad request",
-              description: "There was a problem in the JSON you "\
+              message:     'Bad request',
+              description: 'There was a problem in the JSON you '\
                            "submitted: #{error.message}"
             }.to_json
           ] ]
       end
     end
-
   end
 end
