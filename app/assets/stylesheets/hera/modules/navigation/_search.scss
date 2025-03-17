@@ -11,7 +11,7 @@
       align-items: center;
       background: initial;
       border-radius: 0.375rem;
-      color: $instance-nav-links;
+      color: $main-nav-links;
       display: flex;
       font-size: 1em;
       height: 2rem;
@@ -29,7 +29,7 @@
       .btn {
         background-color: none;
         border: none;
-        color: $instance-nav-links;
+        color: $main-nav-links;
         transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
       }
 
@@ -71,13 +71,13 @@
       &:hover {
         .btn {
           background: initial;
-          color: $instance-nav-hover;
+          color: $main-nav-hover;
         }
       }
 
       .search-query {
         --width: calc(100vw - var(--padding));
-        border-bottom: 1px solid $instance-nav-links;
+        border-bottom: 1px solid $main-nav-links;
         margin: 0 0.5rem;
         opacity: 1;
         padding: 0 1rem 0 1.5rem;

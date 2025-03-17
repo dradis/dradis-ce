@@ -26,13 +26,13 @@ header {
 
           .nav-link {
             align-items: center;
-            color: $instance-nav-links;
+            color: $main-nav-links;
             font-size: 1em;
 
             &:active,
             &:focus,
             &:hover {
-              color: $instance-nav-hover;
+              color: $main-nav-hover;
             }
 
             &.dropdown-toggle::after {
@@ -89,7 +89,7 @@ header {
               box-shadow: none;
 
               .dropdown-item {
-                color: $instance-nav-links;
+                color: $main-nav-links;
 
                 @media (max-width: 991px) {
                   padding: 0.5em 0;
@@ -120,9 +120,9 @@ header {
       }
     }
 
-    &.instance-nav {
-      background-color: $instance-nav-bg;
-      border-bottom: 1px solid $instance-nav-border;
+    &.main-nav {
+      background-color: $main-nav-bg;
+      border-bottom: 1px solid $main-nav-border;
       padding: 0;
       transition: border-color 0s;
 
@@ -134,12 +134,12 @@ header {
       .utility-nav {
         a,
         .nav-link {
-          color: $instance-nav-links;
+          color: $main-nav-links;
 
           &:active,
           &:focus,
           &:hover {
-            color: $instance-nav-hover;
+            color: $main-nav-hover;
           }
         }
 
@@ -156,17 +156,17 @@ header {
       }
 
       .dropdown-menu {
-        background-color: $instance-nav-bg;
-        border: 1px solid $instance-nav-border;
+        background-color: $main-nav-bg;
+        border: 1px solid $main-nav-border;
 
         .dropdown-item {
-          color: $instance-nav-links;
+          color: $main-nav-links;
           text-transform: capitalize;
 
           &:active,
           &:focus,
           &:hover {
-            background-color: lighten($instance-nav-bg, 10%);
+            background-color: lighten($main-nav-bg, 10%);
           }
         }
 
@@ -176,10 +176,10 @@ header {
           &:active,
           &:focus,
           &:hover {
-            background-color: $instance-nav-bg;
+            background-color: $main-nav-bg;
 
             .dropdown-item {
-              background-color: lighten($instance-nav-bg, 10%);
+              background-color: lighten($main-nav-bg, 10%);
               color: $text-default;
             }
           }
@@ -197,7 +197,7 @@ header {
       }
 
       .dropdown-divider {
-        border-top: 1px solid $instance-nav-border;
+        border-top: 1px solid $main-nav-border;
       }
 
       .nav-link {
@@ -205,7 +205,7 @@ header {
       }
 
       .navbar-collapse {
-        background-color: $instance-nav-bg;
+        background-color: $main-nav-bg;
       }
 
       .navbar-nav:not(.utility-nav) {
@@ -225,13 +225,13 @@ header {
       }
 
       .navbar-toggler {
-        color: $instance-nav-links;
+        color: $main-nav-links;
         border: none;
 
         &:focus {
-          border: 2px solid $instance-nav-hover;
+          border: 2px solid $main-nav-hover;
           box-shadow: none;
-          color: $instance-nav-hover;
+          color: $main-nav-hover;
         }
       }
 
@@ -242,7 +242,7 @@ header {
 
         .nav-item.dropdown {
           .nav-link.show {
-            background-color: lighten($instance-nav-bg, 10%);
+            background-color: lighten($main-nav-bg, 10%);
           }
         }
       }
@@ -305,7 +305,7 @@ header {
             }
 
             @media (max-width: 991px) {
-              color: $instance-nav-links;
+              color: $main-nav-links;
             }
 
             @media (min-width: 992px) {
@@ -353,7 +353,7 @@ header {
       }
 
       @media (max-width: 991px) {
-        background-color: $instance-nav-bg;
+        background-color: $main-nav-bg;
         overflow-x: hidden;
         padding: 0;
 
@@ -371,14 +371,14 @@ header {
         .navbar-nav.utility-nav {
           a,
           .nav-link {
-            color: $instance-nav-links;
+            color: $main-nav-links;
             padding-left: 0.5rem;
             padding-right: 0.5rem;
 
             &:active,
             &:focus,
             &:hover {
-              color: $instance-nav-hover;
+              color: $main-nav-hover;
               padding-left: 0.5rem;
               padding-right: 0.5rem;
             }
