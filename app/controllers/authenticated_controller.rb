@@ -17,7 +17,7 @@ class AuthenticatedController < SetupRequiredController
   # before_action :render_onboarding_tour
 
   layout 'hera'
-  
+
   # This is a central location where we can manage authorization errors (e.g.
   # alert admins, block accounts, etc.)
   # For the time being just swallow the AccessDenied exception and present it
@@ -46,5 +46,4 @@ class AuthenticatedController < SetupRequiredController
       redirect_to tour_path
     end
   end
-
 end
