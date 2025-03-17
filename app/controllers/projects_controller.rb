@@ -5,7 +5,6 @@ class ProjectsController < AuthenticatedController
 
   helper        :hera
   helper_method :current_project
-  layout        'hera'
 
   def index
     redirect_to project_path(current_project)

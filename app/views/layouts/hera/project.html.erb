@@ -1,6 +1,4 @@
-<% content_for :body_class do %>
-  has-sub-nav
-<% end %>
+<% content_for :body_class, 'in-project' %>
 
 <% content_for :sub_nav do %>
   <%= render 'layouts/hera/navbar/projects/sub_nav' %>
@@ -42,7 +40,7 @@
     <%= render 'boards/modals/new_board_form' unless request.xhr? %>
   <% end %>
 
-  <% if @node && @node.label != 'Methodologies'%>
+  <% if @node && @node.label != 'Methodologies' %>
     <%= render partial: 'nodes/modals/add_node', locals: { type: :child } %>
     <%= render partial: 'nodes/modals/delete' %>
     <%= render partial: 'nodes/modals/merge' %>
@@ -89,4 +87,4 @@
   <% end %>
 <% end %>
 
-<%= render template: "layouts/hera" %>
+<%= render template: 'layouts/hera' %>
