@@ -1,5 +1,5 @@
 <% content_for :body_class do %>
-  in-project
+  has-sub-nav
 <% end %>
 
 <% content_for :sub_nav do %>
@@ -14,7 +14,7 @@
   <%= render 'activities/poller' %>
 <% end %>
 
-<% content_for :instance_utility_nav, '' %>
+<% content_for :main_utility_nav, '' %>
 
 <% content_for :modals do %>
   <%= render 'layouts/hera/modals' %>
