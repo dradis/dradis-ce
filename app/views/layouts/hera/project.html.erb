@@ -1,17 +1,5 @@
 <% content_for :body_class, 'has-sub-nav' %>
 
-<% content_for :sub_nav do %>
-  <%= render 'layouts/hera/navbar/projects/sub_nav' %>
-<% end %>
-
-<% content_for :node_sidebar do %>
-  <%= render 'layouts/hera/sidebar' %>
-<% end %>
-
-<% content_for :poller do %>
-  <%= render 'activities/poller' %>
-<% end %>
-
 <% content_for :modals do %>
   <%= render 'layouts/hera/modals' %>
   <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
@@ -63,10 +51,8 @@
   <% end %>
 <% end %>
 
-<% content_for :search do %>
-  <li class="nav-item d-lg-none">
-    <%= render "layouts/hera/navbar/projects/search" %>
-  </li>
+<% content_for :node_sidebar do %>
+  <%= render 'layouts/hera/sidebar' %>
 <% end %>
 
 <% content_for :notifications do %>
@@ -83,6 +69,20 @@
     <i class="notifications-bell fa-solid fa-bell d-none d-lg-inline" title="Notifications"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i>
     <span class="d-inline d-lg-none">Notifications</span>
   <% end %>
+<% end %>
+
+<% content_for :poller do %>
+  <%= render 'activities/poller' %>
+<% end %>
+
+<% content_for :search do %>
+  <li class="nav-item d-lg-none">
+    <%= render "layouts/hera/navbar/projects/search" %>
+  </li>
+<% end %>
+
+<% content_for :sub_nav do %>
+  <%= render 'layouts/hera/navbar/projects/project_nav' %>
 <% end %>
 
 <%= render template: 'layouts/hera' %>
