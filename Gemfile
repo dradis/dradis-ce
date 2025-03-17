@@ -193,7 +193,7 @@ group :test do
   gem 'factory_bot_rails'
   gem 'capybara', '~> 3.40'
   gem 'guard-rspec', require: false
-  gem 'selenium-webdriver', '~> 4.17'
+  gem 'selenium-webdriver', '~> 4.29'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'timecop'
 
