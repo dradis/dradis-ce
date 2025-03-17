@@ -506,8 +506,9 @@ GEM
       sprockets-rails
       tilt
     securerandom (0.3.1)
-    selenium-webdriver (4.18.1)
+    selenium-webdriver (4.29.1)
       base64 (~> 0.2)
+      logger (~> 1.4)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
@@ -557,7 +558,7 @@ GEM
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
     webrick (1.8.2)
-    websocket (1.2.10)
+    websocket (1.2.11)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -657,7 +658,7 @@ DEPENDENCIES
   rubyzip (>= 1.2.2)
   sanitize (= 6.0.2)
   sass-rails (~> 6.0)
-  selenium-webdriver (~> 4.17)
+  selenium-webdriver (~> 4.29)
   shoulda-matchers (~> 3.1)
   simple_form
   sinatra (~> 2.2.3)
