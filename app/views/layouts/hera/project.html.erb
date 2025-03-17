@@ -12,8 +12,6 @@
   <%= render 'activities/poller' %>
 <% end %>
 
-<% content_for :main_utility_nav, '' %>
-
 <% content_for :modals do %>
   <%= render 'layouts/hera/modals' %>
   <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
