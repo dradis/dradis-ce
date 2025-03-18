@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/dradis/dradis-calculator_cvss.git
-  revision: 910d54b34ca00652f35f62747b6780a63b588a0b
+  revision: 8e301920595038d5250b1f6f41a473764b654137
   branch: turbo
   specs:
     dradis-calculator_cvss (4.15.0)
@@ -23,8 +23,17 @@ GIT
       dradis-plugins (~> 4.0)
 
 GIT
+  remote: https://github.com/dradis/dradis-html_export.git
+  revision: d242bdf7f841922792e9a747ff15dcc8dbbb8d10
+  specs:
+    dradis-html_export (4.15.0)
+      RedCloth (~> 4.3.2)
+      dradis-plugins (>= 4.8.0)
+      rails_autolink (~> 1.1)
+
+GIT
   remote: https://github.com/dradis/dradis-plugins.git
-  revision: 33cbb1764ee27fd69e6d60fbdae31c43f8933c18
+  revision: bb897de7e411a670ef4841e339a0959b1bc81f0a
   specs:
     dradis-plugins (4.15.0)
 
