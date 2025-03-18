@@ -5,7 +5,7 @@
     - Add View History link when viewing Issues/Content blocks
     - Automatically go to the next record after reviewing
   - Upgraded gems:
-    - capybara, net-imap, nokogiri, paper_trail, rack, rails, rails-html-sanitizer, rexml, rspec-rails
+    - capybara, net-imap, nokogiri, paper_trail, rack, rails, rails-html-sanitizer, rexml, rspec-rails, selenium-webdriver
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
