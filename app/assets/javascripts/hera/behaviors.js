@@ -134,7 +134,7 @@ document.addEventListener('turbo:load', function () {
         searchParams.set('tab', currentTab);
         let urlWithTab = `?${searchParams.toString()}`;
         history.pushState(
-          { turbolinks: true, url: urlWithTab },
+          { turbo: true, url: urlWithTab },
           '',
           urlWithTab
         );
@@ -198,7 +198,7 @@ document.addEventListener('turbo:load', function () {
     window.initBehaviors = initBehaviors;
   }
 
-  document.addEventListener('turbolinks:load', function () {
+  document.addEventListener('turbo:load', function () {
     initBehaviors(document.querySelector('body'));
   });
 
