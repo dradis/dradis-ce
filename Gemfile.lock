@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/dradis/dradis-calculator_cvss.git
-  revision: 6cbf4bb9413a63332c36fccabfca14cdd86dfcaf
+  revision: 9bbe459768fd81bd5b450582568153eabe16757d
+  branch: hera/replace-mintcreek
   specs:
     dradis-calculator_cvss (4.15.0)
       dradis-plugins (~> 4.0)

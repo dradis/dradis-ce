@@ -6,6 +6,10 @@ module Dradis
       VERSION::STRING
     end
   end
+
+  def self.edition
+    :ce
+  end
 end
 
 require 'html/ignore_liquid_in_textile_block_codes'
