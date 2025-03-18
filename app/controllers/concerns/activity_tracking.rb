@@ -31,7 +31,7 @@ module ActivityTracking
     track_activity(trackable, :update, user, project)
 
     if trackable.respond_to?(:state) && trackable.state_previously_changed?
-      track_state_change(trackable)
+      track_state_change(trackable, user: user, project: project)
     end
   end
 

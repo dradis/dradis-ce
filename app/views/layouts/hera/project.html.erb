@@ -1,0 +1,88 @@
+<% content_for :body_class, 'in-project' %>
+
+<% content_for :modals do %>
+  <%= render 'layouts/hera/modals' %>
+  <%= render partial: 'nodes/modals/add_node', locals: { type: :branch } %>
+
+  <% if content_for?(:board_rename_modal) %>
+    <%= yield(:board_rename_modal) %>
+  <% end %>
+  <% if content_for?(:list_new_modal) %>
+    <%= yield(:list_new_modal) %>
+  <% end %>
+  <% if content_for?(:list_rename_modal) %>
+    <%= yield(:list_rename_modal) %>
+  <% end %>
+
+  <% if content_for?(:bulk_update_modal) %>
+    <%= yield(:bulk_update_modal) %>
+  <% end %>
+
+  <% if content_for?(:diff_modal) %>
+    <%= yield(:diff_modal) %>
+  <% end %>
+
+  <% if controller_name == 'boards' || controller_name == 'projects' %>
+    <%= render 'boards/modals/new_board_form' unless request.xhr? %>
+  <% end %>
+
+  <% if @node && @node.label != 'Methodologies' %>
+    <%= render partial: 'nodes/modals/add_node', locals: { type: :child } %>
+    <%= render partial: 'nodes/modals/delete' %>
+    <%= render partial: 'nodes/modals/merge' %>
+    <%= render partial: 'nodes/modals/move' %>
+    <%= render partial: 'nodes/modals/rename' %>
+  <% end %>
+
+  <% if controller_path == 'evidence' %>
+    <%= render partial: 'evidence/modals/move' %>
+  <% end %>
+
+  <% if controller_name == 'notes'%>
+    <%= render partial: 'notes/modals/move' %>
+  <% end %>
+
+  <% if controller_name == 'styles_hera' %>
+    <%= render partial: 'styles_hera/modal' %>
+  <% end %>
+
+  <% if %w[tags issues].include?(controller_name) %>
+    <%= render partial: 'tags/modals/form' %>
+  <% end %>
+<% end %>
+
+<% content_for :node_sidebar do %>
+  <%= render 'layouts/hera/sidebar' %>
+<% end %>
+
+<% content_for :notifications do %>
+  <%= link_to main_app.project_notifications_path(current_project), 
+        class: 'nav-link dropdown-toggle no-caret', 
+        id: 'notifications',
+        data: { 
+          bs_toggle: 'dropdown', 
+          behavior: 'notifications-dropdown close-collapse',
+          project_id: current_project.id 
+        }, 
+        role: 'button', 
+        'aria-expanded': 'false' do %>
+    <i class="notifications-bell fa-solid fa-bell d-none d-lg-inline" title="Notifications"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i>
+    <span class="d-inline d-lg-none">Notifications</span>
+  <% end %>
+<% end %>
+
+<% content_for :poller do %>
+  <%= render 'activities/poller' %>
+<% end %>
+
+<% content_for :search do %>
+  <li class="nav-item d-lg-none">
+    <%= render "layouts/hera/navbar/projects/search" %>
+  </li>
+<% end %>
+
+<% content_for :sub_nav do %>
+  <%= render 'layouts/hera/navbar/projects/project_nav' %>
+<% end %>
+
+<%= render template: 'layouts/hera' %>

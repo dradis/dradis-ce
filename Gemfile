@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.8.7'
+gem 'rails', '~> 7.2.2.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -55,7 +55,7 @@ gem 'liquid'
 
 gem 'kaminari', '~> 1.2.1'
 
-gem 'paper_trail', '~> 12.2.0'
+gem 'paper_trail', '~> 15.2.0'
 
 # gem 'rails_autolink', '~> 1.1'
 
@@ -97,7 +97,7 @@ gem 'nokogiri', '>= 1.18.3'
 # before 1.0.4, so make sure we're using 1.0.4+:
 # see https://github.com/rails/rails-html-sanitizer/commit/f3ba1a839a
 # and https://github.com/flavorjones/loofah/issues/144
-gem 'rails-html-sanitizer', '~> 1.4.4'
+gem 'rails-html-sanitizer', '~> 1.6.1'
 
 # Textile markup
 gem 'RedCloth', '~> 4.3.4', require: 'redcloth'
@@ -183,16 +183,16 @@ end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-
-  gem 'rspec-rails', '~> 4.0.2'
+  # rspec-rails < 7.0.0 does not support rails 7.2
+  gem 'rspec-rails', '~> 7.0.0'
 end
 
 group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
-  gem 'capybara', '~> 3.39'
+  gem 'capybara', '~> 3.40'
   gem 'guard-rspec', require: false
-  gem 'selenium-webdriver', '~> 4.17'
+  gem 'selenium-webdriver', '~> 4.29'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'timecop'
 
@@ -237,7 +237,7 @@ gem 'dradis-calculator_dread', github: 'dradis/dradis-calculator_dread', branch:
 
 # ---------------------------------------------------------------------- Export
 gem 'dradis-csv_export', '~> 4.15.0'
-gem 'dradis-html_export', '~> 4.15.0'
+gem 'dradis-html_export', github: 'dradis/dradis-html_export'
 
 # ---------------------------------------------------------------------- Import
 gem 'dradis-csv', github: 'dradis/dradis-csv', branch: 'turbo'
