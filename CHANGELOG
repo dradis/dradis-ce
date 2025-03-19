@@ -1,6 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Hera: Add new layout with redesigned navigation
   - Revisions: Show state changes in the revisions view
+  - Turbo: Remove turbolinks and add turbo-rails
   - QA:
     - Add View History link when viewing Issues/Content blocks
     - Automatically go to the next record after reviewing

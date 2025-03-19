@@ -27,7 +27,7 @@ class Differ {
   }
 }
 
-document.addEventListener('turbolinks:load', function() {
+document.addEventListener('turbo:load', function() {
   if ($('.js-diff-body').length) {
     let differ = new Differ(),
         content = $('.js-diff-body').html();
