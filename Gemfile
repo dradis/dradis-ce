@@ -232,15 +232,15 @@ end
 
 # ----------------------------------------------------------------- Calculators
 
-gem 'dradis-calculator_cvss', github: 'dradis/dradis-calculator_cvss', branch: 'turbo'
-gem 'dradis-calculator_dread', github: 'dradis/dradis-calculator_dread', branch: 'turbo'
+gem 'dradis-calculator_cvss', github: 'dradis/dradis-calculator_cvss'
+gem 'dradis-calculator_dread', github: 'dradis/dradis-calculator_dread'
 
 # ---------------------------------------------------------------------- Export
 gem 'dradis-csv_export', '~> 4.15.0'
 gem 'dradis-html_export', github: 'dradis/dradis-html_export'
 
 # ---------------------------------------------------------------------- Import
-gem 'dradis-csv', github: 'dradis/dradis-csv', branch: 'turbo'
+gem 'dradis-csv', github: 'dradis/dradis-csv'
 
 # ---------------------------------------------------------------------- Upload
 gem 'dradis-acunetix', '~> 4.15.0'

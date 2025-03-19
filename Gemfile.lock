@@ -1,23 +1,20 @@
 GIT
   remote: https://github.com/dradis/dradis-calculator_cvss.git
-  revision: a88e8b086660b7e8f064827054a3c83216084359
-  branch: turbo
+  revision: 9aff2e770074e19614ca82a894724d7e2786af6a
   specs:
     dradis-calculator_cvss (4.15.0)
       dradis-plugins (~> 4.0)
 
 GIT
   remote: https://github.com/dradis/dradis-calculator_dread.git
-  revision: 95e99f8608213646a1d9b10833050da91bba9697
-  branch: turbo
+  revision: 685e7f7ab0902635742552e56d85f72001b61509
   specs:
     dradis-calculator_dread (4.15.0)
       dradis-plugins (~> 4.0)
 
 GIT
   remote: https://github.com/dradis/dradis-csv.git
-  revision: 0abdde810d08f6d41d48c7739292fc1c0cb49ab2
-  branch: turbo
+  revision: c6be09ecb8ad795177b73cf836d7f343dec762d9
   specs:
     dradis-csv (4.15.0)
       dradis-plugins (~> 4.0)
