@@ -4,6 +4,6 @@ Dradis::Plugins::Echo::Engine.routes.draw do
       patch :update, on: :collection
     end
 
-    resources :prompts, only: [:show]
+    resources :prompts, only: [:index, :show]
   end
 end
