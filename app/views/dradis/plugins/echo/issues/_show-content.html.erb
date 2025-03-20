@@ -3,7 +3,10 @@
     <h4 class="header-underline">Dradis Echo
     </h4>
 
-    <div class="mb-4 content-textile" data-behavior="fetch" data-path="<%= echo.prompt_path(@issue.id) %>">
+    <div class="mb-4 content-textile">
+      <turbo-frame id="echo-issue-<%= @issue.id %>">
+        <div data-behavior="fetch" data-path="<%= echo.prompts_path(type: :issue, record: @issue.id) %>"></div>
+      </turbo-frame>
     </div>
   </div>
 </div>

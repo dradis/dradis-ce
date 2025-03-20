@@ -12,9 +12,10 @@ module Dradis::Plugins::Echo
     end
 
     def show
-      @prompt_id = SecureRandom.hex(20)
-      EchoJob.perform_later(params[:id], @prompt_id)
-      render layout: false
+      @type = set_type
+      @record_id = params[:record]
+      @interaction_id = SecureRandom.hex(20)
+      EchoJob.perform_later(params[:id], @record_id, @interaction_id)
     end
 
     private
