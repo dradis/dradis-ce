@@ -1,4 +1,4 @@
-document.addEventListener('turbolinks:load', function () {
+document.addEventListener('turbo:load', function () {
   $('body').on('click', '.js-try-pro', function () {
     var $this = $(this);
     var term = $this.data('term');

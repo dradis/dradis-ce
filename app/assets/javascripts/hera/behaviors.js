@@ -1,4 +1,4 @@
-document.addEventListener('turbolinks:load', function () {
+document.addEventListener('turbo:load', function () {
   // Activate jQuery.breadCrumbs
   $('.breadcrumb').breadcrumbs({
     tree: $('.main-sidebar .tree-navigation'),
@@ -46,8 +46,8 @@ document.addEventListener('turbolinks:load', function () {
   // Disable turbolinks for on-page anchor links (prevents page from jumping to top and allows smooth-scrolling)
   if ($('a[href^="#"]').length) {
     $('a[href^="#"]').each(function () {
-      if (!$(this).data('turbolinks')) {
-        $(this).attr('data-turbolinks', 'false');
+      if (!$(this).data('turbo')) {
+        $(this).attr('data-turbo', 'false');
       }
     });
   }
@@ -134,7 +134,7 @@ document.addEventListener('turbolinks:load', function () {
         searchParams.set('tab', currentTab);
         let urlWithTab = `?${searchParams.toString()}`;
         history.pushState(
-          { turbolinks: true, url: urlWithTab },
+          { turbo: true, url: urlWithTab },
           '',
           urlWithTab
         );
@@ -198,7 +198,7 @@ document.addEventListener('turbolinks:load', function () {
     window.initBehaviors = initBehaviors;
   }
 
-  document.addEventListener('turbolinks:load', function () {
+  document.addEventListener('turbo:load', function () {
     initBehaviors(document.querySelector('body'));
   });
 

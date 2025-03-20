@@ -1,5 +1,5 @@
-document.addEventListener "turbolinks:load", ->
-  if ($('body.issues-merge.new').length)
+document.addEventListener "turbo:load", ->
+  if ($("body.issues-merge.new").length)
 
     # when clicking on the 'expand/collapse' arrow icon, turn it upside down
     $('.issue-toggle').click ->

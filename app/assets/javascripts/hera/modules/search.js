@@ -1,4 +1,4 @@
-document.addEventListener('turbolinks:load', function () {
+document.addEventListener('turbo:load', function () {
   $('[data-behavior~=form-search]').hover(function () {
     $(this).find('[data-behavior~=search-query]').focus();
   });
