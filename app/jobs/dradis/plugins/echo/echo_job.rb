@@ -2,8 +2,8 @@ module Dradis::Plugins::Echo
   class EchoJob < ApplicationJob
     queue_as :default
 
-    def perform(issue_id, prompt_id)
-      sleep 4
+    def perform(prompt_id, issue_id, interaction_id)
+      sleep 2
 
       prompt =<<~EOP
       I am a cyber security professional working an a cybersecurity assessment.
@@ -19,10 +19,12 @@ module Dradis::Plugins::Echo
         prompt << "#{field}: #{Issue.find(issue_id).fields[field]}\n\n"
       end
 
-      # Turbo::StreamsChannel.broadcast_append_to [prompt_id, 'prompts'],
-      #   target:,
-      #   partial: 'prompts/response',
-      #   locals: { prompt_id:, prompt:, response_id: }
+      response_id = SecureRandom.hex(10)
+
+      Turbo::StreamsChannel.broadcast_prepend_to [interaction_id, 'prompts'],
+        target: 'messages',
+        partial: 'dradis/plugins/echo/prompts/response',
+        locals: { prompt: prompt, response_id: response_id}
 
       begin
         client.generate(
@@ -31,14 +33,14 @@ module Dradis::Plugins::Echo
             prompt: prompt
           }
         ) do |event, raw|
-          process_event(event, prompt_id)
+          process_event(event, response_id, interaction_id)
         end
 
       rescue Ollama::Errors::OllamaError => error
         msg = '<div class="alert alert-danger">There was an error contacting Ollama: '
         msg << error.message
         msg << '</div>'
-        Turbo::StreamsChannel.broadcast_append_to [prompt_id, 'prompts'], target: 'messages', html: msg
+        Turbo::StreamsChannel.broadcast_append_to [interaction_id, 'prompts'], target: 'messages', html: msg
       end
     end
 
@@ -50,13 +52,13 @@ module Dradis::Plugins::Echo
       )
     end
 
-    def process_event(event, prompt_id)
+    def process_event(event, response_id, interaction_id)
       done = event['done']
       if done
-        Turbo::StreamsChannel.broadcast_append_to [prompt_id, 'prompts'], target: 'messages', html: '<p>Done.</p>'
+        Turbo::StreamsChannel.broadcast_append_to [interaction_id, 'prompts'], target: 'messages', html: '<p>Done.</p>'
       else
         message = event['response'].to_s.strip.empty? ? "<br/>" : event['response']
-        Turbo::StreamsChannel.broadcast_append_to [prompt_id, 'prompts'], target: 'messages', html: message
+        Turbo::StreamsChannel.broadcast_append_to [interaction_id, 'prompts'], target: response_id, html: message
       end
     end
   end
