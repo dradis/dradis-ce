@@ -34,7 +34,10 @@ class ComboBox {
   }
 
   appendCustomOption(value) {
-    this.$target.append(`<option value="${value}">${value}</option>`);
+    const sanitizedValue = $('<div>').text(value).html();
+    this.$target.append(
+      `<option value="${sanitizedValue}">${sanitizedValue}</option>`
+    );
 
     const $option = this.$target.children().last();
 
