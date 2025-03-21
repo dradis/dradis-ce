@@ -8,7 +8,7 @@ describe 'Evidence new page' do
     @issue = create(:issue, node: current_project.issue_library)
   end
 
-  describe 'add evidence' do
+  describe 'add evidence', :js do
     before do
       @node = current_project.nodes.create!(label: '192.168.0.1')
 
@@ -19,15 +19,19 @@ describe 'Evidence new page' do
     end
 
     it 'shows existing nodes' do
-      within('[data-behavior~=combobox-container] #evidence_node_ids') do
+      within('[data-behavior~=combobox-container]:has(#evidence_node_ids)') do
         expect(page).to have_text @node.label
       end
     end
 
     it 'creates an evidence with the selected template for selected node' do
       visit new_project_issue_evidence_path(current_project, @issue, template: 'simple_note')
-
-      within('[data-behavior~=combobox-container] #evidence_node_ids') { select(@node.label) }
+      find('.unselect-multi-option').click # deselect initial selection
+      within('[data-behavior~=combobox-container]:has(#evidence_node_ids)') do
+        find('.combobox').click
+        find('.combobox-option', text: @node.label).click
+      end
+      
       expect { click_button('Create Evidence') }.to change { Evidence.count }.by(1)
 
       evidence = Evidence.last
@@ -37,7 +41,7 @@ describe 'Evidence new page' do
 
     it 'creates an evidence for new nodes and existing nodes too' do
       fill_in 'evidence_node_list', with: "192.168.0.1\r\n192.168.0.2\r\n192.168.0.3"
-
+      find('.unselect-multi-option').click # deselect initial selection
       expect do
         click_button('Create Evidence')
         expect(page).to have_text 'Evidence added for selected nodes.'
@@ -51,7 +55,11 @@ describe 'Evidence new page' do
 
     it 'assigns new nodes to the right parent' do
       fill_in 'evidence_node_list', with: "#{@node.label}\r\naaaa"
-      select @node.label, from: 'evidence_node_list_parent_id'
+      find('.unselect-multi-option').click # deselect initial selection
+      within('[data-behavior~=combobox-container]:has(#evidence_node_list_parent_id)') do
+        find('.combobox').click
+        find('.combobox-option', text: @node.label).click
+      end
 
       expect do
         click_button('Create Evidence')
@@ -66,6 +74,7 @@ describe 'Evidence new page' do
 
     it 'tracks "create" activities for new evidence and nodes' do
       fill_in 'evidence_node_list', with: "#{@node.label}\r\naaaa"
+      find('.unselect-multi-option').click # deselect initial selection
       expect do
         click_button('Create Evidence')
         expect(page).to have_text 'Evidence added for selected nodes.'
@@ -78,13 +87,20 @@ describe 'Evidence new page' do
     end
 
     it 'assigns the current user as the evidence author' do
-      within('[data-behavior~=combobox-container] #evidence_node_ids') { select(@node.label) }
+      find('.unselect-multi-option').click # deselect initial selection
+      within('[data-behavior~=combobox-container]:has(#evidence_node_ids)') do
+        find('.combobox').click
+        find('.combobox-option', text: @node.label).click
+      end
       expect { click_button('Create Evidence') }.to change { Evidence.count }.by(1)
       expect(@node.reload.evidence.last.author).to eq(@logged_in_as.email)
     end
 
     context 'invalid form', js: true do
       it 'displays an error when no nodes are selected' do
+        within('[data-behavior~=combobox-container]:has(#evidence_node_ids)') do
+        find('.unselect-multi-option').click
+      end
         click_button 'Create Evidence'
         expect(page).to have_text('A node must be selected.')
       end
