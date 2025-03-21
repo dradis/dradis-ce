@@ -53,7 +53,7 @@ class ComboBox {
   appendOption($parent, $option) {
     const disabled = $option.attr('disabled') ? 'disabled' : '';
     const escapedText = $('<div>').text($option.text()).html();
-    const value = $option.attr('value') || escapedText;
+    const value = $option.attr('value');
 
     const {
       comboboxOptionIcon: iconClass,
@@ -70,9 +70,7 @@ class ComboBox {
         id="combobox-option-${this.idSuffix}-${value}"
         role="option"
         tabindex="${disabled ? '-1' : '0'}"
-      >
-        ${escapedText}
-      </span>`
+      >${escapedText}</span>`
     );
 
     const $appendedOption = $parent.children().last();
