@@ -5,9 +5,9 @@ module ProjectScoped
     before_action :set_project
     before_action :set_nodes
 
-    helper        :hera
+    helper :hera
     helper_method :current_project
-    layout        'hera'
+    layout 'hera/project'
   end
 
   protected
