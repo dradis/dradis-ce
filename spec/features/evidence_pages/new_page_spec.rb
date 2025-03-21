@@ -31,7 +31,7 @@ describe 'Evidence new page' do
         find('.combobox').click
         find('.combobox-option', text: @node.label).click
       end
-      
+
       expect { click_button('Create Evidence') }.to change { Evidence.count }.by(1)
 
       evidence = Evidence.last
