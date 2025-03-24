@@ -535,6 +535,8 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     sqlite3 (1.4.2)
+    stimulus-rails (1.3.4)
+      railties (>= 6.0.0)
     stringio (3.1.1)
     terser (1.1.15)
       execjs (>= 0.3.0, < 3)
@@ -669,6 +671,7 @@ DEPENDENCIES
   spring
   sprockets-rails (>= 3.0.0)
   sqlite3
+  stimulus-rails
   terser (~> 1.1)
   thor (~> 1.2.1)
   time (>= 0.2.2)
