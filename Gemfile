@@ -23,6 +23,7 @@ gem 'coffee-rails', '~> 5.0'
 gem 'local_time', '>= 2.0.0'
 
 gem 'turbo-rails', '~> 2.0'
+gem 'stimulus-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
@@ -88,7 +89,7 @@ gem 'bcrypt', '3.1.12'
 gem 'json', '2.3.0'
 
 # XML manipulation
-gem 'nokogiri', '>= 1.18.3'
+gem 'nokogiri', '>= 1.18.5'
 
 # MySQL backend
 # gem 'mysql2', '~> 0.5.6'
