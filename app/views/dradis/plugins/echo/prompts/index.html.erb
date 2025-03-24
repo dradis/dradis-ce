@@ -1,4 +1,10 @@
 
+<% unless @turbo_status %>
+<div class="alert alert-danger">
+  There was an error contacting Redis: please make sure the Redis server is running.
+</div>
+<% end %>
+
 <div class="mb-5">
   <%= render @prompts %> <a href="javascript:void(0)"><i class="fa-solid fa-pencil fa-fw"></i> Edit prompts</a>
 </div>

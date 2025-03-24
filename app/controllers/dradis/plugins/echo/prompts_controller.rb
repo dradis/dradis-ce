@@ -5,6 +5,8 @@ module Dradis::Plugins::Echo
     include ProjectScoped
     layout false
 
+    before_action :check_turbo_config, only: [:index]
+
     def index
       @type = set_type
       @prompts = Prompt.default.key?(@type) ? Prompt.default[@type] : []
@@ -19,6 +21,19 @@ module Dradis::Plugins::Echo
     end
 
     private
+
+    # Echo requires Turbo, and Turbo requires:
+    #   1. ActionCable to be configured using the :redis adapter.
+    #   2. for Redis to be running.
+    def check_turbo_config
+      @turbo_status = begin
+        ActionCable.server.pubsub.redis_connection_for_subscriptions.ping
+        true
+      rescue
+        false
+      end
+    end
+
     def set_type
       allowed = Prompt.default.keys.map(&:to_s)
       allowed.include?(params[:type]) ? params[:type].to_sym : nil
