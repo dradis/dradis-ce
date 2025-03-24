@@ -23,6 +23,7 @@ gem 'coffee-rails', '~> 5.0'
 gem 'local_time', '>= 2.0.0'
 
 gem 'turbo-rails', '~> 2.0'
+gem 'stimulus-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
