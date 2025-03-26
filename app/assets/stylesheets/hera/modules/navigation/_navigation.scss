@@ -131,30 +131,6 @@ header {
         border-color: transparent;
       }
 
-      .utility-nav {
-        a,
-        .nav-link {
-          color: $main-nav-links;
-
-          &:active,
-          &:focus,
-          &:hover {
-            color: $main-nav-hover;
-          }
-        }
-
-        .nav-item.active {
-          border-top: 5px solid transparent;
-        }
-
-        @media (min-width: 992px) {
-          .nav-link {
-            padding-left: 0;
-            padding-right: 0;
-          }
-        }
-      }
-
       .dropdown-menu {
         background-color: $main-nav-bg;
         border: 1px solid $main-nav-border;
@@ -232,6 +208,30 @@ header {
           border: 2px solid $main-nav-hover;
           box-shadow: none;
           color: $main-nav-hover;
+        }
+      }
+
+      .utility-nav {
+        a,
+        .nav-link {
+          color: $main-nav-links;
+
+          &:active,
+          &:focus,
+          &:hover {
+            color: $main-nav-hover;
+          }
+        }
+
+        .nav-item.active {
+          border-top: 5px solid transparent;
+        }
+
+        @media (min-width: 992px) {
+          .nav-link {
+            padding-left: 0;
+            padding-right: 0;
+          }
         }
       }
 
