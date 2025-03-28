@@ -24,6 +24,11 @@ var $infiniteScrollContainer = $('[data-behavior="infinite-scroll-container"]');
   })
 
   $infiniteScrollContainer.data('page', <%= @page %>);
+  $infiniteScrollContainer.data('userId', <%= @user_id %>);
+  $infiniteScrollContainer.data('trackableType', "<%= @trackable_type %>");
+  $infiniteScrollContainer.data('startDate', "<%= @start_date %>");
+  $infiniteScrollContainer.data('endDate', "<%= @end_date %>");
+  $infiniteScrollContainer.data('specificDate', "<%= @specific_date %>");
 <% else %>
   $infiniteScrollContainer.data('canLoadMore', false);
 <% end %>

@@ -1,0 +1,30 @@
+<div class="row">
+  <%= form_with(url: project_activities_path, method: :get, local: true) do %>
+    <div>
+      <%= select_tag :user_id,
+        options_from_collection_for_select(User.all, :id, :name, params[:user_id]),
+        include_blank: "All Users",
+        class: "me-3" %>
+    
+      <%= select_tag :trackable_type,
+        options_for_select(["Issue", "Evidence", "Note", "Node"],
+        params[:trackable_type]),
+        include_blank: "All Activity Type",
+        class: "me-3" %>
+    
+      <%= label_tag :start_date, "Start Date:" %>
+      <%= date_field_tag :start_date, params[:start_date], class: "me-3" %>
+      
+      <%= label_tag :end_date, "End Date:" %>
+      <%= date_field_tag :end_date, params[:end_date], class: "me-3" %>
+      
+      <%= label_tag :specific_date, "Specific Date:" %>
+      <%= date_field_tag :specific_date, params[:specific_date] %>
+    </div>
+
+    <div class="mt-3">
+      <%= submit_tag "Apply Filters", class: "me-3" %>
+      <%= link_to "Reset Filters", project_activities_path, class: "me-3" %>
+    </div>
+  <% end %>
+</div>
