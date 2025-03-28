@@ -31,6 +31,7 @@ class ComboBox {
     this.populateOptions();
     this.setInitialSelection();
     this.attachEventListeners();
+    this.setupMutationObserver();
   }
 
   appendCustomOption(value) {
@@ -108,52 +109,62 @@ class ComboBox {
   }
 
   attachEventListeners() {
-    this.$comboboxContainer.on('focusout', (event) => {
+    // Using event delegation on the container so that if options are updated,
+    // the listener remains attached.
+
+    this.$comboboxContainer.off('.combobox'); // detach previous handlers
+
+    this.$comboboxContainer.on('focusout.combobox', (event) => {
       // Hide menu if the newly focused element is outside of the ComboBox
       if (!$(event.relatedTarget).closest(this.$comboboxContainer).length) {
         this.hideMenu();
       }
     });
 
-    this.$combobox.on('click', () => {
+    this.$combobox.on('click.combobox', () => {
       this.showMenu();
     });
 
-    this.$combobox.on('keydown', (event) => {
+    this.$combobox.on('keydown.combobox', (event) => {
       if (event.key === 'Enter' || event.key === ' ') {
         this.showMenu();
         event.preventDefault();
       }
     });
 
-    this.$comboboxMenu.on(
-      'click keydown',
-      '[data-behavior~=combobox-option]',
-      (event) => {
-        if (
-          event.type === 'click' ||
-          event.key === 'Enter' ||
-          event.key === ' '
-        ) {
-          this.handleOptionSelection($(event.currentTarget), event);
-        } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-          this.handleArrowNavigation(event);
+    this.$comboboxMenu
+      .off('.combobox') // remove any previous namespaced events
+      .on(
+        'click.combobox keydown.combobox',
+        '[data-behavior~=combobox-option]',
+        (event) => {
+          if (
+            event.type === 'click' ||
+            event.key === 'Enter' ||
+            event.key === ' '
+          ) {
+            this.handleOptionSelection($(event.currentTarget), event);
+          } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+            this.handleArrowNavigation(event);
+          }
         }
-      }
-    );
+      )
+      .on('keydown.combobox', '[data-behavior~=add-option]', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          this.handleAddingCustomOption();
+          event.preventDefault();
+        }
+      });
 
-    this.$comboboxMenu.on('keydown', '[data-behavior~=add-option]', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        this.handleAddingCustomOption();
-        event.preventDefault();
-      }
-    });
+    this.$addOption
+      ?.off('.combobox')
+      .on('click.combobox', () => this.handleAddingCustomOption());
 
-    this.$addOption?.on('click', () => this.handleAddingCustomOption());
+    this.$filter
+      ?.off('.combobox')
+      .on('textchange.combobox', () => this.handleFiltering());
 
-    this.$filter?.on('textchange', () => this.handleFiltering());
-
-    this.$target.on('change', (event) => {
+    this.$target.off('.combobox').on('change.combobox', (event) => {
       let $options = [];
 
       if (this.isMultiSelect) {
@@ -173,16 +184,27 @@ class ComboBox {
       }
 
       this.selectOptions($options);
-
       this.$combobox.toggleClass(
         'disabled',
         !!$(event.currentTarget).attr('disabled')?.length
       );
     });
 
+    this.$combobox.on(
+      'click.combobox',
+      '[data-behavior~=unselect-multi-option]',
+      (event) => {
+        event.stopPropagation();
+        this.unselectMultiOption($(event.currentTarget).parent());
+        this.$combobox.blur();
+      }
+    );
+  }
+
+  setupMutationObserver() {
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
-        // Handle changes in the `disabled` attribute of the target select
+        // Handle changes to the `disabled` attribute of the target select
         if (mutation.attributeName === 'disabled') {
           const isDisabled = !!this.$target.attr('disabled');
           this.$combobox.toggleClass('disabled', isDisabled);
@@ -194,7 +216,6 @@ class ComboBox {
           this.setupFilter();
           this.populateOptions();
           this.setInitialSelection();
-          this.attachEventListeners();
         }
       });
     });
@@ -203,16 +224,6 @@ class ComboBox {
       attributes: true,
       childList: true,
     });
-
-    this.$combobox.on(
-      'click',
-      '[data-behavior~=unselect-multi-option]',
-      (event) => {
-        event.stopPropagation();
-        this.unselectMultiOption($(event.currentTarget).parent());
-        this.$combobox.blur();
-      }
-    );
   }
 
   buildDom() {
@@ -342,6 +353,10 @@ class ComboBox {
   }
 
   handleOptionSelection($option, event) {
+    if ($option.hasClass('disabled')) {
+      return;
+    }
+
     if ($option.hasClass('selected') && this.isMultiSelect) {
       const $unselectedOption = this.$combobox.find(
         `[data-option-value="${$option.data('value')}"]`
