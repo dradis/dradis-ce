@@ -27,6 +27,15 @@ class Activity < ApplicationRecord
     includes(:trackable).order('activities.created_at DESC').limit(10)
   end
 
+  scope :by_user, ->(user_id) { where(user_id: user_id) if user_id.present? }
+  scope :by_trackable_type, ->(type) { where(trackable_type: type) if type.present? }
+  scope :by_date_range, ->(start_date, end_date) {
+    where(created_at: start_date..end_date) if start_date.present? && end_date.present?
+  }
+  scope :on_specific_date, ->(specific_date) {
+    where(created_at: specific_date.to_date.all_day) if specific_date.present?
+  }
+
   # -- Callbacks ------------------------------------------------------------
 
   # Cast action to a string so the 'inclusion' validation works with symbols

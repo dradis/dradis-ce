@@ -12,6 +12,18 @@ class ActivitiesController < AuthenticatedController
                                 .order(created_at: :desc)
                                 .page(@page)
 
+    # Apply filters on All Activities
+    @user_id = params[:user_id]
+    @trackable_type = params[:trackable_type]
+    @start_date = params[:start_date]
+    @end_date = params[:end_date]
+    @specific_date = params[:specific_date]
+
+    activities = activities.by_user(@user_id)
+                           .by_trackable_type(@trackable_type)
+                           .by_date_range(@start_date, @end_date)
+                           .on_specific_date(@specific_date)
+
     @activities_groups = activities.group_by do |activity|
       activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
     end
