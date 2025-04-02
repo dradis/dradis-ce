@@ -17,7 +17,13 @@ module Dradis::Plugins::Echo
       @type = set_type
       @record_id = params[:record]
       @interaction_id = SecureRandom.hex(20)
-      EchoJob.perform_later(params[:id], @record_id, @interaction_id)
+
+      EchoJob.perform_later(
+        prompt_id: params[:id],
+        klass: @type,
+        record_id: @record_id,
+        interaction_id: @interaction_id
+      )
     end
 
     private
