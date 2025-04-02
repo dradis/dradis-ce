@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   # versions of Rails (a sure recipe for disaster, I'm sure), which is needed
   # until we bump Dradis Pro to 4.1.
   spec.add_dependency 'dradis-plugins', '~> 4.0'
+  spec.add_dependency 'liquid'
   spec.add_dependency 'ollama-ai', '~> 1.3.0'
 
   spec.add_development_dependency 'bundler', '~> 2.0'

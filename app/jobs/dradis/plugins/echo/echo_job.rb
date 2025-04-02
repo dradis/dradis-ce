@@ -2,22 +2,13 @@ module Dradis::Plugins::Echo
   class EchoJob < ApplicationJob
     queue_as :default
 
-    def perform(prompt_id, issue_id, interaction_id)
+    def perform(prompt_id:, klass: , record_id: , interaction_id:)
       sleep 2
 
-      prompt =<<~EOP
-      I am a cyber security professional working an a cybersecurity assessment.
-
-      I found a vulnerability and I'd like for you to help me craft a
-      description and recommendation that's going to make it easy to understand
-      for the owners of the system I'm testing.
-
-      So far, this is what I've got, please give me your suggestions.
-      EOP
-
-      %w{Title Description Solution}.each do |field|
-        prompt << "#{field}: #{Issue.find(issue_id).fields[field]}\n\n"
-      end
+      prompt_template = Prompt.default[klass].select { |prompt| prompt.id == prompt_id.to_i }.first
+      Rails.logger.info("🎬 #{prompt_template.prompt}")
+      prompt = parse(prompt_template.prompt, { 'issue' => IssueDrop.new(Issue.find(record_id)) })
+      Rails.logger.info("🔚 #{prompt}")
 
       response_id = SecureRandom.hex(10)
 
@@ -52,12 +43,24 @@ module Dradis::Plugins::Echo
       )
     end
 
+    def parse(template, assigns)
+      options = {
+        filters: [],
+        strict_filters: true,
+        strict_variables: true
+      }
+
+      Liquid::Template.parse(template).render(assigns, options)
+    end
+
     def process_event(event, response_id, interaction_id)
       done = event['done']
       if done
         Turbo::StreamsChannel.broadcast_append_to [interaction_id, 'prompts'], target: 'messages', html: '<p>Done.</p>'
       else
         message = event['response'].to_s.strip.empty? ? "<br/>" : event['response']
+        message.sub!('<think>', '{think}')
+        message.sub!('</think>', '{/think}')
         Turbo::StreamsChannel.broadcast_append_to [interaction_id, 'prompts'], target: response_id, html: message
       end
     end
