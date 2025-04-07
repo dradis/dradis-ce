@@ -1,4 +1,16 @@
-<% content_for :title, 'My Tasks' %>
+<% content_for :title, 'My Cards' %>
+
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to current_project.name, project_path(current_project) %>
+    </li>
+    <li class="breadcrumb-item">
+      <%= link_to 'Methodologies', project_boards_path(current_project) %>
+    </li>
+    <li class="breadcrumb-item active">My Cards</li>
+  </ol>
+<% end%>
 
 <div class="content-container mt-3">
   <% if @tasks.any? %>
