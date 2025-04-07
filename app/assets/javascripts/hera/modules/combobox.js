@@ -16,6 +16,8 @@ class ComboBox {
 
     this.debounceTimer = 250;
     this.isMultiSelect = this.$target.attr('multiple');
+
+    // Generate a unique identifier for the combobox element
     this.idSuffix = Math.random().toString(36).substring(2);
 
     this.init();
