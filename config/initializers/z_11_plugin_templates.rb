@@ -7,7 +7,7 @@
 # Unless the DB is already migrated, do nothing
 
 Rails.application.reloader.to_prepare do
-  if (ActiveRecord::Base.connection rescue false) &&
+  if (ActiveRecord::Base.connection.verify! rescue false) &&
     Configuration.table_exists? &&
     Configuration.paths_templates.exist? &&
     Mapping.table_exists?

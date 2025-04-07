@@ -1,0 +1,127 @@
+body.projects {
+  .summary-panel {
+    #boards-summary {
+      display: flex;
+      flex-wrap: wrap;
+
+      .pie-chart {
+        width: 50%;
+      }
+
+      &.loading {
+        background: image_url('loading.gif') no-repeat center;
+      }
+    }
+
+    .empty-state {
+      &-actions {
+        margin-top: 1.5rem;
+      }
+
+      &-icon {
+        padding: 0.75rem;
+
+        img {
+          width: 7rem;
+        }
+      }
+
+      &-title {
+        margin: 2rem 0 1rem;
+      }
+    }
+
+    #issue-chart {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      svg text {
+        font-size: 14px;
+      }
+    }
+
+    #issues-accordion {
+      margin-top: 1rem;
+
+      .card {
+        margin-bottom: 1rem;
+
+        .card-body {
+          .list-group-item {
+            border: none;
+            transition: background-color 0.2s ease-in-out;
+
+            &:hover {
+              background-color: darken($primary-bg, 3%);
+            }
+
+            li {
+              transition: color 0.2s ease-in-out;
+            }
+          }
+        }
+
+        .card-header {
+          color: $white;
+
+          h5 {
+            margin-bottom: 0;
+          }
+        }
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        &.untagged {
+          border-color: #222;
+
+          .card-body li {
+            color: #222;
+          }
+
+          .card-header {
+            background-color: #222;
+          }
+        }
+      }
+    }
+  }
+
+  .tasks {
+    .list-group-item {
+      border: 1px solid $borderColor;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      pointer-events: none;
+
+      .badge {
+        margin-top: 0.5rem;
+        width: max-content;
+      }
+
+      &:hover {
+        background-color: $secondaryBgColor;
+      }
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+
+      .list-group-item-action {
+        color: $linkColor;
+        padding-bottom: 0.5rem;
+        pointer-events: auto;
+
+        &:active,
+        &:focus,
+        &:hover {
+          background-color: $secondaryBgColor;
+          color: $linkColorHover;
+        }
+      }
+    }
+  }
+}

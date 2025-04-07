@@ -1,25 +1,34 @@
-<% content_for :title, 'Project summary' %>
+<% content_for :title, current_project.name %>
 
-<div class="row m-0">
-  <div class="col-12 col-lg-6 col-xxl-4 p-0">
-    <div class="content-container mt-3 me-lg-3">
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <%= link_to current_project.name, project_path(current_project) %>
+  </li>
+  <li class="breadcrumb-item active">
+    Overview
+  </li>
+</ol>
+
+<div class="row p-0">
+  <div class="col-12 col-lg-6 col-xxl-4">
+    <div class="content-container">
       <%= render partial: 'projects/issues/summary' %>
     </div>
   </div>
 
-  <div class="col-12 col-lg-6 col-xxl-8 p-0">
-    <div class="row m-0">
-      <div class="col-xxl-6 p-0">
-        <div class="content-container mt-0 mt-lg-3 ms-lg-3 mx-xxl-3 pb-2">
+  <div class="col-12 col-lg-6 col-xxl-8">
+    <div class="row p-0">
+      <div class="col-xxl-6">
+        <div class="content-container">
           <%= render partial: 'projects/tasks/summary' %>
         </div>
-        <div class="content-container mt-0 mt-lg-3 ms-lg-3 mx-xxl-3">
+        <div class="content-container">
           <%= render partial: 'projects/boards/summary' %>
         </div>
       </div>
 
-      <div class="col-xxl-6 p-0">
-        <div class="content-container ms-lg-3 mt-0 mt-xxl-3 restrict-height full-height" data-behavior="restrict-height">
+      <div class="col-xxl-6">
+        <div class="content-container">
           <section class="summary-panel">
             <% if @activities.any? %>
               <h4 class="header-underline">Recent activity

@@ -1,0 +1,152 @@
+body:not(.unauthenticated) {
+  font-size: 0.95rem;
+
+  @media (max-width: 991px) {
+    grid-template-rows: #{$navbar-height} 1fr;
+  }
+
+  &.in-project {
+    @media (min-width: 992px) {
+      grid-template-rows: calc(#{$navbar-height} * 2) 1fr;
+    }
+  }
+  &:not(.in-project) {
+    @media (min-width: 992px) {
+      grid-template-rows: #{$navbar-height} 1fr;
+    }
+  }
+
+  grid-template-areas:
+    'navigation'
+    'view-content';
+}
+
+.container,
+.container-fluid {
+  padding: 0 $padding;
+}
+
+.content-container {
+  background-color: $primary-bg;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  margin-bottom: $margin;
+  padding: $padding;
+  position: relative;
+  outline: none;
+
+  .alert {
+    margin: 1rem 0;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: 1fr auto;
+  width: 100vw;
+
+  @include media-breakpoint-up(lg) {
+    // both sidebars rendered and are expanded
+    &:has(.sidebar-expanded.main-sidebar):has(
+        .sidebar-expanded.secondary-sidebar
+      )
+      .view-content {
+      width: calc(
+        100vw -
+          (
+            #{$sidebar-width} + (#{$sidebar-width} * #{$sidebar-width-multiplier})
+          )
+      );
+    }
+
+    // main sidebar is expanded, secondary sidebar is not rendered
+    &:has(.main-sidebar.sidebar-expanded):not(:has(.secondary-sidebar))
+      .view-content {
+      width: calc(100vw - #{$sidebar-width});
+    }
+
+    // main sidebar is expanded, secondary sidebar is collapsed
+    &:has(.main-sidebar.sidebar-expanded):has(.secondary-sidebar):not(
+        :has(.secondary-sidebar.sidebar-expanded)
+      )
+      .view-content {
+      width: calc(100vw - #{$sidebar-width} - #{$sidebar-width-collapsed});
+    }
+
+    // secondary sidebar is expanded, main sidebar is not rendered
+    &:has(.secondary-sidebar.sidebar-expanded):not(:has(.main-sidebar))
+      .view-content {
+      width: calc(100vw - (#{$sidebar-width} * #{$sidebar-width-multiplier}));
+    }
+
+    // secondary sidebar is expanded, main sidebar is collapsed
+    &:has(.secondary-sidebar.sidebar-expanded):has(.main-sidebar):not(
+        :has(.main-sidebar.sidebar-expanded)
+      )
+      .view-content {
+      width: calc(
+        100vw - (#{$sidebar-width} * #{$sidebar-width-multiplier}) - #{$sidebar-width-collapsed}
+      );
+    }
+  }
+}
+
+footer {
+  background-color: $brand-100;
+  border-top: 1px solid $instance-nav-border;
+  cursor: default;
+  font-size: 0.8rem;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+header {
+  grid-area: navigation;
+}
+
+hr {
+  border-bottom: solid 2px rgba(0, 0, 0, 0.25);
+  border-top: 0;
+  margin: 1rem 0;
+
+  &.small {
+    border-bottom: solid 5px rgba(0, 0, 0, 0.25);
+    margin-left: 0;
+    width: 75px;
+  }
+}
+
+main {
+  max-width: 100vw;
+  width: 100%;
+}
+
+.row {
+  & > *[class*='col-'] {
+    position: relative;
+  }
+}
+
+select.form-select[multiple] {
+  padding: 0;
+}
+
+.view-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &:has(.main-sidebar),
+  &:has(.secondary-sidebar) {
+    width: calc(100vw - #{$sidebar-width-collapsed});
+  }
+
+  &:has(.main-sidebar):has(.secondary-sidebar) {
+    width: calc(100vw - (#{$sidebar-width-collapsed} * 2));
+  }
+}

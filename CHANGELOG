@@ -1,10 +1,12 @@
 [v#.#.#] ([month] [YYYY])
-  - Kit Import: Use file name sequencing when a template file with the same name exists
-  - Tasks:
-    - Add view with user assigned tasks
-    - Add dashboard widget for quick access to assigned tasks
+  - Hera: Add new layout with redesigned navigation
+  - Revisions: Show state changes in the revisions view
+  - Turbo: Remove turbolinks and add turbo-rails
+  - QA:
+    - Add View History link when viewing Issues/Content blocks
+    - Automatically go to the next record after reviewing
   - Upgraded gems:
-    - rexml
+    - capybara, net-imap, nokogiri, paper_trail, rack, rails, rails-html-sanitizer, rexml, rspec-rails, selenium-webdriver
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
@@ -18,8 +20,7 @@
       - [integration bug fixes]:
         - [future tense verb] [integration bug fix]
   - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
+    - Export: Default export button to 'All' if all records in project are in 'draft' state
   - REST/JSON API enhancements:
     - [API entity]:
       - [future tense verb] [API enhancement]
@@ -27,6 +28,24 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v4.15.0 (December 2024)
+  - Tags: Add custom ordering
+  - Welcome Kit:
+    - Add HTML report template
+    - Add Issue and evidence templates
+    - Update OWASP Top 10 methodology to latest version (2021)
+  - Upgraded gems:
+    - rails, rexml
+  - Integration enhancements: 
+    - Qualys: Add `cvss3_base`, `cvss3_temporal`, and `cvss3_version` as available vuln fields
+  - Security Fixes:
+    - High: Authenticated (author) persistent cross-site scripting
+
+v4.14.0 (October 2024)
+  - Kit Import: Use file name sequencing when a template file with the same name exists
+  - Upgraded gems:
+    - puma, rails, rexml
 
 v4.13.0 (July 2024)
   - Attachments: Copy attachments when moving an evidence/note

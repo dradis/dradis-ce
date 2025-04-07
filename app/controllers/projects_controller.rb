@@ -4,9 +4,8 @@ class ProjectsController < AuthenticatedController
 
   before_action :set_project
 
-  helper        :tylium
+  helper        :hera
   helper_method :current_project
-  layout        'tylium'
 
   def index
     redirect_to project_path(current_project)
@@ -43,7 +42,7 @@ class ProjectsController < AuthenticatedController
     end
 
     respond_to do |format|
-      format.html { render layout: 'tylium' if !request.xhr? }
+      format.html { render layout: 'hera/project' if !request.xhr? }
       format.json { render json: @boards }
     end
   end

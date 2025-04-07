@@ -1,5 +1,8 @@
 <nav>
   <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to current_project.name, project_path(current_project) %>
+    </li>
     <% case @record %>
     <% when Card %>
       <li class="breadcrumb-item"><%= link_to 'Methodologies', project_boards_path(current_project) %></li>
@@ -10,8 +13,13 @@
       <li class="breadcrumb-item"><%= link_to @record.node.label, project_node_path(current_project, @record.node, tab: 'evidence-tab') %></li>
       <li class="breadcrumb-item"><%= link_to @record.title, project_node_evidence_path(current_project, @record.node, @record) %></li>
     <% when Issue %>
-      <li class="breadcrumb-item"><%= link_to 'All issues', project_issues_path(current_project) %></li>
-      <li class="breadcrumb-item"><%= link_to @record.title, project_issue_path(current_project, @record) %></li>
+      <% if qa %>
+        <li class="breadcrumb-item"><%= link_to 'QA', project_qa_issues_path(current_project) %></li>
+        <li class="breadcrumb-item"><%= link_to @record.title, project_qa_issue_path(current_project, @record) %></li>
+      <% else %>
+        <li class="breadcrumb-item"><%= link_to 'All issues', project_issues_path(current_project) %></li>
+        <li class="breadcrumb-item"><%= link_to @record.title, project_issue_path(current_project, @record) %></li>
+      <% end %>
     <% when Note %>
       <li class="breadcrumb-item"><a href="javascript:void(0)" data-behavior="sidebar-toggle">Nodes</a></li>
       <li class="breadcrumb-item"><%= link_to @record.node.label, project_node_path(current_project, @record.node, tab: 'notes-tab') %></li>
