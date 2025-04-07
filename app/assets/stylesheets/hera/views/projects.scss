@@ -91,7 +91,7 @@ body.projects {
 
   .tasks {
     .list-group-item {
-      border: 1px solid $borderColor;
+      border: 1px solid $border-color;
       border-radius: 0.5rem;
       margin-bottom: 1rem;
       padding: 1rem;
@@ -103,7 +103,7 @@ body.projects {
       }
 
       &:hover {
-        background-color: $secondaryBgColor;
+        background-color: $secondary-bg;
       }
 
       &:last-of-type {
@@ -111,15 +111,15 @@ body.projects {
       }
 
       .list-group-item-action {
-        color: $linkColor;
+        color: $text-link;
         padding-bottom: 0.5rem;
         pointer-events: auto;
 
         &:active,
         &:focus,
         &:hover {
-          background-color: $secondaryBgColor;
-          color: $linkColorHover;
+          background-color: $secondary-bg;
+          color: $text-link-hover;
         }
       }
     }
