@@ -22,6 +22,10 @@
   </nav>
 <% end %>
 
+<% content_for :sidebar do %>
+  <%= render partial: 'sidebar' %>
+<% end %>
+
 <% content_for :list_new_modal do %>
   <%= render 'boards/modals/new_list_form' %>
 <% end %>
