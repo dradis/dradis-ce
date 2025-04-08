@@ -7,7 +7,7 @@ module TasksHelper
       cards = current_user.cards.order(Arel.sql('due_date IS NULL, due_date ASC'))
 
       if project_id
-        cards.select { |card| card.project.id == current_project.id }
+        cards.select { |card| card.project.id == project_id }
       else
         valid_project_ids = Project.kept.current.accessible_by(current_ability).ids
         cards.select { |card| card.project.id.in? valid_project_ids }
