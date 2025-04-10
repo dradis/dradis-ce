@@ -185,7 +185,6 @@ class ComboBox {
         );
       }
 
-      this.selectOptions($options);
       this.$combobox.toggleClass(
         'disabled',
         !!$(event.currentTarget).attr('disabled')?.length
@@ -453,7 +452,14 @@ class ComboBox {
   selectSingleOption($option) {
     this.$combobox.html($option.html());
     this.$combobox.attr('style', $option.attr('style') || '');
-    this.$target.val($option.data('value'));
+
+    const value = $option.data('value');
+    const sanitizedValue = $('<div>').text(value).html();
+    if (this.$target.find('option[value="' + sanitizedValue + '"]').length == 0) {
+      this.$target.find('option:last').val(sanitizedValue);
+    }
+
+    this.$target.val(sanitizedValue);
     this.$comboboxOptions.removeClass('selected');
     this.$comboboxOptions.attr('aria-selected', 'false');
     $option.addClass('selected');
