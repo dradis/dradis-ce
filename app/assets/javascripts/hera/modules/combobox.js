@@ -237,22 +237,22 @@ class ComboBox {
     this.$comboboxContainer = this.$target.parent();
 
     this.$comboboxContainer.append(`
-      <div 
-        class="combobox ${this.isMultiSelect ? 'multiple' : ''}" 
-        tabindex="0" 
+      <div
+        class="combobox ${this.isMultiSelect ? 'multiple' : ''}"
+        tabindex="0"
         role="combobox"
         aria-expanded="false"
-        aria-owns="combobox-menu-${this.idSuffix}" 
-        aria-controls="combobox-menu-${this.idSuffix}" 
-        aria-haspopup="listbox" 
+        aria-owns="combobox-menu-${this.idSuffix}"
+        aria-controls="combobox-menu-${this.idSuffix}"
+        aria-haspopup="listbox"
         aria-autocomplete="list"
         data-behavior="combobox">
       </div>
-      <div 
-        class="combobox-menu" 
-        role="listbox" 
-        id="combobox-menu-${this.idSuffix}" 
-        ${this.isMultiSelect ? 'aria-multiselectable="true"' : ''} 
+      <div
+        class="combobox-menu"
+        role="listbox"
+        id="combobox-menu-${this.idSuffix}"
+        ${this.isMultiSelect ? 'aria-multiselectable="true"' : ''}
         data-behavior="combobox-menu">
       </div>
     `);
@@ -416,7 +416,7 @@ class ComboBox {
       }
 
       this.$combobox.append(
-        `<div 
+        `<div
           class="combobox-multi-option"
           data-behavior="combobox-multi-option"
           data-option-value="${$option.data('value')}"
@@ -453,13 +453,15 @@ class ComboBox {
     this.$combobox.html($option.html());
     this.$combobox.attr('style', $option.attr('style') || '');
 
-    const value = $option.data('value');
-    const sanitizedValue = $('<div>').text(value).html();
-    if (this.$target.find('option[value="' + sanitizedValue + '"]').length == 0) {
-      this.$target.find('option:last').val(sanitizedValue);
+    var value = $option.data('value');
+    if (value && value.length && value != 'undefined') {
+      // If the selected value is not present in the original select, add it.
+      if (!this.$target.find('option[value="' + value + '"]').length) {
+        this.$target.find('option:last').val(value);
+      }
     }
 
-    this.$target.val(sanitizedValue);
+    this.$target.val(value);
     this.$comboboxOptions.removeClass('selected');
     this.$comboboxOptions.attr('aria-selected', 'false');
     $option.addClass('selected');
