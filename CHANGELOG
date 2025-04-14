@@ -22,7 +22,7 @@
     - [report type]:
       - [future tense verb] [reporting enhancement]
   - REST/JSON API enhancements:
-    - Nodes endpoint:
+    - Nodes:
       - include Node Properties in Node API requests
   - Security Fixes:
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
