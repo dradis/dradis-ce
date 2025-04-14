@@ -246,6 +246,16 @@ header {
           }
         }
       }
+
+      @media (min-width: 992px) {
+        .nav-item {
+          border-top: 5px solid transparent;
+
+          &.active {
+            border-top: 5px solid $main-nav-links;
+          }
+        }
+      }
     }
 
     &.sub-nav {
