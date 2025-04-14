@@ -1,6 +1,7 @@
 @mixin button($color) {
-  border: 0px none;
   background: $color;
+  border: 1px solid darken($color, 10);
+  border-radius: 0.5rem;
 
   &:hover,
   &:not(:disabled):not(.disabled):active {
@@ -93,8 +94,8 @@
   }
 
   &.btn-outline-primary {
-    border-color: $primary;
-    color: $primary;
+    border-color: $button-primary;
+    color: $button-primary;
 
     &:hover,
     &:focus,
@@ -102,8 +103,8 @@
     &:active,
     &:not(:disabled):not(.disabled):active {
       color: $white;
-      border-color: $primary;
-      background: $primary;
+      border-color: $button-primary;
+      background: $button-primary;
     }
   }
 
@@ -149,7 +150,7 @@
 
   &.btn-primary,
   &.btn-primary:not(:disabled):not(.disabled).active {
-    @include button($primary);
+    @include button($button-primary);
     color: $white;
   }
 
@@ -176,7 +177,8 @@
   }
 
   &.btn-secondary {
-    background-color: $grey-700;
+    background-color: $button-secondary;
+    border: 1px solid darken($button-secondary, 10);
     color: $white;
 
     &:hover,
@@ -252,10 +254,34 @@
   }
 }
 
+.btn-group {
+  .btn-primary {
+    + .dropdown-menu {
+      background: $button-primary;
+      border: 1px solid darken($button-primary, 10);
+      color: $white;
+
+      .dropdown-item,
+      label,
+      .state {
+        border-bottom: 1px solid darken($button-primary, 10);
+        color: $white;
+
+        &:hover,
+        &:focus {
+          background-color: darken($button-primary, 10);
+          color: $white;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
 .btn-placeholder {
   align-items: center;
-  background-color: $primary;
-  border: 1px solid $primary;
+  background-color: $button-primary;
+  border: 1px solid $button-primary;
   border-radius: 0.25rem;
   color: $white;
   cursor: default;
@@ -267,7 +293,7 @@
   &.disabled {
     background-color: $grey-200;
     border-color: $grey-500;
-    border-left-color: $primary;
+    border-left-color: $button-primary;
     color: $grey-700;
     cursor: not-allowed;
   }
