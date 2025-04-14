@@ -23,7 +23,7 @@
       - [future tense verb] [reporting enhancement]
   - REST/JSON API enhancements:
     - Nodes:
-      - include Node Properties in Node API requests
+      - include Node properties
   - Security Fixes:
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
