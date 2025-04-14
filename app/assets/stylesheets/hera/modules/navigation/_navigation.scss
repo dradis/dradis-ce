@@ -330,10 +330,10 @@ header {
             &:active,
             &:focus,
             &:hover {
-              border-bottom: 5px solid $light;
+              border-bottom: 5px solid $button-secondary;
 
               .nav-link {
-                color: $text-link;
+                color: $button-secondary;
                 padding-left: 1rem;
                 padding-right: 1rem;
               }
