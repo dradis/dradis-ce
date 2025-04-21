@@ -80,9 +80,9 @@ describe 'Nodes API' do
             label:     'New Node',
             type_id:   Node::Types::HOST,
             parent_id: parent_node_id,
-            properties: {
+            raw_properties: {
               'ip' => '1.1.1.1'
-            },
+            }.to_json,
             position:  3
           }
         }
@@ -97,7 +97,11 @@ describe 'Nodes API' do
         expect(response.location).to eq(dradis_api.node_url(retrieved_node['id']))
 
         valid_params[:node].each do |attr, value|
-          expect(retrieved_node[attr.to_s]).to eq value
+          if attr == :raw_properties
+            expect(retrieved_node['properties']).to eq(JSON.parse(value))
+          else
+            expect(retrieved_node[attr.to_s]).to eq value
+          end
         end
       end
 
@@ -142,7 +146,7 @@ describe 'Nodes API' do
         {
           node: {
             label: 'Updated Node',
-            properties: { 'ip' => '1.0.0.1' }
+            raw_properties: { 'ip' => '1.0.0.1' }.to_json
           }
         }
       end
@@ -153,7 +157,7 @@ describe 'Nodes API' do
         expect(current_project.nodes.find(node.id).label).to eq valid_params[:node][:label]
         retrieved_node = JSON.parse(response.body)
         expect(retrieved_node['label']).to eq valid_params[:node][:label]
-        expect(retrieved_node['properties']).to eq valid_params[:node][:properties]
+        expect(retrieved_node['properties']).to eq JSON.parse(valid_params[:node][:raw_properties])
       end
 
       let(:submit_form) { valid_put }
