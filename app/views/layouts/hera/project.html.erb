@@ -82,7 +82,7 @@
 <% end %>
 
 <% content_for :sub_nav do %>
-  <%= render 'layouts/hera/navbar/projects/sub_nav' %>
+  <%= render 'layouts/hera/navbar/sub_nav', locals: { sub_nav_content: 'projects/sub_nav_content' } %>
 <% end %>
 
 <%= render template: 'layouts/hera' %>
