@@ -1,4 +1,4 @@
-<% content_for :body_class, 'in-project' %>
+<% content_for :body_class, 'has-sub-nav' %>
 
 <% content_for :modals do %>
   <%= render 'layouts/hera/modals' %>
@@ -82,7 +82,7 @@
 <% end %>
 
 <% content_for :sub_nav do %>
-  <%= render 'layouts/hera/navbar/projects/project_nav' %>
+  <%= render 'layouts/hera/navbar/sub_nav', locals: { sub_nav_content: 'projects/sub_nav_content' } %>
 <% end %>
 
 <%= render template: 'layouts/hera' %>

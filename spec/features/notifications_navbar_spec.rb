@@ -9,7 +9,7 @@ describe 'User notifications', js: true do
   end
 
   it 'can view the notifcation bell' do
-    within '.instance-nav' do
+    within '.main-nav' do
       expect(page).to have_css '.notifications.dropdown'
     end
   end

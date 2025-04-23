@@ -1,4 +1,4 @@
-body:not(.in-project) {
+body:not(.has-sub-nav) {
   .sidebar {
     top: #{$navbar-height};
     height: calc(100vh - #{$navbar-height});
