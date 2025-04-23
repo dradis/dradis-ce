@@ -22,8 +22,8 @@
   - Reporting enhancements:
     - Export: Default export button to 'All' if all records in project are in 'draft' state
   - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
+    - Nodes:
+      - include Node properties
   - Security Fixes:
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
