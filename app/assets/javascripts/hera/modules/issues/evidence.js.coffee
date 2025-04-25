@@ -11,20 +11,6 @@ document.addEventListener "turbo:load", ->
           .then (html) ->
             $("##{node}").html(html)
 
-    $nodeListOptions = $('[data-behavior~=existing-node-list] option')
-
-    $('[data-behavior~=add-evidence-container]').on 'keyup', '#evidence_node', ->
-      rule = new RegExp($(this).val(), 'i')
-      $nodeListOptions.hide();
-      $nodeListOptions.filter ->
-        rule.test($(this).text())
-      .show()
-
-    $nodeListOptions.mousedown (e) ->
-      e.preventDefault()
-      $(this).prop 'selected', !$(this).prop('selected')
-      $(this).parent().focus()
-
   if $('body.issues.show').length
     $table = $('[data-behavior~=dradis-datatable]')
     $table.on 'dradis:datatable:bulkDelete', ->

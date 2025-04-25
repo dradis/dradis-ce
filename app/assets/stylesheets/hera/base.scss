@@ -223,7 +223,7 @@ mark {
     transition: all 0s ease-in-out;
 
     &.active {
-      background-color: $instance-nav-bg;
+      background-color: $main-nav-bg;
       border: 1px solid $border-color;
       color: $text-link-hover;
     }

@@ -1,6 +1,7 @@
 @import 'hera/modules/attachments';
 @import 'hera/modules/buttons';
 @import 'hera/modules/colors';
+@import 'hera/modules/combobox';
 @import 'hera/modules/comments';
 @import 'hera/modules/datatables';
 @import 'hera/modules/dropdown';
@@ -268,7 +269,7 @@
         border-bottom: none;
 
         &.active {
-          background-color: $instance-nav-bg;
+          background-color: $main-nav-bg;
           border: none;
         }
 

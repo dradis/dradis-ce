@@ -44,6 +44,7 @@
 //= require hera/engines
 
 //= require hera/modules/activities_poller
+//= require hera/modules/combobox
 //= require hera/modules/configurations
 //= require hera/modules/export
 //= require hera/modules/fileupload
