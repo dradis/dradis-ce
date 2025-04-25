@@ -3,8 +3,8 @@
 
 // Theme
 $light: $brand-100;
-$primary: $brand-400;
-$dark: $brand-900;
+$primary: $brand-500;
+$dark: $brand-700;
 
 // Bootstrap Overrides
 $green: $green-500;
@@ -16,10 +16,6 @@ $yellow: $yellow-500;
 $border-color: $grey-200;
 $border-color-dark: $grey-900;
 
-//Buttons
-$button-primary: #2171a3;
-$button-secondary: #c3468d;
-
 // Shadows
 $shadow-color-light: $grey-200;
 $shadow-color-dark: $grey-800;
@@ -27,7 +23,7 @@ $shadow-color-dark: $grey-800;
 // Text
 $text-default: $grey-900;
 $text-error: $red;
-$text-link: $brand-700;
+$text-link: $primary;
 $text-link-hover: darken($text-link, 15%);
 $text-muted: $grey-700;
 $text-small: 0.9rem;

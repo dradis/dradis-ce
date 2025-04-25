@@ -94,8 +94,8 @@
   }
 
   &.btn-outline-primary {
-    border-color: $button-primary;
-    color: $button-primary;
+    border-color: $primary;
+    color: $primary;
 
     &:hover,
     &:focus,
@@ -103,8 +103,8 @@
     &:active,
     &:not(:disabled):not(.disabled):active {
       color: $white;
-      border-color: $button-primary;
-      background: $button-primary;
+      border-color: $primary;
+      background: $primary;
     }
   }
 
@@ -150,7 +150,7 @@
 
   &.btn-primary,
   &.btn-primary:not(:disabled):not(.disabled).active {
-    @include button($button-primary);
+    @include button($primary);
     color: $white;
   }
 
@@ -177,8 +177,7 @@
   }
 
   &.btn-secondary {
-    background-color: $button-secondary;
-    border: 1px solid darken($button-secondary, 10);
+    background-color: $grey-700;
     color: $white;
 
     &:hover,
@@ -257,19 +256,19 @@
 .btn-group {
   .btn-primary {
     + .dropdown-menu {
-      background: $button-primary;
-      border: 1px solid darken($button-primary, 10);
+      background: $primary;
+      border: 1px solid darken($primary, 10);
       color: $white;
 
       .dropdown-item,
       label,
       .state {
-        border-bottom: 1px solid darken($button-primary, 10);
+        border-bottom: 1px solid darken($primary, 10);
         color: $white;
 
         &:hover,
         &:focus {
-          background-color: darken($button-primary, 10);
+          background-color: darken($primary, 10);
           color: $white;
           cursor: pointer;
         }
@@ -280,8 +279,8 @@
 
 .btn-placeholder {
   align-items: center;
-  background-color: $button-primary;
-  border: 1px solid $button-primary;
+  background-color: $primary;
+  border: 1px solid $primary;
   border-radius: 0.25rem;
   color: $white;
   cursor: default;
@@ -293,7 +292,7 @@
   &.disabled {
     background-color: $grey-200;
     border-color: $grey-500;
-    border-left-color: $button-primary;
+    border-left-color: $primary;
     color: $grey-700;
     cursor: not-allowed;
   }
