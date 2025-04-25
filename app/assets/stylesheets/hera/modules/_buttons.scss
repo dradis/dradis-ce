@@ -1,11 +1,11 @@
 @mixin button($color) {
   background: $color;
-  border: 1px solid darken($color, 10);
-  border-radius: 0.5rem;
+  border: 1px solid darken($color, 5%);
+  border-radius: 0.25rem;
 
   &:hover,
   &:not(:disabled):not(.disabled):active {
-    background: darken($color, 10);
+    background: lighten($color, 10);
   }
 }
 
@@ -102,9 +102,9 @@
     &:focus-visible,
     &:active,
     &:not(:disabled):not(.disabled):active {
-      color: $white;
+      color: $primary;
       border-color: $primary;
-      background: $primary;
+      background: $light;
     }
   }
 
@@ -257,18 +257,17 @@
   .btn-primary {
     + .dropdown-menu {
       background: $primary;
-      border: 1px solid darken($primary, 10);
       color: $white;
 
       .dropdown-item,
       label,
       .state {
-        border-bottom: 1px solid darken($primary, 10);
+        border-bottom: 1px solid darken($primary, 5%);
         color: $white;
 
         &:hover,
         &:focus {
-          background-color: darken($primary, 10);
+          background-color: lighten($primary, 5%);
           color: $white;
           cursor: pointer;
         }
