@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Escaping string from Drops' do
-  let(:issue) { create(:issue, text: "#[Title]#\n<h1>test output</h1>\n") }
+  let(:issue) { create(:issue, text: "#[Title]#\n<script>test output</script>\n") }
 
   describe BaseDrop do
     it 'automatically escapes the string outputs' do
@@ -11,7 +11,7 @@ describe 'Escaping string from Drops' do
 
       drop = TestDrop.new(issue)
 
-      expect(drop.title).to eq('&lt;h1&gt;test output&lt;/h1&gt;')
+      expect(drop.title).to eq('')
     end
   end
 
@@ -22,7 +22,7 @@ describe 'Escaping string from Drops' do
       end
 
       drop = TestDrop.new(issue)
-      expect(drop.fields['Title']).to eq('&lt;h1&gt;test output&lt;/h1&gt;')
+      expect(drop.fields['Title']).to eq('')
     end
   end
 end
