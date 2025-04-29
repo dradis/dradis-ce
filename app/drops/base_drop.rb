@@ -38,6 +38,6 @@ class BaseDrop < Liquid::Drop
       return string
     end
 
-    CGI::escapeHTML(string)
+    HTML::Pipeline::SanitizationFilter.call(string).to_s
   end
 end
