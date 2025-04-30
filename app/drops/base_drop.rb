@@ -30,14 +30,14 @@ class BaseDrop < Liquid::Drop
 
   private
 
-  def escape(string)
-    if string.nil? ||
-        !string.is_a?(String) ||
-        string.empty?
+  def escape(obj)
+    if obj.nil? ||
+        !obj.is_a?(String) ||
+        obj.empty?
 
-      return string
+      return obj
     end
 
-    HTML::Pipeline::SanitizationFilter.call(string).to_s
+    HTML::Pipeline::SanitizationFilter.call(obj).to_s
   end
 end
