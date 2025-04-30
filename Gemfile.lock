@@ -338,7 +338,7 @@ GEM
     mustermann (2.0.2)
       ruby2_keywords (~> 0.0.1)
     nenv (0.3.0)
-    net-imap (0.5.6)
+    net-imap (0.5.8)
       date
       net-protocol
     net-pop (0.1.2)
@@ -642,7 +642,7 @@ DEPENDENCIES
   local_time (>= 2.0.0)
   matrix
   mini_racer
-  net-imap (>= 0.5.6)
+  net-imap (>= 0.5.7)
   net-pop
   net-smtp
   nokogiri (>= 1.18.8)
