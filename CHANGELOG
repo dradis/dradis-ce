@@ -1,4 +1,4 @@
-[v#.#.#] ([month] [YYYY])
+v4.16.0 (May 2025)
   - Forms: Add a combobox for selecting, filtering, and creating options
   - Hera: Add new layout with redesigned navigation
   - Revisions: Show state changes in the revisions view
@@ -8,27 +8,10 @@
     - Automatically go to the next record after reviewing
   - Upgraded gems:
     - capybara, net-imap, nokogiri, paper_trail, rack, rails, rails-html-sanitizer, rexml, rspec-rails, selenium-webdriver
-  - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
-    - Bug tracker items:
-      - [item]
-  - New integrations:
-    - [integration]
-  - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
   - Reporting enhancements:
     - Export: Default export button to 'All' if all records in project are in 'draft' state
   - REST/JSON API enhancements:
-    - Nodes:
-      - include Node properties
-  - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Nodes: include Node properties
 
 v4.15.0 (December 2024)
   - Tags: Add custom ordering
