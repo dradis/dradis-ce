@@ -1,6 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Forms: Add a combobox for selecting, filtering, and creating options
   - Hera: Add new layout with redesigned navigation
+  - Nodes: Catch invalid JSON errors when editing node properties
   - Revisions: Show state changes in the revisions view
   - Turbo: Remove turbolinks and add turbo-rails
   - QA:
