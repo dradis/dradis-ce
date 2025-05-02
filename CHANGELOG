@@ -18,8 +18,8 @@
   - Integration enhancements:
     - [integration]:
       - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
+     - HTML:
+        - Fix default HTML report template to work with CE
   - Reporting enhancements:
     - Export: Default export button to 'All' if all records in project are in 'draft' state
   - REST/JSON API enhancements:
