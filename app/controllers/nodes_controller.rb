@@ -65,7 +65,7 @@ class NodesController < NestedNodeResourceController
   # POST /nodes/sort
   def sort
     params[:nodes].each_with_index do |id, index|
-      current_project.nodes.update_all({position: index+1}, {id: id})
+      current_project.nodes.update_all({ position: index + 1 }, { id: id })
     end
     head :ok
   end
@@ -73,7 +73,9 @@ class NodesController < NestedNodeResourceController
   # PUT /node/<id>
   def update
     respond_to do |format|
-      if @node.update(node_params)
+      @node.assign_attributes(node_params)
+
+      if @node.save
         track_updated(@node)
         format.html { redirect_to project_node_path(current_project, @node), notice: 'Node updated.' }
         format.json { render json: { success: true }.to_json }
