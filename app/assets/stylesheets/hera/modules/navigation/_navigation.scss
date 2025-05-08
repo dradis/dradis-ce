@@ -7,7 +7,6 @@ header {
       .navbar-brand {
         img {
           height: 2.425rem;
-          margin: 3px 0 -3px;
           padding: 0 15px;
         }
       }
@@ -181,6 +180,7 @@ header {
       }
 
       .navbar-collapse {
+        align-self: flex-start;
         background-color: $main-nav-bg;
       }
 
@@ -188,6 +188,7 @@ header {
         .nav-item {
           @media (min-width: 992px) {
             margin-inline: calc(var(--margin) / 4);
+            padding-top: 2px;
 
             .nav-link {
               padding-inline: calc(var(--padding) / 3);
