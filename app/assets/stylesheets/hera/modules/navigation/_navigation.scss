@@ -328,6 +328,11 @@ header {
             }
 
             @media (min-width: 992px) {
+              padding-left: 0.7rem;
+              padding-right: 0.7rem;
+            }
+
+            @media (min-width: 1025px) {
               padding-left: 1rem;
               padding-right: 1rem;
             }
@@ -353,8 +358,8 @@ header {
 
               .nav-link {
                 color: $text-link;
-                padding-left: 1rem;
-                padding-right: 1rem;
+                padding-left: 0.7rem;
+                padding-right: 0.7rem;
               }
             }
 
@@ -364,6 +369,18 @@ header {
 
             &:last-child {
               margin-right: 0;
+            }
+          }
+
+          @media (min-width: 1025px) {
+            &.active,
+            &:active,
+            &:focus,
+            &:hover {
+              .nav-link {
+                padding-left: 1rem;
+                padding-right: 1rem;
+              }
             }
           }
         }
