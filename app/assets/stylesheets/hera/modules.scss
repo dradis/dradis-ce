@@ -239,6 +239,14 @@
 
 .list-group {
   .list-group-item {
+    &.active {
+      color: $white;
+
+      &:hover {
+        border-color: $light;
+        color: $text-link;
+      }
+    }
     &:hover {
       background-color: $light;
     }
