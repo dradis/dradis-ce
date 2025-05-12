@@ -54,9 +54,10 @@ class ComboBox {
   }
 
   appendOption($parent, $option) {
+    const behaviors = $option.data('behavior') || '';
     const disabled = $option.attr('disabled') ? 'disabled' : '';
     const escapedText = $('<div>').text($option.text()).html();
-    const value = $option.attr('value');
+    const value = $option.attr('value') || '';
 
     const {
       comboboxOptionIcon: iconClass,
@@ -68,7 +69,7 @@ class ComboBox {
       `<span
         aria-selected="false"
         class="combobox-option ${disabled}"
-        data-behavior="combobox-option"
+        data-behavior="combobox-option ${behaviors}"
         data-value="${value}"
         id="combobox-option-${this.idSuffix}-${value}"
         role="option"
@@ -453,12 +454,26 @@ class ComboBox {
     this.$combobox.html($option.html());
     this.$combobox.attr('style', $option.attr('style') || '');
 
-    var value = $option.data('value');
+    const behavior = $option.data('behavior')?.split(' ')[1] || '';
+    const value = $option.data('value');
+
     if (value && value.length && value != 'undefined') {
       // If the selected value is not present in the original select, add it.
-      if (!this.$target.find('option[value="' + value + '"]').length) {
+      if (!this.$target.find(`option[value="${value}"]`).length) {
         this.$target.find('option:last').val(value);
       }
+    }
+
+    if (
+      behavior.length &&
+      this.$target.find(`option[data-behavior="${behavior}"]`).length
+    ) {
+      this.$target
+        .find(`option[data-behavior="${behavior}"]`)
+        .prop('selected', true);
+
+      this.$target.trigger('change');
+      return;
     }
 
     this.$target.val(value);
