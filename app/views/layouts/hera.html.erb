@@ -22,6 +22,7 @@
       read: image_path('favicon.ico') 
     } %>
 
+    <%= action_cable_meta_tag %>
     <%= stylesheet_link_tag 'hera', media: 'all', 'data-turbo-track' => true %>
     <%= javascript_include_tag 'hera', 'data-turbo-track' => true %>
     <%= csrf_meta_tag %>
