@@ -3,9 +3,6 @@ require 'active_support/core_ext/integer/time'
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # mount all routes under /pro subdirectory
-  config.relative_url_root = '/pro'
-
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests.
   config.cache_classes = true
