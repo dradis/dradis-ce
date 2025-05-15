@@ -54,10 +54,9 @@ class ComboBox {
   }
 
   appendOption($parent, $option) {
-    const behaviors = $option.data('behavior') || '';
     const disabled = $option.attr('disabled') ? 'disabled' : '';
     const escapedText = $('<div>').text($option.text()).html();
-    const value = $option.attr('value') || '';
+    const value = $option.attr('value');
 
     const {
       comboboxOptionIcon: iconClass,
@@ -69,7 +68,7 @@ class ComboBox {
       `<span
         aria-selected="false"
         class="combobox-option ${disabled}"
-        data-behavior="combobox-option ${behaviors}"
+        data-behavior="combobox-option"
         data-value="${value}"
         id="combobox-option-${this.idSuffix}-${value}"
         role="option"
@@ -163,9 +162,12 @@ class ComboBox {
       ?.off('.combobox')
       .on('click.combobox', () => this.handleAddingCustomOption());
 
-    this.$filter
-      ?.off('.combobox')
-      .on('textchange.combobox', () => this.handleFiltering());
+    // Delegated event listener for the filter input
+    this.$comboboxMenu
+      .off('input.combobox', '[data-behavior~=combobox-filter]')
+      .on('input.combobox', '[data-behavior~=combobox-filter]', () => {
+        this.handleFiltering();
+      });
 
     this.$target.off('.combobox').on('change.combobox', (event) => {
       let $options = [];
@@ -185,6 +187,8 @@ class ComboBox {
           `[data-value="${$(event.currentTarget).val()}"]`
         );
       }
+
+      this.selectOptions($options);
 
       this.$combobox.toggleClass(
         'disabled',
@@ -265,7 +269,7 @@ class ComboBox {
   handleAddingCustomOption() {
     this.appendCustomOption(this.$filter.val());
     if (this.isMultiSelect) {
-      this.$filter?.val(null).trigger('textchange');
+      this.$filter?.val(null).trigger('input');
     } else {
       this.hideMenu();
     }
@@ -376,7 +380,7 @@ class ComboBox {
   hideMenu() {
     this.$comboboxMenu.css('display', 'none');
     this.$combobox.attr('aria-expanded', 'false');
-    this.$filter?.val(null).trigger('textchange');
+    this.$filter?.val(null).trigger('input');
   }
 
   isAlreadyInitialized() {
@@ -454,26 +458,12 @@ class ComboBox {
     this.$combobox.html($option.html());
     this.$combobox.attr('style', $option.attr('style') || '');
 
-    const behavior = $option.data('behavior')?.split(' ')[1] || '';
-    const value = $option.data('value');
-
+    var value = $option.data('value');
     if (value && value.length && value != 'undefined') {
       // If the selected value is not present in the original select, add it.
-      if (!this.$target.find(`option[value="${value}"]`).length) {
+      if (!this.$target.find('option[value="' + value + '"]').length) {
         this.$target.find('option:last').val(value);
       }
-    }
-
-    if (
-      behavior.length &&
-      this.$target.find(`option[data-behavior="${behavior}"]`).length
-    ) {
-      this.$target
-        .find(`option[data-behavior="${behavior}"]`)
-        .prop('selected', true);
-
-      this.$target.trigger('change');
-      return;
     }
 
     this.$target.val(value);
