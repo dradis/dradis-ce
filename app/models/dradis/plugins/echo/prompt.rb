@@ -32,9 +32,14 @@ module Dradis::Plugins::Echo
 
     These are the finding's details:
 
-    Title: {{ issue.title }}
-    Description: {{ issue.fields['Description'] }}
-    Solution: {{ issue.fields['Solution'] }}
+    # Title
+    {{ issue.title }}
+
+    # Description
+    {{ issue.fields['Description'] }}
+
+    # Solution
+    {{ issue.fields['Solution'] }}
     EOP
           ),
           new(
@@ -50,9 +55,14 @@ module Dradis::Plugins::Echo
 
     So far, this is what I've got, please give me your suggestions.
 
-    Title: {{ issue.title }}
-    Description: {{ issue.fields['Description'] }}
-    Solution: {{ issue.fields['Solution'] }}
+    # Title
+    {{ issue.title }}
+
+    # Description
+    {{ issue.fields['Description'] }}
+
+    # Solution
+    {{ issue.fields['Solution'] }}
     EOP
           )
         ]
