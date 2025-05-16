@@ -15,7 +15,7 @@ module Dradis::Plugins::Echo
       Turbo::StreamsChannel.broadcast_prepend_to [interaction_id, 'prompts'],
         target: 'messages',
         partial: 'dradis/plugins/echo/prompts/response',
-        locals: { prompt: prompt, response_id: response_id}
+        locals: { prompt: prompt, response_id: response_id, template: prompt_template }
 
       begin
         client.generate(
@@ -61,7 +61,7 @@ module Dradis::Plugins::Echo
         message = event['response'].to_s.strip.empty? ? "<br/>" : event['response']
         message.sub!('<think>', '{think}')
         message.sub!('</think>', '{/think}')
-        Turbo::StreamsChannel.broadcast_append_to [interaction_id, 'prompts'], target: response_id, html: message
+        Turbo::StreamsChannel.broadcast_append_to [interaction_id, 'prompts'], target: response_id, content: message
       end
     end
   end
