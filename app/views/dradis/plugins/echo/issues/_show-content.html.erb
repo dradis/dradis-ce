@@ -5,7 +5,7 @@
 
     <div class="mb-4 content-textile">
       <turbo-frame id="echo-issue-<%= @issue.id %>">
-        <div data-behavior="fetch" data-path="<%= echo.prompts_path(type: :issue, record: @issue.id) %>"></div>
+        <div data-behavior="fetch" data-path="<%= echo.project_prompts_path(current_project, type: :issue, record: @issue.id) %>"></div>
       </turbo-frame>
     </div>
   </div>
