@@ -2,7 +2,7 @@ v4.16.0 (May 2025)
   - Forms: Add a combobox for selecting, filtering, and creating options
   - Hera: Add new layout with redesigned navigation
   - Revisions: Show state changes in the revisions view
-  - Turbo: Remove turbolinks and add turbo-rails
+  - Navigation: Replace Turbolinks with Hotwire
   - QA:
     - Add View History link when viewing Issues/Content blocks
     - Automatically go to the next record after reviewing
@@ -21,7 +21,7 @@ v4.15.0 (December 2024)
     - Update OWASP Top 10 methodology to latest version (2021)
   - Upgraded gems:
     - rails, rexml
-  - Integration enhancements: 
+  - Integration enhancements:
     - Qualys: Add `cvss3_base`, `cvss3_temporal`, and `cvss3_version` as available vuln fields
   - Security Fixes:
     - High: Authenticated (author) persistent cross-site scripting
