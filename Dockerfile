@@ -19,6 +19,7 @@ RUN mkdir -p templates/
 RUN bundle config build.ffi --enable-libffi-alloc
 
 # Installing dependencies
+RUN gem update --system
 RUN bundle install
 
 # Run and own only the runtime files as a non-root user for security
