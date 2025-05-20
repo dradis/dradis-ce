@@ -14,9 +14,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Install sqlite3 dependencies
+        run: sudo apt-get install libsqlite3-dev
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
+          rubygems: 'latest'
           bundler-cache: true
       - name: Security audit dependencies
         run: bundle exec bundler-audit --update --ignore CVE-2023-50724 CVE-2023-50725 CVE-2023-50727 CVE-2024-21510
@@ -39,6 +42,7 @@ jobs:
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
+          rubygems: 'latest'
           bundler-cache: true
       - name: Lint changed files
         run: bin/rubocop-ci ${{ env.TARGET_BRANCH || env.PREV_SHA || env.FALLBACK_BRANCH }} ${{ env.IS_MERGE }}
@@ -56,6 +60,7 @@ jobs:
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
+          rubygems: 'latest'
           bundler-cache: true
       - name: Prepare database
         run: bundle exec rails db:prepare

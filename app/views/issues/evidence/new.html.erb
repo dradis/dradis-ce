@@ -3,8 +3,15 @@
 <% content_for :breadcrumbs do %>
   <nav>
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><%= link_to 'All issues', project_issues_path(current_project) %></li>
-      <li class="breadcrumb-item"><%= link_to @issue.title, project_issue_path(current_project, @issue, tab: 'evidence-tab') %></li>
+      <li class="breadcrumb-item">
+        <%= link_to current_project.name, project_path(current_project) %>
+      </li>
+      <li class="breadcrumb-item">
+        <%= link_to 'All issues', project_issues_path(current_project) %>
+      </li>
+      <li class="breadcrumb-item">
+        <%= link_to @issue.title, project_issue_path(current_project, @issue, tab: 'evidence-tab') %>
+      </li>
       <li class="breadcrumb-item active">New Evidence</li>
     </ol>
   </nav>
@@ -35,11 +42,9 @@
           <div class="col-xl-4">
             <h5>Select existing nodes</h5>
             <% if @nodes.any? %>
-              <div class="existing-node-list mb-3" data-behavior="add-evidence-container">
-                <%= f.label :node, class: 'visually-hidden' %>
-                <%= f.text_field :node, class: 'form-control existing-node-list-filter', placeholder: 'Type here to filter list...' %>
+              <div class="mb-3">
                 <%= f.label :node_ids, class: 'visually-hidden' %>
-                <%= f.collection_select :node_ids, @nodes_for_add_evidence, :id, :label, {}, { class: 'form-select', data: { behavior: 'existing-node-list'}, multiple: 'multiple' } %>
+                <%= f.collection_select :node_ids, @nodes_for_add_evidence, :id, :label, {}, { class: 'form-select', multiple: 'multiple' } %>
               </div>
             <% else %>
               <p>There are no existing nodes yet. <a href="#modal_add_branch_node" data-bs-toggle="modal" tabindex="-1">Create one</a>.</p>
@@ -89,11 +94,11 @@
       <div class="row">
         <div class="col-12">
           <h5>Evidence Content</h5>
-            <%= f.hidden_field :issue_id, value: @issue.id %>
-            <%= f.hidden_field :node_id, value: @issue.node_id %>
+          <%= f.hidden_field :issue_id, value: @issue.id %>
+          <%= f.hidden_field :node_id, value: @issue.node_id %>
 
-            <%= f.label :content, nil, class: 'visually-hidden' %>
-            <%= f.text_area :content,
+          <%= f.label :content, nil, class: 'visually-hidden' %>
+          <%= f.text_area :content,
                 label: false,
                 class: 'textile form-control',
                 data: {

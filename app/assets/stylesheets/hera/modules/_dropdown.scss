@@ -1,0 +1,40 @@
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  border: 1px solid $border-color;
+  box-shadow: 0 2px 3px 0 rgba(33, 55, 74, 0.2);
+  font-size: 0.9rem;
+  margin: 0;
+  max-height: calc(100vh - 10rem);
+  overflow-y: auto;
+  padding: 0.25rem 0;
+  z-index: 4;
+
+  .dropdown-item {
+    align-items: center;
+    color: $text-link;
+    display: flex;
+    transition: color 0s;
+    font-weight: inherit;
+
+    &:active,
+    &:hover {
+      color: $text-link-hover;
+      background-color: $grey-100;
+    }
+
+    i {
+      margin-right: 0.25rem;
+    }
+
+    input[type='checkbox'] {
+      margin-right: 0.5rem;
+    }
+
+    label {
+      margin-bottom: 0;
+    }
+  }
+}

@@ -37,7 +37,7 @@ To try Dradis Community, you can deploy your own instance (you will need account
   * [SAINT](https://dradis.com/integrations/saint.html)
   * [Zed Attack Proxy](https://dradis.com/integrations/zap.html)
   * ...
-  * [Full list](http://dradis.org/integrations/)
+  * [Full list](http://dradis.com/integrations/)
 
 
 ## Editions
@@ -72,7 +72,7 @@ docker run -it -p 3000:3000 dradis/dradis-ce
 ## Getting help
 
 * https://dradis.com/support/
-* [Community Forums](https://discuss.dradisframework.org/)
+* [Community Forums](https://discuss.dradis.com/)
 * [Slack channel](https://evening-hamlet-4416.herokuapp.com/)
 * IRC: **#dradis** `irc.freenode.org`
 

@@ -1,7 +1,3 @@
-if ENV['RAILS_RELATIVE_URL_ROOT']
-  Rails.application.routes.default_scope = ENV['RAILS_RELATIVE_URL_ROOT']
-end
-
 Rails.application.routes.draw do
   get 'up', to: ->(env) { [204, {}, ['']] }
 
@@ -127,7 +123,7 @@ Rails.application.routes.draw do
     post '/upload/parse'  => 'upload#parse'
 
     if Rails.env.development?
-      get '/styles' => 'styles_tylium#index'
+      get '/styles' => 'styles_hera#index'
     end
   end
 
