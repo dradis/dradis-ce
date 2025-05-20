@@ -7,7 +7,6 @@ header {
       .navbar-brand {
         img {
           height: 2.425rem;
-          margin: 3px 0 -3px;
           padding: 0 15px;
         }
       }
@@ -118,6 +117,14 @@ header {
       @media (max-width: 991px) {
         padding: 0;
       }
+
+      @media (min-width: 992px) {
+        padding: 0 0.25rem;
+      }
+
+      @media (min-width: 1025px) {
+        padding: 0 1.5rem;
+      }
     }
 
     &.main-nav {
@@ -181,6 +188,7 @@ header {
       }
 
       .navbar-collapse {
+        align-self: flex-start;
         background-color: $main-nav-bg;
       }
 
@@ -188,6 +196,7 @@ header {
         .nav-item {
           @media (min-width: 992px) {
             margin-inline: calc(var(--margin) / 4);
+            padding-top: 2px;
 
             .nav-link {
               padding-inline: calc(var(--padding) / 3);
@@ -319,6 +328,11 @@ header {
             }
 
             @media (min-width: 992px) {
+              padding-left: 0.7rem;
+              padding-right: 0.7rem;
+            }
+
+            @media (min-width: 1025px) {
               padding-left: 1rem;
               padding-right: 1rem;
             }
@@ -344,8 +358,8 @@ header {
 
               .nav-link {
                 color: $text-link;
-                padding-left: 1rem;
-                padding-right: 1rem;
+                padding-left: 0.7rem;
+                padding-right: 0.7rem;
               }
             }
 
@@ -355,6 +369,18 @@ header {
 
             &:last-child {
               margin-right: 0;
+            }
+          }
+
+          @media (min-width: 1025px) {
+            &.active,
+            &:active,
+            &:focus,
+            &:hover {
+              .nav-link {
+                padding-left: 1rem;
+                padding-right: 1rem;
+              }
             }
           }
         }
@@ -380,8 +406,6 @@ header {
       }
 
       @media (min-width: 992px) {
-        padding: 0 1rem;
-
         .navbar-nav.utility-nav {
           a,
           .nav-link {
