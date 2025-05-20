@@ -1,5 +1,5 @@
 # We're sticking to non-slim version: https://hub.docker.com/_/ruby/
-FROM --platform=amd64 ruby:3.1.2
+FROM ruby:3.1.2
 
 WORKDIR /app
 
