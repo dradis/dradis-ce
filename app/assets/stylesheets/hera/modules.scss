@@ -108,6 +108,16 @@
   }
 }
 
+.card.border-bottom {
+  border: none;
+  border-radius: 0;
+
+  &:last-child {
+    border-bottom: none !important;
+    margin-bottom: 0;
+  }
+}
+
 .card-title {
   font-size: 1rem;
 }
