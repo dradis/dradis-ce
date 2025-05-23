@@ -83,7 +83,7 @@ describe 'Tag pages:' do
 
       it 'renders manage tags' do
         click_link 'Manage tags'
-        expect(current_path).to eq(project_tags_path(current_project))
+        expect(page).to have_current_path(project_tags_path(current_project))
       end
     end
 

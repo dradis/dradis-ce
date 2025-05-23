@@ -45,19 +45,21 @@ function fileUploadInit() {
       if (data.replaceImagePlaceholder !== undefined) {
         $.each(data.files, data.replaceImagePlaceholder.bind(null, data));
       }
-      window.initBehaviors(
-        document.querySelector('[data-behavior~=jquery-upload]')
-      );
+      setTimeout(function () {
+        window.initBehaviors(
+          document.querySelector('[data-behavior~=jquery-upload]')
+        );
+      }, 100);
     });
 }
 
-document.addEventListener('turbolinks:load', function () {
+document.addEventListener('turbo:load', function () {
   // Bind fileUpload on page load.
   fileUploadInit();
 });
 
 // Un-bind fileUpload on page unload.
-document.addEventListener('turbolinks:before-cache', function () {
+document.addEventListener('turbo:before-cache', function () {
   $('[data-behavior~=jquery-upload]').each(function () {
     $(this).fileupload('destroy');
   });

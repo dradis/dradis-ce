@@ -1,33 +1,7 @@
-GIT
-  remote: https://github.com/dradis/dradis-calculator_cvss.git
-  revision: 7cf3b17f4947423c8bf64184dfa74af963e78a47
-  branch: rails/upgrade-7.2
-  specs:
-    dradis-calculator_cvss (4.15.0)
-      dradis-plugins (~> 4.0)
-
-GIT
-  remote: https://github.com/dradis/dradis-calculator_dread.git
-  revision: 2a44b4c755eb0435f2cf4039821b5407e1393b23
-  branch: rails/upgrade-7.2
-  specs:
-    dradis-calculator_dread (4.15.0)
-      dradis-plugins (~> 4.0)
-
-GIT
-  remote: https://github.com/dradis/dradis-html_export.git
-  revision: ca1e887f85b14cbd8e34f40ee01ba6212d3e67c2
-  branch: rails/upgrade-7.2
-  specs:
-    dradis-html_export (4.15.0)
-      RedCloth (~> 4.3.2)
-      dradis-plugins (>= 4.8.0)
-      rails_autolink (~> 1.1)
-
 PATH
   remote: engines/dradis-api
   specs:
-    dradis-api (4.15.0)
+    dradis-api (4.16.0)
       jbuilder
 
 GEM
@@ -133,11 +107,11 @@ GEM
       thor (~> 1.0)
     byebug (11.1.1)
     cancancan (1.17.0)
-    capybara (3.39.2)
+    capybara (3.40.0)
       addressable
       matrix
       mini_mime (>= 0.1.3)
-      nokogiri (~> 1.8)
+      nokogiri (~> 1.11)
       rack (>= 1.6.0)
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
@@ -167,65 +141,73 @@ GEM
     date (3.3.4)
     diff-lcs (1.5.0)
     differ (0.1.2)
-    dradis-acunetix (4.15.0)
+    dradis-acunetix (4.16.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
-    dradis-brakeman (4.15.0)
+    dradis-brakeman (4.16.0)
       dradis-plugins (~> 4.0)
-    dradis-burp (4.15.0)
+    dradis-burp (4.16.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
-    dradis-coreimpact (4.15.0)
+    dradis-calculator_cvss (4.16.0)
       dradis-plugins (~> 4.0)
-    dradis-csv (4.15.0)
+    dradis-calculator_dread (4.16.0)
       dradis-plugins (~> 4.0)
-    dradis-csv_export (4.15.0)
+    dradis-coreimpact (4.16.0)
+      dradis-plugins (~> 4.0)
+    dradis-csv (4.16.0)
+      dradis-plugins (~> 4.0)
+    dradis-csv_export (4.16.0)
       dradis-plugins (>= 4.8.0)
-    dradis-metasploit (4.15.0)
+    dradis-html_export (4.16.0)
+      RedCloth (~> 4.3.2)
+      dradis-plugins (>= 4.8.0)
+      rails_autolink (~> 1.1)
+    dradis-metasploit (4.16.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
-    dradis-nessus (4.15.0)
+    dradis-nessus (4.16.0)
       dradis-plugins (~> 4.0)
       nokogiri
-    dradis-netsparker (4.15.0)
+    dradis-netsparker (4.16.0)
       dradis-plugins (~> 4.0)
       nokogiri (>= 1.12.5)
-    dradis-nexpose (4.15.0)
+    dradis-nexpose (4.16.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
-    dradis-nikto (4.15.0)
+    dradis-nikto (4.16.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
-    dradis-nipper (4.15.0)
+    dradis-nipper (4.16.0)
       dradis-plugins (~> 4.0)
-    dradis-nmap (4.15.0)
+    dradis-nmap (4.16.0)
       dradis-plugins (~> 4.0)
       ruby-nmap (~> 0.7)
-    dradis-ntospider (4.15.0)
+    dradis-ntospider (4.16.0)
       dradis-plugins (~> 4.0)
-    dradis-openvas (4.15.0)
+    dradis-openvas (4.16.0)
       dradis-plugins (~> 4.0)
-    dradis-pentera (4.15.0)
+    dradis-pentera (4.16.0)
       dradis-plugins (~> 4.0)
-    dradis-plugins (4.15.0)
-    dradis-projects (4.15.0)
+    dradis-plugins (4.16.0)
+    dradis-projects (4.16.0)
       dradis-plugins (>= 4.8.0)
       rubyzip
-    dradis-qualys (4.15.1)
+    dradis-qualys (4.16.1)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
-    dradis-saint (4.15.0)
+    dradis-saint (4.16.0)
       combustion (~> 0.6.0)
       dradis-plugins (~> 4.0)
       nokogiri
       rake (~> 13.0)
       rspec-rails
-    dradis-veracode (4.15.0)
+    dradis-veracode (4.16.0)
       dradis-plugins (~> 4.0)
-    dradis-wpscan (4.15.0)
+    dradis-wpscan (4.16.0)
       dradis-plugins (~> 4.0)
       multi_json
-    dradis-zap (4.15.0)
+    dradis-zap (4.16.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
     drb (2.2.1)
@@ -321,7 +303,7 @@ GEM
     matrix (0.4.2)
     method_source (0.9.2)
     mini_mime (1.1.5)
-    mini_portile2 (2.8.7)
+    mini_portile2 (2.8.8)
     mini_racer (0.6.2)
       libv8-node (~> 16.10.0.0)
     minitest (5.25.1)
@@ -331,7 +313,7 @@ GEM
     mustermann (2.0.2)
       ruby2_keywords (~> 0.0.1)
     nenv (0.3.0)
-    net-imap (0.5.6)
+    net-imap (0.5.8)
       date
       net-protocol
     net-pop (0.1.2)
@@ -341,14 +323,14 @@ GEM
     net-smtp (0.5.0)
       net-protocol
     nio4r (2.7.3)
-    nokogiri (1.16.8)
+    nokogiri (1.18.8)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
-    nokogiri (1.16.8-arm64-darwin)
+    nokogiri (1.18.8-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.16.8-x86_64-darwin)
+    nokogiri (1.18.8-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.16.8-x86_64-linux)
+    nokogiri (1.18.8-x86_64-linux-gnu)
       racc (~> 1.4)
     notiffany (0.1.3)
       nenv (~> 0.1)
@@ -372,7 +354,7 @@ GEM
     puma (6.4.3)
       nio4r (~> 2.0)
     racc (1.8.1)
-    rack (2.2.11)
+    rack (2.2.14)
     rack-mini-profiler (2.3.0)
       rack (>= 1.2.0)
     rack-protection (2.2.3)
@@ -459,10 +441,10 @@ GEM
     rspec-mocks (3.13.2)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-rails (6.1.5)
-      actionpack (>= 6.1)
-      activesupport (>= 6.1)
-      railties (>= 6.1)
+    rspec-rails (7.0.2)
+      actionpack (>= 7.0)
+      activesupport (>= 7.0)
+      railties (>= 7.0)
       rspec-core (~> 3.13)
       rspec-expectations (~> 3.13)
       rspec-mocks (~> 3.13)
@@ -502,8 +484,9 @@ GEM
       sprockets-rails
       tilt
     securerandom (0.3.1)
-    selenium-webdriver (4.18.1)
+    selenium-webdriver (4.29.1)
       base64 (~> 0.2)
+      logger (~> 1.4)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
@@ -527,6 +510,8 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     sqlite3 (1.4.2)
+    stimulus-rails (1.3.4)
+      railties (>= 6.0.0)
     stringio (3.1.1)
     terser (1.1.15)
       execjs (>= 0.3.0, < 3)
@@ -536,9 +521,10 @@ GEM
       date
     timecop (0.9.5)
     timeout (0.4.1)
-    turbolinks (5.2.1)
-      turbolinks-source (~> 5.2)
-    turbolinks-source (5.2.0)
+    turbo-rails (2.0.4)
+      actionpack (>= 6.0.0)
+      activejob (>= 6.0.0)
+      railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.3.0)
@@ -553,7 +539,7 @@ GEM
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
     webrick (1.8.2)
-    websocket (1.2.10)
+    websocket (1.2.11)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -581,37 +567,37 @@ DEPENDENCIES
   bundler-audit
   byebug
   cancancan (~> 1.10)
-  capybara (~> 3.39)
+  capybara (~> 3.40)
   coffee-rails (~> 5.0)
   database_cleaner
   differ (~> 0.1.2)
-  dradis-acunetix (~> 4.15.0)
+  dradis-acunetix (~> 4.16.0)
   dradis-api!
-  dradis-brakeman (~> 4.15.0)
-  dradis-burp (~> 4.15.0)
-  dradis-calculator_cvss!
-  dradis-calculator_dread!
-  dradis-coreimpact (~> 4.15.0)
-  dradis-csv (~> 4.15.0)
-  dradis-csv_export (~> 4.15.0)
-  dradis-html_export!
-  dradis-metasploit (~> 4.15.0)
-  dradis-nessus (~> 4.15.0)
-  dradis-netsparker (~> 4.15.0)
-  dradis-nexpose (~> 4.15.0)
-  dradis-nikto (~> 4.15.0)
-  dradis-nipper (~> 4.15.0)
-  dradis-nmap (~> 4.15.0)
-  dradis-ntospider (~> 4.15.0)
-  dradis-openvas (~> 4.15.0)
-  dradis-pentera (~> 4.15.0)
-  dradis-plugins (~> 4.15.0)
-  dradis-projects (~> 4.15.0)
-  dradis-qualys (~> 4.15.0)
-  dradis-saint (~> 4.15.0)
-  dradis-veracode (~> 4.15.0)
-  dradis-wpscan (~> 4.15.0)
-  dradis-zap (~> 4.15.0)
+  dradis-brakeman (~> 4.16.0)
+  dradis-burp (~> 4.16.0)
+  dradis-calculator_cvss (~> 4.16.0)
+  dradis-calculator_dread (~> 4.16.0)
+  dradis-coreimpact (~> 4.16.0)
+  dradis-csv (~> 4.16.0)
+  dradis-csv_export (~> 4.16.0)
+  dradis-html_export (~> 4.16.0)
+  dradis-metasploit (~> 4.16.0)
+  dradis-nessus (~> 4.16.0)
+  dradis-netsparker (~> 4.16.0)
+  dradis-nexpose (~> 4.16.0)
+  dradis-nikto (~> 4.16.0)
+  dradis-nipper (~> 4.16.0)
+  dradis-nmap (~> 4.16.0)
+  dradis-ntospider (~> 4.16.0)
+  dradis-openvas (~> 4.16.0)
+  dradis-pentera (~> 4.16.0)
+  dradis-plugins (~> 4.16.0)
+  dradis-projects (~> 4.16.0)
+  dradis-qualys (~> 4.16.0)
+  dradis-saint (~> 4.16.0)
+  dradis-veracode (~> 4.16.0)
+  dradis-wpscan (~> 4.16.0)
+  dradis-zap (~> 4.16.0)
   factory_bot_rails
   font-awesome-sass (~> 6.4.0)
   foreman
@@ -631,10 +617,10 @@ DEPENDENCIES
   local_time (>= 2.0.0)
   matrix
   mini_racer
-  net-imap (>= 0.5.6)
+  net-imap (>= 0.5.7)
   net-pop
   net-smtp
-  nokogiri (>= 1.16.5)
+  nokogiri (>= 1.18.8)
   paper_trail (~> 15.2.0)
   parslet (~> 1.6.0)
   pg
@@ -647,24 +633,25 @@ DEPENDENCIES
   resque
   resque-status
   rinku
-  rspec-rails (~> 6.1.0)
+  rspec-rails (~> 7.0.0)
   rubocop
   ruby_audit
   rubyzip (>= 1.2.2)
   sanitize (= 6.0.2)
   sass-rails (~> 6.0)
-  selenium-webdriver (~> 4.17)
+  selenium-webdriver (~> 4.29)
   shoulda-matchers (~> 4.0.1)
   simple_form
   sinatra (~> 2.2.3)
   spring
   sprockets-rails (>= 3.0.0)
   sqlite3
+  stimulus-rails
   terser (~> 1.1)
   thor (~> 1.2.1)
   time (>= 0.2.2)
   timecop
-  turbolinks (~> 5)
+  turbo-rails (~> 2.0)
   warden (~> 1.2.3)
   web-console (>= 4.1.0)
   whenever

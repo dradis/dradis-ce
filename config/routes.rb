@@ -1,7 +1,3 @@
-if ENV['RAILS_RELATIVE_URL_ROOT']
-  Rails.application.routes.default_scope = ENV['RAILS_RELATIVE_URL_ROOT']
-end
-
 Rails.application.routes.draw do
   get 'up', to: ->(env) { [204, {}, ['']] }
 

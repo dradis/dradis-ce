@@ -89,7 +89,8 @@ describe 'node pages' do
         choose 'Add multiple'
 
         fill_in :branch_nodes_list, with: "foo\nbar"
-        select 'Host', from: :branch_nodes_icon
+        find('#branch_nodes_icon + .combobox').click
+        find('.combobox-option', text: 'Host').click
 
         expect do
           click_button 'Add'

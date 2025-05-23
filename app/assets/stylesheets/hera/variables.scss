@@ -1,5 +1,5 @@
 @import 'bootstrap/functions';
-@import 'shared/colors';
+@import 'hera/modules/colors';
 
 // Theme
 $light: $brand-100;
@@ -31,15 +31,16 @@ $text-success: darken($green-700, 10%);
 $text-warning: darken($yellow-600, 15%);
 
 // Navbar
-$instance-nav-bg: $brand-200;
-$instance-nav-border: $brand-400;
-$instance-nav-hover: $brand-900;
-$instance-nav-links: $brand-800;
-$navbar-height: 3.2rem;
+$main-nav-bg: $brand-200;
+$main-nav-border: $brand-400;
+$main-nav-hover: $brand-900;
+$main-nav-links: $brand-800;
+$navbar-height: calc(3.2rem - 1px); // 1px to account for border
 
 // Sidebar
 $sidebar-width: 14rem;
 $sidebar-width-collapsed: 0.5rem;
+$sidebar-width-multiplier: 1.25;
 
 // Layout
 $primary-bg: $white;

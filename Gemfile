@@ -22,8 +22,8 @@ gem 'coffee-rails', '~> 5.0'
 # Cache-friendly, client-side local time
 gem 'local_time', '>= 2.0.0'
 
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
+gem 'turbo-rails', '~> 2.0'
+gem 'stimulus-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
@@ -89,7 +89,7 @@ gem 'bcrypt', '3.1.12'
 gem 'json', '2.3.0'
 
 # XML manipulation
-gem 'nokogiri', '>= 1.16.5'
+gem 'nokogiri', '>= 1.18.8'
 
 # MySQL backend
 # gem 'mysql2', '~> 0.5.6'
@@ -140,7 +140,7 @@ gem 'whenever', require: false
 
 gem 'net-smtp'
 gem 'net-pop'
-gem 'net-imap', '>= 0.5.6'
+gem 'net-imap', '>= 0.5.7'
 
 gem 'puma', '>= 6.4.3'
 
@@ -184,16 +184,16 @@ end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-  # rspec-rails < 6.1.0 does not support rails 7.2
-  gem 'rspec-rails', '~> 6.1.0'
+  # rspec-rails < 7.0.0 does not support rails 7.2
+  gem 'rspec-rails', '~> 7.0.0'
 end
 
 group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
-  gem 'capybara', '~> 3.39'
+  gem 'capybara', '~> 3.40'
   gem 'guard-rspec', require: false
-  gem 'selenium-webdriver', '~> 4.17'
+  gem 'selenium-webdriver', '~> 4.29'
   gem 'shoulda-matchers', '~> 4.0.1'
   gem 'timecop'
 
@@ -216,12 +216,12 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 4.15.0'
+gem 'dradis-plugins', '~> 4.16.0'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 4.15.0'
+gem 'dradis-projects', '~> 4.16.0'
 
 plugins_file = 'Gemfile.plugins'
 if File.exist?(plugins_file)
@@ -233,33 +233,33 @@ end
 
 # ----------------------------------------------------------------- Calculators
 
-gem 'dradis-calculator_cvss', github: 'dradis/dradis-calculator_cvss', branch: 'rails/upgrade-7.2'
-gem 'dradis-calculator_dread', github: 'dradis/dradis-calculator_dread', branch: 'rails/upgrade-7.2'
+gem 'dradis-calculator_cvss', '~> 4.16.0'
+gem 'dradis-calculator_dread', '~> 4.16.0'
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv_export', '~> 4.15.0'
-gem 'dradis-html_export', github: 'dradis/dradis-html_export', branch: 'rails/upgrade-7.2'
+gem 'dradis-csv_export', '~> 4.16.0'
+gem 'dradis-html_export', '~> 4.16.0'
 
 # ---------------------------------------------------------------------- Import
-gem 'dradis-csv', '~> 4.15.0'
+gem 'dradis-csv', '~> 4.16.0'
 
 # ---------------------------------------------------------------------- Upload
-gem 'dradis-acunetix', '~> 4.15.0'
-gem 'dradis-brakeman', '~> 4.15.0'
-gem 'dradis-burp', '~> 4.15.0'
-gem 'dradis-coreimpact', '~> 4.15.0'
-gem 'dradis-metasploit', '~> 4.15.0'
-gem 'dradis-nessus', '~> 4.15.0'
-gem 'dradis-netsparker', '~> 4.15.0'
-gem 'dradis-nexpose', '~> 4.15.0'
-gem 'dradis-nikto', '~> 4.15.0'
-gem 'dradis-nipper', '~> 4.15.0'
-gem 'dradis-nmap', '~> 4.15.0'
-gem 'dradis-ntospider', '~> 4.15.0'
-gem 'dradis-openvas', '~> 4.15.0'
-gem 'dradis-pentera', '~> 4.15.0'
-gem 'dradis-qualys', '~> 4.15.0'
-gem 'dradis-saint', '~> 4.15.0'
-gem 'dradis-veracode', '~> 4.15.0'
-gem 'dradis-wpscan', '~> 4.15.0'
-gem 'dradis-zap', '~> 4.15.0'
+gem 'dradis-acunetix', '~> 4.16.0'
+gem 'dradis-brakeman', '~> 4.16.0'
+gem 'dradis-burp', '~> 4.16.0'
+gem 'dradis-coreimpact', '~> 4.16.0'
+gem 'dradis-metasploit', '~> 4.16.0'
+gem 'dradis-nessus', '~> 4.16.0'
+gem 'dradis-netsparker', '~> 4.16.0'
+gem 'dradis-nexpose', '~> 4.16.0'
+gem 'dradis-nikto', '~> 4.16.0'
+gem 'dradis-nipper', '~> 4.16.0'
+gem 'dradis-nmap', '~> 4.16.0'
+gem 'dradis-ntospider', '~> 4.16.0'
+gem 'dradis-openvas', '~> 4.16.0'
+gem 'dradis-pentera', '~> 4.16.0'
+gem 'dradis-qualys', '~> 4.16.0'
+gem 'dradis-saint', '~> 4.16.0'
+gem 'dradis-veracode', '~> 4.16.0'
+gem 'dradis-wpscan', '~> 4.16.0'
+gem 'dradis-zap', '~> 4.16.0'

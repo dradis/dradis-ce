@@ -9,7 +9,8 @@ describe 'Restoring project files' do
     end
 
     it 'transforms methodologies into boards', js: true do
-      select 'Dradis::Plugins::Projects::Upload::Template'
+      find('.combobox', match: :first).click
+      find('.combobox-option', text: 'Dradis::Plugins::Projects::Upload::Template').click
       attach_file \
         'file',
         Rails.root.join(
