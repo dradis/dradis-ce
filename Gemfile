@@ -2,10 +2,10 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.2'
+ruby '3.2.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.2.2.1'
+gem 'rails', '~> 8.0.2'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -26,7 +26,7 @@ gem 'turbo-rails', '~> 2.0'
 gem 'stimulus-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.7'
+gem 'jbuilder', '~> 2.13'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -194,7 +194,7 @@ group :test do
   gem 'capybara', '~> 3.40'
   gem 'guard-rspec', require: false
   gem 'selenium-webdriver', '~> 4.29'
-  gem 'shoulda-matchers', '~> 3.1'
+  gem 'shoulda-matchers', '~> 4.0.1'
   gem 'timecop'
 
   # Required by capybara
@@ -224,7 +224,7 @@ gem 'dradis-api', path: 'engines/dradis-api'
 gem 'dradis-projects', '~> 4.16.0'
 
 plugins_file = 'Gemfile.plugins'
-if File.exists?(plugins_file)
+if File.exist?(plugins_file)
   eval(IO.read(plugins_file), binding)
 end
 

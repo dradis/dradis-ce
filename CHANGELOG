@@ -1,6 +1,5 @@
 [v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
+  - Ruby: Upgrade ruby version to 3.2.0
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
