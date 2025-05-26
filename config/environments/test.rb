@@ -19,7 +19,7 @@ Rails.application.configure do
   config.eager_load = false
 
   # Configure public file server for tests with cache-control for performance.
-  config.public_file_server.headers = { "cache-control" => "public, max-age=3600" }
+  config.public_file_server.headers = { 'cache-control' => 'public, max-age=3600' }
 
   # Show full error reports.
   config.consider_all_requests_local = true

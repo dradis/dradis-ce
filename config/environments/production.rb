@@ -61,7 +61,7 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.logger(STDOUT)
 
   # Change to "debug" to log everything (including potentially personally-identifiable information!)
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", :info)
+  config.log_level = ENV.fetch('RAILS_LOG_LEVEL', :info)
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
@@ -93,7 +93,7 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  config.action_mailer.default_url_options = { host: 'example.com' }
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
   # config.action_mailer.smtp_settings = {
