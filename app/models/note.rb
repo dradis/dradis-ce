@@ -41,7 +41,7 @@ class Note < ApplicationRecord
   # the Note or the Issue is pulled when calling Activity.includes(:trackable).
   # (Since we're not using STI, .includes only joins the class of the most recent
   # Activity instead of pulling the correct class (Note/Issue) for each activity)
-  enum state: [:draft, :ready_for_review, :published]
+  enum :state, { draft: 0, ready_for_review: 1, published: 2 }
 
   # -- Relationships --------------------------------------------------------
   belongs_to :category
