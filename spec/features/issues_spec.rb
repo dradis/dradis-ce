@@ -159,6 +159,30 @@ describe 'Issues pages' do
           end
         end
 
+        context 'when passed a card', js: true do
+          let (:board)  { create(:board, project: current_project, node: current_project.methodology_library) }
+          let (:list)  { create(:list, board: board) }
+          let (:card) { create(:card, list: list) }
+          let(:submit_form) { click_button 'Create Issue' }
+
+          it "preloads the editor with the card content" do
+            visit new_project_issue_path(current_project, card: card)
+
+            expect(find_field('item_form[field_name_0]').value).to include('Title')
+            expect(find_field('item_form[field_value_0]').value).to include(card.name)
+            expect(find_field('item_form[field_name_1]').value).to include('Description')
+            expect(find_field('item_form[field_value_1]').value).to include(card.description.split("\n")[1])
+          end
+
+          it 'creates a new issue' do
+            visit new_project_issue_path(current_project, card: card)
+            submit_form
+
+            expect(page).to have_text("Issue added.")
+            expect(page).to have_text(card.name)
+          end
+        end
+
         context 'when the issue has a Tags field' do
           it 'tags the issue with the corresponding tag if only one is present' do
             tag_field = '!f89406_private'

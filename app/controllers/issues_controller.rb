@@ -20,6 +20,8 @@ class IssuesController < AuthenticatedController
   before_action :set_affected_nodes, only: [:show]
   before_action :set_form_cancel_path, only: [:new, :edit]
   before_action :set_tags, except: [:destroy]
+  # We could use a content template if the card fields the same across all cards
+  before_action :set_card_content, only: :new
 
   def index
   end
@@ -218,5 +220,12 @@ class IssuesController < AuthenticatedController
     else
       "project-#{current_project.id}-issue"
     end
+  end
+
+  def set_card_content
+    return if !params.key?(:card)
+
+    card = Card.find(params[:card])
+    @issue.text = "\n#[Title]#\n#{card.name}\n#{card.description}" unless card.description.blank?
   end
 end
