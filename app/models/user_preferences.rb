@@ -18,11 +18,7 @@ class UserPreferences
   DIGEST_FREQUENCIES = %w[none instant daily].freeze
   DIGEST_FREQUENCY_DEFAULT = 'instant'.freeze
 
-  validates :digest_frequency,
-    inclusion: {
-      in: DIGEST_FREQUENCIES,
-      digest_frequencies: "'#{DIGEST_FREQUENCIES.join("', '")}'"
-    }
+  validates_inclusion_of :digest_frequency, in: DIGEST_FREQUENCIES
 
   # -- Class Methods ----------------------------------------------------------
 

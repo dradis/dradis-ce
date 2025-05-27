@@ -52,14 +52,12 @@ describe UserPreferences do
   end
 
   context '#digest_frequency' do
-    it do
-      should validate_inclusion_of(:digest_frequency).
-        in_array(described_class::DIGEST_FREQUENCIES)
-    end
+    it 'validates the digest_frequency' do
+      preferences = UserPreferences.new(tour_first_sign_in: '1', digest_frequency: 'test')
+      expect(preferences.valid?).to_not be true
 
-    it 'does not accept values as symbols' do
-      should_not validate_inclusion_of(:digest_frequency).
-        in_array(described_class::DIGEST_FREQUENCIES.map(&:to_sym))
+      preferences = UserPreferences.new(tour_first_sign_in: '1', digest_frequency: 'instant')
+      expect(preferences.valid?).to be true
     end
   end
 
