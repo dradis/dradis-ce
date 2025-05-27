@@ -56,7 +56,7 @@ gem 'liquid'
 
 gem 'kaminari', '~> 1.2.1'
 
-gem 'paper_trail', '~> 15.2.0'
+gem 'paper_trail', '~> 16.0'
 
 # gem 'rails_autolink', '~> 1.1'
 
