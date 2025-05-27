@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Activity do
 
-  it { should belong_to(:trackable) }
+  it { should belong_to(:trackable).optional }
 
   it { should validate_presence_of :action }
   it { should validate_presence_of :trackable_id }
