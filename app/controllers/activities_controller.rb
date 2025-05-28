@@ -12,8 +12,18 @@ class ActivitiesController < AuthenticatedController
                                 .order(created_at: :desc)
                                 .page(@page)
 
+    activities = ActivityFilterService.new(activities, filter_params).call
+
+    @users = User.all
+    @trackable_types = current_project.activities.pluck(:trackable_type).uniq.sort
+
     @activities_groups = activities.group_by do |activity|
       activity.created_at.strftime(Activity::ACTIVITIES_STRFTIME_FORMAT)
+    end
+
+    respond_to do |format|
+      format.html
+      format.js
     end
   end
 
@@ -29,5 +39,11 @@ class ActivitiesController < AuthenticatedController
     respond_to do |format|
       format.js
     end
+  end
+
+  private
+
+  def filter_params
+    params.fetch(:filter, {}).permit(:user_id, :trackable_type, :date, :start_date, :end_date)
   end
 end
