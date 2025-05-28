@@ -39,7 +39,7 @@ class UserPreferences
     ATTRIBUTES.map { |attr| :"@#{attr}" }
   end
 
-  def initialize(args={})
+  def initialize(args = {})
     @digest_frequency = args[:digest_frequency] || DIGEST_FREQUENCY_DEFAULT
     @tours = Hash.new { |hash, key| hash[key] = '0' }
 
