@@ -11,6 +11,8 @@
   </nav>
 <% end %>
 
+<%= render partial: 'filters' %>
+
 <div class="content-container">
   <% if @activities_groups.any? %>
     <div class="container">
@@ -24,10 +26,10 @@
     </div>
   <% else %>
     <%= render 'shared/empty_state',
-      name: 'activity',
-      docs_link: 'https://dradis.com/support/guides/projects/activity.html',
-      docs_name: 'the activity feed',
-      text: 'As you make progress this page will show you different milestones you go through. Have to step out for a meeting or off on leave for a couple of days? Review the feed when you get back to get a sense of what\'s new.'
+               name: 'activity',
+               docs_link: 'https://dradis.com/support/guides/projects/activity.html',
+               docs_name: 'the activity feed',
+               text: 'As you make progress this page will show you different milestones you go through. Have to step out for a meeting or off on leave for a couple of days? Review the feed when you get back to get a sense of what\'s new.'
     %>
   <% end %>
-  <div>
+  </div>

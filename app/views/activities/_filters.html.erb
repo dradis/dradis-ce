@@ -1,0 +1,110 @@
+<div class="activity-filters mb-4"
+     data-controller="activity-filter">
+  <h4>Filter Activities</h4>
+  <%= form_with url: project_activities_path(current_project),
+                method: :get,
+                id: 'activity-filter-form',
+                class: 'row g-3',
+                data: {
+                  activity_filter_target: 'form',
+                  turbo: false,
+                  action: "submit->activity-filter#submitForm"
+                },
+                local: true do |f| %>
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <%= fields_for :filter do |filter_f| %>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <h5>Date Filters</h5>
+                <div class="row g-2">
+                  <div class="col-md-6">
+                    <%= filter_f.label :start_date, "Start Date" %>
+                    <%= filter_f.date_field :start_date,
+                                            class: 'form-control',
+                                            value: params.dig(:filter, :start_date),
+                                            data: { activity_filter_target: 'startDate' } %>
+                  </div>
+                  <div class="col-md-6">
+                    <%= filter_f.label :end_date, "End Date" %>
+                    <%= filter_f.date_field :end_date,
+                                            class: 'form-control',
+                                            value: params.dig(:filter, :end_date),
+                                            data: { activity_filter_target: 'endDate' } %>
+                  </div>
+                </div>
+                <div class="my-2 text-center">- OR -</div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <%= filter_f.label :date, "Specific Date" %>
+                    <%= filter_f.date_field :date,
+                                            class: 'form-control',
+                                            value: params.dig(:filter, :date),
+                                            data: { activity_filter_target: 'specificDate' } %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <h5>Content Filters</h5>
+                <div class="mb-3">
+                  <%= filter_f.label :user_id, "User" %>
+                  <%= filter_f.select :user_id,
+                                      options_from_collection_for_select(@users, :id, :email, params.dig(:filter, :user_id)),
+                                      { include_blank: "All Users" },
+                                      { class: 'form-select' }
+                  %>
+                </div>
+
+                <div class="mb-3">
+                  <%= filter_f.label :trackable_type, "Activity Type" %>
+                  <%= filter_f.select :trackable_type,
+                                      options_for_select(@trackable_types.map { |type| [type.humanize, type] }, params.dig(:filter, :trackable_type)),
+                                      { include_blank: "All Types" },
+                                      { class: 'form-select' }
+                  %>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <%= f.submit "Apply Filters", class: 'btn btn-primary' %>
+              <%= link_to "Clear Filters", project_activities_path(current_project), class: 'btn btn-outline-secondary', data: { activity_filter_target: 'clearButton' } %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<!-- Display applied filters summary if any -->
+<% if params[:filter].present? %>
+  <div class="applied-filters mb-3">
+    <h5>Applied Filters:</h5>
+    <ul class="list-inline">
+      <% if params.dig(:filter, :start_date).present? && params.dig(:filter, :end_date).present? %>
+        <li class="list-inline-item badge bg-info">
+          Date Range: <%= params.dig(:filter, :start_date) %> to <%= params.dig(:filter, :end_date) %>
+        </li>
+      <% elsif params.dig(:filter, :date).present? %>
+        <li class="list-inline-item badge bg-info">
+          Date: <%= params.dig(:filter, :date) %>
+        </li>
+      <% end %>
+
+      <% if params.dig(:filter, :user_id).present? %>
+        <li class="list-inline-item badge bg-info">
+          User: <%= @users.find(params.dig(:filter, :user_id)).email %>
+        </li>
+      <% end %>
+
+      <% if params.dig(:filter, :trackable_type).present? %>
+        <li class="list-inline-item badge bg-info">
+          Type: <%= params.dig(:filter, :trackable_type).humanize %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
