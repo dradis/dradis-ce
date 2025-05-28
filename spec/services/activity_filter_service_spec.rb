@@ -62,6 +62,11 @@ RSpec.describe ActivityFilterService do
       it 'ignores the invalid date filter and returns all activities' do
         expect(subject).to eq(activities)
       end
+
+      it 'ignores the invalid date range and returns all activities' do
+        invalid_range_params = { start_date: 'invalid-start', end_date: 'invalid-end' }
+        expect(subject).to eq(activities)
+      end
     end
   end
 end

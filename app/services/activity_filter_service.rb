@@ -1,5 +1,15 @@
 # frozen_string_literal: true
+
 class ActivityFilterService
+  # Initializes the ActivityFilterService.
+  #
+  # @param activities [ActiveRecord::Relation] Collection of activities to filter
+  # @param params [Hash] Filter parameters:
+  #   @option params [String] :user_id The user ID to filter by
+  #   @option params [String] :trackable_type The trackable type to filter by  
+  #   @option params [String] :date Specific date to filter by (YYYY-MM-DD)
+  #   @option params [String] :start_date Start date for range filter (YYYY-MM-DD)
+  #   @option params [String] :end_date End date for range filter (YYYY-MM-DD)
   def initialize(activities, params)
     @activities = activities
     @params = params
