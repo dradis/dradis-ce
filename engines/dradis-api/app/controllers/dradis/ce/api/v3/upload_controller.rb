@@ -15,9 +15,7 @@ module Dradis::CE::API
         attachment << params[:file].read
         attachment.save
 
-        @job_id = Log.new.uid + 1
-
-        process_upload_background(attachment: attachment)
+        @job_id = process_upload_background(attachment: attachment).job_id
       end
 
       def show
@@ -26,11 +24,10 @@ module Dradis::CE::API
       private
 
       def job_logger
-        @job_logger ||= Log.new(uid: params[:item_id].to_i)
+        @job_logger ||= Log.new
       end
 
       def find_uploaders
-        # :upload plugins can define multiple uploaders
         @uploaders ||= Dradis::Plugins::with_feature(:upload).
                          collect(&:uploaders).
                          flatten.
@@ -48,12 +45,10 @@ module Dradis::CE::API
           plugin_name: @uploader.to_s,
           project_id: current_project.id,
           state: @state,
-          uid: params[:item_id].to_i
+          uid: job_logger.id
         )
       end
 
-      # Ensure that the requested :uploader is valid and has been included in the
-      # Plugins::Upload mixin
       def validate_uploader
         valid_uploaders = @uploaders.collect(&:name)
 
