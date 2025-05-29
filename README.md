@@ -1,10 +1,12 @@
-# Welcome to the Dradis Framework
+# Welcome to the Dradis Framework An Automated Pentest Reporting Tool
 
 [![CI](https://github.com/dradis/dradis-ce/actions/workflows/ci.yml/badge.svg)](https://github.com/dradis/dradis-ce/actions/workflows/ci.yml)
 [![Black Hat Arsenal](https://www.toolswatch.org/badges/arsenal/2016.svg)](https://www.blackhat.com/us-16/arsenal.html#dradis-framework)
 [![@dradisfw on X](https://img.shields.io/twitter/follow/dradisfw?style=social)](https://twitter.com/dradisfw)
 
-Dradis is an open-source collaboration framework, tailored to InfoSec teams.
+Dradis is an open-source collaboration framework and penetration testing report generator that helps InfoSec teams streamline reporting workflows. With support for importing data from tools like Burp Suite, Nessus, and Nmap, Dradis automates the tedious parts of the cybersecurity testing workflow so you can focus on analysis and recommendations.
+
+Generate consistent, professional pentest reports faster—with less manual work.
 
 <a href="https://heroku.com/deploy?template=https://github.com/dradis/dradis-ce/tree/develop" target="_blank"><img src="https://www.herokucdn.com/deploy/button.svg" height="40"></a>
 <a href="https://cloud.digitalocean.com/apps/new?repo=https://github.com/dradis/dradis-ce/tree/develop" target="_blank"><img src="https://www.deploytodo.com/do-btn-blue.svg" height="40"></a>
@@ -45,8 +47,7 @@ To try Dradis Community, you can deploy your own instance (you will need account
 There are two editions of Dradis Framework:
 
 * **Dradis Framework Community Edition (CE)**: open-source and available freely under the GPLv2 license.
-* **Dradis Framework Professional Edition (Pro)**: includes extra features that are more useful for organizations dealing with bigger teams and multiple projects at a time. To use Pro and get official support please [become a subscriber](https://dradis.com/).
-
+* **Dradis Framework Professional Edition (Pro)**: looking for more advanced features, designed for collaborating as a InfoSec team? [Dradis Pro](https://dradis.com/reporting.html) offers report automation, collaboration, and client communication tools built for modern cybersecurity teams.
 
 ## Getting started: Community Edition
 
