@@ -17,8 +17,8 @@ class ActivityFilterService
 
   def call
     query = @activities
-    query = filter_by_user(query) if @params[:user_id].present?
-    query = filter_by_trackable_type(query) if @params[:trackable_type].present?
+    query = filter_by_users(query) if @params[:user_ids].present?
+    query = filter_by_trackable_types(query) if @params[:trackable_types].present?
     query = filter_by_specific_date(query) if @params[:date].present?
     query = filter_by_date_range(query) if @params[:start_date].present? && @params[:end_date].present?
     query
@@ -26,16 +26,22 @@ class ActivityFilterService
 
   private
 
-  def filter_by_user(query)
-    return query unless @params[:user_id].present?
+  def filter_by_users(query)
+    return query unless @params[:user_ids].present?
 
-    query.where(user_id: @params[:user_id])
+    user_ids = Array(@params[:user_ids]).reject(&:blank?)
+    return query if user_ids.empty?
+
+    query.where(user_id: user_ids)
   end
 
-  def filter_by_trackable_type(query)
-    return query unless @params[:trackable_type].present?
+  def filter_by_trackable_types(query)
+    return query unless @params[:trackable_types].present?
 
-    query.where(trackable_type: @params[:trackable_type])
+    trackable_types = Array(@params[:trackable_types]).reject(&:blank?)
+    return query if trackable_types.empty?
+
+    query.where(trackable_type: trackable_types)
   end
 
   def filter_by_specific_date(query)

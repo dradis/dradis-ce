@@ -19,7 +19,7 @@ RSpec.describe ActivityFilterService do
     context 'when filtering by user_id' do
       let(:user) { create(:user) }
       let!(:activity) { create(:activity, project: project, user: user) }
-      let(:filter_params) { { user_id: user.id } }
+      let(:filter_params) { { user_ids: [user.id] } }
 
       it 'returns activities for the specified user' do
         expect(subject).to eq([activity])
@@ -29,7 +29,7 @@ RSpec.describe ActivityFilterService do
     context 'when filtering by trackable_type' do
       let!(:activity1) { create(:activity, project: project, trackable_type: 'Issue') }
       let!(:activity2) { create(:activity, project: project, trackable_type: 'Comment') }
-      let(:filter_params) { { trackable_type: 'Issue' } }
+      let(:filter_params) { { trackable_types: ['Issue'] } }
 
       it 'returns activities of the specified trackable type' do
         expect(subject).to eq([activity1])

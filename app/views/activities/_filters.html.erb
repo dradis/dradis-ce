@@ -49,20 +49,28 @@
               <div class="col-md-6">
                 <h5>Content Filters</h5>
                 <div class="mb-3">
-                  <%= filter_f.label :user_id, "User" %>
-                  <%= filter_f.select :user_id,
-                                      options_from_collection_for_select(@users, :id, :email, params.dig(:filter, :user_id)),
-                                      { include_blank: "All Users" },
-                                      { class: 'form-select' }
+                  <%= filter_f.label :user_ids, "Users" %>
+                  <%= filter_f.select :user_ids,
+                                      options_from_collection_for_select(@users, :id, :email, params.dig(:filter, :user_ids)),
+                                      {},
+                                      {
+                                        class: 'form-select',
+                                        multiple: true,
+                                        data: { placeholder: "Choose users to filter..." }
+                                      }
                   %>
                 </div>
 
                 <div class="mb-3">
-                  <%= filter_f.label :trackable_type, "Activity Type" %>
-                  <%= filter_f.select :trackable_type,
-                                      options_for_select(@trackable_types.map { |type| [type.humanize, type] }, params.dig(:filter, :trackable_type)),
-                                      { include_blank: "All Types" },
-                                      { class: 'form-select' }
+                  <%= filter_f.label :trackable_types, "Activity Types" %>
+                  <%= filter_f.select :trackable_types,
+                                      options_for_select(@trackable_types.map { |type| [type.humanize, type] }, params.dig(:filter, :trackable_types)),
+                                      {},
+                                      {
+                                        class: 'form-select',
+                                        multiple: true,
+                                        data: { placeholder: "Select activity types..." }
+                                      }
                   %>
                 </div>
               </div>
@@ -94,16 +102,20 @@
         </li>
       <% end %>
 
-      <% if params.dig(:filter, :user_id).present? %>
-        <li class="list-inline-item badge bg-info">
-          User: <%= @users.find(params.dig(:filter, :user_id)).email %>
-        </li>
+      <% if params.dig(:filter, :user_ids).present? %>
+        <% Array(params.dig(:filter, :user_ids)).reject(&:blank?).each do |user_id| %>
+          <li class="list-inline-item badge bg-info">
+            User: <%= @users.find(user_id).email %>
+          </li>
+        <% end %>
       <% end %>
 
-      <% if params.dig(:filter, :trackable_type).present? %>
-        <li class="list-inline-item badge bg-info">
-          Type: <%= params.dig(:filter, :trackable_type).humanize %>
-        </li>
+      <% if params.dig(:filter, :trackable_types).present? %>
+        <% Array(params.dig(:filter, :trackable_types)).reject(&:blank?).each do |type| %>
+          <li class="list-inline-item badge bg-info">
+            Type: <%= type.humanize %>
+          </li>
+        <% end %>
       <% end %>
     </ul>
   </div>

@@ -44,6 +44,6 @@ class ActivitiesController < AuthenticatedController
   private
 
   def filter_params
-    params.fetch(:filter, {}).permit(:user_id, :trackable_type, :date, :start_date, :end_date)
+    params.fetch(:filter, {}).permit(:date, :start_date, :end_date, user_ids: [], trackable_types: [])
   end
 end
