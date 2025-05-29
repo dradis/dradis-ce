@@ -11,8 +11,15 @@
   </nav>
 <% end %>
 
-<%= render partial: 'filters' %>
-
+<div class="d-flex align-items-center mb-3">
+  <h4 class="mb-0 me-2">Filter Activities</h4>
+  <a href="#" class="text-decoration-none" data-bs-toggle="collapse" data-bs-target="#activityFilters" aria-expanded="false">
+    <i class="fa fa-caret-down"></i>
+  </a>
+</div>
+<div id="activityFilters" class="collapse">
+  <%= render partial: 'filters' %>
+</div>
 <div class="content-container">
   <% if @activities_groups.any? %>
     <div class="container">
