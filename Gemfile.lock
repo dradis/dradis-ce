@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/dradis/dradis-plugins.git
+  revision: e554147b15d18aef404905c0815a05a3261a12f4
+  branch: fix/missing-constant
+  specs:
+    dradis-plugins (4.16.0)
+
 PATH
   remote: engines/dradis-api
   specs:
@@ -189,7 +196,6 @@ GEM
       dradis-plugins (~> 4.0)
     dradis-pentera (4.16.0)
       dradis-plugins (~> 4.0)
-    dradis-plugins (4.16.0)
     dradis-projects (4.16.0)
       dradis-plugins (>= 4.8.0)
       rubyzip
@@ -591,7 +597,7 @@ DEPENDENCIES
   dradis-ntospider (~> 4.16.0)
   dradis-openvas (~> 4.16.0)
   dradis-pentera (~> 4.16.0)
-  dradis-plugins (~> 4.16.0)
+  dradis-plugins!
   dradis-projects (~> 4.16.0)
   dradis-qualys (~> 4.16.0)
   dradis-saint (~> 4.16.0)

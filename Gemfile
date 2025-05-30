@@ -216,7 +216,7 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 4.16.0'
+gem 'dradis-plugins', github: 'dradis/dradis-plugins', branch: 'fix/missing-constant'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 

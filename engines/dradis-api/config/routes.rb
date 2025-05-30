@@ -30,7 +30,7 @@ Dradis::CE::API::Engine::routes.draw do
           end
         end
 
-        get  '/upload/:job_id' => 'upload#index'
+        get  '/upload/:job_id' => 'upload#show'
         post '/upload' => 'upload#create'
       end
     end
