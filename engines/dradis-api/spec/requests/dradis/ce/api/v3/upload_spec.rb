@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Nodes API' do
+describe 'Upload API' do
   include ActionDispatch::TestProcess::FixtureFile
 
   include_context 'project scoped API'
@@ -26,15 +26,13 @@ describe 'Nodes API' do
     describe 'GET /api/upload/:job_id' do
       context 'the job is enqueued' do
         before do
-          @job_id = UploadJob.create
-
-          expect(Resque::Plugins::Status::Hash).to receive(:get).with(@job_id).and_return(
+          expect(Resque::Plugins::Status::Hash).to receive(:get).and_return(
             OpenStruct.new(status: 'completed')
           )
         end
 
         it 'responds with HTTP code 200' do
-          get "/api/upload/#{@job_id}", env: @env
+          get "/api/upload/12345", env: @env
           expect(response.status).to eq 200
         end
       end
