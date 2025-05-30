@@ -25,15 +25,25 @@ describe 'Nodes API' do
 
     describe 'GET /api/upload/:job_id' do
       context 'the job is enqueued' do
-        it 'responds with HTTP code 200' do
-          job_id = UploadJob.create
+        before do
+          @job_id = UploadJob.create
 
-          get "/api/upload/#{job_id}", env: @env
+          expect(Resque::Plugins::Status::Hash).to receive(:get).with(@job_id).and_return(
+            OpenStruct.new(status: 'completed')
+          )
+        end
+
+        it 'responds with HTTP code 200' do
+          get "/api/upload/#{@job_id}", env: @env
           expect(response.status).to eq 200
         end
       end
 
       context 'the job is missing' do
+        before do
+          expect(Resque::Plugins::Status::Hash).to receive(:get).and_return(nil)
+        end
+
         it 'responds with HTTP code 404' do
           get '/api/upload/invalid_job_id', env: @env
           expect(response.status).to eq 404
