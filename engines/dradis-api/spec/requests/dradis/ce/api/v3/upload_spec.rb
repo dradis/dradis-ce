@@ -35,14 +35,14 @@ describe 'Nodes API' do
 
       context 'the job is missing' do
         it 'responds with HTTP code 404' do
-          get "/api/upload/invalid_job_id", env: @env
+          get '/api/upload/invalid_job_id', env: @env
           expect(response.status).to eq 404
         end
       end
     end
 
     describe 'POST /api/upload/' do
-      let(:url) { "/api/upload/" }
+      let(:url) { '/api/upload/' }
       let(:post_upload) { post url, params: params, env: @env }
       let(:file_path) { Rails.root.join('spec', 'fixtures', 'files', 'projects', 'welcome_project.xml') }
       let(:file_fixture) { file_fixture_upload(file_path, 'plain/text') }
