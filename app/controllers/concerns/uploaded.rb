@@ -2,20 +2,12 @@ module Uploaded
   extend ActiveSupport::Concern
 
   included do
-    before_action :find_uploaders
-    before_action :validate_uploader, only: [:create, :parse]
+    include UploaderFinder
+
     before_action :validate_state, only: [:create, :parse]
   end
 
   private
-
-  def find_uploaders
-    # :upload plugins can define multiple uploaders
-    @uploaders ||= Dradis::Plugins::with_feature(:upload).
-                     collect(&:uploaders).
-                     flatten.
-                     sort_by(&:name)
-  end
 
   def process_upload_background(args = {})
     attachment = args.fetch(:attachment)
@@ -64,18 +56,6 @@ module Uploaded
       end
     end
     job_logger.write('Worker process completed.')
-  end
-
-  def validate_uploader
-    valid_uploaders = @uploaders.collect(&:name)
-
-    if (params.key?(:uploader) && valid_uploaders.include?(params[:uploader]))
-      @uploader = params[:uploader].constantize
-    elsif is_api?
-      raise ActiveRecord::RecordNotFound
-    else
-      redirect_to project_upload_manager_path(current_project), alert: 'Something fishy is going on...'
-    end
   end
 
   def validate_state
