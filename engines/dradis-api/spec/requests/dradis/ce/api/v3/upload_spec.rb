@@ -32,7 +32,7 @@ describe 'Upload API' do
         end
 
         it 'responds with HTTP code 200' do
-          get "/api/upload/12345", env: @env
+          get '/api/upload/12345', env: @env
           expect(response.status).to eq 200
         end
       end
