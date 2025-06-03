@@ -9,7 +9,10 @@ module Tracked
     around_perform do |job, block|
       job.tracker.update_status(status: 'pending')
       block.call
-      job.tracker.update_status(status: 'completed')
+
+      unless job.tracker.get_status[:status] == 'failed'
+        job.tracker.update_status(status: 'completed')
+      end
     end
   end
 
