@@ -1,4 +1,6 @@
 class UploadJob < ApplicationJob
+  include Tracked
+
   queue_as :dradis_upload
 
   def perform(default_user_id:, file:, plugin_name:, project_id:, state:, uid:)
