@@ -47,7 +47,7 @@ To try Dradis Community, you can deploy your own instance (you will need account
 There are two editions of Dradis Framework:
 
 * **Dradis Framework Community Edition (CE)**: open-source and available freely under the GPLv2 license.
-* **Dradis Framework Professional Edition (Pro)**: looking for more advanced features, designed for collaborating as a InfoSec team? [Dradis Pro](https://dradis.com/reporting.html) offers report automation, collaboration, and client communication tools built for modern cybersecurity teams.
+* **Dradis Framework Professional Edition (Pro)**: looking for more advanced features, designed for collaborating as a InfoSec team? Dradis Pro offers [report automation](https://dradis.com/reporting.html), collaboration, and client communication tools built for modern cybersecurity teams.
 
 ## Getting started: Community Edition
 
