@@ -13,8 +13,9 @@ module Dradis::CE::API
         attachment << params[:file].read
         attachment.save
 
-        if Rails.env.production? || (File.size(attachment.fullpath) > 1024 * 1024)
-          @job_id = process_upload_background(attachment: attachment)
+        # if Rails.env.production? || (File.size(attachment.fullpath) > 1024 * 1024)
+        if Rails.env.development?
+          @job_id = process_upload_background(attachment: attachment).job_id
           @status = :queued
         else
           process_upload_inline(attachment: attachment)
@@ -23,11 +24,12 @@ module Dradis::CE::API
       end
 
       def show
-        job = Resque::Plugins::Status::Hash.get(params[:job_id])
+        tracker = JobTracker.new(job_id: params[:job_id], queue_name: 'dradis_upload')
+        status_hash = tracker.get_status
 
-        if job
-          @status = job.status
-          @message = job.message
+        if status_hash[:status]
+          @status = status_hash[:status]
+          @message = status_hash[:message]
         else
           raise ActiveRecord::RecordNotFound
         end

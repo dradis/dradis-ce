@@ -19,7 +19,7 @@ module Uploaded
     # NOTE: call the bg job as last thing in the action helps us
     # avoid SQLite3::BusyException when using sqlite and
     # activejob async queue adapter
-    UploadJob.create(
+    UploadJob.perform_later(
       default_user_id: current_user.id,
       file: attachment.fullpath.to_s,
       plugin_name: @uploader.to_s,

@@ -1,16 +1,7 @@
-class UploadJob
-  include Resque::Plugins::Status
+class UploadJob < ApplicationJob
+  queue_as :dradis_upload
 
-  @queue = :dradis_upload
-
-  def perform
-    default_user_id = options['default_user_id']
-    file = options['file']
-    plugin_name = options['plugin_name']
-    project_id = options['project_id']
-    state = options['state']
-    uid = options['uid']
-
+  def perform(default_user_id:, file:, plugin_name:, project_id:, state:, uid:)
     logger = Log.new(uid: uid)
 
     logger.write { "Job id is #{uid}." }
@@ -31,7 +22,6 @@ class UploadJob
 
     logger.write { 'Worker process completed.' }
 
-    completed
   rescue => exception
     logger.write { "There was an error with the upload: #{exception.message}" }
     if Rails.env.development?
@@ -40,7 +30,6 @@ class UploadJob
         sleep(0.2)
       end
     end
-
-    failed('message' => "There was an error with the upload: #{exception.message}")
+    tracker.update_status(status: 'failed', message: exception.message)
   end
 end
