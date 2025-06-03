@@ -12,7 +12,6 @@ class JobTracker
   end
 
   def set_status(status_hash)
-    status_hash.symbolize_keys!
     redis.set(redis_key, status_hash.to_json)
   end
 

@@ -26,8 +26,8 @@ describe 'Upload API' do
     describe 'GET /api/upload/:job_id' do
       context 'the job is enqueued' do
         before do
-          expect(Resque::Plugins::Status::Hash).to receive(:get).and_return(
-            OpenStruct.new(status: 'completed')
+          expect(Resque.redis).to receive(:get).and_return(
+            { 'status' => 'completed' }.to_json
           )
         end
 
@@ -39,7 +39,7 @@ describe 'Upload API' do
 
       context 'the job is missing' do
         before do
-          expect(Resque::Plugins::Status::Hash).to receive(:get).and_return(nil)
+          expect(Resque.redis).to receive(:get).and_return(nil)
         end
 
         it 'responds with HTTP code 404' do
