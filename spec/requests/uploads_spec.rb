@@ -85,9 +85,9 @@ describe 'upload requests' do
 
         # Don't want to deal with Redis or Resque here
         FakeJob = Struct.new(:job_id)
-        allow(UploadJob).to receive(:create).and_return(FakeJob.new(job_id: 123))
+        allow(UploadJob).to receive(:perform_later).and_return(FakeJob.new(job_id: 123))
 
-        expect(UploadJob).to receive(:create).with(
+        expect(UploadJob).to receive(:perform_later).with(
           hash_including(
             file: attachment_file,
             plugin_name: uploader,

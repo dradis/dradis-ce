@@ -122,6 +122,13 @@ RSpec.configure do |config|
   config.append_after(:each) do
     DatabaseCleaner.clean
   end
+
+  # Mock Resque.redis in the test suite so our CI platform does not have redis
+  # as a requirement
+  config.before(:each) do
+    allow(Resque.redis).to receive(:get).and_return(nil)
+    allow(Resque.redis).to receive(:set).and_return(nil)
+  end
 end
 
 Shoulda::Matchers.configure do |config|

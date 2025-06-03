@@ -13,8 +13,7 @@ module Dradis::CE::API
         attachment << params[:file].read
         attachment.save
 
-        # if Rails.env.production? || (File.size(attachment.fullpath) > 1024 * 1024)
-        if Rails.env.development?
+        if Rails.env.production? || (File.size(attachment.fullpath) > 1024 * 1024)
           @job_id = process_upload_background(attachment: attachment).job_id
           @status = :queued
         else
