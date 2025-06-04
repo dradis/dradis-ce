@@ -7,10 +7,10 @@ module Dradis::CE::API
       skip_before_action :json_required, only: [:create]
 
       def create
-        filename = CGI::escape params[:file].original_filename
+        filename = CGI::escape upload_params[:file].original_filename
         # add the file as an attachment
         attachment = Attachment.new(filename, node_id: current_project.plugin_uploads_node.id)
-        attachment << params[:file].read
+        attachment << upload_params[:file].read
         attachment.save
 
         if Rails.env.production? || (File.size(attachment.fullpath) > 1024 * 1024)
@@ -38,6 +38,10 @@ module Dradis::CE::API
 
       def job_logger
         @job_logger ||= Log.new
+      end
+
+      def upload_params
+        params.permit(:file, :uploader, :state)
       end
     end
   end

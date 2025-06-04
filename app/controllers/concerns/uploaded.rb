@@ -14,7 +14,7 @@ module Uploaded
 
     job_logger.write 'Enqueueing job to start in the background.'
 
-    uid = is_api? ? job_logger.id : params[:item_id].to_i
+    uid = is_api? ? job_logger.id : upload_params[:item_id].to_i
 
     # NOTE: call the bg job as last thing in the action helps us
     # avoid SQLite3::BusyException when using sqlite and
@@ -61,8 +61,8 @@ module Uploaded
   def validate_state
     return if @uploader.to_s.include?('::Projects')
 
-    if Issue.states.keys.include?(params[:state])
-      @state = params[:state]
+    if Issue.states.keys.include?(upload_params[:state])
+      @state = upload_params[:state]
     elsif is_api?
       raise ActiveRecord::RecordNotFound
     else

@@ -19,8 +19,8 @@ module UploaderFinder
   # Ensure that the requested :uploader is valid and has been included in the
   # Plugins::Upload mixin
   def validate_uploader
-    return unless uploader_params[:uploader]
-    uploader = @uploaders.find { |uploader| uploader.name == uploader_params[:uploader] }
+    return unless upload_params[:uploader]
+    uploader = @uploaders.find { |uploader| uploader.name == upload_params[:uploader] }
 
     if uploader
       @uploader = uploader
@@ -29,7 +29,7 @@ module UploaderFinder
     end
   end
 
-  def uploader_params
+  def upload_params
     params.permit(:uploader)
   end
 end

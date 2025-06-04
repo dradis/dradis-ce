@@ -19,10 +19,10 @@ class UploadController < AuthenticatedController
   # TODO: this would overwrite an existing file with the same name.
   # See AttachmentsController#create
   def create
-    filename = CGI::escape params[:file].original_filename
+    filename = CGI::escape upload_params[:file].original_filename
     # add the file as an attachment
     @attachment = Attachment.new(filename, node_id: current_project.plugin_uploads_node.id)
-    @attachment << params[:file].read
+    @attachment << upload_params[:file].read
     @attachment.save
 
     @success = true
@@ -31,7 +31,7 @@ class UploadController < AuthenticatedController
   end
 
   def parse
-    attachment = Attachment.find(params[:file], conditions: { node_id: current_project.plugin_uploads_node.id })
+    attachment = Attachment.find(upload_params[:file], conditions: { node_id: current_project.plugin_uploads_node.id })
 
     # Files smaller than 1Mb are processed inlined, others are
     # processed in the background via a Redis worker.
@@ -54,6 +54,10 @@ class UploadController < AuthenticatedController
   private
 
   def job_logger
-    @job_logger ||= Log.new(uid: params[:item_id].to_i)
+    @job_logger ||= Log.new(uid: upload_params[:item_id].to_i)
+  end
+
+  def upload_params
+    params.permit(:file, :item_id, :uploader, :state)
   end
 end
