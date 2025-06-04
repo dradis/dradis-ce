@@ -1,9 +1,13 @@
 class JobTracker
+  DAY_IN_SECONDS = 86_400
+
   attr_accessor :job_id, :queue_name
 
   def initialize(job_id:, queue_name:)
     @job_id = job_id
     @queue_name = queue_name
+
+    redis.expire(redis_key, DAY_IN_SECONDS)
   end
 
   def get_status
@@ -12,7 +16,7 @@ class JobTracker
   end
 
   def set_status(status_hash)
-    redis.set(redis_key, status_hash.to_json)
+    redis.set(redis_key, status_hash.to_json, keepttl: true)
   end
 
   def update_status(status)
