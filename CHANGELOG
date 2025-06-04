@@ -4,8 +4,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Liquid: Allow Liquid to be used in dropdown options when creating new issue/evidence from template
     - Bug tracker items:
       - [item]
   - New integrations:
