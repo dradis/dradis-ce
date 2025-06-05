@@ -2,12 +2,7 @@ class FieldsController < AuthenticatedController
   # Returns the form view given a source text
   def form
     @form_data = FieldParser.source_to_fields_array(params[:source])
-    @allow_dropdown = if params[:source].match?(/{{.*?}}|{%.*?%}/)
-      false
-    else
-      params[:allow_dropdown] == 'true'
-    end
-
+    @allow_dropdown = params[:allow_dropdown] == 'true'
     render layout: false
   end
 

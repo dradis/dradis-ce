@@ -4,7 +4,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - Liquid: Allow Liquid to be used in dropdown options when creating new issue/evidence from template
+    - Liquid: Only present dropdown options when creating new issue/evidence from template if there are no Liquid filters
     - Bug tracker items:
       - [item]
   - New integrations:
