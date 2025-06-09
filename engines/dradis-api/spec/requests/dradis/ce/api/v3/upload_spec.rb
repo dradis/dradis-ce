@@ -27,7 +27,7 @@ describe 'Upload API' do
       context 'the job is enqueued' do
         before do
           expect(Resque.redis).to receive(:get).and_return(
-            { 'status' => 'completed' }.to_json
+            { 'state' => 'completed' }.to_json
           )
         end
 

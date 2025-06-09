@@ -1,4 +1,5 @@
 class JobTracker
+  VALID_STATE_KEYS = [:message, :state].freeze
   DAY_IN_SECONDS = 86_400
 
   attr_accessor :job_id, :queue_name
@@ -18,6 +19,8 @@ class JobTracker
   end
 
   def set_state(state_hash)
+    return unless valid_keys?(state_hash)
+
     redis.set(redis_key, state_hash.to_json, keepttl: true)
   end
 
@@ -34,5 +37,9 @@ class JobTracker
 
   def redis_key
     "#{queue_name}.#{job_id}"
+  end
+
+  def valid_keys?(hash)
+    (hash.keys - VALID_STATE_KEYS).empty?
   end
 end

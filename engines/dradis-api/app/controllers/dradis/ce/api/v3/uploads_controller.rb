@@ -1,6 +1,6 @@
 module Dradis::CE::API
   module V3
-    class UploadController < Dradis::CE::API::APIController
+    class UploadsController < Dradis::CE::API::APIController
       include Dradis::CE::API::ProjectScoped
       include Uploaded
 
