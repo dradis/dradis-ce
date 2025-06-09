@@ -11,14 +11,14 @@ module Tracked
   end
 
   def track_pending
-    tracker.update_status(status: 'pending')
+    tracker.update_state(state: :pending)
     yield
-    unless tracker.get_status[:status] == 'failed'
-      tracker.update_status(status: 'completed')
+    unless tracker.get_state[:state] == :failed
+      tracker.update_state(state: :completed)
     end
   end
 
   def track_queued
-    tracker.update_status(status: 'queued')
+    tracker.update_state(state: :queued)
   end
 end

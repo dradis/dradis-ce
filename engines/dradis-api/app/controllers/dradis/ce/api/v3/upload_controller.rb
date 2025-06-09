@@ -15,20 +15,20 @@ module Dradis::CE::API
 
         if Rails.env.production? || (File.size(attachment.fullpath) > 1024 * 1024)
           @job_id = process_upload_background(attachment: attachment).job_id
-          @status = :queued
+          @state = :queued
         else
           process_upload_inline(attachment: attachment)
-          @status = :completed
+          @state = :completed
         end
       end
 
       def show
-        tracker = JobTracker.new(job_id: params[:job_id], queue_name: 'dradis_upload')
-        status_hash = tracker.get_status
+        tracker = JobTracker.new(job_id: params[:id], queue_name: UploadJob.queue_name)
+        state_hash = tracker.get_state
 
-        if status_hash[:status]
-          @status = status_hash[:status]
-          @message = status_hash[:message]
+        if state_hash[:state]
+          @state = state_hash[:state]
+          @message = state_hash[:message]
         else
           raise ActiveRecord::RecordNotFound
         end

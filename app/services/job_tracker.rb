@@ -4,24 +4,26 @@ class JobTracker
   attr_accessor :job_id, :queue_name
 
   def initialize(job_id:, queue_name:)
+    raise 'Missing job identifiers!' unless job_id && queue_name
+
     @job_id = job_id
     @queue_name = queue_name
 
     redis.expire(redis_key, DAY_IN_SECONDS)
   end
 
-  def get_status
-    status_hash = JSON.parse(redis.get(redis_key) || '{}')
-    status_hash.symbolize_keys
+  def get_state
+    state_hash = JSON.parse(redis.get(redis_key) || '{}')
+    state_hash.symbolize_keys
   end
 
-  def set_status(status_hash)
-    redis.set(redis_key, status_hash.to_json, keepttl: true)
+  def set_state(state_hash)
+    redis.set(redis_key, state_hash.to_json, keepttl: true)
   end
 
-  def update_status(status)
-    status_hash = get_status
-    set_status(status_hash.merge(status))
+  def update_state(state)
+    state_hash = get_state
+    set_state(state_hash.merge(state))
   end
 
   private

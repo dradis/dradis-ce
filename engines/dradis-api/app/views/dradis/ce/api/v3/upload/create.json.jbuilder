@@ -1,5 +1,1 @@
-if @job_id
-  json.job_id @job_id
-end
-
-json.status @status
+json.partial! 'job', job_id: @job_id, message: @message, state: @state
