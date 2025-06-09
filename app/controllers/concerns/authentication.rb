@@ -7,6 +7,7 @@ module Authentication
   end
 
   def access_denied
+    store_location
     throw :warden, message: 'Please sign in first. Access denied.'
   end
 
@@ -52,6 +53,13 @@ module Authentication
   def redirect_to_target_or_default(default, *args)
     redirect_to(session[:return_to] || default, *args)
     session[:return_to] = nil
+  end
+
+  # Save the current location in session so we can go back after a successful
+  # authentication. Use #redirect_back_or_default to return to the stored
+  # location.
+  def store_location
+    session[:return_to] = request.fullpath
   end
 
   # The main accessor for the warden proxy instance
