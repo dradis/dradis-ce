@@ -23,6 +23,8 @@ describe 'Upload API' do
   context 'as authorized user' do
     include_context 'authorized API user'
 
+    before { allow(Resque.redis).to receive(:expire) }
+
     describe 'GET /api/upload/:job_id' do
       context 'the job is enqueued' do
         before do
