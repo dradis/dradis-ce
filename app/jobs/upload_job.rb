@@ -32,6 +32,6 @@ class UploadJob < ApplicationJob
         sleep(0.2)
       end
     end
-    tracker.update_status(state: :failed, message: exception.message)
+    tracker.update_state(state: :failed, message: exception.message)
   end
 end
