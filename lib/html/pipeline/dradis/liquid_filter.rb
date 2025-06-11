@@ -2,6 +2,11 @@ module HTML
   class Pipeline
     module Dradis
       class LiquidFilter < TextFilter
+        LIQUID_FILTER_PATTERNS = [
+          /#{Liquid::TagStart}+.*#{Liquid::FilterSeparator}+.*#{Liquid::TagEnd}+/,
+          /#{Liquid::VariableStart}+.*#{Liquid::FilterSeparator}+.*#{Liquid::VariableEnd}+/
+        ].freeze
+
         def call
           @text = HTML::IgnoreLiquidInTextileBlockCodes.call(@text)
 
