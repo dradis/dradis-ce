@@ -4,7 +4,8 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - Liquid: Only present dropdown options when creating new issue/evidence from template if there are no Liquid filters
+    - Liquid: 
+      - Don't present dropdown options when creating new issue/evidence from template if the options contain Liquid filters
     - Bug tracker items:
       - [item]
   - New integrations:
