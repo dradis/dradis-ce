@@ -12,7 +12,7 @@ module Dradis::Plugins::Echo
 
       response_id = SecureRandom.hex(10)
 
-      Turbo::StreamsChannel.broadcast_prepend_to [interaction_id, 'prompts'],
+      Turbo::StreamsChannel.broadcast_update_to [interaction_id, 'prompts'],
         target: 'messages',
         partial: 'dradis/plugins/echo/prompts/response',
         locals: { prompt: prompt, response_id: response_id, template: prompt_template }
@@ -31,7 +31,7 @@ module Dradis::Plugins::Echo
         msg = '<div class="alert alert-danger m-0">There was an error contacting Ollama: '
         msg << error.message
         msg << '</div>'
-        Turbo::StreamsChannel.broadcast_append_to [interaction_id, 'prompts'], target: response_id, html: msg
+        Turbo::StreamsChannel.broadcast_update_to [interaction_id, 'prompts'], target: response_id, html: msg
       end
     end
 
@@ -63,6 +63,7 @@ module Dradis::Plugins::Echo
         message.sub!('</think>', '{/think}')
         Turbo::StreamsChannel.broadcast_append_to [interaction_id, 'prompts'], target: response_id, content: message
       end
+      Turbo::StreamsChannel.broadcast_remove_to [interaction_id, 'prompts'], target: "#{response_id}_spinner"
     end
   end
 end
