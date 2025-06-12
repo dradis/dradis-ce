@@ -19,7 +19,7 @@ module Dradis::Plugins::Echo
           new(
             id: 1,
             title: 'Summarize',
-            icon: '✨',
+            icon: 'fa-wand-magic-sparkles',
             prompt: <<~EOP
     I am a cyber security professional working an a cybersecurity assessment.
 
@@ -45,7 +45,7 @@ module Dradis::Plugins::Echo
           new(
             id: 2,
             title: 'Reword',
-            icon: '🔀',
+            icon: 'fa-shuffle',
             prompt: <<~EOP
     I am a cyber security professional working an a cybersecurity assessment.
 

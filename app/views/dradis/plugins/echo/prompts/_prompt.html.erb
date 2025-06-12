@@ -1,3 +1,3 @@
 <%= link_to echo.project_prompt_path(current_project, prompt.id, type: @type, record: @record), class: 'btn btn-outline-secondary btn-sm', data: { prompt: prompt.prompt } do %>
-  <%= prompt.icon %> <%= prompt.title %>
+  <i class="fa-solid <%= prompt.icon %>"></i> <%= prompt.title %>
 <% end %>&nbsp;
