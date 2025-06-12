@@ -28,10 +28,10 @@ module Dradis::Plugins::Echo
         end
 
       rescue Ollama::Errors::OllamaError => error
-        msg = '<div class="alert alert-danger">There was an error contacting Ollama: '
+        msg = '<div class="alert alert-danger m-0">There was an error contacting Ollama: '
         msg << error.message
         msg << '</div>'
-        Turbo::StreamsChannel.broadcast_append_to [interaction_id, 'prompts'], target: 'messages', html: msg
+        Turbo::StreamsChannel.broadcast_append_to [interaction_id, 'prompts'], target: response_id, html: msg
       end
     end
 
