@@ -59,8 +59,8 @@ module Dradis::Plugins::Echo
         Turbo::StreamsChannel.broadcast_append_to [interaction_id, 'prompts'], target: 'messages', html: '<p>Done.</p>'
       else
         message = event['response'].to_s.strip.empty? ? "<br/>" : event['response']
-        message.sub!('<think>', '{think}')
-        message.sub!('</think>', '{/think}')
+        message.sub!('<think>', '{thinking}')
+        message.sub!('</think>', '{/thinking}')
         Turbo::StreamsChannel.broadcast_append_to [interaction_id, 'prompts'], target: response_id, content: message
       end
       Turbo::StreamsChannel.broadcast_remove_to [interaction_id, 'prompts'], target: "#{response_id}_spinner"
