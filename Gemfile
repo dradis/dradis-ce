@@ -118,8 +118,8 @@ gem 'pg'
 gem 'cancancan', '~> 1.10'
 
 # Redis-based background worker
-gem 'resque', require: 'resque/status_server'
-gem 'resque-status'
+gem 'resque'
+
 # See https://github.com/sinatra/sinatra/issues/1055
 gem 'sinatra', '~> 2.2.3'
 
@@ -216,7 +216,7 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 4.16.0'
+gem 'dradis-plugins', github: 'dradis/dradis-plugins', branch: 'fix/missing-constant'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
