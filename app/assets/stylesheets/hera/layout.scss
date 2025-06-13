@@ -97,8 +97,9 @@ body:not(.unauthenticated) {
 }
 
 footer {
-  background-color: $brand-100;
-  border-top: 1px solid $main-nav-border;
+  background-color: $brand-200;
+  border-top: 1px solid $brand-300;
+  color: $text-default;
   cursor: default;
   font-size: 0.8rem;
   padding: 0.5rem;
