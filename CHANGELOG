@@ -26,6 +26,9 @@
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
+v4.17.0 (Xxx 2025)
+  - Authentication: store current location before redirect
+
 v4.16.0 (May 2025)
   - Forms: Add a combobox for selecting, filtering, and creating options
   - Hera: Add new layout with redesigned navigation
