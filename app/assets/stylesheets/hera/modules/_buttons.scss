@@ -96,7 +96,6 @@
     border-color: $primary;
     color: $primary;
 
-    &:hover,
     &:focus,
     &:focus-visible,
     &:active,
@@ -104,6 +103,10 @@
       color: $white;
       border-color: $primary;
       background: $primary;
+    }
+
+    &:hover {
+      background: $brand-200;
     }
   }
 

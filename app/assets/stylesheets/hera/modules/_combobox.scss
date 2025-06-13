@@ -30,7 +30,8 @@
     &:not(.selected) {
       &:hover,
       &:focus-visible {
-        background-color: darken($primary, 6%);
+        background-color: $brand-200;
+        color: $text-default !important;
       }
     }
   }
