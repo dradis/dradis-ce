@@ -97,11 +97,11 @@ body:not(.unauthenticated) {
 }
 
 footer {
-  background-color: $brand-200;
-  border-top: 1px solid $brand-300;
+  background-color: $white;
+  border-top: 1px solid $brand-200;
   color: $text-default;
   cursor: default;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   padding: 0.5rem;
   text-align: center;
 }
