@@ -225,7 +225,7 @@ mark {
     &.active {
       background-color: $main-nav-bg;
       border: 1px solid $border-color;
-      color: $text-link-hover;
+      color: $main-nav-links;
     }
   }
 }
