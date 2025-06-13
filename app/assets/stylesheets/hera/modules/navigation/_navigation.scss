@@ -109,7 +109,7 @@ header {
           box-shadow: none;
 
           .fa-bars {
-            color: $primary;
+            color: $light;
           }
         }
       }
@@ -409,7 +409,7 @@ header {
         .navbar-nav.utility-nav {
           a,
           .nav-link {
-            color: $main-nav-links;
+            color: $text-default;
             padding-left: 0.5rem;
             padding-right: 0.5rem;
 
