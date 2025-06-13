@@ -9,7 +9,7 @@
 # loaded plugins of this category.
 class UploadController < AuthenticatedController
   include ProjectScoped
-  include Uploaded
+  include Uploadable
 
   # UPGRADE
   # include Plugins::Upload

@@ -1,9 +1,5 @@
-if @job_id
-  json.job_id @job_id
-end
+json.job_id @job_id
 
 json.state @state
 
-if @message
-  json.message @message
-end
+json.message @message

@@ -1,4 +1,4 @@
-module Uploaded
+module Uploadable
   extend ActiveSupport::Concern
 
   included do

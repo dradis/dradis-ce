@@ -18,19 +18,19 @@ describe JobTracker do
     allow(Resque).to receive(:redis).and_return(redis_double)
   end
 
-  describe '#get_state' do
+  describe '#state' do
     it 'returns the state of the key' do
       expect(redis_double).to receive(:get).with(redis_key)
 
-      expect(tracker.get_state).to eq({ state: 'pending' })
+      expect(tracker.state).to eq({ state: 'pending' })
     end
   end
 
-  describe '#set_state' do
+  describe '#state=' do
     it 'replaces the hash of the key to with the new  hash' do
       expect(redis_double).to receive(:set).with(redis_key, { state: :failed }.to_json, { keepttl: true })
 
-      tracker.set_state({ state: :failed })
+      tracker.state = { state: :failed }
     end
   end
 

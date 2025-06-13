@@ -13,7 +13,7 @@ module Tracked
   def track_pending
     tracker.update_state(state: :pending)
     yield
-    unless tracker.get_state[:state] == :failed
+    unless tracker.state[:state] == :failed
       tracker.update_state(state: :completed)
     end
   end
