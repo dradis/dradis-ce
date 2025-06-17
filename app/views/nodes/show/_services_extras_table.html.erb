@@ -1,13 +1,11 @@
 <div class="row mt-4">
   <div class="col-4 col-lg-3 col-xl-2 pe-0">
-    <ul class="nav nav-pills flex-column" id="scripts-tabs">
+    <ul class="list-group flex-column" id="scripts-tabs">
       <%# each key is in the format "proto/port" e.g. "tcp/22" %>
       <% extras.keys.each do |key| %>
-        <li class="nav-item">
-          <a class="nav-link" data-bs-toggle="pill" data-behavior="services-extras-link" href="#<%= key.gsub('/', '-') %>-tab">
-            <%= key %>
-          </a>
-        </li>
+        <a class="list-group-item" data-bs-toggle="pill" data-behavior="services-extras-link" href="#<%= key.gsub('/', '-') %>-tab">
+          <%= key %>
+        </a>
       <% end %>
     </ul>
   </div>

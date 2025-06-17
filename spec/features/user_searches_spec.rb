@@ -14,14 +14,14 @@ describe 'User searches', type: :feature do
   end
 
   it 'can access search on main navigation' do
-    within '.project-nav' do
+    within '.sub-nav' do
       expect(page).to have_css '#q'
       expect(page).to have_css '#search-btn'
     end
   end
 
   it 'when click on search button search results form is shown', :js do
-    within '.project-nav' do
+    within '.sub-nav' do
       fill_in 'q', with: 'test', visible: false
       click_on 'search-btn'
     end
@@ -34,8 +34,8 @@ describe 'User searches', type: :feature do
       setup_test_data
       term = 'search'
 
-      page.find('.project-nav #q').set(term)
-      within '.project-nav' do
+      page.find('.sub-nav #q').set(term)
+      within '.sub-nav' do
         click_on 'search-btn'
       end
 
@@ -52,8 +52,8 @@ describe 'User searches', type: :feature do
       ghost = create(:node, label: 'Node ghost')
       term = 'search'
 
-      page.find('.project-nav #q').set(term)
-      within '.project-nav' do
+      page.find('.sub-nav #q').set(term)
+      within '.sub-nav' do
         click_on 'search-btn'
       end
 
@@ -65,8 +65,8 @@ describe 'User searches', type: :feature do
     it 'clicking on node tab sees only matched nodes' do
       setup_test_data
       term = 'search'
-      page.find('.project-nav #q').set(term)
-      within '.project-nav' do
+      page.find('.sub-nav #q').set(term)
+      within '.sub-nav' do
         click_on 'search-btn'
       end
 
@@ -84,8 +84,8 @@ describe 'User searches', type: :feature do
     it 'clicking on note tab sees only matched notes' do
       setup_test_data
       term = 'search'
-      page.find('.project-nav #q').set(term)
-      within '.project-nav' do
+      page.find('.sub-nav #q').set(term)
+      within '.sub-nav' do
         click_on 'search-btn'
       end
 
@@ -103,8 +103,8 @@ describe 'User searches', type: :feature do
     it 'clicking on issues tab sees only matched issues' do
       setup_test_data
       term = 'search'
-      page.find('.project-nav #q').set(term)
-      within '.project-nav' do
+      page.find('.sub-nav #q').set(term)
+      within '.sub-nav' do
         click_on 'search-btn'
       end
 
@@ -122,9 +122,9 @@ describe 'User searches', type: :feature do
     it 'clicking on evidences tab sees only matched evidences' do
       setup_test_data
       term = 'search'
-      page.find('.project-nav #q').set(term)
+      page.find('.sub-nav #q').set(term)
 
-      within '.project-nav' do
+      within '.sub-nav' do
         click_on 'search-btn'
       end
 
@@ -140,7 +140,7 @@ describe 'User searches', type: :feature do
     end
 
     it 'sees message warning when no search criteria entered' do
-      within '.project-nav' do
+      within '.sub-nav' do
         click_on 'search-btn'
       end
 
@@ -148,9 +148,9 @@ describe 'User searches', type: :feature do
     end
 
     it 'sees message warning when no matches find' do
-      page.find('.project-nav #q').set('no matches')
+      page.find('.sub-nav #q').set('no matches')
 
-      within '.project-nav' do
+      within '.sub-nav' do
         click_on 'search-btn'
       end
 

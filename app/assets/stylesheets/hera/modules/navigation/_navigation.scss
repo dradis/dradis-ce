@@ -7,7 +7,6 @@ header {
       .navbar-brand {
         img {
           height: 2.425rem;
-          margin: 3px 0 -3px;
           padding: 0 15px;
         }
       }
@@ -26,13 +25,13 @@ header {
 
           .nav-link {
             align-items: center;
-            color: $instance-nav-links;
+            color: $main-nav-links;
             font-size: 1em;
 
             &:active,
             &:focus,
             &:hover {
-              color: $instance-nav-hover;
+              color: $main-nav-hover;
             }
 
             &.dropdown-toggle::after {
@@ -89,7 +88,7 @@ header {
               box-shadow: none;
 
               .dropdown-item {
-                color: $instance-nav-links;
+                color: $main-nav-links;
 
                 @media (max-width: 991px) {
                   padding: 0.5em 0;
@@ -118,11 +117,19 @@ header {
       @media (max-width: 991px) {
         padding: 0;
       }
+
+      @media (min-width: 992px) {
+        padding: 0 0.25rem;
+      }
+
+      @media (min-width: 1025px) {
+        padding: 0 1.5rem;
+      }
     }
 
-    &.instance-nav {
-      background-color: $instance-nav-bg;
-      border-bottom: 1px solid $instance-nav-border;
+    &.main-nav {
+      background-color: $main-nav-bg;
+      border-bottom: 1px solid $main-nav-border;
       padding: 0;
       transition: border-color 0s;
 
@@ -131,42 +138,18 @@ header {
         border-color: transparent;
       }
 
-      .utility-nav {
-        a,
-        .nav-link {
-          color: $instance-nav-links;
-
-          &:active,
-          &:focus,
-          &:hover {
-            color: $instance-nav-hover;
-          }
-        }
-
-        .nav-item.active {
-          border-top: 5px solid transparent;
-        }
-
-        @media (min-width: 992px) {
-          .nav-link {
-            padding-left: 0;
-            padding-right: 0;
-          }
-        }
-      }
-
       .dropdown-menu {
-        background-color: $instance-nav-bg;
-        border: 1px solid $instance-nav-border;
+        background-color: $main-nav-bg;
+        border: 1px solid $main-nav-border;
 
         .dropdown-item {
-          color: $instance-nav-links;
+          color: $main-nav-links;
           text-transform: capitalize;
 
           &:active,
           &:focus,
           &:hover {
-            background-color: lighten($instance-nav-bg, 10%);
+            background-color: lighten($main-nav-bg, 10%);
           }
         }
 
@@ -176,10 +159,10 @@ header {
           &:active,
           &:focus,
           &:hover {
-            background-color: $instance-nav-bg;
+            background-color: $main-nav-bg;
 
             .dropdown-item {
-              background-color: lighten($instance-nav-bg, 10%);
+              background-color: lighten($main-nav-bg, 10%);
               color: $text-default;
             }
           }
@@ -197,7 +180,7 @@ header {
       }
 
       .dropdown-divider {
-        border-top: 1px solid $instance-nav-border;
+        border-top: 1px solid $main-nav-border;
       }
 
       .nav-link {
@@ -205,13 +188,15 @@ header {
       }
 
       .navbar-collapse {
-        background-color: $instance-nav-bg;
+        align-self: flex-start;
+        background-color: $main-nav-bg;
       }
 
       .navbar-nav:not(.utility-nav) {
         .nav-item {
           @media (min-width: 992px) {
             margin-inline: calc(var(--margin) / 4);
+            padding-top: 2px;
 
             .nav-link {
               padding-inline: calc(var(--padding) / 3);
@@ -225,13 +210,37 @@ header {
       }
 
       .navbar-toggler {
-        color: $instance-nav-links;
+        color: $main-nav-links;
         border: none;
 
         &:focus {
-          border: 2px solid $instance-nav-hover;
+          border: 2px solid $main-nav-hover;
           box-shadow: none;
-          color: $instance-nav-hover;
+          color: $main-nav-hover;
+        }
+      }
+
+      .utility-nav {
+        a,
+        .nav-link {
+          color: $main-nav-links;
+
+          &:active,
+          &:focus,
+          &:hover {
+            color: $main-nav-hover;
+          }
+        }
+
+        .nav-item.active {
+          border-top: 5px solid transparent;
+        }
+
+        @media (min-width: 992px) {
+          .nav-link {
+            padding-left: 0;
+            padding-right: 0;
+          }
         }
       }
 
@@ -242,13 +251,23 @@ header {
 
         .nav-item.dropdown {
           .nav-link.show {
-            background-color: lighten($instance-nav-bg, 10%);
+            background-color: lighten($main-nav-bg, 10%);
+          }
+        }
+      }
+
+      @media (min-width: 992px) {
+        .nav-item {
+          border-top: 5px solid transparent;
+
+          &.active {
+            border-top: 5px solid $main-nav-links;
           }
         }
       }
     }
 
-    &.project-nav {
+    &.sub-nav {
       background-color: $white;
       border-bottom: 1px solid $border-color;
       padding: 0;
@@ -305,10 +324,15 @@ header {
             }
 
             @media (max-width: 991px) {
-              color: $instance-nav-links;
+              color: $main-nav-links;
             }
 
             @media (min-width: 992px) {
+              padding-left: 0.7rem;
+              padding-right: 0.7rem;
+            }
+
+            @media (min-width: 1025px) {
               padding-left: 1rem;
               padding-right: 1rem;
             }
@@ -334,13 +358,29 @@ header {
 
               .nav-link {
                 color: $text-link;
-                padding-left: 1rem;
-                padding-right: 1rem;
+                padding-left: 0.7rem;
+                padding-right: 0.7rem;
               }
+            }
+
+            &:first-child {
+              margin-left: 0;
             }
 
             &:last-child {
               margin-right: 0;
+            }
+          }
+
+          @media (min-width: 1025px) {
+            &.active,
+            &:active,
+            &:focus,
+            &:hover {
+              .nav-link {
+                padding-left: 1rem;
+                padding-right: 1rem;
+              }
             }
           }
         }
@@ -353,7 +393,7 @@ header {
       }
 
       @media (max-width: 991px) {
-        background-color: $instance-nav-bg;
+        background-color: $main-nav-bg;
         overflow-x: hidden;
         padding: 0;
 
@@ -366,19 +406,17 @@ header {
       }
 
       @media (min-width: 992px) {
-        padding: 0 1rem;
-
         .navbar-nav.utility-nav {
           a,
           .nav-link {
-            color: $instance-nav-links;
+            color: $main-nav-links;
             padding-left: 0.5rem;
             padding-right: 0.5rem;
 
             &:active,
             &:focus,
             &:hover {
-              color: $instance-nav-hover;
+              color: $main-nav-hover;
               padding-left: 0.5rem;
               padding-right: 0.5rem;
             }

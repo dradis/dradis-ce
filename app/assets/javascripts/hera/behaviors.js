@@ -133,11 +133,7 @@ document.addEventListener('turbo:load', function () {
         let currentTab = $(e.target).attr('href').substring(1);
         searchParams.set('tab', currentTab);
         let urlWithTab = `?${searchParams.toString()}`;
-        history.pushState(
-          { turbo: true, url: urlWithTab },
-          '',
-          urlWithTab
-        );
+        history.pushState({ turbo: true, url: urlWithTab }, '', urlWithTab);
       });
 
     // Initialize clipboard.js
@@ -180,6 +176,13 @@ document.addEventListener('turbo:load', function () {
         $copyBtn.tooltip('hide');
       }, 1000);
     });
+
+    // Initialize ComboBox
+    $(parentElement)
+      .find('select:not(.custom-select)')
+      .each(function () {
+        new ComboBox($(this));
+      });
 
     // Sortable lists
     $('[data-behavior~=ui-sortable]').sortable({

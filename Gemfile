@@ -89,7 +89,7 @@ gem 'bcrypt', '3.1.12'
 gem 'json', '2.3.0'
 
 # XML manipulation
-gem 'nokogiri', '>= 1.18.5'
+gem 'nokogiri', '>= 1.18.8'
 
 # MySQL backend
 # gem 'mysql2', '~> 0.5.6'
@@ -118,8 +118,8 @@ gem 'pg'
 gem 'cancancan', '~> 1.10'
 
 # Redis-based background worker
-gem 'resque', require: 'resque/status_server'
-gem 'resque-status'
+gem 'resque'
+
 # See https://github.com/sinatra/sinatra/issues/1055
 gem 'sinatra', '~> 2.2.3'
 
@@ -140,7 +140,7 @@ gem 'whenever', require: false
 
 gem 'net-smtp'
 gem 'net-pop'
-gem 'net-imap', '>= 0.5.6'
+gem 'net-imap', '>= 0.5.7'
 
 gem 'puma', '>= 6.4.3'
 
@@ -216,12 +216,12 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', github: 'dradis/dradis-plugins'
+gem 'dradis-plugins', github: 'dradis/dradis-plugins', branch: 'fix/missing-constant'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 4.15.0'
+gem 'dradis-projects', '~> 4.16.0'
 
 plugins_file = 'Gemfile.plugins'
 if File.exists?(plugins_file)
@@ -233,33 +233,33 @@ end
 
 # ----------------------------------------------------------------- Calculators
 
-gem 'dradis-calculator_cvss', github: 'dradis/dradis-calculator_cvss'
-gem 'dradis-calculator_dread', github: 'dradis/dradis-calculator_dread'
+gem 'dradis-calculator_cvss', '~> 4.16.0'
+gem 'dradis-calculator_dread', '~> 4.16.0'
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv_export', '~> 4.15.0'
-gem 'dradis-html_export', github: 'dradis/dradis-html_export'
+gem 'dradis-csv_export', '~> 4.16.0'
+gem 'dradis-html_export', '~> 4.16.0'
 
 # ---------------------------------------------------------------------- Import
-gem 'dradis-csv', github: 'dradis/dradis-csv'
+gem 'dradis-csv', '~> 4.16.1'
 
 # ---------------------------------------------------------------------- Upload
-gem 'dradis-acunetix', '~> 4.15.0'
-gem 'dradis-brakeman', '~> 4.15.0'
-gem 'dradis-burp', '~> 4.15.0'
-gem 'dradis-coreimpact', '~> 4.15.0'
-gem 'dradis-metasploit', '~> 4.15.0'
-gem 'dradis-nessus', '~> 4.15.0'
-gem 'dradis-netsparker', '~> 4.15.0'
-gem 'dradis-nexpose', '~> 4.15.0'
-gem 'dradis-nikto', '~> 4.15.0'
-gem 'dradis-nipper', '~> 4.15.0'
-gem 'dradis-nmap', '~> 4.15.0'
-gem 'dradis-ntospider', '~> 4.15.0'
-gem 'dradis-openvas', '~> 4.15.0'
-gem 'dradis-pentera', '~> 4.15.0'
-gem 'dradis-qualys', '~> 4.15.0'
-gem 'dradis-saint', '~> 4.15.0'
-gem 'dradis-veracode', '~> 4.15.0'
-gem 'dradis-wpscan', '~> 4.15.0'
-gem 'dradis-zap', '~> 4.15.0'
+gem 'dradis-acunetix', '~> 4.16.0'
+gem 'dradis-brakeman', '~> 4.16.0'
+gem 'dradis-burp', '~> 4.16.0'
+gem 'dradis-coreimpact', '~> 4.16.0'
+gem 'dradis-metasploit', '~> 4.16.0'
+gem 'dradis-nessus', '~> 4.16.0'
+gem 'dradis-netsparker', '~> 4.16.0'
+gem 'dradis-nexpose', '~> 4.16.0'
+gem 'dradis-nikto', '~> 4.16.0'
+gem 'dradis-nipper', '~> 4.16.0'
+gem 'dradis-nmap', '~> 4.16.0'
+gem 'dradis-ntospider', '~> 4.16.0'
+gem 'dradis-openvas', '~> 4.16.0'
+gem 'dradis-pentera', '~> 4.16.0'
+gem 'dradis-qualys', '~> 4.16.0'
+gem 'dradis-saint', '~> 4.16.0'
+gem 'dradis-veracode', '~> 4.16.0'
+gem 'dradis-wpscan', '~> 4.16.0'
+gem 'dradis-zap', '~> 4.16.0'
