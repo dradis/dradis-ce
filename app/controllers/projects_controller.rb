@@ -19,7 +19,10 @@ class ProjectsController < AuthenticatedController
     @methodologies = current_project.methodology_library.notes.map { |n| Methodology.new(filename: n.id, content: n.text) }
     @nodes         = current_project.nodes.in_tree
     @tags          = current_project.tags
-    @tasks         = assigned_cards(current_project.id)
+    @tasks         = current_project.boards.includes(lists: :cards)
+                      .flat_map { |board| board.lists.flat_map(&:cards) }
+                      .select { |card| card.assignees.include?(current_user) }
+                      .sort_by { |card| [card.due_date.nil? ? 1 : 0, card.due_date] }
 
     @count_by_tag  = { unassigned: 0 }
     @issues_by_tag = Hash.new { |h, k| h[k] = [] }
