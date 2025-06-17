@@ -13,10 +13,6 @@
 
 <%= render 'poller_alerts' unless  request.xhr? %>
 
-<% content_for :sidebar do %>
-  <%= render partial: 'sidebar' %>
-<% end %>
-
 <div class="content-container">
   <% if @boards.any? %>
     <ul class="board-list">
