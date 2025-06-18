@@ -183,6 +183,10 @@ header {
         border-top: 1px solid $main-nav-border;
       }
 
+      .nav-item {
+        border-top: 5px transparent;
+      }
+
       .nav-link {
         padding: calc(var(--padding) / 2);
       }
@@ -196,7 +200,6 @@ header {
         .nav-item {
           @media (min-width: 992px) {
             margin-inline: calc(var(--margin) / 4);
-            padding-top: 2px;
 
             .nav-link {
               padding-inline: calc(var(--padding) / 3);
@@ -232,8 +235,13 @@ header {
           }
         }
 
-        .nav-item.active {
-          border-top: 5px solid transparent;
+        .nav-item {
+          &.active,
+          &:active,
+          &:focus,
+          &:hover {
+            border-top: 5px solid transparent;
+          }
         }
 
         @media (min-width: 992px) {
@@ -260,7 +268,10 @@ header {
         .nav-item {
           border-top: 5px solid transparent;
 
-          &.active {
+          &.active,
+          &:active,
+          &:focus,
+          &:hover {
             border-top: 5px solid $main-nav-links;
           }
         }
@@ -416,7 +427,7 @@ header {
             &:active,
             &:focus,
             &:hover {
-              color: $main-nav-hover;
+              color: $primary;
               padding-left: 0.5rem;
               padding-right: 0.5rem;
             }
