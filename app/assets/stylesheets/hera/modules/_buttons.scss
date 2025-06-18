@@ -106,7 +106,9 @@
     }
 
     &:hover {
-      background: $brand-200;
+      background: $light;
+      border-color: $dark;
+      color: $dark;
     }
   }
 
