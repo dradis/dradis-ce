@@ -277,9 +277,13 @@
         border-bottom: none;
 
         &.active {
-          background-color: $main-nav-bg;
+          background-color: $primary;
           border: none;
           color: $white;
+
+          &:hover {
+            color: $text-link-hover;
+          }
         }
 
         &:focus,
