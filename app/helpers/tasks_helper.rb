@@ -1,12 +1,4 @@
 module TasksHelper
-  TASKS_LIMIT = 5
-
-  def overflow_tasks_count(tasks)
-    return 0 unless tasks.size > TASKS_LIMIT
-
-    tasks.size - TASKS_LIMIT
-  end
-
   def due_date_badge(task)
     return unless task.due_date
 
