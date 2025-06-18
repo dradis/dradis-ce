@@ -51,10 +51,22 @@
   }
 
   &.unread {
-    background-color: $light;
+    background-color: $brand-100;
 
     .notification-icon {
       opacity: 0.15;
+    }
+
+    .title {
+      a {
+        color: $text-link;
+
+        &:active,
+        &:focus,
+        &:hover {
+          color: $text-link-hover;
+        }
+      }
     }
   }
 }
