@@ -78,7 +78,7 @@
       .search-query {
         --width: calc(100vw - var(--padding));
         border-bottom: 1px solid $main-nav-links;
-        color: $brand-100;
+        color: $text-default;
         margin: 0 0.5rem;
         opacity: 1;
         padding: 0 1rem 0 1.5rem;
@@ -88,10 +88,6 @@
         &:active,
         &:hover {
           width: var(--width);
-        }
-
-        &::placeholder {
-          color: $brand-100;
         }
       }
     }
