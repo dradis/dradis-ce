@@ -21,9 +21,6 @@
       <thead>
         <tr>
           <th>Title</th>
-          <% unless params[:project_id] %>
-            <th>Project</th>
-          <% end %>
           <th>Methodology</th>
           <th>List</th>
           <th>Due Date</th>
@@ -36,9 +33,6 @@
             <td data-sort="<%= task.name %>">
               <%= link_to task.name, project_board_list_card_path(task.project, task.board, task.list, task) %>
             </td>
-            <% unless params[:project_id] %>
-              <td data-sort="<%= task.project.name %>"><%= task.project.name %></td>
-            <% end %>
             <td data-sort="<%= task.board.name %>"><%= task.board.name %></td>
             <td data-sort="<%= task.list.name %>"><%= task.list.name %></td>
             <td data-sort="<%= task.due_date || 'no-due-date' %>"><%= due_date_badge(task) %></td>
