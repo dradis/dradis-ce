@@ -131,7 +131,6 @@ header {
       background-color: $main-nav-bg;
       border-bottom: 1px solid $main-nav-border;
       padding: 0;
-      transition: border-color 0s;
 
       &:has(.navbar-collapse.show),
       &:has(.navbar-collapse.collapsing) {
@@ -183,6 +182,11 @@ header {
         border-top: 1px solid $main-nav-border;
       }
 
+      .nav-item {
+        border-top: 5px transparent;
+        transition: border-color 0.2s ease-in-out;
+      }
+
       .nav-link {
         padding: calc(var(--padding) / 2);
       }
@@ -196,7 +200,6 @@ header {
         .nav-item {
           @media (min-width: 992px) {
             margin-inline: calc(var(--margin) / 4);
-            padding-top: 2px;
 
             .nav-link {
               padding-inline: calc(var(--padding) / 3);
@@ -232,8 +235,13 @@ header {
           }
         }
 
-        .nav-item.active {
-          border-top: 5px solid transparent;
+        .nav-item {
+          &.active,
+          &:active,
+          &:focus,
+          &:hover {
+            border-top: 5px solid transparent;
+          }
         }
 
         @media (min-width: 992px) {
@@ -249,9 +257,13 @@ header {
           padding-bottom: 0;
         }
 
-        .nav-item.dropdown {
-          .nav-link.show {
-            background-color: lighten($main-nav-bg, 10%);
+        .nav-item {
+          border-top: 5px solid transparent;
+
+          &.dropdown {
+            .nav-link.show {
+              background-color: lighten($main-nav-bg, 10%);
+            }
           }
         }
       }
@@ -260,7 +272,10 @@ header {
         .nav-item {
           border-top: 5px solid transparent;
 
-          &.active {
+          &.active,
+          &:active,
+          &:focus,
+          &:hover {
             border-top: 5px solid $main-nav-links;
           }
         }
@@ -291,6 +306,7 @@ header {
       .navbar-nav {
         .nav-item {
           margin: 0;
+          transition: border-color 0.2s ease-in-out;
 
           .dropdown-menu {
             .dropdown-item {
@@ -409,14 +425,14 @@ header {
         .navbar-nav.utility-nav {
           a,
           .nav-link {
-            color: $main-nav-links;
+            color: $text-default;
             padding-left: 0.5rem;
             padding-right: 0.5rem;
 
             &:active,
             &:focus,
             &:hover {
-              color: $main-nav-hover;
+              color: $primary;
               padding-left: 0.5rem;
               padding-right: 0.5rem;
             }
