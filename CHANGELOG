@@ -3,8 +3,8 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Liquid: 
+      - Don't present dropdown options when creating new issue/evidence from template if the options contain Liquid filters
     - Bug tracker items:
       - [item]
   - New integrations:
@@ -18,12 +18,14 @@
     - [report type]:
       - [future tense verb] [reporting enhancement]
   - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
+    - Upload: Add endpoint for uploading tool outputs
   - Security Fixes:
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v4.17.0 (Xxx 2025)
+  - Authentication: store current location before redirect
 
 v4.16.0 (May 2025)
   - Forms: Add a combobox for selecting, filtering, and creating options

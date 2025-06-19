@@ -220,6 +220,7 @@ mark {
   .nav-link {
     background-color: $secondary-bg;
     border: 1px solid $border-color;
+    color: $text-link;
     transition: all 0s ease-in-out;
 
     &.active {

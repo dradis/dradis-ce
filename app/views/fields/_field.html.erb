@@ -21,8 +21,8 @@
   </div>
   <div class="inline-editable">
     <div class="edit-hover">
-      <% options = value.split(' | ') %>
-      <% if @allow_dropdown && options.count > 1 %>
+      <% if render_dropdown?(value) %>
+        <% options = value.split(' | ') %>
         <%= select :item_form, "field_value_#{index}", options, {}, { class: 'form-control', data: { behavior: 'preview-enabled' }, tabindex: index + 1 } %>
       <% else %>
         <%= label_tag "item_form[field_value_#{index}]", 'Field Value', class: 'visually-hidden' %>
