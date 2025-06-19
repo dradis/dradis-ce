@@ -4,6 +4,8 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
+    - Calculators:
+      - Render Calculator links in tools menu
     - Liquid: 
       - Don't present dropdown options when creating new issue/evidence from template if the options contain Liquid filters
     - Bug tracker items:
