@@ -1,9 +1,9 @@
 [v#.#.#] ([month] [YYYY])
   - Ruby: Upgrade ruby version to 3.2.0
   - Upgraded gems:
-    - [gem]
+    - rails
   - Bugs fixes:
-    - Liquid: 
+    - Liquid:
       - Don't present dropdown options when creating new issue/evidence from template if the options contain Liquid filters
     - Bug tracker items:
       - [item]
