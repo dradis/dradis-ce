@@ -162,9 +162,12 @@ class ComboBox {
       ?.off('.combobox')
       .on('click.combobox', () => this.handleAddingCustomOption());
 
-    this.$filter
-      ?.off('.combobox')
-      .on('textchange.combobox', () => this.handleFiltering());
+    // Delegated event listener for the filter input
+    this.$comboboxMenu
+      .off('input.combobox', '[data-behavior~=combobox-filter]')
+      .on('input.combobox', '[data-behavior~=combobox-filter]', () => {
+        this.handleFiltering();
+      });
 
     this.$target.off('.combobox').on('change.combobox', (event) => {
       let $options = [];
@@ -184,6 +187,8 @@ class ComboBox {
           `[data-value="${$(event.currentTarget).val()}"]`
         );
       }
+
+      this.selectOptions($options);
 
       this.$combobox.toggleClass(
         'disabled',
@@ -264,7 +269,7 @@ class ComboBox {
   handleAddingCustomOption() {
     this.appendCustomOption(this.$filter.val());
     if (this.isMultiSelect) {
-      this.$filter?.val(null).trigger('textchange');
+      this.$filter?.val(null).trigger('input');
     } else {
       this.hideMenu();
     }
@@ -375,7 +380,7 @@ class ComboBox {
   hideMenu() {
     this.$comboboxMenu.css('display', 'none');
     this.$combobox.attr('aria-expanded', 'false');
-    this.$filter?.val(null).trigger('textchange');
+    this.$filter?.val(null).trigger('input');
   }
 
   isAlreadyInitialized() {

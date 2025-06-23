@@ -96,14 +96,19 @@
     border-color: $primary;
     color: $primary;
 
-    &:hover,
     &:focus,
     &:focus-visible,
     &:active,
     &:not(:disabled):not(.disabled):active {
-      color: $white;
       border-color: $primary;
       background: $primary;
+      color: $white;
+    }
+
+    &:hover {
+      background: $light;
+      border-color: $dark;
+      color: $dark;
     }
   }
 
@@ -270,6 +275,10 @@
     border-left-color: $primary;
     color: $grey-700;
     cursor: not-allowed;
+
+    &:last-child {
+      border-radius: 0;
+    }
   }
 }
 

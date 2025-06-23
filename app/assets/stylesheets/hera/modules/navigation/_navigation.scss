@@ -7,7 +7,6 @@ header {
       .navbar-brand {
         img {
           height: 2.425rem;
-          margin: 3px 0 -3px;
           padding: 0 15px;
         }
       }
@@ -118,13 +117,20 @@ header {
       @media (max-width: 991px) {
         padding: 0;
       }
+
+      @media (min-width: 992px) {
+        padding: 0 0.25rem;
+      }
+
+      @media (min-width: 1025px) {
+        padding: 0 1.5rem;
+      }
     }
 
     &.main-nav {
       background-color: $main-nav-bg;
       border-bottom: 1px solid $main-nav-border;
       padding: 0;
-      transition: border-color 0s;
 
       &:has(.navbar-collapse.show),
       &:has(.navbar-collapse.collapsing) {
@@ -176,11 +182,17 @@ header {
         border-top: 1px solid $main-nav-border;
       }
 
+      .nav-item {
+        border-top: 5px transparent;
+        transition: border-color 0.2s ease-in-out;
+      }
+
       .nav-link {
         padding: calc(var(--padding) / 2);
       }
 
       .navbar-collapse {
+        align-self: flex-start;
         background-color: $main-nav-bg;
       }
 
@@ -223,8 +235,13 @@ header {
           }
         }
 
-        .nav-item.active {
-          border-top: 5px solid transparent;
+        .nav-item {
+          &.active,
+          &:active,
+          &:focus,
+          &:hover {
+            border-top: 5px solid transparent;
+          }
         }
 
         @media (min-width: 992px) {
@@ -240,9 +257,13 @@ header {
           padding-bottom: 0;
         }
 
-        .nav-item.dropdown {
-          .nav-link.show {
-            background-color: lighten($main-nav-bg, 10%);
+        .nav-item {
+          border-top: 5px solid transparent;
+
+          &.dropdown {
+            .nav-link.show {
+              background-color: lighten($main-nav-bg, 10%);
+            }
           }
         }
       }
@@ -251,7 +272,10 @@ header {
         .nav-item {
           border-top: 5px solid transparent;
 
-          &.active {
+          &.active,
+          &:active,
+          &:focus,
+          &:hover {
             border-top: 5px solid $main-nav-links;
           }
         }
@@ -282,6 +306,7 @@ header {
       .navbar-nav {
         .nav-item {
           margin: 0;
+          transition: border-color 0.2s ease-in-out;
 
           .dropdown-menu {
             .dropdown-item {
@@ -319,6 +344,11 @@ header {
             }
 
             @media (min-width: 992px) {
+              padding-left: 0.7rem;
+              padding-right: 0.7rem;
+            }
+
+            @media (min-width: 1025px) {
               padding-left: 1rem;
               padding-right: 1rem;
             }
@@ -344,8 +374,8 @@ header {
 
               .nav-link {
                 color: $text-link;
-                padding-left: 1rem;
-                padding-right: 1rem;
+                padding-left: 0.7rem;
+                padding-right: 0.7rem;
               }
             }
 
@@ -355,6 +385,18 @@ header {
 
             &:last-child {
               margin-right: 0;
+            }
+          }
+
+          @media (min-width: 1025px) {
+            &.active,
+            &:active,
+            &:focus,
+            &:hover {
+              .nav-link {
+                padding-left: 1rem;
+                padding-right: 1rem;
+              }
             }
           }
         }
@@ -380,19 +422,17 @@ header {
       }
 
       @media (min-width: 992px) {
-        padding: 0 1rem;
-
         .navbar-nav.utility-nav {
           a,
           .nav-link {
-            color: $main-nav-links;
+            color: $text-default;
             padding-left: 0.5rem;
             padding-right: 0.5rem;
 
             &:active,
             &:focus,
             &:hover {
-              color: $main-nav-hover;
+              color: $primary;
               padding-left: 0.5rem;
               padding-right: 0.5rem;
             }
