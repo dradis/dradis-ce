@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/dradis/dradis-calculator_mitre.git
+  revision: a6d84665d102695f383bda49e0058ebf2140f880
+  specs:
+    dradis-calculator_mitre (1.0.0)
+      dradis-plugins (~> 4.0)
+
+GIT
   remote: https://github.com/dradis/dradis-plugins.git
   revision: e554147b15d18aef404905c0815a05a3261a12f4
   branch: fix/missing-constant
@@ -336,7 +343,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.8-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.18.8-x86_64-linux-gnu)
+    nokogiri (1.18.8-x86_64-linux)
       racc (~> 1.4)
     notiffany (0.1.3)
       nenv (~> 0.1)
@@ -513,7 +520,8 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.2)
+    sqlite3 (2.7.0)
+      mini_portile2 (~> 2.8.0)
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     stringio (3.1.1)
@@ -581,6 +589,7 @@ DEPENDENCIES
   dradis-burp (~> 4.16.0)
   dradis-calculator_cvss (~> 4.16.0)
   dradis-calculator_dread (~> 4.16.0)
+  dradis-calculator_mitre!
   dradis-coreimpact (~> 4.16.0)
   dradis-csv (~> 4.16.1)
   dradis-csv_export (~> 4.16.0)
