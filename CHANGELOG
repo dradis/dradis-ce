@@ -9,6 +9,7 @@
       - Render Calculator links in tools menu
     - Liquid: 
       - Don't present dropdown options when creating new issue/evidence from template if the options contain Liquid filters
+    - Mailer: Fix email footer always redirecting to tester login
     - Quote Selector:
       - Scroll to comment box in Safari after selecting quote content
     - Bug tracker items:
