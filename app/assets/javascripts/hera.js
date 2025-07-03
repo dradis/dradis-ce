@@ -3,7 +3,7 @@
 //= require rails-ujs
 //= require jquery.form
 //= require jquery.textchange.min
-//= require jquery.textile
+// require jquery.textile
 //= require jquery-fileupload
 //= require jquery-hotkeys
 //= require d3-4.0.0
@@ -20,8 +20,8 @@
 //= require hera/modules/comments
 //= require hera/modules/console_updater
 //= require hera/modules/differ
-//= require hera/modules/editor_toolbar
-//= require hera/modules/quote_selector
+// require hera/modules/editor_toolbar
+// require hera/modules/quote_selector
 //= require hera/modules/mentions
 //= require hera/modules/notifications
 //= require hera/modules/rtp_validation

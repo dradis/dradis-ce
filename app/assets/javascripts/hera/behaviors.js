@@ -63,7 +63,7 @@ document.addEventListener('turbo:load', function () {
 (function ($, window) {
   function initBehaviors(parentElement) {
     // Activate jQuery.Textile
-    $(parentElement).find('.textile').textile();
+    // $(parentElement).find('.textile').textile();
 
     // Activate DataTables
     $(parentElement)
@@ -73,18 +73,18 @@ document.addEventListener('turbo:load', function () {
       });
 
     // Activate Rich Toolbars for the editor
-    $(parentElement)
-      .find('[data-behavior~=rich-toolbar]')
-      .each(function () {
-        new EditorToolbar($(this));
+    // $(parentElement)
+    //   .find('[data-behavior~=rich-toolbar]')
+    //   .each(function () {
+    //     new EditorToolbar($(this));
 
-        // Activate QuoteSelector after Rich toolbars
-        // This can be globally scoped because the QuoteSelector does not allow
-        // double binding
-        $('[data-behavior~=content-textile]').each(function () {
-          new QuoteSelector(this);
-        });
-      });
+    //     // Activate QuoteSelector after Rich toolbars
+    //     // This can be globally scoped because the QuoteSelector does not allow
+    //     // double binding
+    //     $('[data-behavior~=content-textile]').each(function () {
+    //       new QuoteSelector(this);
+    //     });
+    //   });
 
     // Activate local auto save
     $(parentElement)
@@ -210,13 +210,13 @@ document.addEventListener('turbo:load', function () {
   //
   // In particular we're after jquery.textile forms that get rendered post page
   // load via ajax.
-  $(document).on('textile:formLoaded', '.textile-form', function (event) {
-    // We trigger a single formLoaded event for the containing form, but we
-    // have to attach EditorToolbar to individual textareas within it.
-    $(event.target)
-      .find('[data-behavior~=rich-toolbar]')
-      .each(function () {
-        new EditorToolbar($(this));
-      });
-  });
+  // $(document).on('textile:formLoaded', '.textile-form', function (event) {
+  //   // We trigger a single formLoaded event for the containing form, but we
+  //   // have to attach EditorToolbar to individual textareas within it.
+  //   $(event.target)
+  //     .find('[data-behavior~=rich-toolbar]')
+  //     .each(function () {
+  //       new EditorToolbar($(this));
+  //     });
+  // });
 })($, window);
