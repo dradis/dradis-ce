@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/dradis/dradis-calculator_mitre.git
+  revision: a6d84665d102695f383bda49e0058ebf2140f880
+  specs:
+    dradis-calculator_mitre (1.0.0)
+      dradis-plugins (~> 4.0)
+
+GIT
   remote: https://github.com/dradis/dradis-plugins.git
   revision: e554147b15d18aef404905c0815a05a3261a12f4
   branch: fix/missing-constant
@@ -581,6 +588,7 @@ DEPENDENCIES
   dradis-burp (~> 4.16.0)
   dradis-calculator_cvss (~> 4.16.0)
   dradis-calculator_dread (~> 4.16.0)
+  dradis-calculator_mitre!
   dradis-coreimpact (~> 4.16.0)
   dradis-csv (~> 4.16.1)
   dradis-csv_export (~> 4.16.0)
