@@ -2,7 +2,7 @@
   - Calculators: Add MITRE ATT&CK
   - Hera: Update brand colors
   - Upgraded gems:
-    - [gem]
+    - sqlite3
   - Bugs fixes:
     - Calculators:
       - Render Calculator links in tools menu
