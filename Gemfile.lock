@@ -657,7 +657,7 @@ DEPENDENCIES
   sinatra (~> 2.2.3)
   spring
   sprockets-rails (>= 3.0.0)
-  sqlite3
+  sqlite3 (~> 2.7)
   stimulus-rails
   terser (~> 1.1)
   thor (~> 1.2.1)
