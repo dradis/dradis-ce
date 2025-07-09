@@ -1,6 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Calculators: Add MITRE ATT&CK
   - Hera: Update brand colors
+  - Logs: Update logs to use string UUIDs
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
