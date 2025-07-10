@@ -1,4 +1,5 @@
-[v#.#.#] ([month] [YYYY])
+v4.17.0 (July 2025)
+  - Authentication: store current location before redirect
   - Calculators: Add MITRE ATT&CK
   - Hera: Update brand colors
   - Upgraded gems:
@@ -28,9 +29,6 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-
-v4.17.0 (Xxx 2025)
-  - Authentication: store current location before redirect
 
 v4.16.0 (May 2025)
   - Forms: Add a combobox for selecting, filtering, and creating options
