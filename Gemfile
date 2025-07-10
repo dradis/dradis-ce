@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.2.0'
+ruby '3.4.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 8.0.2'
@@ -144,6 +144,8 @@ gem 'net-imap', '>= 0.5.7'
 
 gem 'puma', '>= 6.5.0'
 
+gem 'csv'
+
 # ------------------------------------------------------------------ Deployment
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -176,7 +178,7 @@ group :development do
   # security
   gem 'brakeman', require: false
   gem 'bundler-audit', require: false
-  gem 'ruby_audit', require: false
+  gem 'ruby_audit', '~> 3.0.0', require: false
 
   gem 'rubocop', require: false
 end
