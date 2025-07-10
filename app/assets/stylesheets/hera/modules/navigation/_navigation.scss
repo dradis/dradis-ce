@@ -158,8 +158,6 @@ header {
           &:active,
           &:focus,
           &:hover {
-            background-color: $main-nav-bg;
-
             .dropdown-item {
               background-color: lighten($main-nav-bg, 10%);
               color: $text-default;
@@ -193,7 +191,6 @@ header {
 
       .navbar-collapse {
         align-self: flex-start;
-        background-color: $main-nav-bg;
       }
 
       .navbar-nav:not(.utility-nav) {
