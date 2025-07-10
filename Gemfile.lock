@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/dradis/dradis-calculator_mitre.git
+  revision: a6d84665d102695f383bda49e0058ebf2140f880
+  specs:
+    dradis-calculator_mitre (1.0.0)
+      dradis-plugins (~> 4.0)
+
+GIT
   remote: https://github.com/dradis/dradis-plugins.git
   revision: e554147b15d18aef404905c0815a05a3261a12f4
   branch: fix/missing-constant
@@ -522,7 +529,7 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (2.6.0)
+    sqlite3 (2.7.2)
       mini_portile2 (~> 2.8.0)
     sqlite3 (2.6.0-arm64-darwin)
     sqlite3 (2.6.0-x86_64-darwin)
@@ -597,6 +604,7 @@ DEPENDENCIES
   dradis-burp (~> 4.16.0)
   dradis-calculator_cvss (~> 4.16.0)
   dradis-calculator_dread (~> 4.16.0)
+  dradis-calculator_mitre!
   dradis-coreimpact (~> 4.16.0)
   dradis-csv (~> 4.16.1)
   dradis-csv_export (~> 4.16.0)
