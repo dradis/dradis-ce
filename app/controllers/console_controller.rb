@@ -4,7 +4,7 @@
 # for a specific job
 class ConsoleController < AuthenticatedController
   def status
-    @job_id = params[:item_id].to_i
+    @job_id = params[:item_id]
     @logs = Log.where(
       'uid = ? and id > ?',
       @job_id, params[:after].to_i
