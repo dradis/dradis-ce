@@ -2,6 +2,7 @@ v4.17.0 (July 2025)
   - Authentication: store current location before redirect
   - Calculators: Add MITRE ATT&CK
   - Hera: Update brand colors
+  - Logs: Update logs to use string UIDs
   - Upgraded gems:
     - sqlite3
   - Bugs fixes:
