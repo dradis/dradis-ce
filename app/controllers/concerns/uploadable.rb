@@ -14,7 +14,7 @@ module Uploadable
 
     job_logger.write 'Enqueueing job to start in the background.'
 
-    uid = is_api? ? job_logger.id : upload_params[:item_id]
+    uid = is_api? ? job_logger.uid : upload_params[:item_id]
 
     # NOTE: call the bg job as last thing in the action helps us
     # avoid SQLite3::BusyException when using sqlite and
