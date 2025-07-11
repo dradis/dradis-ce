@@ -235,6 +235,7 @@ end
 
 gem 'dradis-calculator_cvss', github: 'dradis/dradis-calculator_cvss', branch: 'release-4.17.0'
 gem 'dradis-calculator_dread', github: 'dradis/dradis-calculator_dread', branch: 'release-4.17.0'
+gem 'dradis-calculator_mitre', github: 'dradis/dradis-calculator_mitre', branch: 'release-4.17.0'
 
 # ---------------------------------------------------------------------- Export
 gem 'dradis-csv_export', github: 'dradis/dradis-csv_export', branch: 'release-4.17.0'
