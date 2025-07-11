@@ -41,6 +41,14 @@ GIT
       dradis-plugins (~> 4.0)
 
 GIT
+  remote: https://github.com/dradis/dradis-calculator_mitre.git
+  revision: 5ecd00be96adb1f47f40fce45b3823c22052c242
+  branch: release-4.17.0
+  specs:
+    dradis-calculator_mitre (4.17.0)
+      dradis-plugins (~> 4.0)
+
+GIT
   remote: https://github.com/dradis/dradis-coreimpact.git
   revision: 3e97b0efa416ecec776eb5964fca2c9acd008cab
   branch: release-4.17.0
@@ -735,6 +743,7 @@ DEPENDENCIES
   dradis-burp!
   dradis-calculator_cvss!
   dradis-calculator_dread!
+  dradis-calculator_mitre!
   dradis-coreimpact!
   dradis-csv!
   dradis-csv_export!
