@@ -54,6 +54,8 @@ div.dataTables_wrapper {
         }
 
         &.selected {
+          color: $text-default;
+
           a {
             color: $text-link;
 
