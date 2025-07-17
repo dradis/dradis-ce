@@ -189,7 +189,7 @@ document.addEventListener('turbo:load', function () {
       axis: 'y',
       containment: 'parent',
       cursor: 'grabbing',
-      handle: '.fa-grip-vertical',
+      handle: '.fa-reorder',
       update: function () {
         $.post(
           $(this).data('sort-url'),
