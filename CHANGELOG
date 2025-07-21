@@ -3,7 +3,7 @@ v4.17.0 (July 2025)
   - Calculators: Add MITRE ATT&CK
   - Hera: Update brand colors
   - Logs: Update logs to use string UIDs
-  - Upgraded gems: sqlite3
+  - Upgraded gems: nokogiri, sqlite3
   - Bugs fixes:
     - Calculators: Render Calculator links in tools menu
     - Liquid: Don't present dropdown options when creating new issue/evidence from template if the options contain Liquid filters
