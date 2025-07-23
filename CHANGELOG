@@ -1,3 +1,16 @@
+v4.17.0 (July 2025)
+  - Authentication: store current location before redirect
+  - Calculators: Add MITRE ATT&CK
+  - Hera: Update brand colors
+  - Logs: Update logs to use string UIDs
+  - Upgraded gems: nokogiri, sqlite3
+  - Bugs fixes:
+    - Calculators: Render Calculator links in tools menu
+    - Liquid: Don't present dropdown options when creating new issue/evidence from template if the options contain Liquid filters
+    - Quote Selector: Scroll to comment box in Safari after selecting quote content
+  - REST/JSON API enhancements:
+    - Upload: Add endpoint for uploading tool outputs
+
 v4.16.0 (May 2025)
   - Forms: Add a combobox for selecting, filtering, and creating options
   - Hera: Add new layout with redesigned navigation
