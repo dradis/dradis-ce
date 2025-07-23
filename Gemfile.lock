@@ -513,7 +513,7 @@ GEM
     stringio (3.1.1)
     terser (1.1.15)
       execjs (>= 0.3.0, < 3)
-    thor (1.2.2)
+    thor (1.4.0)
     tilt (2.0.11)
     time (0.2.2)
       date
@@ -646,7 +646,7 @@ DEPENDENCIES
   sqlite3
   stimulus-rails
   terser (~> 1.1)
-  thor (~> 1.2.1)
+  thor (~> 1.4.0)
   time (>= 0.2.2)
   timecop
   turbo-rails (~> 2.0)
