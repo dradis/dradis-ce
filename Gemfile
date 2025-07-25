@@ -177,7 +177,9 @@ group :development do
 
   # security
   gem 'brakeman', require: false
+  # required by brakeman
   gem 'abbrev'
+
   gem 'bundler-audit', require: false
   gem 'ruby_audit', '~> 3.0.0', require: false
 
@@ -193,7 +195,7 @@ end
 
 group :test do
   gem 'database_cleaner'
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '~> 6.5'
   gem 'capybara', '~> 3.40'
   gem 'guard-rspec', require: false
   gem 'selenium-webdriver', '~> 4.29'
