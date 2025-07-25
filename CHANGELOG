@@ -1,7 +1,7 @@
 [v#.#.#] ([month] [YYYY])
   - Font: Improve language support
   - Upgraded gems:
-    - [gem]
+    - thor
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
