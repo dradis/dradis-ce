@@ -26,7 +26,7 @@ class UploadController < AuthenticatedController
     @attachment.save
 
     @success = true
-    @item_id = Log.new.uid + 1
+    @item_id = Log.new.uid
     flash.now[:notice] = "Successfully uploaded #{ filename }"
   end
 
@@ -54,7 +54,7 @@ class UploadController < AuthenticatedController
   private
 
   def job_logger
-    @job_logger ||= Log.new(uid: upload_params[:item_id].to_i)
+    @job_logger ||= Log.new(uid: upload_params[:item_id])
   end
 
   def upload_params
