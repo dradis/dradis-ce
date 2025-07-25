@@ -110,7 +110,7 @@ gem 'rinku'
 gem 'sanitize', '6.0.2'
 
 # SQLite3 DB driver
-gem 'sqlite3', '~> 2.6.0'
+gem 'sqlite3'
 gem 'pg'
 
 # --------------------------------------------------------- Dradis Professional
@@ -177,6 +177,7 @@ group :development do
 
   # security
   gem 'brakeman', require: false
+  gem 'abbrev'
   gem 'bundler-audit', require: false
   gem 'ruby_audit', '~> 3.0.0', require: false
 
