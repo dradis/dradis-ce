@@ -478,9 +478,11 @@ class ComboBox {
       `[data-value="${this.$target.val()}"]`
     );
 
-    $initialOption = $initialOption.length
-      ? $initialOption
-      : this.$comboboxOptions.first();
+    if (!this.isMultiSelect) {
+      $initialOption = $initialOption.length
+        ? $initialOption
+        : this.$comboboxOptions.first();
+    }
 
     this.selectOptions($initialOption);
     this.$combobox.toggleClass(
