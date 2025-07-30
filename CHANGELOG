@@ -25,6 +25,9 @@
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
+v4.17.1 (July 2025)
+  - No changes
+
 v4.17.0 (July 2025)
   - Authentication: store current location before redirect
   - Calculators: Add MITRE ATT&CK
