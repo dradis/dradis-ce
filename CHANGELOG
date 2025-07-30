@@ -3,6 +3,7 @@
   - Upgraded gems:
     - thor
   - Bugs fixes:
+    - Combobox: Fix forcing the selection of the first available option for multi-select forms
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
