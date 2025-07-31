@@ -111,7 +111,7 @@ gem 'sanitize', '6.0.2'
 
 # SQLite3 DB driver
 gem 'sqlite3'
-gem 'pg'
+# gem 'pg'
 
 # --------------------------------------------------------- Dradis Professional
 # Authorisation
@@ -221,7 +221,7 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 4.17.0'
+gem 'dradis-plugins', github: 'dradis/dradis-plugins', branch: 'rails/upgrade-3.4'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 

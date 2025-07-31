@@ -1,7 +1,14 @@
+GIT
+  remote: https://github.com/dradis/dradis-plugins.git
+  revision: a73881780a578123477b83d27bddf5ab53f09638
+  branch: rails/upgrade-3.4
+  specs:
+    dradis-plugins (4.17.0)
+
 PATH
   remote: engines/dradis-api
   specs:
-    dradis-api (4.17.0)
+    dradis-api (4.17.1)
       jbuilder
 
 GEM
@@ -189,7 +196,6 @@ GEM
       dradis-plugins (~> 4.0)
     dradis-pentera (4.17.0)
       dradis-plugins (~> 4.0)
-    dradis-plugins (4.17.0)
     dradis-projects (4.17.0)
       dradis-plugins (>= 4.8.0)
       rubyzip
@@ -347,7 +353,6 @@ GEM
       racc
     parslet (1.6.2)
       blankslate (>= 2.0, <= 4.0)
-    pg (1.4.5)
     popper_js (2.11.7)
     pp (0.6.2)
       prettyprint
@@ -614,7 +619,7 @@ DEPENDENCIES
   dradis-ntospider (~> 4.17.0)
   dradis-openvas (~> 4.17.0)
   dradis-pentera (~> 4.17.0)
-  dradis-plugins (~> 4.17.0)
+  dradis-plugins!
   dradis-projects (~> 4.17.0)
   dradis-qualys (~> 4.17.0)
   dradis-saint (~> 4.17.0)
@@ -646,7 +651,6 @@ DEPENDENCIES
   nokogiri (>= 1.18.9)
   paper_trail (~> 16.0)
   parslet (~> 1.6.0)
-  pg
   puma (>= 6.5.0)
   rack-mini-profiler (~> 2.0)
   rails (~> 8.0.2)
