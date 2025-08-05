@@ -1,0 +1,4 @@
+#!/bin/bash -e
+echo 'Preparing the database...'
+./bin/rails db:prepare
+exec "${@}"
