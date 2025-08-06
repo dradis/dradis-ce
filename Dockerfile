@@ -1,5 +1,6 @@
+ARG RUBY_VERSION=3.4.4
 # We're sticking to non-slim version: https://hub.docker.com/_/ruby/
-FROM --platform=linux/amd64 ruby:3.4.4
+FROM ruby:${RUBY_VERSION}
 
 WORKDIR /app
 
@@ -21,11 +22,7 @@ RUN mkdir -p attachments/
 RUN mkdir -p config/shared/
 RUN mkdir -p templates/
 
-# Is this only needed because M1 build?
-RUN bundle config build.ffi --enable-libffi-alloc
-
 # Installing dependencies
-RUN gem update --system
 RUN bundle install
 
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
@@ -40,5 +37,4 @@ ENTRYPOINT ["/app/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-# CMD ["./bin/rails", "server"]
 CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]

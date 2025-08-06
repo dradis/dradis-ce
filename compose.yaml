@@ -1,0 +1,14 @@
+name: "dradis-ce-production"
+
+services:
+  web:
+    build:
+      context: .
+      platforms:
+      - linux/amd64
+    volumes:
+    - dradis-ce-db:/app/db
+    ports:
+    - 3000:3000
+volumes:
+  dradis-ce-db:
