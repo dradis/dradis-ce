@@ -12,6 +12,7 @@
 
 class UserPreferences
   include ActiveModel::Conversion
+  extend ActiveModel::Naming
 
   VALID_TOURS = %i[first_sign_in projects_show].freeze
   DIGEST_FREQUENCIES = %w[none instant daily].freeze
