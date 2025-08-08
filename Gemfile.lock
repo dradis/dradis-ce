@@ -1,7 +1,23 @@
+GIT
+  remote: https://github.com/dradis/dradis-plugins.git
+  revision: a73881780a578123477b83d27bddf5ab53f09638
+  branch: rails/upgrade-3.4
+  specs:
+    dradis-plugins (4.17.0)
+
+GIT
+  remote: https://github.com/dradis/dradis-projects.git
+  revision: 1c7e05f72377981fc9eca70bda177db9298d599f
+  branch: rails/upgrade-3.4
+  specs:
+    dradis-projects (4.17.0)
+      dradis-plugins (>= 4.8.0)
+      rubyzip
+
 PATH
   remote: engines/dradis-api
   specs:
-    dradis-api (4.17.0)
+    dradis-api (4.17.1)
       jbuilder
 
 GEM
@@ -189,10 +205,6 @@ GEM
       dradis-plugins (~> 4.0)
     dradis-pentera (4.17.0)
       dradis-plugins (~> 4.0)
-    dradis-plugins (4.17.0)
-    dradis-projects (4.17.0)
-      dradis-plugins (>= 4.8.0)
-      rubyzip
     dradis-qualys (4.17.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
@@ -613,8 +625,8 @@ DEPENDENCIES
   dradis-ntospider (~> 4.17.0)
   dradis-openvas (~> 4.17.0)
   dradis-pentera (~> 4.17.0)
-  dradis-plugins (~> 4.17.0)
-  dradis-projects (~> 4.17.0)
+  dradis-plugins!
+  dradis-projects!
   dradis-qualys (~> 4.17.0)
   dradis-saint (~> 4.17.0)
   dradis-veracode (~> 4.17.0)
