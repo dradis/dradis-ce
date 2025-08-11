@@ -1,14 +1,17 @@
+# Accept build arguments and set default values
+# BUNDLE_WITHOUT can be overridden at build time to build a development image
+# e.g. docker build --build-arg BUNDLE_WITHOUT="""
+ARG BUNDLE_WITHOUT=development:test
 ARG RUBY_VERSION=3.4.4
+
 # We're sticking to non-slim version: https://hub.docker.com/_/ruby/
 FROM ruby:${RUBY_VERSION}
 
 WORKDIR /app
 
-ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
+ENV BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development" \
-    RAILS_SERVE_STATIC_FILES="enabled"
+    BUNDLE_WITHOUT=${BUNDLE_WITHOUT}
 
 # Copying dradis-ce app
 COPY . .
@@ -37,4 +40,4 @@ ENTRYPOINT ["/app/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+CMD ["bundle", "exec", "rails", "server"]

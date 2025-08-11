@@ -3,9 +3,12 @@ name: "dradis-ce-production"
 services:
   web:
     image: dradis/dradis-ce:latest
+    environment:
+      - RAILS_ENV=production
+      - RAILS_SERVE_STATIC_FILES=enabled
     volumes:
-    - dradis-ce-db:/app/db
+      - dradis-ce-db:/app/db
     ports:
-    - 3000:3000
+      - 3000:3000
 volumes:
   dradis-ce-db:
