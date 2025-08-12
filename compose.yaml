@@ -2,13 +2,34 @@ name: "dradis-ce-production"
 
 services:
   web:
-    image: dradis/dradis-ce:latest
+    # image: dradis/dradis-ce:latest
+    build:
+      context: .
+      platforms:
+        - linux/amd64
+      args:
+        # Build arguments:
+        SSL_CERT_DIR: ${SSL_CERT_DIR}
     environment:
-      - RAILS_ENV=production
-      - RAILS_SERVE_STATIC_FILES=enabled
+      # Runtime environment variables:
+      - RAILS_ENV=${RAILS_ENV}
+      - RAILS_SERVE_STATIC_FILES=${RAILS_SERVE_STATIC_FILES}
+      - RAILS_X_SENDFILE_HEADER=${RAILS_X_SENDFILE_HEADER} # set to nil for use without reverse proxy
+      - SSL_KEY_FILE=${SSL_KEY_FILE}
+      - SSL_CERT_FILE=${SSL_CERT_FILE}
+      - SERVER_IP=${SERVER_IP:-localhost} # default to localhost if not set. Used in entrypoint script.
     volumes:
+      # named volume for the database
       - dradis-ce-db:/app/db
+      # named volume for self-signed SSL certificates
+      - dradis-ce-ssl:${SSL_CERT_DIR}
     ports:
       - 3000:3000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-k", "https://localhost:3000/up"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 volumes:
   dradis-ce-db:
+  dradis-ce-ssl:
