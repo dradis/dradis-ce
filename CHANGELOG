@@ -1,6 +1,6 @@
 [v#.#.#] ([month] [YYYY])
   - Hera: Add new layout with redesigned navigation
-  - Activities: Include methodology name in all methodology actions and clean up syntax
+  - Activities: Include methodology name in all methodology actions
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
