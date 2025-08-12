@@ -15,9 +15,9 @@ services:
       - RAILS_ENV=${RAILS_ENV}
       - RAILS_SERVE_STATIC_FILES=${RAILS_SERVE_STATIC_FILES}
       - RAILS_X_SENDFILE_HEADER=${RAILS_X_SENDFILE_HEADER} # set to nil for use without reverse proxy
-      - SSL_KEY_FILE=${SSL_KEY_FILE}
+      - SERVER_IP=${SERVER_IP:-localhost}
       - SSL_CERT_FILE=${SSL_CERT_FILE}
-      - SERVER_IP=${SERVER_IP:-localhost} # default to localhost if not set. Used in entrypoint script.
+      - SSL_KEY_FILE=${SSL_KEY_FILE}
     volumes:
       # named volume for the database
       - dradis-ce-db:/app/db
