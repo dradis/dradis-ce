@@ -2,8 +2,8 @@ module Dradis
   module CE #:nodoc:
     module VERSION #:nodoc:
       MAJOR = 4
-      MINOR = 15
-      TINY  = 0
+      MINOR = 17
+      TINY  = 1
       PRE = nil
 
       STRING = [[MAJOR, MINOR, TINY].join('.'), PRE].compact.join('-')

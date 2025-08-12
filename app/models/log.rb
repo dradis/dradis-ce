@@ -2,7 +2,7 @@ class Log < ApplicationRecord
   after_initialize :set_uid
 
   def set_uid
-    self.uid ||= (Log.maximum(:uid) || 0) + 1
+    self.uid ||= SecureRandom.uuid
   end
 
   def write(trace = nil, &block)

@@ -1,4 +1,4 @@
-document.addEventListener('turbolinks:load', function () {
+document.addEventListener('turbo:load', function () {
   $('[data-behavior~=liquid-async]').each(function () {
     const that = this,
       data = { text: $(that).attr('data-content') },

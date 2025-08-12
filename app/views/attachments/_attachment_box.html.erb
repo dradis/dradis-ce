@@ -63,7 +63,7 @@
         <div class="fileupload-buttonbar">
           <p class="fileinput-button">
             <label for="file-upload">choose file</label>
-            <input type="file" name="files[]" id="file-upload" multiple>          
+            <input type="file" name="files[]" id="file-upload" multiple>
           </p>
         </div>
         <!-- The loading indicator is shown during image processing -->
@@ -112,7 +112,7 @@
   {% for (var i=0, file; file=o.files[i]; i++) { %}
       <tr class="template-download fade show">
         <td colspan="4">
-          <table>
+          <table class="file">
             <tr>
               {% if (file.error) { %}
                 <td class="name"><span>{%=file.name%}</span></td>
@@ -150,11 +150,6 @@
                   </button>
                 </td>
               {% } %}
-            </tr>
-            <tr>
-              <td class="size">
-                <span>{%=o.formatFileSize(file.size)%}</span>
-              </td>
             </tr>
           </table>
         </td>

@@ -1,8 +1,8 @@
 [v#.#.#] ([month] [YYYY])
-  - Hera: Add new layout with redesigned navigation
   - Activities: Include methodology name in all methodology actions
+  - Font: Improve language support
   - Upgraded gems:
-    - [gem]
+    - thor
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
@@ -26,6 +26,37 @@
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
+v4.17.1 (July 2025)
+  - No changes
+
+v4.17.0 (July 2025)
+  - Authentication: store current location before redirect
+  - Calculators: Add MITRE ATT&CK
+  - Hera: Update brand colors
+  - Logs: Update logs to use string UIDs
+  - Upgraded gems: nokogiri, sqlite3
+  - Bugs fixes:
+    - Calculators: Render Calculator links in tools menu
+    - Liquid: Don't present dropdown options when creating new issue/evidence from template if the options contain Liquid filters
+    - Quote Selector: Scroll to comment box in Safari after selecting quote content
+  - REST/JSON API enhancements:
+    - Upload: Add endpoint for uploading tool outputs
+
+v4.16.0 (May 2025)
+  - Forms: Add a combobox for selecting, filtering, and creating options
+  - Hera: Add new layout with redesigned navigation
+  - Navigation: Replace Turbolinks with Hotwire
+  - Revisions: Show state changes in the revisions view
+  - QA:
+    - Add View History link when viewing Issues/Content blocks
+    - Automatically go to the next record after reviewing
+  - Upgraded gems:
+    - capybara, net-imap, nokogiri, paper_trail, rack, rails, rails-html-sanitizer, rexml, rspec-rails, selenium-webdriver
+  - Reporting enhancements:
+    - Export: Default export button to 'All' if all records in project are in 'draft' state
+  - REST/JSON API enhancements:
+    - Nodes: include Node properties
+
 v4.15.0 (December 2024)
   - Tags: Add custom ordering
   - Welcome Kit:
@@ -34,7 +65,7 @@ v4.15.0 (December 2024)
     - Update OWASP Top 10 methodology to latest version (2021)
   - Upgraded gems:
     - rails, rexml
-  - Integration enhancements: 
+  - Integration enhancements:
     - Qualys: Add `cvss3_base`, `cvss3_temporal`, and `cvss3_version` as available vuln fields
   - Security Fixes:
     - High: Authenticated (author) persistent cross-site scripting

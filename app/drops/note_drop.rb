@@ -1,3 +1,5 @@
 class NoteDrop < BaseDrop
-  delegate :fields, :text, :title, :updated_at, to: :@record
+  include EscapedFields
+
+  delegate :text, :title, :updated_at, to: :@record
 end
