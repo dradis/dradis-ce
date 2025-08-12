@@ -5,8 +5,6 @@ echo 'Preparing the database...'
 if [ ! -f $SSL_KEY_FILE ] || [ ! -f $SSL_CERT_FILE ]; then
   echo 'SSL certificates not found, generating self-signed certificates...'
 
-  echo "server_ip: $SERVER_IP"
-
   openssl req -x509 \
     -newkey rsa:4096 \
     -nodes \
