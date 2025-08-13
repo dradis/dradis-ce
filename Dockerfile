@@ -2,7 +2,7 @@ ARG RUBY_VERSION=3.4.4
 # We're sticking to non-slim version: https://hub.docker.com/_/ruby/
 FROM ruby:${RUBY_VERSION}
 
-# Define acceptable build arguments (must be set AFTER the FROM line):
+# Define acceptable build arguments & their default values (must be set AFTER the FROM line):
 ARG SSL_CERT_DIR=/etc/ssl/dradis.local
 ARG SSL_CERT_FILE=${SSL_CERT_DIR}/bundle.dradis.local.crt
 ARG SSL_KEY_FILE=${SSL_CERT_DIR}/dradis.local.key
