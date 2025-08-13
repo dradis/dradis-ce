@@ -11,8 +11,8 @@ if [ ! -f $SSL_KEY_FILE ] || [ ! -f $SSL_CERT_FILE ]; then
     -keyout $SSL_KEY_FILE \
     -out $SSL_CERT_FILE \
     -days 3650 \
-    -subj "/C=GB/ST=London/L=London/O=Security Roots Ltd/OU=Dradis CE/CN=$SERVER_IP" \
-    -addext "subjectAltName=DNS:$SERVER_IP"
+    -subj "/C=GB/ST=London/L=London/O=Security Roots Ltd/OU=Dradis CE/CN=localhost" \
+    -addext "subjectAltName=DNS:localhost"
 
 else
   echo 'SSL certificates found, skipping generation...'

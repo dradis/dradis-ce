@@ -3,14 +3,20 @@ ARG RUBY_VERSION=3.4.4
 FROM ruby:${RUBY_VERSION}
 
 # Define acceptable build arguments (must be set AFTER the FROM line):
-ARG SSL_CERT_DIR
+ARG SSL_CERT_DIR=/etc/ssl/dradis.local
+ARG SSL_CERT_FILE=${SSL_CERT_DIR}/bundle.dradis.local.crt
+ARG SSL_KEY_FILE=${SSL_CERT_DIR}/dradis.local.key
 
 WORKDIR /app
 
-ENV BUNDLE_DEPLOYMENT="1" \
+ENV RAILS_ENV="production" \
+    RAILS_SERVE_STATIC_FILES="enabled" \
+    BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development" \
-    SSL_CERT_DIR=${SSL_CERT_DIR}
+    SSL_CERT_DIR=${SSL_CERT_DIR} \
+    SSL_CERT_FILE=${SSL_CERT_FILE} \
+    SSL_KEY_FILE=${SSL_KEY_FILE}
 
 # Copying dradis-ce app
 COPY . .
@@ -46,4 +52,3 @@ ENTRYPOINT ["/app/bin/docker-entrypoint"]
 EXPOSE 3000
 # CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
-

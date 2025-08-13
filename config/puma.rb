@@ -35,14 +35,13 @@ worker_timeout 3600 if ENV.fetch('RAILS_ENV', 'development') == 'development'
 # Specifies the `environment` that Puma will run in.
 environment ENV.fetch('RAILS_ENV') { 'development' }
 
-key_file = ENV.fetch('SSL_KEY_FILE', '/etc/ssl/dradis.local/dradis.local.key')
-cert_file = ENV.fetch('SSL_CERT_FILE', '/etc/ssl/dradis.local/bundle.dradis.local.crt')
+key_file = ENV.fetch('SSL_KEY_FILE')
+cert_file = ENV.fetch('SSL_CERT_FILE')
 
-if ENV['RAILS_ENV'] == 'production' && File.exist?(key_file) && File.exist?(cert_file)
+if ENV['RAILS_ENV'] == 'production' && key_file && cert_file
   ssl_bind '0.0.0.0', 3000, {
     key: key_file,
-    cert: cert_file,
-    verify_mode: 'none'
+    cert: cert_file
   }
 else
   #Specifies the `port` that Puma will listen on to receive requests; default is 3000.

@@ -7,22 +7,9 @@ services:
       context: .
       platforms:
         - linux/amd64
-      args:
-        # Build arguments:
-        SSL_CERT_DIR: ${SSL_CERT_DIR}
-    environment:
-      # Runtime environment variables:
-      - RAILS_ENV=${RAILS_ENV}
-      - RAILS_SERVE_STATIC_FILES=${RAILS_SERVE_STATIC_FILES}
-      - RAILS_X_SENDFILE_HEADER=${RAILS_X_SENDFILE_HEADER} # set to nil for use without reverse proxy
-      - SERVER_IP=${SERVER_IP:-localhost}
-      - SSL_CERT_FILE=${SSL_CERT_FILE}
-      - SSL_KEY_FILE=${SSL_KEY_FILE}
     volumes:
       # named volume for the database
       - dradis-ce-db:/app/db
-      # named volume for self-signed SSL certificates
-      - dradis-ce-ssl:${SSL_CERT_DIR}
     ports:
       - 3000:3000
     healthcheck:
@@ -32,4 +19,3 @@ services:
       retries: 3
 volumes:
   dradis-ce-db:
-  dradis-ce-ssl:
