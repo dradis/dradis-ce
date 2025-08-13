@@ -7,6 +7,11 @@ services:
       context: .
       platforms:
         - linux/amd64
+      args:
+        # Build arguments with values pulled from .env:
+        SSL_CERT_DIR: ${SSL_CERT_DIR}
+        SSL_CERT_FILE: ${SSL_CERT_FILE}
+        SSL_KEY_FILE: ${SSL_KEY_FILE}
     volumes:
       # named volume for the database
       - dradis-ce-db:/app/db
