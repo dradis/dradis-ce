@@ -2,21 +2,13 @@ ARG RUBY_VERSION=3.4.4
 # We're sticking to non-slim version: https://hub.docker.com/_/ruby/
 FROM ruby:${RUBY_VERSION}
 
-# Define acceptable build arguments & their default values (must be set AFTER the FROM line):
-ARG SSL_CERT_DIR=/etc/ssl/dradis.local
-ARG SSL_CERT_FILE=${SSL_CERT_DIR}/bundle.dradis.local.crt
-ARG SSL_KEY_FILE=${SSL_CERT_DIR}/dradis.local.key
-
 WORKDIR /app
 
 ENV RAILS_ENV="production" \
     RAILS_SERVE_STATIC_FILES="enabled" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development" \
-    SSL_CERT_DIR=${SSL_CERT_DIR} \
-    SSL_CERT_FILE=${SSL_CERT_FILE} \
-    SSL_KEY_FILE=${SSL_KEY_FILE}
+    BUNDLE_WITHOUT="development" 
 
 # Copying dradis-ce app
 COPY . .
@@ -30,7 +22,7 @@ RUN mkdir -p attachments/
 RUN mkdir -p config/shared/
 RUN mkdir -p templates/
 RUN mkdir -p tmp/pids/
-RUN mkdir -p $SSL_CERT_DIR
+RUN mkdir -p /etc/ssl/dradis.local
 
 # Installing dependencies
 RUN bundle install
@@ -40,8 +32,8 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 # Run and own only the runtime files as a non-root user for security
 RUN useradd rails --create-home --shell /bin/bash && \
     chown -R rails:rails attachments config/shared db log tmp templates && \
-    chown -R rails:rails $SSL_CERT_DIR && \
-    chmod 700 $SSL_CERT_DIR
+    chown -R rails:rails /etc/ssl/dradis.local && \
+    chmod 700 /etc/ssl/dradis.local
 
 USER rails:rails
 
