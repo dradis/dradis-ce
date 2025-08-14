@@ -12,6 +12,8 @@ services:
       - dradis-ce-db:/app/db
     ports:
       - 3000:3000
+      # Comment the previous and uncomment the following line to expose HTTPS on port 443 for use in a VPS
+      # - 443:3000
     healthcheck:
       test: ["CMD", "curl", "-f", "-k", "https://localhost:3000/up"]
       interval: 30s
