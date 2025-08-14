@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Activities: Include methodology name in all methodology actions
   - Font: Improve language support
   - Upgraded gems:
     - thor
