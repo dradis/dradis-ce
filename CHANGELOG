@@ -2,7 +2,7 @@
   - Activities: Include methodology name in all methodology actions
   - Font: Improve language support
   - Upgraded gems:
-    - thor
+    - rails, thor
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
