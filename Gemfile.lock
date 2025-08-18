@@ -542,6 +542,10 @@ GEM
     terser (1.1.15)
       execjs (>= 0.3.0, < 3)
     thor (1.4.0)
+    thruster (0.1.15)
+    thruster (0.1.15-arm64-darwin)
+    thruster (0.1.15-x86_64-darwin)
+    thruster (0.1.15-x86_64-linux)
     tilt (2.0.11)
     time (0.2.2)
       date
@@ -681,6 +685,7 @@ DEPENDENCIES
   stimulus-rails
   terser (~> 1.1)
   thor (~> 1.4.0)
+  thruster
   time (>= 0.2.2)
   timecop
   turbo-rails (~> 2.0)

@@ -2,23 +2,4 @@
 echo 'Preparing the database...'
 ./bin/rails db:prepare
 
-SSL_KEY_FILE='/etc/ssl/dradis.local/dradis.local.key'
-SSL_CERT_FILE='/etc/ssl/dradis.local/bundle.dradis.local.crt'
-
-if [ ! -f $SSL_KEY_FILE ] || [ ! -f $SSL_CERT_FILE ]; then
-  echo 'SSL certificates not found, generating self-signed certificates...'
-
-  openssl req -x509 \
-    -newkey rsa:4096 \
-    -nodes \
-    -keyout $SSL_KEY_FILE \
-    -out $SSL_CERT_FILE \
-    -days 3650 \
-    -subj "/C=GB/ST=London/L=London/O=Security Roots Ltd/OU=Dradis CE/CN=localhost" \
-    -addext "subjectAltName=DNS:localhost"
-
-else
-  echo 'SSL certificates found, skipping generation...'
-fi
-
 exec "${@}"

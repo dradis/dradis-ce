@@ -32,21 +32,11 @@ threads min_threads_count, max_threads_count
 # terminating a worker in developerspment environments.
 worker_timeout 3600 if ENV.fetch('RAILS_ENV', 'development') == 'development'
 
+#Specifies the `port` that Puma will listen on to receive requests; default is 3000.
+port ENV.fetch('PORT', 3000)
+
 # Specifies the `environment` that Puma will run in.
 environment ENV.fetch('RAILS_ENV') { 'development' }
-
-key_file = '/etc/ssl/dradis.local/dradis.local.key'
-cert_file = '/etc/ssl/dradis.local/bundle.dradis.local.crt'
-
-if ENV['RAILS_ENV'] == 'production' && key_file && cert_file
-  ssl_bind '0.0.0.0', 3000, {
-    key: key_file,
-    cert: cert_file
-  }
-else
-  #Specifies the `port` that Puma will listen on to receive requests; default is 3000.
-  port ENV.fetch('PORT', 3000)
-end
 
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart

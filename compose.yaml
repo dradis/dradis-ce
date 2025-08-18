@@ -8,16 +8,15 @@ services:
       platforms:
         - linux/amd64
     volumes:
-      # named volume for the database
-      - dradis-ce-db:/app/db
+      # Persist the database
+      - dradis-ce-storage:/app/storage
     ports:
-      - 3000:3000
-      # Comment the previous and uncomment the following line to expose HTTPS on port 443 for use in a VPS
-      # - 443:3000
+      - 443:443
+      - 80:80
     healthcheck:
-      test: ["CMD", "curl", "-f", "-k", "https://localhost:3000/up"]
+      test: ["CMD", "curl", "-f", "-k", "https://localhost/up"]
       interval: 30s
       timeout: 10s
       retries: 3
 volumes:
-  dradis-ce-db:
+  dradis-ce-storage:
