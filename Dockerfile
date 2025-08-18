@@ -42,5 +42,5 @@ USER rails:rails
 ENTRYPOINT ["/app/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
-EXPOSE 443 80 3000
+EXPOSE 443 80
 CMD ["./bin/thrust", "./bin/rails", "server"]
