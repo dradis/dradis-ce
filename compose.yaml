@@ -13,6 +13,9 @@ services:
     ports:
       - 443:443
       - 80:80
+    environment:
+      # Set domain from ENV var so thruster can handle let's encrypt certificates
+      - TLS_DOMAIN=${TLS_DOMAIN}
     healthcheck:
       test: ["CMD", "curl", "-f", "-k", "https://localhost/up"]
       interval: 30s
