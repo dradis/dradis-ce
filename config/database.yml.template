@@ -11,7 +11,7 @@ default: &default
 
 development:
   <<: *default
-  database: db/development.sqlite3
+  database: storage/development.sqlite3
 
 # MySQL version - make sure the mysql2 gem is included in your Gemfile
 # If you uncomment this development: block, comment the previous one.
