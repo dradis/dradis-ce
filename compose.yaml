@@ -9,7 +9,7 @@ services:
         - linux/amd64
     volumes:
       # Persist the database
-      - dradis-ce-storage:/app/storage
+      - dradis-ce-storage:/dradis/storage
     ports:
       - 443:443
       - 80:80
