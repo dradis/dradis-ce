@@ -1,4 +1,3 @@
-# We're sticking to non-slim version: https://hub.docker.com/_/ruby/
 ARG RUBY_VERSION=3.4.4
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
@@ -25,10 +24,10 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy files needed for bundle install to first layer to leverage Docker cache
-# (lib/ and engines/ are needed for bundle install to succeed)
+# (engines/ is needed for bundle install to succeed and version.rb is needed to resolve engine versions in .gemspec)
 COPY Gemfile Gemfile.lock ./
-COPY engines/dradis-api ./engines/dradis-api
-COPY lib ./lib
+COPY engines ./engines
+COPY lib/dradis/ce/version.rb ./lib/dradis/ce/version.rb
 
 # Install application gems
 RUN bundle install && \
