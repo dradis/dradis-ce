@@ -16,7 +16,7 @@ services:
     healthcheck:
       test: [
         "CMD-SHELL", 
-        "if [ \"$TLS_DOMAIN\" ]; then curl -f -k https://$TLS_DOMAIN/up; else curl -f http://localhost/up; fi"
+        "if [ \"$TLS_DOMAIN\" ]; then curl -f -k http://$TLS_DOMAIN/up; else curl -f http://localhost/up; fi"
       ]
       timeout: 15s
       retries: 3
