@@ -23,8 +23,9 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential curl git pkg-config libyaml-dev && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# Copy files needed for bundle install to first layer to leverage Docker cache
-# (engines/ is needed for bundle install to succeed and version.rb is needed to resolve engine versions in .gemspec)
+# Copy files needed to run `bundle install` to build layer
+# engines/ is needed to resolve built-in engines in Gemfile
+# version.rb is needed to resolve engine versions in .gemspec
 COPY Gemfile Gemfile.lock ./
 COPY engines ./engines
 COPY lib/dradis/ce/version.rb ./lib/dradis/ce/version.rb

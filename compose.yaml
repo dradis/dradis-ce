@@ -1,4 +1,4 @@
-name: "dradis-ce-production"
+name: "dradis-ce"
 
 services:
   web:
