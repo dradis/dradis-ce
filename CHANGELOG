@@ -1,8 +1,8 @@
 [v#.#.#] ([month] [YYYY])
   - Activities: Include methodology name in all methodology actions
   - Font: Improve language support
-  - Rails: Upgrade rails version to 8.0.2.1
-  - Ruby: Upgrade ruby version to 3.4.4
+  - Rails: Upgrade Rails version to 8.0.2.1
+  - Ruby: Upgrade Ruby version to 3.4.4
   - Upgraded gems: thor
   - Bugs fixes:
     - [entity]:
