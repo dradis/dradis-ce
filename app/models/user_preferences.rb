@@ -55,7 +55,7 @@ class UserPreferences
   end
 
   def valid?(args)
-    valid_digest_frequency?
+    DIGEST_FREQUENCIES.include?(self.digest_frequency)
   end
 
   # ----------------------------------------------------------------- YAML.load
@@ -83,11 +83,5 @@ class UserPreferences
     define_method "last_#{tour}=" do |*args|
       @tours[tour] = args.first
     end
-  end
-
-  private
-
-  def valid_digest_frequency?
-    DIGEST_FREQUENCIES.include?(self.digest_frequency)
   end
 end

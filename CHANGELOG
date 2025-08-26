@@ -1,11 +1,12 @@
 [v#.#.#] ([month] [YYYY])
+  - Activities: Include methodology name in all methodology actions
   - Docker: 
-    - Add docker compose file for production deployment
+    - Add Docker Compose configuration file for production deployment
     - Add Thruster gem to handle https
   - Font: Improve language support
-  - Ruby: Upgrade ruby version to 3.4.4
-  - Upgraded gems:
-    - rails, thor
+  - Rails: Upgrade Rails version to 8.0.2.1
+  - Ruby: Upgrade Ruby version to 3.4.4
+  - Upgraded gems: thor
   - Bugs fixes:
     - [entity]:
       - [future tense verb] [bug fix]
