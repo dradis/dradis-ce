@@ -25,7 +25,6 @@ Rails.application.configure do
   # Assets are cacheable
   config.public_file_server.headers = { "Cache-Control" => "public, max-age=#{1.year.to_i}" }
 
-
   # Compress JavaScripts and CSS using a preprocessor.
   config.assets.js_compressor = :terser
   # config.assets.css_compressor = :sass
