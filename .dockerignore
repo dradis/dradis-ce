@@ -1,6 +1,7 @@
 
 # Ignore git directory.
 /.git
+/.gitignore
 
 # Ignore bundle config.
 /.bundle
@@ -20,7 +21,7 @@
 /tmp/pids/*
 !/tmp/pids/.keep
 
-# Ignore storage.
+# Ignore storage(uploaded files in development and any SQLite databases).
 /storage/*
 !/storage/.keep
 /tmp/storage/*
@@ -29,8 +30,12 @@
 # Ignore assets.
 /public/assets
 
-# Ignore applicaiton folders
+# Ignore application folders
 /attachments/
 /config/shared/*
 /db/*.sqlite3
 /templates/*
+
+# Ignore Docker-related files
+/.dockerignore
+/Dockerfile*

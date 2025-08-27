@@ -1,0 +1,24 @@
+name: "dradis-ce"
+
+services:
+  web:
+    # image: dradis/dradis-ce:latest
+    build:
+      context: .
+      platforms:
+        - linux/amd64
+    volumes:
+      # Persist the database
+      - dradis-ce-storage:/dradis/storage
+    ports:
+      - 443:443
+      - 80:80
+    healthcheck:
+      test: [
+        "CMD-SHELL", 
+        "if [ \"$TLS_DOMAIN\" ]; then curl -f -k http://$TLS_DOMAIN/up; else curl -f http://localhost/up; fi"
+      ]
+      timeout: 15s
+      retries: 3
+volumes:
+  dradis-ce-storage:

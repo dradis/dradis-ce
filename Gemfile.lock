@@ -357,7 +357,6 @@ GEM
       racc
     parslet (1.6.2)
       blankslate (>= 2.0, <= 4.0)
-    pg (1.4.5)
     popper_js (2.11.7)
     pp (0.6.2)
       prettyprint
@@ -541,6 +540,10 @@ GEM
     terser (1.1.15)
       execjs (>= 0.3.0, < 3)
     thor (1.4.0)
+    thruster (0.1.15)
+    thruster (0.1.15-arm64-darwin)
+    thruster (0.1.15-x86_64-darwin)
+    thruster (0.1.15-x86_64-linux)
     tilt (2.0.11)
     time (0.2.2)
       date
@@ -656,7 +659,6 @@ DEPENDENCIES
   nokogiri (>= 1.18.9)
   paper_trail (~> 16.0)
   parslet (~> 1.6.0)
-  pg
   puma (>= 6.5.0)
   rack-mini-profiler (~> 2.0)
   rails (~> 8.0.2)
@@ -681,6 +683,7 @@ DEPENDENCIES
   stimulus-rails
   terser (~> 1.1)
   thor (~> 1.4.0)
+  thruster
   time (>= 0.2.2)
   timecop
   turbo-rails (~> 2.0)
