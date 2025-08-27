@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+# Upstream file that can be overridden by https://github.com/rails/cssbundling-rails / https://github.com/rails/jsbundling-rails
+exec './bin/rails', 'server', *ARGV

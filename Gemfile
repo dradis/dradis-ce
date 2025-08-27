@@ -2,10 +2,10 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.2'
+ruby '3.4.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.2.2.2'
+gem 'rails', '~> 8.0.2'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -26,7 +26,7 @@ gem 'turbo-rails', '~> 2.0'
 gem 'stimulus-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.7'
+gem 'jbuilder', '~> 2.13'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -56,7 +56,7 @@ gem 'liquid'
 
 gem 'kaminari', '~> 1.2.1'
 
-gem 'paper_trail', '~> 15.2.0'
+gem 'paper_trail', '~> 16.0'
 
 # gem 'rails_autolink', '~> 1.1'
 
@@ -142,7 +142,9 @@ gem 'net-smtp'
 gem 'net-pop'
 gem 'net-imap', '>= 0.5.7'
 
-gem 'puma', '>= 6.4.3'
+gem 'puma', '>= 6.5.0'
+
+gem 'csv'
 
 # ------------------------------------------------------------------ Deployment
 # Use Capistrano for deployment
@@ -175,10 +177,13 @@ group :development do
 
   # security
   gem 'brakeman', require: false
-  gem 'bundler-audit', require: false
-  gem 'ruby_audit', require: false
+  # required by brakeman
+  gem 'abbrev'
 
-  gem 'rubocop', require: false
+  gem 'bundler-audit', require: false
+  gem 'ruby_audit', '~> 3.0.0', require: false
+
+  gem 'rubocop', '1.79.0', require: false
 end
 
 group :development, :test do
@@ -190,11 +195,11 @@ end
 
 group :test do
   gem 'database_cleaner'
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '~> 6.5'
   gem 'capybara', '~> 3.40'
   gem 'guard-rspec', require: false
   gem 'selenium-webdriver', '~> 4.29'
-  gem 'shoulda-matchers', '~> 3.1'
+  gem 'shoulda-matchers', '~> 4.0.1'
   gem 'timecop'
 
   # Required by capybara
@@ -216,15 +221,15 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 4.17.0'
+gem 'dradis-plugins', github: 'dradis/dradis-plugins'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 4.17.0'
+gem 'dradis-projects', github: 'dradis/dradis-projects'
 
 plugins_file = 'Gemfile.plugins'
-if File.exists?(plugins_file)
+if File.exist?(plugins_file)
   eval(IO.read(plugins_file), binding)
 end
 
