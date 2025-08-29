@@ -2,6 +2,7 @@
 # Ignore git directory.
 /.git
 /.gitignore
+/.github
 
 # Ignore bundle config.
 /.bundle
@@ -10,6 +11,8 @@
 /.env*
 /.kamal/*
 /config/deploy.yml
+/.do
+/bin/heroku
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -36,6 +39,28 @@
 /db/*.sqlite3
 /templates/*
 
+# Ignore bundled gems
+/vendor/bundle
+
 # Ignore Docker-related files
 /.dockerignore
 /Dockerfile*
+compose.yaml
+
+# Ignore development and test files
+/.byebug_history
+/.devcontainer
+/.rspec
+/.rubocop*
+/.ruby-lsp
+/bin/rspec
+/bin/rubocop-ci
+/CHANGELOG.template
+/spec
+
+# Ignore configuration files
+/config/smtp.yml
+/config/database.yml
+/Gemfile.plugins
+
+/.DS_Store

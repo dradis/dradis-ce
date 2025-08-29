@@ -40,6 +40,10 @@ COPY . .
 # Copy sample files
 COPY config/database.yml.template config/database.yml
 COPY config/smtp.yml.template config/smtp.yml
+COPY Gemfile.plugins.template Gemfile.plugins
+
+# Remove template files
+RUN rm config/database.yml.template config/smtp.yml.template Gemfile.plugins.template
 
 # Preparing application folders
 RUN mkdir -p attachments \
