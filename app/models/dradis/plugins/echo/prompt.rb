@@ -13,6 +13,10 @@ module Dradis::Plugins::Echo
     # -- Validations ------------------------------------------------------------
     # -- Scopes -----------------------------------------------------------------
     # -- Class Methods ----------------------------------------------------------
+    def self.by_id(prompt_id, klass: klass)
+      self.default[klass].select { |prompt| prompt.id == prompt_id.to_i }.first
+    end
+
     def self.default
       {
         issue: [
@@ -53,7 +57,7 @@ module Dradis::Plugins::Echo
     description and recommendation that's going to make it easy to understand
     for the owners of the system I'm testing.
 
-    So far, this is what I've got, please give me your suggestions.
+    So far, this is what I've got, please give me your suggestions:
 
     # Title
     {{ issue.title }}
@@ -63,6 +67,15 @@ module Dradis::Plugins::Echo
 
     # Solution
     {{ issue.fields['Solution'] }}
+    EOP
+          ),
+          new(
+            id: 3,
+            title: 'Haiku',
+            icon: 'fa-feather-pointed',
+            prompt: <<~EOP
+    I want to create a haiku inspired by the following text:
+    {{ issue.text }}
     EOP
           )
         ]
