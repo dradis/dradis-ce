@@ -2,20 +2,13 @@ module Dradis::Plugins::Echo
   class EchoJob < ApplicationJob
     queue_as :default
 
-    def perform(prompt_id:, klass: , record_id: , interaction_id:)
-      sleep 2
-
-      prompt_template = Prompt.default[klass].select { |prompt| prompt.id == prompt_id.to_i }.first
-      Rails.logger.info("🎬 #{prompt_template.prompt}")
-      prompt = parse(prompt_template.prompt, { 'issue' => IssueDrop.new(Issue.find(record_id)) })
+    def perform(prompt_id:, klass:, record_id: , interaction_id:, response_id:)
+      template = Prompt.by_id(prompt_id, klass: klass)
+      Rails.logger.info("🎬 #{template.prompt}")
+      prompt = parse(template.prompt, { 'issue' => IssueDrop.new(Issue.find(record_id)) })
       Rails.logger.info("🔚 #{prompt}")
 
-      response_id = SecureRandom.hex(10)
-
-      Turbo::StreamsChannel.broadcast_update_to [interaction_id, 'prompts'],
-        target: 'messages',
-        partial: 'dradis/plugins/echo/prompts/response',
-        locals: { prompt: prompt, response_id: response_id, template: prompt_template }
+      Turbo::StreamsChannel.broadcast_replace_to [interaction_id, 'prompts'], target: 'prompt_content', html: prompt
 
       begin
         client.generate(

@@ -17,12 +17,16 @@ module Dradis::Plugins::Echo
       @type = set_type
       @record_id = params[:record]
       @interaction_id = SecureRandom.hex(20)
+      @response_id = SecureRandom.hex(10)
 
-      EchoJob.perform_later(
+      @template = Prompt.by_id(params[:id], klass: @type)
+
+      EchoJob.set(wait: 2.seconds).perform_later(
         prompt_id: params[:id],
         klass: @type,
         record_id: @record_id,
-        interaction_id: @interaction_id
+        interaction_id: @interaction_id,
+        response_id: @response_id
       )
     end
 

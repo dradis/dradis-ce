@@ -1,14 +1,15 @@
-<div class="echo-response">
+<div class="echo-response mb-3">
   <div class="accordion" id="accordionEcho">
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePrompt" aria-expanded="false" aria-controls="collapseOne">
-          <i class="fa-solid <%= template.icon %> me-2"></i> <%= template.title %> Prompt
+          <i class="fa-solid <%= @template.icon %> me-2"></i> <%= @template.title %> Prompt
         </button>
       </h2>
       <div id="collapsePrompt" class="accordion-collapse collapse" data-bs-parent="#accordionEcho" style="">
-        <div class="accordion-body">
-          <%= simple_format prompt %>
+        <div id="prompt_content" class="accordion-body">
+          <%= @template.prompt %>
+          <div id="prompt_spinner"><%= spinner_tag %></div>
         </div>
       </div>
     </div>
@@ -19,10 +20,8 @@
         </button>
       </h2>
       <div id="collapseResponse" class="accordion-collapse" data-bs-parent="#accordionEcho" style="">
-        <!-- <div id="<%= response_id %>" class="border border-info rounded p-2 mb-4 font-weight-light" style="white-space-collapse: preserve"></div> -->
-
-        <div id="<%= response_id %>" class="accordion-body">
-          <div id="<%= "#{response_id}_spinner" %>"><%= spinner_tag %></div>
+        <div id="<%= @response_id %>" class="accordion-body">
+          <div id="<%= "#{@response_id}_spinner" %>"><%= spinner_tag %></div>
         </div>
       </div>
     </div>
