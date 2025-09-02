@@ -1,4 +1,4 @@
-<turbo-frame id="echo-<%= @type %>-<%= @record_id %>">
+<turbo-frame id="<%= dom_id(@record, :echo) %>">
   <p>Dradis Echo interaction #<%= @interaction_id.truncate(12) %></p>
 
   <%# Subscribe to main channel for real-time updates via ActionCable %>

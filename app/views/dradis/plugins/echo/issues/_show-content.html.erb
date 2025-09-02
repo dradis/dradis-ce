@@ -4,7 +4,7 @@
     </h4>
 
     <div class="content-textile">
-      <turbo-frame id="echo-issue-<%= @issue.id %>">
+      <turbo-frame id="<%= dom_id(@issue, :echo) %>">
         <div data-behavior="fetch" data-path="<%= echo.project_prompts_path(current_project, type: :issue, record: @issue.id) %>"></div>
       </turbo-frame>
     </div>
