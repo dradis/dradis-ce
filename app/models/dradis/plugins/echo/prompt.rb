@@ -13,7 +13,7 @@ module Dradis::Plugins::Echo
     # -- Validations ------------------------------------------------------------
     # -- Scopes -----------------------------------------------------------------
     # -- Class Methods ----------------------------------------------------------
-    def self.by_id(prompt_id, klass: klass)
+    def self.by_id(prompt_id, klass:)
       self.default[klass].select { |prompt| prompt.id == prompt_id.to_i }.first
     end
 
