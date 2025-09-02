@@ -11,8 +11,6 @@
 /.env*
 /.kamal/*
 /config/deploy.yml
-/.do
-/bin/heroku
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -45,7 +43,7 @@
 # Ignore Docker-related files
 /.dockerignore
 /Dockerfile*
-compose.yaml
+/compose.yaml
 
 # Ignore development and test files
 /.byebug_history

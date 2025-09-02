@@ -6,7 +6,7 @@ WORKDIR /dradis
 
 # Install dependencies for Ruby build and gems
 RUN apt-get update -qq && \
-apt-get install --no-install-recommends -y curl git libjemalloc2 libvips sqlite3 && \
+apt-get install --no-install-recommends -y curl git libjemalloc2 libvips sqlite3 redis-server && \
 rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
@@ -40,10 +40,6 @@ COPY . .
 # Copy sample files
 COPY config/database.yml.template config/database.yml
 COPY config/smtp.yml.template config/smtp.yml
-COPY Gemfile.plugins.template Gemfile.plugins
-
-# Remove template files
-RUN rm config/database.yml.template config/smtp.yml.template Gemfile.plugins.template
 
 # Preparing application folders
 RUN mkdir -p attachments \
