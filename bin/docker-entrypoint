@@ -1,18 +1,5 @@
 #!/bin/bash -e
 
-# Redis
-echo 'Starting the Redis server...'
-redis-server --daemonize yes --port 6379 --bind 127.0.0.1
-
-# Wait for Redis to be ready
-timeout 30 bash -c 'until redis-cli ping; do sleep 1; done'
-echo 'Redis started successfully.'
-
-# Resque
-echo 'Starting Resque...'
-QUEUE=* bundle exec rake resque:work &
-
-# db
 echo 'Preparing the database...'
 ./bin/rails db:prepare
 
