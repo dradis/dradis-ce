@@ -6,7 +6,7 @@ WORKDIR /dradis
 
 # Install dependencies for Ruby build and gems
 RUN apt-get update -qq && \
-apt-get install --no-install-recommends -y curl git libjemalloc2 libvips sqlite3 redis-server && \
+apt-get install --no-install-recommends -y curl git libjemalloc2 libvips sqlite3 && \
 rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment

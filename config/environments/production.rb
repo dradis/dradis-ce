@@ -85,7 +85,7 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
-  config.active_job.queue_adapter = :resque
+  # config.active_job.queue_adapter = :resque
 
   # Disable caching for Action Mailer templates even if Action Controller
   # caching is enabled.
