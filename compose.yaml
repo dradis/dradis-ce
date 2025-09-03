@@ -13,6 +13,9 @@ services:
     ports:
       - 443:443
       - 80:80
+    environment:
+      # Set domain from .env so thruster can handle let's encrypt certificates
+      - TLS_DOMAIN=${TLS_DOMAIN}
     healthcheck:
       test: [
         "CMD-SHELL", 
