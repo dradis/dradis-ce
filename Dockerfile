@@ -7,6 +7,7 @@ WORKDIR /dradis
 # Install dependencies for Ruby build and gems
 RUN apt-get update -qq && \
 apt-get install --no-install-recommends -y curl git libjemalloc2 libvips sqlite3 && \
+apt-get install -y redis-server && \
 rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
@@ -70,5 +71,5 @@ USER 1000:1000
 ENTRYPOINT ["/dradis/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
-EXPOSE 443 80
-CMD ["./bin/thrust", "./bin/rails", "server"]
+EXPOSE 80 443
+CMD ["./bin/boot"]
