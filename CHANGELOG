@@ -8,6 +8,7 @@
   - Ruby: Upgrade Ruby version to 3.4.4
   - Upgraded gems: thor
   - Bugs fixes:
+    - Combobox: Prevent forcing the selection of the first available option for multi-select forms
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
