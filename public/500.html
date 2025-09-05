@@ -84,14 +84,14 @@
         align-items: center;
       }
 
-      main article svg {
+      main article section {
+        padding: 1rem;
+      }
+
+      main article section img {
         height: auto;
         max-width: 100%;
         width: auto;
-      }
-
-      main article section {
-        padding: 1rem;
       }
 
       p {
@@ -107,6 +107,10 @@
       }
 
       @media (max-width: 991px) {
+        main {
+          max-width: 500px;
+        }
+
         main article {
           flex-direction: column;
         }
