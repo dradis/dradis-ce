@@ -165,8 +165,12 @@
     transform: translate(-50%, -50%);
   }
 
-  &.divider-large {
+  &.divider-lg {
     margin: 1.25rem 0;
+  }
+
+  &.divider-xl {
+    margin: 2rem 0;
   }
 }
 
