@@ -6,16 +6,15 @@ module Dradis::Plugins::Echo
     layout false
 
     before_action :check_turbo_config, only: [:index]
+    before_action :set_type
+    before_action :authorize_record
 
     def index
-      @type = set_type
       @prompts = Prompt.default.key?(@type) ? Prompt.default[@type] : []
-      @record = params[:record].to_i
+      @record = record_params[:record].to_i
     end
 
     def show
-      @type = set_type
-      @record_id = params[:record]
       @interaction_id = SecureRandom.hex(20)
       @response_id = SecureRandom.hex(10)
 
@@ -24,13 +23,22 @@ module Dradis::Plugins::Echo
       EchoJob.set(wait: 2.seconds).perform_later(
         prompt_id: params[:id],
         klass: @type,
-        record_id: @record_id,
+        record_id: @record.id,
         interaction_id: @interaction_id,
         response_id: @response_id
       )
     end
 
     private
+
+    def record_params
+      params.permit(:type, :record)
+    end
+
+    def authorize_record
+      @record = @type.to_s.classify.constantize.find(record_params[:record])
+      can?(:read, @record)
+    end
 
     # Echo requires Turbo, and Turbo requires:
     #   1. ActionCable to be configured using the :redis adapter.
@@ -46,7 +54,7 @@ module Dradis::Plugins::Echo
 
     def set_type
       allowed = Prompt.default.keys.map(&:to_s)
-      allowed.include?(params[:type]) ? params[:type].to_sym : nil
+      @type = allowed.include?(record_params[:type]) ? record_params[:type].to_sym : nil
     end
   end
 end
