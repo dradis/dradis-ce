@@ -10,6 +10,7 @@ module Dradis::Plugins::Echo
 
       Turbo::StreamsChannel.broadcast_replace_to [interaction_id, 'prompts'], target: 'prompt_content', html: prompt
 
+      @spinner_shown = true
       begin
         client.generate(
           {
@@ -55,8 +56,12 @@ module Dradis::Plugins::Echo
         message.sub!('<think>', '{thinking}')
         message.sub!('</think>', '{/thinking}')
         Turbo::StreamsChannel.broadcast_append_to [interaction_id, 'prompts'], target: response_id, content: message
+
+        if @spinner_shown
+          Turbo::StreamsChannel.broadcast_remove_to [interaction_id, 'prompts'], target: "#{response_id}_spinner"
+          @spinner_shown = false
+        end
       end
-      Turbo::StreamsChannel.broadcast_remove_to [interaction_id, 'prompts'], target: "#{response_id}_spinner"
     end
   end
 end
