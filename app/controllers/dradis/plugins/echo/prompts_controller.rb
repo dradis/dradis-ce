@@ -35,7 +35,7 @@ module Dradis::Plugins::Echo
 
     def authorize_record
       @record = @type.to_s.classify.constantize.find(record_params[:record])
-      can?(:read, @record)
+      authorize!(:read, @record)
     end
 
     # Echo requires Turbo, and Turbo requires:
