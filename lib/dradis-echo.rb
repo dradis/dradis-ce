@@ -1,3 +1,5 @@
+require 'ollama-ai'
+
 require 'dradis-plugins'
 
 module Dradis

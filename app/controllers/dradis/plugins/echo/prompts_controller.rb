@@ -1,5 +1,3 @@
-require 'ollama-ai'
-
 module Dradis::Plugins::Echo
   class PromptsController < AuthenticatedController
     include ProjectScoped
