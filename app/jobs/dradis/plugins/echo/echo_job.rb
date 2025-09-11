@@ -8,7 +8,7 @@ module Dradis::Plugins::Echo
       prompt = parse(template.prompt, { 'issue' => IssueDrop.new(Issue.find(record_id)) })
       Rails.logger.info("🔚 #{prompt}")
 
-      Turbo::StreamsChannel.broadcast_replace_to [interaction_id, 'prompts'], target: 'prompt_content', html: prompt
+      Turbo::StreamsChannel.broadcast_replace_to [interaction_id, 'prompts'], target: 'prompt_template', html: prompt
 
       @spinner_shown = true
       begin
