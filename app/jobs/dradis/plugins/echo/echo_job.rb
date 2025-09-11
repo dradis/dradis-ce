@@ -9,6 +9,7 @@ module Dradis::Plugins::Echo
       Rails.logger.info("🔚 #{prompt}")
 
       Turbo::StreamsChannel.broadcast_replace_to [interaction_id, 'prompts'], target: 'prompt_template', html: prompt
+      Turbo::StreamsChannel.broadcast_remove_to [interaction_id, 'prompts'], target: 'prompt_spinner'
 
       @spinner_shown = true
       begin
