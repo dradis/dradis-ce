@@ -26,6 +26,11 @@ module Dradis::Plugins::Echo
         msg << error.message
         msg << '</div>'
         Turbo::StreamsChannel.broadcast_update_to [interaction_id, 'prompts'], target: response_id, html: msg
+      rescue Exception => error
+        msg = '<div class="alert alert-danger m-0">'
+        msg << error.message
+        msg << '</div>'
+        Turbo::StreamsChannel.broadcast_update_to [interaction_id, 'prompts'], target: response_id, html: msg
       end
     end
 
