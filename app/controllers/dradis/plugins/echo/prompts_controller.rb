@@ -5,7 +5,6 @@ module Dradis::Plugins::Echo
 
     before_action :check_turbo_config, only: [:index]
     before_action :set_type
-    before_action :authorize_record
 
     def index
       @prompts = Prompt.default.key?(@type) ? Prompt.default[@type] : []
@@ -13,12 +12,14 @@ module Dradis::Plugins::Echo
     end
 
     def show
+      @template = Prompt.by_id(params[:id], klass: @type)
+      @record = current_project.send(@type.to_s.pluralize).find(record_params[:record])
+
       @interaction_id = SecureRandom.hex(20)
       @response_id = SecureRandom.hex(10)
 
-      @template = Prompt.by_id(params[:id], klass: @type)
-
-      EchoJob.set(wait: 2.seconds).perform_later(
+      # EchoJob.set(wait: 2.seconds).perform_later(
+      EchoJob.perform_later(
         prompt_id: params[:id],
         klass: @type,
         record_id: @record.id,
@@ -31,11 +32,6 @@ module Dradis::Plugins::Echo
 
     def record_params
       params.permit(:type, :record)
-    end
-
-    def authorize_record
-      @record = @type.to_s.classify.constantize.find(record_params[:record])
-      authorize!(:read, @record)
     end
 
     # Echo requires Turbo, and Turbo requires:
