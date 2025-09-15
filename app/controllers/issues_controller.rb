@@ -20,6 +20,7 @@ class IssuesController < AuthenticatedController
   before_action :set_affected_nodes, only: [:show]
   before_action :set_form_cancel_path, only: [:new, :edit]
   before_action :set_tags, except: [:destroy]
+  before_action :set_card_content, only: :new
 
   def index
   end
@@ -218,5 +219,14 @@ class IssuesController < AuthenticatedController
     else
       "project-#{current_project.id}-issue"
     end
+  end
+
+  def set_card_content
+    return unless params[:board_id] && params[:card_id]
+
+    board = current_project.boards.includes(:cards).find(params[:board_id])
+    card = board.cards.find(params[:card_id])
+
+    @issue.text = "\n#[Title]#\n#{card.name}\n#{card.description}"
   end
 end
