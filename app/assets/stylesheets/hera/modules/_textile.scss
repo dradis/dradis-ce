@@ -200,7 +200,7 @@
           margin: 0;
 
           &.sticky-toolbar .editor-toolbar {
-            margin: 0 -1.5rem -1px -1.5rem;
+            margin-right: 1.5rem;
             width: initial;
           }
         }
@@ -225,7 +225,7 @@
         }
 
         .textarea-container {
-          margin-right: 1rem;
+          margin-right: 1.5rem;
         }
       }
     }
