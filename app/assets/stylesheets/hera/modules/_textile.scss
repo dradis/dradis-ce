@@ -172,6 +172,16 @@
     background: transparent;
     padding: 0;
 
+    .editor-field {
+      .textile {
+        border: 0;
+        border-right: 1px solid $border-color;
+        border-radius: 0;
+        box-shadow: none !important;
+        padding: 0.5rem 1.5rem 0.5rem 1rem;
+      }
+    }
+
     .textile-form {
       .add-field {
         margin: 0.4rem 0.75rem;
