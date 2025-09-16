@@ -229,6 +229,13 @@ body.boards.show {
   }
 }
 
+body.cards.edit {
+  .card_assignees {
+    border-top: 1px solid $border-color;
+    padding-top: 2rem;
+  }
+}
+
 body.cards.show {
   .card-assignees {
     .gravatar {
