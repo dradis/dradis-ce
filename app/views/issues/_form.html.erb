@@ -8,6 +8,11 @@
 
   <%= f.error_notification %>
 
+  <div class="d-flex flex-row align-items-center justify-content-between edit-header">
+    <h4 class="mb-0">Edit issue (<%= @issue.state.humanize %>)</h4>
+     <%= render 'issues/tag_input', f: f %>
+  </div>
+
   <%= label_tag :issue_text, 'Issue source input', class: 'visually-hidden' %>
   <%=
     f.input :text,
@@ -32,8 +37,6 @@
   <% if controller.class.name.deconstantize == 'QA' %>
     <%= hidden_field nil, :return_to, value: :qa %>
   <% end %>
-
-  <%= render 'issues/tag_input', f: f %>
 
   <div class="form-actions">
     <%= render partial: 'qa/state_button', locals: { f: f, record: @issue } %>
