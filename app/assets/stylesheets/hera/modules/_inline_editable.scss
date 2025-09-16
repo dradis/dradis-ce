@@ -20,15 +20,6 @@
     }
   }
 
-  i.fa-pencil {
-    left: 0.5rem;
-    opacity: 0;
-    position: absolute;
-    top: 0.65rem;
-    transition: opacity 0.2s ease-in-out;
-    z-index: 1;
-  }
-
   input[type='text'],
   textarea,
   select {
