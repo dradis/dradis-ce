@@ -183,16 +183,18 @@
       }
 
       .textile-form-field {
-        margin-bottom: 1rem;
+        border-left: 4px solid transparent;
+        margin: 0 1.5rem 2.5rem 0;
+        padding-left: 0.5rem;
         position: relative;
 
         .actions {
-          bottom: 0;
+          bottom: -2.2rem;
           margin: 0 1rem;
           opacity: 0;
           padding: 0.5rem 0;
           position: absolute;
-          right: 0.5rem;
+          right: 0;
           transition: opacity 0.2s ease-in-out;
         }
 
@@ -205,27 +207,17 @@
           }
         }
 
-        &:first-of-type:hover {
-          border-top-color: transparent;
-        }
-
         &:hover {
+          border-left: 4px solid $light;
+
           .actions {
             opacity: 1;
           }
         }
 
-        &:last-of-type:hover {
-          border-bottom-color: transparent;
-        }
-
         textarea {
           min-height: 34px;
           resize: none;
-        }
-
-        .textarea-container {
-          margin-right: 1.5rem;
         }
       }
     }
