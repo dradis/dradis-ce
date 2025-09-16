@@ -18,21 +18,9 @@ body.issues.edit {
       color: $white;
     }
   }
-
-  .edit-header {
-    border-bottom: 1px solid $border-color;
-    margin: -0.5rem 0 1rem;
-    padding-bottom: 0.5rem;
-  }
 }
 
 body.qa-issues.edit {
-  .edit-header {
-    border-bottom: 1px solid $border-color;
-    margin: -0.5rem 0 1rem;
-    padding-bottom: 0.5rem;
-  }
-
   .tag-input {
     display: flex;
     align-items: center;

@@ -181,6 +181,12 @@
   width: 0;
 }
 
+.edit-header {
+  border-bottom: 1px solid $border-color;
+  margin: -0.5rem 0 1rem;
+  padding-bottom: 0.5rem;
+}
+
 .form-actions {
   margin-top: 1rem;
 }
