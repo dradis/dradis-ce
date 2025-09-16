@@ -216,7 +216,7 @@
         }
 
         &:hover {
-          border-left: 4px solid $light;
+          border-color: $light;
 
           .actions {
             opacity: 1;
