@@ -209,7 +209,7 @@ class EditorToolbar {
     }
 
     // expand the textarea to fix the content
-    $(this).css({ height: this.scrollHeight });
+    $(this).css({ height: this.scrollHeight + 2 });
   }
 
   // Splices the content where it needs to go in the textarea
