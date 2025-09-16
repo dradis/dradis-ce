@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Issues: Allow issue creation from cards
   - Hera: Add custom error pages
   - Activities: Include methodology name in all methodology actions
   - Docker: 
