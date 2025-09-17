@@ -13,6 +13,12 @@ body.issues.new {
       color: $text-default;
     }
   }
+
+  @media (max-width: 991px) {
+    .form-actions {
+      margin-top: 2rem;
+    }
+  }
 }
 
 body.issues.edit {

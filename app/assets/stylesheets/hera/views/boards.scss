@@ -233,6 +233,10 @@ body.cards.edit {
   .card_assignees {
     border-top: 1px solid $border-color;
     padding-top: 2rem;
+
+    @media (max-width: 991px) {
+      margin-top: 2rem;
+    }
   }
 }
 

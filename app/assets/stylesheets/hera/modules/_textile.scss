@@ -181,12 +181,14 @@
 
     .textile-form {
       .add-field {
-        margin: 0.4rem 0.75rem;
+        margin: 1rem 0.75rem;
       }
 
       .textile-form-body {
         background-color: $white;
-        border-right: 1px solid $border-color;
+        @media (min-width: 992px) {
+          border-right: 1px solid $border-color;
+        }
       }
 
       .textile-form-field {
@@ -245,7 +247,9 @@
       }
 
       @include media-breakpoint-down(lg) {
+        border-top: 1px solid $border-color;
         margin-top: 2rem;
+        padding-top: 2rem;
       }
     }
   }
