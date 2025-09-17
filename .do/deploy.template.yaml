@@ -12,4 +12,6 @@ spec:
     git:
       branch: develop
       repo_clone_url: https://github.com/dradis/dradis-ce.git
+    health_check:
+      http_path: /up
     name: web
