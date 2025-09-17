@@ -229,7 +229,8 @@ body.boards.show {
   }
 }
 
-body.cards.edit {
+body.cards.edit,
+body.cards.new {
   .card_assignees {
     border-top: 1px solid $border-color;
     padding-top: 2rem;
