@@ -249,6 +249,10 @@ describe 'Card pages:' do
         expect(page).to have_selector("a[href='#{project_board_list_card_path(current_project, @board, @list, @card)}'][data-method='delete']")
       end
 
+      it 'has a link to create issue' do
+        expect(page).to have_selector("a[href='#{new_project_issue_path(current_project, board_id: @board, card_id: @card)}']")
+      end
+
       describe "clicking 'delete'" do
         before { PaperTrail.enabled = true }
         after  { PaperTrail.enabled = false }
@@ -284,6 +288,25 @@ describe 'Card pages:' do
         let(:trackable) { @card }
 
         include_examples 'creates an Activity', :destroy
+      end
+
+      describe "clicking 'Issue'" do
+        before { PaperTrail.enabled = true }
+        after  { PaperTrail.enabled = false }
+
+        let(:submit_form) do
+          within('.actions', match: :first) do
+            find('.dots-dropdown').click
+            click_link 'Issue'
+          end
+        end
+
+        it 'redirects to the new issue page with content populated' do
+          submit_form
+          expect(page).to have_current_path new_project_issue_path(current_project, board_id: @board, card_id: @card)
+          expect(page).to have_text @card.name
+          expect(page).to have_text @card.description.split("\n")[1]
+        end
       end
 
       describe 'card redirects' do
