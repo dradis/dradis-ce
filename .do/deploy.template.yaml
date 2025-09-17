@@ -1,7 +1,7 @@
 spec:
   name: dradis-ce
   services:
-    envs:
+  - envs:
     - key: RAILS_ENV
       value: production
       scope: RUN_TIME
