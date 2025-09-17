@@ -9,8 +9,8 @@ spec:
     - key: RAILS_SERVE_STATIC_FILES
       value: enabled
       scope: RUN_TIME
+    dockerfile_path: Dockerfile
     git:
       branch: develop
       repo_clone_url: https://github.com/dradis/dradis-ce.git
     name: web
-    run_command: ./bin/setup
