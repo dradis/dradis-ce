@@ -1,7 +1,7 @@
 spec:
   name: dradis-ce
   services:
-    dockerfile_path: Dockerfile
+  - dockerfile_path: Dockerfile
     git:
       branch: develop
       repo_clone_url: https://github.com/dradis/dradis-ce.git
