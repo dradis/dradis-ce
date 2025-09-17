@@ -8,10 +8,7 @@
 
   <%= f.error_notification %>
 
-  <div class="d-flex flex-row align-items-center justify-content-between edit-header">
-    <h4 class="mb-0">Edit issue (<%= @issue.state.humanize %>)</h4>
-     <%= render 'issues/tag_input', f: f %>
-  </div>
+  <%= render 'issues/tag_input', f: f %>
 
   <%= label_tag :issue_text, 'Issue source input', class: 'visually-hidden' %>
   <%=
