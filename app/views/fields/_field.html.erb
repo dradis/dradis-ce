@@ -41,7 +41,8 @@
   </div>
   <div class="actions">
     <%= link_to 'javascript:void(0)', class: 'text-error-hover', tabindex: '-1',  data: { behavior: 'delete-field' } do %>
-      <i class="fa-solid fa-trash"></i> Delete Field
+      <i class="fa-solid fa-trash" title="Delete Field"></i> 
+      <span class="visually-hidden">Delete Field</span>
     <% end %>
   </div>
 </div>

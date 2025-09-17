@@ -125,8 +125,6 @@
 
 .textile-wrap {
   background-color: #fff;
-  overflow-x: hidden;
-  overflow-y: auto;
   word-break: break-word;
 
   &.textile-fullscreen {
@@ -193,17 +191,16 @@
 
       .textile-form-field {
         border-left: 4px solid transparent;
-        margin: 0 1.5rem 2.5rem 0;
+        margin: 0 1.5rem 0.5rem 0;
         padding-left: 0.5rem;
         position: relative;
 
         .actions {
-          bottom: -2.2rem;
-          margin: 0 1rem;
+          top: 0;
           opacity: 0;
           padding: 0.5rem 0;
           position: absolute;
-          right: 0;
+          left: -1.25rem;
           transition: opacity 0.2s ease-in-out;
         }
 
