@@ -2,6 +2,9 @@ spec:
   name: dradis-ce
   services:
   - name: web
+    health_check:
+      http_path: /up
+    http_port: 80
     image:
       registry_type: DOCKER_HUB
       registry: dradis
