@@ -8,8 +8,6 @@
 
   <%= f.error_notification %>
 
-  <%= render 'issues/tag_input', f: f %>
-
   <%= label_tag :issue_text, 'Issue source input', class: 'visually-hidden' %>
   <%=
     f.input :text,
@@ -34,6 +32,8 @@
   <% if controller.class.name.deconstantize == 'QA' %>
     <%= hidden_field nil, :return_to, value: :qa %>
   <% end %>
+
+  <%= render 'issues/tag_input', f: f %>
 
   <div class="form-actions">
     <%= render partial: 'qa/state_button', locals: { f: f, record: @issue } %>
