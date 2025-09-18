@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Editor: Update UI for improved editing experience
   - Hera: Add custom error pages
   - Activities: Include methodology name in all methodology actions
   - Docker: 
