@@ -1,11 +1,9 @@
 spec:
   name: dradis-ce
   services:
-  - dockerfile_path: Dockerfile
-    git:
-      branch: develop
-      repo_clone_url: https://github.com/dradis/dradis-ce.git
-    health_check:
-      http_path: /up
-    http_port: 80
-    name: web
+  - name: web
+    image:
+      registry_type: DOCKER_HUB
+      registry: dradis
+      repository: dradis-ce
+      digest: sha256:78cf8fb628718518d9fce479cb54db0ccfb037dd6f7ef5711a499bfd166a6372
