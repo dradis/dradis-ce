@@ -1,4 +1,4 @@
-[v#.#.#] ([month] [YYYY])
+v4.18.0 (September 2025)
   - Editor: Update UI for improved editing experience
   - Hera: Add custom error pages
   - Activities: Include methodology name in all methodology actions
@@ -12,27 +12,6 @@
   - Upgraded gems: thor
   - Bugs fixes:
     - Combobox: Prevent forcing the selection of the first available option for multi-select forms
-    - [entity]:
-      - [future tense verb] [bug fix]
-    - Bug tracker items:
-      - [item]
-  - New integrations:
-    - [integration]
-  - Integration enhancements:
-    - [integration]:
-      - [future tense verb] [integration enhancement]
-      - [integration bug fixes]:
-        - [future tense verb] [integration bug fix]
-  - Reporting enhancements:
-    - [report type]:
-      - [future tense verb] [reporting enhancement]
-  - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
-  - Security Fixes:
-    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
-    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
 
 v4.17.1 (July 2025)
   - No changes
