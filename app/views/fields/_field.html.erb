@@ -5,7 +5,6 @@
   <div class="d-inline-flex justify-content-between w-100">
     <div class="inline-editable w-100" data-behavior="inline-editable">
       <div class="edit-hover">
-        <i class="fa-solid fa-pencil pt-1" data-behavior="edit-field" data-edit-field="#item_form_field_name_<%= index %>"></i>
         <%= label_tag "item_form[field_name_#{index}]", 'Field Name', class: 'visually-hidden' %>
         <%= text_field_tag "item_form[field_name_#{index}]", field_name,
           class: 'form-control',
@@ -42,7 +41,8 @@
   </div>
   <div class="actions">
     <%= link_to 'javascript:void(0)', class: 'text-error-hover', tabindex: '-1',  data: { behavior: 'delete-field' } do %>
-      <i class="fa-solid fa-trash"></i> Delete
+      <i class="fa-solid fa-trash" title="Delete Field"></i> 
+      <span class="visually-hidden">Delete Field</span>
     <% end %>
   </div>
 </div>
