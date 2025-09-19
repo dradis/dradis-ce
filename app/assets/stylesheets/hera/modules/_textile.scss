@@ -125,9 +125,6 @@
 
 .textile-wrap {
   background-color: #fff;
-  max-height: calc(100vh - 29rem);
-  overflow-x: hidden;
-  overflow-y: auto;
   word-break: break-word;
 
   &.textile-fullscreen {
@@ -172,67 +169,63 @@
     background: transparent;
     padding: 0;
 
+    .editor-field {
+      .textile {
+        border: 0;
+        border-right: 1px solid $border-color;
+        border-radius: 0;
+        box-shadow: none !important;
+        padding: 0.5rem 1.5rem 0.5rem 1rem;
+      }
+    }
+
     .textile-form {
       .add-field {
-        margin: 0.4rem 0.75rem;
+        margin: 1rem 0.75rem;
       }
 
       .textile-form-body {
-        background-color: $secondary-bg;
-        border: 1px solid $border-color;
-        border-radius: 5px;
+        background-color: $white;
+        @media (min-width: 992px) {
+          border-right: 1px solid $border-color;
+        }
       }
 
       .textile-form-field {
-        border-bottom: 1px solid transparent;
-        border-top: 1px solid transparent;
-        margin-bottom: -1px;
+        border-left: 4px solid transparent;
+        margin: 0 1.5rem 0.5rem 0;
+        padding-left: 0.5rem;
         position: relative;
+        transition: border 0.2s ease-in-out;
 
         .actions {
-          bottom: 0;
-          margin: 0 1rem;
+          top: 0;
           opacity: 0;
           padding: 0.5rem 0;
           position: absolute;
-          right: 0.5rem;
+          left: -1.25rem;
           transition: opacity 0.2s ease-in-out;
         }
 
         .editor-field {
-          margin: 0 1.5rem;
+          margin: 0;
 
           &.sticky-toolbar .editor-toolbar {
-            margin: 0 -1.5rem -1px -1.5rem;
             width: initial;
           }
         }
 
-        &:first-of-type:hover {
-          border-top-color: transparent;
-        }
-
         &:hover {
-          background-color: darken($secondary-bg, 2%);
-          border-bottom-color: $border-color;
-          border-top-color: $border-color;
+          border-color: $light;
 
           .actions {
             opacity: 1;
           }
         }
 
-        &:last-of-type:hover {
-          border-bottom-color: transparent;
-        }
-
         textarea {
           min-height: 34px;
           resize: none;
-        }
-
-        .textarea-container {
-          margin: 0 -1.6px 2.25rem -0.6px;
         }
       }
     }
@@ -255,7 +248,9 @@
       }
 
       @include media-breakpoint-down(lg) {
+        border-top: 1px solid $border-color;
         margin-top: 2rem;
+        padding-top: 2rem;
       }
     }
   }
