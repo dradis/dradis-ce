@@ -2,14 +2,15 @@ v4.18.0 (September 2025)
   - Editor: Update UI for improved editing experience
   - Hera: Add custom error pages
   - Activities: Include methodology name in all methodology actions
-  - Docker: 
+  - Docker:
     - Add Docker Compose configuration file for production deployment
     - Add Thruster gem to handle https
     - Manage server processes with a Procfile and boot script
   - Font: Improve language support
   - Rails: Upgrade Rails version to 8.0.2.1
   - Ruby: Upgrade Ruby version to 3.4.4
-  - Upgraded gems: thor
+  - Upgraded gems:
+    - rexml, selenium-webdriver, thor
   - Bugs fixes:
     - Combobox: Prevent forcing the selection of the first available option for multi-select forms
 
