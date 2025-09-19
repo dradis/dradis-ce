@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.4.4'
+ruby '3.4.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 8.0.2'
@@ -121,9 +121,6 @@ gem 'cancancan', '~> 1.10'
 
 # Redis-based background worker
 gem 'resque'
-
-# See https://github.com/sinatra/sinatra/issues/1055
-gem 'sinatra', '~> 2.2.3'
 
 # Forms that integrate with Twitter's Bootstrap
 gem 'simple_form'
