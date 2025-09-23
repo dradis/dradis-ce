@@ -75,7 +75,7 @@ body.errors.show {
     width: 100%;
 
     .error-header {
-      align-items: center;
+      align-items: start;
       display: flex;
       flex-direction: row;
       gap: 0.75rem;
@@ -83,6 +83,7 @@ body.errors.show {
       i {
         color: $red;
         font-size: 2.25rem;
+        margin-top: 0.3rem;
       }
     }
 
@@ -100,6 +101,10 @@ body.errors.show {
       word-break: break-all;
       word-wrap: break-word;
     }
+  }
+
+  .font-mono {
+    font-family: monospace;
   }
 
   h1,
