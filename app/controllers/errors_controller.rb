@@ -20,9 +20,9 @@ class ErrorsController < ApplicationController
     return status_from_params if SUPPORTED_STATUS_CODES.include?(status_from_params)
 
     if @error
-      status_from_exception = @error.try(:status_code) ||
+      status_from_error = @error.try(:status_code) ||
         ActionDispatch::ExceptionWrapper.new(request.env, @error).status_code
-      return status_from_exception if SUPPORTED_STATUS_CODES.include?(status_from_exception)
+      return status_from_error if SUPPORTED_STATUS_CODES.include?(status_from_error)
     end
 
     500
