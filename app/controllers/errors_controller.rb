@@ -11,10 +11,10 @@ class ErrorsController < ApplicationController
 
   SUPPORTED_ERRORS.each do |status_name, status_code|
     define_method(status_name) do
-      @error = request.env['action_dispatch.exception']
+      @exception = request.env['action_dispatch.exception']
 
       respond_to do |format|
-        format.html { render "errors/#{status_code}", status: status_code }
+        format.html { render "errors/#{status_code}" }
         format.any  { head status_code }
       end
     end

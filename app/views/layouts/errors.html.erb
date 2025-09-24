@@ -22,17 +22,17 @@
         <a class="btn" href="/">Back to the ship</a>
       </article>
     </main>
-    <% if @error %>
+    <% if @exception %>
       <div class="error">
         <div class="error-header">
           <i class="fa-solid fa-triangle-exclamation"></i>
           <div>
-            <p><strong><%= @error.class %></strong></p>
-            <p class="font-mono"><%= @error.message %></p>
+            <p><strong><%= @exception.class %></strong></p>
+            <p class="font-mono"><%= @exception.message %></p>
           </div>
         </div>
 
-        <pre><code><%= @error.backtrace.join("\n\n") %></code></pre>
+        <pre><code><%= @exception.backtrace.join("\n\n") %></code></pre>
       </div>
     <% end %>
   </body>
