@@ -1,5 +1,6 @@
 body.issues.edit,
-body.issues.new {
+body.issues.new,
+body.qa-issues.edit {
   .tag-input {
     display: flex;
     align-items: center;
@@ -27,13 +28,6 @@ body.issues.edit {
       background-color: $primary;
       color: $white;
     }
-  }
-}
-
-body.qa-issues.edit {
-  .tag-input {
-    display: flex;
-    align-items: center;
   }
 }
 
