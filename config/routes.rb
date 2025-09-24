@@ -160,9 +160,9 @@ Rails.application.routes.draw do
     root to: 'setup/passwords#new'
   end
 
-  ErrorsController::SUPPORTED_STATUS_CODES.each do |status_code|
+  ErrorsController::SUPPORTED_ERRORS.each do |status_name, status_code|
     match "/#{status_code}",
-      to: 'errors#show',
+      to: "errors##{status_name}",
       via: :all,
       defaults: { status_code: status_code }
   end

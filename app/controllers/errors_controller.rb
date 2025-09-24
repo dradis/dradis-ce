@@ -1,30 +1,22 @@
 class ErrorsController < ApplicationController
   layout 'errors'
 
-  SUPPORTED_STATUS_CODES = [400, 404, 406, 422, 500].freeze
+  SUPPORTED_ERRORS = {
+    bad_request: 400,
+    not_found: 404,
+    unsupported_browser: 406,
+    unprocessable_entity: 422,
+    internal_server_error: 500
+  }.freeze
 
-  def show
-    @error = request.env['action_dispatch.exception']
-    @status_code = determine_status_code
+  SUPPORTED_ERRORS.each do |status_name, status_code|
+    define_method(status_name) do
+      @error = request.env['action_dispatch.exception']
 
-    respond_to do |format|
-      format.html { render "errors/#{@status_code}", status: @status_code }
-      format.any { head @status_code }
+      respond_to do |format|
+        format.html { render "errors/#{status_code}", status: status_code }
+        format.any  { head status_code }
+      end
     end
-  end
-
-  private
-
-  def determine_status_code
-    status_from_params = params[:status_code]&.to_i
-    return status_from_params if SUPPORTED_STATUS_CODES.include?(status_from_params)
-
-    if @error
-      status_from_error = @error.try(:status_code) ||
-        ActionDispatch::ExceptionWrapper.new(request.env, @error).status_code
-      return status_from_error if SUPPORTED_STATUS_CODES.include?(status_from_error)
-    end
-
-    500
   end
 end
