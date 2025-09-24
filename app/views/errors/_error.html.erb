@@ -1,0 +1,19 @@
+<% content_for :title, "#{status_code} - #{error_title}" %>
+
+<section>
+  <div class="title">
+    <h1><%= error_title %></h1>
+    <h2><%= status_code %></h2>
+  </div>
+
+  <div class="quote">
+    <blockquote>
+      <p><%= quote %></p>
+    </blockquote>
+    <p class="author"><%= author %></p>
+  </div>
+</section>
+
+<section>
+  <%= image_tag "icons/#{icon[0]}.svg", alt: icon[1] %>
+</section>

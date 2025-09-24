@@ -1,22 +1,7 @@
-<% content_for :title, '406 - Unsupported browser' %>
-
-<section>
-  <div class="title">
-    <h1>Unsupported browser</h1>
-    <h2>406</h2>
-  </div>
-
-  <div class="quote">
-    <blockquote>
-      <p>
-        We've jumped way beyond the Red Line into uncharted space.
-        Limited supplies. Limited fuel. No allies. And now no hope!
-      </p>
-    </blockquote>
-    <p class="author">Commander Adama</p>
-  </div>
-</section>
-
-<section>
-  <%= image_tag "icons/9.svg", alt: 'UFO' %>
-</section>
+<%= render 'error', 
+  error_title: 'Unsupported browser',
+  status_code: 406,
+  quote: "We've jumped way beyond the Red Line into uncharted space. Limited supplies. Limited fuel. No allies. And now no hope!",
+  author: 'Commander Adama',
+  icon: [9, 'UFO']
+%>

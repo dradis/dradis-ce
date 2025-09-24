@@ -1,22 +1,7 @@
-<% content_for :title, '500 - Internal Server Error' %>
-
-<section>
-  <div class="title">
-    <h1>Internal Server Error</h1>
-    <h2>500</h2>
-  </div>
-
-  <div class="quote">
-    <blockquote>
-      <p>
-        There are computational errors in every jump. The further out
-        you jump, the greater the error.
-      </p>
-    </blockquote>
-    <p class="author">Commander Adama</p>
-  </div>
-</section>
-
-<section>
-  <%= image_tag "icons/7.svg", alt: 'Spacecraft' %>
-</section>
+<%= render 'error', 
+  error_title: 'Internal Server Error',
+  status_code: 500,
+  quote: 'There are computational errors in every jump. The further out you jump, the greater the error.',
+  author: 'Commander Adama',
+  icon: [7, 'Spacecraft']
+%>
