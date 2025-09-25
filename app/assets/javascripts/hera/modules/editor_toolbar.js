@@ -179,12 +179,15 @@ class EditorToolbar {
     // reset position and hide toolbar once focus is lost
     this.$target.on('blur', function () {
       const $toolbarElement = $(this).parent().prev(),
-        $editorField = $(this).parents('[data-behavior~=editor-field]');
+        $editorField = $(this).parents('[data-behavior~=editor-field]'),
+        $isFocused = document.activeElement === $toolbarElement;
 
-      $toolbarElement.css({ opacity: 0, visibility: 'hidden' });
+      if ($isFocused) {
+        $toolbarElement.css({ opacity: 0, visibility: 'hidden' });
 
-      $(window).off('scroll.editor-toolbar');
-      $editorField.removeClass('sticky-toolbar');
+        $(window).off('scroll.editor-toolbar');
+        $editorField.removeClass('sticky-toolbar');
+      }
     });
   }
 
