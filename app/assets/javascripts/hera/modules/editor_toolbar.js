@@ -178,33 +178,9 @@ class EditorToolbar {
 
     // reset position and hide toolbar once focus is lost
     this.$target.on('blur', function () {
-      const $toolbarElement = $(this).parent().prev(),
-        $editorField = $(this).parents('[data-behavior~=editor-field]');
+      const $toolbarElement = $(this).parent().prev();
 
-      //mouseenter & mouseleave need to be outside of blur for the toolbar to work
-      let $isToolbarActive = false;
-
-      $toolbarElement.on('mouseenter', () => {
-        $isToolbarActive = true;
-        console.log($isToolbarActive);
-      });
-
-      $toolbarElement.on('mouseleave', () => {
-        $isToolbarActive = false;
-        console.log($isToolbarActive);
-      });
-
-      setTimeout(() => {
-        if (
-          !$toolbarElement.is(document.activeElement) &&
-          !$toolbarElement.has(document.activeElement).length
-        ) {
-          $toolbarElement.css({ opacity: 0, visibility: 'hidden' });
-        }
-      }, 10);
-
-      $(window).off('scroll.editor-toolbar');
-      $editorField.removeClass('sticky-toolbar');
+      $toolbarElement.css({ opacity: 0, visibility: 'hidden' });
     });
   }
 
