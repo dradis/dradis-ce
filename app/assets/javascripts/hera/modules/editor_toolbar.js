@@ -181,7 +181,27 @@ class EditorToolbar {
       const $toolbarElement = $(this).parent().prev(),
         $editorField = $(this).parents('[data-behavior~=editor-field]');
 
-      $toolbarElement.css({ opacity: 0, visibility: 'hidden' });
+      //mouseenter & mouseleave need to be outside of blur for the toolbar to work
+      let $isToolbarActive = false;
+
+      $toolbarElement.on('mouseenter', () => {
+        $isToolbarActive = true;
+        console.log($isToolbarActive);
+      });
+
+      $toolbarElement.on('mouseleave', () => {
+        $isToolbarActive = false;
+        console.log($isToolbarActive);
+      });
+
+      setTimeout(() => {
+        if (
+          !$toolbarElement.is(document.activeElement) &&
+          !$toolbarElement.has(document.activeElement).length
+        ) {
+          $toolbarElement.css({ opacity: 0, visibility: 'hidden' });
+        }
+      }, 10);
 
       $(window).off('scroll.editor-toolbar');
       $editorField.removeClass('sticky-toolbar');
