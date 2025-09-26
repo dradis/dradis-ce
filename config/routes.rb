@@ -107,6 +107,8 @@ Rails.application.routes.draw do
       collection { post :sort }
     end
 
+    resources :tasks, only: :index
+
     namespace :qa do
       resources :issues, only: [:edit, :index, :show, :update], concerns: [:multiple_update, :previewable]
     end

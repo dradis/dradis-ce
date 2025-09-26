@@ -1,0 +1,32 @@
+<section class="summary-panel">
+  <% if @tasks.any? %>
+    <h4 class="header-underline">My Cards
+      <span class="actions pt-1">
+        <div class="action">
+          <%= link_to project_tasks_path(current_project) do %>
+            <i class="fa-solid fa-tasks"></i> All Cards
+          <% end %>
+        </div>
+      </span>
+    </h4>
+    <ul class="list-group tasks">
+      <% @tasks.first(5).each do |task| %>
+        <li class="d-flex flex-column list-group-item">
+          <%= link_to project_board_list_card_path(current_project, task.board, task.list, task), class: "list-group-item-action text-truncate" do %>
+            <%= task.name %>
+          <% end %>
+          <span class="small text-muted"><%= task.board.name %></span>
+          <%= due_date_badge(task) %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <div class="mb-3">
+      <%= render 'shared/empty_state',
+        name: 'assigned card',
+        docs_link: 'https://dradis.com/support/guides/projects/methodologies.html#task',
+        text: "Use this space to stay on top of cards once they're assigned."
+      %>
+    </div>
+  <% end %>
+</section>
