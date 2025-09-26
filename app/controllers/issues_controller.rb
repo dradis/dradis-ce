@@ -16,11 +16,11 @@ class IssuesController < AuthenticatedController
   before_action :set_columns, only: :index
 
   before_action :set_or_initialize_issue, except: [:import, :index]
+  before_action :set_content_from_card, only: [:new]
   before_action :set_auto_save_key, only: [:new, :create, :edit, :update]
   before_action :set_affected_nodes, only: [:show]
   before_action :set_form_cancel_path, only: [:new, :edit]
   before_action :set_tags, except: [:destroy]
-  before_action :set_card_content, only: :new
 
   def index
   end
@@ -221,12 +221,12 @@ class IssuesController < AuthenticatedController
     end
   end
 
-  def set_card_content
+  def set_content_from_card
     return unless params[:board_id] && params[:card_id]
 
     board = current_project.boards.includes(:cards).find(params[:board_id])
     card = board.cards.find(params[:card_id])
 
-    @issue.text = "\n#[Title]#\n#{card.name}\n#{card.description}"
+    @issue.text = "#[Title]#\n#{card.name}\n\n#{card.description}"
   end
 end

@@ -159,13 +159,13 @@ describe 'Issues pages' do
           end
         end
 
-        context 'when passed a card', js: true do
-          let (:board)  { create(:board, project: current_project, node: current_project.methodology_library) }
-          let (:list)  { create(:list, board: board) }
+        context 'when passed a card' do
+          let (:board) { create(:board, project: current_project, node: current_project.methodology_library) }
+          let (:list) { create(:list, board: board) }
           let (:card) { create(:card, list: list) }
           let(:submit_form) { click_button 'Create Issue' }
 
-          it 'preloads the editor with the card content' do
+          it 'preloads the editor with the card content', js: true do
             visit new_project_issue_path(current_project, board_id: board, card_id: card)
 
             expect(find_field('item_form[field_name_0]').value).to include('Title')
