@@ -227,6 +227,9 @@ class IssuesController < AuthenticatedController
     board = current_project.boards.includes(:cards).find(params[:board_id])
     card = board.cards.find(params[:card_id])
 
-    @issue.text = "#[Title]#\n#{card.name}\n\n#[Description]#\n#{card.description}"
+    card.fields.each do |field, value|
+      next if field == 'List' # We don't want to copy the List field
+      @issue.set_field(field, value)
+    end
   end
 end
