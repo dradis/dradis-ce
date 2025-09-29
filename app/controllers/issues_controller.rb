@@ -227,6 +227,6 @@ class IssuesController < AuthenticatedController
     board = current_project.boards.includes(:cards).find(params[:board_id])
     card = board.cards.find(params[:card_id])
 
-    @issue.text = "#[Title]#\n#{card.name}\n\n#{card.description}"
+    @issue.text = "#[Title]#\n#{card.name}\n\n#[Description]#\n#{card.description}"
   end
 end

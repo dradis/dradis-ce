@@ -170,8 +170,8 @@ describe 'Issues pages' do
 
             expect(find_field('item_form[field_name_0]').value).to include('Title')
             expect(find_field('item_form[field_value_0]').value).to include(card.name)
-            expect(find_field('item_form[field_name_1]').value).to include('Description')
-            expect(find_field('item_form[field_value_1]').value).to include(card.description.split("\n")[1])
+            expect(find_field('item_form[field_name_2]').value).to include('Description')
+            expect(find_field('item_form[field_value_2]').value).to include(card.description.split("\n")[1])
           end
 
           it 'creates a new issue' do
