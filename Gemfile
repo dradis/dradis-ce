@@ -2,10 +2,10 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.2'
+ruby '3.4.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.2.2.1'
+gem 'rails', '~> 8.0.2'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
@@ -26,7 +26,7 @@ gem 'turbo-rails', '~> 2.0'
 gem 'stimulus-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.7'
+gem 'jbuilder', '~> 2.13'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -56,7 +56,7 @@ gem 'liquid'
 
 gem 'kaminari', '~> 1.2.1'
 
-gem 'paper_trail', '~> 15.2.0'
+gem 'paper_trail', '~> 16.0'
 
 # gem 'rails_autolink', '~> 1.1'
 
@@ -65,6 +65,8 @@ gem 'record_tag_helper'
 gem 'rubyzip', '>= 1.2.2'
 
 gem 'thor', '~> 1.4.0'
+
+gem 'thruster'
 
 # Ruby dependency, version specified here due to CVE-2023-28756
 gem 'time', '>= 0.2.2'
@@ -111,7 +113,7 @@ gem 'sanitize', '6.0.2'
 
 # SQLite3 DB driver
 gem 'sqlite3'
-gem 'pg'
+# gem 'pg'
 
 # --------------------------------------------------------- Dradis Professional
 # Authorisation
@@ -119,9 +121,6 @@ gem 'cancancan', '~> 1.10'
 
 # Redis-based background worker
 gem 'resque'
-
-# See https://github.com/sinatra/sinatra/issues/1055
-gem 'sinatra', '~> 2.2.3'
 
 # Forms that integrate with Twitter's Bootstrap
 gem 'simple_form'
@@ -142,7 +141,9 @@ gem 'net-smtp'
 gem 'net-pop'
 gem 'net-imap', '>= 0.5.7'
 
-gem 'puma', '>= 6.4.3'
+gem 'puma', '>= 6.5.0'
+
+gem 'csv'
 
 # ------------------------------------------------------------------ Deployment
 # Use Capistrano for deployment
@@ -175,10 +176,13 @@ group :development do
 
   # security
   gem 'brakeman', require: false
-  gem 'bundler-audit', require: false
-  gem 'ruby_audit', require: false
+  # required by brakeman
+  gem 'abbrev'
 
-  gem 'rubocop', require: false
+  gem 'bundler-audit', require: false
+  gem 'ruby_audit', '~> 3.0.0', require: false
+
+  gem 'rubocop', '1.79.0', require: false
 end
 
 group :development, :test do
@@ -190,11 +194,11 @@ end
 
 group :test do
   gem 'database_cleaner'
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '~> 6.5'
   gem 'capybara', '~> 3.40'
   gem 'guard-rspec', require: false
-  gem 'selenium-webdriver', '~> 4.29'
-  gem 'shoulda-matchers', '~> 3.1'
+  gem 'selenium-webdriver', '~> 4.35'
+  gem 'shoulda-matchers', '~> 4.0.1'
   gem 'timecop'
 
   # Required by capybara
@@ -216,15 +220,15 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 4.17.0'
+gem 'dradis-plugins', '~> 4.18.0'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 4.17.0'
+gem 'dradis-projects', '~> 4.18.0'
 
 plugins_file = 'Gemfile.plugins'
-if File.exists?(plugins_file)
+if File.exist?(plugins_file)
   eval(IO.read(plugins_file), binding)
 end
 
@@ -233,34 +237,34 @@ end
 
 # ----------------------------------------------------------------- Calculators
 
-gem 'dradis-calculator_cvss', '~> 4.17.0'
-gem 'dradis-calculator_dread', '~> 4.17.0'
-gem 'dradis-calculator_mitre', '~> 4.17.0'
+gem 'dradis-calculator_cvss', '~> 4.18.0'
+gem 'dradis-calculator_dread', '~> 4.18.0'
+gem 'dradis-calculator_mitre', '~> 4.18.0'
 
 # ---------------------------------------------------------------------- Export
-gem 'dradis-csv_export', '~> 4.17.0'
-gem 'dradis-html_export', '~> 4.17.0'
+gem 'dradis-csv_export', '~> 4.18.0'
+gem 'dradis-html_export', '~> 4.18.0'
 
 # ---------------------------------------------------------------------- Import
-gem 'dradis-csv', '~> 4.17.0'
+gem 'dradis-csv', '~> 4.18.0'
 
 # ---------------------------------------------------------------------- Upload
-gem 'dradis-acunetix', '~> 4.17.0'
-gem 'dradis-brakeman', '~> 4.17.0'
-gem 'dradis-burp', '~> 4.17.0'
-gem 'dradis-coreimpact', '~> 4.17.0'
-gem 'dradis-metasploit', '~> 4.17.0'
-gem 'dradis-nessus', '~> 4.17.0'
-gem 'dradis-netsparker', '~> 4.17.0'
-gem 'dradis-nexpose', '~> 4.17.0'
-gem 'dradis-nikto', '~> 4.17.0'
-gem 'dradis-nipper', '~> 4.17.0'
-gem 'dradis-nmap', '~> 4.17.0'
-gem 'dradis-ntospider', '~> 4.17.0'
-gem 'dradis-openvas', '~> 4.17.0'
-gem 'dradis-pentera', '~> 4.17.0'
-gem 'dradis-qualys', '~> 4.17.0'
-gem 'dradis-saint', '~> 4.17.0'
-gem 'dradis-veracode', '~> 4.17.0'
-gem 'dradis-wpscan', '~> 4.17.0'
-gem 'dradis-zap', '~> 4.17.0'
+gem 'dradis-acunetix', '~> 4.18.0'
+gem 'dradis-brakeman', '~> 4.18.0'
+gem 'dradis-burp', '~> 4.18.0'
+gem 'dradis-coreimpact', '~> 4.18.0'
+gem 'dradis-metasploit', '~> 4.18.0'
+gem 'dradis-nessus', '~> 4.18.0'
+gem 'dradis-netsparker', '~> 4.18.0'
+gem 'dradis-nexpose', '~> 4.18.0'
+gem 'dradis-nikto', '~> 4.18.0'
+gem 'dradis-nipper', '~> 4.18.0'
+gem 'dradis-nmap', '~> 4.18.0'
+gem 'dradis-ntospider', '~> 4.18.0'
+gem 'dradis-openvas', '~> 4.18.0'
+gem 'dradis-pentera', '~> 4.18.0'
+gem 'dradis-qualys', '~> 4.18.0'
+gem 'dradis-saint', '~> 4.18.0'
+gem 'dradis-veracode', '~> 4.18.0'
+gem 'dradis-wpscan', '~> 4.18.0'
+gem 'dradis-zap', '~> 4.18.0'

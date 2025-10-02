@@ -99,7 +99,7 @@
       margin: 0 1px;
       position: sticky;
       text-align: center;
-      top: 0;
+      top: 100px; // header height
 
       &:after,
       &:before {
