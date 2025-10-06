@@ -1,17 +1,19 @@
-<nav class="navbar navbar-expand-lg main-nav">
-  <div class="container-fluid">
-    <%= navbar_brand %>
+<% cache [Dradis::Plugins::with_feature(:addon).size] do %>
+  <nav class="navbar navbar-expand-lg main-nav">
+    <div class="container-fluid">
+      <%= navbar_brand %>
 
-    <button class="navbar-toggler" type="button" data-behavior="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".dual-nav" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <i class="fa-solid fa-bars"></i>
-    </button>
+      <button class="navbar-toggler" type="button" data-behavior="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".dual-nav" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars"></i>
+      </button>
 
-    <div class="collapse navbar-collapse justify-content-end dual-nav" data-behavior="navbar-collapse">
-      <ul class="navbar-nav navbar-nav-scroll me-auto pb-0">
-        <%= render "layouts/hera/navbar/main_nav/#{Dradis.edition}" %>
-      </ul>
+      <div class="collapse navbar-collapse justify-content-end dual-nav" data-behavior="navbar-collapse">
+        <ul class="navbar-nav navbar-nav-scroll me-auto pb-0">
+          <%= render "layouts/hera/navbar/main_nav/#{Dradis.edition}" %>
+        </ul>
 
-      <%= render 'layouts/hera/navbar/main_nav/utility_nav' %>
+        <%= render 'layouts/hera/navbar/main_nav/utility_nav' %>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+<% end %>
