@@ -1,13 +1,23 @@
 body.issues.edit,
-body.issues.new {
+body.issues.new,
+body.qa-issues.edit {
   .tag-input {
     display: flex;
     align-items: center;
-    margin-bottom: 1rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0.6rem;
 
     .btn {
       background: $primary-bg;
       color: $text-default;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .form-actions {
+      margin-top: 2rem;
     }
   }
 }

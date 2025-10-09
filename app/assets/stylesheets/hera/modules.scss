@@ -162,6 +162,26 @@
   border-top: 1px solid $border-color;
   height: 0;
   margin: 0.25rem 0;
+  position: relative;
+
+  .divider-label {
+    background-color: $white;
+    color: $text-default;
+    font-size: $text-small;
+    left: 50%;
+    padding: 0 0.5rem;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &.divider-lg {
+    margin: 1.25rem 0;
+  }
+
+  &.divider-xl {
+    margin: 2rem 0;
+  }
 }
 
 .divider-vertical {
@@ -296,7 +316,6 @@
           }
         }
 
-        &:focus,
         &:hover {
           background-color: $light;
         }

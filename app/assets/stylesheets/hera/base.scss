@@ -1,13 +1,13 @@
 @font-face {
   font-family: 'ProximaNovaLight';
-  src: font-url('proximanova-light.woff2');
+  src: font-url('proximanova-light.otf');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'ProximaNovaRegular';
-  src: font-url('proximanova-regular.woff2');
+  src: font-url('proximanova-regular.otf');
   font-weight: 500;
   font-style: normal;
 }
@@ -63,6 +63,7 @@ a {
 
 b,
 .form-label,
+.inline-editable input[type='text'],
 strong,
 th {
   font-family: 'ProximaNovaRegular', 'system-ui';
