@@ -4,7 +4,7 @@
   - Upgraded gems:
     - rack
   - Bugs fixes:
-    - Assert sidebar toggle button isn't covered by scrollbar
+    - Sidebar: Assert toggle button isn't covered by scrollbar
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
