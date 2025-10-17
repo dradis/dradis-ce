@@ -1,14 +1,10 @@
 <% content_for :title, 'Notifications' %>
 
-<% if @current_project %>
-  <% content_for :breadcrumbs do %>
+<% content_for :breadcrumbs do %>
+  <% if @current_project %>
     <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-        <%= link_to current_project.name, project_path(current_project) %>
-      </li>
-      <li class="breadcrumb-item active">
-        Notifications
-      </li>
+      <li class="breadcrumb-item"><%= link_to current_project.name, project_path(current_project) %></li>
+      <li class="breadcrumb-item active">Notifications</li>
     </ol>
   <% end %>
 <% end %>
