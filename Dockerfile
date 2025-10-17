@@ -69,6 +69,7 @@ RUN groupadd --system --gid 1000 rails && \
     chown -R rails:rails \
         app/views/tmp \
         attachments \
+        config/schedules \ 
         config/shared \
         db \
         log \
