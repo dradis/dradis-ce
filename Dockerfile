@@ -11,11 +11,12 @@ apt-get install -y redis-server && \
 rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
+# RAILS_SERVE_STATIC_FILES  is enabled to let Rails serve static files since we're not using Nginx
 ENV RAILS_ENV="production" \
-    RAILS_SERVE_STATIC_FILES="enabled" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development test"
+    BUNDLE_WITHOUT="development test" \
+    RAILS_SERVE_STATIC_FILES="enabled"
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build
@@ -65,7 +66,15 @@ COPY --from=build /dradis /dradis
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    chown -R rails:rails app/views/tmp attachments config/shared db log storage tmp templates
+    chown -R rails:rails \
+        app/views/tmp \
+        attachments \
+        config/shared \
+        db \
+        log \
+        storage \
+        templates \
+        tmp
 USER 1000:1000
 
 # Entrypoint prepares the database.
