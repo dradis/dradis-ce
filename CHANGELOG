@@ -2,8 +2,9 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - rack
+    - rack, uri
   - Bugs fixes:
+    - Sidebar: Assert toggle button isn't covered by scrollbar
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
