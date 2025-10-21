@@ -1,30 +1,17 @@
 <% content_for :title, 'Notifications' %>
 
-<% if @current_project %>
-  <% content_for :breadcrumbs do %>
+<% content_for :breadcrumbs do %>
+  <% if @current_project %>
     <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-        <%= link_to current_project.name, project_path(current_project) %>
-      </li>
-      <li class="breadcrumb-item active">
-        Notifications
-      </li>
+      <li class="breadcrumb-item"><%= link_to current_project.name, project_path(current_project) %></li>
+      <li class="breadcrumb-item active">Notifications</li>
     </ol>
   <% end %>
-
-  <div class="content-container">
-    <h4 class="header-underline w-100">
-      <%= render partial: 'notifications/header' %>
-    </h4>
-    <%= render partial: 'notifications/notifications' %>
-  </div>
-<% else %>
-  <div class="card">
-    <div class="card-header bg-primary">
-      <div class="card-title">
-        <%= render partial: 'notifications/header' %>
-      </div>
-    </div>
-    <%= render partial: 'notifications/notifications' %>
-  </div>
 <% end %>
+
+<div class="content-container">
+  <h4 class="header-underline w-100">
+    <%= render partial: 'notifications/header' %>
+  </h4>
+  <%= render partial: 'notifications/notifications' %>
+</div>
