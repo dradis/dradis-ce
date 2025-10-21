@@ -17,7 +17,7 @@ class Activity < ApplicationRecord
 
   validates_presence_of :action, :trackable_id, :trackable_type, :user
 
-  VALID_ACTIONS = %w[create destroy recover state_change update]
+  VALID_ACTIONS = %w[create destroy download recover state_change update]
 
   validates_inclusion_of :action, in: VALID_ACTIONS
 
@@ -47,6 +47,18 @@ class Activity < ApplicationRecord
     super
     self.trackable_type = 'Issue' if new_trackable.is_a?(Issue)
     new_trackable
+  end
+
+  def to_payload
+    {
+      id: self.id,
+      class: self.class.name,
+      content: self.content,
+      commentable: {
+        id: self.commentable.id,
+        title: self.commentable.title
+      }
+    }
   end
 
   def to_xml(xml_builder, version: 3)
