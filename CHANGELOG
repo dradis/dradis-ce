@@ -1,5 +1,5 @@
 [v#.#.#] ([month] [YYYY])
-  - Layout: Improve primary action visibility for Evidence, Issues, Notes, and Node Properties
+  - Layout: Improve primary action visibility for Evidence, Issues, Methodologies, Notes, and Node Properties
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
