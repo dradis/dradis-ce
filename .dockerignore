@@ -1,11 +1,6 @@
-
-# Ignore git directory.
-/.git
-/.gitignore
-/.github
-
-# Ignore bundle config.
+# Bundler files
 /.bundle
+/vendor/bundle
 
 # Ignore environment and deployment files.
 /.env*
@@ -20,11 +15,11 @@
 !/log/.keep
 !/tmp/.keep
 
-# Ignore pidfiles.
+# Ignore pidfiles, but keep the directory.
 /tmp/pids/*
 !/tmp/pids/.keep
 
-# Ignore storage(uploaded files in development and any SQLite databases).
+# Ignore storage.
 /storage/*
 !/storage/.keep
 /tmp/storage/*
@@ -33,20 +28,18 @@
 # Ignore assets.
 /public/assets
 
-# Ignore application folders
+# Ignore configuration files
+/config/database.yml
+/config/smtp.yml
+
+# Ignore database files
+/db/*.sqlite3
+
+# Ignore app-specific folders
 /attachments/
 /avatars/
 /config/shared/*
-/db/*.sqlite3
 /templates/*
-
-# Ignore bundled gems
-/vendor/bundle
-
-# Ignore Docker-related files
-/.dockerignore
-/Dockerfile*
-/compose.yaml
 
 # Ignore development and test files
 /.byebug_history
@@ -59,11 +52,15 @@
 /CHANGELOG.template
 /spec
 
-# Ignore configuration files
-/config/smtp.yml
-/config/database.yml
+# Ignore Docker-related files
+/.dockerignore
+/Dockerfile*
+/compose.yaml
 
-# Ignore themes
-/themes/*
+# Ignore git directory.
+/.git
+/.gitignore
+/.github
 
+# Random
 /.DS_Store
