@@ -1,6 +1,5 @@
 [v#.#.#] ([month] [YYYY])
-  - [entity]:
-    - [future tense verb] [feature]
+  - Docker: Update default attachments & templates locations to storage/
   - Upgraded gems:
     - rack, uri
   - Bugs fixes:

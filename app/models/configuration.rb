@@ -41,11 +41,8 @@ class Configuration < ApplicationRecord
 
 
   # --------------------------------------------------------------- admin:paths
-  # In CE ./templates/ is always a folder (created by bin/setup) but in Pro
-  # it can be a symlink (if we're in Production). We use .realdirpath to
-  # ensure we're using the "shared" folder (that's the target of the link).
   def self.paths_templates
-    @@paths_templates ||= Rails.root.join('templates').realdirpath
+    @@paths_templates ||= Rails.root.join('storage', 'templates')
   end
 
   def self.paths_templates_methodologies

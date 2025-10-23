@@ -1,6 +1,12 @@
 #!/bin/bash -e
 
-echo 'Preparing the database...'
-./bin/rails db:prepare
+# Only create or migrate existing database when starting the Rails server or running bin/boot
+if ([ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]) || [ "${@: -1:1}" == "./bin/boot" ]; then
+  echo "Preparing the database..."
+  ./bin/rails db:prepare
+else
+  # for resque container, since it won't be created automatically like it is when we call bin/rails server
+  mkdir -p tmp/pids
+fi
 
 exec "${@}"
