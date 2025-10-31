@@ -36,6 +36,7 @@
       </div>
 
       <div class="style-code-wrapper collapse" id="container-code">
+        <%= highlight_code(@article.code, @article.language) %>
         <pre class="style-code">
 <code><span class="et">&lt;div</span><span class="an"> class=</span><span class="av">"content-container"</span><span class="et">></span>
   <span class="et">&lt;h4</span><span class="an"> class=</span><span class="av">"header-underline"</span><span class="et">></span><span class="et">></span><span class="et">></span>Header Text Here<span class="et">&lt;/h4</span><span class="et">></span>

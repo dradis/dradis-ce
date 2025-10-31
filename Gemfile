@@ -183,6 +183,9 @@ group :development do
   gem 'ruby_audit', '~> 3.0.0', require: false
 
   gem 'rubocop', '1.79.0', require: false
+
+  # syntax highlighter for styles
+  gem 'rouge'
 end
 
 group :development, :test do
