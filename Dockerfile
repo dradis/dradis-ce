@@ -1,39 +1,76 @@
-# We're sticking to non-slim version: https://hub.docker.com/_/ruby/
-FROM --platform=amd64 ruby:3.1.2
+ARG RUBY_VERSION=3.4.6
+FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
-WORKDIR /app
+# Rails app lives here
+WORKDIR /dradis
 
-# Copying dradis-ce app
+# Install dependencies for Ruby build and gems
+RUN apt-get update -qq && \
+apt-get install --no-install-recommends -y curl git libjemalloc2 libvips sqlite3 && \
+apt-get install -y redis-server && \
+rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Set production environment
+ENV RAILS_ENV="production" \
+    RAILS_SERVE_STATIC_FILES="enabled" \
+    BUNDLE_DEPLOYMENT="1" \
+    BUNDLE_PATH="/usr/local/bundle" \
+    BUNDLE_WITHOUT="development test"
+
+# Throw-away build stage to reduce size of final image
+FROM base AS build
+
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y build-essential curl git pkg-config libyaml-dev && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Copy files needed to run `bundle install` to build layer
+# engines/ is needed to resolve built-in engines in Gemfile
+# version.rb is needed to resolve engine versions in .gemspec
+COPY Gemfile Gemfile.lock ./
+COPY engines ./engines
+COPY lib/dradis/ce/version.rb ./lib/dradis/ce/version.rb
+
+# Install application gems
+RUN bundle install && \
+    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
+    bundle exec bootsnap precompile --gemfile
+
 COPY . .
 
-# Copying sample files
+# Copy sample files
 COPY config/database.yml.template config/database.yml
 COPY config/smtp.yml.template config/smtp.yml
 
 # Preparing application folders
-RUN mkdir -p attachments/
-RUN mkdir -p config/shared/
-RUN mkdir -p templates/
+RUN mkdir -p app/views/tmp \
+    attachments \
+    config/shared \
+    storage \
+    templates
 
-# Is this only needed because M1 build?
-RUN bundle config build.ffi --enable-libffi-alloc
+# Precompile bootsnap code for faster boot times
+RUN bundle exec bootsnap precompile app/ lib/
 
-# Installing dependencies
-RUN bundle install
+# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+
+# Final stage for app image
+FROM base
+
+# Copy built artifacts: gems, application
+COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
+COPY --from=build /dradis /dradis
 
 # Run and own only the runtime files as a non-root user for security
-RUN useradd rails --create-home --shell /bin/bash && \
-    chown -R rails:rails attachments config/shared db log tmp templates
-USER rails:rails
-
-# Preparing database
-RUN bin/rails db:prepare
-#RUN bin/rails db:seed
+RUN groupadd --system --gid 1000 rails && \
+    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
+    chown -R rails:rails app/views/tmp attachments config/shared db log storage tmp templates
+USER 1000:1000
 
 # Entrypoint prepares the database.
-# ENTRYPOINT ["/app/bin/docker-entrypoint"]
+ENTRYPOINT ["/dradis/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
-EXPOSE 3000
-# CMD ["./bin/rails", "server"]
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+EXPOSE 80 443
+CMD ["./bin/boot"]

@@ -98,7 +98,8 @@ describe 'evidence' do
 
     it 'has a form to edit the evidence' do
       expect(page).to have_field :evidence_content
-      expect(page).to have_field :evidence_issue_id
+      expect(page).to have_field :evidence_issue_id, visible: false
+      expect(page).to have_selector '#evidence_issue_id + .combobox'
     end
 
     context 'when editing the evidence from an issue' do
@@ -123,7 +124,6 @@ describe 'evidence' do
     describe 'submitting the form with valid information', js: true do
       let(:new_content) { 'new content' }
       before do
-        click_link 'Source'
         fill_in :evidence_content, with: new_content
       end
 
@@ -190,7 +190,11 @@ describe 'evidence' do
     describe 'textile form view' do
       let(:action_path) { new_project_node_evidence_path(current_project, @node) }
       let(:params) { {} }
-      let(:required_form) { find('#evidence_issue_id option:nth-of-type(2)').select_option }
+      let(:required_form) do
+        find('#evidence_issue_id + .combobox').click
+        find('.combobox-menu .combobox-option:nth-of-type(2)').click
+      end
+
       it_behaves_like 'a textile form view', Evidence
       it_behaves_like 'an editor that remembers what view you like'
     end
@@ -209,7 +213,8 @@ describe 'evidence' do
 
       describe 'submitting the form with valid information' do
         before do
-          select @issue_1.title, from: :evidence_issue_id
+          find('#evidence_issue_id + .combobox').click
+          find('.combobox-option', text: @issue_1.title).click
           fill_in :evidence_content, with: 'This is some evidence'
         end
 

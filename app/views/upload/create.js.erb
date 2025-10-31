@@ -1,5 +1,5 @@
 <% if @success -%>
-  ConsoleUpdater.jobId = <%= @item_id %>
+  ConsoleUpdater.jobId = '<%= @item_id %>'
   $('#result').data('id', ConsoleUpdater.jobId)
   $('#result').show()
   $('#item_id').val(ConsoleUpdater.jobId)
@@ -10,7 +10,7 @@
   url = $('#new_upload').data('parse-url');
   data = {
     file: '<%= @attachment.filename %>',
-    item_id: <%= @item_id %>,
+    item_id: '<%= @item_id %>',
     uploader: '<%= params[:uploader] %>'
   };
   <% if @state %>

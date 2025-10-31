@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Report - Dradis Professional Edition</title>
+  <style type="text/css">
+  /*! normalize.css v2.1.0 | MIT License | git.io/normalize */
+  article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary {display: block;}
+  [hidden] {display: none;}
+  html {font-family: sans-serif; /* 1 */-webkit-text-size-adjust: 100%; /* 2 */-ms-text-size-adjust: 100%; /* 2 */}
+  body {margin: 0;}
+  a:focus {outline: thin dotted;}
+  a:active,a:hover {outline: 0;}
+  h1 {font-size: 2em;margin: 0.67em 0;}
+  abbr[title] {border-bottom: 1px dotted;}
+  b,strong {font-weight: bold;}
+  dfn {font-style: italic;}
+  hr {-moz-box-sizing: content-box;box-sizing: content-box;height: 0;}
+  mark {background: #ff0;color: #000;}
+  code,kbd,pre,samp {font-family: monospace, serif;font-size: 1em;}
+  pre {white-space: pre-wrap;}
+  q {quotes: "\201C" "\201D" "\2018" "\2019";}
+  small {font-size: 80%;}
+  sub,sup {font-size: 75%;line-height: 0;position: relative;vertical-align: baseline;}
+  sup {top: -0.5em;}
+  sub {bottom: -0.25em;}
+  img {border: 0;}
+  svg:not(:root) {overflow: hidden;}
+  figure {margin: 0;}
+  fieldset {border: 1px solid #c0c0c0;margin: 0 2px;padding: 0.35em 0.625em 0.75em;}
+  legend {border: 0; /* 1 */padding: 0; /* 2 */}
+  button,input,select,textarea {font-family: inherit; /* 1 */font-size: 100%; /* 2 */margin: 0; /* 3 */}
+  button,input {line-height: normal;}
+  button,select {text-transform: none;}
+  button,html input[type="button"], /* 1 */input[type="reset"],input[type="submit"] {-webkit-appearance: button; /* 2 */cursor: pointer; /* 3 */}
+  button[disabled],html input[disabled] {cursor: default;}
+  input[type="checkbox"],input[type="radio"] {box-sizing: border-box; /* 1 */padding: 0; /* 2 */}
+  input[type="search"] {-webkit-appearance: textfield; /* 1 */-moz-box-sizing: content-box;-webkit-box-sizing: content-box; /* 2 */box-sizing: content-box;}
+  input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration {-webkit-appearance: none;}
+  button::-moz-focus-inner,input::-moz-focus-inner {border: 0;padding: 0;}
+  textarea {overflow: auto; /* 1 */vertical-align: top; /* 2 */}
+
+
+
+  /* custom report styles */
+  body {
+    background: url('/assets/grid.png');
+    margin-top: 70px;
+  }
+  header {
+    background-color: #efefef;
+    box-shadow: 2px 0px 5px rgba(0,0,0,0.2);
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+  header .title {
+    background: url('/assets/logopro_tiny_t.png') 0 0 no-repeat;
+    color:#333;
+    float: left;
+    font-family: 'Helvetica neue', Helvetica, sans-serif;
+    font-size: 20px;
+    height: 48px;
+    line-height: 48px;
+    margin-left: 20px;
+    padding-left: 50px;
+    position: relative;
+    text-decoration: none;
+    text-shadow: 1px 1px #fff;
+  }
+  .container {
+    margin: 0 auto;
+    max-width: 960px;
+    max-width: 68.571428571rem;
+    overflow: hidden;
+  }
+  .content .container {
+    background-color: #fff;
+    border-radius: 12px;
+  }
+  .report {
+    padding: 15px;
+  }
+  .field {
+    margin: 10px 0;
+  }
+  .field .field-name {
+    float: left;
+    font-weight: bold;
+    text-align: right;
+    width: 12.5%;
+  }
+  .field .field-content {
+    padding-left: 20%;
+  }
+  .cvss-info { color: green; }
+  .cvss-low { color: blue; }
+  .cvss-medium { color: orange; }
+  .cvss-high { color: red; }
+  .cvss-critical { color: purple; }
+
+  footer .container {
+    color: #6f6f6f;
+    margin-top: 20px;
+    text-align: center;
+    text-shadow: 0 2px 0 #fff;
+  }
+
+  table {
+    border-collapse: collapse;
+    margin: 2em auto;
+    width: 75%;
+  }
+
+  thead {
+    text-align: left;
+  }
+
+  </style>
+  <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script type="text/javascript">
+    // this hash will map note id's to CSS classes associated with their
+    // CVSS score
+    var noteClassName = {};
+    <% sorted = { :info => [], :low => [], :medium => [], :high => [], :critical => []} %>
+    <% for issue in issues;
+         cvss = issue.fields['CVSSv4.BaseScore'].to_f;
+         case cvss
+           when 0..0.9
+             sorted[:info] << issue
+             %>noteClassName[<%= issue.id %>] = 'cvss-info'; <%
+           when 1.0..3.9
+             sorted[:low] << issue
+             %>noteClassName[<%= issue.id %>] = 'cvss-low'; <%
+           when 4.0..6.9
+             sorted[:medium] << issue
+             %>noteClassName[<%= issue.id %>] = 'cvss-medium'; <%
+           when 7.0..8.9
+             sorted[:high] << issue
+             %>noteClassName[<%= issue.id %>] = 'cvss-high'; <%
+           else
+             sorted[:critical] << issue
+             %>noteClassName[<%= issue.id %>] = 'cvss-critical'; <%
+         end
+       end %>
+
+    $(function () {
+      var chart;
+      chart = new Highcharts.Chart({
+          chart: {
+              renderTo: 'bar-chart',
+              type: 'column'
+          },
+          title: {
+              text: 'Issue summary'
+          },
+          xAxis: {
+              categories: [
+                  'Info',
+                  'Low',
+                  'Medium',
+                  'High',
+                  'Critical'
+              ]
+          },
+          yAxis: {
+              min: 0,
+              title: {
+                  text: 'Number of issues'
+              }
+          },
+          legend: {
+            enabled: false
+          },
+          tooltip: {
+              formatter: function() {
+                  return ''+
+                      this.x +': '+ this.y +' issues';
+              }
+          },
+          plotOptions: {
+              column: {
+                  pointPadding: 0.2,
+                  borderWidth: 0
+              }
+          },
+          series: [{
+            data: [
+              { y: <%= sorted[:info].count %>,   color: 'green'},
+              { y: <%= sorted[:low].count %>,    color: 'blue'},
+              { y: <%= sorted[:medium].count %>, color: 'orange'},
+              { y: <%= sorted[:high].count %>,   color: 'red'},
+              { y: <%= sorted[:critical].count %>,   color: 'purple'}
+            ]
+          }]
+      });
+    });
+  </script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <span class="title"><strong>Dradis</strong> Professional Edition</span>
+    </div>
+  </header>
+  <div class="content">
+    <div class="container">
+      <div class="report">
+        <h1>Full HTML report by Kobol Consulting</h1>
+        <h1>Summary of Findings</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Issue</th>
+              <th>Risk</th>
+              <th>CVSSv4</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% [:critical, :high, :medium, :low, :info].each do |rating| %>
+              <% sorted[rating].each do |issue| %>
+              <tr>
+                <td>
+                  <a href="#note_<%= issue.id %>"><%= h issue.fields['Title'] %></a>
+                </td>
+                <td class="cvss-<%= rating %>"><%= rating.to_s.titleize %></td>
+                <td class="cvss-<%= rating %>"><%= markup(issue.fields['CVSSv4.BaseScore'], liquid: true) %></td>
+              </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+
+        <div id="bar-chart" style="max-width: 600px; min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+
+        <h1>Detailed findings</h1>
+        <% for issue in issues do %>
+        <div id="note_<%= issue.id %>" class="note-content">
+          <h2><%= h issue.fields['Title'] %></h2>
+          <% ['CVSSv4.BaseScore', 'Description', 'Solution', 'References' ].each do |field_name| %>
+          <div class="field">
+            <div class="field-name <%= field_name.downcase %>"><%= field_name %></div>
+            <div class="field-content <%= field_name.downcase %>"><%= markup(issue.fields[field_name], liquid: true) %></div>
+          </div>
+          <% end %>
+        </div>
+        <hr/>
+        <br/>
+        <% end %>
+        <% if defined?(Dradis::Pro) %>
+          <h2>Conclusions and Recommendations</h2>
+          <% content_service.all_content_blocks.each do |block| %>
+            <% if block.fields['Type'] == "Conclusions"%>
+              <%= markup(block.fields['Description'], liquid: true) %>
+            <% end %>
+          <% end %>
+          <hr/>
+          <br/>
+
+          <h2>Appendix</h2>
+          <% content_service.all_content_blocks.each do |block| %>
+            <% if block.fields['Type'] == "Appendix"%>
+              <h3><%= markup(block.fields['Title'], liquid: true) %></h3>
+              <%= markup(block.fields['Description'], liquid: true) %>
+            <% end %>
+          <% end %>
+          <hr/>
+          <br/>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="container">the best collaboration solution for security teams<br/><%= title %></div>
+  </footer>
+</body>
+<script type="text/javascript">
+$(function(){
+  // colour-code CVSS scores
+  $('.field-content.cvssv4.basescore').each(function(){
+    $(this).addClass( noteClassName[ $(this).parents('.note-content').attr('id').split('_')[1] ] );
+  });
+
+  // auto-link URLs
+  var link_regexp = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+  $('.field-content.references').each(function(){
+    $(this).html( $(this).html().replace(link_regexp,"<a href='$1'>$1</a>") );
+  });
+})
+</script>
+</html>

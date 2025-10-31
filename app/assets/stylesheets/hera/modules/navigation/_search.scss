@@ -1,0 +1,95 @@
+.navbar {
+  .form-search {
+    height: 2rem;
+    margin-left: 0.25rem;
+    position: relative;
+    transition: width 0.2s ease-in-out;
+    width: 0px;
+    z-index: 1;
+
+    .btn {
+      align-items: center;
+      background: initial;
+      border-radius: 0.375rem;
+      color: $text-default;
+      display: flex;
+      font-size: 1em;
+      height: 2rem;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 2rem;
+    }
+
+    &:active,
+    &:hover {
+      cursor: pointer;
+      width: 9.5rem;
+
+      .btn {
+        background-color: none;
+        border: none;
+        color: $primary;
+        transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+      }
+
+      .search-query {
+        opacity: 1;
+        right: 1.25rem;
+        width: 9rem;
+      }
+    }
+
+    .search-query {
+      background: none;
+      border: 0;
+      color: $text-default;
+      height: 2rem;
+      opacity: 0;
+      outline: 0;
+      padding: 0 1.25rem 0 0.5rem;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: opacity 0.2s ease-in-out, width 0.2s ease-in-out,
+        right 0.2s ease-in-out;
+      width: 0;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .form-search {
+      margin: 0 0 0.5rem;
+      width: auto;
+
+      .btn {
+        left: 0;
+        right: initial;
+        top: 0;
+      }
+
+      &:hover {
+        .btn {
+          background: initial;
+          color: $main-nav-hover;
+        }
+      }
+
+      .search-query {
+        --width: calc(100vw - var(--padding));
+        border-bottom: 1px solid $main-nav-links;
+        color: $text-default;
+        margin: 0 0.5rem;
+        opacity: 1;
+        padding: 0 1rem 0 1.5rem;
+        position: initial;
+        width: var(--width);
+
+        &:active,
+        &:hover {
+          width: var(--width);
+        }
+      }
+    }
+  }
+}

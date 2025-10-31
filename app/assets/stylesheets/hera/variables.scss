@@ -1,0 +1,56 @@
+@import 'bootstrap/functions';
+@import 'hera/modules/colors';
+
+// Theme
+$light: $brand-200;
+$primary: $brand-500;
+$dark: $brand-900;
+
+// Bootstrap Overrides
+$green: $green-500;
+$orange: $orange-500;
+$red: $red-500;
+$yellow: $yellow-500;
+
+// Borders
+$border-color: $grey-200;
+$border-color-dark: $grey-900;
+
+// Shadows
+$shadow-color-light: $grey-200;
+$shadow-color-dark: $grey-800;
+
+// Text
+$text-default: $grey-900;
+$text-error: $red;
+$text-link: $primary;
+$text-link-hover: darken($text-link, 20%);
+$text-muted: $grey-700;
+$text-small: 0.9rem;
+$text-success: darken($green-700, 10%);
+$text-warning: darken($yellow-600, 15%);
+
+// Navbar
+$main-nav-bg: $light;
+$main-nav-border: $brand-400;
+$main-nav-hover: $dark;
+$main-nav-links: $brand-700;
+$navbar-height: calc(3.2rem - 1px); // 1px to account for border
+
+// Sidebar
+$sidebar-width: 14rem;
+$sidebar-width-collapsed: 0.5rem;
+$sidebar-width-multiplier: 1.25;
+
+// Layout
+$primary-bg: $white;
+$secondary-bg: $grey-100;
+$focus-shadow: 0 0 0 0.2rem unquote(#{$primary}80) !important;
+$shadow-color: $grey-200;
+
+// Spacing
+$margin: 1.5rem;
+$padding: 1.5rem;
+
+// This line must be last to override BS5 colors.
+@import 'bootstrap/variables';

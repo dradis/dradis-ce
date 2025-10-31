@@ -113,7 +113,6 @@ describe 'note pages' do
     describe 'submitting the form with valid information', js: true do
       let(:new_content) { 'New note text' }
       before do
-        click_link 'Source'
         fill_in :note_text, with: new_content
       end
 
@@ -154,7 +153,7 @@ describe 'note pages' do
     describe 'cancel button' do
       it 'returns to the note page' do
         cancel_form
-        expect(current_path).to eq project_node_note_path(current_project, @node, @note)
+        expect(page).to have_current_path(project_node_note_path(current_project, @node, @note))
       end
     end
 
@@ -233,7 +232,7 @@ describe 'note pages' do
       describe 'cancel button' do
         it 'returns to the node page' do
           cancel_form
-          expect(current_path).to eq project_node_path(current_project, @node)
+          expect(page).to have_current_path(project_node_path(current_project, @node))
         end
       end
     end

@@ -8,6 +8,10 @@ class Project
   attr_reader :id, :name
 
   # -- Class Methods --------------------------------------------------------
+  def self.all
+    [new]
+  end
+
   def self.create(args = {})
     new(**args.merge(id: 1))
   end
@@ -37,6 +41,10 @@ class Project
   end
 
   def authors
+    User.all
+  end
+
+  def reviewers
     User.all
   end
 

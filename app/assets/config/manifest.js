@@ -1,9 +1,10 @@
 //= link application.css
+//= link errors.css
+//= link hera.css
 //= link setup/setup.css
-//= link tylium.css
 
 //= link legacy.application.js
-//= link tylium.js
+//= link hera.js
 
 //= link_tree ../../javascript .js
 //= link_tree ../../../vendor/javascript .js

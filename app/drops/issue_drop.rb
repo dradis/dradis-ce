@@ -1,5 +1,7 @@
 class IssueDrop < BaseDrop
-  delegate :author, :fields, :text, :title, to: :@record
+  include EscapedFields
+
+  delegate :author, :text, :title, to: :@record
 
   def affected
     @affected ||= @record.affected.map { |node| NodeDrop.new(node) }

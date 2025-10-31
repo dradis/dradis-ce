@@ -37,7 +37,8 @@ shared_examples 'a form with local auto save' do |klass, action|
     if klass == Card
       check @first_user.name
     elsif klass == Evidence
-      select @issue_1.title, from: :evidence_issue_id
+      find('#evidence_issue_id + .combobox').click
+      find('.combobox-menu .combobox-option', text:  @issue_1.title).click
     elsif klass == Issue
       dropdown_toggle = page.find('.dropdown-toggle span.tag')
       dropdown_toggle.click
@@ -60,7 +61,7 @@ shared_examples 'a form with local auto save' do |klass, action|
         if klass == Card
           expect(page.find("input#card_assignee_ids_#{@first_user.id}")).to be_checked
         elsif klass == Evidence
-          expect(page).to have_select('evidence_issue_id', selected: @issue_1.title)
+          expect(page).to have_select('evidence_issue_id', selected: @issue_1.title, visible: false)
         elsif klass == Issue
           expect(page).to have_button(@tag_1.display_name)
         end
@@ -88,7 +89,7 @@ shared_examples 'a form with local auto save' do |klass, action|
         if klass == Card
           expect(page.find("input#card_assignee_ids_#{@first_user.id}")).not_to be_checked
         elsif klass == Evidence
-          expect(page).to have_select('evidence_issue_id', selected: 'Auto-generate a new issue')
+          expect(page).to have_select('evidence_issue_id', selected: 'Auto-generate a new issue', visible: false)
         elsif klass == Issue
           expect(page).to have_css('.dropdown-toggle span.tag', text: 'No tag')
         end
@@ -102,7 +103,7 @@ shared_examples 'a form with local auto save' do |klass, action|
 
   context 'when Cancel is clicked' do
     it 'clears cached data' do
-      within('.view-content') do
+      within('[data-behavior="view-content"]') do
         scroll_to(:bottom)
       end
       click_link 'Cancel'

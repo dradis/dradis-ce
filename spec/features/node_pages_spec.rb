@@ -20,7 +20,7 @@ describe 'node pages' do
     describe "clicking the '+' button in the 'Nodes' sidebar", js: true do
       before do
         visit project_path(current_project)
-        find('.add-node > a').click
+        find('.main-sidebar .header a').click
       end
 
       let(:submit_form) { click_button 'Add' }
@@ -82,14 +82,15 @@ describe 'node pages' do
         ])
 
         # redirects to project root:
-        expect(page).to have_selector 'h3', text: /PROJECT SUMMARY/i
+        expect(page).to have_selector '.breadcrumb-item.active', text: 'Overview'
       end
 
       example 'adding multiple root host nodes' do
         choose 'Add multiple'
 
         fill_in :branch_nodes_list, with: "foo\nbar"
-        select 'Host', from: :branch_nodes_icon
+        find('#branch_nodes_icon + .combobox').click
+        find('.combobox-option', text: 'Host').click
 
         expect do
           click_button 'Add'
@@ -355,8 +356,6 @@ describe 'node pages' do
       end
 
       it 'shows the current node in the sidebar node tree', js: true do
-        find('.tree-header').click
-
         within ".main-sidebar .nodes-nav #node_#{@node.id}" do
           expect(page).to have_content 'My node'
         end
