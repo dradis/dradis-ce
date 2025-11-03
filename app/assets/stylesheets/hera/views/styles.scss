@@ -16,32 +16,23 @@ body.styles_hera {
     position: relative;
 
     .style-code {
-      display: flex;
       background-color: #222;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fff;
       margin-bottom: 0;
       margin-top: 2rem;
-      font-size: 0.8rem;
 
-      code {
-        background-color: transparent;
-        color: #fff;
-        padding: 0;
+      .nt {
+        color: #569cd6;
+      }
 
-        .an {
-          color: #9cdcfe;
-        }
+      .na {
+        color: #9cdcfe;
+      }
 
-        .av {
-          color: #ce9178;
-        }
-
-        .ct {
-          color: #608b4e;
-        }
-
-        .et {
-          color: #569cd6;
-        }
+      .s {
+        color: #ce9178;
       }
     }
   }
