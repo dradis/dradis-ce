@@ -4,6 +4,7 @@
   <h4 class="header-underline">Table of Contents</h4>
 
   <nav class="d-flex flex-column" data-behavior="smooth-scroll-nav">
+    <a href="#alerts" class="nav-link">Alerts</a>
     <a href="#combobox" class="nav-link">Combobox</a>
     <a href="#container" class="nav-link">Content Container</a>
     <a href="#tabs" class="nav-link">Content Container with Tabs</a>
@@ -22,6 +23,132 @@
   <p>Welcome to the Hera style guide, here you will see all the major custom style components that we use in the Hera layout.</p>
   <p>If you find something you would like to implement in the view you are working on, you can simply press the <i class="fa-solid fa-code" style="font-weight: bold;"></i> button to reveal the code structure including all the element tags, classes, data-attributes etc.</p>
   <p>Hera uses Bootstrap 5, please refer to <a href="https://getbootstrap.com/docs/5.0/getting-started/introduction/" target="_blank">the official documentation</a> for standard bootstrap classes and element structure.</p>
+</div>
+
+<!-- Alerts -->
+<div class="content-container">
+  <div class="scroll-offset" id="alerts"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Alerts</h4>
+     <a class="reveal-code" data-bs-toggle="collapse" href="#alerts-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <p>Alerts are created with the class <code>alert</code>, and a contextual class (e.g. <code>alert-success</code>). To add a close button to the alert, add the <code>alert-dismissible</code> class.</p>
+
+    <div class="row mt-4 pt-2">
+      <div class="col-md-6">
+        <div class="alert alert-warning alert-dismissible">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"><span class="visually-hidden">Close alert</span></button>
+          <strong>Warning!</strong> Some important warning here.
+        </div>
+        <div class="alert alert-info alert-dismissible">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"><span class="visually-hidden">Close alert</span></button>
+          <strong>Info!</strong> An informational alert.
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="alert alert-success alert-dismissible">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"><span class="visually-hidden">Close alert</span></button>
+          <strong>Success!</strong> The intendation action was permformed.
+        </div>
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"><span class="visually-hidden">Close alert</span></button>
+          <strong>Error!</strong> Something went wrong.
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="alert alert-warning alert-dismissible">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"><span class="visually-hidden">Close alert</span></button>
+          <h4>Warning!</h4>
+          <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
+          <p><a class="btn btn-warning" href="#">Take this action</a> <a class="alert-link" href="#">Or do this</a></p>
+        </div>
+        <div class="alert alert-info alert-dismissible">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"><span class="visually-hidden">Close alert</span></button>
+          <h4>Well done!</h4>
+          <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
+          <p><a class="btn btn-primary" href="#">Take this action</a> <a class="alert-link" href="#">Or do this</a></p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="alert alert-success alert-dismissible">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"><span class="visually-hidden">Close alert</span></button>
+          <h4>Heads up!</h4>
+          <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
+          <p><a class="btn btn-success" href="#">Take this action</a> <a class="alert-link" href="#">Or do this</a></p>
+        </div>
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"><span class="visually-hidden">Close alert</span></button>
+          <h4>Oh snap!</h4>
+          <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
+          <p><a class="btn btn-danger" href="#">Take this action</a> <a class="alert-link" href="#">Or do this</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="alerts-code">
+    <%= highlight_code('
+      <div class="alert alert-warning alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">
+          <span class="visually-hidden">Close alert</span>
+        </button>
+        <strong>Warning!</strong> Some important warning here.
+      </div>
+      <div class="alert alert-info alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">
+          <span class="visually-hidden">Close alert</span>
+        </button>
+        <strong>Info!</strong> An informational alert.
+      </div>
+      <div class="alert alert-success alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">
+          <span class="visually-hidden">Close alert</span>
+        </button>
+        <strong>Success!</strong> The intendation action was permformed.
+      </div>
+      <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">
+          <span class="visually-hidden">Close alert</span>
+        </button>
+        <strong>Error!</strong> Something went wrong.
+      </div>
+      <div class="alert alert-warning alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">
+          <span class="visually-hidden">Close alert</span>
+        </button>
+        <h4>Warning!</h4>
+        <p>Change this and that and try again.</p>
+        <p><a class="btn btn-warning" href="#">Take this action</a> <a class="alert-link" href="#">Or do this</a></p>
+      </div>
+      <div class="alert alert-info alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">
+          <span class="visually-hidden">Close alert</span>
+        </button>
+        <h4>Well done!</h4>
+        <p>Change this and that and try again.</p>
+        <p><a class="btn btn-primary" href="#">Take this action</a> <a class="alert-link" href="#">Or do this</a></p>
+      </div>
+      <div class="alert alert-success alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">
+          <span class="visually-hidden">Close alert</span>
+        </button>
+        <h4>Heads up!</h4>
+        <p>Change this and that and try again.</p>
+        <p><a class="btn btn-success" href="#">Take this action</a> <a class="alert-link" href="#">Or do this</a></p>
+      </div>
+      <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">
+          <span class="visually-hidden">Close alert</span>
+        </button>
+        <h4>Oh snap!</h4>
+        <p>Change this and that and try again.</p>
+        <p><a class="btn btn-danger" href="#">Take this action</a> <a class="alert-link" href="#">Or do this</a></p>
+      </div>').html_safe %>
+  </div>
 </div>
 
 <!-- Combobox -->
