@@ -1,15 +1,8 @@
 <% content_for :title, 'Hera Style Guide' %>
 
-<div class="content-container mt-4">
-  <h1 class="text-center mb-4">Hera Style Guide [ WIP ]</h1>
-  <p>Welcome to the Hera style guide, here you will see all the major custom style components that we use in the Hera layout.</p>
-  <p>If you find something you would like to implement in the view you are working on, you can simply press the <i class="fa-solid fa-code" style="font-weight: bold;"></i> button to reveal the code structure including all the element tags, classes, data-attributes etc.</p>
-  <p>Hera uses Bootstrap 5, please refer to <a href="https://getbootstrap.com/docs/5.0/getting-started/introduction/" target="_blank">the official documentation</a> for standard bootstrap classes and element structure.</p>
-</div>
-
-<!-- Table of Contents -->
-<div class="content-container">
+<% content_for :sidebar do %>
   <h4 class="header-underline">Table of Contents</h4>
+
   <nav class="d-flex flex-column" data-behavior="smooth-scroll-nav">
     <a href="#combobox" class="nav-link">Combobox</a>
     <a href="#container" class="nav-link">Content Container</a>
@@ -22,6 +15,13 @@
     <a href="#tooltips" class="nav-link">Tooltips Using Aria-Tooltips</a>
     <a href="#typography" class="nav-link">Typography</a>
   </nav>
+<% end %>
+
+<div class="content-container mt-4">
+  <h1 class="text-center mb-4">Hera Style Guide [ WIP ]</h1>
+  <p>Welcome to the Hera style guide, here you will see all the major custom style components that we use in the Hera layout.</p>
+  <p>If you find something you would like to implement in the view you are working on, you can simply press the <i class="fa-solid fa-code" style="font-weight: bold;"></i> button to reveal the code structure including all the element tags, classes, data-attributes etc.</p>
+  <p>Hera uses Bootstrap 5, please refer to <a href="https://getbootstrap.com/docs/5.0/getting-started/introduction/" target="_blank">the official documentation</a> for standard bootstrap classes and element structure.</p>
 </div>
 
 <!-- Combobox -->
