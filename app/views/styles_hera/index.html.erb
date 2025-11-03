@@ -5,6 +5,7 @@
 
   <nav class="d-flex flex-column" data-behavior="smooth-scroll-nav">
     <a href="#alerts" class="nav-link">Alerts</a>
+    <a href="#buttons" class="nav-link">Buttons</a>
     <a href="#combobox" class="nav-link">Combobox</a>
     <a href="#container" class="nav-link">Content Container</a>
     <a href="#tabs" class="nav-link">Content Container with Tabs</a>
@@ -33,7 +34,7 @@
      <a class="reveal-code" data-bs-toggle="collapse" href="#alerts-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
   </div>
   <div class="style-example">
-    <p>Alerts are created with the class <code>alert</code>, and a contextual class (e.g. <code>alert-success</code>). To add a close button to the alert, add the <code>alert-dismissible</code> class.</p>
+    <p class="m-0">Alerts are created with the class <code>alert</code>, and a contextual class (e.g. <code>alert-success</code>). To add a close button to the alert, add the <code>alert-dismissible</code> class.</p>
 
     <div class="row mt-4 pt-2">
       <div class="col-md-6">
@@ -148,6 +149,48 @@
         <p>Change this and that and try again.</p>
         <p><a class="btn btn-danger" href="#">Take this action</a> <a class="alert-link" href="#">Or do this</a></p>
       </div>').html_safe %>
+  </div>
+</div>
+
+<!-- Buttons -->
+<div class="content-container">
+  <div class="scroll-offset" id="container"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Buttons</h4>
+    <a class="reveal-code" data-bs-toggle="collapse" href="#button-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <p class="m-0">Buttons are created using the class <code>btn</code> and a contextual class (e.g. <code>btn-primary</code>).</p>
+    <p>Additional classes may be applied to define its size. Use <code>.btn-lg</code> for large buttons, <code>.btn-sm</code> for small, and <code>.btn-block</code> for full width buttons.</p>
+    <div class="d-flex flex-row justify-content-between mb-3">
+      <button class="btn btn-primary">Primary button</button>
+      <button class="btn btn-secondary">Secondary button</button>
+      <button class="btn btn-danger">Danger button</button>
+      <button class="btn btn-success">Success button</button>
+      <button class="btn btn-warning">Warning button</button>
+    </div>
+    <div class="d-flex flex-row justify-content-between">
+      <button class="btn btn-outline-primary">Primary outline</button>
+      <button class="btn btn-outline-seconday">Secondary outline</button>
+      <button class="btn btn-outline-danger">Danger outline</button> 
+      <button class="btn btn-outline-success">Success outline</button> 
+      <button class="btn btn-outline-warning">Warning outline</button>
+    </div>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="button-code">
+    <%= highlight_code('
+      <button class="btn btn-primary">Primary button</button>
+      <button class="btn btn-secondary">Secondary button</button>
+      <button class="btn btn-danger">Danger button</button>
+      <button class="btn btn-success">Success button</button>
+      <button class="btn btn-warning">Warning button</button>
+
+      <button class="btn btn-outline-primary">Primary outline</button>
+      <button class="btn btn-outline-seconday">Secondary outline</button>
+      <button class="btn btn-outline-danger">Danger outline</button>
+      <button class="btn btn-outline-success">Success outline</button>
+      <button class="btn btn-outline-warning">Warning outline</button>', 'html').html_safe %>
   </div>
 </div>
 
