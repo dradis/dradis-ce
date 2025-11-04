@@ -28,7 +28,7 @@ class EditorToolbar {
       this.opts.uploader === undefined
     ) {
       console.log(
-        'You initialized a RichToolbar with the image uploader option but have not provided an existing uploader to utilize'
+        'You initialized a RichToolbar with the image uploader option but have not provided an existing uploader to utilize',
       );
       return;
     }
@@ -38,14 +38,14 @@ class EditorToolbar {
 
   init() {
     this.$target.wrap(
-      '<div class="editor-field" data-behavior="editor-field"><div class="textarea-container"></div></div>'
+      '<div class="editor-field" data-behavior="editor-field"><div class="textarea-container"></div></div>',
     );
     this.$editorField = this.$target.parents('[data-behavior~=editor-field]');
     this.$editorField.prepend(
-      '<div class="editor-toolbar" data-behavior="editor-toolbar"></div>'
+      '<div class="editor-toolbar" data-behavior="editor-toolbar"></div>',
     );
     this.$editorToolbar = this.$editorField.find(
-      '[data-behavior~=editor-toolbar]'
+      '[data-behavior~=editor-toolbar]',
     );
 
     this.$editorToolbar.append(this.textareaElements(this.opts.include));
@@ -64,7 +64,7 @@ class EditorToolbar {
     this.$fileField = $(
       '<input type="file" name="editor-toolbar-' +
         Math.random().toString(36) +
-        '[]" multiple accept="image/*" style="display: none">'
+        '[]" multiple accept="image/*" style="display: none">',
     );
     this.$editorToolbar.append(this.$fileField);
 
@@ -81,6 +81,8 @@ class EditorToolbar {
 
   behaviors() {
     var that = this;
+    this.scrollEventName =
+      'scroll.editor-toolbar-' + this.$target.attr('id') || Math.random();
 
     this.$target.on('click change keyup select', function () {
       // enabling/disabling specific toolbar functions for textareas on selection
@@ -102,7 +104,24 @@ class EditorToolbar {
     this.$target.on('blur focus textchange input', this.setHeight);
 
     // Handler for setting the correct textarea heights on load (for current values)
-    this.$target.each(this.setHeight);
+    if (this.$target.is(':visible')) {
+      this.$target.each(this.setHeight);
+    } else {
+      const $tabPane = this.$target.closest('.tab-pane');
+      const tabId = $tabPane.attr('id');
+
+      // Use delegated event (only attaches once per document)
+      $(document).on(
+        'shown.bs.tab',
+        'a[data-bs-toggle="tab"][href="#' + tabId + '"]',
+        function () {
+          // This will still fire for each instance, but at least we're not adding duplicate listeners
+          if (that.$target.is(':visible')) {
+            that.$target.each(that.setHeight);
+          }
+        },
+      );
+    }
 
     // when a toolbar button is clicked
     this.$editorToolbar.find('[data-btn]').click(function () {
@@ -160,26 +179,29 @@ class EditorToolbar {
       }
 
       // adjust position on scroll to make toolbar always appear at the top of the textarea
-      $(window).on('scroll.editor-toolbar', function () {
-        const parentOffsetTop = $editorField.offset().top;
+      $(window)
+        .off(that.scrollEventName)
+        .on(that.scrollEventName, function () {
+          const parentOffsetTop = $editorField.offset().top;
 
-        // keep toolbar at the top of text area when scrolling
-        if (
-          $inputElement.height() > inputMinHeightForStickyToolbar &&
-          parentOffsetTop < $(window).scrollTop() + headerHeight
-        ) {
-          $editorField.addClass('sticky-toolbar');
-        } else {
-          // reset the toolbar to the default position and appearance
-          $editorField.removeClass('sticky-toolbar');
-        }
-      });
+          // keep toolbar at the top of text area when scrolling
+          if (
+            $inputElement.height() > inputMinHeightForStickyToolbar &&
+            parentOffsetTop < $(window).scrollTop() + headerHeight
+          ) {
+            $editorField.addClass('sticky-toolbar');
+          } else {
+            // reset the toolbar to the default position and appearance
+            $editorField.removeClass('sticky-toolbar');
+          }
+        });
     });
 
     // reset position and hide toolbar once focus is lost
     this.$target.on('blur', function () {
       const $toolbarElement = $(this).parent().prev();
 
+      $(window).off(that.scrollEventName);
       $toolbarElement.css({ opacity: 0, visibility: 'hidden' });
     });
   }
@@ -214,7 +236,7 @@ class EditorToolbar {
     this.$target.val(
       elementText.slice(0, cursorInfo.start) +
         text +
-        elementText.slice(cursorInfo.end)
+        elementText.slice(cursorInfo.end),
     );
   }
 
@@ -234,7 +256,7 @@ class EditorToolbar {
       // no text was selected, select injected placeholder text
       this.$target[0].setSelectionRange(
         cursorInfo.start + affix.prefix.length,
-        cursorInfo.start + affix.asString().length - affix.suffix.length
+        cursorInfo.start + affix.asString().length - affix.suffix.length,
       );
     }
   }
@@ -271,7 +293,7 @@ class EditorToolbar {
     this.$target.val(
       this.$target
         .val()
-        .replace(placeholder.asString(), affix.asString(), this.$target)
+        .replace(placeholder.asString(), affix.asString(), this.$target),
     );
 
     var position = this.$target.val().indexOf(affix.asString()),
@@ -297,7 +319,7 @@ class EditorToolbar {
       quote: new BlockAffix('\nbq.', 'Quoted text'),
       table: new Affix(
         '',
-        '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|'
+        '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|',
       ),
     };
 
@@ -434,7 +456,7 @@ class Affix {
           ? this.wrapped(selection)
           : text + '\n' + this.wrapped(selection);
       }.bind(this),
-      ''
+      '',
     );
 
     // Account for accidental empty line selections before/after a group
