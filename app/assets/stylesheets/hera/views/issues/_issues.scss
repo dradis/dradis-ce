@@ -33,8 +33,7 @@ body.issues.edit {
 
 body.issues.index {
   .add-issues {
-    border: 1px solid $dark;
-    border-radius: 5px;
+    border: 1px solid $primary;
     height: 100%;
 
     .card-body {
@@ -44,8 +43,8 @@ body.issues.index {
     }
 
     .card-header {
-      background: $dark;
-      color: lighten($light, 5%);
+      background: $primary;
+      color: $white;
 
       .card-title {
         margin-bottom: 0;
