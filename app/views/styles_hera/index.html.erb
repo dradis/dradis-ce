@@ -10,11 +10,11 @@
     <a href="#cards" class="nav-link">Cards</a>
     <a href="#combobox" class="nav-link">Combobox</a>
     <a href="#container" class="nav-link">Content Container</a>
-    <a href="#tabs" class="nav-link">Content Container with Tabs</a>
     <a href="#dots" class="nav-link">Dots Menu</a>
     <a href="#modals" class="nav-link">Modals</a>
     <a href="#toolbar" class="nav-link">Rich Toolbar</a>
     <a href="#tables" class="nav-link">Tables</a>
+    <a href="#tabs-pills" class="nav-link">Tabs & Pills</a>
     <a href="#input" class="nav-link">Text Input with Inset Button</a>
     <a href="#tooltips" class="nav-link">Tooltips Using Aria-Tooltips</a>
     <a href="#typography" class="nav-link">Typography</a>
@@ -518,70 +518,6 @@
   </div>
 </div>
 
-<!-- Content Container with Tabs -->
-<ul class="tabs-container nav nav-tabs" data-behavior="deeplinks">
-  <li class="nav-item">
-    <a data-bs-toggle="tab" class="nav-link" href="#tab1">Tab 1</a>
-  </li>
-  <li class="nav-item">
-    <a data-bs-toggle="tab" class="nav-link active" href="#tab2">Tab 2</a>
-  </li>
-  <li class="nav-item">
-    <a data-bs-toggle="tab" class="nav-link" href="#tab3">Tab 3</a>
-  </li>
-</ul>
-<div class="content-container">
-  <div class="scroll-offset" id="tabs" style="top: -4rem;"></div>
-
-  <div class="style-header">
-    <h4 class="header-underline">Content Container with Tabs</h4>
-    <a class="reveal-code" data-bs-toggle="collapse" href="#tabs-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
-  </div>
-
-  <div class="style-example">
-    <div class="tab-content">
-      <div id="tab1" class="tab-pane fade">
-        <p>Tab 1 Content</p>
-      </div>
-      <div id="tab2" class="tab-pane fade active show">
-        <p>Tab 2 Content</p>
-      </div>
-      <div id="tab3" class="tab-pane fade">
-        <p>Tab 3 Content</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="style-code-wrapper collapse" id="tabs-code">
-    <%= highlight_code('
-      <ul class="tabs-container nav nav-tabs">
-        <li class="nav-item">
-          <a data-bs-toggle="tab" href="#tab1" class="nav-link"Tab 1</a>
-        </li>
-        <li class="nav-item">
-          <a data-bs-toggle="tab" href="#tab2" class="nav-link active"Tab 2</a>
-        </li>
-        <li class="nav-item">
-          <a data-bs-toggle="tab" href="#tab3" class="nav-link"Tab 3</a>
-        </li>
-      </ul>
-
-      <div class="content-container">
-        <div class="tab-content">
-          <div id="tab1" class="tab-pane fade">
-            <p>Tab 1 Content</p>
-          </div>
-          <div id="tab2" class="tab-pane fade active show">
-            <p>Tab 2 Content</p>
-          </div>
-          <div id="tab3" class="tab-pane fade">
-            <p>Tab 3 Content</p>
-          </div>
-        </div>
-      </div>', 'html').html_safe %>
-  </div>
-</div>
-
 <!-- Dots Menu -->
 <div class="content-container">
   <div class="scroll-offset" id="dots"></div>
@@ -800,6 +736,195 @@
           </tbody>
         </table>
       </div>', 'html').html_safe %>
+  </div>
+</div>
+
+<!-- Tabs & Pills -->
+<div class="content-container">
+  <div class="scroll-offset" id="tabs-pills"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Tabs & Pills</h4>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <ul class="tabs-container nav nav-tabs" data-behavior="deeplinks">
+        <li class="nav-item">
+          <a data-bs-toggle="tab" class="nav-link" href="#tab1">Tab 1</a>
+        </li>
+        <li class="nav-item">
+          <a data-bs-toggle="tab" class="nav-link active" href="#tab2">Tab 2</a>
+        </li>
+        <li class="nav-item">
+          <a data-bs-toggle="tab" class="nav-link" href="#tab3">Tab 3</a>
+        </li>
+      </ul>
+      <div class="content-container">
+        <div class="style-header">
+          <h4 class="header-underline">Tabs</h4>
+          <a class="reveal-code" data-bs-toggle="collapse" href="#tabs-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+        </div>
+
+        <div class="style-example">
+          <div class="tab-content">
+            <div id="tab1" class="tab-pane fade">
+              <p>Tab 1 Content</p>
+            </div>
+            <div id="tab2" class="tab-pane fade active show">
+              <p>Tab 2 Content</p>
+            </div>
+            <div id="tab3" class="tab-pane fade">
+              <p>Tab 3 Content</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="style-code-wrapper collapse" id="tabs-code">
+          <%= highlight_code('
+            <ul class="tabs-container nav nav-tabs">
+              <li class="nav-item">
+                <a data-bs-toggle="tab" href="#tab1" class="nav-link">Tab 1</a>
+              </li>
+              <li class="nav-item">
+                <a data-bs-toggle="tab" href="#tab2" class="nav-link active">Tab 2</a>
+              </li>
+              <li class="nav-item">
+                <a data-bs-toggle="tab" href="#tab3" class="nav-link">Tab 3</a>
+              </li>
+            </ul>
+
+            <div class="content-container">
+              <div class="tab-content">
+                <div id="tab1" class="tab-pane fade">
+                  <p>Tab 1 Content</p>
+                </div>
+                <div id="tab2" class="tab-pane fade active show">
+                  <p>Tab 2 Content</p>
+                </div>
+                <div id="tab3" class="tab-pane fade">
+                  <p>Tab 3 Content</p>
+                </div>
+              </div>
+            </div>', 'html').html_safe %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <ul class="nav nav-pills nav-justified mb-3" id="pills-tab" role="tablist" data-behavior='deeplinks'>
+        <li class="nav-item">
+          <a class="nav-link active" href="#pill1" role="tab" data-bs-toggle="tab">Link 1</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#pill2" role="tab" data-bs-toggle="tab">Link 2</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Dropdown <b class="caret"></b></a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#dropdown2-1" data-bs-toggle="tab">@fat</a>
+            <a class="dropdown-item" href="#dropdown2-2" data-bs-toggle="tab">@mdo</a>
+          </div>
+        </li>
+      </ul>
+
+      <div class="style-example">
+        <div id="pills-tab-content" class="tab-content">
+          <div class="tab-pane fade active show" id="pill1">
+            <div class="card">
+              <div class="card-body">
+                <div class="style-header">
+                  <h4 class="header-underline">Pills</h4>
+                  <a class="reveal-code" data-bs-toggle="collapse" href="#pills-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+                </div>
+                <p>Tab-pane 1 content</p>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="pill2">
+            <div class="card">
+              <div class="card-body">
+                <div class="style-header">
+                  <h4 class="header-underline">Pills</h4>
+                  <a class="reveal-code" data-bs-toggle="collapse" href="#pills-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+                </div>
+                <p>Tab-pane 2 content</p>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="dropdown2-1">
+            <div class="card">
+              <div class="card-body">
+                <div class="style-header">
+                  <h4 class="header-underline">Pills</h4>
+                  <a class="reveal-code" data-bs-toggle="collapse" href="#pills-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+                </div>
+                <p>Dropdown 1 content</p>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="dropdown2-2">
+            <div class="card">
+              <div class="card-body">
+                <div class="style-header">
+                  <h4 class="header-underline">Pills</h4>
+                  <a class="reveal-code" data-bs-toggle="collapse" href="#pills-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+                </div>
+                <p>Dropdown 2 content</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="style-code-wrapper collapse" id="pills-code">
+        <%= highlight_code('
+          <ul class="nav nav-pills nav-justified mb-3" id="pills-tab" role="tablist" data-behavior="deeplinks">
+            <li class="nav-item">
+              <a class="nav-link active" href="#pill1" role="tab" data-bs-toggle="tab">Link 1</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#pill2" role="tab" data-bs-toggle="tab">Link 2</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Dropdown <b class="caret"></b></a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#dropdown2-1" data-bs-toggle="tab">@fat</a>
+                <a class="dropdown-item" href="#dropdown2-2" data-bs-toggle="tab">@mdo</a>
+              </div>
+            </li>
+          </ul>
+
+          <div id="pills-tab-content" class="tab-content">
+            <div class="tab-pane fade active show" id="pill1">
+              <div class="card">
+                <div class="card-body">
+                  <p>Tab-pane 1 content</p>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="pill2">
+              <div class="card">
+                <div class="card-body">
+                  <p>Tab-pane 2 content</p>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="dropdown2-1">
+              <div class="card">
+                <div class="card-body">
+                  <p>Dropdown 1 content</p>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="dropdown2-2">
+              <div class="card">
+                <div class="card-body">
+                  <p>Dropdown 2 content</p>
+                </div>
+              </div>
+            </div>
+          </div>', 'html').html_safe %>
+      </div>
+    </div>
   </div>
 </div>
 
