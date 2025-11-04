@@ -10,6 +10,7 @@
     <a href="#cards" class="nav-link">Cards</a>
     <a href="#combobox" class="nav-link">Combobox</a>
     <a href="#container" class="nav-link">Content Container</a>
+    <a href="#dividers" class="nav-link">Dividers</a>
     <a href="#dots" class="nav-link">Dots Menu</a>
     <a href="#modals" class="nav-link">Modals</a>
     <a href="#toolbar" class="nav-link">Rich Toolbar</a>
@@ -515,6 +516,54 @@
         <p>Your awesome content</p>
       </div>
     ', 'html').html_safe %>
+  </div>
+</div>
+
+<!-- Dividers -->
+<div class="content-container">
+  <div class="scroll-offset" id="dividers"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Dividers</h4>
+    <a class="reveal-code" data-bs-toggle="collapse" href="#dividers-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <p class="m-0">Dividers are used to visually separate content and enhance the overall layout.</p>
+    <p>They can be separated in three main categories:</p>
+    <ul>
+      <li class="mb-3">
+        <strong>Plain horizontal separator: used within content, when no additional information is required</strong>
+        <hr>
+        <span>or</span>
+        <div class="divider"></div>
+      </li>
+      <li class="mb-3">
+        <strong>Separator with label: used in cards or widgets, to separate sections</strong>
+        <div class="divider divider-lg">
+          <span class="divider-label">Title</span>
+        </div>
+      </li>
+      <li>
+        <strong>Separator with label (lead): used in views to separate larger areas/sections of content</strong>
+        <div class="divider divider-xl">
+          <p class="divider-label lead">Title</p>
+        </div>  
+      </li>
+    </ul>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="dividers-code">
+    <%= highlight_code('
+      <hr>
+
+      <div class="divider"></div>
+
+      <div class="divider divider-lg">
+        <span class="divider-label">Title</span>
+      </div>
+
+      <div class="divider divider-xl">
+        <p class="divider-label lead">Title</p>
+      </div>', 'html').html_safe %>
   </div>
 </div>
 
