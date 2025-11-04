@@ -5,6 +5,7 @@
 
   <nav class="d-flex flex-column" data-behavior="smooth-scroll-nav">
     <a href="#alerts" class="nav-link">Alerts</a>
+    <a href="#badges" class="nav-link">Badges</a>
     <a href="#buttons" class="nav-link">Buttons</a>
     <a href="#combobox" class="nav-link">Combobox</a>
     <a href="#container" class="nav-link">Content Container</a>
@@ -149,6 +150,44 @@
         <p>Change this and that and try again.</p>
         <p><a class="btn btn-danger" href="#">Take this action</a> <a class="alert-link" href="#">Or do this</a></p>
       </div>', 'html').html_safe %>
+  </div>
+</div>
+
+<!-- Badgets -->
+<div class="content-container">
+  <div class="scroll-offset" id="badges"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Badges</h4>
+     <a class="reveal-code" data-bs-toggle="collapse" href="#badge-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <p class="m-0">Badges are created with the class <code>badge</code>, and a contextual class (e.g. <code>bg-danger</code>).</p>
+    <p class="m-0">In their solid form <code>bg-success</code>, <code>bg-warning</code>, and <code>bg-danger</code> are used for due-dates, while <code>bg-primary</code> for informational purposes.</p>
+    <p>In their outline form they're used to display project information.</p>
+
+    <div class="d-flex flex-row mb-3">
+      <span class="badge bg-primary me-2">Badge primary</span>
+      <span class="badge-due-date badge bg-danger me-2">Overdue</span>
+      <span class="badge-due-date badge bg-success me-2">Future due date</span>
+      <span class="badge-due-date badge bg-warning me-2">Due today</span>
+    </div>
+    <div class="d-flex flex-row">
+      <span class="badge badge-outline-lavender me-2">Team name</span>
+      <span class="badge badge-outline-info me-2">Project state</span> 
+      <span class="badge badge-outline-danger me-2">Danger badge</span> 
+    </div>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="badge-code">
+    <%= highlight_code('
+      <span class="badge bg-primary">Badge primary</span>
+      <span class="badge-due-date badge bg-danger">Overdue</span>
+      <span class="badge-due-date badge bg-success">Future due date</span>
+      <span class="badge-due-date badge bg-warning">Due today</span>
+
+      <span class="badge badge-outline-lavender">Team name</span>
+      <span class="badge badge-outline-info">Project state</span> 
+      <span class="badge badge-outline-danger">Danger badge</span>', 'html').html_safe %>
   </div>
 </div>
 
