@@ -192,6 +192,48 @@
   </div>
 </div>
 
+<!-- Buttons -->
+<div class="content-container">
+  <div class="scroll-offset" id="buttons"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Buttons</h4>
+    <a class="reveal-code" data-bs-toggle="collapse" href="#button-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <p class="m-0">Buttons are created using the class <code>btn</code> and a contextual class (e.g. <code>btn-primary</code>).</p>
+    <p>Additional classes may be applied to define its size. Use <code>.btn-lg</code> for large buttons, <code>.btn-sm</code> for small, and <code>.btn-block</code> for full width buttons.</p>
+    <div class="d-flex flex-row justify-content-between mb-3">
+      <button class="btn btn-primary">Primary button</button>
+      <button class="btn btn-secondary">Secondary button</button>
+      <button class="btn btn-danger">Danger button</button>
+      <button class="btn btn-success">Success button</button>
+      <button class="btn btn-warning">Warning button</button>
+    </div>
+    <div class="d-flex flex-row justify-content-between">
+      <button class="btn btn-outline-primary">Primary outline</button>
+      <button class="btn btn-outline-secondary">Secondary outline</button>
+      <button class="btn btn-outline-danger">Danger outline</button> 
+      <button class="btn btn-outline-success">Success outline</button> 
+      <button class="btn btn-outline-warning">Warning outline</button>
+    </div>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="button-code">
+    <%= highlight_code('
+      <button class="btn btn-primary">Primary button</button>
+      <button class="btn btn-secondary">Secondary button</button>
+      <button class="btn btn-danger">Danger button</button>
+      <button class="btn btn-success">Success button</button>
+      <button class="btn btn-warning">Warning button</button>
+
+      <button class="btn btn-outline-primary">Primary outline</button>
+      <button class="btn btn-outline-seconday">Secondary outline</button>
+      <button class="btn btn-outline-danger">Danger outline</button>
+      <button class="btn btn-outline-success">Success outline</button>
+      <button class="btn btn-outline-warning">Warning outline</button>', 'html').html_safe %>
+  </div>
+</div>
+
 <!-- Cards -->
 <div class="content-container">
   <div class="scroll-offset" id="cards"></div>
@@ -292,48 +334,6 @@
       </div>', 'html').html_safe %>
   </div>
 
-</div>
-
-<!-- Buttons -->
-<div class="content-container">
-  <div class="scroll-offset" id="buttons"></div>
-  <div class="style-header">
-    <h4 class="header-underline">Buttons</h4>
-    <a class="reveal-code" data-bs-toggle="collapse" href="#button-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
-  </div>
-  <div class="style-example">
-    <p class="m-0">Buttons are created using the class <code>btn</code> and a contextual class (e.g. <code>btn-primary</code>).</p>
-    <p>Additional classes may be applied to define its size. Use <code>.btn-lg</code> for large buttons, <code>.btn-sm</code> for small, and <code>.btn-block</code> for full width buttons.</p>
-    <div class="d-flex flex-row justify-content-between mb-3">
-      <button class="btn btn-primary">Primary button</button>
-      <button class="btn btn-secondary">Secondary button</button>
-      <button class="btn btn-danger">Danger button</button>
-      <button class="btn btn-success">Success button</button>
-      <button class="btn btn-warning">Warning button</button>
-    </div>
-    <div class="d-flex flex-row justify-content-between">
-      <button class="btn btn-outline-primary">Primary outline</button>
-      <button class="btn btn-outline-secondary">Secondary outline</button>
-      <button class="btn btn-outline-danger">Danger outline</button> 
-      <button class="btn btn-outline-success">Success outline</button> 
-      <button class="btn btn-outline-warning">Warning outline</button>
-    </div>
-  </div>
-
-  <div class="style-code-wrapper collapse" id="button-code">
-    <%= highlight_code('
-      <button class="btn btn-primary">Primary button</button>
-      <button class="btn btn-secondary">Secondary button</button>
-      <button class="btn btn-danger">Danger button</button>
-      <button class="btn btn-success">Success button</button>
-      <button class="btn btn-warning">Warning button</button>
-
-      <button class="btn btn-outline-primary">Primary outline</button>
-      <button class="btn btn-outline-seconday">Secondary outline</button>
-      <button class="btn btn-outline-danger">Danger outline</button>
-      <button class="btn btn-outline-success">Success outline</button>
-      <button class="btn btn-outline-warning">Warning outline</button>', 'html').html_safe %>
-  </div>
 </div>
 
 <!-- Combobox -->
