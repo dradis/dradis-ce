@@ -173,6 +173,10 @@
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
+
+    &.lead {
+      font-size: 1.25rem;
+    }
   }
 
   &.divider-lg {
