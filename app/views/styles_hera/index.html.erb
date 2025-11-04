@@ -12,6 +12,7 @@
     <a href="#container" class="nav-link">Content Container</a>
     <a href="#dividers" class="nav-link">Dividers</a>
     <a href="#dots" class="nav-link">Dots Menu</a>
+    <a href="#form-elements" class="nav-link">Form Elements</a>
     <a href="#modals" class="nav-link">Modals</a>
     <a href="#toolbar" class="nav-link">Rich Toolbar</a>
     <a href="#tables" class="nav-link">Tables</a>
@@ -609,6 +610,249 @@
           <a href="javascript:void(0)" class="dropdown-item"><i class="fa-solid fa-area-chart fa-fw"></i> Group 2 action 4</a>
         </div>
       </div>', 'html').html_safe %>
+  </div>
+</div>
+
+<!-- Form Elements -->
+<div class="content-container">
+  <div class="scroll-offset" id="form-elements"></div>
+  <h4 class="header-underline">Form Elements</h4>
+  <p>This section presents the different form elements that can be used throughout the application, also demonstrating the error / success styles that may apply.</p>
+
+  <div class="py-3">
+    <div class="style-example">
+      <div class="style-header">
+        <h5 class="header-underline">Form Controls</h5>
+        <a class="reveal-code" data-bs-toggle="collapse" href="#controls-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="input-normal" class="form-label">Normal text input</label>
+            <input type="text" id="input-normal" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label for="input-disabled" class="form-label">Disabled text input</label>
+            <input type="text" id="input-disabled" class="form-control" disabled>
+          </div>
+
+          <div class="mb-3">
+            <label for="input-valid" class="form-label">Valid text input</label>
+            <input type="text" id="input-valid" class="form-control is-valid">
+          </div>
+
+          <div class="mb-3">
+            <label for="input-invalid" class="form-label">Invalid text input</label>
+            <input type="text" id="input-invalid" class="form-control is-invalid">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="input-textarea" class="form-label">This is a textarea</label>
+            <textarea class="form-control" rows="9"></textarea>
+          </div>
+          <div class="mb-3">
+            <input type="submit" class="btn btn-primary pull-right" value="Submit">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="style-code-wrapper collapse" id="controls-code">
+      <%= highlight_code('
+        <label for="input-normal" class="form-label">Normal text input</label>
+        <input type="text" id="input-normal" class="form-control">
+
+        <label for="input-disabled" class="form-label">Disabled text input</label>
+        <input type="text" id="input-disabled" class="form-control" disabled>
+
+        <label for="input-valid" class="form-label">Valid text input</label>
+        <input type="text" id="input-valid" class="form-control is-valid">
+
+        <label for="input-invalid" class="form-label">Invalid text input</label>
+        <input type="text" id="input-invalid" class="form-control is-invalid">
+
+        <label for="input-textarea" class="form-label">This is a textarea</label>
+        <textarea class="form-control" rows="9"></textarea>
+        <input type="submit" class="btn btn-primary pull-right" value="Submit">', 'html').html_safe %>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="py-3">
+    <div class="style-example">
+      <div class="style-header">
+        <h5 class="header-underline">Checkboxes and Radios</h5>
+        <a class="reveal-code" data-bs-toggle="collapse" href="#checkboxes-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              Default
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+            <label class="form-check-label" for="defaultCheck2">
+              Disabled
+            </label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1checked" checked>
+            <label class="form-check-label" for="defaultCheck1">
+              Default checked
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck2checked" checked disabled>
+            <label class="form-check-label" for="defaultCheck2">
+              Disabled checked
+            </label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+            <label class="form-check-label" for="exampleRadios1">
+              Default
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exampleRadiosDisabled" id="exampleRadios3" value="option3" disabled>
+            <label class="form-check-label" for="exampleRadios3">
+              Disabled radio
+            </label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option1" checked>
+            <label class="form-check-label" for="exampleRadios2">
+              Default Selected
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exampleRadiosDisabled" id="exampleRadios4" value="option3" checked disabled>
+            <label class="form-check-label" for="exampleRadios4">
+              Disabled Selected
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="style-code-wrapper collapse" id="checkboxes-code">
+      <%= highlight_code('
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+          <label class="form-check-label" for="defaultCheck1">
+            Default
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+          <label class="form-check-label" for="defaultCheck2">
+            Disabled
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1checked" checked>
+          <label class="form-check-label" for="defaultCheck1">
+            Default checked
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="defaultCheck2checked" checked disabled>
+          <label class="form-check-label" for="defaultCheck2">
+            Disabled checked
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+          <label class="form-check-label" for="exampleRadios1">
+            Default
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="exampleRadiosDisabled" id="exampleRadios3" value="option3" disabled>
+          <label class="form-check-label" for="exampleRadios3">
+            Disabled radio
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option1" checked>
+          <label class="form-check-label" for="exampleRadios2">
+            Default Selected
+          </label>
+        </div>
+        
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="exampleRadiosDisabled" id="exampleRadios4" value="option3" checked disabled>
+          <label class="form-check-label" for="exampleRadios4">
+            Disabled Selected
+          </label>
+        </div>', 'html').html_safe %>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="py-3">
+    <div class="style-example">
+      <div class="style-header">
+        <h5 class="header-underline">Toggle Switch</h5>
+        <a class="reveal-code" data-bs-toggle="collapse" href="#toggle-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+      </div>
+      <div class="form-check form-switch">
+        <input type="checkbox" class="form-check-input" role="switch" id="customSwitch1">
+        <label class="form-check-label" for="customSwitch1">Default switch checkbox input</label>
+      </div>
+      <div class="form-check form-switch">
+        <input type="checkbox" class="form-check-input" role="switch" id="customSwitch1disabled" disabled>
+        <label class="form-check-label" for="customSwitch1disabled">Disabled switch checkbox input</label>
+      </div>
+      <div class="form-check form-switch">
+        <input type="checkbox" class="form-check-input" role="switch" id="customSwitch2" checked>
+        <label class="form-check-label" for="customSwitch2">Checked switch checkbox input</label>
+      </div>
+      <div class="form-check form-switch">
+        <input type="checkbox" class="form-check-input" role="switch" id="customSwitch2disabled" checked disabled>
+        <label class="form-check-label" for="customSwitch2disabled">Disabled checked switch checkbox input</label>
+      </div>
+    </div>
+
+    <div class="style-code-wrapper collapse" id="toggle-code">
+      <%= highlight_code('
+        <div class="form-check form-switch">
+          <input type="checkbox" class="form-check-input" role="switch" id="customSwitch1">
+          <label class="form-check-label" for="customSwitch1">Default switch checkbox input</label>
+        </div>
+        <div class="form-check form-switch">
+          <input type="checkbox" class="form-check-input" role="switch" id="customSwitch1disabled" disabled>
+          <label class="form-check-label" for="customSwitch1disabled">Disabled switch checkbox input</label>
+        </div>
+        <div class="form-check form-switch">
+          <input type="checkbox" class="form-check-input" role="switch" id="customSwitch2" checked>
+          <label class="form-check-label" for="customSwitch2">Checked switch checkbox input</label>
+        </div>
+        <div class="form-check form-switch">
+          <input type="checkbox" class="form-check-input" role="switch" id="customSwitch2disabled" checked disabled>
+          <label class="form-check-label" for="customSwitch2disabled">Disabled checked switch checkbox input</label>
+        </div>', 'html').html_safe %>
+    </div>
   </div>
 </div>
 
