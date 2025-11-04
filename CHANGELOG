@@ -3,7 +3,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - rack, uri
+    - rack, ruby, uri
   - Bugs fixes:
     - Sidebar: Assert toggle button isn't covered by scrollbar
     - [entity]:
