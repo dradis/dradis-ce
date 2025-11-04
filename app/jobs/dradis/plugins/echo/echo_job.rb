@@ -1,0 +1,73 @@
+module Dradis::Plugins::Echo
+  class EchoJob < ApplicationJob
+    queue_as :default
+
+    def perform(prompt_id:, klass:, record_id: , interaction_id:, response_id:)
+      template = Prompt.by_id(prompt_id, klass: klass)
+      Rails.logger.info("🎬 #{template.prompt}")
+      prompt = parse(template.prompt, { 'issue' => IssueDrop.new(Issue.find(record_id)) })
+      Rails.logger.info("🔚 #{prompt}")
+
+      Turbo::StreamsChannel.broadcast_replace_to [interaction_id, 'prompts'], target: 'prompt_template', html: prompt
+      Turbo::StreamsChannel.broadcast_remove_to [interaction_id, 'prompts'], target: 'prompt_spinner'
+
+      @spinner_shown = true
+      begin
+        client.generate(
+          {
+            model: Engine.settings.model,
+            prompt: prompt
+          }
+        ) do |event, raw|
+          process_event(event, response_id, interaction_id)
+        end
+
+      rescue Ollama::Errors::OllamaError => error
+        msg = '<div class="alert alert-danger m-0">There was an error contacting Ollama: '
+        msg << error.message
+        msg << '</div>'
+        Turbo::StreamsChannel.broadcast_update_to [interaction_id, 'prompts'], target: response_id, html: msg
+      rescue Exception => error
+        msg = '<div class="alert alert-danger m-0">'
+        msg << error.message
+        msg << '</div>'
+        Turbo::StreamsChannel.broadcast_update_to [interaction_id, 'prompts'], target: response_id, html: msg
+      end
+    end
+
+    private
+    def client
+      @client ||= Ollama.new(
+        credentials: { address: Engine.settings.address },
+        options: { server_sent_events: true }
+      )
+    end
+
+    def parse(template, assigns)
+      options = {
+        filters: [],
+        strict_filters: true,
+        strict_variables: true
+      }
+
+      Liquid::Template.parse(template).render(assigns, options)
+    end
+
+    def process_event(event, response_id, interaction_id)
+      done = event['done']
+      if done
+        Turbo::StreamsChannel.broadcast_append_to [interaction_id, 'prompts'], target: 'messages', html: '<p>Done.</p>'
+      else
+        message = event['response'].to_s.strip.empty? ? "<br/>" : event['response']
+        message.sub!('<think>', '{thinking}')
+        message.sub!('</think>', '{/thinking}')
+        Turbo::StreamsChannel.broadcast_append_to [interaction_id, 'prompts'], target: response_id, content: message
+
+        if @spinner_shown
+          Turbo::StreamsChannel.broadcast_remove_to [interaction_id, 'prompts'], target: "#{response_id}_spinner"
+          @spinner_shown = false
+        end
+      end
+    end
+  end
+end

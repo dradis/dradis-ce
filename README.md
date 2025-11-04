@@ -2,6 +2,30 @@
 
 The add-on requires [Dradis CE](https://dradis.com/ce/) > 4.0, or [Dradis Pro](https://dradis.com/).
 
+It uses a local [Ollama](https://ollama.org/) installation to connect Dradis to
+your preferred LLMs.
+
+Dradis Echo ships with a flexible prompting engine that uses Liquid templates
+to provide full context about your project and findings, so you can craft
+relevant prompts to get the most accurate answers.
+
+By default Echo is configured to use this Ollama config:
+
+```
+Address: http://localhost:11434
+Model: deepseek-r1:latest
+```
+
+This can be configured through the Tools > Dradis Echo menu.
+
+Run Ollama and pull one of the models:
+
+```bash
+ollama pull deepseek-r1:latest
+```
+
+Make sure Redis is also running.
+
 
 ## Install
 
