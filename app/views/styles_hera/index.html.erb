@@ -395,7 +395,7 @@
         <option value="4">🚀 Emojis also work!</option>
       </select>
     </div>
-    <div>
+    <div class="mb-3">
       <label class="form-label">Option-colors and Option-icons Example</label>
       <select class="form-select">
         <option value="a">Plain option (no color and no icon)</option>
@@ -405,97 +405,92 @@
         <option value="e" data-combobox-option-icon="fa-solid fa-user-astronaut" data-combobox-option-color="#27A599" data-combobox-option-icon-color="#fa824c">Colored option with different color icon</option>
       </select>
     </div>
+    <div class="mb-3">
+      <label class="form-label">Disabled Example</label>
+      <select class="form-select" data-combobox-config="no-filter" disabled>
+        <option value="a">Awesome Option</option>
+      </select>
+    </div>
   </div>
 
   <div class="style-code-wrapper collapse" id="combobox-code">
     <%= highlight_code('
-      <div class="mb-3">
-        <label class="form-label">Basic Example</label>
-        <select class="form-select" data-combobox-config="no-filter">
-          <option value="a">Awesome Option</option>
-          <option value="b">Another Option</option>
-          <option value="c">🚀 Emojis also work!</option>
-        </select>
-      </div>
+      <label class="form-label">Basic Example</label>
+      <select class="form-select" data-combobox-config="no-filter">
+        <option value="a">Awesome Option</option>
+        <option value="b">Another Option</option>
+        <option value="c">🚀 Emojis also work!</option>
+      </select>
 
-      <div class="mb-3">
-        <label class="form-label">Filter Example</label>
-        <select class="form-select">
-          <option value="a">Awesome Option</option>
-          <option value="b" selected>Pre-selected Option</option>
-          <option value="c">Another Option</option>
-          <option value="d">🚀 Emojis also work!</option>
-        </select>
-      </div>
+      <label class="form-label">Filter Example</label>
+      <select class="form-select">
+        <option value="a">Awesome Option</option>
+        <option value="b" selected>Pre-selected Option</option>
+        <option value="c">Another Option</option>
+        <option value="d">🚀 Emojis also work!</option>
+      </select>
 
-      <div class="mb-3">
-        <label class="form-label">User-defined Options Example</label>
-        <select class="form-select" data-combobox-config="add-options">
-          <option>Prompt Option</option>
-          <option value="1">Filterable option</option>
-          <option value="2">Search for me</option>
-          <option value="3">🚀 Emojis also work!</option>
-        </select>
-      </div>
+      <label class="form-label">User-defined Options Example</label>
+      <select class="form-select" data-combobox-config="add-options">
+        <option>Prompt Option</option>
+        <option value="1">Filterable option</option>
+        <option value="2">Search for me</option>
+        <option value="3">🚀 Emojis also work!</option>
+      </select>
 
-      <div class="mb-3">
-        <label class="form-label">Grouped Options Example</label>
-        <select class="form-select" data-combobox-config="add-options">
-          <option>Prompt Option</option>
-          <optgroup label="Group 123">
-            <option value="1">Grouped option</option>
-            <option value="2">Another one</option>
-            <option value="3" disabled>Disabled option</option>
-          </optgroup>
-          <optgroup label="Group ABC">
-            <option value="4">In another group</option>
-          </optgroup>
-        </select>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">Multi-select & User-defined Option Example</label>
-        <select class="form-select" data-combobox-config="add-options" multiple>
-          <option value="1">Filterable option</option>
-          <option value="2">Search for me</option>
+      <label class="form-label">Grouped Options Example</label>
+      <select class="form-select" data-combobox-config="add-options">
+        <option>Prompt Option</option>
+        <optgroup label="Group 123">
+          <option value="1">Grouped option</option>
+          <option value="2">Another one</option>
           <option value="3" disabled>Disabled option</option>
-          <option value="4">🚀 Emojis also work!</option>
-        </select>
-      </div>
+        </optgroup>
+        <optgroup label="Group ABC">
+          <option value="4">In another group</option>
+        </optgroup>
+      </select>
 
-      <div>
-        <label class="form-label">Option-colors and Option-icons Example</label>
-        <select class="form-select">
-          <option value="a">Plain option (no color and no icon)</option>
-          <option
-            value="b"
-            data-combobox-option-color="#de0a26"
-          >
-            Colored option without icon
-          </option>
-          <option
-            value="c"
-            data-combobox-option-icon="fa-solid fa-rocket"
-          >
-            Option with icon (no color added)
-          </option>
-          <option
-            value="d"
-            data-combobox-option-icon="fa-regular fa-hand-peace"
-            data-combobox-option-color="#964adb"
-          >
-            Colored option with icon
-          </option>
-          <option
-            value="e"
-            data-combobox-option-icon="fa-solid fa-user-astronaut"
-            data-combobox-option-color="#27A599"
-            data-combobox-option-icon-color="#fa824c"
-          >
-            Colored option with different color icon
-          </option>
-        </select>
-      </div>').html_safe %>
+      <label class="form-label">Multi-select & User-defined Option Example</label>
+      <select class="form-select" data-combobox-config="add-options" multiple>
+        <option value="1">Filterable option</option>
+        <option value="2">Search for me</option>
+        <option value="3" disabled>Disabled option</option>
+        <option value="4">🚀 Emojis also work!</option>
+      </select>
+
+      <label class="form-label">Option-colors and Option-icons Example</label>
+      <select class="form-select">
+        <option value="a">Plain option (no color and no icon)</option>
+        <option
+          value="b"
+          data-combobox-option-color="#de0a26">
+          Colored option without icon
+        </option>
+        <option
+          value="c"
+          data-combobox-option-icon="fa-solid fa-rocket">
+          Option with icon (no color added)
+        </option>
+        <option
+          value="d"
+          data-combobox-option-icon="fa-regular fa-hand-peace"
+          data-combobox-option-color="#964adb">
+          Colored option with icon
+        </option>
+        <option
+          value="e"
+          data-combobox-option-icon="fa-solid fa-user-astronaut"
+          data-combobox-option-color="#27A599"
+          data-combobox-option-icon-color="#fa824c">
+          Colored option with different color icon
+        </option>
+      </select>
+      
+      <label class="form-label">Disabled Example</label>
+      <select class="form-select" data-combobox-config="no-filter" disabled>
+        <option value="a">Awesome Option</option>
+      </select>', 'html').html_safe %>
   </div>
 </div>
 
