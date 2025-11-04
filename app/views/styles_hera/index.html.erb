@@ -7,6 +7,7 @@
     <a href="#alerts" class="nav-link">Alerts</a>
     <a href="#badges" class="nav-link">Badges</a>
     <a href="#buttons" class="nav-link">Buttons</a>
+    <a href="#cards" class="nav-link">Cards</a>
     <a href="#combobox" class="nav-link">Combobox</a>
     <a href="#container" class="nav-link">Content Container</a>
     <a href="#tabs" class="nav-link">Content Container with Tabs</a>
@@ -189,6 +190,108 @@
       <span class="badge badge-outline-info">Project state</span> 
       <span class="badge badge-outline-danger">Danger badge</span>', 'html').html_safe %>
   </div>
+</div>
+
+<!-- Cards -->
+<div class="content-container">
+  <div class="scroll-offset" id="cards"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Cards</h4>
+    <a class="reveal-code" data-bs-toggle="collapse" href="#card-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <p class="m-0">Cards are used to display multiple items that fall under the same category. The card gives the elements a white background, grey border with subtle border radius as well as uniform padding and margin.</p>
+    <p>Two variations are available:</p>
+    <ul>
+      <li>Cards with header</li>
+      <li>Cards without header</li>
+    </ul>
+    <p>If the content doesn't fall under the categories mentioned above, use a <a href="#container">content-container</a> instead.</p>
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header bg-primary">
+            <h4 class="card-title">Primary card</h4>
+          </div>
+          <div class="card-body">
+            <p>If you're using a card with a header, give it a <code>bg-primary</code>.<p>
+            <p>You can add anything you want within the body.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header bg-default">
+            <h4 class="card-title">Default card</h4>
+          </div>
+          <div class="card-body">
+            <p>Alternatively, give it a <code>bg-default</code>.<p>
+            <p>You can add anything you want within the body.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5><a href="#">Link to view card</a></h5>
+            <p>You can add anything you want within the body.</p>
+            <p>If you need to add actions, then use a horizontal ruler to separate them from the rest of the content.</p>
+            <hr>
+            <a class="btn btn-small btn-primary">
+              <i class="fa-solid fa-eye me-1"></i>View  
+            </a>
+            <a class="btn btn-small btn-warning">
+              <i class="fa-solid fa-pencil me-1"></i>Edit
+            </a>
+            <a class="btn btn-small btn-danger">
+              <i class="fa-solid fa-close me-1"></i>Delete
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="card-code">
+    <%= highlight_code('
+      <div class="card">
+        <div class="card-header bg-primary">
+          <h4 class="card-title">Primary card</h4>
+        </div>
+        <div class="card-body">
+          <p>You can add anything you want within the body.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-default">
+          <h4 class="card-title">Default card</h4>
+        </div>
+        <div class="card-body">
+          <p>You can add anything you want within the body.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5><a href="#">Link to view card</a></h5>
+          <p>You can add anything you want within the body.</p>
+          <p>If you need to add actions, then use a horizontal ruler to separate them from the rest of the content.</p>
+          <hr>
+          <a class="btn btn-small btn-primary">
+            <i class="fa-solid fa-eye me-1"></i>View  
+          </a>
+          <a class="btn btn-small btn-warning">
+            <i class="fa-solid fa-pencil me-1"></i>Edit
+          </a>
+          <a class="btn btn-small btn-danger">
+            <i class="fa-solid fa-close me-1"></i>Delete
+          </a>
+        </div>
+      </div>', 'html').html_safe %>
+  </div>
+
 </div>
 
 <!-- Buttons -->
