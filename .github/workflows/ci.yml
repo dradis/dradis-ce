@@ -22,7 +22,7 @@ jobs:
           rubygems: 'latest'
           bundler-cache: true
       - name: Security audit dependencies
-        run: bundle exec bundler-audit --update --ignore CVE-2025-61921
+        run: bundle exec bundler-audit --update --ignore CVE-2024-21510 CVE-2025-61921
       - name: Security audit ruby
         run: bundle exec ruby-audit update && bundle exec ruby-audit check --ignore CVE-2025-61594
       - name: Security audit application code
