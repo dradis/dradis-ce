@@ -191,4 +191,3 @@ describe 'card pages', js: true do
     it_behaves_like 'a card page with poller'
   end
 end
-
