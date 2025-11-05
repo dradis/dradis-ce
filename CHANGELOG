@@ -1,17 +1,10 @@
 [v#.#.#] ([month] [YYYY])
-  - Hera: Add custom error pages
-  - Activities: Include methodology name in all methodology actions
-  - Docker: 
-    - Add Docker Compose configuration file for production deployment
-    - Add Thruster gem to handle https
-    - Manage server processes with a Procfile and boot script
-  - Font: Improve language support
   - Integrations: List enabled integrations in issues table to show/hide integration-specific table actions
-  - Rails: Upgrade Rails version to 8.0.2.1
-  - Ruby: Upgrade Ruby version to 3.4.4
-  - Upgraded gems: thor
+  - Layout: Improve primary action visibility for Evidence, Issues, Methodologies, Notes, and Node Properties
+  - Upgraded gems:
+    - rack, uri
   - Bugs fixes:
-    - Combobox: Prevent forcing the selection of the first available option for multi-select forms
+    - Sidebar: Assert toggle button isn't covered by scrollbar
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
@@ -33,6 +26,22 @@
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v4.18.0 (September 2025)
+  - Activities: Include methodology name in all methodology actions
+  - Docker:
+    - Add Docker Compose configuration file for production deployment
+    - Add Thruster gem to handle https
+    - Manage server processes with a Procfile and boot script
+  - Editor: Update UI for improved editing experience
+  - Font: Improve font weight consistency for international characters
+  - Layout: Add custom error pages
+  - Rails: Upgrade Rails version to 8.0.2.1
+  - Ruby: Upgrade Ruby version to 3.4.6
+  - Upgraded gems:
+    - resque, rexml, selenium-webdriver, thor
+  - Bugs fixes:
+    - Combobox: Prevent forcing the selection of the first available option for multi-select forms
 
 v4.17.1 (July 2025)
   - No changes

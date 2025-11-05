@@ -63,6 +63,7 @@ a {
 
 b,
 .form-label,
+.inline-editable input[type='text'],
 strong,
 th {
   font-family: 'ProximaNovaRegular', 'system-ui';
@@ -291,4 +292,48 @@ pre code {
 
 ul {
   list-style: none;
+}
+
+@media (min-width: 1200px) {
+  h1,
+  .h1 {
+    font-size: 2rem;
+  }
+
+  h2,
+  .h2 {
+    font-size: 1.5rem;
+  }
+
+  h3,
+  .h3 {
+    font-size: 1.3rem;
+  }
+
+  h4,
+  .h4 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 1199px) {
+  h1,
+  .h1 {
+    font-size: 1.75rem;
+  }
+
+  h2,
+  .h2 {
+    font-size: 1.3rem;
+  }
+
+  h3,
+  .h3 {
+    font-size: 1.125rem;
+  }
+
+  h4,
+  .h4 {
+    font-size: 1.1rem;
+  }
 }

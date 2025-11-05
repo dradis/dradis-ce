@@ -1,0 +1,168 @@
+@import 'font-awesome';
+@import 'hera/variables';
+
+@font-face {
+  font-family: 'ProximaNovaLight';
+  font-style: normal;
+  font-weight: 400;
+  src: font-url('proximanova-light.otf');
+}
+
+@font-face {
+  font-family: 'ProximaNovaRegular';
+  font-style: normal;
+  font-weight: 500;
+  src: font-url('proximanova-regular.otf');
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  font-size: 16px;
+}
+
+body.errors {
+  background: $brand-50;
+  color: $grey-900;
+  font-family: 'ProximaNovaLight', 'system-ui';
+  font-size: 1rem;
+  letter-spacing: -0.0025em;
+  line-height: 1.4;
+  min-height: 100vh;
+
+  a {
+    color: $brand-500;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-underline-offset: 0.0925em;
+  }
+
+  .author {
+    color: $grey-700;
+    margin-left: 0.25rem;
+
+    &::before {
+      content: '— ';
+    }
+  }
+
+  blockquote {
+    margin-bottom: 0.5rem;
+  }
+
+  .btn {
+    border: 1px solid $brand-500;
+    border-radius: 0.5rem;
+    display: block;
+    padding: 0.5rem 0.75rem;
+    width: max-content;
+
+    &:hover,
+    &:focus {
+      background-color: $brand-700;
+      color: $white;
+    }
+  }
+
+  .error {
+    margin: 0rem auto;
+    max-width: 65rem;
+    padding: 2rem;
+    width: 100%;
+
+    .error-header {
+      align-items: flex-start;
+      display: flex;
+      flex-direction: row;
+      gap: 0.75rem;
+
+      i {
+        color: $red;
+        font-size: 2.25rem;
+        margin-top: 0.3rem;
+      }
+    }
+
+    pre {
+      background: $grey-900;
+      border: 1px solid $grey-300;
+      border-radius: 0.25rem;
+      color: $white;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      margin-top: 1.5rem;
+      overflow-x: auto;
+      padding: 1rem;
+      white-space: pre-wrap;
+      word-break: break-all;
+      word-wrap: break-word;
+    }
+  }
+
+  .font-mono {
+    font-family: monospace;
+  }
+
+  h1,
+  h2,
+  strong {
+    font-family: 'ProximaNovaRegular', 'system-ui';
+    font-weight: 700;
+  }
+
+  main {
+    box-shadow: 0px 10px 53px 10px rgba(66, 66, 66, 0.15);
+
+    article {
+      margin: 0 auto;
+      max-width: 65rem;
+      padding: 4rem 2rem 2rem;
+      width: 100%;
+
+      .error-content {
+        align-items: flex-start;
+        display: flex;
+        flex-direction: row;
+      }
+
+      section {
+        flex: 1;
+
+        img {
+          display: block;
+          height: 100%;
+          margin: 0 auto;
+          max-height: 18rem;
+          width: auto;
+        }
+      }
+
+      .title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .quote {
+        margin-bottom: 2rem;
+      }
+    }
+  }
+
+  @media (max-width: 991px) {
+    main article {
+      .error-content {
+        flex-direction: column-reverse;
+
+        section {
+          &:last-child {
+            margin-bottom: 2rem;
+          }
+        }
+      }
+    }
+  }
+}

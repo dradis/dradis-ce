@@ -23,6 +23,10 @@
           that.close();
         }
       });
+
+      if ($('[data-behavior~=local-auto-save]').length) {
+        that.close(true);
+      }
     }
 
     changeState(key, state) {
@@ -30,11 +34,13 @@
       Turbo.cache.clear();
     }
 
-    close() {
+    close(skipChangeState = false) {
       this.$sidebar
         .removeClass('sidebar-expanded')
         .addClass('sidebar-collapsed')
         .attr('data-behavior', 'sidebar');
+
+      if (skipChangeState) return;
 
       this.changeState(this.storageKey, false);
     }
