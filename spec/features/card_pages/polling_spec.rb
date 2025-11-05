@@ -43,8 +43,8 @@ describe 'card pages', js: true do
       end
 
       it 'updates the link' do
-        within "#card_#{@other_card.id}_link" do
-          expect(page).to have_text 'updated card', visible: false
+        within "#card_#{@other_card.id}_link", visible: false do
+          expect(page).to have_selector 'a', text: 'updated card', visible: false
         end
       end
     end
