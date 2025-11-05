@@ -121,10 +121,6 @@ Rails.application.routes.draw do
     get  '/upload'        => 'upload#index',  as: :upload_manager
     post '/upload'        => 'upload#create'
     post '/upload/parse'  => 'upload#parse'
-
-    if Rails.env.development?
-      get '/styles' => 'styles_hera#index'
-    end
   end
 
   resources :console, only: [] do
@@ -155,6 +151,10 @@ Rails.application.routes.draw do
     post :preview
   end
 
+  if Rails.env.development?
+    get '/styles' => 'styles#index'
+  end
+
   if defined?(Dradis::Pro)
   else
     root to: 'setup/passwords#new'
@@ -169,3 +169,4 @@ Rails.application.routes.draw do
 
   mount ActionCable.server => '/cable'
 end
+

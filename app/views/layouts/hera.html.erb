@@ -40,7 +40,7 @@
     ) do %>
 
     <header class="sticky-top">
-      <%= render 'layouts/hera/navbar/main_nav' %>
+      <%= render 'layouts/hera/navbar/main_nav' unless controller_path == 'styles' %>
       <%= yield(:sub_nav) if content_for?(:sub_nav) %>
     </header>
 
@@ -52,7 +52,7 @@
         <main class="container-fluid">
           <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
           <%= render 'layouts/hera/noscript' %>
-          <%= render "layouts/hera/project_teaser" unless defined?(Dradis::Pro) %>
+          <%= render "layouts/hera/project_teaser" unless defined?(Dradis::Pro) || controller_path == 'styles' %>
           <%= flash_messages %>
           <%= content_for?(:content) ? yield(:content) : yield %>
         </main>
@@ -72,3 +72,4 @@
     <!-- End of modals -->
   <% end %>
 </html>
+
