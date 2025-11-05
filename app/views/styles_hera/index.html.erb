@@ -4,6 +4,7 @@
   <h4 class="header-underline">Table of Contents</h4>
 
   <nav class="d-flex flex-column" data-behavior="smooth-scroll-nav">
+    <a href="#accordion" class="nav-link">Accordion</a>
     <a href="#alerts" class="nav-link">Alerts</a>
     <a href="#badges" class="nav-link">Badges</a>
     <a href="#buttons" class="nav-link">Buttons</a>
@@ -28,6 +29,117 @@
   <p>Welcome to the Hera style guide, here you will see all the major custom style components that we use in the Hera layout.</p>
   <p>If you find something you would like to implement in the view you are working on, you can simply press the <i class="fa-solid fa-code" style="font-weight: bold;"></i> button to reveal the code structure including all the element tags, classes, data-attributes etc.</p>
   <p>Hera uses Bootstrap 5, please refer to <a href="https://getbootstrap.com/docs/5.0/getting-started/introduction/" target="_blank">the official documentation</a> for standard bootstrap classes and element structure.</p>
+</div>
+
+<!-- Accordion -->
+<div class="content-container">
+  <div class="scroll-offset" id="accordion"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Accordion</h4>
+     <a class="reveal-code" data-bs-toggle="collapse" href="#accordion-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <p>This is a component that organizes content into collapsible sections, allowing users to expand and collapse content panels to view or hide information.</p>
+
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Accordion Item 1
+          </button>
+        </h3>
+        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>This is the first item’s accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Accordion Item 2
+          </button>
+        </h3>
+        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>This is the second item’s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            Accordion Item 3
+          </button>
+        </h3>
+        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>This is the third item’s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="accordion-code">
+    <%= highlight_code('
+      <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h3 class="accordion-header">
+            <button 
+              class="accordion-button" 
+              type="button" 
+              data-bs-toggle="collapse" 
+              data-bs-target="#collapseOne" 
+              aria-expanded="true" 
+              aria-controls="collapseOne">
+              Accordion Item 1
+            </button>
+          </h3>
+          <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <p>Accordion item 1 content</p>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h3 class="accordion-header">
+            <button 
+              class="accordion-button collapsed" 
+              type="button" 
+              data-bs-toggle="collapse" 
+              data-bs-target="#collapseTwo" 
+              aria-expanded="false" 
+              aria-controls="collapseTwo">
+              Accordion Item 2
+            </button>
+          </h3>
+          <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <p>Accordion item 2 content</p>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h3 class="accordion-header">
+            <button 
+              class="accordion-button collapsed" 
+              type="button" 
+              data-bs-toggle="collapse" 
+              data-bs-target="#collapseThree" 
+              aria-expanded="false" 
+              aria-controls="collapseThree">
+              Accordion Item 3
+            </button>
+          </h3>
+          <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <p>Accordion item 2 content</p>
+            </div>
+          </div>
+        </div>
+      </div>', 'html').html_safe %>
+  </div>
 </div>
 
 <!-- Alerts -->
