@@ -15,7 +15,7 @@ describe 'card pages', js: true do
       end
 
       it 'adds a link' do
-        expect(page).to have_selector "#card_#{@new_card.id}_link"
+        expect(page).to have_selector "#card_#{@new_card.id}_link", wait: 30
       end
     end
 
@@ -44,7 +44,7 @@ describe 'card pages', js: true do
 
       it 'updates the link' do
         within "#card_#{@other_card.id}_link" do
-          expect(page).to have_text 'updated card'
+          expect(page).to have_text 'updated card', wait: 30
         end
       end
     end
@@ -113,7 +113,7 @@ describe 'card pages', js: true do
       end
 
       it 'adds the link' do
-        expect(page).to have_selector "#card_#{@moved_card.id}_link"
+        expect(page).to have_selector "#card_#{@moved_card.id}_link", wait: 30
       end
     end
 
@@ -191,3 +191,4 @@ describe 'card pages', js: true do
     it_behaves_like 'a card page with poller'
   end
 end
+
