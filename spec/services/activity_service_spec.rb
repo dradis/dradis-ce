@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe ActivityService do
-  before { described_class.subscribe_event('test.event') }
+  before { described_class.subscribe_namespace('test') }
 
   let(:user) { create(:user) }
   let(:project) { create(:project) }
