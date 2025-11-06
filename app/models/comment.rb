@@ -83,6 +83,18 @@ class Comment < ApplicationRecord
     end
   end
 
+  def to_payload
+    {
+      id: self.id,
+      class: self.class.name,
+      content: self.content,
+      commentable: {
+        id: self.commentable.id,
+        title: self.commentable.title
+      }
+    }
+  end
+
   def to_xml(xml_builder, version: 3)
     xml_builder.content do
       xml_builder.cdata!(content)

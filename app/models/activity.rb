@@ -49,18 +49,6 @@ class Activity < ApplicationRecord
     new_trackable
   end
 
-  def to_payload
-    {
-      id: self.id,
-      class: self.class.name,
-      content: self.content,
-      commentable: {
-        id: self.commentable.id,
-        title: self.commentable.title
-      }
-    }
-  end
-
   def to_xml(xml_builder, version: 3)
     xml_builder.action(action)
     xml_builder.user_email(user.email)
