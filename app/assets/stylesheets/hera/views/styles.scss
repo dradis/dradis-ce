@@ -1,4 +1,4 @@
-body.styles_hera {
+body.styles {
   button[data-behavior~='smooth-scroll'] {
     margin-bottom: 0.25rem;
   }
@@ -83,8 +83,19 @@ body.styles_hera {
       }
     }
 
-    ul:not(.pagination) {
-      list-style-type: disc;
+    ul {
+      &.icon-list {
+        -moz-column-count: 4;
+        -moz-column-gap: 20px;
+        -webkit-column-count: 4;
+        -webkit-column-gap: 20px;
+        column-count: 4;
+        column-gap: 20px;
+      }
+
+      &:not(.pagination) {
+        list-style-type: disc;
+      }
     }
   }
 
