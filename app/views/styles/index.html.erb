@@ -1038,8 +1038,9 @@
 
     <p class="m-0">Some icons that are universal/don't need translation (e.g. home, magnifying glass, and trash/bin), can be used without an accompanying label. But, as a general rule of thumb all icons should come with a label for accessibility reasons.</p>
 
-    <p>When using an icon as a standalone element, always add a label with <code>class="visually-hidden"</code> to keep them accessible to assistive technologies, and a <code>title="{icon-title}"</code> for mouse-using users.</p>
-    
+    <p class="m-0">When using an icon as a standalone element, always add a label with <code>class="visually-hidden"</code> to keep them accessible to assistive technologies, and a <code>title="{icon-title}"</code> for mouse-using users.</p>
+    <p>When the icon is placed on the left side of the copy, add an additional <code>class="me-1"</code> to assert proper spacing between the two.</p>
+
     <p>Hera uses v.6.7.2 of <a href="https://fontawesome.com/v6/search?o=r" target="_blank">Font Awesome</a>.</p>
 
     <h5>List of icons currently being used:</h5>
@@ -1047,51 +1048,105 @@
       <li><strong>Main Navigation</strong>
         <ul>
           <li>Help: <i class="fa-solid fa-question" title="Help"></i></li>
-          <li>Logout: <i class="fa-solid fa-arrow-right-from-bracket"></i></li>
+          <li>Logout: <i class="fa-solid fa-arrow-right-from-bracket" title="Logout"></i></li>
           <li>Notifications: <i class="fa-solid fa-bell" title="Notifications"></i></li>
-          <li>Settings/Configurations: <i class="fa-solid fa-cog" title="Configuration"></i></li>
+          <li>Configuration: <i class="fa-solid fa-cog" title="Configuration"></i></li>
           <li>Trash: <i class="fa-solid fa-trash-can" title="Trash"></i></li>
         </ul>
       </li>
 
       <li><strong>Miscellaneous</strong>
         <ul>
-          <li>Add new: <i class="fa-solid fa-plus me-1"></i></li>
-          <li>Attachments: <i class="fa-solid fa-paperclip"></i></li>
-          <li>Edit: <i class="fa-solid fa-pencil"></i></li>
-          <li>URL: <i class="fa-solid fa-link fa-fw"></i></li>
+          <li>Add new: <i class="fa-solid fa-plus" title="Add"></i></li>
+          <li>Attachments: <i class="fa-solid fa-paperclip" title="Attachment"></i></li>
+          <li>Download: <i class="fa-solid fa-download" title="Download"></i></li>
+          <li>Edit: <i class="fa-solid fa-pencil" title="Edit"></i></li>
+          <li>Kit Upload: <i class="fa-solid fa-upload fa-fw" title="Upload"></i></li>
+          <li>URL: <i class="fa-solid fa-link fa-fw" title="URL"></i></li>
         </ul>
       </li>
 
       <li><strong>Project</strong>
         <ul>
-          <li>Activities: <i class="fa-solid fa-rss fa-fw"></i></li>
-          <li>Evidence: <i class="fa-solid fa-laptop"></i></li>
+          <li>Activities: <i class="fa-solid fa-rss fa-fw" title="Activities"></i></li>
+          <li>Evidence: <i class="fa-solid fa-laptop" title="Evidence"></i></li>
           <li>Export: <i class="fa-solid fa-file-export" title="Export"></i></li>
           <li>Issues: <i class="fa-solid fa-bug" title="Issues"></i></li>
           <li>Methodologies: <i class="fa-brands fa-trello" title="Methodologies"></i></li>
-          <li>Nodes: <i class="fa-solid fa-sitemap me-1"></i></li>
+          <li>Nodes: <i class="fa-solid fa-sitemap me-1" title="Nodes"></i></li>
           <li>Overview: <i class="fa-regular fa-folder-open" title="Overview"></i></li>
           <li>QA: <i class="fa-regular fa-handshake" title="QA"></i></li>
-          <li>Revisions/View History: <i class="fa-solid fa-history fa-fw"></i></li>
+          <li>Report Content: <i class="fa-solid fa-file-lines" title="Report content"></i>
+            <ul>
+              <li>Document Properties: <i class="fa-solid fa-cogs" title="Document properties"></i></li>
+              <li>Content Blocks: <i class="fa-solid fa-th-large" title="Content blocks"></i></li>
+          </li>
+          <li>Revisions/View History: <i class="fa-solid fa-history fa-fw" title="History"></i></li>
           <li>Search: <i class="fa-solid fa-search" title="Search"></i></li>
-          <li>Tag: <i class="fa-solid fa-tag"></i></li>
-          <li>Unsubscribe: <i class="fa-solid fa-bell-slash fa-fw"></i></li>
+          <li>Tag: <i class="fa-solid fa-tag" title="Tag"></i></li>
+          <li>Unsubscribe: <i class="fa-solid fa-bell-slash fa-fw" title="Unsubscribe"></i></li>
           <li>Upload: <i class="fa-solid fa-cloud-arrow-up" title="Upload"></i></li>
         </ul>
       </li>
 
       <li><strong>Tools & Integrations</strong>
         <ul>
-          <li>Calculators: <i class="fa-solid fa-calculator"></i></li>
-          <li>Issue Library: <i class="fa-solid fa-book fa-fw"></i></li>
-          <li>Remediation Tracker: <i class="fa-solid fa-tasks fa-fw"></i></li>
+          <li>Business Intelligence:
+            <ul>
+              <li>Overview: <i class="fa-solid fa-chart-line" title="Overview"></i></li>
+              <li>Custom Properties: <i class="fa-solid fa-sliders" title="Custom Properties"></i></li>
+              <li>Data Analysis: <i class="fa-solid fa-chart-simple" title="Data Analysis"></i></li>
+            </ul>
+          </li>
+          <li>Gateway:
+            <ul>
+              <li>Projects: <i class="fa-solid fa-briefcase" title="Projects"></i></li>
+              <li>Services/Questionnaires: <i class="fa-solid fa-envelopes-bulk" title="Services"></i></li>
+              <li>Themes: <i class="fa-solid fa-palette" title="Themes"></i></li>
+            </ul>
+          </li>
+          <li>Issue Library: <i class="fa-solid fa-book fa-fw" title="Issue Library"></i>
+            <ul>
+              <li>Entries: <i class="fa-solid fa-database" title="Entries"></i></li>
+              <li>QA Entries: <i class="fa-solid fa-handshake" title="QA Entries"></i></li>
+            </ul>
+          </li>
+          <li>Remediation Tracker: <i class="fa-solid fa-tasks fa-fw" title="Remediation Tracker"></i>
+            <ul>
+              <li>Tickets: <i class="fa-solid fa-clipboard-check" title="Tickets"></i></li>
+              <li>Ticket Categories: <i class="fa-solid fa-square-poll-horizontal" title="Ticket Categories"></i></li>
+              <li>Ticket States: <i class="fa-solid fa-bars-progress" title="Ticket States"></i></li>
+            </ul>
+          </li>
+          <li>Risk Calculators: <i class="fa-solid fa-calculator" title="Risk Calculator"></i></li>
         </ul>
       </li>
+
+      <li><strong>Users</strong>
+        <ul>
+          <li>Testers: <i class="fa-solid fa-users-line" title="Testers"></i></li>
+          <li>Contributors: <i class="fa-solid fa-chalkboard-user" title="Contributors"></i></li>
+          <li>Disable: <i class="fa-solid fa-user-times" title="Disable"></i></li>
+          <li>Enable: <i class="fa-solid fa-user-plus" title="Enable"></i></li>
+          <li>Permissions: <i class="fa-solid fa-eye-slash" title="Permissions"></i></li>
+      </li>
+
     </ul>
   </div>
 
   <div class="style-code-wrapper collapse" id="icons-code">
+    <%= highlight_code('
+      <!-- Standalone icon usage example -->
+      <a href="#">
+        <i class="fa-solid fa-trash-can" title="Trash"></i>
+        <label class="visually-hidden">Trash</label>
+      </a>
+
+      <!-- Icon next to copy example -->
+      <a class="nav-link" href="#">
+        <i class="fa-solid fa-chalkboard-user me-1" title="Contributors"></i>
+        <span>Contributors</span>
+      </a>', 'html').html_safe %>
   </div>
 </div>
 
