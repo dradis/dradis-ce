@@ -4,7 +4,6 @@ class MultiDestroyJob < ApplicationJob
   queue_as :dradis_project
 
   def perform(author_email:, ids:, klass:, project_id: nil, uid:)
-    # FIXME: migrate logs#uid to uuid ?
     logger = Log.new(uid: uid)
 
     project = Project.find(project_id) if project_id
