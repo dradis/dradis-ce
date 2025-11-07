@@ -8,7 +8,7 @@ module Payloadable
   def to_payload
     {
       id: self.id,
-      class: self.class
+      class: self.class.name
     }.merge(local_payload)
   end
 end
