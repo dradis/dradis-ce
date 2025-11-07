@@ -29,6 +29,8 @@ module MultipleDestroy
 
   private
 
+  # Extracting this to a method so it can be overridden in controllers
+  # fully qualified class name is needed for engine controllers
   def klass_for_multiple_destroy
     controller_name.singularize.capitalize
   end
