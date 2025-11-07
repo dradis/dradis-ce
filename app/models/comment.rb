@@ -1,6 +1,6 @@
 class Comment < ApplicationRecord
+  include Eventable
   include Notifiable
-  include Payloadable
 
   MENTION_PATTERN = /[a-z0-9][a-z0-9\-@\.]*/.freeze
 

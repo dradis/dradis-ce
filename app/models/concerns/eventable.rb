@@ -1,4 +1,4 @@
-module Payloadable
+module Eventable
   extend ActiveSupport::Concern
 
   def local_payload

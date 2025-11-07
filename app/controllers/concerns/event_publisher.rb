@@ -1,12 +1,12 @@
-module EventInstrumenter
+module EventPublisher
   # Fires an event using ActiveSupport::Notifications and passes the event_record
   # payload, action, and user as the event payloads.
   #
   # event_name: String
-  # event_record: Payloadable model record
+  # event_record: Eventable model record
   #
   # Returns nil
-  def instrument(event_name, event_record)
+  def publish(event_name, event_record)
     ActiveSupport::Notifications.instrument(
       event_name,
       event_record.to_payload.merge(
