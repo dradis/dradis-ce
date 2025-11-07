@@ -12,7 +12,7 @@ class ActivityService
 
       ActivityTrackingJob.perform_later(
         action: payload[:action].to_s,
-        project_id: payload[:project] ? payload[:project].id : nil,
+        project_id: payload[:project] ? payload[:project][:id] : nil,
         trackable_id: payload[:id],
         trackable_type: payload[:class],
         user_id: payload[:user][:id]

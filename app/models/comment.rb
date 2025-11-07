@@ -1,5 +1,6 @@
 class Comment < ApplicationRecord
   include Notifiable
+  include Payloadable
 
   MENTION_PATTERN = /[a-z0-9][a-z0-9\-@\.]*/.freeze
 
@@ -34,6 +35,16 @@ class Comment < ApplicationRecord
 
   def create_subscription
     Subscription.subscribe(user: user, to: commentable) if user
+  end
+
+  def local_payload
+    {
+      content: self.content,
+      commentable: {
+        id: self.commentable.id,
+        title: self.commentable.title
+      }
+    }
   end
 
   def notify(action:, actor:, recipients:)
@@ -81,18 +92,6 @@ class Comment < ApplicationRecord
       # Ensure we return an ActiveRecord::Relation object
       scope.where(id: ids)
     end
-  end
-
-  def to_payload
-    {
-      id: self.id,
-      class: self.class.name,
-      content: self.content,
-      commentable: {
-        id: self.commentable.id,
-        title: self.commentable.title
-      }
-    }
   end
 
   def to_xml(xml_builder, version: 3)
