@@ -39,7 +39,6 @@ class Configuration < ApplicationRecord
       .find_or_create_by(name: 'admin:signups_enabled').value.to_i == 1
   end
 
-
   # --------------------------------------------------------------- admin:paths
   def self.paths_templates
     @@paths_templates ||= Rails.root.join('storage', 'templates')
@@ -69,7 +68,6 @@ class Configuration < ApplicationRecord
     create_with(value: paths_templates.join('reports').to_s)
       .find_or_create_by(name: 'admin:paths:templates:reports').value
   end
-
 
   # ------------------------------------------------------------- admin:plugins
 
