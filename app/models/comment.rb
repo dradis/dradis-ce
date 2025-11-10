@@ -37,7 +37,7 @@ class Comment < ApplicationRecord
     Subscription.subscribe(user: user, to: commentable) if user
   end
 
-  def local_payload
+  def local_event_payload
     {
       content: self.content,
       commentable: {

@@ -9,6 +9,6 @@ module Eventable
     {
       id: self.id,
       class: self.class.name
-    }.merge(local_payload)
+    }.merge(local_event_payload)
   end
 end
