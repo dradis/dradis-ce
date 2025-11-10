@@ -11,11 +11,11 @@ apt-get install --no-install-recommends -y redis-server sqlite3 && \
 rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
-# RAILS_SERVE_STATIC_FILES  is enabled to let Rails serve static files since we're not using Nginx
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development test" \
+    # RAILS_SERVE_STATIC_FILES  is enabled to let Rails serve static files since we're not using Nginx
     RAILS_SERVE_STATIC_FILES="enabled"
 
 # Throw-away build stage to reduce size of final image
