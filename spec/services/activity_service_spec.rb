@@ -9,7 +9,9 @@ describe ActivityService do
   let(:payload) {
     {
       action: 'test',
-      project: project,
+      project: {
+        id: project.id
+      },
       id: 1,
       class: 'Issue',
       user: {
