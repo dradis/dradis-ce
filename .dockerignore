@@ -32,9 +32,6 @@
 /config/database.yml
 /config/smtp.yml
 
-# Ignore database files
-/db/*.sqlite3
-
 # Ignore app-specific folders
 /attachments/
 /avatars/
