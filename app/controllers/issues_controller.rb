@@ -22,7 +22,6 @@ class IssuesController < AuthenticatedController
   before_action :set_tags, except: [:destroy]
 
   def index
-    @enabled_integrations = Dradis::Plugins::with_feature(:addon).map(&:plugin_name).map(&:to_s)
   end
 
   def show

@@ -1,5 +1,5 @@
 [v#.#.#] ([month] [YYYY])
-  - Integrations: List enabled integrations in issues table to show/hide integration-specific table actions
+  - Integrations: Include assets for all integrations regardless of enabled/disabled status
   - Layout: Improve primary action visibility for Evidence, Issues, Methodologies, Notes, and Node Properties
   - Upgraded gems:
     - rack, uri
