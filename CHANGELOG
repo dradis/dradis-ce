@@ -7,6 +7,7 @@
   - Upgraded gems:
     - rack, uri
   - Bugs fixes:
+    - Datatables: Assert correct state order with sorting records
     - Sidebar: Assert toggle button isn't covered by scrollbar
     - [entity]:
       - [future tense verb] [bug fix]
