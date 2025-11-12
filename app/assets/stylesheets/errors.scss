@@ -87,6 +87,11 @@ body.errors {
       }
     }
 
+    .error-line {
+      color: $red-300;
+      font-weight: bold;
+    }
+
     pre {
       background: $grey-900;
       border: 1px solid $grey-300;

@@ -32,6 +32,22 @@
           </div>
         </div>
 
+        <% if @exception.backtrace.present? %>
+          <% app_trace = @exception.backtrace.find { |line| line.include?(Rails.root.to_s) } %>
+          <% match = app_trace.match(/^(.+):(\d+)/) %>
+          <% file_path, line_number = match[1], match[2].to_i %>
+          <% lines = File.readlines(file_path) %>
+          <% start_line = [line_number - 6, 0].max %>
+          <% end_line = [line_number + 4, lines.length - 1].min %>
+          <pre><code><%= file_path.gsub(Rails.root.to_s + '/', '') %>:<%= line_number %>
+
+          <% (start_line..end_line).each do |i| %>
+            <% current_line = i + 1 %>
+<span class="<%= class_names('error-line': current_line == line_number) %>"><%= sprintf("%4d", current_line) %> <%= lines[i].rstrip %></span>
+          <% end %>
+</code></pre>
+        <% end %>
+
         <pre><code><%= @exception.backtrace.join("\n\n") %></code></pre>
       </div>
     <% end %>
