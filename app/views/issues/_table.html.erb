@@ -46,7 +46,7 @@
                 when 'Created by'
                   [issue.author, issue.author]
                 when 'State'
-                  [issue.state, issue.state.humanize]
+                  [issue.state_before_type_cast, issue.state.humanize]
                 when 'Updated'
                   [issue.updated_at.to_i, local_time_ago(issue.updated_at)]
                 else

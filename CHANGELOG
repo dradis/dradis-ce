@@ -1,10 +1,13 @@
 [v#.#.#] ([month] [YYYY])
+  - Layout: Improve primary action visibility for Evidence, Issues, Methodologies, Notes, and Node Properties
+  - Navigation: Move Trash and Project Configurations in main navigation bar
   - Textile: Add support for paragraph alignment
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
     - rack, uri
   - Bugs fixes:
+    - Datatables: Assert correct state order with sorting records
     - Sidebar: Assert toggle button isn't covered by scrollbar
     - [entity]:
       - [future tense verb] [bug fix]
