@@ -52,7 +52,7 @@
                     when 'Tags'
                       [issue_tags(issue), issue_tags(issue)]
                     when 'Entry State'
-                      [issue.state, issue.state.humanize]
+                      [Issue.states[issue.state], issue.state.humanize]
                     else
                       [issue.fields.fetch(column, ''), markup(issue.fields.fetch(column, ''))]
                     end
