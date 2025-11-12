@@ -1,7 +1,9 @@
 [v#.#.#] ([month] [YYYY])
   - Layout: Improve primary action visibility for Evidence, Issues, Methodologies, Notes, and Node Properties
   - Navigation: Move Trash and Project Configurations in main navigation bar
-  - Textile: Add support for paragraph alignment
+  - Textile:
+    - Add support for paragraph alignment
+    - Add support for image resizing, alignment, and borders
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:

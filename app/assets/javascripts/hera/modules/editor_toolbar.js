@@ -290,7 +290,7 @@ class EditorToolbar {
       bold: new Affix('*', 'Bold text', '*'),
       field: new Affix('#[', 'Field', ']#\n'),
       //'highlight':          new Affix('$${{', 'Highlighted text', '}}$$'),
-      image: new Affix('\np=. !', 'https://', '!\n'),
+      image: new Affix('\np=. !{border: 0px solid black; height: #px; width: #px;}', 'https://', '!\n'),
       'image-placeholder': new Affix('\np=. !', 'https://', ' uploading...!\n'),
       //'inline-code': new Affix('@', 'Inline code', '@'),
       italic: new Affix('_', 'Italic text', '_'),
