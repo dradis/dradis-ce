@@ -4,7 +4,7 @@ v4.19.0 (November 2025)
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - rack, uri
+    - rack, rails, uri
   - Bugs fixes:
     - Datatables: Assert correct state order with sorting records
     - Sidebar: Assert toggle button isn't covered by scrollbar
