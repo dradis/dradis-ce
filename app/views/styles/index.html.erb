@@ -767,7 +767,7 @@
         <%= highlight_code('
           <div class="empty-state">
             <div class="empty-state-icon">
-              < %= image_tag "icons/#{rand(9)}.svg" % >
+              &lt;%= image_tag "icons/#{rand(9)}.svg" %&gt;
             </div>
             <div class="empty-state-body">
               <div class="container">
@@ -778,15 +778,14 @@
                   {record-type} description
                 </p>
                 <div class="empty-state-actions">
-                  <a href="#" 
-                    class="empty-state-docs-link" 
-                    target="_blank">
+                  <a href="#" class="empty-state-docs-link" target="_blank">
                     More about {record-type}
                   </a>
                 </div>
               </div>
             </div>
-          </div>', 'html').html_safe %>
+          </div>', 'erb').html_safe
+        %>
       </div>
     </div>
   </div>
