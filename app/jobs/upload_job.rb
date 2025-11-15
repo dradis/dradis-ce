@@ -3,10 +3,10 @@ class UploadJob < ApplicationJob
 
   queue_as :dradis_upload
 
-  def perform(default_user_id:, file:, plugin_name:, project_id:, state:, uid:)
-    logger = Log.new(uid: uid)
+  def perform(default_user_id:, file:, plugin_name:, project_id:, state:)
+    logger = Log.new(uid: job_id)
 
-    logger.write { "Job id is #{uid}." }
+    logger.write { "Job id is #{job_id}." }
     logger.write { 'Running Ruby version %s' % RUBY_VERSION }
     logger.write { 'Worker process starting background task.' }
 
@@ -24,6 +24,7 @@ class UploadJob < ApplicationJob
 
     logger.write { 'Worker process completed.' }
 
+    self
   rescue => exception
     logger.write { "There was an error with the upload: #{exception.message}" }
     if Rails.env.development?
