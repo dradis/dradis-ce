@@ -51,7 +51,7 @@
                       [issue.title, issue.title]
                     when 'Tags'
                       [issue_tags(issue), issue_tags(issue)]
-                    when 'State'
+                    when 'Result State'
                       [Issue.states[issue.state], issue.state.humanize]
                     else
                       [issue.fields.fetch(column, ''), markup(issue.fields.fetch(column, ''))]
@@ -102,7 +102,7 @@
                       </div>
                     <% else %>
                     <div class="hover-only text-center">
-                      <span class="badge badge-outline-info">Entry not Published</span>
+                      <span class="badge badge-outline-info">Result not Published</span>
                     </div>
                     <% end %>
                   </td>
