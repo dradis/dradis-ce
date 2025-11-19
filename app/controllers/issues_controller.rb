@@ -121,7 +121,7 @@ class IssuesController < AuthenticatedController
 
     @default_columns = ['Title', 'Tags']
     # add state column if state has been provided by plugin
-    @default_columns << 'State' if results.any? && results.first.state
+    @default_columns << 'Result State' if results.any? && results.first.state
     @all_columns = @default_columns | (@import_issues.map(&:fields).map(&:keys).uniq.flatten - ['AddonTags'])
   end
 
