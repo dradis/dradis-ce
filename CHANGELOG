@@ -1,4 +1,5 @@
 v4.19.0 (November 2025)
+  - Docker: Update default attachments & templates locations to storage/
   - Layout: Improve primary action visibility for Evidence, Issues, Methodologies, Notes, and Node Properties
   - Navigation: Move Trash and Project Configurations in main navigation bar
   - [entity]:
