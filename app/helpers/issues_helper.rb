@@ -25,6 +25,8 @@ module IssuesHelper
         end
       end
 
+      issue.state = record.state
+
       # The content of the entry can come with a Tags field, but the plugin
       # can also set some (e.g. the entry's status - 'Draft', 'Pending')
       if record.tags.any?

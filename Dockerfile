@@ -6,16 +6,17 @@ WORKDIR /dradis
 
 # Install dependencies for Ruby build and gems
 RUN apt-get update -qq && \
-apt-get install --no-install-recommends -y curl git libjemalloc2 libvips sqlite3 && \
-apt-get install -y redis-server && \
+apt-get install --no-install-recommends -y curl git libjemalloc2 libvips && \
+apt-get install --no-install-recommends -y redis-server sqlite3 && \
 rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
 ENV RAILS_ENV="production" \
-    RAILS_SERVE_STATIC_FILES="enabled" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development test"
+    BUNDLE_WITHOUT="development test" \
+    # RAILS_SERVE_STATIC_FILES  is enabled to let Rails serve static files since we're not using Nginx
+    RAILS_SERVE_STATIC_FILES="enabled"
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build
@@ -24,10 +25,10 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential curl git pkg-config libyaml-dev && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# Copy files needed to run `bundle install` to build layer
+# Copy files to build layer that are needed to run `bundle install` & install app gems
 # engines/ is needed to resolve built-in engines in Gemfile
-# version.rb is needed to resolve engine versions in .gemspec
-COPY Gemfile Gemfile.lock ./
+# version.rb is needed to resolve built-in engine versions in their respective .gemspecs
+COPY Gemfile Gemfile.lock Gemfile.plugins ./
 COPY engines ./engines
 COPY lib/dradis/ce/version.rb ./lib/dradis/ce/version.rb
 
@@ -42,17 +43,16 @@ COPY . .
 COPY config/database.yml.template config/database.yml
 COPY config/smtp.yml.template config/smtp.yml
 
-# Preparing application folders
+# Prepare application folders
+# app/views/tmp is needed for HTML exporter report creation
 RUN mkdir -p app/views/tmp \
-    attachments \
     config/shared \
-    storage \
-    templates
+    storage
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
-# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+# Precompile assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 # Final stage for app image
@@ -65,7 +65,15 @@ COPY --from=build /dradis /dradis
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    chown -R rails:rails app/views/tmp attachments config/shared db log storage tmp templates
+    chown -R rails:rails \
+        app/views/tmp \
+        config/schedules \ 
+        config/shared \
+        db \
+        log \
+        storage \
+        tmp
+# Switch to non-root user
 USER 1000:1000
 
 # Entrypoint prepares the database.
