@@ -49,7 +49,7 @@
                     case column
                     when 'Title'
                       [issue.title, issue.title]
-                    when 'Tags'
+                    when 'Result Tags'
                       [issue_tags(issue), issue_tags(issue)]
                     when 'Result State'
                       [Issue.states[issue.state], issue.state.humanize]
