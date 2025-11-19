@@ -220,7 +220,7 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 4.18.0'
+gem 'dradis-plugins', github: 'dradis/dradis-plugins', branch: 'with_feature/add-enabled-option'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 

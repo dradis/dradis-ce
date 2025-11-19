@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/dradis/dradis-plugins.git
+  revision: 7b9110a08e642f78a4d191da9f1f4091511b46e1
+  branch: with_feature/add-enabled-option
+  specs:
+    dradis-plugins (4.19.0)
+
 PATH
   remote: engines/dradis-api
   specs:
@@ -189,7 +196,6 @@ GEM
       dradis-plugins (~> 4.0)
     dradis-pentera (4.18.0)
       dradis-plugins (~> 4.0)
-    dradis-plugins (4.18.0)
     dradis-projects (4.18.0)
       dradis-plugins (>= 4.8.0)
       rubyzip
@@ -615,7 +621,7 @@ DEPENDENCIES
   dradis-ntospider (~> 4.18.0)
   dradis-openvas (~> 4.18.0)
   dradis-pentera (~> 4.18.0)
-  dradis-plugins (~> 4.18.0)
+  dradis-plugins!
   dradis-projects (~> 4.18.0)
   dradis-qualys (~> 4.18.0)
   dradis-saint (~> 4.18.0)

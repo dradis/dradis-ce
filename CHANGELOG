@@ -1,9 +1,8 @@
 v4.19.0 (November 2025)
   - Docker: Update default attachments & templates locations to storage/
+  - Integrations: Include assets for all integrations regardless of enabled/disabled status
   - Layout: Improve primary action visibility for Evidence, Issues, Methodologies, Notes, and Node Properties
   - Navigation: Move Trash and Project Configurations in main navigation bar
-  - [entity]:
-    - [future tense verb] [feature]
   - Upgraded gems:
     - rack, rails, uri
   - Bugs fixes:
