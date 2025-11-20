@@ -65,7 +65,7 @@ class Attachment < File
   AttachmentPwd = Rails.env.test? ? Rails.root.join('tmp', 'attachments') : Rails.root.join('attachments')
   FileUtils.mkdir_p(AttachmentPwd) unless File.exist?(AttachmentPwd)
 
-  SCREENSHOT_REGEX = /\!((https?:\/\/.+)|((\/pro)?\/projects\/(\d+)\/nodes\/(\d+)\/attachments\/(.+?)(\(.*\))?))\!/i
+  SCREENSHOT_REGEX = /\!(?:{.*})?((https?:\/\/.+)|((\/pro)?\/projects\/(\d+)\/nodes\/(\d+)\/attachments\/(.+?)(\(.*\))?))\!/i
 
   # -- Class Methods  ---------------------------------------------------------
 
