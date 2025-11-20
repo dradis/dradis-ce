@@ -379,12 +379,6 @@ class EditorToolbar {
       <i class="fa-solid fa-italic"></i>\
     </div>';
 
-    if (include.includes('highlight'))
-      str +=
-        '<div class="editor-btn px-2" data-btn="highlight" aria-tooltip="highlight code">\
-      <i class="fa-solid fa-highlighter"></i>\
-    </div>';
-
     str += '<div class="divider-vertical"></div>';
 
     if (include.includes('block-code'))
@@ -392,6 +386,14 @@ class EditorToolbar {
         '<div class="editor-btn" data-btn="block-code" aria-tooltip="code block">\
       <i class="fa-solid fa-code"></i>\
     </div>';
+
+    if (include.includes('highlight'))
+      str +=
+        '<div class="editor-btn px-2" data-btn="highlight" aria-tooltip="highlight code">\
+    <i class="fa-solid fa-highlighter"></i>\
+    </div>';
+
+    str += '<div class="divider-vertical"></div>';
 
     if (include.includes('link'))
       str +=
