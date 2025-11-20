@@ -28,7 +28,7 @@ class EditorToolbar {
       this.opts.uploader === undefined
     ) {
       console.log(
-        'You initialized a RichToolbar with the image uploader option but have not provided an existing uploader to utilize'
+        'You initialized a RichToolbar with the image uploader option but have not provided an existing uploader to utilize',
       );
       return;
     }
@@ -38,14 +38,14 @@ class EditorToolbar {
 
   init() {
     this.$target.wrap(
-      '<div class="editor-field" data-behavior="editor-field"><div class="textarea-container"></div></div>'
+      '<div class="editor-field" data-behavior="editor-field"><div class="textarea-container"></div></div>',
     );
     this.$editorField = this.$target.parents('[data-behavior~=editor-field]');
     this.$editorField.prepend(
-      '<div class="editor-toolbar" data-behavior="editor-toolbar"></div>'
+      '<div class="editor-toolbar" data-behavior="editor-toolbar"></div>',
     );
     this.$editorToolbar = this.$editorField.find(
-      '[data-behavior~=editor-toolbar]'
+      '[data-behavior~=editor-toolbar]',
     );
 
     this.$editorToolbar.append(this.textareaElements(this.opts.include));
@@ -64,7 +64,7 @@ class EditorToolbar {
     this.$fileField = $(
       '<input type="file" name="editor-toolbar-' +
         Math.random().toString(36) +
-        '[]" multiple accept="image/*" style="display: none">'
+        '[]" multiple accept="image/*" style="display: none">',
     );
     this.$editorToolbar.append(this.$fileField);
 
@@ -83,18 +83,8 @@ class EditorToolbar {
     var that = this;
 
     this.$target.on('click change keyup select', function () {
-      // enabling/disabling specific toolbar functions for textareas on selection
-      var buttons = '[data-btn~=table], [data-btn~=image]';
-      if (
-        window.getSelection().toString().length > 0 ||
-        this.selectionStart != this.selectionEnd
-      ) {
-        // when there is text selected
-        that.$editorField.find(buttons).addClass('disabled');
-      } else {
-        // when there is no text selected
-        that.$editorField.find(buttons).removeClass('disabled');
-      }
+      that.updateSelectionButtons();
+      that.updateCodeBlockButtons();
     });
 
     // Handler for setting the correct textarea height on keyboard input, on focus,
@@ -184,6 +174,69 @@ class EditorToolbar {
     });
   }
 
+  updateSelectionButtons() {
+    const noSelectionButtons = '[data-btn~=table], [data-btn~=image]';
+    const textarea = this.$target[0];
+
+    if (
+      window.getSelection().toString().length > 0 ||
+      textarea.selectionStart != textarea.selectionEnd
+    ) {
+      // when there is text selected
+      this.$editorField.find(noSelectionButtons).addClass('disabled');
+    } else {
+      // when there is no text selected
+      this.$editorField.find(noSelectionButtons).removeClass('disabled');
+    }
+  }
+
+  updateCodeBlockButtons() {
+    const codeBlockButtons = '[data-btn~=highlight]';
+    const $buttons = this.$editorField.find(codeBlockButtons);
+    const cursorInfo = this.$target.cursorInfo();
+    const lines = this.$target.val().split('\n');
+    const newlineLength = 1;
+    const blockLevelPattern = /^(bc\.\.?|bq\.\.?|p\.|#|\*)/;
+    let charCount = 0;
+    let currentlyInBlock = false;
+    let isMultilineBlock = false;
+
+    for (const line of lines) {
+      const lineStart = charCount;
+      const lineEnd = charCount + line.length;
+
+      // detect start of code block
+      if (line.match(/^bc\.\./)) {
+        currentlyInBlock = true;
+        isMultilineBlock = true;
+      } else if (line.match(/^bc\./)) {
+        currentlyInBlock = true;
+        isMultilineBlock = false;
+      } else if (currentlyInBlock) {
+        // detect end of code block
+        if (
+          isMultilineBlock ? line.match(blockLevelPattern) : line.trim() === ''
+        ) {
+          currentlyInBlock = false;
+          isMultilineBlock = false;
+        }
+      }
+
+      if (
+        currentlyInBlock &&
+        cursorInfo.start >= lineStart &&
+        cursorInfo.start <= lineEnd + newlineLength
+      ) {
+        $buttons.removeClass('disabled');
+        return;
+      }
+
+      charCount += line.length + newlineLength;
+    }
+
+    $buttons.addClass('disabled');
+  }
+
   setHeight(e) {
     const shrinkEvents = [
       'deleteContentForward',
@@ -214,7 +267,7 @@ class EditorToolbar {
     this.$target.val(
       elementText.slice(0, cursorInfo.start) +
         text +
-        elementText.slice(cursorInfo.end)
+        elementText.slice(cursorInfo.end),
     );
   }
 
@@ -234,7 +287,7 @@ class EditorToolbar {
       // no text was selected, select injected placeholder text
       this.$target[0].setSelectionRange(
         cursorInfo.start + affix.prefix.length,
-        cursorInfo.start + affix.asString().length - affix.suffix.length
+        cursorInfo.start + affix.asString().length - affix.suffix.length,
       );
     }
   }
@@ -271,7 +324,7 @@ class EditorToolbar {
     this.$target.val(
       this.$target
         .val()
-        .replace(placeholder.asString(), affix.asString(), this.$target)
+        .replace(placeholder.asString(), affix.asString(), this.$target),
     );
 
     var position = this.$target.val().indexOf(affix.asString()),
@@ -286,7 +339,7 @@ class EditorToolbar {
       'block-code': new BlockAffix('\nbc.', 'Code markup'),
       bold: new Affix('*', 'Bold text', '*'),
       field: new Affix('#[', 'Field', ']#\n'),
-      //'highlight':          new Affix('$${{', 'Highlighted text', '}}$$'),
+      highlight: new Affix('$${{', 'Highlighted code', '}}$$'),
       image: new Affix('\n!', 'https://', '!\n'),
       'image-placeholder': new Affix('\n!', 'https://', ' uploading...!\n'),
       //'inline-code': new Affix('@', 'Inline code', '@'),
@@ -297,7 +350,7 @@ class EditorToolbar {
       quote: new BlockAffix('\nbq.', 'Quoted text'),
       table: new Affix(
         '',
-        '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|'
+        '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|',
       ),
     };
 
@@ -324,6 +377,12 @@ class EditorToolbar {
       str +=
         '<div class="editor-btn px-2" data-btn="italic" aria-tooltip="italic text">\
       <i class="fa-solid fa-italic"></i>\
+    </div>';
+
+    if (include.includes('highlight'))
+      str +=
+        '<div class="editor-btn px-2" data-btn="highlight" aria-tooltip="highlight code">\
+      <i class="fa-solid fa-highlighter"></i>\
     </div>';
 
     str += '<div class="divider-vertical"></div>';
@@ -434,7 +493,7 @@ class Affix {
           ? this.wrapped(selection)
           : text + '\n' + this.wrapped(selection);
       }.bind(this),
-      ''
+      '',
     );
 
     // Account for accidental empty line selections before/after a group
