@@ -29,7 +29,7 @@
           class: 'form-control',
           data: {
             behavior: 'preview-enabled rich-toolbar drop-zone',
-            'rich-toolbar': 'block-code bold image italic link list-ol list-ul table',
+            'rich-toolbar': 'block-code bold highlight image italic link list-ol list-ul table',
             'rich-toolbar-uploader': '[data-behavior~=jquery-upload]',
             id: "item_form_field_value_#{index}"
           },
@@ -41,7 +41,7 @@
   </div>
   <div class="actions">
     <%= link_to 'javascript:void(0)', class: 'text-error-hover', tabindex: '-1',  data: { behavior: 'delete-field' } do %>
-      <i class="fa-solid fa-trash" title="Delete Field"></i> 
+      <i class="fa-solid fa-trash" title="Delete Field"></i>
       <span class="visually-hidden">Delete Field</span>
     <% end %>
   </div>
