@@ -1,2 +1,2 @@
-v4.xx.0 (Month 2025)
+v4.19.0 (November 2025)
   - Initial release
