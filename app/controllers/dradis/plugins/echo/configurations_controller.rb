@@ -1,6 +1,5 @@
 module Dradis::Plugins::Echo
   class ConfigurationsController < AuthenticatedController
-    include ProjectScoped
     before_action :set_configurations
 
     def index
