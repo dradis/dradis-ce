@@ -7,7 +7,7 @@
   - Upgraded gems:
     - rack, uri
   - Bugs fixes:
-    - Editor: Fix disabled toolbar buttons
+    - Editor: Add disabled button styling
     - Datatables: Assert correct state order with sorting records
     - Sidebar: Assert toggle button isn't covered by scrollbar
     - [entity]:
