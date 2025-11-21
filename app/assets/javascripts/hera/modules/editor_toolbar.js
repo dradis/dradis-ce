@@ -28,7 +28,7 @@ class EditorToolbar {
       this.opts.uploader === undefined
     ) {
       console.log(
-        'You initialized a RichToolbar with the image uploader option but have not provided an existing uploader to utilize',
+        'You initialized a RichToolbar with the image uploader option but have not provided an existing uploader to utilize'
       );
       return;
     }
@@ -38,14 +38,14 @@ class EditorToolbar {
 
   init() {
     this.$target.wrap(
-      '<div class="editor-field" data-behavior="editor-field"><div class="textarea-container"></div></div>',
+      '<div class="editor-field" data-behavior="editor-field"><div class="textarea-container"></div></div>'
     );
     this.$editorField = this.$target.parents('[data-behavior~=editor-field]');
     this.$editorField.prepend(
-      '<div class="editor-toolbar" data-behavior="editor-toolbar"></div>',
+      '<div class="editor-toolbar" data-behavior="editor-toolbar"></div>'
     );
     this.$editorToolbar = this.$editorField.find(
-      '[data-behavior~=editor-toolbar]',
+      '[data-behavior~=editor-toolbar]'
     );
 
     this.$editorToolbar.append(this.textareaElements(this.opts.include));
@@ -64,7 +64,7 @@ class EditorToolbar {
     this.$fileField = $(
       '<input type="file" name="editor-toolbar-' +
         Math.random().toString(36) +
-        '[]" multiple accept="image/*" style="display: none">',
+        '[]" multiple accept="image/*" style="display: none">'
     );
     this.$editorToolbar.append(this.$fileField);
 
@@ -267,7 +267,7 @@ class EditorToolbar {
     this.$target.val(
       elementText.slice(0, cursorInfo.start) +
         text +
-        elementText.slice(cursorInfo.end),
+        elementText.slice(cursorInfo.end)
     );
   }
 
@@ -287,7 +287,7 @@ class EditorToolbar {
       // no text was selected, select injected placeholder text
       this.$target[0].setSelectionRange(
         cursorInfo.start + affix.prefix.length,
-        cursorInfo.start + affix.asString().length - affix.suffix.length,
+        cursorInfo.start + affix.asString().length - affix.suffix.length
       );
     }
   }
@@ -324,7 +324,7 @@ class EditorToolbar {
     this.$target.val(
       this.$target
         .val()
-        .replace(placeholder.asString(), affix.asString(), this.$target),
+        .replace(placeholder.asString(), affix.asString(), this.$target)
     );
 
     var position = this.$target.val().indexOf(affix.asString()),
@@ -350,7 +350,7 @@ class EditorToolbar {
       quote: new BlockAffix('\nbq.', 'Quoted text'),
       table: new Affix(
         '',
-        '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|',
+        '|_. Col 1 Header|_. Col 2 Header|\n|Col 1 Row 1|Col 2 Row 1|\n|Col 1 Row 2|Col 2 Row 2|'
       ),
     };
 
@@ -363,49 +363,49 @@ class EditorToolbar {
     if (include.includes('field'))
       str +=
         '<div class="editor-btn" data-btn="field" aria-tooltip="add new field">\
-      <i class="fa-solid fa-plus"></i>\
-    </div>\
-    <div class="divider-vertical"></div>';
+          <i class="fa-solid fa-plus"></i>\
+        </div>\
+        <div class="divider-vertical"></div>';
 
     if (include.includes('bold'))
       str +=
         '<div class="editor-btn" data-btn="bold" aria-tooltip="bold text">\
-      <i class="fa-solid fa-bold"></i>\
-    </div>';
+          <i class="fa-solid fa-bold"></i>\
+        </div>';
 
     if (include.includes('italic'))
       str +=
         '<div class="editor-btn px-2" data-btn="italic" aria-tooltip="italic text">\
-      <i class="fa-solid fa-italic"></i>\
-    </div>';
+          <i class="fa-solid fa-italic"></i>\
+        </div>';
 
     str += '<div class="divider-vertical"></div>';
 
     if (include.includes('block-code'))
       str +=
         '<div class="editor-btn" data-btn="block-code" aria-tooltip="code block">\
-      <i class="fa-solid fa-code"></i>\
-    </div>';
+          <i class="fa-solid fa-code"></i>\
+        </div>';
 
     if (include.includes('highlight'))
       str +=
         '<div class="editor-btn px-2" data-btn="highlight" aria-tooltip="highlight code">\
-    <i class="fa-solid fa-highlighter"></i>\
-    </div>';
+          <i class="fa-solid fa-highlighter"></i>\
+        </div>';
 
     str += '<div class="divider-vertical"></div>';
 
     if (include.includes('link'))
       str +=
         '<div class="editor-btn" data-btn="link" aria-tooltip="link">\
-      <i class="fa-solid fa-link"></i>\
-    </div>';
+          <i class="fa-solid fa-link"></i>\
+        </div>';
 
     if (include.includes('quote'))
       str +=
         '<div class="editor-btn" data-btn="quote" aria-tooltip="quote block">\
-      <i class="fa-solid fa-quote-left"></i>\
-    </div>';
+          <i class="fa-solid fa-quote-left"></i>\
+        </div>';
 
     if (include.includes('table'))
       str +=
@@ -418,21 +418,21 @@ class EditorToolbar {
     if (include.includes('list-ul'))
       str +=
         '<div class="editor-btn" data-btn="list-ul" aria-tooltip="unordered list">\
-      <i class="fa-solid fa-list-ul"></i>\
-    </div>';
+          <i class="fa-solid fa-list-ul"></i>\
+        </div>';
     if (include.includes('list-ol'))
       str +=
         '<div class="editor-btn" data-btn="list-ol" aria-tooltip="ordered list">\
-      <i class="fa-solid fa-list-ol"></i>\
-    </div>';
+          <i class="fa-solid fa-list-ol"></i>\
+        </div>';
 
     str += '<div class="divider-vertical"></div>';
 
     if (include.includes('image'))
       str +=
         '<div class="editor-btn image-btn" data-btn="image" aria-tooltip="image">\
-      <i class="fa-regular fa-image"></i>\
-    </div>';
+          <i class="fa-regular fa-image"></i>\
+        </div>';
 
     /* Additional buttons for future use
 
@@ -495,7 +495,7 @@ class Affix {
           ? this.wrapped(selection)
           : text + '\n' + this.wrapped(selection);
       }.bind(this),
-      '',
+      ''
     );
 
     // Account for accidental empty line selections before/after a group
