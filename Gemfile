@@ -227,6 +227,8 @@ gem 'dradis-api', path: 'engines/dradis-api'
 # Import / export project data
 gem 'dradis-projects', '~> 4.18.0'
 
+gem 'dradis-echo', github: 'dradis/dradis-echo', branch: 'release-4.19.0'
+
 plugins_file = 'Gemfile.plugins'
 if File.exist?(plugins_file)
   eval(IO.read(plugins_file), binding)
