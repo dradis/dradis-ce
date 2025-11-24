@@ -6,8 +6,8 @@ v4.19.0 (November 2025)
   - Upgraded gems:
     - rack, rails, uri
   - Bugs fixes:
-    - Datatables: Assert correct state order with sorting records
-    - Sidebar: Assert toggle button isn't covered by scrollbar
+    - Datatables: Ensure correct record ordering when applying sorting
+    - Sidebar: Prevent the toggle button from being covered by the scrollbar
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
