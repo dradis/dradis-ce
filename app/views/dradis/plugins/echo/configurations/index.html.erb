@@ -97,12 +97,7 @@
                   <%= fields_for "config[#{configuration[:name]}]", configuration do |f| %>
                     <div class="mb-3">
                       <label for="<%= configuration[:name] %>" class="form-label"><%= configuration[:name].to_s.titleize.gsub(':', ' : ') %></label>
-                      <%=
-                        text_field_tag :value,
-                          configuration[:value],
-                          class: 'form-control',
-                          id: "config_1_"
-                      %>
+                      <%= text_field_tag configuration[:name], configuration[:value], class: 'form-control' %>
                     </div>
                   <% end %>
                 <% end %>
