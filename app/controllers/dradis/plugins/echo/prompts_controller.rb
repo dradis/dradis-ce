@@ -31,7 +31,7 @@ module Dradis::Plugins::Echo
     private
 
     def record_params
-      params.permit(:type, :record)
+      params.permit(:type, :project, :record)
     end
 
     # Echo requires Turbo, and Turbo requires:
