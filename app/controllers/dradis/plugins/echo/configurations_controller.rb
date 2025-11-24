@@ -3,6 +3,7 @@ module Dradis::Plugins::Echo
     before_action :set_configurations
 
     def index
+      @model = @configurations.find { |c| c[:name] == :model }
     end
 
     def update
