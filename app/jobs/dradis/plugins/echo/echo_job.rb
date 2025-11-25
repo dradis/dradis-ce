@@ -58,15 +58,23 @@ module Dradis::Plugins::Echo
       if done
         Turbo::StreamsChannel.broadcast_append_to [interaction_id, 'prompts'], target: 'messages', html: '<p>Done.</p>'
       else
-        message = event['response'].to_s.strip.empty? ? nil : event['response']
-        unless message.nil?
-          message.sub!('<think>', '{thinking}')
-          message.sub!('</think>', '{/thinking}')
-          Turbo::StreamsChannel.broadcast_append_to [interaction_id, 'prompts'], target: response_id,
-                                                                                 content: message
+        message = event['response'] unless event['response'].to_s.strip.empty?
+        if message
+          # This replaces the html tags to display the thinking section of the
+          # response. This has been known to show up in the following ollama
+          # models:
+          # - deepseek-r1:latest
+          # - deepseek-r1:1.5b
+          message = message.sub('<think>', '{thinking}').sub('</think>', '{/thinking}')
+
+          Turbo::StreamsChannel.broadcast_append_to(
+            [interaction_id, 'prompts'],
+            target: response_id,
+            content: message
+          )
         end
 
-        if @spinner_shown && !message.nil?
+        if @spinner_shown && message
           Turbo::StreamsChannel.broadcast_remove_to [interaction_id, 'prompts'], target: "#{response_id}_spinner"
           @spinner_shown = false
         end

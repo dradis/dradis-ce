@@ -12,7 +12,7 @@ module Dradis::Plugins::Echo
     end
 
     def show
-      @template = Prompt.by_id(params[:id], klass: @type)
+      @template = Prompt.by_id(record_params[:id], klass: @type)
       @record = current_project.send(@type.to_s.pluralize).find(record_params[:record])
 
       @interaction_id = SecureRandom.hex(20)
@@ -20,7 +20,7 @@ module Dradis::Plugins::Echo
 
       # EchoJob.set(wait: 2.seconds).perform_later(
       EchoJob.perform_later(
-        prompt_id: params[:id],
+        prompt_id: record_params[:id],
         klass: @type,
         record_id: @record.id,
         interaction_id: @interaction_id,
@@ -31,7 +31,7 @@ module Dradis::Plugins::Echo
     private
 
     def record_params
-      params.permit(:type, :project, :record)
+      params.permit(:id, :type, :project_id, :record)
     end
 
     # Echo requires Turbo, and Turbo requires:
