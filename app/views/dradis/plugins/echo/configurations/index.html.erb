@@ -31,24 +31,24 @@
 <% end %>
 
 <h1>Echo</h1>
-<h2 class="mb-3">Rewrite, summerize, and standardize your findinds using your LLM of choice</h2>
+<h2 class="mb-3">Rewrite, summarize, and standardize your findings using your LLM of choice</h2>
 
 <div class="accordion mb-4" id="configuration-accordion">
   <div class="accordion-item">
     <h4 class="accordion-header" id="steps-heading" >
-      <button 
-        class="accordion-button <%= class_names(collapsed: !@model[:default]) %>" 
-        type="button" 
-        data-bs-toggle="collapse" 
-        data-bs-target="#collapse-steps" 
-        aria-expanded="true" 
-        aria-controls="collapse-steps" 
+      <button
+        class="accordion-button <%= class_names(collapsed: !@is_default_model) %>"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapse-steps"
+        aria-expanded="true"
+        aria-controls="collapse-steps"
         data-bs-toggle="collapse">Configuration Steps
       </button>
     </h4>
-    <div 
-      id="collapse-steps" 
-      class="accordion-collapse collapse <%= class_names(show: @model[:default]) %>" 
+    <div
+      id="collapse-steps"
+      class="accordion-collapse collapse <%= class_names(show: @is_default_model) %>"
       aria-labelledby="steps-heading">
       <div class="accordion-body">
         <ol class="mb-0">
@@ -73,18 +73,18 @@
 
   <div class="accordion-item">
     <h4 class="accordion-header" id="details-heading">
-      <button 
-        class="accordion-button" 
-        type="button" 
-        data-bs-toggle="collapse" 
-        data-bs-target="#collapse-details" 
-        aria-expanded="true" 
-        aria-controls="collapse-details" 
+      <button
+        class="accordion-button"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapse-details"
+        aria-expanded="true"
+        aria-controls="collapse-details"
         data-bs-toggle="collapse">Configuration Details
       </button>
     </h4>
     <div
-      id="collapse-details" 
+      id="collapse-details"
       class="accordion-collapse show"
       aria-labelledby="details-heading">
       <div class="accordion-body">
