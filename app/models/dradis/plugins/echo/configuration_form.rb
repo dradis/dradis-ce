@@ -23,6 +23,10 @@ module Dradis::Plugins::Echo
       end
     end
 
+    def configured?
+      @configured ||= !Engine.settings.is_default?(:model, model)
+    end
+
     private
 
     def save_settings

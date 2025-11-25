@@ -2,8 +2,6 @@ module Dradis::Plugins::Echo
   class ConfigurationsController < AuthenticatedController
     def index
       @configuration_form = ConfigurationForm.from_storage
-
-      @is_default_model = Engine.settings.all.find { |c| c[:name] == :model }[:default]
     end
 
     def update

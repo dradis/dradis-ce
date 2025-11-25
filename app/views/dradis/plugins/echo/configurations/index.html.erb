@@ -35,9 +35,9 @@
 
 <div class="accordion mb-4" id="configuration-accordion">
   <div class="accordion-item">
-    <h4 class="accordion-header" id="steps-heading" >
+    <h4 class="accordion-header" id="steps-heading">
       <button
-        class="accordion-button <%= class_names(collapsed: !@is_default_model) %>"
+        class="accordion-button <%= class_names(collapsed: @configuration_form.configured?) %>"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#collapse-steps"
@@ -48,7 +48,7 @@
     </h4>
     <div
       id="collapse-steps"
-      class="accordion-collapse collapse <%= class_names(show: @is_default_model) %>"
+      class="accordion-collapse collapse <%= class_names(show: !@configuration_form.configured?) %>"
       aria-labelledby="steps-heading">
       <div class="accordion-body">
         <ol class="mb-0">
@@ -96,7 +96,8 @@
                 <div class="mb-3">
                   <%= f.label :address, class: 'form-label' %>
                   <%= f.text_field :address, class: 'form-control', required: true %>
-
+                </div>
+                <div class="mb-3">
                   <%= f.label :model, class: 'form-label' %>
                   <%= f.text_field :model, class: 'form-control', required: true %>
                   <div class="form-text">
