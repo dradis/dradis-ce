@@ -97,7 +97,12 @@
                   <%= fields_for "config[#{configuration[:name]}]", configuration do |f| %>
                     <div class="mb-3">
                       <label for="<%= configuration[:name] %>" class="form-label"><%= configuration[:name].to_s.titleize.gsub(':', ' : ') %></label>
-                      <%= text_field_tag configuration[:name], configuration[:value], class: 'form-control' %>
+                      <%= text_field_tag configuration[:name], configuration[:value], class: 'form-control', required: true %>
+                      <% if configuration[:name] == :model %>
+                        <div class="form-text">
+                          For example: gpt-oss:latest or deepseek-r1:1.5b
+                        </div>
+                      <% end %>
                     </div>
                   <% end %>
                 <% end %>

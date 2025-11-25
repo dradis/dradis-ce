@@ -8,7 +8,7 @@ module Dradis::Plugins::Echo
 
     addon_settings :echo do
       settings.default_address = 'http://localhost:11434'
-      settings.default_model = 'deepseek-r1:latest'
+      settings.default_model = 'model:variant'
     end
 
     # initializer 'echo.asset_precompile_paths' do |app|
