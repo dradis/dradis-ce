@@ -1,5 +1,5 @@
 v4.19.0 (November 2025)
-  - Editor: Add highlight code button to the toolbar
+  - Editor: Add inline code, and highlight code buttons to the toolbar
   - Layout: Improve primary action visibility for Evidence, Issues, Methodologies, Notes, and Node Properties
   - Navigation: Move Trash and Project Configurations in main navigation bar
   - [entity]:

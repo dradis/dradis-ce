@@ -342,7 +342,7 @@ class EditorToolbar {
       highlight: new Affix('$${{', 'Highlighted code', '}}$$'),
       image: new Affix('\n!', 'https://', '!\n'),
       'image-placeholder': new Affix('\n!', 'https://', ' uploading...!\n'),
-      //'inline-code': new Affix('@', 'Inline code', '@'),
+      'inline-code': new Affix('@', 'Inline code', '@'),
       italic: new Affix('_', 'Italic text', '_'),
       link: new Affix('"', 'Link text', '":https://'),
       'list-ol': new Affix('# ', 'Ordered item'),
@@ -381,10 +381,19 @@ class EditorToolbar {
 
     str += '<div class="divider-vertical"></div>';
 
+    if (include.includes('inline-code'))
+      str +=
+        '<div class="editor-btn" data-btn="inline-code" aria-tooltip="inline code">\
+          <i class="fa-solid fa-code"></i>\
+        </div>';
+
     if (include.includes('block-code'))
       str +=
         '<div class="editor-btn" data-btn="block-code" aria-tooltip="code block">\
-          <i class="fa-solid fa-code"></i>\
+          <span class="fa-stack">\
+            <i class="fa-regular fa-square fa-stack-2x"></i>\
+            <i class="fa-solid fa-code fa-stack-1x"></i>\
+          </span>\
         </div>';
 
     if (include.includes('highlight'))
@@ -410,8 +419,8 @@ class EditorToolbar {
     if (include.includes('table'))
       str +=
         '<div class="editor-btn" data-btn="table" aria-tooltip="table">\
-      <i class="fa-solid fa-table"></i>\
-    </div>';
+          <i class="fa-solid fa-table"></i>\
+        </div>';
 
     str += '<div class="divider-vertical"></div>';
 
@@ -433,17 +442,6 @@ class EditorToolbar {
         '<div class="editor-btn image-btn" data-btn="image" aria-tooltip="image">\
           <i class="fa-regular fa-image"></i>\
         </div>';
-
-    /* Additional buttons for future use
-
-    <div class="editor-btn" data-btn="highlight" aria-label="highlighted text">\
-      <i class="fa-solid fa-paint-brush"></i>\
-    </div>\
-    <div class="editor-btn" data-btn="inline-code" aria-label="inline code">\
-      <i class="fa-solid fa-terminal"></i>\
-    </div>\
-
-    */
     return str;
   }
 
