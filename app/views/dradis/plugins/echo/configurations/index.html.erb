@@ -89,23 +89,20 @@
       aria-labelledby="details-heading">
       <div class="accordion-body">
 
-        <%= form_tag configurations_path, method: :patch, class: 'w-100' do %>
+        <%= form_with model: @configuration_form, url: configurations_path, method: :patch, class: 'w-100' do |f| %>
           <div class="card">
             <div class="card-body">
               <div class="row">
-                <% @configurations.each do |configuration| %>
-                  <%= fields_for "config[#{configuration[:name]}]", configuration do |f| %>
-                    <div class="mb-3">
-                      <label for="<%= configuration[:name] %>" class="form-label"><%= configuration[:name].to_s.titleize.gsub(':', ' : ') %></label>
-                      <%= text_field_tag configuration[:name], configuration[:value], class: 'form-control', required: true %>
-                      <% if configuration[:name] == :model %>
-                        <div class="form-text">
-                          For example: gpt-oss:latest or deepseek-r1:1.5b
-                        </div>
-                      <% end %>
-                    </div>
-                  <% end %>
-                <% end %>
+                <div class="mb-3">
+                  <%= f.label :address, class: 'form-label' %>
+                  <%= f.text_field :address, class: 'form-control', required: true %>
+
+                  <%= f.label :model, class: 'form-label' %>
+                  <%= f.text_field :model, class: 'form-control', required: true %>
+                  <div class="form-text">
+                    For example: gpt-oss:latest or deepseek-r1:1.5b
+                  </div>
+                </div>
               </div>
             </div>
           </div>
