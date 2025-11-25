@@ -1,4 +1,4 @@
-# Echo: AI copilot for Dradis
+# Echo: Context-aware automation for Dradis
 
 Echo ships with a flexible prompting engine that uses Liquid templates to provide full context about your project and findings, so you can craft relevant prompts to get the most accurate answers. Your data always stays local to uphold data sovereignty.
 
