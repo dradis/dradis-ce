@@ -337,7 +337,10 @@ class EditorToolbar {
     if (include.includes('block-code'))
       str +=
         '<div class="editor-btn" data-btn="block-code" aria-tooltip="code block">\
-          <i class="fa-solid fa-code"></i>\
+          <span class="fa-stack">\
+            <i class="fa-regular fa-square"></i>\
+            <i class="fa-solid fa-code"></i>\
+          </span>\
         </div>';
 
     if (include.includes('link'))
