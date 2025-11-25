@@ -343,6 +343,8 @@ class EditorToolbar {
           </span>\
         </div>';
 
+    str += '<div class="divider-vertical"></div>';
+
     if (include.includes('link'))
       str +=
         '<div class="editor-btn" data-btn="link" aria-tooltip="link">\
