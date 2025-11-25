@@ -363,21 +363,21 @@ class EditorToolbar {
     if (include.includes('field'))
       str +=
         '<div class="editor-btn" data-btn="field" aria-tooltip="add new field">\
-              <i class="fa-solid fa-plus"></i>\
-            </div>\
-            <div class="divider-vertical"></div>';
+          <i class="fa-solid fa-plus"></i>\
+        </div>\
+        <div class="divider-vertical"></div>';
 
     if (include.includes('bold'))
       str +=
         '<div class="editor-btn" data-btn="bold" aria-tooltip="bold text">\
-              <i class="fa-solid fa-bold"></i>\
-            </div>';
+          <i class="fa-solid fa-bold"></i>\
+        </div>';
 
     if (include.includes('italic'))
       str +=
         '<div class="editor-btn px-2" data-btn="italic" aria-tooltip="italic text">\
-              <i class="fa-solid fa-italic"></i>\
-            </div>';
+          <i class="fa-solid fa-italic"></i>\
+        </div>';
 
     str += '<div class="divider-vertical"></div>';
 
@@ -407,14 +407,14 @@ class EditorToolbar {
     if (include.includes('link'))
       str +=
         '<div class="editor-btn" data-btn="link" aria-tooltip="link">\
-              <i class="fa-solid fa-link"></i>\
-            </div>';
+          <i class="fa-solid fa-link"></i>\
+        </div>';
 
     if (include.includes('quote'))
       str +=
         '<div class="editor-btn" data-btn="quote" aria-tooltip="quote block">\
-              <i class="fa-solid fa-quote-left"></i>\
-            </div>';
+          <i class="fa-solid fa-quote-left"></i>\
+        </div>';
 
     if (include.includes('table'))
       str +=
@@ -427,21 +427,21 @@ class EditorToolbar {
     if (include.includes('list-ul'))
       str +=
         '<div class="editor-btn" data-btn="list-ul" aria-tooltip="unordered list">\
-              <i class="fa-solid fa-list-ul"></i>\
-            </div>';
+          <i class="fa-solid fa-list-ul"></i>\
+        </div>';
     if (include.includes('list-ol'))
       str +=
         '<div class="editor-btn" data-btn="list-ol" aria-tooltip="ordered list">\
-              <i class="fa-solid fa-list-ol"></i>\
-            </div>';
+          <i class="fa-solid fa-list-ol"></i>\
+        </div>';
 
     str += '<div class="divider-vertical"></div>';
 
     if (include.includes('image'))
       str +=
         '<div class="editor-btn image-btn" data-btn="image" aria-tooltip="image">\
-              <i class="fa-regular fa-image"></i>\
-            </div>';
+          <i class="fa-regular fa-image"></i>\
+        </div>';
 
     /* Additional buttons for future use
 
