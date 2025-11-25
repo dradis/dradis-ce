@@ -442,17 +442,6 @@ class EditorToolbar {
         '<div class="editor-btn image-btn" data-btn="image" aria-tooltip="image">\
           <i class="fa-regular fa-image"></i>\
         </div>';
-
-    /* Additional buttons for future use
-
-    <div class="editor-btn" data-btn="highlight" aria-label="highlighted text">\
-      <i class="fa-solid fa-paint-brush"></i>\
-    </div>\
-    <div class="editor-btn" data-btn="inline-code" aria-label="inline code">\
-      <i class="fa-solid fa-terminal"></i>\
-    </div>\
-
-    */
     return str;
   }
 
