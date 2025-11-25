@@ -1,1 +1,1 @@
-<%#= link_to 'Dradis Echo', echo.configurations_path, class: 'dropdown-item' %>
+<%= link_to 'Echo', defined?(Dradis::Pro) ? echo.configurations_path : project_configurations_path, class: 'dropdown-item' %>
