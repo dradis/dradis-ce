@@ -9,14 +9,16 @@ Dradis Echo ships with a flexible prompting engine that uses Liquid templates
 to provide full context about your project and findings, so you can craft
 relevant prompts to get the most accurate answers.
 
-By default Echo is configured to use this Ollama config:
+By default, Echo is configured to use this Ollama config:
 
 ```
 Address: http://localhost:11434
 Model: deepseek-r1:latest
 ```
 
-This can be configured through the Tools > Dradis Echo menu.
+This can be configured in app:
+- CE: Settings -> Configure Integrations
+- Pro: Tools -> Tool Manager -> Configure (in the Echo section)
 
 Run Ollama and pull one of the models:
 
@@ -37,8 +39,12 @@ And
 
     bundle install
 
-Restart your Dradis server and you should be good to go.
+Restart your Dradis server, and you should be good to go.
 
+## Enable
+While Echo is in Beta, it is disabled by default. To enable and start using Echo:
+- CE: In the rails console, run `Dradis::Plugins::Echo::Engine.enable!`
+- Pro: Tools -> Tool Manager -> Enable (in the Echo section)
 
 ## More information
 
