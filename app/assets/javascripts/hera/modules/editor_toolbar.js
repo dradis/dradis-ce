@@ -338,8 +338,8 @@ class EditorToolbar {
       str +=
         '<div class="editor-btn" data-btn="block-code" aria-tooltip="code block">\
           <span class="fa-stack">\
-            <i class="fa-regular fa-square"></i>\
-            <i class="fa-solid fa-code"></i>\
+            <i class="fa-regular fa-square fa-stack-2x"></i>\
+            <i class="fa-solid fa-code fa-stack-1x"></i>\
           </span>\
         </div>';
 
