@@ -1,6 +1,6 @@
 module Dradis::Plugins::Echo
   class EchoJob < ApplicationJob
-    queue_as :default
+    queue_as :dradis_project
 
     def perform(prompt_id:, klass:, record_id:, interaction_id:, response_id:)
       template = Prompt.by_id(prompt_id, klass: klass)
