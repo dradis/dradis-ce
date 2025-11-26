@@ -25,7 +25,7 @@ module Dradis::Plugins::Echo
             title: 'Summarize',
             icon: 'fa-wand-magic-sparkles',
             prompt: <<~EOP
-    I am a cyber security professional working an a cybersecurity assessment.
+    I am a cyber security professional working on a cybersecurity assessment.
 
     I found a vulnerability and I'd like for you to help me craft a concise
     description of the impact it has on the security posture of the environment.
@@ -51,7 +51,7 @@ module Dradis::Plugins::Echo
             title: 'Reword',
             icon: 'fa-shuffle',
             prompt: <<~EOP
-    I am a cyber security professional working an a cybersecurity assessment.
+    I am a cyber security professional working on a cybersecurity assessment.
 
     I found a vulnerability and I'd like for you to help me craft a
     description and recommendation that's going to make it easy to understand

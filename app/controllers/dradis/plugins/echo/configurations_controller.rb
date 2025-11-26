@@ -1,13 +1,24 @@
 module Dradis::Plugins::Echo
   class ConfigurationsController < AuthenticatedController
-    include ProjectScoped
-    before_action :set_configurations
-
     def index
+      @configuration_form = ConfigurationForm.from_storage
     end
 
-    def set_configurations
-      @configurations = Engine.settings.all
+    def update
+      @configuration_form = ConfigurationForm.new(configuration_params)
+
+      if @configuration_form.save
+        redirect_to configurations_path, notice: 'Updated configuration successfully'
+      else
+        flash[:alert] = 'Invalid settings'
+        render action: :index
+      end
+    end
+
+    private
+
+    def configuration_params
+      params.require(:configuration_form).permit(:address, :model)
     end
   end
 end
