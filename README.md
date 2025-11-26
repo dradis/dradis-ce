@@ -45,6 +45,12 @@ Configure Echo with the Ollama server address and selected model:
 - CE: Settings -> Configure Integrations
 - Pro: Tools -> Tool Manager -> Configure (in the Echo section)
 
+## Usage
+Navigate to an Issue and click the Echo tab. From there you’ll be able to Summarize or Reword your Issue content, or generate a cheeky Haiku.
+
+## Customize 
+To update the prompts in the beta release, update the default prompts in the [prompt.rb](https://github.com/dradis/dradis-echo/blob/release-4.19.0/app/models/dradis/plugins/echo/prompt.rb) file. In the future, this will be a feature available in the UI. 
+
 ## More information
 
 See the Dradis Framework's [README.md](https://github.com/dradis/dradis-ce/blob/develop/README.md)
