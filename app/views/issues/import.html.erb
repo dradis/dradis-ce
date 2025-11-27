@@ -49,15 +49,17 @@
                     case column
                     when 'Title'
                       [issue.title, issue.title]
-                    when 'Tags'
+                    when 'Result Tags'
                       [issue_tags(issue), issue_tags(issue)]
+                    when 'Result State'
+                      [Issue.states[issue.state], issue.state.humanize]
                     else
                       [issue.fields.fetch(column, ''), markup(issue.fields.fetch(column, ''))]
                     end
                     %>
                     <%= content_tag :td,
                         display,
-                        class: class_names('text-break-spaces': column == 'Affected'),
+                        class: class_names('text-break-spaces': column == 'Affected', 'text-muted': issue.state.present? && !issue.published?),
                         data: {
                           behavior: class_names(tag: column == 'Tags'),
                           sort: sort
@@ -65,35 +67,44 @@
                     %>
                   <% end  %>
                   <td class="column-actions">
-                    <div class="btn-group btn-states" data-behavior="btn-states">
-                      <%= link_to project_issues_path(current_project, format: :js), class: 'btn btn-primary', data: { text: issue.text, state: 'draft', behavior: 'add-issue' } do %>
-                        <i class="fa-solid fa-plus"></i> Add issue (<span data-behavior="state-button">Draft</span>)
-                      <% end %>
-                      <a href="#" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="visually-hidden">Toggle Dropdown</span>
-                      </a>
-                      <div class="dropdown-menu">
-                        <%= collection_radio_buttons(issue, :state, Issue.states, :first, :first) do |b| %>
-                          <span>
-                            <%= b.label class: 'state' do %>
-                              <%= b.radio_button(class: 'd-none', data: { behavior: 'state-radio' }, checked: b.value == 'draft') %>
-                              <i class="fa-solid fa-check fa-fw"></i>
-                              <div class="state-label">
-                                <p data-behavior="state-label"><%= b.text.humanize %></p>
-                                <% case b.value %>
-                                <% when 'draft' %>
-                                  <span>Still not ready for review or the report.</span>
-                                <% when 'ready_for_review' %>
-                                  <span>All done on this one, ready for QA.</span>
-                                <% when 'published' %>
-                                  <span>Content is final, ready for the report.</span>
-                                <% end %>
-                              </div>
-                            <% end %>
-                          </span>
+                    <%# Display the Add Issue link for plugins that don't provide a state %>
+                    <%# For plugins that do provide a state show only for published %>
+                    <% if issue.state.nil? || issue.published? %>
+                      <% default_state = issue.state ? 'published' : 'draft' %>
+                      <div class="btn-group btn-states" data-behavior="btn-states">
+                        <%= link_to project_issues_path(current_project, format: :js), class: 'btn btn-primary', data: { entry_id: issue.id, text: issue.text, state: default_state, behavior: 'add-issue' } do %>
+                          <i class="fa-solid fa-plus"></i> Add issue (<span data-behavior="state-button"><%= default_state.humanize %></span>)
                         <% end %>
+                        <a href="#" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="visually-hidden">Toggle Dropdown</span>
+                        </a>
+                        <div class="dropdown-menu">
+                          <%= collection_radio_buttons(issue, :state, Issue.states, :first, :first) do |b| %>
+                            <span>
+                              <%= b.label class: 'state' do %>
+                                <%= b.radio_button(class: 'd-none', data: { behavior: 'state-radio' }, checked: b.value == default_state) %>
+                                <i class="fa-solid fa-check fa-fw"></i>
+                                <div class="state-label">
+                                  <p data-behavior="state-label"><%= b.text.humanize %></p>
+                                  <% case b.value %>
+                                  <% when 'draft' %>
+                                    <span>Still not ready for review or the report.</span>
+                                  <% when 'ready_for_review' %>
+                                    <span>All done on this one, ready for QA.</span>
+                                  <% when 'published' %>
+                                    <span>Content is final, ready for the report.</span>
+                                  <% end %>
+                                </div>
+                              <% end %>
+                            </span>
+                          <% end %>
+                        </div>
                       </div>
+                    <% else %>
+                    <div class="hover-only text-center">
+                      <span class="badge badge-outline-info">Result not Published</span>
                     </div>
+                    <% end %>
                   </td>
                 </tr>
               <% end %>
