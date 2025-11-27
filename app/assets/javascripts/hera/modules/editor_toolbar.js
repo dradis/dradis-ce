@@ -83,18 +83,8 @@ class EditorToolbar {
     var that = this;
 
     this.$target.on('click change keyup select', function () {
-      // enabling/disabling specific toolbar functions for textareas on selection
-      var buttons = '[data-btn~=table], [data-btn~=image]';
-      if (
-        window.getSelection().toString().length > 0 ||
-        this.selectionStart != this.selectionEnd
-      ) {
-        // when there is text selected
-        that.$editorField.find(buttons).addClass('disabled');
-      } else {
-        // when there is no text selected
-        that.$editorField.find(buttons).removeClass('disabled');
-      }
+      that.updateSelectionButtons();
+      that.updateCodeBlockButtons();
     });
 
     // Handler for setting the correct textarea height on keyboard input, on focus,
@@ -182,6 +172,69 @@ class EditorToolbar {
 
       $toolbarElement.css({ opacity: 0, visibility: 'hidden' });
     });
+  }
+
+  updateSelectionButtons() {
+    const noSelectionButtons = '[data-btn~=table], [data-btn~=image]';
+    const textarea = this.$target[0];
+
+    if (
+      window.getSelection().toString().length > 0 ||
+      textarea.selectionStart != textarea.selectionEnd
+    ) {
+      // when there is text selected
+      this.$editorField.find(noSelectionButtons).addClass('disabled');
+    } else {
+      // when there is no text selected
+      this.$editorField.find(noSelectionButtons).removeClass('disabled');
+    }
+  }
+
+  updateCodeBlockButtons() {
+    const codeBlockButtons = '[data-btn~=highlight]';
+    const $buttons = this.$editorField.find(codeBlockButtons);
+    const cursorInfo = this.$target.cursorInfo();
+    const lines = this.$target.val().split('\n');
+    const newlineLength = 1;
+    const blockLevelPattern = /^(bc\.\.?|bq\.\.?|p\.|#|\*)/;
+    let charCount = 0;
+    let currentlyInBlock = false;
+    let isMultilineBlock = false;
+
+    for (const line of lines) {
+      const lineStart = charCount;
+      const lineEnd = charCount + line.length;
+
+      // detect start of code block
+      if (line.match(/^bc\.\./)) {
+        currentlyInBlock = true;
+        isMultilineBlock = true;
+      } else if (line.match(/^bc\./)) {
+        currentlyInBlock = true;
+        isMultilineBlock = false;
+      } else if (currentlyInBlock) {
+        // detect end of code block
+        if (
+          isMultilineBlock ? line.match(blockLevelPattern) : line.trim() === ''
+        ) {
+          currentlyInBlock = false;
+          isMultilineBlock = false;
+        }
+      }
+
+      if (
+        currentlyInBlock &&
+        cursorInfo.start >= lineStart &&
+        cursorInfo.start <= lineEnd + newlineLength
+      ) {
+        $buttons.removeClass('disabled');
+        return;
+      }
+
+      charCount += line.length + newlineLength;
+    }
+
+    $buttons.addClass('disabled');
   }
 
   setHeight(e) {
@@ -286,10 +339,10 @@ class EditorToolbar {
       'block-code': new BlockAffix('\nbc.', 'Code markup'),
       bold: new Affix('*', 'Bold text', '*'),
       field: new Affix('#[', 'Field', ']#\n'),
-      //'highlight':          new Affix('$${{', 'Highlighted text', '}}$$'),
+      highlight: new Affix('$${{', 'Highlighted code', '}}$$'),
       image: new Affix('\n!', 'https://', '!\n'),
       'image-placeholder': new Affix('\n!', 'https://', ' uploading...!\n'),
-      //'inline-code': new Affix('@', 'Inline code', '@'),
+      'inline-code': new Affix('@', 'Inline code', '@'),
       italic: new Affix('_', 'Italic text', '_'),
       link: new Affix('"', 'Link text', '":https://'),
       'list-ol': new Affix('# ', 'Ordered item'),
@@ -347,11 +400,28 @@ class EditorToolbar {
 
     str += '<div class="divider-vertical"></div>';
 
+    if (include.includes('inline-code'))
+      str +=
+        '<div class="editor-btn" data-btn="inline-code" aria-tooltip="inline code">\
+          <i class="fa-solid fa-code"></i>\
+        </div>';
+
     if (include.includes('block-code'))
       str +=
         '<div class="editor-btn" data-btn="block-code" aria-tooltip="code block">\
-          <i class="fa-solid fa-code"></i>\
+          <span class="fa-stack">\
+            <i class="fa-regular fa-square fa-stack-2x"></i>\
+            <i class="fa-solid fa-code fa-stack-1x"></i>\
+          </span>\
         </div>';
+
+    if (include.includes('highlight'))
+      str +=
+        '<div class="editor-btn px-2" data-btn="highlight" aria-tooltip="highlight code">\
+          <i class="fa-solid fa-highlighter"></i>\
+        </div>';
+
+    str += '<div class="divider-vertical"></div>';
 
     if (include.includes('link'))
       str +=
@@ -378,7 +448,6 @@ class EditorToolbar {
         '<div class="editor-btn" data-btn="list-ul" aria-tooltip="unordered list">\
           <i class="fa-solid fa-list-ul"></i>\
         </div>';
-
     if (include.includes('list-ol'))
       str +=
         '<div class="editor-btn" data-btn="list-ol" aria-tooltip="ordered list">\
@@ -392,7 +461,6 @@ class EditorToolbar {
         '<div class="editor-btn image-btn" data-btn="image" aria-tooltip="image">\
           <i class="fa-regular fa-image"></i>\
         </div>';
-
     return str;
   }
 
