@@ -2,7 +2,7 @@
   <% if local_assigns[:new_path] %>
     <%= link_to 'javascript:void(0)',
       class: local_assigns.fetch(:button_class, '') + ' dropdown-toggle no-caret',
-      data: { name: name.downcase, bs_toggle: 'dropdown' } do %>
+      data: { bs_toggle: 'dropdown' } do %>
       <i class="fa-solid fa-plus"> </i> <%= local_assigns.fetch(:text, '') %><span class="visually-hidden">New <%= name.downcase.singularize %></span>
     <% end %>
     <%= render 'shared/templates_dropdown', name: name, new_path: new_path, category_id: category_id, menu_class: menu_class %>

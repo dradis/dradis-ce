@@ -17,9 +17,24 @@
 
 <!-- Main content -->
 <div class="content-container" id="issue-viewer">
+  <h4 class="header-underline">Issues
+    <span class="actions pt-1">
+      <div class="action">
+        <div class="dropdown">
+          <%= link_to 'javascript:void(0)', class: 'dropdown-toggle', data: { name: 'issues', bs_toggle: 'dropdown' } do %>
+            <i class="fa-solid fa-plus me-1"></i>New Issue
+          <% end %>
+          <%= render 'shared/templates_dropdown',
+            name: 'Issue',
+            new_path: new_project_issue_path(current_project, @issue),
+            category_id: nil
+          %>
+        </div>
+      </div>
+    </span>
+  </h4>
 
   <div class="note-text-inner">
-
     <% if @issues.any? %>
       <div data-behavior="datatable-paths"
            data-table-destroy-url="<%= multiple_destroy_project_issues_path(current_project) %>"

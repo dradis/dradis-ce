@@ -22,9 +22,9 @@ jobs:
           rubygems: 'latest'
           bundler-cache: true
       - name: Security audit dependencies
-        run: bundle exec bundler-audit --update --ignore CVE-2023-50724 CVE-2023-50725 CVE-2023-50727 CVE-2024-21510
+        run: bundle exec bundler-audit --update --ignore CVE-2024-21510 CVE-2025-61921
       - name: Security audit ruby
-        run: bundle exec ruby-audit update && bundle exec ruby-audit check --ignore CVE-2021-33621 CVE-2024-27282
+        run: bundle exec ruby-audit update && bundle exec ruby-audit check --ignore CVE-2025-61594
       - name: Security audit application code
         run: bundle exec brakeman -q -w2
   rubocop:
@@ -68,3 +68,4 @@ jobs:
         run: bundle exec rails assets:precompile
       - name: Run tests
         run: bundle exec rspec spec engines -p
+

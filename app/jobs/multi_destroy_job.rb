@@ -3,11 +3,10 @@ class MultiDestroyJob < ApplicationJob
 
   queue_as :dradis_project
 
-  def perform(author_email:, ids:, klass:, project_id:, uid:)
-    # FIXME: migrate logs#uid to uuid ?
+  def perform(author_email:, ids:, klass:, project_id: nil, uid:)
     logger = Log.new(uid: uid)
 
-    project = Project.find(project_id)
+    project = Project.find(project_id) if project_id
 
     # In controllers we set PaperTrail metadata in
     # ProjectScoped#info_for_paper_trail, but now

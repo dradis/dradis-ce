@@ -141,6 +141,10 @@ header {
         background-color: $main-nav-bg;
         border: 1px solid $main-nav-border;
 
+        .dropdown-header {
+          color: $dark;
+        }
+
         .dropdown-item {
           color: $main-nav-links;
           text-transform: capitalize;

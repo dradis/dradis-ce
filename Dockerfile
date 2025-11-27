@@ -43,7 +43,8 @@ COPY config/database.yml.template config/database.yml
 COPY config/smtp.yml.template config/smtp.yml
 
 # Preparing application folders
-RUN mkdir -p attachments \
+RUN mkdir -p app/views/tmp \
+    attachments \
     config/shared \
     storage \
     templates
@@ -64,7 +65,7 @@ COPY --from=build /dradis /dradis
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    chown -R rails:rails attachments config/shared db log storage tmp templates
+    chown -R rails:rails app/views/tmp attachments config/shared db log storage tmp templates
 USER 1000:1000
 
 # Entrypoint prepares the database.

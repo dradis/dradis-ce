@@ -264,7 +264,8 @@ body:not(.has-sub-nav) {
 
     &.sidebar-collapsed {
       .sidebar-toggle {
-        right: -1.1rem;
+        right: -1.75rem;
+        padding-left: 1rem;
         padding-right: 0.4rem;
       }
 
@@ -289,8 +290,9 @@ body:not(.has-sub-nav) {
 
     &.sidebar-collapsed {
       .sidebar-toggle {
-        left: -1.1rem;
+        left: -1.75rem;
         padding-left: 0.4rem;
+        padding-right: 1rem;
       }
 
       .sidebar-toggle-icon {

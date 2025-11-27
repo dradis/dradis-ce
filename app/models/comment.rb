@@ -1,4 +1,5 @@
 class Comment < ApplicationRecord
+  include Eventable
   include Notifiable
 
   MENTION_PATTERN = /[a-z0-9][a-z0-9\-@\.]*/.freeze
@@ -34,6 +35,16 @@ class Comment < ApplicationRecord
 
   def create_subscription
     Subscription.subscribe(user: user, to: commentable) if user
+  end
+
+  def local_event_payload
+    {
+      content: self.content,
+      commentable: {
+        id: self.commentable.id,
+        title: self.commentable.title
+      }
+    }
   end
 
   def notify(action:, actor:, recipients:)

@@ -86,7 +86,7 @@
   background-color: transparent;
   border: none;
   margin-bottom: calc(var(--margin) * 2);
-  padding: 1rem 0;
+  padding: 1rem 0.5rem;
   width: 100%;
 
   .breadcrumb-item {
@@ -105,6 +105,16 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+  }
+}
+
+.card.border-bottom {
+  border: none;
+  border-radius: 0;
+
+  &:last-child {
+    border-bottom: none !important;
+    margin-bottom: 0;
   }
 }
 

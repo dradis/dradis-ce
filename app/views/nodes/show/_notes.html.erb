@@ -1,21 +1,21 @@
 <div class="tab-pane" id="notes-tab">
-  <% if @sorted_notes.any? %>
-    <h4 class="header-underline">Notes
-      <span class="actions pt-1">
-        <div class="action">
-          <div class="dropdown">
-            <%= link_to 'javascript:void(0)', class: 'dropdown-toggle', data: { bs_toggle: 'dropdown' } do %>
-              <i class="fa-solid fa-plus"></i> New Note
-            <% end %>
-            <%= render 'shared/templates_dropdown',
-              name: 'Note',
-              new_path: new_project_node_note_path(@node.project, @node),
-              category_id: nil
-            %>
-          </div>
+  <h4 class="header-underline">Notes
+    <span class="actions pt-1">
+      <div class="action">
+        <div class="dropdown">
+          <%= link_to 'javascript:void(0)', class: 'dropdown-toggle', data: { bs_toggle: 'dropdown' } do %>
+            <i class="fa-solid fa-plus me-1"></i>New Note
+          <% end %>
+          <%= render 'shared/templates_dropdown',
+            name: 'Note',
+            new_path: new_project_node_note_path(@node.project, @node),
+            category_id: nil
+          %>
         </div>
-      </span>
-    </h4>
+      </div>
+    </span>
+  </h4>
+  <% if @sorted_notes.any? %>
     <div data-behavior="datatable-paths"
         data-table-destroy-url="<%= multiple_destroy_project_node_notes_path(@node.project, @node) %>"
         data-table-close-console-url="<%= project_node_path(@node.project, @node, tab: "notes-tab") %>">
@@ -25,7 +25,6 @@
     </div>
   <% else %>
     <%= render 'shared/empty_state',
-      actions_partial: 'nodes/notes/empty_state_actions',
       docs_link: 'https://dradis.com/support/guides/projects/notes.html',
       name: 'note',
       text: 'Use notes to store your thoughts, ideas, and other content that, while useful, probably isn\'t going to be exported into your final report.'

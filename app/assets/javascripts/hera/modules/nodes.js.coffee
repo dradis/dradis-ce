@@ -20,12 +20,3 @@ document.addEventListener "turbo:load", ->
   if $('body.nodes.show').length
     $('[data-behavior~=services-extras-link]').first().addClass('active')
     $('[data-behavior~=services-extras-tab-pane]').first().addClass('active')
-
-    $('[data-behavior~=evidence-dropdown-toggle]').click (e) ->
-      e.stopPropagation()
-      new bootstrap.Dropdown($("[data-name='evidence']")).show();
-
-    $('[data-behavior~=notes-dropdown-toggle]').click (e) ->
-      e.stopPropagation()
-      new bootstrap.Dropdown($("[data-name='notes']")).show();
-

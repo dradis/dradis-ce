@@ -55,26 +55,6 @@ body.boards.index {
     padding: 0.5rem 0.75rem;
     transition: background-color 0.2s ease-in-out;
 
-    &.board-new {
-      background-color: darken($secondary-bg, 5%);
-      color: $text-default;
-      display: table-cell;
-      height: 5rem;
-      font-weight: 400;
-      text-align: center;
-      vertical-align: middle;
-      width: inherit;
-      transition: all 0.2s ease-in-out;
-
-      &:hover {
-        background-color: darken($secondary-bg, 10%);
-      }
-
-      @include media-breakpoint-down(lg) {
-        display: block;
-      }
-    }
-
     &:hover {
       background-color: darken($primary, 5%);
     }
