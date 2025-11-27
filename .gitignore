@@ -3,11 +3,12 @@
 /vendor/bundle/
 /vendor/cache/*darwin*
 
-# Rails stuff
-/db/*.sqlite3
-/db/*.sqlite3-*
-/config/database.yml
-/config/smtp.yml
+# Ignore environment and deployment files
+/.env*
+/.kamal/*
+/config/deploy.yml
+
+# Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
 !/log/.keep
@@ -18,18 +19,15 @@
 /storage/*
 !/storage/.keep
 
+# Ignore assets.
 /public/assets
-.byebug_history
 
-# RSpec testing
-/spec/.examples.txt
+# Ignore configuration files
+/config/database.yml
+/config/master.key
+/config/smtp.yml
 
-# Ignore environment and deployment files
-/.env*
-/.kamal/*
-/config/deploy.yml
-
-# App-specific
+# Ignore app-specific folders
 /attachments/
 /backup/
 /config/shared/
@@ -37,12 +35,13 @@
 /sample_files/
 /Gemfile.plugins
 
+# Ignore development and test files
+.byebug_history
+/spec/.examples.txt
+
 # Vagrant
 .vagrant/
 
 # Random
 .DS_Store
 *.swp
-
-# Ignore master key for decrypting credentials and more.
-/config/master.key

@@ -2,11 +2,7 @@ name: "dradis-ce"
 
 services:
   web:
-    # image: dradis/dradis-ce:latest
-    build:
-      context: .
-      platforms:
-        - linux/amd64
+    image: dradis/dradis-ce:latest
     volumes:
       # Persist the database
       - dradis-ce-storage:/dradis/storage

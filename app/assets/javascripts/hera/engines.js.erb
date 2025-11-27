@@ -1,6 +1,6 @@
 document.addEventListener('turbo:load', function(){
 <%
-Dradis::Plugins::with_feature(:addon).sort_by(&:plugin_description).each do |plugin|
+Dradis::Plugins::with_feature(:addon, include_disabled: true).sort_by(&:plugin_description).each do |plugin|
   begin
     plugin_path = ActiveSupport::Inflector.underscore(ActiveSupport::Inflector.deconstantize(plugin.name))
     %>

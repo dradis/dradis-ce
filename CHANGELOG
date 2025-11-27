@@ -1,9 +1,35 @@
+[v#.#.#] ([month] [YYYY])
+  - Docker: Update default attachments & templates locations to storage/
+  - Integrations: Include assets for all integrations regardless of enabled/disabled status
+  - Upgraded gems:
+    - [gem]
+  - Bugs fixes:
+    - [entity]:
+      - [future tense verb] [bug fix]
+    - Bug tracker items:
+      - [item]
+  - New integrations:
+    - [integration]
+  - Integration enhancements:
+    - [integration]:
+      - [future tense verb] [integration enhancement]
+      - [integration bug fixes]:
+        - [future tense verb] [integration bug fix]
+  - Reporting enhancements:
+    - [report type]:
+      - [future tense verb] [reporting enhancement]
+  - REST/JSON API enhancements:
+    - [API entity]:
+      - [future tense verb] [API enhancement]
+  - Security Fixes:
+    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
 v4.19.0 (November 2025)
   - Editor: Add inline code, and highlight code buttons to the toolbar
   - Layout: Improve primary action visibility for Evidence, Issues, Methodologies, Notes, and Node Properties
   - Navigation: Move Trash and Project Configurations in main navigation bar
-  - [entity]:
-    - [future tense verb] [feature]
   - Upgraded gems:
     - rack, rails, uri
   - Bugs fixes:
