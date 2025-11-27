@@ -1,4 +1,5 @@
 <div class="setup-progress">
   <div class="setup-progress-indicator <%= 'active' if (request.path == root_path) || request.path.include?('/password') %>"></div>
+  <div class="setup-progress-indicator <%= 'active' if request.path.include?('/analytics') %>"></div>
   <div class="setup-progress-indicator <%= 'active' if request.path.include?('/kit') %>"></div>
 </div>

@@ -25,7 +25,7 @@ module Setup
 
     private
     def ensure_pristine
-      redirect_to new_setup_kit_path unless (::Configuration.shared_password == 'improvable_dradis')
+      redirect_to new_setup_analytics_path unless (::Configuration.shared_password == 'improvable_dradis')
     end
 
     # Ensure that the user has provided a valid password, that the password
