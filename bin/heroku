@@ -10,7 +10,6 @@ end
 
 FileUtils.chdir APP_ROOT do
   puts "\n== Copying sample files =="
-  FileUtils.cp 'config/secrets.yml.template', 'config/secrets.yml'
   FileUtils.cp 'config/smtp.yml.template', 'config/smtp.yml'
 
   puts "\n== Preparing templates folder =="
