@@ -40,8 +40,12 @@
     ) do %>
 
     <header class="sticky-top">
-      <%= render 'layouts/hera/navbar/main_nav' unless controller_path == 'styles' %>
-      <%= yield(:sub_nav) if content_for?(:sub_nav) %>
+      <% if controller_path == 'styles' %>
+        <%= render partial: 'styles/header' %>
+      <% else %>
+        <%= render 'layouts/hera/navbar/main_nav' %>
+        <%= yield(:sub_nav) if content_for?(:sub_nav) %>
+      <% end %>
     </header>
 
     <div class="content-grid">

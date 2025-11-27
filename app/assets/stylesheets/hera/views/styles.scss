@@ -3,6 +3,23 @@ body.styles {
     margin-bottom: 0.25rem;
   }
 
+  .navbar-placeholder {
+    background-color: $main-nav-bg;
+    border-bottom: 1px solid $main-nav-border;
+    display: flex;
+    justify-content: end;
+    padding: 0.8rem 1rem;
+
+    a {
+      color: $main-nav-links;
+
+      &:focus,
+      &:hover {
+        color: $main-nav-hover;
+      }
+    }
+  }
+
   .page-title {
     display: none;
   }
