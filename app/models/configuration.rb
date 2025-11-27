@@ -77,7 +77,6 @@ class Configuration < ApplicationRecord
       .find_or_create_by(name: 'admin:paths:templates:reports').value
   end
 
-
   # ------------------------------------------------------------- admin:plugins
 
   # This setting is used by the plugins as the root of all the content the add.
