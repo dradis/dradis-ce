@@ -1196,6 +1196,26 @@
     <a class="btn btn-primary" data-bs-toggle="modal" href="#modal-example">Click for modal</a>
   </div>
 
+  <div id="modal-example" class="modal fade" tab-index="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal Title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal">
+          <span class="visually-hidden">Close modal</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal content goes here</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary">Submit</button>
+        <button class="btn" type="button" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   <div class="style-code-wrapper collapse" id="modals-code">
     <%= highlight_code('
 // This line goes in the view where you would want to use a button or link to trigger the modal dialog.
@@ -1208,7 +1228,7 @@
       <div class="modal-header">
         <h5 class="modal-title">Modal Title</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal">
-          <span class="visaully-hidden">Close modal</span>
+          <span class="visually-hidden">Close modal</span>
         </button>
       </div>
       <div class="modal-body">
