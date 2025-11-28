@@ -9,12 +9,11 @@ describe HTML::Pipeline::Dradis::Sanitize do
 
   context 'allowed elements' do
     it 'allows style="text-align" as a property when sanitizing' do
-      str = "<div><p style=\"text-align:center;\">test alignment</p></div>"
+      str = '<div><p style="text-align:center;">test alignment</p></div>'
 
       expect(pipeline.call(str)[:output].to_s).to eq(str)
     end
   end
-
 
   context 'disallowed elements' do
     %w[
