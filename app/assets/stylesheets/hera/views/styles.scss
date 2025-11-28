@@ -7,8 +7,9 @@ body.styles {
     background-color: $main-nav-bg;
     border-bottom: 1px solid $main-nav-border;
     display: flex;
-    justify-content: end;
-    padding: 0.8rem 1rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.25rem 1.5rem;
 
     a {
       color: $main-nav-links;
@@ -17,6 +18,10 @@ body.styles {
       &:hover {
         color: $main-nav-hover;
       }
+    }
+
+    .logo {
+      height: 2.5rem;
     }
   }
 
