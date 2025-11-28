@@ -170,8 +170,12 @@ fieldset.check_boxes {
 }
 
 .form-actions {
+  background-color: $primary-bg;
   border-top: 1px solid $border-color;
-  padding-top: 1rem;
+  bottom: 0;
+  padding: 1rem 0;
+  position: sticky;
+  width: 100%;
 
   @media (max-width: 991px) {
     margin-top: 2rem;
