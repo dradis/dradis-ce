@@ -2,7 +2,7 @@
 
 <%= render partial: 'setup/progress' %>
 
-<%= form_tag( setup_analytics_path ) do -%>
+<%= form_tag(setup_analytics_path) do -%>
   <h1>Making Dradis better, together!</h1>
   <p class="small">We need your help to make Dradis better.</p>
   <p class="small">
@@ -10,23 +10,16 @@
       href="https://dradis.com/why-dradis.html?utm_source=ce&utm_medium=app&utm_campaign=analytics"
       target="_blank">Privacy and data sovereignty</a>
     are two of the top reasons why teams choose Dradis, that's why we don't
-    track individual users, only agregate feature usage data.
+    track individual users, only aggregated anonymous feature usage data.
   </p>
-  <p class="small">Would you help us improve?</p>
+  <p class="small mb-0">Would you help us improve?</p>
 
-  <div class="text-center">
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="analytics" value="1" required>
-      <label class="form-check-label" for="inlineRadio2">Yes, I'd like to help!</label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="analytics" value="0" required>
-      <label class="form-check-label" for="inlineRadio1">No thanks.</label>
-    </div>
+  <div class="d-flex">
+    <%= button_tag name: 'analytics', value: '0', class: 'btn btn-outline-primary' do %>
+      No thanks. <i class="fa-solid fa-long-arrow-right"></i>
+    <% end %>
+    <%= button_tag name: 'analytics', value: '1', class: 'btn btn-primary' do %>
+      Yes, I'd like to help! <i class="fa-solid fa-long-arrow-right"></i>
+    <% end %>
   </div>
-
-
-  <%= button_tag :submit, class: 'btn btn-primary' do %>
-    Next <i class="fa-solid fa-long-arrow-right"></i>
-  <% end %>
 <% end %>
