@@ -204,7 +204,7 @@ h6 {
 }
 
 mark {
-  background-color: yellow;
+  background-color: $yellow;
   padding-left: 0;
   padding-right: 0;
 }
@@ -250,9 +250,17 @@ p:last-child {
   margin-bottom: 0;
 }
 
-pre code {
-  background-color: initial;
-  padding: 0;
+pre {
+  background-color: $secondary-bg;
+  border: solid 2px $border-color-dark;
+  border-radius: 0.25rem;
+  padding: 0.375rem 0.75rem;
+
+  code {
+    background: initial;
+    color: $brand-700;
+    padding: 0;
+  }
 }
 
 .required-input {
