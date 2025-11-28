@@ -23,6 +23,10 @@ class ComboBox {
     this.init();
   }
 
+  // ==========================================================================
+  // Initialization
+  // ==========================================================================
+
   init() {
     if (this.isAlreadyInitialized()) {
       this.reinitialize();
@@ -36,77 +40,87 @@ class ComboBox {
     this.setupMutationObserver();
   }
 
-  appendCustomOption(value) {
-    const sanitizedValue = $('<div>').text(value).html();
-    this.$target.append(
-      `<option value="${sanitizedValue}">${sanitizedValue}</option>`,
-    );
-
-    if (this.isMultiSelect) {
-      let selectedValues = this.$target.val() || [];
-      selectedValues.push(sanitizedValue);
-      this.$target.val(selectedValues).trigger('change');
-    } else {
-      this.$target.val(sanitizedValue).trigger('change');
-    }
+  isAlreadyInitialized() {
+    return this.$target.parent().is('[data-behavior~=combobox-container]');
   }
 
-  appendOption($parent, $option) {
-    const disabled = $option.attr('disabled') ? 'disabled' : '';
-    const escapedText = $('<div>').text($option.text()).html();
-    const value = $option.attr('value');
+  reinitialize() {
+    const $existingContainer = this.$target.parent(),
+      $targetParent = $existingContainer.parent(),
+      $targetSelect = this.$target.clone();
 
-    const {
-      comboboxOptionIcon: iconClass,
-      comboboxOptionIconColor: iconColor,
-      comboboxOptionColor: optionColor,
-    } = $option.data();
-
-    $parent.append(
-      `<span
-        aria-selected="false"
-        class="combobox-option ${disabled}"
-        data-behavior="combobox-option"
-        data-value="${value}"
-        id="combobox-option-${this.idSuffix}-${value}"
-        role="option"
-        tabindex="${disabled ? '-1' : '0'}"
-      >${escapedText}</span>`,
-    );
-
-    const $appendedOption = $parent.children().last();
-
-    if (iconClass) {
-      $appendedOption.prepend(`<i class="${iconClass} fa-fw me-1"></i>`);
-
-      if (iconColor) {
-        $appendedOption.find('i').attr('style', `color: ${iconColor}`);
-      }
-    }
-
-    if (optionColor) {
-      $appendedOption.attr('style', `color: ${optionColor}`);
-    }
-
-    if (disabled) {
-      $appendedOption.attr('aria-disabled', 'true');
-    }
+    $targetSelect.appendTo($targetParent);
+    $existingContainer.remove();
+    this.$target = $targetSelect;
   }
 
-  appendOptgroup($optgroup) {
-    this.$comboboxMenu.append(
-      `<div class="combobox-optgroup" data-behavior="combobox-optgroup">
-        <span class="d-block px-2 py-1">${$optgroup.attr('label')}<span>
-      </div>`,
-    );
+  // ==========================================================================
+  // DOM Building
+  // ==========================================================================
 
-    $optgroup.children('option').each((_, option) => {
-      this.appendOption(
-        this.$comboboxMenu.find('[data-behavior~=combobox-optgroup]').last(),
-        $(option),
+  buildDom() {
+    this.$target
+      .addClass('d-none')
+      .wrap(
+        `<div class="combobox-container" data-behavior="combobox-container"></div>`,
       );
-    });
+
+    this.$comboboxContainer = this.$target.parent();
+
+    this.$comboboxContainer.append(`
+      <div
+        class="combobox ${this.isMultiSelect ? 'multiple' : ''}"
+        tabindex="0"
+        role="combobox"
+        aria-expanded="false"
+        aria-owns="combobox-menu-${this.idSuffix}"
+        aria-controls="combobox-menu-${this.idSuffix}"
+        aria-haspopup="listbox"
+        aria-autocomplete="list"
+        data-behavior="combobox">
+      </div>
+      <div
+        class="combobox-menu"
+        role="listbox"
+        id="combobox-menu-${this.idSuffix}"
+        ${this.isMultiSelect ? 'aria-multiselectable="true"' : ''}
+        data-behavior="combobox-menu">
+      </div>
+    `);
+
+    this.$combobox = this.$comboboxContainer.find('[data-behavior~=combobox]');
+    this.$comboboxMenu = this.$combobox.next('[data-behavior~=combobox-menu]');
   }
+
+  setupFilter() {
+    if (this.config.includes('no-filter')) return;
+
+    this.$comboboxMenu.append(`
+      <div class="d-flex flex-column pt-1">
+        <label class="visually-hidden" for="combobox-filter-${this.idSuffix}">Filter options</label>
+        <input type="search" class="form-control mx-2 mb-2 w-auto" data-behavior="combobox-filter" id="combobox-filter-${this.idSuffix}" placeholder="Filter options...">
+        <span class="d-block text-secondary text-center d-none pe-none" data-behavior="no-results">No results.</span>
+      </div>
+    `);
+
+    this.$filter = this.$comboboxMenu.find('[data-behavior~=combobox-filter]');
+
+    if (this.config.includes('add-options')) {
+      this.$filter.parent().append(
+        `<span class="combobox-option d-none" data-behavior="add-option" tabindex="0">
+          <i class="fa-solid fa-plus me-1"></i>
+          Create <strong>${this.$filter.val()}</strong> option
+          </span>`,
+      );
+
+      this.$filter.attr('placeholder', 'Filter or create options...');
+      this.$addOption = this.$filter.siblings('[data-behavior~=add-option]');
+    }
+  }
+
+  // ==========================================================================
+  // Event Listeners & Observers
+  // ==========================================================================
 
   attachEventListeners() {
     // Using event delegation on the container so that if options are updated,
@@ -238,38 +252,37 @@ class ComboBox {
     });
   }
 
-  buildDom() {
-    this.$target
-      .addClass('d-none')
-      .wrap(
-        `<div class="combobox-container" data-behavior="combobox-container"></div>`,
-      );
+  // ==========================================================================
+  // Event Handlers
+  // ==========================================================================
 
-    this.$comboboxContainer = this.$target.parent();
+  handleOptionSelection($option, event) {
+    if ($option.hasClass('disabled')) {
+      return;
+    }
 
-    this.$comboboxContainer.append(`
-      <div
-        class="combobox ${this.isMultiSelect ? 'multiple' : ''}"
-        tabindex="0"
-        role="combobox"
-        aria-expanded="false"
-        aria-owns="combobox-menu-${this.idSuffix}"
-        aria-controls="combobox-menu-${this.idSuffix}"
-        aria-haspopup="listbox"
-        aria-autocomplete="list"
-        data-behavior="combobox">
-      </div>
-      <div
-        class="combobox-menu"
-        role="listbox"
-        id="combobox-menu-${this.idSuffix}"
-        ${this.isMultiSelect ? 'aria-multiselectable="true"' : ''}
-        data-behavior="combobox-menu">
-      </div>
-    `);
+    const value = $option.data('value');
 
-    this.$combobox = this.$comboboxContainer.find('[data-behavior~=combobox]');
-    this.$comboboxMenu = this.$combobox.next('[data-behavior~=combobox-menu]');
+    this.$target.data('combobox-value-before', this.$target.val());
+
+    if (this.isMultiSelect) {
+      let selectedValues = this.$target.val() || [];
+
+      if ($option.hasClass('selected')) {
+        // Remove value from selection
+        selectedValues = selectedValues.filter((v) => v != value);
+      } else {
+        // Add value to selection
+        selectedValues.push(value);
+      }
+
+      this.$target.val(selectedValues).trigger('change');
+    } else {
+      this.$target.val(value).trigger('change');
+      this.hideMenu();
+    }
+
+    if (event) event.preventDefault();
   }
 
   handleAddingCustomOption() {
@@ -364,44 +377,9 @@ class ComboBox {
     }, this.debounceTimer);
   }
 
-  handleOptionSelection($option, event) {
-    if ($option.hasClass('disabled')) {
-      return;
-    }
-
-    const value = $option.data('value');
-
-    this.$target.data('combobox-value-before', this.$target.val());
-
-    if (this.isMultiSelect) {
-      let selectedValues = this.$target.val() || [];
-
-      if ($option.hasClass('selected')) {
-        // Remove value from selection
-        selectedValues = selectedValues.filter((v) => v != value);
-      } else {
-        // Add value to selection
-        selectedValues.push(value);
-      }
-
-      this.$target.val(selectedValues).trigger('change');
-    } else {
-      this.$target.val(value).trigger('change');
-      this.hideMenu();
-    }
-
-    if (event) event.preventDefault();
-  }
-
-  hideMenu() {
-    this.$comboboxMenu.css('display', 'none');
-    this.$combobox.attr('aria-expanded', 'false');
-    this.$filter?.val(null).trigger('input');
-  }
-
-  isAlreadyInitialized() {
-    return this.$target.parent().is('[data-behavior~=combobox-container]');
-  }
+  // ==========================================================================
+  // Option Management
+  // ==========================================================================
 
   populateOptions() {
     this.$target.children().each((_, child) => {
@@ -417,14 +395,108 @@ class ComboBox {
     );
   }
 
-  reinitialize() {
-    const $existingContainer = this.$target.parent(),
-      $targetParent = $existingContainer.parent(),
-      $targetSelect = this.$target.clone();
+  appendOption($parent, $option) {
+    const disabled = $option.attr('disabled') ? 'disabled' : '';
+    const escapedText = $('<div>').text($option.text()).html();
+    const value = $option.attr('value');
 
-    $targetSelect.appendTo($targetParent);
-    $existingContainer.remove();
-    this.$target = $targetSelect;
+    const {
+      comboboxOptionIcon: iconClass,
+      comboboxOptionIconColor: iconColor,
+      comboboxOptionColor: optionColor,
+    } = $option.data();
+
+    $parent.append(
+      `<span
+        aria-selected="false"
+        class="combobox-option ${disabled}"
+        data-behavior="combobox-option"
+        data-value="${value}"
+        id="combobox-option-${this.idSuffix}-${value}"
+        role="option"
+        tabindex="${disabled ? '-1' : '0'}"
+      >${escapedText}</span>`,
+    );
+
+    const $appendedOption = $parent.children().last();
+
+    if (iconClass) {
+      $appendedOption.prepend(`<i class="${iconClass} fa-fw me-1"></i>`);
+
+      if (iconColor) {
+        $appendedOption.find('i').attr('style', `color: ${iconColor}`);
+      }
+    }
+
+    if (optionColor) {
+      $appendedOption.attr('style', `color: ${optionColor}`);
+    }
+
+    if (disabled) {
+      $appendedOption.attr('aria-disabled', 'true');
+    }
+  }
+
+  appendOptgroup($optgroup) {
+    this.$comboboxMenu.append(
+      `<div class="combobox-optgroup" data-behavior="combobox-optgroup">
+        <span class="d-block px-2 py-1">${$optgroup.attr('label')}<span>
+      </div>`,
+    );
+
+    $optgroup.children('option').each((_, option) => {
+      this.appendOption(
+        this.$comboboxMenu.find('[data-behavior~=combobox-optgroup]').last(),
+        $(option),
+      );
+    });
+  }
+
+  appendCustomOption(value) {
+    const sanitizedValue = $('<div>').text(value).html();
+    this.$target.append(
+      `<option value="${sanitizedValue}">${sanitizedValue}</option>`,
+    );
+
+    if (this.isMultiSelect) {
+      let selectedValues = this.$target.val() || [];
+      selectedValues.push(sanitizedValue);
+      this.$target.val(selectedValues).trigger('change');
+    } else {
+      this.$target.val(sanitizedValue).trigger('change');
+    }
+  }
+
+  unselectMultiOption($option) {
+    const valueToRemove = $option.data('option-value'),
+      selectedValues = this.$target
+        .val()
+        .filter((value) => value != valueToRemove);
+    this.$target.val(selectedValues).trigger('change');
+  }
+
+  // ==========================================================================
+  // UI Updates
+  // ==========================================================================
+
+  setInitialSelection() {
+    let $initialOption = this.$comboboxOptions.filter(
+      `[data-value="${this.$target.val()}"]`,
+    );
+
+    if (!$initialOption.length) {
+      if (this.isMultiSelect) {
+        $initialOption = [];
+      } else {
+        $initialOption = this.$comboboxOptions.first();
+      }
+    }
+
+    this.updateComboboxUI($initialOption);
+    this.$combobox.toggleClass(
+      'disabled',
+      !!this.$target.attr('disabled')?.length,
+    );
   }
 
   updateComboboxUI(options) {
@@ -437,6 +509,24 @@ class ComboBox {
     } else {
       this.updateSingleSelectUI(options[0]);
     }
+  }
+
+  updateSingleSelectUI($option) {
+    this.$combobox.html($option.html());
+    this.$combobox.attr('style', $option.attr('style') || '');
+
+    var value = $option.data('value');
+    if (value && value.length && value != 'undefined') {
+      // If the selected value is not present in the original select, add it.
+      if (!this.$target.find('option[value="' + value + '"]').length) {
+        this.$target.find('option:last').val(value);
+      }
+    }
+
+    this.$comboboxOptions.removeClass('selected');
+    this.$comboboxOptions.attr('aria-selected', 'false');
+    $option.addClass('selected');
+    $option.attr('aria-selected', 'true');
   }
 
   updateMultiSelectUI($options) {
@@ -465,84 +555,6 @@ class ComboBox {
       $option.addClass('selected');
       $option.attr('aria-selected', 'true');
     });
-  }
-
-  updateSingleSelectUI($option) {
-    this.$combobox.html($option.html());
-    this.$combobox.attr('style', $option.attr('style') || '');
-
-    var value = $option.data('value');
-    if (value && value.length && value != 'undefined') {
-      // If the selected value is not present in the original select, add it.
-      if (!this.$target.find('option[value="' + value + '"]').length) {
-        this.$target.find('option:last').val(value);
-      }
-    }
-
-    this.$comboboxOptions.removeClass('selected');
-    this.$comboboxOptions.attr('aria-selected', 'false');
-    $option.addClass('selected');
-    $option.attr('aria-selected', 'true');
-  }
-
-  setInitialSelection() {
-    let $initialOption = this.$comboboxOptions.filter(
-      `[data-value="${this.$target.val()}"]`,
-    );
-
-    if (!$initialOption.length) {
-      if (this.isMultiSelect) {
-        $initialOption = [];
-      } else {
-        $initialOption = this.$comboboxOptions.first();
-      }
-    }
-
-    this.updateComboboxUI($initialOption);
-    this.$combobox.toggleClass(
-      'disabled',
-      !!this.$target.attr('disabled')?.length,
-    );
-  }
-
-  setupFilter() {
-    if (this.config.includes('no-filter')) return;
-
-    this.$comboboxMenu.append(`
-      <div class="d-flex flex-column pt-1">
-        <label class="visually-hidden" for="combobox-filter-${this.idSuffix}">Filter options</label>
-        <input type="search" class="form-control mx-2 mb-2 w-auto" data-behavior="combobox-filter" id="combobox-filter-${this.idSuffix}" placeholder="Filter options...">
-        <span class="d-block text-secondary text-center d-none pe-none" data-behavior="no-results">No results.</span>
-      </div>
-    `);
-
-    this.$filter = this.$comboboxMenu.find('[data-behavior~=combobox-filter]');
-
-    if (this.config.includes('add-options')) {
-      this.$filter.parent().append(
-        `<span class="combobox-option d-none" data-behavior="add-option" tabindex="0">
-          <i class="fa-solid fa-plus me-1"></i>
-          Create <strong>${this.$filter.val()}</strong> option
-          </span>`,
-      );
-
-      this.$filter.attr('placeholder', 'Filter or create options...');
-      this.$addOption = this.$filter.siblings('[data-behavior~=add-option]');
-    }
-  }
-
-  showMenu() {
-    this.$comboboxMenu.css('display', 'block');
-    this.$combobox.attr('aria-expanded', 'true');
-    this.$filter?.focus();
-  }
-
-  unselectMultiOption($option) {
-    const valueToRemove = $option.data('option-value'),
-      selectedValues = this.$target
-        .val()
-        .filter((value) => value != valueToRemove);
-    this.$target.val(selectedValues).trigger('change');
   }
 
   refreshComboboxUI() {
@@ -591,5 +603,21 @@ class ComboBox {
     }
 
     this.updateComboboxUI($options);
+  }
+
+  // ==========================================================================
+  // Utilities
+  // ==========================================================================
+
+  showMenu() {
+    this.$comboboxMenu.css('display', 'block');
+    this.$combobox.attr('aria-expanded', 'true');
+    this.$filter?.focus();
+  }
+
+  hideMenu() {
+    this.$comboboxMenu.css('display', 'none');
+    this.$combobox.attr('aria-expanded', 'false');
+    this.$filter?.val(null).trigger('input');
   }
 }
