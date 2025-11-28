@@ -185,27 +185,12 @@ class ComboBox {
         this.handleFiltering();
       });
 
-    this.$target.off('.combobox').on('change.combobox', (event) => {
-      // Store the value that triggered this change so we can revert if there
-      // is a handler that cancels the change
-      const valueBeforeHandlers = $(event.currentTarget).data(
-        'combobox-value-before',
-      );
-
-      // Use setTimeout to let other handlers run first, then check if value was reverted
+    this.$target.off('.combobox').on('change.combobox', () => {
+      // setTimeout to let other handlers run first, then update UI to match
+      // the final selected value. This is needed to support other scripts
+      // canceling the change event (ie. browser alert in Mappings Manager).
       setTimeout(() => {
-        const currentValue = this.$target.val();
-
-        // If value was reverted back by another handler, update UI to match
-        if (
-          JSON.stringify(currentValue) === JSON.stringify(valueBeforeHandlers)
-        ) {
-          this.refreshComboboxFromSelectValue();
-          return;
-        }
-
-        // Otherwise proceed with normal update
-        this.refreshComboboxFromSelectValue();
+        this.refreshComboboxUI();
       }, 0);
     });
 
@@ -262,8 +247,6 @@ class ComboBox {
     }
 
     const value = $option.data('value');
-
-    this.$target.data('combobox-value-before', this.$target.val());
 
     if (this.isMultiSelect) {
       let selectedValues = this.$target.val() || [];
@@ -515,14 +498,6 @@ class ComboBox {
     this.$combobox.html($option.html());
     this.$combobox.attr('style', $option.attr('style') || '');
 
-    var value = $option.data('value');
-    if (value && value.length && value != 'undefined') {
-      // If the selected value is not present in the original select, add it.
-      if (!this.$target.find('option[value="' + value + '"]').length) {
-        this.$target.find('option:last').val(value);
-      }
-    }
-
     this.$comboboxOptions.removeClass('selected');
     this.$comboboxOptions.attr('aria-selected', 'false');
     $option.addClass('selected');
@@ -558,28 +533,7 @@ class ComboBox {
   }
 
   refreshComboboxUI() {
-    let $options = [];
-
-    if (this.isMultiSelect) {
-      const currentValues = this.$target.val() || [];
-      currentValues.forEach((value) => {
-        const $option = this.$comboboxOptions.filter(`[data-value="${value}"]`);
-        if ($option.length) {
-          $options.push($option);
-        }
-      });
-      this.$comboboxOptions.removeClass('selected');
-      this.$combobox.find('[data-behavior~=combobox-multi-option]').remove();
-    } else {
-      $options = this.$comboboxOptions.filter(
-        `[data-value="${this.$target.val()}"]`,
-      );
-    }
-
-    this.updateComboboxUI($options);
-  }
-
-  refreshComboboxFromSelectValue() {
+    // Refresh the combobox options reference in case DOM has changed
     this.$comboboxOptions = this.$comboboxMenu.find(
       '[data-behavior~=combobox-option]',
     );
