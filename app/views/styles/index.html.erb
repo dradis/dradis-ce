@@ -1260,15 +1260,25 @@
     <ul>
       <li><em>data-rich-toolbar: block-code | bold | field<sup>*</sup> | highlight code | inline-code | italic | link | list-ol | list-ul | quote | table | image<sup>*</sup></em></li>
     </ul>
-    <p class="mb-0"><sup>*</sup> omitted from this example</p>
+    <p><sup>*</sup> omitted from this example</p>
+
+    <p>As of Nov 2025, instead of adding the individual styles, you can use <code>data-rich-toolbar="defaults"</code> to include all of them (excl. field and image).</p>
   </div>
 
   <div class="style-code-wrapper collapse" id="toolbar-code">
     <%= highlight_code('
+<!-- Default styles -->
 <textarea 
   class="form-control" 
   data-behavior="rich-toolbar" 
   data-rich-toolbar="defaults">
+</textarea>
+
+<!-- All styles -->
+<textarea 
+  class="form-control" 
+  data-behavior="rich-toolbar" 
+  data-rich-toolbar="defaults fields image">
 </textarea>', 'html').html_safe %>
   </div>
 </div>
