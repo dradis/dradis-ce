@@ -44,9 +44,11 @@ module ApplicationHelper # :nodoc:
     Dradis::Plugins::with_feature(feature).each do |plugin|
       begin
         plugin_path = ActiveSupport::Inflector.underscore(ActiveSupport::Inflector.deconstantize(plugin.name))
-        hook_json = sanitize(render("#{plugin_path}/#{partial}", locals)).strip
+        raw_output = render("#{plugin_path}/#{partial}", locals)
+        # grab json from cluttered string
+        json_data = raw_output.match(/(\{.*\})/m)
 
-        data_attrs.merge!(JSON.parse(hook_json)) if hook_json.present?
+        data_attrs.merge!(JSON.parse(json_data[0])) if json_data
       rescue ActionView::MissingTemplate
         next
       end
