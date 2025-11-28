@@ -1254,11 +1254,11 @@
   <div class="style-example">
     <label class="mb-3" for="toolbar-textarea">Click the below textarea to reveal the rich toolbar.</label>
     <div class="d-flex justify-content-center mb-3">
-      <textarea class="form-control" id="toolbar-textarea" data-behavior="rich-toolbar" data-rich-toolbar="block-code bold italic link list-ol list-ul table quote" placeholder="This is an auto-expanding textarea with a rich toolbar"></textarea>
+      <textarea class="form-control" id="toolbar-textarea" data-behavior="rich-toolbar" data-rich-toolbar="defaults" placeholder="This is an auto-expanding textarea with a rich toolbar"></textarea>
     </div>
     <p>Configuration options:</p>
     <ul>
-      <li><em>data-rich-toolbar: block-code | bold | field<sup>*</sup> | italic | link | list-ol | list-ul | quote | table | image<sup>*</sup></em></li>
+      <li><em>data-rich-toolbar: block-code | bold | field<sup>*</sup> | highlight code | inline-code | italic | link | list-ol | list-ul | quote | table | image<sup>*</sup></em></li>
     </ul>
     <p class="mb-0"><sup>*</sup> omitted from this example</p>
   </div>
@@ -1268,7 +1268,7 @@
 <textarea 
   class="form-control" 
   data-behavior="rich-toolbar" 
-  data-rich-toolbar="block-code bold italic link list-ol list-ul quote table">
+  data-rich-toolbar="defaults">
 </textarea>', 'html').html_safe %>
   </div>
 </div>
