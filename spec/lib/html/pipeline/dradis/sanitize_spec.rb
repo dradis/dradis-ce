@@ -21,7 +21,6 @@ describe HTML::Pipeline::Dradis::Sanitize do
       script iframe object embed applet link style video audio
       form meta svg math
     ].each do |disallowed_element|
-
       it "sanitizes the #{disallowed_element}" do
         str = "<#{disallowed_element}>test output</#{disallowed_element}>"
         expect(['test output', '']).to include(pipeline.call(str)[:output].to_s)
@@ -29,21 +28,23 @@ describe HTML::Pipeline::Dradis::Sanitize do
     end
   end
 
-  context 'disallowed attribtues' do
+  context 'disallowed attributes' do
     %w[
       onclick onload onerror onfocus onmouseover onanimationstart onplay
     ].each do |attribute|
-      it "sanitizes the on attribute #{attribute}" do
-        str = "<div on=\"#{attribute}\">test output</div>"
+      it "sanitizes the attribute #{attribute}" do
+        str = "<div #{attribute}=\"test\">test output</div>"
         expect(pipeline.call(str)[:output].to_s).to eq('<div>test output</div>')
       end
     end
+  end
 
+  context 'disallowed style css' do
     %w[
       expression() background:url() color:test
-    ].each do |attribute|
-      it "sanitizes the style attribute #{attribute}" do
-        str = "<div style=\"#{attribute}\">test output</div>"
+    ].each do |css|
+      it "sanitizes the style css #{css}" do
+        str = "<div style=\"#{css}\">test output</div>"
         expect(pipeline.call(str)[:output].to_s).to eq('<div>test output</div>')
       end
     end
