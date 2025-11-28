@@ -69,12 +69,12 @@ describe ApplicationHelper do
         "<h1>&lt;script&gt;alert(1)&lt;/script&gt;</h1>\n"\
         "<blockquote>\n<p>&lt;script&gt;alert(2)&lt;/script&gt;</p>\n</blockquote>\n"\
         "<div>&lt;script&gt;alert(3)&lt;/script&gt;</div>\n"\
-        "<p class=\"xss\">&lt;script&gt;alert(4)&lt;/script&gt;</p>\n"\
-        "<p id=\"xss\">&lt;script&gt;alert(5)&lt;/script&gt;</p>\n"\
-        "<p class=\"xss\" id=\"xss\">&lt;script&gt;alert(6)&lt;/script&gt;</p>\n"\
+        "<p>&lt;script&gt;alert(4)&lt;/script&gt;</p>\n"\
+        "<p>&lt;script&gt;alert(5)&lt;/script&gt;</p>\n"\
+        "<p>&lt;script&gt;alert(6)&lt;/script&gt;</p>\n"\
         "<p lang=\"xss\">&lt;script&gt;alert(7)&lt;/script&gt;</p>\n"\
         "<p style=\"text-align:left;\">&lt;script&gt;alert(8)&lt;/script&gt;</p>\n"\
-        "<p style=\"padding-left:1em;\">&lt;script&gt;alert(9)&lt;/script&gt;</p>\n"
+        "<p>&lt;script&gt;alert(9)&lt;/script&gt;</p>\n"
       )
 
       text_5 = '“xss”:http://<script>alert(1)</script>;'
