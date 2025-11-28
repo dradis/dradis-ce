@@ -1,12 +1,43 @@
 [v#.#.#] ([month] [YYYY])
+  - [entity]:
+    - [future tense verb] [feature]
+  - Upgraded gems:
+    - [gem]
+  - Bugs fixes:
+    - [entity]:
+      - [future tense verb] [bug fix]
+    - Bug tracker items:
+      - [item]
+  - New integrations:
+    - [integration]
+  - Integration enhancements:
+    - [integration]:
+      - [future tense verb] [integration enhancement]
+      - [integration bug fixes]:
+        - [future tense verb] [integration bug fix]
+  - Reporting enhancements:
+    - [report type]:
+      - [future tense verb] [reporting enhancement]
+  - REST/JSON API enhancements:
+    - [API entity]:
+      - [future tense verb] [API enhancement]
+  - Security Fixes:
+    - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+    - Low: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
+
+v4.19.0 (November 2025)
+  - Editor: Add inline code, and highlight code buttons to the toolbar
   - Layout: Improve primary action visibility for Evidence, Issues, Methodologies, Notes, and Node Properties
   - Navigation: Move Trash and Project Configurations in main navigation bar
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - rack, uri
+    - rack, rails, uri
   - Bugs fixes:
-    - Sidebar: Assert toggle button isn't covered by scrollbar
+    - Editor: Add disabled button styling
+    - Datatables: Ensure correct record ordering when applying sorting
+    - Sidebar: Prevent the toggle button from being covered by the scrollbar
     - [entity]:
       - [future tense verb] [bug fix]
     - Bug tracker items:
