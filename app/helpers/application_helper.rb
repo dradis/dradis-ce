@@ -5,7 +5,7 @@ module ApplicationHelper # :nodoc:
     context = {}
 
     # Note that future HTML::Pipeline versions have migrated from Sanitize -> Selma
-    context[:whitelist] = HTML::Pipeline::Dradis::Allowlist::ALLOWLIST
+    context[:whitelist] = HTML::Pipeline::Dradis::Sanitize::ALLOWLIST
 
     pipeline_filters = [
       HTML::Pipeline::Dradis::FieldableFilter,
