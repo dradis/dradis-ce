@@ -322,6 +322,16 @@ ul {
   .h4 {
     font-size: 1.2rem;
   }
+
+  h5,
+  .h5 {
+    font-size: 1.1rem;
+  }
+
+  h6,
+  .h6 {
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 1199px) {
@@ -343,5 +353,15 @@ ul {
   h4,
   .h4 {
     font-size: 1.1rem;
+  }
+
+  h5,
+  .h5 {
+    font-size: 1.05rem;
+  }
+
+  h6,
+  .h6 {
+    font-size: 1rem;
   }
 }
