@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Forms: Improve visibility of form actions
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
