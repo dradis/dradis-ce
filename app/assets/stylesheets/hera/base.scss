@@ -172,6 +172,10 @@ fieldset.check_boxes {
 .form-actions {
   padding-top: 1rem;
   border-top: 1px solid $border-color;
+
+  @media (max-width: 991px) {
+    margin-top: 2rem;
+  }
 }
 
 .form-check-input {
