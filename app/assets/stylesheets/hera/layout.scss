@@ -35,7 +35,7 @@ body:not(.unauthenticated) {
   position: relative;
   outline: none;
 
-  &:has(> :last-child.note-text-inner) {
+  &:has(> :last-child form) {
     padding-bottom: 0;
   }
 
