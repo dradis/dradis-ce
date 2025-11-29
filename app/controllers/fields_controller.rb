@@ -1,4 +1,6 @@
 class FieldsController < AuthenticatedController
+  before_action :set_target_id
+
   # Returns the form view given a source text
   def form
     @form_data = FieldParser.source_to_fields_array(params[:source])
@@ -14,5 +16,11 @@ class FieldsController < AuthenticatedController
   # Returns the source text given a form data
   def source
     render plain: FieldParser.fields_to_source(params[:form])
+  end
+
+  private
+
+  def set_target_id
+    @target_id = params[:target]
   end
 end

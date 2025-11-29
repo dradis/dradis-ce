@@ -9,6 +9,7 @@
   'tags-path': project_tags_path(current_project)
 }%>
 <% table_attributes.merge!(tags: @tags.map { |t| [t.display_name, t.color, t.name] }.to_json) if local_assigns[:tags] %>
+<% table_attributes.merge!(collect_data_attrs_hooks('issues/send_to_bulk')) %>
 <%= tag.table class: 'table table-striped mb-0', data: table_attributes do %>
   <% cache ['issues-table', @all_columns, issues.map(&:id), @issues.map(&:updated_at).map(&:to_i).sort.last, @tags] do %>
     <thead>
