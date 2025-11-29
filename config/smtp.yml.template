@@ -28,3 +28,6 @@ test:
 
 production:
   <<: *default
+
+sandbox:
+  <<: *default
