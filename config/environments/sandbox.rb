@@ -99,7 +99,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'dradis.com' }
 
   # Sandbox: disable email
-  action_mailer.perform_deliveries = false
+  config.action_mailer.perform_deliveries = false
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
   # config.action_mailer.smtp_settings = {
