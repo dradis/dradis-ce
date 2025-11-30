@@ -16,7 +16,7 @@ module Setup
       setting.value = ::BCrypt::Password.create(@password)
 
       if setting.save
-        redirect_to new_setup_kit_path
+        redirect_to new_setup_analytics_path
       else
         flash[:alert] = "Something went wrong: #{setting.errors.full_messages.join('; ')}"
         render :new
