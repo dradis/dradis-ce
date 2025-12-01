@@ -4,10 +4,8 @@ module ApplicationHelper # :nodoc:
 
     context = {}
 
-    # SEE: https://github.com/rgrove/sanitize/blob/main/lib/sanitize/config/relaxed.rb
-    # for the list of allowed elements/attributes.
     # Note that future HTML::Pipeline versions have migrated from Sanitize -> Selma
-    context[:whitelist] = Sanitize::Config::RELAXED
+    context[:whitelist] = HTML::Pipeline::Dradis::Sanitize::ALLOWLIST
 
     pipeline_filters = [
       HTML::Pipeline::Dradis::FieldableFilter,
