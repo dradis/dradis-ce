@@ -10,12 +10,14 @@ apt-get install --no-install-recommends -y curl git libjemalloc2 libvips sqlite3
 apt-get install -y redis-server && \
 rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# Set production environment
-ENV RAILS_ENV="production" \
+# Set Rails environment
+ARG RAILS_ENV="production"
+ARG BUNDLE_WITHOUT="development sandbox test"
+ENV RAILS_ENV=$RAILS_ENV \
     RAILS_SERVE_STATIC_FILES="enabled" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development test"
+    BUNDLE_WITHOUT=$BUNDLE_WITHOUT
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build
