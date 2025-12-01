@@ -1,22 +1,22 @@
 require 'rails_helper'
 
 describe ApplicationHelper do
-  describe "#markup" do
+  describe '#markup' do
 
-    it "correctly parses urls containing multiple dots" do
-      expect(helper.markup("h1. More test, http://example.org/Some.Nonexisting.URI.with.dots.inside?foobarfoobarfoobar")).to include('<a href="http://example.org/Some.Nonexisting.URI.with.dots.inside?foobarfoobarfoobar">')
+    it 'correctly parses urls containing multiple dots' do
+      expect(helper.markup('h1. More test, http://example.org/Some.Nonexisting.URI.with.dots.inside?foobarfoobarfoobar')).to include('<a href="http://example.org/Some.Nonexisting.URI.with.dots.inside?foobarfoobarfoobar">')
     end
 
-    it "correctly parses urls containing parenthesis" do
-      expect(helper.markup("test content http://example.org/Some.page(moreinfo) more here")).to include('<a href="http://example.org/Some.page(moreinfo)">')
+    it 'correctly parses urls containing parenthesis' do
+      expect(helper.markup('test content http://example.org/Some.page(moreinfo) more here')).to include('<a href="http://example.org/Some.page(moreinfo)">')
     end
 
-    it "correctly parses urls containing a combination of capital letters and parenthesis" do
-      expect(helper.markup("https://www.owasp.org/index.php/Test_HTTP_Methods_(OTG-CONFIG-006)")).to include('<a href="https://www.owasp.org/index.php/Test_HTTP_Methods_(OTG-CONFIG-006)">')
+    it 'correctly parses urls containing a combination of capital letters and parenthesis' do
+      expect(helper.markup('https://www.owasp.org/index.php/Test_HTTP_Methods_(OTG-CONFIG-006)')).to include('<a href="https://www.owasp.org/index.php/Test_HTTP_Methods_(OTG-CONFIG-006)">')
     end
 
-    it "correctly parses bold tags" do
-      expect(helper.markup("The word *duck* should be bold.")).to include("<strong>duck</strong>")
+    it 'correctly parses bold tags' do
+      expect(helper.markup('The word *duck* should be bold.')).to include('<strong>duck</strong>')
     end
 
     it 'correctly parses Textile header tags' do
@@ -46,7 +46,7 @@ describe ApplicationHelper do
       )
 
       text_3 = "xssbc. <script>alert(1)</script>\n\n"\
-        "xssbc.. <script>alert(1)</script>"
+        'xssbc.. <script>alert(1)</script>'
       expect(helper.markup(text_3)).to include(
         "<div>\n<p>xssbc. &lt;script&gt;alert(1)&lt;/script&gt;</p>\n"\
         "<p>xssbc.. &lt;script&gt;alert(1)&lt;/script&gt;</p>\n</div>"
@@ -73,8 +73,8 @@ describe ApplicationHelper do
         "<p>&lt;script&gt;alert(5)&lt;/script&gt;</p>\n"\
         "<p>&lt;script&gt;alert(6)&lt;/script&gt;</p>\n"\
         "<p lang=\"xss\">&lt;script&gt;alert(7)&lt;/script&gt;</p>\n"\
-        "<p>&lt;script&gt;alert(8)&lt;/script&gt;</p>\n"\
-        "<p>&lt;script&gt;alert(9)&lt;/script&gt;</p>\n</div>"
+        "<p style=\"text-align:left;\">&lt;script&gt;alert(8)&lt;/script&gt;</p>\n"\
+        "<p>&lt;script&gt;alert(9)&lt;/script&gt;</p>\n"
       )
 
       text_5 = '“xss”:http://<script>alert(1)</script>;'
