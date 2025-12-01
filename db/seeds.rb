@@ -2,14 +2,10 @@
 if Rails.env.sandbox?
 
   # Shared password
-  setting = ::Configuration.find_by_name('admin:password')
-  setting.value = ::BCrypt::Password.create('dradis')
-  setting.save
+  ::Configuration.create!(name: 'admin:password', value: ::BCrypt::Password.create('dradis'))
 
   # Share Analytics
-  setting = ::Configuration.new(name: 'admin:usage_sharing')
-  setting.value = 1
-  setting.save
+  ::Configuration.create!(name: 'admin:usage_sharing', value: 1)
 
   # Load Kit
   # Before we import the Kit we need at least 1 user
@@ -18,7 +14,7 @@ if Rails.env.sandbox?
   kit_folder = Rails.root.join('lib', 'tasks', 'templates', 'welcome').to_s
   logger = Log.new.info('Loading Welcome kit...')
   kit_folder
-  KitImportJob.perform_later(kit_folder, logger: logger)
+  KitImportJob.perform_now(kit_folder, logger: logger)
 else
   # Create a few default tags.
   Tag::DEFAULT_TAGS.each do |name|
