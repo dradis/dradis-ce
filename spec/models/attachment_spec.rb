@@ -104,6 +104,7 @@ describe Attachment do
       '',
       'https://example.com!',
       '!{/pro/projects/1/nodes/1/attachments/file.png(captions)!',
+      '!{<script>alert(1);</script>}/pro/projects/1/nodes/1/attachments/file.png(captions)!'
     ]
 
     invalid_strings.each do |string|
