@@ -2,5 +2,6 @@
 
 echo 'Preparing the database...'
 ./bin/rails db:prepare
+./bin/rails db:seed
 
 exec "${@}"
