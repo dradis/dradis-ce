@@ -336,12 +336,15 @@ class EditorToolbar {
 
   affixesLibrary(type, selection) {
     const library = {
+      'align-center': new Affix('p=. ', 'Center aligned text'),
+      'align-left': new Affix('p<. ', 'Left aligned text'),
+      'align-right': new Affix('p>. ', 'Right aligned text'),
       'block-code': new BlockAffix('\nbc.', 'Code markup'),
       bold: new Affix('*', 'Bold text', '*'),
       field: new Affix('#[', 'Field', ']#\n'),
       highlight: new Affix('$${{', 'Highlighted code', '}}$$'),
-      image: new Affix('\n!', 'https://', '!\n'),
-      'image-placeholder': new Affix('\n!', 'https://', ' uploading...!\n'),
+      image: new Affix('\np=. !', 'https://', '!\n'),
+      'image-placeholder': new Affix('\np=. !', 'https://', ' uploading...!\n'),
       'inline-code': new Affix('@', 'Inline code', '@'),
       italic: new Affix('_', 'Italic text', '_'),
       link: new Affix('"', 'Link text', '":https://'),
@@ -400,6 +403,19 @@ class EditorToolbar {
 
     str += '<div class="divider-vertical"></div>';
 
+    if (include.includes('align'))
+      str +=
+        '<div class="editor-btn" data-btn="align-left" aria-tooltip="align left">\
+          <i class="fa-solid fa-align-left"></i>\
+        </div>\
+        <div class="editor-btn" data-btn="align-center" aria-tooltip="align center">\
+           <i class="fa-solid fa-align-center"></i>\
+         </div>\
+         <div class="editor-btn" data-btn="align-right" aria-tooltip="align right">\
+          <i class="fa-solid fa-align-right"></i>\
+         </div>\
+         <div class="divider-vertical"></div>';
+
     if (include.includes('inline-code'))
       str +=
         '<div class="editor-btn" data-btn="inline-code" aria-tooltip="inline code">\
@@ -448,6 +464,7 @@ class EditorToolbar {
         '<div class="editor-btn" data-btn="list-ul" aria-tooltip="unordered list">\
           <i class="fa-solid fa-list-ul"></i>\
         </div>';
+
     if (include.includes('list-ol'))
       str +=
         '<div class="editor-btn" data-btn="list-ol" aria-tooltip="ordered list">\
