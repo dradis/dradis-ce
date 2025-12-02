@@ -35,6 +35,10 @@ body:not(.unauthenticated) {
   position: relative;
   outline: none;
 
+  &:has(> :last-child .form-actions.sticky) {
+    padding-bottom: 0;
+  }
+
   .alert {
     margin: 1rem 0;
   }
