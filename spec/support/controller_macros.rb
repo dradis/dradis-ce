@@ -17,7 +17,10 @@ module ControllerMacros
 
     @project = Project.new
 
-    # weaksauce alert: this creates a Node which flags the Setup as done.
+    # Bypassing the setup Wizard
+    ## Password: via fixture file
+    ## Analytics: via fixture file
+    ## Kit: weaksauce alert: this creates a Node which flags the Setup as done.
     @project.issue_library
   end
 
