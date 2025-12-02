@@ -81,9 +81,7 @@ class EditorToolbar {
 
   behaviors() {
     var that = this;
-    this.scrollEventName =
-      'scroll.editor-toolbar-' + this.$target.attr('id') ||
-      Math.random().toString(36).substring(2);
+    this.scrollEventName = 'scroll.editor-toolbar-' + this.$target.attr('id');
 
     this.$target.on('click change keyup select', function () {
       that.updateSelectionButtons();
