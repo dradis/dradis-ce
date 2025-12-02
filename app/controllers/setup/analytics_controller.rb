@@ -1,6 +1,5 @@
 module Setup
   class AnalyticsController < BaseController
-
     def new; end
 
     def create
