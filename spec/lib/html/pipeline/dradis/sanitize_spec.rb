@@ -13,6 +13,18 @@ describe HTML::Pipeline::Dradis::Sanitize do
 
       expect(pipeline.call(str)[:output].to_s).to eq(str)
     end
+
+    it 'allows style="border" as a property when sanitizing' do
+      str = '<div><p style="border: 1px solid #000000;">test border</p></div>'
+
+      expect(pipeline.call(str)[:output].to_s).to eq(str)
+    end
+
+    it 'allows width and height as a property when sanitizing' do
+      str = '<div><p style="width: 10px; height: 10px;">test size</p></div>'
+
+      expect(pipeline.call(str)[:output].to_s).to eq(str)
+    end
   end
 
   context 'disallowed elements' do
