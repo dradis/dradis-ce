@@ -35,7 +35,7 @@ body:not(.unauthenticated) {
   position: relative;
   outline: none;
 
-  &:has(> :last-child form .form-actions) {
+  &:has(> :last-child .form-actions.sticky) {
     padding-bottom: 0;
   }
 
