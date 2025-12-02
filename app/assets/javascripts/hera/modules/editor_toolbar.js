@@ -327,6 +327,16 @@ class EditorToolbar {
         .replace(placeholder.asString(), affix.asString(), this.$target),
     );
 
+
+    // Replace placeholder image sizes
+    this.$target.val(
+      this.$target.val().replace('width: #', 'width: ' + data.result[0].width)
+    );
+    this.$target.val(
+      this.$target.val().replace('height: #', 'height: ' + data.result[0].height)
+    );
+
+
     var position = this.$target.val().indexOf(affix.asString()),
       cursorInfo = new CursorInfo(position, position, undefined);
 
@@ -343,8 +353,8 @@ class EditorToolbar {
       bold: new Affix('*', 'Bold text', '*'),
       field: new Affix('#[', 'Field', ']#\n'),
       highlight: new Affix('$${{', 'Highlighted code', '}}$$'),
-      image: new Affix('\np=. !', 'https://', '!\n'),
-      'image-placeholder': new Affix('\np=. !', 'https://', ' uploading...!\n'),
+      image: new Affix('\np=. !{border: 0px solid #000000; height: #px; width: #px;}', 'https://', '!\n'),
+      'image-placeholder': new Affix('\np=. !{border: 0px solid #000000; height: #px; width: #px;}', 'https://', ' uploading...!\n'),
       'inline-code': new Affix('@', 'Inline code', '@'),
       italic: new Affix('_', 'Italic text', '_'),
       link: new Affix('"', 'Link text', '":https://'),

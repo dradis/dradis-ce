@@ -35,6 +35,10 @@ class AttachmentsController < AuthenticatedController
     }
 
     if Mime::Type.lookup_by_extension(File.extname(@attachment.filename).downcase.tr('.', '')).to_s =~ /^image\//
+      image_size = ImageSize.new(uploaded_file.tempfile)
+      json[:width] = image_size.width
+      json[:height] = image_size.height
+
       json[:thumbnail_url] = project_node_attachment_path(current_project, @node, @attachment.filename)
     end
 
