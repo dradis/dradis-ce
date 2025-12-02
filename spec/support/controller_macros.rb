@@ -4,7 +4,7 @@ module ControllerMacros
   included { fixtures :configurations }
 
   # Macro to emulate user login
-  def login_as_user(user=create(:user))
+  def login_as_user(user = create(:user))
     allow_any_instance_of(ApplicationController).to \
       receive(:authenticated?).and_return(true)
     allow_any_instance_of(ApplicationController).to \
@@ -17,7 +17,10 @@ module ControllerMacros
 
     @project = Project.new
 
-    # weaksauce alert: this creates a Node which flags the Setup as done.
+    # Bypassing the setup Wizard
+    ## Password: via fixture file
+    ## Analytics: via fixture file
+    ## Kit: weaksauce alert: this creates a Node which flags the Setup as done.
     @project.issue_library
   end
 

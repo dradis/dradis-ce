@@ -1,7 +1,7 @@
 module Setup
   class AnalyticsController < BaseController
-    def new
-    end
+    def new; end
+
     def create
       setting = ::Configuration.new(name: 'admin:usage_sharing')
       setting.value = ActiveModel::Type::Boolean.new.cast(params[:analytics]) ? 1 : 0
