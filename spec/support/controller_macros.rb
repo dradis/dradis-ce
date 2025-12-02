@@ -4,7 +4,7 @@ module ControllerMacros
   included { fixtures :configurations }
 
   # Macro to emulate user login
-  def login_as_user(user=create(:user))
+  def login_as_user(user = create(:user))
     allow_any_instance_of(ApplicationController).to \
       receive(:authenticated?).and_return(true)
     allow_any_instance_of(ApplicationController).to \
