@@ -1,5 +1,5 @@
 class FieldsController < AuthenticatedController
-  before_action :set_target_id
+  before_action :set_target_id, only: [:field]
 
   # Returns the form view given a source text
   def form
@@ -21,6 +21,8 @@ class FieldsController < AuthenticatedController
   private
 
   def set_target_id
-    @target_id = params[:target]
+    if params[:target].to_s.match?(/\Atextile_form_body_[0-9a-fA-F]{8}\z/)
+      @target_id = params[:target]
+    end
   end
 end

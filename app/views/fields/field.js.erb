@@ -1,6 +1,6 @@
 <% field_row = render partial: 'field', locals: { index: @index } %>
 var fieldGroup = $('<%= escape_javascript(field_row) %>');
-var $targetBody = $('#<%= @target_id %>');
+var $targetBody = $('#<%= escape_javascript(@target_id) %>');
 var $form = $targetBody.closest('form');
 
 $targetBody.append(fieldGroup);
