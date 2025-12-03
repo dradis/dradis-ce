@@ -42,24 +42,6 @@ module ApplicationHelper # :nodoc:
     ;nil
   end
 
-  def collect_data_attrs_hooks(partial, locals: {}, feature: :addon)
-    data_attrs = {}
-
-    Dradis::Plugins::with_feature(feature).each do |plugin|
-      begin
-        plugin_path = ActiveSupport::Inflector.underscore(ActiveSupport::Inflector.deconstantize(plugin.name))
-        raw_output = render("#{plugin_path}/#{partial}", locals)
-        # grab json from cluttered string
-        json_data = raw_output.match(/(\{.*\})/m)
-
-        data_attrs.merge!(JSON.parse(json_data[0])) if json_data
-      rescue ActionView::MissingTemplate
-        next
-      end
-    end
-    data_attrs
-  end
-
   def spinner_tag(spinner_class: 'text-primary', align: 'center', inline: false)
     content_tag :div, class: "#{inline ? 'd-inline-flex' : 'd-flex' } align-items-center justify-content-#{align} spinner-container" do
       content_tag :div, nil, class: "spinner-border #{spinner_class}"
