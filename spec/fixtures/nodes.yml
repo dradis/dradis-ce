@@ -1,0 +1,3 @@
+root:
+  label: 'Wizard Bypass'
+  type_id: Node::Types::ISSUELIB
