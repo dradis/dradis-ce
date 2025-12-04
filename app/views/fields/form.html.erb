@@ -1,4 +1,4 @@
-<div class="textile-form-body" data-behavior="textile-form-body" id="<%= target_dom_id %>">
+<div class="textile-form-body" data-behavior="textile-form-body" id="<%= @target_dom_id %>">
   <% if @form_data.any? %>
     <% @form_data.each_with_index do |field, index| %>
       <%= render partial: 'field', locals: { field: field, index: index } %>
