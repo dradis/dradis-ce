@@ -1,7 +1,7 @@
 module SupportHelper
   def self.included(base)
     included_ce(base)
-    included_pro(base) if defined?(Dradis::Pro)
+    included_pro(base)
   end
 
   def self.included_ce(base)
