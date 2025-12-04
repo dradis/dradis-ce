@@ -37,7 +37,7 @@ describe 'Sessions' do
   end
 
   context 'when using an incorrect password' do
-    let(:password) { 'wrong_pass'}
+    let(:password) { 'wrong_pass' }
 
     it 'redirect to login with a message' do
       login
