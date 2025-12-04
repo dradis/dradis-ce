@@ -1,6 +1,3 @@
-analytics:
-  name: 'admin:usage_sharing'
-  value: 1
 # ::BCrypt::Password.create('rspec_pass')
 password:
   name: 'admin:password'

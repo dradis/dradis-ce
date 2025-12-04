@@ -1,15 +1,6 @@
 module ControllerMacros
   extend ActiveSupport::Concern
 
-  included do
-    # Bypassing the setup Wizard
-    ## Shared Password
-    ## Analytics
-    fixtures :configurations
-    ## Kit
-    fixtures :nodes
-  end
-
   # Macro to emulate user login
   def login_as_user(user = create(:user))
     allow_any_instance_of(ApplicationController).to \

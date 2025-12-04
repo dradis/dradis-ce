@@ -1,9 +1,6 @@
 require 'rails_helper'
 
-describe 'Setup::Kits' do
-
-  # This Setup step is CE only
-  break if defined?(Dradis::Pro)
+describe 'Setup::Kits', skip_setup_mock: true do
 
   context "when shared password is already set" do
     it "enqueues a KitImport job if a valid kit is passed" do
