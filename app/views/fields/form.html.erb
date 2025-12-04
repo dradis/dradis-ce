@@ -1,4 +1,4 @@
-<div class="textile-form-body" data-behavior="textile-form-body">
+<div class="textile-form-body" data-behavior="textile-form-body" id="<%= @target_dom_id %>">
   <% if @form_data.any? %>
     <% @form_data.each_with_index do |field, index| %>
       <%= render partial: 'field', locals: { field: field, index: index } %>
@@ -9,7 +9,7 @@
 </div>
 
 <div class="add-field">
-  <%= link_to field_fields_path(index: @form_data.length + 1), data: { behavior: 'add-field' }, remote: true do %>
+  <%= link_to field_fields_path(index: @form_data.length + 1, target: @target_dom_id), data: { behavior: 'add-field' }, remote: true do %>
     <i class="fa-solid fa-plus"></i> Add field
   <% end %>
 </div>
