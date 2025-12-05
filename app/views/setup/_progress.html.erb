@@ -1,4 +1,8 @@
 <div class="setup-progress">
+  <% if defined?(Dradis::Pro) %>
+  <% else %>
   <div class="setup-progress-indicator <%= 'active' if (request.path == root_path) || request.path.include?('/password') %>"></div>
+  <div class="setup-progress-indicator <%= 'active' if request.path.include?('/analytics') %>"></div>
+  <% end %>
   <div class="setup-progress-indicator <%= 'active' if request.path.include?('/kit') %>"></div>
 </div>

@@ -82,9 +82,9 @@ RSpec.configure do |config|
   config.include ControllerMacros, type: :feature
   config.include ControllerMacros, type: :request
   # config.include SelecterHelper,   type: :feature
-  # config.include SupportHelper,    type: :controller
-  # config.include SupportHelper,    type: :feature
-  # config.include SupportHelper,    type: :request
+  config.include SupportHelper, type: :controller
+  config.include SupportHelper, type: :feature
+  config.include SupportHelper, type: :request
   config.include FactoryBot::Syntax::Methods
   config.include WaitForAjax, type: :feature
 

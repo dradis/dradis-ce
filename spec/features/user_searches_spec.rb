@@ -10,7 +10,7 @@ describe 'User searches', type: :feature do
 
   before do
     login_to_project_as_user
-    visit root_path
+    visit project_path(current_project)
   end
 
   it 'can access search on main navigation' do

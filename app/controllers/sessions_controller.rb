@@ -1,5 +1,5 @@
 # This controller handles the login/logout function of the site.
-class SessionsController < ApplicationController
+class SessionsController < SetupRequiredController
   skip_before_action :verify_authenticity_token, only: :failure
 
   def create

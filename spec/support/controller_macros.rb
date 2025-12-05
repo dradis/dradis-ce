@@ -1,10 +1,8 @@
 module ControllerMacros
   extend ActiveSupport::Concern
 
-  included { fixtures :configurations }
-
   # Macro to emulate user login
-  def login_as_user(user=create(:user))
+  def login_as_user(user = create(:user))
     allow_any_instance_of(ApplicationController).to \
       receive(:authenticated?).and_return(true)
     allow_any_instance_of(ApplicationController).to \
@@ -16,9 +14,6 @@ module ControllerMacros
     login_as_user
 
     @project = Project.new
-
-    # weaksauce alert: this creates a Node which flags the Setup as done.
-    @project.issue_library
   end
 
   def current_project
