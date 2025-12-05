@@ -28,7 +28,9 @@
     <%= csrf_meta_tag %>
     <%= csp_meta_tag %>
     <%= javascript_importmap_tags %>
-    <%= render 'layouts/analytics' %>
+    <% cache :analytics, ::Configuration.usage_sharing_enabled? do %>
+    <%= render 'layouts/plausible' if Rails.env.sandbox? || ::Configuration.usage_sharing_enabled? %>
+    <% end %>
   </head>
 
   <%= 
@@ -41,8 +43,12 @@
     ) do %>
 
     <header class="sticky-top">
-      <%= render 'layouts/hera/navbar/main_nav' %>
-      <%= yield(:sub_nav) if content_for?(:sub_nav) %>
+      <% if controller_path == 'styles' %>
+        <%= render partial: 'styles/header' %>
+      <% else %>
+        <%= render 'layouts/hera/navbar/main_nav' %>
+        <%= yield(:sub_nav) if content_for?(:sub_nav) %>
+      <% end %>
     </header>
 
     <div class="content-grid">
@@ -53,7 +59,7 @@
         <main class="container-fluid">
           <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
           <%= render 'layouts/hera/noscript' %>
-          <%= render "layouts/hera/project_teaser" unless defined?(Dradis::Pro) %>
+          <%= render "layouts/hera/project_teaser" unless defined?(Dradis::Pro) || controller_path == 'styles' %>
           <%= flash_messages %>
           <%= content_for?(:content) ? yield(:content) : yield %>
         </main>
