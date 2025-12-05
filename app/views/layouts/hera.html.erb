@@ -28,7 +28,9 @@
     <%= csrf_meta_tag %>
     <%= csp_meta_tag %>
     <%= javascript_importmap_tags %>
-    <%= render 'layouts/analytics' %>
+    <% cache :analytics, ::Configuration.usage_sharing_enabled? do %>
+    <%= render 'layouts/plausible' if Rails.env.sandbox? || ::Configuration.usage_sharing_enabled? %>
+    <% end %>
   </head>
 
   <%= 
