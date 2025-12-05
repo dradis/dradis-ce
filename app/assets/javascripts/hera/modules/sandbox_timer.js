@@ -2,9 +2,10 @@ document.addEventListener('turbo:load', function () {
   const badge = document.querySelector('[data-sandbox-reset-minutes]');
   if (!badge) return;
 
-  const resetMinutes = parseInt(badge.dataset.sandboxResetMinutes);
+  const resetMinutes = 5 || parseInt(badge.dataset.sandboxResetMinutes);
   const timerElement = document.querySelector('[data-behavior="timer"]');
-  const bufferSeconds = 5;
+  const bufferSeconds = 10;
+  let isRestarting = false;
 
   function updateTimer() {
     const now = new Date();
@@ -14,7 +15,6 @@ document.addEventListener('turbo:load', function () {
       0,
       resetMinutes * 60 - secondsIntoCycle - bufferSeconds,
     );
-
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
 
@@ -25,12 +25,21 @@ document.addEventListener('turbo:load', function () {
       'text-bg-warning',
       'text-bg-danger',
     );
-    if (totalSeconds <= 60) {
+
+    if (totalSeconds < 60) {
       badge.classList.add('text-bg-danger');
-    } else if (totalSeconds <= 300) {
+    } else if (totalSeconds < 300) {
       badge.classList.add('text-bg-warning');
     } else {
       badge.classList.add('text-bg-primary');
+    }
+
+    if (totalSeconds === 0 && !isRestarting) {
+      isRestarting = true;
+      badge.innerHTML =
+        'Restarting... <span class="spinner-border spinner-border-sm" role="status"></span>';
+      setTimeout(() => window.location.reload(), bufferSeconds * 1000);
+      return;
     }
   }
 
