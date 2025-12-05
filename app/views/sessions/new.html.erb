@@ -9,7 +9,10 @@
   </div>
   <div>
     <%= label_tag :password, nil, class: 'form-label' %>
-    <%= password_field_tag :password, nil, class: 'form-control' %>
+    <%= password_field_tag :password, Rails.env.sandbox? ? 'dradis' : nil, class: 'form-control' %>
+    <% if Rails.env.sandbox? %>
+      <div class="form-text">Password is <code>dradis</code>.</div>
+    <% end %>
   </div>
   <div class="pt-1">
     <%= submit_tag 'Log in', class: 'btn btn-block btn-primary mt-4', data: { behavior: 'animate-click' } %>
