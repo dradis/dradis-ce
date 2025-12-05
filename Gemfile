@@ -208,6 +208,11 @@ group :test do
   gem 'matrix'
 end
 
+group :sandbox do
+  gem 'stackprof'
+  gem 'sentry-ruby'
+end
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 # gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 

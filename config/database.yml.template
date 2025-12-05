@@ -33,3 +33,7 @@ test:
 production:
   <<: *default
   database: storage/production.sqlite3
+
+sandbox:
+  <<: *default
+  database: storage/sandbox.sqlite3

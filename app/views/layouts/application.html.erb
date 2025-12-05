@@ -10,7 +10,7 @@
     <%= javascript_importmap_tags %>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <% cache :analytics, ::Configuration.usage_sharing_enabled? do %>
+    <% cache [:analytics, ::Configuration.usage_sharing_enabled?] do %>
     <%= render 'layouts/plausible' if Rails.env.sandbox? || ::Configuration.usage_sharing_enabled? %>
     <% end %>
   </head>

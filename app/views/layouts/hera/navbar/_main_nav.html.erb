@@ -11,6 +11,7 @@
         <%= render "layouts/hera/navbar/main_nav/#{Dradis.edition}" %>
       </ul>
 
+      <%= render 'layouts/hera/navbar/main_nav/sandbox_timer' if Rails.env.sandbox? %>
       <%= render 'layouts/hera/navbar/main_nav/utility_nav' %>
     </div>
   </div>

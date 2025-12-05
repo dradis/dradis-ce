@@ -51,6 +51,7 @@
 //= require hera/modules/issues
 //= require hera/modules/liquid_async
 //= require hera/modules/nodes
+//= require hera/modules/sandbox_timer
 //= require hera/modules/search
 //= require hera/modules/sidebar
 //= require hera/modules/try_pro
