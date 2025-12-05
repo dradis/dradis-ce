@@ -2,7 +2,7 @@ document.addEventListener('turbo:load', function () {
   const badge = document.querySelector('[data-sandbox-reset-minutes]');
   if (!badge) return;
 
-  const resetMinutes = 5 || parseInt(badge.dataset.sandboxResetMinutes);
+  const resetMinutes = parseInt(badge.dataset.sandboxResetMinutes);
   const timerElement = document.querySelector('[data-behavior="timer"]');
   const bufferSeconds = 10;
   let isRestarting = false;
