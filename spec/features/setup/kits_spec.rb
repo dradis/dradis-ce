@@ -1,12 +1,9 @@
 require 'rails_helper'
 
-describe 'Setup::Kits' do
+describe 'Setup::Kits', skip_setup_mock: true do
 
-  # This Setup step is CE only
-  break if defined?(Dradis::Pro)
-
-  context "when shared password is already set" do
-    it "enqueues a KitImport job if a valid kit is passed" do
+  context 'when shared password is already set' do
+    it 'enqueues a KitImport job if a valid kit is passed' do
 
       ActiveJob::Base.queue_adapter = :test
       ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
@@ -20,7 +17,7 @@ describe 'Setup::Kits' do
       end.to have_enqueued_job(KitImportJob)
     end
 
-    it "doesn't enque a KitImport if :none is passed" do
+    it 'doesn\'t enque a KitImport if :none is passed' do
       visit new_setup_kit_path
       expect do
         # We'd need JS to be able to click in the link and send a POST
@@ -28,7 +25,7 @@ describe 'Setup::Kits' do
       end.to_not have_enqueued_job(KitImportJob)
     end
 
-    it "doesn't enque a KitImport if invalid kit is passed" do
+    it 'doesn\'t enque a KitImport if invalid kit is passed' do
       visit new_setup_kit_path
       expect do
         # We'd need JS to be able to click in the link and send a POST
