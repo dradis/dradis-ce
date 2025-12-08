@@ -50,7 +50,8 @@
                 when 'Updated'
                   [issue.updated_at.to_i, local_time_ago(issue.updated_at)]
                 else
-                  [issue.fields.fetch(column, ''), markup(issue.fields.fetch(column, ''))]
+                  text = liquified_field(column, issue)
+                  [text, markup(text)]
                 end
               %>
               <%= content_tag :td,
