@@ -14,6 +14,7 @@
 @import 'hera/modules/navigation/search';
 @import 'hera/modules/notifications';
 @import 'hera/modules/revisions';
+@import 'hera/modules/sandbox';
 @import 'hera/modules/sidebar';
 @import 'hera/modules/textile';
 @import 'hera/modules/validations';
@@ -94,7 +95,7 @@
       color: $text-muted;
     }
 
-    & + .breadcrumb-item::before {
+    &+.breadcrumb-item::before {
       content: '\f105';
       font-family: var(--fa-style-family, 'Font Awesome 6 Free');
       font-weight: 600;
@@ -281,6 +282,7 @@
         color: $text-link;
       }
     }
+
     &:hover {
       background-color: $light;
     }
@@ -350,6 +352,7 @@
   &.page-mini {
     padding: 10px;
   }
+
   &.page-none {
     margin: 0 0;
     padding: 0px;
@@ -365,7 +368,7 @@
   margin-bottom: 0.75rem;
   border-top: 1px solid $border-color;
 
-  > * {
+  >* {
     padding-right: 5px;
   }
 }
@@ -398,6 +401,7 @@ pre {
 
   @media (max-width: 991px) {
     flex-wrap: nowrap;
+
     .nav-link {
       padding: 0.5rem;
 

@@ -1,6 +1,7 @@
   <nav class="navbar navbar-expand-lg main-nav">
   <div class="container-fluid">
     <%= navbar_brand %>
+    <%= render 'layouts/hera/navbar/main_nav/sandbox_timer' if Rails.env.sandbox? %>
 
     <button class="navbar-toggler" type="button" data-behavior="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".dual-nav" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <i class="fa-solid fa-bars"></i>
@@ -11,7 +12,6 @@
         <%= render "layouts/hera/navbar/main_nav/#{Dradis.edition}" %>
       </ul>
 
-      <%= render 'layouts/hera/navbar/main_nav/sandbox_timer' if Rails.env.sandbox? %>
       <%= render 'layouts/hera/navbar/main_nav/utility_nav' %>
     </div>
   </div>
