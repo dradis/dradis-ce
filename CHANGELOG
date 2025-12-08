@@ -1,7 +1,6 @@
 [v#.#.#] ([month] [YYYY])
+  - Liquid: evaluate Liquid content before rendering all issues/evidence tables
   - Wizard: add analytics sharing step
-  - [entity]:
-    - [future tense verb] [feature]
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
