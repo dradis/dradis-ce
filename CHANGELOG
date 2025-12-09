@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Nodes: add more types and icons
   - Wizard:
     - Add analytics sharing step
     - Mark as done after Kit step, without waiting for the background job.
