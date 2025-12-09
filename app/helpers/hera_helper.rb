@@ -71,6 +71,13 @@ module HeraHelper
     end
   end
 
+  def node_types_collection
+    Node::Types::LABELS.map.with_index do |type, index|
+      next if Node::Types::SYSTEM_TYPES.include?(index)
+      [ type.titleize, index ]
+    end.compact
+  end
+
   def page_title
     [content_for(:title), "Dradis #{defined?(Dradis::Pro) ? 'Professional' : 'Community' } Edition"].compact.join(' | ')
   end
