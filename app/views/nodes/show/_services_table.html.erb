@@ -3,7 +3,7 @@
     <table>
       <thead>
         <tr>
-          <% NodeProperties::SERVICE_KEYS.each do |key| %>
+          <% Node::Properties::SERVICE_KEYS.each do |key| %>
             <th><%= key.to_s.titleize %></th>
           <% end %>
         </tr>
@@ -11,7 +11,7 @@
       <tbody>
         <% services.each do |service| %>
           <tr>
-            <% NodeProperties::SERVICE_KEYS.each do |key| %>
+            <% Node::Properties::SERVICE_KEYS.each do |key| %>
               <td><%= service[key] %></td>
             <% end %>
           </tr>
