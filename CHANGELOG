@@ -1,7 +1,5 @@
 [v#.#.#] ([month] [YYYY])
-  - Wizard:
-    - Add analytics sharing step
-    - Mark as done after Kit step, without waiting for the background job.
+  - Wizard: add analytics sharing step
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
