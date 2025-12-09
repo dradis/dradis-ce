@@ -10,7 +10,6 @@ module HeraHelper
     css << icon_class
     css << extra_class if extra_class
 
-    options = { class: css.join(' ') }
     tag = nil
 
     case model
@@ -18,11 +17,15 @@ module HeraHelper
       tag = model.issue.tags.first
     when Issue
       tag = model.tags.first
+    when Node
+      css = ['fa-regular']
+      css << model.icon
     end
 
+    options = { class: css.join(' ') }
     if tag
       options[:style] = "color: #{tag.color}"
-    else
+    elsif !model.is_a?(Node)
       options[:style] = 'color: #222'
     end
 
