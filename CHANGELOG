@@ -4,8 +4,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Notifications: Ensure correct path generation for Note/Issue in presenter
     - Bug tracker items:
       - [item]
   - New integrations:
