@@ -18,7 +18,7 @@ module HeraHelper
     when Issue
       tag = model.tags.first
     when Node
-      css = ['fa-regular']
+      css = ['fa-solid']
       css << model.icon
     end
 
