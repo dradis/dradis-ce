@@ -42,9 +42,7 @@ class Nodes::Merger
 
   def move_descendents
     DESCENDENT_RELATIONSHIPS.each do |relation, column|
-      collection = source_node.send(relation)
-      collection.update_all(column => target_node.id)
-      collection.touch_all
+      source_node.send(relation).in_batches.each_record { |record| record.update(column => target_node.id) }
     end
   end
 
