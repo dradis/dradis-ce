@@ -74,7 +74,13 @@ module HeraHelper
   def node_types_collection
     Node::Types::LABELS.map.with_index do |type, index|
       next if Node::Types::SYSTEM_TYPES.include?(index)
-      [ type.titleize, index ]
+      icon = Node::Types::ICONS[index]
+      html_options = icon.present? ? { 'data-combobox-option-icon': "fa-solid #{icon}" } : {}
+      [
+        type.titleize,
+        index,
+        html_options
+      ]
     end.compact
   end
 
