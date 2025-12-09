@@ -52,10 +52,30 @@
       justify-content: center;
       padding: 0.5rem;
       transition: all 0.2s ease-in-out;
+      vertical-align: middle;
       width: 1.75rem;
 
       &.disabled {
         pointer-events: none;
+        color: $icon-disabled;
+      }
+
+      .fa-stack {
+        height: 1rem;
+        line-height: 1;
+
+        &-1x {
+          background-color: $secondary-bg;
+          font-size: 0.6rem;
+          left: -0.2rem;
+          top: -0.1rem;
+          padding-right: 0.8rem;
+        }
+
+        &-2x {
+          font-size: 1.1rem;
+          left: -0.1rem;
+        }
       }
 
       &:hover {

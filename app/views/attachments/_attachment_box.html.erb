@@ -57,14 +57,14 @@
     </table>
 
     <div class="drop-zone attachment-upload-box" data-behavior="drop-zone">
-      <span>Drop attachments here</span>
+      <span>Drop attachments here, or</span>
       <!-- The file upload form used as target for the file upload widget -->
       <%= form_tag main_app.project_node_attachments_path(node.project, node, format: :json), id: 'fileupload', multipart: true do %>
         <div class="fileupload-buttonbar">
-          <p class="fileinput-button">
+          <span class="fileinput-button">
             <label for="file-upload">choose file</label>
             <input type="file" name="files[]" id="file-upload" multiple>
-          </p>
+          </span>
         </div>
         <!-- The loading indicator is shown during image processing -->
         <div class="fileupload-loading"></div>

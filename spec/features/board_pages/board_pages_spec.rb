@@ -47,7 +47,7 @@ describe 'Board pages:' do
           visit project_boards_path(current_project)
 
           expect {
-            click_link 'Create new methodology...'
+            click_link 'New Methodology'
 
             find('#modal-board-new', visible: true)
             find('#board_new_board_template ~ .combobox').click

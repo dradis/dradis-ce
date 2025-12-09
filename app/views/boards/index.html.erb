@@ -14,6 +14,13 @@
 <%= render 'poller_alerts' unless  request.xhr? %>
 
 <div class="content-container">
+  <h4 class="header-underline">Methodologies
+    <span class="actions pt-1">
+      <a data-bs-toggle="modal" href="#modal-board-new">
+        <i class="fa-solid fa-plus me-1"></i>New Methodology
+      </a>
+    </span>
+  </h4>
   <% if @boards.any? %>
     <ul class="board-list">
       <% @boards.each do |board| %>
@@ -38,12 +45,6 @@
           </div>
         </li>
       <% end %>
-
-      <li class="board-list-item">
-        <a class="board-tile board-new" data-bs-toggle="modal" href="#modal-board-new">
-          Create new methodology...
-        </a>
-      </li>
     </ul>
   <% else %>
     <%= render 'shared/empty_state',

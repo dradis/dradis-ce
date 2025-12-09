@@ -4,7 +4,7 @@
       <div class="action">
         <div class="dropdown">
           <%= link_to 'javascript:void(0)', class: 'dropdown-toggle', data: { bs_toggle: 'dropdown' } do %>
-            <i class="fa-solid fa-plus"></i> New Evidence
+            <i class="fa-solid fa-plus me-1"></i>New Evidence
           <% end %>
           <%= render 'shared/templates_dropdown',
             name: 'Evidence',
@@ -26,7 +26,6 @@
     </div>
   <% else %>
     <%= render 'shared/empty_state',
-      actions_partial: 'nodes/evidence/empty_state_actions',
       docs_link: 'https://dradis.com/support/guides/projects/issues.html',
       name: 'evidence',
       text: 'Evidence ties this node to the issues you have identified. Use evidence to detail changes from one instance of the vulnerability to the next: port number, specific versions, banners grabbed by scanners, etc.'
