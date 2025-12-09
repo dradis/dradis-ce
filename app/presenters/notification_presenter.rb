@@ -79,6 +79,7 @@ class NotificationPresenter < BasePresenter
     # Would like to use only `commentable.respond_to?(:node)` here, but
     # that would return a wrong path for issues
     comment         = notification.notifiable
+    comment.association(:commentable).reload if comment.commentable_type == 'Note' || comment.commentable_type == 'Issue'
     commentable     = comment.commentable
 
     if commentable.respond_to?(:node) && !commentable.is_a?(Issue)
