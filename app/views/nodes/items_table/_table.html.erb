@@ -47,7 +47,8 @@
               when 'Updated'
                 [item.updated_at.to_i, local_time_ago(item.updated_at)]
               else
-                [item.fields.fetch(column, ''), markup(item.fields.fetch(column, ''))]
+                text = liquified_field(column, item)
+                [text, markup(text)]
               end
               %>
               <td data-sort="<%= sort %>"><%= display %></td>

@@ -10,4 +10,12 @@ module MarkupHelper
       source_url: main_app.source_fields_path
     }
   end
+
+  def liquified_field(field, record)
+    LiquidParser.new(
+      field: field,
+      project: current_project, 
+      record: record
+    ).parse
+  end
 end
