@@ -5,16 +5,17 @@ module Node::Types
   HOST = 1
   METHODOLOGY = 2
   ISSUELIB = 3
-  FOLDER = 4
-  ATTACHMENT = 5
-  UPLOAD = 6
-  DESKTOP = 7
-  SERVER = 8
-  MOBILE = 9
-  TABLET = 10
-  USER = 11
-  NETWORK = 12
-  CREDENTIAL = 13
+  CONTENTLIB = 4
+  FOLDER = 5
+  ATTACHMENT = 6
+  UPLOAD = 7
+  DESKTOP = 8
+  SERVER = 9
+  MOBILE = 10
+  TABLET = 11
+  USER = 12
+  NETWORK = 13
+  CREDENTIAL = 14
 
   LABELS = %w[
     Default
@@ -48,7 +49,8 @@ module Node::Types
 
   SYSTEM_TYPES = [
     METHODOLOGY,
-    ISSUELIB
+    ISSUELIB,
+    CONTENTLIB
   ]
 
   included do
