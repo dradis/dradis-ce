@@ -77,7 +77,9 @@
           <%= select_tag(
             "nodes[type_id]",
             options_for_select(
-              [["No icon", Node::Types::DEFAULT], ["Host", Node::Types::HOST]]
+              node_types_collection.map do |label, value, html_options|
+                [label, value, html_options || {}]
+              end
             ),
             include_blank: false,
             class: 'form-select',
