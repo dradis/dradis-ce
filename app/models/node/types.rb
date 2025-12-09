@@ -19,8 +19,6 @@ module Node::Types
   LABELS = %w[
     Default
     Host
-    Methodology
-    IssueLib
     Folder
     Attachment
     Upload
@@ -36,8 +34,6 @@ module Node::Types
   ICONS = [
     '',
     'fa-laptop',
-    '',
-    '',
     'fa-folder',
     'fa-paperclip',
     'fa-cloud-arrow-up',
