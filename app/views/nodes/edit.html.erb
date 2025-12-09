@@ -15,7 +15,7 @@
 
         <%=
           f.input :type_id,
-            collection: Node::Types::LABELS.map.with_index { |type, index| [ type.titleize, index ] },
+            collection: node_types_collection,
             include_blank: false,
             label: 'Icon'
         %>
