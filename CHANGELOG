@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Liquid: evaluate Liquid content before rendering all issues/evidence tables
   - Nodes:
     - Add more types and icons
     - Rename addon upload/parent nodes and add icons
