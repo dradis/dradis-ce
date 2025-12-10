@@ -52,7 +52,7 @@
               else
                 liquid_content = item.fields.fetch(column, '')
                 if item.is_a?(Evidence)
-                  preview_path = preview_project_issue_evidence_path(current_project, item.issue, item)
+                  preview_path = preview_project_node_evidence_path(current_project, @node, item)
                   liquid_behavior = 'liquid-async'
                 end
 
