@@ -1,11 +1,8 @@
 name: CI
 
 on:
-  pull_request:
-    branches: ['*']
   push:
-    branches: [develop, main]
-  workflow_dispatch:
+    branches: ['**']
 
 jobs:
   audits:
