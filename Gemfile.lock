@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/dradis/dradis-projects.git
+  revision: 726eec47158c518935ae638fedb82a304dd00237
+  branch: nodes/icons
+  specs:
+    dradis-projects (4.19.0)
+      dradis-plugins (>= 4.8.0)
+      rubyzip
+
 PATH
   remote: engines/dradis-api
   specs:
@@ -190,9 +199,6 @@ GEM
     dradis-pentera (4.19.0)
       dradis-plugins (~> 4.0)
     dradis-plugins (4.19.0)
-    dradis-projects (4.19.0)
-      dradis-plugins (>= 4.8.0)
-      rubyzip
     dradis-qualys (4.19.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
@@ -617,7 +623,7 @@ DEPENDENCIES
   dradis-openvas (~> 4.19.0)
   dradis-pentera (~> 4.19.0)
   dradis-plugins (~> 4.19.0)
-  dradis-projects (~> 4.19.0)
+  dradis-projects!
   dradis-qualys (~> 4.19.0)
   dradis-saint (~> 4.19.0)
   dradis-veracode (~> 4.19.0)

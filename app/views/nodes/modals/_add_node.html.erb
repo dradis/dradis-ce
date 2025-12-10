@@ -53,7 +53,7 @@
           <%= f.hidden_field :parent_id, id: "#{type}_parent_id" %>
           <%= f.input :label, input_html: { id: "#{type}_node_label", data: { behavior: 'node-label' } } %>
           <%= f.input :type_id,
-            collection: [["No icon", Node::Types::DEFAULT], ["Host", Node::Types::HOST]],
+            collection: node_types_collection,
             include_blank: false,
             label: 'Icon',
             input_html: { class: 'form-select', id: "#{type}_node_icon", data: { behavior: 'node-icon' } }
@@ -76,9 +76,7 @@
           <%= label_tag "#{type}_nodes_icon", 'Icon', class: 'form-label' %>
           <%= select_tag(
             "nodes[type_id]",
-            options_for_select(
-              [["No icon", Node::Types::DEFAULT], ["Host", Node::Types::HOST]]
-            ),
+            options_for_select(node_types_collection),
             include_blank: false,
             class: 'form-select',
             id: "#{type}_nodes_icon",
