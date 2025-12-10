@@ -26,6 +26,9 @@
           <tr id="issue-<%= issue.id %>" data-tag-url="<%= project_issue_path(current_project, issue) %>">
             <td class="select-checkbox" data-behavior="select-checkbox"></td>
             <% @all_columns.each do |column| %>
+              <% preview_path = nil %>
+              <% liquid_content = nil %>
+              <% liquid_behavior = nil %>
               <% sort, display =
                 case column
                 when 'Title'
@@ -50,16 +53,25 @@
                 when 'Updated'
                   [issue.updated_at.to_i, local_time_ago(issue.updated_at)]
                 else
-                  [issue.fields.fetch(column, ''), markup(issue.fields.fetch(column, ''))]
+                  liquid_content = issue.fields.fetch(column, '')
+                  preview_path = preview_project_issue_path(current_project, issue)
+                  liquid_behavior = 'liquid-async'
+    
+                  [liquid_content, liquid_content] 
                 end
               %>
               <%= content_tag :td,
-                  display,
-                  class: class_names('text-break-spaces': column == 'Affected'),
-                  data: {
-                    behavior: class_names(tag: column == 'Tags'),
-                    sort: sort
-                  }
+                display,
+                class: class_names('text-break-spaces': column == 'Affected'),
+                data: {
+                  behavior: [
+                    class_names(tag: column == 'Tags'),
+                    liquid_behavior
+                  ].compact.join(' '),
+                sort: sort,
+                path: preview_path, 
+                content: liquid_content 
+                }
               %>
             <% end %>
             <td class="column-actions">

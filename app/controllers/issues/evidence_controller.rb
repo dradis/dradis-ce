@@ -2,6 +2,7 @@ class Issues::EvidenceController < AuthenticatedController
   include ActivityTracking
   include ContentFromTemplate
   include DynamicFieldNamesCacher
+  include LiquidEnabledResource
   include MultipleDestroy
   include ProjectScoped
 
@@ -9,6 +10,7 @@ class Issues::EvidenceController < AuthenticatedController
   before_action :set_affected_nodes, only: :index
   before_action :set_auto_save_key, only: :new
   before_action :set_columns, only: :index
+  before_action :set_evidence, only: :preview
 
   def index
     render layout: false
@@ -78,6 +80,10 @@ class Issues::EvidenceController < AuthenticatedController
     params.require(:evidence).permit(:author, :content, :issue_id, :node_id)
   end
 
+  def liquid_resource_assigns
+    { 'evidence' => EvidenceDrop.new(@evidence) }
+  end
+
   def node_params_empty?
     params[:evidence][:node_list].blank? &&
       (params[:evidence][:node_ids].reject(&:empty?).empty?)
@@ -112,6 +118,10 @@ class Issues::EvidenceController < AuthenticatedController
     else
       "issue-#{params[:issue_id]}-evidence"
     end
+  end
+
+  def set_evidence
+    @evidence = Evidence.find_by!(id: params[:id], issue_id: params[:issue_id])
   end
 
   def set_issues
