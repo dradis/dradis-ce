@@ -114,7 +114,7 @@ class Project
   # When Upload plugins create new nodes, they'll do so under this parent node
   def plugin_parent_node
     @plugin_parent_node ||= nodes
-      .create_with(type: Node::Types::UPLOAD)
+      .create_with(type_id: Node::Types::UPLOAD)
       .find_or_create_by(label: ::Configuration.plugin_parent_node)
   end
 
@@ -122,7 +122,7 @@ class Project
   # as container
   def plugin_uploads_node
     @plugin_uploads_node ||= nodes
-      .create_with(type: Node::Types::ATTACHMENT)
+      .create_with(type_id: Node::Types::ATTACHMENT)
       .find_or_create_by(label: ::Configuration.plugin_uploads_node)
   end
 
