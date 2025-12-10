@@ -72,7 +72,7 @@ module HeraHelper
   end
 
   def node_types_collection
-    Node::Types::LABELS.map.with_index do |type, index|
+    Node::Types::LABELS.filter_map.with_index do |type, index|
       next if Node::Types::SYSTEM_TYPES.include?(index)
       icon = Node::Types::ICONS[index]
       html_options = icon.present? ? { 'data-combobox-option-icon': "fa-solid #{icon}" } : {}
@@ -81,7 +81,7 @@ module HeraHelper
         index,
         html_options
       ]
-    end.compact
+    end
   end
 
   def page_title
