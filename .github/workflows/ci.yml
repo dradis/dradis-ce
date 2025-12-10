@@ -2,10 +2,9 @@ name: CI
 
 on:
   pull_request:
-    branches: ['*']
+    types: [opened, synchronize, reopened]
   push:
-    branches: [develop, main]
-  workflow_dispatch:
+    branches: ['**']
 
 jobs:
   audits:
