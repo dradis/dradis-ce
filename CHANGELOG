@@ -1,5 +1,10 @@
 [v#.#.#] ([month] [YYYY])
-  - Wizard: add analytics sharing step
+  - Nodes:
+    - Add more types and icons
+    - Rename addon upload/parent nodes and add icons
+  - Wizard:
+    - Add analytics sharing step
+    - Mark as done after Kit step, without waiting for the background job.
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:

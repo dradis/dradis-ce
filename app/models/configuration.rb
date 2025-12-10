@@ -81,7 +81,7 @@ class Configuration < ApplicationRecord
 
   # This setting is used by the plugins as the root of all the content the add.
   def self.plugin_parent_node
-    create_with(value: 'plugin.output')
+    create_with(value: 'Scanner output')
       .find_or_create_by(name: 'admin:plugins:parent_node').value
   end
 

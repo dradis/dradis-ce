@@ -10,7 +10,6 @@ module HeraHelper
     css << icon_class
     css << extra_class if extra_class
 
-    options = { class: css.join(' ') }
     tag = nil
 
     case model
@@ -18,11 +17,15 @@ module HeraHelper
       tag = model.issue.tags.first
     when Issue
       tag = model.tags.first
+    when Node
+      css = ['fa-fw fa-solid']
+      css << model.icon
     end
 
+    options = { class: css.join(' ') }
     if tag
       options[:style] = "color: #{tag.color}"
-    else
+    elsif !model.is_a?(Node)
       options[:style] = 'color: #222'
     end
 
@@ -65,6 +68,19 @@ module HeraHelper
       link_to current_user.role?(:contributor) ? main_app.contributors_home_path : main_app.dashboard_path, class: 'navbar-brand' do
         image_tag 'logo_small.png', alt: 'Dradis Pro logo', class: 'p-lg-0'
       end
+    end
+  end
+
+  def node_types_collection
+    Node::Types::LABELS.filter_map.with_index do |type, index|
+      next if Node::Types::SYSTEM_TYPES.include?(index)
+      icon = Node::Types::ICONS[index]
+      html_options = icon.present? ? { 'data-combobox-option-icon': "fa-solid #{icon}" } : {}
+      [
+        type.titleize,
+        index,
+        html_options
+      ]
     end
   end
 

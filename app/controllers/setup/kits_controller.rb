@@ -8,7 +8,7 @@ module Setup
     def create
       case @kit
       when :none
-        mark_as_done
+        ;
       when :welcome
         kit_folder = Rails.root.join('lib', 'tasks', 'templates', 'welcome').to_s
         logger = Log.new.info('Loading Welcome kit...')
@@ -17,6 +17,7 @@ module Setup
         KitImportJob.perform_later(kit_folder, logger: logger)
       end
 
+      mark_as_done
       flash[:notice] = 'All done. May the findings for this project be plentiful!'
       redirect_to login_path
     end
