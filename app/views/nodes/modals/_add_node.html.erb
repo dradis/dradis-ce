@@ -76,11 +76,7 @@
           <%= label_tag "#{type}_nodes_icon", 'Icon', class: 'form-label' %>
           <%= select_tag(
             "nodes[type_id]",
-            options_for_select(
-              node_types_collection.map do |label, value, html_options|
-                [label, value, html_options || {}]
-              end
-            ),
+            options_for_select(node_types_collection),
             include_blank: false,
             class: 'form-select',
             id: "#{type}_nodes_icon",
