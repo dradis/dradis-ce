@@ -239,7 +239,6 @@ end
 # effective.
 
 # ----------------------------------------------------------------- Calculators
-
 gem 'dradis-calculator_cvss', '~> 4.19.0'
 gem 'dradis-calculator_dread', '~> 4.19.0'
 gem 'dradis-calculator_mitre', '~> 4.19.0'
