@@ -51,8 +51,10 @@
                 [item.updated_at.to_i, local_time_ago(item.updated_at)]
               else
                 liquid_content = item.fields.fetch(column, '')
-                preview_path =  preview_project_issue_evidence_path(current_project, item.issue, item)
-                liquid_behavior = 'liquid-async'
+                if item.is_a?(Evidence)
+                  preview_path = preview_project_issue_evidence_path(current_project, item.issue, item)
+                  liquid_behavior = 'liquid-async'
+                end
 
                 [liquid_content, liquid_content]
               end
