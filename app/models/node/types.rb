@@ -16,6 +16,7 @@ module Node::Types
   USER = 12
   NETWORK = 13
   CREDENTIAL = 14
+  DATABASE = 15
 
   LABELS = %w[
     Default
@@ -33,6 +34,7 @@ module Node::Types
     User
     Network
     Credential
+    Database
   ].freeze
 
   ICONS = [
@@ -50,7 +52,8 @@ module Node::Types
     'fa-tablet-screen-button',
     'fa-user',
     'fa-sitemap',
-    'fa-key'
+    'fa-key',
+    'fa-database'
   ].freeze
 
   SYSTEM_TYPES = [
