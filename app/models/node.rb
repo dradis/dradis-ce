@@ -5,7 +5,7 @@
 # Each Node has a :parent node and a :label. Nodes can also have many
 # Attachment objects associated with them.
 class Node < ApplicationRecord
-  include NodeProperties
+  include Properties
   include Types
 
   acts_as_tree counter_cache: true, order: :label
