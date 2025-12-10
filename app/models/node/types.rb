@@ -43,7 +43,7 @@ module Node::Types
     '',
     'fa-folder',
     'fa-paperclip',
-    'fa-cloud-arrow-up',
+    'fa-cloud',
     'fa-desktop',
     'fa-server',
     'fa-mobile-screen',
