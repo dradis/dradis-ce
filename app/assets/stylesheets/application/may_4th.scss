@@ -1,0 +1,26 @@
+body.unauthenticated.may-4th {
+  $easterEggColor: #222222;
+
+  --primary: #{$easterEggColor};
+  --dark: #{darken($easterEggColor, 10)};
+  --light: #{lighten($easterEggColor, 20)};
+
+  &::after,
+  &::before {
+    content: '';
+    inset: 0;
+    position: fixed;
+    z-index: -1;
+  }
+
+  &::after {
+    background-image: image-url('may_4th/attack.png');
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-size: clamp(330px, 40vw, 550px);
+  }
+
+  .form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba($easterEggColor, 0.25) !important;
+  }
+}
