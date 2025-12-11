@@ -14,7 +14,7 @@ services:
       - TLS_DOMAIN=${TLS_DOMAIN}
     healthcheck:
       test: [
-        "CMD-SHELL", 
+        "CMD-SHELL",
         "if [ \"$TLS_DOMAIN\" ]; then curl -f -k http://$TLS_DOMAIN/up; else curl -f http://localhost/up; fi"
       ]
       timeout: 15s
