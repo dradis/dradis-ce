@@ -26,4 +26,8 @@ body.unauthenticated.holiday {
     background-repeat: no-repeat;
     background-size: 100% 16rem;
   }
+
+  .form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba($holidayColor, 0.25) !important;
+  }
 }
