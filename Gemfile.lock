@@ -1,12 +1,12 @@
 GIT
   remote: https://github.com/dradis/dradis-plugins.git
-  revision: 7b9110a08e642f78a4d191da9f1f4091511b46e1
-  branch: with_feature/add-enabled-option
+  revision: 7bf110e507b6f46528d2fdcf63273f8d012650e5
   specs:
     dradis-plugins (4.19.0)
+
+GIT
   remote: https://github.com/dradis/dradis-projects.git
-  revision: 726eec47158c518935ae638fedb82a304dd00237
-  branch: nodes/icons
+  revision: 12c1f357d02b39590a0c22e9acafe0e4a12a53ca
   specs:
     dradis-projects (4.19.0)
       dradis-plugins (>= 4.8.0)
@@ -203,10 +203,6 @@ GEM
       dradis-plugins (~> 4.0)
     dradis-pentera (4.19.0)
       dradis-plugins (~> 4.0)
-    dradis-projects (4.19.0)
-      dradis-plugins (>= 4.8.0)
-      rubyzip
-    dradis-plugins (4.19.0)
     dradis-qualys (4.19.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
