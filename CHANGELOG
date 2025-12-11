@@ -1,4 +1,7 @@
 [v#.#.#] ([month] [YYYY])
+  - Docker:
+    - Update default attachments & templates locations to storage/
+    - Include assets for all integrations regardless of enabled/disabled status
   - Nodes:
     - Add more types and icons
     - Rename addon upload/parent nodes and add icons
