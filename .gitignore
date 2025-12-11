@@ -28,10 +28,8 @@
 /config/smtp.yml
 
 # Ignore app-specific folders
-/attachments/
 /backup/
 /config/shared/
-/templates/
 /sample_files/
 /Gemfile.plugins
 
