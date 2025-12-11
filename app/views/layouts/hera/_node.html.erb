@@ -13,9 +13,7 @@
   <% end %>
 
   <%= link_to main_app.project_node_path(node.project, node), title: node.label, data: { behavior: 'sidebar-link sidebar-node-link' } do %>
-    <% if node.type_id == Node::Types::HOST %>
-      <i class="fa-solid fa-laptop"></i>
-    <% end %>
+    <%= colored_icon_for_model(node, nil) %>
     <%= node.label %>
   <% end %>
 

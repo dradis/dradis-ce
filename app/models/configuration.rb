@@ -39,6 +39,11 @@ class Configuration < ApplicationRecord
       .find_or_create_by(name: 'admin:signups_enabled').value.to_i == 1
   end
 
+  def self.usage_sharing_enabled?
+    create_with(value: 0)
+      .find_or_create_by(name: 'admin:usage_sharing').value.to_i == 1
+  end
+
   # --------------------------------------------------------------- admin:paths
   def self.paths_templates
     @@paths_templates ||= Rails.root.join('storage', 'templates')
@@ -73,7 +78,7 @@ class Configuration < ApplicationRecord
 
   # This setting is used by the plugins as the root of all the content the add.
   def self.plugin_parent_node
-    create_with(value: 'plugin.output')
+    create_with(value: 'Scanner output')
       .find_or_create_by(name: 'admin:plugins:parent_node').value
   end
 

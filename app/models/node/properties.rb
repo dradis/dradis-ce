@@ -1,18 +1,16 @@
 # Note: looks like we're deviating from Rails expected conventions. Maybe
 # reimplement in light of:
 #   https://nvisium.com/blog/2015/06/22/using-rails-5-attributes-api-today-in/
-module NodeProperties
-  def self.included(base)
-    @base = base
+module Node::Properties
+  extend ActiveSupport::Concern
 
-    base.class_eval do
-      # Node properties:
-      # * Serialized as JSON
-      # * The smart setter set_property(key, value) takes care of duplications, etc.
-      serialize :properties, coder: JSONWithIndifferentAccess
+  included do
+    # Node properties:
+    # * Serialized as JSON
+    # * The smart setter set_property(key, value) takes care of duplications, etc.
+    serialize :properties, coder: JSONWithIndifferentAccess
 
-      validates :raw_properties, json: { message: 'contains invalid JSON' }
-    end
+    validates :raw_properties, json: { message: 'contains invalid JSON' }
   end
 
   SERVICE_KEYS = %i[protocol port state product reason name version]
