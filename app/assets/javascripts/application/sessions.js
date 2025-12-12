@@ -6,7 +6,7 @@ document.addEventListener('turbo:load', function () {
       randomString = strings[randomStringIndex];
 
     function setStrings() {
-      if ($('body.unauthenticated').hasClass('holiday')) {
+      if ($('body.unauthenticated').hasClass('december')) {
         return [
           'Yippie Ki Yay!',
           'Follow the white rabbit',

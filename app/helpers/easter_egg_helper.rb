@@ -1,15 +1,15 @@
 module EasterEggHelper
   def easter_egg_class
     class_names(
-      holiday: holiday?,
+      december: december?,
       'may-4th': may_4th?
     )
   end
 
   def easter_egg_logo
     case
-    when holiday?
-      'holiday/logo_full_small.png'
+    when december?
+      'december/logo_full_small.png'
     when may_4th?
       'may_4th/logo_full_small.png'
     else
@@ -19,7 +19,7 @@ module EasterEggHelper
 
   private
 
-  def holiday?
+  def december?
     Date.today.month == 12
   end
 
