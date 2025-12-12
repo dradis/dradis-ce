@@ -1,9 +1,9 @@
-document.addEventListener('turbo:load', function() {
+document.addEventListener('turbo:load', function () {
   if ($('body.unauthenticated').length) {
     var charCount = 0,
-        strings = setStrings(),
-        randomStringIndex = Math.floor(Math.random() * strings.length),
-        randomString = strings[randomStringIndex];
+      strings = setStrings(),
+      randomStringIndex = Math.floor(Math.random() * strings.length),
+      randomString = strings[randomStringIndex];
 
     function setStrings() {
       if ($('body.unauthenticated').hasClass('holiday')) {
@@ -13,11 +13,26 @@ document.addEventListener('turbo:load', function() {
           'Take the red pill',
           'There is no spoon',
           'Eat, sleep, hack, repeat',
-          'I am Jack\'s complete lack of surprise',
+          "I am Jack's complete lack of surprise",
           'Greetings Professor Falken',
-          'There is no right and wrong. There\'s only fun and boring.',
-          'The cake is a lie'
-        ]
+          "There is no right and wrong. There's only fun and boring.",
+          'The cake is a lie',
+        ];
+      } else if ($('body.unauthenticated').hasClass('may-4th')) {
+        return [
+          'May the Fourth be with you',
+          'This is the way',
+          "Help me, Obi-Wan Kenobi. You're my only hope.",
+          'In my experience there is no such thing as luck',
+          'A long time ago in a galaxy far, far away...',
+          'I find your lack of faith disturbing',
+          'Your focus determines your reality',
+          'Do. Or do not. There is no try.',
+          "I've got a bad feeling about this",
+          'The Force will be with you. Always.',
+          'You were the chosen one!',
+          'I am your father',
+        ];
       } else {
         return [
           'The same reports, in a fraction of the time',
@@ -25,15 +40,17 @@ document.addEventListener('turbo:load', function() {
           'Combine output from multiple tools easily',
           'Spend less time reporting and more time testing',
           'The entire team knows how the project is going',
-          'Working better, together'
-        ]
+          'Working better, together',
+        ];
       }
     }
 
-    setTimeout(function() {
-      setInterval(function() {
+    setTimeout(function () {
+      setInterval(function () {
         if (charCount <= randomString.length) {
-          $('[data-behavior~=mission-text]').text(randomString.substring(0, charCount));
+          $('[data-behavior~=mission-text]').text(
+            randomString.substring(0, charCount),
+          );
           charCount += 1;
         }
       }, 20);
@@ -41,11 +58,13 @@ document.addEventListener('turbo:load', function() {
 
     $('[data-behavior~=logo-icons]').addClass('expand');
 
-    $('[data-behavior~=animate-click]').on('click', function() {
+    $('[data-behavior~=animate-click]').on('click', function () {
       $('[data-behavior~=logo-icons]').removeClass('expand').addClass('shrink');
-      setTimeout(function() {
-        $('[data-behavior~=logo-icons]').removeClass('shrink').addClass('expand');
-      }, 250)
+      setTimeout(function () {
+        $('[data-behavior~=logo-icons]')
+          .removeClass('shrink')
+          .addClass('expand');
+      }, 250);
     });
   }
 });
