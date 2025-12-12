@@ -1,9 +1,5 @@
 body.unauthenticated.december {
-  $decemberColor: #c30f16;
-
-  --primary: #{$decemberColor};
-  --dark: #{darken($decemberColor, 10)};
-  --light: #{lighten($decemberColor, 20)};
+  @include easter-egg-theme(#c30f16);
 
   &::after,
   &::before {
@@ -25,9 +21,5 @@ body.unauthenticated.december {
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: 100% 16rem;
-  }
-
-  .form-control:focus {
-    box-shadow: 0 0 0 0.2rem rgba($decemberColor, 0.25) !important;
   }
 }
