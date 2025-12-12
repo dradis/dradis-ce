@@ -13,6 +13,10 @@ body.unauthenticated.may-4th {
     z-index: -1;
   }
 
+  &::before {
+    background-image: image-url('may_4th/stars.png');
+  }
+
   &::after {
     background-image: image-url('may_4th/attack.png');
     background-position: top right;
