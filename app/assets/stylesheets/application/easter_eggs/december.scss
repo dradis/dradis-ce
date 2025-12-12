@@ -1,4 +1,4 @@
-body.unauthenticated.december {
+body.unauthenticated:not(.contributors).december {
   @include easter-egg-theme(#c30f16);
 
   &::after,
