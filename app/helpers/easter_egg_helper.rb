@@ -13,7 +13,7 @@ module EasterEggHelper
     when may_4th?
       'may_4th/logo_full_small.png'
     else
-      'logo_full_small.png'
+      false
     end
   end
 
