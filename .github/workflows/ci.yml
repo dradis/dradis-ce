@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       IS_MERGE: ${{ github.base_ref == '' }}
-      PREV_SHA: ${{ github.event.before }}
+      PREV_SHA: ${{ github.event.before != '0000000000000000000000000000000000000000' && github.event.before || null }}
       TARGET_BRANCH: ${{ github.base_ref }}
       FALLBACK_BRANCH: 'origin/develop'
     steps:
