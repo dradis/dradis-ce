@@ -20,18 +20,27 @@ document.addEventListener('turbo:load', function () {
         ];
       } else if ($('body.unauthenticated').hasClass('may-4th')) {
         return [
-          'May the Fourth be with you',
-          'This is the way',
+          'May the Fourth be with you.',
+          'This is the way.',
           "Help me, Obi-Wan Kenobi. You're my only hope.",
-          'In my experience there is no such thing as luck',
+          'In my experience there is no such thing as luck.',
           'A long time ago in a galaxy far, far away...',
-          'I find your lack of faith disturbing',
-          'Your focus determines your reality',
+          'I find your lack of faith disturbing.',
+          'Your focus determines your reality.',
           'Do. Or do not. There is no try.',
-          "I've got a bad feeling about this",
+          "I've got a bad feeling about this.",
           'The Force will be with you. Always.',
           'You were the chosen one!',
-          'I am your father',
+          'I am your father,',
+          'Let the Wookie win.',
+          'Be careful not to choke on your aspirations.',
+          "Let's keep a little optimism here.",
+          "I'm not leaving my fate up to chance.",
+          "Don't just blindly follow the program, exercise some free will.",
+          "In my experience, there's no such thing as luck.",
+          'Persistence without insight will lead to the same outcome.',
+          "As long as there's light, we've got a chance.",
+          'The greatest teacher, failure is.',
         ];
       } else {
         return [
