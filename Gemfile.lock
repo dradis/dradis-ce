@@ -1,7 +1,12 @@
 GIT
+  remote: https://github.com/dradis/dradis-plugins.git
+  revision: 7bf110e507b6f46528d2fdcf63273f8d012650e5
+  specs:
+    dradis-plugins (4.19.0)
+
+GIT
   remote: https://github.com/dradis/dradis-projects.git
-  revision: 726eec47158c518935ae638fedb82a304dd00237
-  branch: nodes/icons
+  revision: 12c1f357d02b39590a0c22e9acafe0e4a12a53ca
   specs:
     dradis-projects (4.19.0)
       dradis-plugins (>= 4.8.0)
@@ -198,7 +203,6 @@ GEM
       dradis-plugins (~> 4.0)
     dradis-pentera (4.19.0)
       dradis-plugins (~> 4.0)
-    dradis-plugins (4.19.0)
     dradis-qualys (4.19.0)
       dradis-plugins (~> 4.0)
       nokogiri (~> 1.3)
@@ -622,7 +626,7 @@ DEPENDENCIES
   dradis-ntospider (~> 4.19.0)
   dradis-openvas (~> 4.19.0)
   dradis-pentera (~> 4.19.0)
-  dradis-plugins (~> 4.19.0)
+  dradis-plugins!
   dradis-projects!
   dradis-qualys (~> 4.19.0)
   dradis-saint (~> 4.19.0)
