@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_14_201737) do
+ActiveRecord::Schema[7.2].define(version: 2025_07_07_070805) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -125,7 +125,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_14_201737) do
   end
 
   create_table "logs", force: :cascade do |t|
-    t.integer "uid"
+    t.string "uid"
     t.text "text"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -215,6 +215,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_14_201737) do
     t.integer "taggings_count", default: 0, null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.integer "position"
     t.index ["name"], name: "index_tags_on_name"
     t.index ["taggings_count"], name: "index_tags_on_taggings_count"
   end

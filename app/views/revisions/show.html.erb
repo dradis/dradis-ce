@@ -1,25 +1,89 @@
 <% content_for :title, "#{@record.class.model_name} ##{@record.id} - comparing revisions" %>
 
 <% content_for :breadcrumbs do %>
-  <%= render partial: 'breadcrumbs' %>
+  <%= render partial: 'breadcrumbs', locals: { qa: @qa } %>
 <% end %>
 
-<% if @node %>
-  <%= render "nodes/sidebar" %>
+<% content_for :sidebar do %>
+  <% if @diffed_revision %>
+    <% if @revision.previous %>
+      <div class="header">
+        <div class="header-inner">
+          <h5 class="header-name">Previous revision</h5>
+          <div class="options">
+            <%= link_to '#prev', 
+            data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+              <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle previous revision</span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div id="prev" class="collapse show">
+        <ul class="p-0">
+          <li><strong>Author:</strong> <%= @diffed_revision.previous_author %></li>
+          <li><strong>Action:</strong> <%= @diffed_revision.previous_action.capitalize %></li>
+          <% if @diffed_revision.changed_state.any? %>
+            <li><strong>State:</strong> <del><%= @diffed_revision.changed_state[:before].humanize %></del></li>
+          <% elsif defined?(@record.state) && @record.state %>
+            <li><strong>State:</strong> <%= @record.state.humanize %></li>
+          <% end %>
+          <li><strong>When:</strong> <%= @diffed_revision.last_updated_at %></li>
+        </ul>
+      </div>
+    <% end %>
+    <div class="header">
+      <div class="header-inner">
+        <h5 class="header-name">This revision</h5>
+        <div class="options">
+          <%= link_to '#current', 
+            data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+            <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle current revision</span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div id="current" class="collapse show">
+      <ul class="p-0">
+        <li><strong>Author:</strong> <%= @diffed_revision.this_author %></li>
+        <li><strong>Action:</strong> Update</li>
+        <% if @diffed_revision.changed_state.any? %>
+          <li><strong>State:</strong> <ins><%= @diffed_revision.changed_state[:after].humanize %></ins></li>
+        <% elsif defined?(@record.state) && @record.state %>
+          <li><strong>State:</strong> <%= @record.state.humanize %></li>
+        <% end %>
+        <li><strong>When:</strong> <%= @diffed_revision.updated_at %></li>
+      </ul>
+    </div>
+  <% end %>
+  <%= render "nodes/sidebar" if @node %>
+  <div class="header">
+    <div class="header-inner">
+      <h5 class="header-name">Legend</h5>
+      <div class="options">
+        <%= link_to '#legend', 
+            data: { bs_toggle: 'collapse', behavior: 'collapse-collection' }, class: 'collapsed' do %>
+          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle legend</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div id="legend" class="collapse mb-3">
+    <p><del>removed text</del> <ins>added text</ins></p>
+  </div>
 <% end %>
 
-<div class="row m-0">
-  <div class="col-12 p-0 <%= 'col-xl-8 col-xxl-9' if @diffed_revision %>">
+<div class="row p-0">
+  <div class="col-12">
     <% if @diffed_revision %>
-      <div class="content-container pb-3 me-xl-3">
+      <div class="content-container">
         <div class="diff">
           <h4 class="header-underline">Viewing changes from <%= @diffed_revision.updated_at %></h4>
-          <pre class='js-diff-body'><%= @diffed_revision.diff.format_as(:color) %></pre>
+          <pre class='js-diff-body mt-3'><%= @diffed_revision.diff.format_as(:color) %></pre>
         </div>
       </div>
     <% end %>
 
-    <div id="<%= dom_id(@record) %>_revisions" class="content-container revisions-table note-text-inner <%= 'me-xl-3' if @diffed_revision %>">
+    <div id="<%= dom_id(@record) %>_revisions" class="content-container revisions-table note-text-inner">
       <h4 class="header-underline"><%= @record.class.name %> History</h4>
 
       <table class="table mb-0">
@@ -43,7 +107,7 @@
                     <% if revision == @revision %>
                       Currently Viewing
                     <% elsif revision.event == "update" %>
-                      <%= link_to "View Changes", record_revision_path(@record, revision) %>
+                      <%= link_to "View Changes", record_revision_path(@record, revision, qa: @qa) %>
                     <% end %>
                   <% end %>
                 </td>
@@ -54,34 +118,4 @@
       </table>
     </div>
   </div>
-
-  <% if @diffed_revision %>
-    <div class="col-12 col-xl-4 col-xxl-3 p-0">
-      <div class="sticky-top">
-        <div class="content-container mt-0 mt-xl-4 ms-xl-3">
-          <h4 class="header-underline">Legend</h4>
-          <p><del>removed text</del></p>
-          <p><ins>added text</ins></p>
-        </div>
-        <% if @revision.previous %>
-          <div class="content-container ms-xl-3">
-            <h4 class="header-underline">Previous revision</h4>
-            <ul>
-              <li><strong>Author:</strong> <%= @diffed_revision.previous_author %></li>
-              <li><strong>Action:</strong> <%= @diffed_revision.previous_action.capitalize %></li>
-              <li><strong>When:</strong> <%= @diffed_revision.last_updated_at %></li>
-            </ul>
-          </div>
-        <% end %>
-        <div class="content-container ms-xl-3">
-          <h4 class="header-underline">This revision</h4>
-          <ul>
-            <li><strong>Author:</strong> <%= @diffed_revision.this_author %></li>
-            <li><strong>Action:</strong> Update</li>
-            <li><strong>When:</strong> <%= @diffed_revision.updated_at %></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  <% end %>
 </div>

@@ -25,6 +25,8 @@ module IssuesHelper
         end
       end
 
+      issue.state = record.state
+
       # The content of the entry can come with a Tags field, but the plugin
       # can also set some (e.g. the entry's status - 'Draft', 'Pending')
       if record.tags.any?
@@ -65,13 +67,13 @@ module IssuesHelper
       content =
         if tag
           [
-            colored_icon_for_model(issue, 'fa-bug'),
+            colored_icon_for_model(issue, 'fa-tag'),
             h(tag.display_name)
           ]
         else
           [
-            content_tag(:i, nil, class: 'fa-solid fa-bug'),
-            'Untagged'
+            content_tag(:i, nil, class: 'fa-solid fa-tag'),
+            'No tag'
           ]
         end
 

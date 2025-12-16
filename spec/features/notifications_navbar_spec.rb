@@ -9,7 +9,7 @@ describe 'User notifications', js: true do
   end
 
   it 'can view the notifcation bell' do
-    within '.navbar' do
+    within '.main-nav' do
       expect(page).to have_css '.notifications.dropdown'
     end
   end
@@ -24,7 +24,7 @@ describe 'User notifications', js: true do
       it 'shows an empty dropdown' do
         find('[data-behavior~=notifications-dropdown]').click
 
-        expect(find(".notification-container", text: "You don't have any notifications yet.")).to_not be_nil
+        expect(find('.notification-container', text: "You don't have any notifications yet.")).to_not be_nil
       end
     end
 

@@ -1,7 +1,3 @@
-if ENV['RAILS_RELATIVE_URL_ROOT']
-  Rails.application.routes.default_scope = ENV['RAILS_RELATIVE_URL_ROOT']
-end
-
 Rails.application.routes.draw do
   get 'up', to: ->(env) { [204, {}, ['']] }
 
@@ -107,7 +103,9 @@ Rails.application.routes.draw do
       member { post :recover }
     end
 
-    resources :tags, except: [:show]
+    resources :tags, except: [:show] do
+      collection { post :sort }
+    end
 
     namespace :qa do
       resources :issues, only: [:edit, :index, :show, :update], concerns: [:multiple_update, :previewable]
@@ -123,10 +121,6 @@ Rails.application.routes.draw do
     get  '/upload'        => 'upload#index',  as: :upload_manager
     post '/upload'        => 'upload#create'
     post '/upload/parse'  => 'upload#parse'
-
-    if Rails.env.development?
-      get '/styles' => 'styles_tylium#index'
-    end
   end
 
   resources :console, only: [] do
@@ -144,6 +138,7 @@ Rails.application.routes.draw do
   namespace :setup, only: [:index] do
     if defined?(Dradis::Pro)
     else
+      resource :analytics, only: [:new, :create]
       resource :password, only: [:new, :create]
     end
     resource :kit, only: [:new, :create]
@@ -157,9 +152,20 @@ Rails.application.routes.draw do
     post :preview
   end
 
+  if Rails.env.development?
+    get '/styles' => 'styles#index'
+  end
+
   if defined?(Dradis::Pro)
   else
     root to: 'setup/passwords#new'
+  end
+
+  ErrorsController::SUPPORTED_ERRORS.each do |status_name, status_code|
+    match "/#{status_code}",
+      to: "errors##{status_name}",
+      via: :all,
+      defaults: { status_code: status_code }
   end
 
   mount ActionCable.server => '/cable'

@@ -1,4 +1,8 @@
-@import './tylium';
+@import 'hera/custom_grid';
+@import 'hera/variables';
+@import 'bootstrap';
 
-@import 'application/holiday';
+@import 'hera/base';
+
+@import 'application/easter_eggs';
 @import 'application/sessions';

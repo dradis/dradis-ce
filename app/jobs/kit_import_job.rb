@@ -192,8 +192,10 @@ class KitImportJob < ApplicationJob
 
   def import_templates(template_type)
     kit_template_dir = "#{working_dir}/kit/templates/#{template_type}"
-    destination = templates_dirs[template_type]
     return unless Dir.exist?(kit_template_dir)
+
+    destination = templates_dirs[template_type]
+    FileUtils.mkdir_p(destination) unless File.exist?(destination)
 
     Dir["#{kit_template_dir}/*"].each do |file|
       copy_file(file, destination)

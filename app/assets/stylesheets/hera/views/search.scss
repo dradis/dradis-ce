@@ -1,0 +1,28 @@
+body.search.index {
+  .inset-button-wrapper {
+    max-width: 300px;
+  }
+
+  .match-snippet {
+    background-color: $secondary-bg;
+    border: 1px solid $border-color;
+    padding: 0.25rem 0.5rem;
+  }
+
+  tr:first-child td {
+    border-top: none;
+  }
+
+  .result-details {
+    color: $text-muted;
+    margin: 10px 0;
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  .search-match-title {
+    font-weight: 600;
+  }
+}

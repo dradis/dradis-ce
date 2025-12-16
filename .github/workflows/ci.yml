@@ -1,12 +1,11 @@
 name: CI
 
 on:
-  pull_request:
-    branches: ['*']
   push:
-    branches: [develop, main]
-  workflow_dispatch:
-
+    branches: ['**']
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   audits:
     name: Security Audits
@@ -14,14 +13,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Install sqlite3 dependencies
+        run: sudo apt-get install libsqlite3-dev
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
+          rubygems: 'latest'
           bundler-cache: true
       - name: Security audit dependencies
-        run: bundle exec bundler-audit --update --ignore CVE-2023-50724 CVE-2023-50725 CVE-2023-50727
+        run: bundle exec bundler-audit --update --ignore CVE-2024-21510 CVE-2025-61921
       - name: Security audit ruby
-        run: bundle exec ruby-audit update && bundle exec ruby-audit check --ignore CVE-2021-33621 CVE-2024-27282
+        run: bundle exec ruby-audit update && bundle exec ruby-audit check --ignore CVE-2025-61594
       - name: Security audit application code
         run: bundle exec brakeman -q -w2
   rubocop:
@@ -30,17 +32,21 @@ jobs:
     runs-on: ubuntu-latest
     env:
       IS_MERGE: ${{ github.base_ref == '' }}
-      PREV_SHA: ${{ github.event.before }}
+      # SHA is set to all 0s on the first push to a new branch. We set it to
+      # an empty string to ensure our fallback chain works as expected.
+      PREV_SHA: ${{ github.event.before != '0000000000000000000000000000000000000000' && github.event.before || '' }}
       TARGET_BRANCH: ${{ github.base_ref }}
+      FALLBACK_BRANCH: 'origin/develop'
     steps:
       - name: Checkout code
         uses: actions/checkout@v1
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
+          rubygems: 'latest'
           bundler-cache: true
       - name: Lint changed files
-        run: bin/rubocop-ci ${{ env.TARGET_BRANCH || env.PREV_SHA }} ${{ env.IS_MERGE }}
+        run: bin/rubocop-ci ${{ env.TARGET_BRANCH || env.PREV_SHA || env.FALLBACK_BRANCH }} ${{ env.IS_MERGE }}
   rspec:
     name: RSpec
     needs: [audits, rubocop]
@@ -55,6 +61,7 @@ jobs:
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1
         with:
+          rubygems: 'latest'
           bundler-cache: true
       - name: Prepare database
         run: bundle exec rails db:prepare
@@ -62,3 +69,4 @@ jobs:
         run: bundle exec rails assets:precompile
       - name: Run tests
         run: bundle exec rspec spec engines -p
+

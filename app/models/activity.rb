@@ -17,14 +17,14 @@ class Activity < ApplicationRecord
 
   validates_presence_of :action, :trackable_id, :trackable_type, :user
 
-  VALID_ACTIONS = %w[create destroy recover state_change update]
+  VALID_ACTIONS = %w[create destroy download recover state_change update]
 
   validates_inclusion_of :action, in: VALID_ACTIONS
 
   # -- Scopes ---------------------------------------------------------------
 
   scope :latest, -> do
-    includes(:trackable).order('activities.created_at DESC').limit(20)
+    includes(:trackable).order('activities.created_at DESC').limit(10)
   end
 
   # -- Callbacks ------------------------------------------------------------

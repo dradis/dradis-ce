@@ -1,10 +1,12 @@
 class UploadJob < ApplicationJob
+  include Tracked
+
   queue_as :dradis_upload
 
   def perform(default_user_id:, file:, plugin_name:, project_id:, state:, uid:)
     logger = Log.new(uid: uid)
 
-    logger.write { "Job id is #{job_id}." }
+    logger.write { "Job id is #{uid}." }
     logger.write { 'Running Ruby version %s' % RUBY_VERSION }
     logger.write { 'Worker process starting background task.' }
 
@@ -21,5 +23,15 @@ class UploadJob < ApplicationJob
     importer.import(file: file)
 
     logger.write { 'Worker process completed.' }
+
+  rescue => exception
+    logger.write { "There was an error with the upload: #{exception.message}" }
+    if Rails.env.development?
+      exception.backtrace.first(10).each do |trace|
+        logger.debug { trace }
+        sleep(0.2)
+      end
+    end
+    tracker.update_state(state: :failed, message: exception.message)
   end
 end

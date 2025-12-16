@@ -1,0 +1,49 @@
+.inline-editable {
+  display: flex;
+
+  .edit-hover {
+    align-items: flex-start;
+    display: inline-flex;
+    position: relative;
+    width: 100%;
+  }
+
+  input[type='text'],
+  textarea,
+  select {
+    border: 1px solid transparent;
+    border-radius: 0;
+
+    &:focus,
+    &:hover {
+      border-color: transparent;
+    }
+
+    &:focus {
+      box-shadow: none !important;
+      outline: none !important;
+    }
+  }
+
+  input[type='text'] {
+    background-color: transparent;
+    font-weight: 600;
+    margin: 0 1rem;
+    padding: 0.5rem 0 0.25rem 0 !important;
+    width: 100%;
+
+    &:focus {
+      background-color: transparent;
+    }
+  }
+
+  textarea {
+    margin: 0;
+    padding: 0.5rem 0.5rem 0.5rem 0 !important;
+  }
+
+  select {
+    background-color: $primary-bg;
+    margin: 0 1.5rem 2.25rem 1.5rem;
+  }
+}

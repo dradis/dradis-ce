@@ -12,17 +12,11 @@
 
 class UserPreferences
   include ActiveModel::Conversion
-  include ActiveModel::Validations
+  extend ActiveModel::Naming
 
   VALID_TOURS = %i[first_sign_in projects_show].freeze
   DIGEST_FREQUENCIES = %w[none instant daily].freeze
   DIGEST_FREQUENCY_DEFAULT = 'instant'.freeze
-
-  validates :digest_frequency,
-    inclusion: {
-      in: DIGEST_FREQUENCIES,
-      digest_frequencies: "'#{DIGEST_FREQUENCIES.join("', '")}'"
-    }
 
   # -- Class Methods ----------------------------------------------------------
 
@@ -37,14 +31,15 @@ class UserPreferences
   #           to be able to track what was the last version we presented to
   #           them. See TourRegistry class.
   ATTRIBUTES = %i[digest_frequency tours]
-  attr_accessor *ATTRIBUTES
+  attr_accessor(*ATTRIBUTES)
 
   def to_yaml_properties
     ATTRIBUTES.map { |attr| :"@#{attr}" }
   end
 
-  def initialize(args={})
+  def initialize(args = {})
     @digest_frequency = args[:digest_frequency] || DIGEST_FREQUENCY_DEFAULT
+
     @tours = Hash.new { |hash, key| hash[key] = '0' }
 
     args.each do |key, value|
@@ -57,6 +52,10 @@ class UserPreferences
   # Needed for active model conversions, to work with form_with
   def persisted?
     true
+  end
+
+  def valid?(args)
+    DIGEST_FREQUENCIES.include?(self.digest_frequency)
   end
 
   # ----------------------------------------------------------------- YAML.load

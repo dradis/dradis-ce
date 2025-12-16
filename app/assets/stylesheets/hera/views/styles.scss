@@ -1,0 +1,152 @@
+body.styles {
+  button[data-behavior~='smooth-scroll'] {
+    margin-bottom: 0.25rem;
+  }
+
+  .navbar-placeholder {
+    background-color: $main-nav-bg;
+    border-bottom: 1px solid $main-nav-border;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.25rem 1.5rem;
+
+    a {
+      color: $main-nav-links;
+
+      &:focus,
+      &:hover {
+        color: $main-nav-hover;
+      }
+    }
+
+    .logo {
+      height: 2.5rem;
+    }
+  }
+
+  .page-title {
+    display: none;
+  }
+
+  .scroll-offset {
+    position: absolute;
+    top: -2rem;
+  }
+
+  .style-code-wrapper {
+    position: relative;
+
+    .style-code {
+      background-color: #222;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: #fff;
+      margin-bottom: 0;
+      margin-top: 2rem;
+
+      .c,
+      .ch,
+      .cd,
+      .cm,
+      .cp,
+      .cpf,
+      .c1,
+      .cs {
+        color: #6e7781;
+      }
+
+      .err {
+        color: #f6f8fa;
+        background-color: #82071e;
+      }
+
+      .na {
+        color: #9cdcfe;
+      }
+
+      .nt {
+        color: #569cd6;
+      }
+
+      .s {
+        color: #ce9178;
+      }
+    }
+  }
+
+  .style-example {
+    .editor-field {
+      height: initial;
+      width: 50%;
+
+      textarea {
+        min-height: 7.5rem;
+        resize: none;
+      }
+    }
+
+    .fw4 {
+      font-weight: 400;
+    }
+
+    .fw6 {
+      font-weight: 600;
+    }
+
+    .table-wrapper {
+      .items-table {
+        white-space: nowrap;
+
+        th,
+        td {
+          display: table-cell !important;
+        }
+      }
+    }
+
+    ul {
+      &.icon-list {
+        -moz-column-count: 4;
+        -moz-column-gap: 20px;
+        -webkit-column-count: 4;
+        -webkit-column-gap: 20px;
+        column-count: 4;
+        column-gap: 20px;
+
+        i {
+          margin-right: 0.5rem;
+        }
+      }
+
+      &:not(.pagination) {
+        list-style-type: disc;
+      }
+    }
+  }
+
+  .style-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    .reveal-code {
+      font-size: 1.1rem;
+      position: absolute;
+      top: -0.3rem;
+      right: 0;
+      padding: 0.3rem;
+      display: inline-flex;
+      background-color: $primary-bg;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        background-color: $secondary-bg;
+        border: 1px solid $border-color;
+      }
+    }
+  }
+}

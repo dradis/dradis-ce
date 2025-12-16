@@ -3,15 +3,16 @@
   <head>
     <title><%= content_for?(:title) ? yield(:title) : 'Dradis Community Edition' %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-    <%= stylesheet_link_tag 'setup/setup', media: 'all', 'data-turbolinks-track' => true %>
+    <%= stylesheet_link_tag 'setup/setup', media: 'all', 'data-turbo-track' => true %>
     <%= favicon_link_tag %>
     <%= csrf_meta_tag %>
 
     <meta charset="utf-8">
+    <%= render 'layouts/plausible' %>
   </head>
 
   <body class="<%= controller_name %> <%= action_name %>">
-    <%= render 'shared/noscript' %>
+    <%= render 'layouts/hera/noscript' %>
     <div class="container narrow">
       <div class="row h-100vh">
         <div class="col-12 d-flex flex-column justify-content-between">
@@ -23,7 +24,7 @@
             <%= yield %>
           </div>
 
-          <p class="copyright">Dradis Community Edition - <a href="http://drad.is">http://drad.is</a></p>
+          <p class="copyright">Dradis Community Edition - <a href="https://dradis.com/ce/?utm_source=ce&utm_medium=app&utm_campaign=layout">https://dradis.com/ce/</a></p>
         </div>
       </div>
     </div>

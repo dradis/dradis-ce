@@ -1,0 +1,27 @@
+<div class="header">
+  <div class="header-inner pb-2">
+    <h5 class="header-name mb-0"><i class="fa-solid fa-sitemap me-1"></i>Nodes</h5>
+    <div class="options">
+      <a href="#modal_add_branch_node" data-bs-toggle="modal" tabindex="-1">
+        <i class="fa-solid fa-plus fa-fw" data-behavior="add-node"></i><span class="visually-hidden">Add node</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<ul class="nodes-nav tree-navigation">
+  <div class="note-list collapse show" data-behavior="node-tree-content">
+    <div class="nodes-list">
+      <% if @nodes.empty? %>
+        <%= render 'shared/empty_state',
+          actions_partial: 'layouts/hera/nodes/empty_state_actions',
+          docs_link: 'https://dradis.com/support/guides/projects/nodes.html',
+          name: 'node',
+          text: 'Use nodes to structure and organize your project.'
+        %>
+      <% else %>
+        <%= render partial: 'layouts/hera/node', collection: @nodes %>
+      <% end %>
+    </div>
+  </div>
+</ul>

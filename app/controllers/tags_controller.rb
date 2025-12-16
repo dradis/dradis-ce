@@ -1,6 +1,7 @@
 class TagsController < AuthenticatedController
   include ProjectScoped
   include ActivityTracking
+  include Sortable
 
   before_action :set_columns, only: :index
   load_and_authorize_resource
@@ -43,6 +44,10 @@ class TagsController < AuthenticatedController
 
   private
 
+  def sortable_records
+    { klass: Tag, ids: current_project.tags.ids }
+  end
+
   def tag_params
     modified_params = params.require(:tag).permit(:name, :color)
     modified_params[:name] = "#{modified_params[:color].gsub('#', '!')}_#{modified_params[:name]}"
@@ -50,7 +55,7 @@ class TagsController < AuthenticatedController
   end
 
   def set_columns
-    default_field_names = ['Name'].freeze
+    default_field_names = ['Sort', 'Name'].freeze
     extra_field_names = ['Color', 'Created', 'Updated'].freeze
 
     @default_columns = default_field_names

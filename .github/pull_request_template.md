@@ -38,3 +38,4 @@ remain in the PR's description:
 ### Check List
 
 - [ ] Added a CHANGELOG entry
+- [ ] Commit message has a detailed description of what changed and why.

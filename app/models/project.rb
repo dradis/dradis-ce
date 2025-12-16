@@ -8,6 +8,10 @@ class Project
   attr_reader :id, :name
 
   # -- Class Methods --------------------------------------------------------
+  def self.all
+    [new]
+  end
+
   def self.create(args = {})
     new(**args.merge(id: 1))
   end
@@ -37,6 +41,10 @@ class Project
   end
 
   def authors
+    User.all
+  end
+
+  def reviewers
     User.all
   end
 
@@ -105,13 +113,17 @@ class Project
 
   # When Upload plugins create new nodes, they'll do so under this parent node
   def plugin_parent_node
-    @plugin_parent_node ||= nodes.find_or_create_by(label: ::Configuration.plugin_parent_node)
+    @plugin_parent_node ||= nodes
+      .create_with(type_id: Node::Types::UPLOAD)
+      .find_or_create_by(label: ::Configuration.plugin_parent_node)
   end
 
   # Security scanner output files uploaded via the Upload Manager use this node
   # as container
   def plugin_uploads_node
-    @plugin_uploads_node ||= nodes.find_or_create_by(label: ::Configuration.plugin_uploads_node)
+    @plugin_uploads_node ||= nodes
+      .create_with(type_id: Node::Types::ATTACHMENT)
+      .find_or_create_by(label: ::Configuration.plugin_uploads_node)
   end
 
   # If an item is recovered from the trash, but we can't reassign it to its

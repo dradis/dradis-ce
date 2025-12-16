@@ -2,13 +2,20 @@ require 'rails_helper'
 
 describe List do
   it { should belong_to(:board).touch(true) }
-  it { should belong_to(:previous_list).with_foreign_key(:previous_id) }
+  it { should belong_to(:previous_list).with_foreign_key(:previous_id).optional }
   it { should have_many(:cards).dependent(:destroy) }
 
   it { should validate_presence_of(:board) }
   it { should validate_presence_of(:name) }
 
   it { should validate_length_of(:name).is_at_most(DB_MAX_STRING_LENGTH) }
+
+  describe 'acts as linked list' do
+    let(:model) { List }
+    let(:list_item) { 'card' }
+
+    it_behaves_like 'a linked list model'
+  end
 
   before do
     @parent = create(:board)

@@ -29,6 +29,8 @@ Dradis::CE::API::Engine::routes.draw do
             end
           end
         end
+
+        resources :uploads, only: [:show, :create], path: :upload
       end
     end
   end

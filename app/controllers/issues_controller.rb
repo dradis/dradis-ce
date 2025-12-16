@@ -9,6 +9,7 @@ class IssuesController < AuthenticatedController
   include MultipleDestroy
   include NotificationsReader
   include ProjectScoped
+  include Publishable
 
   before_action :set_issuelib
   before_action :set_issues, except: [:destroy]
@@ -118,7 +119,9 @@ class IssuesController < AuthenticatedController
     @filter = importer.filter
     @query = params[:query]
 
-    @default_columns = ['Title', 'Tags']
+    @default_columns = ['Title', 'Result Tags']
+    # add state column if state has been provided by plugin
+    @default_columns << 'Result State' if results.any? && results.first.state
     @all_columns = @default_columns | (@import_issues.map(&:fields).map(&:keys).uniq.flatten - ['AddonTags'])
   end
 

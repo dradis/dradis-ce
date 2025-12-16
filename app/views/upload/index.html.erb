@@ -1,8 +1,19 @@
-<% content_for :title, 'Upload Manager' %>
+<% content_for :title, 'Upload' %>
 
-<div class="row m-0">
-  <div class="col-lg-6 col-xl-5 p-0 order-1">
-    <div class="content-container mt-3 me-lg-3" data-behavior="content-container">
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to current_project.name, project_path(current_project) %>
+    </li>
+    <li class="breadcrumb-item active">
+      Upload
+    </li>
+  </ol>
+<% end %>
+
+<div class="row p-0">
+  <div class="col-lg-6 col-xl-5 mb-4">
+    <div class="content-container mb-0 h-100">
       <h4 class="header-underline">Upload Output Files</h4>
       <p class="mt-4">Use the form below to upload output files from other tools.</p>
 
@@ -45,35 +56,8 @@
     </div>
   </div>
 
-  <div class="col-lg-6 col-xl-7 p-0 order-3 order-lg-2">
-    <div class="content-container mt-0 mt-lg-3 ms-lg-3 restrict-height" data-height="match-prev" data-behavior="restrict-height">
-      <h4 class="header-underline">Available plugins</h4>
-
-      <div class="overflow-auto">
-        <table class="table table-striped mb-0">
-          <thead>
-            <tr>
-              <th>Plugin</th>
-              <th>Description</th>
-              <th>Version</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @uploaders.each do |uploader| %>
-              <tr>
-                <td><code><%= uploader.name %></code></td>
-                <td><%= uploader.meta[:description] %></td>
-                <td><%= uploader.meta[:version] %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-12 p-0 order-2 order-lg-3">
-    <div class="content-container mt-0">
+  <div class="col-lg-6 col-xl-7 mb-4">
+    <div class="content-container mb-0 h-100">
       <h4 class="header-underline">Output console</h4>
       <div id="status"></div>
       <%= content_tag :div, id: 'result', style: 'display:none', data: { url: status_console_index_path }  do %>

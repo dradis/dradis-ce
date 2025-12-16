@@ -51,7 +51,7 @@ Selenium::WebDriver.logger
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_paths = ["#{::Rails.root}/spec/fixtures"]
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -82,11 +82,11 @@ RSpec.configure do |config|
   config.include ControllerMacros, type: :feature
   config.include ControllerMacros, type: :request
   # config.include SelecterHelper,   type: :feature
-  # config.include SupportHelper,    type: :controller
-  # config.include SupportHelper,    type: :feature
-  # config.include SupportHelper,    type: :request
+  config.include SupportHelper, type: :controller
+  config.include SupportHelper, type: :feature
+  config.include SupportHelper, type: :request
   config.include FactoryBot::Syntax::Methods
-  # config.include WaitForAjax, type: :feature
+  config.include WaitForAjax, type: :feature
 
   config.example_status_persistence_file_path = Rails.root.join('spec', '.examples.txt')
 

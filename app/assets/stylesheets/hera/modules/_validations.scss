@@ -1,0 +1,40 @@
+.validation {
+  &.validation-feed {
+    .validation-list {
+      list-style-type: none;
+      padding: 0;
+
+      .fw-bold {
+        font-family: 'ProximaNovaRegular', 'system-ui';
+        padding: 0.5rem 0;
+      }
+
+      li {
+        i {
+          margin-right: 0.15rem;
+        }
+
+        .text-error {
+          font-size: 90%;
+          margin: 0 0 0.5rem 1.6rem;
+        }
+
+        &:last-of-type .text-error {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+.validation-feed-container {
+  display: flex;
+  flex-direction: column;
+
+  .validation-feed-spinner {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+  }
+}

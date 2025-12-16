@@ -47,11 +47,11 @@ describe 'Board pages:' do
           visit project_boards_path(current_project)
 
           expect {
-            click_link 'Create new methodology...'
+            click_link 'New Methodology'
 
             find('#modal-board-new', visible: true)
-            find('#board_new_board_template').find(:option, 'Methodology Template v3').select_option
-
+            find('#board_new_board_template ~ .combobox').click
+            find('.combobox-option', text: 'Methodology Template v3').click
             click_button 'Add methodology'
           }.to change { Board.count }.by(1)
         end

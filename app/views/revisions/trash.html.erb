@@ -1,6 +1,17 @@
 <% content_for :title, 'Trash' %>
 
-<div class="content-container mt-3" id="trash">
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to current_project.name, project_path(current_project) %>
+    </li>
+    <li class="breadcrumb-item active">
+      Trash
+    </li>
+  </ol>
+<% end %>
+
+<div class="content-container" id="trash">
   <% if @revisions.any? %>
     <% cache @revisions do %>
       <div class="table-wrapper">

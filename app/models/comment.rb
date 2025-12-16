@@ -1,4 +1,5 @@
 class Comment < ApplicationRecord
+  include Eventable
   include Notifiable
 
   MENTION_PATTERN = /[a-z0-9][a-z0-9\-@\.]*/.freeze
@@ -36,6 +37,16 @@ class Comment < ApplicationRecord
     Subscription.subscribe(user: user, to: commentable) if user
   end
 
+  def local_event_payload
+    {
+      content: self.content,
+      commentable: {
+        id: self.commentable.id,
+        title: self.commentable.title
+      }
+    }
+  end
+
   def notify(action:, actor:, recipients:)
     case action.to_s
     when 'create'
@@ -47,7 +58,7 @@ class Comment < ApplicationRecord
       # to be an ActiveRecord::Relation.
       subscribers = User.includes(:subscriptions).where(
         subscriptions: { subscribable_id: commentable.id, subscribable_type: commentable.class.to_s }
-      ).where.not(id: [user.id] + mentions.pluck(:id))
+      ).where.not(id: [user.id] + mentions.pluck(:id)).enabled
       subscribers = subscribers.select { |user| Ability.new(user).can?(:read, self) }
       create_notifications(action: :create, actor: actor, recipients: subscribers)
     end
@@ -87,7 +98,7 @@ class Comment < ApplicationRecord
     xml_builder.content do
       xml_builder.cdata!(content)
     end
-    xml_builder.author(user.email)
+    xml_builder.author(user&.email)
     xml_builder.created_at(created_at.to_i)
   end
 

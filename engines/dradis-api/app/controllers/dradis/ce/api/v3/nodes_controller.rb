@@ -44,7 +44,7 @@ module Dradis::CE::API
       protected
 
       def node_params
-        params.require(:node).permit(:label, :type_id, :parent_id, :position)
+        params.require(:node).permit(:label, :type_id, :parent_id, :position, :raw_properties)
       end
     end
   end

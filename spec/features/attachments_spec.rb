@@ -9,7 +9,7 @@ describe 'Describe attachments' do
     expect(page).to have_content('Access denied.')
   end
 
-  describe 'as authenticated user' do
+  describe 'as authenticated user', :js do
     before do
       login_to_project_as_user
       @node = create(:node, project: current_project)
@@ -23,9 +23,8 @@ describe 'Describe attachments' do
       visit project_node_path(current_project, @node)
 
       file_path = Rails.root.join('spec/fixtures/files/rails.png')
-      attach_file('files[]', file_path)
-      click_button 'Start'
-
+      attach_file('files[]', file_path, visible: false)
+      wait_for_ajax
       expect(page).to have_content('rails.png')
       expect(File.exist?(Attachment.pwd.join(@node.id.to_s, 'rails.png'))).to be true
     end
@@ -41,9 +40,8 @@ describe 'Describe attachments' do
       visit project_node_path(current_project, @node)
 
       file_path = Rails.root.join('spec/fixtures/files/rails.png')
-      attach_file('files[]', file_path)
-      click_button 'Start'
-
+      attach_file('files[]', file_path, visible: false)
+      wait_for_ajax
       expect(Dir["#{node_attachments}/*"].count).to eq(2)
     end
 

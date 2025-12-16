@@ -13,9 +13,9 @@
   </li>
   <li class="nav-item">
     <% if defined?(Dradis::Pro) %>
-    <a href="#methodology-tab" data-bs-toggle="tab" class="nav-link"><i class="fa-brands fa-trello"></i> Methodology</a>
+      <a href="#methodology-tab" data-bs-toggle="tab" class="nav-link"><i class="fa-brands fa-trello"></i> Methodology</a>
     <% else %>
-    <a class="js-try-pro nav-link" href="javascript:void(0)" data-term="node-boards" data-url="https://dradis.com/pro/pages/consistency.html"><i class="fa-brands fa-trello"></i> Methodology</a>
+      <a class="js-try-pro nav-link" href="javascript:void(0)" data-term="node-boards" data-url="https://dradis.com/pro/pages/consistency.html"><i class="fa-brands fa-trello"></i> Methodology</a>
     <% end %>
   </li>
   <li class="nav-item">
@@ -43,8 +43,8 @@
   </li>
 </ul>
 
-<div class="content-container mt-0">
-  <div class="tab-content mt-0">
+<div class="content-container">
+  <div class="tab-content">
     <%= render 'nodes/show/activities' %>
     <%= render 'nodes/show/evidence' %>
     <%= render 'nodes/show/notes' %>

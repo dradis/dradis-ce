@@ -1,8 +1,26 @@
 <% content_for :title, 'Methodologies' %>
 
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to current_project.name, project_path(current_project) %>
+    </li>
+    <li class="breadcrumb-item active">
+      Methodologies
+    </li>
+  </ol>
+<% end %>
+
 <%= render 'poller_alerts' unless  request.xhr? %>
 
-<div class="content-container pb-3 mt-3">
+<div class="content-container">
+  <h4 class="header-underline">Methodologies
+    <span class="actions pt-1">
+      <a data-bs-toggle="modal" href="#modal-board-new">
+        <i class="fa-solid fa-plus me-1"></i>New Methodology
+      </a>
+    </span>
+  </h4>
   <% if @boards.any? %>
     <ul class="board-list">
       <% @boards.each do |board| %>
@@ -27,19 +45,13 @@
           </div>
         </li>
       <% end %>
-
-      <li class="board-list-item">
-        <a class="board-tile board-new" data-bs-toggle="modal" href="#modal-board-new">
-          Create new methodology...
-        </a>
-      </li>
     </ul>
   <% else %>
     <%= render 'shared/empty_state',
-      actions_partial: 'boards/empty_state_actions',
-      docs_link: 'https://dradis.com/support/guides/projects/methodologies.html',
-      name: 'methodology',
-      text: 'Drive consistency and quality by using a standard methodology for each assessment type.'
-    %>
+          actions_partial: 'boards/empty_state_actions',
+          docs_link: 'https://dradis.com/support/guides/projects/methodologies.html',
+          name: 'methodology',
+          text: 'Drive consistency and quality by using a standard methodology for each assessment type.'
+        %>
   <% end %>
 </div>

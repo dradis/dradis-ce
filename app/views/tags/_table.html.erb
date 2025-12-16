@@ -1,46 +1,42 @@
 <% cache ['tags-table', @all_columns, @tags] do %>
   <table class="table table-striped mb-0"
-         data-behavior="dradis-datatable"
-         data-default-columns="<%= @default_columns.to_json %>"
-         data-item-name="tags"
-         data-local-storage-key="project.ce.<%= dom_id(current_project) %>.tags_datatable">
+    data-behavior="dradis-datatable"
+    data-default-columns="<%= @default_columns.to_json %>"
+    data-item-name="tags"
+    data-local-storage-key="project.ce.<%= dom_id(current_project) %>.tags_datatable">
     <thead>
       <tr>
         <% @all_columns.each do |column| %>
-          <th><%= column %></th>
+          <th class="no-sort" data-column-visible="<%= column != 'Sort' %>">
+            <span class="<%= class_names('visually-hidden': column == 'Sort'  )%>"><%= column %></span>
+          </th>
         <% end %>
         <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Actions</span></th>
       </tr>
     </thead>
-    <tbody>
+    <tbody data-behavior='ui-sortable', data-sort-url="<%= sort_project_tags_path(current_project) %>">
       <% @tags.each do |tag| %>
         <% cache [tag, @all_columns, 'tags-table'] do %>
           <tr id="tag-<%= tag.id %>">
             <% @all_columns.each do |column| %>
               <%
-              sort, display =
+               content =
               case column
+              when 'Sort'
+                  content_tag(:i, nil, class: 'fa-solid fa-grip-vertical w-100') + content_tag(:span, 'Change sort order', class: 'visually-hidden')
               when 'Name'
-                [
-                  tag.display_name,
                   content_tag(:span, class: 'tag', style: "color: #{tag.color}") do
                     content_tag(:i, nil, class: 'fa-solid fa-tag fa-fw me-1') + tag.display_name
                   end
-                ]
               when 'Color'
-                [tag.color, content_tag(:span, tag.color, style:  "color: #{tag.color}")]
+                content_tag(:span, tag.color, style:  "color: #{tag.color}")
               when 'Created'
-                [tag.created_at.to_i, local_time_ago(tag.created_at)]
+                local_time_ago(tag.created_at)
               when 'Updated'
-                [tag.updated_at.to_i, local_time_ago(tag.updated_at)]
+                local_time_ago(tag.updated_at)
               end
               %>
-              <%= content_tag :td,
-                display,
-                data: {
-                  sort: sort
-                }
-              %>
+              <%= content_tag :td, content, class: class_names('text-secondary text-center': column == 'Sort') %>
             <% end  %>
             <td class="column-actions">
               <%= link_to edit_project_tag_path(current_project, tag), remote: true do %>
