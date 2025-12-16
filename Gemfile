@@ -183,6 +183,9 @@ group :development do
   gem 'ruby_audit', '~> 3.0.0', require: false
 
   gem 'rubocop', '1.79.0', require: false
+
+  # syntax highlighter for styles
+  gem 'rouge'
 end
 
 group :development, :test do
@@ -220,12 +223,12 @@ end
 #
 
 # Base framework classes required by other plugins
-gem 'dradis-plugins', '~> 4.19.0'
+gem 'dradis-plugins', github: 'dradis/dradis-plugins'
 
 gem 'dradis-api', path: 'engines/dradis-api'
 
 # Import / export project data
-gem 'dradis-projects', '~> 4.19.0'
+gem 'dradis-projects', github: 'dradis/dradis-projects'
 
 plugins_file = 'Gemfile.plugins'
 if File.exist?(plugins_file)
@@ -236,7 +239,6 @@ end
 # effective.
 
 # ----------------------------------------------------------------- Calculators
-
 gem 'dradis-calculator_cvss', '~> 4.19.0'
 gem 'dradis-calculator_dread', '~> 4.19.0'
 gem 'dradis-calculator_mitre', '~> 4.19.0'

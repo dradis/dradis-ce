@@ -1,0 +1,1673 @@
+<% content_for :title, 'Hera Style Guide' %>
+
+<% content_for :sidebar do %>
+  <h4 class="header-underline">Table of Contents</h4>
+
+  <nav class="d-flex flex-column" data-behavior="smooth-scroll-nav">
+    <a href="#accordion" class="nav-link">Accordion</a>
+    <a href="#alerts" class="nav-link">Alerts</a>
+    <a href="#badges" class="nav-link">Badges</a>
+    <a href="#buttons" class="nav-link">Buttons</a>
+    <a href="#cards" class="nav-link">Cards</a>
+    <a href="#combobox" class="nav-link">Combobox</a>
+    <a href="#container" class="nav-link">Content Container</a>
+    <a href="#dividers" class="nav-link">Dividers</a>
+    <a href="#dots" class="nav-link">Dots Menu</a>
+    <a href="#empty-states" class="nav-link">Empty States</a>
+    <a href="#form-elements" class="nav-link">Form Elements</a>
+    <a href="#icons" class="nav-link">Icons</a>
+    <a href="#modals" class="nav-link">Modals</a>
+    <a href="#toolbar" class="nav-link">Rich Toolbar</a>
+    <a href="#tables" class="nav-link">Tables</a>
+    <a href="#tabs-pills" class="nav-link">Tabs & Pills</a>
+    <a href="#input" class="nav-link">Text Input with Inset Button</a>
+    <a href="#tooltips" class="nav-link">Tooltips Using Aria-Tooltips</a>
+    <a href="#typography" class="nav-link">Typography</a>
+  </nav>
+<% end %>
+
+<div class="content-container mt-4">
+  <h1 class="text-center mb-4">Hera Style Guide [ WIP ]</h1>
+  <p>Welcome to the Hera style guide, here you will see all the major custom style components that we use in the Hera layout.</p>
+  <p>If you find something you would like to implement in the view you are working on, you can simply press the <i class="fa-solid fa-code" style="font-weight: bold;"></i> button to reveal the code structure including all the element tags, classes, data-attributes etc.</p>
+  <p>Hera uses Bootstrap 5, please refer to <a href="https://getbootstrap.com/docs/5.0/getting-started/introduction/" target="_blank">the official documentation</a> for standard bootstrap classes and element structure.</p>
+</div>
+
+<!-- Accordion -->
+<div class="content-container">
+  <div class="scroll-offset" id="accordion"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Accordion</h4>
+     <a class="reveal-code" data-bs-toggle="collapse" href="#accordion-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <p>This is a component that organizes content into collapsible sections, allowing users to expand and collapse content panels to view or hide information.</p>
+
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Accordion Item 1
+          </button>
+        </h3>
+        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>This is the first item’s accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Accordion Item 2
+          </button>
+        </h3>
+        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>This is the second item’s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            Accordion Item 3
+          </button>
+        </h3>
+        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>This is the third item’s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="accordion-code">
+    <%= highlight_code('
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h3 class="accordion-header">
+      <button 
+        class="accordion-button" 
+        type="button" 
+        data-bs-toggle="collapse" 
+        data-bs-target="#collapseOne" 
+        aria-expanded="true" 
+        aria-controls="collapseOne">
+        Accordion Item 1
+      </button>
+    </h3>
+    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <p>Accordion item 1 content</p>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h3 class="accordion-header">
+      <button 
+        class="accordion-button collapsed" 
+        type="button" 
+        data-bs-toggle="collapse" 
+        data-bs-target="#collapseTwo" 
+        aria-expanded="false" 
+        aria-controls="collapseTwo">
+        Accordion Item 2
+      </button>
+    </h3>
+    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <p>Accordion item 2 content</p>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h3 class="accordion-header">
+      <button 
+        class="accordion-button collapsed" 
+        type="button" 
+        data-bs-toggle="collapse" 
+        data-bs-target="#collapseThree" 
+        aria-expanded="false" 
+        aria-controls="collapseThree">
+        Accordion Item 3
+      </button>
+    </h3>
+    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <p>Accordion item 2 content</p>
+      </div>
+    </div>
+  </div>
+</div>', 'html').html_safe %>
+  </div>
+</div>
+
+<!-- Alerts -->
+<div class="content-container">
+  <div class="scroll-offset" id="alerts"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Alerts</h4>
+     <a class="reveal-code" data-bs-toggle="collapse" href="#alerts-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <p class="m-0">Alerts are created with the class <code>alert</code>, and a contextual class (e.g. <code>alert-success</code>). To add a close button to the alert, add the <code>alert-dismissible</code> class.</p>
+
+    <div class="row mt-4 pt-2">
+      <div class="col-md-6">
+        <div class="alert alert-warning alert-dismissible">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"><span class="visually-hidden">Close alert</span></button>
+          <strong>Warning!</strong> Some important warning here.
+        </div>
+        <div class="alert alert-info alert-dismissible">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"><span class="visually-hidden">Close alert</span></button>
+          <strong>Info!</strong> An informational alert.
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="alert alert-success alert-dismissible">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"><span class="visually-hidden">Close alert</span></button>
+          <strong>Success!</strong> The intendation action was permformed.
+        </div>
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"><span class="visually-hidden">Close alert</span></button>
+          <strong>Error!</strong> Something went wrong.
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="alert alert-warning alert-dismissible">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"><span class="visually-hidden">Close alert</span></button>
+          <h4>Warning!</h4>
+          <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
+          <p><a class="btn btn-warning" href="#">Take this action</a> <a class="alert-link" href="#">Or do this</a></p>
+        </div>
+        <div class="alert alert-info alert-dismissible">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"><span class="visually-hidden">Close alert</span></button>
+          <h4>Well done!</h4>
+          <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
+          <p><a class="btn btn-primary" href="#">Take this action</a> <a class="alert-link" href="#">Or do this</a></p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="alert alert-success alert-dismissible">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"><span class="visually-hidden">Close alert</span></button>
+          <h4>Heads up!</h4>
+          <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
+          <p><a class="btn btn-success" href="#">Take this action</a> <a class="alert-link" href="#">Or do this</a></p>
+        </div>
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true"><span class="visually-hidden">Close alert</span></button>
+          <h4>Oh snap!</h4>
+          <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
+          <p><a class="btn btn-danger" href="#">Take this action</a> <a class="alert-link" href="#">Or do this</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="alerts-code">
+    <%= highlight_code('
+<div class="alert alert-warning alert-dismissible">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">
+    <span class="visually-hidden">Close alert</span>
+  </button>
+  <strong>Warning!</strong> Some important warning here.
+</div>
+<div class="alert alert-info alert-dismissible">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">
+    <span class="visually-hidden">Close alert</span>
+  </button>
+  <strong>Info!</strong> An informational alert.
+</div>
+<div class="alert alert-success alert-dismissible">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">
+    <span class="visually-hidden">Close alert</span>
+  </button>
+  <strong>Success!</strong> The intendation action was permformed.
+</div>
+<div class="alert alert-danger alert-dismissible">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">
+    <span class="visually-hidden">Close alert</span>
+  </button>
+  <strong>Error!</strong> Something went wrong.
+</div>
+<div class="alert alert-warning alert-dismissible">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">
+    <span class="visually-hidden">Close alert</span>
+  </button>
+  <h4>Warning!</h4>
+  <p>Change this and that and try again.</p>
+  <p><a class="btn btn-warning" href="#">Take this action</a> <a class="alert-link" href="#">Or do this</a></p>
+</div>
+<div class="alert alert-info alert-dismissible">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">
+    <span class="visually-hidden">Close alert</span>
+  </button>
+  <h4>Well done!</h4>
+  <p>Change this and that and try again.</p>
+  <p><a class="btn btn-primary" href="#">Take this action</a> <a class="alert-link" href="#">Or do this</a></p>
+</div>
+<div class="alert alert-success alert-dismissible">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">
+    <span class="visually-hidden">Close alert</span>
+  </button>
+  <h4>Heads up!</h4>
+  <p>Change this and that and try again.</p>
+  <p><a class="btn btn-success" href="#">Take this action</a> <a class="alert-link" href="#">Or do this</a></p>
+</div>
+<div class="alert alert-danger alert-dismissible">
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">
+    <span class="visually-hidden">Close alert</span>
+  </button>
+  <h4>Oh snap!</h4>
+  <p>Change this and that and try again.</p>
+  <p><a class="btn btn-danger" href="#">Take this action</a> <a class="alert-link" href="#">Or do this</a></p>
+</div>', 'html').html_safe %>
+  </div>
+</div>
+
+<!-- Badges -->
+<div class="content-container">
+  <div class="scroll-offset" id="badges"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Badges</h4>
+     <a class="reveal-code" data-bs-toggle="collapse" href="#badge-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <p class="m-0">Badges are created with the class <code>badge</code>, and a contextual class (e.g. <code>bg-danger</code>).</p>
+    <p class="m-0">In their solid form <code>bg-success</code>, <code>bg-warning</code>, and <code>bg-danger</code> are used for due-dates, while <code>bg-primary</code> for informational purposes.</p>
+    <p>In their outline form they're used to display project information.</p>
+
+    <div class="d-flex flex-row mb-3">
+      <span class="badge bg-primary me-2">Badge primary</span>
+      <span class="badge bg-danger me-2">Overdue</span>
+      <span class="badge bg-success me-2">Future due date</span>
+      <span class="badge bg-warning me-2">Due today</span>
+    </div>
+    <div class="d-flex flex-row">
+      <span class="badge badge-outline-lavender me-2">Team name</span>
+      <span class="badge badge-outline-info me-2">Project state</span> 
+      <span class="badge badge-outline-danger me-2">Danger badge</span> 
+    </div>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="badge-code">
+    <%= highlight_code('
+<span class="badge bg-primary">Badge primary</span>
+<span class="badge bg-danger">Overdue</span>
+<span class="badge bg-success">Future due date</span>
+<span class="badge bg-warning">Due today</span>
+
+<span class="badge badge-outline-lavender">Team name</span>
+<span class="badge badge-outline-info">Project state</span> 
+<span class="badge badge-outline-danger">Danger badge</span>', 'html').html_safe %>
+  </div>
+</div>
+
+<!-- Buttons -->
+<div class="content-container">
+  <div class="scroll-offset" id="buttons"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Buttons</h4>
+    <a class="reveal-code" data-bs-toggle="collapse" href="#button-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <p class="m-0">Buttons are created using the class <code>btn</code> and a contextual class (e.g. <code>btn-primary</code>).</p>
+    <p>Additional classes may be applied to define its size. Use <code>.btn-lg</code> for large buttons, <code>.btn-sm</code> for small, and <code>.btn-block</code> for full width buttons.</p>
+    <div class="d-flex flex-row justify-content-between mb-3">
+      <button class="btn btn-primary">Primary button</button>
+      <button class="btn btn-secondary">Secondary button</button>
+      <button class="btn btn-danger">Danger button</button>
+      <button class="btn btn-success">Success button</button>
+      <button class="btn btn-warning">Warning button</button>
+    </div>
+    <div class="d-flex flex-row justify-content-between mb-3">
+      <button class="btn btn-outline-primary">Primary outline</button>
+      <button class="btn btn-outline-secondary">Secondary outline</button>
+      <button class="btn btn-outline-danger">Danger outline</button> 
+      <button class="btn btn-outline-success">Success outline</button> 
+      <button class="btn btn-outline-warning">Warning outline</button>
+    </div>
+    <div class="d-flex flex-row justify-content-between">
+      <a class="btn btn-primary" href="#">
+        <i class="fa-solid fa-plus me-1" title="Add"></i>Button with icon
+      </a>
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary">Button with dropdown</button>
+        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="visually-hidden">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Action</a></li>
+          <li><a class="dropdown-item" href="#">Another action</a></li>
+          <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="button-code">
+    <%= highlight_code('
+<button class="btn btn-primary">Primary button</button>
+<button class="btn btn-secondary">Secondary button</button>
+<button class="btn btn-danger">Danger button</button>
+<button class="btn btn-success">Success button</button>
+<button class="btn btn-warning">Warning button</button>
+
+<button class="btn btn-outline-primary">Primary outline</button>
+<button class="btn btn-outline-seconday">Secondary outline</button>
+<button class="btn btn-outline-danger">Danger outline</button>
+<button class="btn btn-outline-success">Success outline</button>
+<button class="btn btn-outline-warning">Warning outline</button>
+
+<a class="btn btn-primary" href="#">
+  <i class="fa-solid fa-plus me-1" title="Add"></i>New {record-type}
+</a>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-primary">Button with dropdown</button>
+  <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="visually-hidden">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+  </ul>
+</div>', 'html').html_safe %>
+  </div>
+</div>
+
+<!-- Cards -->
+<div class="content-container">
+  <div class="scroll-offset" id="cards"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Cards</h4>
+    <a class="reveal-code" data-bs-toggle="collapse" href="#card-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <p class="m-0">Cards are used to display multiple items that fall under the same category. The card gives the elements a white background, grey border with subtle border radius as well as uniform padding and margin.</p>
+    <p>Two variations are available:</p>
+    <ul>
+      <li>Cards with header</li>
+      <li>Cards without header</li>
+    </ul>
+    <p>If the content doesn't fall under the categories mentioned above, use a <a href="#container">content-container</a> instead.</p>
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header bg-primary">
+            <h4 class="card-title">Primary card</h4>
+          </div>
+          <div class="card-body">
+            <p>If you're using a card with a header, give it a <code>bg-primary</code>.<p>
+            <p>You can add anything you want within the body.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header bg-default">
+            <h4 class="card-title">Default card</h4>
+          </div>
+          <div class="card-body">
+            <p>Alternatively, give it a <code>bg-default</code>.<p>
+            <p>You can add anything you want within the body.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5><a href="#">Link to view card</a></h5>
+            <p>You can add anything you want within the body.</p>
+            <p>If you need to add actions, then use a horizontal ruler to separate them from the rest of the content.</p>
+            <hr>
+            <a class="btn btn-small btn-primary">
+              <i class="fa-solid fa-eye me-1"></i>View  
+            </a>
+            <a class="btn btn-small btn-warning">
+              <i class="fa-solid fa-pencil me-1"></i>Edit
+            </a>
+            <a class="btn btn-small btn-danger">
+              <i class="fa-solid fa-close me-1"></i>Delete
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="card-code">
+    <%= highlight_code('
+<div class="card">
+  <div class="card-header bg-primary">
+    <h4 class="card-title">Primary card</h4>
+  </div>
+  <div class="card-body">
+    <p>You can add anything you want within the body.</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header bg-default">
+    <h4 class="card-title">Default card</h4>
+  </div>
+  <div class="card-body">
+    <p>You can add anything you want within the body.</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <h5><a href="#">Link to view card</a></h5>
+    <p>You can add anything you want within the body.</p>
+    <p>If you need to add actions, then use a horizontal ruler to separate them from the rest of the content.</p>
+    <hr>
+    <a class="btn btn-small btn-primary">
+      <i class="fa-solid fa-eye me-1"></i>View  
+    </a>
+    <a class="btn btn-small btn-warning">
+      <i class="fa-solid fa-pencil me-1"></i>Edit
+    </a>
+    <a class="btn btn-small btn-danger">
+      <i class="fa-solid fa-close me-1"></i>Delete
+    </a>
+  </div>
+</div>', 'html').html_safe %>
+  </div>
+</div>
+
+<!-- Combobox -->
+<div class="content-container">
+  <div class="scroll-offset" id="combobox"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Combobox</h4>
+    <a class="reveal-code" data-bs-toggle="collapse" href="#combobox-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <div class="mb-3">
+      <label class="form-label">Basic Example</label>
+      <select class="form-select" data-combobox-config="no-filter">
+        <option value="a">Awesome Option</option>
+        <option value="b">Another Option</option>
+        <option value="c">🚀 Emojis also work!</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Filter Example</label>
+      <select class="form-select">
+        <option value="a">Awesome Option</option>
+        <option value="b" selected>Pre-selected Option</option>
+        <option value="c">Another Option</option>
+        <option value="d">🚀 Emojis also work!</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">User-defined Options Example</label>
+      <select class="form-select" data-combobox-config="add-options">
+        <option>Prompt Option</option>
+        <option value="1">Filterable option</option>
+        <option value="2">Search for me</option>
+        <option value="3">🚀 Emojis also work!</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Grouped Options Example</label>
+      <select class="form-select" data-combobox-config="add-options">
+        <option>Prompt Option</option>
+        <optgroup label="Group 123">
+          <option value="1">Grouped option</option>
+          <option value="2">Another one</option>
+          <option value="3" disabled>Disabled option</option>
+        </optgroup>
+        <optgroup label="Group ABC">
+          <option value="4">In another group</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Multi-select & User-defined Option Example</label>
+      <select class="form-select" data-combobox-config="add-options" multiple>
+        <option value="1">Filterable option</option>
+        <option value="2">Search for me</option>
+        <option value="3" disabled>Disabled option</option>
+        <option value="4">🚀 Emojis also work!</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Option-colors and Option-icons Example</label>
+      <select class="form-select">
+        <option value="a">Plain option (no color and no icon)</option>
+        <option value="b" data-combobox-option-color="#de0a26">Colored option without icon</option>
+        <option value="c" data-combobox-option-icon="fa-solid fa-rocket">Option with icon (no color added)</option>
+        <option value="d" data-combobox-option-icon="fa-regular fa-hand-peace" data-combobox-option-color="#964adb">Colored option with icon</option>
+        <option value="e" data-combobox-option-icon="fa-solid fa-user-astronaut" data-combobox-option-color="#27A599" data-combobox-option-icon-color="#fa824c">Colored option with different color icon</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Disabled Example</label>
+      <select class="form-select" data-combobox-config="no-filter" disabled>
+        <option value="a">Awesome Option</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="combobox-code">
+    <%= highlight_code('
+<label class="form-label">Basic Example</label>
+<select class="form-select" data-combobox-config="no-filter">
+  <option value="a">Awesome Option</option>
+  <option value="b">Another Option</option>
+  <option value="c">🚀 Emojis also work!</option>
+</select>
+
+<label class="form-label">Filter Example</label>
+<select class="form-select">
+  <option value="a">Awesome Option</option>
+  <option value="b" selected>Pre-selected Option</option>
+  <option value="c">Another Option</option>
+  <option value="d">🚀 Emojis also work!</option>
+</select>
+
+<label class="form-label">User-defined Options Example</label>
+<select class="form-select" data-combobox-config="add-options">
+  <option>Prompt Option</option>
+  <option value="1">Filterable option</option>
+  <option value="2">Search for me</option>
+  <option value="3">🚀 Emojis also work!</option>
+</select>
+
+<label class="form-label">Grouped Options Example</label>
+<select class="form-select" data-combobox-config="add-options">
+  <option>Prompt Option</option>
+  <optgroup label="Group 123">
+    <option value="1">Grouped option</option>
+    <option value="2">Another one</option>
+    <option value="3" disabled>Disabled option</option>
+  </optgroup>
+  <optgroup label="Group ABC">
+    <option value="4">In another group</option>
+  </optgroup>
+</select>
+
+<label class="form-label">Multi-select & User-defined Option Example</label>
+<select class="form-select" data-combobox-config="add-options" multiple>
+  <option value="1">Filterable option</option>
+  <option value="2">Search for me</option>
+  <option value="3" disabled>Disabled option</option>
+  <option value="4">🚀 Emojis also work!</option>
+</select>
+
+<label class="form-label">Option-colors and Option-icons Example</label>
+<select class="form-select">
+  <option value="a">Plain option (no color and no icon)</option>
+  <option
+    value="b"
+    data-combobox-option-color="#de0a26">
+    Colored option without icon
+  </option>
+  <option
+    value="c"
+    data-combobox-option-icon="fa-solid fa-rocket">
+    Option with icon (no color added)
+  </option>
+  <option
+    value="d"
+    data-combobox-option-icon="fa-regular fa-hand-peace"
+    data-combobox-option-color="#964adb">
+    Colored option with icon
+  </option>
+  <option
+    value="e"
+    data-combobox-option-icon="fa-solid fa-user-astronaut"
+    data-combobox-option-color="#27A599"
+    data-combobox-option-icon-color="#fa824c">
+    Colored option with different color icon
+  </option>
+</select>
+
+<label class="form-label">Disabled Example</label>
+<select class="form-select" data-combobox-config="no-filter" disabled>
+  <option value="a">Awesome Option</option>
+</select>', 'html').html_safe %>
+  </div>
+</div>
+
+<!-- Content Containers -->
+<div class="content-container">
+  <div class="scroll-offset" id="container"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Content Container</h4>
+    <a class="reveal-code" data-bs-toggle="collapse" href="#container-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <p class="m-0">Each individual section of Hera should be wrapped in a content container with an optional header element. The content container gives the elements a white background, grey border with subtle border radius as well as uniform padding and margin. The height is set to auto without a max-height.</p>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="container-code">
+    <%= highlight_code('
+<div class="content-container">
+  <h4 class="header-underline">Header</h4>
+  <p>Your awesome content</p>
+</div>', 'html').html_safe %>
+  </div>
+</div>
+
+<!-- Dividers -->
+<div class="content-container">
+  <div class="scroll-offset" id="dividers"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Dividers</h4>
+    <a class="reveal-code" data-bs-toggle="collapse" href="#dividers-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <p class="m-0">Dividers are used to visually separate content and enhance the overall layout.</p>
+    <p>They can be separated in three main categories:</p>
+    <ul>
+      <li class="mb-3">
+        <strong>Plain horizontal separator: used within content, when no additional information is required</strong>
+        <hr>
+        <span>or</span>
+        <div class="divider"></div>
+      </li>
+      <li class="mb-3">
+        <strong>Separator with label: used in cards or widgets, to separate sections</strong>
+        <div class="divider divider-lg">
+          <span class="divider-label">Title</span>
+        </div>
+      </li>
+      <li>
+        <strong>Separator with label (lead): used in views to separate larger areas/sections of content</strong>
+        <div class="divider divider-xl">
+          <p class="divider-label lead">Title</p>
+        </div>  
+      </li>
+    </ul>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="dividers-code">
+    <%= highlight_code('
+<hr>
+
+<div class="divider"></div>
+
+<div class="divider divider-lg">
+  <span class="divider-label">Title</span>
+</div>
+
+<div class="divider divider-xl">
+  <p class="divider-label lead">Title</p>
+</div>', 'html').html_safe %>
+  </div>
+</div>
+
+<!-- Dots Menu -->
+<div class="content-container">
+  <div class="scroll-offset" id="dots"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Dots Menu</h4>
+    <a class="reveal-code" data-bs-toggle="collapse" href="#dots-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <div class="dropdown dots-dropdown">
+      <a href="javascript:void(0)" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-h fa-lg"></i><span class="visually-hidden">Toggle menu</span></a>
+      <div class="dropdown-menu">
+        <a href="javascript:void(0)" class="dropdown-item"><i class="fa-brands fa-superpowers fa-fw"></i> Some action</a>
+        <a href="javascript:void(0)" class="dropdown-item"><i class="fa-solid fa-cube fa-fw"></i> Another action</a>
+        <span class="dropdown-item dots-dropdown-header">Group Header</span>
+        <a href="javascript:void(0)" class="dropdown-item"><i class="fa-regular fa-hand-peace fa-fw"></i> Some grouped action</a>
+        <a href="javascript:void(0)" class="dropdown-item"><i class="fa-regular fa-hand-spock fa-fw"></i> Another grouped action</a>
+        <span class="dropdown-item dots-dropdown-header">Another Group</span>
+        <a href="javascript:void(0)" class="dropdown-item"><i class="fa-solid fa-pie-chart fa-fw"></i> Group 2 action 1</a>
+        <a href="javascript:void(0)" class="dropdown-item"><i class="fa-solid fa-line-chart fa-fw"></i> Group 2 action 2</a>
+        <a href="javascript:void(0)" class="dropdown-item"><i class="fa-solid fa-bar-chart fa-fw"></i> Group 2 action 3</a>
+        <a href="javascript:void(0)" class="dropdown-item"><i class="fa-solid fa-area-chart fa-fw"></i> Group 2 action 4</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="dots-code">
+    <%= highlight_code('
+<div class="dropdown dots-dropdown">
+  <a href="javascript:void(0)" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-h fa-lg"></i></a>
+  <div class="dropdown-menu">
+    <a href="javascript:void(0)" class="dropdown-item"><i class="fa-brands fa-superpowers fa-fw"></i> Some action</a>
+    <a href="javascript:void(0)" class="dropdown-item"><i class="fa-solid fa-cube fa-fw"></i> Another action</a>
+    <span class="dropdown-item dots-dropdown-header">Group header</span>
+    <a href="javascript:void(0)" class="dropdown-item"><i class="fa-regular fa-hand-peace fa-fw"></i> Some grouped action</a>
+    <a href="javascript:void(0)" class="dropdown-item"><i class="fa-regular fa-hand-spock fa-fw"></i> Another grouped action</a>
+    <span class="dropdown-item dots-dropdown-header">Another header</span>
+    <a href="javascript:void(0)" class="dropdown-item"><i class="fa-solid fa-pie-chart fa-fw"></i> Group 2 action 1</a>
+    <a href="javascript:void(0)" class="dropdown-item"><i class="fa-solid fa-line-chart fa-fw"></i> Group 2 action 2</a>
+    <a href="javascript:void(0)" class="dropdown-item"><i class="fa-solid fa-bar-chart fa-fw"></i> Group 2 action 3</a>
+    <a href="javascript:void(0)" class="dropdown-item"><i class="fa-solid fa-area-chart fa-fw"></i> Group 2 action 4</a>
+  </div>
+</div>', 'html').html_safe %>
+  </div>
+</div>
+
+<!-- Empty States -->
+<div class="content-container">
+  <div class="scroll-offset" id="empty-states"></div>
+  <h4 class="header-underline">Empty States</h4>
+
+  <p>Empty States are used when there are no records of a specific type to be displayed. The Default empty state includes an svg icon, a short description of the record type, a CTA (where applicable), and link to relevant documentation.</p>
+  
+  <div class="row">
+    <div class="col-md-6">
+      <div class="style-example">
+        <div class="content-container">
+          <div class="style-header">
+            <h5 class="header-underline">Default</h5>
+            <a class="reveal-code" data-bs-toggle="collapse" href="#default-empty-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+          </div>
+          <div class="empty-state">
+            <div class="empty-state-icon">
+              <%= image_tag "icons/#{rand(9)}.svg" %>
+            </div>
+            <div class="empty-state-body">
+              <div class="container">
+                <h4 class="empty-state-title">You don't have any {record-type} yet</h4>
+                <p class="empty-state-body-text">{record-type} description</p>
+                <div class="empty-state-actions">
+                  <a href="#" class="empty-state-docs-link" target="_blank">More about {record-type}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="style-code-wrapper collapse" id="default-empty-code">
+        <%= highlight_code('
+<div class="empty-state">
+  <div class="empty-state-icon">
+    &lt;%= image_tag "icons/#{rand(9)}.svg" %&gt;
+  </div>
+  <div class="empty-state-body">
+    <div class="container">
+      <h4 class="empty-state-title">
+        You don\'t have any {record-type} yet
+      </h4>
+      <p class="empty-state-body-text">
+        {record-type} description
+      </p>
+      <div class="empty-state-actions">
+        <a href="#" class="empty-state-docs-link" target="_blank">
+          More about {record-type}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>', 'erb').html_safe %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Form Elements -->
+<div class="content-container">
+  <div class="scroll-offset" id="form-elements"></div>
+  <h4 class="header-underline">Form Elements</h4>
+  <p>This section presents the different form elements that can be used throughout the application, also demonstrating the error / success styles that may apply.</p>
+
+  <div class="py-3">
+    <div class="style-example">
+      <div class="style-header">
+        <h5 class="header-underline">Form Controls</h5>
+        <a class="reveal-code" data-bs-toggle="collapse" href="#controls-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="input-normal" class="form-label">Normal text input</label>
+            <input type="text" id="input-normal" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label for="input-disabled" class="form-label">Disabled text input</label>
+            <input type="text" id="input-disabled" class="form-control" disabled>
+          </div>
+
+          <div class="mb-3">
+            <label for="input-valid" class="form-label">Valid text input</label>
+            <input type="text" id="input-valid" class="form-control is-valid">
+          </div>
+
+          <div class="mb-3">
+            <label for="input-invalid" class="form-label">Invalid text input</label>
+            <input type="text" id="input-invalid" class="form-control is-invalid">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="input-textarea" class="form-label">This is a textarea</label>
+            <textarea class="form-control" rows="9"></textarea>
+          </div>
+          <div class="mb-3">
+            <input type="submit" class="btn btn-primary pull-right" value="Submit">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="style-code-wrapper collapse" id="controls-code">
+      <%= highlight_code('
+<label for="input-normal" class="form-label">Normal text input</label>
+<input type="text" id="input-normal" class="form-control">
+
+<label for="input-disabled" class="form-label">Disabled text input</label>
+<input type="text" id="input-disabled" class="form-control" disabled>
+
+<label for="input-valid" class="form-label">Valid text input</label>
+<input type="text" id="input-valid" class="form-control is-valid">
+
+<label for="input-invalid" class="form-label">Invalid text input</label>
+<input type="text" id="input-invalid" class="form-control is-invalid">
+
+<label for="input-textarea" class="form-label">This is a textarea</label>
+<textarea class="form-control" rows="9"></textarea>
+<input type="submit" class="btn btn-primary pull-right" value="Submit">', 'html').html_safe %>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="py-3">
+    <div class="style-example">
+      <div class="style-header">
+        <h5 class="header-underline">Checkboxes and Radios</h5>
+        <a class="reveal-code" data-bs-toggle="collapse" href="#checkboxes-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              Default
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+            <label class="form-check-label" for="defaultCheck2">
+              Disabled
+            </label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck3checked" checked>
+            <label class="form-check-label" for="defaultCheck3">
+              Default checked
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck4checked" checked disabled>
+            <label class="form-check-label" for="defaultCheck4">
+              Disabled checked
+            </label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios" value="option1">
+            <label class="form-check-label" for="exampleRadios1">
+              Default
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exampleRadiosDisabled" id="exampleRadios2" value="option3" disabled>
+            <label class="form-check-label" for="exampleRadios3">
+              Disabled radio
+            </label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option1" checked>
+            <label class="form-check-label" for="exampleRadios2">
+              Default Selected
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exampleRadiosDisabled" id="exampleRadios4" value="option3" checked disabled>
+            <label class="form-check-label" for="exampleRadios4">
+              Disabled Selected
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="style-code-wrapper collapse" id="checkboxes-code">
+      <%= highlight_code('
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+  <label class="form-check-label" for="defaultCheck1">
+    Default
+  </label>
+</div>
+
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+  <label class="form-check-label" for="defaultCheck2">
+    Disabled
+  </label>
+</div>
+
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="defaultCheck3checked" checked>
+  <label class="form-check-label" for="defaultCheck3">
+    Default checked
+  </label>
+</div>
+
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="defaultCheck4checked" checked disabled>
+  <label class="form-check-label" for="defaultCheck4">
+    Disabled checked
+  </label>
+</div>
+
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+  <label class="form-check-label" for="exampleRadios1">
+    Default
+  </label>
+</div>
+
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadiosDisabled" id="exampleRadios3" value="option3" disabled>
+  <label class="form-check-label" for="exampleRadios3">
+    Disabled radio
+  </label>
+</div>
+
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option1" checked>
+  <label class="form-check-label" for="exampleRadios2">
+    Default Selected
+  </label>
+</div>
+
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadiosDisabled" id="exampleRadios4" value="option3" checked disabled>
+  <label class="form-check-label" for="exampleRadios4">
+    Disabled Selected
+  </label>
+</div>', 'html').html_safe %>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="py-3">
+    <div class="style-example">
+      <div class="style-header">
+        <h5 class="header-underline">Toggle Switch</h5>
+        <a class="reveal-code" data-bs-toggle="collapse" href="#toggle-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+      </div>
+      <div class="form-check form-switch">
+        <input type="checkbox" class="form-check-input" role="switch" id="customSwitch1">
+        <label class="form-check-label" for="customSwitch1">Default switch checkbox input</label>
+      </div>
+      <div class="form-check form-switch">
+        <input type="checkbox" class="form-check-input" role="switch" id="customSwitch1disabled" disabled>
+        <label class="form-check-label" for="customSwitch1disabled">Disabled switch checkbox input</label>
+      </div>
+      <div class="form-check form-switch">
+        <input type="checkbox" class="form-check-input" role="switch" id="customSwitch2" checked>
+        <label class="form-check-label" for="customSwitch2">Checked switch checkbox input</label>
+      </div>
+      <div class="form-check form-switch">
+        <input type="checkbox" class="form-check-input" role="switch" id="customSwitch2disabled" checked disabled>
+        <label class="form-check-label" for="customSwitch2disabled">Disabled checked switch checkbox input</label>
+      </div>
+    </div>
+
+    <div class="style-code-wrapper collapse" id="toggle-code">
+      <%= highlight_code('
+<div class="form-check form-switch">
+  <input type="checkbox" class="form-check-input" role="switch" id="customSwitch1">
+  <label class="form-check-label" for="customSwitch1">Default switch checkbox input</label>
+</div>
+<div class="form-check form-switch">
+  <input type="checkbox" class="form-check-input" role="switch" id="customSwitch1disabled" disabled>
+  <label class="form-check-label" for="customSwitch1disabled">Disabled switch checkbox input</label>
+</div>
+<div class="form-check form-switch">
+  <input type="checkbox" class="form-check-input" role="switch" id="customSwitch2" checked>
+  <label class="form-check-label" for="customSwitch2">Checked switch checkbox input</label>
+</div>
+<div class="form-check form-switch">
+  <input type="checkbox" class="form-check-input" role="switch" id="customSwitch2disabled" checked disabled>
+  <label class="form-check-label" for="customSwitch2disabled">Disabled checked switch checkbox input</label>
+</div>', 'html').html_safe %>
+    </div>
+  </div>
+</div>
+
+<!-- Icons -->
+<div class="content-container">
+  <div class="scroll-offset" id="icons"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Icons</h4>
+    <a class="reveal-code" data-bs-toggle="collapse" href="#icons-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <p class="m-0">They're by definition a visual representation of an object, or action, and they must be used to communicate meaning and reduce ambiguity. If not, they're just adding visual noise.</p>
+
+    <p class="m-0">Some icons that are universal/don't need translation (e.g. home, magnifying glass, and trash/bin), can be used without an accompanying label. But, as a general rule of thumb all icons should come with a label for accessibility reasons.</p>
+
+    <p class="m-0">When using an icon as a standalone element, always add a label with <code>class="visually-hidden"</code> to keep them accessible to assistive technologies, and a <code>title="{icon-title}"</code> for mouse-using users.</p>
+    <p>When the icon is placed on the left side of the copy, add an additional <code>class="me-1"</code> to assert proper spacing between the two.</p>
+
+    <p>Hera uses v.6.7.2 of <a href="https://fontawesome.com/v6/search?o=r" target="_blank">Font Awesome</a>.</p>
+
+    <h5>List of icons currently being used:</h5>
+    <ul class="icon-list">
+      <li><strong>Main Navigation</strong>
+        <ul>
+          <li><i class="fa-solid fa-question" title="Help"></i>Help</li>
+          <li><i class="fa-solid fa-arrow-right-from-bracket" title="Logout"></i>Logout</li>
+          <li><i class="fa-solid fa-bell" title="Notifications"></i>Notifications</li>
+          <li><i class="fa-solid fa-cog" title="Configuration"></i>Configuration</li>
+          <li><i class="fa-solid fa-trash-can" title="Trash"></i>Trash</li>
+        </ul>
+      </li>
+
+      <li><strong>Miscellaneous</strong>
+        <ul>
+          <li><i class="fa-solid fa-plus" title="Add"></i>Add new</li>
+          <li><i class="fa-solid fa-box-archive" title="Archive"></i>Archive</li>
+          <li><i class="fa-solid fa-paperclip" title="Attachment"></i>Attachments</li>
+          <li><i class="fa-solid fa-calendar" title="Calendar"></i>Date</li>
+          <li><i class="fa-solid fa-download" title="Download"></i>Download</li>
+          <li><i class="fa-solid fa-copy" title="Duplicate"></i>Duplicate</li>
+          <li><i class="fa-solid fa-pencil" title="Edit"></i>Edit</li>
+          <li><i class="fa-solid fa-close" title="Delete"></i>Hard delete</li>
+          <li><i class="fa-solid fa-upload fa-fw" title="Upload"></i>Kit Upload</li>
+          <li><i class="fa-solid fa-trash-can" title="Trash"></i>Soft delete</li>
+          <li><i class="fa-solid fa-link fa-fw" title="URL"></i>URL</li>
+        </ul>
+      </li>
+
+      <li><strong>Project</strong>
+        <ul>
+          <li><i class="fa-solid fa-rss fa-fw" title="Activities"></i>Activities</li>
+          <li><i class="fa-regular fa-address-card" title="Card"></i>Card</li>
+          <li><i class="fa-solid fa-laptop" title="Evidence"></i>Evidence</li>
+          <li><i class="fa-solid fa-file-export" title="Export"></i>Export</li>
+          <li><i class="fa-solid fa-bug" title="Issues"></i>Issues</li>
+          <li><i class="fa-brands fa-trello" title="Methodologies"></i>Methodologies</li>
+          <li><i class="fa-solid fa-sitemap me-1" title="Nodes"></i>Nodes</li>
+          <li><i class="fa-regular fa-folder-open" title="Overview"></i>Overview</li>
+          <li><i class="fa-regular fa-handshake" title="QA"></i>QA</li>
+          <li><i class="fa-solid fa-file-lines" title="Report content"></i>Report Content
+            <ul>
+              <li><i class="fa-solid fa-cogs" title="Document properties"></i>Document Properties</li>
+              <li><i class="fa-solid fa-th-large" title="Content blocks"></i>Content Blocks</li>
+            </ul>
+          </li>
+          <li><i class="fa-solid fa-history fa-fw" title="History"></i>Revisions/View History</li>
+          <li><i class="fa-solid fa-search" title="Search"></i>Search</li>
+          <li><i class="fa-solid fa-tag" title="Tag"></i>Tag</li>
+          <li><i class="fa-solid fa-bell-slash fa-fw" title="Unsubscribe"></i>Unsubscribe</li>
+          <li><i class="fa-solid fa-cloud-arrow-up" title="Upload"></i>Upload</li>
+        </ul>
+      </li>
+
+      <li><strong>Tools & Integrations</strong>
+        <ul>
+          <li>Business Intelligence:
+            <ul>
+              <li><i class="fa-solid fa-chart-line" title="Overview"></i>Overview</li>
+              <li><i class="fa-solid fa-sliders" title="Custom Properties"></i>Custom Properties</li>
+              <li><i class="fa-solid fa-chart-simple" title="Data Analysis"></i>Data Analysis</li>
+            </ul>
+          </li>
+          <li>Gateway:
+            <ul>
+              <li><i class="fa-solid fa-briefcase" title="Projects"></i>Projects</li>
+              <li><i class="fa-solid fa-envelopes-bulk" title="Services"></i>Services/Questionnaires</li>
+              <li><i class="fa-solid fa-palette" title="Themes"></i>Themes</li>
+            </ul>
+          </li>
+          <li><i class="fa-solid fa-book fa-fw" title="Issue Library"></i>Issue Library
+            <ul>
+              <li><i class="fa-solid fa-database" title="Entries"></i>Entries</li>
+              <li><i class="fa-solid fa-handshake" title="QA Entries"></i>QA Entries</li>
+            </ul>
+          </li>
+          <li><i class="fa-solid fa-tasks fa-fw" title="Remediation Tracker"></i>Remediation Tracker
+            <ul>
+              <li><i class="fa-solid fa-clipboard-check" title="Tickets"></i>Tickets</li>
+              <li><i class="fa-solid fa-square-poll-horizontal" title="Ticket Categories"></i>Ticket Categories</li>
+              <li><i class="fa-solid fa-bars-progress" title="Ticket States"></i>Ticket States</li>
+            </ul>
+          </li>
+          <li><i class="fa-solid fa-calculator" title="Risk Calculator"></i>Risk Calculators</li>
+        </ul>
+      </li>
+
+      <li><strong>Users</strong>
+        <ul>
+          <li><i class="fa-solid fa-users-line" title="Testers"></i>Testers</li>
+          <li><i class="fa-solid fa-chalkboard-user" title="Contributors"></i>Contributors</li>
+          <li><i class="fa-solid fa-user-times" title="Disable"></i>Disable</li>
+          <li><i class="fa-solid fa-user-plus" title="Enable"></i>Enable</li>
+          <li><i class="fa-solid fa-eye-slash" title="Permissions"></i>Permissions</li>
+      </li>
+
+    </ul>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="icons-code">
+    <%= highlight_code('
+<!-- Standalone icon usage example -->
+<a href="#">
+  <i class="fa-solid fa-trash-can" title="Trash"></i>
+  <label class="visually-hidden">Trash</label>
+</a>
+
+<!-- Icon next to copy example -->
+<a class="nav-link" href="#">
+  <i class="fa-solid fa-chalkboard-user me-1" title="Contributors"></i>
+  <span>Contributors</span>
+</a>', 'html').html_safe %>
+  </div>
+</div>
+
+<!-- Modals -->
+<div class="content-container">
+  <div class="scroll-offset" id="modals"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Modals</h4>
+    <a class="reveal-code" data-bs-toggle="collapse" href="#modals-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example text-center">
+    <a class="btn btn-primary" data-bs-toggle="modal" href="#modal-example">Click for modal</a>
+  </div>
+
+  <div id="modal-example" class="modal fade" tab-index="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal Title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal">
+          <span class="visually-hidden">Close modal</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal content goes here</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary">Submit</button>
+        <button class="btn" type="button" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="style-code-wrapper collapse" id="modals-code">
+    <%= highlight_code('
+// This line goes in the view where you would want to use a button or link to trigger the modal dialog.
+<a class="btn btn-primary" data-bs-toggle="modal" href="#modal-example">Click for modal</a>
+
+// This block must be added as a partial to the modals section of "layouts/Hera.html.erb" near the end of the file.
+<div id="modal-example" class="modal fade" tab-index="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal Title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal">
+          <span class="visually-hidden">Close modal</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal content goes here</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary">Submit</button>
+        <button class="btn" type="button" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>', 'html').html_safe %>
+  </div>
+</div>
+
+<!-- Rich Toolbar -->
+<div class="content-container">
+  <div class="scroll-offset" id="toolbar"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Rich Toolbar</h4>
+    <a class="reveal-code" data-bs-toggle="collapse" href="#toolbar-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <label class="mb-3" for="toolbar-textarea">Click the below textarea to reveal the rich toolbar.</label>
+    <div class="d-flex justify-content-center mb-3">
+      <textarea class="form-control" id="toolbar-textarea" data-behavior="rich-toolbar" data-rich-toolbar="defaults" placeholder="This is an auto-expanding textarea with a rich toolbar"></textarea>
+    </div>
+    <p>Configuration options:</p>
+    <ul>
+      <li><em>data-rich-toolbar: block-code | bold | field<sup>*</sup> | highlight code | inline-code | italic | link | list-ol | list-ul | quote | table | image<sup>*</sup></em></li>
+    </ul>
+    <p><sup>*</sup> omitted from this example</p>
+
+    <p>As of Nov 2025, instead of adding the individual styles, you can use <code>data-rich-toolbar="defaults"</code> to include all of them (excl. field and image).</p>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="toolbar-code">
+    <%= highlight_code('
+<!-- Default styles -->
+<textarea 
+  class="form-control" 
+  data-behavior="rich-toolbar" 
+  data-rich-toolbar="defaults">
+</textarea>
+
+<!-- All styles -->
+<textarea 
+  class="form-control" 
+  data-behavior="rich-toolbar" 
+  data-rich-toolbar="defaults fields image">
+</textarea>', 'html').html_safe %>
+  </div>
+</div>
+
+<!-- Tables -->
+<div class="content-container">
+  <div class="scroll-offset" id="tables"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Tables</h4>
+    <a class="reveal-code" data-bs-toggle="collapse" href="#tables-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <p>Tables in Dradis have a special structure in order to allow them to be scrollable and sortable. The below table is an example of a table exceeding the container boundaries but all data is still visisible thanks to a horizontally scrollable table wrapper.</p>
+
+    <div class="d-flex justify-content-center mt-4">
+      <div class="table-wrapper">
+        <table class="table table-striped"
+          data-behavior="dradis-datatable"
+          data-default-columns='["Col 1 Header", "Col 2 Header", "Col 3 Header", "Col 4 Header", "Col 5 Header"]'
+          data-item-name="name_of_entity"
+          data-local-storage-key="project.ce.name_of_entities_datatable">
+          <thead>
+            <tr>
+              <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Select</span></th>
+              <th>Col 1 Header</th>
+              <th>Col 2 Header</th>
+              <th>Col 3 Header</th>
+              <th>Col 4 Header</th>
+              <th>Col 5 Header</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr id="name_of_entity-1">
+              <td class="select-checkbox" data-behavior="select-checkbox"></td>
+              <td data-sort="Row 1 Col 1 Data">Row 1 Col 1 Data</td>
+              <td data-sort="Row 1 Col 2 Data">Row 1 Col 2 Data</td>
+              <td data-sort="Row 1 Col 3 Data">Row 1 Col 3 Data</td>
+              <td data-sort="Row 1 Col 4 Data">Row 1 Col 4 Data</td>
+              <td data-sort="Row 1 Col 4 Data">Row 1 Col 5 Data</td>
+            </tr>
+            <tr id="name_of_entity-2">
+              <td class="select-checkbox" data-behavior="select-checkbox"></td>
+              <td data-sort="Row 2 Col 1 Data">Row 2 Col 1 Data</td>
+              <td data-sort="Row 2 Col 2 Data">Row 2 Col 2 Data</td>
+              <td data-sort="Row 2 Col 3 Data">Row 2 Col 3 Data</td>
+              <td data-sort="Row 2 Col 4 Data">Row 2 Col 4 Data</td>
+              <td data-sort="Row 2 Col 4 Data">Row 2 Col 5 Data</td>
+            </tr>
+            <tr id="name_of_entity-3">
+              <td class="select-checkbox" data-behavior="select-checkbox"></td>
+              <td data-sort="Row 3 Col 1 Data">Row 3 Col 1 Data</td>
+              <td data-sort="Row 3 Col 2 Data">Row 3 Col 2 Data</td>
+              <td data-sort="Row 3 Col 3 Data">Row 3 Col 3 Data</td>
+              <td data-sort="Row 3 Col 4 Data">Row 3 Col 4 Data</td>
+              <td data-sort="Row 3 Col 4 Data">Row 3 Col 5 Data</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="tables-code">
+    <%= highlight_code('
+<div class="table-wrapper">
+  <table
+  class="table table-striped"
+  data-behavior="dradis-datatable"
+  data-default-columns="[\'Col 1 Header\', \'Col 2 Header\', \'Col 3 Header\', \'Col 4 Header\', \'Col 5 Header\']"
+  data-item-name="name_of_entity"
+  data-local-storage-key="project.ce.name_of_entities_datatable">
+    <thead>
+      <tr>
+        <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Select</span></th>
+        <th>Col 1 Header</th>
+        <th>Col 2 Header</th>
+        <th>Col 3 Header</th>
+        <th>Col 4 Header</th>
+        <th>Col 5 Header</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="name_of_entity-1">
+        <td class="select-checkbox" data-behavior="select-checkbox"></td>
+        <td data-sort="Row 1 Col 1 Data">Row 1 Col 1 Data</td>
+        <td data-sort="Row 1 Col 2 Data">Row 1 Col 2 Data</td>
+        <td data-sort="Row 1 Col 3 Data">Row 1 Col 3 Data</td>
+        <td data-sort="Row 1 Col 4 Data">Row 1 Col 4 Data</td>
+        <td data-sort="Row 1 Col 5 Data">Row 1 Col 5 Data</td>
+      </tr>
+      <tr id="name_of_entity-2">
+        <td class="select-checkbox" data-behavior="select-checkbox"></td>
+        <td data-sort="Row 2 Col 1 Data">Row 2 Col 1 Data</td>
+        <td data-sort="Row 2 Col 2 Data">Row 2 Col 2 Data</td>
+        <td data-sort="Row 2 Col 3 Data">Row 2 Col 3 Data</td>
+        <td data-sort="Row 2 Col 4 Data">Row 2 Col 4 Data</td>
+        <td data-sort="Row 2 Col 5 Data">Row 2 Col 5 Data</td>
+      </tr>
+      <tr id="name_of_entity-3">
+        <td class="select-checkbox" data-behavior="select-checkbox"></td>
+        <td data-sort="Row 3 Col 1 Data">Row 3 Col 1 Data</td>
+        <td data-sort="Row 3 Col 2 Data">Row 3 Col 2 Data</td>
+        <td data-sort="Row 3 Col 3 Data">Row 3 Col 3 Data</td>
+        <td data-sort="Row 3 Col 4 Data">Row 3 Col 4 Data</td>
+        <td data-sort="Row 3 Col 5 Data">Row 3 Col 5 Data</td>
+      </tr>
+    </tbody>
+  </table>
+</div>', 'html').html_safe %>
+  </div>
+</div>
+
+<!-- Tabs & Pills -->
+<div class="content-container">
+  <div class="scroll-offset" id="tabs-pills"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Tabs & Pills</h4>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <ul class="tabs-container nav nav-tabs" data-behavior="deeplinks">
+        <li class="nav-item">
+          <a data-bs-toggle="tab" class="nav-link" href="#tab1">Tab 1</a>
+        </li>
+        <li class="nav-item">
+          <a data-bs-toggle="tab" class="nav-link active" href="#tab2">Tab 2</a>
+        </li>
+        <li class="nav-item">
+          <a data-bs-toggle="tab" class="nav-link" href="#tab3">Tab 3</a>
+        </li>
+      </ul>
+      <div class="content-container">
+        <div class="style-header">
+          <h4 class="header-underline">Tabs</h4>
+          <a class="reveal-code" data-bs-toggle="collapse" href="#tabs-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+        </div>
+
+        <div class="style-example">
+          <div class="tab-content">
+            <div id="tab1" class="tab-pane fade">
+              <p>Tab 1 Content</p>
+            </div>
+            <div id="tab2" class="tab-pane fade active show">
+              <p>Tab 2 Content</p>
+            </div>
+            <div id="tab3" class="tab-pane fade">
+              <p>Tab 3 Content</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="style-code-wrapper collapse" id="tabs-code">
+          <%= highlight_code('
+<ul class="tabs-container nav nav-tabs">
+  <li class="nav-item">
+    <a data-bs-toggle="tab" href="#tab1" class="nav-link">Tab 1</a>
+  </li>
+  <li class="nav-item">
+    <a data-bs-toggle="tab" href="#tab2" class="nav-link active">Tab 2</a>
+  </li>
+  <li class="nav-item">
+    <a data-bs-toggle="tab" href="#tab3" class="nav-link">Tab 3</a>
+  </li>
+</ul>
+
+<div class="content-container">
+  <div class="tab-content">
+    <div id="tab1" class="tab-pane fade">
+      <p>Tab 1 Content</p>
+    </div>
+    <div id="tab2" class="tab-pane fade active show">
+      <p>Tab 2 Content</p>
+    </div>
+    <div id="tab3" class="tab-pane fade">
+      <p>Tab 3 Content</p>
+    </div>
+  </div>
+</div>', 'html').html_safe %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <ul class="nav nav-pills nav-justified mb-3" id="pills-tab" role="tablist" data-behavior='deeplinks'>
+        <li class="nav-item">
+          <a class="nav-link active" href="#pill1" role="tab" data-bs-toggle="tab">Link 1</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#pill2" role="tab" data-bs-toggle="tab">Link 2</a>
+        </li>
+      </ul>
+
+      <div class="style-example">
+        <div id="pills-tab-content" class="tab-content">
+          <div class="tab-pane fade active show" id="pill1">
+            <div class="card">
+              <div class="card-body">
+                <div class="style-header">
+                  <h4 class="header-underline">Pills</h4>
+                  <a class="reveal-code" data-bs-toggle="collapse" href="#pills-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+                </div>
+                <p>Tab-pane 1 content</p>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="pill2">
+            <div class="card">
+              <div class="card-body">
+                <div class="style-header">
+                  <h4 class="header-underline">Pills</h4>
+                  <a class="reveal-code" data-bs-toggle="collapse" href="#pills-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+                </div>
+                <p>Tab-pane 2 content</p>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="dropdown2-1">
+            <div class="card">
+              <div class="card-body">
+                <div class="style-header">
+                  <h4 class="header-underline">Pills</h4>
+                  <a class="reveal-code" data-bs-toggle="collapse" href="#pills-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+                </div>
+                <p>Dropdown 1 content</p>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="dropdown2-2">
+            <div class="card">
+              <div class="card-body">
+                <div class="style-header">
+                  <h4 class="header-underline">Pills</h4>
+                  <a class="reveal-code" data-bs-toggle="collapse" href="#pills-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+                </div>
+                <p>Dropdown 2 content</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="style-code-wrapper collapse" id="pills-code">
+        <%= highlight_code('
+<ul class="nav nav-pills nav-justified mb-3" id="pills-tab" role="tablist" data-behavior="deeplinks">
+  <li class="nav-item">
+    <a class="nav-link active" href="#pill1" role="tab" data-bs-toggle="tab">Link 1</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#pill2" role="tab" data-bs-toggle="tab">Link 2</a>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Dropdown <b class="caret"></b></a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#dropdown2-1" data-bs-toggle="tab">@fat</a>
+      <a class="dropdown-item" href="#dropdown2-2" data-bs-toggle="tab">@mdo</a>
+    </div>
+  </li>
+</ul>
+
+<div id="pills-tab-content" class="tab-content">
+  <div class="tab-pane fade active show" id="pill1">
+    <div class="card">
+      <div class="card-body">
+        <p>Tab-pane 1 content</p>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="pill2">
+    <div class="card">
+      <div class="card-body">
+        <p>Tab-pane 2 content</p>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="dropdown2-1">
+    <div class="card">
+      <div class="card-body">
+        <p>Dropdown 1 content</p>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="dropdown2-2">
+    <div class="card">
+      <div class="card-body">
+        <p>Dropdown 2 content</p>
+      </div>
+    </div>
+  </div>
+</div>', 'html').html_safe %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Text Input with Inset Button -->
+<div class="content-container">
+  <div class="scroll-offset" id="input"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Text Input with Inset Button</h4>
+    <a class="reveal-code" data-bs-toggle="collapse" href="#input-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <div class="container">
+      <div class="row">
+        <div class="col-8 offset-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+          <div class="inset-button-wrapper">
+            <label for="inset-example" class="visually-hidden">Example input element with inset button</label>
+            <input type="text" class="form-control" id="inset-example" placeholder="Placeholder Text...">
+            <button type="submit" class="btn btn-primary">Button</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="input-code">
+    <%= highlight_code('
+<div class="inset-button-wrapper">
+  <input type="text" class="form-control" placeholder="Placeholder Text...">
+  <button type="submit" class="btn btn-primary">Button</button>
+</div>', 'html').html_safe %>
+  </div>
+</div>
+
+<!-- Tooltips -->
+<div class="content-container">
+  <div class="scroll-offset" id="tooltips"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Tooltips using aria-tooltips</h4>
+    <a class="reveal-code" data-bs-toggle="collapse" href="#tooltips-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <p>Hover over the below button to see a tooltip using the aria-tooltip attribute. We use aria-tooltips as tooltips as they are easily customizable and do not require any kind of plugin's or 3rd party code to function. This example uses a button element but this can be used on almost any kind of element.</p>
+    <div class="w-100 d-flex justify-content-center">
+      <button class="btn btn-primary" aria-tooltip="Tooltip text using aria-tooltip">Hover Me!</button>
+    </div>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="tooltips-code">
+   <%= highlight_code('
+<button class="btn btn-primary" aria-tooltip="Tooltip text using aria-tooltips">Hover Me!</button>', 'html').html_safe %>
+  </div>
+</div>
+
+<!-- Typography -->
+<div class="content-container">
+  <div class="scroll-offset" id="typography"></div>
+  <div class="style-header">
+    <h4 class="header-underline">Typography</h4>
+    <a class="reveal-code" data-bs-toggle="collapse" href="#typography-code"><i class="fa-solid fa-code"></i><label class="visually-hidden">Toggle code</label></a>
+  </div>
+  <div class="style-example">
+    <div class="row">
+      <div class="col-12">
+        <p>Hera uses the <a href="https://fonts.adobe.com/fonts/proxima-nova" target="_blank">ProximaNova</a> font, with <code>font-size: 0.95rem</code> (= 15.2px). <strong>ProximaNovaLight</strong> is used for elements with <code>font-weight: 400</code>, and <strong>ProximaNovaRegular</strong> for <code>font-weight: 500</code>.</p>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-6 text-center">
+        <h1>Heading 1</h1>
+        <h2>Heading 2</h2>
+        <h3>Heading 3</h3>
+        <h4>Heading 4</h4>
+        <h5>Heading 5</h5>
+        <h6>Heading 6</h6>
+      </div>
+      <div class="col-6 text-center">
+        <p class="lead">Paragraph with lead class</p>
+        <p>Normal paragraph</p>
+        <p><a href="javascript:void(0)">Link example</a></p>
+        <p class="text-error">Error text</p>
+        <p class="text-muted">Muted text</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="style-code-wrapper collapse" id="typography-code">
+    <%= highlight_code('
+<h1>Heading 1</h1>
+<h2>Heading 2</h2>
+<h4 class="header-underline">>Heading 3</h4>
+<h4 class="header-underline">>Heading 4</h4>
+<h5>Heading 5</h5>
+<h6>Heading 6</h6>
+
+<p class="lead">Paragraph with lead class</p>
+<p>Normal paragraph</p>
+<a href="javascript:void(0)">Link example</a>
+<p class="text-error">Error text</p>
+<p class="text-muted">Muted text</p>', 'html').html_safe %>
+  </div>
+</div>

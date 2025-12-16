@@ -1,14 +1,22 @@
 [v#.#.#] ([month] [YYYY])
+  - Docker:
+    - Update default attachments & templates locations to storage/
+    - Include assets for all integrations regardless of enabled/disabled status
+  - Nodes:
+    - Add more types and icons
+    - Rename addon upload/parent nodes and add icons
   - Textile:
     - Add support for paragraph alignment
     - Add support for image resizing, alignment, and borders
+  - Wizard:
+    - Add analytics sharing step
+    - Mark as done after Kit step, without waiting for the background job.
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
-    - [entity]:
-      - [future tense verb] [bug fix]
+    - Notifications: Ensure correct link for note and issue comments
     - Bug tracker items:
       - [item]
   - New integrations:
