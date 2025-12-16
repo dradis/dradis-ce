@@ -312,7 +312,7 @@
 
         &.active {
           background-color: $primary;
-          border: none;
+          border-color: transparent;
           color: $white;
 
           &:hover {
