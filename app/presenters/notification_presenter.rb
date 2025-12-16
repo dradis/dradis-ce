@@ -78,8 +78,10 @@ class NotificationPresenter < BasePresenter
     # FIXME - ISSUE/NOTE INHERITANCE
     # Would like to use only `commentable.respond_to?(:node)` here, but
     # that would return a wrong path for issues
-    comment         = notification.notifiable
-    commentable     = comment.commentable
+    comment = notification.notifiable
+    # Force reload for Note/Issue types.
+    # Polymorphic association fetches wrong class record, leading to incorrect path generation.
+    commentable = ['Note', 'Issue'].include?(comment.commentable_type) ? comment.reload_commentable : comment.commentable
 
     if commentable.respond_to?(:node) && !commentable.is_a?(Issue)
       [commentable.project, commentable.node, commentable]

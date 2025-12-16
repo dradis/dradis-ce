@@ -6,14 +6,7 @@
 # Attachment objects associated with them.
 class Node < ApplicationRecord
   include Properties
-
-  module Types
-    DEFAULT = 0
-    HOST = 1
-    METHODOLOGY = 2
-    ISSUELIB = 3
-    USER_TYPES = [DEFAULT, HOST]
-  end
+  include Types
 
   acts_as_tree counter_cache: true, order: :label
 
@@ -58,7 +51,6 @@ class Node < ApplicationRecord
   # -- Callbacks ------------------------------------------------------------
   before_destroy :destroy_attachments
   before_save do |record|
-    record.type_id = Types::DEFAULT unless record.type_id
     record.position = 0 unless record.position
   end
 
@@ -71,10 +63,6 @@ class Node < ApplicationRecord
     user_nodes.roots
   }
 
-  scope :user_nodes, -> {
-    where('type_id IN (?)', Types::USER_TYPES)
-  }
-
   # -- Class Methods --------------------------------------------------------
 
   # -- Instance Methods -----------------------------------------------------
@@ -85,10 +73,6 @@ class Node < ApplicationRecord
   # Return all the Attachment objects associated with this Node.
   def attachments
     Attachment.find(:all, conditions: { node_id: self.id })
-  end
-
-  def user_node?
-    Types::USER_TYPES.include?(self.type_id)
   end
 
   # SEE: https://github.com/amerine/acts_as_tree/issues/63
