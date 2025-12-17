@@ -12,7 +12,28 @@ Dradis::CE::API::Engine::routes.draw do
         end
       end
 
-      scope module: :v3, constraints: Dradis::CE::API::RoutingConstraints.new(version: 3, default: true) do
+      scope module: :v3, constraints: Dradis::CE::API::RoutingConstraints.new(version: 3) do
+        resources :boards do
+          resources :lists do
+            resources :cards do
+            end
+          end
+        end
+        resources :issues
+        resources :nodes do
+          resources :evidence
+          resources :notes
+          constraints(filename: /.*/) do
+            resources :attachments, param: :filename do
+              get :download, on: :member
+            end
+          end
+        end
+
+        resources :uploads, only: [:show, :create], path: :upload
+      end
+
+      scope module: :v4, constraints: Dradis::CE::API::RoutingConstraints.new(version: 4, default: true) do
         resources :boards do
           resources :lists do
             resources :cards do
