@@ -42,8 +42,15 @@ class Nodes::Merger
 
   def move_descendents
     DESCENDENT_RELATIONSHIPS.each do |relation, column|
-      source_node.send(relation).in_batches.each_record { |record| record.update(column => target_node.id) }
+      collection = source_node.send(relation)
+      collection_ids = collection.pluck(:id)
+
+      collection.update_all(column => target_node.id)
+      collection.klass.where(id: collection_ids).touch_all
     end
+
+    # touch all issues since update_all doesn't run callbacks
+    target_node.issues.touch_all
   end
 
   def reset_counter_caches
