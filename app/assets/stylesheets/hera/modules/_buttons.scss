@@ -156,6 +156,10 @@
   &.btn-primary:not(:disabled):not(.disabled).active {
     @include button($primary);
     color: $white;
+
+    a {
+      color: $white;
+    }
   }
 
   &.btn-responsive {

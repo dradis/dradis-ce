@@ -59,6 +59,38 @@
               <small>dradis_template-hipaa.v0.3.docx</small>
             </label>
           </div>
+          <div class="mt-4">
+            <div class="btn-group btn-states">
+              <button id="export-button" class="btn btn-lg btn-primary">
+                <a href="javascript:void(0)" class="js-try-pro" data-term="word-reports" data-url="https://dradis.com/pro/pages/reporting.html">Export Published Records</a>
+              </button>
+              <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="visually-hidden">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu">
+                <span>
+                  <label class="state" for="word_export_scope_published">
+                    <input id="word_export_scope_published" class="d-none" type="radio" value="published" checked="checked" name="scope">
+                    <i class="fa-solid fa-check fa-fw"></i>
+                    <div class="state-label">
+                      <p data-behavior="state-label">Published</p>
+                        <span>Only records that have been reviewed and published.</span>
+                    </div>
+                  </label>
+                </span>
+                <span>
+                  <label class="state" for="word_export_scope_all">
+                    <input id="word_export_scope_all" class="d-none" type="radio" value="all" name="scope">
+                    <i class="fa-solid fa-check fa-fw"></i>
+                    <div class="state-label">
+                      <p data-behavior="state-label">All</p>
+                        <span>All records, regardless if they are draft, ready for review, or published.</span>
+                    </div>
+                  </label>      
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div id="plugin-excel" class="tab-pane fade" role="tabpanel">
@@ -77,9 +109,40 @@
               <small>dradis_template-welcome.v1.5.xlsm</small>
             </label>
           </div>
+          <div class="mt-4">
+            <div class="btn-group btn-states">
+              <button id="export-button" class="btn btn-lg btn-primary">
+                <a href="javascript:void(0)" class="js-try-pro" data-term="excel-reports" data-url="https://dradis.com/pro/pages/excel.html">Export Published Records</a>
+              </button>
+              <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="visually-hidden">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu">
+                <span>
+                  <label class="state" for="excel_export_scope_published">
+                    <input id="excel_export_scope_published" class="d-none" data-behavior="state-radio" type="radio" value="published" checked="checked" name="scope">
+                    <i class="fa-solid fa-check fa-fw"></i>
+                    <div class="state-label">
+                      <p data-behavior="state-label">Published</p>
+                        <span>Only records that have been reviewed and published.</span>
+                    </div>
+                  </label>
+                </span>
+                <span>
+                  <label class="state" for="excel_export_scope_all">
+                    <input id="excel_export_scope_all" class="d-none" data-behavior="state-radio" type="radio" value="all" name="scope">
+                    <i class="fa-solid fa-check fa-fw"></i>
+                    <div class="state-label">
+                      <p data-behavior="state-label">All</p>
+                        <span>All records, regardless if they are draft, ready for review, or published.</span>
+                    </div>
+                  </label>      
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       <% end %>
     </div>
   </div>
-
 <% end %>
