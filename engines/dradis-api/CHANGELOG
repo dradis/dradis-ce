@@ -1,2 +1,5 @@
+v4 (Dec 2025)
+  - Publish issue events for webhooks
+
 v3 (Aug 2023)
   - Add Boards, Lists, Cards endpoints.
