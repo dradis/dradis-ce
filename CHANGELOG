@@ -5,6 +5,7 @@
   - Nodes:
     - Add more types and icons
     - Rename addon upload/parent nodes and add icons
+    - Update associated evidence, notes and child nodes' updated_at columns on node merge
   - Wizard:
     - Add analytics sharing step
     - Mark as done after Kit step, without waiting for the background job.
