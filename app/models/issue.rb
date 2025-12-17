@@ -117,7 +117,7 @@ class Issue < Note
     end
   end
 
-   # Returns a hash that will be used as part of event notification workflows.
+  # Returns a hash that will be used as part of event notification workflows.
   def local_event_payload
     {
       author: author,
