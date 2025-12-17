@@ -1,5 +1,5 @@
 [v#.#.#] ([month] [YYYY])
-  - Activities: Subscribe to events via namespace and create activities using published events
+  - Activities: Subscribe to issue CRUD events via namespace and create activities using published events
   - Docker:
     - Update default attachments & templates locations to storage/
     - Include assets for all integrations regardless of enabled/disabled status
