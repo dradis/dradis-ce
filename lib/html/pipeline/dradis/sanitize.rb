@@ -13,7 +13,7 @@ module HTML
 
           # Allow text-align property
           css: {
-            properties: %w[ text-align border width height ]
+            properties: %w[ border height text-align width ]
           }.freeze
         )
       end
