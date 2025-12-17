@@ -24,13 +24,61 @@
     <%= render_view_hooks 'export/index-tabs', feature: :export %>
 
     <% if !defined?(Dradis::Pro) %>
-      <li class="nav-item"><a href="javascript:void(0)" class="js-try-pro nav-link" data-term="word-reports" data-url="https://dradis.com/pro/pages/reporting.html"><i class="fa-solid fa-file-word fa-fw"></i>Word</a></li>
-      <li class="nav-item"><a href="javascript:void(0)" class="js-try-pro nav-link" data-term="excel-reports" data-url="https://dradis.com/pro/pages/excel.html"><i class="fa-solid fa-file-excel fa-fw"></i>Excel</a></li>
+      <li class="nav-item">
+        <a href="#plugin-word" class="nav-link" data-bs-toggle="tab"><i class="fa-solid fa-file-word fa-fw"></i>Word</a>
+      </li>
+      <li class="nav-item">
+        <a href="#plugin-excel" class="nav-link" data-bs-toggle="tab"><i class="fa-solid fa-file-excel fa-fw"></i>Excel</a>
+      </li>
     <% end %>
   </ul>
   <div class="content-container">
     <div class="tab-content">
       <%= render_view_hooks 'export/index-content', feature: :export %>
+
+      <% if !defined?(Dradis::Pro) %>
+        <div id="plugin-word" class="tab-pane fade" role="tabpanel">
+          <h4 class="header-underline">Choose a template</h4>
+          <p>Reports are fully customizable to fit your existing format. Upload multiple templates and tailor everything to your needs.</p>
+          
+          <div class="form-check">
+            <input type="radio" name="template" id="word-1" class="form-check-input" checked>
+            <label class="form-check-label" for="word-1">dradis_welcome_template.v0.10 - 
+              <small>dradis_welcome_template.v0.10.docx</small>
+            </label>
+          </div>
+          <div class="form-check">
+            <input type="radio" name="template" id="word-2" class="form-check-input">
+            <label class="form-check-label" for="word-2">dradis_owasp_template.v0.8 - 
+              <small>dradis_owasp_template.v0.8.docx</small>
+            </label>
+          </div>
+          <div class="form-check">
+            <input type="radio" name="template" id="word-3" class="form-check-input">
+            <label class="form-check-label" for="word-3">dradis_template-hipaa.v0.3 - 
+              <small>dradis_template-hipaa.v0.3.docx</small>
+            </label>
+          </div>
+        </div>
+
+        <div id="plugin-excel" class="tab-pane fade" role="tabpanel">
+          <h4 class="header-underline">Choose a template</h4>
+          <p>Reports are fully customizable to fit your existing format. Upload multiple templates and tailor everything to your needs.</p>
+          
+          <div class="form-check">
+            <input type="radio" name="template" id="excel-1" class="form-check-input" checked>
+            <label class="form-check-label" for="excel-1">dradis_template-excel-owasp.v1.3 - 
+              <small>dradis_template-excel-owasp.v1.3.xlsx</small>
+            </label>
+          </div>
+          <div class="form-check">
+            <input type="radio" name="template" id="excel-2" class="form-check-input">
+            <label class="form-check-label" for="excel-2">dradis_template-welcome.v1.5 - 
+              <small>dradis_template-welcome.v1.5.xlsm</small>
+            </label>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 
