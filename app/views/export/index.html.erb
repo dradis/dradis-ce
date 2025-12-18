@@ -34,8 +34,6 @@
   </ul>
   <div class="content-container">
     <div class="tab-content">
-      <%= render_view_hooks 'export/index-content', feature: :export %>
-
       <% if !defined?(Dradis::Pro) %>
         <div id="plugin-word" class="tab-pane fade" role="tabpanel">
           <h4 class="header-underline">Choose a template</h4>
@@ -145,6 +143,8 @@
           </div>
         </div>
       <% end %>
+
+      <%= render_view_hooks 'export/index-content', feature: :export %>
     </div>
   </div>
 
