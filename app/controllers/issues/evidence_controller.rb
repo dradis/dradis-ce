@@ -6,7 +6,7 @@ class Issues::EvidenceController < AuthenticatedController
   include MultipleDestroy
   include ProjectScoped
 
-  before_action :set_issues, only: [:create_multiple, :index, :new]
+  before_action :set_issues, only: [:create_multiple, :index, :new, :preview]
   before_action :set_affected_nodes, only: :index
   before_action :set_auto_save_key, only: :new
   before_action :set_columns, only: :index
@@ -121,7 +121,7 @@ class Issues::EvidenceController < AuthenticatedController
   end
 
   def set_evidence
-    @evidence = Evidence.find_by!(id: params[:id], issue_id: params[:issue_id])
+    @evidence = @issue.evidence.find_by(id: params[:id])
   end
 
   def set_issues
