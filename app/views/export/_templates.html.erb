@@ -6,3 +6,41 @@
     </label>
   </div>
 <% end %>
+
+<div class="mt-4">
+  <div class="btn-group btn-states" data-behavior="btn-states">
+    <button id="export-button" class="btn btn-lg btn-primary">
+      <a 
+        href="javascript:void(0)" 
+        class="js-try-pro" 
+        data-term="<%= exporter %>-reports" 
+        data-url=<%= exporter == 'word' ? 'https://dradis.com/pro/pages/reporting.html' : 'https://dradis.com/pro/pages/excel.html'%>>
+        Export 
+        <span data-behavior="state-button"><%= @default_button_state.humanize %></span> 
+        Records
+      </a>
+    </button>
+    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="visually-hidden">Toggle Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+      <%= collection_radio_buttons(nil, :scope, [['published', 'published'], ['all', 'all']], :first, :first) do |b| %>
+        <span>
+          <%= b.label class: 'state', for: "#{exporter}_scope_#{b.value}" do %>
+            <%= b.radio_button id: "#{exporter}_scope_#{b.value}", class: 'd-none', name: "#{exporter}-scope", data: { behavior: 'state-radio'}, checked: b.value == @default_button_state %>
+            <i class="fa-solid fa-check fa-fw"></i>
+            <div class="state-label">
+              <p data-behavior="state-label"><%= b.text.humanize %></p>
+              <% case b.value %>
+              <% when 'published' %>
+                <span>Only records that have been reviewed and published.</span>
+              <% when 'all' %>
+                <span>All records, regardless if they are draft, ready for review, or published.</span>
+              <% end %>
+            </div>
+          <% end %>
+        </span>
+      <% end %>
+    </div>
+  </div>
+</div>
