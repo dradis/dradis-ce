@@ -15,14 +15,14 @@
     <% end %>
   </head>
 
-  <body class="unauthenticated <%= controller_name %> <%= class_names(holiday: Date.today.month == 12) %>">
+  <body class="unauthenticated <%= controller_name %> <%= easter_egg_class %>">
     <%= render 'layouts/hera/noscript' %>
     <div class="container h-100">
       <div class="row h-100 align-items-center">
         <div class="col-lg-5">
           <div class="form-container card card-body">
             <div class="logo-icons" data-behavior="logo-icons"></div>
-            <%= image_tag Date.today.month == 12 ? 'holiday/logo_full_small.png' : 'logo_full_small.png', alt: 'Dradis CE logo', class: 'logo' %>
+            <%= image_tag easter_egg_logo || 'logo_full_small.png', alt: 'Dradis CE logo', class: 'logo' %>
             <div class="form-container-inner">
               <%= flash_messages %>
               <%= yield %>

@@ -1,0 +1,12 @@
+@mixin easter-egg-theme($color) {
+  --primary: #{$color};
+  --dark: #{darken($color, 10)};
+  --light: #{lighten($color, 20)};
+
+  .form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba($color, 0.25) !important;
+  }
+}
+
+@import 'easter_eggs/december.scss';
+@import 'easter_eggs/may_4th.scss';
