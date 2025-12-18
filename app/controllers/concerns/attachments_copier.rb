@@ -1,6 +1,6 @@
 module AttachmentsCopier
   # Scans record content and for each attachment reference found,
-  # 1. Copies the attachment to the new node 
+  # 1. Copies the attachment to the new node
   # 2. Updates the content to point to the new attachment
   # Returns an array of copied attachments for that record
   def copy_attachments(record, previous_node_id = nil)

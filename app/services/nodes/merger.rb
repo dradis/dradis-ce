@@ -92,7 +92,7 @@ class Nodes::Merger
 
   def update_attachments
     self.copied_attachments = []
-    
+
     target_node.evidence.each do |evidence|
       copied_attachments = copied_attachments | copy_attachments(evidence, source_node.id)
       evidence.save if evidence.changed?
