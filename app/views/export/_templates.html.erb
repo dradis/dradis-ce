@@ -2,7 +2,7 @@
   <div class="form-check">
     <input type="radio" name="<%= exporter %>" id="<%= label %>" class="form-check-input" <%= 'checked' if index == 0 %>>
     <label class="form-check-label" for="<%= label %>"><%= label %> - 
-      <small><%= label %>.docx</small>
+      <small><%= label %><%= exporter == 'word' ? '.docx' : '.xlsx' %></small>
     </label>
   </div>
 <% end %>
