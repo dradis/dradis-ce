@@ -1,3 +1,9 @@
+// Helper for updating table sorting values
+function updateLiquidSortValue(element, html) {
+  const liquidText = $('<div>').html(html).text().trim();
+  $(element).attr('data-sort', liquidText);
+}
+
 function liquidAsync() {
   $('[data-behavior~=liquid-async]').each(function () {
     const that = this,
@@ -20,8 +26,7 @@ function liquidAsync() {
         $(that).html(html);
 
         if (requiresSortUpdate) {
-            const liquidText = $('<div>').html(html).text().trim(); 
-            $(that).attr('data-sort', liquidText); 
+          updateLiquidSortValue(that, html);
         }
 
         $(that).trigger('dradis:liquid-rendered');
