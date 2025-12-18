@@ -42,19 +42,19 @@
           <p>Reports are fully customizable to fit your existing format. Upload multiple templates and tailor everything to your needs.</p>
           
           <div class="form-check">
-            <input type="radio" name="template" id="word-1" class="form-check-input" checked>
+            <input type="radio" name="word-template" id="word-1" class="form-check-input" checked>
             <label class="form-check-label" for="word-1">dradis_welcome_template.v0.10 - 
               <small>dradis_welcome_template.v0.10.docx</small>
             </label>
           </div>
           <div class="form-check">
-            <input type="radio" name="template" id="word-2" class="form-check-input">
+            <input type="radio" name="word-template" id="word-2" class="form-check-input">
             <label class="form-check-label" for="word-2">dradis_owasp_template.v0.8 - 
               <small>dradis_owasp_template.v0.8.docx</small>
             </label>
           </div>
           <div class="form-check">
-            <input type="radio" name="template" id="word-3" class="form-check-input">
+            <input type="radio" name="word-template" id="word-3" class="form-check-input">
             <label class="form-check-label" for="word-3">dradis_template-hipaa.v0.3 - 
               <small>dradis_template-hipaa.v0.3.docx</small>
             </label>
@@ -74,8 +74,8 @@
               <div class="dropdown-menu">
                 <%= collection_radio_buttons(nil, :scope, [['published', 'published'], ['all', 'all']], :first, :first) do |b| %>
                   <span>
-                    <%= b.label class: 'state', for: "word_export" do %>
-                      <%= b.radio_button id: "#word_export", class: 'd-none', data: { behavior: 'state-radio'}, checked: b.value == @default_button_state %>
+                    <%= b.label class: 'state', for: "#word_scope_#{b.value}" do %>
+                      <%= b.radio_button id: "#word_scope_#{b.value}", class: 'd-none', name: 'word-scope', data: { behavior: 'state-radio'}, checked: b.value == @default_button_state %>
                       <i class="fa-solid fa-check fa-fw"></i>
                       <div class="state-label">
                         <p data-behavior="state-label"><%= b.text.humanize %></p>
@@ -99,13 +99,13 @@
           <p>Reports are fully customizable to fit your existing format. Upload multiple templates and tailor everything to your needs.</p>
           
           <div class="form-check">
-            <input type="radio" name="template" id="excel-1" class="form-check-input" checked>
+            <input type="radio" name="excel-template" id="excel-1" class="form-check-input" checked>
             <label class="form-check-label" for="excel-1">dradis_template-excel-owasp.v1.3 - 
               <small>dradis_template-excel-owasp.v1.3.xlsx</small>
             </label>
           </div>
           <div class="form-check">
-            <input type="radio" name="template" id="excel-2" class="form-check-input">
+            <input type="radio" name="excel-template" id="excel-2" class="form-check-input">
             <label class="form-check-label" for="excel-2">dradis_template-welcome.v1.5 - 
               <small>dradis_template-welcome.v1.5.xlsm</small>
             </label>
@@ -125,8 +125,8 @@
               <div class="dropdown-menu">
                 <%= collection_radio_buttons(nil, :scope, [['published', 'published'], ['all', 'all']], :first, :first) do |b| %>
                   <span>
-                    <%= b.label class: 'state', for: "excel_export" do %>
-                      <%= b.radio_button id: "#excel_export", class: 'd-none', data: { behavior: 'state-radio'}, checked: b.value == @default_button_state %>
+                    <%= b.label class: 'state', for: "#excel_scope_#{b.value}" do %>
+                      <%= b.radio_button id: "#excel_scope_#{b.value}", class: 'd-none', name: 'excel-scope', data: { behavior: 'state-radio'}, checked: b.value == @default_button_state %>
                       <i class="fa-solid fa-check fa-fw"></i>
                       <div class="state-label">
                         <p data-behavior="state-label"><%= b.text.humanize %></p>
