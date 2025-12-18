@@ -101,9 +101,17 @@
                         </div>
                       </div>
                     <% else %>
-                    <div class="hover-only text-center">
-                      <span class="badge badge-outline-info">Result not Published</span>
-                    </div>
+                      <div class="btn-group" title="Result must be published in the library before it can be imported into the project." data-bs-toggle="tooltip">
+                        <a href="javascript:void(0)" class="btn btn-primary disabled" disabled="disabled">
+                          <i class="fa-solid fa-plus"></i> Add Issue (Published)
+                        </a>
+                        <a
+                          href="javascript:void(0)"
+                          class="btn btn-primary dropdown-toggle dropdown-toggle-split disabled"
+                          disabled="disabled"
+                          role="presentation"
+                        ></a>
+                      </div>
                     <% end %>
                   </td>
                 </tr>
