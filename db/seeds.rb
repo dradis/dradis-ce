@@ -5,7 +5,6 @@ unless defined?(Dradis::Pro)
   end
 end
 
-# Seed Pro-specific engines if available
 if defined?(Dradis::Pro)
   # Load engine seeds
   Dradis::Pro::BI::Engine.load_seed
