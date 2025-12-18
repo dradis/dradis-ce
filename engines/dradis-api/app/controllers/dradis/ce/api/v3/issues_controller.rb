@@ -25,7 +25,7 @@ module Dradis::CE::API
 
         if @issue.save
           @issue.tag_from_field_content!
-          publish_event('issue.created', @issue.local_event_payload)
+          publish_event('issue.created', @issue.to_event_payload)
           render status: 201, location: dradis_api.issue_url(@issue)
         else
           render_validation_errors(@issue)
@@ -34,7 +34,7 @@ module Dradis::CE::API
 
       def update
         if @issue.update(issue_params)
-          publish_event('issue.updated', @issue.local_event_payload)
+          publish_event('issue.updated', @issue.to_event_payload)
           render node: @node
         else
           render_validation_errors(@issue)
@@ -43,7 +43,7 @@ module Dradis::CE::API
 
       def destroy
         @issue.destroy
-        publish_event('issue.destroyed', @issue.local_event_payload)
+        publish_event('issue.destroyed', @issue.to_event_payload)
         render_successful_destroy_message
       end
 
