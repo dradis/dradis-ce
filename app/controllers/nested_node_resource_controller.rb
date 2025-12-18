@@ -23,7 +23,7 @@ class NestedNodeResourceController < AuthenticatedController
       end
     else
       @node = current_project.nodes.includes(
-        :notes, :evidence, evidence: [:issue, { issue: :tags }]
+        :activities, :children, :notes, :evidence, evidence: [:issue, { issue: :tags }]
       ).find(params[:node_id])
     end
   end
