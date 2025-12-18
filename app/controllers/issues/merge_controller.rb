@@ -1,5 +1,4 @@
 class Issues::MergeController < IssuesController
-
   def new
     @issues = []
 
