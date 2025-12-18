@@ -17,7 +17,7 @@ class Nodes::Merger
       move_descendents
       reset_counter_caches
       update_properties
-      copy_attachments
+      update_attachments
 
       Node.destroy(source_node.id)
     end
@@ -90,22 +90,15 @@ class Nodes::Merger
     target_node.save
   end
 
-  def copy_attachments
+  def update_attachments
     self.copied_attachments = []
-
-    # scan all evidence associated with new node for any screenshot references
-    # and update them      
+    
     target_node.evidence.each do |evidence|
-      # for each evidence, scans the content and for any attachment references found,
-      # updates the content to point to the new attachment location AND
-      # copies the attachment to the new node.
-      # returns an array of copied attachments for that evidence
-      # DOESN'T SAVE
-      copied_attachments.concat(copy_attachments(evidence))
+      copied_attachments = copied_attachments | copy_attachments(evidence, source_node.id)
       evidence.save if evidence.changed?
     end
 
-    # copy all attachments to new node
+    # Copy any remaining attachments that were not copied via AttachmentsCopier
     source_node.attachments.each do |attachment|
       copied_attachments << attachment.copy_to(target_node) unless copied_attachments.include?(attachment)
     end
