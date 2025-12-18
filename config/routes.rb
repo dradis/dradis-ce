@@ -156,6 +156,10 @@ Rails.application.routes.draw do
     get '/styles' => 'styles#index'
   end
 
+  if !defined?(Dradis::Pro)
+    get 'addons/issuelib', :to => "static#issuelib"
+  end
+
   if defined?(Dradis::Pro)
   else
     root to: 'setup/passwords#new'
