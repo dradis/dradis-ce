@@ -1,5 +1,6 @@
 module AttachmentsCopier
   def copy_attachments(record)
+    copied_attachments = []
     record.content.scan(Attachment::SCREENSHOT_REGEX).each do |screenshot_path|
       full_screenshot_path, _, _, _, project_id, node_id, filename, _ = screenshot_path
 
@@ -7,9 +8,11 @@ module AttachmentsCopier
 
       if attachment
         new_attachment = attachment.copy_to(record.node)
+        copied_attachments << new_attachment
         record.content = updated_record_content(record.content, full_screenshot_path, new_attachment)
       end
     end
+    copied_attachments
   end
 
   def updated_record_content(record_content, full_screenshot_path, new_attachment)
