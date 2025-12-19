@@ -5,7 +5,7 @@
   </a>
 
   <ul class="dropdown-menu" aria-labelledby="tools-dropdown">
-    <li><a href="../addons/issuelib" class="dropdown-item">Issue Library</a></li>
+    <li><%= link_to 'Issue Library', addons_issuelib_path, class: 'dropdown-item' %>
     <%= render_view_hooks('tools_menu') %>
   </ul>
 </li>
