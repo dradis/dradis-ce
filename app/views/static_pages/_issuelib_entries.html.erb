@@ -1,4 +1,4 @@
-<table class="table table-striped mb-0">
+<table class="table table-striped dataTable mb-0">
   <thead>
     <tr>
       <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Select</span></th>
@@ -10,7 +10,7 @@
   <tbody>
     <% entries.each_with_index do |entry, index| %>
       <tr id="entry-<%= index %>">
-        <td class="select-checkbox" data-behavior="select-checkbox"><input type="checkbox"></td>
+        <td class="select-checkbox" data-behavior="select-checkbox"></td>
         <td><%= entry %></td>
         <td>Published</td>
         <td>on <%= (Date.today - 1.month).strftime('%b %d, %Y') %></td>
