@@ -42,7 +42,9 @@
           <%= render partial: 'templates', 
             locals: { 
               labels: ['dradis_welcome_template', 'dradis_owasp_template', 'dradis_template-hipaa'],
-              exporter: 'word'
+              exporter: 'word',
+              extension: 'docx',
+              url: 'https://dradis.com/pro/pages/reporting.html'
             }
           %>
         </div>
@@ -54,7 +56,9 @@
           <%= render partial: 'templates', 
             :locals => { 
               labels: ['dradis_template-excel-owasp', 'dradis_template-welcome'],
-              exporter: 'excel'
+              exporter: 'excel',
+              extension: 'xlsx',
+              url: 'https://dradis.com/pro/pages/excel.html'
             }
           %>
         </div>
