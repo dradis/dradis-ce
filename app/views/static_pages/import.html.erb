@@ -1,0 +1,35 @@
+<% content_for :title, 'Import Issues' %>
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <%= link_to 'Dashboard', main_app.root_path %>
+  </li>
+  <li class="breadcrumb-item active">
+    Import Issues
+  </li>
+</ol>
+
+<!-- Main content -->
+<div class="content-container">
+  <div id="issue-viewer">
+    <div class="results">
+      <div class="page page-none">
+
+        <div class="header">
+          <div class="header-inner">
+            <h4 class="header-underline">Search results</h4>
+          </div>
+        </div>
+
+        <%= render partial: 'issuelib_entries',
+          :locals => { 
+            columns: ['Title', ''],
+            entries: ['Auto-complete in password field', 'DOM-based cross-site scripting (XSS)', 'Insufficient cross-site request forgery (CSRF) protection', 'Reflected cross-site scripting (XSS)'],
+            import: 'true'
+          }
+        %>
+      </div>
+    </div>
+  </div>
+</div>
