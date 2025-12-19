@@ -102,8 +102,8 @@ class Nodes::Merger
     source_node.attachments.each do |attachment|
       # need to compare filename since they will be loaded as different ruby objects so == doesn't work
       unless copied_attachments.any? { |a| a.filename == attachment.filename }
-        self.copied_attachments << attachment.copy_to(target_node) 
-    end
+        self.copied_attachments << attachment.copy_to(target_node)
+      end
     end
   end
 
