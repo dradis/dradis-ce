@@ -36,9 +36,14 @@
 
 <div id="issuelib_entries_table" class="card">
   <div class="card-header bg-primary">
-    <h4 class="card-title">Issue Library entries</h4>
+    <h4 class="card-title mb-0">Issue Library entries</h4>
   </div>
   <div class="card-body">
-    <p>IL samples</p>
+    <%= render partial: 'issuelib_entries',
+      :locals => { 
+        columns: ['Title', 'State', 'Created', 'Updated'],
+        entries: ['entry1', 'entry2', 'entry3', 'entry4']
+      }
+    %>
   </div>
 </div>

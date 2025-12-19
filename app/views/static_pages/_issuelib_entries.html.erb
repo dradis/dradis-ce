@@ -1,0 +1,21 @@
+<table class="table table-striped mb-0">
+  <thead>
+    <tr>
+      <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Select</span></th>
+      <% columns.each_with_index do |column, index| %>
+        <th><%= column %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% entries.each_with_index do |entry, index| %>
+      <tr id="entry-<%= index %>">
+        <td class="select-checkbox" data-behavior="select-checkbox"><input type="checkbox"></td>
+        <td><%= entry %></td>
+        <td>Published</td>
+        <td>on <%= (Date.today - 1.month).strftime('%b %d, %Y') %></td>
+        <td>on <%= Date.today.strftime('%b %d, %Y') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
