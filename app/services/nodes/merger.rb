@@ -95,7 +95,7 @@ class Nodes::Merger
 
     target_node.evidence.each do |evidence|
       copied_attachments = copied_attachments | copy_attachments(evidence, source_node.id)
-      evidence.save if evidence.changed?
+      evidence.save! if evidence.changed?
     end
 
     # Copy any remaining attachments that were not copied via AttachmentsCopier

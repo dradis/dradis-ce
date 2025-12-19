@@ -189,7 +189,7 @@ RSpec.describe Nodes::Merger do
       it 'does not move evidence' do
         evidence = create(:evidence, node: source_node)
         merge_nodes
-        expect(target_node.evidence).not_to include evidence
+        expect(target_node.reload.evidence).not_to include evidence
       end
 
       it 'does not change source node evidence count' do
