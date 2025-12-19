@@ -157,7 +157,7 @@ Rails.application.routes.draw do
   end
 
   if !defined?(Dradis::Pro)
-    get 'addons/issuelib', :to => "static#issuelib"
+    get 'addons/issuelib', :to => "static_pages#issuelib"
   end
 
   if defined?(Dradis::Pro)
