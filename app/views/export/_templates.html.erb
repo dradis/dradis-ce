@@ -9,17 +9,16 @@
 
 <div class="mt-4">
   <div class="btn-group btn-states" data-behavior="btn-states">
-    <button id="export-button" class="btn btn-lg btn-primary">
-      <a 
-        href="javascript:void(0)"
-        class="js-try-pro"
-        data-term="<%= exporter %>-reports"
-        data-url=<%= url %>>
-        Export 
-        <span data-behavior="state-button"><%= @default_button_state.humanize %></span> 
-        Records
-      </a>
-    </button>
+    <a 
+      href="javascript:void(0)"
+      id="export-button"
+      class="btn btn-lg btn-primary js-try-pro"
+      data-term="<%= exporter %>-reports"
+      data-url=<%= url %>>
+      Export 
+      <span data-behavior="state-button"><%= @default_button_state.humanize %></span> 
+      Records
+    </a>
     <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <span class="visually-hidden">Toggle Dropdown</span>
     </button>
