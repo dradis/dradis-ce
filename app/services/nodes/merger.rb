@@ -94,13 +94,16 @@ class Nodes::Merger
     self.copied_attachments = []
 
     target_node.evidence.each do |evidence|
-      copied_attachments = copied_attachments | copy_attachments(evidence, source_node.id)
+      self.copied_attachments = self.copied_attachments | copy_attachments(evidence, source_node.id)
       evidence.save! if evidence.changed?
     end
 
     # Copy any remaining attachments that were not copied via AttachmentsCopier
     source_node.attachments.each do |attachment|
-      copied_attachments << attachment.copy_to(target_node) unless copied_attachments.include?(attachment)
+      # need to compare filename since they will be loaded as different ruby objects so == doesn't work
+      unless copied_attachments.any? { |a| a.filename == attachment.filename }
+        self.copied_attachments << attachment.copy_to(target_node) 
+    end
     end
   end
 

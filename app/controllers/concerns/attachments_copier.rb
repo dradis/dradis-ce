@@ -20,7 +20,7 @@ module AttachmentsCopier
         )
 
         record.content = record.content.gsub(full_screenshot_path, new_path)
-        copied_attachments << new_attachment
+        copied_attachments << attachment
       end
     end
     copied_attachments
