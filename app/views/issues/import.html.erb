@@ -101,7 +101,7 @@
                         </div>
                       </div>
                     <% else %>
-                      <div class="btn-group" title="Result must be published in the library before it can be imported into the project." data-bs-toggle="tooltip">
+                      <div class="btn-group" title="This result is still in a <%= issue.state.humanize.titleize %> state. Publish it in the library before importing to the project." data-bs-toggle="tooltip">
                         <a href="javascript:void(0)" class="btn btn-primary disabled" disabled="disabled">
                           <i class="fa-solid fa-plus"></i> Add Issue (Published)
                         </a>
