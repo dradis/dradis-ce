@@ -8,6 +8,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="current-user-id" content="<%= current_user.id %>">
+    <meta name="integrations" content="<%= Dradis::Plugins::with_feature(:addon) %>">
     <% if flash.any? %>
       <% # when flash messages present, disable turbolinks cache to avoid
         # the message appear and disappear in the next page load %>
@@ -28,6 +29,9 @@
     <%= csrf_meta_tag %>
     <%= csp_meta_tag %>
     <%= javascript_importmap_tags %>
+    <% cache [:analytics, ::Configuration.usage_sharing_enabled?] do %>
+      <%= render 'layouts/plausible' if Rails.env.sandbox? || ::Configuration.usage_sharing_enabled? %>
+    <% end %>
   </head>
 
   <%= 
