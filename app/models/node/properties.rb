@@ -99,10 +99,10 @@ module Node::Properties
 
   # -------------------------------------- :raw_properties accessors for the UI
   def raw_properties
-    if self.has_any_property?
-      JSON.pretty_generate(self.properties.to_hash)
-    elsif @raw_properties
+    if @raw_properties
       @raw_properties
+    elsif self.has_any_property?
+      JSON.pretty_generate(self.properties.to_hash)
     else
       "{\n}"
     end
