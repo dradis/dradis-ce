@@ -37,7 +37,6 @@ module AvatarHelper
       width: opt[:size]
     }
 
-
     content_tag :span, class: opt[:class] do
       image_tag(avatar_url(user, size: opt[:size]), img_properties) +
         (opt[:include_name] ? " #{user.try(:name)}" : '')
