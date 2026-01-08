@@ -392,12 +392,12 @@ describe 'node pages' do
         expect { submit_form }.not_to change { @node.reload.properties }
       end
 
-      it "displays an error message to the user" do
+      it 'displays an error message to the user' do
         submit_form
         expect(page).to have_content('Raw properties contains invalid JSON')
       end
 
-      it "preserves the invalid properties in the textarea so the user can fix it" do
+      it 'preserves the invalid properties in the textarea so the user can fix it' do
         submit_form
         expect(find('#node_raw_properties').value).to eq('{ "hello" "hola" }')
       end
