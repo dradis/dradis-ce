@@ -89,6 +89,10 @@
     }
 
     applySavedWidth() {
+      if ($(window).width() < this.mobileBreakpoint) {
+        return;
+      }
+
       const savedWidth = localStorage.getItem(this.widthStorageKey);
       const width = savedWidth || this.minWidth;
       this.$sidebar.css('width', `${width}px`);
