@@ -72,6 +72,7 @@
 
     constrainSidebarWidth() {
       if (!this.isResizable) return;
+      if ($(window).width() < this.mobileBreakpoint) return;
 
       const savedWidth = localStorage.getItem(this.widthStorageKey);
       if (!savedWidth) return;
@@ -89,6 +90,8 @@
     }
 
     startResize(e) {
+      if ($(window).width() < this.mobileBreakpoint) return;
+
       this.isResizing = true;
       this.startX = e.clientX;
       this.startWidth = this.$sidebar.outerWidth();
@@ -100,6 +103,10 @@
 
     resize(e) {
       if (!this.isResizing) return;
+      if ($(window).width() < this.mobileBreakpoint) {
+        this.stopResize();
+        return;
+      }
 
       const width = this.startWidth + (e.clientX - this.startX);
       const constrainedWidth = Math.min(

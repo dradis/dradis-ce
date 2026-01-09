@@ -14,28 +14,6 @@ body:not(.has-sub-nav) {
   height: calc(100vh - (#{$navbar-height} * 2));
   z-index: 3;
 
-  .resize-handle {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 0.25rem;
-    cursor: ew-resize;
-    z-index: 1;
-
-    &:hover {
-      background-color: rgba($black, 0.05);
-    }
-  }
-
-  &.resizing {
-    pointer-events: none;
-
-    .resize-handle {
-      pointer-events: all;
-    }
-  }
-
   .sidebar-content {
     display: flex;
     flex-direction: column;
@@ -326,6 +304,32 @@ body:not(.has-sub-nav) {
 
     .template-download {
       font-size: $text-small;
+    }
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .sidebar {
+    .resize-handle {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      width: 0.25rem;
+      cursor: ew-resize;
+      z-index: 1;
+
+      &:hover {
+        background-color: rgba($black, 0.05);
+      }
+    }
+
+    &.resizing {
+      pointer-events: none;
+
+      .resize-handle {
+        pointer-events: all;
+      }
     }
   }
 }
