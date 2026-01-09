@@ -10,11 +10,11 @@
       this.isResizing = false;
       this.isResizable = $sidebar.is('[data-behavior~=resizable]');
       this.minWidth = 224; // must match $sidebar-width in variables.scss
-      this.maxWidth = 600;
       this.init();
     }
 
     init() {
+      this.updateMaxWidth();
       this.toggle(this.isSidebarOpen());
 
       const that = this;
@@ -24,6 +24,9 @@
       });
 
       $(window).on('resize', function () {
+        that.updateMaxWidth();
+        that.constrainSidebarWidth();
+
         if ($(window).width() < that.mobileBreakpoint) {
           that.close();
         }
@@ -50,6 +53,33 @@
       }
     }
 
+    updateMaxWidth() {
+      this.windowWidth = $(window).width();
+      this.maxWidth = Math.min(this.windowWidth * 0.3, 475);
+    }
+
+    constrainSidebarWidth() {
+      if (!this.isResizable) return;
+
+      const savedWidth = localStorage.getItem(this.widthStorageKey);
+      if (!savedWidth) return;
+
+      const currentWidth = parseInt(savedWidth, 10);
+      const constrainedWidth = Math.min(
+        Math.max(currentWidth, this.minWidth),
+        this.maxWidth,
+      );
+
+      if (currentWidth !== constrainedWidth) {
+        localStorage.setItem(this.widthStorageKey, constrainedWidth);
+        document.documentElement.style.setProperty(
+          '--main-sidebar-width',
+          `${constrainedWidth}px`,
+        );
+
+        this.$sidebar.css('width', `${constrainedWidth}px`);
+      }
+    }
     startResize(e) {
       this.isResizing = true;
       this.startX = e.clientX;
@@ -95,12 +125,17 @@
 
       const savedWidth = localStorage.getItem(this.widthStorageKey);
       const width = savedWidth || this.minWidth;
-      this.$sidebar.css('width', `${width}px`);
+      const constrainedWidth = Math.min(
+        Math.max(width, this.minWidth),
+        this.maxWidth,
+      );
+
+      this.$sidebar.css('width', `${constrainedWidth}px`);
 
       // used to update view-content width
       document.documentElement.style.setProperty(
         '--main-sidebar-width',
-        `${width}px`,
+        `${constrainedWidth}px`,
       );
     }
 
