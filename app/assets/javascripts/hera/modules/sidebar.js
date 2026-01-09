@@ -58,6 +58,18 @@
       this.maxWidth = Math.min(this.windowWidth * 0.3, 475);
     }
 
+    updateViewContentWidth(width) {
+      document.documentElement.style.setProperty(
+        '--main-sidebar-width',
+        `${width}px`,
+      );
+    }
+
+    updateSidebarWidth(width) {
+      this.$sidebar.css('width', `${width}px`);
+      this.updateViewContentWidth(width);
+    }
+
     constrainSidebarWidth() {
       if (!this.isResizable) return;
 
@@ -72,14 +84,10 @@
 
       if (currentWidth !== constrainedWidth) {
         localStorage.setItem(this.widthStorageKey, constrainedWidth);
-        document.documentElement.style.setProperty(
-          '--main-sidebar-width',
-          `${constrainedWidth}px`,
-        );
-
-        this.$sidebar.css('width', `${constrainedWidth}px`);
+        this.updateSidebarWidth(constrainedWidth);
       }
     }
+
     startResize(e) {
       this.isResizing = true;
       this.startX = e.clientX;
@@ -98,13 +106,7 @@
         Math.max(width, this.minWidth),
         this.maxWidth,
       );
-      this.$sidebar.css('width', `${constrainedWidth}px`);
-
-      // used to update view-content width
-      document.documentElement.style.setProperty(
-        '--main-sidebar-width',
-        `${constrainedWidth}px`,
-      );
+      this.updateSidebarWidth(constrainedWidth);
     }
 
     stopResize() {
@@ -130,13 +132,7 @@
         this.maxWidth,
       );
 
-      this.$sidebar.css('width', `${constrainedWidth}px`);
-
-      // used to update view-content width
-      document.documentElement.style.setProperty(
-        '--main-sidebar-width',
-        `${constrainedWidth}px`,
-      );
+      this.updateSidebarWidth(constrainedWidth);
     }
 
     changeState(key, state) {
