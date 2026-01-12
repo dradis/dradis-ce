@@ -1,3 +1,7 @@
+:root {
+  --main-sidebar-width: #{$sidebar-width};
+}
+
 body:not(.unauthenticated) {
   font-size: 0.95rem;
 
@@ -10,15 +14,15 @@ body:not(.unauthenticated) {
       grid-template-rows: calc(#{$navbar-height} * 2) 1fr;
     }
   }
+
   &:not(.has-sub-nav) {
     @media (min-width: 992px) {
       grid-template-rows: #{$navbar-height} 1fr;
     }
   }
 
-  grid-template-areas:
-    'navigation'
-    'view-content';
+  grid-template-areas: 'navigation'
+  'view-content';
 }
 
 .container,
@@ -51,47 +55,30 @@ body:not(.unauthenticated) {
   width: 100vw;
 
   @include media-breakpoint-up(lg) {
+
     // both sidebars rendered and are expanded
-    &:has(.sidebar-expanded.main-sidebar):has(
-        .sidebar-expanded.secondary-sidebar
-      )
-      .view-content {
-      width: calc(
-        100vw -
-          (
-            #{$sidebar-width} + (#{$sidebar-width} * #{$sidebar-width-multiplier})
-          )
-      );
+    &:has(.sidebar-expanded.main-sidebar):has(.sidebar-expanded.secondary-sidebar) .view-content {
+      width: calc(100vw - var(--main-sidebar-width) - (#{$sidebar-width} * #{$sidebar-width-multiplier}));
     }
 
     // main sidebar is expanded, secondary sidebar is not rendered
-    &:has(.main-sidebar.sidebar-expanded):not(:has(.secondary-sidebar))
-      .view-content {
-      width: calc(100vw - #{$sidebar-width});
+    &:has(.main-sidebar.sidebar-expanded):not(:has(.secondary-sidebar)) .view-content {
+      width: calc(100vw - var(--main-sidebar-width));
     }
 
     // main sidebar is expanded, secondary sidebar is collapsed
-    &:has(.main-sidebar.sidebar-expanded):has(.secondary-sidebar):not(
-        :has(.secondary-sidebar.sidebar-expanded)
-      )
-      .view-content {
-      width: calc(100vw - #{$sidebar-width} - #{$sidebar-width-collapsed});
+    &:has(.main-sidebar.sidebar-expanded):has(.secondary-sidebar):not( :has(.secondary-sidebar.sidebar-expanded)) .view-content {
+      width: calc(100vw - var(--main-sidebar-width) - #{$sidebar-width-collapsed});
     }
 
     // secondary sidebar is expanded, main sidebar is not rendered
-    &:has(.secondary-sidebar.sidebar-expanded):not(:has(.main-sidebar))
-      .view-content {
+    &:has(.secondary-sidebar.sidebar-expanded):not(:has(.main-sidebar)) .view-content {
       width: calc(100vw - (#{$sidebar-width} * #{$sidebar-width-multiplier}));
     }
 
     // secondary sidebar is expanded, main sidebar is collapsed
-    &:has(.secondary-sidebar.sidebar-expanded):has(.main-sidebar):not(
-        :has(.main-sidebar.sidebar-expanded)
-      )
-      .view-content {
-      width: calc(
-        100vw - (#{$sidebar-width} * #{$sidebar-width-multiplier}) - #{$sidebar-width-collapsed}
-      );
+    &:has(.secondary-sidebar.sidebar-expanded):has(.main-sidebar):not( :has(.main-sidebar.sidebar-expanded)) .view-content {
+      width: calc(100vw - (#{$sidebar-width} * #{$sidebar-width-multiplier}) - #{$sidebar-width-collapsed});
     }
   }
 }
@@ -128,7 +115,7 @@ main {
 }
 
 .row {
-  & > *[class*='col-'] {
+  &>*[class*='col-'] {
     position: relative;
   }
 }
