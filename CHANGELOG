@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Profile: update default user avatar
   - Docker:
     - Update default attachments & templates locations to storage/
     - Include assets for all integrations regardless of enabled/disabled status
