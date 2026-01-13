@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AvatarHelper
-  DEFAULT_PROFILE_IMAGE = 'profile.png'.freeze
+  DEFAULT_PROFILE_IMAGE = 'avatar.png'.freeze
   DEFAULT_PROFILE_IMAGE_SIZE = 80
 
   # Gravatar will use a default image if one is not found. Having gravatar serve
@@ -36,7 +36,6 @@ module AvatarHelper
       title: opt[:title],
       width: opt[:size]
     }
-
 
     content_tag :span, class: opt[:class] do
       image_tag(avatar_url(user, size: opt[:size]), img_properties) +
