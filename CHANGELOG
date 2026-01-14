@@ -1,5 +1,6 @@
 [v#.#.#] ([month] [YYYY])
   - Profile: update default user avatar
+  - Forms: Improve visibility of form actions
   - Docker:
     - Update default attachments & templates locations to storage/
     - Include assets for all integrations regardless of enabled/disabled status
