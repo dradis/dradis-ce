@@ -169,9 +169,17 @@ fieldset.check_boxes {
   }
 }
 
-.form-actions {
-  padding-top: 1rem;
+.form-actions.sticky {
+  background-color: $primary-bg;
   border-top: 1px solid $border-color;
+  bottom: 0;
+  padding: 1rem 0;
+  position: sticky;
+  width: 100%;
+
+  @media (max-width: 991px) {
+    margin-top: 2rem;
+  }
 }
 
 .form-check-input {
