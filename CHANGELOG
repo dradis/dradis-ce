@@ -17,6 +17,7 @@
   - Upgraded gems:
     - [gem]
   - Bugs fixes:
+    - Nodes: Display error message and preserve input on properties update
     - Notifications: Ensure correct link for note and issue comments
     - Bug tracker items:
       - [item]
