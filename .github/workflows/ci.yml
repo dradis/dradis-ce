@@ -23,7 +23,8 @@ jobs:
       - name: Security audit dependencies
         run: bundle exec bundler-audit --update --ignore CVE-2024-21510 CVE-2025-61921
       - name: Security audit ruby
-        run: bundle exec ruby-audit update && bundle exec ruby-audit check --ignore CVE-2025-61594
+        # These ignores can be removed once the Ruby version is upgraded to >= 3.4.8
+        run: bundle exec ruby-audit update && bundle exec ruby-audit check --ignore CVE-2025-61594 CVE-2025-58767
       - name: Security audit application code
         run: bundle exec brakeman -q -w2
   rubocop:
