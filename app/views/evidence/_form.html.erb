@@ -33,7 +33,7 @@
     <%= hidden_field :evidence, :original_updated_at, value: @evidence.updated_at.to_i %>
   <% end %>
 
-  <div class="form-actions">
+  <div class="form-actions sticky">
     <%= hidden_field_tag :return_to, :issue if params[:return_to] == 'issue' %>
     <%= f.button :submit, nil, class: 'btn btn-primary' %> or
     <%=
