@@ -20,7 +20,11 @@
     <p class="mb-2">Libraries:</p>
     <ul class="fa-ul">
       <li><i class="fa-solid fa-li fa-chevron-right"></i><a href="https://dradis.com/integrations/mediawiki.html?utm_source=ce&utm_medium=app" target="_blank">MediaWiki</a></li>
-      <li><i class="fa-solid fa-li fa-chevron-right"></i><a href="javascript:void(0)" class="js-try-pro" data-term="issuelib" data-url="https://dradis.com/pro/pages/issuelib.html"><i class="fa-solid fa-book"></i> Built-in Issue Library</a></li>
+      <li><i class="fa-solid fa-li fa-chevron-right"></i>
+        <%= link_to projects_1_issues_import_path do %>
+          <i class="fa-solid fa-book"></i> Built-in Issue Library</a>
+        <% end %>
+      </li>
     </ul>
   <% else %>
     <% Dradis::Plugins::with_feature(:import).each do |plugin| %>
