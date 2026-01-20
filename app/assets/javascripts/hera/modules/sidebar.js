@@ -37,7 +37,6 @@
         $('[data-behavior~=local-auto-save]').length &&
         $(window).width() < that.sidebarBreakpoint
       ) {
-        console.log('editing');
         that.close(true);
       }
 
