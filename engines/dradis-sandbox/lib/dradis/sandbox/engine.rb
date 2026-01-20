@@ -30,6 +30,5 @@ module Dradis::Sandbox
         end
       end
     end
-
   end
 end
