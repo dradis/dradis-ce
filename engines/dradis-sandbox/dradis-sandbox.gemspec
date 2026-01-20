@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-require File.expand_path('../lib/dradis/sandbox/version', __FILE__)
-version = Dradis::CE::API.version
+require_relative 'lib/dradis/sandbox/version'
+version = Dradis::Sandbox.version
 
 Gem::Specification.new do |gem|
   gem.platform      = Gem::Platform::RUBY
