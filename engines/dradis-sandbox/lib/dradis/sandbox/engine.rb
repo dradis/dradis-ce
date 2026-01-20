@@ -13,10 +13,6 @@ module Dradis::Sandbox
       end
     end
 
-    initializer 'dradis-sandbox.load_seed' do
-      Engine.load_seed
-    end
-
     initializer 'dradis-sandbox.sentry' do
       if !Rails.env.local? && ENV['SKIP_TELEMETRY'].blank?
         Sentry.init do |config|
