@@ -6,6 +6,7 @@
       this.$toggleLink = $sidebar.find($('[data-behavior~=sidebar-toggle]'));
       this.$resizeHandle = $sidebar.find('[data-behavior~=resize-handle]');
       this.mobileBreakpoint = 992;
+      this.sidebarBreakpoint = 1510;
       this.widthStorageKey = `${this.storageKey}-width`;
       this.isResizing = false;
       this.isResizable = $sidebar.is('[data-behavior~=resizable]');
@@ -32,7 +33,11 @@
         }
       });
 
-      if ($('[data-behavior~=local-auto-save]').length) {
+      if (
+        $('[data-behavior~=local-auto-save]').length &&
+        $(window).width() < that.sidebarBreakpoint
+      ) {
+        console.log('editing');
         that.close(true);
       }
 
@@ -61,7 +66,7 @@
     updateViewContentWidth(width) {
       document.documentElement.style.setProperty(
         '--main-sidebar-width',
-        `${width}px`,
+        `${width}px`
       );
     }
 
@@ -80,7 +85,7 @@
       const currentWidth = parseInt(savedWidth, 10);
       const constrainedWidth = Math.min(
         Math.max(currentWidth, this.minWidth),
-        this.maxWidth,
+        this.maxWidth
       );
 
       if (currentWidth !== constrainedWidth) {
@@ -111,7 +116,7 @@
       const width = this.startWidth + (e.clientX - this.startX);
       const constrainedWidth = Math.min(
         Math.max(width, this.minWidth),
-        this.maxWidth,
+        this.maxWidth
       );
       this.updateSidebarWidth(constrainedWidth);
     }
@@ -136,7 +141,7 @@
       const width = savedWidth || this.minWidth;
       const constrainedWidth = Math.min(
         Math.max(width, this.minWidth),
-        this.maxWidth,
+        this.maxWidth
       );
 
       this.updateSidebarWidth(constrainedWidth);
