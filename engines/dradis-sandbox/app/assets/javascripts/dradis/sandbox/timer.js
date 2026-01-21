@@ -1,6 +1,4 @@
-console.log(1);
 document.addEventListener('turbo:load', function () {
-  console.log(2);
   const badge = document.querySelector('[data-sandbox-reset-minutes]');
   if (!badge) return;
 
