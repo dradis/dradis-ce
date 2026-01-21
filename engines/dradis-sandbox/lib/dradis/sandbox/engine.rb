@@ -13,6 +13,16 @@ module Dradis::Sandbox
       end
     end
 
+    initializer 'dradis-sandbox.append_seeds' do
+      # Only append seeds when we're actually connected to a database
+      # and it's ready (not during assets:precompile, etc.)
+      if !ENV['SECRET_KEY_BASE_DUMMY']
+        # This is a special case in which we want to overwrite the app's seeds
+        # instead of appending to the collection.
+        Rails.application.config.paths['db/seeds.rb'] = root.join('db/seeds.rb')
+      end
+    end
+
     initializer 'dradis-sandbox.sentry' do
       if !Rails.env.local? && ENV['SKIP_TELEMETRY'].blank?
         Sentry.init do |config|
