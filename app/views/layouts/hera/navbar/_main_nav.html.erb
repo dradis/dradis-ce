@@ -1,4 +1,4 @@
-<% cache(['navbar', Dradis::Plugins.with_feature(:addon), current_user.notifications.unread.count]) do %>
+<% cache(['navbar', Dradis::Plugins.with_feature(:addon), current_user.notifications.unread.size]) do %>
   <nav class="navbar navbar-expand-lg main-nav">
     <div class="container-fluid">
       <%= navbar_brand %>
