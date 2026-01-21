@@ -7,6 +7,13 @@ module Dradis::Sandbox
     provides :addon
     description 'Dradis CE Sandbox'
 
+    initializer 'dradis-sandbox.assets' do |app|
+      app.config.assets.precompile += [
+        'dradis/sandbox/manifests/hera.css',
+        'dradis/sandbox/manifests/hera.js'
+      ]
+    end
+
     initializer 'dradis-sandbox.mount_engine' do |app|
       app.routes.append do
         mount Dradis::Sandbox::Engine => '/', as: 'sandbox'
