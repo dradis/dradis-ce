@@ -29,7 +29,7 @@
     <%= hidden_field :note, :original_updated_at, value: @note.updated_at.to_i %>
   <% end %>
 
-  <div class="form-actions">
+  <div class="form-actions sticky">
     <%= f.button :submit, class: 'btn btn-primary' %> or
     <%=
       link_to 'Cancel',
