@@ -37,7 +37,11 @@
         $('[data-behavior~=local-auto-save]').length &&
         $(window).width() < that.sidebarBreakpoint
       ) {
-        that.close(true);
+        if (this.storageKey == 'secondary-sidebar-expanded') {
+          this.getValidation(this.storageKey);
+        } else {
+          that.close(true);
+        }
       }
 
       if (this.isResizable) {
@@ -178,6 +182,22 @@
 
     toggle(openSidebar) {
       openSidebar ? this.open() : this.close();
+    }
+
+    getValidation(storageKey) {
+      const $validationFeed = $('[data-behavior~=validation-feed]');
+      if ($validationFeed.length === 0) {
+        this.close(true);
+      }
+      $validationFeed.on('dradis:validation-loaded', () => {
+        const $validationResult = $(
+          '[data-behavior~=validation-result-icon]:first'
+        );
+
+        if ($validationResult.hasClass('fa-check')) {
+          this.close(true);
+        }
+      });
     }
   }
 
