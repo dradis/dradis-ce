@@ -43,6 +43,8 @@
       } 
     ) do %>
 
+    <%= render_view_hooks 'sandbox_timer' %>
+
     <header class="sticky-top">
       <% if controller_path == 'styles' %>
         <%= render partial: 'styles/header' %>
