@@ -188,6 +188,7 @@
       const $validationFeed = $('[data-behavior~=validation-feed]');
       if ($validationFeed.length === 0) {
         this.close(true);
+        return;
       }
       $validationFeed.one('dradis:validation-loaded', () => {
         const $validationResult = $(
