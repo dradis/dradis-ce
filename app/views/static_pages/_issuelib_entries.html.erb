@@ -12,6 +12,7 @@
       <tr id="entry-<%= index %>">
         <td><input type="checkbox" /></td>
         <td><%= entry %></td>
+        <td>Published</td>
         <% if import == 'yes' %>
           <td class="column-actions">
             <div class="btn-group btn-states">
@@ -49,7 +50,6 @@
             </div>
           </td>
         <% else %>
-          <td>Published</td>
           <td>on <%= (Date.today - 1.month).strftime('%b %d, %Y') %></td>
           <td>on <%= Date.today.strftime('%b %d, %Y') %></td>
         <% end %>
