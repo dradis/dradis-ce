@@ -189,7 +189,7 @@
       if ($validationFeed.length === 0) {
         this.close(true);
       }
-      $validationFeed.on('dradis:validation-loaded', () => {
+      $validationFeed.one('dradis:validation-loaded', () => {
         const $validationResult = $(
           '[data-behavior~=validation-result-icon]:first'
         );
