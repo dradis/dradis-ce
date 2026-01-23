@@ -10,7 +10,7 @@
   <tbody>
     <% entries.each_with_index do |entry, index| %>
       <tr id="entry-<%= index %>">
-        <td class="select-checkbox" data-behavior="select-checkbox"></td>
+        <td><input type="checkbox" /></td>
         <td><%= entry %></td>
         <% if import == 'yes' %>
           <td class="column-actions">
