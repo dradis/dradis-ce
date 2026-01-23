@@ -38,7 +38,7 @@
         $(window).width() < this.desktopBreakpoint
       ) {
         if (this.storageKey == 'secondary-sidebar-expanded') {
-          this.getValidation();
+          this.closeOnValidationSuccess();
         } else {
           that.close(true);
         }
