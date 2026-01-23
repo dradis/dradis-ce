@@ -6,7 +6,7 @@
       this.$toggleLink = $sidebar.find($('[data-behavior~=sidebar-toggle]'));
       this.$resizeHandle = $sidebar.find('[data-behavior~=resize-handle]');
       this.mobileBreakpoint = 992;
-      this.sidebarBreakpoint = 1510;
+      this.desktopBreakpoint = 1510;
       this.widthStorageKey = `${this.storageKey}-width`;
       this.isResizing = false;
       this.isResizable = $sidebar.is('[data-behavior~=resizable]');
@@ -35,7 +35,7 @@
 
       if (
         $('[data-behavior~=local-auto-save]').length &&
-        $(window).width() < this.sidebarBreakpoint
+        $(window).width() < this.desktopBreakpoint
       ) {
         if (this.storageKey == 'secondary-sidebar-expanded') {
           this.getValidation(this.storageKey);
