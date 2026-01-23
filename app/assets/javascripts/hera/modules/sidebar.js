@@ -35,7 +35,7 @@
 
       if (
         $('[data-behavior~=local-auto-save]').length &&
-        $(window).width() < that.sidebarBreakpoint
+        $(window).width() < this.sidebarBreakpoint
       ) {
         if (this.storageKey == 'secondary-sidebar-expanded') {
           this.getValidation(this.storageKey);
