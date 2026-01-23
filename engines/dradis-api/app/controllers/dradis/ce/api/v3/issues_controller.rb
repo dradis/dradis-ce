@@ -1,7 +1,6 @@
 module Dradis::CE::API
   module V3
     class IssuesController < Dradis::CE::API::APIController
-      include ActivityTracking
       include EventPublisher
       include Dradis::CE::API::ProjectScoped
 
