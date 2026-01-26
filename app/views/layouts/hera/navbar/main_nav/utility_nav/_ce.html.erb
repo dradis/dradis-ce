@@ -7,7 +7,7 @@
 
 <%= render partial: 'layouts/hera/navbar/main_nav/utility_nav/configuration_menu' %>
 
-<% cache(['navbar-notifications', current_user.notifications.unread.size]) do %>
+<% cache(['navbar-notifications', current_user.notifications.unread]) do %>
   <li class="nav-item notifications dropdown">
     <%= link_to main_app.project_notifications_path(current_project),
       class: 'nav-link dropdown-toggle no-caret',
