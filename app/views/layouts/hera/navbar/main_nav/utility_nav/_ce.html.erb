@@ -7,23 +7,26 @@
 
 <%= render partial: 'layouts/hera/navbar/main_nav/utility_nav/configuration_menu' %>
 
-<li class="nav-item notifications dropdown">
-  <%= link_to main_app.project_notifications_path(current_project), 
-    class: 'nav-link dropdown-toggle no-caret', 
-    data: { 
-      id: 'notifications',
-      bs_toggle: 'dropdown',
-      behavior: 'notifications-dropdown close-collapse',
-      project_id: current_project.id 
-    }, 
-    role: 'button', 
-    'aria-expanded': 'false' do %>
-    <i class="notifications-bell fa-solid fa-bell d-none d-lg-inline" title="Notifications"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i>
-    <span class="d-inline d-lg-none">Notifications</span>
-  <% end %>
-  <div class="dropdown-menu dropdown-menu-end" data-url="<%= main_app.notifications_path %>" aria-labelledby="notifications">
-  </div>
-</li>
+<% cache(['navbar-notifications', current_user.notifications.unread]) do %>
+  <li class="nav-item notifications dropdown">
+    <%= link_to main_app.project_notifications_path(current_project),
+      class: 'nav-link dropdown-toggle no-caret',
+      data: {
+        id: 'notifications',
+        bs_toggle: 'dropdown',
+        behavior: 'notifications-dropdown close-collapse',
+        project_id: current_project.id
+      },
+      role: 'button',
+      'aria-expanded': 'false' do %>
+      <i class="notifications-bell fa-solid fa-bell d-none d-lg-inline" title="Notifications"><i class="notifications-dot d-none" data-behavior="notifications-dot"></i></i>
+      <span class="d-inline d-lg-none">Notifications</span>
+    <% end %>
+    <div class="dropdown-menu dropdown-menu-end" data-url="<%= main_app.notifications_path %>" aria-labelledby="notifications">
+    </div>
+  </li>
+<% end %>
+
 <%= render partial: 'layouts/hera/navbar/main_nav/help_menu' %>
 
 <li class="nav-item dropdown me-0 mb-3 mb-lg-0">
