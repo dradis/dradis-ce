@@ -5,7 +5,9 @@
   </a>
 
   <ul class="dropdown-menu" aria-labelledby="tools-dropdown">
-    <li><%= link_to 'Issue Library', addons_issuelib_path, class: 'dropdown-item' %></li>
+    <% if !defined?(Dradis::Pro) %>
+      <li><%= link_to 'Issue Library', addons_issuelib_path, class: 'dropdown-item' %></li>
+    <% end %>
     <%= render_view_hooks('tools_menu') %>
   </ul>
 </li>
