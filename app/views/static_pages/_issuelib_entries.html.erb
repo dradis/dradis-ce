@@ -12,7 +12,16 @@
       <% entries.each_with_index do |entry, index| %>
         <tr id="entry-<%= index %>">
           <td><input type="checkbox" /></td>
-          <td><%= entry %></td>
+          <td>
+            <a 
+              href="javascript:void(0)"
+              class="js-try-pro"
+              data-term="issuelib"
+              data-url="https://dradis.com/pro/pages/issuelib.html">
+              <%= entry %>
+            </a>
+           
+          </td>
           <td>Published</td>
           <% if import == 'yes' %>
             <td class="column-actions">
