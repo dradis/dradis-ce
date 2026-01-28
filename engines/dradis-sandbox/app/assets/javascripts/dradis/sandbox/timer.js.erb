@@ -1,5 +1,5 @@
 document.addEventListener('turbo:load', function () {
-  const resetMinutes = 5;
+  const resetMinutes =  <%= ENV['SANDBOX_RESET_MINUTES'] || 20 %>;
   const bufferSeconds = 10;
   let isRestarting = false;
 
