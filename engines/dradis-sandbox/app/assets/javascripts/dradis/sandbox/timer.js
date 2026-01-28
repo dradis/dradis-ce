@@ -1,11 +1,18 @@
 document.addEventListener('turbo:load', function () {
-  const badge = document.querySelector('[data-sandbox-reset-minutes]');
-  if (!badge) return;
-
-  const resetMinutes = parseInt(badge.dataset.sandboxResetMinutes);
-  const timerElement = document.querySelector('[data-behavior="timer"]');
+  const resetMinutes = 5;
   const bufferSeconds = 10;
   let isRestarting = false;
+
+  const timerBadge = document.createElement('span');
+  timerBadge.className = 'sandbox-timer badge text-bg-primary';
+  timerBadge.innerHTML = `
+    Restarts in:
+    <span class="font-monospace fw-light" data-behavior="timer">00:00</span>
+  `;
+
+  document.body.appendChild(timerBadge);
+
+  const timerElement = timerBadge.querySelector('[data-behavior="timer"]');
 
   function updateTimer() {
     const now = new Date();
@@ -20,26 +27,24 @@ document.addEventListener('turbo:load', function () {
 
     timerElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
-    badge.classList.remove(
+    timerBadge.classList.remove(
       'text-bg-primary',
       'text-bg-warning',
       'text-bg-danger',
     );
-
     if (totalSeconds < 60) {
-      badge.classList.add('text-bg-danger');
+      timerBadge.classList.add('text-bg-danger');
     } else if (totalSeconds < 300) {
-      badge.classList.add('text-bg-warning');
+      timerBadge.classList.add('text-bg-warning');
     } else {
-      badge.classList.add('text-bg-primary');
+      timerBadge.classList.add('text-bg-primary');
     }
 
     if (totalSeconds === 0 && !isRestarting) {
       isRestarting = true;
-      badge.innerHTML =
+      timerBadge.innerHTML =
         'Restarting... <span class="spinner-border spinner-border-sm" role="status"></span>';
       setTimeout(() => window.location.reload(), bufferSeconds * 1000);
-      return;
     }
   }
 
