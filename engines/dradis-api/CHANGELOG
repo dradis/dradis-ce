@@ -1,2 +1,3 @@
 v3 (Aug 2023)
   - Add Boards, Lists, Cards endpoints.
+  - Track activities using published events
