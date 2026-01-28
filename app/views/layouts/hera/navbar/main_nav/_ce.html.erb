@@ -6,4 +6,7 @@
     <span>Projects</span>
   <% end %>
 </li>
-<%= render 'layouts/hera/navbar/main_nav/tools_menu' %>
+
+<% cache(['navbar-tools', Dradis::Plugins.with_feature(:addon)]) do %>
+  <%= render 'layouts/hera/navbar/main_nav/tools_menu' %>
+<% end %>

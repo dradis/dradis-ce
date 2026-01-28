@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Activities: remove ActivityTracking for Issues and use EventPublisher
   - Profile: update default user avatar
   - Forms: Improve visibility of form actions
   - Docker:
