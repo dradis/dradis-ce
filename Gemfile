@@ -29,6 +29,7 @@ gem 'stimulus-rails'
 gem 'jbuilder', '~> 2.13'
 
 # Use Active Storage variant
+# add libvips to Dockerfile if enabling
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb

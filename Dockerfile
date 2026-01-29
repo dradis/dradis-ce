@@ -5,9 +5,9 @@ FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 WORKDIR /dradis
 
 # Install dependencies for Ruby build and gems
+#   if using image_processing for ActiveStorage, add libvips
 RUN apt-get update -qq && \
-apt-get install --no-install-recommends -y curl git libjemalloc2 libvips && \
-apt-get install --no-install-recommends -y redis-server sqlite3 && \
+apt-get install --no-install-recommends -y libjemalloc2 redis-server sqlite3 && \
 rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
