@@ -11,6 +11,9 @@
     - Update associated evidence, notes and child nodes' updated_at columns on node merge
     - Warn on node merge that methodology will not be copied
   - Sidebar: Add resize functionality
+  - Textile:
+    - Add support for paragraph alignment
+    - Add support for image resizing, alignment, and borders
   - Wizard:
     - Add analytics sharing step
     - Mark as done after Kit step, without waiting for the background job.
@@ -45,7 +48,6 @@ v4.19.0 (November 2025)
   - Editor: Add inline code, and highlight code buttons to the toolbar
   - Layout: Improve primary action visibility for Evidence, Issues, Methodologies, Notes, and Node Properties
   - Navigation: Move Trash and Project Configurations in main navigation bar
-  - Textile: Add support for paragraph alignment
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:

@@ -81,4 +81,36 @@ describe Attachment do
       expect(source_node.attachments.any? { |a| a.filename == expected_name }).to eq true
     end
   end
+
+  describe 'screenshot regex' do
+    valid_strings = [
+      '!https://example.com!',
+      '!http://example.com!',
+      '!/pro/projects/1/nodes/1/attachments/file.png!',
+      '!/projects/1/nodes/1/attachments/file.png!',
+      '!/pro/projects/1/nodes/1/attachments/file.png(captions)!',
+      '!{}/pro/projects/1/nodes/1/attachments/file.png(captions)!',
+      '!{border: 1px solid #000000}/pro/projects/1/nodes/1/attachments/file.png(captions)!',
+      '!{height: 50px; width: 50px}/pro/projects/1/nodes/1/attachments/file.png(captions)!'
+    ]
+
+    valid_strings.each do |string|
+      it "matches #{string}" do
+        expect(string).to match(Attachment::SCREENSHOT_REGEX)
+      end
+    end
+
+    invalid_strings = [
+      '',
+      'https://example.com!',
+      '!{/pro/projects/1/nodes/1/attachments/file.png(captions)!',
+      '!{<script>alert(1);</script>}/pro/projects/1/nodes/1/attachments/file.png(captions)!'
+    ]
+
+    invalid_strings.each do |string|
+      it "does not match #{string}" do
+        expect(string).to_not match(Attachment::SCREENSHOT_REGEX)
+      end
+    end
+  end
 end
