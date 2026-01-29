@@ -19,4 +19,3 @@ module Dradis
   end
 end
 
-require 'dradis/ce'

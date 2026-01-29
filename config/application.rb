@@ -58,3 +58,5 @@ module Dradis
     config.exceptions_app = self.routes
   end
 end
+
+require 'dradis/ce'
