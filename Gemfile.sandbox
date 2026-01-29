@@ -1,0 +1,9 @@
+# This Gemfile extends the base Gemfile with Sandbox-specific dependencies
+eval_gemfile 'Gemfile'
+
+gem 'dradis-sandbox', path: 'engines/dradis-sandbox'
+
+# Telemetry
+gem 'sentry-ruby'
+gem 'sentry-rails'
+gem 'stackprof'

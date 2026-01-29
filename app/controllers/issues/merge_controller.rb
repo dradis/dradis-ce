@@ -1,5 +1,4 @@
 class Issues::MergeController < IssuesController
-
   def new
     @issues = []
 
@@ -22,8 +21,8 @@ class Issues::MergeController < IssuesController
       if @issue.new_record?
         @issue.author ||= current_user.email
         if @issue.save && @issue.update(issue_params)
-          track_created(@issue)
           @issue.tag_from_field_content!
+          publish_event('issue.created', @issue.to_event_payload)
         end
       end
 
