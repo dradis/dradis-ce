@@ -20,3 +20,24 @@
     <% end %>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-8 offset-2 col-md-4 offset-md-0 mt-3">
+    <%= button_to setup_kit_path(kit: :welcome), class: 'btn btn-experience' do %>
+      <p>Infra Pentest</p>
+      <span><i class="fa-solid fa-long-arrow-right"></i></span>
+    <% end %>
+  </div>
+  <div class="col-8 offset-2 col-md-4 offset-md-0 mt-3">
+    <%= button_to setup_kit_path(kit: :owasp), class: 'btn btn-experience' do %>
+      <p>OWASP Test</p>
+      <span><i class="fa-solid fa-long-arrow-right"></i></span>
+    <% end %>
+  </div>
+  <div class="col-8 offset-2 col-md-4 offset-md-0 mt-3">
+    <%= button_to setup_kit_path(kit: :redteam), class: 'btn btn-experience' do %>
+      <p>Red Team</p>
+      <span><i class="fa-solid fa-long-arrow-right"></i></span>
+    <% end %>
+  </div>
+</div>
