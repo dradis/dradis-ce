@@ -28,7 +28,8 @@ describe 'Issues API' do
 
     describe 'GET /api/issues' do
       before(:each) do
-        @issues = create_list(:issue, 30, node: current_project.issue_library).sort_by(&:title)
+        @issues = create_list(:issue, 20, node: current_project.issue_library).sort_by(&:title)
+        @issues += create_list(:issue, 10, text: "#[Title]#\nSearchable\n", node: current_project.issue_library)
 
         get path, env: @env
         expect(response.status).to eq(200)
@@ -64,6 +65,14 @@ describe 'Issues API' do
 
         it 'retrieves the paginated issues' do
           expect(@retrieved_issues.count).to eq(5)
+        end
+      end
+
+      context 'with query' do
+        let(:path) { '/api/issues?q=searchable' }
+
+        it 'retrieves the searched issues' do
+          expect(@retrieved_issues.count).to eq(10)
         end
       end
     end

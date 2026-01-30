@@ -8,7 +8,10 @@ module Dradis::CE::API
       before_action :validate_state, only: [:create, :update]
 
       def index
-        @issues = current_project.issues.includes(:tags).order('updated_at desc')
+        @issues = current_project.issues
+
+        @issues = @issues.search(params[:q]) if params[:q]
+        @issues = @issues.includes(:tags).order('updated_at desc')
         @issues = @issues.page(params[:page].to_i) if params[:page]
         @issues = @issues.sort
       end
