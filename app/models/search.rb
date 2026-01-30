@@ -14,12 +14,15 @@ class Search
   # Return results based on params.
   # If search term is empty return empty array
   def results
-    return [] if query.blank?
     # Default Kaminari per page is 25, as we are using here
     results = send(scope)
     case results
     when ActiveRecord::Relation
-      results.page(page)
+      if page
+        results.page(page)
+      else
+        results
+      end
     else
       Kaminari.paginate_array(results).page(page)
     end
@@ -64,11 +67,12 @@ class Search
   end
 
   def issues
-    @issues ||= Issue.where(
-      "node_id = :node AND LOWER(text) LIKE LOWER(:q)",
-      node: project.issue_library,
-      q: "%#{query}%"
-    ).order(updated_at: :desc)
+    @issues ||=
+      begin
+        issues = Issue.where(node: project.issue_library)
+        issues = issues.where("LOWER(text) LIKE LOWER(:q)", q: "%#{query}%") if query
+        issues.order(updated_at: :desc)
+      end
   end
 
   def nodes
