@@ -70,21 +70,21 @@ class Search
     @issues ||=
       begin
         issues = Issue.where(node: project.issue_library)
-        issues = issues.where("LOWER(text) LIKE LOWER(:q)", q: "%#{query}%") if query
-        issues.order(updated_at: :desc)
+        issues = issues.where('LOWER(text) LIKE LOWER(:q)', q: "%#{query}%") if query
+        issues.includes(:node).order(updated_at: :desc)
       end
   end
 
   def nodes
     @nodes ||= project.nodes.user_nodes
-      .where("LOWER(label) LIKE LOWER(:q)", q: "%#{query}%")
+      .where('LOWER(label) LIKE LOWER(:q)', q: "%#{query}%")
       .order(updated_at: :desc)
   end
 
   def notes
     @notes ||= begin
       Note.where(
-        "node_id IN (:nodes) AND LOWER(text) LIKE LOWER(:q)",
+        'node_id IN (:nodes) AND LOWER(text) LIKE LOWER(:q)',
         nodes: project.nodes.user_nodes.pluck(:id),
         q: "%#{query}%"
       )
