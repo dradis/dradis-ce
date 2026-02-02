@@ -70,8 +70,8 @@ class Search
     @issues ||=
       begin
         issues = Issue.where(node: project.issue_library)
-        issues = issues.where('LOWER(text) LIKE LOWER(:q)', q: "%#{query}%") if query
-        issues.includes(:node).order(updated_at: :desc)
+        issues = issues.where('LOWER(text) LIKE LOWER(:q)', q: "%#{query}%") if query.present?
+        issues.includes(:node, :tags).order(updated_at: :desc)
       end
   end
 

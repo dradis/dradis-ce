@@ -75,6 +75,14 @@ describe 'Issues API' do
           expect(@retrieved_issues.count).to eq(10)
         end
       end
+
+      context 'with empty query' do
+        let(:path) { '/api/issues?q=' }
+
+        it 'retrieves all the issues' do
+          expect(@retrieved_issues.count).to eq(30)
+        end
+      end
     end
 
     describe 'GET /api/issue/:id' do

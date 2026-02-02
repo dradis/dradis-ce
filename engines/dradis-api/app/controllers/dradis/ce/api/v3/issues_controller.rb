@@ -15,7 +15,6 @@ module Dradis::CE::API
           project: current_project
         ).results
 
-        @issues = @issues.includes(:tags).order('updated_at desc')
         @issues = @issues.sort
       end
 
