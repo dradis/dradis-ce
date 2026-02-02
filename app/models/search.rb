@@ -21,7 +21,7 @@ class Search
       if page
         results.page(page)
       else
-        results
+        results.page.per(results.count)
       end
     else
       Kaminari.paginate_array(results).page(page)
