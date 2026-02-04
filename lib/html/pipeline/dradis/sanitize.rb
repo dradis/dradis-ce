@@ -12,7 +12,9 @@ module HTML
           ).freeze,
 
           # Allow text-align property
-          css: { properties: ['text-align'] }.freeze
+          css: {
+            properties: %w[ border height text-align width ]
+          }.freeze
         )
       end
     end
