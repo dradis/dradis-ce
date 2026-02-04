@@ -9,6 +9,7 @@
       </tr>
     </thead>
     <tbody>
+      <% entries = ['Auto-complete in password field', 'DOM-based cross-site scripting (XSS)', 'Insufficient cross-site request forgery (CSRF) protection', 'Reflected cross-site scripting (XSS)'] %>
       <% entries.each_with_index do |entry, index| %>
         <tr id="entry-<%= index %>">
           <td><input type="checkbox" /></td>
