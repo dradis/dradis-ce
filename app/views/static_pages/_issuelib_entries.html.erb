@@ -24,14 +24,16 @@
           </td>
           <td>Published</td>
           <% if import %>
+            <% @default_button_state = 'published' %>
             <td class="column-actions">
-              <div class="btn-group btn-states">
+              <div class="btn-group btn-states" data-behavior="btn-states">
                 <a 
                   href="javascript:void(0)"
                   class="btn btn-primary js-try-pro"
                   data-term="issuelib"
                   data-url="https://dradis.com/pro/pages/issuelib.html">
-                  <i class="fa-solid fa-plus"></i> Add issue (Published)
+                  <i class="fa-solid fa-plus"></i> Add issue
+                  (<span data-behavior="state-button"><%= @default_button_state.humanize %></span>)
                 </a>
                 <a href="#" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="visually-hidden">Toggle Dropdown</span>
@@ -40,7 +42,7 @@
                   <%= collection_radio_buttons(nil, :scope, [['draft', 'draft'], ['ready_for_review', 'ready_for_review'], ['published', 'published']], :first, :first) do |b| %>
                     <span>
                       <%= b.label class: 'state' do %>
-                        <%= b.radio_button(class: 'd-none', data: { behavior: 'state-radio' }, checked: b.value == 'published') %>
+                        <%= b.radio_button(class: 'd-none', data: { behavior: 'state-radio' }, checked: b.value == @default_button_state) %>
                         <i class="fa-solid fa-check fa-fw"></i>
                         <div class="state-label">
                           <p data-behavior="state-label"><%= b.text.humanize %></p>
