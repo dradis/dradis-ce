@@ -17,6 +17,7 @@
   - Wizard:
     - Add analytics sharing step
     - Mark as done after Kit step, without waiting for the background job.
+    - Update Welcome kit with OWASP Top 10:2025 methodology
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
