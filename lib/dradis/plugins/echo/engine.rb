@@ -11,6 +11,14 @@ module Dradis::Plugins::Echo
       settings.default_model = 'deepseek-r1:latest'
     end
 
+    # add engine migrations to main app migrations paths in development
+    if Rails.env.development?
+      initializer 'dradis-echo.append_migrations' do |app|
+        engine_migrations_path = config.paths['db/migrate'].expanded.first
+        app.config.paths['db/migrate'].push(engine_migrations_path)
+      end
+    end
+
     # initializer 'echo.asset_precompile_paths' do |app|
     #   app.config.assets.precompile += [
     #     'dradis/plugins/echo/manifests/application.css',
@@ -18,6 +26,12 @@ module Dradis::Plugins::Echo
     #     'dradis/plugins/echo/manifests/hera.js'
     #   ]
     # end
+
+    initializer 'echo.extend_user_model' do
+      ActiveSupport.on_load :user_model do
+        ::User.send(:has_many, :prompts, class_name: 'Dradis::Plugins::Echo::Prompt', dependent: :destroy)
+      end
+    end
 
     initializer 'echo.mount_engine' do
       Rails.application.routes.append do

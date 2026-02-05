@@ -1,5 +1,5 @@
 module Dradis::Plugins::Echo
-  class PromptsController < AuthenticatedController
+  class Projects::PromptsController < AuthenticatedController
     include ProjectScoped
     layout false
 
@@ -7,7 +7,7 @@ module Dradis::Plugins::Echo
     before_action :set_type
 
     def index
-      @prompts = Prompt.default.key?(@type) ? Prompt.default[@type] : []
+      @prompts = current_user.prompts
       @record = record_params[:record].to_i
     end
 

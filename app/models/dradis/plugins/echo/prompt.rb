@@ -1,86 +1,74 @@
 module Dradis::Plugins::Echo
-  class Prompt
-    include ActiveModel::Model
-    include ActiveModel::Attributes
-
-    attribute :id, :integer
-    attribute :title, :string
-    attribute :icon, :string
-    attribute :prompt, :string
+  class Prompt < ApplicationRecord
+    enum :visibility, [ :personal, :shared ]
 
     # -- Relationships ----------------------------------------------------------
+    belongs_to :user
+
     # -- Callbacks --------------------------------------------------------------
     # -- Validations ------------------------------------------------------------
     # -- Scopes -----------------------------------------------------------------
     # -- Class Methods ----------------------------------------------------------
-    def self.by_id(prompt_id, klass:)
-      self.default[klass].select { |prompt| prompt.id == prompt_id.to_i }.first
-    end
-
     def self.default
-      {
-        issue: [
-          new(
-            id: 1,
-            title: 'Summarize',
-            icon: 'fa-wand-magic-sparkles',
-            prompt: <<~EOP
-    I am a cyber security professional working on a cybersecurity assessment.
+      [
+        new(
+          title: 'Summarize',
+          icon: 'fa-wand-magic-sparkles',
+          prompt: <<~EOP
+        I am a cyber security professional working on a cybersecurity assessment.
 
-    I found a vulnerability and I'd like for you to help me craft a concise
-    description of the impact it has on the security posture of the environment.
+        I found a vulnerability and I'd like for you to help me craft a concise
+        description of the impact it has on the security posture of the environment.
 
-    I will include this description along with others in the Executive Summary
-    section of my security assessment report deliverable. Ideally it should be
-    no more than a single sentence.
+        I will include this description along with others in the Executive Summary
+        section of my security assessment report deliverable. Ideally it should be
+        no more than a single sentence.
 
-    These are the finding's details:
+        These are the finding's details:
 
-    # Title
-    {{ issue.title }}
+        # Title
+        {{ issue.title }}
 
-    # Description
-    {{ issue.fields['Description'] }}
+        # Description
+        {{ issue.fields['Description'] }}
 
-    # Solution
-    {{ issue.fields['Solution'] }}
-    EOP
-          ),
-          new(
-            id: 2,
-            title: 'Reword',
-            icon: 'fa-shuffle',
-            prompt: <<~EOP
-    I am a cyber security professional working on a cybersecurity assessment.
+        # Solution
+        {{ issue.fields['Solution'] }}
+        EOP
+        ),
 
-    I found a vulnerability and I'd like for you to help me craft a
-    description and recommendation that's going to make it easy to understand
-    for the owners of the system I'm testing.
+        new(
+          title: 'Reword',
+          icon: 'fa-shuffle',
+          prompt: <<~EOP
+        I am a cyber security professional working on a cybersecurity assessment.
 
-    So far, this is what I've got, please give me your suggestions:
+        I found a vulnerability and I'd like for you to help me craft a
+        description and recommendation that's going to make it easy to understand
+        for the owners of the system I'm testing.
 
-    # Title
-    {{ issue.title }}
+        So far, this is what I've got, please give me your suggestions:
 
-    # Description
-    {{ issue.fields['Description'] }}
+        # Title
+        {{ issue.title }}
 
-    # Solution
-    {{ issue.fields['Solution'] }}
-    EOP
-          ),
-          new(
-            id: 3,
-            title: 'Haiku',
-            icon: 'fa-feather-pointed',
-            prompt: <<~EOP
-    I want to create a haiku inspired by the following text:
-    {{ issue.text }}
-    EOP
-          )
-        ]
-      }.freeze
+        # Description
+        {{ issue.fields['Description'] }}
+
+        # Solution
+        {{ issue.fields['Solution'] }}
+        EOP
+        ),
+
+        new(
+          title: 'Haiku',
+          icon: 'fa-feather-pointed',
+          prompt: <<~EOP
+        I want to create a haiku inspired by the following text:
+        {{ issue.text }}
+        EOP
+        )
+      ]
     end
-    # -- Instance Methods -------------------------------------------------------
   end
 end
