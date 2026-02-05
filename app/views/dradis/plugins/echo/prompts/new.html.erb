@@ -1,3 +1,19 @@
-<h1>New Prompt</h1>
+<% content_for :title, "New Prompt" %>
 
-<%= render 'form' %>
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      Dradis Echo
+    </li>
+    <li class="breadcrumb-item">
+      <%= link_to 'Prompts', prompts_path %>
+    </li>
+    <li class="breadcrumb-item active">
+      New Prompt
+    </li>
+  </ol>
+<% end %>
+<div class="content-container">
+  <h4 class="header-underline">New Prompt</h4>
+  <%= render 'form' %>
+</div>

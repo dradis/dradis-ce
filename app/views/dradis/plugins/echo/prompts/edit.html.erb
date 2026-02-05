@@ -1,3 +1,19 @@
-<h1>Edit Prompt</h1>
+<% content_for :title, "Edit #{@prompt.title}" %>
 
-<%= render 'form' %>
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      Dradis Echo
+    </li>
+    <li class="breadcrumb-item">
+      <%= link_to 'Prompts', prompts_path %>
+    </li>
+    <li class="breadcrumb-item active">
+      <%= @prompt.title %>
+    </li>
+  </ol>
+<% end %>
+<div class="content-container">
+  <h4 class="header-underline">Edit <%= @prompt.title %></h4>
+  <%= render 'form' %>
+</div>
