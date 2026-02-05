@@ -3,7 +3,7 @@ module Dradis::Plugins::Echo
     queue_as :dradis_project
 
     def perform(prompt_id:, klass:, record_id:, interaction_id:, response_id:)
-      template = Prompt.by_id(prompt_id, klass: klass)
+      template = Prompt.find(prompt_id)
       Rails.logger.info("🎬 #{template.prompt}")
       prompt = parse(template.prompt, { 'issue' => IssueDrop.new(Issue.find(record_id)) })
       Rails.logger.info("🔚 #{prompt}")
