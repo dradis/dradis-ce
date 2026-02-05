@@ -12,7 +12,7 @@ module Dradis::Plugins::Echo
     end
 
     def show
-      @template = Prompt.by_id(record_params[:id], klass: @type)
+      @template = current_user.prompts.find(params[:id])
       @record = current_project.send(@type.to_s.pluralize).find(record_params[:record])
 
       @interaction_id = SecureRandom.hex(20)
@@ -47,7 +47,7 @@ module Dradis::Plugins::Echo
     end
 
     def set_type
-      allowed = Prompt.default.keys.map(&:to_s)
+      allowed = %w[issue]
       @type = allowed.include?(record_params[:type]) ? record_params[:type].to_sym : nil
     end
   end

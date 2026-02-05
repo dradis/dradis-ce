@@ -9,7 +9,7 @@ module Dradis::Plugins::Echo
     # -- Validations ------------------------------------------------------------
     # -- Scopes -----------------------------------------------------------------
     # -- Class Methods ----------------------------------------------------------
-    def self.default
+    def self.defaults
       [
         new(
           title: 'Summarize',

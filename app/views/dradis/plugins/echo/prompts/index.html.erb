@@ -1,0 +1,29 @@
+<h1>Prompts</h1>
+
+<%= link_to 'New Prompt', new_prompt_path %>
+
+<%= tag.table class: 'table table-striped mb-0', data: { behavior: 'dradis-datatable' } do %>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Prompt</th>
+      <th>Created At</th>
+      <th>Updated At</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @prompts.each do |prompt| %>
+      <tr>
+        <td><%= prompt.title %></td>
+        <td><%= truncate(prompt.prompt, length: 100) %></td>
+        <td><%= l(prompt.created_at, format: :short) %></td>
+        <td><%= l(prompt.updated_at, format: :short) %></td>
+        <td>
+          <%= link_to 'Edit', edit_prompt_path(prompt), class: 'btn btn-sm btn-secondary' %>
+          <%= link_to 'Delete', prompt_path(prompt), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+<% end %>
