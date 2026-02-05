@@ -2,11 +2,13 @@
 
 Echo ships with a flexible prompting engine that uses Liquid Dynamic Content to provide full context about your project and findings, so you can craft relevant prompts to get the most accurate answers. Your data always stays local to uphold data sovereignty.
 
+
 ## Prerequisites
 
 The add-on requires [Dradis CE](https://dradis.com/ce/) > 4.0, or [Dradis Pro](https://dradis.com/).
 
 It uses a local [Ollama](https://ollama.org/) installation to connect Dradis to your preferred LLMs.
+
 
 ## Setup
 
@@ -28,6 +30,7 @@ And you'll need to update [this line](https://github.com/dradis/dradis-ce/blob/d
 adapter: redis
 ```
 
+
 ## Install
 
 Add this to your `Gemfile.plugins`:
@@ -40,16 +43,23 @@ And
 
 Lastly, restart your Dradis server, and you should see Echo available in your instance.
 
+
 ## Configure
+
 Configure Echo with the Ollama server address and selected model:
-- CE: Settings -> Configure Integrations
+
+- CE: Tools -> Echo
 - Pro: Tools -> Tool Manager -> Configure (in the Echo section)
 
+
 ## Usage
+
 Navigate to an Issue and click the Echo tab. From there you’ll be able to Summarize or Reword your Issue content, or generate a cheeky Haiku.
+
 
 ## Customize 
 To update the prompts in the beta release, update the default prompts in the [prompt.rb](https://github.com/dradis/dradis-echo/blob/release-4.19.0/app/models/dradis/plugins/echo/prompt.rb) file. In the future, this will be a feature available in the UI. 
+
 
 ## More information
 
@@ -57,13 +67,16 @@ See the Dradis Framework's [README.md](https://github.com/dradis/dradis-ce/blob/
 
 Read the [Echo documentation](https://dradis.com/support/guides/echo/)
 
+
 ## Contributing
 
 See the Dradis Framework's [CONTRIBUTING.md](https://github.com/dradis/dradis-ce/blob/develop/CONTRIBUTING.md)
 
+
 ## License
 
 Dradis Framework and all its components are released under [GNU General Public License version 2.0](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html) as published by the Free Software Foundation and appearing in the file LICENSE included in the packaging of this file.
+
 
 ## Feature requests and bugs
 
