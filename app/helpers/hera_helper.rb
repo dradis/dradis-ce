@@ -61,7 +61,7 @@ module HeraHelper
 
   def navbar_brand
     if !defined?(Dradis::Pro)
-      link_to main_app.root_path, class: 'navbar-brand' do
+      link_to main_app.project_path(current_project), class: 'navbar-brand' do
         image_tag 'logo_small.png', alt: 'Dradis CE logo', class: 'p-lg-0'
       end
     else
