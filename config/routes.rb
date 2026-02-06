@@ -156,13 +156,12 @@ Rails.application.routes.draw do
     get '/styles' => 'styles#index'
   end
 
-  if !defined?(Dradis::Pro)
-    get 'addons/issuelib', to: 'static_pages#issuelib'
-    get 'projects/1/issue/import', to: 'static_pages#import'
-  end
-
   if defined?(Dradis::Pro)
   else
+    # Static pages
+    get 'projects/1/addons/issuelib', to: 'static_pages#issuelib_index', as: :static_issuelib
+    get 'projects/1/addons/issuelib/import', to: 'static_pages#issuelib_import', as: :static_issuelib_import
+
     root to: 'setup/passwords#new'
   end
 
