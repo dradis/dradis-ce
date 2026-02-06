@@ -18,17 +18,29 @@ module Dradis::Plugins::Echo
       @interaction_id = SecureRandom.hex(20)
       @response_id = SecureRandom.hex(10)
 
+      @prompt = parse(@template.prompt)
+
       # EchoJob.set(wait: 2.seconds).perform_later(
       EchoJob.perform_later(
-        prompt_id: record_params[:id],
-        klass: @type,
-        record_id: @record.id,
+        prompt: @prompt,
         interaction_id: @interaction_id,
         response_id: @response_id
       )
     end
 
     private
+
+    def parse(template)
+      assigns = { 'issue' => IssueDrop.new(@record) }
+
+      options = {
+        filters: [],
+        strict_filters: true,
+        strict_variables: true
+      }
+
+      Liquid::Template.parse(template).render(assigns, options)
+    end
 
     def record_params
       params.permit(:id, :type, :project_id, :record)
