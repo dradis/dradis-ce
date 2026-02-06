@@ -9,7 +9,15 @@ else
   target="origin/$1"
 fi
 
-result_info="bundle exec rubocop --force-exclusion --format simple $(git diff-tree -r --no-commit-id --name-only $target..HEAD)"
+changed_ruby_files=$(git diff-tree -r --no-commit-id --name-only $target..HEAD | grep '\.rb$' || :)
+
+if [ -z "$changed_ruby_files" ]
+then
+  echo "✅ No Ruby files changed compared to $target. Skipping rubocop."
+  exit 0
+fi
+
+result_info="bundle exec rubocop --force-exclusion --format simple $changed_ruby_files"
 files_inspected=`$result_info | grep "files inspected\|file inspected" | cut -d " " -f1`
 warning_count=`$result_info | grep "offenses detected\|offense detected" | cut -d " " -f4`
 

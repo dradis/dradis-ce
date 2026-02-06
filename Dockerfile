@@ -10,8 +10,8 @@ apt-get install --no-install-recommends -y curl git libjemalloc2 libvips && \
 apt-get install --no-install-recommends -y redis-server sqlite3 && \
 rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# Set production environment
-ARG BUNDLE_GEMFILE="Gemfile.lock"
+# This can be overriden to build the Sandbox image
+ARG BUNDLE_GEMFILE="Gemfile"
 
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
