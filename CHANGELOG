@@ -1,7 +1,6 @@
 [v#.#.#] ([month] [YYYY])
   - Profile: update default user avatar
   - Forms: Improve visibility of form actions
-  - Export: Enhance Word and Excel tab content
   - Docker:
     - Update default attachments & templates locations to storage/
     - Include assets for all integrations regardless of enabled/disabled status
@@ -10,6 +9,7 @@
     - Rename addon upload/parent nodes and add icons
     - Update associated evidence, notes and child nodes' updated_at columns on node merge
     - Warn on node merge that methodology will not be copied
+  - Show don't gate: Word/Excel templates
   - Sidebar: Add resize functionality
   - Wizard:
     - Add analytics sharing step

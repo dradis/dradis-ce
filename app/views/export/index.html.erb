@@ -22,12 +22,7 @@
 
   <ul id="plugin-chooser" class="tabs-container nav nav-tabs">
     <% if !defined?(Dradis::Pro) %>
-      <li class="nav-item">
-        <a href="#plugin-word" class="nav-link" data-bs-toggle="tab"><i class="fa-solid fa-file-word fa-fw"></i>Word</a>
-      </li>
-      <li class="nav-item">
-        <a href="#plugin-excel" class="nav-link" data-bs-toggle="tab"><i class="fa-solid fa-file-excel fa-fw"></i>Excel</a>
-      </li>
+      <%= render 'static_pages/export-tabs'%>
     <% end %>
 
     <%= render_view_hooks 'export/index-tabs', feature: :export %>
@@ -35,7 +30,7 @@
   <div class="content-container">
     <div class="tab-content">
       <% if !defined?(Dradis::Pro) %>
-        <%= render 'static_pages/export'%>
+        <%= render 'static_pages/export-content'%>
       <% end %>
 
       <%= render_view_hooks 'export/index-content', feature: :export %>
