@@ -60,7 +60,10 @@
         <main class="container-fluid">
           <%= content_for?(:breadcrumbs) ? yield(:breadcrumbs) : '' %>
           <%= render 'layouts/hera/noscript' %>
-          <%= render "layouts/hera/project_teaser" unless defined?(Dradis::Pro) || controller_path == 'styles' %>
+          <% # Only render the project teaser in CE and in project ID != 1 %>
+          <% if !defined?(Dradis::Pro) && request.path =~ /\A\/projects\/(?!1\z)\d+\z/ %>
+            <%= render "layouts/hera/project_teaser" %>
+          <% end %>
           <%= flash_messages %>
           <%= content_for?(:content) ? yield(:content) : yield %>
         </main>
