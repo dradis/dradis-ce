@@ -22,7 +22,7 @@
 
   <ul id="plugin-chooser" class="tabs-container nav nav-tabs">
     <% if !defined?(Dradis::Pro) %>
-      <%= render 'static_pages/export-tabs'%>
+      <%= render 'static_pages/export_tabs'%>
     <% end %>
 
     <%= render_view_hooks 'export/index-tabs', feature: :export %>
@@ -30,7 +30,7 @@
   <div class="content-container">
     <div class="tab-content">
       <% if !defined?(Dradis::Pro) %>
-        <%= render 'static_pages/export-content'%>
+        <%= render 'static_pages/export_content'%>
       <% end %>
 
       <%= render_view_hooks 'export/index-content', feature: :export %>
