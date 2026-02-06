@@ -35,33 +35,7 @@
   <div class="content-container">
     <div class="tab-content">
       <% if !defined?(Dradis::Pro) %>
-        <div id="plugin-word" class="tab-pane fade" role="tabpanel">
-          <h4 class="header-underline">Choose a template</h4>
-          <p>Templates are 100% customizable, base them on your existing report format and keep multiple templates for different clients, teams, methodologies, or deliverable styles.</p>
-          
-          <%= render partial: 'templates', 
-            locals: { 
-              labels: ['dradis_welcome_template', 'dradis_owasp_template', 'dradis_template-hipaa'],
-              exporter: 'word',
-              extension: 'docx',
-              url: 'https://dradis.com/pro/pages/reporting.html'
-            }
-          %>
-        </div>
-
-        <div id="plugin-excel" class="tab-pane fade" role="tabpanel">
-          <h4 class="header-underline">Choose a template</h4>
-          <p>Templates are 100% customizable, base them on your existing report format and keep multiple templates for different clients, teams, methodologies, or deliverable styles.</p>
-
-          <%= render partial: 'templates', 
-            :locals => { 
-              labels: ['dradis_template-excel-owasp', 'dradis_template-welcome'],
-              exporter: 'excel',
-              extension: 'xlsx',
-              url: 'https://dradis.com/pro/pages/excel.html'
-            }
-          %>
-        </div>
+        <%= render 'static_pages/export'%>
       <% end %>
 
       <%= render_view_hooks 'export/index-content', feature: :export %>
