@@ -25,20 +25,7 @@ class AttachmentsController < AuthenticatedController
     @attachment << uploaded_file.read
     @attachment.save
 
-    # new jQuery uploader
-    json = {
-      name:        @attachment.filename,
-      size:        File.size(@attachment.fullpath),
-      url:         project_node_attachment_path(current_project, @node, @attachment.filename),
-      delete_url:  project_node_attachment_path(current_project, @node, @attachment.filename),
-      delete_type: 'DELETE'
-    }
-
-    if Mime::Type.lookup_by_extension(File.extname(@attachment.filename).downcase.tr('.', '')).to_s =~ /^image\//
-      json[:thumbnail_url] = project_node_attachment_path(current_project, @node, @attachment.filename)
-    end
-
-    render json: [json], content_type: 'text/plain'
+    render json: [build_attachment_json], content_type: 'text/plain'
   end
 
   # This function will send the Attachment file to the browser. It will try to
@@ -101,5 +88,23 @@ class AttachmentsController < AuthenticatedController
 
   def attachment_params
     params.require(:attachment).permit(:filename)
+  end
+
+  # new jQuery uploader
+  def build_attachment_json
+    json = {
+      name:        @attachment.filename,
+      size:        File.size(@attachment.fullpath),
+      url:         project_node_attachment_path(current_project, @node, @attachment.filename),
+      delete_url:  project_node_attachment_path(current_project, @node, @attachment.filename),
+      delete_type: 'DELETE'
+    }
+
+    if Mime::Type.lookup_by_extension(File.extname(@attachment.filename).downcase.tr('.', '')).to_s =~ /^image\//
+      json[:width], json[:height] = ImageSize.path(@attachment.fullpath).size
+      json[:thumbnail_url] = project_node_attachment_path(current_project, @node, @attachment.filename)
+    end
+
+    json
   end
 end
