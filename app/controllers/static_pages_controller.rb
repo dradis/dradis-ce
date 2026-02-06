@@ -1,7 +1,7 @@
 class StaticPagesController < AuthenticatedController
   include ProjectScoped
 
-  def issuelib; end
+  def issuelib_index; end
 
-  def import; end
+  def issuelib_import; end
 end
