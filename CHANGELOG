@@ -12,6 +12,7 @@
     - Warn on node merge that methodology will not be copied
   - Show don't gate:
     - Issue Library
+    - Ticketing integrations
     - Word/Excel templates
   - Sidebar: Add resize functionality
   - Textile:
