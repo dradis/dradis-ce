@@ -19,9 +19,23 @@
     </p>
     <p class="mb-2">Libraries:</p>
     <ul class="fa-ul">
-      <li><i class="fa-solid fa-li fa-chevron-right"></i><a href="https://dradis.com/integrations/mediawiki.html?utm_source=ce&utm_medium=app" target="_blank">MediaWiki</a></li>
-      <li><i class="fa-solid fa-li fa-chevron-right"></i><a href="javascript:void(0)" class="js-try-pro" data-term="issuelib" data-url="https://dradis.com/pro/pages/issuelib.html"><i class="fa-solid fa-book"></i> Built-in Issue Library</a></li>
+      <li><i class="fa-solid fa-li fa-chevron-right"></i>
+        <a href="https://dradis.com/integrations/mediawiki.html?utm_source=ce&utm_medium=app" target="_blank">
+          MediaWiki
+        </a>
+      </li>
+      <li><i class="fa-solid fa-li fa-chevron-right"></i>
+        <%= link_to static_issuelib_path do %>
+          <i class="fa-solid fa-book"></i> Built-in Issue Library
+        <% end %>
+      </li>
     </ul>
+    <form action="<%=  static_issuelib_import_path %>" class="form-inline mb-4" method="get">
+      <div class="inset-button-wrapper">
+        <input type="text" class="form-control search-query", placeholder="Search Issue Library" />
+        <button type="submit" class="btn btn-primary">Search</button>
+      </div>
+    </form>
   <% else %>
     <% Dradis::Plugins::with_feature(:import).each do |plugin| %>
       <div>
