@@ -1,0 +1,72 @@
+<div class="dataTables_wrapper">
+  <table class="table table-striped dataTable mb-0">
+    <thead>
+      <tr>
+        <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Select</span></th>
+        <% columns.each_with_index do |column, index| %>
+          <th><%= column %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% entries = ['Auto-complete in password field', 'DOM-based cross-site scripting (XSS)', 'Insufficient cross-site request forgery (CSRF) protection', 'Reflected cross-site scripting (XSS)'] %>
+      <% entries.each_with_index do |entry, index| %>
+        <tr id="entry-<%= index %>">
+          <td><input type="checkbox" /></td>
+          <td>
+            <a 
+              href="javascript:void(0)"
+              class="js-try-pro"
+              data-term="issuelib"
+              data-url="https://dradis.com/pro/pages/issuelib.html">
+              <%= entry %>
+            </a>
+          </td>
+          <td>Published</td>
+          <% if import %>
+            <% @default_button_state = 'published' %>
+            <td class="column-actions">
+              <div class="btn-group btn-states" data-behavior="btn-states">
+                <a 
+                  href="javascript:void(0)"
+                  class="btn btn-primary js-try-pro"
+                  data-term="issuelib"
+                  data-url="https://dradis.com/pro/pages/issuelib.html">
+                  <i class="fa-solid fa-plus"></i> Add issue
+                  (<span data-behavior="state-button"><%= @default_button_state.humanize %></span>)
+                </a>
+                <a href="#" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="visually-hidden">Toggle Dropdown</span>
+                </a>
+                <div class="dropdown-menu">
+                  <%= collection_radio_buttons(entry, :state, [['draft', 'draft'], ['ready_for_review', 'ready_for_review'], ['published', 'published']], :first, :first) do |b| %>
+                    <span>
+                      <%= b.label class: 'state', for: "#{entry}_state_#{b.value}" do %>
+                        <%= b.radio_button id: "#{entry}_state_#{b.value}", class: 'd-none', data: { behavior: 'state-radio' }, checked: b.value == @default_button_state %>
+                        <i class="fa-solid fa-check fa-fw"></i>
+                        <div class="state-label">
+                          <p data-behavior="state-label"><%= b.text.humanize %></p>
+                          <% case b.value %>
+                          <% when 'draft' %>
+                            <span>Still not ready for review or the report.</span>
+                          <% when 'ready_for_review' %>
+                            <span>All done on this one, ready for QA.</span>
+                          <% when 'published' %>
+                            <span>Content is final, ready for the report.</span>
+                          <% end %>
+                        </div>
+                      <% end %>
+                    </span>
+                  <% end %>
+                </div>
+              </div>
+            </td>
+          <% else %>
+            <td>on <%= (Date.today - 1.month).strftime('%b %d, %Y') %></td>
+            <td>on <%= Date.today.strftime('%b %d, %Y') %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
