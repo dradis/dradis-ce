@@ -11,6 +11,33 @@
   </ol>
 <% end %>
 
+<%= content_for :sidebar do %>
+  <div class="header">
+    <div class="header-inner">
+      <h5 class="header-name">
+        Prompts Tip
+      </h5>
+      <div class="options">
+        <%= link_to "#prompts-tips", data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle Prompts Tip</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div id="prompts-tip" class="collapse show">
+    <div class="alert alert-primary mt-0">
+      <p>
+        Create reusable AI prompts to automate repetitive tasks like summarizing findings, generating CVSS scores, or translating technical issues for non-technical audiences. Use Liquid Dynamic Content like <code class="text-nowrap px-0">{{ issue.text }}</code> to include issue content.
+      </p>
+      <p class="text-end card-link">
+        More about
+        <%= link_to 'Prompts', 'https://dradis.com/support/guides/echo/prompts.html', target: '_blank' %>
+      </p>
+    </div>
+  </div>
+<% end %>
+
 <div class="content-container">
   <h4 class="header-underline">Prompts
     <% if @prompts.any? %>
