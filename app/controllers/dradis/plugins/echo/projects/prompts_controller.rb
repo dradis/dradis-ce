@@ -5,20 +5,19 @@ module Dradis::Plugins::Echo
 
     before_action :check_turbo_config, only: [:index]
     before_action :set_type
+    before_action :set_record
 
     def index
       @prompts = current_user.prompts
-      @record = record_params[:record].to_i
     end
 
     def show
       @template = current_user.prompts.find(params[:id])
-      @record = current_project.send(@type.to_s.pluralize).find(record_params[:record])
 
       @interaction_id = SecureRandom.hex(20)
       @response_id = SecureRandom.hex(10)
 
-      @prompt = parse(@template.prompt)
+      @prompt = liquid_parse(@template.prompt)
 
       # EchoJob.set(wait: 2.seconds).perform_later(
       EchoJob.perform_later(
@@ -30,7 +29,7 @@ module Dradis::Plugins::Echo
 
     private
 
-    def parse(template)
+    def liquid_parse(template)
       assigns = { 'issue' => IssueDrop.new(@record) }
 
       options = {
@@ -41,6 +40,7 @@ module Dradis::Plugins::Echo
 
       Liquid::Template.parse(template).render(assigns, options)
     end
+    helper_method :liquid_parse
 
     def record_params
       params.permit(:id, :type, :project_id, :record)
@@ -56,6 +56,10 @@ module Dradis::Plugins::Echo
       rescue
         false
       end
+    end
+
+    def set_record
+      @record = current_project.send(@type.to_s.pluralize).find(record_params[:record])
     end
 
     def set_type

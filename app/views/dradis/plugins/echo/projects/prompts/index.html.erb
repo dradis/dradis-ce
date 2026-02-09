@@ -4,7 +4,26 @@
   </div>
 <% end %>
 
-<div>
-  <p class="mb-2">Summarize, rewrite, and analyze findings leveraging Liquid Dynamic Content and full project context. Your data stays local with your model of choice.</p>
-  <%= render partial: 'dradis/plugins/echo/projects/prompts/prompt', collection: @prompts %>
+<div class="row">
+  <div class="col-3">
+    <ul class="nav flex-column" data-behavior="deeplinks" role="tablist">
+      <% @prompts.each_with_index do |prompt, index| %>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#prompt-tab-<%= prompt.id %>" role="tab" aria-controls="details-tab" aria-selected="true">
+            <i class="fa-solid <%= prompt.icon %>"></i> <%= prompt.title %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="col-9">
+    <div class="tab-content">
+      <% @prompts.each do |prompt| %>
+        <div class="tab-pane fade show" id="prompt-tab-<%= prompt.id %>" role="tabpanel" aria-labelledby="details-tab">
+          <%= render partial: 'dradis/plugins/echo/projects/prompts/prompt', locals: { prompt: prompt } %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>

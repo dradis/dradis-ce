@@ -1,3 +1,16 @@
-<%= link_to echo.project_prompt_path(current_project, prompt.id, type: @type, record: @record), class: 'btn btn-outline-primary btn-sm me-2', data: { prompt: prompt.prompt } do %>
-  <i class="fa-solid <%= prompt.icon %>"></i> <%= prompt.title %>
-<% end %>
+<div class="content-container">
+  <div class="mb-3">
+    <%= form_with url: echo.project_prompt_path(current_project, prompt.id), method: :get do |f| %>
+      <%= f.hidden_field :type, value: @type %>
+      <%= f.hidden_field :record, value: @record.id %>
+
+      <div class="input-group">
+        <%= f.text_area :input, value: liquid_parse(prompt.prompt), class: "form-control", placeholder: "Enter your prompt here...", rows: 3 %>
+      </div>
+
+      <div>
+        <%= f.submit "Submit", class: "btn btn-primary mt-2" %>
+      </div>
+    <% end %>
+  </div>
+</div>
