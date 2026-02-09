@@ -14,7 +14,7 @@
         <% @prompts.each_with_index do |prompt, index| %>
           <li class="nav-item">
             <a class="nav-link <%= class_names(active: index == 0) %>" data-bs-toggle="tab" href="#prompt-tab-<%= prompt.id %>" role="tab" aria-controls="details-tab" aria-selected="true">
-              <i class="fa-solid <%= prompt.icon %>"></i> <%= prompt.title %>
+              <i class="fa-solid fa-fw <%= prompt.icon %>"></i> <%= prompt.title %>
             </a>
           </li>
         <% end %>
