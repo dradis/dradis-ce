@@ -19,7 +19,6 @@ module Dradis::Plugins::Echo
 
       @prompt = liquid_parse(@template.prompt)
 
-      # EchoJob.set(wait: 2.seconds).perform_later(
       EchoJob.perform_later(
         prompt: @prompt,
         interaction_id: @interaction_id,

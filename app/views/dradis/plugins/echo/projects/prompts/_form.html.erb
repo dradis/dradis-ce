@@ -1,9 +1,0 @@
-<%= form_with url: "", html: { id: "chat_form", class: "form-inline" } do |f| %>
-  <%= f.hidden_field :chat_id, value: 1 %>
-
-  <label class="sr-only" for="inlineFormInputPrompt">Prompt</label>
-  <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Go on, you know what to do">
-
-  <%#= f.text_area :message, class: "resize-none border rounded-md w-full py-2 px-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-blue-500", placeholder: "Your message", autofocus: true %>
-  <%= f.submit "Send", class: "btn btn-primary mb-2" %>
-<% end %>

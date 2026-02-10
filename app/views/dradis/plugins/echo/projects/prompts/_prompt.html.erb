@@ -3,7 +3,7 @@
   <%= f.hidden_field :record, value: @record.id %>
 
   <div class="input-group">
-    <%= f.text_area :input, value: liquid_parse(prompt.prompt), class: "form-control field-sizing-content", placeholder: "Enter your prompt here...", rows: 3 %>
+    <%= f.text_area :input, value: liquid_parse(prompt.prompt), class: "form-control field-sizing-content", placeholder: "Enter your prompt here...", rows: 30 %>
   </div>
 
   <div class="form-actions sticky pt-1">
