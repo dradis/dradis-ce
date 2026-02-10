@@ -70,5 +70,14 @@ module Dradis::Plugins::Echo
         )
       ]
     end
+
+    def self.seed_default_prompts(user)
+      transaction do
+        defaults.each do |prompt|
+          prompt.user = user
+          prompt.save!
+        end
+      end
+    end
   end
 end
