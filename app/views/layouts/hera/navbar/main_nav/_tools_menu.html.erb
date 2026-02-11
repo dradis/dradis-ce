@@ -8,7 +8,7 @@
     <%= render_view_hooks('tools_menu') %>
     <% if !defined?(Dradis::Pro) %>
       <li><div class="dropdown-divider"></div></li>
-      <li><%= link_to 'Issue Library', static_issuelib_path, class: 'dropdown-item' %></li>
+      <li><%= link_to 'Issue Library', main_app.static_issuelib_path, class: 'dropdown-item' %></li>
     <% end %>
   </ul>
 </li>
