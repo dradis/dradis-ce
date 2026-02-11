@@ -1,0 +1,34 @@
+<% content_for :title, 'Import Issues' %>
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <%= link_to 'Dashboard', main_app.root_path %>
+  </li>
+  <li class="breadcrumb-item">
+    <%= link_to 'Issue Library', main_app.static_issuelib_path %>
+  </li>
+  <li class="breadcrumb-item active">
+    Import Issues
+  </li>
+</ol>
+
+<div class="content-container">
+  <div id="issue-viewer">
+    <div class="results">
+      <div class="page page-none">
+        <div class="header">
+          <div class="header-inner">
+            <h4 class="header-underline">Search results</h4>
+          </div>
+        </div>
+
+        <%= render partial: 'issuelib_entries',
+          locals: { 
+            columns: ['Title', 'State', ''],
+            import: true
+          }
+        %>
+      </div>
+    </div>
+  </div>
+</div>

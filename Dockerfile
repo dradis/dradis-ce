@@ -10,9 +10,12 @@ apt-get install --no-install-recommends -y curl git libjemalloc2 libvips && \
 apt-get install --no-install-recommends -y redis-server sqlite3 && \
 rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# Set production environment
+# This can be overriden to build the Sandbox image
+ARG BUNDLE_GEMFILE="Gemfile"
+
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
+    BUNDLE_GEMFILE=$BUNDLE_GEMFILE \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development test" \
     # RAILS_SERVE_STATIC_FILES  is enabled to let Rails serve static files since we're not using Nginx
@@ -28,7 +31,7 @@ RUN apt-get update -qq && \
 # Copy files to build layer that are needed to run `bundle install` & install app gems
 # engines/ is needed to resolve built-in engines in Gemfile
 # version.rb is needed to resolve built-in engine versions in their respective .gemspecs
-COPY Gemfile Gemfile.lock Gemfile.plugins ./
+COPY Gemfile Gemfile.lock Gemfile.plugins Gemfile.sandbox Gemfile.sandbox.lock ./
 COPY engines ./engines
 COPY lib/dradis/ce/version.rb ./lib/dradis/ce/version.rb
 
@@ -50,7 +53,7 @@ RUN mkdir -p app/views/tmp \
     storage
 
 # Precompile bootsnap code for faster boot times
-RUN bundle exec bootsnap precompile app/ lib/
+RUN bundle exec bootsnap precompile app/ engines/ lib/
 
 # Precompile assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
