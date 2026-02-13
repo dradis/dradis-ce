@@ -63,10 +63,15 @@ If you'd like to use Dradis in Docker, first get the latest image:
 docker image pull dradis/dradis-ce:latest
 ```
 
+Generate credentials:
+```
+docker run --rm -it -e EDITOR=vi dradis-ce:latest ./bin/rails credentials:edit
+```
+
 And then run the container:
 
 ```
-docker run -it -p 3000:3000 dradis/dradis-ce
+docker run -it -p 3000:80 dradis/dradis-ce
 ```
 
 
