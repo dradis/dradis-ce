@@ -5,7 +5,7 @@ module Dradis::Plugins::Echo
 
     before_action :check_turbo_config, only: [:index]
     before_action :set_type
-    before_action :set_record
+    before_action :set_record, except: [:create]
 
     def index
       Prompt.seed_default_prompts(current_user) if current_user.prompts.empty?
@@ -19,13 +19,17 @@ module Dradis::Plugins::Echo
       @interaction_id = SecureRandom.hex(20)
       @response_id = SecureRandom.hex(10)
 
-      @prompt = liquid_parse(@template.prompt)
+      @message = liquid_parse(@template.prompt)
+    end
 
+    def create
       EchoJob.perform_later(
-        prompt: @prompt,
-        interaction_id: @interaction_id,
-        response_id: @response_id
+        prompt: params[:prompt],
+        interaction_id: params[:interaction_id],
+        response_id: params[:response_id]
       )
+
+      head :ok
     end
 
     private
