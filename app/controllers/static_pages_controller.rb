@@ -4,4 +4,6 @@ class StaticPagesController < AuthenticatedController
   def issuelib_index; end
 
   def issuelib_import; end
+
+  def remediationtracker_index; end
 end
