@@ -1,3 +1,95 @@
 <% content_for :title, 'Remediation Tracker' %>
 
-<h1>RT</h1>
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to 'Dashboard', main_app.root_path %></li>
+    <li class="breadcrumb-item active">Remediation Tracker</li>
+  </ol>
+<% end %>
+
+<% content_for :sidebar do %>
+  <div class="header">
+    <div class="header-inner">
+      <h5 class="header-name">Remediation Tracker Tips</h5>
+      <div class="options">
+        <%= link_to '#remediation-tracker-tips', data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle update state</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div id="remediation-tracker-tips" class="page-tips show collapse">
+    <div class="bg-info">
+      <p>With the Remediation Tracker add-on:</p>
+      <ul class="fa-ul">
+        <li>
+          <p><i class="fa-solid fa-li fa-check text-mint"></i> Send Issues from your projects to the tracker</p>
+        </li>
+        <li>
+          <p><i class="fa-solid fa-li fa-check text-mint"></i> Define custom categories and states</p>
+        </li>
+        <li>
+          <p><i class="fa-solid fa-li fa-check text-mint"></i> Assign remediation work to specific team members</p>
+        </li>
+        <li>
+          <p><i class="fa-solid fa-li fa-check text-mint"></i> Keep all your remediation data in one place</p>
+        </li>
+      </ul>
+      <p class="text-end card-link">More about <a href="https://dradis.com/tools/remediation.html" target="_blank">Remediation Tracker</a>.</p>
+    </div>
+  </div>
+<% end %>
+
+<div class="row d-flex align-items-start justify-content-between">
+  <div class="col-12 col-md-9">
+    <h1>Remediation Tracker</h1>
+    <h2 class="mb-3">Assign tickets to your team and track remediation status across all your projects</h2>
+  </div>
+  <div class="col-12 col-md-3 d-flex justify-content-start justify-content-md-end mb-4 mb-md-0">
+    <a
+      href="javascript:void(0)"
+      class="btn btn-primary js-try-pro"
+      data-term="remediation"
+      data-url="https://dradis.com/pro/pages/remediation.html">
+      <i class="fa-solid fa-plus me-1"></i>New Ticket
+    </a>
+  </div>
+</div>
+
+<ul class="tabs-container nav nav-tabs main-tabs">
+  <li class="nav-item">
+    <a href="#tickets-tab" data-bs-toggle="tab" class="nav-link active">
+      <i class="fa-solid fa-clipboard-check me-1"></i>Tickets
+    </a>
+  </li>
+  <li class="nav-item">
+    <a
+      href="javascript:void(0)"
+      class="nav-link js-try-pro"
+      data-term="remediation"
+      data-url="https://dradis.com/pro/pages/remediation.html">
+      <i class="fa-solid fa-square-poll-horizontal me-1"></i>Ticket Categories
+    </a>
+  </li>
+  <li class="nav-item">
+    <a
+      href="javascript:void(0)"
+      class="nav-link js-try-pro"
+      data-term="remediation"
+      data-url="https://dradis.com/pro/pages/remediation.html">
+      <i class="fa-solid fa-bars-progress me-1"></i>Ticket States
+    </a>
+  </li>
+</ul>
+
+<div class="row p-0">
+  <div class="col-12">
+    <div class="content-container">
+      <div class="tab-content">
+        <div class="tab-pane active" id="tickets-tab">
+          <%= render partial: 'remediationtracker_tickets' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
