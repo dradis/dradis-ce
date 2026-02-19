@@ -1,38 +1,3 @@
-<% tickets = [
-  {
-    title:    'SQL Injection in Login Form',
-    category: 'Security',
-    state:    'Open',
-    assignee: 'James T. Kirk',
-    due_at:   Date.today - 1.week,
-    overdue:  true
-  },
-  {
-    title:    'Outdated SSL Certificate',
-    category: 'Infrastructure',
-    state:    'In Progress',
-    assignee: 'Nyota Uhura',
-    due_at:   Date.today,
-    overdue:  true
-  },
-  {
-    title:    'Cross-Site Scripting in Search Bar',
-    category: 'Security',
-    state:    'Open',
-    assignee: 'Montgomery Scott',
-    due_at:   Date.today + 1.week,
-    overdue:  false
-  },
-  {
-    title:    'Missing HTTP Security Headers',
-    category: 'Compliance',
-    state:    'In Progress',
-    assignee: nil,
-    due_at:   Date.today + 1.month,
-    overdue:  false
-  }
-] %>
-
 <div class="dataTables_wrapper">
   <table class="table table-striped dataTable mb-0">
     <thead>
@@ -46,7 +11,7 @@
       </tr>
     </thead>
     <tbody>
-      <% tickets.each_with_index do |ticket, index| %>
+      <% @tickets.each_with_index do |ticket, index| %>
         <tr id="ticket-<%= index %>">
           <td>
             <a
