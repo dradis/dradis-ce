@@ -19,7 +19,7 @@ module Dradis::Plugins::Echo
       @interaction_id = SecureRandom.hex(20)
       @response_id = SecureRandom.hex(10)
 
-      @message = liquid_parse(@template.prompt)
+      @prompt = liquid_parse(@template.prompt)
     end
 
     def create

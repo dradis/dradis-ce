@@ -9,8 +9,6 @@ export default class extends Controller {
   }
 
   connect() {
-    console.log(this.interactionIdValue)
-
     setTimeout(() => {
       fetch(this.urlValue, {
         method: 'POST',
