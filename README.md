@@ -65,7 +65,7 @@ docker image pull dradis/dradis-ce:latest
 
 Generate a master key value:
 ```
-docker run --rm -it dradis/dradis-ce:latest bash -c "./bin/rails secret | head -c 32"
+openssl rand -hex 16
 ```
 
 And then run the container:
