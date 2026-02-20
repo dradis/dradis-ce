@@ -3,13 +3,9 @@ require 'rails_helper'
 describe DigestSender do
   describe '#send' do
     before do
-      # Set default From for testing
-      NotificationMailer.send(:default, from: 'test@email.com')
-
       @user = create(:user)
       issue = create(:issue)
       @comment = create(:comment, commentable: issue)
-      project = issue.node.project
     end
 
     context 'instant' do
