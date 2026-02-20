@@ -24,14 +24,6 @@ module Dradis
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
 
-    # pull active_record_encryption keys from environment variables, fall back to credentials if not set
-    config.active_record.encryption.primary_key = ENV['ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY'] || 
-      credentials.dig(:active_record_encryption, :primary_key)
-    config.active_record.encryption.deterministic_key = ENV['ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY'] || 
-      credentials.dig(:active_record_encryption, :deterministic_key)
-    config.active_record.encryption.key_derivation_salt = ENV['ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT'] || 
-      credentials.dig(:active_record_encryption, :key_derivation_salt)
-
     # Change the format of the cache entry. Changing this default means that all new cache entries
     # added to the cache will have a different format that is not supported by Rails 7.0 applications.
     config.active_support.cache_format_version = 7.1
