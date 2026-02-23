@@ -15,11 +15,9 @@ module Dradis::Plugins::Echo
 
     def show
       @template = current_user.prompts.find(params[:id])
-
+      @prompt = params[:prompt]
       @interaction_id = SecureRandom.hex(20)
       @response_id = SecureRandom.hex(10)
-
-      @prompt = liquid_parse(@template.prompt)
     end
 
     def create
