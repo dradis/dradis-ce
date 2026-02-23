@@ -29,6 +29,7 @@
 
 # Ignore app-specific folders
 /backup/
+/config/credentials/
 /config/shared/
 /sample_files/
 /Gemfile.plugins

@@ -49,6 +49,7 @@ COPY config/smtp.yml.template config/smtp.yml
 # Prepare application folders
 # app/views/tmp is needed for HTML exporter report creation
 RUN mkdir -p app/views/tmp \
+    config/credentials \
     config/shared \
     storage
 
@@ -70,6 +71,7 @@ RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
     chown -R rails:rails \
         app/views/tmp \
+        config/credentials \
         config/shared \
         log \
         storage \
