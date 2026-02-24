@@ -8,7 +8,7 @@ end
 content_path = Rails.application.config.credentials.content_path
 key_path = Rails.application.config.credentials.key_path
 
-if !ENV.fetch('SECRET_KEY_BASE_DUMMY', nil) && (!content_path.exist? | content_path.zero?)
+if !ENV.key?('SECRET_KEY_BASE_DUMMY') && (!content_path.exist? | content_path.zero?)
   warn "The file #{content_path} does not exists or is empty."
   warn "Generating a new file and writing to #{content_path}; this will invalidate the previous Rails sessions."
 
@@ -26,7 +26,7 @@ if !ENV.fetch('SECRET_KEY_BASE_DUMMY', nil) && (!content_path.exist? | content_p
   }.to_yaml
 
   # if master key is not set in env and there is no master.key file, create one
-  if !ENV.fetch('RAILS_MASTER_KEY', nil)
+  if !ENV.key?('RAILS_MASTER_KEY')
     key = ActiveSupport::EncryptedConfiguration.generate_key
     key_path.binwrite(key)
     key_path.chmod 0600

@@ -50,7 +50,6 @@ COPY config/smtp.yml.template config/smtp.yml
 # app/views/tmp is needed for HTML exporter report creation
 RUN mkdir -p app/views/tmp \
     config/credentials \
-    config/shared \
     storage
 
 # Precompile bootsnap code for faster boot times
@@ -72,7 +71,6 @@ RUN groupadd --system --gid 1000 rails && \
     chown -R rails:rails \
         app/views/tmp \
         config/credentials \
-        config/shared \
         log \
         storage \
         tmp
