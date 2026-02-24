@@ -25,8 +25,9 @@ if !ENV.key?('SECRET_KEY_BASE_DUMMY') && (!content_path.exist? | content_path.ze
     secret_key_base: SecureRandom.hex(64)
   }.to_yaml
 
-  # if master key is not set in env and there is no master.key file, create one
+  # if master key is not set in env, create one
   if !ENV.key?('RAILS_MASTER_KEY')
+    # the following can be removed when we drop support for VM instances, after which master key will always be an environment variable
     key = ActiveSupport::EncryptedConfiguration.generate_key
     key_path.binwrite(key)
     key_path.chmod 0600

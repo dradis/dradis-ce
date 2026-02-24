@@ -63,15 +63,10 @@ If you'd like to use Dradis in Docker, first get the latest image:
 docker image pull dradis/dradis-ce:latest
 ```
 
-Generate a master key value:
-```
-openssl rand -hex 16
-```
-
 And then run the container:
 
 ```
-docker run --env=RAILS_MASTER_KEY=abc123 -it -p 3000:80 dradis/dradis-ce
+docker run -it -p 3000:80 dradis/dradis-ce
 ```
 
 
