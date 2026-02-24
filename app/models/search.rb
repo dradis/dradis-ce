@@ -57,7 +57,7 @@ class Search
   def evidence
     @evidence ||=
       begin
-        evidence = Evidence.where('node_id IN (:nodes)', nodes: project.nodes.user_nodes.pluck(:id))
+        evidence = Evidence.where(node_id: project.nodes.user_nodes.pluck(:id))
         evidence = evidence.where('LOWER(content) LIKE LOWER(:q)', q: "%#{query}%") if query.present?
         evidence.includes(:issue, :node).order(updated_at: :desc)
       end
@@ -84,7 +84,7 @@ class Search
   def notes
     @notes ||=
       begin
-        notes = Note.where('node_id IN (:nodes)', nodes: project.nodes.user_nodes.pluck(:id))
+        notes = Note.where(node_id: project.nodes.user_nodes.pluck(:id))
         notes = notes.where('LOWER(text) LIKE LOWER(:q)', q: "%#{query}%") if query.present?
         notes.includes(:node).order(updated_at: :desc)
       end
