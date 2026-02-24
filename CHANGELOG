@@ -42,8 +42,7 @@
     - [report type]:
       - [future tense verb] [reporting enhancement]
   - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
+    - Issues: Add support for search
   - Security Fixes:
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
