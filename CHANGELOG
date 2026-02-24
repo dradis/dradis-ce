@@ -25,7 +25,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - [gem]
+    - nokogiri, rack
   - Bugs fixes:
     - Nodes: Display error message and preserve input on properties update
     - Notifications: Ensure correct link for note and issue comments
