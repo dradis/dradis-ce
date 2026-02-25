@@ -50,7 +50,7 @@
   </h4>
 
   <% if @prompts.any? %>
-    <%= tag.table class: 'table table-striped mb-0', data: { behavior: 'dradis-datatable' } do %>
+    <%= tag.table class: 'table table-striped mb-0', data: { behavior: 'dradis-datatable', 'default-columns': ['Title', 'Prompt', 'Actions'], 'local-storage-key': 'echo.prompts_datatable' } do %>
       <thead>
         <tr>
           <th>Title</th>
@@ -58,7 +58,7 @@
           <th>Type</th>
           <th>Created At</th>
           <th>Updated At</th>
-          <th class="no-sort"><span class="visually-hidden">Actions</span></th>
+          <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Actions</span></th>
         </tr>
       </thead>
       <tbody>
