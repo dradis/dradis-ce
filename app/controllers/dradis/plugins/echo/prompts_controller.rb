@@ -56,7 +56,7 @@ module Dradis::Plugins::Echo
     end
 
     def prompt_params
-      params.require(:prompt).permit(:title, :icon, :prompt)
+      params.require(:prompt).permit(:title, :icon, :prompt, :prompt_type)
     end
 
     def set_prompt

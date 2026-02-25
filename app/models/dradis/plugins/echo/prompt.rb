@@ -2,6 +2,8 @@ module Dradis::Plugins::Echo
   class Prompt < ApplicationRecord
     include Defaults
 
+    PROMPT_TYPES = [ :issue ].freeze
+
     enum :visibility, [ :personal, :shared ]
 
     # -- Relationships ----------------------------------------------------------

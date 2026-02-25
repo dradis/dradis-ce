@@ -10,6 +10,11 @@
   </div>
 
   <div class="mb-3">
+    <%= f.label :prompt_type, 'Prompt Type', class: 'form-label' %>
+    <%= f.select :prompt_type, options_for_select(Dradis::Plugins::Echo::Prompt::PROMPT_TYPES.map { |type| [type.to_s.humanize, type] }, @prompt.prompt_type), {}, class: 'form-select' %>
+  </div>
+
+  <div class="mb-3">
     <%= f.label :prompt, 'Prompt', class: 'form-label' %>
     <%= f.text_area :prompt, value: @prompt.prompt, class: 'form-control', rows: 10, required: true %>
   </div>
