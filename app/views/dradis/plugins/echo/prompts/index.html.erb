@@ -64,7 +64,7 @@
       <tbody>
         <% @prompts.each do |prompt| %>
           <tr>
-            <td><%= prompt.title %></td>
+            <td><%= content_tag :i, nil, class: "fa-solid #{prompt.icon}" %> <%= prompt.title %></td>
             <td><%= prompt.prompt %></td>
             <td><%= prompt.scope.to_s.humanize %></td>
             <td><%= local_time_ago(prompt.created_at) %></td>
