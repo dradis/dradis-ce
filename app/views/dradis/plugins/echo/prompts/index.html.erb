@@ -55,7 +55,7 @@
         <tr>
           <th>Title</th>
           <th>Prompt</th>
-          <th>Type</th>
+          <th>Scope</th>
           <th>Created At</th>
           <th>Updated At</th>
           <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Actions</span></th>
@@ -66,7 +66,7 @@
           <tr>
             <td><%= prompt.title %></td>
             <td><%= prompt.prompt %></td>
-            <td><%= prompt.prompt_type %></td>
+            <td><%= prompt.scope.to_s.humanize %></td>
             <td><%= local_time_ago(prompt.created_at) %></td>
             <td><%= local_time_ago(prompt.updated_at) %></td>
             <td class="column-actions">

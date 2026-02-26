@@ -10,8 +10,13 @@
   </div>
 
   <div class="mb-3">
-    <%= f.label :prompt_type, 'Prompt Type', class: 'form-label' %>
-    <%= f.select :prompt_type, options_for_select(Dradis::Plugins::Echo::Prompt::PROMPT_TYPES.map { |type| [type.to_s.humanize, type] }, @prompt.prompt_type), {}, class: 'form-select' %>
+    <%= f.label :scope, 'Prompt Scope', class: 'form-label' %>
+    <%=
+      f.select :scope,
+        options_for_select(Dradis::Plugins::Echo::Prompt::SCOPES.map { |scop| [scope.to_s.humanize, scope] }, @prompt.scope),
+        {},
+        class: 'form-select'
+    %>
   </div>
 
   <div class="mb-3">

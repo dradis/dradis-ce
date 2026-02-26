@@ -8,7 +8,7 @@ module Dradis::Plugins::Echo
           new(
             title: 'Summarize',
             icon: 'fa-wand-magic-sparkles',
-            prompt_type: :issue,
+            scope: :issue,
             prompt: <<~EOP
           I am a cyber security professional working on a cybersecurity assessment.
 
@@ -35,7 +35,7 @@ module Dradis::Plugins::Echo
           new(
             title: 'Reword',
             icon: 'fa-shuffle',
-            prompt_type: :issue,
+            scope: :issue,
             prompt: <<~EOP
           I am a cyber security professional working on a cybersecurity assessment.
 
@@ -59,7 +59,7 @@ module Dradis::Plugins::Echo
           new(
             title: 'Haiku',
             icon: 'fa-feather-pointed',
-            prompt_type: :issue,
+            scope: :issue,
             prompt: <<~EOP
           I want to create a haiku inspired by the following text:
           {{ issue.text }}
@@ -69,12 +69,7 @@ module Dradis::Plugins::Echo
       end
 
       def seed_default_prompts(user)
-        transaction do
-          defaults.each do |prompt|
-            prompt.user = user
-            prompt.save!
-          end
-        end
+        user.prompts = defaults.dup
       end
     end
   end
