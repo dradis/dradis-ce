@@ -45,7 +45,6 @@ module Dradis
     config.assets.configure do |env|
       env.export_concurrent = false
     end
-    config.action_view.form_with_generates_remote_forms = true
 
     # Override the default credentials lookup paths. See bin/rails credentials:help
     config.credentials.content_path = Rails.root.join('config', 'shared', 'credentials.yml.enc')
