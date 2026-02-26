@@ -4,8 +4,16 @@
   align-items: center;
   gap: 0.25rem;
   position: fixed;
+  right: 12rem;
   top: 0.6rem;
-  left: 50%;
-  transform: translateX(-50%);
   z-index: 1050;
+
+  @media (max-width: 1024px) {
+    right: 10.75rem;
+  }
+
+  @media (max-width: 991px) {
+    right: 50%;
+    transform: translateX(50%);
+  }
 }
