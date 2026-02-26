@@ -66,7 +66,7 @@ module Dradis::Plugins::Echo
     end
 
     def set_type
-      allowed = %w[issue]
+      allowed = Prompt::SCOPES.map(&:to_s)
       @type = allowed.include?(record_params[:type]) ? record_params[:type].to_sym : nil
     end
   end
