@@ -153,7 +153,7 @@ Rails.application.routes.draw do
   end
 
   if Rails.env.development?
-    get '/styles' => 'styles#index'
+    get 'styles', to: 'static_pages#styles_index'
   end
 
   if defined?(Dradis::Pro)
