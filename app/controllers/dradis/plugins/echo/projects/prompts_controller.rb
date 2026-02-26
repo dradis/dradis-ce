@@ -10,7 +10,7 @@ module Dradis::Plugins::Echo
     def index
       Prompt.seed_default_prompts(current_user) if current_user.prompts.empty?
 
-      @prompts = current_user.prompts
+      @prompts = current_user.prompts.for(@type)
     end
 
     def show
