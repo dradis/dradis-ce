@@ -10,6 +10,10 @@
     - Rename addon upload/parent nodes and add icons
     - Update associated evidence, notes and child nodes' updated_at columns on node merge
     - Warn on node merge that methodology will not be copied
+  - Show don't gate:
+    - Issue Library
+    - Ticketing integrations
+    - Word/Excel templates
   - Sidebar: Add resize functionality
   - Textile:
     - Add support for paragraph alignment
@@ -21,7 +25,7 @@
   - [entity]:
     - [future tense verb] [feature]
   - Upgraded gems:
-    - [gem]
+    - nokogiri, rack
   - Bugs fixes:
     - Nodes: Display error message and preserve input on properties update
     - Notifications: Ensure correct link for note and issue comments
@@ -38,8 +42,7 @@
     - [report type]:
       - [future tense verb] [reporting enhancement]
   - REST/JSON API enhancements:
-    - [API entity]:
-      - [future tense verb] [API enhancement]
+    - Issues: Add support for search
   - Security Fixes:
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
