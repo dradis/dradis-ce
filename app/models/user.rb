@@ -21,4 +21,5 @@ class User < ApplicationRecord
 
   # -- Class Methods --------------------------------------------------------
   # -- Instance Methods -----------------------------------------------------
+  ActiveSupport.run_load_hooks(:user_model, self)
 end
