@@ -19,7 +19,7 @@ module Dradis::Plugins::Echo
       if @prompt.save
         redirect_to prompts_path, notice: 'Prompt was successfully created.'
       else
-        render :new
+        render :new, status: :unprocessable_entity
       end
     end
 
