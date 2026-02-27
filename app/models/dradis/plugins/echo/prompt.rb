@@ -13,7 +13,7 @@ module Dradis::Plugins::Echo
     before_validation :set_defaults, on: :create
 
     # -- Validations ------------------------------------------------------------
-    normalizes :scope, with: ->(type) { type.to_s }
+    normalizes :scope, with: ->(value) { value.to_s }
 
     validates :title,
       length: { maximum: DB_MAX_STRING_LENGTH },
@@ -21,12 +21,12 @@ module Dradis::Plugins::Echo
       uniqueness: { scope: :user_id }
 
     validates :prompt, presence: true
-    validates :scope, inclusion: SCOPES, presence: true
+    validates :scope, inclusion: SCOPES.map(&:to_s), presence: true
     validates :user, presence: true, associated: true
     validates :visibility, presence: true
 
     # -- Scopes -----------------------------------------------------------------
-    scope :for, ->(type) { where(scope: type) }
+    scope :for, ->(value) { where(scope: value) }
 
     # -- Class Methods ----------------------------------------------------------
 
