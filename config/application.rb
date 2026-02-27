@@ -47,8 +47,9 @@ module Dradis
     end
 
     # Override the default credentials lookup paths. See bin/rails credentials:help
-    config.credentials.content_path = Rails.root.join('config', 'shared', 'credentials.yml.enc')
-    config.credentials.key_path = Rails.root.join('config', 'shared', 'master.key')
+    config.credentials.content_path = Rails.root.join('config', 'credentials', 'credentials.yml.enc')
+    # the following can be removed when we drop support for VM instances, after which master key will be an environment variable
+    config.credentials.key_path = Rails.root.join('config', 'credentials', 'master.key')
 
     # Don't generate system test files.
     config.generators.system_tests = nil
