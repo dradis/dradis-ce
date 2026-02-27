@@ -74,11 +74,7 @@
     <%= yield(:poller) if content_for?(:poller) %>
 
     <!-- All modals go here -->
-    <% if content_for?(:modals) %>
-      <%= yield(:modals) %>
-    <% else %>
-      <%= render 'layouts/hera/modals' %>
-    <% end %>
+    <%= yield(:modals) if content_for?(:modals) %>
     
     <%= render 'layouts/hera/modals' %>
 
