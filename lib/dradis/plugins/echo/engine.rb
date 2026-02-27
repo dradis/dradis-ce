@@ -20,6 +20,7 @@ module Dradis::Plugins::Echo
     end
 
     initializer 'echo.asset_precompile_paths' do |app|
+      app.config.assets.paths << root.join('app/javascript')
       app.config.assets.precompile += [
         'dradis/plugins/echo/manifests/hera.js'
       ]
@@ -53,5 +54,5 @@ module Dradis::Plugins::Echo
       # https://github.com/rails/importmap-rails#sweeping-the-cache-in-development-and-test
       app.config.importmap.cache_sweepers << root.join('app/javascript')
     end
-  end
+    end
 end
