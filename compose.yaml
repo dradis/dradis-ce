@@ -9,7 +9,9 @@ services:
     ports:
       - 443:443
       - 80:80
-    env_file: .env
+    env_file:
+      - path: .env
+        required: false
     healthcheck:
       test: [
         "CMD-SHELL",
