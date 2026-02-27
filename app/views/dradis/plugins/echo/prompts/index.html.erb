@@ -1,10 +1,92 @@
-<% unless @turbo_status %>
-  <div class="alert alert-danger">
-    There was an error contacting Redis: please make sure the Redis server is running.
+<% content_for :title, 'Echo Prompts' %>
+
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      Dradis Echo
+    </li>
+    <li class="breadcrumb-item active">
+      Prompts
+    </li>
+  </ol>
+<% end %>
+
+<%= content_for :sidebar do %>
+  <div class="header">
+    <div class="header-inner">
+      <h5 class="header-name">
+        Prompts Tip
+      </h5>
+      <div class="options">
+        <%= link_to "#prompts-tips", data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle Prompts Tip</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div id="prompts-tip" class="collapse show">
+    <div class="alert alert-primary mt-0">
+      <p>
+        Create reusable AI prompts to automate repetitive tasks like summarizing findings, generating CVSS scores, or translating technical issues for non-technical audiences. Use Liquid Dynamic Content like <code class="text-nowrap px-0">{{ issue.text }}</code> to include issue content.
+      </p>
+      <p class="text-end card-link">
+        More about
+        <%= link_to 'Prompts', 'https://dradis.com/support/guides/echo/prompts.html', target: '_blank' %>
+      </p>
+    </div>
   </div>
 <% end %>
 
-<div>
-  <p class="mb-2">Summarize, rewrite, and analyze findings leveraging Liquid Dynamic Content and full project context. Your data stays local with your model of choice.</p>
-  <%= render @prompts %>
+<div class="content-container">
+  <h4 class="header-underline">Prompts
+    <% if @prompts.any? %>
+      <span class="actions pt-1">
+        <%= link_to new_prompt_path do %>
+          <i class="fa-solid fa-plus me-1"></i>New Prompt
+        <% end %>
+      </span>
+    <% end %>
+  </h4>
+
+  <% if @prompts.any? %>
+    <%= tag.table class: 'table table-striped mb-0', data: { behavior: 'dradis-datatable', 'default-columns': ['Title', 'Prompt', 'Actions'], 'local-storage-key': 'echo.prompts_datatable' } do %>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Prompt</th>
+          <th>Scope</th>
+          <th>Created At</th>
+          <th>Updated At</th>
+          <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Actions</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @prompts.each do |prompt| %>
+          <tr>
+            <td><%= content_tag :i, nil, class: "fa-solid #{prompt.icon}" %> <%= prompt.title %></td>
+            <td><%= prompt.prompt %></td>
+            <td><%= prompt.scope.to_s.humanize %></td>
+            <td><%= local_time_ago(prompt.created_at) %></td>
+            <td><%= local_time_ago(prompt.updated_at) %></td>
+            <td class="column-actions">
+              <%= link_to edit_prompt_path(prompt) do %>
+                <i class="fa-solid fa-pencil"></i> Edit
+              <% end %>
+              <%= link_to prompt_path(prompt), method: :delete, data: { confirm: "Are you sure?" }, class: 'text-error-hover' do %>
+                <i class="fa-solid fa-trash"></i> Delete
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    <% end %>
+  <% else %>
+    <%= render 'shared/empty_state',
+      actions_partial: 'dradis/plugins/echo/prompts/empty_state_actions',
+      docs_link: 'https://dradis.com/support/guides/echo/prompts.html',
+      name: 'prompt',
+      text: 'Create reusable prompts to standardize how your team analyzes findings, writes reports, summarizes vulnerabilities, and more. Save time by building a library of prompts for common tasks (such as explaining technical findings to non-technical stakeholders or generating executive summaries) that anyone on your team can use for consistent results.'
+      %>
+  <% end %>
 </div>

@@ -2,14 +2,9 @@ module Dradis::Plugins::Echo
   class EchoJob < ApplicationJob
     queue_as :dradis_project
 
-    def perform(prompt_id:, klass:, record_id:, interaction_id:, response_id:)
-      template = Prompt.by_id(prompt_id, klass: klass)
-      Rails.logger.info("🎬 #{template.prompt}")
-      prompt = parse(template.prompt, { 'issue' => IssueDrop.new(Issue.find(record_id)) })
+    def perform(prompt:, interaction_id:, response_id:)
+      Rails.logger.info("🎬 #{prompt}")
       Rails.logger.info("🔚 #{prompt}")
-
-      Turbo::StreamsChannel.broadcast_replace_to [interaction_id, 'prompts'], target: 'prompt_template', html: prompt
-      Turbo::StreamsChannel.broadcast_remove_to [interaction_id, 'prompts'], target: 'prompt_spinner'
 
       @spinner_shown = true
       begin
@@ -41,16 +36,6 @@ module Dradis::Plugins::Echo
         credentials: { address: Engine.settings.address },
         options: { server_sent_events: true }
       )
-    end
-
-    def parse(template, assigns)
-      options = {
-        filters: [],
-        strict_filters: true,
-        strict_variables: true
-      }
-
-      Liquid::Template.parse(template).render(assigns, options)
     end
 
     def process_event(event, response_id, interaction_id)

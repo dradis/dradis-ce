@@ -1,9 +1,48 @@
-<%= form_with url: "", html: { id: "chat_form", class: "form-inline" } do |f| %>
-  <%= f.hidden_field :chat_id, value: 1 %>
+<%= form_with model: @prompt do |f| %>
 
-  <label class="sr-only" for="inlineFormInputPrompt">Prompt</label>
-  <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Go on, you know what to do">
+  <% if @prompt.errors.any? %>
+    <div style="color: red" class="mb-3">
+      <h2><%= pluralize(@prompt.errors.count, "error") %> prohibited this prompt from being saved:</h2>
 
-  <%#= f.text_area :message, class: "resize-none border rounded-md w-full py-2 px-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:border-blue-500", placeholder: "Your message", autofocus: true %>
-  <%= f.submit "Send", class: "btn btn-primary mb-2" %>
+      <ul>
+        <% @prompt.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :title, 'Title', class: 'form-label' %>
+    <%= f.text_field :title, value: @prompt.title, class: 'form-control', required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :icon, 'Icon', class: 'form-label' %>
+    <%=
+      f.text_field :icon,
+        value: @prompt.icon,
+        placeholder: 'Use a font-awesome icon name (e.g. fa-wand-magic-sparkles)',
+        class: 'form-control'
+    %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :scope, 'Prompt Scope', class: 'form-label' %>
+    <%=
+      f.select :scope,
+        options_for_select(Dradis::Plugins::Echo::Prompt::SCOPES.map { |scope| [scope.to_s.humanize, scope] }, @prompt.scope),
+        {},
+        class: 'form-select'
+    %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :prompt, 'Prompt', class: 'form-label' %>
+    <%= f.text_area :prompt, value: @prompt.prompt, class: 'form-control', rows: 10, required: true %>
+  </div>
+
+  <div>
+    <%= f.submit class: 'btn btn-primary' %> or <%= link_to 'Cancel', prompts_path %>
+  </div>
 <% end %>

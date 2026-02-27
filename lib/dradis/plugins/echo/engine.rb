@@ -11,6 +11,14 @@ module Dradis::Plugins::Echo
       settings.default_model = 'deepseek-r1:latest'
     end
 
+    # add engine migrations to main app migrations paths in development
+    if Rails.env.development?
+      initializer 'dradis-echo.append_migrations' do |app|
+        engine_migrations_path = config.paths['db/migrate'].expanded.first
+        app.config.paths['db/migrate'].push(engine_migrations_path)
+      end
+    end
+
     # initializer 'echo.asset_precompile_paths' do |app|
     #   app.config.assets.precompile += [
     #     'dradis/plugins/echo/manifests/application.css',
@@ -18,6 +26,12 @@ module Dradis::Plugins::Echo
     #     'dradis/plugins/echo/manifests/hera.js'
     #   ]
     # end
+
+    initializer 'echo.extend_user_model' do
+      ActiveSupport.on_load :user_model do
+        ::User.send(:has_many, :prompts, class_name: 'Dradis::Plugins::Echo::Prompt', dependent: :destroy)
+      end
+    end
 
     initializer 'echo.mount_engine' do
       Rails.application.routes.append do
@@ -27,6 +41,24 @@ module Dradis::Plugins::Echo
           mount Engine, at: '/', as: :echo
         end
       end
+    end
+
+    # `before:` option has to be a string as it has to match
+    # a named initializer exactly as a String or a Symbol
+    # "importmap" is a string, you can see this list to check
+    # the order of initializers:
+    #   Rails.application.initializers.tsort.map(&:name)
+    initializer 'echo.importmap', before: 'importmap' do |app|
+      # https://github.com/rails/importmap-rails#composing-import-maps
+      app.config.importmap.paths << root.join('config/importmap.rb')
+
+      # https://github.com/rails/importmap-rails#sweeping-the-cache-in-development-and-test
+      app.config.importmap.cache_sweepers << root.join('app/javascript')
+    end
+
+    initializer 'echo.assets' do |app|
+      app.config.assets.paths << root.join('app/javascript')
+      app.config.assets.precompile += %w[ dradis/plugins/echo/manifest.js ]
     end
   end
 end
