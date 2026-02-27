@@ -19,13 +19,11 @@ module Dradis::Plugins::Echo
       end
     end
 
-    # initializer 'echo.asset_precompile_paths' do |app|
-    #   app.config.assets.precompile += [
-    #     'dradis/plugins/echo/manifests/application.css',
-    #     'dradis/plugins/echo/manifests/application.js',
-    #     'dradis/plugins/echo/manifests/hera.js'
-    #   ]
-    # end
+    initializer 'echo.asset_precompile_paths' do |app|
+      app.config.assets.precompile += [
+        'dradis/plugins/echo/manifests/hera.js'
+      ]
+    end
 
     initializer 'echo.extend_user_model' do
       ActiveSupport.on_load :user_model do
@@ -54,11 +52,6 @@ module Dradis::Plugins::Echo
 
       # https://github.com/rails/importmap-rails#sweeping-the-cache-in-development-and-test
       app.config.importmap.cache_sweepers << root.join('app/javascript')
-    end
-
-    initializer 'echo.assets' do |app|
-      app.config.assets.paths << root.join('app/javascript')
-      app.config.assets.precompile += %w[ dradis/plugins/echo/manifest.js ]
     end
   end
 end
