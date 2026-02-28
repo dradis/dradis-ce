@@ -35,7 +35,7 @@
 # Ignore app-specific folders
 /attachments/
 /avatars/
-/config/shared/*
+/config/credentials/*
 /templates/*
 
 # Ignore development and test files
