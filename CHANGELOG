@@ -14,10 +14,12 @@
     - Issue Library
     - Ticketing integrations
     - Word/Excel templates
-  - Sidebar: Add resize functionality
+  - Sidebar: 
+    - Add resize functionality
   - Textile:
     - Add support for paragraph alignment
     - Add support for image resizing, alignment, and borders
+    - Keep sidebar open when editing issues in large viewports
   - Wizard:
     - Add analytics sharing step
     - Mark as done after Kit step, without waiting for the background job.
