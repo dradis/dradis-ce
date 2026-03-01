@@ -7,7 +7,6 @@
         <th>State</th>
         <th>Assignee</th>
         <th>Due date</th>
-        <th class="no-sort"><span class="visually-hidden">Actions</span></th>
       </tr>
     </thead>
     <tbody>
@@ -35,22 +34,6 @@
             <time class="<%= 'text-danger' if ticket[:overdue] %>">
               <%= ticket[:due_at].strftime('%B %d, %Y') %>
             </time>
-          </td>
-          <td class="column-actions text-nowrap">
-            <a
-              href="javascript:void(0)"
-              class="btn btn-xs btn-warning js-try-pro"
-              data-term="remediation"
-              data-url="https://dradis.com/pro/pages/remediation.html">
-              <i class="fa-solid fa-pencil"></i> edit
-            </a>
-            <a
-              href="javascript:void(0)"
-              class="btn btn-xs btn-danger js-try-pro"
-              data-term="remediation"
-              data-url="https://dradis.com/pro/pages/remediation.html">
-              <i class="fa-solid fa-close"></i> delete
-            </a>
           </td>
         </tr>
       <% end %>
