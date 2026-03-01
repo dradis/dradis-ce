@@ -26,6 +26,8 @@ shared_examples 'an editor that remembers what view you like' do
 
   it 'will load fields view after viewing source view but clicking back to fields view' do
     click_link 'Source'
+
+    find('body').click
     click_link 'Fields'
 
     visit action_path
@@ -90,6 +92,7 @@ shared_examples 'a textile form view' do |klass|
     click_link 'Source'
     fill_in "#{klass.to_s.downcase}_#{content_attribute}", with: fieldless_string + "\n" + field_string
 
+    find('body').click
     click_link 'Fields'
 
     expect(find('#item_form_field_name_0').value).to eq ('')
@@ -105,6 +108,7 @@ shared_examples 'a textile form view' do |klass|
     click_link 'Source'
     fill_in "#{klass.to_s.underscore}_#{content_attribute}", with: text
 
+    find('body').click
     click_link 'Fields'
 
     expect(find('#item_form_field_name_0').value).to eq ('Field')
