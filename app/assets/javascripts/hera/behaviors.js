@@ -16,7 +16,7 @@ document.addEventListener('turbo:load', function () {
   });
 
   // If project id is changed in project path
-  if (!/^\/projects\/1(\/|$)/.test(window.location.pathname)) {
+  if (/^\/projects\/(?!1(\/|$))\d+(\/|$)/.test(window.location.pathname)) {
     $('[data-behavior~=project-teaser]').removeClass('d-none');
   }
 
