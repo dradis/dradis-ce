@@ -3,6 +3,8 @@ module Dradis::Plugins::Echo
     before_action :set_prompt, only: [:show, :edit, :update, :destroy]
 
     def index
+      Prompt.seed_default_prompts(current_user) if current_user.prompts.empty?
+
       @prompts = current_user.prompts
     end
 
@@ -17,7 +19,7 @@ module Dradis::Plugins::Echo
       if @prompt.save
         redirect_to prompts_path, notice: 'Prompt was successfully created.'
       else
-        render :new
+        render :new, status: :unprocessable_entity
       end
     end
 
@@ -54,7 +56,7 @@ module Dradis::Plugins::Echo
     end
 
     def prompt_params
-      params.require(:prompt).permit(:title, :icon, :prompt)
+      params.require(:prompt).permit(:title, :icon, :prompt, :scope)
     end
 
     def set_prompt

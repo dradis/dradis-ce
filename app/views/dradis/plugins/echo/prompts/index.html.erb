@@ -50,21 +50,23 @@
   </h4>
 
   <% if @prompts.any? %>
-    <%= tag.table class: 'table table-striped mb-0', data: { behavior: 'dradis-datatable' } do %>
+    <%= tag.table class: 'table table-striped mb-0', data: { behavior: 'dradis-datatable', 'default-columns': ['Title', 'Prompt', 'Actions'], 'local-storage-key': 'echo.prompts_datatable' } do %>
       <thead>
         <tr>
           <th>Title</th>
           <th>Prompt</th>
+          <th>Scope</th>
           <th>Created At</th>
           <th>Updated At</th>
-          <th class="no-sort"><span class="visually-hidden">Actions</span></th>
+          <th class="no-sort" data-column-visible="false"><span class="visually-hidden">Actions</span></th>
         </tr>
       </thead>
       <tbody>
         <% @prompts.each do |prompt| %>
           <tr>
-            <td><%= prompt.title %></td>
+            <td><%= content_tag :i, nil, class: "fa-solid #{prompt.icon}" %> <%= prompt.title %></td>
             <td><%= prompt.prompt %></td>
+            <td><%= prompt.scope.to_s.humanize %></td>
             <td><%= local_time_ago(prompt.created_at) %></td>
             <td><%= local_time_ago(prompt.updated_at) %></td>
             <td class="column-actions">

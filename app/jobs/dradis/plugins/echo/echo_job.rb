@@ -3,9 +3,6 @@ module Dradis::Plugins::Echo
     queue_as :dradis_project
 
     def perform(prompt:, interaction_id:, response_id:)
-      # Add delay to allow the browser to subscribe to the Turbo Stream.
-      sleep 2
-
       Rails.logger.info("🎬 #{prompt}")
       Rails.logger.info("🔚 #{prompt}")
 
