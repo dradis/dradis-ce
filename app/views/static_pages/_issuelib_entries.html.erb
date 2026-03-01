@@ -9,40 +9,39 @@
       </tr>
     </thead>
     <tbody>
-      <% entries = ['Auto-complete in password field', 'DOM-based cross-site scripting (XSS)', 'Insufficient cross-site request forgery (CSRF) protection', 'Reflected cross-site scripting (XSS)'] %>
-      <% entries.each_with_index do |entry, index| %>
+      <% @entries.each_with_index do |entry, index| %>
         <tr id="entry-<%= index %>">
           <td><input type="checkbox" /></td>
           <td>
-            <a 
+            <a
               href="javascript:void(0)"
               class="js-try-pro"
               data-term="issuelib"
               data-url="https://dradis.com/pro/pages/issuelib.html">
-              <%= entry %>
+              <%= entry[:title] %>
             </a>
           </td>
-          <td>Published</td>
+          <td><%= entry[:state].humanize %></td>
           <% if import %>
-            <% @default_button_state = 'published' %>
+            <% default_button_state = 'published' %>
             <td class="column-actions">
               <div class="btn-group btn-states" data-behavior="btn-states">
-                <a 
+                <a
                   href="javascript:void(0)"
                   class="btn btn-primary js-try-pro"
                   data-term="issuelib"
                   data-url="https://dradis.com/pro/pages/issuelib.html">
                   <i class="fa-solid fa-plus"></i> Add issue
-                  (<span data-behavior="state-button"><%= @default_button_state.humanize %></span>)
+                  (<span data-behavior="state-button"><%= default_button_state.humanize %></span>)
                 </a>
                 <a href="#" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="visually-hidden">Toggle Dropdown</span>
                 </a>
                 <div class="dropdown-menu">
-                  <%= collection_radio_buttons(entry, :state, [['draft', 'draft'], ['ready_for_review', 'ready_for_review'], ['published', 'published']], :first, :first) do |b| %>
+                  <%= collection_radio_buttons("entry_#{index}", :state, [['draft', 'draft'], ['ready_for_review', 'ready_for_review'], ['published', 'published']], :first, :first) do |b| %>
                     <span>
-                      <%= b.label class: 'state', for: "#{entry}_state_#{b.value}" do %>
-                        <%= b.radio_button id: "#{entry}_state_#{b.value}", class: 'd-none', data: { behavior: 'state-radio' }, checked: b.value == @default_button_state %>
+                      <%= b.label class: 'state', for: "entry_#{index}_state_#{b.value}" do %>
+                        <%= b.radio_button id: "entry_#{index}_state_#{b.value}", class: 'd-none', data: { behavior: 'state-radio' }, checked: b.value == default_button_state %>
                         <i class="fa-solid fa-check fa-fw"></i>
                         <div class="state-label">
                           <p data-behavior="state-label"><%= b.text.humanize %></p>
@@ -62,8 +61,8 @@
               </div>
             </td>
           <% else %>
-            <td>on <%= (Date.today - 1.month).strftime('%b %d, %Y') %></td>
-            <td>on <%= Date.today.strftime('%b %d, %Y') %></td>
+            <td>on <%= entry[:created_at].strftime('%b %d, %Y') %></td>
+            <td>on <%= entry[:updated_at].strftime('%b %d, %Y') %></td>
           <% end %>
         </tr>
       <% end %>
