@@ -48,20 +48,33 @@
       class="accordion-collapse collapse <%= class_names(show: !@configuration_form.configured?) %>"
       aria-labelledby="steps-heading">
       <div class="accordion-body">
+        <!--
+        <h2>LanguageTool configuration</h2>
+        <p>
+          <a href="https://github.com/languagetool-org/languagetool">LanguageTool</a>
+          is an open-source style and grammar checker for 25+ languages.
+        </p>
+        <ol>
+          <li class="mb2">Download and run <a href="https://github.com/languagetool-org/languagetool?tab=readme-ov-file#docker">LanguageTool</a> (we recommend Docker).</li>
+          <li class="mb2">Update the form below with the container's address</li>
+        </ol>
+        -->
+
+        <h2>LLM configuration</h2>
         <ol class="mb-0">
           <li class="mb2">Download and install <a href="https://ollama.com/download" target="_blank">Ollama</a></li>
           <li class="mb2">Start Ollama with <code>$ ollama serve</code></li>
           <li class="mb2">Choose a <a href="https://ollama.com/search" target="_blank">model</a></li>
           <li class="mb2">Run the model with <code>$ ollama run [model-name]:[variant]</code>.
             <ul>
-              <li>For example: <code>$ ollama run deepseek-r1:1.5b</code></li>
+              <li>For example: <code>$ ollama run qwen2.5:14b</code> (~9GB)</li>
               <li>The model will be downloaded on first run.</li>
             </li>
           </ul>
           <li class="mb2">Update the form below with:</li>
           <ul>
-            <li>Address (from the output of Step 2 - default is <code>http://localhost:11434</code>)</li>
-            <li>Model (using the same format as step 4 - for example <code>deepseek-r1:1.5b</code>)</li>
+            <li>Ollama address: from the output of Step 2 - default is <code>http://localhost:11434</code></li>
+            <li>Ollama model: using the same format as step 4 - for example <code>qwen2.5:14b</code></li>
           </ul>
         </ol>
       </div>
@@ -91,19 +104,19 @@
             <div class="card-body">
               <div class="row">
                 <div class="mb-3">
-                  <%= f.label :address, class: 'form-label' %>
-                  <%= f.text_field :address, class: 'form-control', required: true %>
+                  <%= f.label :ollama_address, class: 'form-label' %>
+                  <%= f.text_field :roslin_ollama_address, class: 'form-control', required: true %>
                 </div>
                 <div class="mb-3">
-                  <%= f.label :model, class: 'form-label' %>
-                  <%= f.text_field :model, class: 'form-control', required: true %>
+                  <%= f.label :ollama_model, class: 'form-label' %>
+                  <%= f.text_field :roslin_ollama_model, class: 'form-control', required: true %>
                 </div>
               </div>
             </div>
           </div>
           <div class="form-actions">
             <%= submit_tag 'Save Configuration', class: 'btn btn-primary' %>
-            <%= link_to 'Cancel', main_app.admin_integrations_path(tab: 'tools') %>
+            <%#= link_to 'Cancel', main_app.admin_integrations_path(tab: 'tools') %>
           </div>
         <% end %>
       </div>
