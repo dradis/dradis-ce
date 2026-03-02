@@ -1,5 +1,5 @@
 class QA::InlineThreadsController < AuthenticatedController
-  include ActivityTracking
+  include EventPublisher
   include Mentioned
   include Notified
   include ProjectScoped
@@ -29,7 +29,7 @@ class QA::InlineThreadsController < AuthenticatedController
         )
 
         if @comment.save
-          track_created(@comment, project: current_project)
+          publish_event('comment.created', @comment.to_event_payload)
           broadcast_notifications(
             action: :create,
             notifiable: @comment,
@@ -38,14 +38,14 @@ class QA::InlineThreadsController < AuthenticatedController
         end
       end
 
-      track_created(@thread, project: current_project)
+      publish_event('inline_comment_thread.created', @thread.to_event_payload)
     end
   end
 
   def destroy
     authorize! :destroy, @thread
     @thread.destroy!
-    track_destroyed(@thread, project: current_project)
+    publish_event('inline_comment_thread.destroyed', @thread.to_event_payload)
   end
 
   private

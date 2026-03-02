@@ -1,5 +1,5 @@
 class QA::InlineThreadCommentsController < AuthenticatedController
-  include ActivityTracking
+  include EventPublisher
   include Mentioned
   include Notified
   include ProjectScoped
@@ -15,7 +15,7 @@ class QA::InlineThreadCommentsController < AuthenticatedController
     @comment.user = current_user
 
     if @comment.save
-      track_created(@comment, project: current_project)
+      publish_event('comment.created', @comment.to_event_payload)
       broadcast_notifications(
         action: :create,
         notifiable: @comment,

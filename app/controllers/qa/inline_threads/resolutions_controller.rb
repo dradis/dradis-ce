@@ -1,5 +1,5 @@
 class QA::InlineThreads::ResolutionsController < AuthenticatedController
-  include ActivityTracking
+  include EventPublisher
   include ProjectScoped
 
   before_action :set_issue
@@ -9,12 +9,12 @@ class QA::InlineThreads::ResolutionsController < AuthenticatedController
 
   def create
     @thread.resolve!(current_user)
-    track_activity(@thread, :resolve, current_user, current_project)
+    publish_event('inline_comment_thread.resolved', @thread.to_event_payload)
   end
 
   def destroy
     @thread.reopen!(current_user)
-    track_activity(@thread, :reopen, current_user, current_project)
+    publish_event('inline_comment_thread.reopened', @thread.to_event_payload)
   end
 
   private
