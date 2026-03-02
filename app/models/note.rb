@@ -61,6 +61,7 @@ class Note < ApplicationRecord
   # are destroyed if the record really is an `Issue`
   after_destroy do
     Comment.where(commentable_type: 'Issue', commentable_id: id).destroy_all
+    InlineCommentThread.where(issue_id: id).destroy_all
     Subscription.where(subscribable_type: 'Issue', subscribable_id: id).destroy_all
   end
 

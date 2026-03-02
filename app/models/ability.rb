@@ -8,6 +8,9 @@ class Ability
     can [:publish], Project, reviewers: { id: [user.id] }
     can [:create, :read], Comment
     can [:update, :destroy], Comment, user_id: user.id
+    can [:create, :read], InlineCommentThread
+    can [:resolve, :reopen], InlineCommentThread
+    can :destroy, InlineCommentThread, user_id: user.id
     can :manage, Tag
   end
 end

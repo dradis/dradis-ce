@@ -6,6 +6,7 @@ class Comment < ApplicationRecord
 
   # -- Relationships --------------------------------------------------------
   belongs_to :commentable, polymorphic: true
+  belongs_to :inline_comment_thread, optional: true
   belongs_to :user, optional: true
 
   # -- Callbacks ------------------------------------------------------------

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_07_07_070805) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_02_034852) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -91,7 +91,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_07_070805) do
     t.integer "user_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.integer "inline_comment_thread_id"
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
+    t.index ["inline_comment_thread_id"], name: "index_comments_on_inline_comment_thread_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
@@ -103,6 +105,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_07_070805) do
     t.index ["name"], name: "index_configurations_on_name", unique: true
   end
 
+  create_table "dradis_plugins_echo_prompts", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "icon", null: false
+    t.string "scope", null: false
+    t.text "prompt", null: false
+    t.integer "visibility", default: 0, null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_dradis_plugins_echo_prompts_on_user_id"
+  end
+
   create_table "evidence", force: :cascade do |t|
     t.integer "node_id"
     t.integer "issue_id"
@@ -112,6 +126,21 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_07_070805) do
     t.datetime "updated_at", precision: nil, null: false
     t.index ["issue_id"], name: "index_evidence_on_issue_id"
     t.index ["node_id"], name: "index_evidence_on_node_id"
+  end
+
+  create_table "inline_comment_threads", force: :cascade do |t|
+    t.integer "issue_id", null: false
+    t.integer "user_id", null: false
+    t.text "anchor", null: false
+    t.integer "version_id"
+    t.integer "status", default: 0, null: false
+    t.integer "resolved_by_id"
+    t.datetime "resolved_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["issue_id", "status"], name: "index_inline_comment_threads_on_issue_id_and_status"
+    t.index ["issue_id"], name: "index_inline_comment_threads_on_issue_id"
+    t.index ["user_id"], name: "index_inline_comment_threads_on_user_id"
   end
 
   create_table "lists", force: :cascade do |t|
@@ -243,7 +272,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_07_070805) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "boards", "nodes", on_delete: :cascade
+  add_foreign_key "comments", "inline_comment_threads"
   add_foreign_key "comments", "users", on_delete: :nullify
+  add_foreign_key "dradis_plugins_echo_prompts", "users"
+  add_foreign_key "inline_comment_threads", "users"
+  add_foreign_key "inline_comment_threads", "users", column: "resolved_by_id"
   add_foreign_key "mapping_fields", "mappings"
   add_foreign_key "notifications", "users", column: "actor_id", on_delete: :cascade
   add_foreign_key "notifications", "users", column: "recipient_id", on_delete: :cascade

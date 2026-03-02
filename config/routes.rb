@@ -108,7 +108,12 @@ Rails.application.routes.draw do
     end
 
     namespace :qa do
-      resources :issues, only: [:edit, :index, :show, :update], concerns: [:multiple_update, :previewable]
+      resources :issues, only: [:edit, :index, :show, :update], concerns: [:multiple_update, :previewable] do
+        resources :inline_threads, only: [:index, :create, :destroy], controller: 'inline_threads' do
+          resource :resolution, only: [:create, :destroy], controller: 'inline_threads/resolutions'
+          resources :comments, only: [:create], controller: 'inline_thread_comments'
+        end
+      end
     end
 
     get 'search' => 'search#index'

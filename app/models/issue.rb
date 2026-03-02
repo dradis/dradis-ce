@@ -14,6 +14,7 @@ class Issue < Note
   # -- Relationships --------------------------------------------------------
   has_many :evidence, dependent: :destroy
   has_many :affected, through: :evidence, source: :node
+  has_many :inline_comment_threads, dependent: :destroy
 
   # `has_many :activities` doesn't work as normal here, because we're not
   # using proper single-table inheritance. (By default it will search
