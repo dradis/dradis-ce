@@ -31,8 +31,8 @@ body:not(.unauthenticated) {
 }
 
 .content-container {
-  background-color: $primary-bg;
-  border: 1px solid $border-color;
+  background-color: var(--primary-bg);
+  border: 1px solid var(--border-color);
   border-radius: 5px;
   margin-bottom: $margin;
   padding: $padding;
@@ -91,7 +91,7 @@ body:not(.unauthenticated) {
 footer {
   background-color: $brand-100;
   border-top: 1px solid $brand-300;
-  color: $text-default;
+  color: $grey-900;
   cursor: default;
   font-size: 0.9rem;
   padding: 0.5rem;

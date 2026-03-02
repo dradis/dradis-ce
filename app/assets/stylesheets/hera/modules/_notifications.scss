@@ -1,6 +1,6 @@
 @mixin notification-list-item {
   position: relative;
-  border-bottom: 1px solid $main-nav-border;
+  border-bottom: 1px solid var(--main-nav-border);
   padding: 0.5rem 2rem 0.5rem 1rem;
   display: flex;
 
@@ -60,12 +60,12 @@
 
     .title {
       a {
-        color: $text-link;
+        color: var(--text-link);
 
         &:active,
         &:focus,
         &:hover {
-          color: $text-link-hover;
+          color: var(--text-link-hover);
         }
       }
     }
@@ -129,7 +129,7 @@
         padding: 0 1em;
         line-height: 2em;
         font-size: 0.8rem;
-        border-bottom: 1px solid $main-nav-border;
+        border-bottom: 1px solid var(--main-nav-border);
 
         a {
           &:active,
@@ -146,7 +146,7 @@
 
       .footer {
         line-height: 2em;
-        border-top: 1px solid $main-nav-border;
+        border-top: 1px solid var(--main-nav-border);
         font-size: 0.8rem;
       }
     }

@@ -1,0 +1,147 @@
+// themes.scss
+// CSS custom properties for light and dark themes.
+// The raw palette ($brand-*, $grey-*, etc.) is defined at compile time in
+// modules/_colors.scss and interpolated here into runtime custom properties.
+// Components reference var(--name) rather than the SCSS variables directly.
+
+:root {
+  // Backgrounds
+  --primary-bg:        #{$white};
+  --secondary-bg:      #{$grey-100};
+  --primary-bg-subtle: #{darken($white, 3%)};          // darken($primary-bg, 3%)
+  --secondary-bg-subtle: #{darken($grey-100, 5%)};     // darken($secondary-bg, 5%)
+  --secondary-bg-strong: #{darken($grey-100, 10%)};    // darken($secondary-bg, 10%)
+
+  // Text
+  --text-default:      #{$grey-900};
+  --text-muted:        #{$grey-700};
+  --text-link:         #{$brand-500};
+  --text-link-hover:   #{darken($brand-500, 20%)};
+  --text-error:        #{$red-500};
+  --text-error-hover:  #{$red-600};
+  --text-success:      #{darken($green-700, 10%)};
+  --text-warning:      #{darken($yellow-600, 15%)};
+  --icon-disabled:     #{$grey-600};
+
+  // Borders & shadows
+  --border-color:      #{$grey-200};
+  --border-color-dark: #{$grey-900};
+  --shadow-color:      #{$grey-200};
+
+  // Navbar
+  --main-nav-bg:       #{$brand-200};
+  --main-nav-bg-hover: #{lighten($brand-200, 10%)};
+  --main-nav-border:   #{$brand-400};
+  --main-nav-hover:    #{$brand-900};
+  --main-nav-links:    #{$brand-700};
+}
+
+[data-theme="dark"] {
+  // Backgrounds
+  --primary-bg:          #{$grey-900};
+  --secondary-bg:        #{$grey-800};
+  --primary-bg-subtle:   #{$grey-800};
+  --secondary-bg-subtle: #{darken($grey-800, 3%)};
+  --secondary-bg-strong: #{darken($grey-800, 6%)};
+
+  // Text
+  --text-default:      #{$grey-100};
+  --text-muted:        #{$grey-400};
+  --text-link:         #{$brand-300};
+  --text-link-hover:   #{$brand-200};
+  --text-error:        #{$red-300};
+  --text-error-hover:  #{$red-200};
+  --text-success:      #{$green-400};
+  --text-warning:      #{$yellow-400};
+  --icon-disabled:     #{$grey-500};
+
+  // Borders & shadows
+  --border-color:      #{$grey-700};
+  --border-color-dark: #{$grey-300};
+  --shadow-color:      #{$black};
+
+  // Bootstrap CSS custom property overrides
+  --bs-body-bg:       #{$grey-900};
+  --bs-body-color:    #{$grey-100};
+  --bs-border-color:  #{$grey-700};
+
+  // Bootstrap form controls (compiled with hardcoded values in BS 5.2, must override via selectors)
+  .form-control,
+  .form-select {
+    background-color: var(--secondary-bg);
+    border-color: var(--border-color);
+    color: var(--text-default);
+
+    &:disabled,
+    &[readonly] {
+      background-color: var(--secondary-bg-strong);
+      color: var(--text-muted);
+    }
+  }
+
+  .form-check-input {
+    background-color: var(--secondary-bg);
+    border-color: var(--border-color);
+  }
+
+  .input-group-text {
+    background-color: var(--secondary-bg);
+    border-color: var(--border-color);
+    color: var(--text-default);
+  }
+
+  // Bootstrap pagination (compiled with hardcoded #fff in BS 5.2)
+  .page-link {
+    background-color: var(--primary-bg);
+    border-color: var(--border-color);
+    color: var(--text-link);
+
+    &:hover,
+    &:focus {
+      background-color: var(--secondary-bg);
+      border-color: var(--border-color);
+      color: var(--text-link-hover);
+    }
+  }
+
+  .page-item {
+    &.disabled .page-link {
+      background-color: var(--secondary-bg);
+      border-color: var(--border-color);
+      color: var(--text-muted);
+    }
+
+    &.active .page-link {
+      background-color: $primary;
+      border-color: $primary;
+      color: $white;
+    }
+  }
+
+  // Bootstrap dropdown menus (compiled with hardcoded #fff in BS 5.2)
+  .dropdown-menu {
+    background-color: var(--primary-bg);
+    border-color: var(--border-color);
+    color: var(--text-default);
+
+    .dropdown-item {
+      color: var(--text-default);
+
+      &:hover,
+      &:focus {
+        background-color: var(--secondary-bg);
+        color: var(--text-default);
+      }
+
+      &.active,
+      &:active {
+        background-color: var(--secondary-bg-strong);
+        color: var(--text-default);
+      }
+    }
+
+    .dropdown-divider {
+      border-color: var(--border-color);
+    }
+  }
+}

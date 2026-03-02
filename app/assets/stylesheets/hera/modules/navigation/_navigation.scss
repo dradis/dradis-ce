@@ -25,13 +25,13 @@ header {
 
           .nav-link {
             align-items: center;
-            color: $main-nav-links;
+            color: var(--main-nav-links);
             font-size: 1em;
 
             &:active,
             &:focus,
             &:hover {
-              color: $main-nav-hover;
+              color: var(--main-nav-hover);
             }
 
             &.dropdown-toggle::after {
@@ -88,7 +88,7 @@ header {
               box-shadow: none;
 
               .dropdown-item {
-                color: $main-nav-links;
+                color: var(--main-nav-links);
 
                 @media (max-width: 991px) {
                   padding: 0.5em 0;
@@ -128,8 +128,8 @@ header {
     }
 
     &.main-nav {
-      background-color: $main-nav-bg;
-      border-bottom: 1px solid $main-nav-border;
+      background-color: var(--main-nav-bg);
+      border-bottom: 1px solid var(--main-nav-border);
       padding: 0;
 
       &:has(.navbar-collapse.show),
@@ -138,21 +138,21 @@ header {
       }
 
       .dropdown-menu {
-        background-color: $main-nav-bg;
-        border: 1px solid $main-nav-border;
+        background-color: var(--main-nav-bg);
+        border: 1px solid var(--main-nav-border);
 
         .dropdown-header {
           color: $dark;
         }
 
         .dropdown-item {
-          color: $main-nav-links;
+          color: var(--main-nav-links);
           text-transform: capitalize;
 
           &:active,
           &:focus,
           &:hover {
-            background-color: lighten($main-nav-bg, 10%);
+            background-color: var(--main-nav-bg-hover);
           }
         }
 
@@ -163,8 +163,8 @@ header {
           &:focus,
           &:hover {
             .dropdown-item {
-              background-color: lighten($main-nav-bg, 10%);
-              color: $text-default;
+              background-color: var(--main-nav-bg-hover);
+              color: var(--text-default);
             }
           }
 
@@ -181,7 +181,7 @@ header {
       }
 
       .dropdown-divider {
-        border-top: 1px solid $main-nav-border;
+        border-top: 1px solid var(--main-nav-border);
       }
 
       .nav-item {
@@ -214,25 +214,25 @@ header {
       }
 
       .navbar-toggler {
-        color: $main-nav-links;
+        color: var(--main-nav-links);
         border: none;
 
         &:focus {
-          border: 2px solid $main-nav-hover;
+          border: 2px solid var(--main-nav-hover);
           box-shadow: none;
-          color: $main-nav-hover;
+          color: var(--main-nav-hover);
         }
       }
 
       .utility-nav {
         a,
         .nav-link {
-          color: $main-nav-links;
+          color: var(--main-nav-links);
 
           &:active,
           &:focus,
           &:hover {
-            color: $main-nav-hover;
+            color: var(--main-nav-hover);
           }
         }
 
@@ -263,7 +263,7 @@ header {
 
           &.dropdown {
             .nav-link.show {
-              background-color: lighten($main-nav-bg, 10%);
+              background-color: var(--main-nav-bg-hover);
             }
           }
         }
@@ -277,19 +277,19 @@ header {
           &:active,
           &:focus,
           &:hover {
-            border-top: 5px solid $main-nav-links;
+            border-top: 5px solid var(--main-nav-links);
           }
         }
       }
     }
 
     &.sub-nav {
-      background-color: $white;
-      border-bottom: 1px solid $border-color;
+      background-color: var(--primary-bg);
+      border-bottom: 1px solid var(--border-color);
       padding: 0;
 
       .dropdown-divider {
-        border-top: 1px solid $border-color;
+        border-top: 1px solid var(--border-color);
       }
 
       .navbar-collapse {
@@ -298,7 +298,7 @@ header {
           overflow-y: scroll;
 
           .dropdown-menu {
-            background-color: $brand-200;
+            background-color: var(--main-nav-bg);
             border: none;
           }
         }
@@ -316,19 +316,19 @@ header {
 
               &:hover,
               &:focus {
-                color: $text-default;
+                color: var(--text-default);
                 background-color: $light;
               }
             }
 
             @media (min-width: 992px) {
-              border: 1px solid $border-color;
+              border: 1px solid var(--border-color);
               box-shadow: 1px 1px 5px 0px rgba($shadow-color-light, 0.5);
             }
           }
 
           .nav-link {
-            color: $text-default;
+            color: var(--text-default);
             display: flex;
             flex-direction: row;
 
@@ -341,7 +341,7 @@ header {
             }
 
             @media (max-width: 991px) {
-              color: $main-nav-links;
+              color: var(--main-nav-links);
             }
 
             @media (min-width: 992px) {
@@ -358,7 +358,7 @@ header {
           @media (max-width: 991px) {
             &.active {
               .nav-link {
-                color: $text-default;
+                color: var(--text-default);
               }
             }
           }
@@ -374,7 +374,7 @@ header {
               border-bottom: 5px solid $light;
 
               .nav-link {
-                color: $text-link;
+                color: var(--text-link);
                 padding-left: 0.7rem;
                 padding-right: 0.7rem;
               }
@@ -410,14 +410,14 @@ header {
       }
 
       @media (max-width: 991px) {
-        background-color: $main-nav-bg;
+        background-color: var(--main-nav-bg);
         overflow-x: hidden;
         padding: 0;
 
         .nav-item.active {
           .nav-link {
             background-color: $light;
-            color: $text-default;
+            color: var(--text-default);
           }
         }
       }
@@ -426,7 +426,7 @@ header {
         .navbar-nav.utility-nav {
           a,
           .nav-link {
-            color: $text-default;
+            color: var(--text-default);
             padding-left: 0.5rem;
             padding-right: 0.5rem;
 

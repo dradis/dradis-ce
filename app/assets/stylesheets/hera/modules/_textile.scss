@@ -31,8 +31,8 @@
   }
 
   pre {
-    background-color: $secondary-bg;
-    border: 1px solid $border-color;
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--border-color);
     border-radius: 3px;
     margin: 0.75rem 0;
     padding: 10px;
@@ -172,7 +172,7 @@
     .editor-field {
       .textile {
         border: 0;
-        border-right: 1px solid $border-color;
+        border-right: 1px solid var(--border-color);
         border-radius: 0;
         box-shadow: none !important;
         padding: 0.5rem 1.5rem 0.5rem 1rem;
@@ -187,7 +187,7 @@
       .textile-form-body {
         background-color: $white;
         @media (min-width: 992px) {
-          border-right: 1px solid $border-color;
+          border-right: 1px solid var(--border-color);
         }
       }
 
@@ -244,13 +244,13 @@
         justify-content: center;
 
         h5 {
-          color: $text-muted;
+          color: var(--text-muted);
           margin-bottom: 1.75rem;
         }
       }
 
       @include media-breakpoint-down(lg) {
-        border-top: 1px solid $border-color;
+        border-top: 1px solid var(--border-color);
         margin-top: 2rem;
         padding-top: 2rem;
       }
@@ -266,12 +266,12 @@
       a {
         border-radius: 3px;
         border: 0px none;
-        color: $text-link;
+        color: var(--text-link);
 
         &:hover {
           background: #fff;
           border: 0px none;
-          color: $text-link-hover;
+          color: var(--text-link-hover);
         }
 
         &.active {

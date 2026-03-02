@@ -4,8 +4,8 @@
   .drop-zone {
     background: $brand-100;
     border-radius: 0.5rem;
-    outline: 3px dashed $border-color;
-    color: $text-muted;
+    outline: 3px dashed var(--border-color);
+    color: var(--text-muted);
     padding: 2.5rem;
     text-align: center;
     margin: 1rem 0;
@@ -13,12 +13,12 @@
   }
 
   .fileinput-button {
-    color: $text-link;
+    color: var(--text-link);
     float: none;
     margin: 0;
 
     &:hover {
-      color: $text-link-hover;
+      color: var(--text-link-hover);
     }
 
     label[for='file-upload'] {
@@ -69,7 +69,7 @@
     }
 
     .template-download {
-      border-bottom: 1px solid $border-color;
+      border-bottom: 1px solid var(--border-color);
 
       &:first-child {
         .file {
@@ -97,7 +97,7 @@
 
   table {
     margin-bottom: 0;
-    color: $white;
+    color: var(--text-default);
     table-layout: fixed;
     width: 100%;
     border-spacing: 0 3px;
@@ -113,7 +113,7 @@
       padding: 0;
 
       .btn {
-        color: $text-link;
+        color: var(--text-link);
         padding: 4px 6px;
         opacity: 0.25;
         transition: opacity 0.15s ease-in-out;
@@ -121,7 +121,7 @@
         &.btn-copy {
           &:focus-visible,
           &:hover {
-            color: $text-link-hover;
+            color: var(--text-link-hover);
           }
         }
 

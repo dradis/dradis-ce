@@ -25,8 +25,14 @@
   }
 
   &.btn-default {
-    @include button($secondary-bg);
-    color: $text-default;
+    border: 0px none;
+    background: var(--secondary-bg);
+    color: var(--text-default);
+
+    &:hover,
+    &:not(:disabled):not(.disabled):active {
+      background: var(--secondary-bg-strong);
+    }
   }
 
   &.btn-lavender {
@@ -47,7 +53,7 @@
 
   &.btn-link {
     background-color: transparent;
-    color: $text-link;
+    color: var(--text-link);
     font-size: inherit;
     margin: 0;
     padding: 0;
@@ -57,7 +63,7 @@
     &:focus-visible,
     &:not(:disabled):not(.disabled):active {
       background-color: transparent;
-      color: $text-link-hover;
+      color: var(--text-link-hover);
       text-decoration: none;
     }
   }
@@ -242,7 +248,7 @@
       }
 
       .dropdown-item-text {
-        color: $text-default;
+        color: var(--text-default);
         font-size: 0.8rem;
         padding: 0;
         white-space: normal;
@@ -296,7 +302,7 @@
 
   span:not(:last-child) {
     .state {
-      border-bottom: 1px solid $border-color;
+      border-bottom: 1px solid var(--border-color);
     }
   }
 

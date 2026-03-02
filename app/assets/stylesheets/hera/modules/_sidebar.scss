@@ -8,7 +8,7 @@ body:not(.has-sub-nav) {
 .sidebar {
   --padding: 1.25rem;
   --margin: 1.25rem;
-  background-color: $white;
+  background-color: var(--primary-bg);
   position: sticky;
   top: calc(#{$navbar-height} * 2);
   height: calc(100vh - (#{$navbar-height} * 2));
@@ -29,7 +29,7 @@ body:not(.has-sub-nav) {
     .dradis-placeholder {
       font-style: italic;
       cursor: default;
-      color: $text-muted;
+      color: var(--text-muted);
       font-size: 0.9rem;
     }
 
@@ -42,21 +42,21 @@ body:not(.has-sub-nav) {
 
       .header-inner {
         border-bottom: 1px solid;
-        color: $text-default;
+        color: var(--text-default);
         display: flex;
         justify-content: space-between;
 
         a {
-          color: $text-default;
+          color: var(--text-default);
 
           &:active,
           &:focus,
           &:hover {
-            color: $text-link;
+            color: var(--text-link);
           }
 
           &.disabled {
-            color: lighten($text-muted, 15%);
+            color: $grey-500;
             cursor: not-allowed;
             pointer-events: none;
           }
@@ -73,7 +73,7 @@ body:not(.has-sub-nav) {
         }
 
         h5 {
-          border-color: $text-default;
+          border-color: var(--text-default);
           display: flex;
           justify-content: space-between;
         }
@@ -88,7 +88,7 @@ body:not(.has-sub-nav) {
     .note-list {
       .list-item {
         align-items: center;
-        border-bottom: 1px solid $border-color;
+        border-bottom: 1px solid var(--border-color);
         display: flex;
         flex-direction: row;
         font-size: $text-small;
@@ -107,7 +107,7 @@ body:not(.has-sub-nav) {
 
         &.active {
           >a {
-            color: $black;
+            color: var(--text-default);
           }
         }
 
@@ -159,7 +159,7 @@ body:not(.has-sub-nav) {
 
     .summary-link.active {
       a {
-        color: $black;
+        color: var(--text-default);
       }
     }
   }
@@ -169,8 +169,8 @@ body:not(.has-sub-nav) {
   }
 
   .sidebar-toggle {
-    background-color: $white;
-    border: 1px solid $border-color;
+    background-color: var(--primary-bg);
+    border: 1px solid var(--border-color);
     border-radius: 0.2rem;
     font-size: 0.9rem;
     padding: 0.25rem 0.5rem 0.15rem;
@@ -188,7 +188,7 @@ body:not(.has-sub-nav) {
   }
 
   &.main-sidebar {
-    border-right: 2px solid $border-color;
+    border-right: 2px solid var(--border-color);
     width: $sidebar-width;
 
     .sidebar-content {
@@ -231,7 +231,7 @@ body:not(.has-sub-nav) {
             overflow: hidden;
 
             &.active>a {
-              color: $black;
+              color: var(--text-default);
             }
           }
 
@@ -278,7 +278,7 @@ body:not(.has-sub-nav) {
   }
 
   &.secondary-sidebar {
-    border-left: 2px solid $border-color;
+    border-left: 2px solid var(--border-color);
     right: 0;
     width: calc(#{$sidebar-width} * #{$sidebar-width-multiplier});
 

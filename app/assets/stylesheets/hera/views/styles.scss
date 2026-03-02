@@ -4,19 +4,19 @@ body.styles {
   }
 
   .navbar-placeholder {
-    background-color: $main-nav-bg;
-    border-bottom: 1px solid $main-nav-border;
+    background-color: var(--main-nav-bg);
+    border-bottom: 1px solid var(--main-nav-border);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0.25rem 1.5rem;
 
     a {
-      color: $main-nav-links;
+      color: var(--main-nav-links);
 
       &:focus,
       &:hover {
-        color: $main-nav-hover;
+        color: var(--main-nav-hover);
       }
     }
 
@@ -138,14 +138,14 @@ body.styles {
       right: 0;
       padding: 0.3rem;
       display: inline-flex;
-      background-color: $primary-bg;
+      background-color: var(--primary-bg);
       border: 1px solid transparent;
       border-radius: 5px;
       transition: all 0.2s ease-in-out;
 
       &:hover {
-        background-color: $secondary-bg;
-        border: 1px solid $border-color;
+        background-color: var(--secondary-bg);
+        border: 1px solid var(--border-color);
       }
     }
   }

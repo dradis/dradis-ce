@@ -13,7 +13,7 @@
 }
 
 body:not(.unauthenticated) {
-  background-color: $white;
+  background-color: var(--primary-bg);
   display: grid;
   font-family: 'ProximaNovaLight', 'system-ui';
   min-height: 100vh;
@@ -23,7 +23,7 @@ body:not(.unauthenticated) {
 }
 
 a {
-  color: $text-link;
+  color: var(--text-link);
   text-decoration: none;
   transition: color 0.2s ease-in-out;
 
@@ -33,7 +33,7 @@ a {
   }
 
   &:hover {
-    color: $text-link-hover;
+    color: var(--text-link-hover);
   }
 }
 
@@ -170,8 +170,8 @@ fieldset.check_boxes {
 }
 
 .form-actions.sticky {
-  background-color: $primary-bg;
-  border-top: 1px solid $border-color;
+  background-color: var(--primary-bg);
+  border-top: 1px solid var(--border-color);
   bottom: 0;
   padding: 1rem 0;
   position: sticky;
@@ -227,15 +227,15 @@ mark {
   }
 
   .nav-link {
-    background-color: $secondary-bg;
-    border: 1px solid $border-color;
-    color: $text-link;
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-link);
     transition: all 0s ease-in-out;
 
     &.active {
-      background-color: $main-nav-bg;
-      border: 1px solid $border-color;
-      color: $main-nav-links;
+      background-color: var(--main-nav-bg);
+      border: 1px solid var(--border-color);
+      color: var(--main-nav-links);
     }
   }
 }
@@ -259,8 +259,8 @@ p:last-child {
 }
 
 pre {
-  background-color: $secondary-bg;
-  border: solid 2px $border-color-dark;
+  background-color: var(--secondary-bg);
+  border: solid 2px var(--border-color-dark);
   border-radius: 0.25rem;
   padding: 0.375rem 0.75rem;
 
@@ -280,19 +280,19 @@ pre {
 }
 
 .text-error {
-  color: $text-error !important;
+  color: var(--text-error) !important;
 }
 
 .text-error-hover {
-  color: $text-error !important;
+  color: var(--text-error) !important;
 
   &:hover {
-    color: darken($text-error, 10%) !important;
+    color: var(--text-error-hover) !important;
   }
 }
 
 .text-muted {
-  color: $text-muted !important;
+  color: var(--text-muted) !important;
 }
 
 .text-primary {
@@ -300,10 +300,10 @@ pre {
 }
 
 .text-success {
-  color: $text-success !important;
+  color: var(--text-success) !important;
 }
 .text-warning {
-  color: $text-warning !important;
+  color: var(--text-warning) !important;
 }
 
 ul {
