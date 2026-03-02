@@ -33,40 +33,55 @@ class InlineThreadHighlighter {
     if (!exact) return;
 
     var textNodes = this.getTextNodes();
-    var matchInfo = this.findTextInNodes(textNodes, exact);
+    var segments = this.findTextInNodes(textNodes, exact);
 
-    if (!matchInfo) return;
+    if (!segments || segments.length === 0) return;
 
-    try {
-      var range = document.createRange();
-      range.setStart(matchInfo.startNode, matchInfo.startOffset);
-      range.setEnd(matchInfo.endNode, matchInfo.endOffset);
+    var marks = this.wrapSegments(segments, thread);
 
-      var mark = document.createElement('mark');
-      mark.className = 'inline-thread-highlight';
-      mark.dataset.threadId = thread.id;
-      mark.dataset.commentCount = thread.comments.length;
-
-      if (thread.status === 'resolved') {
-        mark.classList.add('resolved');
-      }
-      if (thread.outdated) {
-        mark.classList.add('outdated');
-      }
-
-      range.surroundContents(mark);
-
-      // Click handler to open thread panel
-      var panel = this.panel;
+    // Click handler to open thread panel
+    var panel = this.panel;
+    marks.forEach(function (mark) {
       mark.addEventListener('click', function (e) {
         e.preventDefault();
         panel.openExistingThread(thread);
       });
-    } catch (e) {
-      // surroundContents can fail if the range spans multiple elements.
-      // In that case, we skip this highlight gracefully.
-      console.warn('Could not highlight thread ' + thread.id + ':', e.message);
+    });
+  }
+
+  // Wrap each matched text node segment with a <mark> element.
+  // Processes in reverse order to avoid invalidating DOM offsets.
+  wrapSegments(segments, thread) {
+    var marks = [];
+
+    for (var i = segments.length - 1; i >= 0; i--) {
+      var seg = segments[i];
+
+      try {
+        var range = document.createRange();
+        range.setStart(seg.node, seg.startOffset);
+        range.setEnd(seg.node, seg.endOffset);
+
+        var mark = document.createElement('mark');
+        mark.className = 'inline-thread-highlight';
+        mark.dataset.threadId = thread.id;
+        mark.dataset.commentCount = thread.comments.length;
+
+        if (thread.status === 'resolved') {
+          mark.classList.add('resolved');
+        }
+        if (thread.outdated) {
+          mark.classList.add('outdated');
+        }
+
+        range.surroundContents(mark);
+        marks.push(mark);
+      } catch (e) {
+        console.warn('Could not highlight segment for thread ' + thread.id + ':', e.message);
+      }
     }
+
+    return marks;
   }
 
   clearHighlights() {
@@ -98,10 +113,12 @@ class InlineThreadHighlighter {
     return textNodes;
   }
 
+  // Returns an array of { node, startOffset, endOffset } segments —
+  // one per text node that overlaps the match. Each segment stays
+  // within a single text node so surroundContents works safely.
   findTextInNodes(textNodes, searchText) {
-    // Build a combined text string with node boundaries tracked
     var combined = '';
-    var nodeMap = []; // { node, startIndex, endIndex }
+    var nodeMap = [];
 
     for (var i = 0; i < textNodes.length; i++) {
       var nodeText = textNodes[i].textContent;
@@ -118,36 +135,27 @@ class InlineThreadHighlighter {
     if (matchIndex === -1) return null;
 
     var matchEnd = matchIndex + searchText.length;
-
-    // Find the start node and offset
-    var startNode = null, startOffset = 0;
-    var endNode = null, endOffset = 0;
+    var segments = [];
 
     for (var j = 0; j < nodeMap.length; j++) {
       var entry = nodeMap[j];
 
-      if (!startNode && matchIndex >= entry.startIndex && matchIndex < entry.endIndex) {
-        startNode = entry.node;
-        startOffset = matchIndex - entry.startIndex;
-      }
+      // Skip nodes entirely before the match
+      if (entry.endIndex <= matchIndex) continue;
 
-      if (matchEnd > entry.startIndex && matchEnd <= entry.endIndex) {
-        endNode = entry.node;
-        endOffset = matchEnd - entry.startIndex;
-        break;
-      }
+      // Stop after nodes entirely after the match
+      if (entry.startIndex >= matchEnd) break;
+
+      var segStart = Math.max(matchIndex, entry.startIndex) - entry.startIndex;
+      var segEnd = Math.min(matchEnd, entry.endIndex) - entry.startIndex;
+
+      segments.push({
+        node: entry.node,
+        startOffset: segStart,
+        endOffset: segEnd
+      });
     }
 
-    if (!startNode || !endNode) return null;
-
-    // surroundContents requires start and end in the same node
-    if (startNode !== endNode) return null;
-
-    return {
-      startNode: startNode,
-      startOffset: startOffset,
-      endNode: endNode,
-      endOffset: endOffset
-    };
+    return segments.length > 0 ? segments : null;
   }
 }
