@@ -30,6 +30,11 @@ class InlineThreadTurbo {
     this.csrfToken = csrfMeta ? csrfMeta.content : '';
 
     var contentEl = container.querySelector('[data-behavior~=content-textile]');
+
+    // Prevent QuoteSelector from binding to this content-textile element.
+    // QuoteSelector's constructor checks this data attribute and bails if set.
+    $(contentEl).data('quoteSelector', 'inline-thread');
+
     this.highlighter = new InlineThreadHighlighter(contentEl, this);
     this.selector = new InlineThreadSelector(container, this);
 
