@@ -1,0 +1,85 @@
+// Inline thread highlights on issue body text
+.inline-thread-highlight {
+  background-color: rgba(255, 235, 59, 0.3);
+  border-bottom: 2px solid rgba(255, 193, 7, 0.6);
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: rgba(255, 235, 59, 0.5);
+  }
+
+  &.resolved {
+    background-color: rgba(76, 175, 80, 0.15);
+    border-bottom: 2px dashed rgba(76, 175, 80, 0.4);
+  }
+
+  &.outdated {
+    background-color: rgba(255, 152, 0, 0.15);
+    border-bottom: 2px dotted rgba(255, 152, 0, 0.4);
+  }
+}
+
+// Inline comment selection button (follows .selection-quote-button pattern)
+.inline-comment-button {
+  align-items: center;
+  background-color: $secondary-bg;
+  border: 1px solid $border-color;
+  border-radius: 25px;
+  box-shadow: 0 20px 30px 0 rgba(33, 55, 74, 0.1);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem;
+  position: absolute;
+  user-select: none;
+  width: auto;
+  z-index: 3;
+
+  &:after {
+    border: 0.5rem solid;
+    border-color: $secondary-bg transparent transparent;
+    content: '';
+    height: 0;
+    left: 0.7rem;
+    position: absolute;
+    top: 100%;
+    width: 0;
+  }
+
+  &:hover {
+    background-color: darken($secondary-bg, 5%);
+  }
+}
+
+// Thread panel (slide-out from right)
+.inline-thread-panel-container {
+  background: $white;
+  border-left: 1px solid $border-color;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  height: 100vh;
+  overflow-y: auto;
+  position: fixed;
+  right: -400px;
+  top: 0;
+  transition: right 0.3s ease;
+  width: 400px;
+  z-index: 1050;
+
+  &.open {
+    right: 0;
+  }
+}
+
+.inline-thread-panel-header {
+  background: $secondary-bg;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.inline-thread-comment {
+  &:last-child {
+    border-bottom: none !important;
+  }
+}

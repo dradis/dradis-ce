@@ -1,0 +1,9 @@
+<% if @comment.persisted? %>
+  if (window.InlineThreadManager) {
+    window.InlineThreadManager.onCommentCreated(<%= @thread.id %>, <%= @comment.id %>);
+  }
+<% else %>
+  if (window.InlineThreadManager) {
+    window.InlineThreadManager.onCommentError('<%= j @comment.errors.full_messages.join(", ") %>');
+  }
+<% end %>

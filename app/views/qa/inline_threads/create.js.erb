@@ -1,0 +1,9 @@
+<% if @thread.persisted? %>
+  if (window.InlineThreadManager) {
+    window.InlineThreadManager.onThreadCreated(<%= @thread.id %>);
+  }
+<% else %>
+  if (window.InlineThreadManager) {
+    window.InlineThreadManager.onThreadError('<%= j @thread.errors.full_messages.join(", ") %>');
+  }
+<% end %>
