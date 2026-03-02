@@ -1,4 +1,4 @@
-class QA::InlineThreadCommentsController < AuthenticatedController
+class QA::InlineThreads::CommentsController < AuthenticatedController
   include EventPublisher
   include Mentioned
   include Notified
