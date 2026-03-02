@@ -1,5 +1,8 @@
 module Dradis::Plugins::Echo
-  class ConfigurationsController < AuthenticatedController
+  class ConfigurationsController < ApplicationController
+    # FIXME: this is caused by CE's navbar_brand requiring :current_project
+    include ProjectScoped if !defined?(Dradis::Pro)
+
     def index
       @configuration_form = ConfigurationForm.from_storage
     end

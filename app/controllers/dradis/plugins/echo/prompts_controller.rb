@@ -1,5 +1,5 @@
 module Dradis::Plugins::Echo
-  class PromptsController < AuthenticatedController
+  class PromptsController < ApplicationController
     before_action :set_prompt, only: [:show, :edit, :update, :destroy]
 
     def index
