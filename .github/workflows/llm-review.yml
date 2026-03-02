@@ -78,7 +78,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.3"
+          rubygems: 'latest'
           bundler-cache: true
 
       - name: Run RuboCop on changed Ruby files
