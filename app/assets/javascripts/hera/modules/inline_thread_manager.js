@@ -40,6 +40,15 @@ class InlineThreadManager {
     window.InlineThreadManager = this;
 
     this.fetchAndHighlight();
+
+    // Liquid async rendering replaces innerHTML of content-textile,
+    // destroying all <mark> highlights. Re-fetch and re-highlight.
+    var that = this;
+    this.$container.find('[data-behavior~=content-textile]').on(
+      'dradis:liquid-rendered', function () {
+        that.fetchAndHighlight();
+      }
+    );
   }
 
   fetchAndHighlight() {

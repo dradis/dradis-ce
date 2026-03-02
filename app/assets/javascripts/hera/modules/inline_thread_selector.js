@@ -21,6 +21,7 @@ class InlineThreadSelector {
     this.panel = panel;
     this.rawText = this.$content.data('content') || '';
     this.createPath = this.$container.data('inline-threads-create-path');
+    this.pendingSelection = null;
 
     // Prevent double-binding
     if (this.$container.data('inlineThreadSelector')) {
@@ -39,9 +40,20 @@ class InlineThreadSelector {
       '</div>'
     );
 
+    this.appendButton();
+    this.bindEvents();
+
+    // Liquid async rendering replaces innerHTML of content-textile,
+    // destroying our appended button. Re-append after render completes.
+    var that = this;
+    this.$content.on('dradis:liquid-rendered', function () {
+      that.appendButton();
+    });
+  }
+
+  appendButton() {
     this.$content.append(this.$commentBtn);
     this.$content.css('position', 'relative');
-    this.bindEvents();
   }
 
   bindEvents() {
@@ -51,6 +63,11 @@ class InlineThreadSelector {
       var selectionObj = document.getSelection();
 
       if (that.isValidSelection(selectionObj)) {
+        // Capture the selected text NOW while it still exists.
+        // The browser may clear the selection on mousedown when the
+        // user clicks the "Add Comment" button.
+        that.pendingSelection = selectionObj.toString();
+
         var range = selectionObj.getRangeAt(0);
         var selectionPosition = range.getBoundingClientRect();
         var parentPosition = that.$content[0].getBoundingClientRect();
@@ -73,11 +90,12 @@ class InlineThreadSelector {
       if (!$(e.target).closest('[data-behavior~=inline-comment-button]').length &&
           !e.shiftKey) {
         that.clearButton();
+        that.pendingSelection = null;
       }
     });
 
     this.$commentBtn.on('click', function () {
-      var selectedText = document.getSelection().toString();
+      var selectedText = that.pendingSelection;
       if (!selectedText) return;
 
       var anchor = that.buildAnchor(selectedText);
@@ -85,6 +103,7 @@ class InlineThreadSelector {
         that.panel.openNewThread(anchor, that.createPath);
       }
 
+      that.pendingSelection = null;
       that.clearSelection();
       that.clearButton();
     });
