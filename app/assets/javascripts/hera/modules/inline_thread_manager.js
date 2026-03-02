@@ -28,6 +28,11 @@ class InlineThreadManager {
     });
 
     var contentEl = this.$container.find('[data-behavior~=content-textile]')[0];
+
+    // Prevent QuoteSelector from binding to this content-textile element.
+    // QuoteSelector's constructor checks this data attribute and bails if set.
+    $(contentEl).data('quoteSelector', 'inline-thread');
+
     this.highlighter = new InlineThreadHighlighter(contentEl, this.panel);
     this.selector = new InlineThreadSelector(container, this.panel);
 
