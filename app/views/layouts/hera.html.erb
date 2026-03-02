@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      data-theme="<%= current_user.preferences.theme || 'auto' %>"
+      data-controller="theme">
   <head>
     <title><%= page_title %></title>
     <meta charset="utf-8">

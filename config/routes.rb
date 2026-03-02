@@ -9,6 +9,9 @@ Rails.application.routes.draw do
 
   resources :comments
 
+  # --------------------------------------------------------- User preferences
+  resource :preferences, only: [:update]
+
   # ------------------------------------------------------------ Project routes
   concern :multiple_destroy do
     collection do
