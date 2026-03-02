@@ -2,7 +2,11 @@
 
 <% content_for :breadcrumbs do %>
   <ol class="breadcrumb">
+    <% if defined?(Dradis::Pro) %>
     <li class="breadcrumb-item"><%= link_to 'Dashboard', main_app.dashboard_path %></li>
+    <% else %>
+    <li class="breadcrumb-item"><%= link_to Project.new.name, main_app.project_path(1) %></li>
+    <% end %>
     <li class="breadcrumb-item active">Dradis Echo</li>
   </ol>
 <% end %>
