@@ -36,6 +36,7 @@
 /attachments/
 /avatars/
 /config/credentials/*
+/config/shared/*
 /templates/*
 
 # Ignore development and test files
