@@ -20,6 +20,7 @@ class InlineThreadSelector {
     this.$content = this.$container.find('[data-behavior~=content-textile]');
     this.coordinator = coordinator;
     this.rawText = this.$content.data('content') || '';
+    this.pendingSelection = null;
 
     // Prevent double-binding
     if (this.$container.data('inlineThreadSelector')) {
@@ -61,6 +62,11 @@ class InlineThreadSelector {
       var selectionObj = document.getSelection();
 
       if (that.isValidSelection(selectionObj)) {
+        // Capture the selected text NOW while it still exists.
+        // The browser may clear the selection on mousedown when the
+        // user clicks the "Add Comment" button.
+        that.pendingSelection = selectionObj.toString();
+
         var range = selectionObj.getRangeAt(0);
         var selectionPosition = range.getBoundingClientRect();
         var parentPosition = that.$content[0].getBoundingClientRect();
@@ -83,11 +89,12 @@ class InlineThreadSelector {
       if (!$(e.target).closest('[data-behavior~=inline-comment-button]').length &&
           !e.shiftKey) {
         that.clearButton();
+        that.pendingSelection = null;
       }
     });
 
     this.$commentBtn.on('click', function () {
-      var selectedText = document.getSelection().toString();
+      var selectedText = that.pendingSelection;
       if (!selectedText) return;
 
       var anchor = that.buildAnchor(selectedText);
@@ -95,6 +102,7 @@ class InlineThreadSelector {
         that.coordinator.showNewThreadForm(anchor);
       }
 
+      that.pendingSelection = null;
       that.clearSelection();
       that.clearButton();
     });
