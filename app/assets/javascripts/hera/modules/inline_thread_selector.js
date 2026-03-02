@@ -38,9 +38,20 @@ class InlineThreadSelector {
       '</div>'
     );
 
+    this.appendButton();
+    this.bindEvents();
+
+    // Liquid async rendering replaces innerHTML of content-textile,
+    // destroying our appended button. Re-append after render completes.
+    var that = this;
+    this.$content.on('dradis:liquid-rendered', function () {
+      that.appendButton();
+    });
+  }
+
+  appendButton() {
     this.$content.append(this.$commentBtn);
     this.$content.css('position', 'relative');
-    this.bindEvents();
   }
 
   bindEvents() {

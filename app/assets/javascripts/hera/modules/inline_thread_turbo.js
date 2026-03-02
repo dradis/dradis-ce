@@ -100,6 +100,14 @@ class InlineThreadTurbo {
       }
     });
 
+    // Liquid async rendering replaces innerHTML of content-textile,
+    // destroying all <mark> highlights. Re-fetch and re-highlight.
+    $(this.container).find('[data-behavior~=content-textile]').on(
+      'dradis:liquid-rendered', function () {
+        that.fetchAndHighlight();
+      }
+    );
+
     // After any Turbo form submission in our panel, re-highlight threads.
     // Turbo Streams have already updated the panel DOM by this point.
     document.addEventListener('turbo:submit-end', function (e) {
