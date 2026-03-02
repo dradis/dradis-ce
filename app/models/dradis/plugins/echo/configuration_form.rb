@@ -2,14 +2,19 @@ module Dradis::Plugins::Echo
   class ConfigurationForm
     include ActiveModel::Model
 
-    attr_accessor :address, :model
+    attr_accessor :roslin_ollama_address, :roslin_ollama_model
 
-    validates :address, allow_blank: false, presence: true, format: { with: URI.regexp(['http', 'https']), message: 'needs to be a valid URL' }
-    validates :model, allow_blank: false, presence: true
+    validates :roslin_ollama_address,
+      allow_blank: false,
+      presence: true,
+      format: { with: URI.regexp(['http', 'https']), message: 'needs to be a valid URL' }
+    validates :roslin_ollama_model,
+      allow_blank: false,
+      presence: true
 
     def self.from_storage
       instance = new
-      [:address, :model].each do |setting|
+      [:roslin_ollama_address, :roslin_ollama_model].each do |setting|
         instance.send("#{setting}=", Engine.settings.send(setting))
       end
       instance
@@ -24,13 +29,13 @@ module Dradis::Plugins::Echo
     end
 
     def configured?
-      @configured ||= !Engine.settings.is_default?(:model, model)
+      @configured ||= !Engine.settings.is_default?(:roslin_ollama_model, roslin_ollama_model)
     end
 
     private
 
     def save_settings
-      [:address, :model].each do |setting|
+      [:roslin_ollama_address, :roslin_ollama_model].each do |setting|
         Engine.settings.send("#{setting}=", send(setting))
       end
       Engine.settings.save

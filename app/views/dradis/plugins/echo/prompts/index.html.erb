@@ -2,12 +2,12 @@
 
 <% content_for :breadcrumbs do %>
   <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      Dradis Echo
-    </li>
-    <li class="breadcrumb-item active">
-      Prompts
-    </li>
+    <% if defined?(Dradis::Pro) %>
+    <li class="breadcrumb-item"><%= link_to 'Dashboard', main_app.dashboard_path %></li>
+    <% else %>
+    <li class="breadcrumb-item"><%= link_to Project.new.name, main_app.project_path(1) %></li>
+    <% end %>
+    <li class="breadcrumb-item active">Dradis Echo</li>
   </ol>
 <% end %>
 
@@ -15,7 +15,7 @@
   <div class="header">
     <div class="header-inner">
       <h5 class="header-name">
-        Prompts Tip
+        Echo Prompt Tips
       </h5>
       <div class="options">
         <%= link_to "#prompts-tips", data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>

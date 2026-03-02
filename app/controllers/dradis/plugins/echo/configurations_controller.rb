@@ -1,5 +1,5 @@
 module Dradis::Plugins::Echo
-  class ConfigurationsController < AuthenticatedController
+  class ConfigurationsController < ApplicationController
     def index
       @configuration_form = ConfigurationForm.from_storage
     end
@@ -18,7 +18,7 @@ module Dradis::Plugins::Echo
     private
 
     def configuration_params
-      params.require(:configuration_form).permit(:address, :model)
+      params.require(:configuration_form).permit(:roslin_ollama_address, :roslin_ollama_model)
     end
   end
 end

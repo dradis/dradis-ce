@@ -7,8 +7,11 @@ module Dradis::Plugins::Echo
     description 'Dradis AI Copilot'
 
     addon_settings :echo do
-      settings.default_address = 'http://localhost:11434'
-      settings.default_model = 'deepseek-r1:latest'
+      settings.default_roslin_enabled = false
+      settings.default_roslin_teaser = true
+      settings.default_roslin_languagetool_address = 'http://localhost:8010'
+      settings.default_roslin_ollama_address = 'http://localhost:11434'
+      settings.default_roslin_ollama_model = 'qwen2.5:14b'
     end
 
     # add engine migrations to main app migrations paths in development
