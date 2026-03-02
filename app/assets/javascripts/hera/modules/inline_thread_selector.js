@@ -93,7 +93,11 @@ class InlineThreadSelector {
       }
     });
 
-    this.$commentBtn.on('click', function () {
+    // Use event delegation on $content rather than direct binding on the
+    // button element. jQuery's .html() (used by liquid_async.js) calls
+    // cleanData() on child elements, stripping any directly-bound handlers.
+    // Delegated handlers survive because they live on the parent.
+    this.$content.on('click', '[data-behavior~=inline-comment-button]', function () {
       var selectedText = that.pendingSelection;
       if (!selectedText) return;
 
