@@ -35,12 +35,27 @@
               </span>
             </span>
           </h4>
-          <%= render partial: 'shared/textile_content', locals: { record: @issue, preview_path: preview_project_issue_path(current_project, @issue) } %>
+          <div data-behavior="inline-threads-container"
+               data-inline-threads-path="<%= project_qa_issue_inline_threads_path(current_project, @issue, format: :json) %>"
+               data-inline-threads-base-path="<%= project_qa_issue_inline_threads_path(current_project, @issue) %>"
+               data-issue-id="<%= @issue.id %>">
+            <%= render partial: 'shared/textile_content', locals: { record: @issue, preview_path: preview_project_issue_path(current_project, @issue) } %>
+          </div>
           <div class="author-info">
             <span class="ms-auto">Author: <%= @issue.author || 'n/a' %></span>
           </div>
         </div>
       <% end %>
+    </div>
+
+    <div class="inline-thread-panel-container" data-behavior="inline-thread-panel">
+      <div class="inline-thread-panel-header d-flex justify-content-between align-items-center p-3 border-bottom">
+        <h6 class="mb-0">Inline Comment</h6>
+        <button type="button" class="btn-close" data-behavior="close-inline-panel" aria-label="Close"></button>
+      </div>
+      <div class="inline-thread-panel-body">
+        <%= turbo_frame_tag 'inline_thread_content' %>
+      </div>
     </div>
 
     <div class="content-container">

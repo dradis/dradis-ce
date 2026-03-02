@@ -1,0 +1,7 @@
+<div class="inline-thread-comment py-2 border-bottom" id="inline_comment_<%= comment.id %>">
+  <div class="d-flex justify-content-between">
+    <span class="fw-bold small"><%= comment.user&.name || 'Unknown' %></span>
+    <span class="text-muted small"><%= local_time_ago(comment.created_at) %></span>
+  </div>
+  <div class="mt-1 small"><%= comment_formatter(comment.content) %></div>
+</div>

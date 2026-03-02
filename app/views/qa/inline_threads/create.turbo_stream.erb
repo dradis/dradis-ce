@@ -1,0 +1,5 @@
+<% if @thread.persisted? %>
+  <%= turbo_stream.update 'inline_thread_content' do %>
+    <%= render 'thread', thread: @thread, issue: @issue %>
+  <% end %>
+<% end %>
