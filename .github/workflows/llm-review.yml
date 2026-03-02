@@ -1,0 +1,148 @@
+# .github/workflows/llm-review.yml
+# LLM-Assisted Code Review — triggers on every PR event
+# See .github/prompts/code_reviewer.txt for the system prompt
+# See .github/scripts/ for the supporting Python scripts
+#
+# Required secrets:  ANTHROPIC_API_KEY
+# Optional secrets:  OPENAI_API_KEY (fallback model)
+# Repository vars:   LLM_MODEL, LLM_MAX_TOKENS, LLM_FAIL_SEVERITY, etc.
+
+name: LLM Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review, labeled]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "PR number to re-review (workflow_dispatch only)"
+        required: false
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+# Cancel in-flight runs for the same PR when a new commit is pushed
+concurrency:
+  group: llm-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+env:
+  # ── Model settings ───────────────────────────────────────────────────────────
+  LLM_MODEL:               ${{ vars.LLM_MODEL          || 'claude-sonnet-4-20250514' }}
+  LLM_FALLBACK_MODEL:      ${{ vars.LLM_FALLBACK_MODEL || 'claude-haiku-4-5-20251001' }}
+  LLM_MAX_TOKENS:          ${{ vars.LLM_MAX_TOKENS     || '4096' }}
+  LLM_SMALL_DIFF_THRESHOLD: ${{ vars.LLM_SMALL_DIFF_THRESHOLD || '50' }}
+  # ── Review behaviour ────────────────────────────────────────────────────────
+  LLM_FAIL_SEVERITY:       ${{ vars.LLM_FAIL_SEVERITY  || 'major' }}
+  LLM_CONTEXT_LINES:       ${{ vars.LLM_CONTEXT_LINES  || '5' }}
+  LLM_IGNORE_PATHS:        ${{ vars.LLM_IGNORE_PATHS   || 'vendor/,node_modules/,*.lock,db/schema.rb,*.min.js,generated/' }}
+  # ── Label names ─────────────────────────────────────────────────────────────
+  LLM_SKIP_LABEL:          ${{ vars.LLM_SKIP_LABEL     || 'skip-llm' }}
+  LLM_BYPASS_LABEL:        ${{ vars.LLM_BYPASS_LABEL   || 'override/llm' }}
+
+jobs:
+  llm-review:
+    name: LLM Code Review
+    runs-on: ubuntu-latest
+
+    # Skip entirely when the skip label is present
+    if: >
+      !contains(
+        github.event.pull_request.labels.*.name,
+        vars.LLM_SKIP_LABEL || 'skip-llm'
+      )
+
+    steps:
+      # ── 1. Detect bypass label ───────────────────────────────────────────────
+      - name: Detect bypass label
+        id: bypass
+        run: |
+          LABELS='${{ toJson(github.event.pull_request.labels) }}'
+          BYPASS_LABEL="${{ env.LLM_BYPASS_LABEL }}"
+          if echo "$LABELS" | grep -q "\"$BYPASS_LABEL\""; then
+            echo "bypass=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::Bypass label '$BYPASS_LABEL' found — review will be non-blocking."
+          else
+            echo "bypass=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      # ── 2. Checkout ──────────────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history needed for git diff
+
+      # ── 3. Ruby + RuboCop ────────────────────────────────────────────────────
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Run RuboCop on changed Ruby files
+        run: |
+          CHANGED_RB=$(git diff --name-only \
+            origin/${{ github.base_ref }}...HEAD \
+            | grep '\.rb$' | tr '\n' ' ')
+          if [ -n "$CHANGED_RB" ]; then
+            bundle exec rubocop \
+              --format json \
+              --out rubocop_output.json \
+              $CHANGED_RB || true   # do not fail workflow on rubocop offenses
+          else
+            echo '{"files":[],"summary":{}}' > rubocop_output.json
+          fi
+
+      # ── 4. Python setup ──────────────────────────────────────────────────────
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: pip install anthropic requests detect-secrets --quiet
+
+      # ── 5. Assemble payload ──────────────────────────────────────────────────
+      - name: Assemble review payload
+        id: payload
+        env:
+          GH_TOKEN:    ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER:   ${{ github.event.pull_request.number }}
+          BASE_SHA:    ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA:    ${{ github.event.pull_request.head.sha }}
+          REPO:        ${{ github.repository }}
+          PR_TITLE:    ${{ github.event.pull_request.title }}
+          PR_BODY:     ${{ github.event.pull_request.body }}
+        run: python3 .github/scripts/assemble_payload.py
+
+      # ── 6. Call LLM API ──────────────────────────────────────────────────────
+      - name: Call LLM API
+        id: llm
+        if: steps.bypass.outputs.bypass == 'false'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY:    ${{ secrets.OPENAI_API_KEY }}   # optional fallback
+        run: python3 .github/scripts/call_llm.py
+
+      # ── 7. Post review comments ──────────────────────────────────────────────
+      - name: Post review comments
+        if: steps.bypass.outputs.bypass == 'false' && steps.llm.outcome == 'success'
+        env:
+          GH_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO:      ${{ github.repository }}
+          HEAD_SHA:  ${{ github.event.pull_request.head.sha }}
+        run: python3 .github/scripts/post_review.py
+
+      # ── 8. Set check verdict ─────────────────────────────────────────────────
+      - name: Set check verdict
+        if: always()
+        env:
+          GH_TOKEN:  ${{ secrets.GITHUB_TOKEN }}
+          REPO:      ${{ github.repository }}
+          HEAD_SHA:  ${{ github.event.pull_request.head.sha }}
+          BYPASS:    ${{ steps.bypass.outputs.bypass }}
+          LLM_STEP:  ${{ steps.llm.outcome }}
+        run: python3 .github/scripts/set_verdict.py
