@@ -1,16 +1,29 @@
 class StaticPagesController < AuthenticatedController
   include ProjectScoped
 
-  def issuelib_index
+  before_action :set_entries, only: [:issuelib_index, :issuelib_import]
+  before_action :set_tickets, only: [:remediationtracker_index]
+
+  def issuelib_index; end
+
+  def issuelib_import
+    @entries = @entries.select { |e| e[:state] == 'published' }
+  end
+
+  def remediationtracker_index; end
+
+  private
+
+  def set_entries
     @entries = issuelib_entries
   end
 
-  def issuelib_import
-    @entries = issuelib_entries.select { |e| e[:state] == 'published' }
+  def set_tickets
+    @tickets = tickets
   end
 
-  def remediationtracker_index
-    @tickets = [
+  def tickets
+    [
       {
         title:    'SQL Injection in Login Form',
         category: 'Security',
@@ -45,8 +58,6 @@ class StaticPagesController < AuthenticatedController
       }
     ]
   end
-
-  private
 
   def issuelib_entries
     [
