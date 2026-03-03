@@ -3,6 +3,7 @@
 }
 
 .dropdown-menu {
+  background-color: var(--primary-bg);
   border: 1px solid var(--border-color);
   box-shadow: 0 2px 3px 0 rgba(33, 55, 74, 0.2);
   font-size: 0.9rem;
@@ -22,7 +23,7 @@
     &:active,
     &:hover {
       color: var(--text-link-hover);
-      background-color: var(--secondary-bg);
+      background-color: var(--secondary-bg-strong);
     }
 
     i {
