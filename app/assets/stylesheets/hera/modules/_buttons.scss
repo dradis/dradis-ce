@@ -239,7 +239,7 @@
       &:hover {
         .dropdown-item,
         .dropdown-item-text {
-          background-color: $grey-100;
+          background-color: var(--secondary-bg);
         }
       }
 
@@ -312,18 +312,18 @@
     padding: 0.5rem 1.75rem 0.5rem 0.5rem;
 
     &:has(input:disabled) {
-      background-color: $grey-200;
+      background-color: var(--secondary-bg);
       cursor: not-allowed;
 
       .state-label {
         p {
-          color: $grey-700;
+          color: var(--text-muted);
         }
       }
     }
 
     &:hover {
-      background-color: $grey-100;
+      background-color: var(--secondary-bg);
     }
 
     i {
@@ -343,6 +343,7 @@
       }
 
       span {
+        color: var(--text-default);
         font-size: 0.8rem;
       }
     }
@@ -361,7 +362,7 @@
   }
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   .btn-close {
     filter: invert(1) grayscale(100%) brightness(200%);
     opacity: 0.75;

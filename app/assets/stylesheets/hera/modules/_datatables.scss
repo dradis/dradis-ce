@@ -359,7 +359,7 @@ div.dataTables_wrapper {
       &:focus,
       &:hover {
         color: var(--text-link-hover);
-        background-color: $grey-100;
+        background-color: var(--secondary-bg);
       }
     }
   }
