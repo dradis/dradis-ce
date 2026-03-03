@@ -45,12 +45,11 @@ class InlineThreadTurbo {
   // -- Panel management ----------------------------------------------------
 
   openPanel() {
-    this.panel.classList.add('open');
+    bootstrap.Offcanvas.getOrCreateInstance(this.panel).show();
   }
 
   closePanel() {
-    this.panel.classList.remove('open');
-    this.frame.innerHTML = '';
+    bootstrap.Offcanvas.getInstance(this.panel)?.hide();
   }
 
   // -- Thread display (via Turbo Frame) ------------------------------------
@@ -83,17 +82,15 @@ class InlineThreadTurbo {
   // -- Events --------------------------------------------------------------
 
   bindEvents() {
-    // Close panel
-    this.panel.addEventListener('click', (e) => {
-      if (e.target.closest('[data-behavior~=close-inline-panel]')) {
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.panel.classList.contains('show')) {
         this.closePanel();
       }
     });
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && this.panel.classList.contains('open')) {
-        this.closePanel();
-      }
+    // Clear frame when offcanvas finishes hiding (covers dismiss button, Escape, and programmatic close).
+    this.panel.addEventListener('hidden.bs.offcanvas', () => {
+      this.frame.innerHTML = '';
     });
 
     // Liquid async rendering replaces innerHTML of content-textile,

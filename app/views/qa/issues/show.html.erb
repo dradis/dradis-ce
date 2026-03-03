@@ -47,12 +47,12 @@
       <% end %>
     </div>
 
-    <div class="inline-thread-panel-container" data-behavior="inline-thread-panel">
-      <div class="inline-thread-panel-header d-flex justify-content-between align-items-center p-3 border-bottom">
-        <h6 class="mb-0">Inline Comment Thread</h6>
-        <button type="button" class="btn-close" data-behavior="close-inline-panel" aria-label="Close"></button>
+    <div class="offcanvas offcanvas-end" tabindex="-1" data-behavior="inline-thread-panel" data-bs-backdrop="false" data-bs-scroll="true" aria-labelledby="inlineThreadPanelLabel">
+      <div class="offcanvas-header">
+        <h6 class="offcanvas-title">Inline Comment Thread</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
-      <div class="inline-thread-panel-body">
+      <div class="offcanvas-body">
         <%= turbo_frame_tag 'inline_thread_content' %>
       </div>
     </div>
