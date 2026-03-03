@@ -23,28 +23,27 @@ class InlineThreadHighlighter {
   highlight(threads) {
     this.clearHighlights();
 
-    threads.forEach(function (thread) {
+    threads.forEach(thread => {
       this.highlightThread(thread);
-    }.bind(this));
+    });
   }
 
   highlightThread(thread) {
-    var exact = thread.anchor.exact;
+    const exact = thread.anchor.exact;
     if (!exact) return;
 
-    var textNodes = this.getTextNodes();
-    var segments = this.findTextInNodes(textNodes, exact);
+    const textNodes = this.getTextNodes();
+    const segments = this.findTextInNodes(textNodes, exact);
 
     if (!segments || segments.length === 0) return;
 
-    var marks = this.wrapSegments(segments, thread);
+    const marks = this.wrapSegments(segments, thread);
 
     // Click handler to open thread in Turbo Frame panel
-    var coordinator = this.coordinator;
-    marks.forEach(function (mark) {
-      mark.addEventListener('click', function (e) {
+    marks.forEach(mark => {
+      mark.addEventListener('click', (e) => {
         e.preventDefault();
-        coordinator.showThread(thread.id);
+        this.coordinator.showThread(thread.id);
       });
     });
   }
@@ -52,17 +51,17 @@ class InlineThreadHighlighter {
   // Wrap each matched text node segment with a <mark> element.
   // Processes in reverse order to avoid invalidating DOM offsets.
   wrapSegments(segments, thread) {
-    var marks = [];
+    const marks = [];
 
-    for (var i = segments.length - 1; i >= 0; i--) {
-      var seg = segments[i];
+    for (let i = segments.length - 1; i >= 0; i--) {
+      const seg = segments[i];
 
       try {
-        var range = document.createRange();
+        const range = document.createRange();
         range.setStart(seg.node, seg.startOffset);
         range.setEnd(seg.node, seg.endOffset);
 
-        var mark = document.createElement('mark');
+        const mark = document.createElement('mark');
         mark.className = 'inline-thread-highlight';
         mark.dataset.threadId = thread.id;
         mark.dataset.commentCount = thread.comments.length;
@@ -85,9 +84,9 @@ class InlineThreadHighlighter {
   }
 
   clearHighlights() {
-    var marks = this.contentEl.querySelectorAll('mark.inline-thread-highlight');
-    marks.forEach(function (mark) {
-      var parent = mark.parentNode;
+    const marks = this.contentEl.querySelectorAll('mark.inline-thread-highlight');
+    marks.forEach(mark => {
+      const parent = mark.parentNode;
       while (mark.firstChild) {
         parent.insertBefore(mark.firstChild, mark);
       }
@@ -97,15 +96,15 @@ class InlineThreadHighlighter {
   }
 
   getTextNodes() {
-    var textNodes = [];
-    var walker = document.createTreeWalker(
+    const textNodes = [];
+    const walker = document.createTreeWalker(
       this.contentEl,
       NodeFilter.SHOW_TEXT,
       null,
       false
     );
 
-    var node;
+    let node;
     while ((node = walker.nextNode())) {
       textNodes.push(node);
     }
@@ -117,12 +116,12 @@ class InlineThreadHighlighter {
   // one per text node that overlaps the match. Each segment stays
   // within a single text node so surroundContents works safely.
   findTextInNodes(textNodes, searchText) {
-    var combined = '';
-    var nodeMap = [];
+    let combined = '';
+    const nodeMap = [];
 
-    for (var i = 0; i < textNodes.length; i++) {
-      var nodeText = textNodes[i].textContent;
-      var startIndex = combined.length;
+    for (let i = 0; i < textNodes.length; i++) {
+      const nodeText = textNodes[i].textContent;
+      const startIndex = combined.length;
       combined += nodeText;
       nodeMap.push({
         node: textNodes[i],
@@ -131,14 +130,14 @@ class InlineThreadHighlighter {
       });
     }
 
-    var matchIndex = combined.indexOf(searchText);
+    const matchIndex = combined.indexOf(searchText);
     if (matchIndex === -1) return null;
 
-    var matchEnd = matchIndex + searchText.length;
-    var segments = [];
+    const matchEnd = matchIndex + searchText.length;
+    const segments = [];
 
-    for (var j = 0; j < nodeMap.length; j++) {
-      var entry = nodeMap[j];
+    for (let j = 0; j < nodeMap.length; j++) {
+      const entry = nodeMap[j];
 
       // Skip nodes entirely before the match
       if (entry.endIndex <= matchIndex) continue;
@@ -146,8 +145,8 @@ class InlineThreadHighlighter {
       // Stop after nodes entirely after the match
       if (entry.startIndex >= matchEnd) break;
 
-      var segStart = Math.max(matchIndex, entry.startIndex) - entry.startIndex;
-      var segEnd = Math.min(matchEnd, entry.endIndex) - entry.startIndex;
+      const segStart = Math.max(matchIndex, entry.startIndex) - entry.startIndex;
+      const segEnd = Math.min(matchEnd, entry.endIndex) - entry.startIndex;
 
       segments.push({
         node: entry.node,

@@ -46,9 +46,8 @@ class InlineThreadSelector {
 
     // Liquid async rendering replaces innerHTML of content-textile,
     // destroying our appended button. Re-append after render completes.
-    var that = this;
-    this.$content.on('dradis:liquid-rendered', function () {
-      that.appendButton();
+    this.$content.on('dradis:liquid-rendered', () => {
+      this.appendButton();
     });
   }
 
@@ -58,40 +57,38 @@ class InlineThreadSelector {
   }
 
   bindEvents() {
-    var that = this;
+    $(document).on('mouseup.inlineThread', () => {
+      const selectionObj = document.getSelection();
 
-    $(document).on('mouseup.inlineThread', function () {
-      var selectionObj = document.getSelection();
-
-      if (that.isValidSelection(selectionObj)) {
+      if (this.isValidSelection(selectionObj)) {
         // Capture the selected text NOW while it still exists.
         // The browser may clear the selection on mousedown when the
         // user clicks the "Add Comment" button.
-        that.pendingSelection = selectionObj.toString();
+        this.pendingSelection = selectionObj.toString();
 
-        var range = selectionObj.getRangeAt(0);
-        var selectionPosition = range.getBoundingClientRect();
-        var parentPosition = that.$content[0].getBoundingClientRect();
-        var boundingBoxY = selectionPosition.y - parentPosition.y;
-        var chevronOffsetY = 8;
-        var chevronOffsetX = 15;
+        const range = selectionObj.getRangeAt(0);
+        const selectionPosition = range.getBoundingClientRect();
+        const parentPosition = this.$content[0].getBoundingClientRect();
+        const boundingBoxY = selectionPosition.y - parentPosition.y;
+        const chevronOffsetY = 8;
+        const chevronOffsetX = 15;
 
-        var clonedRange = range.cloneRange();
+        const clonedRange = range.cloneRange();
         clonedRange.collapse(true);
-        var boundingBoxX = clonedRange.getBoundingClientRect().x - parentPosition.x;
+        const boundingBoxX = clonedRange.getBoundingClientRect().x - parentPosition.x;
 
-        that.$commentBtn.removeClass('d-none').css({
-          top: boundingBoxY - (that.$commentBtn.outerHeight() + chevronOffsetY),
+        this.$commentBtn.removeClass('d-none').css({
+          top: boundingBoxY - (this.$commentBtn.outerHeight() + chevronOffsetY),
           left: boundingBoxX - chevronOffsetX
         });
       }
     });
 
-    $(document).on('mousedown.inlineThread', function (e) {
+    $(document).on('mousedown.inlineThread', (e) => {
       if (!$(e.target).closest('[data-behavior~=inline-comment-button]').length &&
           !e.shiftKey) {
-        that.clearButton();
-        that.pendingSelection = null;
+        this.clearButton();
+        this.pendingSelection = null;
       }
     });
 
@@ -99,18 +96,18 @@ class InlineThreadSelector {
     // button element. jQuery's .html() (used by liquid_async.js) calls
     // cleanData() on child elements, stripping any directly-bound handlers.
     // Delegated handlers survive because they live on the parent.
-    this.$content.on('click', '[data-behavior~=inline-comment-button]', function () {
-      var selectedText = that.pendingSelection;
+    this.$content.on('click', '[data-behavior~=inline-comment-button]', () => {
+      const selectedText = this.pendingSelection;
       if (!selectedText) return;
 
-      var anchor = that.buildAnchor(selectedText);
+      const anchor = this.buildAnchor(selectedText);
       if (anchor) {
-        that.coordinator.showNewThreadForm(anchor);
+        this.coordinator.showNewThreadForm(anchor);
       }
 
-      that.pendingSelection = null;
-      that.clearSelection();
-      that.clearButton();
+      this.pendingSelection = null;
+      this.clearSelection();
+      this.clearButton();
     });
   }
 
@@ -119,25 +116,25 @@ class InlineThreadSelector {
   // us find user selections (which see rendered text without markers) and
   // map back to raw text positions for anchoring.
   _buildFieldMap() {
-    var raw = this.rawText.replace(/\r\n/g, '\n');
+    const raw = this.rawText.replace(/\r\n/g, '\n');
     this._normalizedRaw = raw;
     this._strippedText = '';
     this._strippedToRaw = [];
 
-    var fieldRegex = /#\[([^\]]*?)\]#/g;
-    var lastEnd = 0;
-    var match;
+    const fieldRegex = /#\[([^\]]*?)\]#/g;
+    let lastEnd = 0;
+    let match;
 
     while ((match = fieldRegex.exec(raw)) !== null) {
       // Copy characters before the marker as-is
-      for (var i = lastEnd; i < match.index; i++) {
+      for (let i = lastEnd; i < match.index; i++) {
         this._strippedToRaw.push(i);
         this._strippedText += raw.charAt(i);
       }
       // Copy just the field name (skip #[ and ]#)
-      var nameStart = match.index + 2;
-      var name = match[1];
-      for (var j = 0; j < name.length; j++) {
+      const nameStart = match.index + 2;
+      const name = match[1];
+      for (let j = 0; j < name.length; j++) {
         this._strippedToRaw.push(nameStart + j);
         this._strippedText += name.charAt(j);
       }
@@ -145,18 +142,18 @@ class InlineThreadSelector {
     }
 
     // Copy remaining text after last marker
-    for (var k = lastEnd; k < raw.length; k++) {
+    for (let k = lastEnd; k < raw.length; k++) {
       this._strippedToRaw.push(k);
       this._strippedText += raw.charAt(k);
     }
   }
 
   buildAnchor(selectedText) {
-    var selection = selectedText.replace(/\r\n/g, '\n');
-    var raw = this._normalizedRaw;
+    let selection = selectedText.replace(/\r\n/g, '\n');
+    const raw = this._normalizedRaw;
 
     // Fast path: exact match in raw text (selection within a single field value)
-    var rawIndex = raw.indexOf(selection);
+    let rawIndex = raw.indexOf(selection);
     if (rawIndex === -1) {
       rawIndex = raw.indexOf(selection.trim());
       if (rawIndex !== -1) { selection = selection.trim(); }
@@ -167,9 +164,9 @@ class InlineThreadSelector {
     }
 
     // Slow path: search in stripped text (handles selections spanning #[Field]#)
-    var strippedIndex = this._strippedText.indexOf(selection);
+    let strippedIndex = this._strippedText.indexOf(selection);
     if (strippedIndex === -1) {
-      var trimmed = selection.trim();
+      const trimmed = selection.trim();
       strippedIndex = this._strippedText.indexOf(trimmed);
       if (strippedIndex !== -1) { selection = trimmed; }
     }
@@ -179,24 +176,24 @@ class InlineThreadSelector {
     }
 
     // Map stripped positions back to raw positions
-    var rawStart = this._strippedToRaw[strippedIndex];
-    var endMapIndex = strippedIndex + selection.length - 1;
+    const rawStart = this._strippedToRaw[strippedIndex];
+    const endMapIndex = strippedIndex + selection.length - 1;
     if (endMapIndex >= this._strippedToRaw.length) {
       return null;
     }
-    var rawEnd = this._strippedToRaw[endMapIndex] + 1;
+    const rawEnd = this._strippedToRaw[endMapIndex] + 1;
 
     return this._buildResult(rawStart, rawEnd, selectedText);
   }
 
   _buildResult(rawStart, rawEnd, selectedText) {
-    var raw = this._normalizedRaw;
+    const raw = this._normalizedRaw;
 
-    var prefixStart = Math.max(0, rawStart - 30);
-    var prefix = raw.substring(prefixStart, rawStart);
-    var suffixEnd = Math.min(raw.length, rawEnd + 30);
-    var suffix = raw.substring(rawEnd, suffixEnd);
-    var fieldName = this.findFieldName(rawStart);
+    const prefixStart = Math.max(0, rawStart - 30);
+    const prefix = raw.substring(prefixStart, rawStart);
+    const suffixEnd = Math.min(raw.length, rawEnd + 30);
+    const suffix = raw.substring(rawEnd, suffixEnd);
+    const fieldName = this.findFieldName(rawStart);
 
     return {
       type: 'TextQuoteSelector',
@@ -212,10 +209,10 @@ class InlineThreadSelector {
   }
 
   findFieldName(position) {
-    var fieldRegex = /#\[(.+?)\]#/g;
-    var match;
-    var currentField = null;
-    var raw = this._normalizedRaw;
+    const fieldRegex = /#\[(.+?)\]#/g;
+    let match;
+    let currentField = null;
+    const raw = this._normalizedRaw;
 
     while ((match = fieldRegex.exec(raw)) !== null) {
       if (match.index > position) {
@@ -230,8 +227,8 @@ class InlineThreadSelector {
   isValidSelection(selectionObj) {
     if (selectionObj.isCollapsed) return false;
 
-    var anchorParent = $(selectionObj.anchorNode).closest('[data-behavior~=content-textile]');
-    var focusParent = $(selectionObj.focusNode).closest('[data-behavior~=content-textile]');
+    const anchorParent = $(selectionObj.anchorNode).closest('[data-behavior~=content-textile]');
+    const focusParent = $(selectionObj.focusNode).closest('[data-behavior~=content-textile]');
 
     return anchorParent.length === 1 &&
            focusParent.length === 1 &&
