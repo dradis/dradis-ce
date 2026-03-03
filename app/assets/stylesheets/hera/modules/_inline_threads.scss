@@ -52,35 +52,18 @@
   }
 }
 
-// Thread panel (slide-out from right)
-.inline-thread-panel-container {
-  background: $white;
-  border-left: 1px solid $border-color;
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-  height: 100vh;
-  overflow-y: auto;
-  position: fixed;
-  right: -400px;
-  top: 0;
-  transition: right 0.3s ease;
-  width: 400px;
-  z-index: 1050;
-
-  &.open {
-    right: 0;
-  }
-}
-
-.inline-thread-panel-header {
-  background: $secondary-bg;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
 
 .inline-thread-comment {
+  @include comment-item;
+
   &:last-child {
     border-bottom: none !important;
+  }
+
+  .content {
+    p:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 

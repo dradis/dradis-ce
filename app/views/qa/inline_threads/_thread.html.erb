@@ -1,56 +1,53 @@
-<div class="inline-thread p-3" id="inline_thread_<%= thread.id %>" data-thread-id="<%= thread.id %>">
-  <div class="thread-header mb-3">
-    <div class="d-flex align-items-center mb-2">
-      <% if thread.resolved? %>
-        <span class="badge bg-success me-2">Resolved</span>
+<div class="inline-thread" id="inline_thread_<%= thread.id %>" data-thread-id="<%= thread.id %>">
+  <div class="d-flex align-items-center gap-2 mb-3">
+    <% if thread.resolved? %>
+      <span class="badge bg-success">Resolved</span>
+    <% else %>
+      <span class="badge bg-warning text-dark">Open</span>
+    <% end %>
+    <% if thread.outdated? %>
+      <span class="badge bg-secondary">Outdated</span>
+    <% end %>
+
+    <div class="ms-auto d-flex gap-2">
+      <% if thread.open? %>
+        <%= button_to project_qa_issue_inline_thread_resolution_path(current_project, issue, thread),
+              method: :post,
+              class: 'btn btn-sm btn-outline-primary' do %>
+          <i class="fa-solid fa-check me-1"></i>Resolve
+        <% end %>
       <% else %>
-        <span class="badge bg-warning text-dark me-2">Open</span>
+        <%= button_to project_qa_issue_inline_thread_resolution_path(current_project, issue, thread),
+              method: :delete,
+              class: 'btn btn-sm btn-outline-secondary' do %>
+          <i class="fa-solid fa-rotate-left me-1"></i>Reopen
+        <% end %>
       <% end %>
-      <% if thread.outdated? %>
-        <span class="badge bg-secondary me-2">Outdated</span>
+
+      <% if thread.user_id == current_user.id %>
+        <%= button_to project_qa_issue_inline_thread_path(current_project, issue, thread),
+              method: :delete,
+              class: 'btn btn-sm btn-outline-danger',
+              data: { turbo_confirm: 'Delete this thread and all its comments?' } do %>
+          <i class="fa-solid fa-xmark me-1"></i>Delete
+        <% end %>
       <% end %>
     </div>
-    <blockquote class="thread-quoted-text border-start border-3 border-primary ps-3 text-muted fst-italic">
-      <%= thread.quoted_text %>
-    </blockquote>
   </div>
+  <blockquote class="thread-quoted-text border-start border-3 border-primary ps-3 text-muted fst-italic mt-4">
+    <%= thread.quoted_text %>
+  </blockquote>
 
-  <div class="thread-comments mb-3" id="thread_<%= thread.id %>_comments">
+  <div class="border-top" id="thread_<%= thread.id %>_comments">
     <% thread.comments.includes(:user).each do |comment| %>
       <%= render 'qa/inline_threads/inline_comment', comment: comment %>
     <% end %>
   </div>
 
-  <div class="thread-actions d-flex gap-2 mb-3">
-    <% if thread.open? %>
-      <%= button_to project_qa_issue_inline_thread_resolution_path(current_project, issue, thread),
-            method: :post,
-            class: 'btn btn-sm btn-outline-success' do %>
-        <i class="fa-solid fa-check me-1"></i>Resolve
-      <% end %>
-    <% else %>
-      <%= button_to project_qa_issue_inline_thread_resolution_path(current_project, issue, thread),
-            method: :delete,
-            class: 'btn btn-sm btn-outline-secondary' do %>
-        <i class="fa-solid fa-rotate-left me-1"></i>Reopen
-      <% end %>
-    <% end %>
-
-    <% if thread.user_id == current_user.id %>
-      <%= button_to project_qa_issue_inline_thread_path(current_project, issue, thread),
-            method: :delete,
-            class: 'btn btn-sm btn-outline-danger',
-            data: { turbo_confirm: 'Delete this thread and all its comments?' } do %>
-        <i class="fa-solid fa-trash me-1"></i>Delete
-      <% end %>
-    <% end %>
-  </div>
-
-  <hr>
+  <hr class="mt-0">
 
   <div id="thread_<%= thread.id %>_reply_form">
-    <%= form_with url: project_qa_issue_inline_thread_comments_path(current_project, issue, thread),
-          class: 'inline-thread-reply-form' do |f| %>
+    <%= form_with url: project_qa_issue_inline_thread_comments_path(current_project, issue, thread) do |f| %>
       <%= f.text_area :content,
             name: 'comment[content]',
             class: 'form-control form-control-sm mb-2',

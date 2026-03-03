@@ -1,3 +1,23 @@
+@mixin comment-item {
+  .gravatar {
+    padding-top: 3px;
+
+    &:not(.gravatar-inline) {
+      float: none;
+      margin-right: 0.5rem;
+    }
+  }
+
+  .user {
+    font-weight: 600;
+  }
+
+  .time {
+    color: #888;
+    font-size: 12px;
+  }
+}
+
 @mixin ajax-console {
   background-color: $black;
   border-radius: 5px;

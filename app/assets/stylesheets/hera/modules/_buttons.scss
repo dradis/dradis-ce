@@ -62,6 +62,21 @@
     }
   }
 
+  &.btn-outline-danger {
+    color: $red;
+    border-color: $red;
+
+    &:hover,
+    &:focus,
+    &:focus-visible,
+    &:active,
+    &:not(:disabled):not(.disabled):active {
+      background: $red;
+      border-color: $red;
+      color: $white;
+    }
+  }
+
   &.btn-outline-info {
     color: darken($green-700, 10%);
     border-color: darken($green-700, 10%);
@@ -95,6 +110,10 @@
   &.btn-outline-primary {
     border-color: $primary;
     color: $primary;
+
+    .fa-check {
+      color: inherit;
+    }
 
     &:focus,
     &:focus-visible,
