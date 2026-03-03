@@ -28,18 +28,12 @@
   --border-color-dark: #{$grey-900};
   --shadow-color:      #{$grey-200};
 
-  // Navbar
-  --main-nav-bg:       #{$brand-200};
-  --main-nav-bg-hover: #{lighten($brand-200, 10%)};
-  --main-nav-border:   #{$brand-400};
-  --main-nav-hover:    #{$brand-900};
-  --main-nav-links:    #{$brand-700};
 }
 
 [data-theme="dark"] {
   // Backgrounds
   --primary-bg:          #{$grey-900};
-  --secondary-bg:        #{$grey-800};
+  --secondary-bg:        #{darken($grey-800, 15%)};
   --primary-bg-subtle:   #{$grey-800};
   --secondary-bg-subtle: #{darken($grey-800, 3%)};
   --secondary-bg-strong: #{darken($grey-800, 6%)};
@@ -60,88 +54,8 @@
   --border-color-dark: #{$grey-300};
   --shadow-color:      #{$black};
 
-  // Bootstrap CSS custom property overrides
+  // Bootstrap global CSS custom property overrides
   --bs-body-bg:       #{$grey-900};
   --bs-body-color:    #{$grey-100};
   --bs-border-color:  #{$grey-700};
-
-  // Bootstrap form controls (compiled with hardcoded values in BS 5.2, must override via selectors)
-  .form-control,
-  .form-select {
-    background-color: var(--secondary-bg);
-    border-color: var(--border-color);
-    color: var(--text-default);
-
-    &:disabled,
-    &[readonly] {
-      background-color: var(--secondary-bg-strong);
-      color: var(--text-muted);
-    }
-  }
-
-  .form-check-input {
-    background-color: var(--secondary-bg);
-    border-color: var(--border-color);
-  }
-
-  .input-group-text {
-    background-color: var(--secondary-bg);
-    border-color: var(--border-color);
-    color: var(--text-default);
-  }
-
-  // Bootstrap pagination (compiled with hardcoded #fff in BS 5.2)
-  .page-link {
-    background-color: var(--primary-bg);
-    border-color: var(--border-color);
-    color: var(--text-link);
-
-    &:hover,
-    &:focus {
-      background-color: var(--secondary-bg);
-      border-color: var(--border-color);
-      color: var(--text-link-hover);
-    }
-  }
-
-  .page-item {
-    &.disabled .page-link {
-      background-color: var(--secondary-bg);
-      border-color: var(--border-color);
-      color: var(--text-muted);
-    }
-
-    &.active .page-link {
-      background-color: $primary;
-      border-color: $primary;
-      color: $white;
-    }
-  }
-
-  // Bootstrap dropdown menus (compiled with hardcoded #fff in BS 5.2)
-  .dropdown-menu {
-    background-color: var(--primary-bg);
-    border-color: var(--border-color);
-    color: var(--text-default);
-
-    .dropdown-item {
-      color: var(--text-default);
-
-      &:hover,
-      &:focus {
-        background-color: var(--secondary-bg);
-        color: var(--text-default);
-      }
-
-      &.active,
-      &:active {
-        background-color: var(--secondary-bg-strong);
-        color: var(--text-default);
-      }
-    }
-
-    .dropdown-divider {
-      border-color: var(--border-color);
-    }
-  }
 }

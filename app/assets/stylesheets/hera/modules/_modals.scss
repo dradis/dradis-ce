@@ -107,6 +107,12 @@
     }
   }
 
+  [data-theme="dark"] & {
+    background-color: var(--primary-bg);
+    border-color: var(--border-color);
+    color: var(--text-default);
+  }
+
   &#try-pro {
     .modal-dialog {
       max-width: 80%;

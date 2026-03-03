@@ -409,3 +409,32 @@ div.dataTables_wrapper {
     }
   }
 }
+
+[data-theme="dark"] {
+  .page-item {
+    &.disabled .page-link {
+      background-color: var(--secondary-bg);
+      border-color: var(--border-color);
+      color: var(--text-muted);
+    }
+
+    &.active .page-link {
+      background-color: $primary;
+      border-color: $primary;
+      color: $white;
+    }
+  }
+
+  .page-link {
+    background-color: var(--primary-bg);
+    border-color: var(--border-color);
+    color: var(--text-link);
+
+    &:hover,
+    &:focus {
+      background-color: var(--secondary-bg);
+      border-color: var(--border-color);
+      color: var(--text-link-hover);
+    }
+  }
+}
