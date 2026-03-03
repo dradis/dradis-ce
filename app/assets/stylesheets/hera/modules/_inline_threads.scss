@@ -79,8 +79,16 @@
 }
 
 .inline-thread-comment {
+  @include comment-item;
+
   &:last-child {
     border-bottom: none !important;
+  }
+
+  .content {
+    p:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 
