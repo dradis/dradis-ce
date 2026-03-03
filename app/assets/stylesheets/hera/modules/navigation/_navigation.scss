@@ -164,7 +164,7 @@ header {
           &:hover {
             .dropdown-item {
               background-color: lighten($brand-200, 10%);
-              color: var(--text-default);
+              color: $brand-700;
             }
           }
 
