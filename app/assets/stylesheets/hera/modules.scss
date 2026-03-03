@@ -108,6 +108,11 @@
   }
 }
 
+.card {
+  background-color: var(--primary-bg);
+  border-color: var(--border-color);
+}
+
 .card.border-bottom {
   border: none;
   border-radius: 0;
@@ -265,22 +270,6 @@
 .issue-severity {
   cursor: default;
   white-space: nowrap;
-}
-
-.list-group {
-  .list-group-item {
-    &.active {
-      color: $white;
-
-      &:hover {
-        border-color: $light;
-        color: var(--text-link);
-      }
-    }
-    &:hover {
-      background-color: $light;
-    }
-  }
 }
 
 //vertical nav-tabs
