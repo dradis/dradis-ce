@@ -4,16 +4,16 @@ body.projects {
       display: flex;
       flex-wrap: wrap;
 
+      &.loading {
+        background: image_url('loading.gif') no-repeat center;
+      }
+
       .pie-chart {
         width: 50%;
       }
 
       svg.legend text {
         fill: var(--text-default);
-      }
-
-      &.loading {
-        background: image_url('loading.gif') no-repeat center;
       }
     }
 
