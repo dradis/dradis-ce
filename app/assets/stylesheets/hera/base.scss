@@ -239,6 +239,12 @@ mark {
   padding-right: 0;
 }
 
+::selection,
+::-moz-selection {
+  background: $light;
+  color: var(--text-default);
+}
+
 .nav-pills {
   .nav-item {
     margin-right: 0.5rem;
