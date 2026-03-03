@@ -5,6 +5,9 @@
     }
 
     .modal-content {
+      background-color: var(--primary-bg);
+      border-color: var(--border-color);
+      color: var(--text-default);
       font-size: 0.9rem;
 
       .modal-body {
@@ -104,14 +107,6 @@
           padding-left: 3em;
         }
       }
-    }
-  }
-
-  [data-theme='dark'] {
-    .modal-content {
-      background-color: var(--secondary-bg);
-      border-color: var(--border-color);
-      color: var(--text-default);
     }
   }
 
