@@ -21,8 +21,9 @@ body:not(.unauthenticated) {
     }
   }
 
-  grid-template-areas: 'navigation'
-  'view-content';
+  grid-template-areas:
+    'navigation'
+    'view-content';
 }
 
 .container,
@@ -60,30 +61,47 @@ body:not(.unauthenticated) {
   width: 100vw;
 
   @include media-breakpoint-up(lg) {
-
     // both sidebars rendered and are expanded
-    &:has(.sidebar-expanded.main-sidebar):has(.sidebar-expanded.secondary-sidebar) .view-content {
-      width: calc(100vw - var(--main-sidebar-width) - (#{$sidebar-width} * #{$sidebar-width-multiplier}));
+    &:has(.sidebar-expanded.main-sidebar):has(
+        .sidebar-expanded.secondary-sidebar
+      )
+      .view-content {
+      width: calc(
+        100vw - var(--main-sidebar-width) -
+          (#{$sidebar-width} * #{$sidebar-width-multiplier})
+      );
     }
 
     // main sidebar is expanded, secondary sidebar is not rendered
-    &:has(.main-sidebar.sidebar-expanded):not(:has(.secondary-sidebar)) .view-content {
+    &:has(.main-sidebar.sidebar-expanded):not(:has(.secondary-sidebar))
+      .view-content {
       width: calc(100vw - var(--main-sidebar-width));
     }
 
     // main sidebar is expanded, secondary sidebar is collapsed
-    &:has(.main-sidebar.sidebar-expanded):has(.secondary-sidebar):not( :has(.secondary-sidebar.sidebar-expanded)) .view-content {
-      width: calc(100vw - var(--main-sidebar-width) - #{$sidebar-width-collapsed});
+    &:has(.main-sidebar.sidebar-expanded):has(.secondary-sidebar):not(
+        :has(.secondary-sidebar.sidebar-expanded)
+      )
+      .view-content {
+      width: calc(
+        100vw - var(--main-sidebar-width) - #{$sidebar-width-collapsed}
+      );
     }
 
     // secondary sidebar is expanded, main sidebar is not rendered
-    &:has(.secondary-sidebar.sidebar-expanded):not(:has(.main-sidebar)) .view-content {
+    &:has(.secondary-sidebar.sidebar-expanded):not(:has(.main-sidebar))
+      .view-content {
       width: calc(100vw - (#{$sidebar-width} * #{$sidebar-width-multiplier}));
     }
 
     // secondary sidebar is expanded, main sidebar is collapsed
-    &:has(.secondary-sidebar.sidebar-expanded):has(.main-sidebar):not( :has(.main-sidebar.sidebar-expanded)) .view-content {
-      width: calc(100vw - (#{$sidebar-width} * #{$sidebar-width-multiplier}) - #{$sidebar-width-collapsed});
+    &:has(.secondary-sidebar.sidebar-expanded):has(.main-sidebar):not(
+        :has(.main-sidebar.sidebar-expanded)
+      )
+      .view-content {
+      width: calc(
+        100vw - (#{$sidebar-width} * #{$sidebar-width-multiplier}) - #{$sidebar-width-collapsed}
+      );
     }
   }
 }
@@ -103,12 +121,12 @@ header {
 }
 
 hr {
-  border-bottom: solid 2px rgba(0, 0, 0, 0.25);
+  border-bottom: solid 2px var(--border-color);
   border-top: 0;
   margin: 1rem 0;
 
   &.small {
-    border-bottom: solid 5px rgba(0, 0, 0, 0.25);
+    border-bottom: solid 5px var(--border-color);
     margin-left: 0;
     width: 75px;
   }
@@ -120,7 +138,7 @@ main {
 }
 
 .row {
-  &>*[class*='col-'] {
+  & > *[class*='col-'] {
     position: relative;
   }
 }
