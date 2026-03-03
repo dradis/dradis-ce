@@ -28,6 +28,8 @@
   --border-color-dark: #{$grey-900};
   --shadow-color:      #{$grey-200};
 
+  // Tables
+  --table-stripe-bg: rgba(0, 0, 0, 0.05);
 }
 
 [data-theme="dark"] {
@@ -53,6 +55,9 @@
   --border-color:      #{$grey-700};
   --border-color-dark: #{$grey-300};
   --shadow-color:      #{$black};
+
+  // Tables
+  --table-stripe-bg: rgba(255, 255, 255, 0.05);
 
   // Bootstrap global CSS custom property overrides
   --bs-body-bg:       #{$grey-900};

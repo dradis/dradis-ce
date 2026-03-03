@@ -366,6 +366,8 @@ div.dataTables_wrapper {
   }
 
   .table {
+    --bs-table-striped-bg: var(--table-stripe-bg);
+
     td {
       padding: 0.4rem 0.75rem;
     }
