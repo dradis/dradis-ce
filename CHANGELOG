@@ -13,6 +13,7 @@
     - Warn on node merge that methodology will not be copied
   - Show don't gate:
     - Issue Library
+    - Remediation Tracker
     - Ticketing integrations
     - Word/Excel templates
   - Sidebar:
