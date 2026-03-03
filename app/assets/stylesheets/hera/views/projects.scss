@@ -49,8 +49,20 @@ body.projects {
 
         .card-body {
           .list-group-item {
+            background-color: var(--primary-bg);
             border: none;
+            border-color: var(--border-color);
+            color: var(--text-default);
             transition: background-color 0.2s ease-in-out;
+
+            &.active {
+              color: $white;
+
+              &:hover {
+                border-color: var(--border-color);
+                color: var(--text-link);
+              }
+            }
 
             &:hover {
               background-color: var(--primary-bg-subtle);
@@ -76,10 +88,6 @@ body.projects {
 
         &.untagged {
           border-color: #222;
-
-          .card-body li {
-            color: #222;
-          }
 
           .card-header {
             background-color: #222;
