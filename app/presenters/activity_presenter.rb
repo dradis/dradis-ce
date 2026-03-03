@@ -45,7 +45,7 @@ class ActivityPresenter < BasePresenter
       case activity.trackable_type
       when 'Board', 'List', 'Card'
         'fa-brands fa-trello'
-      when 'Comment'
+      when 'Comment', 'InlineCommentThread'
         'fa-comment'
       when 'Evidence'
         'fa-flag'

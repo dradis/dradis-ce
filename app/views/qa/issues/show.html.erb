@@ -18,7 +18,11 @@
   <div class="col-12">
     <div class="content-container">
       <% cache ['issue-content', @issue] do %>
-        <div class="note-text-inner">
+        <div class="note-text-inner"
+             data-behavior="inline-threads-container"
+             data-inline-threads-path="<%= project_qa_issue_inline_threads_path(current_project, @issue, format: :json) %>"
+             data-inline-threads-base-path="<%= project_qa_issue_inline_threads_path(current_project, @issue) %>"
+             data-issue-id="<%= @issue.id %>">
           <h4 class="mb-4 header-underline align-items-center">
             <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
             <%= render partial: 'shared/liquid_loading' %>
@@ -41,6 +45,16 @@
           </div>
         </div>
       <% end %>
+    </div>
+
+    <div class="inline-thread-panel-container" data-behavior="inline-thread-panel">
+      <div class="inline-thread-panel-header d-flex justify-content-between align-items-center p-3 border-bottom">
+        <h6 class="mb-0">Inline Comment</h6>
+        <button type="button" class="btn-close" data-behavior="close-inline-panel" aria-label="Close"></button>
+      </div>
+      <div class="inline-thread-panel-body">
+        <%= turbo_frame_tag 'inline_thread_content' %>
+      </div>
     </div>
 
     <div class="content-container">

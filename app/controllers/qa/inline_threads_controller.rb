@@ -5,7 +5,7 @@ class QA::InlineThreadsController < AuthenticatedController
   include ProjectScoped
 
   before_action :set_issue
-  before_action :set_thread, only: [:destroy]
+  before_action :set_thread, only: [:show, :destroy]
 
   layout false
 
@@ -13,6 +13,9 @@ class QA::InlineThreadsController < AuthenticatedController
     @threads = @issue.inline_comment_threads
                      .includes(comments: :user)
                      .order(created_at: :asc)
+  end
+
+  def show
   end
 
   def create
