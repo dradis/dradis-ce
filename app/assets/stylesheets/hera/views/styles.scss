@@ -4,19 +4,19 @@ body.styles {
   }
 
   .navbar-placeholder {
-    background-color: var(--main-nav-bg);
-    border-bottom: 1px solid var(--main-nav-border);
+    background-color: $brand-200;
+    border-bottom: 1px solid $brand-400;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0.25rem 1.5rem;
 
     a {
-      color: var(--main-nav-links);
+      color: $brand-700;
 
       &:focus,
       &:hover {
-        color: var(--main-nav-hover);
+        color: $brand-900;
       }
     }
 

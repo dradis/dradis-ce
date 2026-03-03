@@ -71,13 +71,13 @@
       &:hover {
         .btn {
           background: initial;
-          color: var(--main-nav-hover);
+          color: $brand-900;
         }
       }
 
       .search-query {
         --width: calc(100vw - var(--padding));
-        border-bottom: 1px solid var(--main-nav-links);
+        border-bottom: 1px solid $brand-700;
         color: var(--text-default);
         margin: 0 0.5rem;
         opacity: 1;

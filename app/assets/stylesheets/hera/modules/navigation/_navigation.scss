@@ -25,13 +25,13 @@ header {
 
           .nav-link {
             align-items: center;
-            color: var(--main-nav-links);
+            color: $brand-700;
             font-size: 1em;
 
             &:active,
             &:focus,
             &:hover {
-              color: var(--main-nav-hover);
+              color: $brand-900;
             }
 
             &.dropdown-toggle::after {
@@ -88,7 +88,7 @@ header {
               box-shadow: none;
 
               .dropdown-item {
-                color: var(--main-nav-links);
+                color: $brand-700;
 
                 @media (max-width: 991px) {
                   padding: 0.5em 0;
@@ -128,8 +128,8 @@ header {
     }
 
     &.main-nav {
-      background-color: var(--main-nav-bg);
-      border-bottom: 1px solid var(--main-nav-border);
+      background-color: $brand-200;
+      border-bottom: 1px solid $brand-400;
       padding: 0;
 
       &:has(.navbar-collapse.show),
@@ -138,21 +138,21 @@ header {
       }
 
       .dropdown-menu {
-        background-color: var(--main-nav-bg);
-        border: 1px solid var(--main-nav-border);
+        background-color: $brand-200;
+        border: 1px solid $brand-400;
 
         .dropdown-header {
           color: $dark;
         }
 
         .dropdown-item {
-          color: var(--main-nav-links);
+          color: $brand-700;
           text-transform: capitalize;
 
           &:active,
           &:focus,
           &:hover {
-            background-color: var(--main-nav-bg-hover);
+            background-color: lighten($brand-200, 10%);
           }
         }
 
@@ -163,7 +163,7 @@ header {
           &:focus,
           &:hover {
             .dropdown-item {
-              background-color: var(--main-nav-bg-hover);
+              background-color: lighten($brand-200, 10%);
               color: var(--text-default);
             }
           }
@@ -181,7 +181,7 @@ header {
       }
 
       .dropdown-divider {
-        border-top: 1px solid var(--main-nav-border);
+        border-top: 1px solid $brand-400;
       }
 
       .nav-item {
@@ -214,25 +214,25 @@ header {
       }
 
       .navbar-toggler {
-        color: var(--main-nav-links);
+        color: $brand-700;
         border: none;
 
         &:focus {
-          border: 2px solid var(--main-nav-hover);
+          border: 2px solid $brand-900;
           box-shadow: none;
-          color: var(--main-nav-hover);
+          color: $brand-900;
         }
       }
 
       .utility-nav {
         a,
         .nav-link {
-          color: var(--main-nav-links);
+          color: $brand-700;
 
           &:active,
           &:focus,
           &:hover {
-            color: var(--main-nav-hover);
+            color: $brand-900;
           }
         }
 
@@ -263,7 +263,7 @@ header {
 
           &.dropdown {
             .nav-link.show {
-              background-color: var(--main-nav-bg-hover);
+              background-color: lighten($brand-200, 10%);
             }
           }
         }
@@ -277,7 +277,7 @@ header {
           &:active,
           &:focus,
           &:hover {
-            border-top: 5px solid var(--main-nav-links);
+            border-top: 5px solid $brand-700;
           }
         }
       }
@@ -298,7 +298,7 @@ header {
           overflow-y: scroll;
 
           .dropdown-menu {
-            background-color: var(--main-nav-bg);
+            background-color: $brand-200;
             border: none;
           }
         }
@@ -341,7 +341,7 @@ header {
             }
 
             @media (max-width: 991px) {
-              color: var(--main-nav-links);
+              color: $brand-700;
             }
 
             @media (min-width: 992px) {
@@ -410,7 +410,7 @@ header {
       }
 
       @media (max-width: 991px) {
-        background-color: var(--main-nav-bg);
+        background-color: $brand-200;
         overflow-x: hidden;
         padding: 0;
 
