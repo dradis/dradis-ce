@@ -35,7 +35,7 @@
 [data-theme="dark"] {
   // Backgrounds
   --primary-bg:          #{$grey-900};
-  --secondary-bg:        #{darken($grey-800, 15%)};
+  --secondary-bg:        #{darken($grey-900, 3%)};
   --primary-bg-subtle:   #{$grey-800};
   --secondary-bg-subtle: #{darken($grey-800, 3%)};
   --secondary-bg-strong: #{darken($grey-800, 6%)};
