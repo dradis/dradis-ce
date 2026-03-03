@@ -9,5 +9,7 @@ services:
         - linux/amd64
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
+    ports:
+      - "3000:3000"
     volumes:
-    - ..:/workspace
+      - ..:/workspace
