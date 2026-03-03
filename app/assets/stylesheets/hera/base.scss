@@ -214,12 +214,6 @@ fieldset.check_boxes {
   }
 }
 
-.input-group-text {
-  background-color: var(--secondary-bg);
-  border-color: var(--border-color);
-  color: var(--text-default);
-}
-
 h1,
 h2,
 h3,
@@ -231,6 +225,12 @@ h6 {
   & * {
     font-family: 'ProximaNovaLight', 'system-ui';
   }
+}
+
+.input-group-text {
+  background-color: var(--secondary-bg);
+  border-color: var(--border-color);
+  color: var(--text-default);
 }
 
 mark {
@@ -395,4 +395,3 @@ ul {
     font-size: 1rem;
   }
 }
-
