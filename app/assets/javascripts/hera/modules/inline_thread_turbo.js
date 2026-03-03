@@ -124,7 +124,7 @@ class InlineThreadTurbo {
   // -- Helpers -------------------------------------------------------------
 
   buildNewThreadForm(anchor) {
-    return `<div class="inline-thread-new p-3">
+    return `<div class="p-3">
       <h6>New Comment Thread</h6>
       <blockquote class="thread-quoted-text border-start border-3 border-primary ps-3 text-muted fst-italic">
         ${this.escapeHtml(anchor.exact)}
