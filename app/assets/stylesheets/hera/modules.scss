@@ -326,8 +326,16 @@
 }
 
 .nav-tabs {
-  .nav-link:hover:not(.active) {
-    border-color: transparent;
+  .nav-link {
+    &.active {
+      background-color: var(--primary-bg);
+      border-color: var(--border-color) var(--border-color) var(--primary-bg);
+      color: var(--text-default);
+    }
+
+    &:hover:not(.active) {
+      border-color: transparent;
+    }
   }
 }
 
