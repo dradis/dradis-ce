@@ -2,7 +2,7 @@
   font-size: 0.9rem;
 
   .drop-zone {
-    background: $brand-100;
+    background: var(--secondary-bg);
     border-radius: 0.5rem;
     outline: 3px dashed var(--border-color);
     color: var(--text-muted);
