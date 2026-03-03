@@ -107,10 +107,12 @@
     }
   }
 
-  [data-theme="dark"] & {
-    background-color: var(--primary-bg);
-    border-color: var(--border-color);
-    color: var(--text-default);
+  [data-theme='dark'] {
+    .modal-content {
+      background-color: var(--secondary-bg);
+      border-color: var(--border-color);
+      color: var(--text-default);
+    }
   }
 
   &#try-pro {
