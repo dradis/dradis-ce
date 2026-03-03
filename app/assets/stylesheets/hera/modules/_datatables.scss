@@ -201,15 +201,22 @@ div.dataTables_wrapper {
 
           &.disabled {
             .page-link {
+              background-color: var(--secondary-bg);
+              border-color: var(--border-color);
               color: var(--text-muted);
             }
           }
 
           .page-link {
+            background-color: var(--primary-bg);
+            border-color: var(--border-color);
             color: var(--text-link);
 
+            &:hover,
             &:focus {
-              box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 1px $dark;
+              background-color: var(--secondary-bg);
+              border-color: var(--border-color);
+              color: var(--text-link-hover);
             }
           }
         }
@@ -408,35 +415,6 @@ div.dataTables_wrapper {
 
     span:not(.badge) {
       line-height: 1.35rem;
-    }
-  }
-}
-
-[data-theme="dark"] {
-  .page-item {
-    &.disabled .page-link {
-      background-color: var(--secondary-bg);
-      border-color: var(--border-color);
-      color: var(--text-muted);
-    }
-
-    &.active .page-link {
-      background-color: $primary;
-      border-color: $primary;
-      color: $white;
-    }
-  }
-
-  .page-link {
-    background-color: var(--primary-bg);
-    border-color: var(--border-color);
-    color: var(--text-link);
-
-    &:hover,
-    &:focus {
-      background-color: var(--secondary-bg);
-      border-color: var(--border-color);
-      color: var(--text-link-hover);
     }
   }
 }
