@@ -1,22 +1,22 @@
 // Inline thread highlights on issue body text
 .inline-thread-highlight {
-  background-color: rgba(255, 235, 59, 0.3);
-  border-bottom: 2px solid rgba(255, 193, 7, 0.6);
+  background-color: rgba($yellow-300, 0.3);
+  border-bottom: 2px solid rgba($yellow-500, 0.6);
   cursor: pointer;
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: rgba(255, 235, 59, 0.5);
+    background-color: rgba($yellow-300, 0.5);
   }
 
   &.resolved {
-    background-color: rgba(76, 175, 80, 0.15);
-    border-bottom: 2px dashed rgba(76, 175, 80, 0.4);
+    background-color: rgba($green-500, 0.15);
+    border-bottom: 2px dashed rgba($green-500, 0.4);
   }
 
   &.outdated {
-    background-color: rgba(255, 152, 0, 0.15);
-    border-bottom: 2px dotted rgba(255, 152, 0, 0.4);
+    background-color: rgba($orange, 0.15);
+    border-bottom: 2px dotted rgba($orange, 0.4);
   }
 }
 
@@ -26,7 +26,7 @@
   background-color: $secondary-bg;
   border: 1px solid $border-color;
   border-radius: 25px;
-  box-shadow: 0 20px 30px 0 rgba(33, 55, 74, 0.1);
+  box-shadow: 0 20px 30px 0 rgba($shadow-color-dark, 0.1);
   cursor: pointer;
   display: flex;
   justify-content: center;
