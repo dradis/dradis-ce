@@ -138,8 +138,6 @@ class InlineThreadTurbo {
         </div>
         <div class="d-flex gap-2">
           <button type="submit" class="btn btn-sm btn-primary">Create Thread</button>
-          <button type="button" class="btn btn-sm btn-outline-secondary"
-            data-behavior="close-inline-panel">Cancel</button>
         </div>
       </form>
     </div>`;
