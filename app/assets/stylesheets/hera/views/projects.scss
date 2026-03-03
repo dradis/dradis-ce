@@ -91,10 +91,10 @@ body.projects {
         }
 
         &.untagged {
-          border-color: #222;
+          border-color: $black;
 
           .card-header {
-            background-color: #222;
+            background-color: $black;
           }
         }
       }
