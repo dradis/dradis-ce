@@ -24,7 +24,7 @@ class InlineThreadTurbo {
     this.basePath = container.dataset.inlineThreadsBasePath;
 
     this.panel = document.querySelector('[data-behavior~=inline-thread-panel]');
-    this.frame = document.getElementById('inline_thread_content');
+    this.frame = document.querySelector('[data-behavior~=inline-thread-content]');
 
     const csrfMeta = document.querySelector('meta[name=csrf-token]');
     this.csrfToken = csrfMeta ? csrfMeta.content : '';
@@ -111,7 +111,7 @@ class InlineThreadTurbo {
 
       // Close panel if the thread was deleted (frame is now empty)
       setTimeout(() => {
-        if (this.frame && !this.frame.querySelector('.inline-thread')) {
+        if (this.frame && !this.frame.querySelector('[data-behavior~=inline-thread]')) {
           this.closePanel();
         }
       }, 100);

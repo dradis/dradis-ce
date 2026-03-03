@@ -63,6 +63,7 @@ class InlineThreadHighlighter {
 
         const mark = document.createElement('mark');
         mark.className = 'inline-thread-highlight';
+        mark.dataset.behavior = 'inline-thread-highlight';
         mark.dataset.threadId = thread.id;
         mark.dataset.commentCount = thread.comments.length;
 
@@ -84,7 +85,7 @@ class InlineThreadHighlighter {
   }
 
   clearHighlights() {
-    const marks = this.contentEl.querySelectorAll('mark.inline-thread-highlight');
+    const marks = this.contentEl.querySelectorAll('[data-behavior~=inline-thread-highlight]');
     marks.forEach(mark => {
       const parent = mark.parentNode;
       while (mark.firstChild) {
