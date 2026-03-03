@@ -121,23 +121,20 @@ class InlineThreadTurbo {
   // -- Helpers -------------------------------------------------------------
 
   buildNewThreadForm(anchor) {
-    return `<div class="p-3">
-      <h6>New Comment Thread</h6>
-      <blockquote class="thread-quoted-text border-start border-3 border-primary ps-3 text-muted fst-italic">
-        ${this.escapeHtml(anchor.exact)}
-      </blockquote>
-      <form action="${this.basePath}" method="post" accept-charset="UTF-8" data-turbo="true">
-        <input type="hidden" name="authenticity_token" value="${this.csrfToken}">
-        ${this.buildAnchorFields(anchor)}
-        <div class="mb-2">
-          <textarea name="comment[content]" class="form-control form-control-sm"
-            placeholder="Add a comment..." rows="3" required></textarea>
-        </div>
-        <div class="d-flex gap-2">
-          <button type="submit" class="btn btn-sm btn-primary">Create Thread</button>
-        </div>
-      </form>
-    </div>`;
+    return `<blockquote class="thread-quoted-text border-start border-3 border-primary ps-3 text-muted fst-italic">
+      ${this.escapeHtml(anchor.exact)}
+    </blockquote>
+    <form action="${this.basePath}" method="post" accept-charset="UTF-8" data-turbo="true">
+      <input type="hidden" name="authenticity_token" value="${this.csrfToken}">
+      ${this.buildAnchorFields(anchor)}
+      <div class="mb-2">
+        <textarea name="comment[content]" class="form-control form-control-sm"
+          placeholder="Add a comment..." rows="3" required></textarea>
+      </div>
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-sm btn-primary">Create Thread</button>
+      </div>
+    </form>`;
   }
 
   buildAnchorFields(anchor) {
