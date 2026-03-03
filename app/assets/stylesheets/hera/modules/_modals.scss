@@ -16,7 +16,7 @@
 
           .add_multiple_nodes_error {
             display: none;
-            color: #b94a48;
+            color: var(--text-error);
             margin-top: 10px;
           }
         }

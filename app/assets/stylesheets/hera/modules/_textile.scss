@@ -277,8 +277,8 @@
         }
 
         &.active {
-          background: darken($grey-900, 10%);
-          color: #fff;
+          background: $primary;
+          color: $white;
         }
       }
     }

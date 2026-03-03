@@ -170,7 +170,7 @@
   position: relative;
 
   .divider-label {
-    background-color: $white;
+    background-color: var(--primary-bg);
     color: var(--text-default);
     font-size: $text-small;
     left: 50%;
