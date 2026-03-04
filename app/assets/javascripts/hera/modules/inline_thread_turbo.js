@@ -22,6 +22,7 @@ class InlineThreadTurbo {
     this.container = container;
     this.threadsPath = container.dataset.inlineThreadsPath;
     this.basePath = container.dataset.inlineThreadsBasePath;
+    this.anchorPath = container.dataset.inlineThreadsAnchorPath;
 
     this.panel = document.querySelector('[data-behavior~=inline-thread-panel]');
     this.frame = document.querySelector('[data-behavior~=inline-thread-content]');
@@ -66,6 +67,22 @@ class InlineThreadTurbo {
 
     const textarea = this.frame.querySelector('textarea');
     if (textarea) textarea.focus();
+  }
+
+  // Sends the selected text to the server, which locates it in the raw content
+  // and returns a TextQuoteSelector anchor. On success, shows the new thread form.
+  async resolveAnchor(selectedText) {
+    const url = new URL(this.anchorPath, window.location.origin);
+    url.searchParams.set('selected_text', selectedText);
+
+    const response = await fetch(url, {
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (!response.ok) return;
+
+    const anchor = await response.json();
+    this.showNewThreadForm(anchor);
   }
 
   // -- Data fetching and highlighting --------------------------------------

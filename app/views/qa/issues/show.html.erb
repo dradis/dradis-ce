@@ -22,6 +22,7 @@
              data-behavior="inline-threads-container"
              data-inline-threads-path="<%= project_qa_issue_inline_threads_path(current_project, @issue, format: :json) %>"
              data-inline-threads-base-path="<%= project_qa_issue_inline_threads_path(current_project, @issue) %>"
+             data-inline-threads-anchor-path="<%= anchor_project_qa_issue_inline_threads_path(current_project, @issue) %>"
              data-issue-id="<%= @issue.id %>">
           <h4 class="mb-4 header-underline align-items-center">
             <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
