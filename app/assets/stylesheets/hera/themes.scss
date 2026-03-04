@@ -13,16 +13,18 @@
   --secondary-bg-strong: #{darken($grey-800, 6%)};
 
   // Text
-  --text-default:      #{$grey-100};
-  --text-muted:        #{$grey-400};
-  --text-link:         #{$brand-300};
-  --text-link-hover:   #{$brand-200};
-  --text-error:        #{$red-300};
-  --text-error-hover:  #{$red-200};
-  --text-success:      #{$green-400};
-  --text-warning:      #{$yellow-400};
-  --icon-disabled:     #{$grey-500};
-  --untagged-color:    #{$grey-400};
+  --text-default:         #{$grey-100};
+  --text-muted:           #{$grey-400};
+  --text-link:            #{$brand-300};
+  --text-link-hover:      #{$brand-200};
+  --text-error:           #{$red-300};
+  --text-error-hover:     #{$red-200};
+  --text-success:         #{$green-400};
+  --text-warning:         #{$yellow-400};
+  --icon-disabled:        #{$grey-500};
+  --untagged-color:       #{$grey-400};
+  --badge-info-color:     #{$green-600};
+  --badge-lavender-color: #{$lavender-light};
 
   // Borders & shadows
   --border-color:      #{$grey-700};
@@ -46,16 +48,18 @@
   --secondary-bg-strong: #{darken($grey-100, 10%)};    // darken($secondary-bg, 10%)
 
   // Text
-  --text-default:      #{$grey-900};
-  --text-muted:        #{$grey-700};
-  --text-link:         #{$brand-500};
-  --text-link-hover:   #{darken($brand-500, 20%)};
-  --text-error:        #{$red-500};
-  --text-error-hover:  #{$red-600};
-  --text-success:      #{darken($green-700, 10%)};
-  --text-warning:      #{darken($yellow-600, 15%)};
-  --icon-disabled:     #{$grey-600};
-  --untagged-color:    #{$grey-700};
+  --text-default:         #{$grey-900};
+  --text-muted:           #{$grey-700};
+  --text-link:            #{$brand-500};
+  --text-link-hover:      #{darken($brand-500, 20%)};
+  --text-error:           #{$red-500};
+  --text-error-hover:     #{$red-600};
+  --text-success:         #{darken($green-700, 10%)};
+  --text-warning:         #{darken($yellow-600, 15%)};
+  --icon-disabled:        #{$grey-600};
+  --untagged-color:       #{$grey-700};
+  --badge-info-color:     #{darken($green-700, 10%)};
+  --badge-lavender-color: #{darken($lavender-dark, 5%)};
 
   // Borders & shadows
   --border-color:      #{$grey-200};

@@ -79,13 +79,13 @@ th {
 }
 
 .badge-outline-info {
-  border: 1px solid darken($green-700, 10%);
-  color: darken($green-700, 10%);
+  border: 1px solid var(--badge-info-color);
+  color: var(--badge-info-color);
 }
 
 .badge-outline-lavender {
-  border: 1px solid $lavender-dark;
-  color: $lavender-dark;
+  border: 1px solid var(--badge-lavender-color);
+  color: var(--badge-lavender-color);
 }
 
 .bg-info {
