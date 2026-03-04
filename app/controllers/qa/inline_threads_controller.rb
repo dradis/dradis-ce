@@ -42,6 +42,8 @@ class QA::InlineThreadsController < AuthenticatedController
       end
 
       publish_event('inline_comment_thread.created', @thread.to_event_payload)
+    else
+      head :unprocessable_entity
     end
   end
 
