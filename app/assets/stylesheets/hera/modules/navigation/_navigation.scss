@@ -151,7 +151,8 @@ header {
 
           &:active,
           &:focus,
-          &:hover {
+          &:hover,
+          &.active {
             background-color: lighten($brand-200, 10%);
           }
         }
