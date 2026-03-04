@@ -217,6 +217,12 @@
 
   &.btn-warning {
     @include button($yellow);
+    color: $black;
+
+    &:hover,
+    &:not(:disabled):not(.disabled):active {
+      color: $black;
+    }
   }
 
   &.btn-xs {
