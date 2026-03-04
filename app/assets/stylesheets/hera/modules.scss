@@ -277,6 +277,12 @@
     background-color: var(--primary-bg);
     border-color: var(--border-color);
     color: var(--text-default);
+
+    &:active,
+    &:hover,
+    &:focus {
+      color: var(--text-link-hover);
+    }
   }
 }
 
