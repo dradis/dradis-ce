@@ -192,9 +192,14 @@ fieldset.check_boxes {
   }
 }
 
+.form-switch .form-check-input {
+  background-image: var(--form-switch-bg);
+}
+
 .form-control,
 .form-select {
   background-color: var(--primary-bg);
+  background-image: var(--form-select-caret);
   border-color: var(--border-color);
   color: var(--text-default);
 
