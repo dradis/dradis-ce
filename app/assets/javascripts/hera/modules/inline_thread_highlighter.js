@@ -35,7 +35,7 @@ class InlineThreadHighlighter {
     const textNodes = this.getTextNodes();
     const segments = this.findTextInNodes(textNodes, exact);
 
-    if (!segments || segments.length === 0) return;
+    if (segments.length === 0) return;
 
     const marks = this.wrapSegments(segments, thread);
 
@@ -156,6 +156,6 @@ class InlineThreadHighlighter {
       });
     }
 
-    return segments.length > 0 ? segments : null;
+    return segments;
   }
 }
