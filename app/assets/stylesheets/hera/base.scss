@@ -209,8 +209,10 @@ fieldset.check_boxes {
   font-size: inherit;
 
   &:focus {
-    border-color: $dark;
+    background-color: var(--primary-bg);
+    border-color: var(--border-color);
     box-shadow: $focus-shadow;
+    color: var(--text-default);
   }
 }
 
