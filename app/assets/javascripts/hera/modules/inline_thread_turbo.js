@@ -101,20 +101,19 @@ class InlineThreadTurbo {
       }
     );
 
+    // Close the panel as soon as the delete form is submitted (after confirm),
+    // so the user doesn't see the frame empty out before the panel animates away.
+    document.addEventListener('turbo:submit-start', (e) => {
+      if (!e.target.matches('[data-behavior~=delete-thread-form]')) return;
+      this.closePanel();
+    });
+
     // After any Turbo form submission in our panel, re-highlight threads.
-    // Turbo Streams have already updated the panel DOM by this point.
     document.addEventListener('turbo:submit-end', (e) => {
       if (!e.target.closest('[data-behavior~=inline-thread-panel]')) return;
       if (!e.detail.success) return;
 
       this.fetchAndHighlight();
-
-      // Close panel if the thread was deleted (frame is now empty)
-      setTimeout(() => {
-        if (this.frame && !this.frame.querySelector('[data-behavior~=inline-thread]')) {
-          this.closePanel();
-        }
-      }, 100);
     });
   }
 

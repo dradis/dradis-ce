@@ -28,6 +28,7 @@
         <%= button_to project_qa_issue_inline_thread_path(current_project, issue, thread),
               method: :delete,
               class: 'btn btn-sm btn-outline-danger',
+              form: { data: { behavior: 'delete-thread-form' } },
               data: { turbo_confirm: 'Delete this thread and all its comments?' } do %>
           <i class="fa-solid fa-xmark me-1"></i>Delete
         <% end %>
