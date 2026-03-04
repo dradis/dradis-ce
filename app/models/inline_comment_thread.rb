@@ -1,7 +1,7 @@
 class InlineCommentThread < ApplicationRecord
   include Eventable
 
-  REQUIRED_ANCHOR_KEYS = %w[type exact prefix suffix position].freeze
+  REQUIRED_ANCHOR_KEYS = %w[exact position prefix suffix type].freeze
 
   serialize :anchor, coder: JSON
 
