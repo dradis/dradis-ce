@@ -26,6 +26,12 @@
       background-color: var(--secondary-bg);
     }
 
+    &.active {
+      background-color: var(--secondary-bg);
+      color: var(--text-default);
+      font-weight: 600;
+    }
+
     i {
       margin-right: 0.25rem;
     }

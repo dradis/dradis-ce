@@ -17,7 +17,7 @@ class UserPreferences
   VALID_TOURS = %i[first_sign_in projects_show].freeze
   DIGEST_FREQUENCIES = %w[none instant daily].freeze
   DIGEST_FREQUENCY_DEFAULT = 'instant'.freeze
-  VALID_THEMES = %w[light dark].freeze
+  VALID_THEMES = %w[auto light dark].freeze
 
   # -- Class Methods ----------------------------------------------------------
 
