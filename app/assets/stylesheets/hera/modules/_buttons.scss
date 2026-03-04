@@ -99,8 +99,8 @@
   }
 
   &.btn-outline-primary {
-    border-color: $primary;
-    color: $primary;
+    border-color: var(--text-link);
+    color: var(--text-link);
 
     &:focus,
     &:focus-visible,
@@ -112,9 +112,9 @@
     }
 
     &:hover {
-      background: $light;
-      border-color: $dark;
-      color: $dark;
+      background: var(--btn-outline-primary-hover-bg);
+      border-color: var(--btn-outline-primary-hover-color);
+      color: var(--btn-outline-primary-hover-color);
     }
   }
 

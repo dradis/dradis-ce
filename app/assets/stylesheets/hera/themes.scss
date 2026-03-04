@@ -17,6 +17,10 @@
   --border-color:      #{$grey-700};
   --border-color-dark: #{$grey-300};
 
+  // Buttons
+  --btn-outline-primary-hover-bg:    #{$brand-800};
+  --btn-outline-primary-hover-color: #{$brand-200};
+
   // Forms
   --form-select-caret: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23d1d1d1' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
   --form-switch-bg:    url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba(255, 255, 255, 0.25)'/%3e%3c/svg%3e");
@@ -59,6 +63,10 @@
   // Borders & shadows
   --border-color:      #{$grey-200};
   --border-color-dark: #{$grey-900};
+
+  // Buttons
+  --btn-outline-primary-hover-bg:    #{$brand-200};
+  --btn-outline-primary-hover-color: #{$brand-900};
 
   // Forms
   --form-select-caret: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
