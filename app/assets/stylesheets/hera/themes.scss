@@ -4,34 +4,7 @@
 // modules/_colors.scss and interpolated here into runtime custom properties.
 // Components reference var(--name) rather than the SCSS variables directly.
 
-:root {
-  // Backgrounds
-  --primary-bg:        #{$white};
-  --secondary-bg:      #{$grey-100};
-  --primary-bg-subtle: #{darken($white, 3%)};          // darken($primary-bg, 3%)
-  --secondary-bg-subtle: #{darken($grey-100, 5%)};     // darken($secondary-bg, 5%)
-  --secondary-bg-strong: #{darken($grey-100, 10%)};    // darken($secondary-bg, 10%)
-
-  // Text
-  --text-default:      #{$grey-900};
-  --text-muted:        #{$grey-700};
-  --text-link:         #{$brand-500};
-  --text-link-hover:   #{darken($brand-500, 20%)};
-  --text-error:        #{$red-500};
-  --text-error-hover:  #{$red-600};
-  --text-success:      #{darken($green-700, 10%)};
-  --text-warning:      #{darken($yellow-600, 15%)};
-  --icon-disabled:     #{$grey-600};
-
-  // Borders & shadows
-  --border-color:      #{$grey-200};
-  --border-color-dark: #{$grey-900};
-
-  // Tables
-  --table-stripe-bg: rgba(0, 0, 0, 0.05);
-}
-
-[data-theme="dark"] {
+@mixin dark-theme {
   // Backgrounds
   --primary-bg:          #{$grey-900};
   --secondary-bg:        #{darken($grey-900, 3%)};
@@ -61,4 +34,43 @@
   --bs-body-bg:       #{$grey-900};
   --bs-body-color:    #{$grey-100};
   --bs-border-color:  #{$grey-700};
+}
+
+:root {
+  // Backgrounds
+  --primary-bg:        #{$white};
+  --secondary-bg:      #{$grey-100};
+  --primary-bg-subtle: #{darken($white, 3%)};          // darken($primary-bg, 3%)
+  --secondary-bg-subtle: #{darken($grey-100, 5%)};     // darken($secondary-bg, 5%)
+  --secondary-bg-strong: #{darken($grey-100, 10%)};    // darken($secondary-bg, 10%)
+
+  // Text
+  --text-default:      #{$grey-900};
+  --text-muted:        #{$grey-700};
+  --text-link:         #{$brand-500};
+  --text-link-hover:   #{darken($brand-500, 20%)};
+  --text-error:        #{$red-500};
+  --text-error-hover:  #{$red-600};
+  --text-success:      #{darken($green-700, 10%)};
+  --text-warning:      #{darken($yellow-600, 15%)};
+  --icon-disabled:     #{$grey-600};
+
+  // Borders & shadows
+  --border-color:      #{$grey-200};
+  --border-color-dark: #{$grey-900};
+
+  // Tables
+  --table-stripe-bg: rgba(0, 0, 0, 0.05);
+}
+
+// Auto: follow the OS preference
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    @include dark-theme;
+  }
+}
+
+// Explicit dark override
+[data-theme="dark"] {
+  @include dark-theme;
 }
