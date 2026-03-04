@@ -21,6 +21,8 @@ class QA::InlineThreads::CommentsController < AuthenticatedController
         notifiable: @comment,
         user: current_user
       )
+    else
+      head :unprocessable_entity
     end
   end
 

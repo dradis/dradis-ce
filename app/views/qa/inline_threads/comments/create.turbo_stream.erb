@@ -1,5 +1,3 @@
-<% if @comment.persisted? %>
-  <%= turbo_stream.update 'inline_thread_content' do %>
-    <%= render 'qa/inline_threads/thread', thread: @thread.reload, issue: @issue %>
-  <% end %>
+<%= turbo_stream.update 'inline_thread_content' do %>
+  <%= render 'qa/inline_threads/thread', thread: @thread.reload, issue: @issue %>
 <% end %>
