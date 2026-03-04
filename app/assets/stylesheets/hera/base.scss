@@ -199,7 +199,6 @@ fieldset.check_boxes {
 .form-control,
 .form-select {
   background-color: var(--primary-bg);
-  background-image: var(--form-select-caret);
   border-color: var(--border-color);
   color: var(--text-default);
 
@@ -219,6 +218,10 @@ fieldset.check_boxes {
     box-shadow: $focus-shadow;
     color: var(--text-default);
   }
+}
+
+.form-select {
+  background-image: var(--form-select-caret);
 }
 
 h1,
