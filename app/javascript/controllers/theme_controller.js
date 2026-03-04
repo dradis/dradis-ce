@@ -1,45 +1,46 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["darkIcon", "lightIcon"]
+  static targets = ["autoIcon", "lightIcon", "darkIcon", "autoItem", "lightItem", "darkItem"]
 
   connect() {
-    const stored = this.element.dataset.theme
+    this.preference = this.element.dataset.theme || "auto"
+    this.applyPreference(this.preference)
 
-    if (!stored || stored === "auto") {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
-      this.applyTheme(prefersDark ? "dark" : "light")
-    } else {
-      this.applyTheme(stored)
-    }
-
-    // Keep in sync when the OS preference changes (and no explicit preference is set)
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-      if (!this.element.dataset.theme || this.element.dataset.theme === "auto") {
-        this.applyTheme(e.matches ? "dark" : "light")
-      }
-    })
-  }
-
-  toggle() {
-    const current = this.element.dataset.theme
-    const next = current === "dark" ? "light" : "dark"
-    this.applyTheme(next)
-    this.persist(next)
-  }
-
-  applyTheme(theme) {
-    this.element.dataset.theme = theme
-
-    if (this.hasDarkIconTarget && this.hasLightIconTarget) {
-      if (theme === "dark") {
-        this.darkIconTarget.classList.add("d-none")
-        this.lightIconTarget.classList.remove("d-none")
-      } else {
-        this.darkIconTarget.classList.remove("d-none")
-        this.lightIconTarget.classList.add("d-none")
+    this.osChangeHandler = (e) => {
+      if (this.preference === "auto") {
+        this.element.dataset.theme = e.matches ? "dark" : "light"
       }
     }
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", this.osChangeHandler)
+  }
+
+  disconnect() {
+    window.matchMedia("(prefers-color-scheme: dark)").removeEventListener("change", this.osChangeHandler)
+  }
+
+  select({ params: { name } }) {
+    this.preference = name
+    this.applyPreference(name)
+    this.persist(name)
+  }
+
+  applyPreference(preference) {
+    this.element.dataset.theme = preference === "auto"
+      ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+      : preference
+
+    this.updateUI(preference)
+  }
+
+  updateUI(preference) {
+    this.autoIconTarget.classList.toggle("d-none", preference !== "auto")
+    this.lightIconTarget.classList.toggle("d-none", preference !== "light")
+    this.darkIconTarget.classList.toggle("d-none", preference !== "dark")
+
+    this.autoItemTarget.classList.toggle("active", preference === "auto")
+    this.lightItemTarget.classList.toggle("active", preference === "light")
+    this.darkItemTarget.classList.toggle("active", preference === "dark")
   }
 
   persist(theme) {
