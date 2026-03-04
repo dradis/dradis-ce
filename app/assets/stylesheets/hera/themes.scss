@@ -11,6 +11,7 @@
   --primary-bg-subtle:   #{$grey-800};
   --secondary-bg-subtle: #{darken($grey-800, 3%)};
   --secondary-bg-strong: #{darken($grey-800, 6%)};
+  --nav-active-bg:       #{$brand-600};
 
   // Text
   --text-default:         #{$grey-100};
@@ -46,6 +47,7 @@
   --primary-bg-subtle: #{darken($white, 3%)};          // darken($primary-bg, 3%)
   --secondary-bg-subtle: #{darken($grey-100, 5%)};     // darken($secondary-bg, 5%)
   --secondary-bg-strong: #{darken($grey-100, 10%)};    // darken($secondary-bg, 10%)
+  --nav-active-bg:     #{$brand-500};
 
   // Text
   --text-default:         #{$grey-900};

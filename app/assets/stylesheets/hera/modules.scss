@@ -296,7 +296,7 @@
         border-bottom: none;
 
         &.active {
-          background-color: $primary;
+          background-color: var(--nav-active-bg);
           border: none;
           color: $white;
 
@@ -306,7 +306,7 @@
         }
 
         &:hover {
-          background-color: $light;
+          background-color: var(--secondary-bg-subtle);
         }
       }
     }
