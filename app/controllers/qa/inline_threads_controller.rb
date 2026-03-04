@@ -9,6 +9,16 @@ class QA::InlineThreadsController < AuthenticatedController
 
   layout false
 
+  def anchor
+    result = InlineThreadAnchorFinder.new(@issue.text, params[:selected_text]).call
+
+    if result
+      render json: result
+    else
+      head :unprocessable_entity
+    end
+  end
+
   def index
     @threads = @issue.inline_comment_threads
                      .includes(comments: :user)
