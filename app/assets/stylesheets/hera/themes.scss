@@ -38,6 +38,8 @@
   --bs-body-bg:       #{$grey-900};
   --bs-body-color:    #{$grey-100};
   --bs-border-color:  #{$grey-700};
+
+  color-scheme: dark;
 }
 
 :root {
@@ -69,6 +71,8 @@
 
   // Tables
   --table-stripe-bg: rgba(0, 0, 0, 0.05);
+
+  color-scheme: light;
 }
 
 // Auto: follow the OS preference
