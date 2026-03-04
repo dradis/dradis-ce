@@ -1,0 +1,20 @@
+<turbo-frame id="<%= dom_id(@record, :echo) %>">
+  <div
+    data-controller="dradis--plugins--echo--prompt"
+    data-dradis--plugins--echo--prompt-interaction-id-value="<%= @interaction_id %>"
+    data-dradis--plugins--echo--prompt-prompt-value="<%= @prompt %>"
+    data-dradis--plugins--echo--prompt-response-id-value="<%= @response_id %>"
+    data-dradis--plugins--echo--prompt-url-value="<%= project_prompts_path %>"
+  >
+
+    <p>Dradis Echo interaction #<%= @interaction_id.truncate(12) %></p>
+
+    <%# Subscribe to main channel for real-time updates via ActionCable %>
+    <%= turbo_stream_from @interaction_id, 'prompts' %>
+
+    <%# Here is where we will stream the responses from the LLM %>
+    <div id="messages" class="my-2" style="height: 50vh; overflow-y: auto">
+      <%= render partial: 'dradis/plugins/echo/projects/prompts/response' %>
+    </div>
+  </div>
+</turbo-frame>

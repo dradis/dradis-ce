@@ -1,0 +1,42 @@
+<% unless @turbo_status %>
+  <div class="alert alert-danger">
+    There was an error contacting Redis: please make sure the Redis server is running.
+  </div>
+<% end %>
+
+<% if @prompts.any? %>
+  <p>Interact with Echo by selecting a saved prompt to use with this Issue.</p>
+
+  <div class="row">
+    <div class="col-3">
+      <p class="form-label">Saved Prompts</p>
+      <ul class="nav flex-column" data-behavior="deeplinks" role="tablist">
+        <% @prompts.each_with_index do |prompt, index| %>
+          <li class="nav-item">
+            <a class="nav-link <%= class_names(active: index == 0) %>" data-bs-toggle="tab" href="#prompt-tab-<%= prompt.id %>" role="tab" aria-controls="details-tab" aria-selected="true">
+              <i class="fa-solid fa-fw <%= prompt.icon %>"></i> <%= prompt.title %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="col-9">
+      <p class="form-label">Selected Prompt</p>
+      <div class="tab-content">
+        <% @prompts.each_with_index do |prompt, index| %>
+          <div class="tab-pane fade <%= class_names('show active': index == 0) %>" id="prompt-tab-<%= prompt.id %>" role="tabpanel" aria-labelledby="details-tab">
+            <%= render partial: 'dradis/plugins/echo/projects/prompts/prompt', locals: { prompt: prompt } %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <%= render 'shared/empty_state',
+    actions_partial: 'dradis/plugins/echo/prompts/empty_state_actions',
+    docs_link: 'https://dradis.com/support/guides/echo/prompts.html',
+    name: 'prompt',
+    text: 'Create reusable prompts to standardize how your team analyzes findings, writes reports, summarizes vulnerabilities, and more. Save time by building a library of prompts that anyone on your team can use for consistent results.'
+  %>
+<% end %>
