@@ -272,6 +272,10 @@ mark {
   }
 }
 
+.nav-tabs {
+  border-color: var(--border-color);
+}
+
 .nav-tabs + .tab-content {
   .card {
     border-top: none;
@@ -317,6 +321,7 @@ pre {
   white-space: break-spaces !important;
 }
 
+.text-danger,
 .text-error {
   color: var(--text-error) !important;
 }
