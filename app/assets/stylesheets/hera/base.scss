@@ -317,6 +317,10 @@ pre {
   color: var(--text-default);
 }
 
+.table {
+  --bs-table-striped-bg: var(--table-stripe-bg);
+}
+
 .text-break-spaces {
   white-space: break-spaces !important;
 }
