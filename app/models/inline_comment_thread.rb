@@ -25,9 +25,6 @@ class InlineCommentThread < ApplicationRecord
   validates :issue, presence: true
   validate :anchor_schema_valid
 
-  # -- Scopes ---------------------------------------------------------------
-  scope :for_issue, ->(issue) { where(issue_id: issue.id) }
-
   # -- Class Methods --------------------------------------------------------
 
   # -- Instance Methods -----------------------------------------------------
