@@ -272,6 +272,13 @@
   white-space: nowrap;
 }
 
+.list-group {
+  .list-group-item {
+    background-color: var(--primary-bg);
+    border-color: var(--border-color);
+  }
+}
+
 //vertical nav-tabs
 .nav {
   &.flex-column {
