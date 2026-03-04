@@ -1,40 +1,5 @@
 <div class="inline-thread" id="inline_thread_<%= thread.id %>" data-behavior="inline-thread" data-thread-id="<%= thread.id %>">
-  <div class="d-flex align-items-center gap-2 mb-3">
-    <% if thread.resolved? %>
-      <span class="badge bg-success">Resolved</span>
-    <% else %>
-      <span class="badge bg-warning text-dark">Open</span>
-    <% end %>
-    <% if thread.outdated? %>
-      <span class="badge bg-secondary">Outdated</span>
-    <% end %>
-
-    <div class="ms-auto d-flex gap-2">
-      <% if thread.open? %>
-        <%= button_to project_qa_issue_inline_thread_resolution_path(current_project, issue, thread),
-              method: :post,
-              class: 'btn btn-sm btn-outline-primary' do %>
-          <i class="fa-solid fa-check me-1"></i>Resolve
-        <% end %>
-      <% else %>
-        <%= button_to project_qa_issue_inline_thread_resolution_path(current_project, issue, thread),
-              method: :delete,
-              class: 'btn btn-sm btn-outline-secondary' do %>
-          <i class="fa-solid fa-rotate-left me-1"></i>Reopen
-        <% end %>
-      <% end %>
-
-      <% if thread.user_id == current_user.id %>
-        <%= button_to project_qa_issue_inline_thread_path(current_project, issue, thread),
-              method: :delete,
-              class: 'btn btn-sm btn-outline-danger',
-              form: { data: { behavior: 'delete-thread-form' } },
-              data: { turbo_confirm: 'Delete this thread and all its comments?' } do %>
-          <i class="fa-solid fa-xmark me-1"></i>Delete
-        <% end %>
-      <% end %>
-    </div>
-  </div>
+  <%= render 'qa/inline_threads/thread_header', thread: thread, issue: issue %>
   <blockquote class="thread-quoted-text border-start border-3 border-primary ps-3 text-muted fst-italic mt-4">
     <%= thread.quoted_text %>
   </blockquote>
