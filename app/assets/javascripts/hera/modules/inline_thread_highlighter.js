@@ -132,7 +132,7 @@ class InlineThreadHighlighter {
     }
 
     const matchIndex = combined.indexOf(searchText);
-    if (matchIndex === -1) return null;
+    if (matchIndex === -1) return [];
 
     const matchEnd = matchIndex + searchText.length;
     const segments = [];
