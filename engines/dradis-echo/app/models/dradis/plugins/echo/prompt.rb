@@ -35,6 +35,5 @@ module Dradis::Plugins::Echo
     def set_defaults
       self.icon ||= 'fa-star-of-life'
     end
-
   end
 end

@@ -41,7 +41,6 @@ module Dradis::Plugins::Echo
       redirect_to prompts_path, notice: 'Prompt was successfully destroyed.'
     end
 
-
     private
     def prompt_params
       params.require(:prompt).permit(:title, :icon, :prompt, :scope)

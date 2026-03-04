@@ -12,7 +12,7 @@ module Dradis
         TINY = 0
         PRE = 0
 
-        STRING = [MAJOR, MINOR, TINY, PRE].compact.join(".")
+        STRING = [MAJOR, MINOR, TINY, PRE].compact.join('.')
       end
     end
   end

@@ -57,5 +57,5 @@ module Dradis::Plugins::Echo
       # https://github.com/rails/importmap-rails#sweeping-the-cache-in-development-and-test
       app.config.importmap.cache_sweepers << root.join('app/javascript')
     end
-    end
+  end
 end
