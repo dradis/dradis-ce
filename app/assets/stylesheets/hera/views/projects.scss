@@ -98,7 +98,7 @@ body.projects {
           }
 
           .fa-bug {
-            color: $black;
+            color: var(--untagged-color);
           }
         }
       }

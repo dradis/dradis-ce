@@ -22,6 +22,7 @@
   --text-success:      #{$green-400};
   --text-warning:      #{$yellow-400};
   --icon-disabled:     #{$grey-500};
+  --untagged-color:    #{$grey-400};
 
   // Borders & shadows
   --border-color:      #{$grey-700};
@@ -54,6 +55,7 @@
   --text-success:      #{darken($green-700, 10%)};
   --text-warning:      #{darken($yellow-600, 15%)};
   --icon-disabled:     #{$grey-600};
+  --untagged-color:    #{$grey-700};
 
   // Borders & shadows
   --border-color:      #{$grey-200};
