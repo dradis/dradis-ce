@@ -5,35 +5,19 @@ export default class extends Controller {
 
   connect() {
     this.preference = this.element.dataset.theme || "auto"
-    this.applyPreference(this.preference)
-
-    this.osChangeHandler = (e) => {
-      if (this.preference === "auto") {
-        this.element.dataset.theme = e.matches ? "dark" : "light"
-      }
-    }
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", this.osChangeHandler)
-  }
-
-  disconnect() {
-    window.matchMedia("(prefers-color-scheme: dark)").removeEventListener("change", this.osChangeHandler)
+    this.updateUI(this.preference)
   }
 
   select({ params: { name } }) {
     this.preference = name
-    this.applyPreference(name)
+    this.element.dataset.theme = name
+    this.updateUI(name)
     this.persist(name)
   }
 
-  applyPreference(preference) {
-    this.element.dataset.theme = preference === "auto"
-      ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
-      : preference
-
-    this.updateUI(preference)
-  }
-
   updateUI(preference) {
+    if (!this.hasAutoIconTarget) return
+
     this.autoIconTarget.classList.toggle("d-none", preference !== "auto")
     this.lightIconTarget.classList.toggle("d-none", preference !== "light")
     this.darkIconTarget.classList.toggle("d-none", preference !== "dark")
@@ -45,7 +29,6 @@ export default class extends Controller {
 
   persist(theme) {
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
-
     fetch("/preferences", {
       method: "PATCH",
       headers: {

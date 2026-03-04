@@ -1,7 +1,8 @@
 class User < ApplicationRecord
   alias_attribute :name, :email
 
-  serialize :preferences, type: UserPreferences
+  serialize :preferences, type: UserPreferences, yaml: { permitted_classes: [UserPreferences, Symbol] }
+  
   validates_associated :preferences
 
   # -- Relationships --------------------------------------------------------
