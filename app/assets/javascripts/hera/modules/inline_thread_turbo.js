@@ -60,7 +60,8 @@ class InlineThreadTurbo {
   }
 
   showNewThreadForm(anchor) {
-    this.frame.innerHTML = this.buildNewThreadForm(anchor);
+    this.frame.innerHTML = '';
+    this.frame.appendChild(this.buildNewThreadForm(anchor));
     this.openPanel();
 
     const textarea = this.frame.querySelector('textarea');
@@ -120,38 +121,69 @@ class InlineThreadTurbo {
   // -- Helpers -------------------------------------------------------------
 
   buildNewThreadForm(anchor) {
-    return `<blockquote class="thread-quoted-text border-start border-3 border-primary ps-3 text-muted fst-italic">
-      ${this.escapeHtml(anchor.exact)}
-    </blockquote>
-    <form action="${this.basePath}" method="post" accept-charset="UTF-8" data-turbo="true">
-      <input type="hidden" name="authenticity_token" value="${this.csrfToken}">
-      ${this.buildAnchorFields(anchor)}
-      <div class="mb-2">
-        <textarea name="comment[content]" class="form-control form-control-sm"
-          placeholder="Add a comment..." rows="3" required></textarea>
-      </div>
-      <div class="d-flex gap-2">
-        <button type="submit" class="btn btn-sm btn-primary">Create Thread</button>
-      </div>
-    </form>`;
+    const fragment = document.createDocumentFragment();
+
+    const blockquote = document.createElement('blockquote');
+    blockquote.className = 'thread-quoted-text border-start border-3 border-primary ps-3 text-muted fst-italic';
+    blockquote.textContent = anchor.exact;
+    fragment.appendChild(blockquote);
+
+    const form = document.createElement('form');
+    form.action = this.basePath;
+    form.method = 'post';
+    form.acceptCharset = 'UTF-8';
+    form.dataset.turbo = 'true';
+
+    const csrfInput = document.createElement('input');
+    csrfInput.type = 'hidden';
+    csrfInput.name = 'authenticity_token';
+    csrfInput.value = this.csrfToken;
+    form.appendChild(csrfInput);
+
+    this.buildAnchorFields(anchor).forEach(el => form.appendChild(el));
+
+    const textareaWrapper = document.createElement('div');
+    textareaWrapper.className = 'mb-2';
+    const textarea = document.createElement('textarea');
+    textarea.name = 'comment[content]';
+    textarea.className = 'form-control form-control-sm';
+    textarea.placeholder = 'Add a comment...';
+    textarea.rows = 3;
+    textarea.required = true;
+    textareaWrapper.appendChild(textarea);
+    form.appendChild(textareaWrapper);
+
+    const buttonWrapper = document.createElement('div');
+    buttonWrapper.className = 'd-flex gap-2';
+    const button = document.createElement('button');
+    button.type = 'submit';
+    button.className = 'btn btn-sm btn-primary';
+    button.textContent = 'Create Thread';
+    buttonWrapper.appendChild(button);
+    form.appendChild(buttonWrapper);
+
+    fragment.appendChild(form);
+
+    return fragment;
   }
 
   buildAnchorFields(anchor) {
     const prefix = 'inline_comment_thread[anchor]';
 
-    return `<input type="hidden" name="${prefix}[type]" value="${this.escapeHtml(anchor.type)}">
-      <input type="hidden" name="${prefix}[exact]" value="${this.escapeHtml(anchor.exact)}">
-      <input type="hidden" name="${prefix}[prefix]" value="${this.escapeHtml(anchor.prefix)}">
-      <input type="hidden" name="${prefix}[suffix]" value="${this.escapeHtml(anchor.suffix)}">
-      <input type="hidden" name="${prefix}[field_name]" value="${this.escapeHtml(anchor.field_name || '')}">
-      <input type="hidden" name="${prefix}[position][start]" value="${anchor.position.start}">
-      <input type="hidden" name="${prefix}[position][end]" value="${anchor.position.end}">`;
-  }
-
-  escapeHtml(str) {
-    if (!str) return '';
-    const div = document.createElement('div');
-    div.appendChild(document.createTextNode(str));
-    return div.innerHTML;
+    return [
+      [prefix + '[type]',            anchor.type],
+      [prefix + '[exact]',           anchor.exact],
+      [prefix + '[prefix]',          anchor.prefix],
+      [prefix + '[suffix]',          anchor.suffix],
+      [prefix + '[field_name]',      anchor.field_name || ''],
+      [prefix + '[position][start]', anchor.position.start],
+      [prefix + '[position][end]',   anchor.position.end]
+    ].map(([name, value]) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = name;
+      input.value = value;
+      return input;
+    });
   }
 }
