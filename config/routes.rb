@@ -166,6 +166,7 @@ Rails.application.routes.draw do
     # Static pages
     get 'projects/1/addons/issuelib', to: 'static_pages#issuelib_index', as: :static_issuelib
     get 'projects/1/addons/issuelib/import', to: 'static_pages#issuelib_import', as: :static_issuelib_import
+    get 'projects/1/addons/remediationtracker', to: 'static_pages#remediationtracker_index', as: :static_remediationtracker
 
     root to: 'setup/passwords#new'
   end
