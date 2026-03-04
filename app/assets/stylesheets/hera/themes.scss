@@ -26,6 +26,7 @@
   --untagged-color:       #{$grey-400};
   --badge-info-color:     #{$green-600};
   --badge-lavender-color: #{$lavender-light};
+  --pre-code-color:       #{$brand-300};
 
   // Borders & shadows
   --border-color:      #{$grey-700};
@@ -68,6 +69,7 @@
   --untagged-color:       #{$grey-700};
   --badge-info-color:     #{darken($green-700, 10%)};
   --badge-lavender-color: #{darken($lavender-dark, 5%)};
+  --pre-code-color:       #{$brand-700};
 
   // Borders & shadows
   --border-color:      #{$grey-200};

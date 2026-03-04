@@ -298,7 +298,7 @@ pre {
 
   code {
     background: initial;
-    color: $brand-700;
+    color: var(--pre-code-color);
     padding: 0;
   }
 }
