@@ -10,13 +10,13 @@
 
   <div class="ms-auto d-flex gap-2">
     <% if thread.open? %>
-      <%= button_to project_qa_issue_inline_thread_resolution_path(current_project, issue, thread),
+      <%= button_to inline_thread_resolution_path(thread),
             method: :post,
             class: 'btn btn-sm btn-outline-primary' do %>
         <i class="fa-solid fa-check me-1"></i>Resolve
       <% end %>
     <% else %>
-      <%= button_to project_qa_issue_inline_thread_resolution_path(current_project, issue, thread),
+      <%= button_to inline_thread_resolution_path(thread),
             method: :delete,
             class: 'btn btn-sm btn-outline-secondary' do %>
         <i class="fa-solid fa-rotate-left me-1"></i>Reopen
@@ -24,7 +24,7 @@
     <% end %>
 
     <% if thread.user_id == current_user.id %>
-      <%= button_to project_qa_issue_inline_thread_path(current_project, issue, thread),
+      <%= button_to inline_thread_path(thread),
             method: :delete,
             class: 'btn btn-sm btn-outline-danger',
             form: { data: { behavior: 'delete-thread-form' } },

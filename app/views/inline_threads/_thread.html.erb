@@ -1,19 +1,19 @@
 <div class="inline-thread" id="inline_thread_<%= thread.id %>" data-behavior="inline-thread" data-thread-id="<%= thread.id %>">
-  <%= render 'qa/inline_threads/thread_header', thread: thread, issue: issue %>
+  <%= render 'inline_threads/thread_header', thread: thread %>
   <blockquote class="thread-quoted-text border-start border-3 border-primary ps-3 text-muted fst-italic mt-4">
     <%= thread.quoted_text %>
   </blockquote>
 
   <div class="border-top" id="thread_<%= thread.id %>_comments">
     <% thread.comments.includes(:user).each do |comment| %>
-      <%= render 'qa/inline_threads/inline_comment', comment: comment %>
+      <%= render 'inline_threads/inline_comment', comment: comment %>
     <% end %>
   </div>
 
   <hr class="mt-0">
 
   <div id="thread_<%= thread.id %>_reply_form">
-    <%= form_with url: project_qa_issue_inline_thread_comments_path(current_project, issue, thread) do |f| %>
+    <%= form_with url: inline_thread_comments_path(thread) do |f| %>
       <%= f.text_area :content,
             name: 'comment[content]',
             class: 'form-control form-control-sm mb-2',

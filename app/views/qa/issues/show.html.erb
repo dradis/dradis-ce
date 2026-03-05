@@ -20,9 +20,10 @@
       <% cache ['issue-content', @issue] do %>
         <div class="note-text-inner"
              data-behavior="inline-threads-container"
-             data-inline-threads-path="<%= project_qa_issue_inline_threads_path(current_project, @issue, format: :json) %>"
-             data-inline-threads-base-path="<%= project_qa_issue_inline_threads_path(current_project, @issue) %>"
-             data-issue-id="<%= @issue.id %>">
+             data-inline-threads-path="<%= inline_threads_path(format: :json, inline_comment_thread: { commentable_type: @issue.class, commentable_id: @issue.id }) %>"
+             data-inline-threads-base-path="<%= inline_threads_path %>"
+             data-commentable-type="<%= @issue.class %>"
+             data-commentable-id="<%= @issue.id %>">
           <h4 class="mb-4 header-underline align-items-center">
             <span class="text-truncate" title="<%= @issue.title %>"><%= @issue.title %></span>
             <%= render partial: 'shared/liquid_loading' %>

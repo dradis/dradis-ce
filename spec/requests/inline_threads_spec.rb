@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'QA Inline Threads' do
+describe 'Inline Threads' do
   before do
     login_to_project_as_user
     @issue = create(:issue, state: :ready_for_review)
@@ -21,12 +21,18 @@ describe 'QA Inline Threads' do
     { 'Accept' => 'text/vnd.turbo-stream.html' }
   end
 
-  describe 'GET /projects/:project_id/qa/issues/:issue_id/inline_threads' do
+  describe 'GET /inline_threads' do
     it 'returns threads as JSON' do
-      thread = create(:inline_comment_thread, issue: @issue)
+      thread = create(:inline_comment_thread, commentable: @issue)
       create(:comment, inline_comment_thread: thread, commentable: @issue)
 
-      get project_qa_issue_inline_threads_path(@project, @issue, format: :json)
+      get inline_threads_path(
+        format: :json,
+        inline_comment_thread: {
+          commentable_type: 'Issue',
+          commentable_id: @issue.id
+        }
+      )
 
       expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
@@ -37,7 +43,13 @@ describe 'QA Inline Threads' do
     end
 
     it 'returns empty array when no threads exist' do
-      get project_qa_issue_inline_threads_path(@project, @issue, format: :json)
+      get inline_threads_path(
+        format: :json,
+        inline_comment_thread: {
+          commentable_type: 'Issue',
+          commentable_id: @issue.id
+        }
+      )
 
       expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
@@ -45,12 +57,12 @@ describe 'QA Inline Threads' do
     end
   end
 
-  describe 'GET /projects/:project_id/qa/issues/:issue_id/inline_threads/:id' do
+  describe 'GET /inline_threads/:id' do
     it 'renders the thread in a turbo frame' do
-      thread = create(:inline_comment_thread, issue: @issue)
+      thread = create(:inline_comment_thread, commentable: @issue)
       create(:comment, inline_comment_thread: thread, commentable: @issue)
 
-      get project_qa_issue_inline_thread_path(@project, @issue, thread)
+      get inline_thread_path(thread)
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include('turbo-frame')
@@ -58,12 +70,16 @@ describe 'QA Inline Threads' do
     end
   end
 
-  describe 'POST /projects/:project_id/qa/issues/:issue_id/inline_threads' do
+  describe 'POST /inline_threads' do
     it 'creates a new thread with initial comment' do
       expect {
-        post project_qa_issue_inline_threads_path(@project, @issue),
+        post inline_threads_path,
           params: {
-            inline_comment_thread: { anchor: valid_anchor },
+            inline_comment_thread: {
+              commentable_type: 'Issue',
+              commentable_id: @issue.id,
+              anchor: valid_anchor
+            },
             comment: { content: 'This needs revision' }
           },
           headers: turbo_stream_headers
@@ -73,7 +89,7 @@ describe 'QA Inline Threads' do
       expect(response.media_type).to eq('text/vnd.turbo-stream.html')
 
       thread = InlineCommentThread.last
-      expect(thread.issue).to eq(@issue)
+      expect(thread.commentable).to eq(@issue)
       expect(thread.user).to eq(@logged_in_as)
       expect(thread.anchor['exact']).to eq('Apache bugs')
       expect(thread).to be_open
@@ -85,8 +101,14 @@ describe 'QA Inline Threads' do
 
     it 'creates a thread without initial comment' do
       expect {
-        post project_qa_issue_inline_threads_path(@project, @issue),
-          params: { inline_comment_thread: { anchor: valid_anchor } },
+        post inline_threads_path,
+          params: {
+            inline_comment_thread: {
+              commentable_type: 'Issue',
+              commentable_id: @issue.id,
+              anchor: valid_anchor
+            }
+          },
           headers: turbo_stream_headers
       }.to change { InlineCommentThread.count }.by(1)
         .and change { Comment.count }.by(0)
@@ -95,12 +117,12 @@ describe 'QA Inline Threads' do
     end
   end
 
-  describe 'DELETE /projects/:project_id/qa/issues/:issue_id/inline_threads/:id' do
+  describe 'DELETE /inline_threads/:id' do
     it 'destroys a thread owned by the current user' do
-      thread = create(:inline_comment_thread, issue: @issue, user: @logged_in_as)
+      thread = create(:inline_comment_thread, commentable: @issue, user: @logged_in_as)
 
       expect {
-        delete project_qa_issue_inline_thread_path(@project, @issue, thread),
+        delete inline_thread_path(thread),
           headers: turbo_stream_headers
       }.to change { InlineCommentThread.count }.by(-1)
 
@@ -108,11 +130,11 @@ describe 'QA Inline Threads' do
     end
   end
 
-  describe 'POST /projects/:project_id/qa/issues/:issue_id/inline_threads/:id/resolution' do
+  describe 'POST /inline_threads/:id/resolution' do
     it 'resolves the thread' do
-      thread = create(:inline_comment_thread, issue: @issue)
+      thread = create(:inline_comment_thread, commentable: @issue)
 
-      post project_qa_issue_inline_thread_resolution_path(@project, @issue, thread),
+      post inline_thread_resolution_path(thread),
         headers: turbo_stream_headers
 
       expect(response.media_type).to eq('text/vnd.turbo-stream.html')
@@ -122,17 +144,17 @@ describe 'QA Inline Threads' do
     end
   end
 
-  describe 'DELETE /projects/:project_id/qa/issues/:issue_id/inline_threads/:id/resolution' do
+  describe 'DELETE /inline_threads/:id/resolution' do
     it 'reopens a resolved thread' do
       thread = create(
         :inline_comment_thread,
-        issue: @issue,
+        commentable: @issue,
         status: :resolved,
         resolved_by: @logged_in_as,
         resolved_at: Time.current
       )
 
-      delete project_qa_issue_inline_thread_resolution_path(@project, @issue, thread),
+      delete inline_thread_resolution_path(thread),
         headers: turbo_stream_headers
 
       expect(response.media_type).to eq('text/vnd.turbo-stream.html')
@@ -141,12 +163,12 @@ describe 'QA Inline Threads' do
     end
   end
 
-  describe 'POST /projects/:project_id/qa/issues/:issue_id/inline_threads/:id/comments' do
+  describe 'POST /inline_threads/:id/comments' do
     it 'creates a reply comment on the thread' do
-      thread = create(:inline_comment_thread, issue: @issue)
+      thread = create(:inline_comment_thread, commentable: @issue)
 
       expect {
-        post project_qa_issue_inline_thread_comments_path(@project, @issue, thread),
+        post inline_thread_comments_path(thread),
           params: { comment: { content: 'Good point, will fix' } },
           headers: turbo_stream_headers
       }.to change { thread.comments.count }.by(1)

@@ -22,6 +22,8 @@ class InlineThreadTurbo {
     this.container = container;
     this.threadsPath = container.dataset.inlineThreadsPath;
     this.basePath = container.dataset.inlineThreadsBasePath;
+    this.commentableType = container.dataset.commentableType;
+    this.commentableId = container.dataset.commentableId;
 
     this.panel = document.querySelector('[data-behavior~=inline-thread-panel]');
     this.frame = document.querySelector('[data-behavior~=inline-thread-content]');
@@ -140,6 +142,7 @@ class InlineThreadTurbo {
     csrfInput.value = this.csrfToken;
     form.appendChild(csrfInput);
 
+    this.buildCommentableFields().forEach(el => form.appendChild(el));
     this.buildAnchorFields(anchor).forEach(el => form.appendChild(el));
 
     const textareaWrapper = document.createElement('div');
@@ -165,6 +168,21 @@ class InlineThreadTurbo {
     fragment.appendChild(form);
 
     return fragment;
+  }
+
+  buildCommentableFields() {
+    const prefix = 'inline_comment_thread';
+
+    return [
+      [prefix + '[commentable_type]', this.commentableType],
+      [prefix + '[commentable_id]',   this.commentableId]
+    ].map(([name, value]) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = name;
+      input.value = value;
+      return input;
+    });
   }
 
   buildAnchorFields(anchor) {

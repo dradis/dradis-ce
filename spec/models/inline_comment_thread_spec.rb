@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 describe InlineCommentThread do
-  it { should belong_to :issue }
+  it { should belong_to :commentable }
   it { should belong_to :user }
   it { should belong_to(:resolved_by).optional }
   it { should belong_to(:paper_trail_version).optional }
   it { should have_many(:comments).dependent(:destroy) }
 
   it { should validate_presence_of :anchor }
-  it { should validate_presence_of :issue }
+  it { should validate_presence_of :commentable }
 
   describe 'anchor validation' do
     it 'rejects anchor missing required keys' do
@@ -80,7 +80,7 @@ describe InlineCommentThread do
       expect(thread.outdated?).to be false
     end
 
-    it 'returns false when issue has no update versions' do
+    it 'returns false when commentable has no update versions' do
       thread = create(:inline_comment_thread)
       expect(thread.outdated?).to be false
     end

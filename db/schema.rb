@@ -117,7 +117,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_02_034852) do
   end
 
   create_table "inline_comment_threads", force: :cascade do |t|
-    t.integer "issue_id", null: false
+    t.string "commentable_type", null: false
+    t.integer "commentable_id", null: false
     t.integer "user_id", null: false
     t.text "anchor", null: false
     t.integer "version_id"
@@ -126,8 +127,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_02_034852) do
     t.datetime "resolved_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["issue_id", "status"], name: "index_inline_comment_threads_on_issue_id_and_status"
-    t.index ["issue_id"], name: "index_inline_comment_threads_on_issue_id"
+    t.index ["commentable_type", "commentable_id", "status"], name: "index_inline_comment_threads_on_commentable_and_status"
+    t.index ["commentable_type", "commentable_id"], name: "index_inline_comment_threads_on_commentable"
     t.index ["user_id"], name: "index_inline_comment_threads_on_user_id"
   end
 

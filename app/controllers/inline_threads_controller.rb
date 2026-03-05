@@ -1,33 +1,32 @@
-class QA::InlineThreadsController < AuthenticatedController
+class InlineThreadsController < AuthenticatedController
   include EventPublisher
-  include Mentioned
   include Notified
-  include ProjectScoped
-
-  before_action :set_issue
-  before_action :set_thread, only: [:show, :destroy]
 
   layout false
 
+  before_action :set_thread, only: [:show, :destroy]
+
+  include Mentioned
+
   def index
-    @threads = @issue.inline_comment_threads
-                     .includes(comments: :user)
-                     .order(created_at: :asc)
+    @threads = commentable.inline_comment_threads
+                           .includes(comments: :user)
+                           .order(created_at: :asc)
   end
 
   def show
   end
 
   def create
-    @thread = @issue.inline_comment_threads.build(thread_params)
+    @thread = commentable.inline_comment_threads.build(thread_params)
     @thread.user = current_user
-    @thread.version_id = @issue.versions.last&.id
+    @thread.version_id = commentable.versions.last&.id
 
     if @thread.save
       if params[:comment].present? && params[:comment][:content].present?
         @comment = @thread.comments.build(
           content: params[:comment][:content],
-          commentable: @issue,
+          commentable: commentable,
           user: current_user
         )
 
@@ -55,16 +54,39 @@ class QA::InlineThreadsController < AuthenticatedController
 
   private
 
-  def set_issue
-    @issue = current_project.issues.ready_for_review.find(params[:issue_id])
+  def commentable
+    @commentable ||= begin
+      if @thread
+        @thread.commentable
+      else
+        commentable_class.find(comment_thread_params[:commentable_id])
+      end
+    end
+  end
+
+  def commentable_class
+    if InlineCommentable.allowed_types.include?(comment_thread_params[:commentable_type])
+      comment_thread_params[:commentable_type].constantize
+    else
+      raise 'Invalid commentable'
+    end
+  end
+
+  def comment_thread_params
+    params.require(:inline_comment_thread).permit(:commentable_type, :commentable_id)
+  end
+
+  def project
+    @project ||= commentable.respond_to?(:project) ? commentable.project : nil
   end
 
   def set_thread
-    @thread = @issue.inline_comment_threads.find(params[:id])
+    @thread = InlineCommentThread.find(params[:id])
   end
 
   def thread_params
     params.require(:inline_comment_thread).permit(
+      :commentable_type, :commentable_id,
       anchor: [:type, :exact, :prefix, :suffix, :field_name, { position: [:start, :end] }]
     )
   end

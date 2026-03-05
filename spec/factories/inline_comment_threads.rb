@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :inline_comment_thread do
-    association :issue, state: :ready_for_review
+    association :commentable, factory: :issue, state: :ready_for_review
     association :user
     anchor do
       {

@@ -1,7 +1,7 @@
 <% if inline_comment_thread %>
-  <% issue = inline_comment_thread.issue %>
-  <% title = issue.title.present? ? issue.title : "Issue ##{issue.id}" %>
-  <%= presenter.verb %> an inline comment thread on <%= link_to title, project_qa_issue_path(issue.project, issue) %>.
+  <% commentable = inline_comment_thread.commentable %>
+  <% title = commentable.title.present? ? commentable.title : "#{commentable.class.name} ##{commentable.id}" %>
+  <%= presenter.verb %> an inline comment thread on <%= link_to title, project_qa_issue_path(commentable.project, commentable) %>.
 <% else %>
   <% if activity.action == 'destroy' %>
     deleted an inline comment thread.
