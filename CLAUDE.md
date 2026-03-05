@@ -246,3 +246,4 @@ entirely — field names appear as headings or bold text, values as body text. T
 - CI runs: bundler-audit, ruby-audit, brakeman, rubocop (changed files), rspec (4 parallel nodes)
 - Feature branch PRs into `develop` should have a Summary describing the full feature, not just the last commit
 - `db/schema.rb` hygiene: Only commit schema changes from your own migrations.
+- Do not add `Co-Authored-By` lines to commit messages.
