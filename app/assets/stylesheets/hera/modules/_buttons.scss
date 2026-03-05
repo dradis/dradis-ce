@@ -69,8 +69,8 @@
   }
 
   &.btn-outline-info {
-    color: darken($green-700, 10%);
-    border-color: darken($green-700, 10%);
+    color: var(--btn-outline-info-color);
+    border-color: var(--btn-outline-info-color);
 
     &:hover,
     &:focus,
@@ -84,8 +84,8 @@
   }
 
   &.btn-outline-lavender {
-    border-color: $lavender-dark;
-    color: $lavender-dark;
+    border-color: var(--btn-outline-lavender-color);
+    color: var(--btn-outline-lavender-color);
 
     &:hover,
     &:focus,
@@ -112,15 +112,15 @@
     }
 
     &:hover {
-      background: var(--btn-outline-primary-hover-bg);
-      border-color: var(--btn-outline-primary-hover-color);
-      color: var(--btn-outline-primary-hover-color);
+      background: $light;
+      border-color: $dark;
+      color: $dark;
     }
   }
 
   &.btn-outline-secondary {
-    border-color: $grey-700;
-    color: $grey-700;
+    border-color: var(--btn-outline-secondary-color);
+    color: var(--btn-outline-secondary-color);
 
     &:hover,
     &:focus,
@@ -134,8 +134,8 @@
   }
 
   &.btn-outline-success {
-    border-color: darken($green-700, 10%);
-    color: darken($green-700, 10%);
+    border-color: var(--btn-outline-success-color);
+    color: var(--btn-outline-success-color);
 
     &:hover,
     &:focus,
@@ -149,12 +149,15 @@
   }
 
   &.btn-outline-warning {
+    border-color: var(--btn-outline-warning-color);
+    color: var(--btn-outline-warning-color);
+
     &:hover,
     &:focus,
     &:focus-visible,
     &:active,
     &:not(:disabled):not(.disabled):active {
-      color: $white;
+      color: $black;
     }
   }
 
@@ -205,6 +208,12 @@
 
   &.btn-success {
     @include button($green);
+    color: $black;
+
+    &:hover,
+    &:not(:disabled):not(.disabled):active {
+      color: $black;
+    }
   }
 
   &.btn-transparent {
