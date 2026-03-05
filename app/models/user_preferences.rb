@@ -31,7 +31,7 @@ class UserPreferences
   #           seen. Since we can have multiple versions of each tour we need
   #           to be able to track what was the last version we presented to
   #           them. See TourRegistry class.
-  ATTRIBUTES = %i[digest_frequency tours theme]
+  ATTRIBUTES = %i[digest_frequency theme tours]
   attr_accessor(*ATTRIBUTES)
 
   def to_yaml_properties
