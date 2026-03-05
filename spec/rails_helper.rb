@@ -91,13 +91,9 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = Rails.root.join('spec', '.examples.txt')
 
   config.before(:suite) do
-    begin
-      FactoryBot.lint
-    ensure
-      DatabaseCleaner.clean_with(:truncation)
-      FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
-      FileUtils.rm_rf(Rails.root.join('tmp/storage'))
-    end
+    DatabaseCleaner.clean_with(:truncation)
+    FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
+    FileUtils.rm_rf(Rails.root.join('tmp/storage'))
   end
 
   config.before(:each) do
