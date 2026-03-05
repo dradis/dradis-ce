@@ -1,5 +1,9 @@
 <p>You'll need an import plugin like:</p>
 <ul class="fa-ul">
   <li><i class="fa-solid fa-li fa-chevron-right"></i><a href="https://dradis.com/integrations/mediawiki.html?utm_source=ce&utm_medium=app" target="_blank">MediaWiki</a></li>
-  <li><i class="fa-solid fa-li fa-chevron-right"></i><a href="javascript:void(0)" class="js-try-pro" data-term="issuelib" data-url="https://dradis.com/pro/pages/issuelib.html"><i class="fa-solid fa-book"></i> Built-in IssueLibrary</a></li>
+  <li><i class="fa-solid fa-li fa-chevron-right"></i>
+    <%= link_to static_issuelib_path do %>
+      <i class="fa-solid fa-book"></i> Built-in IssueLibrary
+    <% end %>
+  </li>
 </ul>

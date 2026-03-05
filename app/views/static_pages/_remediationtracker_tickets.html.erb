@@ -1,0 +1,42 @@
+<div class="dataTables_wrapper">
+  <table class="table table-striped dataTable mb-0">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Category</th>
+        <th>State</th>
+        <th>Assignee</th>
+        <th>Due date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tickets.each_with_index do |ticket, index| %>
+        <tr id="ticket-<%= index %>">
+          <td>
+            <a
+              href="javascript:void(0)"
+              class="js-try-pro"
+              data-term="remediation"
+              data-url="https://dradis.com/pro/pages/remediation.html">
+              <%= ticket[:title] %>
+            </a>
+          </td>
+          <td><%= ticket[:category] %></td>
+          <td><%= ticket[:state] %></td>
+          <td>
+            <% if ticket[:assignee] %>
+              <%= ticket[:assignee] %>
+            <% else %>
+              <span class="text-muted">(no one yet)</span>
+            <% end %>
+          </td>
+          <td>
+            <time class="<%= 'text-danger' if ticket[:overdue] %>">
+              <%= ticket[:due_at].strftime('%B %d, %Y') %>
+            </time>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
