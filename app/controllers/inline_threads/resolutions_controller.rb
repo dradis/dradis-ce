@@ -7,12 +7,12 @@ class InlineThreads::ResolutionsController < AuthenticatedController
 
   def create
     @thread.resolve!(current_user)
-    publish_event('inline_comment_thread.resolved', @thread.to_event_payload)
+    publish_event('inline_thread.resolved', @thread.to_event_payload)
   end
 
   def destroy
     @thread.reopen!(current_user)
-    publish_event('inline_comment_thread.reopened', @thread.to_event_payload)
+    publish_event('inline_thread.reopened', @thread.to_event_payload)
   end
 
   private
@@ -22,6 +22,6 @@ class InlineThreads::ResolutionsController < AuthenticatedController
   end
 
   def set_thread
-    @thread = InlineCommentThread.find(params[:inline_thread_id])
+    @thread = InlineThread.find(params[:inline_thread_id])
   end
 end

@@ -20,7 +20,7 @@
       <% cache ['issue-content', @issue] do %>
         <div class="note-text-inner"
              data-behavior="inline-threads-container"
-             data-inline-threads-path="<%= inline_threads_path(format: :json, inline_comment_thread: { commentable_type: @issue.class, commentable_id: @issue.id }) %>"
+             data-inline-threads-path="<%= inline_threads_path(format: :json, inline_thread: { commentable_type: @issue.class, commentable_id: @issue.id }) %>"
              data-inline-threads-base-path="<%= inline_threads_path %>"
              data-commentable-type="<%= @issue.class %>"
              data-commentable-id="<%= @issue.id %>">

@@ -171,7 +171,7 @@ class InlineThreadTurbo {
   }
 
   buildCommentableFields() {
-    const prefix = 'inline_comment_thread';
+    const prefix = 'inline_thread';
 
     return [
       [prefix + '[commentable_type]', this.commentableType],
@@ -186,7 +186,7 @@ class InlineThreadTurbo {
   }
 
   buildAnchorFields(anchor) {
-    const prefix = 'inline_comment_thread[anchor]';
+    const prefix = 'inline_thread[anchor]';
 
     return [
       [prefix + '[type]',            anchor.type],

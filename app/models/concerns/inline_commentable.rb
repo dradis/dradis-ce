@@ -6,6 +6,6 @@ module InlineCommentable
   included do |base|
     InlineCommentable.allowed_types << base.name
 
-    has_many :inline_comment_threads, as: :commentable, dependent: :destroy
+    has_many :inline_threads, as: :commentable, dependent: :destroy
   end
 end

@@ -1,6 +1,6 @@
-class CreateInlineCommentThreads < ActiveRecord::Migration[8.0]
+class CreateInlineThreads < ActiveRecord::Migration[8.0]
   def change
-    create_table :inline_comment_threads do |t|
+    create_table :inline_threads do |t|
       t.references :commentable, polymorphic: true, null: false
       t.references :user, null: false, foreign_key: true
       t.text :anchor, null: false
@@ -12,8 +12,8 @@ class CreateInlineCommentThreads < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    add_index :inline_comment_threads, [:commentable_type, :commentable_id, :status],
-      name: 'index_inline_comment_threads_on_commentable_and_status'
-    add_foreign_key :inline_comment_threads, :users, column: :resolved_by_id
+    add_index :inline_threads, [:commentable_type, :commentable_id, :status],
+      name: 'index_inline_threads_on_commentable_and_status'
+    add_foreign_key :inline_threads, :users, column: :resolved_by_id
   end
 end

@@ -9,7 +9,7 @@ class InlineThreadsController < AuthenticatedController
   include Mentioned
 
   def index
-    @threads = commentable.inline_comment_threads
+    @threads = commentable.inline_threads
                            .includes(comments: :user)
                            .order(created_at: :asc)
   end
@@ -18,7 +18,7 @@ class InlineThreadsController < AuthenticatedController
   end
 
   def create
-    @thread = commentable.inline_comment_threads.build(thread_params)
+    @thread = commentable.inline_threads.build(thread_params)
     @thread.user = current_user
     @thread.version_id = commentable.versions.last&.id
 
@@ -40,7 +40,7 @@ class InlineThreadsController < AuthenticatedController
         end
       end
 
-      publish_event('inline_comment_thread.created', @thread.to_event_payload)
+      publish_event('inline_thread.created', @thread.to_event_payload)
     else
       head :unprocessable_entity
     end
@@ -49,7 +49,7 @@ class InlineThreadsController < AuthenticatedController
   def destroy
     authorize! :destroy, @thread
     @thread.destroy!
-    publish_event('inline_comment_thread.destroyed', @thread.to_event_payload)
+    publish_event('inline_thread.destroyed', @thread.to_event_payload)
   end
 
   private
@@ -73,7 +73,7 @@ class InlineThreadsController < AuthenticatedController
   end
 
   def comment_thread_params
-    params.require(:inline_comment_thread).permit(:commentable_type, :commentable_id)
+    params.require(:inline_thread).permit(:commentable_type, :commentable_id)
   end
 
   def project
@@ -81,11 +81,11 @@ class InlineThreadsController < AuthenticatedController
   end
 
   def set_thread
-    @thread = InlineCommentThread.find(params[:id])
+    @thread = InlineThread.find(params[:id])
   end
 
   def thread_params
-    params.require(:inline_comment_thread).permit(
+    params.require(:inline_thread).permit(
       :commentable_type, :commentable_id,
       anchor: [:type, :exact, :prefix, :suffix, :field_name, { position: [:start, :end] }]
     )

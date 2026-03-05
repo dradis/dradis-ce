@@ -1,5 +1,5 @@
-<% if inline_comment_thread %>
-  <% commentable = inline_comment_thread.commentable %>
+<% if inline_thread %>
+  <% commentable = inline_thread.commentable %>
   <% title = commentable.title.present? ? commentable.title : "#{commentable.class.name} ##{commentable.id}" %>
   <%= presenter.verb %> an inline comment thread on <%= link_to title, project_qa_issue_path(commentable.project, commentable) %>.
 <% else %>

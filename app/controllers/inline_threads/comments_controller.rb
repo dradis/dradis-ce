@@ -31,7 +31,7 @@ class InlineThreads::CommentsController < AuthenticatedController
   end
 
   def set_thread
-    @thread = InlineCommentThread.find(params[:inline_thread_id])
+    @thread = InlineThread.find(params[:inline_thread_id])
   end
 
   def comment_params

@@ -1,4 +1,4 @@
-class InlineCommentThread < ApplicationRecord
+class InlineThread < ApplicationRecord
   include Eventable
 
   REQUIRED_ANCHOR_KEYS = %w[exact position prefix suffix type].freeze

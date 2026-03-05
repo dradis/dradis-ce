@@ -209,7 +209,7 @@ Guidelines:
 
 **Event publishing:** Controllers `include EventPublisher` and call `publish_event('namespace.action', ...)`. Models `include Eventable`. Events route through `ActiveSupport::Notifications` and `ActivityService.subscribe_namespace`.
 
-Event name convention: `'issue.created'`, `'comment.destroyed'`, `'inline_comment_thread.resolved'`.
+Event name convention: `'issue.created'`, `'comment.destroyed'`, `'inline_thread.resolved'`.
 
 > **Deprecated:** `ActivityTracking` (`track_created`, `track_destroyed`, `track_activity`,
 > `track_state_change`) — do not use in new code. Use `EventPublisher` + `publish_event` instead.
