@@ -29,10 +29,7 @@ describe 'issue pages' do
     context "merge issues into a new one", js: true do
       describe 'textile form view' do
         let(:action_path) { new_project_merge_path(current_project, ids: [@issue1.id, @issue2.id]) }
-        let(:required_form) do
-          choose('Merge into a new issue')
-        end
-        it_behaves_like 'a textile form view', Issue
+        it_behaves_like 'a .textile form'
       end
 
       it 'creates a new issue' do
