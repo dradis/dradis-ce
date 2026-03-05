@@ -32,6 +32,10 @@ describe 'InlineThreadSelector#buildAnchor', js: true do
     ].join("\n")
   end
 
+  # Build an anchor by simulating what getSelection().toString() returns.
+  # We read innerText from the DOM to discover the actual separator between
+  # block elements (e.g. \n\n between h5 and p), then extract the substring
+  # that corresponds to the described selection.
   def build_anchor(selected_text)
     page.evaluate_script(<<~JS)
       (function() {
@@ -42,8 +46,31 @@ describe 'InlineThreadSelector#buildAnchor', js: true do
     JS
   end
 
+  def rendered_text
+    @rendered_text ||= page.evaluate_script(<<~JS)
+      (function() {
+        var container = document.querySelector('[data-behavior~=inline-threads-container]');
+        var selector = $(container).data('inlineThreadSelector');
+        return selector.renderedText;
+      })()
+    JS
+  end
+
+  # Extract a substring from the rendered text between two landmarks.
+  # This ensures test selections match innerText exactly.
+  def selection_between(from_text, to_text)
+    text = rendered_text
+    start_idx = text.index(from_text)
+    end_idx = text.index(to_text)
+    text[start_idx..(end_idx + to_text.length - 1)]
+  end
+
   it 'handles selection of multi-line content (no fields)' do
-    anchor = build_anchor("The application is vulnerable to SQL injection.\nAn attacker can extract data from the database.")
+    selected = selection_between(
+      'The application is vulnerable',
+      'An attacker can extract data from the database.'
+    )
+    anchor = build_anchor(selected)
 
     expect(anchor).to be_present
     expect(anchor['exact']).to include('The application is vulnerable')
@@ -57,15 +84,15 @@ describe 'InlineThreadSelector#buildAnchor', js: true do
 
     expect(anchor).to be_present
     expect(anchor['exact']).to eq('Description')
-    # "Description" is a heading — findFieldName walks h5 elements
-    # and returns the last heading whose offset <= position.
-    # Since Description IS the h5, its offset equals the selection position,
-    # so findFieldName returns "Description".
     expect(anchor['field_name']).to eq('Description')
   end
 
   it 'handles selection of a field name + 1 line of content' do
-    anchor = build_anchor("Description\nThe application is vulnerable to SQL injection.")
+    selected = selection_between(
+      'Description',
+      'The application is vulnerable to SQL injection.'
+    )
+    anchor = build_anchor(selected)
 
     expect(anchor).to be_present
     expect(anchor['exact']).to include('Description')
@@ -74,7 +101,11 @@ describe 'InlineThreadSelector#buildAnchor', js: true do
   end
 
   it 'handles selection of a field name + 2 lines of content' do
-    anchor = build_anchor("Description\nThe application is vulnerable to SQL injection.\nAn attacker can extract data from the database.")
+    selected = selection_between(
+      'Description',
+      'An attacker can extract data from the database.'
+    )
+    anchor = build_anchor(selected)
 
     expect(anchor).to be_present
     expect(anchor['exact']).to include('Description')
@@ -84,7 +115,11 @@ describe 'InlineThreadSelector#buildAnchor', js: true do
   end
 
   it 'handles selection spanning across 2 fields' do
-    anchor = build_anchor("An attacker can extract data from the database.\nRecommendation\nUse parameterized queries.")
+    selected = selection_between(
+      'An attacker can extract data from the database.',
+      'Use parameterized queries.'
+    )
+    anchor = build_anchor(selected)
 
     expect(anchor).to be_present
     expect(anchor['exact']).to include('An attacker can extract data')

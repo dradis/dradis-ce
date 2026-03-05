@@ -19,7 +19,7 @@ class InlineThreadSelector {
     this.$container = $(container);
     this.$content = this.$container.find('[data-behavior~=content-textile]');
     this.coordinator = coordinator;
-    this.renderedText = this.$content[0].textContent;
+    this.renderedText = this.$content[0].innerText;
     this.pendingSelection = null;
 
     // Prevent double-binding
@@ -45,7 +45,7 @@ class InlineThreadSelector {
     // Liquid async rendering replaces innerHTML of content-textile,
     // destroying our appended button. Re-read text and re-append.
     this.$content.on('dradis:liquid-rendered', () => {
-      this.renderedText = this.$content[0].textContent;
+      this.renderedText = this.$content[0].innerText;
       this.appendButton();
     });
   }
@@ -143,42 +143,19 @@ class InlineThreadSelector {
   }
 
   findFieldName(position) {
+    const text = this.renderedText;
     const headings = this.$content[0].querySelectorAll('h5');
     let currentField = null;
 
     for (let i = 0; i < headings.length; i++) {
-      const heading = headings[i];
-      const range = document.createRange();
-      range.selectNodeContents(heading);
+      const name = headings[i].textContent.trim();
+      const headingPos = text.indexOf(name);
+      if (headingPos === -1 || headingPos > position) break;
 
-      // Compare heading's position in the textContent to the selection position.
-      // Walk text nodes up to this heading to find its offset.
-      const headingOffset = this.textOffsetOf(heading);
-      if (headingOffset > position) break;
-
-      currentField = heading.textContent.trim();
+      currentField = name;
     }
 
     return currentField;
-  }
-
-  textOffsetOf(targetNode) {
-    const walker = document.createTreeWalker(
-      this.$content[0],
-      NodeFilter.SHOW_TEXT,
-      null,
-      false
-    );
-
-    let offset = 0;
-    let node;
-
-    while ((node = walker.nextNode())) {
-      if (targetNode.contains(node)) return offset;
-      offset += node.textContent.length;
-    }
-
-    return offset;
   }
 
   isValidSelection(selectionObj) {

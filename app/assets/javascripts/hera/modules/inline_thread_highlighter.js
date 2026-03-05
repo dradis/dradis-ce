@@ -116,29 +116,40 @@ class InlineThreadHighlighter {
   // Returns an array of { node, startOffset, endOffset } segments —
   // one per text node that overlaps the match. Each segment stays
   // within a single text node so surroundContents works safely.
+  //
+  // Uses innerText as the combined string because anchor.exact comes
+  // from getSelection().toString() which mirrors innerText behavior
+  // (inserting \n at block boundaries and <br> elements).
   findTextInNodes(textNodes, searchText) {
-    let combined = '';
-    const nodeMap = [];
-
-    for (let i = 0; i < textNodes.length; i++) {
-      const nodeText = textNodes[i].textContent;
-      const startIndex = combined.length;
-      combined += nodeText;
-      nodeMap.push({
-        node: textNodes[i],
-        startIndex: startIndex,
-        endIndex: combined.length
-      });
-    }
-
+    const combined = this.contentEl.innerText;
     const matchIndex = combined.indexOf(searchText);
     if (matchIndex === -1) return [];
 
     const matchEnd = matchIndex + searchText.length;
+
+    // Map each text node to its position within innerText
+    const nodeMap = [];
+    let searchFrom = 0;
+
+    for (var i = 0; i < textNodes.length; i++) {
+      var content = textNodes[i].textContent;
+      if (!content.trim()) continue;
+
+      var pos = combined.indexOf(content, searchFrom);
+      if (pos === -1) continue;
+
+      nodeMap.push({
+        node: textNodes[i],
+        startIndex: pos,
+        endIndex: pos + content.length
+      });
+      searchFrom = pos + content.length;
+    }
+
     const segments = [];
 
-    for (let j = 0; j < nodeMap.length; j++) {
-      const entry = nodeMap[j];
+    for (var j = 0; j < nodeMap.length; j++) {
+      var entry = nodeMap[j];
 
       // Skip nodes entirely before the match
       if (entry.endIndex <= matchIndex) continue;
@@ -146,8 +157,8 @@ class InlineThreadHighlighter {
       // Stop after nodes entirely after the match
       if (entry.startIndex >= matchEnd) break;
 
-      const segStart = Math.max(matchIndex, entry.startIndex) - entry.startIndex;
-      const segEnd = Math.min(matchEnd, entry.endIndex) - entry.startIndex;
+      var segStart = Math.max(matchIndex, entry.startIndex) - entry.startIndex;
+      var segEnd = Math.min(matchEnd, entry.endIndex) - entry.startIndex;
 
       segments.push({
         node: entry.node,
