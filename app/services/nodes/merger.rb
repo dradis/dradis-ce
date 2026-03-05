@@ -91,24 +91,50 @@ class Nodes::Merger
   end
 
   def update_attachments
-    self.copied_attachments = []
+    self.copied_attachments = {}
 
     target_node.evidence.each do |evidence|
-      self.copied_attachments = self.copied_attachments | copy_attachments(evidence, source_node.id)
+      result = copy_attachments(evidence, source_node.id)
+      self.copied_attachments.merge!(result)
       evidence.save! if evidence.changed?
     end
 
-    # Copy any remaining attachments that were not copied via AttachmentsCopier
+    # Copy any remaining attachments that were not referenced in any evidence
     source_node.attachments.each do |attachment|
-      # need to compare filename since they will be loaded as different ruby objects so == doesn't work
-      unless copied_attachments.any? { |a| a.filename == attachment.filename }
-        self.copied_attachments << attachment.copy_to(target_node)
+      # Skip if already copied
+      unless copied_attachments.key?(attachment.filename)
+        new_attachment = attachment.copy_to(target_node)
+        self.copied_attachments[attachment.filename] = new_attachment.filename
       end
+    end
+
+    # Update any screenshots in Issue content that still point to the source node
+    update_issue_screenshot_links
+  end
+
+  def update_issue_screenshot_links
+    return if copied_attachments.empty?
+
+    source_node.project.issues.find_each do |issue|
+      next unless Attachment::SCREENSHOT_REGEX.match?(issue.text)
+
+      copied_attachments.each do |old_filename, new_filename|
+        old_screenshot_path = "nodes/#{source_node.id}/attachments/#{old_filename}"
+        next unless issue.text.include?(old_screenshot_path)
+
+        new_screenshot_path = "nodes/#{target_node.id}/attachments/#{new_filename}"
+        issue.text = issue.text.gsub(old_screenshot_path, new_screenshot_path)
+      end
+
+      issue.save! if issue.changed?
     end
   end
 
   def undo_attachments_copy
     return unless copied_attachments&.any?
-    copied_attachments.each(&:delete)
+    copied_attachments.values.each do |new_filename|
+      attachment = Attachment.find_by(filename: new_filename, node_id: target_node.id)
+      attachment.delete if attachment
+    end
   end
 end

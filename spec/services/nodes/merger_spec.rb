@@ -96,6 +96,23 @@ RSpec.describe Nodes::Merger do
       FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
     end
 
+    it 'updates issue screenshot links to point to new node' do
+      attachment = create(:attachment, node: source_node)
+      issue = create(:issue,
+        text: "#[Description]#\n\n!/pro/projects/#{source_node.project_id}/nodes/#{source_node.id}/attachments/#{attachment.url_encoded_filename}!",
+        node: source_node.project.issue_library
+      )
+
+      merge_nodes
+
+      expect(issue.reload.content)
+        .to include("/nodes/#{target_node.id}/attachments/#{attachment.url_encoded_filename}")
+      expect(issue.reload.content)
+        .not_to include("/nodes/#{source_node.id}/attachments/#{attachment.url_encoded_filename}")
+
+      FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
+    end
+
     describe 'property merges' do
       it 'merges basic properties together' do
         source_node = create(:node, :with_properties)
@@ -250,6 +267,22 @@ RSpec.describe Nodes::Merger do
 
         expect(evidence.content).to include("/nodes/#{source_node.id}/attachments/#{attachment.url_encoded_filename}")
         expect(evidence.content).not_to include("/nodes/#{target_node.id}/attachments/#{attachment.url_encoded_filename}")
+
+        FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
+      end
+
+      it 'does not update issue screenshot links to point to new node' do
+        attachment = create(:attachment, node: source_node)
+        issue = create(:issue,
+          text: "#[Description]#\n\n!/pro/projects/#{source_node.project_id}/nodes/#{source_node.id}/attachments/#{attachment.url_encoded_filename}!",
+          node: source_node.project.issue_library
+        )
+        merge_nodes
+
+        expect(issue.reload.content)
+          .to include("/nodes/#{source_node.id}/attachments/#{attachment.url_encoded_filename}")
+        expect(issue.reload.content)
+          .not_to include("/nodes/#{target_node.id}/attachments/#{attachment.url_encoded_filename}")
 
         FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
       end
