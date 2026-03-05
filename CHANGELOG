@@ -1,5 +1,5 @@
 [v#.#.#] ([month] [YYYY])
-  - Dark mode: Add runtime dark mode theme switchable via a toggle in the utility nav
+  - Layout: Add light/dark/auto theme toggle to support dark mode
   - Activities: remove ActivityTracking for Issues and use EventPublisher
   - Profile: update default user avatar
   - Forms: Improve visibility of form actions
