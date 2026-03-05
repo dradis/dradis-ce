@@ -231,8 +231,7 @@ describe 'Card pages:' do
       let(:create_activities) { nil }
       let(:create_comments) { nil }
 
-      let(:commentable) { @card }
-      it_behaves_like 'a page with a comments feed'
+      it_behaves_like 'a page with a comments feed hook'
 
       let(:subscribable) { @card }
       it_behaves_like 'a page with subscribe/unsubscribe links'

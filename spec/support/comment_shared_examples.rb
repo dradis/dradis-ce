@@ -1,3 +1,10 @@
+shared_examples 'a page with a comments feed hook' do
+  it 'renders the comments feed', js: true do
+    find('[data-behavior~=fetch-comments]')
+    expect(page).to have_css('[data-behavior~=fetch-comments] .comment-feed')
+  end
+end
+
 # Define the following let variables before using these examples:
 #
 #   create_comments : a block which creates the comments AND IS CALLED

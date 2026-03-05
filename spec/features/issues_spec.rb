@@ -371,8 +371,7 @@ describe 'Issues pages' do
           end
         end
 
-        let(:commentable) { @issue }
-        it_behaves_like 'a page with a comments feed'
+        it_behaves_like 'a page with a comments feed hook'
 
         let(:subscribable) { @issue }
         it_behaves_like 'a page with subscribe/unsubscribe links'
