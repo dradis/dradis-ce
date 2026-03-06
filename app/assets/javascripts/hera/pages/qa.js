@@ -5,11 +5,9 @@ document.addEventListener('turbo:load', () => {
     });
   }
 
-  // Initialize inline comment threads on QA issue show page
-  if (document.querySelector('body.qa-issues.show')) {
-    const container = document.querySelector('[data-behavior~=inline-threads-container]');
-    if (container) {
-      new InlineThreadTurbo(container);
-    }
+  // Initialize inline comment threads on any QA show page with a container
+  const container = document.querySelector('[data-behavior~=inline-threads-container]');
+  if (container) {
+    new InlineThreadTurbo(container);
   }
 });

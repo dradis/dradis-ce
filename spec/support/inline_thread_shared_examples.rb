@@ -1,11 +1,4 @@
-require 'rails_helper'
-
-describe 'Inline Threads' do
-  before do
-    login_to_project_as_user
-    @issue = create(:issue, state: :ready_for_review)
-  end
-
+shared_examples 'inline threads' do
   let(:valid_anchor) do
     {
       type: 'TextQuoteSelector',
@@ -23,14 +16,14 @@ describe 'Inline Threads' do
 
   describe 'GET /inline_threads' do
     it 'returns threads as JSON' do
-      thread = create(:inline_thread, commentable: @issue)
-      create(:comment, inline_thread: thread, commentable: @issue)
+      thread = create(:inline_thread, commentable: commentable)
+      create(:comment, inline_thread: thread, commentable: commentable)
 
       get inline_threads_path(
         format: :json,
         inline_thread: {
-          commentable_type: 'Issue',
-          commentable_id: @issue.id
+          commentable_type: commentable.class.to_s,
+          commentable_id: commentable.id
         }
       )
 
@@ -46,8 +39,8 @@ describe 'Inline Threads' do
       get inline_threads_path(
         format: :json,
         inline_thread: {
-          commentable_type: 'Issue',
-          commentable_id: @issue.id
+          commentable_type: commentable.class.to_s,
+          commentable_id: commentable.id
         }
       )
 
@@ -59,8 +52,8 @@ describe 'Inline Threads' do
 
   describe 'GET /inline_threads/:id' do
     it 'renders the thread in a turbo frame' do
-      thread = create(:inline_thread, commentable: @issue)
-      create(:comment, inline_thread: thread, commentable: @issue)
+      thread = create(:inline_thread, commentable: commentable)
+      create(:comment, inline_thread: thread, commentable: commentable)
 
       get inline_thread_path(thread)
 
@@ -76,8 +69,8 @@ describe 'Inline Threads' do
         post inline_threads_path,
           params: {
             inline_thread: {
-              commentable_type: 'Issue',
-              commentable_id: @issue.id,
+              commentable_type: commentable.class.to_s,
+              commentable_id: commentable.id,
               anchor: valid_anchor
             },
             comment: { content: 'This needs revision' }
@@ -89,21 +82,20 @@ describe 'Inline Threads' do
       expect(response.media_type).to eq('text/vnd.turbo-stream.html')
 
       thread = InlineThread.last
-      expect(thread.commentable).to eq(@issue)
+      expect(thread.commentable).to eq(commentable)
       expect(thread.user).to eq(@logged_in_as)
       expect(thread.anchor['exact']).to eq('Apache bugs')
       expect(thread).to be_open
 
       comment = thread.comments.first
       expect(comment.content).to eq('This needs revision')
-      expect(comment.commentable).to eq(@issue)
+      expect(comment.commentable).to eq(commentable)
     end
-
   end
 
   describe 'DELETE /inline_threads/:id' do
     it 'destroys a thread owned by the current user' do
-      thread = create(:inline_thread, commentable: @issue, user: @logged_in_as)
+      thread = create(:inline_thread, commentable: commentable, user: @logged_in_as)
 
       expect {
         delete inline_thread_path(thread),
@@ -116,7 +108,7 @@ describe 'Inline Threads' do
 
   describe 'POST /inline_threads/:id/resolution' do
     it 'resolves the thread' do
-      thread = create(:inline_thread, commentable: @issue)
+      thread = create(:inline_thread, commentable: commentable)
 
       post inline_thread_resolution_path(thread),
         headers: turbo_stream_headers
@@ -132,7 +124,7 @@ describe 'Inline Threads' do
     it 'reopens a resolved thread' do
       thread = create(
         :inline_thread,
-        commentable: @issue,
+        commentable: commentable,
         status: :resolved,
         resolved_by: @logged_in_as,
         resolved_at: Time.current
@@ -149,7 +141,7 @@ describe 'Inline Threads' do
 
   describe 'POST /inline_threads/:id/comments' do
     it 'creates a reply comment on the thread' do
-      thread = create(:inline_thread, commentable: @issue)
+      thread = create(:inline_thread, commentable: commentable)
 
       expect {
         post inline_thread_comments_path(thread),
@@ -161,7 +153,7 @@ describe 'Inline Threads' do
 
       comment = thread.comments.last
       expect(comment.content).to eq('Good point, will fix')
-      expect(comment.commentable).to eq(@issue)
+      expect(comment.commentable).to eq(commentable)
       expect(comment.user).to eq(@logged_in_as)
     end
   end
