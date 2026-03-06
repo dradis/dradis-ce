@@ -8,7 +8,7 @@
       </h2>
       <div id="collapsePrompt" class="accordion-collapse collapse" aria-labelledby="promptHeading" data-bs-parent="#accordionEcho">
         <div id="prompt_content" class="accordion-body">
-          <div id="prompt_template"><%= @prompt %></div>
+          <div class="echo-content"><%= @prompt %></div>
         </div>
       </div>
     </div>
@@ -20,7 +20,7 @@
         </button>
       </h2>
       <div id="collapseResponse" class="accordion-collapse" aria-labelledby="responseHeading" data-bs-parent="#accordionEcho">
-        <div id="<%= @response_id %>" class="accordion-body">
+        <div id="<%= @response_id %>" class="accordion-body echo-content">
           <div id="<%= "#{@response_id}_spinner" %>"><%= spinner_tag %></div>
         </div>
       </div>
