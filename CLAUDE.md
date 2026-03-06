@@ -1,4 +1,4 @@
-# CLAUDE.md — Dradis Pro
+# CLAUDE.md - Dradis
 
 ## Project overview
 
