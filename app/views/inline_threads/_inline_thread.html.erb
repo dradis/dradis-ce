@@ -1,19 +1,19 @@
-<div class="inline-thread" id="inline_thread_<%= thread.id %>" data-behavior="inline-thread" data-thread-id="<%= thread.id %>">
-  <%= render 'inline_threads/thread_header', thread: thread %>
+<div class="inline-thread" id="inline_thread_<%= inline_thread.id %>" data-behavior="inline-thread" data-thread-id="<%= inline_thread.id %>">
+  <%= render 'inline_threads/header', inline_thread: inline_thread %>
   <blockquote class="thread-quoted-text border-start border-3 border-primary ps-3 text-muted fst-italic mt-4">
-    <%= thread.quoted_text %>
+    <%= inline_thread.quoted_text %>
   </blockquote>
 
-  <div class="border-top" id="thread_<%= thread.id %>_comments">
-    <% thread.comments.includes(:user).each do |comment| %>
+  <div class="border-top" id="thread_<%= inline_thread.id %>_comments">
+    <% inline_thread.comments.includes(:user).each do |comment| %>
       <%= render 'inline_threads/inline_comment', comment: comment %>
     <% end %>
   </div>
 
   <hr class="mt-0">
 
-  <div id="thread_<%= thread.id %>_reply_form">
-    <%= form_with url: inline_thread_comments_path(thread) do |f| %>
+  <div id="thread_<%= inline_thread.id %>_reply_form">
+    <%= form_with url: inline_thread_comments_path(inline_thread) do |f| %>
       <%= f.text_area :content,
             name: 'comment[content]',
             class: 'form-control form-control-sm mb-2',
