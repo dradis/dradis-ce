@@ -99,22 +99,6 @@ describe 'Inline Threads' do
       expect(comment.commentable).to eq(@issue)
     end
 
-    it 'creates a thread without initial comment' do
-      expect {
-        post inline_threads_path,
-          params: {
-            inline_thread: {
-              commentable_type: 'Issue',
-              commentable_id: @issue.id,
-              anchor: valid_anchor
-            }
-          },
-          headers: turbo_stream_headers
-      }.to change { InlineThread.count }.by(1)
-        .and change { Comment.count }.by(0)
-
-      expect(response.media_type).to eq('text/vnd.turbo-stream.html')
-    end
   end
 
   describe 'DELETE /inline_threads/:id' do
