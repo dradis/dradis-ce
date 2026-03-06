@@ -6,7 +6,7 @@ describe 'QA Issues' do
   end
 
   let(:commentable) do
-    create(:issue, state: :ready_for_review)
+    create(:issue, node: current_project.issue_library, state: :ready_for_review)
   end
 
   include_examples 'inline threads'
