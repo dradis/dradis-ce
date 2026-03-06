@@ -124,6 +124,10 @@ RuboCop is configured with `DisabledByDefault: true` — only explicitly enabled
 - **Empty lines** around class/module/method bodies: none allowed
 - Excluded from linting: `**/templates/**/*`, `**/vendor/**/*`, `db/schema.rb`
 
+Other styling rules:
+
+- **Alphabetical order within sections** — `include` statements, method definitions, SCSS `@import` directives, and similar declarations are sorted alphabetically within their logical section. In models, sections defined using comments (e.g. Relationships, Callbacks, Validations, Instance Methods (public then private), etc. see existing example). Only sort within the section, not across sections.
+
 
 ## Custom inflections (important for Zeitwerk)
 
