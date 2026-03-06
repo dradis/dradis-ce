@@ -10,7 +10,7 @@ module Dradis::Plugins::Echo
       begin
         client.generate(
           {
-            model: Engine.settings.model,
+            model: Engine.settings.roslin_ollama_model,
             prompt: prompt
           }
         ) do |event, raw|
@@ -33,7 +33,7 @@ module Dradis::Plugins::Echo
 
     def client
       @client ||= Ollama.new(
-        credentials: { address: Engine.settings.address },
+        credentials: { address: Engine.settings.roslin_ollama_address },
         options: { server_sent_events: true }
       )
     end
