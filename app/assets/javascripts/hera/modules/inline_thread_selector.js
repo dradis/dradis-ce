@@ -112,19 +112,18 @@ class InlineThreadSelector {
 
   buildAnchor(selectedText) {
     const text = this.renderedText;
-    let selection = selectedText.replace(/\r\n/g, '\n');
 
-    let index = text.indexOf(selection);
+    let index = text.indexOf(selectedText);
     if (index === -1) {
-      selection = selection.trim();
-      index = text.indexOf(selection);
+      selectedText = selectedText.trim();
+      index = text.indexOf(selectedText);
     }
 
     if (index === -1) return null;
 
     const prefixStart = Math.max(0, index - 30);
     const prefix = text.substring(prefixStart, index);
-    const endPos = index + selection.length;
+    const endPos = index + selectedText.length;
     const suffixEnd = Math.min(text.length, endPos + 30);
     const suffix = text.substring(endPos, suffixEnd);
     const fieldName = this.findFieldName(index);
