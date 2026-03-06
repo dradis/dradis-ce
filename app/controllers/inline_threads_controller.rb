@@ -15,7 +15,7 @@ class InlineThreadsController < AuthenticatedController
 
 
   def index
-    @threads = commentable.inline_threads
+    @inline_threads = commentable.inline_threads
                            .includes(comments: :user)
                            .order(created_at: :asc)
   end
@@ -24,13 +24,13 @@ class InlineThreadsController < AuthenticatedController
   end
 
   def create
-    @thread = commentable.inline_threads.build(inline_thread_params)
-    @thread.user = current_user
-    @thread.version_id = commentable.versions.last&.id
+    @inline_thread = commentable.inline_threads.build(inline_thread_params)
+    @inline_thread.user = current_user
+    @inline_thread.version_id = commentable.versions.last&.id
 
-    if @thread.save
+    if @inline_thread.save
       if comment_params.present? && comment_params[:content].present?
-        @comment = @thread.comments.build(
+        @comment = @inline_thread.comments.build(
           content: comment_params[:content],
           commentable: commentable,
           user: current_user
@@ -46,15 +46,15 @@ class InlineThreadsController < AuthenticatedController
         end
       end
 
-      publish_event('inline_thread.created', @thread.to_event_payload)
+      publish_event('inline_thread.created', @inline_thread.to_event_payload)
     else
       head :unprocessable_entity
     end
   end
 
   def destroy
-    @thread.destroy!
-    publish_event('inline_thread.destroyed', @thread.to_event_payload)
+    @inline_thread.destroy!
+    publish_event('inline_thread.destroyed', @inline_thread.to_event_payload)
   end
 
   private
@@ -69,8 +69,8 @@ class InlineThreadsController < AuthenticatedController
 
   def commentable
     @commentable ||= begin
-      if @thread
-        @thread.commentable
+      if @inline_thread
+        @inline_thread.commentable
       else
         commentable_class.find(inline_thread_params[:commentable_id])
       end

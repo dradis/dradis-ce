@@ -1,4 +1,4 @@
-json.array! @threads do |thread|
+json.array! @inline_threads do |thread|
   json.id thread.id
   json.status thread.status
   json.outdated thread.outdated?
