@@ -19,10 +19,8 @@ class InlineThreadSelector {
     this.$container = $(container);
     this.$content = this.$container.find('[data-behavior~=content-textile]');
     this.coordinator = coordinator;
-    this.rawText = this.$content.data('content') || '';
+    this.renderedText = this.$content[0].innerText;
     this.pendingSelection = null;
-
-    this._buildFieldMap();
 
     // Prevent double-binding
     if (this.$container.data('inlineThreadSelector')) {
@@ -45,8 +43,9 @@ class InlineThreadSelector {
     this.bindEvents();
 
     // Liquid async rendering replaces innerHTML of content-textile,
-    // destroying our appended button. Re-append after render completes.
+    // destroying our appended button. Re-read text and re-append.
     this.$content.on('dradis:liquid-rendered', () => {
+      this.renderedText = this.$content[0].innerText;
       this.appendButton();
     });
   }
@@ -111,89 +110,23 @@ class InlineThreadSelector {
     });
   }
 
-  // Build a version of the raw text with #[Field]# markers replaced by just
-  // the field name, plus a position map from stripped→raw indices. This lets
-  // us find user selections (which see rendered text without markers) and
-  // map back to raw text positions for anchoring.
-  _buildFieldMap() {
-    const raw = this.rawText.replace(/\r\n/g, '\n');
-    this._normalizedRaw = raw;
-    this._strippedText = '';
-    this._strippedToRaw = [];
-
-    const fieldRegex = /#\[([^\]]*?)\]#/g;
-    let lastEnd = 0;
-    let match;
-
-    while ((match = fieldRegex.exec(raw)) !== null) {
-      // Copy characters before the marker as-is
-      for (let i = lastEnd; i < match.index; i++) {
-        this._strippedToRaw.push(i);
-        this._strippedText += raw.charAt(i);
-      }
-      // Copy just the field name (skip #[ and ]#)
-      const nameStart = match.index + 2;
-      const name = match[1];
-      for (let j = 0; j < name.length; j++) {
-        this._strippedToRaw.push(nameStart + j);
-        this._strippedText += name.charAt(j);
-      }
-      lastEnd = match.index + match[0].length;
-    }
-
-    // Copy remaining text after last marker
-    for (let k = lastEnd; k < raw.length; k++) {
-      this._strippedToRaw.push(k);
-      this._strippedText += raw.charAt(k);
-    }
-  }
-
   buildAnchor(selectedText) {
-    let selection = selectedText.replace(/\r\n/g, '\n');
-    const raw = this._normalizedRaw;
+    const text = this.renderedText;
 
-    // Fast path: exact match in raw text (selection within a single field value)
-    let rawIndex = raw.indexOf(selection);
-    if (rawIndex === -1) {
-      rawIndex = raw.indexOf(selection.trim());
-      if (rawIndex !== -1) { selection = selection.trim(); }
+    let index = text.indexOf(selectedText);
+    if (index === -1) {
+      selectedText = selectedText.trim();
+      index = text.indexOf(selectedText);
     }
 
-    if (rawIndex !== -1) {
-      return this._buildResult(rawIndex, rawIndex + selection.length, selectedText);
-    }
+    if (index === -1) return null;
 
-    // Slow path: search in stripped text (handles selections spanning #[Field]#)
-    let strippedIndex = this._strippedText.indexOf(selection);
-    if (strippedIndex === -1) {
-      const trimmed = selection.trim();
-      strippedIndex = this._strippedText.indexOf(trimmed);
-      if (strippedIndex !== -1) { selection = trimmed; }
-    }
-
-    if (strippedIndex === -1) {
-      return null;
-    }
-
-    // Map stripped positions back to raw positions
-    const rawStart = this._strippedToRaw[strippedIndex];
-    const endMapIndex = strippedIndex + selection.length - 1;
-    if (endMapIndex >= this._strippedToRaw.length) {
-      return null;
-    }
-    const rawEnd = this._strippedToRaw[endMapIndex] + 1;
-
-    return this._buildResult(rawStart, rawEnd, selectedText);
-  }
-
-  _buildResult(rawStart, rawEnd, selectedText) {
-    const raw = this._normalizedRaw;
-
-    const prefixStart = Math.max(0, rawStart - 30);
-    const prefix = raw.substring(prefixStart, rawStart);
-    const suffixEnd = Math.min(raw.length, rawEnd + 30);
-    const suffix = raw.substring(rawEnd, suffixEnd);
-    const fieldName = this.findFieldName(rawStart);
+    const prefixStart = Math.max(0, index - 30);
+    const prefix = text.substring(prefixStart, index);
+    const endPos = index + selectedText.length;
+    const suffixEnd = Math.min(text.length, endPos + 30);
+    const suffix = text.substring(endPos, suffixEnd);
+    const fieldName = this.findFieldName(index);
 
     return {
       type: 'TextQuoteSelector',
@@ -201,24 +134,24 @@ class InlineThreadSelector {
       prefix: prefix,
       suffix: suffix,
       position: {
-        start: rawStart,
-        end: rawEnd
+        start: index,
+        end: endPos
       },
       field_name: fieldName
     };
   }
 
   findFieldName(position) {
-    const fieldRegex = /#\[(.+?)\]#/g;
-    let match;
+    const text = this.renderedText;
+    const headings = this.$content[0].querySelectorAll('h5');
     let currentField = null;
-    const raw = this._normalizedRaw;
 
-    while ((match = fieldRegex.exec(raw)) !== null) {
-      if (match.index > position) {
-        break;
-      }
-      currentField = match[1];
+    for (let i = 0; i < headings.length; i++) {
+      const name = headings[i].textContent.trim();
+      const headingPos = text.indexOf(name);
+      if (headingPos === -1 || headingPos > position) break;
+
+      currentField = name;
     }
 
     return currentField;
