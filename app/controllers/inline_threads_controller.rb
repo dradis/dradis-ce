@@ -13,7 +13,6 @@ class InlineThreadsController < AuthenticatedController
 
   before_action :authorize_commentable
 
-
   def index
     @inline_threads = commentable.inline_threads
                            .includes(comments: :user)
