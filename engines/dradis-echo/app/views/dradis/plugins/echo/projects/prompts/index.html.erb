@@ -7,29 +7,24 @@
 <% if @prompts.any? %>
   <p>Interact with Echo by selecting a saved prompt to use with this Issue.</p>
 
-  <div class="row">
-    <div class="col-3">
+  <div class="row" data-controller="dradis--plugins--echo--prompt-selector">
+    <div class="col-12 mb-3">
       <p class="form-label">Saved Prompts</p>
-      <ul class="nav flex-column" data-behavior="deeplinks" role="tablist">
-        <% @prompts.each_with_index do |prompt, index| %>
-          <li class="nav-item">
-            <a class="nav-link <%= class_names(active: index == 0) %>" data-bs-toggle="tab" href="#prompt-tab-<%= prompt.id %>" role="tab" aria-controls="details-tab" aria-selected="true">
-              <i class="fa-solid fa-fw <%= prompt.icon %>"></i> <%= prompt.title %>
-            </a>
-          </li>
+      <select class="form-select">
+        <option value="">Select a prompt...</option>
+        <% @prompts.each do |prompt| %>
+          <option value="<%= echo.preview_project_prompt_path(current_project, prompt.id, type: @type, record: @record.id) %>">
+            <%= prompt.title %>
+          </option>
         <% end %>
-      </ul>
+      </select>
     </div>
 
-    <div class="col-9">
+    <div class="col-12">
       <p class="form-label">Selected Prompt</p>
-      <div class="tab-content">
-        <% @prompts.each_with_index do |prompt, index| %>
-          <div class="tab-pane fade <%= class_names('show active': index == 0) %>" id="prompt-tab-<%= prompt.id %>" role="tabpanel" aria-labelledby="details-tab">
-            <%= render partial: 'dradis/plugins/echo/projects/prompts/prompt', locals: { prompt: prompt } %>
-          </div>
-        <% end %>
-      </div>
+      <turbo-frame id="echo-prompt-preview" data-dradis--plugins--echo--prompt-selector-target="frame">
+        <p class="text-muted">Select a prompt above to preview it.</p>
+      </turbo-frame>
     </div>
   </div>
 <% else %>

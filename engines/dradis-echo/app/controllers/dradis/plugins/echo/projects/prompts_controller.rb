@@ -6,6 +6,7 @@ module Dradis::Plugins::Echo
     before_action :check_turbo_config, only: [:index]
     before_action :set_type
     before_action :set_record, except: [:create]
+    before_action :set_prompt, only: [:preview, :show]
 
     def index
       Prompt.seed_default_prompts(current_user) if current_user.prompts.empty?
@@ -13,8 +14,9 @@ module Dradis::Plugins::Echo
       @prompts = current_user.prompts.for(@type)
     end
 
+    def preview; end
+
     def show
-      @template = current_user.prompts.find(params[:id])
       @prompt = params[:prompt]
       @interaction_id = SecureRandom.hex(20)
       @response_id = SecureRandom.hex(10)
@@ -63,6 +65,10 @@ module Dradis::Plugins::Echo
 
     def set_record
       @record = current_project.send(@type.to_s.pluralize).find(record_params[:record])
+    end
+
+    def set_prompt
+      @prompt_template = current_user.prompts.find(params[:id])
     end
 
     def set_type
