@@ -8,6 +8,8 @@ export default class extends Controller {
       const url = event.target.value
       if (url) this.frameTarget.src = url
     })
+
+    this.frameTarget.src = this.element.querySelector('select').value
   }
 
   disconnect() {

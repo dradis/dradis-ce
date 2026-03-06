@@ -11,7 +11,6 @@
     <div class="col-12 mb-3">
       <p class="form-label">Saved Prompts</p>
       <select class="form-select">
-        <option value="">Select a prompt...</option>
         <% @prompts.each do |prompt| %>
           <option value="<%= echo.preview_project_prompt_path(current_project, prompt.id, type: @type, record: @record.id) %>">
             <%= prompt.title %>
@@ -23,7 +22,6 @@
     <div class="col-12">
       <p class="form-label">Selected Prompt</p>
       <turbo-frame id="echo-prompt-preview" data-dradis--plugins--echo--prompt-selector-target="frame">
-        <p class="text-muted">Select a prompt above to preview it.</p>
       </turbo-frame>
     </div>
   </div>
