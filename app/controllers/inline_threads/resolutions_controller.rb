@@ -17,10 +17,6 @@ class InlineThreads::ResolutionsController < AuthenticatedController
 
   private
 
-  def project
-    @project ||= @thread.commentable.respond_to?(:project) ? @thread.commentable.project : nil
-  end
-
   def set_thread
     @thread = InlineThread.find(params[:inline_thread_id])
   end
