@@ -1,4 +1,4 @@
-class InlineCommentThread < ApplicationRecord
+class InlineThread < ApplicationRecord
   include Eventable
 
   REQUIRED_ANCHOR_KEYS = %w[exact position prefix suffix type].freeze
@@ -8,7 +8,7 @@ class InlineCommentThread < ApplicationRecord
   enum :status, { open: 0, resolved: 1 }
 
   # -- Relationships --------------------------------------------------------
-  belongs_to :issue
+  belongs_to :commentable, polymorphic: true
   belongs_to :user
   belongs_to :resolved_by, class_name: 'User', optional: true
   belongs_to :paper_trail_version,
@@ -17,12 +17,23 @@ class InlineCommentThread < ApplicationRecord
     optional: true
   has_many :comments, dependent: :destroy
 
+  # Because Issue descends from Note but doesn't use STI, Rails's default
+  # polymorphic setter will set 'commentable_type' to 'Note' when you pass an
+  # Issue. Override the default behaviour here for issues:
+  #
+  # FIXME - ISSUE/NOTE INHERITANCE
+  def commentable=(new_commentable)
+    super
+    self.commentable_type = 'Issue' if new_commentable.is_a?(Issue)
+    new_commentable
+  end
+
   # -- Callbacks ------------------------------------------------------------
   before_validation :coerce_anchor_position
 
   # -- Validations ----------------------------------------------------------
   validates :anchor, presence: true
-  validates :issue, presence: true
+  validates :commentable, presence: true
   validate :anchor_schema_valid
 
   # -- Class Methods --------------------------------------------------------
@@ -43,22 +54,22 @@ class InlineCommentThread < ApplicationRecord
   def outdated?
     return false if version_id.nil?
 
-    latest_version = issue.versions.where(event: 'update').last
+    latest_version = commentable.versions.where(event: 'update').last
     return false unless latest_version
 
     version_id < latest_version.id
   end
 
   def project
-    issue.project
+    commentable.project
   end
 
   def local_event_payload
     {
       anchor: anchor,
-      issue: {
-        id: issue.id,
-        title: issue.title
+      commentable: {
+        id: commentable.id,
+        title: commentable.title
       },
       status: status
     }

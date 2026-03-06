@@ -9,6 +9,11 @@ Rails.application.routes.draw do
 
   resources :comments
 
+  resources :inline_threads, only: [:index, :show, :create, :destroy], controller: 'inline_threads' do
+    resource :resolution, only: [:create, :destroy], controller: 'inline_threads/resolutions'
+    resources :comments, only: [:create], controller: 'inline_threads/comments'
+  end
+
   # ------------------------------------------------------------ Project routes
   concern :multiple_destroy do
     collection do
@@ -108,12 +113,7 @@ Rails.application.routes.draw do
     end
 
     namespace :qa do
-      resources :issues, only: [:edit, :index, :show, :update], concerns: [:multiple_update, :previewable] do
-        resources :inline_threads, only: [:index, :show, :create, :destroy], controller: 'inline_threads' do
-          resource :resolution, only: [:create, :destroy], controller: 'inline_threads/resolutions'
-          resources :comments, only: [:create], controller: 'inline_threads/comments'
-        end
-      end
+      resources :issues, only: [:edit, :index, :show, :update], concerns: [:multiple_update, :previewable]
     end
 
     get 'search' => 'search#index'

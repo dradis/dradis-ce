@@ -1,17 +1,14 @@
-class QA::InlineThreads::CommentsController < AuthenticatedController
+class InlineThreads::CommentsController < AuthenticatedController
   include EventPublisher
   include Mentioned
   include Notified
-  include ProjectScoped
-
-  before_action :set_issue
-  before_action :set_thread
 
   layout false
+  load_and_authorize_resource :inline_thread
 
   def create
-    @comment = @thread.comments.build(comment_params)
-    @comment.commentable = @issue
+    @comment = @inline_thread.comments.build(comment_params)
+    @comment.commentable = @inline_thread.commentable
     @comment.user = current_user
 
     if @comment.save
@@ -28,12 +25,8 @@ class QA::InlineThreads::CommentsController < AuthenticatedController
 
   private
 
-  def set_issue
-    @issue = current_project.issues.ready_for_review.find(params[:issue_id])
-  end
-
-  def set_thread
-    @thread = @issue.inline_comment_threads.find(params[:inline_thread_id])
+  def project
+    @project ||= @inline_thread.commentable.respond_to?(:project) ? @inline_thread.commentable.project : nil
   end
 
   def comment_params
