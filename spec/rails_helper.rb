@@ -91,8 +91,10 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = Rails.root.join('spec', '.examples.txt')
 
   config.before(:suite) do
-    FileUtils.rm_rf(Dir.glob(Attachment.pwd + '*'))
+    # All test-env file storage (Attachments, ActiveStorage) lives under
+    # tmp/storage so we only need to clean one place.
     FileUtils.rm_rf(Rails.root.join('tmp/storage'))
+    FileUtils.mkdir_p(Attachment.pwd)
   end
 end
 
