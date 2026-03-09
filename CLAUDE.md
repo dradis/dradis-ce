@@ -336,12 +336,7 @@ document.addEventListener('turbo:load', function () {
 
 ## Changelogs
 
-Two changelogs, both follow the template in `CHANGELOG.template`:
-
-- **`CHANGELOG`** — CE (Community Edition) changes. Features that land in CE first are recorded here.
-- **`CHANGELOG.pro`** — Pro-only changes. If a CE change also applies to Pro, it gets migrated here too.
-
-Entries are grouped under the relevant section heading from the template (e.g. `REST/JSON API enhancements`, `Bugs Fixed`, `Reporting enhancements`). Keep entries to a single line. Do not create a new version header — add to the existing `[v#.#.#]` block at the top.
+`CHANGELOG` follows the template in `CHANGELOG.template`. Add entries under the relevant section heading (e.g. `REST/JSON API enhancements`, `Bugs Fixed`, `Reporting enhancements`). Keep entries to a single line. Do not create a new version header — add to the existing `[v#.#.#]` block at the top.
 
 **Entry format:** `Module/Entity: description` — always lead with the module, tool, or entity, followed by a colon and the description.
 
