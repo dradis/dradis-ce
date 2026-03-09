@@ -13,26 +13,26 @@ Dradis Community Edition (CE) is a Ruby on Rails application for collaborative s
 
 ## Common commands
 
-    ```bash
-    # Run full test suite
-    bundle exec rspec
+```bash
+# Run full test suite
+bundle exec rspec
 
-    # Run a single spec file
-    bundle exec rspec spec/path/to/spec.rb
+# Run a single spec file
+bundle exec rspec spec/path/to/spec.rb
 
-    # Run engine specs
-    bundle exec rspec engines/<engine-name>/spec/
+# Run engine specs
+bundle exec rspec engines/<engine-name>/spec/
 
-    # Lint changed files only (CI style — compares against target branch)
-    bin/rubocop-ci origin/develop false
+# Lint changed files only (CI style — compares against target branch)
+bin/rubocop-ci origin/develop false
 
-    # Database
-    bin/rails db:prepare
-    bin/rails db:migrate
+# Database
+bin/rails db:prepare
+bin/rails db:migrate
 
-    # Dev server (port 3000)
-    bin/dev
-    ```
+# Dev server (port 3000)
+bin/dev
+```
 
 You can restart with `touch tmp/restart.txt`
 
