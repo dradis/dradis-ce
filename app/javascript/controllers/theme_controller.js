@@ -2,6 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["autoIcon", "lightIcon", "darkIcon", "autoItem", "lightItem", "darkItem"]
+  static values = { preferencesPath: String }
 
   connect() {
     this.preference = this.element.dataset.theme || "auto"
