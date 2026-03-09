@@ -50,15 +50,13 @@ document.addEventListener('turbo:load', function(){
       );
     };
 
-    var untaggedColor = getComputedStyle(document.documentElement).getPropertyValue('--untagged-color').trim();
-
     x_axis = svg.append('g')
         .attr('class', 'x axis')
         .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis);
     x_axis.selectAll("text").style("fill", "inherit");
     x_axis.selectAll("path").style("stroke", "none");
-    x_axis.selectAll("text").last().style("fill", untaggedColor);
+    x_axis.selectAll("text").last().classed("untagged", true);
 
     var bars = svg.append('g');
 
@@ -90,8 +88,8 @@ document.addEventListener('turbo:load', function(){
       i++;
     }
 
-    $($('.tick')[i]).attr('fill', untaggedColor);
-    $($('.bar')[i]).attr('fill', untaggedColor);
-    $($('.counter')[i]).attr('fill', untaggedColor);
+    $($('.tick')[i]).addClass('untagged');
+    $($('.bar')[i]).addClass('untagged');
+    $($('.counter')[i]).addClass('untagged');
   }
 });

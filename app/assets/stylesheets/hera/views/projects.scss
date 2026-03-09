@@ -40,6 +40,12 @@ body.projects {
       justify-content: center;
       align-items: center;
 
+      .bar.untagged,
+      .counter.untagged,
+      .tick.untagged {
+        fill: var(--untagged-color);
+      }
+
       svg text {
         font-size: 14px;
       }
