@@ -116,7 +116,7 @@
       border-radius: 0px;
       box-shadow: none;
       display: block;
-      margin: 0 1px;
+      margin: 0 $margin 0 1px;
       position: sticky;
       text-align: center;
       top: 100px; // header height
@@ -132,6 +132,10 @@
 
       & + .textarea-container {
         margin-top: -42px !important;
+      }
+
+      @media (max-width: 991px) {
+        top: 50px;
       }
     }
   }
