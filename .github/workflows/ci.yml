@@ -66,8 +66,6 @@ jobs:
           bundler-cache: true
       - name: Prepare database
         run: bundle exec rails db:prepare
-      - name: Precompile assets
-        run: bundle exec rails assets:precompile
       - name: Run tests
         run: bundle exec rspec spec engines -p
 

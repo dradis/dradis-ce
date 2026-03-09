@@ -28,9 +28,7 @@ describe 'Card pages:' do
 
       describe 'textile form view' do
         let(:action_path) { new_project_board_list_card_path(current_project, @board, @list) }
-        let(:required_form) { fill_in :card_name, with: 'New Card' }
-        it_behaves_like 'a textile form view', Card
-        it_behaves_like 'an editor that remembers what view you like'
+        it_behaves_like 'a .textile form'
       end
 
       describe 'submitting the form with valid information' do
@@ -128,9 +126,7 @@ describe 'Card pages:' do
 
       describe 'textile form view' do
         let(:action_path) { edit_project_board_list_card_path(current_project, @board, @list, @card) }
-        let(:item) { @card }
-        it_behaves_like 'a textile form view', Card
-        it_behaves_like 'an editor that remembers what view you like'
+        it_behaves_like 'a .textile form'
       end
 
       describe 'submitting the form with valid information' do
@@ -235,8 +231,7 @@ describe 'Card pages:' do
       let(:create_activities) { nil }
       let(:create_comments) { nil }
 
-      let(:commentable) { @card }
-      it_behaves_like 'a page with a comments feed'
+      it_behaves_like 'a page with a comments feed hook'
 
       let(:subscribable) { @card }
       it_behaves_like 'a page with subscribe/unsubscribe links'
