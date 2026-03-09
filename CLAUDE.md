@@ -323,6 +323,7 @@ document.addEventListener('turbo:load', function () {
 ### Pull requests
 
 - PR title follows the same format as commit messages.
+- Fill in the PR description using the template at `.github/pull_request_template.md`.
 - Feature branch PRs should have a Summary describing the full feature, not just the last commit.
 - CI must be green before merging. If `develop` CI is red, investigate before merging.
 
