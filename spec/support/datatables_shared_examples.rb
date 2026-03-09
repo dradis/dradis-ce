@@ -44,42 +44,40 @@ shared_examples 'a DataTable' do
       end
     end
 
-    it 'is hidden by default' do
-      within '.dt-buttons.btn-group' do
-        expect(page).to_not have_button('Delete')
-      end
-    end
-
-    it 'is visible when row checkbox is selected' do
-      within '.dataTables_wrapper' do
-        page.find('td.select-checkbox', match: :first).click
-        expect(page).to have_button('Delete')
-      end
-    end
-
-    it 'is hidden again after a row checkbox is unselected' do
-      within '.dataTables_wrapper' do
-        page.find('td.select-checkbox', match: :first).click
-        page.find('td.select-checkbox', match: :first).click
-
-        expect(page).to_not have_button('Delete')
-      end
-    end
-
-    it 'can delete a selected item' do
-      within '.dataTables_wrapper' do
-        original_row_count = page.all('tbody tr').count
-        page.find('td.select-checkbox', match: :first).click
-
-        page.accept_confirm do
-          click_button('Delete')
+    it 'toggles visibility on select/unselect and can delete' do
+      aggregate_failures 'delete button behavior' do
+        # Hidden by default
+        within '.dt-buttons.btn-group' do
+          expect(page).to_not have_button('Delete')
         end
 
-        # Wait for ajax
-        page.find('.alert')
+        # Visible when row checkbox is selected
+        within '.dataTables_wrapper' do
+          page.find('td.select-checkbox', match: :first).click
+          expect(page).to have_button('Delete')
+        end
 
-        expect(page.all('tbody tr').count).to eq(original_row_count - 1)
-        expect(page).to have_text(/deleted/)
+        # Hidden again after unselect
+        within '.dataTables_wrapper' do
+          page.find('td.select-checkbox', match: :first).click
+          expect(page).to_not have_button('Delete')
+        end
+
+        # Can delete a selected item
+        within '.dataTables_wrapper' do
+          original_row_count = page.all('tbody tr').count
+          page.find('td.select-checkbox', match: :first).click
+
+          page.accept_confirm do
+            click_button('Delete')
+          end
+
+          # Wait for ajax
+          page.find('.alert')
+
+          expect(page.all('tbody tr').count).to eq(original_row_count - 1)
+          expect(page).to have_text(/deleted/)
+        end
       end
     end
   end
@@ -92,41 +90,32 @@ shared_examples 'a DataTable' do
       end
     end
 
-    it 'shows the tag button when an item is selected' do
-      within '.dataTables_wrapper' do
-        page.find('td.select-checkbox', match: :first).click
-        expect(page).to have_button('Tag')
-      end
-    end
+    it 'selects, shows tags, and applies a tag' do
+      aggregate_failures 'tagging behavior' do
+        # Shows the tag button when an item is selected
+        within '.dataTables_wrapper' do
+          page.find('td.select-checkbox', match: :first).click
+          expect(page).to have_button('Tag')
+        end
 
-    it 'shows the available tags' do
-      page.find('td.select-checkbox', match: :first).click
+        # Shows the available tags
+        within '.dt-buttons.btn-group' do
+          click_button('Tag')
 
-      within '.dt-buttons.btn-group' do
-        click_button('Tag')
+          within '.dt-button-collection' do
+            @tags.each do |tag|
+              expect(page).to have_link(tag.display_name)
+            end
 
-        within '.dt-button-collection' do
-          @tags.each do |tag|
-            expect(page).to have_link(tag.display_name)
+            # Tags the selected issue
+            click_link(@tags.first.display_name)
           end
         end
+
+        # Wait for the spinner to disappear
+        expect(page).to_not have_css('[data-behavior=spinner]')
+        expect(@issue.reload.tags).to include(@tags.first)
       end
-    end
-
-    it 'tags the selected issue' do
-      page.find('td.select-checkbox', match: :first).click
-
-      within '.dt-buttons.btn-group' do
-        click_button('Tag')
-
-        within '.dt-button-collection' do
-          click_link(@tags.first.display_name)
-        end
-      end
-
-      # Wait for the spinner to disappear
-      expect(page).to_not have_css('[data-behavior=spinner]')
-      expect(@issue.reload.tags).to include(@tags.first)
     end
   end
 
