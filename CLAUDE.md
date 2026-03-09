@@ -361,17 +361,4 @@ Editor: insert images at the cursor position when dragging and dropping or copyi
 
 ## Acceptance testing
 
-After a feature is complete, developers write an acceptance testing plan for the Support / Customer Success team. These testers are familiar with the product but not the codebase. The plan goes in the task tracker under the "Acceptance" section.
-
-Format:
-
-> **How to test**
-> (Steps to test functionality, described in detail for someone not familiar with this part of the application / code base)
-
-Guidelines:
-- Write numbered step-by-step instructions a non-developer can follow in the browser
-- State prerequisites (user role, seed data needed)
-- Cover the happy path first, then edge cases and error states
-- For API features, include concrete `curl` examples with expected responses
-- Include what the tester should verify at each step (flash messages, UI state changes, DB side effects)
-- Distinguish between what should succeed and what should be rejected (e.g. out-of-scope API calls returning 403)
+After a feature is complete, generate an acceptance testing plan using `/testing-steps`. The plan goes in the task tracker under the "Acceptance" section.
