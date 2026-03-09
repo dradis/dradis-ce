@@ -2,7 +2,7 @@ class PreferencesController < AuthenticatedController
   def update
     theme = params.dig(:preferences, :theme)
 
-    unless theme.nil? || UserPreferences::VALID_THEMES.include?(theme)
+    unless UserPreferences::VALID_THEMES.include?(theme)
       render json: { error: 'Invalid theme' }, status: :unprocessable_entity
       return
     end

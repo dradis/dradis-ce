@@ -17,7 +17,8 @@ class UserPreferences
   VALID_TOURS = %i[first_sign_in projects_show].freeze
   DIGEST_FREQUENCIES = %w[none instant daily].freeze
   DIGEST_FREQUENCY_DEFAULT = 'instant'.freeze
-  VALID_THEMES = %w[auto light dark].freeze
+  # nil is a valid theme value meaning "not set", which falls back to 'auto' in the layout.
+  VALID_THEMES = [nil, *%w[auto light dark]].freeze
 
   # -- Class Methods ----------------------------------------------------------
 
@@ -58,7 +59,7 @@ class UserPreferences
 
   def valid?(args)
     DIGEST_FREQUENCIES.include?(self.digest_frequency) &&
-      (theme.nil? || VALID_THEMES.include?(theme))
+      VALID_THEMES.include?(theme)
   end
 
   # ----------------------------------------------------------------- YAML.load
