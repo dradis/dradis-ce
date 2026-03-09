@@ -29,7 +29,7 @@ export default class extends Controller {
 
   persist(theme) {
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
-    fetch("/preferences", {
+    fetch(this.preferencesPathValue, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
