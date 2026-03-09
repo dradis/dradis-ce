@@ -91,10 +91,11 @@ body.projects {
         }
 
         &.untagged {
-          border-color: $black;
+          border-color: var(--untagged-color);
 
           .card-header {
-            background-color: $black;
+            background-color: var(--untagged-color);
+            color: var(--untagged-text);
           }
 
           .fa-bug {

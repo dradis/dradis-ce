@@ -45,6 +45,7 @@
   --text-success:         #{$green-400};
   --text-warning:         #{$yellow-400};
   --untagged-color:       #{$grey-400};
+  --untagged-text:        #{$grey-900};
 
   // Bootstrap global CSS custom property overrides
   --bs-body-bg:       #{$grey-900};
@@ -95,6 +96,7 @@
   --text-success:         #{darken($green-700, 10%)};
   --text-warning:         #{darken($yellow-600, 15%)};
   --untagged-color:       #{$grey-700};
+  --untagged-text:        #{$white};
 
   color-scheme: light;
 }
