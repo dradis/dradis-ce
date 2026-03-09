@@ -49,6 +49,8 @@ app/                        # Main Rails app
   drops/                    # Liquid template drops
 engines/
   dradis-api/               # CE API engine (in-project resource)
+  dradis-echo/              # Context-aware automation for Dradis
+  dradis-sandbox/           # Sandbox environment for testing
   ...
 config/
   initializers/warden_*.rb  # Warden strategies (numbered for load order)
