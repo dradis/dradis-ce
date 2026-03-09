@@ -250,7 +250,10 @@ Never use inline event handlers. Always use `addEventListener`.
 ```js
 // ✅
 element.addEventListener('click', handleClick);
-// ❌ <button onclick="handleClick()">
+```
+
+```html
+❌ <button onclick="handleClick()">
 ```
 
 ### Turbo and initialization
