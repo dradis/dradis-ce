@@ -20,10 +20,10 @@
   <div class="mb-3">
     <%= f.label :icon, 'Icon', class: 'form-label' %>
     <%=
-      f.text_field :icon,
-        value: @prompt.icon,
-        placeholder: 'Use a font-awesome icon name (e.g. fa-wand-magic-sparkles)',
-        class: 'form-control'
+      f.select :icon,
+        options_for_select(prompt_icons_collection, @prompt.icon),
+        {},
+        class: 'form-select'
     %>
   </div>
 
