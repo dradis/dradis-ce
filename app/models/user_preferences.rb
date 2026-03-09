@@ -35,6 +35,10 @@ class UserPreferences
   ATTRIBUTES = %i[digest_frequency theme tours]
   attr_accessor(*ATTRIBUTES)
 
+  def theme_or_default
+    theme || 'auto'
+  end
+
   def to_yaml_properties
     ATTRIBUTES.map { |attr| :"@#{attr}" }
   end

@@ -1,4 +1,4 @@
-<% theme_pref = current_user.preferences.theme || 'auto' %>
+<% theme_pref = current_user.preferences.theme_or_default %>
 <li class="nav-item dropdown">
   <a href="javascript:void(0)" class="nav-link dropdown-toggle no-caret-xl" title="Theme" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="d-none d-lg-inline">
