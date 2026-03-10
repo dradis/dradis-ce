@@ -126,7 +126,6 @@ class InlineThreadTurbo {
     const fragment = document.createDocumentFragment();
 
     const blockquote = document.createElement('blockquote');
-    blockquote.className = 'thread-quoted-text border-start border-3 border-primary ps-3 text-muted fst-italic';
     blockquote.textContent = anchor.exact;
     fragment.appendChild(blockquote);
 
