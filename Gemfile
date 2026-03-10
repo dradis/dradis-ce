@@ -196,7 +196,6 @@ group :development, :test do
 end
 
 group :test do
-  gem 'database_cleaner'
   gem 'factory_bot_rails', '~> 6.5'
   gem 'capybara', '~> 3.40'
   gem 'guard-rspec', require: false

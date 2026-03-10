@@ -1,3 +1,10 @@
+shared_examples 'a .textile form' do
+  it 'renders the textile editor' do
+    visit action_path
+    expect(page).to have_css('textarea.textile', visible: :all)
+  end
+end
+
 shared_examples 'a form with a help button' do
   describe "clicking the 'help' button", js: true do
     before { find('form .btn-help').click }
