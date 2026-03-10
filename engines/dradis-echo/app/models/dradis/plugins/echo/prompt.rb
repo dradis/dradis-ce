@@ -1,64 +1,9 @@
 module Dradis::Plugins::Echo
   class Prompt < ApplicationRecord
     include Defaults
+    include Icons
 
     SCOPES = [ :issue ].freeze
-
-    LABELS = [
-      'AI Generation',
-      'Alert',
-      'Analysis',
-      'Automation',
-      'Code Review',
-      'Command Line',
-      'Credentials',
-      'Database',
-      'Encryption',
-      'Forensics',
-      'General',
-      'Infrastructure',
-      'Investigation',
-      'Network',
-      'Reconnaissance',
-      'Report',
-      'Reword',
-      'Risk Scoring',
-      'Scope',
-      'Secure Document',
-      'Security',
-      'Summary',
-      'Vulnerabilities',
-      'Web Application',
-      'Writing Style'
-    ].freeze
-
-    ICONS = %w[
-      fa-wand-magic-sparkles
-      fa-circle-exclamation
-      fa-brain
-      fa-robot
-      fa-code
-      fa-terminal
-      fa-key
-      fa-database
-      fa-lock
-      fa-fingerprint
-      fa-star-of-life
-      fa-server
-      fa-magnifying-glass
-      fa-network-wired
-      fa-user-secret
-      fa-file-lines
-      fa-shuffle
-      fa-gauge
-      fa-bullseye
-      fa-file-shield
-      fa-shield-halved
-      fa-clipboard-list
-      fa-bug
-      fa-globe
-      fa-feather-pointed
-    ].freeze
 
     enum :visibility, [ :user, :team ]
 
@@ -76,7 +21,6 @@ module Dradis::Plugins::Echo
       presence: true,
       uniqueness: { scope: :user_id }
 
-    validates :icon, inclusion: ICONS, presence: true
     validates :prompt, presence: true
     validates :scope, inclusion: SCOPES.map(&:to_s), presence: true
     validates :user, presence: true, associated: true
