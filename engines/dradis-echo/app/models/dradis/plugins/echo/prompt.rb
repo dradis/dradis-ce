@@ -1,6 +1,7 @@
 module Dradis::Plugins::Echo
   class Prompt < ApplicationRecord
     include Defaults
+    include Icons
 
     SCOPES = [ :issue ].freeze
 
