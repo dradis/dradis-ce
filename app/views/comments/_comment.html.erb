@@ -37,6 +37,11 @@
         </div>
       </div>
       <div class="content content-textile" data-behavior="content-textile">
+        <% if comment.inline_thread_id? %>
+          <blockquote>
+            <%= comment.inline_thread.quoted_text.chomp %>
+          </blockquote>
+        <% end %>
         <%= comment_formatter(comment.content) %>
       </div>
     </div>
