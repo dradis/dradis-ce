@@ -23,7 +23,6 @@ class DradisTasks < Thor
       puts '** Cleaning database...'
       rake('db:drop')
       rake('db:prepare')
-      rake('db:seed')
       puts '   [  DONE  ]'
     end
 

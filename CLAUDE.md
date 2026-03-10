@@ -163,7 +163,7 @@ Defined in `config/initializers/inflections.rb`:
 
 ## Testing conventions
 
-- **RSpec 7** with FactoryBot, Shoulda Matchers, DatabaseCleaner
+- **RSpec 7** with FactoryBot, Shoulda Matchers
 - **Feature specs:** Selenium with Firefox headless (`Capybara.javascript_driver = :firefox`)
 - **CSRF is disabled** in test env (`allow_forgery_protection = false`) — no CSRF meta tag is rendered
 - **Warden test helpers:**
@@ -218,7 +218,7 @@ Event name convention: `'issue.created'`, `'comment.destroyed'`, `'inline_thread
 > **Deprecated:** `ActivityTracking` (`track_created`, `track_destroyed`, `track_activity`,
 > `track_state_change`) — do not use in new code. Use `EventPublisher` + `publish_event` instead.
 
-**Engine registration:** Each Pro engine inherits from `Dradis::Plugins::Base`, provides `:addon`, and registers Warden strategies / controller extensions in initializers.
+**Engine registration:** Each engine inherits from `Dradis::Plugins::Base`, provides `:addon`, and registers Warden strategies / controller extensions in initializers.
 
 **API authentication chain:** Warden strategies are tried in order. For scoped API keys: `:api_key_auth` checks `dradis_{prefix}_{secret}` tokens first, then `:api_token` falls back to legacy Bearer/Basic auth.
 
@@ -243,12 +243,15 @@ entirely — field names appear as headings or bold text, values as body text. T
 
 ## Git workflow
 
+- **Before committing:** Run `bin/rubocop-ci develop false` to lint changed files. Do not commit if it fails.
 - Primary branch: `develop`
-- Feature branches: topic branches off `develop`
-- Sub-branch rules: `topic/feature` (e.g. `api_keys/model`)
+- Feature branches:
+  - Topic branches off `develop` (e.g. `feature/api-keys`)
+  - PRs into `develop` should have a Summary describing the full feature (e.g. all the topic branches), not just the last commit
+- Sub-branch rules: use "/" to split branch names like `<topic>/<feature>` (e.g. `api-keys/model`)
 - Commit format: `(#TICKET) Short imperative statement` with body explaining the problem and fix
-- CI runs: bundler-audit, ruby-audit, brakeman, rubocop (changed files), rspec (4 parallel nodes)
-- Feature branch PRs into `develop` should have a Summary describing the full feature, not just the last commit
-- `db/schema.rb` hygiene: Only commit schema changes from your own migrations.
-- **Migrations:** Use `t.references` (not `t.integer` or `t.bigint`) for FK columns. `t.references` generates the correct type for the database adapter and adds the index automatically.
+- **Migrations:**
+  - `db/schema.rb` hygiene: Only commit schema changes from your own migrations.
+  - Use `t.references` (not `t.integer` or `t.bigint`) for FK columns. `t.references` generates the correct type for the database adapter and adds the index automatically.
 - Do not add `Co-Authored-By` lines to commit messages.
+- CI runs: bundler-audit, ruby-audit, brakeman, rubocop (changed files), rspec (4 parallel nodes)
