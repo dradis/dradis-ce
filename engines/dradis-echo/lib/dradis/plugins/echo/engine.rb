@@ -14,12 +14,10 @@ module Dradis::Plugins::Echo
       settings.default_roslin_ollama_model = 'qwen2.5:14b'
     end
 
-    # add engine migrations to main app migrations paths in development
-    if Rails.env.development?
-      initializer 'dradis-echo.append_migrations' do |app|
-        engine_migrations_path = config.paths['db/migrate'].expanded.first
-        app.config.paths['db/migrate'].push(engine_migrations_path)
-      end
+    # add engine migrations to main app migrations paths
+    initializer 'dradis-echo.append_migrations' do |app|
+      engine_migrations_path = config.paths['db/migrate'].expanded.first
+      app.config.paths['db/migrate'].push(engine_migrations_path)
     end
 
     initializer 'echo.asset_precompile_paths' do |app|
