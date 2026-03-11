@@ -99,7 +99,7 @@
     margin: 0;
     margin-top: 2px;
     padding: 0;
-    background: #efefef;
+    background: var(--secondary-bg);
 
     li {
       padding: 5px 5px;
@@ -107,7 +107,7 @@
 
       &.highlight,
       &:hover {
-        background: #ddd;
+        background: var(--secondary-bg-strong);
       }
 
       span {
