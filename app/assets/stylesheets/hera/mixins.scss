@@ -27,3 +27,23 @@
     }
   }
 }
+
+@mixin comment-item {
+  .gravatar {
+    padding-top: 3px;
+
+    &:not(.gravatar-inline) {
+      float: none;
+      margin-right: 0.5rem;
+    }
+  }
+
+  .user {
+    font-weight: 600;
+  }
+
+  .time {
+    color: $text-muted;
+    font-size: 0.75rem;
+  }
+}
