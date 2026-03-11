@@ -26,9 +26,9 @@ class InlineThreadsController < AuthenticatedController
 
   def create
     @inline_thread = commentable.inline_threads.build(inline_thread_params_for_create)
+    comment = @inline_thread.comments.first
 
     if @inline_thread.save
-      comment = @inline_thread.comments.first
       publish_event('comment.created', comment.to_event_payload)
       broadcast_notifications(
         action: :create,

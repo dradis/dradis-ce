@@ -1,3 +1,7 @@
-<%= turbo_stream.update 'inline_thread_content' do %>
-  <%= render 'inline_threads/inline_thread', inline_thread: @inline_thread %>
+<%= turbo_stream.append "thread_#{@inline_thread.id}_comments" do %>
+  <%= render 'inline_threads/inline_comment', comment: @comment %>
+<% end %>
+
+<%= turbo_stream.replace "thread_#{@inline_thread.id}_reply_form" do %>
+  <%= render 'inline_threads/reply_form', inline_thread: @inline_thread %>
 <% end %>

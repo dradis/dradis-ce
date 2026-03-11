@@ -12,14 +12,5 @@
 
   <hr class="mt-0">
 
-  <div id="thread_<%= inline_thread.id %>_reply_form">
-    <%= form_with url: inline_thread_comments_path(inline_thread) do |f| %>
-      <%= f.text_area :content,
-            name: 'comment[content]',
-            class: 'form-control form-control-sm mb-2',
-            placeholder: 'Reply...',
-            rows: 2 %>
-      <%= f.submit 'Reply', class: 'btn btn-sm btn-primary' %>
-    <% end %>
-  </div>
+  <%= render 'inline_threads/reply_form', inline_thread: inline_thread %>
 </div>
