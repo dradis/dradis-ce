@@ -5,7 +5,7 @@ class InlineThread < ApplicationRecord
 
   serialize :anchor, coder: JSON
 
-  enum :status, { open: 0, resolved: 1 }
+  enum :status, [:open, :resolved]
 
   # -- Relationships --------------------------------------------------------
   belongs_to :commentable, polymorphic: true
@@ -34,7 +34,7 @@ class InlineThread < ApplicationRecord
   # -- Validations ----------------------------------------------------------
   validates :anchor, presence: true
   validates :commentable, presence: true
-  validate :anchor_schema_valid
+  validate :anchor_schema
 
   # -- Class Methods --------------------------------------------------------
 
@@ -89,7 +89,7 @@ class InlineThread < ApplicationRecord
     end
   end
 
-  def anchor_schema_valid
+  def anchor_schema
     return if anchor.blank?
 
     missing = REQUIRED_ANCHOR_KEYS - anchor.keys

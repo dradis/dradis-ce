@@ -19,8 +19,7 @@ class InlineThreadsController < AuthenticatedController
                            .order(created_at: :asc)
   end
 
-  def show
-  end
+  def show; end
 
   def create
     @inline_thread = commentable.inline_threads.build(inline_thread_params)
