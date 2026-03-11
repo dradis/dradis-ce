@@ -131,7 +131,7 @@ class InlineThreadHighlighter {
       // Cross-browser: anchor.exact may use different whitespace than
       // the current browser's innerText (e.g. Safari uses spaces where
       // Firefox uses \n\n around block elements). Fuzzy-match whitespace.
-      const result = this.fuzzyIndexOf(combined, searchText);
+      const result = fuzzyIndexOf(combined, searchText);
       if (!result) return [];
       matchIndex = result.start;
       matchEnd = result.end;
@@ -180,19 +180,4 @@ class InlineThreadHighlighter {
     return segments;
   }
 
-  // Find `needle` in `haystack` allowing whitespace runs in the needle
-  // to match any whitespace run in the haystack. Returns { start, end }
-  // positions in the original haystack, or null.
-  fuzzyIndexOf(haystack, needle) {
-    const parts = needle.split(/\s+/).map(
-      s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-    );
-    if (parts.length < 2) return null;
-
-    const pattern = new RegExp(parts.join('\\s+'));
-    const match = haystack.match(pattern);
-    if (!match) return null;
-
-    return { start: match.index, end: match.index + match[0].length };
-  }
 }
