@@ -14,12 +14,15 @@ class Search
   # Return results based on params.
   # If search term is empty return empty array
   def results
-    return [] if query.blank?
     # Default Kaminari per page is 25, as we are using here
     results = send(scope)
     case results
     when ActiveRecord::Relation
-      results.page(page)
+      if page
+        results.page(page)
+      else
+        results.page.per(results.count)
+      end
     else
       Kaminari.paginate_array(results).page(page)
     end
@@ -52,40 +55,38 @@ class Search
   end
 
   def evidence
-    @evidence ||= begin
-      Evidence.where(
-        'node_id IN (:nodes) AND LOWER(content) LIKE LOWER(:q)',
-        nodes: project.nodes.user_nodes.pluck(:id),
-        q: "%#{query}%"
-      )
-        .includes(:issue, :node)
-        .order(updated_at: :desc)
-    end
+    @evidence ||=
+      begin
+        evidence = Evidence.where(node_id: project.nodes.user_nodes.pluck(:id))
+        evidence = evidence.where('LOWER(content) LIKE LOWER(:q)', q: "%#{query}%") if query.present?
+        evidence.includes(:issue, :node).order(updated_at: :desc)
+      end
   end
 
   def issues
-    @issues ||= Issue.where(
-      "node_id = :node AND LOWER(text) LIKE LOWER(:q)",
-      node: project.issue_library,
-      q: "%#{query}%"
-    ).order(updated_at: :desc)
+    @issues ||=
+      begin
+        issues = Issue.where(node: project.issue_library)
+        issues = issues.where('LOWER(text) LIKE LOWER(:q)', q: "%#{query}%") if query.present?
+        issues.includes(:node, :tags).order(updated_at: :desc)
+      end
   end
 
   def nodes
-    @nodes ||= project.nodes.user_nodes
-      .where("LOWER(label) LIKE LOWER(:q)", q: "%#{query}%")
-      .order(updated_at: :desc)
+    @nodes ||=
+      begin
+        nodes = project.nodes.user_nodes
+        nodes = nodes.where('LOWER(label) LIKE LOWER(:q)', q: "%#{query}%") if query.present?
+        nodes.order(updated_at: :desc)
+      end
   end
 
   def notes
-    @notes ||= begin
-      Note.where(
-        "node_id IN (:nodes) AND LOWER(text) LIKE LOWER(:q)",
-        nodes: project.nodes.user_nodes.pluck(:id),
-        q: "%#{query}%"
-      )
-        .includes(:node)
-        .order(updated_at: :desc)
-    end
+    @notes ||=
+      begin
+        notes = Note.where(node_id: project.nodes.user_nodes.pluck(:id))
+        notes = notes.where('LOWER(text) LIKE LOWER(:q)', q: "%#{query}%") if query.present?
+        notes.includes(:node).order(updated_at: :desc)
+      end
   end
 end

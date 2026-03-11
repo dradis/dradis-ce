@@ -1,5 +1,6 @@
 class Issue < Note
   include Commentable
+  include Eventable
   # FIXME - ISSUE/NOTE INHERITANCE
   # Commentable.allowed_types << base.name doesn't work for Issue because it's
   # an STI model, so we manually allow the class here.
@@ -114,6 +115,21 @@ class Issue < Note
     results.sort_by do |node, _|
       node.label.split('.').map(&:to_i)
     end
+  end
+
+  # Returns a hash that will be used as part of event notification workflows.
+  def local_event_payload
+    {
+      author: author,
+      project: {
+        id: project.id,
+        name: project.name
+      },
+      state: state,
+      tag: tags.first,
+      fields: fields,
+      title: title
+    }
   end
 
   # Move all Evidence attached to issues with ids in issue_ids

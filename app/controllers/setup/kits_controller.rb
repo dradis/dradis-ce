@@ -8,7 +8,7 @@ module Setup
     def create
       case @kit
       when :none
-        ;
+        Tag::DEFAULT_TAGS.each { |name| Tag.create!(name: name) } unless defined?(Dradis::Pro)
       when :welcome
         kit_folder = Rails.root.join('lib', 'tasks', 'templates', 'welcome').to_s
         logger = Log.new.info('Loading Welcome kit...')
