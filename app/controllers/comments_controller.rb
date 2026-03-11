@@ -7,8 +7,10 @@ class CommentsController < AuthenticatedController
 
   layout false
 
+  before_action :authorize_commentable
+
   def index
-    @comments = commentable.comments.includes(:user)
+    @comments = commentable.comments.includes(:inline_thread, :user)
   end
 
   def create
@@ -37,6 +39,14 @@ class CommentsController < AuthenticatedController
   end
 
   private
+
+  def authorize_commentable
+    if project
+      authorize! :use, project
+    else
+      authorize! :show, commentable
+    end
+  end
 
   def comment_params
     params.require(:comment).permit(:content, :commentable_type, :commentable_id)
