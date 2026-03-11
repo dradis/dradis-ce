@@ -119,6 +119,19 @@ class InlineThreadSelector {
       index = text.indexOf(selectedText);
     }
 
+    // Cross-field selections span block elements (e.g. <h5> headings).
+    // Browsers differ in how Selection.toString() whitespace-separates
+    // blocks vs how innerText does it (e.g. \n vs \n\n). Normalise
+    // whitespace in both strings to find the match, then map back to
+    // original positions.
+    if (index === -1) {
+      const result = this.fuzzyIndexOf(text, selectedText);
+      if (result) {
+        index = result.start;
+        selectedText = text.substring(result.start, result.end);
+      }
+    }
+
     if (index === -1) return null;
 
     const prefixStart = Math.max(0, index - 30);
@@ -139,6 +152,23 @@ class InlineThreadSelector {
       },
       field_name: fieldName
     };
+  }
+
+  // Find `needle` in `haystack` allowing whitespace runs in the needle
+  // to match any whitespace run in the haystack. Returns { start, end }
+  // positions in the original haystack, or null.
+  fuzzyIndexOf(haystack, needle) {
+    // Build a regex that treats each whitespace run in the needle as \s+
+    const parts = needle.split(/\s+/).map(
+      s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    );
+    if (parts.length < 2) return null;
+
+    const pattern = new RegExp(parts.join('\\s+'));
+    const match = haystack.match(pattern);
+    if (!match) return null;
+
+    return { start: match.index, end: match.index + match[0].length };
   }
 
   findFieldName(position) {

@@ -87,7 +87,7 @@ class InlineThreadsController < AuthenticatedController
       user: current_user,
       version_id: commentable.versions.last&.id
     ).tap do |p|
-      p[:comments_attributes].each do |attrs|
+      p[:comments_attributes].each_value do |attrs|
         attrs.merge!(user: current_user, commentable: commentable)
       end
     end
@@ -98,7 +98,7 @@ class InlineThreadsController < AuthenticatedController
   end
 
   def require_comment
-    if inline_thread_params.dig(:comments_attributes, 0, :content).blank?
+    if inline_thread_params.dig(:comments_attributes, '0', :content).blank?
       head :unprocessable_entity
     end
   end

@@ -72,7 +72,7 @@ shared_examples 'inline threads' do
               commentable_type: commentable.class.to_s,
               commentable_id: commentable.id,
               anchor: valid_anchor,
-              comments_attributes: [{ content: 'This needs revision' }]
+              comments_attributes: { '0' => { content: 'This needs revision' } }
             }
           },
           headers: turbo_stream_headers
