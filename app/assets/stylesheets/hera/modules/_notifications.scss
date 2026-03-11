@@ -53,6 +53,7 @@
 
   &.unread {
     background-color: $brand-100;
+    color: $grey-900;
 
     .notification-icon {
       opacity: 0.15;
