@@ -5,8 +5,8 @@ module Dradis::Plugins::Echo
 
     before_action :check_turbo_config, only: [:index]
     before_action :set_type
-    before_action :set_record, except: [:create]
     before_action :set_prompt, only: [:preview, :show]
+    before_action :set_record, except: [:create]
 
     def index
       Prompt.seed_default_prompts(current_user) if current_user.prompts.empty?
