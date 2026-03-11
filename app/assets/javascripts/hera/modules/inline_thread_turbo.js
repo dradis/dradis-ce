@@ -111,13 +111,41 @@ class InlineThreadTurbo {
       this.closePanel();
     });
 
-    // After any Turbo form submission in our panel, re-highlight threads.
+    // After any Turbo form submission in our panel, re-highlight threads
+    // or show an error if the submission failed.
     document.addEventListener('turbo:submit-end', (e) => {
       if (!e.target.closest('[data-behavior~=inline-thread-panel]')) return;
-      if (!e.detail.success) return;
 
-      this.fetchAndHighlight();
+      if (e.detail.success) {
+        this.clearErrors();
+        this.fetchAndHighlight();
+      } else {
+        this.showError(e.target);
+      }
     });
+
+    // Clear errors when the user starts typing again.
+    this.panel.addEventListener('input', (e) => {
+      if (e.target.matches('textarea')) this.clearErrors();
+    });
+  }
+
+  // -- Error feedback ------------------------------------------------------
+
+  showError(form) {
+    this.clearErrors();
+
+    const alert = document.createElement('div');
+    alert.className = 'alert alert-danger py-1 px-2 mb-2 small';
+    alert.dataset.behavior = 'inline-thread-error';
+    alert.textContent = 'Something went wrong. Please try again.';
+    form.prepend(alert);
+  }
+
+  clearErrors() {
+    this.frame.querySelectorAll('[data-behavior~=inline-thread-error]').forEach(
+      el => el.remove()
+    );
   }
 
   // -- Helpers -------------------------------------------------------------
