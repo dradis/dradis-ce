@@ -5,6 +5,7 @@ module Dradis::Plugins::Echo
 
     before_action :check_turbo_config, only: [:index]
     before_action :set_type
+    before_action :set_prompt, only: [:preview, :show]
     before_action :set_record, except: [:create]
 
     def index
@@ -13,9 +14,10 @@ module Dradis::Plugins::Echo
       @prompts = current_user.prompts.for(@type)
     end
 
+    def preview; end
+
     def show
-      @template = current_user.prompts.find(params[:id])
-      @prompt = params[:prompt]
+      @prompt_content = params[:prompt]
       @interaction_id = SecureRandom.hex(20)
       @response_id = SecureRandom.hex(10)
     end
@@ -63,6 +65,10 @@ module Dradis::Plugins::Echo
 
     def set_record
       @record = current_project.send(@type.to_s.pluralize).find(record_params[:record])
+    end
+
+    def set_prompt
+      @prompt = current_user.prompts.find(params[:id])
     end
 
     def set_type
