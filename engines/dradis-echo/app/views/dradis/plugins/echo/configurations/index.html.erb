@@ -1,0 +1,127 @@
+<% content_for :title, 'Dradis Echo Configuration' %>
+
+<% content_for :breadcrumbs do %>
+  <ol class="breadcrumb">
+    <% if defined?(Dradis::Pro) %>
+    <li class="breadcrumb-item"><%= link_to 'Dashboard', main_app.dashboard_path %></li>
+    <li class="breadcrumb-item"><%= link_to 'Dradis Echo', echo.prompts_path %></li>
+    <% else %>
+    <li class="breadcrumb-item"><%= link_to Project.new.name, main_app.project_path(1) %></li>
+    <% end %>
+    <li class="breadcrumb-item active">Echo Configuration</li>
+  </ol>
+<% end %>
+
+<% content_for :sidebar do %>
+  <div class="header">
+    <div class="header-inner">
+      <h5 class="header-name">Echo Configuration Tips</h5>
+      <div class="options">
+        <%= link_to "#tips", data: { bs_toggle: 'collapse', behavior: 'collapse-collection' } do %>
+          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle tips</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div id="tips" class="page-tips show collapse">
+    <div class="bg-info">
+      <p>To configure Echo to work with your LLM of choice, first install and run Ollama, then download and run an LLM using Ollama.</p>
+      <p>Update the url and model on this page, then navigate to an Issue and explore the Echo tab.</p>
+      <p class="text-end card-link">More about <a href="https://dradis.com/support/guides/intelligent_automation/echo/" target="_blank">Echo</a>.</p>
+    </div>
+  </div>
+<% end %>
+
+<div class="accordion mb-4" id="configuration-accordion">
+  <div class="accordion-item">
+    <h4 class="accordion-header" id="steps-heading">
+      <button
+        class="accordion-button <%= class_names(collapsed: @configuration_form.configured?) %>"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapse-steps"
+        aria-expanded="true"
+        aria-controls="collapse-steps"
+        data-bs-toggle="collapse">Configuration Steps
+      </button>
+    </h4>
+    <div
+      id="collapse-steps"
+      class="accordion-collapse collapse <%= class_names(show: !@configuration_form.configured?) %>"
+      aria-labelledby="steps-heading">
+      <div class="accordion-body">
+        <!--
+        <h2>LanguageTool configuration</h2>
+        <p>
+          <a href="https://github.com/languagetool-org/languagetool">LanguageTool</a>
+          is an open-source style and grammar checker for 25+ languages.
+        </p>
+        <ol>
+          <li class="mb2">Download and run <a href="https://github.com/languagetool-org/languagetool?tab=readme-ov-file#docker">LanguageTool</a> (we recommend Docker).</li>
+          <li class="mb2">Update the form below with the container's address</li>
+        </ol>
+        -->
+
+        <h2>LLM configuration</h2>
+        <ol class="mb-0">
+          <li class="mb2">Download and install <a href="https://ollama.com/download" target="_blank">Ollama</a></li>
+          <li class="mb2">Start Ollama with <code>$ ollama serve</code></li>
+          <li class="mb2">Choose a <a href="https://ollama.com/search" target="_blank">model</a></li>
+          <li class="mb2">Run the model with <code>$ ollama run [model-name]:[variant]</code>.
+            <ul>
+              <li>For example: <code>$ ollama run qwen2.5:14b</code> (~9GB)</li>
+              <li>The model will be downloaded on first run.</li>
+            </li>
+          </ul>
+          <li class="mb2">Update the form below with:</li>
+          <ul>
+            <li>Ollama address: from the output of Step 2 - default is <code>http://localhost:11434</code></li>
+            <li>Ollama model: using the same format as step 4 - for example <code>qwen2.5:14b</code></li>
+          </ul>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <h4 class="accordion-header" id="details-heading">
+      <button
+        class="accordion-button"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapse-details"
+        aria-expanded="true"
+        aria-controls="collapse-details"
+        data-bs-toggle="collapse">Configuration Details
+      </button>
+    </h4>
+    <div
+      id="collapse-details"
+      class="accordion-collapse show"
+      aria-labelledby="details-heading">
+      <div class="accordion-body">
+
+        <%= form_with model: @configuration_form, url: configurations_path, method: :patch, class: 'w-100' do |f| %>
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="mb-3">
+                  <%= f.label :ollama_address, class: 'form-label' %>
+                  <%= f.text_field :roslin_ollama_address, class: 'form-control', required: true %>
+                </div>
+                <div class="mb-3">
+                  <%= f.label :ollama_model, class: 'form-label' %>
+                  <%= f.text_field :roslin_ollama_model, class: 'form-control', required: true %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <%= submit_tag 'Save Configuration', class: 'btn btn-primary' %>
+            <%#= link_to 'Cancel', main_app.admin_integrations_path(tab: 'tools') %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

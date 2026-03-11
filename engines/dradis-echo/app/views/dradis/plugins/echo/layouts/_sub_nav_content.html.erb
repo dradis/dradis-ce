@@ -1,0 +1,14 @@
+<ul class="navbar-nav">
+  <%= content_tag :li, class: class_names('nav-item', active: controller_path.ends_with?('echo/prompts')) do %>
+    <%= link_to echo.prompts_path, class: 'nav-link' do %>
+      <i class="fa-solid fa-database me-1" title="Manage Prompts"></i>
+      <span>Prompts</span>
+    <% end %>
+  <% end %>
+  <%= content_tag :li, class: class_names('nav-item', active: controller_path.include?('echo/configurations')) do %>
+    <%= link_to echo.configurations_path, class: 'nav-link' do %>
+      <i class="fa-solid fa-cog me-1" title="Configuration"></i>
+      <span>Configuration</span>
+    <% end %>
+  <% end %>
+</ul>

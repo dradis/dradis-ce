@@ -1,0 +1,13 @@
+Dradis::Plugins::Echo::Engine.routes.draw do
+  scope '/addons/echo' do
+    resources :configurations, only: [:index] do
+      patch :update, on: :collection
+    end
+
+    resources :projects, only: [] do
+      resources :prompts, only: [:index, :show, :create], module: :projects
+    end
+
+    resources :prompts, except: [:show]
+  end
+end

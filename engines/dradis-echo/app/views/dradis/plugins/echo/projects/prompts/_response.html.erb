@@ -1,0 +1,29 @@
+<div class="echo-response mb-3">
+  <div class="accordion" id="accordionEcho">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="promptHeading">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePrompt" aria-expanded="false" aria-controls="collapsePrompt">
+          <i class="fa-solid <%= @template.icon %> me-2"></i> <%= @template.title %> Prompt
+        </button>
+      </h2>
+      <div id="collapsePrompt" class="accordion-collapse collapse" aria-labelledby="promptHeading" data-bs-parent="#accordionEcho">
+        <div id="prompt_content" class="accordion-body">
+          <div id="prompt_template"><%= @prompt %></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="responseHeading">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseResponse" aria-expanded="true" aria-controls="collapseResponse">
+          <i class="fa-solid fa-wifi me-2"></i>Echo Response
+        </button>
+      </h2>
+      <div id="collapseResponse" class="accordion-collapse" aria-labelledby="responseHeading" data-bs-parent="#accordionEcho">
+        <div id="<%= @response_id %>" class="accordion-body">
+          <div id="<%= "#{@response_id}_spinner" %>"><%= spinner_tag %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
