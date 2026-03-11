@@ -32,7 +32,6 @@ class InlineThread < ApplicationRecord
   # -- Callbacks ------------------------------------------------------------
 
   # -- Validations ----------------------------------------------------------
-  
   validates :commentable, presence: true
 
   # -- Class Methods --------------------------------------------------------
