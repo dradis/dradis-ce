@@ -17,7 +17,7 @@ module Dradis::Plugins::Echo
     def preview; end
 
     def show
-      @prompt = params[:prompt]
+      @prompt_content = params[:prompt]
       @interaction_id = SecureRandom.hex(20)
       @response_id = SecureRandom.hex(10)
     end
@@ -68,7 +68,7 @@ module Dradis::Plugins::Echo
     end
 
     def set_prompt
-      @prompt_template = current_user.prompts.find(params[:id])
+      @prompt = current_user.prompts.find(params[:id])
     end
 
     def set_type
