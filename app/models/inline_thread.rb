@@ -45,6 +45,10 @@ class InlineThread < ApplicationRecord
         id: commentable.id,
         title: commentable.title
       },
+      project: {
+        id: project.id,
+        name: project.name
+      },
       status: status
     }
   end
