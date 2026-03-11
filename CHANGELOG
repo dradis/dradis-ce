@@ -6,6 +6,7 @@
   - Docker:
     - Update default attachments & templates locations to storage/
     - Include assets for all integrations regardless of enabled/disabled status
+  - Echo context layer is part of the framework
   - Nodes:
     - Add more types and icons
     - Rename addon upload/parent nodes and add icons
