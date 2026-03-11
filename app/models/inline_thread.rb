@@ -1,9 +1,6 @@
 class InlineThread < ApplicationRecord
   include Eventable
-
-  REQUIRED_ANCHOR_KEYS = %w[exact position prefix suffix type].freeze
-
-  serialize :anchor, coder: JSON
+  include InlineThread::Anchor
 
   enum :status, [:open, :resolved]
 
@@ -33,37 +30,14 @@ class InlineThread < ApplicationRecord
   delegate :project, to: :commentable
 
   # -- Callbacks ------------------------------------------------------------
-  before_validation :coerce_anchor_position
 
   # -- Validations ----------------------------------------------------------
-  validates :anchor, presence: true
+  
   validates :commentable, presence: true
-  validate :anchor_schema
 
   # -- Class Methods --------------------------------------------------------
 
   # -- Instance Methods -----------------------------------------------------
-  def resolve!(user)
-    update!(status: :resolved, resolved_by: user, resolved_at: Time.current)
-  end
-
-  def reopen!(_user)
-    update!(status: :open, resolved_by: nil, resolved_at: nil)
-  end
-
-  def quoted_text
-    anchor&.dig('exact')
-  end
-
-  def outdated?
-    return false if version_id.nil?
-
-    latest_version = commentable.versions.where(event: 'update').last
-    return false unless latest_version
-
-    version_id < latest_version.id
-  end
-
   def local_event_payload
     {
       anchor: anchor,
@@ -75,35 +49,20 @@ class InlineThread < ApplicationRecord
     }
   end
 
-  private
+  def outdated?
+    return false if version_id.nil?
 
-  def coerce_anchor_position
-    return if anchor.blank? || !anchor.is_a?(Hash)
-    return unless anchor['position'].is_a?(Hash)
+    latest_version = commentable.versions.where(event: 'update').last
+    return false unless latest_version
 
-    %w[start end].each do |key|
-      val = anchor['position'][key]
-      if val.is_a?(String) && val =~ /\A\d+\z/
-        anchor['position'][key] = val.to_i
-      end
-    end
+    version_id < latest_version.id
   end
 
-  def anchor_schema
-    return if anchor.blank?
+  def reopen!(_user)
+    update!(status: :open, resolved_by: nil, resolved_at: nil)
+  end
 
-    missing = REQUIRED_ANCHOR_KEYS - anchor.keys
-    if missing.any?
-      errors.add(:anchor, "missing required keys: #{missing.join(', ')}")
-    end
-
-    if anchor['position'].present?
-      pos = anchor['position']
-      unless pos.is_a?(Hash) &&
-             pos['start'].to_s =~ /\A\d+\z/ &&
-             pos['end'].to_s =~ /\A\d+\z/
-        errors.add(:anchor, 'position must have integer start and end')
-      end
-    end
+  def resolve!(user)
+    update!(status: :resolved, resolved_by: user, resolved_at: Time.current)
   end
 end
