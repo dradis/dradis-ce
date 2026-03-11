@@ -18,6 +18,8 @@ class InlineThreads::CommentsController < AuthenticatedController
         notifiable: @comment,
         user: current_user
       )
+      @inline_thread.reload
+      @inline_thread.comments.includes(:user).load
     else
       head :unprocessable_entity
     end

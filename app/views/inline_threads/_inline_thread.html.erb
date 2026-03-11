@@ -5,7 +5,7 @@
   </blockquote>
 
   <div class="border-top" id="thread_<%= inline_thread.id %>_comments">
-    <% inline_thread.comments.includes(:user).each do |comment| %>
+    <% inline_thread.comments.each do |comment| %>
       <%= render 'inline_threads/inline_comment', comment: comment %>
     <% end %>
   </div>

@@ -1,5 +1,5 @@
 class InlineThreadsController < AuthenticatedController
-  load_and_authorize_resource, except: [:index]
+  load_and_authorize_resource except: [:index]
 
   include EventPublisher
   # FIXME: @mentions are currently too tied to Comments
@@ -12,6 +12,7 @@ class InlineThreadsController < AuthenticatedController
   layout false
 
   before_action :authorize_commentable
+  before_action :require_comment, only: [:create]
 
   def index
     @inline_threads = commentable.inline_threads
@@ -19,31 +20,21 @@ class InlineThreadsController < AuthenticatedController
                            .order(created_at: :asc)
   end
 
-  def show; end
+  def show
+    @inline_thread.comments.includes(:user).load
+  end
 
   def create
-    @inline_thread = commentable.inline_threads.build(inline_thread_params)
-    @inline_thread.user = current_user
-    @inline_thread.version_id = commentable.versions.last&.id
+    @inline_thread = commentable.inline_threads.build(inline_thread_params_for_create)
 
     if @inline_thread.save
-      if comment_params.present? && comment_params[:content].present?
-        @comment = @inline_thread.comments.build(
-          content: comment_params[:content],
-          commentable: commentable,
-          user: current_user
-        )
-
-        if @comment.save
-          publish_event('comment.created', @comment.to_event_payload)
-          broadcast_notifications(
-            action: :create,
-            notifiable: @comment,
-            user: current_user
-          )
-        end
-      end
-
+      comment = @inline_thread.comments.first
+      publish_event('comment.created', comment.to_event_payload)
+      broadcast_notifications(
+        action: :create,
+        notifiable: comment,
+        user: current_user
+      )
       publish_event('inline_thread.created', @inline_thread.to_event_payload)
     else
       head :unprocessable_entity
@@ -83,18 +74,32 @@ class InlineThreadsController < AuthenticatedController
     end
   end
 
-  def comment_params
-    params.require(:comment).permit(:content)
-  end
-
   def inline_thread_params
     params.require(:inline_thread).permit(
       :commentable_type, :commentable_id,
-      anchor: [:type, :exact, :prefix, :suffix, :field_name, { position: [:start, :end] }]
+      anchor: [:type, :exact, :prefix, :suffix, :field_name, { position: [:start, :end] }],
+      comments_attributes: [:content]
     )
+  end
+
+  def inline_thread_params_for_create
+    inline_thread_params.merge(
+      user: current_user,
+      version_id: commentable.versions.last&.id
+    ).tap do |p|
+      p[:comments_attributes].each do |attrs|
+        attrs.merge!(user: current_user, commentable: commentable)
+      end
+    end
   end
 
   def project
     @project ||= commentable.respond_to?(:project) ? commentable.project : nil
+  end
+
+  def require_comment
+    if inline_thread_params.dig(:comments_attributes, 0, :content).blank?
+      head :unprocessable_entity
+    end
   end
 end

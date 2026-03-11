@@ -147,7 +147,7 @@ class InlineThreadTurbo {
     const textareaWrapper = document.createElement('div');
     textareaWrapper.className = 'mb-2';
     const textarea = document.createElement('textarea');
-    textarea.name = 'comment[content]';
+    textarea.name = 'inline_thread[comments_attributes][0][content]';
     textarea.className = 'form-control form-control-sm';
     textarea.placeholder = 'Add a comment...';
     textarea.rows = 3;

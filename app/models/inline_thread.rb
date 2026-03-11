@@ -17,6 +17,8 @@ class InlineThread < ApplicationRecord
     optional: true
   has_many :comments, dependent: :destroy
 
+  accepts_nested_attributes_for :comments
+
   # Because Issue descends from Note but doesn't use STI, Rails's default
   # polymorphic setter will set 'commentable_type' to 'Note' when you pass an
   # Issue. Override the default behaviour here for issues:
@@ -27,6 +29,8 @@ class InlineThread < ApplicationRecord
     self.commentable_type = 'Issue' if new_commentable.is_a?(Issue)
     new_commentable
   end
+
+  delegate :project, to: :commentable
 
   # -- Callbacks ------------------------------------------------------------
   before_validation :coerce_anchor_position
@@ -58,10 +62,6 @@ class InlineThread < ApplicationRecord
     return false unless latest_version
 
     version_id < latest_version.id
-  end
-
-  def project
-    commentable.project
   end
 
   def local_event_payload

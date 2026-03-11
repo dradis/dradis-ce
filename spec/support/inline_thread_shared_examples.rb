@@ -71,9 +71,9 @@ shared_examples 'inline threads' do
             inline_thread: {
               commentable_type: commentable.class.to_s,
               commentable_id: commentable.id,
-              anchor: valid_anchor
-            },
-            comment: { content: 'This needs revision' }
+              anchor: valid_anchor,
+              comments_attributes: [{ content: 'This needs revision' }]
+            }
           },
           headers: turbo_stream_headers
       }.to change { InlineThread.count }.by(1)
