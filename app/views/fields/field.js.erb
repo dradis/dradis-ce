@@ -1,8 +1,11 @@
 <% field_row = render partial: 'field', locals: { index: @index } %>
 var fieldGroup = $('<%= escape_javascript(field_row) %>');
-$('[data-behavior~=textile-form-body]').append(fieldGroup);
+var $targetBody = $('#<%= escape_javascript(@target_id) %>');
+var $form = $targetBody.closest('form');
 
-$('.textile').data('plugin_textile').bindFieldGroup(fieldGroup);
+$targetBody.append(fieldGroup);
+
+$form.find('textarea.textile').data('plugin_textile')?.bindFieldGroup(fieldGroup);
 
 $('[data-behavior~=rich-toolbar]', fieldGroup).each(function() {
   new EditorToolbar($(this));

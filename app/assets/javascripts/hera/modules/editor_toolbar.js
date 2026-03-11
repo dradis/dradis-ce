@@ -81,6 +81,7 @@ class EditorToolbar {
 
   behaviors() {
     var that = this;
+    this.scrollEventName = 'scroll.editor-toolbar-' + this.$target.attr('id');
 
     this.$target.on('click change keyup select', function () {
       that.updateSelectionButtons();
@@ -92,7 +93,24 @@ class EditorToolbar {
     this.$target.on('blur focus textchange input', this.setHeight);
 
     // Handler for setting the correct textarea heights on load (for current values)
-    this.$target.each(this.setHeight);
+    if (this.$target.is(':visible')) {
+      this.$target.each(this.setHeight);
+    } else {
+      const $tabPane = this.$target.closest('.tab-pane');
+      const tabId = $tabPane.attr('id');
+
+      // Use delegated event (only attaches once per document)
+      $(document).on(
+        'shown.bs.tab',
+        'a[data-bs-toggle="tab"][href="#' + tabId + '"]',
+        function () {
+          // This will still fire for each instance, but at least we're not adding duplicate listeners
+          if (that.$target.is(':visible')) {
+            that.$target.each(that.setHeight);
+          }
+        },
+      );
+    }
 
     // when a toolbar button is clicked
     this.$editorToolbar.find('[data-btn]').click(function () {
@@ -150,26 +168,29 @@ class EditorToolbar {
       }
 
       // adjust position on scroll to make toolbar always appear at the top of the textarea
-      $(window).on('scroll.editor-toolbar', function () {
-        const parentOffsetTop = $editorField.offset().top;
+      $(window)
+        .off(that.scrollEventName)
+        .on(that.scrollEventName, function () {
+          const parentOffsetTop = $editorField.offset().top;
 
-        // keep toolbar at the top of text area when scrolling
-        if (
-          $inputElement.height() > inputMinHeightForStickyToolbar &&
-          parentOffsetTop < $(window).scrollTop() + headerHeight
-        ) {
-          $editorField.addClass('sticky-toolbar');
-        } else {
-          // reset the toolbar to the default position and appearance
-          $editorField.removeClass('sticky-toolbar');
-        }
-      });
+          // keep toolbar at the top of text area when scrolling
+          if (
+            $inputElement.height() > inputMinHeightForStickyToolbar &&
+            parentOffsetTop < $(window).scrollTop() + headerHeight
+          ) {
+            $editorField.addClass('sticky-toolbar');
+          } else {
+            // reset the toolbar to the default position and appearance
+            $editorField.removeClass('sticky-toolbar');
+          }
+        });
     });
 
     // reset position and hide toolbar once focus is lost
     this.$target.on('blur', function () {
       const $toolbarElement = $(this).parent().prev();
 
+      $(window).off(that.scrollEventName);
       $toolbarElement.css({ opacity: 0, visibility: 'hidden' });
     });
   }
