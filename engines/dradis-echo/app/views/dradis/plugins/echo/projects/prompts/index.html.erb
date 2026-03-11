@@ -12,7 +12,9 @@
       <p class="form-label">Saved Prompts</p>
       <select class="form-select">
         <% @prompts.each do |prompt| %>
-          <option value="<%= echo.preview_project_prompt_path(current_project, prompt.id, type: @type, record: @record.id) %>">
+          <option
+            data-combobox-option-icon="fa-solid <%= prompt.icon %>"
+            value="<%= echo.preview_project_prompt_path(current_project, prompt.id, type: @type, record: @record.id) %>">
             <%= prompt.title %>
           </option>
         <% end %>
