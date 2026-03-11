@@ -1,5 +1,5 @@
 class InlineThreadsController < AuthenticatedController
-  load_and_authorize_resource
+  load_and_authorize_resource, except: [:index]
 
   include EventPublisher
   # FIXME: @mentions are currently too tied to Comments
