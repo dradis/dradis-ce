@@ -18,6 +18,14 @@ PATH
     dradis-api (4.19.0)
       jbuilder
 
+PATH
+  remote: engines/dradis-echo
+  specs:
+    dradis-echo (4.19.0.0)
+      dradis-plugins (~> 4.0)
+      liquid
+      ollama-ai (~> 1.3.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -144,12 +152,6 @@ GEM
     connection_pool (2.5.3)
     crass (1.0.6)
     csv (3.3.5)
-    database_cleaner (2.0.2)
-      database_cleaner-active_record (>= 2, < 3)
-    database_cleaner-active_record (2.2.0)
-      activerecord (>= 5.a)
-      database_cleaner-core (~> 2.0.0)
-    database_cleaner-core (2.0.1)
     date (3.4.1)
     diff-lcs (1.5.0)
     differ (0.1.2)
@@ -221,12 +223,23 @@ GEM
     drb (2.2.3)
     erb (5.0.2)
     erubi (1.13.1)
+    ethon (0.15.0)
+      ffi (>= 1.15.0)
     execjs (2.7.0)
     factory_bot (6.5.4)
       activesupport (>= 6.1.0)
     factory_bot_rails (6.5.0)
       factory_bot (~> 6.5)
       railties (>= 6.1.0)
+    faraday (2.14.1)
+      faraday-net_http (>= 2.0, < 3.5)
+      json
+      logger
+    faraday-net_http (3.4.2)
+      net-http (~> 0.5)
+    faraday-typhoeus (1.1.0)
+      faraday (~> 2.0)
+      typhoeus (~> 1.4)
     ffi (1.15.5)
     font-awesome-sass (6.4.0)
       sassc (~> 2.0)
@@ -326,6 +339,8 @@ GEM
     mustermann (2.0.2)
       ruby2_keywords (~> 0.0.1)
     nenv (0.3.0)
+    net-http (0.9.1)
+      uri (>= 0.11.1)
     net-imap (0.5.8)
       date
       net-protocol
@@ -348,6 +363,10 @@ GEM
     notiffany (0.1.3)
       nenv (~> 0.1)
       shellany (~> 0.0)
+    ollama-ai (1.3.0)
+      faraday (~> 2.10)
+      faraday-typhoeus (~> 1.1)
+      typhoeus (~> 1.4, >= 1.4.1)
     paper_trail (16.0.0)
       activerecord (>= 6.1)
       request_store (~> 1.4)
@@ -555,6 +574,8 @@ GEM
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
       railties (>= 6.0.0)
+    typhoeus (1.5.0)
+      ethon (>= 0.9.0, < 0.16.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (3.1.4)
@@ -603,7 +624,6 @@ DEPENDENCIES
   capybara (~> 3.40)
   coffee-rails (~> 5.0)
   csv
-  database_cleaner
   differ (~> 0.1.2)
   dradis-acunetix (~> 4.19.0)
   dradis-api!
@@ -615,6 +635,7 @@ DEPENDENCIES
   dradis-coreimpact (~> 4.19.0)
   dradis-csv (~> 4.19.0)
   dradis-csv_export (~> 4.19.0)
+  dradis-echo!
   dradis-html_export (~> 4.19.0)
   dradis-metasploit (~> 4.19.0)
   dradis-nessus (~> 4.19.0)

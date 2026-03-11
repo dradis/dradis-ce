@@ -49,7 +49,7 @@ shared_examples 'a form with local auto save' do |klass, action|
       fill_in "#{form_object_name}_#{model_attribute[:name]}", with: model_attribute[:value]
     end
 
-    sleep 1 # Needed for debounce function in local_auto_save.js
+    # debounceTimer is 0 in test env, see local.js
   end
 
   context 'when form is not saved' do
@@ -130,7 +130,7 @@ shared_examples 'a form with local auto save' do |klass, action|
             fill_in "#{form_object_name}_#{model_attribute[:name]}", with: model_attribute[:value]
           end
 
-          sleep 1 # Needed for debounce function in local_auto_save.js
+          # debounceTimer is 0 in test env, see local.js
         end
       end
 

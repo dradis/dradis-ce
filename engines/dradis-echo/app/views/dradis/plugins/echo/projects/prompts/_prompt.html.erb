@@ -1,0 +1,12 @@
+<%= form_with url: echo.project_prompt_path(current_project, prompt.id), method: :get do |f| %>
+  <%= f.hidden_field :type, value: @type %>
+  <%= f.hidden_field :record, value: @record.id %>
+
+  <div class="input-group">
+    <%= f.text_area :prompt, value: liquid_parse(prompt.prompt), class: "form-control field-sizing-content", placeholder: "Enter your prompt here...", rows: 30 %>
+  </div>
+
+  <div class="form-actions sticky pt-1">
+    <%= f.submit 'Echo this prompt', class: "btn btn-primary mt-2" %>
+  </div>
+<% end %>
