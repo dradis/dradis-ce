@@ -1,4 +1,30 @@
-<% if Dradis::Plugins::Echo::Engine.settings.roslin_teaser %>
+<% if Dradis::Plugins::Echo::Engine.settings.roslin_enabled %>
+
+<div class="header">
+  <div class="header">
+    <div class="header-inner">
+      <h5 class="header-name">
+        Roslin
+        <i class="fa-solid ms-2 fa-info-circle"></i>
+      </h5>
+      <div class="options">
+        <a data-bs-toggle="collapse" data-behavior="collapse-collection" href="#roslin-widget">
+          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle Roslin Agent Widget</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="collapse show" id="roslin-widget">
+    <p>
+      Here are some suggestions:
+    </p>
+    <p class="mb-2"><i class="fa-solid fa-chevron-right fa-fw"></i> Redundant phrase (pos: 512)</p>
+    <p class="mb-2"><i class="fa-solid fa-chevron-right fa-fw"></i> Spelling mistake (pos: 958)</p>
+  </div>
+</div>
+
+<% elsif Dradis::Plugins::Echo::Engine.settings.roslin_teaser %>
+
 <div class="header">
   <div class="header">
     <div class="header-inner">
@@ -27,26 +53,3 @@
 </div>
 
 <% end %>
-
-<div class="header">
-  <div class="header">
-    <div class="header-inner">
-      <h5 class="header-name">
-        Roslin
-        <i class="fa-solid ms-2 fa-info-circle"></i>
-      </h5>
-      <div class="options">
-        <a data-bs-toggle="collapse" data-behavior="collapse-collection" href="#roslin-widget">
-          <i class="fa-solid fa-chevron-up" data-behavior="toggle-chevron"></i><span class="visually-hidden">Toggle Roslin Agent Widget</span>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="collapse show" id="roslin-widget">
-    <p>
-      Here are some suggestions:
-    </p>
-    <p class="mb-2"><i class="fa-solid fa-chevron-right fa-fw"></i> Redundant phrase (pos: 512)</p>
-    <p class="mb-2"><i class="fa-solid fa-chevron-right fa-fw"></i> Spelling mistake (pos: 958)</p>
-  </div>
-</div>
