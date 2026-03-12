@@ -164,9 +164,6 @@ Defined in `config/initializers/inflections.rb`:
 
 ## HTML/ERB conventions
 
-- **Always use Rails helpers** — never raw HTML tags for assets or links:
-  - `<%= image_tag 'image.png' %>` not `<img src="/assets/image.png">`
-  - `<%= link_to 'Label', some_path %>` not `<a href="/some-path/">`
 - **DOM IDs must be unique.** Take extra care in loops and partials loaded repeatedly via AJAX — use the record ID or another unique value to scope them (e.g. `dom_id(record)`).
 
 
