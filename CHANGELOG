@@ -49,6 +49,7 @@
       - [future tense verb] [reporting enhancement]
   - REST/JSON API enhancements:
     - Issues: Add support for search
+    - Issues: show in Recent Activity when edited via the API
   - Security Fixes:
     - High: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
     - Medium: (Authenticated|Unauthenticated) (admin|author|contributor) [vulnerability description]
