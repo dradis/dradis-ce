@@ -1,8 +1,4 @@
 module ApplicationHelper # :nodoc:
-  def dradis_theme
-    current_user ? current_user.preferences.theme_or_default : 'light'
-  end
-
   def markup(text, options = {})
     return unless text.present?
 
@@ -49,6 +45,15 @@ module ApplicationHelper # :nodoc:
   def spinner_tag(spinner_class: 'text-primary', align: 'center', inline: false)
     content_tag :div, class: "#{inline ? 'd-inline-flex' : 'd-flex' } align-items-center justify-content-#{align} spinner-container" do
       content_tag :div, nil, class: "spinner-border #{spinner_class}"
+    end
+  end
+
+  def dradis_theme
+    if current_user
+      current_user.preferences.theme || 'auto'
+    else
+      # Default to light theme for unauthenticated users
+      'light'
     end
   end
 end
