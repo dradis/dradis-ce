@@ -118,7 +118,7 @@ Event name convention: `'issue.created'`, `'comment.destroyed'`, `'inline_thread
 
 **Engine registration:** Each engine inherits from `Dradis::Plugins::Base`, provides `:addon`, and registers Warden strategies / controller extensions in initializers.
 
-**API authentication chain:** Warden strategies are tried in order. For scoped API keys: `:api_key_auth` checks `dradis_{prefix}_{secret}` tokens first, then `:api_token` falls back to legacy Bearer/Basic auth.
+**API authentication chain:** Warden strategies are tried in order. For scoped personal access tokens: `:pat_auth` checks `dradis_pat_{prefix}_{secret}` tokens first, then `:api_token` falls back to legacy Bearer/Basic auth.
 
 
 ## Dradis field syntax
@@ -159,7 +159,7 @@ Defined in `config/initializers/inflections.rb`:
 - `evidence` is **uncountable** (never `evidences`)
 - Acronyms: `IP`, `IPs`, `JSON`, `OS`, `OSs`, `QA`, `RTP`
 
-**Zeitwerk naming consequence:** Rails treats `API` as an implicit acronym. Files under `api_keys/` expect class names like `APIKey`, `APIKeysController`, `APIToken` — **not** `ApiKey`, `ApiKeysController`, `ApiToken`.
+**Zeitwerk naming consequence:** Rails treats `API` as an implicit acronym. Files under the API engine expect class names like `APIToken`, `APIController` — **not** `ApiToken`, `ApiController`.
 
 
 ## HTML/ERB conventions
@@ -351,7 +351,7 @@ document.addEventListener('turbo:load', function () {
 
 ```
 REST/JSON API enhancements:
-API keys: add multiple, per-user, scoped keys for agentic workflows
+Personal access tokens: add multiple, per-user, scoped tokens for agentic workflows
 
 Bugs Fixed:
 Evidence: redirect back to the correct view when canceling an edit
