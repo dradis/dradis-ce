@@ -318,6 +318,7 @@ document.addEventListener('turbo:load', function () {
 ### Commits
 
 - Keep commits small and focused on a single logical change. Avoid unrelated changes in the same commit.
+- **Before committing:** verify the change works (run relevant specs, test the migration, confirm the fix, etc.). Do not commit unverified changes.
 - **Before committing:** run `bin/rubocop-ci develop false`. Do not commit if it fails.
 - Commit message format: `imperative-verb description` — max 80 characters.
 - Describe the **why**, not the what. The code shows what changed; the message should explain the reason.
