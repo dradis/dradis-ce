@@ -3,16 +3,27 @@ name: CI
 on:
   push:
     branches: ['**']
+permissions:
+  contents: read
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  audits:
-    name: Security Audits
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
+    env:
+      IS_MERGE: ${{ github.base_ref == '' }}
+      # SHA is set to all 0s on the first push to a new branch. We set it to
+      # an empty string to ensure our fallback chain works as expected.
+      PREV_SHA: ${{ github.event.before != '0000000000000000000000000000000000000000' && github.event.before || '' }}
+      TARGET_BRANCH: ${{ github.base_ref }}
+      FALLBACK_BRANCH: 'origin/develop'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Install sqlite3 dependencies
         run: sudo apt-get install libsqlite3-dev
       - name: Install Ruby and gems
@@ -27,30 +38,11 @@ jobs:
         run: bundle exec ruby-audit update && bundle exec ruby-audit check --ignore CVE-2025-61594 CVE-2025-58767
       - name: Security audit application code
         run: bundle exec brakeman -q -w2
-  rubocop:
-    name: RuboCop
-    needs: [audits]
-    runs-on: ubuntu-latest
-    env:
-      IS_MERGE: ${{ github.base_ref == '' }}
-      # SHA is set to all 0s on the first push to a new branch. We set it to
-      # an empty string to ensure our fallback chain works as expected.
-      PREV_SHA: ${{ github.event.before != '0000000000000000000000000000000000000000' && github.event.before || '' }}
-      TARGET_BRANCH: ${{ github.base_ref }}
-      FALLBACK_BRANCH: 'origin/develop'
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v1
-      - name: Install Ruby and gems
-        uses: ruby/setup-ruby@v1
-        with:
-          rubygems: 'latest'
-          bundler-cache: true
       - name: Lint changed files
         run: bin/rubocop-ci ${{ env.TARGET_BRANCH || env.PREV_SHA || env.FALLBACK_BRANCH }} ${{ env.IS_MERGE }}
   rspec:
     name: RSpec
-    needs: [audits, rubocop]
+    needs: [lint]
     runs-on: ubuntu-latest
     env:
       RAILS_ENV: test
@@ -66,8 +58,5 @@ jobs:
           bundler-cache: true
       - name: Prepare database
         run: bundle exec rails db:prepare
-      - name: Precompile assets
-        run: bundle exec rails assets:precompile
       - name: Run tests
         run: bundle exec rspec spec engines -p
-

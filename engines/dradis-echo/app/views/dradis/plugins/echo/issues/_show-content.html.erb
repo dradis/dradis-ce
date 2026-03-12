@@ -1,0 +1,10 @@
+<div class="tab-pane" id="echo-tab">
+  <div class="inner">
+    <h4 class="header-underline">Dradis Echo
+    </h4>
+
+    <turbo-frame id="<%= dom_id(@issue, :echo) %>">
+      <div data-behavior="fetch" data-path="<%= echo.project_prompts_path(current_project, type: :issue, record: @issue.id) %>"></div>
+    </turbo-frame>
+  </div>
+</div>
