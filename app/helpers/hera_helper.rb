@@ -26,7 +26,7 @@ module HeraHelper
     if tag
       options[:style] = "color: #{tag.color}"
     elsif !model.is_a?(Node)
-      options[:style] = 'color: #222'
+      options[:style] = 'color: var(--untagged-color)'
     end
 
     content_tag :i, nil, options

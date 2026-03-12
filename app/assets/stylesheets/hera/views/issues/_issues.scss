@@ -10,8 +10,8 @@ body.qa-issues.edit {
     padding: 0.6rem;
 
     .btn {
-      background: $primary-bg;
-      color: $text-default;
+      background: var(--primary-bg);
+      color: var(--text-default);
     }
   }
 }
@@ -58,9 +58,9 @@ body.issues.index {
   }
 
   .tab-content.outer-tab {
-    border-right: 1px solid $border-color;
-    border-bottom: 1px solid $border-color;
-    border-left: 1px solid $border-color;
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
   }
 
   .tab-pane {
@@ -73,7 +73,7 @@ body.issues.show {
     padding-left: 2rem;
 
     .content-textile {
-      border-left: 6px solid $border-color;
+      border-left: 6px solid var(--border-color);
       margin-left: 1rem;
       padding-left: 1rem;
     }
