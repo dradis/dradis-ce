@@ -4,7 +4,7 @@
 
 Dradis Community Edition (CE) is a Ruby on Rails application for collaborative security assessment reporting.
 
-- **Rails 8.0**, Ruby 3.4, SQLite3, Importmaps (no Webpack)
+- **Rails 8.0**, Ruby 3.4, SQLite3 / MySQL (see below), Importmaps (no Webpack)
 - **Authentication:** Warden (custom strategies, not Devise). Default scope only — never pass `scope: :user`.
 - **Authorization:** CanCanCan 3.0 with role-based bit mask (`:admin`, `:author`, `:contributor`, `:disabled`)
 - **Jobs:** Resque (queue adapter) + SolidQueue (recurring/scheduled via `config/recurring.yml`)
@@ -287,7 +287,7 @@ document.addEventListener('turbo:load', function () {
 
 ## Testing conventions
 
-- **RSpec 7** with FactoryBot, Shoulda Matchers, DatabaseCleaner
+- **RSpec 7** with FactoryBot, Shoulda Matchers
 - **Feature specs:** Selenium with Firefox headless (`Capybara.javascript_driver = :firefox`)
 - **CSRF is disabled** in test env (`allow_forgery_protection = false`) — no CSRF meta tag is rendered
 - **Warden test helpers:**
@@ -318,8 +318,9 @@ document.addEventListener('turbo:load', function () {
 ### Commits
 
 - Keep commits small and focused on a single logical change. Avoid unrelated changes in the same commit.
-- **Before committing:** verify the change works (run relevant specs, test the migration, confirm the fix, etc.). Do not commit unverified changes.
-- **Before committing:** run `bin/rubocop-ci develop false`. Do not commit if it fails.
+- **Before committing:**
+  - Verify the change works (run relevant specs, test the migration, confirm the fix, etc.). Do not commit unverified changes.
+  - Run `bin/rubocop-ci develop false`. Do not commit if it fails.
 - Commit message format: `imperative-verb description` — max 80 characters.
 - Describe the **why**, not the what. The code shows what changed; the message should explain the reason.
   - ❌ `add text-wrap class to card`
@@ -331,16 +332,16 @@ document.addEventListener('turbo:load', function () {
 - PR title follows the same format as commit messages.
 - Fill in the PR description using the template at `.github/pull_request_template.md`.
 - Feature branch PRs should have a Summary describing the full feature, not just the last commit.
-- CI must be green before merging. If `develop` CI is red, investigate before merging.
+- You never merge PRs, only open or comment.
+- CI runs (see .github/): bundler-audit, ruby-audit, brakeman, rubocop (changed files), rspec (4 parallel nodes).
 
-### Other
+### Migrations
 
 - `db/schema.rb` hygiene: only commit schema changes from your own migrations.
-- **Migrations:** use `t.references` (not `t.integer` or `t.bigint`) for FK columns — generates the correct type and adds the index automatically.
-- CI runs: bundler-audit, ruby-audit, brakeman, rubocop (changed files), rspec (4 parallel nodes).
+- Use `t.references` (not `t.integer` or `t.bigint`) for FK columns — generates the correct type and adds the index automatically.
 
 
-## Changelogs
+### Change logs
 
 `CHANGELOG` follows the template in `CHANGELOG.template`. Add entries under the relevant section heading (e.g. `REST/JSON API enhancements`, `Bugs Fixed`, `Reporting enhancements`). Keep entries to a single line. Do not create a new version header — add to the existing `[v#.#.#]` block at the top.
 
@@ -358,6 +359,9 @@ Bugs Fixed:
 Evidence: redirect back to the correct view when canceling an edit
 Editor: insert images at the cursor position when dragging and dropping or copying and pasting
 ```
+
+- All user-facing changes require a CHANGELOG entry.
+- A code refactor, or an internal change like a spec/ addition, don't need one.
 
 
 ## Acceptance testing
