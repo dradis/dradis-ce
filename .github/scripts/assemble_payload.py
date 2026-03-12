@@ -180,10 +180,10 @@ def load_rubocop(changed_files: list[str]) -> dict:
 
 # ── Guidelines ────────────────────────────────────────────────────────────────
 def load_guidelines() -> str:
-    for path in [".github/llm_guidelines.md", "CONTRIBUTING.md", "docs/CONTRIBUTING.md"]:
+    for path in [".claude/CLAUDE.md", "CONTRIBUTING.md", "docs/CONTRIBUTING.md"]:
         p = pathlib.Path(path)
         if p.exists():
-            return p.read_text()[:800]
+            return p.read_text()
     return ""
 
 
