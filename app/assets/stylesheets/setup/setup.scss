@@ -1,5 +1,6 @@
 @import '_bootstrap';
 @import '../hera/variables';
+@import '../hera/themes';
 @import 'font-awesome';
 
 html {
@@ -13,11 +14,11 @@ body {
 }
 
 a {
-  color: $text-link;
+  color: var(--text-link);
   transition: color 0.2s ease-in-out;
 
   &:hover {
-    color: $text-link-hover;
+    color: var(--text-link-hover);
     text-decoration: none;
   }
 }

@@ -9,6 +9,7 @@
 @import 'hera/modules/editor_toolbar';
 @import 'hera/modules/icons';
 @import 'hera/modules/inline_editable';
+@import 'hera/modules/inline_threads';
 @import 'hera/modules/modals';
 @import 'hera/modules/navigation/navigation';
 @import 'hera/modules/navigation/search';
@@ -49,7 +50,7 @@
 
 .accordion-group {
   margin-bottom: 5px;
-  border: 1px solid $border-color;
+  border: 1px solid var(--border-color);
   border-radius: 5px;
 
   .accordion-heading {
@@ -75,7 +76,7 @@
   margin-top: 1rem;
   padding-top: 0.5rem;
   width: 100%;
-  border-top: 1px solid $border-color;
+  border-top: 1px solid var(--border-color);
 }
 
 .autofocus {
@@ -91,14 +92,14 @@
 
   .breadcrumb-item {
     &.active {
-      color: $text-muted;
+      color: var(--text-muted);
     }
 
     & + .breadcrumb-item::before {
       content: '\f105';
       font-family: var(--fa-style-family, 'Font Awesome 6 Free');
       font-weight: 600;
-      color: darken($border-color, 5%);
+      color: $grey-300;
     }
 
     &:last-of-type {
@@ -106,6 +107,11 @@
       text-overflow: ellipsis;
     }
   }
+}
+
+.card {
+  background-color: var(--primary-bg);
+  border-color: var(--border-color);
 }
 
 .card.border-bottom {
@@ -159,14 +165,14 @@
 }
 
 .divider {
-  border-top: 1px solid $border-color;
+  border-top: 1px solid var(--border-color);
   height: 0;
   margin: 0.25rem 0;
   position: relative;
 
   .divider-label {
-    background-color: $white;
-    color: $text-default;
+    background-color: var(--primary-bg);
+    color: var(--text-default);
     font-size: $text-small;
     left: 50%;
     padding: 0 0.5rem;
@@ -189,7 +195,7 @@
 }
 
 .divider-vertical {
-  border-right: 1px solid $border-color;
+  border-right: 1px solid var(--border-color);
   display: initial;
   margin: 0.25rem;
   width: 0;
@@ -216,7 +222,7 @@
 
 .header-underline {
   align-items: center;
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   margin-bottom: 0.5em;
   margin-top: -0.5rem;
@@ -269,16 +275,14 @@
 
 .list-group {
   .list-group-item {
-    &.active {
-      color: $white;
+    background-color: var(--primary-bg);
+    border-color: var(--border-color);
+    color: var(--text-default);
 
-      &:hover {
-        border-color: $light;
-        color: $text-link;
-      }
-    }
-    &:hover {
-      background-color: $light;
+    &:active,
+    &:hover,
+    &:focus {
+      color: var(--text-link-hover);
     }
   }
 }
@@ -298,26 +302,26 @@
         .nav-link {
           border-bottom-left-radius: $border-radius;
           border-bottom-right-radius: $border-radius;
-          border-bottom: 1px solid $border-color;
+          border-bottom: 1px solid var(--border-color);
         }
       }
 
       .nav-link {
-        border: 1px solid $border-color;
+        border: 1px solid var(--border-color);
         border-bottom: none;
 
         &.active {
-          background-color: $primary;
+          background-color: var(--nav-active-bg);
           border: none;
           color: $white;
 
           &:hover {
-            color: $text-link-hover;
+            color: var(--text-link-hover);
           }
         }
 
         &:hover {
-          background-color: $light;
+          background-color: var(--secondary-bg-subtle);
         }
       }
     }
@@ -325,20 +329,28 @@
 }
 
 .nav-link {
-  color: $text-link;
+  color: var(--text-link);
   display: block;
   padding: 0.5rem 1rem;
   transition: color 0.2s ease-in-out;
   text-decoration: none;
 
   &:hover {
-    color: $text-link-hover;
+    color: var(--text-link-hover);
   }
 }
 
 .nav-tabs {
-  .nav-link:hover:not(.active) {
-    border-color: transparent;
+  .nav-link {
+    &.active {
+      background-color: var(--primary-bg);
+      border-color: var(--border-color) var(--border-color) var(--primary-bg);
+      color: var(--text-default);
+    }
+
+    &:hover:not(.active) {
+      border-color: transparent;
+    }
   }
 }
 
@@ -359,7 +371,7 @@
 .pagination {
   padding-top: 0.75rem;
   margin-bottom: 0.75rem;
-  border-top: 1px solid $border-color;
+  border-top: 1px solid var(--border-color);
 
   > * {
     padding-right: 5px;
@@ -374,8 +386,8 @@ pre {
   word-break: break-all;
   word-wrap: break-word;
   white-space: pre-wrap;
-  background-color: $secondary-bg;
-  border: 1px solid $border-color;
+  background-color: var(--secondary-bg);
+  border: 1px solid var(--border-color);
   border-radius: 5px;
 }
 

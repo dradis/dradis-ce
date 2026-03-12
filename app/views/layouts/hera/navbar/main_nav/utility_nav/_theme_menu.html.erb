@@ -1,0 +1,28 @@
+<% dradis_theme = current_user.preferences.theme %>
+<li class="nav-item dropdown">
+  <a href="javascript:void(0)" class="nav-link dropdown-toggle no-caret-xl" title="Theme" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="d-none d-lg-inline">
+      <i class="fa-solid fa-circle-half-stroke fa-fw<%= ' d-none' unless dradis_theme == 'auto' %>" data-theme-target="autoIcon"></i>
+      <i class="fa-solid fa-sun fa-fw<%= ' d-none' unless dradis_theme == 'light' %>" data-theme-target="lightIcon"></i>
+      <i class="fa-solid fa-moon fa-fw<%= ' d-none' unless dradis_theme == 'dark' %>" data-theme-target="darkIcon"></i>
+    </span>
+    <span class="d-inline d-lg-none">Theme</span>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li>
+      <button class="dropdown-item<%= ' active' if dradis_theme == 'auto' %>" data-action="click->theme#select" data-theme-name-param="auto" data-theme-target="autoItem">
+        <i class="fa-solid fa-circle-half-stroke fa-fw me-1"></i>Auto
+      </button>
+    </li>
+    <li>
+      <button class="dropdown-item<%= ' active' if dradis_theme == 'light' %>" data-action="click->theme#select" data-theme-name-param="light" data-theme-target="lightItem">
+        <i class="fa-solid fa-sun fa-fw me-1"></i>Light
+      </button>
+    </li>
+    <li>
+      <button class="dropdown-item<%= ' active' if dradis_theme == 'dark' %>" data-action="click->theme#select" data-theme-name-param="dark" data-theme-target="darkItem">
+        <i class="fa-solid fa-moon fa-fw me-1"></i>Dark
+      </button>
+    </li>
+  </ul>
+</li>

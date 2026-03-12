@@ -1,0 +1,114 @@
+// themes.scss
+// CSS custom properties for light and dark themes.
+// The raw palette ($brand-*, $grey-*, etc.) is defined at compile time in
+// modules/_colors.scss and interpolated here into runtime custom properties.
+// Components reference var(--name) rather than the SCSS variables directly.
+
+@mixin dark-theme {
+  // Backgrounds
+  --nav-active-bg:       #{$brand-600};
+  --primary-bg:          #{$grey-900};
+  --primary-bg-subtle:   #{$grey-800};
+  --secondary-bg:        #{darken($grey-900, 3%)};
+  --secondary-bg-strong: #{darken($grey-800, 6%)};
+  --secondary-bg-subtle: #{darken($grey-800, 3%)};
+
+  // Borders & shadows
+  --border-color:      #{$grey-700};
+  --border-color-dark: #{$grey-300};
+
+  // Buttons
+  --btn-outline-info-color:      #{$green-500};
+  --btn-outline-lavender-color:  #{$lavender-light};
+  --btn-outline-secondary-color: #{$grey-400};
+  --btn-outline-success-color:   #{$green-500};
+  --btn-outline-warning-color:   #{$yellow-500};
+
+  // Forms
+  --form-select-caret: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23d1d1d1' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  --form-switch-bg:    url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba(255, 255, 255, 0.25)'/%3e%3c/svg%3e");
+
+  // Tables
+  --table-stripe-bg: rgba(255, 255, 255, 0.05);
+
+  // Text
+  --badge-info-color:     #{$green-600};
+  --badge-lavender-color: #{$lavender-light};
+  --icon-disabled:        #{$grey-500};
+  --pre-code-color:       #{$brand-300};
+  --text-default:         #{$grey-100};
+  --text-error:           #{$red-300};
+  --text-error-hover:     #{$red-200};
+  --text-link:            #{$brand-300};
+  --text-link-hover:      #{$brand-200};
+  --text-muted:           #{$grey-400};
+  --text-success:         #{$green-400};
+  --text-warning:         #{$yellow-400};
+  --untagged-color:       #{$grey-400};
+  --untagged-text:        #{$grey-900};
+
+  // Bootstrap global CSS custom property overrides
+  --bs-body-bg:       #{$grey-900};
+  --bs-body-color:    #{$grey-100};
+  --bs-border-color:  #{$grey-700};
+
+  color-scheme: dark;
+}
+
+:root {
+  // Backgrounds
+  --nav-active-bg:       #{$brand-500};
+  --primary-bg:          #{$white};
+  --primary-bg-subtle:   #{darken($white, 3%)};          // darken($primary-bg, 3%)
+  --secondary-bg:        #{$grey-100};
+  --secondary-bg-strong: #{darken($grey-100, 10%)};      // darken($secondary-bg, 10%)
+  --secondary-bg-subtle: #{darken($grey-100, 5%)};       // darken($secondary-bg, 5%)
+
+  // Borders & shadows
+  --border-color:      #{$grey-200};
+  --border-color-dark: #{$grey-900};
+
+  // Buttons
+  --btn-outline-info-color:      #{darken($green-700, 10%)};
+  --btn-outline-lavender-color:  #{$lavender-dark};
+  --btn-outline-secondary-color: #{$grey-700};
+  --btn-outline-success-color:   #{darken($green-700, 10%)};
+  --btn-outline-warning-color:   #{$yellow-800};
+
+  // Forms
+  --form-select-caret: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  --form-switch-bg:    url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba(0, 0, 0, 0.25)'/%3e%3c/svg%3e");
+
+  // Tables
+  --table-stripe-bg: rgba(0, 0, 0, 0.05);
+
+  // Text
+  --badge-info-color:     #{darken($green-700, 10%)};
+  --badge-lavender-color: #{darken($lavender-dark, 5%)};
+  --icon-disabled:        #{$grey-600};
+  --pre-code-color:       #{$brand-700};
+  --text-default:         #{$grey-900};
+  --text-error:           #{$red-500};
+  --text-error-hover:     #{$red-600};
+  --text-link:            #{$brand-500};
+  --text-link-hover:      #{darken($brand-500, 20%)};
+  --text-muted:           #{$grey-700};
+  --text-success:         #{darken($green-700, 10%)};
+  --text-warning:         #{darken($yellow-600, 15%)};
+  --untagged-color:       #{$grey-700};
+  --untagged-text:        #{$white};
+
+  color-scheme: light;
+}
+
+// Auto: follow the OS preference
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    @include dark-theme;
+  }
+}
+
+// Explicit dark override
+[data-theme="dark"] {
+  @include dark-theme;
+}
