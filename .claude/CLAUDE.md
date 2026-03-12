@@ -118,7 +118,7 @@ Event name convention: `'issue.created'`, `'comment.destroyed'`, `'inline_thread
 
 **Engine registration:** Each engine inherits from `Dradis::Plugins::Base`, provides `:addon`, and registers Warden strategies / controller extensions in initializers.
 
-**API authentication chain:** Warden strategies are tried in order. For scoped API keys: `:api_key_auth` checks `dradis_{prefix}_{secret}` tokens first, then `:api_token` falls back to legacy Bearer/Basic auth.
+**API authentication chain:** Warden strategies are tried in order. For scoped personal access tokens: `:pat_auth` checks `dradis_pat_{prefix}_{secret}` tokens first, then `:api_token` falls back to legacy Bearer/Basic auth.
 
 
 ## Dradis field syntax
@@ -159,7 +159,7 @@ Defined in `config/initializers/inflections.rb`:
 - `evidence` is **uncountable** (never `evidences`)
 - Acronyms: `IP`, `IPs`, `JSON`, `OS`, `OSs`, `QA`, `RTP`
 
-**Zeitwerk naming consequence:** Rails treats `API` as an implicit acronym. Files under `api_keys/` expect class names like `APIKey`, `APIKeysController`, `APIToken` — **not** `ApiKey`, `ApiKeysController`, `ApiToken`.
+**Zeitwerk naming consequence:** Rails treats `API` as an implicit acronym. Files under the API engine expect class names like `APIToken`, `APIController` — **not** `ApiToken`, `ApiController`.
 
 
 ## HTML/ERB conventions
@@ -318,6 +318,7 @@ document.addEventListener('turbo:load', function () {
 ### Commits
 
 - Keep commits small and focused on a single logical change. Avoid unrelated changes in the same commit.
+- **Before committing:** verify the change works (run relevant specs, test the migration, confirm the fix, etc.). Do not commit unverified changes.
 - **Before committing:** run `bin/rubocop-ci develop false`. Do not commit if it fails.
 - Commit message format: `imperative-verb description` — max 80 characters.
 - Describe the **why**, not the what. The code shows what changed; the message should explain the reason.
@@ -351,7 +352,7 @@ document.addEventListener('turbo:load', function () {
 
 ```
 REST/JSON API enhancements:
-API keys: add multiple, per-user, scoped keys for agentic workflows
+Personal access tokens: add multiple, per-user, scoped tokens for agentic workflows
 
 Bugs Fixed:
 Evidence: redirect back to the correct view when canceling an edit
