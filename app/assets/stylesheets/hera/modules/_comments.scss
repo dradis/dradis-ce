@@ -4,14 +4,14 @@
   }
 
   .comment-wrapper {
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid var(--border-color);
     padding-bottom: 0.5rem;
 
     .comment {
       margin-top: 0.5rem;
       padding: 15px;
       border-radius: 5px;
-      background-color: $primary-bg;
+      background-color: var(--primary-bg);
 
       .content {
         margin-left: 2.5rem;
@@ -25,7 +25,7 @@
       @include comment-item;
 
       &:hover {
-        background-color: $secondary-bg;
+        background-color: var(--secondary-bg);
 
         .actions.current_user {
           visibility: visible;
@@ -83,7 +83,7 @@
     margin: 0;
     margin-top: 2px;
     padding: 0;
-    background: #efefef;
+    background: var(--secondary-bg);
 
     li {
       padding: 5px 5px;
@@ -91,7 +91,7 @@
 
       &.highlight,
       &:hover {
-        background: #ddd;
+        background: var(--secondary-bg-strong);
       }
 
       span {

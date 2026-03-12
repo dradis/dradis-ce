@@ -23,7 +23,7 @@
 // Inline comment selection button (follows .selection-quote-button pattern)
 .inline-comment-button {
   align-items: center;
-  background-color: $secondary-bg;
+  background-color: var(--secondary-bg);
   border: 1px solid $border-color;
   border-radius: 25px;
   box-shadow: 0 20px 30px 0 rgba($shadow-color-dark, 0.1);
@@ -38,7 +38,7 @@
 
   &:after {
     border: 0.5rem solid;
-    border-color: $secondary-bg transparent transparent;
+    border-color: var(--secondary-bg) transparent transparent;
     content: '';
     height: 0;
     left: 0.7rem;
@@ -48,7 +48,7 @@
   }
 
   &:hover {
-    background-color: darken($secondary-bg, 5%);
+    background-color: var(--secondary-bg-subtle);
   }
 }
 

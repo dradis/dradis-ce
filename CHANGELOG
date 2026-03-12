@@ -1,4 +1,5 @@
 [v#.#.#] ([month] [YYYY])
+  - Layout: Add light/dark/auto theme toggle to support dark mode
   - Activities: remove ActivityTracking for Issues and use EventPublisher
   - QA: add in-line comment threads
   - Profile: update default user avatar
@@ -17,7 +18,7 @@
     - Remediation Tracker
     - Ticketing integrations
     - Word/Excel templates
-  - Sidebar: 
+  - Sidebar:
     - Add resize functionality
   - Textile:
     - Add support for paragraph alignment

@@ -2,6 +2,7 @@ class User < ApplicationRecord
   alias_attribute :name, :email
 
   serialize :preferences, type: UserPreferences
+
   validates_associated :preferences
 
   # -- Relationships --------------------------------------------------------
