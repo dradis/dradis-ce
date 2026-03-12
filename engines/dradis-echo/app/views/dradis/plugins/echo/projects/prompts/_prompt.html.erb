@@ -1,4 +1,5 @@
-<%= form_with url: echo.project_prompt_path(current_project, prompt.id), method: :get do |f| %>
+<%= form_with url: echo.project_prompt_path(current_project, prompt.id), method: :get,
+              data: { turbo_frame: dom_id(@record, :echo) } do |f| %>
   <%= f.hidden_field :type, value: @type %>
   <%= f.hidden_field :record, value: @record.id %>
 

@@ -9,6 +9,11 @@ Rails.application.routes.draw do
 
   resources :comments
 
+  resources :inline_threads, only: [:index, :show, :create, :destroy], controller: 'inline_threads' do
+    resource :resolution, only: [:create, :destroy], controller: 'inline_threads/resolutions'
+    resources :comments, only: [:create], controller: 'inline_threads/comments'
+  end
+  
   # --------------------------------------------------------- User preferences
   resource :preferences, only: [:update]
 

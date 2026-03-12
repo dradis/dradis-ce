@@ -22,14 +22,7 @@
         }
       }
 
-      .gravatar {
-        padding-top: 3px;
-
-        &:not(.gravatar-inline) {
-          float: none;
-          margin-right: 0.5rem;
-        }
-      }
+      @include comment-item;
 
       &:hover {
         background-color: var(--secondary-bg);
@@ -37,15 +30,6 @@
         .actions.current_user {
           visibility: visible;
         }
-      }
-
-      .time {
-        color: #888;
-        font-size: 12px;
-      }
-
-      .user {
-        font-weight: 600;
       }
     }
   }
