@@ -12,13 +12,12 @@
 
 class UserPreferences
   include ActiveModel::Conversion
+  include Theme
   extend ActiveModel::Naming
 
   VALID_TOURS = %i[first_sign_in projects_show].freeze
   DIGEST_FREQUENCIES = %w[none instant daily].freeze
   DIGEST_FREQUENCY_DEFAULT = 'instant'.freeze
-  # nil is a valid theme value meaning "not set", which falls back to 'auto' in the layout.
-  VALID_THEMES = [nil, *%w[auto light dark]].freeze
 
   # -- Class Methods ----------------------------------------------------------
 
@@ -34,10 +33,6 @@ class UserPreferences
   #           them. See TourRegistry class.
   ATTRIBUTES = %i[digest_frequency theme tours]
   attr_accessor(*ATTRIBUTES)
-
-  def theme_or_default
-    theme || 'auto'
-  end
 
   def to_yaml_properties
     ATTRIBUTES.map { |attr| :"@#{attr}" }
@@ -63,7 +58,7 @@ class UserPreferences
 
   def valid?(args)
     DIGEST_FREQUENCIES.include?(self.digest_frequency) &&
-      VALID_THEMES.include?(theme)
+      valid_theme?
   end
 
   # ----------------------------------------------------------------- YAML.load

@@ -1,4 +1,8 @@
 module ApplicationHelper # :nodoc:
+  def dradis_theme
+    current_user ? current_user.preferences.theme_or_default : 'light'
+  end
+
   def markup(text, options = {})
     return unless text.present?
 
