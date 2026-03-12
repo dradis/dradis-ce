@@ -8,28 +8,30 @@ describe 'issue pages' do
       # create 2 issues
       @issue1 = create(:issue, node: current_project.issue_library)
       @issue2 = create(:issue, node: current_project.issue_library)
-
-      visit project_issues_path(current_project)
-
-      # click > 1 issue checkboxes
-      page.all('td.select-checkbox').each(&:click)
-
-      # click the merge button
-      find('span', text: 'Merge').click
     end
 
-    it 'merges issues into an existing one' do
-      expect(page).to have_content /You're merging 2 Issues into a target Issue/i
-
-      click_button 'Merge issues'
-
-      expect(page).to have_content('1 issue merged into ')
+    describe 'textile form view' do
+      let(:action_path) { new_project_merge_path(current_project, ids: [@issue1.id, @issue2.id]) }
+      it_behaves_like 'a .textile form'
     end
 
-    context 'merge issues into a new one', js: true do
-      describe 'textile form view' do
-        let(:action_path) { new_project_merge_path(current_project, ids: [@issue1.id, @issue2.id]) }
-        it_behaves_like 'a .textile form'
+    context 'when navigating from the issues index' do
+      before do
+        visit project_issues_path(current_project)
+
+        # click > 1 issue checkboxes
+        page.all('td.select-checkbox').each(&:click)
+
+        # click the merge button
+        find('span', text: 'Merge').click
+      end
+
+      it 'merges issues into an existing one' do
+        expect(page).to have_content /You're merging 2 Issues into a target Issue/i
+
+        click_button 'Merge issues'
+
+        expect(page).to have_content('1 issue merged into ')
       end
 
       it 'creates a new issue' do
@@ -77,11 +79,11 @@ describe 'issue pages' do
         expect(page).to have_content(/2 issues merged into Merged issue/i)
         expect(Issue.last.reload.tag_list).to eq(tag_name)
       end
-    end
 
-    let(:submit_form) {
-      click_button 'Merge issues'
-    }
-    include_examples 'deleted item is listed in Trash', :issue
+      let(:submit_form) {
+        click_button 'Merge issues'
+      }
+      include_examples 'deleted item is listed in Trash', :issue
+    end
   end
 end
