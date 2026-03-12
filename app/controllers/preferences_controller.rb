@@ -2,15 +2,15 @@ class PreferencesController < AuthenticatedController
   before_action :set_theme
 
   def update
-    unless UserPreferences::VALID_THEMES.include?(@theme) || @theme.nil?
+    if @theme
+      current_user.preferences.theme = @theme
+      current_user.save!
+
+      render json: { theme: current_user.preferences.theme }
+    else
       render json: { error: 'Invalid theme' }, status: :unprocessable_entity
       return
     end
-
-    current_user.preferences.theme = @theme
-    current_user.save!
-
-    render json: { theme: current_user.preferences.theme }
   end
 
   private
@@ -20,6 +20,8 @@ class PreferencesController < AuthenticatedController
   end
 
   def set_theme
-    @theme = preferences_params[:theme]
+    if UserPreferences::VALID_THEMES.include?(preferences_params[:theme])
+      @theme = preferences_params[:theme]
+    end
   end
 end

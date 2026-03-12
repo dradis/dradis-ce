@@ -40,7 +40,7 @@ class UserPreferences
 
   def initialize(args = {})
     @digest_frequency = args[:digest_frequency] || DIGEST_FREQUENCY_DEFAULT
-    @theme = args[:theme]
+    @theme = args[:theme] || DEFAULT_THEME
 
     @tours = Hash.new { |hash, key| hash[key] = '0' }
 

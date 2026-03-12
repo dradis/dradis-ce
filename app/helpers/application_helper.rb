@@ -47,13 +47,4 @@ module ApplicationHelper # :nodoc:
       content_tag :div, nil, class: "spinner-border #{spinner_class}"
     end
   end
-
-  def dradis_theme
-    if current_user
-      current_user.preferences.theme || 'auto'
-    else
-      # Default to light theme for unauthenticated users
-      'light'
-    end
-  end
 end
