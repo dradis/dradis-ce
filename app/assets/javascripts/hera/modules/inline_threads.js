@@ -2,17 +2,17 @@
 //
 // Entry point: new InlineThreadTurbo(container) (see pages/qa.js)
 
-// Find `needle` in `haystack` allowing whitespace runs in the needle
-// to match any whitespace run in the haystack. Returns { start, end }
-// positions in the original haystack, or null.
-const fuzzyIndexOf = (haystack, needle) => {
-  const parts = needle.split(/\s+/).map(
-    s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+// Find `selection` in `text` allowing whitespace runs in the selection
+// to match any whitespace run in the text. Returns { start, end }
+// positions in the original text, or null.
+const fuzzyIndexOf = (text, selection) => {
+  const parts = selection.split(/\s+/).map(
+    part => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
   );
   if (parts.length < 2) return null;
 
   const pattern = new RegExp(parts.join('\\s+'));
-  const match = haystack.match(pattern);
+  const match = text.match(pattern);
   if (!match) return null;
 
   return { start: match.index, end: match.index + match[0].length };
@@ -74,8 +74,8 @@ class InlineThreadHighlighter {
 
         range.surroundContents(mark);
         marks.push(mark);
-      } catch (e) {
-        console.warn('Could not highlight segment for thread ' + thread.id + ':', e.message);
+      } catch (error) {
+        console.warn('Could not highlight segment for thread ' + thread.id + ':', error.message);
       }
     }
 
@@ -385,7 +385,7 @@ class InlineThreadTurbo {
 
   fetchAndHighlight() {
     fetch(this.threadsPath, { headers: { 'Accept': 'application/json' } })
-      .then(r => r.json())
+      .then(response => response.json())
       .then(threads => this.highlighter.highlight(threads));
   }
 
