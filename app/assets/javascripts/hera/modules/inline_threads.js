@@ -116,11 +116,11 @@ class InlineThreadHighlighter {
     const nodeMap = [];
     let searchFrom = 0;
 
-    for (var i = 0; i < textNodes.length; i++) {
-      var content = textNodes[i].textContent;
+    for (let i = 0; i < textNodes.length; i++) {
+      const content = textNodes[i].textContent;
       if (!content.trim()) continue;
 
-      var pos = combined.indexOf(content, searchFrom);
+      const pos = combined.indexOf(content, searchFrom);
       if (pos === -1) continue;
 
       nodeMap.push({ node: textNodes[i], startIndex: pos, endIndex: pos + content.length });
@@ -129,8 +129,8 @@ class InlineThreadHighlighter {
 
     const segments = [];
 
-    for (var j = 0; j < nodeMap.length; j++) {
-      var entry = nodeMap[j];
+    for (let j = 0; j < nodeMap.length; j++) {
+      const entry = nodeMap[j];
       if (entry.endIndex <= matchIndex) continue;
       if (entry.startIndex >= matchEnd) break;
 
