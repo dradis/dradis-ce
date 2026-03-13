@@ -1,10 +1,3 @@
-// Inline comment threads — text selection, highlighting, and Turbo coordination.
-//
-// Entry point: new InlineThreadTurbo(container) (see pages/qa.js)
-
-// Find `selection` in `text` allowing whitespace runs in the selection
-// to match any whitespace run in the text. Returns { start, end }
-// positions in the original text, or null.
 const fuzzyIndexOf = (text, selection) => {
   const parts = selection.split(/\s+/).map(
     part => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
@@ -17,11 +10,6 @@ const fuzzyIndexOf = (text, selection) => {
 
   return { start: match.index, end: match.index + match[0].length };
 };
-
-// -- InlineThreadHighlighter -------------------------------------------------
-//
-// Renders <mark> highlights on the rendered HTML content for existing inline
-// comment threads. Uses TreeWalker to find matching text nodes and wraps them.
 
 class InlineThreadHighlighter {
   constructor(contentElement, coordinator) {
@@ -50,7 +38,6 @@ class InlineThreadHighlighter {
     });
   }
 
-  // Wrap each matched text node segment with a <mark> element.
   // Processes in reverse order to avoid invalidating DOM offsets.
   wrapSegments(segments, thread) {
     const marks = [];
@@ -107,13 +94,9 @@ class InlineThreadHighlighter {
     return textNodes;
   }
 
-  // Returns an array of { node, startOffset, endOffset } segments —
-  // one per text node that overlaps the match. Each segment stays
-  // within a single text node so surroundContents works safely.
-  //
-  // Uses innerText as the combined string because anchor.exact comes
-  // from getSelection().toString() which mirrors innerText behavior
-  // (inserting \n at block boundaries and <br> elements).
+  // Each segment stays within a single text node so surroundContents works safely.
+  // Uses innerText because anchor.exact comes from getSelection().toString(),
+  // which mirrors innerText behavior (inserting \n at block boundaries and <br> elements).
   findTextInNodes(textNodes, searchText) {
     const combined = this.contentEl.innerText;
     let matchIndex = combined.indexOf(searchText);
@@ -130,7 +113,6 @@ class InlineThreadHighlighter {
       matchEnd = result.end;
     }
 
-    // Map each text node to its position within innerText
     const nodeMap = [];
     let searchFrom = 0;
 
@@ -162,11 +144,6 @@ class InlineThreadHighlighter {
     return segments;
   }
 }
-
-// -- InlineThreadSelector ----------------------------------------------------
-//
-// Handles text selection within the QA issue body and shows an "Add Comment"
-// popover button. On click, builds a new thread form via the coordinator.
 
 class InlineThreadSelector {
   constructor(container, coordinator) {
@@ -237,10 +214,9 @@ class InlineThreadSelector {
       }
     });
 
-    // Use event delegation on $content rather than direct binding on the
-    // button element. jQuery's .html() (used by liquid_async.js) calls
-    // cleanData() on child elements, stripping any directly-bound handlers.
-    // Delegated handlers survive because they live on the parent.
+    // Use event delegation on $content rather than direct binding on the button.
+    // jQuery's .html() (used by liquid_async.js) calls cleanData() on child elements,
+    // stripping directly-bound handlers. Delegated handlers survive on the parent.
     this.$content.on('click', '[data-behavior~=inline-comment-button]', () => {
       const selectedText = this.pendingSelection;
       if (!selectedText) return;
@@ -325,15 +301,6 @@ class InlineThreadSelector {
   }
 }
 
-// -- InlineThreadTurbo -------------------------------------------------------
-//
-// Coordinator: wires InlineThreadHighlighter and InlineThreadSelector together
-// using Turbo Frames and Turbo Streams for server-rendered responses.
-//
-// - Existing threads load into the panel via Turbo Frame (GET show)
-// - New thread forms are built client-side and submitted via Turbo (POST create)
-// - Resolve/reopen/reply are server-rendered inside the Turbo Frame
-
 class InlineThreadTurbo {
   constructor(container) {
     this.container = container;
@@ -360,12 +327,8 @@ class InlineThreadTurbo {
     this.fetchAndHighlight();
   }
 
-  // -- Panel management ------------------------------------------------------
-
   openPanel() { bootstrap.Offcanvas.getOrCreateInstance(this.panel).show(); }
   closePanel() { bootstrap.Offcanvas.getInstance(this.panel)?.hide(); }
-
-  // -- Thread display (via Turbo Frame) --------------------------------------
 
   showThread(threadId) {
     this.frame.src = `${this.basePath}/${threadId}`;
@@ -381,39 +344,32 @@ class InlineThreadTurbo {
     if (textarea) textarea.focus();
   }
 
-  // -- Data fetching and highlighting ----------------------------------------
-
   fetchAndHighlight() {
     fetch(this.threadsPath, { headers: { 'Accept': 'application/json' } })
       .then(response => response.json())
       .then(threads => this.highlighter.highlight(threads));
   }
 
-  // -- Events ----------------------------------------------------------------
-
   bindEvents() {
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && this.panel.classList.contains('show')) this.closePanel();
     });
 
-    // Clear frame when offcanvas hides (covers dismiss button, Escape, and programmatic close).
+    // Covers dismiss button, Escape key, and programmatic close.
     this.panel.addEventListener('hidden.bs.offcanvas', () => {
       this.frame.innerHTML = '';
     });
 
-    // Liquid async rendering replaces innerHTML of content-textile,
-    // destroying all <mark> highlights. Re-fetch and re-highlight.
+    // Liquid async rendering replaces innerHTML of content-textile, destroying highlights.
     $(this.container).find('[data-behavior~=content-textile]').on(
       'dradis:liquid-rendered', () => this.fetchAndHighlight()
     );
 
-    // Close the panel as soon as a delete is submitted so the user doesn't
-    // see the frame empty out before the panel animates away.
+    // Close before the Turbo response arrives so the panel animates away cleanly.
     document.addEventListener('turbo:submit-start', (e) => {
       if (e.target.matches('[data-behavior~=delete-thread-form]')) this.closePanel();
     });
 
-    // After any Turbo form submission in our panel, re-highlight or show error.
     document.addEventListener('turbo:submit-end', (e) => {
       if (!e.target.closest('[data-behavior~=inline-thread-panel]')) return;
 
@@ -430,8 +386,6 @@ class InlineThreadTurbo {
     });
   }
 
-  // -- Error feedback --------------------------------------------------------
-
   showError(form) {
     this.clearErrors();
     const alert = document.createElement('div');
@@ -444,8 +398,6 @@ class InlineThreadTurbo {
   clearErrors() {
     this.frame.querySelectorAll('[data-behavior~=inline-thread-error]').forEach(el => el.remove());
   }
-
-  // -- Form building ---------------------------------------------------------
 
   buildNewThreadForm(anchor) {
     const fragment = document.createDocumentFragment();
