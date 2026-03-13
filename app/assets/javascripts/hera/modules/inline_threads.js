@@ -312,9 +312,6 @@ class InlineThreadTurbo {
     this.panel = document.querySelector('[data-behavior~=inline-thread-panel]');
     this.frame = document.querySelector('[data-behavior~=inline-thread-content]');
 
-    const csrfMeta = document.querySelector('meta[name=csrf-token]');
-    this.csrfToken = csrfMeta ? csrfMeta.content : '';
-
     const contentEl = container.querySelector('[data-behavior~=content-textile]');
 
     // Prevent QuoteSelector from binding to this content-textile element.
@@ -336,12 +333,13 @@ class InlineThreadTurbo {
   }
 
   showNewThreadForm(anchor) {
-    this.frame.innerHTML = '';
-    this.frame.appendChild(this.buildNewThreadForm(anchor));
+    const params = new URLSearchParams({
+      'inline_thread[commentable_type]': this.commentableType,
+      'inline_thread[commentable_id]':   this.commentableId,
+      'inline_thread[anchor]':           JSON.stringify(anchor)
+    });
+    this.frame.src = `${this.basePath}/new?${params}`;
     this.openPanel();
-
-    const textarea = this.frame.querySelector('textarea');
-    if (textarea) textarea.focus();
   }
 
   fetchAndHighlight() {
@@ -399,84 +397,4 @@ class InlineThreadTurbo {
     this.frame.querySelectorAll('[data-behavior~=inline-thread-error]').forEach(el => el.remove());
   }
 
-  buildNewThreadForm(anchor) {
-    const fragment = document.createDocumentFragment();
-
-    const blockquote = document.createElement('blockquote');
-    blockquote.textContent = anchor.exact;
-    fragment.appendChild(blockquote);
-
-    const form = document.createElement('form');
-    form.action = this.basePath;
-    form.method = 'post';
-    form.acceptCharset = 'UTF-8';
-    form.dataset.turbo = 'true';
-
-    const csrfInput = document.createElement('input');
-    csrfInput.type = 'hidden';
-    csrfInput.name = 'authenticity_token';
-    csrfInput.value = this.csrfToken;
-    form.appendChild(csrfInput);
-
-    this.buildCommentableFields().forEach(el => form.appendChild(el));
-    this.buildAnchorFields(anchor).forEach(el => form.appendChild(el));
-
-    const textareaWrapper = document.createElement('div');
-    textareaWrapper.className = 'mb-2';
-    const textarea = document.createElement('textarea');
-    textarea.name = 'inline_thread[comments_attributes][0][content]';
-    textarea.className = 'form-control form-control-sm';
-    textarea.placeholder = 'Add a comment...';
-    textarea.rows = 3;
-    textarea.required = true;
-    textareaWrapper.appendChild(textarea);
-    form.appendChild(textareaWrapper);
-
-    const buttonWrapper = document.createElement('div');
-    buttonWrapper.className = 'd-flex gap-2';
-    const button = document.createElement('button');
-    button.type = 'submit';
-    button.className = 'btn btn-sm btn-primary';
-    button.textContent = 'Create Thread';
-    buttonWrapper.appendChild(button);
-    form.appendChild(buttonWrapper);
-
-    fragment.appendChild(form);
-    return fragment;
-  }
-
-  buildCommentableFields() {
-    const prefix = 'inline_thread';
-
-    return [
-      [prefix + '[commentable_type]', this.commentableType],
-      [prefix + '[commentable_id]',   this.commentableId]
-    ].map(([name, value]) => {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = name;
-      input.value = value;
-      return input;
-    });
-  }
-
-  buildAnchorFields(anchor) {
-    const prefix = 'inline_thread[anchor]';
-
-    return [
-      [prefix + '[type]',            anchor.type],
-      [prefix + '[exact]',           anchor.exact],
-      [prefix + '[prefix]',          anchor.prefix],
-      [prefix + '[suffix]',          anchor.suffix],
-      [prefix + '[field_name]',      anchor.field_name || ''],
-      [prefix + '[position][start]', anchor.position.start],
-      [prefix + '[position][end]',   anchor.position.end]
-    ].map(([name, value]) => {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = name;
-      input.value = value;
-      return input;
-    });
-  }
 }

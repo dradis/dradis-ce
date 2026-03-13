@@ -1,0 +1,21 @@
+<blockquote><%= @anchor['exact'] %></blockquote>
+
+<%= form_with url: inline_threads_path do |f| %>
+  <%= hidden_field_tag 'inline_thread[commentable_type]', @commentable_type %>
+  <%= hidden_field_tag 'inline_thread[commentable_id]',   @commentable_id %>
+  <%= hidden_field_tag 'inline_thread[anchor]',           @anchor.to_json %>
+
+  <div class="mb-2">
+    <%= text_area_tag 'inline_thread[comments_attributes][0][content]',
+          nil,
+          autofocus: true,
+          class: 'form-control form-control-sm',
+          placeholder: 'Add a comment...',
+          rows: 3,
+          required: true %>
+  </div>
+
+  <div class="d-flex gap-2">
+    <%= f.submit 'Create Thread', class: 'btn btn-sm btn-primary' %>
+  </div>
+<% end %>

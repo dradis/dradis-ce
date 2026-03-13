@@ -14,6 +14,12 @@ class InlineThreadsController < AuthenticatedController
   before_action :authorize_commentable
   before_action :require_comment, only: [:create]
 
+  def new
+    @commentable_type = inline_thread_params[:commentable_type]
+    @commentable_id = inline_thread_params[:commentable_id]
+    @anchor = inline_thread_params[:anchor]
+  end
+
   def index
     @inline_threads = commentable.inline_threads
                            .includes(comments: :user)
@@ -75,11 +81,15 @@ class InlineThreadsController < AuthenticatedController
   end
 
   def inline_thread_params
-    params.require(:inline_thread).permit(
-      :commentable_type, :commentable_id,
-      anchor: [:type, :exact, :prefix, :suffix, :field_name, { position: [:start, :end] }],
+    permitted = params.require(:inline_thread).permit(
+      :commentable_type, :commentable_id, :anchor,
       comments_attributes: [:content]
     )
+    # anchor arrives as a JSON string (from new/create) and must be parsed
+    # back into a hash before being passed to the model.
+    return permitted.merge(anchor: JSON.parse(permitted[:anchor])) if permitted[:anchor]
+
+    permitted
   end
 
   def inline_thread_params_for_create
