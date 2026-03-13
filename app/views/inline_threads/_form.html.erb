@@ -1,5 +1,7 @@
 <blockquote><%= @anchor['exact'] %></blockquote>
 
+<%= render 'error' %>
+
 <%= form_with url: inline_threads_path do |f| %>
   <%= hidden_field_tag 'inline_thread[commentable_type]', @commentable_type %>
   <%= hidden_field_tag 'inline_thread[commentable_id]',   @commentable_id %>

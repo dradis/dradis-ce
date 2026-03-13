@@ -372,7 +372,6 @@ class InlineThreadTurbo {
       if (!e.target.closest('[data-behavior~=inline-thread-panel]')) return;
 
       if (e.detail.success) {
-        this.clearErrors();
         this.fetchAndHighlight();
       } else {
         this.showError(e.target);
@@ -385,16 +384,11 @@ class InlineThreadTurbo {
   }
 
   showError(form) {
-    this.clearErrors();
-    const alert = document.createElement('div');
-    alert.className = 'alert alert-danger py-1 px-2 mb-2 small';
-    alert.dataset.behavior = 'inline-thread-error';
-    alert.textContent = 'Something went wrong. Please try again.';
-    form.prepend(alert);
+    form.querySelector('[data-behavior~=inline-thread-error]').classList.remove('d-none');
   }
 
   clearErrors() {
-    this.frame.querySelectorAll('[data-behavior~=inline-thread-error]').forEach(el => el.remove());
+    this.frame.querySelectorAll('[data-behavior~=inline-thread-error]').forEach(el => el.classList.add('d-none'));
   }
 
 }
