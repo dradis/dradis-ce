@@ -22,10 +22,7 @@
 //= require hera/modules/differ
 //= require hera/modules/editor_toolbar
 //= require hera/modules/quote_selector
-//= require hera/modules/inline_threads/utils
-//= require hera/modules/inline_threads/selector
-//= require hera/modules/inline_threads/highlighter
-//= require hera/modules/inline_threads/turbo
+//= require hera/modules/inline_threads
 //= require hera/modules/mentions
 //= require hera/modules/notifications
 //= require hera/modules/rtp_validation
