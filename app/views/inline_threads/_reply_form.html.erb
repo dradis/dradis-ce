@@ -1,5 +1,5 @@
 <div id="thread_<%= inline_thread.id %>_reply_form">
-  <%= render 'error' %>
+  <%= render 'inline_threads/error' %>
   <%= form_with url: inline_thread_comments_path(inline_thread) do |f| %>
     <%= f.text_area :content,
           name: 'comment[content]',
