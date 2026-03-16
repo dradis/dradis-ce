@@ -476,6 +476,39 @@ module Dradis::Plugins::<module_name>
 end
 ```
 
+#### `app/views/dradis/plugins/<slug>/placeholder/index.html.erb`
+```erb
+<div>
+  <h1>Your addon is working!</h1>
+  <p>This is a placeholder view for the <strong>dradis-<slug></strong> addon.</p>
+  <p>When you're ready to build your UI, here's where to start:</p>
+  <ul>
+    <li>Delete or rename <code>app/controllers/dradis/plugins/<slug>/placeholder_controller.rb</code> and replace it with your own controller.</li>
+    <li>Add your views under <code>app/views/dradis/plugins/<slug>/</code>.</li>
+    <li>Update <code>config/routes.rb</code> to point at your new controller.</li>
+  </ul>
+</div>
+```
+
+Also scaffold the matching placeholder controller so the view is reachable when the gem is first loaded:
+
+#### `app/controllers/dradis/plugins/<slug>/placeholder_controller.rb`
+```ruby
+module Dradis::Plugins::<module_name>
+  class PlaceholderController < ApplicationController
+    def index
+    end
+  end
+end
+```
+
+And update `config/routes.rb` to point at it as the root:
+```ruby
+Dradis::Plugins::<module_name>::Engine.routes.draw do
+  root to: 'placeholder#index'
+end
+```
+
 ## Step 6 — Initialize git and show summary
 
 After generating all files, run:
@@ -510,9 +543,10 @@ Show only the steps relevant to the addon type(s) the user chose:
 > 2. The `export` method has access to everything in the project — issues, evidence, nodes, and notes. Build your output however you need.
 
 **If they chose Custom pages (Option C or D with custom pages):**
-> 1. Open `config/routes.rb` — add the URL routes for your new pages here.
-> 2. Open `app/controllers/dradis/plugins/<slug>/application_controller.rb` — create controllers for each page that inherit from this base controller.
-> 3. Add views under `app/views/dradis/plugins/<slug>/` to build out the UI for your pages.
+> 1. Visit your addon's root URL in Dradis to see the placeholder page — it confirms everything is wired up correctly.
+> 2. Open `app/views/dradis/plugins/<slug>/` — replace the placeholder with your real views here.
+> 3. Open `config/routes.rb` — swap out the placeholder route for your real routes.
+> 4. Add controllers under `app/controllers/dradis/plugins/<slug>/` — inherit from `ApplicationController` to get authentication and project scoping for free.
 
 **For all addon types, finish with:**
 > - To use your addon with a local Dradis installation, add this line to the Dradis `Gemfile`:
