@@ -13,6 +13,7 @@
     - Rename addon upload/parent nodes and add icons
     - Update associated evidence, notes and child nodes' updated_at columns on node merge
     - Warn on node merge that methodology will not be copied
+    - Update attachment links in evidence to point to new node on node merge
   - Show don't gate:
     - Issue Library
     - Remediation Tracker
